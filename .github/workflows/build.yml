@@ -59,6 +59,9 @@ jobs:
       - name: Install Node Packages
         run: npm install
 
+      - name: Docker build
+        run: docker compose -f docker-compose.yml build
+
       - name: Login to Azure registry
         uses: docker/login-action@v3.0.0
         if: ${{ env.SHOULD_PUBLISH == 'true'}}
