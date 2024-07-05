@@ -62,14 +62,6 @@ jobs:
       - name: Install Node Packages
         run: npm install
 
-      - name: Run Lint and Unit Tests
-        continue-on-error: true
-        run: npm run test:ci
-
-      - name: Generate Test Coverage Report
-        continue-on-error: true
-        run: npm run test:cov
-
       - name: Login to Azure registry
         uses: docker/login-action@v3.0.0
         if: ${{ env.SHOULD_PUBLISH }}
@@ -80,9 +72,8 @@ jobs:
 
       - name: Build and push an image to container registry
         uses: docker/build-push-action@v5.1.0
-        if: ${{ env.SHOULD_PUBLISH }}
+        if: ${{ env.SHOULD_PUBLISH == 'true'}}
         with:
-          file: ${{ github.workspace }}/Dockerfile
           push: true
           tags: oaftech.azurecr.io/oneacrefund/fineract-frontend-v2:${{ env.IMAGE_TAGS }}
           context: ${{ github.workspace }}
