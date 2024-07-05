@@ -105,7 +105,7 @@
   <span fxHide.lg>
     <!--   <button mat-menu-item [routerLink]="['/accounting']">Accounting</button>
     <button mat-menu-item [matMenuTriggerFor]="reportsMenu">Reports</button> -->
-    <button mat-menu-item [matMenuTriggerFor]="adminMenu">Admin</button>
+    <button mat-menu-item [matMenuTriggerFor]="adminMenu" *ngIf="displayAdminOptions">Admin</button>
     <!--     <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">Self Service</button> -->
   </span>
 </mat-menu>

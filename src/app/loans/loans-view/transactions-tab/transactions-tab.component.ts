@@ -29,7 +29,6 @@ export class TransactionsTabComponent implements OnInit {
     'fee',
     'penalties',
     'loanBalance',
-    'actions',
   ];
 
   /**
