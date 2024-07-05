@@ -16,7 +16,7 @@ on:
       - 'release/*'
 
 env:
-  SHOULD_PUBLISH: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop' || startsWith(github.ref, 'refs/heads/release/')
+  SHOULD_PUBLISH: ${{ github.ref }} == 'refs/heads/master' ||${{ github.ref }} == 'refs/heads/develop' || startsWith(${{ github.ref }}, 'refs/heads/release/')
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -58,15 +58,6 @@ jobs:
           echo "IMAGE_SEMANTIC_HASH=$IMAGE_TAGS" >> $GITHUB_ENV
           echo "IMAGE_TAGS=$IMAGE_TAGS" >> $GITHUB_ENV
 
-      - name: Publish MegaLinter reports
-        if: ${{ success() }} || ${{ failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: MegaLinter reports
-          path: |
-            megalinter-reports
-            mega-linter.log
-
       - name: Install Node Packages
         run: npm install
 
@@ -78,10 +69,6 @@ jobs:
         continue-on-error: true
         run: npm run test:cov
 
-      - name: Run build
-        continue-on-error: true
-        run: npm run build:prod
-
       - name: Login to Azure registry
         uses: docker/login-action@v3.0.0
         if: ${{ env.SHOULD_PUBLISH }}
@@ -91,7 +78,7 @@ jobs:
           password: ${{ secrets.ACR_PULL_PASSWORD }}
 
       - name: Build and push an image to container registry
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v3.0.0
         if: ${{ env.SHOULD_PUBLISH }}
         with:
           registry: oaftech.azurecr.io
