@@ -58,7 +58,7 @@ jobs:
           echo "IMAGE_SEMANTIC_HASH=$IMAGE_TAGS" >> $GITHUB_ENV
           echo "IMAGE_TAGS=$IMAGE_TAGS" >> $GITHUB_ENV
           echo "SHOULD_PUBLISH=$SHOULD_PUBLISH"
-          SHOULD_PUBLISH_1: '${{ github.ref }}' == 'refs/heads/master' || '${{ github.ref }}' == 'refs/heads/develop' || startsWith('${{ github.ref }}', 'refs/heads/release/')
+          SHOULD_PUBLISH_1: '${{ github.ref }}' == 'refs/heads/master' || '${{ github.ref }}' == 'refs/heads/develop' 
           echo "SHOULD_PUBLISH1=$SHOULD_PUBLISH1"
 
       - name: Install Node Packages
@@ -84,6 +84,7 @@ jobs:
         uses: docker/build-push-action@v3.0.0
         if: ${{ env.SHOULD_PUBLISH }}
         with:
+          context: .
           registry: oaftech.azurecr.io
           push: true
           tags: oneacrefund/fineract-frontend-v2:${{ env.IMAGE_TAGS }}
