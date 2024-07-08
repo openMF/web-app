@@ -78,8 +78,11 @@ jobs:
         if: ${{ env.SHOULD_PUBLISH == 'true'}}
         run: docker push oaftech.azurecr.io/oneacrefund/fineract-frontend-v2:${{ env.IMAGE_TAGS }}
 
+      - name: Use latest image tag
+        run: yq -i '.image.tag = "${{ env.IMAGE_TAGS }}"' ${{ github.workspace }}/deployment/values.yaml
+
       - name: Publish configuration package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.3.1
         if: ${{ env.SHOULD_PUBLISH == 'true'}}
         with:
           name: fineract-frontend-v2
