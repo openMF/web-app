@@ -74,10 +74,7 @@ export class BulkRepaymentDownloadComponent implements OnInit {
       const urlSuffix = '/clients/repayments/export?countryId=' + countryId + '&repaymentsDate=' + repaymentsDate;
 
       this.organizationService.downloadOutputTemplate(urlSuffix).subscribe((res: any) => {
-        const contentType = res.headers.get("Content-Type");
-        const blob = new Blob([res.body], { type: contentType });
-        const fileOfBlob = new File([blob],"", { type: contentType });
-        window.open(window.URL.createObjectURL(fileOfBlob));
+        this.organizationService.downloadFileFromAPIResponse(res);
       });
     }
 

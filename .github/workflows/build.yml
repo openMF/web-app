@@ -79,7 +79,7 @@ jobs:
         run: docker push oaftech.azurecr.io/oneacrefund/fineract-frontend-v2:${{ env.IMAGE_TAGS }}
 
       - name: Publish configuration package
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ env.SHOULD_PUBLISH == 'true'}}
         with:
           name: fineract-frontend-v2

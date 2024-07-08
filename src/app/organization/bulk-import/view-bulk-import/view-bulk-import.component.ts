@@ -160,10 +160,7 @@ export class ViewBulkImportComponent implements OnInit {
     this.organizationService
       .getImportTemplate(this.bulkImport.urlSuffix, countryId, officeId, staffId, legalFormType)
       .subscribe((res: any) => {
-        const contentType = res.headers.get('Content-Type');
-        const blob = new Blob([res.body], { type: contentType });
-        const fileOfBlob = new File([blob], 'template.xls', { type: contentType });
-        window.open(window.URL.createObjectURL(fileOfBlob));
+        this.organizationService.downloadFileFromAPIResponse(res);
       });
   }
 
