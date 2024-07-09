@@ -47,18 +47,18 @@
         <td mat-cell *matCellDef="let instruction">
           <span *ngIf="instruction.status.value!=='Deleted'">
             <button class="account-action-button" mat-raised-button color="primary"
-              matTooltip="Edit Standing Instruction" *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'"
+              matTooltip="{{ 'tooltips.Edit Standing Instruction' | translate}}" *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'"
               [routerLink]="['../', 'standing-instructions', instruction.id, 'edit']">
               <i class="fa fa-edit"></i>
             </button>
           </span>
           <span *ngIf="instruction.status.value!=='Deleted'">
             <button class="account-action-button" mat-raised-button color="warn"
-              matTooltip="Delete Standing Instruction" *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'" (click)="deleteStandingInstruction(instruction.id)">
+              matTooltip="{{ 'tooltips.Delete Standing Instruction' | translate}}" *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'" (click)="deleteStandingInstruction(instruction.id)">
               <i class="fa fa-times"></i>
             </button>
           </span>
-          <button class="account-action-button" mat-raised-button color="primary" matTooltip="View Standing Instruction"
+          <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.View Standing Instruction' | translate}}"
             *mifosxHasPermission="'READ_STANDINGINSTRUCTION'" [routerLink]="['../', 'standing-instructions', instruction.id, 'view']">
             <i class="fa fa-eye"></i>
           </button>

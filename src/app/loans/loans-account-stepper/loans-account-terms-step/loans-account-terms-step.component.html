@@ -71,7 +71,7 @@
     <mat-form-field fxFlex="23%">
       <mat-label>{{"labels.inputs.Repaid every" | translate}}</mat-label>
       <input type="number" matInput required formControlName="repaymentEvery"
-      matTooltip="These fields are input to calculating the repayment schedule for a loan account and are used to determine when payments are due.">
+      matTooltip="{{ 'tooltips.Fields are input to calculating the repayment schedule' | translate}}">
       <mat-error *ngIf="loansAccountTermsForm.controls.repaymentEvery.hasError('required')">
         {{"labels.inputs.Repaid every" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
       </mat-error>
