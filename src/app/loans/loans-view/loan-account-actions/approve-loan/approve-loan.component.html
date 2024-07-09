@@ -27,10 +27,10 @@
             <mat-datepicker #disbursementDatePicker></mat-datepicker>
           </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>{{"labels.inputs.Approved Amount" | translate}}</mat-label>
-            <input matInput type="number" formControlName="approvedLoanAmount">
-          </mat-form-field>
+          <mifosx-input-amount [currency]="currency" [isRequired]="true"
+            [inputFormControl]="approveLoanForm.controls.approvedLoanAmount"
+            [inputLabel]="'Approved Amount'">
+          </mifosx-input-amount>
 
           <mat-form-field>
             <mat-label>{{"labels.inputs.Transaction Amount" | translate}}</mat-label>

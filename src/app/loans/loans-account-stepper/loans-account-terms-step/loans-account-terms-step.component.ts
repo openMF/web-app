@@ -12,6 +12,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { Currency } from 'app/shared/models/general.model';
 import { CodeName, OptionData } from 'app/shared/models/option-data.model';
 
 /**
@@ -63,7 +64,6 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   clientActiveLoanData: any;
   /** Multi Disbursement Data */
   disbursementDataSource: {}[] = [];
-  currencyDisplaySymbol = '$';
   /** Loan repayment strategies */
   transactionProcessingStrategyOptions: any = [];
   repaymentStrategyDisabled = false;
@@ -85,11 +85,12 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   pristine = true;
 
   loanId: any = null;
-
   loanScheduleType: OptionData | null = null;
   loanProduct: LoanProduct | null = null;
-
   interestRateFrequencyTypeData: any[] = [];
+  currency: Currency;
+
+  productEnableDownPayment = false;
 
   /**
    * Create Loans Account Terms Form
@@ -108,19 +109,19 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
    */
   ngOnChanges() {
     if (this.loansAccountProductTemplate) {
+      this.currency = this.loansAccountProductTemplate.currency;
+
       this.loansAccountTermsData = this.loansAccountProductTemplate;
-      this.currencyDisplaySymbol = this.loansAccountTermsData.currency.displaySymbol;
       if (this.loanId != null && this.loansAccountTemplate.accountNo) {
         this.loansAccountTermsData = this.loansAccountTemplate;
       }
+      this.productEnableDownPayment = this.loansAccountTermsData.product.enableDownPayment;
 
       if (this.loansAccountTermsData.product) {
         this.loanProduct = this.loansAccountTermsData.product;
       }
 
       this.interestRateFrequencyTypeData = this.loansAccountTermsData.interestRateFrequencyTypeOptions;
-      console.log(this.loansAccountTermsData);
-      console.log(this.loanProduct);
 
       this.loansAccountTermsForm.patchValue({
         'principalAmount': this.loansAccountTermsData.principal,
@@ -167,6 +168,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         this.loansAccountTermsForm.addControl('enableInstallmentLevelDelinquency', new UntypedFormControl(this.loansAccountTermsData.enableInstallmentLevelDelinquency || this.loanProduct.enableInstallmentLevelDelinquency));
       }
       this.collateralDataSource = this.loansAccountTermsData.collateral || [];
+      if (this.productEnableDownPayment) {
+        const enableDownPayment = (this.loansAccountTermsData['enableDownPayment'] === false) ? false : true;
+        this.loansAccountTermsForm.addControl('enableDownPayment', new UntypedFormControl(enableDownPayment));
+      }
 
       const allowAttributeOverrides = this.loansAccountTermsData.product.allowAttributeOverrides;
       if (!allowAttributeOverrides.repaymentEvery) {
@@ -318,7 +323,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
 
   hasFixedLength(): boolean {
     if (this.loansAccountTermsData) {
-      return this.loansAccountTermsData.product.fixedLength ? true : false;
+      return this.loansAccountTermsData.product?.fixedLength ? true : false;
     }
     return false;
   }
@@ -523,6 +528,14 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   }
 
   isDelinquencyEnabled(): boolean {
+    if (!this.loanProduct || !this.loanProduct.delinquencyBucket) {
+      return false;
+    }
+    return true;
+  }
+
+  isDownPaymentEnabled(): boolean {
+    console.log(this.loanProduct);
     if (!this.loanProduct || !this.loanProduct.delinquencyBucket) {
       return false;
     }

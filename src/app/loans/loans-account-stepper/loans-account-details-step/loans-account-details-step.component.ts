@@ -1,13 +1,14 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
-import { TooltipPosition } from '@angular/material/tooltip';
 
 /** Custom Services */
 import { LoansService } from '../../loans.service';
 import { Commons } from 'app/core/utils/commons';
+import { takeUntil } from 'rxjs/operators';
+import { ReplaySubject, Subject } from 'rxjs';
 
 /**
  * Loans Account Details Step
@@ -17,7 +18,7 @@ import { Commons } from 'app/core/utils/commons';
   templateUrl: './loans-account-details-step.component.html',
   styleUrls: ['./loans-account-details-step.component.scss']
 })
-export class LoansAccountDetailsStepComponent implements OnInit {
+export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
 
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
@@ -27,7 +28,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Product Data */
-  productData: any;
+  productList: any;
   /** Loan Officer Data */
   loanOfficerOptions: any;
   /** Loan Purpose Options */
@@ -44,6 +45,12 @@ export class LoansAccountDetailsStepComponent implements OnInit {
   loanId: any = null;
 
   loanProductSelected = false;
+  /** Currency data. */
+  protected productData: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
+  /** control for the filter select */
+  protected filterFormCtrl: UntypedFormControl = new UntypedFormControl('');
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
 
   /** Loans Account Template with product data  */
   @Output() loansAccountProductTemplate = new EventEmitter();
@@ -66,7 +73,7 @@ export class LoansAccountDetailsStepComponent implements OnInit {
     this.maxDate = this.settingsService.maxFutureDate;
     this.buildDependencies();
     if (this.loansAccountTemplate) {
-      this.productData = this.loansAccountTemplate.productOptions.sort(this.commons.dynamicSort('name'));
+      this.productList = this.loansAccountTemplate.productOptions.sort(this.commons.dynamicSort('name'));
       if (this.loansAccountTemplate.loanProductId) {
         this.loansAccountDetailsForm.patchValue({
           'productId': this.loansAccountTemplate.loanProductId,
@@ -77,6 +84,31 @@ export class LoansAccountDetailsStepComponent implements OnInit {
           'expectedDisbursementDate': this.loansAccountTemplate.timeline.expectedDisbursementDate && new Date(this.loansAccountTemplate.timeline.expectedDisbursementDate),
           'externalId': this.loansAccountTemplate.externalId
         });
+      }
+    }
+    this.filterFormCtrl.valueChanges
+    .pipe(takeUntil(this._onDestroy))
+    .subscribe(() => {
+      this.searchItem();
+    });
+    this.productData.next(this.productList.slice());
+  }
+
+  ngOnDestroy(): void {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
+
+  searchItem(): void {
+    if (this.productList) {
+      const search: string = this.filterFormCtrl.value.toLowerCase();
+
+      if (!search) {
+          this.productData.next(this.productList.slice());
+      } else {
+        this.productData.next(this.productList.filter((option: any) => {
+          return option['name'].toLowerCase().indexOf(search) >= 0;
+        }));
       }
     }
   }

@@ -72,6 +72,11 @@
       {{loansAccount.repaymentFrequencyDayOfWeekType | find: loansAccountProductTemplate.repaymentFrequencyDaysOfWeekTypeOptions:'id': 'name'}}</span>
   </div>
 
+  <div fxFlexFill *ngIf="productEnableDownPayment">
+    <span fxFlex="40%">{{ 'labels.inputs.Enable Down Payments' | translate}}:</span>
+    <span  fxFlex="60%">{{ loansAccount.enableDownPayment | yesNo }}</span>
+  </div>
+
   <div fxFlexFill *ngIf="loansAccount.repaymentsStartingFromDate">
     <span fxFlex="40%">{{"labels.inputs.First repayment on" | translate}}:</span>
     <span fxFlex="60%">{{ loansAccount.repaymentsStartingFromDate | dateFormat }}</span>
