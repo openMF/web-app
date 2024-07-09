@@ -2,13 +2,10 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-    <mat-form-field fxFlex="48%">
-      <mat-label>{{"labels.inputs.Principal" | translate}} {{currencyDisplaySymbol}}</mat-label>
-      <input type="number" matInput formControlName="principalAmount">
-      <mat-error *ngIf="loansAccountTermsForm.controls.principalAmount.hasError('required')">
-        {{"labels.inputs.Principal" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
-      </mat-error>
-    </mat-form-field>
+    <mifosx-input-amount fxFlex="48%"  *ngIf="currency" [currency]="currency" [isRequired]="true"
+      [inputFormControl]="loansAccountTermsForm.controls.principalAmount"
+      [inputLabel]="'Principal'">
+    </mifosx-input-amount>
 
     <h4 fxFlex="98%" class="mat-h4">{{"labels.heading.Term Options" | translate}} <i class="fas fa-question" matTooltip="The loan term parameter in loan accounts
       is the default-calculated field based on the number of repayments and repaid every value entered by the user"></i></h4>
@@ -105,6 +102,11 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="enableDownPayment" matTooltip="Leave this checkbox checked if the loan has Down Payment, A Down Payment is
+    a sum a buyer pays upfront when purchasing a good. It represents a percentage of the total purchase price, and the balance is usually financed" class="margin-b" *ngIf="productEnableDownPayment">
+      {{'labels.inputs.Enable Down Payment' | translate}}
+    </mat-checkbox>
 
     <h4 fxFlex="98%" class="mat-h4">{{"labels.inputs.Nominal interest rate" | translate}}</h4>
 

@@ -4,8 +4,11 @@
 
     <mat-form-field fxFlex="72%">
       <mat-label>{{"labels.inputs.Product Name" | translate}}</mat-label>
-      <mat-select formControlName="productId" matTooltip="{{ 'tooltips.Name of the loan product' | translate}}" required>
-        <mat-option *ngFor="let product of productData" [value]="product.id">
+      <mat-select required matTooltip="{{ 'tooltips.Name of the loan product' | translate}}" formControlName="productId">
+        <mat-option>
+          <ngx-mat-select-search [formControl]="filterFormCtrl"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let product of productData | async" [value]="product.id">
           {{ product.name }}
         </mat-option>
       </mat-select>

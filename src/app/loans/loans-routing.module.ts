@@ -302,8 +302,7 @@ const routes: Routes = [
         component: LoanAccountActionsComponent,
         data: { title: 'Loan Account Actions', breadcrumb: 'action', routeParamBreadcrumb: 'action' },
         resolve: {
-          actionButtonData: LoanActionButtonResolver,
-          loanDetailsData: LoanDetailsResolver
+          actionButtonData: LoanActionButtonResolver
         }
       },
       {

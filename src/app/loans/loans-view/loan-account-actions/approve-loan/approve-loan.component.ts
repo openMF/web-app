@@ -7,6 +7,7 @@ import { Dates } from 'app/core/utils/dates';
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { Currency } from 'app/shared/models/general.model';
 
 /**
  * Approve Loan component.
@@ -28,6 +29,7 @@ export class ApproveLoanComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Loan Id */
   loanId: any;
+  currency: Currency;
 
   /**
    * Retrieve data from `Resolver`.
@@ -46,6 +48,7 @@ export class ApproveLoanComponent implements OnInit {
     private settingsService: SettingsService) {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.loanData = data.actionButtonData;
+      this.currency = data.actionButtonData.currency;
     });
     this.loanId = this.route.snapshot.params['loanId'];
   }

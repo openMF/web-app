@@ -48,6 +48,11 @@
         </div>
 
         <div fxFlexFill>
+            <span fxFlex="50%">{{ 'labels.inputs.Enable Down Payments' | translate}}:</span>
+            <span fxFlex="50%">{{ loanDetails.enableDownPayment | yesNo }}</span>
+        </div>
+
+        <div fxFlexFill>
             <span fxFlex="50%"> {{"labels.inputs.Grace: On Principal Payment" | translate}}</span>
             <span fxFlex="50%"> {{loanDetails.graceOnPrincipalPayment}} </span>
         </div>

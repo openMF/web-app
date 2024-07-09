@@ -49,6 +49,8 @@ export class RepaymentScheduleTabComponent implements OnInit {
   installmentStyle(installment: any): string {
     if (installment.isAdditional) {
       return 'additional';
+    } else if (installment.downPaymentPeriod) {
+      return 'downpayment';
     }
     return '';
   }
