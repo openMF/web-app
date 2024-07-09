@@ -1493,6 +1493,7 @@
             "Email Address": "Correo electrónico",
             "Email ID": "Id de correo",
             "Email should be a": "El correo electrónico debe ser un",
+            "Enable Accrual Activity Posting on Installment Due Date": "Habilitar la publicación de actividad acumulada en la fecha de vencimiento del pago a plazos",
             "Enable installment level Delinquency": "Habilitar morosidad a nivel de cuotas",
             "Enable Auto Repayment for Down Payment": "Habilitar el pago automático para el pago inicial",
             "Enable Dormancy Tracking": "Habilitar seguimiento de inactividad",
