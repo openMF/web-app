@@ -72,6 +72,7 @@ export class ReactivateClientComponent implements OnInit {
     this.reactivateClientForm = this.formBuilder.group({
       reactivationDate: ['', Validators.required],
       reactivationReasonId: ['', Validators.required],
+      skipVerification: [false],
     });
   }
 

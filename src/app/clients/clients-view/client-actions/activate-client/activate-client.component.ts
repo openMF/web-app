@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatomoTracker } from "@ngx-matomo/tracker";
+import { MatomoTracker } from '@ngx-matomo/tracker';
 
 /**
  * Activate Client Component
@@ -15,10 +15,9 @@ import { MatomoTracker } from "@ngx-matomo/tracker";
 @Component({
   selector: 'mifosx-activate-client',
   templateUrl: './activate-client.component.html',
-  styleUrls: ['./activate-client.component.scss']
+  styleUrls: ['./activate-client.component.scss'],
 })
 export class ActivateClientComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -37,13 +36,15 @@ export class ActivateClientComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {MatomoTracker} matomoTracker Matomo tracker service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private clientsService: ClientsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
-    private matomoTracker: MatomoTracker) {
+    private matomoTracker: MatomoTracker
+  ) {
     this.clientId = this.route.parent.snapshot.params['clientId'];
   }
 
@@ -52,7 +53,7 @@ export class ActivateClientComponent implements OnInit {
    */
   ngOnInit() {
     //set Matomo page info
-    let title = document.title || "";
+    let title = document.title || '';
     this.matomoTracker.setDocumentTitle(`${title}`);
 
     this.createActivateClientForm();
@@ -63,7 +64,8 @@ export class ActivateClientComponent implements OnInit {
    */
   createActivateClientForm() {
     this.activateClientForm = this.formBuilder.group({
-      'activationDate': ['', Validators.required]
+      activationDate: ['', Validators.required],
+      skipVerification: [false],
     });
   }
 
@@ -82,14 +84,13 @@ export class ActivateClientComponent implements OnInit {
     const data = {
       ...activateClientFormData,
       dateFormat,
-      locale
+      locale,
     };
     //Matomo log activity
-    this.matomoTracker.trackEvent('clients', 'activate',this.clientId);// change to track right info
+    this.matomoTracker.trackEvent('clients', 'activate', this.clientId); // change to track right info
 
     this.clientsService.executeClientCommand(this.clientId, 'activate', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

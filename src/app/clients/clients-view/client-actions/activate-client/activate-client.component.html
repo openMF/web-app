@@ -1,30 +1,38 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="activateClientForm" (ngSubmit)="submit()">
+      <mat-card-content fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <mat-form-field fxFlex (click)="activationDatePicker.open()">
+          <mat-label>Activated On Date</mat-label>
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="activationDatePicker"
+            required
+            formControlName="activationDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #activationDatePicker></mat-datepicker>
+          <mat-error *ngIf="activateClientForm.controls.activationDate.hasError('required')">
+            Activated On Date is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
 
-      <mat-card-content>
-
-          <mat-form-field fxFlex (click)="activationDatePicker.open()">
-            <mat-label>Activated On Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
-            <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #activationDatePicker></mat-datepicker>
-            <mat-error *ngIf="activateClientForm.controls.activationDate.hasError('required')">
-              Activated On Date is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-
+        <mat-checkbox
+          labelPosition="before"
+          formControlName="skipVerification"
+          *mifosxHasPermission="'SKIP_VERIFICATION_CLIENT'"
+          fxFlex
+        >
+          Skip Verification
+        </mat-checkbox>
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
         <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
         <button mat-raised-button color="accent" [disabled]="!activateClientForm.valid">Confirm</button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

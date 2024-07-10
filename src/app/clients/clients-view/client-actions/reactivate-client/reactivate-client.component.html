@@ -1,14 +1,18 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="reactivateClientForm" (ngSubmit)="submit()">
-
       <mat-card-content>
         <div fxLayout="column">
           <mat-form-field fxFlex (click)="reactivationDatePicker.open()">
             <mat-label>Re Activation On Date</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="reactivationDatePicker" required formControlName="reactivationDate">
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="reactivationDatePicker"
+              required
+              formControlName="reactivationDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="reactivationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #reactivationDatePicker></mat-datepicker>
             <mat-error *ngIf="reactivateClientForm.controls.reactivationDate.hasError('required')">
@@ -27,6 +31,16 @@
               Reactivate Reason is <strong>required</strong>
             </mat-error>
           </mat-form-field>
+
+         
+          <mat-checkbox
+            labelPosition="before"
+            formControlName="skipVerification"
+            *mifosxHasPermission="'SKIP_VERIFICATION_CLIENT'"
+            fxFlex="calc(48%)"
+          >
+            Skip Verification
+          </mat-checkbox>
         </div>
       </mat-card-content>
 
@@ -34,9 +48,6 @@
         <button type="button" mat-raised-button [routerLink]="['../../']">Cancel</button>
         <button mat-raised-button color="accent" [disabled]="!reactivateClientForm.valid">Confirm</button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

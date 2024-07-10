@@ -71,6 +71,7 @@
     * [SER-2818] - Remove templates link to organisation.
     * [SER-2803] - Move build from Azure pipeline to GitHub Actions
     * [SER-2745] - Fix file name in the bulk import downloads to use file name from the API
+    * [SER-2847] - Allow overide of OCR checks if a user has the SKIP_VERIFICATION_CLIENT permission.
 
 ## Version 1.0.0 - for use with Fineract Web App
 
