@@ -2,7 +2,7 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Lock-in Period' | translate}} <i class='fas fa-question' matTooltip="A period of time during which a fixed deposit account based on this fixed deposit product will be locked-in after it is opened."></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Lock-in Period' | translate}} <i class='fas fa-question' matTooltip="{{ 'tooltips.A period of time during which a fixed deposit account' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
@@ -18,7 +18,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Minimum Deposit Term' | translate}} <i class='fas fa-question' matTooltip="The minimum length of time the funds must remain in the fixed deposit account to earn the full interest income."></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Minimum Deposit Term' | translate}} <i class='fas fa-question' matTooltip="{{ 'tooltips.The minimum length of time' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
@@ -40,7 +40,7 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.And thereafter, in Multiples of' | translate}} <i class='fas fa-question-circle' matTooltip="After the minimum deposit term has passed, additional deposit durations may be specified."></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">{{'labels.heading.And thereafter, in Multiples of' | translate}} <i class='fas fa-question-circle' matTooltip="{{ 'tooltips.After the minimum deposit term has passed' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
@@ -56,7 +56,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Maximum Deposit Term' | translate}} <i class='fas fa-question-circle' matTooltip="The maximum length of time funds may be deposited in a fixed deposit account based on this fixed deposit product."></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Maximum Deposit Term' | translate}} <i class='fas fa-question-circle' matTooltip="{{ 'tooltips.The maximum length of time funds' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
@@ -74,7 +74,7 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h4 fxFlex="23%" class="mat-h4">{{'labels.heading.For Pre-mature closure' | translate}} <i class='fas fa-question-circle' matTooltip="This sections defines an interest penalty for pre-mature closure."></i></h4>
+    <h4 fxFlex="23%" class="mat-h4">{{'labels.heading.For Pre-mature closure' | translate}} <i class='fas fa-question-circle' matTooltip="{{ 'tooltips.This sections defines an interest penalty' | translate}}"></i></h4>
 
     <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
       {{'labels.inputs.Apply Penal Interest (less)' | translate}}
@@ -96,7 +96,7 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v" matTooltip="An boolean flag to attach  taxes to interest posting">
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v" matTooltip="{{ 'tooltips.An boolean flag to attach' | translate}}">
       {{'labels.inputs.Is Withhold Tax Applicable' | translate}}
     </mat-checkbox>
 
