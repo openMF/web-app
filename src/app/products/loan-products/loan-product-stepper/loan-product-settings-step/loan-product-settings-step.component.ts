@@ -87,7 +87,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'maxTrancheCount': this.loanProductsTemplate.maxTrancheCount,
       'outstandingLoanBalance': this.loanProductsTemplate.outstandingLoanBalance,
       'showTermsAndConditions': this.loanProductsTemplate.settings?.loanProductTemplate != null || this.loanProductsTemplate.settings?.loanProductTemplate != undefined,
-      'templateForTermsAndConditions': this.loanProductsTemplate.settings?.loanProductTemplate?.id
+      'templateForTermsAndConditions': this.loanProductsTemplate.settings?.loanProductTemplate?.id,
+      'canBeRecurring': this.loanProductsTemplate.canBeRecurring,
     });
 
     if (this.loanProductsTemplate.isInterestRecalculationEnabled) {
@@ -176,7 +177,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
         'graceOnArrearsAgeing': [true]
       }),
       'templateForTermsAndConditions': [''],
-      'showTermsAndConditions': [false]
+      'showTermsAndConditions': [false],
+      'canBeRecurring': [false],
     });
   }
 

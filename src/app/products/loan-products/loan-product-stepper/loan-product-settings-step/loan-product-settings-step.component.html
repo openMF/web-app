@@ -2,7 +2,7 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
 
-    <mat-form-field fxFlex="31%">
+    <!-- <mat-form-field fxFlex="31%">
       <mat-label>Amortization</mat-label>
       <mat-select formControlName="amortizationType" required>
         <mat-option *ngFor="let amortizationType of amortizationTypeData" [value]="amortizationType.id">
@@ -156,13 +156,17 @@
         <input type="number" matInput formControlName="maximumGap">
       </mat-form-field>
 
-    </div>
+    </div> -->
 
     <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="canUseForTopup" class="margin-v">
       Allowed to be used for providing Topup Loans
     </mat-checkbox>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="canBeRecurring" class="margin-v">
+      Loan can be taken multiple times by same client
+    </mat-checkbox>
+
+    <!-- <mat-divider fxFlex="98%"></mat-divider>
 
     <h3 fxFlex="23%" class="mat-h3">Interest Recalculation</h3>
 
@@ -448,7 +452,7 @@
       <mat-error>
         Terms and condition template is <strong>required</strong>
       </mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
 
   </div>
 
