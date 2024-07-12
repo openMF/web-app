@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="30%">
       <mat-label>{{'labels.inputs.products.loan.Amortization' | translate}}</mat-label>
-      <mat-select formControlName="amortizationType" matTooltip="The Amortization value is input to calculating the repayment amounts for repayment of the loan." required>
+      <mat-select formControlName="amortizationType" matTooltip="{{ 'tooltips.The Amortization value' | translate}}" required>
         <mat-option *ngFor="let amortizationType of amortizationTypeData" [value]="amortizationType.id">
           {{'labels.inputs.products.loan.amortizationType.' + amortizationType.value | translate}}
         </mat-option>
@@ -16,7 +16,7 @@
 
     <mat-form-field fxFlex="30%">
       <mat-label>{{'labels.inputs.Interest Method' | translate}}</mat-label>
-      <mat-select formControlName="interestType" matTooltip="The Interest method value is input to calculating the payments amount for repayment of the loan. " required>
+      <mat-select formControlName="interestType" matTooltip="{{ 'tooltips.The Interest method value' | translate}}" required>
         <mat-option *ngFor="let interestType of interestTypeData" [value]="interestType.id">
           {{ interestType.value | translateKey:'catalogs' }}
         </mat-option>
@@ -28,8 +28,7 @@
 
     <mat-form-field fxFlex="30%">
       <mat-label>{{'labels.inputs.Interest calculation period' | translate}}</mat-label>
-      <mat-select formControlName="interestCalculationPeriodType" matTooltip="Daily - Will Calculate the interest on DAILY basis ex: Month of February has 28days
-      and it will calculate interest for 28days, SAME AS REPAYMENT PERIOD- it calculates for the month,that is, 30days." required>
+      <mat-select formControlName="interestCalculationPeriodType" matTooltip="{{ 'tooltips.Daily - Will Calculate the interest' | translate}}" required>
         <mat-option *ngFor="let interestCalculationPeriodType of interestCalculationPeriodTypeData" [value]="interestCalculationPeriodType.id">
           {{ interestCalculationPeriodType.value | translateKey:'catalogs' }}
         </mat-option>
@@ -44,8 +43,7 @@
     </mat-checkbox>
 
     <mat-checkbox *ngIf="loanProductSettingsForm.value.interestCalculationPeriodType === 1" fxFlex="96%" labelPosition="before"
-      matTooltip=" To be used with SAME AS REPAYMENT PERIOD- for  calculating exact interest with partial period  ex: Interest charged from is 5th of April ,
-      Principal is 10000 and interest is 1% per month then the interest will be (10000 * 1%)* (25/30) , it calculates for the month first then calculates exact periods between start date and end date(can be a decimal)"
+      matTooltip="{{ 'tooltips.To be used with SAME AS REPAYMENT PERIOD' | translate}}"
       formControlName="allowPartialPeriodInterestCalcualtion">
       {{'labels.inputs.Calculate interest for exact days in partial period' | translate}}
     </mat-checkbox>
@@ -65,7 +63,7 @@
 
     <mat-form-field fxFlex="30%">
       <mat-label>{{'labels.inputs.Repayment strategy' | translate}}</mat-label>
-      <mat-select formControlName="transactionProcessingStrategyCode" matTooltip="The repayment strategy determines the sequence in which each of the components is paid."
+      <mat-select formControlName="transactionProcessingStrategyCode" matTooltip="{{ 'tooltips.The repayment strategy' | translate}}"
         required [disabled]="advancedTransactionProcessingStrategyDisabled">
         <mat-option *ngFor="let transactionProcessingStrategy of transactionProcessingStrategyData" [value]="transactionProcessingStrategy.code">
           {{ transactionProcessingStrategy.name | translateKey:'catalogs' }}
@@ -87,15 +85,14 @@
 
     <h3 fxFlex="96%" class="mat-h3">{{'labels.inputs.Loan Tranche Details' | translate}}</h3>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="multiDisburseLoan" matTooltip="Leave this checkbox unchecked if the loan is a single disburse loan. Check this
-    checkbox if the loan is a multi disburse loan. See additional fields for additional information required for this type of loan." class="margin-b">
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="multiDisburseLoan" matTooltip="{{ 'tooltips.Leave this checkbox unchecked' | translate}}" class="margin-b">
       {{'labels.inputs.Enable Multiple Disbursals' | translate}}
     </mat-checkbox>
 
     <div *ngIf="loanProductSettingsForm.value.multiDisburseLoan" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
       <mat-form-field fxFlex="48%">
         <mat-label>{{'labels.inputs.Maximum Tranche count' | translate}}</mat-label>
-        <input type="number" matInput matTooltip="The maximum number of disbursements allowed for a loan account." formControlName="maxTrancheCount" required>
+        <input type="number" matInput matTooltip="{{ 'tooltips.Maximum number of disbursements' | translate}}" formControlName="maxTrancheCount" required>
         <mat-error *ngIf="loanProductSettingsForm.controls.maxTrancheCount.hasError('required')">
           {{'labels.inputs.Maximum Tranche count' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
         </mat-error>
@@ -103,7 +100,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>{{'labels.inputs.Maximum allowed outstanding balance' | translate}}</mat-label>
-        <input type="number" matInput matTooltip="The maximum outstanding loan account balance allowed at a point in time." formControlName="outstandingLoanBalance">
+        <input type="number" matInput matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate}}" formControlName="outstandingLoanBalance">
       </mat-form-field>
 
       <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="disallowExpectedDisbursements" class="margin-v">
@@ -113,8 +110,7 @@
 
     <h3 fxFlex="96%" class="mat-h3">{{'labels.heading.Down Payment' | translate}}</h3>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="enableDownPayment" matTooltip="Leave this checkbox checked if the loan has Down Payment, A Down Payment is
-    a sum a buyer pays upfront when purchasing a good. It represents a percentage of the total purchase price, and the balance is usually financed" class="margin-b">
+    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="enableDownPayment" matTooltip="{{ 'tooltips.Leave this checkbox unchecked' | translate}}" class="margin-b">
       {{'labels.inputs.Enable Down Payment' | translate}}
     </mat-checkbox>
 
