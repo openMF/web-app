@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="72%">
       <mat-label>{{'labels.inputs.Product Name' | translate}}</mat-label>
-      <input matInput formControlName="name" matTooltip="The product name is a unique identifier for the lending product." required>
+      <input matInput formControlName="name" matTooltip="{{ 'tooltips.Product name is a unique identifier' | translate}}" required>
       <mat-error>
         {{'labels.inputs.Product Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
@@ -12,7 +12,7 @@
 
     <mat-form-field fxFlex="24%">
       <mat-label>{{'labels.inputs.Short Name' | translate}}</mat-label>
-      <input matInput formControlName="shortName" maxlength="4" matTooltip="The short name is a unique identifier for the lending product." required>
+      <input matInput formControlName="shortName" maxlength="4" matTooltip="{{ 'tooltips.Short name is a unique identifier' | translate}}" required>
       <mat-error>
         {{'labels.inputs.Short Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
@@ -20,34 +20,34 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Fund' | translate}}</mat-label>
-      <mat-select matTooltip="Loan products may be assigned to a fund set up by your financial institution. If available, the fund field can be used for tracking and reporting on groups of loans." formControlName="fundId">
+      <mat-select matTooltip="{{ 'tooltips.Loan products may be assigned' | translate}}" formControlName="fundId">
         <mat-option *ngFor="let fund of fundData" [value]="fund.id">
           {{ fund.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox labelPosition="before" matTooltip="A borrower loan counter (cycle) is used for tracking how many time the client has taken this particular product." formControlName="includeInBorrowerCycle" fxFlex="48%">
+    <mat-checkbox labelPosition="before" matTooltip="{{ 'tooltips.A borrower loan counter (cycle)' | translate}}" formControlName="includeInBorrowerCycle" fxFlex="48%">
       {{'labels.inputs.Include in Customer Loan Counter' | translate}}
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%" (click)="startDatePicker.open()">
       <mat-label>{{'labels.inputs.Start Date' | translate}}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" matTooltip="The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created." formControlName="startDate">
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" matTooltip="{{ 'tooltips.loan product will be active and available to clients' | translate}}" formControlName="startDate">
       <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%" (click)="closeDatePicker.open()">
       <mat-label>{{'labels.inputs.Close Date' | translate}}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closeDatePicker" matTooltip="The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive." formControlName="closeDate">
+      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closeDatePicker" matTooltip="{{ 'tooltips.loan product will become inactive and unavailable to clients' | translate}}" formControlName="closeDate">
       <mat-datepicker-toggle matSuffix [for]="closeDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #closeDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="98%">
       <mat-label>{{'labels.inputs.Description' | translate}}</mat-label>
-      <textarea matInput matTooltip="The description is used to provide additional information regarding the purpose and characteristics of the loan product." formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+      <textarea matInput matTooltip="{{ 'tooltips.Provide additional information' | translate}}" formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
     </mat-form-field>
 
   </div>
