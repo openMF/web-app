@@ -18,7 +18,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency" matTooltip="The number at which lock in period occurs." >
+      <input type="number" matInput formControlName="lockinPeriodFrequency" matTooltip="{{ 'tooltips.The number at which lock in period occurs' | translate}}" >
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -35,7 +35,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
-      <input type="number" matInput formControlName="minDepositTerm" matTooltip="The number at which minimum deposit occurs." required>
+      <input type="number" matInput formControlName="minDepositTerm" matTooltip="{{ 'tooltips.The number at which minimum deposit occurs' | translate}}" required>
       <mat-error>
         {{'labels.inputs.Minimum Deposit Term Frequency' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
@@ -57,7 +57,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
-      <input type="number" matInput formControlName="inMultiplesOfDepositTerm" matTooltip="The number at which multiple deposits occurs.">
+      <input type="number" matInput formControlName="inMultiplesOfDepositTerm" matTooltip="{{ 'tooltips.The number at which multiple deposits occurs' | translate}}">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
@@ -73,7 +73,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
-      <input type="number" matInput formControlName="maxDepositTerm" matTooltip="The number at which minimum deposit occurs.">
+      <input type="number" matInput formControlName="maxDepositTerm" matTooltip="{{ 'tooltips.The number at which minimum deposit occurs' | translate}}">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">

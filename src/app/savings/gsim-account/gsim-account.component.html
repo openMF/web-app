@@ -32,25 +32,25 @@
           <td mat-cell *matCellDef="let element">
             <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
               (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
-              <i class="fa fa-arrow-up" matTooltip="Deposit"></i>
+              <i class="fa fa-arrow-up" matTooltip="{{ 'tooltips.Deposit' | translate}}"></i>
             </button>
             <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
               (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Withdrawal']">
-              <i class="fa fa-arrow-down" matTooltip="Withdraw"></i>
+              <i class="fa fa-arrow-down" matTooltip="{{ 'tooltips.Withdraw' | translate}}"></i>
             </button>
             <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button color="primary"
               (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Approve']">
-              <i class="fa fa-check" matTooltip="Approve"></i>
+              <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate}}"></i>
             </button>
             <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
               class="account-action-button" mat-raised-button color="primary"
               (click)="routeEdit($event)" [routerLink]="['../../../','savings-accounts', element.id, 'actions', 'Undo Approval']">
-              <i class="fa fa-undo" matTooltip="Undo Approval"></i>
+              <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approval' | translate}}"></i>
             </button>
             <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
               class="account-action-button" mat-raised-button color="primary"
               (click)="routeEdit($event)" [routerLink]="['../../', element.id, 'actions', 'Activate']">
-              <i class="fa fa-check-circle" matTooltip="Activate"></i>
+              <i class="fa fa-check-circle" matTooltip="{{ 'tooltips.Activate' | translate}}"></i>
             </button>
           </td>
         </ng-container>

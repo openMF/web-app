@@ -2,7 +2,7 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Principal' | translate}}<i class="m-l-10 fas fa-question" matTooltip="These fields are used to define the minimum, default, and maximum principal allowed for the loan product."></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Principal' | translate}}<i class="m-l-10 fas fa-question" matTooltip="{{ 'tooltips.Fields are used to define the minimum, default, and maximum principal' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="31%">
       <mat-label>{{'labels.inputs.Minimum' | translate}}</mat-label>
@@ -57,7 +57,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Number of repayments' | translate}} <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, and maximum number of repayments allowed for the loan product."></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Number of repayments' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.Fields are used to define the minimum, default, and maximum number of repayments' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="31%">
       <mat-label>{{'labels.inputs.Minimum' | translate}}</mat-label>
@@ -97,7 +97,7 @@
 
     <div *ngIf="!loanProductTermsForm.value.isLinkedToFloatingInterestRates" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
-      <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Nominal interest rate' | translate}} <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, maximum, and period for the nominal interest rate allowed for the loan product. The minimum, default, and maximum nominal interest rates are expressed as percentages."></i></h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Nominal interest rate' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.Define the minimum, default, maximum, and period for the nominal interest rate' | translate}}"></i></h4>
 
       <mat-form-field fxFlex="23%">
         <mat-label>{{'labels.inputs.Minimum' | translate}}</mat-label>
@@ -394,7 +394,7 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
-    <h4 fxFlex="33%" class="mat-h4">{{'labels.inputs.Repaid every' | translate}} <i class="fas fa-question" matTooltip="These fields are input to calculating the repayment schedule for a loan account and are used to determine when payments are due."></i></h4>
+    <h4 fxFlex="33%" class="mat-h4">{{'labels.inputs.Repaid every' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.Fields are input to calculating the repayment schedule' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="30%">
       <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>

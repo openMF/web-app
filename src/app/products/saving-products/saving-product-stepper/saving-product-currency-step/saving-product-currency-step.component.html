@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Currency' | translate}}</mat-label>
-      <mat-select formControlName="currencyCode" matTooltip="The currency to be used" required>
+      <mat-select formControlName="currencyCode" matTooltip="{{ 'tooltips.The currency to be used' | translate}}" required>
         <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
           {{ currency.name }}
         </mat-option>
@@ -16,7 +16,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Decimal Places' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="The number of decimal places to be used to track and report on saving accounts" formControlName="digitsAfterDecimal" required>
+      <input type="number" matInput matTooltip="{{ 'tooltips.Track and report saving account' | translate}}" formControlName="digitsAfterDecimal" required>
       <mat-error>
         {{'labels.inputs.Decimal Places' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
@@ -24,7 +24,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Currency in multiples of' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="The amount to be rounded off (example: 100 rounds off to 200, 300, 400, etc)" formControlName="inMultiplesOf">
+      <input type="number" matInput matTooltip="{{ 'tooltips.Amount to be rounded off' | translate}}" formControlName="inMultiplesOf">
       <mat-error>
         {{'labels.inputs.Currency in multiples of' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>

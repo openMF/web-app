@@ -52,7 +52,7 @@
                   <fa-icon icon="edit"></fa-icon>
                 </button>
                 <button type="button" mat-icon-button color="warn" *ngIf="taxComponent.isNew"
-                  (click)="delete(taxComponentIndex)" matTooltip="Delete Interest Rate Chart"
+                  (click)="delete(taxComponentIndex)" matTooltip="{{ 'tooltips.Delete Interest Rate Chart' | translate}}"
                   matTooltipPosition="left">
                   <fa-icon icon="trash"></fa-icon>
                 </button>
