@@ -20,14 +20,14 @@
 
         <div fxFlex="98%" fxLayout="row" fxLayoutAlign="end center">
           <button type="button" mat-icon-button color="warn" (click)="delete(charts, chartIndex)"
-            matTooltip="Delete Interest Rate Chart" matTooltipPosition="left">
+            matTooltip="{{ 'tooltips.Delete Interest Rate Chart' | translate}}" matTooltipPosition="left">
             <fa-icon icon="trash"></fa-icon>
           </button>
         </div>
 
         <mat-form-field fxFlex="32%">
           <mat-label>{{ 'labels.inputs.Name' | translate}}</mat-label>
-          <input matInput formControlName="name" matTooltip="The name is a unique identifier for the chart." required>
+          <input matInput formControlName="name" matTooltip="{{ 'tooltips.The name is a unique identifier for the chart' | translate}}" required>
         </mat-form-field>
 
         <mat-form-field fxFlex="31%" (click)="validFromDatePicker.open()">
@@ -52,7 +52,7 @@
         <mat-form-field fxFlex="65%">
           <mat-label>{{ 'labels.inputs.Description' | translate}}</mat-label>
           <textarea matInput formControlName="description"
-            matTooltip="The description is used to provide additional information regarding the purpose and characteristics of the chart."></textarea>
+            matTooltip="{{ 'tooltips.The description is used to provide additional information' | translate}}"></textarea>
         </mat-form-field>
 
         <div fxFlex="31%" fxLayout="row" fxLayoutAlign="space-between center">

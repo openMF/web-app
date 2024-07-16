@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Product Name' | translate}} </mat-label>
-      <input matInput formControlName="name" matTooltip="The product name is a unique identifier for the lending product." required>
+      <input matInput formControlName="name" matTooltip="{{ 'tooltips.Product name is a unique identifier' | translate}}" required>
       <mat-error *ngIf="recurringDepositProductDetailsForm.controls.name.hasError('required')">
         {{'labels.inputs.Product Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
@@ -12,7 +12,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Short Name' | translate}}</mat-label>
-      <input matInput formControlName="shortName" maxlength="4"  matTooltip="The short name is a unique identifier for the lending product." required>
+      <input matInput formControlName="shortName" maxlength="4"  matTooltip="{{ 'tooltips.Short name is a unique identifier' | translate}}" required>
       <mat-error *ngIf="recurringDepositProductDetailsForm.controls.shortName.hasError('required')">
         {{'labels.inputs.Short Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
@@ -20,7 +20,7 @@
 
     <mat-form-field fxFlex="98%">
       <mat-label>{{'labels.inputs.Description' | translate}}</mat-label>
-      <textarea matInput formControlName="description" matTooltip="The description is used to provide additional information regarding the purpose and characteristics of the recurring deposit product."  cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+      <textarea matInput formControlName="description" matTooltip="{{ 'tooltips.Description is used to provide additional information regarding the purpose' | translate}}"  cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
       <mat-error *ngIf="recurringDepositProductDetailsForm.controls.description.hasError('required')">
         {{'labels.inputs.Description' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>

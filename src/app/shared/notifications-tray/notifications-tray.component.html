@@ -1,5 +1,5 @@
 <button
-  mat-icon-button class="ml-1" matTooltip="Notifications"
+  mat-icon-button class="ml-1" matTooltip="{{ 'tooltips.Notifications' | translate}}"
   [matMenuTriggerFor]="notificationsMenu" (menuClosed)="menuClosed()"
   [matBadge]="unreadNotifications.length" [matBadgeHidden]="!unreadNotifications.length" matBadgeColor="warn"  matBadgeSize="medium"
 >
