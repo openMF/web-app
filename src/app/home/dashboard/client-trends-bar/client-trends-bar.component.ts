@@ -4,15 +4,15 @@ import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
-import { merge, forkJoin } from 'rxjs';
+import { forkJoin, merge } from 'rxjs';
 import { skip } from 'rxjs/operators';
 
 /** Custom Services */
 import { HomeService } from '../../home.service';
 
 /** Charting Imports */
-import Chart from 'chart.js';
 import { Dates } from 'app/core/utils/dates';
+import Chart from 'chart.js';
 
 /**
  * Client Trends Bar Chart Component.
@@ -218,19 +218,23 @@ export class ClientTrendsBarComponent implements OnInit {
   setChart(labels: any[], clientCounts: number[], loanCounts: number[]) {
     if (!this.chart) {
       this.chart = new Chart('client-trends-bar', {
-        type: 'bar',
+        type: 'line', // Change the type to 'line'
         data: {
           labels: labels,
           datasets: [
             {
               label: 'New Clients',
-              backgroundColor: 'dodgerblue',
-              data: clientCounts
+              borderColor: 'dodgerblue', // Change backgroundColor to borderColor
+              backgroundColor: 'transparent', // Set backgroundColor to transparent
+              data: clientCounts,
+              fill: false // Ensure the line is not filled
             },
             {
               label: 'Loans Disbursed',
-              backgroundColor: 'green',
-              data: loanCounts
+              borderColor: 'green', // Change backgroundColor to borderColor
+              backgroundColor: 'transparent', // Set backgroundColor to transparent
+              data: loanCounts,
+              fill: false // Ensure the line is not filled
             }
           ]
         },
@@ -244,6 +248,7 @@ export class ClientTrendsBarComponent implements OnInit {
           }
         }
       });
+
     } else {
       this.chart.data.labels = labels;
       this.chart.data.datasets[0].data = clientCounts;
