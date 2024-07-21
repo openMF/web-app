@@ -3,54 +3,56 @@
   padding: 2%;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+
+  .search {
+      width: 100%;
+      padding: 12px;
+      mat-card-content {
+        width: 100%;
+      }
+
+      mat-form-field {
+        width: 100%;
+      }
+    }
 
   .top-card {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap: 2px;
+    flex: 1 0 100%;
 
-    .recent-activities,
-    .frequent-activities{
-      min-width: 18.5rem;
-    }
-    .recent-activities,
-    .frequent-activities,
-    .amount-disbursed {
-      flex: 1 0 calc(26.33% - 10px);
-      padding: 0;
-      margin: 10px;
-
-      .list {
-        padding-top: 0;
-      }
+    .trends-bar {
+      width: 100%;
+      flex: 1 0 100%;
     }
   }
 
-  .bottom-card{
+  .bottom-card {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     gap: 2px;
 
-    .trends-bar,
-    .amount-collected {
+    .amount-collected,
+    .amount-disbursed {
       flex: 1 0 calc(40% - 10px);
       padding: 0;
       margin: 10px;
     }
   }
- 
-  @media screen and (max-width: 768px) {
-    .recent-activities,
-    .frequent-activities,
-    .amount-disbursed,
+}
+
+@media screen and (max-width: 768px) {
+
+  .top-card,
+  .bottom-card {
+    flex-direction: column;
+
     .trends-bar,
-    .amount-collected {
-      box-sizing: border-box;
+    .amount-collected,
+    .amount-disbursed {
+      flex: 1 0 100%;
       width: 100%;
-      flex: 1 0 calc(80% - 10px);
-      margin-bottom: 20px;
+      margin: 10px 0;
     }
   }
 }

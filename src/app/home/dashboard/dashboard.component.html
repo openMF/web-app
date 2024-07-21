@@ -2,55 +2,39 @@
 
   <mat-card class="card" fxLayout="column" fxLayoutGap="40px">
 
+    <div fxLayout="row" class="search">
+      <mat-card-content>
+
+        <mat-form-field>
+          <mat-label>{{'labels.placeholders.Search Activity' | translate}}</mat-label>
+          <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
+        </mat-form-field>
+
+        <mat-autocomplete #activitySearch="matAutocomplete">
+          <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
+            <span>{{activity.activity}}</span>
+          </mat-option>
+        </mat-autocomplete>
+
+      </mat-card-content>
+    </div>
+
     <div fxLayout="row" class="top-card">
+        <div class="trends-bar">
+          <mifosx-client-trends-bar></mifosx-client-trends-bar>
+        </div>
+    </div>
 
-      <mat-card class="recent-activities">
-
-        <mat-card-header class="header">
-          <h3><fa-icon icon="bolt"></fa-icon>
-          &nbsp;&nbsp; {{"labels.heading.Recent Activities" | translate}}</h3>
-        </mat-card-header>
-
-        <mat-card-content>
-          <mat-action-list class="list">
-            <button mat-list-item *ngFor="let activity of recentActivities" (click)="navigatetoActivity(activity)"> {{ activity | urlToString }} </button>
-          </mat-action-list>
-        </mat-card-content>
-
-      </mat-card>
-
-      <mat-card class="frequent-activities">
-
-        <mat-card-header class="header">
-          <h3><fa-icon icon="laptop"></fa-icon>
-          &nbsp;&nbsp; {{"labels.heading.Frequent Activities" | translate}}</h3>
-        </mat-card-header>
-
-        <mat-card-content>
-          <mat-action-list class="list">
-            <button mat-list-item *ngFor="let activity of frequentActivities"
-            [routerLink]="activity"> {{ activity | urlToString }} </button>
-          </mat-action-list>
-        </mat-card-content>
-
-      </mat-card>
+    <div fxLayout="row" class="bottom-card">
 
       <div class="amount-disbursed">
         <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
       </div>
 
-    </div>
-
-    <div fxLayout="row" class="bottom-card">
-
-      <div class="trends-bar">
-        <mifosx-client-trends-bar></mifosx-client-trends-bar>
-      </div>
-
       <div class="amount-collected">
         <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
       </div>
-      
+
     </div>
 
   </mat-card>
