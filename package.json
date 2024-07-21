@@ -1,6 +1,6 @@
 {
   "name": "mifosx-web-app",
-  "version": "0.0.0",
+  "version": "0.10.0",
   "description": "MifosX Web App is the default web application built on top of the Fineract platform for the Mifos user community leveraging the popular Angular framework.",
   "keywords": [
     "mifos",
@@ -54,8 +54,11 @@
     "@swimlane/ngx-graph": "^8.0.2",
     "@tailwindcss/forms": "^0.5.4",
     "chart.js": "3.0.0-alpha",
-    "d3": "^7.6.1",
+    "d3": "^7.9.0",
+    "html2canvas": "^1.4.1",
     "install": "^0.13.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "lodash": "4.17.21",
     "moment": "^2.29.4",
     "ngx-mat-select-search": "5.0.0",

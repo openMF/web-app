@@ -1,3 +1,4 @@
+import { Currency } from 'app/shared/models/general.model';
 
 export interface DelinquencyRange {
   id:             number;
@@ -48,4 +49,70 @@ export interface DelinquencyPausePeriod {
   active:           boolean;
   pausePeriodStart: number[];
   pausePeriodEnd:   number[];
+}
+
+
+export interface RepaymentSchedule {
+  currency:                   Currency;
+  loanTermInDays:             number;
+  totalPrincipalDisbursed:    number;
+  totalPrincipalExpected:     number;
+  totalPrincipalPaid:         number;
+  totalInterestCharged:       number;
+  totalFeeChargesCharged:     number;
+  totalPenaltyChargesCharged: number;
+  totalWaived:                number;
+  totalWrittenOff:            number;
+  totalRepaymentExpected:     number;
+  totalRepayment:             number;
+  totalPaidInAdvance:         number;
+  totalPaidLate:              number;
+  totalOutstanding:           number;
+  totalCredits:               number;
+  periods:                    RepaymentSchedulePeriod[];
+}
+
+export interface RepaymentSchedulePeriod {
+  dueDate:                          number[];
+  principalDisbursed?:              number;
+  principalLoanBalanceOutstanding:  number;
+  feeChargesDue:                    number;
+  feeChargesPaid:                   number;
+  feeChargesOutstanding:            number;
+  totalOriginalDueForPeriod:        number;
+  totalDueForPeriod:                number;
+  totalPaidForPeriod:               number;
+  totalOutstandingForPeriod:        number;
+  totalOverdue?:                    number;
+  totalActualCostOfLoanForPeriod:   number;
+  totalCredits:                     number;
+  period?:                          number;
+  fromDate?:                        number[];
+  complete?:                        boolean;
+  isAdditional?:                    boolean;
+  downPaymentPeriod?:               boolean;
+  daysInPeriod?:                    number;
+  principalOriginalDue?:            number;
+  principalDue?:                    number;
+  principalPaid?:                   number;
+  principalWrittenOff?:             number;
+  principalOutstanding?:            number;
+  interestOriginalDue?:             number;
+  interestDue?:                     number;
+  interestPaid?:                    number;
+  interestWaived?:                  number;
+  interestWrittenOff?:              number;
+  interestOutstanding?:             number;
+  feeChargesWaived?:                number;
+  feeChargesWrittenOff?:            number;
+  penaltyChargesDue?:               number;
+  penaltyChargesPaid?:              number;
+  penaltyChargesWaived?:            number;
+  penaltyChargesWrittenOff?:        number;
+  penaltyChargesOutstanding?:       number;
+  totalPaidInAdvanceForPeriod?:     number;
+  totalPaidLateForPeriod?:          number;
+  totalWaivedForPeriod?:            number;
+  totalWrittenOffForPeriod?:        number;
+  totalInstallmentAmountForPeriod?: number;
 }
