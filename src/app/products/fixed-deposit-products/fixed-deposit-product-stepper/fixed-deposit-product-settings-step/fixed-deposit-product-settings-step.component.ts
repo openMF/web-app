@@ -48,6 +48,12 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
         'withHoldTax': this.fixedDepositProductsTemplate.withHoldTax
       });
     }
+
+    if (this.fixedDepositProductsTemplate.withHoldTax) {
+      this.fixedDepositProductSettingsForm.patchValue({
+        'taxGroupId': this.fixedDepositProductsTemplate.taxGroup ? this.fixedDepositProductsTemplate.taxGroup.id : ''
+      });
+    }
   }
 
   createFixedDepositProductSettingsForm() {

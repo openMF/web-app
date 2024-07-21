@@ -2,7 +2,7 @@
 
 table {
   width: 100%;
-  margin: 3% 0%;
+  margin: 2% 0%;
 }
 
 .container {
@@ -23,4 +23,16 @@ table {
 
 .downpayment {
   color: $status-downpayment;
+}
+
+.paid {
+  color: $state-done;
+}
+
+.current {
+  color: $status-active;
+}
+
+.overdued {
+  color: $status-matured;
 }

@@ -47,6 +47,12 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
         'withHoldTax': this.recurringDepositProductsTemplate.withHoldTax
       });
     }
+
+    if (this.recurringDepositProductsTemplate.withHoldTax) {
+      this.recurringDepositProductSettingsForm.patchValue({
+        'taxGroupId': this.recurringDepositProductsTemplate.taxGroup ? this.recurringDepositProductsTemplate.taxGroup.id : ''
+      });
+    }
   }
 
   createrecurringDepositProductSettingsForm() {
