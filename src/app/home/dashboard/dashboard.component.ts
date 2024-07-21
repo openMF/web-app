@@ -1,7 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { activities } from '../activities';
 /**
  * Dashboard component.
  */
@@ -18,6 +21,12 @@ export class DashboardComponent implements OnInit {
   recentActivities: string[];
   /** Array of most frequent user activities */
   frequentActivities: string[];
+  /** Search Text. */
+  searchText: UntypedFormControl = new UntypedFormControl();
+  /** Filtered Activities. */
+  filteredActivities: Observable<any[]>;
+  /** All User Activities. */
+  allActivities: any[] = activities;
 
   /**
    * Gets user activities from local storage.
@@ -29,6 +38,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.recentActivities = this.getRecentActivities();
     this.frequentActivities = this.getFrequentActivities();
+    this.setFilteredActivities();
   }
 
   /**
@@ -73,6 +83,26 @@ export class DashboardComponent implements OnInit {
    */
   navigatetoActivity(activity: string) {
     this.router.navigateByUrl(activity);
+  }
+
+  /**
+   * Sets filtered activities for autocomplete.
+   */
+  setFilteredActivities() {
+    this.filteredActivities = this.searchText.valueChanges
+    .pipe(
+      map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
+      map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
+  }
+
+  /**
+   * Filters activities.
+   * @param activityName Activity name to filter activity by.
+   * @returns {any} Filtered activities.
+   */
+  private filterActivity(activityName: string): any {
+    const filterValue = activityName.toLowerCase();
+    return this.allActivities.filter(activity => activity.activity.toLowerCase().indexOf(filterValue) === 0);
   }
 
 }
