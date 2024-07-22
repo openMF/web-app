@@ -78,11 +78,11 @@ export class AmountDisbursedPieComponent implements OnInit {
   setChart(data: any) {
     if (!this.chart) {
       this.chart = new Chart('disbursement-pie', {
-        type: 'pie',
+        type: 'doughnut',
         data: {
           labels: ['Pending', 'Disbursed'],
           datasets: [{
-            backgroundColor: ['red', 'yellow'],
+            backgroundColor: ['dodgerblue', 'red'],
             data: data
           }]
         },
