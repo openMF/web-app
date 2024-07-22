@@ -82,7 +82,7 @@ export class AmountDisbursedPieComponent implements OnInit {
         data: {
           labels: ['Pending', 'Disbursed'],
           datasets: [{
-            backgroundColor: ['red', 'yellow'],
+            backgroundColor: ['dodgerblue', 'red'],
             data: data
           }]
         },

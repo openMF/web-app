@@ -82,7 +82,7 @@ export class AmountCollectedPieComponent implements OnInit {
         data: {
           labels: ['Pending', 'Collected'],
           datasets: [{
-            backgroundColor: ['red', 'green'],
+            backgroundColor: ['dodgerblue', 'red'],
             data: data
           }]
         },
