@@ -78,11 +78,11 @@ export class AmountCollectedPieComponent implements OnInit {
   setChart(data: any) {
     if (!this.chart) {
       this.chart = new Chart('collection-pie', {
-        type: 'pie',
+        type: 'doughnut',
         data: {
           labels: ['Pending', 'Collected'],
           datasets: [{
-            backgroundColor: ['red', 'green'],
+            backgroundColor: ['dodgerblue', 'red'],
             data: data
           }]
         },
