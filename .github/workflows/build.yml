@@ -87,6 +87,29 @@ jobs:
         with:
           name: fineract-frontend-v2
           path: ${{ github.workspace }}/deployment
+
+      - name: Configure environment for Deployment
+        if: ${{ env.SHOULD_PUBLISH == 'true'}}
+        run: |
+          if [ "${GITHUB_REF}" == "refs/heads/develop" ]; then
+            echo "::set-output name=environment::Test"
+          elif [ "${GITHUB_REF}" == "refs/heads/main" ]; then
+            echo "::set-output name=environment::QA"
+          fi
+
+      - name: Trigger target repository dispatch event
+        if: ${{ env.SHOULD_PUBLISH == 'true'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          TARGET_REPO: one-acre-fund/CD-fineract-frontend
+          ENVIRONMENT: ${{ steps.set-env.outputs.environment }}
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token $WORKFLOW_TOKEN" \
+            https://api.github.com/repos/$TARGET_REPO/dispatches \
+            -d '{"event_type":"trigger-workflow","client_payload":{"environment":"'"$ENVIRONMENT"'"}}'
+
   sonarcloud:
     name: Sonarcloud analyze
     runs-on: ubuntu-latest
