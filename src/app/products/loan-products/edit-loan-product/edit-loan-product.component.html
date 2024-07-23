@@ -51,6 +51,15 @@
 
       </mat-step>
 
+      <mat-step *ngIf="isAdvancedPaymentStrategy" [stepControl]="loanProductInterestRefundForm" completed>
+        <ng-template matStepLabel>{{'labels.inputs.INTEREST REFUND' | translate}}</ng-template>
+        <mifosx-loan-product-interest-refund-step
+          [loanProductsTemplate]="loanProductAndTemplate"
+          (supportedInterestRefundTypes)="setSupportedInterestRefundTypes($event)"
+        >
+        </mifosx-loan-product-interest-refund-step>
+      </mat-step>
+
       <mat-step *ngIf="isAdvancedPaymentStrategy" completed>
 
         <ng-template matStepLabel>{{'labels.inputs.PAYMENT ALLOCATION' | translate}}</ng-template>

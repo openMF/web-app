@@ -372,6 +372,13 @@
     </span>
   </div>
 
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation && supportedInterestRefundTypes.length > 0">
+    <span fxFlex="47%">{{ 'labels.inputs.SUPPORTED INTEREST REFUND TYPES' | translate}}:</span>
+    <span  fxFlex="53%">
+      {{mapHumanReadableValueStringEnumOptionDataList(supportedInterestRefundTypes)}}
+    </span>
+  </div>
+
   <h3 class="mat-h3" fxFlexFill>{{ 'labels.inputs.Down Payments' | translate}}</h3>
 
   <mat-divider [inset]="true"></mat-divider>

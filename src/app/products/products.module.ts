@@ -12,6 +12,7 @@ import { ProductsComponent } from './products.component';
 import { LoanProductsComponent } from './loan-products/loan-products.component';
 import { LoanProductDetailsStepComponent } from './loan-products/loan-product-stepper/loan-product-details-step/loan-product-details-step.component';
 import { LoanProductCurrencyStepComponent } from './loan-products/loan-product-stepper/loan-product-currency-step/loan-product-currency-step.component';
+import { LoanProductInterestRefundStepComponent } from './loan-products/loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
 import { LoanProductTermsStepComponent } from './loan-products/loan-product-stepper/loan-product-terms-step/loan-product-terms-step.component';
 import { LoanProductSettingsStepComponent } from './loan-products//loan-product-stepper/loan-product-settings-step/loan-product-settings-step.component';
 import { LoanProductChargesStepComponent } from './loan-products/loan-product-stepper/loan-product-charges-step/loan-product-charges-step.component';
@@ -138,6 +139,7 @@ import { LoanProductSummaryComponent } from './loan-products/common/loan-product
         LoanProductsComponent,
         LoanProductDetailsStepComponent,
         LoanProductCurrencyStepComponent,
+        LoanProductInterestRefundStepComponent,
         LoanProductTermsStepComponent,
         LoanProductSettingsStepComponent,
         LoanProductPaymentStrategyStepComponent,

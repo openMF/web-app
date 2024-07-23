@@ -1,0 +1,14 @@
+<form [formGroup]="loanProductInterestRefundForm">
+
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>{{'labels.inputs.SUPPORTED INTEREST REFUND TYPES' | translate}}</mat-label>
+      <mat-select multiple formControlName="supportedInterestRefundTypes" matTooltip="{{ 'tooltips.Refund transactions where interest refund will automatically be calculated' | translate}}">
+        <mat-option *ngFor="let supportedTransaction of supportedInterestRefundTypesOptions" [value]="supportedTransaction.id">
+          {{ supportedTransaction.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>
