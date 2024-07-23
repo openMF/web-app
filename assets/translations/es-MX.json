@@ -2387,7 +2387,9 @@
             "to": "a",
             "Down Payments": "Pago Inicial",
             "Enable Down Payments": "Habilitar Pagos Iniciales",
-            "valid": "válido"
+            "valid": "válido",
+          "INTEREST REFUND": "REEMBOLSO DE INTERESES",
+          "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipos de reembolso de intereses admitidos"
         },
         "links": {
             "Community": "Comunidad",
@@ -3372,6 +3374,7 @@
         "Withdraw": "Retirar",
         "Yes": "Sí",
         "loan product will be active and available to clients": "La fecha en que el producto de Crédito estará activo y disponible para los clientes. Si está en blanco, el producto de Crédito estará activo tan pronto como se cree.",
-        "loan product will become inactive and unavailable to clients": "La fecha en que el producto de Crédito quedará inactivo y no estará disponible para los clientes. Si está en blanco, el producto de carga nunca quedará inactivo."
+        "loan product will become inactive and unavailable to clients": "La fecha en que el producto de Crédito quedará inactivo y no estará disponible para los clientes. Si está en blanco, el producto de carga nunca quedará inactivo.",
+      "Refund transactions where interest refund will automatically be calculated": "Transacciones de reembolso en las que el reembolso de intereses se calculará automáticamente"
     }
 }

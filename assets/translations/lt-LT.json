@@ -2388,7 +2388,9 @@
       "to": "į",
       "Down Payments": "Pradiniai mokėjimai",
       "Enable Down Payments": "Įgalinti pradinius mokėjimus",
-      "valid": "galioja"
+      "valid": "galioja",
+      "INTEREST REFUND": "PALŪKANŲ GRĄŽINIMAS",
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Palaikomi palūkanų grąžinimo tipai"
     },
     "links": {
       "Community": "bendruomenė",
@@ -3373,6 +3375,7 @@
     "Withdraw": "Atsitraukti",
     "Yes": "Taip",
     "loan product will be active and available to clients": "Data, kada paskolos produktas bus aktyvus ir bus prieinamas klientams. Jei tuščia, paskolos produktas bus aktyvus, kai tik bus sukurtas.",
-    "loan product will become inactive and unavailable to clients": "Data, kai paskolos produktas taps neaktyvus ir nepasiekiamas klientams. Jei tuščia, įkėlimo produktas niekada netaps neaktyvus."
+    "loan product will become inactive and unavailable to clients": "Data, kai paskolos produktas taps neaktyvus ir nepasiekiamas klientams. Jei tuščia, įkėlimo produktas niekada netaps neaktyvus.",
+    "Refund transactions where interest refund will automatically be calculated": "Atmaksas darījumi, kuros procentu atmaksa tiks aprēķināta automātiski"
   }
 }

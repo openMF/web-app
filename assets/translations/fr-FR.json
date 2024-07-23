@@ -2388,7 +2388,9 @@
       "to": "à",
       "Down Payments": "Acomptes",
       "Enable Down Payments": "Activer les acomptes",
-      "valid": "valide"
+      "valid": "valide",
+      "INTEREST REFUND": "REMBOURSEMENT DES INTÉRÊTS",
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Types de remboursement d'intérêts pris en charge"
     },
     "links": {
       "Community": "Communauté",
@@ -3373,6 +3375,7 @@
     "Withdraw": "Retirer",
     "Yes": "Oui",
     "loan product will be active and available to clients": "La date à laquelle le produit de prêt sera actif et disponible pour les clients. Si ce champ est vide, le produit de prêt sera actif dès sa création.",
-    "loan product will become inactive and unavailable to clients": "Date à laquelle le produit de prêt deviendra inactif et indisponible pour les clients. S'il est vide, le produit chargé ne deviendra jamais inactif."
+    "loan product will become inactive and unavailable to clients": "Date à laquelle le produit de prêt deviendra inactif et indisponible pour les clients. S'il est vide, le produit chargé ne deviendra jamais inactif.",
+    "Refund transactions where interest refund will automatically be calculated": "Opérations de remboursement pour lesquelles le remboursement des intérêts sera automatiquement calculé"
   }
 }

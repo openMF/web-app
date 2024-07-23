@@ -2388,7 +2388,9 @@
       "to": "A",
       "Down Payments": "Acconti",
       "Enable Down Payments": "Abilita acconti",
-      "valid": "valido"
+      "valid": "valido",
+      "INTEREST REFUND": "RIMBORSO DEGLI INTERESSI",
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipi di rimborso degli interessi supportati"
     },
     "links": {
       "Community": "Comunità",
@@ -3373,6 +3375,7 @@
     "Withdraw": "Ritirare",
     "Yes": "SÌ",
     "loan product will be active and available to clients": "La data in cui il prodotto di prestito sarà attivo e disponibile per i clienti. Se vuoto, il prodotto di prestito sarà attivo non appena verrà creato.",
-    "loan product will become inactive and unavailable to clients": "La data in cui il prodotto di prestito diventerà inattivo e non disponibile per i clienti. Se vuoto, il prodotto caricato non diventerà mai inattivo."
+    "loan product will become inactive and unavailable to clients": "La data in cui il prodotto di prestito diventerà inattivo e non disponibile per i clienti. Se vuoto, il prodotto caricato non diventerà mai inattivo.",
+    "Refund transactions where interest refund will automatically be calculated": "Transazioni di rimborso in cui il rimborso degli interessi verrà calcolato automaticamente"
   }
 }

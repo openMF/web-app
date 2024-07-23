@@ -2388,7 +2388,9 @@
       "to": "para",
       "Down Payments": "Adiantamentos",
       "Enable Down Payments": "Habilitar adiantamentos",
-      "valid": "válido"
+      "valid": "válido",
+      "INTEREST REFUND": "REEMBOLSO DE JUROS",
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipos de reembolso de juros suportados"
     },
     "links": {
       "Community": "Comunidade",
@@ -3373,6 +3375,7 @@
     "Withdraw": "Retirar",
     "Yes": "Sim",
     "loan product will be active and available to clients": "A data em que o produto de empréstimo estará ativo e disponível para os clientes. Se estiver em branco, o produto de empréstimo estará ativo assim que for criado.",
-    "loan product will become inactive and unavailable to clients": "A data em que o produto de empréstimo ficará inativo e indisponível para os clientes. Se estiver em branco, o produto de carregamento nunca ficará inativo."
+    "loan product will become inactive and unavailable to clients": "A data em que o produto de empréstimo ficará inativo e indisponível para os clientes. Se estiver em branco, o produto de carregamento nunca ficará inativo.",
+    "Refund transactions where interest refund will automatically be calculated": "Transações de reembolso em que o reembolso de juros será calculado automaticamente"
   }
 }
