@@ -2389,7 +2389,9 @@
             "to": "to",
             "Down Payments": "Down Payments",
             "Enable Down Payments": "Enable Down Payments",
-            "valid": "valid"
+            "valid": "valid",
+            "INTEREST REFUND": "INTEREST REFUND",
+            "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types"
         },
         "links": {
             "Community": "Community",
@@ -3374,6 +3376,7 @@
         "Withdraw": "Withdraw",
         "Yes": "Yes",
         "loan product will be active and available to clients": "The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created.",
-        "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive."
+        "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
+        "Refund transactions where interest refund will automatically be calculated": "Refund transactions where interest refund will automatically be calculated"
     }
 }

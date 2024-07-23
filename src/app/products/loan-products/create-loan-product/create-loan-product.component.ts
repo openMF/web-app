@@ -9,12 +9,14 @@ import { LoanProductTermsStepComponent } from '../loan-product-stepper/loan-prod
 import { LoanProductSettingsStepComponent } from '../loan-product-stepper/loan-product-settings-step/loan-product-settings-step.component';
 import { LoanProductChargesStepComponent } from '../loan-product-stepper/loan-product-charges-step/loan-product-charges-step.component';
 import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan-product-accounting-step/loan-product-accounting-step.component';
+import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { LoanProducts } from '../loan-products';
 import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { Accounting } from 'app/core/utils/accounting';
+import { StringEnumOptionData } from '../../../shared/models/option-data.model';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -25,6 +27,7 @@ export class CreateLoanProductComponent implements OnInit {
 
   @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
   @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
+  @ViewChild(LoanProductInterestRefundStepComponent, {static: true}) loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
@@ -37,6 +40,7 @@ export class CreateLoanProductComponent implements OnInit {
   isAdvancedPaymentStrategy = false;
   paymentAllocation: PaymentAllocation[] = [];
   creditAllocation: PaymentAllocation[] = [];
+  supportedInterestRefundTypes: StringEnumOptionData[] = [];
   advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   advancedCreditAllocations: AdvancedPaymentAllocation[] = [];
 
@@ -79,6 +83,12 @@ export class CreateLoanProductComponent implements OnInit {
     }
   }
 
+  get loanProductInterestRefundForm() {
+    if (this.loanProductInterestRefundStep != null) {
+      return this.loanProductInterestRefundStep.loanProductInterestRefundForm;
+    }
+  }
+
   get loanProductTermsForm() {
     return this.loanProductTermsStep.loanProductTermsForm;
   }
@@ -97,6 +107,10 @@ export class CreateLoanProductComponent implements OnInit {
 
   setCreditAllocation(paymentAllocation: PaymentAllocation[]): void {
     this.creditAllocation = paymentAllocation;
+  }
+
+  setSupportedInterestRefundTypes(supportedInterestRefundTypes: StringEnumOptionData[]): void {
+    this.supportedInterestRefundTypes = supportedInterestRefundTypes;
   }
 
   get loanProductSettingsForm() {
@@ -129,6 +143,7 @@ export class CreateLoanProductComponent implements OnInit {
     if (this.isAdvancedPaymentStrategy) {
       loanProduct['paymentAllocation'] = this.paymentAllocation;
       loanProduct['creditAllocation'] = this.creditAllocation;
+      loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
     }
     return loanProduct;
   }
@@ -139,6 +154,7 @@ export class CreateLoanProductComponent implements OnInit {
       loanProduct['dueDaysForRepaymentEvent'] = null;
       loanProduct['overDueDaysForRepaymentEvent'] = null;
     }
+    loanProduct['supportedInterestRefundTypes'] = this.mapStringEnumOptionToIdList(loanProduct['supportedInterestRefundTypes']);
     delete loanProduct['useDueForRepaymentsConfigurations'];
 
     this.productsService.createLoanProduct(loanProduct)
@@ -147,4 +163,7 @@ export class CreateLoanProductComponent implements OnInit {
       });
   }
 
+  mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {
+    return incomingValues.map(v => v.id);
+  }
 }

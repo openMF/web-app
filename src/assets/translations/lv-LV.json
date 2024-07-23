@@ -2388,7 +2388,9 @@
       "to": "uz",
       "Down Payments": "Pirmās iemaksas",
       "Enable Down Payments": "Iespējot pirmās iemaksas",
-      "valid": "derīgs"
+      "valid": "derīgs",
+      "INTEREST REFUND": "PROCENTU ATMAKSĀŠANA",
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Atbalstītie procentu atmaksas veidi"
     },
     "links": {
       "Community": "kopiena",
@@ -3373,6 +3375,7 @@
     "Withdraw": "Izņemt",
     "Yes": "Jā",
     "loan product will be active and available to clients": "Datums, kad aizdevuma produkts būs aktīvs un pieejams klientiem. Ja lauks ir tukšs, aizdevuma produkts būs aktīvs, tiklīdz tas tiks izveidots.",
-    "loan product will become inactive and unavailable to clients": "Datums, kad aizdevuma produkts kļūs neaktīvs un klientiem nebūs pieejams. Ja lauks ir tukšs, ielādes produkts nekad nekļūs neaktīvs."
+    "loan product will become inactive and unavailable to clients": "Datums, kad aizdevuma produkts kļūs neaktīvs un klientiem nebūs pieejams. Ja lauks ir tukšs, ielādes produkts nekad nekļūs neaktīvs.",
+    "Refund transactions where interest refund will automatically be calculated": "Grąžinimo operacijos, kai palūkanų grąžinimas bus skaičiuojamas automatiškai"
   }
 }

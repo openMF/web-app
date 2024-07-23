@@ -2388,7 +2388,9 @@
       "to": "kwa",
       "Down Payments": "Malipo ya Chini",
       "Enable Down Payments": "Washa Malipo ya Chini",
-      "valid": "halali"
+      "valid": "halali",
+      "INTEREST REFUND": "MAREJESHO YA RIBA",
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Aina za kurejesha riba zinazotumika"
     },
     "links": {
       "Community": "Jumuiya",
@@ -3373,6 +3375,7 @@
     "Withdraw": "Kutoa",
     "Yes": "Ndiyo",
     "loan product will be active and available to clients": "Tarehe ambayo bidhaa ya mkopo itaanza kutumika na inapatikana kwa wateja. Ikiwa tupu, bidhaa ya mkopo itaanza kutumika mara tu itakapoundwa.",
-    "loan product will become inactive and unavailable to clients": "Tarehe ambayo bidhaa ya mkopo itaacha kutumika na haitapatikana kwa wateja. Ikiwa tupu, bidhaa ya kupakia haitafanya kazi kamwe."
+    "loan product will become inactive and unavailable to clients": "Tarehe ambayo bidhaa ya mkopo itaacha kutumika na haitapatikana kwa wateja. Ikiwa tupu, bidhaa ya kupakia haitafanya kazi kamwe.",
+    "Refund transactions where interest refund will automatically be calculated": "Shughuli za kurejesha pesa ambapo urejeshaji wa riba utahesabiwa kiotomatiki"
   }
 }

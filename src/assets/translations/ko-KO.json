@@ -2389,7 +2389,9 @@
       "to": "에게",
       "Down Payments": "계약금",
       "Enable Down Payments": "계약금 활성화",
-      "valid": "유효한"
+      "valid": "유효한",
+      "INTEREST REFUND": "이자환급",
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "지원되는 이자 환불 유형"
     },
     "links": {
       "Community": "지역 사회",
@@ -3373,6 +3375,7 @@
     "Withdraw": "철회하다",
     "Yes": "예",
     "loan product will be active and available to clients": "대출 상품이 활성화되어 고객에게 제공되는 날짜입니다. 비어 있으면 대출 상품이 생성되자마자 활성화됩니다.",
-    "loan product will become inactive and unavailable to clients": "대출 상품이 비활성화되어 고객이 사용할 수 없게 되는 날짜입니다. 비어 있으면 로드 제품이 비활성화되지 않습니다."
+    "loan product will become inactive and unavailable to clients": "대출 상품이 비활성화되어 고객이 사용할 수 없게 되는 날짜입니다. 비어 있으면 로드 제품이 비활성화되지 않습니다.",
+    "Refund transactions where interest refund will automatically be calculated": "이자 환불이 자동으로 계산되는 환불 거래"
   }
 }

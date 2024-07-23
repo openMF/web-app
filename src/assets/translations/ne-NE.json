@@ -2388,7 +2388,9 @@
       "to": "को",
       "Down Payments": "तल भुक्तानीहरू",
       "Enable Down Payments": "डाउन पेमेन्टहरू सक्षम गर्नुहोस्",
-      "valid": "मान्य"
+      "valid": "मान्य",
+      "INTEREST REFUND": "व्याज परतावा",
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "समर्थित व्याज परतावा प्रकार"
     },
     "links": {
       "Community": "समुदाय",
@@ -3373,6 +3375,7 @@
     "Withdraw": "निकाल्नु",
     "Yes": "हो",
     "loan product will be active and available to clients": "ऋण उत्पादन सक्रिय र ग्राहकहरूको लागि उपलब्ध हुने मिति। खाली भएमा, ऋण उत्पादन सिर्जना हुने बित्तिकै सक्रिय हुनेछ।",
-    "loan product will become inactive and unavailable to clients": "ऋण उत्पादन निष्क्रिय र ग्राहकहरु को लागी अनुपलब्ध हुने मिति। यदि खाली छ भने, लोड उत्पादन कहिल्यै निष्क्रिय हुनेछैन।"
+    "loan product will become inactive and unavailable to clients": "ऋण उत्पादन निष्क्रिय र ग्राहकहरु को लागी अनुपलब्ध हुने मिति। यदि खाली छ भने, लोड उत्पादन कहिल्यै निष्क्रिय हुनेछैन।",
+    "Refund transactions where interest refund will automatically be calculated": "फिर्ता लेनदेन जहाँ ब्याज फिर्ता स्वतः गणना हुनेछ"
   }
 }
