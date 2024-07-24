@@ -712,6 +712,7 @@
       "Withdraw Deposit": "Einzahlung abheben",
       "Re-Invest Maturity Amount": "Fälligkeitsbetrag reinvestieren",
       "Re-Invest Principal Only": "Nur Kapital reinvestieren",
+      "Interest Refund": "Zinsrückerstattung",
       "Transfer to Savings": "Übertragen auf Ersparnisse"
     },
     "commons": {
@@ -2390,6 +2391,7 @@
       "Enable Down Payments": "Anzahlungen aktivieren",
       "valid": "gültig",
       "INTEREST REFUND": "ZINSRÜCKERSTATTUNG",
+      "Supported Interest Refund Types": "Unterstützte Zinsrückerstattungsarten",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Unterstützte Zinsrückerstattungsarten"
     },
     "links": {

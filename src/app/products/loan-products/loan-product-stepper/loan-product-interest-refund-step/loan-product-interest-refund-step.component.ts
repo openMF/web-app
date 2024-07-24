@@ -45,6 +45,9 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {
+    if (!incomingValues) {
+      return [];
+    }
     return incomingValues.map(v => v.id);
   }
 

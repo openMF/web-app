@@ -712,6 +712,7 @@
       "Withdraw Deposit": "Vybrat vklad",
       "Re-Invest Maturity Amount": "Částka splatnosti znovu investovat",
       "Re-Invest Principal Only": "Pouze reinvestice jistiny",
+      "Interest Refund": "Vrácení úroků",
       "Transfer to Savings": "Převod do Úspory"
     },
     "commons": {
@@ -2390,6 +2391,7 @@
       "Enable Down Payments": "Povolit zálohové platby",
       "valid": "platný",
       "INTEREST REFUND": "VRÁCENÍ ÚROKU",
+      "Supported Interest Refund Types": "Unterstützte Zinsrückerstattungsarten",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Podporované typy vrácení úroků"
     },
     "links": {

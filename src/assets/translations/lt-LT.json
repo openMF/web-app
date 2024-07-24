@@ -712,6 +712,7 @@
       "Withdraw Deposit": "Išsiimti indėlį",
       "Re-Invest Maturity Amount": "Iš naujo investuokite termino sumą",
       "Re-Invest Principal Only": "Iš naujo investuokite tik pagrindinę sumą",
+      "Interest Refund": "Palūkanų grąžinimas",
       "Transfer to Savings": "Perkėlimas į santaupas"
     },
     "commons": {
@@ -2390,6 +2391,7 @@
       "Enable Down Payments": "Įgalinti pradinius mokėjimus",
       "valid": "galioja",
       "INTEREST REFUND": "PALŪKANŲ GRĄŽINIMAS",
+      "Supported Interest Refund Types": "Palaikomi palūkanų grąžinimo tipai",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Palaikomi palūkanų grąžinimo tipai"
     },
     "links": {
