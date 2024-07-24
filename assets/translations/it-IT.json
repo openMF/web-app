@@ -712,6 +712,7 @@
       "Withdraw Deposit": "Prelevare il deposito",
       "Re-Invest Maturity Amount": "Reinvestimento dell'importo a scadenza",
       "Re-Invest Principal Only": "Reinvestire solo il capitale",
+      "Interest Refund": "Rimborso degli interessi",
       "Transfer to Savings": "Trasferimento al risparmio"
     },
     "commons": {
@@ -2390,6 +2391,7 @@
       "Enable Down Payments": "Abilita acconti",
       "valid": "valido",
       "INTEREST REFUND": "RIMBORSO DEGLI INTERESSI",
+      "Supported Interest Refund Types": "Tipi di rimborso degli interessi supportati",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipi di rimborso degli interessi supportati"
     },
     "links": {

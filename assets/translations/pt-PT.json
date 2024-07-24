@@ -712,6 +712,7 @@
       "Withdraw Deposit": "Retirar Depósito",
       "Re-Invest Maturity Amount": "Reinvestir o valor do vencimento",
       "Re-Invest Principal Only": "Reinvestir apenas o principal",
+      "Interest Refund": "Reembolso de juros",
       "Transfer to Savings": "Transferência para Poupança"
     },
     "commons": {
@@ -2390,6 +2391,7 @@
       "Enable Down Payments": "Habilitar adiantamentos",
       "valid": "válido",
       "INTEREST REFUND": "REEMBOLSO DE JUROS",
+      "Supported Interest Refund Types": "Tipos de reembolso de juros suportados",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipos de reembolso de juros suportados"
     },
     "links": {

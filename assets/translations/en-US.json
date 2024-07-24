@@ -714,6 +714,7 @@
             "Withdraw Deposit": "Withdraw Deposit",
             "Re-Invest Maturity Amount": "Re-Invest Maturity Amount",
             "Re-Invest Principal Only": "Re-Invest Principal Only",
+            "Interest Refund": "Interest Refund",
             "Transfer to Savings": "Transfer to Savings"
         },
         "commons": {
@@ -2391,6 +2392,7 @@
             "Enable Down Payments": "Enable Down Payments",
             "valid": "valid",
             "INTEREST REFUND": "INTEREST REFUND",
+            "Supported Interest Refund Types": "Supported Interest Refund Types",
             "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types"
         },
         "links": {

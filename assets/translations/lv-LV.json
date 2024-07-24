@@ -712,6 +712,7 @@
       "Withdraw Deposit": "Izņemt depozītu",
       "Re-Invest Maturity Amount": "Atkārtoti ieguldīt termiņa summu",
       "Re-Invest Principal Only": "Reinvestēt tikai pamatsummu",
+      "Interest Refund": "Procentu atmaksa",
       "Transfer to Savings": "Pārskaitījums uz uzkrājumiem"
     },
     "commons": {
@@ -2390,6 +2391,7 @@
       "Enable Down Payments": "Iespējot pirmās iemaksas",
       "valid": "derīgs",
       "INTEREST REFUND": "PROCENTU ATMAKSĀŠANA",
+      "Supported Interest Refund Types": "Atbalstītie procentu atmaksas veidi",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Atbalstītie procentu atmaksas veidi"
     },
     "links": {

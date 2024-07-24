@@ -712,6 +712,7 @@
       "Withdraw Deposit": "예치금 인출",
       "Re-Invest Maturity Amount": "만기금액 재투자",
       "Re-Invest Principal Only": "본인만 재투자",
+      "Interest Refund": "이자환급",
       "Transfer to Savings": "저축으로 이체"
     },
     "commons": {
@@ -2391,6 +2392,7 @@
       "Enable Down Payments": "계약금 활성화",
       "valid": "유효한",
       "INTEREST REFUND": "이자환급",
+      "Supported Interest Refund Types": "지원되는 이자 환불 유형",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "지원되는 이자 환불 유형"
     },
     "links": {
