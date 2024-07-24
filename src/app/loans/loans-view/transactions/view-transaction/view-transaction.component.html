@@ -73,7 +73,7 @@
         </div>
 
         <div fxFlex="50%">
-          {{ transactionData.amount | currency }} {{ transactionData.currency.code }}
+          {{ transactionData.amount | currency:transactionData.currency.code:'symbol-narrow':'1.2-2' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.externalId">
