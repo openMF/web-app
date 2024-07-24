@@ -184,7 +184,11 @@ export class EditLoanProductComponent implements OnInit {
       loanProduct['dueDaysForRepaymentEvent'] = null;
       loanProduct['overDueDaysForRepaymentEvent'] = null;
     }
-    loanProduct['supportedInterestRefundTypes'] = this.mapStringEnumOptionToIdList(loanProduct['supportedInterestRefundTypes']);
+    if (this.isAdvancedPaymentStrategy) {
+      loanProduct['supportedInterestRefundTypes'] = this.mapStringEnumOptionToIdList(loanProduct['supportedInterestRefundTypes']);
+    } else {
+      delete loanProduct['supportedInterestRefundTypes'];
+    }
     delete loanProduct['useDueForRepaymentsConfigurations'];
 
     this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
