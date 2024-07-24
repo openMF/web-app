@@ -712,6 +712,7 @@
       "Withdraw Deposit": "Toa Amana",
       "Re-Invest Maturity Amount": "Wekeza Tena Kiasi cha Ukomavu",
       "Re-Invest Principal Only": "Wekeza tena Mkuu Pekee",
+      "Interest Refund": "Urejeshaji wa riba",
       "Transfer to Savings": "Hamisha kwa Akiba"
     },
     "commons": {
@@ -2390,6 +2391,7 @@
       "Enable Down Payments": "Washa Malipo ya Chini",
       "valid": "halali",
       "INTEREST REFUND": "MAREJESHO YA RIBA",
+      "Supported Interest Refund Types": "Aina za Urejeshaji wa Riba Zinazotumika",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Aina za kurejesha riba zinazotumika"
     },
     "links": {

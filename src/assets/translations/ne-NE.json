@@ -712,6 +712,7 @@
       "Withdraw Deposit": "निक्षेप फिर्ता लिनुहोस्",
       "Re-Invest Maturity Amount": "परिपक्वता रकम पुन: लगानी गर्नुहोस्",
       "Re-Invest Principal Only": "पुन: लगानी प्रिन्सिपल मात्र",
+      "Interest Refund": "ब्याज फिर्ता",
       "Transfer to Savings": "बचतमा स्थानान्तरण गर्नुहोस्"
     },
     "commons": {
@@ -2390,6 +2391,7 @@
       "Enable Down Payments": "डाउन पेमेन्टहरू सक्षम गर्नुहोस्",
       "valid": "मान्य",
       "INTEREST REFUND": "व्याज परतावा",
+      "Supported Interest Refund Types": "समर्थित ब्याज फिर्ता प्रकारहरू",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "समर्थित व्याज परतावा प्रकार"
     },
     "links": {
