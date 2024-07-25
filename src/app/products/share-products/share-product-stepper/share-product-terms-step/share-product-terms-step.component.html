@@ -4,7 +4,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Total Number of Shares' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="Total number of shares that a product is offering" formControlName="totalShares" required>
+      <input type="number" matInput matTooltip="{{ 'tooltips.Total number of shares that a product is offering' | translate}}" formControlName="totalShares" required>
       <mat-error>
         {{'labels.inputs.Total Number of Shares' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
@@ -12,7 +12,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Shares to be Issued' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="Total number of shares that an orgranization wants to issue to it's clients" formControlName="sharesIssued" required>
+      <input type="number" matInput matTooltip="{{ 'tooltips.Total number of shares that an orgranization' | translate}}" formControlName="sharesIssued" required>
       <mat-error>
         {{'labels.inputs.Shares to be Issued' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
@@ -20,7 +20,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Nominal/Unit Price' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="Unit/Nominal Price of each share" formControlName="unitPrice" required>
+      <input type="number" matInput matTooltip="{{ 'tooltips.Unit/Nominal Price of each share' | translate}}" formControlName="unitPrice" required>
       <mat-error>
         {{'labels.inputs.Nominal Price' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
@@ -28,7 +28,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Capital Value' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="Total Capital Value" formControlName="shareCapital" readonly>
+      <input type="number" matInput matTooltip="{{ 'tooltips.Total Capital Value' | translate}}" formControlName="shareCapital" readonly>
       <mat-hint>
         {{'labels.inputs.Shares to be Issued * Nominal Price (Auto calculated)' | translate}}
       </mat-hint>

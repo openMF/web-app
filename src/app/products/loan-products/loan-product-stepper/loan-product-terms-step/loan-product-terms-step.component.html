@@ -49,7 +49,7 @@
     </div>
 
     <mat-form-field fxFlex="31%">
-      <mat-label>{{'labels.inputs.Installment day calculation from' | translate}} <i class="fas fa-question" matTooltip="Repayment schedule will start the installment dates from the submitted date or the disbursement date"></i></mat-label>
+      <mat-label>{{'labels.inputs.Installment day calculation from' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.Repayment schedule will start the installment' | translate}}"></i></mat-label>
       <mat-select formControlName="repaymentStartDateType" required>
         <mat-option *ngFor="let repaymentStartDateType of repaymentStartDateTypeOptions" [value]="repaymentStartDateType.id">
           {{ repaymentStartDateType.value | translateKey:'catalogs'}}
@@ -139,7 +139,7 @@
 
     <div *ngIf="loanProductTermsForm.value.isLinkedToFloatingInterestRates && !isZeroInterest()" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
 
-      <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Floating Interest Rate' | translate}} <i class="fas fa-question" matTooltip="These fields are used to define the minimum, default, maximum, and period for the Floating Interest Rate allowed for the loan product. The minimum, default, and maximum floating interest rates are expressed as percentages."></i></h4>
+      <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Floating Interest Rate' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.Define the minimum, default, maximum, and period for the floating interest rate' | translate}}"></i></h4>
 
       <mat-form-field fxFlex="31%">
         <mat-label>{{'labels.inputs.Floating Rate' | translate}}</mat-label>
@@ -417,7 +417,7 @@
     </mat-form-field>
 
     <h4 fxFlex="33%" class="mat-h4" *ngIf="allowFixedLength()">{{'labels.inputs.Fixed Length' | translate}} <i class="fas fa-question"
-      matTooltip="Due to regulatory requirements in some countries, the loans cannot exceed X days, the Fineract SOR needs to be extended to support defining that a loan has a maximum length and the maximum length of that loan defines the length of the last installment which will be a shorter period than the first installments."></i></h4>
+      matTooltip="{{ 'tooltips.Due to regulatory requirements in some countries' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="30%" *ngIf="allowFixedLength()">
       <mat-label>{{'labels.inputs.Fixed Length' | translate}}</mat-label>

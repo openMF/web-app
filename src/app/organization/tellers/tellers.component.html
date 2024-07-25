@@ -34,7 +34,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Status' | translate }} </th>
         <td mat-cell *matCellDef="let teller">
           <div [className]="teller.status === 'ACTIVE' ? 'true' : 'false'">
-            <fa-icon matTooltip="{{ teller.status === 'ACTIVE' ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+            <fa-icon matTooltip="{{ teller.status === 'ACTIVE' ? ( 'labels.inputs.Active' | translate ) : ('labels.catalogs.Inactive' | translate) }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
           </div>
         </td>
       </ng-container>

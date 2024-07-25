@@ -117,7 +117,7 @@
     <div *ngIf="loanProductSettingsForm.value.enableDownPayment" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
       <mat-form-field fxFlex="48%">
         <mat-label>{{'labels.inputs.Disbursed Amount Percentage Down Payment' | translate}} (%)</mat-label>
-        <input type="number" matInput matTooltip="The percentage of disbursements amount for Down Payment" formControlName="disbursedAmountPercentageForDownPayment" required [min]="0" [max]="100">
+        <input type="number" matInput matTooltip="{{ 'tooltips.The percentage of disbursements amount for Down Payment' | translate}}" formControlName="disbursedAmountPercentageForDownPayment" required [min]="0" [max]="100">
         <mat-error *ngIf="loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.hasError('required')">
           {{'labels.inputs.Disbursed Amount Percentage Down Payment' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
         </mat-error>
@@ -126,8 +126,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enableAutoRepaymentForDownPayment" matTooltip="Enable or disable  the auto repayment of down-payment.
-      When “auto repayment for the down-payments“ is enabled,  the disbursements will trigger an auto down payment transaction for the down payment amount" class="margin-b">
+      <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enableAutoRepaymentForDownPayment" matTooltip="{{ 'tooltips.Enable or disable the auto repayment of down-payment.' | translate}}" class="margin-b">
       {{'labels.inputs.Enable Auto Repayment for Down Payment' | translate}}
       </mat-checkbox>
     </div>
@@ -136,7 +135,7 @@
 
     <span fxFlex="48%" fxHide.lt-md></span>
 
-    <h4 fxFlex="98%" class="mat-h4 m-r-10">{{'labels.inputs.Moratorium' | translate}} <i class="fas fa-question" matTooltip="The moratorium information will default from the loan product settings, but can be changed for this loan account"></i></h4>
+    <h4 fxFlex="98%" class="mat-h4 m-r-10">{{'labels.inputs.Moratorium' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.The moratorium information' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Grace on principal payment' | translate}}</mat-label>
@@ -171,19 +170,17 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Interest free period' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="If the Interest Free Period is '4' and the client's Repayment Frequency is every week,
-      then for the first four weeks the client need not to pay interest, he has to pay principle due for that week only." formControlName="graceOnInterestCharged">
+      <input type="number" matInput matTooltip="{{ 'tooltips.If the Interest Free Period' | translate}}" formControlName="graceOnInterestCharged">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Arrears tolerance' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="With 'Arrears tolerance' you can specify a tolerance amount and if the loan is behind (in arrears),
-      but within the tolerance, it won't be classified as 'in arrears' and part of the portfolio at risk." formControlName="inArrearsTolerance">
+      <input type="number" matInput matTooltip="{{ 'tooltips.With Arrears tolerance' | translate}}" formControlName="inArrearsTolerance">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Days in year' | translate}}</mat-label>
-      <mat-select matTooltip="The setting for number of days in year to use to calculate interest" formControlName="daysInYearType" required>
+      <mat-select matTooltip="{{ 'tooltips.To calculate interest' | translate}}" formControlName="daysInYearType" required>
         <mat-option *ngFor="let daysInYearType of daysInYearTypeData" [value]="daysInYearType.id">
           {{ daysInYearType.value | translateKey:'catalogs' }}
         </mat-option>
@@ -195,7 +192,7 @@
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Days in month' | translate}}</mat-label>
-      <mat-select matTooltip="Number of days in month." formControlName="daysInMonthType" required>
+      <mat-select matTooltip="{{ 'tooltips.Number of days in month' | translate}}." formControlName="daysInMonthType" required>
         <mat-option *ngFor="let daysInMonthType of daysInMonthTypeData" [value]="daysInMonthType.id">
           {{ daysInMonthType.value | translateKey:'catalogs' }}
         </mat-option>
@@ -210,7 +207,7 @@
     </mat-checkbox>
 
     <h4 fxFlex="48%">{{'labels.inputs.Number of days a loan may be overdue before moving into arrears' | translate}} <i class="fas fa-question"
-      matTooltip="A loan is in arrears once the number of days entered into this field is exceeded. If this field is blank, the loan will be in arrears the day after a scheduled payment is missed. "></i></h4>
+      matTooltip="{{ 'tooltips.A loan is in arrears once the number of days' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.On arrears ageing' | translate}}</mat-label>
@@ -218,7 +215,7 @@
     </mat-form-field>
 
     <h4 fxFlex="48%">{{'labels.inputs.Maximum number of days a loan may be overdue before becoming a NPA (non performing asset)' | translate}} <i class="fas fa-question"
-      matTooltip="A loan is a NPA (non performing asset) once the number of days entered into this field is exceeded. If this field is blank, the loan will be an NPA the day after a scheduled payment is missed."></i></h4>
+      matTooltip="{{ 'tooltips.NPA (non performing asset) once the number of days' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Overdue days for NPA' | translate}}</mat-label>
@@ -234,7 +231,7 @@
       <input type="number" matInput formControlName="principalThresholdForLastInstallment">
     </mat-form-field>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" matTooltip="These fields are used to define the minimum, maximum gap that should be present between the installments for the loan product" formControlName="allowVariableInstallments" class="margin-v">
+    <mat-checkbox fxFlex="48%" labelPosition="before" matTooltip="{{ 'tooltips.Fields are used to define the minimum, maximum gap' | translate}}" formControlName="allowVariableInstallments" class="margin-v">
       {{'labels.inputs.Are Variable Installments allowed?' | translate}}
     </mat-checkbox>
 
@@ -260,7 +257,7 @@
 
     </div>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" matTooltip="If selected, the Loan Product can be used to apply for Topup Loans." formControlName="canUseForTopup" class="margin-v">
+    <mat-checkbox fxFlex="48%" labelPosition="before" matTooltip="{{ 'tooltips.Loan Product can be used to apply for Topup Loans' | translate}}" formControlName="canUseForTopup" class="margin-v">
       {{'labels.inputs.Allowed to be used for providing Topup Loans' | translate}}
     </mat-checkbox>
 
@@ -471,9 +468,9 @@
     <mat-divider fxFlex="98%"></mat-divider>
 
     <h3 fxFlex="23%" class="mat-h3">{{ 'labels.heading.Event Settings' | translate }}<i class="fas fa-question"
-      matTooltip="Setting for event notifications to be sent before or after repayments. Blue color means default value from global configurations."></i></h3>
+      matTooltip="{{ 'tooltips.Setting for event notifications to be sent' | translate}}"></i></h3>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="useDueForRepaymentsConfigurations" matTooltip="Use or not the Global Configurations values to the Repayment Event (notifications)" class="margin-b">
+    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="useDueForRepaymentsConfigurations" matTooltip="{{ 'tooltips.Use or not the Global Configurations' | translate}}" class="margin-b">
       {{'labels.inputs.Use the Global Configurations values to the Repayment Event (notifications)' | translate}}
     </mat-checkbox>
 
@@ -481,12 +478,12 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>{{'labels.inputs.Due days for repayment event' | translate}}</mat-label>
-        <input type="number" matInput matTooltip="The maximum outstanding loan account balance allowed at a point in time." formControlName="dueDaysForRepaymentEvent">
+        <input type="number" matInput matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate}}" formControlName="dueDaysForRepaymentEvent">
       </mat-form-field>
 
       <mat-form-field fxFlex="48%">
         <mat-label>{{'labels.inputs.OverDue days for repayment event' | translate}}</mat-label>
-        <input type="number" matInput matTooltip="The maximum outstanding loan account balance allowed at a point in time." formControlName="overDueDaysForRepaymentEvent">
+        <input type="number" matInput matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate}}" formControlName="overDueDaysForRepaymentEvent">
       </mat-form-field>
     </div>
 

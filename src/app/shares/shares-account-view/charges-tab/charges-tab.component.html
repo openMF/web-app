@@ -52,21 +52,21 @@
         <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
         <td mat-cell *matCellDef="let charge">
           <span *ngIf="sharesAccountData.status.value === 'Submitted and pending approval'">
-            <button class="account-action-button" mat-raised-button color="primary" matTooltip="Edit Charge"
+            <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Edit Charge' | translate}}"
               *mifosxHasPermission="'UPDATE_SHARESACCOUNTCHARGE'" (click)="routeEdit($event); editCharge(charge)">
               <i class="fa fa-pencil"></i>
             </button>
-            <button class="account-action-button" mat-raised-button color="warn" matTooltip="Delete Charge"
+            <button class="account-action-button" mat-raised-button color="warn" matTooltip="{{ 'tooltips.Delete Charge' | translate}}"
               *mifosxHasPermission="'DELETE_SHARESACCOUNTCHARGE'" (click)="routeEdit($event); deleteCharge(charge.id)">
               <i class="fa fa-trash"></i>
             </button>
           </span>
           <span *ngIf="sharesAccountData.status.value === 'Active'">
-            <button class="account-action-button" mat-raised-button color="primary" matTooltip="Pay Charge"
+            <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Pay Charge' | translate}}"
               *mifosxHasPermission="'PAY_SHARESACCOUNTCHARGE'" (click)="routeEdit($event); payCharge(charge.id)">
               <i class="fa fa-dollar"></i>
             </button>
-            <button class="account-action-button" mat-raised-button color="primary" matTooltip="Waive Charge"
+            <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Waive Charge' | translate}}"
               *mifosxHasPermission="'WAIVE_SHARESACCOUNTCHARGE'" (click)="routeEdit($event); waiveCharge(charge.id)">
               <i class="fa fa-flag"></i>
             </button>
