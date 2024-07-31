@@ -44,7 +44,7 @@
       <mat-label>{{"labels.inputs.Relationship" | translate}}</mat-label>
       <mat-select formControlName="relationshipId" required>
         <mat-option *ngFor="let relation of data.options.relationshipIdOptions" [value]="relation.id">
-          {{ relation.name  }}
+          {{ relation.name | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="familyMemberForm.controls.relationshipId.hasError('required')">
@@ -56,7 +56,7 @@
       <mat-label>{{"labels.inputs.Gender" | translate}}</mat-label>
       <mat-select formControlName="genderId" required>
         <mat-option *ngFor="let gender of data.options.genderIdOptions" [value]="gender.id">
-          {{ gender.name }}
+          {{ gender.name | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="familyMemberForm.controls.genderId.hasError('required')">
@@ -68,7 +68,7 @@
       <mat-label>{{"labels.inputs.Profession" | translate}}</mat-label>
       <mat-select formControlName="professionId">
         <mat-option *ngFor="let profession of data.options.professionIdOptions" [value]="profession.id">
-          {{ profession.name }}
+          {{ profession.name | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -78,7 +78,7 @@
       <mat-select formControlName="maritalStatusId">
         <mat-option *ngFor="let maritalStatus of data.options.maritalStatusIdOptions"
           [value]="maritalStatus.id">
-          {{ maritalStatus.name }}
+          {{ maritalStatus.name | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>

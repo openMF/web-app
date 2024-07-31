@@ -18,7 +18,7 @@
       <mat-label>{{"labels.inputs.Legal Form" | translate}}</mat-label>
       <mat-select required formControlName="legalFormId">
         <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
-          {{ legalForm.value }}
+          {{ legalForm.value | translateKey:'inputs'}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -122,7 +122,7 @@
       <mat-label>{{"labels.inputs.Gender" | translate}}</mat-label>
       <mat-select formControlName="genderId">
         <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
-          {{ gender.name }}
+          {{ gender.name | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -159,7 +159,7 @@
       <mat-label>{{"labels.inputs.Client Type" | translate}}</mat-label>
       <mat-select formControlName="clientTypeId">
         <mat-option *ngFor="let clientType of clientTypeOptions" [value]="clientType.id">
-          {{ clientType.name }}
+          {{ clientType.name | translateKey:'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
