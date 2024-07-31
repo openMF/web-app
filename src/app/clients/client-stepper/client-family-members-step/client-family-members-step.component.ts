@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
+import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog/client-family-member-dialog.component';
 
@@ -23,8 +24,10 @@ export class ClientFamilyMembersStepComponent {
 
   /**
    * @param {MatDialog} dialog Mat Dialog
+   * @param {TranslateService} translateService Translate Service.
    */
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+              private translateService: TranslateService) { }
 
   /**
    * Adds a family member.
@@ -32,7 +35,7 @@ export class ClientFamilyMembersStepComponent {
   addFamilyMember() {
     const addFamilyMemberDialogRef = this.dialog.open(ClientFamilyMemberDialogComponent, {
       data: {
-        context: 'Add',
+        context: this.translateService.instant('labels.buttons.Add'),
         options: this.clientTemplate.familyMemberOptions,
       },
       width: '50rem'
