@@ -321,6 +321,7 @@
       "Apply Changes": "Appliquer les modifications",
       "Approve": "Approuver",
       "Assign Staff": "Affecter du personnel",
+      "Assign Member": "Attribuer un membre",
       "Attach Meeting": "Joindre une réunion",
       "Attendance": "Présence",
       "Back": "Dos",
@@ -724,6 +725,10 @@
       "unmarried": "célibataire",
       "office address": "Adresse de bureau",
       "residential address": "adresse résidentielle",
+      "Passport": "Passeport",
+      "Id": "Identifiant",
+      "Drivers License": "Le permis de conduire",
+      "Any Other Id Type": "Tout autre type d'identifiant",
       "Transfer to Savings": "Transfert vers l'épargne"
     },
     "commons": {
@@ -919,6 +924,7 @@
       "Guarantors Details": "Détails des garants",
       "Hold Amount": "Montant retenu",
       "Holiday": "Vacances",
+      "identifier id": "identifiant",
       "Identities": "Identités",
       "Import Employees": "Importer des employés",
       "Import Offices": "Bureaux d'importation",

@@ -321,6 +321,7 @@
       "Apply Changes": "Lietot izmaiņas",
       "Approve": "Apstiprināt",
       "Assign Staff": "Norīkojiet personālu",
+      "Assign Member": "Piešķirt biedru",
       "Attach Meeting": "Pievienot sapulci",
       "Attendance": "Apmeklējums",
       "Back": "Atpakaļ",
@@ -724,6 +725,10 @@
       "unmarried": "neprecējies",
       "office address": "biroja adrese",
       "residential address": "dzīvesvietas adrese",
+      "Passport": "Pase",
+      "Id": "Id",
+      "Drivers License": "Vadītāja apliecība",
+      "Any Other Id Type": "Jebkurš cits ID veids",
       "Transfer to Savings": "Pārskaitījums uz uzkrājumiem"
     },
     "commons": {
@@ -919,6 +924,7 @@
       "Guarantors Details": "Sīkāka informācija par galvotāju",
       "Hold Amount": "Aizturēšanas summa",
       "Holiday": "Brīvdienas",
+      "identifier id": "identifikatora id",
       "Identities": "Identitātes",
       "Import Employees": "Importēt darbiniekus",
       "Import Offices": "Importa biroji",

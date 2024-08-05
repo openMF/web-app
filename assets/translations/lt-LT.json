@@ -321,6 +321,7 @@
       "Apply Changes": "Taikyti pakeitimus",
       "Approve": "Patvirtinti",
       "Assign Staff": "Paskirkite darbuotojus",
+      "Assign Member": "Priskirti narį",
       "Attach Meeting": "Pridėti susitikimą",
       "Attendance": "Lankomumas",
       "Back": "Atgal",
@@ -724,6 +725,10 @@
       "unmarried": "nevedęs",
       "office address": "biuro adresas",
       "residential address": "gyvenamosios vietos adresas",
+      "Passport": "Pasas",
+      "Id": "Id",
+      "Drivers License": "Vairuotojo pažymėjimas",
+      "Any Other Id Type": "Bet koks kitas ID tipas",
       "Transfer to Savings": "Perkėlimas į santaupas"
     },
     "commons": {
@@ -919,6 +924,7 @@
       "Guarantors Details": "Išsami informacija apie garantus",
       "Hold Amount": "Laikymo suma",
       "Holiday": "Šventė",
+      "identifier id": "identifikatoriaus id",
       "Identities": "Tapatybės",
       "Import Employees": "Importuoti darbuotojus",
       "Import Offices": "Importo biurai",
