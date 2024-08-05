@@ -321,6 +321,7 @@
       "Apply Changes": "Tekeleza Mabadiliko",
       "Approve": "Idhini",
       "Assign Staff": "Wape Wafanyakazi",
+      "Assign Member": "Mkabidhi Mwanachama",
       "Attach Meeting": "Ambatanisha Mkutano",
       "Attendance": "Mahudhurio",
       "Back": "Nyuma",
@@ -724,6 +725,10 @@
       "unmarried": "bila kuolewa",
       "office address": "anwani ya ofisi",
       "residential address": "anwani ya makazi",
+      "Passport": "Pasipoti",
+      "Id": "Kitambulisho",
+      "Drivers License": "Leseni ya Udereva",
+      "Any Other Id Type": "Aina Nyingine Yoyote ya Kitambulisho",
       "Transfer to Savings": "Hamisha kwa Akiba"
     },
     "commons": {
@@ -919,6 +924,7 @@
       "Guarantors Details": "Maelezo ya Wadhamini",
       "Hold Amount": "Shikilia Kiasi",
       "Holiday": "Sikukuu",
+      "identifier id": "kitambulisho",
       "Identities": "Vitambulisho",
       "Import Employees": "Wafanyikazi wa Kuagiza",
       "Import Offices": "Ofisi za Kuagiza",

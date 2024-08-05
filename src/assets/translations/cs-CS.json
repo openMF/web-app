@@ -321,6 +321,7 @@
       "Approve": "Schvalovat",
       "Apply Changes": "Aplikuj změny",
       "Assign Staff": "Přiřadit personál",
+      "Assign Member": "Přiřadit člena",
       "Attach Meeting": "Připojit schůzku",
       "Attendance": "Účast",
       "Back": "Zadní",
@@ -724,6 +725,10 @@
       "unmarried": "svobodný",
       "office address": "adresa kanceláře",
       "residential address": "adresa bydliště",
+      "Passport": "Cestovní pas",
+      "Id": "Id",
+      "Drivers License": "Řidičský průkaz",
+      "Any Other Id Type": "Jakýkoli jiný typ ID",
       "Transfer to Savings": "Převod do Úspory"
     },
     "commons": {
@@ -918,6 +923,7 @@
       "Guarantors Details": "Podrobnosti o garantech",
       "Hold Amount": "Částka držení",
       "Holiday": "Dovolená",
+      "identifier id": "identifikátor id",
       "Identities": "Totožnosti",
       "Import Employees": "Import zaměstnanců",
       "Import Offices": "Dovozní kanceláře",

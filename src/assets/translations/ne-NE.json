@@ -321,6 +321,7 @@
       "Apply Changes": "परिवर्तनहरू लागू गर्नुहोस्",
       "Approve": "मंजूर गर्नु",
       "Assign Staff": "कर्मचारी नियुक्त गर्नुहोस्",
+      "Assign Member": "सदस्य नियुक्त गर्नुहोस्",
       "Attach Meeting": "बैठक संलग्न गर्नुहोस्",
       "Attendance": "उपस्थित",
       "Back": "पछाडि",
@@ -724,6 +725,10 @@
       "unmarried": "अविवाहित",
       "office address": "कार्यालय ठेगाना",
       "residential address": "आवासीय ठेगाना",
+      "Passport": "राहदानी",
+      "Id": "आईडी",
+      "Drivers License": "चालकको सवारी इजाजत पत्र",
+      "Any Other Id Type": "कुनै पनि अन्य आईडी प्रकार",
       "Transfer to Savings": "बचतमा स्थानान्तरण गर्नुहोस्"
     },
     "commons": {
@@ -919,6 +924,7 @@
       "Guarantors Details": "ग्यारेन्टर विवरणहरू",
       "Hold Amount": "रकम होल्ड गर्नुहोस्",
       "Holiday": "बिदाको आनन्द लिनु",
+      "identifier id": "पहिचानकर्ता आईडी",
       "Identities": "पहिचानहरू",
       "Import Employees": "कर्मचारी आयात गर्नुहोस्",
       "Import Offices": "आयात कार्यालयहरू",

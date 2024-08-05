@@ -321,6 +321,7 @@
       "Apply Changes": "변경 승인",
       "Approve": "승인하다",
       "Assign Staff": "직원 배정",
+      "Assign Member": "회원 지정",
       "Attach Meeting": "회의 첨부",
       "Attendance": "출석",
       "Back": "뒤쪽에",
@@ -724,6 +725,10 @@
       "unmarried": "미혼",
       "office address": "사무실 주소",
       "residential address": "거주지 주소",
+      "Passport": "여권",
+      "Id": "ID",
+      "Drivers License": "운전 면허증",
+      "Any Other Id Type": "기타 ID 유형",
       "Transfer to Savings": "저축으로 이체"
     },
     "commons": {
@@ -919,6 +924,7 @@
       "Guarantors Details": "보증인 세부사항",
       "Hold Amount": "보유금액",
       "Holiday": "휴일",
+      "identifier id": "식별자 ID",
       "Identities": "신원",
       "Import Employees": "직원 가져오기",
       "Import Offices": "수입 사무소",

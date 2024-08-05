@@ -69,7 +69,7 @@ export class ClientAddressStepComponent {
    */
   editAddress(address: any, index: number) {
     const data = {
-      title: 'Edit Client Address',
+      title: this.translateService.instant('labels.buttons.Edit') + ' ' + this.translateService.instant('labels.catalogs.Client') + ' ' + this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields(address),
       layout: { addButtonText: 'Edit' }
     };
@@ -94,7 +94,7 @@ export class ClientAddressStepComponent {
    */
   deleteAddress(address: any, index: number) {
     const deleteAddressDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `address type : ${address.addressType} ${index}` }
+      data: { deleteContext: `${this.translateService.instant('labels.heading.Address')} ${this.translateService.instant('labels.inputs.Type')} : ${address.addressType} ${index}` }
     });
     deleteAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

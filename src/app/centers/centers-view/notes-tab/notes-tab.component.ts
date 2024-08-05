@@ -1,15 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
-import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { CentersService } from '../../centers.service';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
+import { CentersService } from '../../centers.service';
 
 @Component({
   selector: 'mifosx-notes-tab',
@@ -28,7 +29,8 @@ export class NotesTabComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private centersService: CentersService,
     private authenticationService: AuthenticationService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private translateService: TranslateService) {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.centerId = this.route.parent.snapshot.params['centerId'];
@@ -66,13 +68,13 @@ export class NotesTabComponent implements OnInit {
                 required: true,
                 value: noteContent,
                 controlType: 'input',
-                label: 'Note'
+                label: this.translateService.instant('labels.inputs.Note')
               }],
               layout: {
                 columns: 1,
                 addButtonText: 'Confirm'
               },
-              title: 'Edit Note'
+              title: this.translateService.instant('labels.heading.Edit Note')
             }
     });
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
@@ -86,7 +88,7 @@ export class NotesTabComponent implements OnInit {
 
   deleteNote(noteId: string, index: number) {
     const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `Note id:${noteId}` }
+      data: { deleteContext: `${this.translateService.instant('labels.inputs.Note')} ${this.translateService.instant('labels.inputs.Id')}:${noteId}` }
     });
     deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

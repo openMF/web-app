@@ -321,6 +321,7 @@
             "Approve": "Approve",
             "Apply Changes": "Apply Changes",
             "Assign Staff": "Assign Staff",
+            "Assign Member": "Assign Member",
             "Attach Meeting": "Attach Meeting",
             "Attendance": "Attendance",
             "Back": "Back",
@@ -726,6 +727,10 @@
             "unmarried": "unmarried",
             "office address": "office address",
             "residential address": "residential address",
+            "Passport": "Passport",
+            "Id": "Id",
+            "Drivers License": "Drivers License",
+            "Any Other Id Type": "Any Other Id Type",
             "Transfer to Savings": "Transfer to Savings"
         },
         "commons": {
@@ -921,6 +926,7 @@
             "Guarantors Details": "Guarantors Details",
             "Hold Amount": "Hold Amount",
             "Holiday": "Holiday",
+            "identifier id": "identifier id",
             "Identities": "Identities",
             "Import Employees": "Import Employees",
             "Import Offices": "Import Offices",
