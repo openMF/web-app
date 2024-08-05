@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
@@ -12,9 +12,10 @@ import { SettingsService } from 'app/settings/settings.service';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
 /** Custom Models */
+import { TranslateService } from '@ngx-translate/core';
+import { Dates } from 'app/core/utils/dates';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { Dates } from 'app/core/utils/dates';
 
 /**
  * Center Attendance component.
@@ -59,7 +60,8 @@ export class CenterAttendanceComponent implements OnInit {
               private router: Router,
               private centersService: CentersService,
               private settingsService: SettingsService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private translateService: TranslateService) {
     this.route.data.subscribe(( data: { centersActionData: any }) => {
       this.centerData = data.centersActionData;
       this.membersData = data.centersActionData.clients;
@@ -97,14 +99,14 @@ export class CenterAttendanceComponent implements OnInit {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'attendanceType',
-        label: 'Attendance',
+        label: this.translateService.instant('labels.buttons.Attendance'),
         value: member.attendanceType,
         options: { label: 'value', value: 'id', data: this.attendanceTypeOptions },
         required: false
       }),
     ];
     const data = {
-      title: 'Assign Member Attendance',
+      title: this.translateService.instant('labels.buttons.Assign Member') + ' ' + this.translateService.instant('labels.buttons.Attendance'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };

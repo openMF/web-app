@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
@@ -10,6 +10,7 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
 /** Custom Services */
+import { TranslateService } from '@ngx-translate/core';
 import { ClientsService } from '../../clients.service';
 
 /**
@@ -35,10 +36,12 @@ export class AddressTabComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {ClientsService} clientService Clients Service
    * @param {MatDialog} dialog Mat Dialog
+   * @param {TranslateService} translateService Translate Service.
    */
   constructor(private route: ActivatedRoute,
               private clientService: ClientsService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private translateService: TranslateService) {
     this.route.data.subscribe((data: {
       clientAddressData: any,
       clientAddressFieldConfig: any,
@@ -56,7 +59,7 @@ export class AddressTabComponent {
    */
   addAddress() {
     const data = {
-      title: 'Add Client Address',
+      title: this.translateService.instant('labels.buttons.Add') + ' ' + this.translateService.instant('labels.catalogs.Client') + ' ' + this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields('add')
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
@@ -81,7 +84,7 @@ export class AddressTabComponent {
    */
   editAddress(address: any, index: number) {
     const data = {
-      title: 'Edit Client Address',
+      title: this.translateService.instant('labels.buttons.Edit') + ' ' + this.translateService.instant('labels.catalogs.Client') + ' ' + this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields('edit', address),
       layout: { addButtonText: 'Edit' }
     };
@@ -138,10 +141,15 @@ export class AddressTabComponent {
    */
   getAddressFormFields(formType?: string, address?: any) {
     let formfields: FormfieldBase[] = [];
+
+    for (let index = 0; index < this.clientAddressTemplate.addressTypeIdOptions.length; index++) {
+      this.clientAddressTemplate.addressTypeIdOptions[index].name = this.translateService.instant(`labels.catalogs.${this.clientAddressTemplate.addressTypeIdOptions[index].name}`)
+    }
+
     if (formType === 'add') {
       formfields.push(this.isFieldEnabled('addressType') ? new SelectBase({
         controlName: 'addressType',
-        label: 'Address Type',
+        label: this.translateService.instant('labels.inputs.Address Type'),
         value: address ? address.addressType : '',
         options: { label: 'name', value: 'id', data: this.clientAddressTemplate.addressTypeIdOptions },
         order: 1
@@ -149,7 +157,7 @@ export class AddressTabComponent {
     }
     formfields.push(this.isFieldEnabled('street') ? new InputBase({
       controlName: 'street',
-      label: 'Street',
+      label: this.translateService.instant('labels.inputs.Street'),
       value: address ? address.street : '',
       type: 'text',
       required: false,
@@ -157,63 +165,63 @@ export class AddressTabComponent {
     }) : null);
     formfields.push(this.isFieldEnabled('addressLine1') ? new InputBase({
       controlName: 'addressLine1',
-      label: 'Address Line 1',
+      label: this.translateService.instant('labels.inputs.Address Line') + ' 1',
       value: address ? address.addressLine1 : '',
       type: 'text',
       order: 3
     }) : null);
     formfields.push(this.isFieldEnabled('addressLine2') ? new InputBase({
       controlName: 'addressLine2',
-      label: 'Address Line 2',
+      label: this.translateService.instant('labels.inputs.Address Line') + ' 2',
       value: address ? address.addressLine2 : '',
       type: 'text',
       order: 4
     }) : null);
     formfields.push(this.isFieldEnabled('addressLine3') ? new InputBase({
       controlName: 'addressLine3',
-      label: 'Address Line 3',
+      label: this.translateService.instant('labels.inputs.Address Line') + ' 3',
       value: address ? address.addressLine3 : '',
       type: 'text',
       order: 5
     }) : null);
     formfields.push(this.isFieldEnabled('townVillage') ? new InputBase({
       controlName: 'townVillage',
-      label: 'Town / Village',
+      label: this.translateService.instant('labels.inputs.Town / Village'),
       value: address ? address.townVillage : '',
       type: 'text',
       order: 6
     }) : null);
     formfields.push(this.isFieldEnabled('city') ? new InputBase({
       controlName: 'city',
-      label: 'City',
+      label: this.translateService.instant('labels.inputs.City'),
       value: address ? address.city : '',
       type: 'text',
       order: 7
     }) : null);
     formfields.push(this.isFieldEnabled('stateProvinceId') ? new SelectBase({
       controlName: 'stateProvinceId',
-      label: 'State / Province',
+      label: this.translateService.instant('labels.inputs.State / Province'),
       value: address ? address.stateProvinceId : '',
       options: { label: 'name', value: 'id', data: this.clientAddressTemplate.stateProvinceIdOptions },
       order: 8
     }) : null);
     formfields.push(this.isFieldEnabled('countyDistrict') ? new InputBase({
       controlName: 'countryDistrict',
-      label: 'Country District',
+      label: this.translateService.instant('labels.inputs.State / Province'),
       value: address ? address.countyDistrict : '',
       type: 'text',
       order: 11
     }) : null);
     formfields.push(this.isFieldEnabled('countryId') ? new SelectBase({
       controlName: 'countryId',
-      label: 'Country',
+      label: this.translateService.instant('labels.inputs.Country'),
       value: address ? address.countryId : '',
       options: { label: 'name', value: 'id', data: this.clientAddressTemplate.countryIdOptions },
       order: 10
     }) : null);
     formfields.push(this.isFieldEnabled('postalCode') ? new InputBase({
       controlName: 'postalCode',
-      label: 'Postal Code',
+      label: this.translateService.instant('labels.inputs.Postal Code'),
       value: address ? address.postalCode : '',
       type: 'text',
       order: 11

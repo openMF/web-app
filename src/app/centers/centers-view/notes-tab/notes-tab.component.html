@@ -4,7 +4,7 @@
     <form #formRef="ngForm" [formGroup]="noteForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
       (ngSubmit)="submit()">
       <mat-form-field fxFlex="calc(90%-20px)">
-        <textarea formControlName="note" matInput placeholder="Write a note ...."></textarea>
+        <textarea formControlName="note" matInput placeholder="{{'labels.text.Write a note' | translate}} ...."></textarea>
       </mat-form-field>
       <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid" *mifosxHasPermission="'CREATE_GROUPNOTE'">
         <fa-icon icon="plus" class="m-r-10"></fa-icon> {{"labels.buttons.Add" | translate}}

@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 
 /** Custom Models */
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -10,13 +10,13 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
 /** Custom Components */
-import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
-import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 
 /** Custom Services */
-import { ClientsService } from '../../clients.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ClientsService } from '../../clients.service';
 
 /**
  * Identities Tab Component
@@ -72,6 +72,9 @@ export class IdentitiesTabComponent {
    * Add Client Identifier
    */
   addIdentifier() {
+    for (let index = 0; index < this.clientIdentifierTemplate.allowedDocumentTypes.length; index++) {
+      this.clientIdentifierTemplate.allowedDocumentTypes[index].name = this.translateService.instant(`labels.catalogs.${this.clientIdentifierTemplate.allowedDocumentTypes[index].name}`)
+    }
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'documentTypeId',
@@ -139,7 +142,7 @@ export class IdentitiesTabComponent {
    */
   deleteIdentifier(clientId: string, identifierId: string, index: number) {
     const deleteIdentifierDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `identifier id:${identifierId}` }
+      data: { deleteContext: `${this.translateService.instant('labels.heading.identifier id')} : ${identifierId}` }
     });
     deleteIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
