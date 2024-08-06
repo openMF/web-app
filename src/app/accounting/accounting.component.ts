@@ -1,10 +1,10 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** Custom Services */
-import { PopoverService } from '../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
+import { PopoverService } from '../configuration-wizard/popover/popover.service';
 
 /**
  * Accounting component.
@@ -36,6 +36,8 @@ export class AccountingComponent implements OnInit, AfterViewInit {
   @ViewChild('createJournalEntries') createJournalEntries: ElementRef<any>;
   /* Template for popover on Create Journal Entries */
   @ViewChild('templateCreateJournalEntries') templateCreateJournalEntries: TemplateRef<any>;
+  // Initialize an array of 10 boolean values, all set to false
+  arrowBooleans: boolean[] = new Array(10).fill(false);
 
   /**
    * @param {Router} router Router.
@@ -55,6 +57,7 @@ export class AccountingComponent implements OnInit, AfterViewInit {
    * @param target HTMLElement | ElementRef<any>.
    * @param position String.
    * @param backdrop Boolean.
+   * @param arrowNumber - The index of the boolean value to toggle.
    */
   showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
@@ -175,6 +178,11 @@ export class AccountingComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showCreateJournalEntries = false;
     this.configurationWizardService.showClosingEntriesList = true;
     this.router.navigate(['/accounting/closing-entries']);
+  }
+
+  arrowBooleansToggle(arrowNumber:number) {
+    // Toggle the boolean value at the given index
+    this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }
 
 }
