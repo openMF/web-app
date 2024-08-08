@@ -2,66 +2,78 @@
 
   <mat-card>
 
-    <div fxLayout="row" fxLayout.lt-md="column">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
 
       <div fxFlex="50%">
 
         <mat-nav-list>
 
         <div #loanProducts>
-          <mat-list-item [routerLink]="['loan-products']" *mifosxHasPermission="'READ_LOANPRODUCT'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_LOANPRODUCT'">
+            <mat-icon matListIcon [routerLink]="['loan-products']">
               <fa-icon icon="briefcase" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Loan Products' | translate}}</h4>
-            <p matLine>{{'labels.text.Add new loan product or modify or inactivate loan product' | translate}}</p>
+            <h4 matLine [routerLink]="['loan-products']">{{'labels.heading.Loan Products' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="!arrowBooleans[0]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['loan-products']">{{'labels.text.Add new loan product or modify or inactivate loan product' | translate}}</p>
           </mat-list-item>
         </div>
 
         <div #savingsProducts>
-          <mat-list-item [routerLink]="['saving-products']" *mifosxHasPermission="'READ_SAVINGSPRODUCT'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_SAVINGSPRODUCT'">
+            <mat-icon matListIcon [routerLink]="['saving-products']">
               <fa-icon icon="briefcase" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Savings Products' | translate}}</h4>
-            <p matLine>{{'labels.text.Add new savings product or modify or inactivate savings product' | translate}}</p>
+            <h4 matLine [routerLink]="['saving-products']">{{'labels.heading.Savings Products' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="!arrowBooleans[1]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="arrowBooleans[1]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['saving-products']">{{'labels.text.Add new savings product or modify or inactivate savings product' | translate}}</p>
           </mat-list-item>
         </div>
 
         <div #shareProducts>
-          <mat-list-item [routerLink]="['share-products']" *mifosxHasPermission="'READ_SHAREPRODUCT'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_SHAREPRODUCT'">
+            <mat-icon matListIcon [routerLink]="['share-products']">
               <fa-icon icon="briefcase" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Share Products' | translate}}</h4>
-            <p matLine>{{'labels.text.Add new share product or modify or inactivate share product' | translate}}</p>
+            <h4 matLine [routerLink]="['share-products']">{{'labels.heading.Share Products' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="!arrowBooleans[2]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="arrowBooleans[2]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['share-products']">{{'labels.text.Add new share product or modify or inactivate share product' | translate}}</p>
           </mat-list-item>
         </div>
 
         <div #charges>
-          <mat-list-item [routerLink]="['charges']" *mifosxHasPermission="'READ_CHARGE'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_CHARGE'">
+            <mat-icon matListIcon [routerLink]="['charges']">
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Charges' | translate}}</h4>
-            <p matLine>{{'labels.text.Define charges/penalties for loan products, savings and deposit products' | translate}}</p>
+            <h4 matLine [routerLink]="['charges']">{{'labels.heading.Charges' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(3)" *ngIf="!arrowBooleans[3]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(3)" *ngIf="arrowBooleans[3]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[3]" [routerLink]="['charges']">{{'labels.text.Define charges/penalties for loan products, savings and deposit products' | translate}}</p>
           </mat-list-item>
         </div>
 
-          <mat-list-item [routerLink]="['collaterals']">
-            <mat-icon matListIcon>
+          <mat-list-item>
+            <mat-icon matListIcon [routerLink]="['collaterals']">
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Collateral Management' | translate}}</h4>
-            <p matLine>{{'labels.text.Define collaterals for Collateral Management' | translate}}</p>
+            <h4 matLine [routerLink]="['collaterals']">{{'labels.heading.Collateral Management' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(4)" *ngIf="!arrowBooleans[4]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(4)" *ngIf="arrowBooleans[4]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[4]" [routerLink]="['collaterals']">{{'labels.text.Define collaterals for Collateral Management' | translate}}</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['delinquency-bucket-configurations']" *mifosxHasPermission="'READ_DELINQUENCY_BUCKET'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_DELINQUENCY_BUCKET'">
+            <mat-icon matListIcon [routerLink]="['delinquency-bucket-configurations']">
               <fa-icon icon="briefcase" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Delinquency Buckets' | translate}}</h4>
-            <p matLine>{{'labels.text.Define delinquency day ranges and bucket set for loan products' | translate}}</p>
+            <h4 matLine [routerLink]="['delinquency-bucket-configurations']">{{'labels.heading.Delinquency Buckets' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(5)" *ngIf="!arrowBooleans[5]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(5)" *ngIf="arrowBooleans[5]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[5]" [routerLink]="['delinquency-bucket-configurations']">{{'labels.text.Define delinquency day ranges and bucket set for loan products' | translate}}</p>
           </mat-list-item>
 
         </mat-nav-list>
@@ -72,48 +84,58 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['products-mix']" *mifosxHasPermission="'READ_PRODUCTMIX'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_PRODUCTMIX'">
+            <mat-icon matListIcon [routerLink]="['products-mix']">
               <fa-icon icon="random" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Products Mix' | translate}}</h4>
-            <p matLine>{{'labels.text.Defines rules for taking multiple rules' | translate}}</p>
+            <h4 matLine [routerLink]="['products-mix']">{{'labels.heading.Products Mix' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(6)" *ngIf="!arrowBooleans[6]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(6)" *ngIf="arrowBooleans[6]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[6]" [routerLink]="['products-mix']">{{'labels.text.Defines rules for taking multiple rules' | translate}}</p>
           </mat-list-item>
 
         <div #fixedDepositProducts>
-          <mat-list-item [routerLink]="['fixed-deposit-products']" *mifosxHasPermission="'READ_FIXEDDEPOSITPRODUCT'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_FIXEDDEPOSITPRODUCT'">
+            <mat-icon matListIcon [routerLink]="['fixed-deposit-products']">
               <fa-icon icon="briefcase" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Fixed Deposit Products' | translate}}</h4>
-            <p matLine>{{'labels.text.Add, modify or inactivate a Fixed deposit product' | translate}}</p>
+            <h4 matLine [routerLink]="['fixed-deposit-products']">{{'labels.heading.Fixed Deposit Products' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(7)" *ngIf="!arrowBooleans[7]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(7)" *ngIf="arrowBooleans[7]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[7]" [routerLink]="['fixed-deposit-products']">{{'labels.text.Add, modify or inactivate a Fixed deposit product' | translate}}</p>
           </mat-list-item>
         </div>
 
         <div #recurringDepositProducts>
-          <mat-list-item [routerLink]="['recurring-deposit-products']" *mifosxHasPermission="'READ_RECURRINGDEPOSITPRODUCT'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_RECURRINGDEPOSITPRODUCT'">
+            <mat-icon matListIcon [routerLink]="['recurring-deposit-products']">
               <fa-icon icon="briefcase" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Recurring Deposit Products' | translate}}</h4>
-            <p matLine>{{'labels.text.Add, modify or inactivate a Recurring Deposit product' | translate}}</p>
+            <h4 matLine [routerLink]="['recurring-deposit-products']">{{'labels.heading.Recurring Deposit Products' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(8)" *ngIf="!arrowBooleans[8]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(8)" *ngIf="arrowBooleans[8]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[8]" [routerLink]="['recurring-deposit-products']">{{'labels.text.Add, modify or inactivate a Recurring Deposit product' | translate}}</p>
           </mat-list-item>
         </div>
 
-          <mat-list-item [routerLink]="['tax-configurations']" *mifosxHasPermission="'READ_TAXGROUP'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_TAXGROUP'">
+            <mat-icon matListIcon [routerLink]="['tax-configurations']">
               <fa-icon icon="cogs" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Manage Tax Configurations' | translate}}</h4>
-            <p matLine>{{'labels.text.Define Tax components and Tax groups' | translate}}</p>
+            <h4 matLine [routerLink]="['tax-configurations']">{{'labels.heading.Manage Tax Configurations' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="!arrowBooleans[9]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="arrowBooleans[9]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['tax-configurations']">{{'labels.text.Define Tax components and Tax groups' | translate}}</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['floating-rates']" *mifosxHasPermission="'READ_FLOATINGRATE'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_FLOATINGRATE'">
+            <mat-icon matListIcon [routerLink]="['floating-rates']">
               <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Floating Rates' | translate}}</h4>
-            <p matLine>{{'labels.text.Define floating rates for loan products' | translate}}</p>
+            <h4 matLine [routerLink]="['floating-rates']">{{'labels.heading.Floating Rates' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(10)" *ngIf="!arrowBooleans[10]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(10)" *ngIf="arrowBooleans[10]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[10]" [routerLink]="['floating-rates']">{{'labels.text.Define floating rates for loan products' | translate}}</p>
           </mat-list-item>
 
         </mat-nav-list>

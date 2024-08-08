@@ -1,10 +1,10 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { PopoverService } from '../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
+import { PopoverService } from '../configuration-wizard/popover/popover.service';
 
 /**
  * Organization component.
@@ -41,6 +41,8 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
   @ViewChild('manageFunds') manageFunds: ElementRef<any>;
   /* Template for popover on manage funds */
   @ViewChild('templateManageFunds') templateManageFunds: TemplateRef<any>;
+  // Initialize an array of 18 boolean values, all set to false
+  arrowBooleans: boolean[] = new Array(18).fill(false);
 
   /**
    * @param {ActivatedRoute} activatedRoute ActivatedRoute.
@@ -62,6 +64,7 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
    * @param target HTMLElement | ElementRef<any>.
    * @param position String.
    * @param backdrop Boolean.
+   * @param arrowNumber - The index of the boolean value to toggle.
    */
   showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
@@ -205,5 +208,10 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showManageFunds = false;
     this.configurationWizardService.showRecurringDepositProductsList = true;
     this.router.navigate(['/products/recurring-deposit-products']);
+  }
+
+  arrowBooleansToggle(arrowNumber:number) {
+    // Toggle the boolean value at the given index
+    this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }
 }
