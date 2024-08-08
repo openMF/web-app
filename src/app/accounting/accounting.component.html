@@ -2,7 +2,7 @@
 
   <mat-card>
 
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="16px">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
 
       <div fxFlex="50%">
 
@@ -13,10 +13,8 @@
               <fa-icon icon="sync" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine [routerLink]="['journal-entries/frequent-postings']">{{"labels.heading.Frequent Postings" | translate}}</h4>
-
             <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="!arrowBooleans[0]" icon="arrow-down" size="md"></fa-icon>
             <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
-
             <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['journal-entries/frequent-postings']">{{"labels.text.These are predefined postings" | translate}}</p>
           </mat-list-item>
 
@@ -26,10 +24,8 @@
                 <fa-icon icon="plus" size="sm"></fa-icon>
               </mat-icon>
               <h4 matLine [routerLink]="['journal-entries/create']">{{"labels.heading.Create Journal Entries" | translate}}</h4>
-
               <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="!arrowBooleans[1]" icon="arrow-down" size="md"></fa-icon>
               <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="arrowBooleans[1]" icon="arrow-up" size="md"></fa-icon>
-
               <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['journal-entries/create']">{{"labels.text.Manual journal entry transactions recorded in a journal" | translate}}</p>
             </mat-list-item>
           </div>
@@ -39,10 +35,8 @@
               <fa-icon icon="search" size="sm"></fa-icon>
             </mat-icon>
             <h4 matLine [routerLink]="['journal-entries']">{{"labels.heading.Search Journal Entries" | translate}}</h4>
-
             <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="!arrowBooleans[2]" icon="arrow-down" size="md"></fa-icon>
             <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="arrowBooleans[2]" icon="arrow-up" size="md"></fa-icon>
-
             <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['journal-entries']">{{"labels.text.Advanced search option for journal entries" | translate}}</p>
           </mat-list-item>
 
@@ -84,10 +78,8 @@
                 <fa-icon icon="sitemap" size="sm"></fa-icon>
               </mat-icon>
               <h4 matLine [routerLink]="['chart-of-accounts']">{{"labels.heading.Chart of Accounts" | translate}}</h4>
-
-                <fa-icon (click)="arrowBooleansToggle(5)" *ngIf="!arrowBooleans[5]" icon="arrow-down" size="md"></fa-icon>
-                <fa-icon (click)="arrowBooleansToggle(5)" *ngIf="arrowBooleans[5]" icon="arrow-up" size="md"></fa-icon>
-
+              <fa-icon (click)="arrowBooleansToggle(5)" *ngIf="!arrowBooleans[5]" icon="arrow-down" size="md"></fa-icon>
+              <fa-icon (click)="arrowBooleansToggle(5)" *ngIf="arrowBooleans[5]" icon="arrow-up" size="md"></fa-icon>
               <p matLine *ngIf="arrowBooleans[5]" [routerLink]="['chart-of-accounts']">{{"labels.text.List of accounts used by the organization" | translate}}</p>
             </mat-list-item>
           </div>
