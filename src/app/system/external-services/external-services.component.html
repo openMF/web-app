@@ -2,26 +2,30 @@
 
   <mat-card>
 
-    <div fxLayout="row" fxLayout.lt-md="column">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
 
       <div fxFlex="50%">
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['amazon-s3']">
-            <mat-icon matListIcon>
+          <mat-list-item>
+            <mat-icon matListIcon [routerLink]="['amazon-s3']">
               <fa-icon icon="cloud" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.S3 Amazon External Service' | translate}}</h4>
-            <p matLine>{{'labels.text.S3 Amazon Service Configuration' | translate}}</p>
+            <h4 matLine [routerLink]="['amazon-s3']">{{'labels.heading.S3 Amazon External Service' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="!arrowBooleans[0]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine [routerLink]="['amazon-s3']" *ngIf="arrowBooleans[0]">{{'labels.text.S3 Amazon Service Configuration' | translate}}</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['sms']">
-            <mat-icon matListIcon>
+          <mat-list-item>
+            <mat-icon matListIcon [routerLink]="['sms']">
               <fa-icon icon="comment-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.SMS External Service' | translate}}</h4>
-            <p matLine>{{'labels.text.SMS Service Configuration' | translate}}</p>
+            <h4 matLine [routerLink]="['sms']">{{'labels.heading.SMS External Service' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="!arrowBooleans[1]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="arrowBooleans[1]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine [routerLink]="['sms']" *ngIf="arrowBooleans[1]">{{'labels.text.SMS Service Configuration' | translate}}</p>
           </mat-list-item>
 
         </mat-nav-list>
@@ -32,20 +36,24 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['email']">
-            <mat-icon matListIcon>
+          <mat-list-item>
+            <mat-icon matListIcon [routerLink]="['email']">
               <fa-icon icon="envelope" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Email External Service' | translate}}</h4>
-            <p matLine>{{'labels.text.Email Service Configuration' | translate}}</p>
+            <h4 matLine [routerLink]="['email']">{{'labels.heading.Email External Service' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="!arrowBooleans[2]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="arrowBooleans[2]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine [routerLink]="['email']" *ngIf="arrowBooleans[2]">{{'labels.text.Email Service Configuration' | translate}}</p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['notification']">
-            <mat-icon matListIcon>
+          <mat-list-item>
+            <mat-icon matListIcon [routerLink]="['notification']">
               <fa-icon icon="bell" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine> {{'labels.heading.Notification External Service' | translate}}</h4>
-            <p matLine>{{'labels.text.Notification Service Configuration' | translate}}</p>
+            <h4 matLine [routerLink]="['notification']"> {{'labels.heading.Notification External Service' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(3)" *ngIf="!arrowBooleans[3]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(3)" *ngIf="arrowBooleans[3]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine [routerLink]="['notification']" *ngIf="arrowBooleans[3]">{{'labels.text.Notification Service Configuration' | translate}}</p>
           </mat-list-item>
 
         </mat-nav-list>

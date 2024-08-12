@@ -2,18 +2,20 @@
 
   <mat-card>
 
-    <div fxLayout="row" fxLayout.lt-md="column">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
 
       <div fxFlex="50%">
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['tax-components']" *mifosxHasPermission="'READ_TAXCOMPONENT'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_TAXCOMPONENT'">
+            <mat-icon matListIcon [routerLink]="['tax-components']">
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Manage Tax Components' | translate}}</h4>
-            <p matLine>{{'labels.heading.Define Tax Components' | translate}}</p>
+            <h4 matLine [routerLink]="['tax-components']">{{'labels.heading.Manage Tax Components' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="!arrowBooleans[0]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['tax-components']">{{'labels.heading.Define Tax Components' | translate}}</p>
           </mat-list-item>
 
         </mat-nav-list>
@@ -24,12 +26,14 @@
 
         <mat-nav-list>
 
-          <mat-list-item [routerLink]="['tax-groups']" *mifosxHasPermission="'READ_TAXGROUP'">
-            <mat-icon matListIcon>
+          <mat-list-item *mifosxHasPermission="'READ_TAXGROUP'">
+            <mat-icon matListIcon [routerLink]="['tax-groups']">
               <fa-icon icon="building" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine>{{'labels.heading.Manage Tax Groups' | translate}}</h4>
-            <p matLine>{{'labels.heading.Define Tax Groups' | translate}}</p>
+            <h4 matLine [routerLink]="['tax-groups']">{{'labels.heading.Manage Tax Groups' | translate}}</h4>
+            <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="!arrowBooleans[1]" icon="arrow-down" size="md"></fa-icon>
+            <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="arrowBooleans[1]" icon="arrow-up" size="md"></fa-icon>
+            <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['tax-groups']">{{'labels.heading.Define Tax Groups' | translate}}</p>
           </mat-list-item>
 
         </mat-nav-list>
