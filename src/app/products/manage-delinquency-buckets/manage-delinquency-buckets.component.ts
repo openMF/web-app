@@ -6,10 +6,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manage-delinquency-buckets.component.scss']
 })
 export class ManageDelinquencyBucketsComponent implements OnInit {
+  // Initialize an array of 2 boolean values, all set to false
+  arrowBooleans: boolean[] = new Array(2).fill(false);
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  /**
+   * Popover function
+   * @param arrowNumber - The index of the boolean value to toggle.
+   */
+
+  arrowBooleansToggle(arrowNumber:number) {
+    // Toggle the boolean value at the given index
+    this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }
 
 }
