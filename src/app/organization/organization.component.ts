@@ -210,7 +210,7 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/products/recurring-deposit-products']);
   }
 
-  arrowBooleansToggle(arrowNumber:number) {
+  arrowBooleansToggle(arrowNumber:  number) {
     // Toggle the boolean value at the given index
     this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }

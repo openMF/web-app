@@ -136,7 +136,7 @@ export class ClientAddressStepComponent {
     let formfields: FormfieldBase[] = [];
 
     for (let index = 0; index < this.clientTemplate.address[0].addressTypeIdOptions.length; index++) {
-      this.clientTemplate.address[0].addressTypeIdOptions[index].name = this.translateService.instant(`labels.catalogs.${this.clientTemplate.address[0].addressTypeIdOptions[index].name}`)
+      this.clientTemplate.address[0].addressTypeIdOptions[index].name = this.translateService.instant(`labels.catalogs.${this.clientTemplate.address[0].addressTypeIdOptions[index].name}`);
     }
 
     formfields.push(this.isFieldEnabled('addressType') ? new SelectBase({

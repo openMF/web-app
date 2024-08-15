@@ -143,7 +143,7 @@ export class AddressTabComponent {
     let formfields: FormfieldBase[] = [];
 
     for (let index = 0; index < this.clientAddressTemplate.addressTypeIdOptions.length; index++) {
-      this.clientAddressTemplate.addressTypeIdOptions[index].name = this.translateService.instant(`labels.catalogs.${this.clientAddressTemplate.addressTypeIdOptions[index].name}`)
+      this.clientAddressTemplate.addressTypeIdOptions[index].name = this.translateService.instant(`labels.catalogs.${this.clientAddressTemplate.addressTypeIdOptions[index].name}`);
     }
 
     if (formType === 'add') {

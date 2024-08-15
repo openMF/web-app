@@ -285,7 +285,7 @@
 
       <mat-form-field fxFlex="48%">
         <mat-label>{{'labels.inputs.Advance payments adjustment type' | translate}}</mat-label>
-        <mat-select formControlName="rescheduleStrategyMethod" required>
+        <mat-select formControlName="rescheduleStrategyMethod" required [disabled]="rescheduleStrategyTypeDisabled">
           <mat-option *ngFor="let rescheduleStrategyType of rescheduleStrategyTypeData" [value]="rescheduleStrategyType.id">
             {{ rescheduleStrategyType.value | translateKey:'catalogs' }}
           </mat-option>
