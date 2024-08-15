@@ -32,7 +32,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
   daysInYearTypeData: any;
   daysInMonthTypeData: any;
   preClosureInterestCalculationStrategyData: any;
-  rescheduleStrategyTypeData: any;
+  rescheduleStrategyTypeData: OptionData[];
+  rescheduleStrategyTypeDataBase: OptionData[];
   interestRecalculationCompoundingTypeData: any;
   interestRecalculationFrequencyTypeData: any;
   interestRecalculationNthDayTypeData: any;
@@ -44,6 +45,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
   isAdvancedTransactionProcessingStrategy = false;
   advancedTransactionProcessingStrategyDisabled = true;
   useDueForRepaymentsConfigurations = false;
+  rescheduleStrategyTypeDisabled = false;
 
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
@@ -73,6 +75,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.daysInMonthTypeData = this.loanProductsTemplate.daysInMonthTypeOptions;
     this.preClosureInterestCalculationStrategyData = this.loanProductsTemplate.preClosureInterestCalculationStrategyOptions;
     this.rescheduleStrategyTypeData = this.loanProductsTemplate.rescheduleStrategyTypeOptions;
+    this.rescheduleStrategyTypeDataBase = this.loanProductsTemplate.rescheduleStrategyTypeOptions;
     this.interestRecalculationCompoundingTypeData = this.loanProductsTemplate.interestRecalculationCompoundingTypeOptions;
     this.interestRecalculationFrequencyTypeData = this.loanProductsTemplate.interestRecalculationFrequencyTypeOptions;
     this.interestRecalculationNthDayTypeData = this.loanProductsTemplate.interestRecalculationNthDayTypeOptions;
@@ -124,9 +127,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.isAdvancedTransactionProcessingStrategy = LoanProducts.isAdvancedPaymentAllocationStrategy(transactionProcessingStrategyCode);
     this.processingStrategyService.initialize(this.isAdvancedTransactionProcessingStrategy);
     this.validateAdvancedPaymentStrategyControls();
-
-    console.log(this.loanProductsTemplate.dueDaysForRepaymentEvent);
-    console.log(this.loanProductsTemplate.overDueDaysForRepaymentEvent);
 
     if (this.loanProductsTemplate.dueDaysForRepaymentEvent != null &&
       this.loanProductsTemplate.overDueDaysForRepaymentEvent != null) {
@@ -283,7 +283,9 @@ export class LoanProductSettingsStepComponent implements OnInit {
           this.loanProductSettingsForm.addControl('interestRecalculationCompoundingMethod', new UntypedFormControl(this.interestRecalculationCompoundingTypeData[0].id, Validators.required));
           this.loanProductSettingsForm.addControl('recalculationRestFrequencyType', new UntypedFormControl(this.interestRecalculationFrequencyTypeData[0].id, Validators.required));
           this.loanProductSettingsForm.addControl('isArrearsBasedOnOriginalSchedule', new UntypedFormControl(''));
-
+          if (this.loanProductSettingsForm.value.isInterestRecalculationEnabled) {
+            this.setRescheduleStrategies();
+          }
           this.loanProductSettingsForm.get('interestRecalculationCompoundingMethod').valueChanges
             .subscribe((interestRecalculationCompoundingMethod: any) => {
               if (interestRecalculationCompoundingMethod !== 0) {
@@ -485,8 +487,31 @@ export class LoanProductSettingsStepComponent implements OnInit {
         });
         this.isAdvancedTransactionProcessingStrategy =  true;
       }
+      if (this.loanProductSettingsForm.value.isInterestRecalculationEnabled) {
+        this.setRescheduleStrategies();
+      }
       this.processingStrategyService.initialize(this.isAdvancedTransactionProcessingStrategy);
     });
+  }
+
+  private setRescheduleStrategies() {
+    if (this.advancedTransactionProcessingStrategyDisabled) {
+      this.rescheduleStrategyTypeData = this.rescheduleStrategyTypeDataBase.filter(
+        (o: OptionData) => o.id > 3
+      );
+      this.loanProductSettingsForm.patchValue({
+        'rescheduleStrategyMethod': this.rescheduleStrategyTypeData[0].id
+      });
+      this.rescheduleStrategyTypeDisabled = true;
+    } else {
+      this.rescheduleStrategyTypeData = this.rescheduleStrategyTypeDataBase.filter(
+        (o: OptionData) => o.id < 4
+      );
+      this.loanProductSettingsForm.patchValue({
+        'rescheduleStrategyMethod': this.rescheduleStrategyTypeData[0].id
+      });
+      this.rescheduleStrategyTypeDisabled = false;
+    }
   }
 
   private getGlobalConfigValue(configName: string): number {

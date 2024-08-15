@@ -73,7 +73,7 @@ export class IdentitiesTabComponent {
    */
   addIdentifier() {
     for (let index = 0; index < this.clientIdentifierTemplate.allowedDocumentTypes.length; index++) {
-      this.clientIdentifierTemplate.allowedDocumentTypes[index].name = this.translateService.instant(`labels.catalogs.${this.clientIdentifierTemplate.allowedDocumentTypes[index].name}`)
+      this.clientIdentifierTemplate.allowedDocumentTypes[index].name = this.translateService.instant(`labels.catalogs.${this.clientIdentifierTemplate.allowedDocumentTypes[index].name}`);
     }
     const formfields: FormfieldBase[] = [
       new SelectBase({
