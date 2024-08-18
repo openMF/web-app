@@ -1,5 +1,7 @@
 
-<mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+<div *ngIf="isLoading" class="loader">
+  <div class="loading"></div>
+</div>
 
 <div class="savings-account-tables" fxLayout="row" fxLayoutGap="2%" *ngIf="!isLoading">
 

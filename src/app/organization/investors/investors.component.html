@@ -47,8 +47,9 @@
   </div>
 
   <div class="mat-elevation-z8 container m-t-20">
-    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
-
+    <div *ngIf="isLoading" class="loader">
+      <div class="loading"></div>
+    </div>
     <mat-accordion *ngIf="existsDataToFilter">
       <mat-expansion-panel *ngFor="let record of searchResults;index as i" class="record">
         <mat-expansion-panel-header>
