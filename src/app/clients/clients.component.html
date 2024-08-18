@@ -20,7 +20,9 @@
   </div>
 
   <div [hidden]="!existsClientsToFilter">
-    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+    <div *ngIf="isLoading">
+      <div class="loading"></div>
+    </div>
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChanged($event)">
 
       <!-- Name Column -->

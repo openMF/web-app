@@ -22,3 +22,81 @@ table {
     color : black;
   }
 }
+
+$bar: 150px;
+$foo: $bar * 8;
+$color: #e2e4ec;
+
+
+.loading {
+  position: absolute;
+  width: $bar;
+  height: 8px;
+  background: linear-gradient(125deg, rgb(255, 255, 255), #c4d2e9, rgb(255, 255, 255));
+  animation: grow 4s linear infinite, move 4s linear infinite;
+  top: 75px;
+}
+
+.sidenav {
+  overflow-x: hidden;
+}
+
+@keyframes move {
+  0% {
+    left: 0;
+  }
+
+  16.7% {
+    left: 0;
+  }
+
+  33.3% {
+    left: $foo / 2;
+  }
+
+  50% {
+    left: $foo - $bar;
+  }
+
+  66.7% {
+    left: $foo / 2;
+  }
+
+  83.3% {
+    left: 0;
+  }
+
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes grow {
+  0% {
+    width: $bar;
+  }
+
+  16.7% {
+    width: $foo / 2;
+  }
+
+  33.3% {
+    width: $foo / 2;
+  }
+
+  50% {
+    width: $bar;
+  }
+
+  66.7% {
+    width: $foo / 2;
+  }
+
+  83.3% {
+    width: $foo / 2;
+  }
+
+  100% {
+    width: $bar;
+  }
+}

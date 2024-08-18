@@ -45,8 +45,8 @@
     </div>
   </div>
 
-  <div class="table-output" *ngIf="hideOutput">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <div *ngIf="hideOutput" class="loader">
+    <div class="loading"></div>
   </div>
 
   <div class="back-button" *ngIf="!hideOutput">
