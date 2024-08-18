@@ -1,6 +1,6 @@
 /** Angular Imports */
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable, Subscription } from 'rxjs';
