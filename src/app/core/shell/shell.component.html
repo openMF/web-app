@@ -18,12 +18,14 @@
   </mat-sidenav>
 
   <!-- Content -->
-  <mat-sidenav-content>
+  <mat-sidenav-content class="sidenav">
 
     <!-- Toolbar -->
     <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"></mifosx-toolbar>
     <!-- Progress Bar -->
-    <mat-progress-bar [mode]="progressBarMode"></mat-progress-bar>
+    <div *ngIf="progressBarMode !== 'none'">
+      <div class="loading"></div>
+    </div>
 
     <!-- Breadcrumb -->
     <mifosx-breadcrumb></mifosx-breadcrumb>
