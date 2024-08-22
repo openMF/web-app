@@ -125,8 +125,10 @@ export class RunReportComponent implements OnInit {
         } else { // Child Parameter
           const parent: ReportParameter = this.paramData
             .find((entry: any) => entry.name === param.parentParameterName);
-          parent.childParameters.push(param);
-          this.updateParentParameters(parent);
+          if (parent != null) {
+            parent.childParameters.push(param);
+            this.updateParentParameters(parent);
+          }
         }
       });
     if (this.isPentahoReport()) {
