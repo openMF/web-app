@@ -44,15 +44,21 @@
       <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" | translate}} </th>
       <td mat-cell *matCellDef="let item">
         <span *ngIf="item.statusEnum.pendingApproval">
-          <button class="action-button" mat-raised-button color="warn" matTooltip="{{ 'tooltips.Reject Reschedule' | translate}}" matTooltipPosition="left"
-          (click)="manageRequest(item, 'Reject')">
-          <fa-icon icon="trash"></fa-icon>
-        </button>
-          <button class="action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Approve Reschedule' | translate}}" matTooltipPosition="right"
+          <button class="action-button" mat-raised-button color="warn"
+            matTooltip="{{ 'tooltips.Reject Reschedule' | translate}}" matTooltipPosition="left"
+            (click)="manageRequest(item, 'Reject')">
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+          <button class="action-button" mat-raised-button color="primary"
+            matTooltip="{{ 'tooltips.Approve Reschedule' | translate}}" matTooltipPosition="right"
             (click)="manageRequest(item, 'Approve')">
             <fa-icon icon="check"></fa-icon>
           </button>
-
+          <button class="action-button" mat-raised-button color="primary"
+            matTooltip="{{ 'tooltips.View Reschedule' | translate}}" matTooltipPosition="right"
+            [routerLink]="[item.id]">
+            <fa-icon icon="eye"></fa-icon>
+          </button>
         </span>
       </td>
     </ng-container>

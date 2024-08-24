@@ -1,0 +1,38 @@
+@import "assets/styles/helper";
+
+table {
+  width: 100%;
+  margin: 2% 0%;
+}
+
+.container {
+  padding-bottom: 2%;
+}
+
+.check {
+  padding-left: 15px;
+}
+
+.amount-changed {
+  color: $status-approved;
+}
+
+.additional {
+  color: $status-approved;
+}
+
+.downpayment {
+  color: $status-downpayment;
+}
+
+.paid {
+  color: $status-paid;
+}
+
+.current {
+  color: $status-active;
+}
+
+.overdued {
+  color: $status-matured;
+}
