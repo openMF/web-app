@@ -98,6 +98,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
           'overpaymentLiabilityAccount': this.glAccountLookUp(this.loanProduct.overpaymentLiabilityAccountId, liabilityAccountData),
         };
 
+        this.paymentChannelToFundSourceMappings = [];
         if (this.loanProduct.paymentChannelToFundSourceMappings?.length > 0) {
           const paymentTypesData = this.loanProductsTemplate.paymentTypeOptions || [];
           this.loanProduct.paymentChannelToFundSourceMappings.forEach((m: any) => {
