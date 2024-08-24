@@ -45,29 +45,59 @@
         </mat-card-title>
 
         <mat-card-subtitle>
-          <p>
-            <b>{{"labels.inputs.Office" | translate}} :</b><mifosx-entity-name entityName="{{clientViewData.officeName}}"></mifosx-entity-name><br />
-            <b>{{"labels.inputs.Client" | translate}} :</b> <mifosx-account-number accountNo="{{clientViewData.accountNo}}"></mifosx-account-number><br />
-            <b>{{"labels.inputs.External Id" | translate}}:</b><mifosx-external-identifier externalId="{{clientViewData.externalId}}" completed="true"></mifosx-external-identifier><br />
-            <span *ngIf="clientViewData.staffName"><b>{{"labels.inputs.Staff" | translate}} :</b> {{clientViewData.staffName ||
-              'Unassigned'}}<br /></span>
-            <span *ngIf="clientViewData.activationDate"><b>{{"labels.inputs.Activation Date" | translate}} :</b> {{clientViewData.activationDate |
-              dateFormat}}<br /></span>
-            <span *ngIf="clientViewData.groups.length > 0">
-              {{"labels.inputs.Member Of" | translate}} :
-              <span *ngFor="let group of clientViewData.groups">
-                <a>{{group.name}}</a>&nbsp;
-              </span>
-            </span>
-            <br />
-            <span *ngIf="clientViewData.mobileNo">
-              <b>{{"labels.inputs.Mobile Number" | translate}}:</b><mifosx-external-identifier externalId="{{clientViewData.mobileNo}}" completed="true"></mifosx-external-identifier><br />
-            </span>
-            <span *ngIf="clientViewData.emailAddress">
-              <b>{{"labels.inputs.Email" | translate}}:</b><mifosx-external-identifier externalId="{{clientViewData.emailAddress}}" completed="true"></mifosx-external-identifier><br />
-            </span>
-            <br />
-          </p>
+          <div fxLayout="row" fxLayout.lt-md="column">
+            <div fxFlex="50%">
+              <table class="account-overview">
+                <tbody>
+                  <tr>
+                    <td><b>{{"labels.inputs.Office" | translate}}</b></td>
+                    <td><mifosx-entity-name entityName="{{clientViewData.officeName}}"></mifosx-entity-name></td>
+                  </tr>
+                  <tr>
+                    <td><b>{{"labels.inputs.Client" | translate}}</b></td>
+                    <td><mifosx-account-number accountNo="{{clientViewData.accountNo}}"></mifosx-account-number></td>
+                  </tr>
+                  <tr>
+                    <td><b>{{"labels.inputs.External Id" | translate}}</b></td>
+                    <td><mifosx-external-identifier externalId="{{clientViewData.externalId}}" completed="true"></mifosx-external-identifier></td>
+                  </tr>
+                  <tr *ngIf="clientViewData.activationDate">
+                    <td><b>{{"labels.inputs.Activation Date" | translate}}</b></td>
+                    <td>{{clientViewData.activationDate | dateFormat}}</td>
+                  </tr>
+                  <tr>
+                    <td><b>{{"labels.inputs.Staff" | translate}}</b></td>
+                    <td *ngIf="clientViewData.staffName">{{clientViewData.staffName}}</td>
+                    <td *ngIf="!clientViewData.staffName">{{'labels.inputs.Unassigned' | translate}}</td>
+                  </tr>
+                </tbody>
+              </table> 
+            </div>
+            <div fxFlex="50%">
+              <table class="account-overview">
+                <tbody>
+                  <tr *ngIf="clientViewData.groups.length > 0">
+                    <td><b>{{"labels.inputs.Member Of" | translate}}</b></td>
+                    <td><span *ngFor="let group of clientViewData.groups">
+                      <span class="m-r-3">{{group.name}}</span>
+                    </span></td>
+                  </tr>
+                  <tr>
+                    <td><b>{{"labels.inputs.Client Type" | translate}}</b></td>
+                    <td>{{clientViewData.clientType.name}}</td>
+                  </tr>
+                  <tr>
+                    <td><b>{{"labels.inputs.Mobile Number" | translate}}</b></td>
+                    <td><mifosx-external-identifier externalId="{{clientViewData.mobileNo}}" completed="true"></mifosx-external-identifier></td>
+                  </tr>
+                  <tr>
+                    <td><b>{{"labels.inputs.Email" | translate}}</b></td>
+                    <td><mifosx-external-identifier externalId="{{clientViewData.emailAddress}}" completed="true"></mifosx-external-identifier></td>
+                  </tr>
+                </tbody>
+              </table> 
+            </div>
+          </div>
         </mat-card-subtitle>
 
       </div>
