@@ -82,7 +82,7 @@
                       <span class="m-r-3">{{group.name}}</span>
                     </span></td>
                   </tr>
-                  <tr>
+                  <tr *ngIf="clientViewData.clientType">
                     <td><b>{{"labels.inputs.Client Type" | translate}}</b></td>
                     <td>{{clientViewData.clientType.name}}</td>
                   </tr>
