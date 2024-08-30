@@ -733,6 +733,12 @@
             "Id": "Id",
             "Drivers License": "Drivers License",
             "Any Other Id Type": "Any Other Id Type",
+            "Check loan repayment overdue": "Check loan repayment overdue",
+            "Update loan arrears aging": "Update loan arrears aging",
+            "Loan Delinquency Classification": "Loan Delinquency Classification",
+            "Add periodic accrual entries": "Add periodic accrual entries",
+            "Accrual Activity Posting on Installment Due Date": "Accrual Activity Posting on Installment Due Date",
+            "Check loan repayment due": "Check loan repayment due",
             "Transfer to Savings": "Transfer to Savings"
         },
         "commons": {

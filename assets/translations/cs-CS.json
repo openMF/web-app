@@ -731,6 +731,12 @@
       "Id": "Id",
       "Drivers License": "Řidičský průkaz",
       "Any Other Id Type": "Jakýkoli jiný typ ID",
+      "Check loan repayment overdue": "Zkontrolujte splácení úvěru po splatnosti",
+      "Update loan arrears aging": "Aktualizace stárnutí úvěrových nedoplatků",
+      "Loan Delinquency Classification": "Klasifikace nesplácení úvěrů",
+      "Add periodic accrual entries": "Přidejte pravidelné položky časového rozlišení",
+      "Accrual Activity Posting on Installment Due Date": "Účtování akruální činnosti v den splatnosti splátky",
+      "Check loan repayment due": "Zkontrolujte splatnost půjčky",
       "Transfer to Savings": "Převod do Úspory"
     },
     "commons": {
