@@ -729,6 +729,12 @@
             "Id": "Identificación",
             "Drivers License": "Licencia de conducir",
             "Any Other Id Type": "Cualquier otro tipo de identificación",
+            "Check loan repayment overdue": "Verificar pagos vencidos de préstamos",
+            "Update loan arrears aging": "Actualizar antigüedad de atrasos en los préstamos",
+            "Loan Delinquency Classification": "Clasificación de morosidad de préstamos",
+            "Add periodic accrual entries": "Agregar entradas de devengo periódico",
+            "Accrual Activity Posting on Installment Due Date": "Contabilización de devengo acumulado en la fecha de vencimiento del pago",
+            "Check loan repayment due": "Verificar pagos a vencer de préstamos",
             "Transfer to Savings": "Transferir a Ahorros"
         },
         "commons": {

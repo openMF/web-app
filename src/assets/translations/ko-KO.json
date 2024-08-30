@@ -731,6 +731,12 @@
       "Id": "ID",
       "Drivers License": "운전 면허증",
       "Any Other Id Type": "기타 ID 유형",
+      "Check loan repayment overdue": "대출 상환 연체 확인",
+      "Update loan arrears aging": "대출 연체 연령 업데이트",
+      "Loan Delinquency Classification": "대출 연체 분류",
+      "Add periodic accrual entries": "정기 발생 항목 추가",
+      "Accrual Activity Posting on Installment Due Date": "할부 만기일에 대한 발생 활동 전기",
+      "Check loan repayment due": "대출 상환 기한 확인",
       "Transfer to Savings": "저축으로 이체"
     },
     "commons": {

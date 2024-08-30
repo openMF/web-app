@@ -731,6 +731,12 @@
       "Id": "आईडी",
       "Drivers License": "चालकको सवारी इजाजत पत्र",
       "Any Other Id Type": "कुनै पनि अन्य आईडी प्रकार",
+      "Check loan repayment overdue": "ऋण चुक्ता तिरेको जाँच गर्नुहोस्",
+      "Update loan arrears aging": "पुरानो ऋण बक्यौता अपडेट गर्नुहोस्",
+      "Loan Delinquency Classification": "ऋण अपराध वर्गीकरण",
+      "Add periodic accrual entries": "आवधिक संचय प्रविष्टिहरू थप्नुहोस्",
+      "Accrual Activity Posting on Installment Due Date": "किस्ता तिर्ने मितिमा उपार्जन गतिविधि पोस्ट गर्दै",
+      "Check loan repayment due": "ऋण तिर्न बाँकी जाँच गर्नुहोस्",
       "Transfer to Savings": "बचतमा स्थानान्तरण गर्नुहोस्"
     },
     "commons": {

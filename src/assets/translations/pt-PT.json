@@ -731,6 +731,12 @@
       "Id": "Eu ia",
       "Drivers License": "Carteira de motorista",
       "Any Other Id Type": "Qualquer outro tipo de ID",
+      "Check loan repayment overdue": "Verifique o reembolso do empréstimo vencido",
+      "Update loan arrears aging": "Atualizar vencimento de empréstimos em atraso",
+      "Loan Delinquency Classification": "Classificação de inadimplência de empréstimos",
+      "Add periodic accrual entries": "Adicione entradas de acumulação periódicas",
+      "Accrual Activity Posting on Installment Due Date": "Publicação de atividades de acumulação na data de vencimento da parcela",
+      "Check loan repayment due": "Verifique o vencimento do empréstimo",
       "Transfer to Savings": "Transferência para Poupança"
     },
     "commons": {
