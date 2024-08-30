@@ -731,6 +731,12 @@
       "Id": "Id",
       "Drivers License": "Vairuotojo pažymėjimas",
       "Any Other Id Type": "Bet koks kitas ID tipas",
+      "Check loan repayment overdue": "Patikrinkite, ar vėluojama grąžinti paskolą",
+      "Update loan arrears aging": "Atnaujinti paskolos įsiskolinimų senėjimą",
+      "Loan Delinquency Classification": "Paskolų vėlavimo klasifikacija",
+      "Add periodic accrual entries": "Pridėkite periodinius kaupimo įrašus",
+      "Accrual Activity Posting on Installment Due Date": "Kaupimo veiklos registravimas įmokos mokėjimo dieną",
+      "Check loan repayment due": "Patikrinkite paskolos grąžinimo terminą",
       "Transfer to Savings": "Perkėlimas į santaupas"
     },
     "commons": {

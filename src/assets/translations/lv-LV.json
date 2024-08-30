@@ -731,6 +731,12 @@
       "Id": "Id",
       "Drivers License": "Vadītāja apliecība",
       "Any Other Id Type": "Jebkurš cits ID veids",
+      "Check loan repayment overdue": "Pārbaudiet, vai kredīta atmaksa ir kavēta",
+      "Update loan arrears aging": "Atjaunināt kredīta parādu novecošanu",
+      "Loan Delinquency Classification": "Aizdevuma kavējumu klasifikācija",
+      "Add periodic accrual entries": "Pievienojiet periodiskus uzkrāšanas ierakstus",
+      "Accrual Activity Posting on Installment Due Date": "Uzkrāšanas darbības grāmatošana iemaksas termiņā",
+      "Check loan repayment due": "Pārbaudiet aizdevuma atmaksas termiņu",
       "Transfer to Savings": "Pārskaitījums uz uzkrājumiem"
     },
     "commons": {

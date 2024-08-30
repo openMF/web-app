@@ -731,6 +731,12 @@
       "Id": "Id",
       "Drivers License": "Patente di guida",
       "Any Other Id Type": "Qualsiasi altro tipo di documento di identità",
+      "Check loan repayment overdue": "Controllare il rimborso del prestito in ritardo",
+      "Update loan arrears aging": "Aggiornare l'invecchiamento dei prestiti arretrati",
+      "Loan Delinquency Classification": "Classificazione delle insolvenze sui prestiti",
+      "Add periodic accrual entries": "Aggiungere voci di competenza periodica",
+      "Accrual Activity Posting on Installment Due Date": "Registrazione dell'attività di competenza alla data di scadenza della rata",
+      "Check loan repayment due": "Controllare il rimborso del prestito in scadenza",
       "Transfer to Savings": "Trasferimento al risparmio"
     },
     "commons": {

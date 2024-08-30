@@ -731,6 +731,12 @@
       "Id": "Ausweis",
       "Drivers License": "Führerschein",
       "Any Other Id Type": "Jeder andere ID-Typ",
+      "Check loan repayment overdue": "Überprüfen Sie, ob die Kreditrückzahlung überfällig ist",
+      "Update loan arrears aging": "Aktualisieren Sie die Fälligkeit der Kreditrückstände",
+      "Loan Delinquency Classification": "Klassifizierung der Kreditausfälle",
+      "Add periodic accrual entries": "Fügen Sie periodische Abgrenzungsposten hinzu",
+      "Accrual Activity Posting on Installment Due Date": "Buchung der Abgrenzungsaktivität am Fälligkeitsdatum der Rate",
+      "Check loan repayment due": "Prüfen Sie, ob die Kreditrückzahlung fällig ist",
       "Transfer to Savings": "Übertragen auf Ersparnisse"
     },
     "commons": {

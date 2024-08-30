@@ -731,6 +731,12 @@
       "Id": "Identifiant",
       "Drivers License": "Le permis de conduire",
       "Any Other Id Type": "Tout autre type d'identifiant",
+      "Check loan repayment overdue": "Vérifier le remboursement du prêt en retard",
+      "Update loan arrears aging": "Mettre à jour le vieillissement des arriérés de prêts",
+      "Loan Delinquency Classification": "Classification des prêts en souffrance",
+      "Add periodic accrual entries": "Ajouter des entrées de régularisation périodiques",
+      "Accrual Activity Posting on Installment Due Date": "Comptabilisation d'activité de régularisation à la date d'échéance du versement",
+      "Check loan repayment due": "Vérifier le remboursement du prêt dû",
       "Transfer to Savings": "Transfert vers l'épargne"
     },
     "commons": {
