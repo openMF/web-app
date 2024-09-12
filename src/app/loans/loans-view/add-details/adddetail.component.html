@@ -1,0 +1,32 @@
+<div class="container p-b-20">
+  <h3> {{"labels.heading.Loan additional Details" | translate}} </h3>
+
+    <div fxLayout="row wrap" fxLayout.lt-md="column">
+
+        <div fxFlexFill>
+            <span fxFlex="50%">{{"labels.inputs.Goods Value" | translate}}</span>
+            <span fxFlex="50%">{{loanDetails.loanAdditionalDetails.goodsValue | translate }}</span>
+        </div>
+        <div fxFlexFill>
+            <span fxFlex="50%">{{"labels.inputs.Freight Charges" | translate}}</span>
+            <span fxFlex="50%">{{loanDetails.loanAdditionalDetails.freightCharges | translate }}</span>
+        </div>
+        <div fxFlexFill>
+          <span fxFlex="50%">{{"labels.inputs.Other Charges" | translate}}</span>
+          <span fxFlex="50%">{{loanDetails.loanAdditionalDetails.otherCharges | translate }}</span>
+         </div>
+         <div fxFlexFill>
+          <span fxFlex="50%">{{"labels.inputs.Advance" | translate}}</span>
+          <span fxFlex="50%">{{loanDetails.loanAdditionalDetails.advance | translate }}</span>
+         </div>
+         <div fxFlexFill>
+          <span fxFlex="50%">{{"labels.inputs.Reduction By Lender" | translate}}</span>
+          <span fxFlex="50%">{{loanDetails.loanAdditionalDetails.reductionByLender | translate }}</span>
+         </div>
+         <div fxFlexFill>
+          <span fxFlex="50%">{{"labels.inputs.Advance Ratio" | translate}} %</span>
+          <span fxFlex="50%">{{loanDetails.loanAdditionalDetails.advanceRatio | translate }} %</span>
+         </div>
+      
+    </div>
+</div>

@@ -2,6 +2,30 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+      [inputFormControl]="loansAccountTermsForm.controls.goodsValue"
+      [inputLabel]="'Goods Value'">
+    </mifosx-input-amount>
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+      [inputFormControl]="loansAccountTermsForm.controls.freightCharges"
+      [inputLabel]="'Freight Charges'">
+    </mifosx-input-amount>
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+      [inputFormControl]="loansAccountTermsForm.controls.otherCharges"
+      [inputLabel]="'Other Charges'">
+    </mifosx-input-amount>
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+    [inputFormControl]="loansAccountTermsForm.controls.advance"
+    [inputLabel]="'Advance'">
+    </mifosx-input-amount>
+    <mifosx-input-amount fxFlex="23%"  *ngIf="currency" [currency]="currency"
+      [inputFormControl]="loansAccountTermsForm.controls.reductionByLender"
+      [inputLabel]="'Reduction By Lender'">
+    </mifosx-input-amount>
+    <mat-form-field fxFlex="23%">
+      <mat-label>{{"labels.inputs.Advance Ratio" | translate}} %</mat-label>
+      <input type="number" matInput formControlName="advanceRatio">
+    </mat-form-field>
     <mifosx-input-amount fxFlex="48%"  *ngIf="currency" [currency]="currency" [isRequired]="true"
       [inputFormControl]="loansAccountTermsForm.controls.principalAmount"
       [inputLabel]="'Principal'">

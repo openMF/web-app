@@ -135,6 +135,10 @@
         [active]="general.isActive">
         {{"labels.inputs.General" | translate}}
       </a>
+      <a mat-tab-link [routerLink]="['./adddetail']" routerLinkActive #adddetails="routerLinkActive"
+        [active]="adddetails.isActive">
+        {{"labels.inputs.Addtional Details" | translate}}
+      </a>
       <a mat-tab-link [routerLink]="['./accountdetail']" routerLinkActive #accountdetail="routerLinkActive"
         [active]="accountdetail.isActive">
         {{"labels.inputs.Account Details" | translate}}

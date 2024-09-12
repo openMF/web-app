@@ -52,6 +52,47 @@
       <span class="m-l-5">{{loansAccountProductTemplate.currency.code}}</span>
     </span>
   </div>
+  <div fxFlexFill>
+    <span fxFlex="40%">{{"labels.inputs.Goods Value" | translate}}:</span>
+    <span fxFlex="60%">
+      {{ loansAccount.goodsValue | currency:loansAccountProductTemplate.currency.code:'symbol-narrow':'1.2-2'}}
+      <span class="m-l-5">{{loansAccountProductTemplate.currency.code}}</span>
+    </span>
+  </div>
+
+  <div fxFlexFill>
+      <span fxFlex="40%">{{"labels.inputs.Freight Charges" | translate}}:</span>
+      <span fxFlex="60%">
+        {{ loansAccount.freightCharges | currency:loansAccountProductTemplate.currency.code:'symbol-narrow':'1.2-2'}}
+        <span class="m-l-5">{{loansAccountProductTemplate.currency.code}}</span>
+      </span>
+  </div>
+  <div fxFlexFill>
+      <span fxFlex="40%">{{"labels.inputs.Other Charges" | translate}}:</span>
+      <span fxFlex="60%">
+        {{ loansAccount.otherCharges | currency:loansAccountProductTemplate.currency.code:'symbol-narrow':'1.2-2'}}
+        <span class="m-l-5">{{loansAccountProductTemplate.currency.code}}</span>
+      </span>
+   </div>
+  <div fxFlexFill>
+    <span fxFlex="40%">{{"labels.inputs.Advance" | translate}}:</span>
+    <span fxFlex="60%">
+      {{ loansAccount.advance | currency:loansAccountProductTemplate.currency.code:'symbol-narrow':'1.2-2'}}
+      <span class="m-l-5">{{loansAccountProductTemplate.currency.code}}</span>
+    </span>
+  </div>
+  <div fxFlexFill>
+    <span fxFlex="40%">{{"labels.inputs.Reduction By Lender" | translate}}:</span>
+    <span fxFlex="60%">
+      {{ loansAccount.reductionByLender | currency:loansAccountProductTemplate.currency.code:'symbol-narrow':'1.2-2'}}
+      <span class="m-l-5">{{loansAccountProductTemplate.currency.code}}</span>
+    </span>
+  </div>
+  <div fxFlexFill *ngIf="loansAccount.advanceRatio">
+    <span fxFlex="40%">{{"labels.inputs.Advance Ratio" | translate}}:</span>
+    <span
+      fxFlex="60%">{{loansAccount.advanceRatio}}&nbsp;&nbsp;%</span>
+  </div>
 
   <div fxFlexFill>
     <span fxFlex="40%">{{"labels.inputs.Loan Term" | translate}}:</span>

@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoansViewComponent } from './loans-view/loans-view.component';
 import { GeneralTabComponent } from './loans-view/general-tab/general-tab.component';
 import { AccountDetailsComponent } from './loans-view/account-details/account-details.component';
+import { AdddetailTabComponent } from './loans-view/add-details/adddetail.component';
 import { NotesTabComponent } from './loans-view/notes-tab/notes-tab.component';
 import { RepaymentScheduleTabComponent } from './loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
 import { TransactionsTabComponent } from './loans-view/transactions-tab/transactions-tab.component';
@@ -98,6 +99,11 @@ const routes: Routes = [
               loanDetailsData: LoanDetailsResolver,
               loanDatatables: LoanDatatablesResolver
             },
+          },
+          {
+            path: 'adddetail',
+            component: AdddetailTabComponent,
+            data: { title: 'Adddetail', breadcrumb: 'Adddetail', routeParamBreadcrumb: false },
           },
           {
             path: 'accountdetail',
