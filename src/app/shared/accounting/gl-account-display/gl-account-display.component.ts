@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GLAccount } from 'app/shared/models/general.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { GLAccount } from 'app/shared/models/general.model';
   templateUrl: './gl-account-display.component.html',
   styleUrls: ['./gl-account-display.component.scss']
 })
-export class GlAccountDisplayComponent implements OnInit {
+export class GlAccountDisplayComponent {
 
   @Input() glAccount: GLAccount | null = null;
   @Input() accountTitle: string | null = null;
@@ -14,9 +14,6 @@ export class GlAccountDisplayComponent implements OnInit {
   @Input() withAccount = '50%';
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   glAccountValue(): string {
     if (this.glAccount) {

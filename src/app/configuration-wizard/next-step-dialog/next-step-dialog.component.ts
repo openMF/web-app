@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
@@ -10,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './next-step-dialog.component.html',
   styleUrls: ['./next-step-dialog.component.scss']
 })
-export class NextStepDialogComponent implements OnInit {
+export class NextStepDialogComponent {
 
   /* Step Percentage */
   stepPercentage: number;
@@ -27,9 +27,6 @@ export class NextStepDialogComponent implements OnInit {
       this.stepPercentage = data.stepPercentage;
       this.nextStepName = data.nextStepName;
       this.previousStepName = data.previousStepName;
-  }
-
-  ngOnInit() {
   }
 
 }

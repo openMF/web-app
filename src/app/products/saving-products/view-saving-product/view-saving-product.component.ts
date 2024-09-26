@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './view-saving-product.component.html',
   styleUrls: ['./view-saving-product.component.scss']
 })
-export class ViewSavingProductComponent implements OnInit {
+export class ViewSavingProductComponent {
 
   savingProductDatatables: any = [];
 
@@ -19,9 +19,6 @@ export class ViewSavingProductComponent implements OnInit {
         }
       });
     });
-  }
-
-  ngOnInit() {
   }
 
 }

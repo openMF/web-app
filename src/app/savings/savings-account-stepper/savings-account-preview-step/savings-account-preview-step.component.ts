@@ -25,7 +25,7 @@ export class SavingsAccountPreviewStepComponent {
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date', 'repaymentsEvery'];
 
   /** Form submission event */
-  @Output() submit = new EventEmitter();
+  @Output() submitEvent = new EventEmitter();
 
   constructor(private translateService: TranslateService) { }
 

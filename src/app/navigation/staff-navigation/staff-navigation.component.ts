@@ -1,19 +1,16 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'mifosx-staff-navigation',
   templateUrl: './staff-navigation.component.html',
   styleUrls: ['./staff-navigation.component.scss']
 })
-export class StaffNavigationComponent implements OnInit {
+export class StaffNavigationComponent {
 
   @Input() employeeData: any;
   @Input() centerData: any;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

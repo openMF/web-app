@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
  * External Services component.
@@ -8,14 +8,11 @@ import { Component, OnInit } from '@angular/core';
   selector: 'mifosx-external-services',
   templateUrl: './external-services.component.html',
 })
-export class ExternalServicesComponent implements OnInit {
+export class ExternalServicesComponent {
   // Initialize an array of 4 boolean values, all set to false
   arrowBooleans: boolean[] = new Array(4).fill(false);
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   /**
    * Popover function

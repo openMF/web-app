@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PaymentDetail } from './payment-detail-model';
 
 
@@ -7,13 +7,11 @@ import { PaymentDetail } from './payment-detail-model';
   templateUrl: './transaction-payment-detail.component.html',
   styleUrls: ['./transaction-payment-detail.component.scss']
 })
-export class TransactionPaymentDetailComponent implements OnInit {
+export class TransactionPaymentDetailComponent {
 
   @Input() paymentDetailData: PaymentDetail;
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   hasSomeValue(): boolean {
     return (

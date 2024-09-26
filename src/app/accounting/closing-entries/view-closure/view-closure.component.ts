@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,7 +17,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   templateUrl: './view-closure.component.html',
   styleUrls: ['./view-closure.component.scss']
 })
-export class ViewClosureComponent implements OnInit {
+export class ViewClosureComponent {
 
   /** GL Account closure. */
   glAccountClosure: any;
@@ -36,9 +36,6 @@ export class ViewClosureComponent implements OnInit {
     this.route.data.subscribe((data: { glAccountClosure: any }) => {
       this.glAccountClosure = data.glAccountClosure;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

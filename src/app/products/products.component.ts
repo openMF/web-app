@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** Custom Services */
@@ -14,7 +14,7 @@ import { PopoverService } from '../configuration-wizard/popover/popover.service'
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit, AfterViewInit {
+export class ProductsComponent implements AfterViewInit {
 
   /* Reference of charges */
   @ViewChild('charges') charges: ElementRef<any>;
@@ -51,9 +51,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private configurationWizardService: ConfigurationWizardService,
               private popoverService: PopoverService) { }
-
-  ngOnInit() {
-  }
 
   /**
    * To show popover.

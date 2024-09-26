@@ -178,7 +178,7 @@
                   <div *ngIf="chartSlab.fromPeriod !== undefined">
                     {{ chartSlab.fromPeriod }} - {{ chartSlab.toPeriod }} {{ chartSlab.periodType.value }}
                   </div>
-                  <div *ngIf="chartSlab.fromPeriod == undefined">
+                  <div *ngIf="chartSlab.fromPeriod === undefined">
                     &nbsp;
                   </div>
                 </td>
@@ -191,7 +191,7 @@
                     {{ chartSlab.amountRangeFrom }} - {{ chartSlab.amountRangeTo }}
                   </div>
 
-                  <div *ngIf="chartSlab.amountRangeFrom == undefined">
+                  <div *ngIf="chartSlab.amountRangeFrom === undefined">
                     &nbsp;
                   </div>
                 </td>

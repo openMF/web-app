@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './view-loan-product.component.html',
   styleUrls: ['./view-loan-product.component.scss']
 })
-export class ViewLoanProductComponent implements OnInit {
+export class ViewLoanProductComponent {
 
   loanProductDatatables: any = [];
 
@@ -14,9 +14,6 @@ export class ViewLoanProductComponent implements OnInit {
     this.route.data.subscribe((data: { loanProductDatatables: any }) => {
       this.loanProductDatatables = data.loanProductDatatables;
     });
-  }
-
-  ngOnInit() {
   }
 
 }

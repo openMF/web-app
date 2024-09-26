@@ -24,7 +24,7 @@ export class CampaignPreviewStepComponent implements OnInit {
   smsProviders: any[];
 
   /** Emits submit() event */
-  @Output() submit = new EventEmitter;
+  @Output() submitEvent = new EventEmitter;
 
   constructor() { }
 

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -21,7 +21,7 @@ import { Dates } from 'app/core/utils/dates';
   templateUrl: './edit-recurring-deposit-account.component.html',
   styleUrls: ['./edit-recurring-deposit-account.component.scss']
 })
-export class EditRecurringDepositAccountComponent implements OnInit {
+export class EditRecurringDepositAccountComponent {
 
   /** Imports all the step component */
   @ViewChild(RecurringDepositsAccountDetailsStepComponent, { static: true }) recurringDepositsAccountDetailsStep: RecurringDepositsAccountDetailsStepComponent;
@@ -51,9 +51,6 @@ export class EditRecurringDepositAccountComponent implements OnInit {
    */
   setTemplate($event: any) {
     this.recurringDepositsAccountProductTemplate = $event;
-  }
-
-  ngOnInit() {
   }
 
   /** Get Recurring Deposit Account Details Form Data */

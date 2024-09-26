@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
   templateUrl: './reschedule-loan-tab.component.html',
   styleUrls: ['./reschedule-loan-tab.component.scss']
 })
-export class RescheduleLoanTabComponent implements OnInit {
+export class RescheduleLoanTabComponent {
   @Input() loanStatus: LoanStatus;
 
   loanRescheduleData: any;
@@ -31,9 +31,6 @@ export class RescheduleLoanTabComponent implements OnInit {
     this.route.parent.data.subscribe((data: { loanRescheduleData: any }) => {
       this.loanRescheduleData = data.loanRescheduleData;
     });
-  }
-
-  ngOnInit(): void {
   }
 
   manageRequest(request: any, command: string): void {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 /** Custom Components */
 import { LoanAccountTableComponent } from '../loan-account-table/loan-account-table.component';
@@ -12,7 +12,7 @@ import { MemberGroupsComponent } from '../member-groups/member-groups.component'
   templateUrl: './client-navigation.component.html',
   styleUrls: ['./client-navigation.component.scss']
 })
-export class ClientNavigationComponent implements OnInit {
+export class ClientNavigationComponent {
 
   @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
   @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
@@ -23,8 +23,5 @@ export class ClientNavigationComponent implements OnInit {
   @Input() clientAccountsData: any;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

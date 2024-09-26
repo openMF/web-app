@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
@@ -9,7 +9,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   templateUrl: './view-bucket.component.html',
   styleUrls: ['./view-bucket.component.scss']
 })
-export class ViewBucketComponent implements OnInit {
+export class ViewBucketComponent {
 
   /** Delinquency Bucket Data. */
   delinquencyBucketData: any;
@@ -24,9 +24,6 @@ export class ViewBucketComponent implements OnInit {
         (objA: { minimumAge: number; }, objB: { minimumAge: number; }) => objA.minimumAge - objB.minimumAge,
       );
     });
-  }
-
-  ngOnInit(): void {
   }
 
   deleteDelinquencyBucket() {

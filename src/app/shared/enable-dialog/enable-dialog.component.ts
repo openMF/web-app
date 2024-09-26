@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
@@ -10,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './enable-dialog.component.html',
   styleUrls: ['./enable-dialog.component.scss']
 })
-export class EnableDialogComponent implements OnInit {
+export class EnableDialogComponent {
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
@@ -18,8 +18,5 @@ export class EnableDialogComponent implements OnInit {
    */
   constructor(public dialogRef: MatDialogRef<EnableDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  ngOnInit() {
-  }
 
 }

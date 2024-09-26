@@ -105,20 +105,20 @@
           {{ chargeData.active === true | yesNo }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency">
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency">
           {{"labels.inputs.Add Fee Frequency" | translate}}
         </div>
 
         <div fxFlex="50%"
-          *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeFrequency && chargeData.feeFrequency">
+          *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency && chargeData.feeFrequency">
           {{ chargeData.feeFrequency.value | translateKey:'catalogs' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
+        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
           {{"labels.inputs.Frequency Interval" | translate}}
         </div>
 
-        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id == 9 && chargeData.feeInterval">
+        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
           {{ chargeData.feeInterval }}
         </div>
 

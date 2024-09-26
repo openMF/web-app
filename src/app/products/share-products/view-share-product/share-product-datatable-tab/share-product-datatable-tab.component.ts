@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './share-product-datatable-tab.component.html',
   styleUrls: ['./share-product-datatable-tab.component.scss']
 })
-export class ShareProductDatatableTabComponent implements OnInit {
+export class ShareProductDatatableTabComponent {
 
   entityId: string;
   entityDatatable: any;
@@ -19,9 +19,6 @@ export class ShareProductDatatableTabComponent implements OnInit {
       this.entityDatatable = data.shareProductDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
-  }
-
-  ngOnInit(): void {
   }
 
 }

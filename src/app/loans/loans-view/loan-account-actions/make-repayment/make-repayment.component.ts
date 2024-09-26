@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ import { Currency } from 'app/shared/models/general.model';
   templateUrl: './make-repayment.component.html',
   styleUrls: ['./make-repayment.component.scss']
 })
-export class MakeRepaymentComponent implements OnInit, OnDestroy {
+export class MakeRepaymentComponent implements OnInit {
 
   @Input() dataObject: any;
   /** Loan Id */
@@ -61,10 +61,6 @@ export class MakeRepaymentComponent implements OnInit, OnDestroy {
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
-  }
-
-  ngOnDestroy(): void {
-
   }
 
   /**

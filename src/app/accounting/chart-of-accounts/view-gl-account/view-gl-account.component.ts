@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -18,7 +18,7 @@ import { Location } from '@angular/common';
   templateUrl: './view-gl-account.component.html',
   styleUrls: ['./view-gl-account.component.scss']
 })
-export class ViewGlAccountComponent implements OnInit {
+export class ViewGlAccountComponent {
 
   /** GL Account. */
   glAccount: any;
@@ -38,9 +38,6 @@ export class ViewGlAccountComponent implements OnInit {
     this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

@@ -11,7 +11,7 @@
     }"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="!(isHandset$ | async)">
+    [opened]="(isHandset$ | async) === false">
 
     <mifosx-sidenav [sidenavCollapsed]="sidenavCollapsed"></mifosx-sidenav>
 

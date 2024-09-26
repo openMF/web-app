@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './datatable-tab.component.html',
   styleUrls: ['./datatable-tab.component.scss']
 })
-export class DatatableTabComponent implements OnInit {
+export class DatatableTabComponent {
   entityId: string;
   entityDatatable: any;
   multiRowDatatableFlag: boolean;
@@ -19,8 +19,6 @@ export class DatatableTabComponent implements OnInit {
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
 
-  }
-  ngOnInit(): void {
   }
 
 }

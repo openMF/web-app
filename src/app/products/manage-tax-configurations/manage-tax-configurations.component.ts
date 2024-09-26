@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
  * Manage Tax Configurations component.
@@ -8,14 +8,11 @@ import { Component, OnInit } from '@angular/core';
   selector: 'mifosx-manage-tax-configurations',
   templateUrl: './manage-tax-configurations.component.html',
 })
-export class ManageTaxConfigurationsComponent implements OnInit {
+export class ManageTaxConfigurationsComponent {
   // Initialize an array of 2 boolean values, all set to false
   arrowBooleans: boolean[] = new Array(2).fill(false);
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   /**
    * Popover function

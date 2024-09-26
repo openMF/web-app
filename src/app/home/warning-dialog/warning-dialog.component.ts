@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { environment } from '../../../environments/environment';
 
@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './warning-dialog.component.html',
   styleUrls: ['./warning-dialog.component.scss']
 })
-export class WarningDialogComponent implements OnInit {
+export class WarningDialogComponent {
 
   title: string;
   content: string;
@@ -17,9 +17,6 @@ export class WarningDialogComponent implements OnInit {
     this.title = environment.warningDialog.title;
     this.content = environment.warningDialog.content;
     this.buttonText = environment.warningDialog.buttonText;
-  }
-
-  ngOnInit() {
   }
 
 }

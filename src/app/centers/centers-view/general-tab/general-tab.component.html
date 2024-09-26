@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-  <div *ngIf="centerViewData.status.value=='Closed'">
+  <div *ngIf="centerViewData.status.value==='Closed'">
     <h3 class="closedCenter">{{"labels.heading.Center Closed" | translate}}</h3>
   </div>
   <h3>{{"labels.heading.Summary Details" | translate}}</h3>
@@ -83,19 +83,19 @@
           <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" | translate}} </th>
           <td mat-cell *matCellDef="let element">
             <ng-container *ngIf="element.status.active">
-              <button class="account-action-button" mat-raised-button color="primary" *ngIf="element.depositType.id == '100'"
+              <button class="account-action-button" mat-raised-button color="primary" *ngIf="element.depositType.id === 100"
                 (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
                 <i class="fa fa-arrow-right" matTooltip="{{ 'tooltips.Deposit' | translate}}"></i>
               </button>
-              <button class="account-action-button" mat-raised-button color="primary" *ngIf="element.depositType.id == '300'"
+              <button class="account-action-button" mat-raised-button color="primary" *ngIf="element.depositType.id === 300"
                 (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
                 <i class="fa fa-arrow-right" matTooltip="{{ 'tooltips.Deposit' | translate}}"></i>
               </button>
-              <button class="account-action-button" mat-raised-button color="primary" *ngIf="element.depositType.id == '100'"
+              <button class="account-action-button" mat-raised-button color="primary" *ngIf="element.depositType.id === 100"
                 (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Withdrawal']">
                 <i class="fa fa-arrow-left" matTooltip="{{ 'tooltips.Withdraw' | translate}}"></i>
               </button>
-              <button class="account-action-button" mat-raised-button color="primary" *ngIf="element.depositType.id == '300'"
+              <button class="account-action-button" mat-raised-button color="primary" *ngIf="element.depositType.id === 300"
                 (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Withdrawal']">
                 <i class="fa fa-arrow-left" matTooltip="{{ 'tooltips.Withdraw' | translate}}"></i>
               </button>

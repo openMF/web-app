@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
  * Self service app configuration component.
@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './app-configuration.component.html',
   styleUrls: ['./app-configuration.component.scss']
 })
-export class AppConfigurationComponent implements OnInit {
+export class AppConfigurationComponent {
 
   /** Placeholder for languages. */
   languages: any;
@@ -27,8 +27,5 @@ export class AppConfigurationComponent implements OnInit {
   onlineBankingAppFonts: any;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +12,7 @@ import { AccountsFilterPipe } from '../../pipes/accounts-filter.pipe';
   templateUrl: './share-account-table.component.html',
   styleUrls: ['./share-account-table.component.scss']
 })
-export class ShareAccountTableComponent implements OnInit {
+export class ShareAccountTableComponent {
 
   /** Columns to be displayed in the share accounts table. */
   displayedColumns: string[] = ['accountNo', 'productName', 'totalApprovedShares', 'Status'];
@@ -48,9 +48,6 @@ export class ShareAccountTableComponent implements OnInit {
    */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  ngOnInit() {
   }
 
   /**

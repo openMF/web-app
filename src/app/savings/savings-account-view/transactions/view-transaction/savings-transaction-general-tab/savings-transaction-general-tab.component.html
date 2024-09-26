@@ -2,8 +2,8 @@
   <span
     *ngIf="!(transactionData.interestedPostedAsOn === false && (transactionData.transactionType.id === 17 || transactionData.transactionType.id === 3))">
     <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
-      <button mat-raised-button color="primary" *ngIf="transactionData.transactionType.value == 'Transfer' || transactionData.reversed == 'true'
-          || transactionData.transactionType.id==3 || transactionData.transactionType.id==17" [routerLink]="'edit'">
+      <button mat-raised-button color="primary" *ngIf="transactionData.transactionType.value === 'Transfer' || transactionData.reversed === 'true'
+          || transactionData.transactionType.id===3 || transactionData.transactionType.id===17" [routerLink]="'edit'">
         <fa-icon icon="edit" class="m-r-10"></fa-icon>{{"labels.buttons.Edit" | translate}}
       </button>
     </span>

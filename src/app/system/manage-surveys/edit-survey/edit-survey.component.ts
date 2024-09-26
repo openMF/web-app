@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,7 +22,7 @@ import { Survey, QuestionData, ResponseData } from './../survey.model';
   templateUrl: './edit-survey.component.html',
   styleUrls: ['./edit-survey.component.scss']
 })
-export class EditSurveyComponent implements OnInit {
+export class EditSurveyComponent {
 
   /** Survey form. */
   surveyForm: UntypedFormGroup;
@@ -44,12 +44,6 @@ export class EditSurveyComponent implements OnInit {
                   this.prepareSurveyForm(data.survey);
                 });
               }
-
-  /**
-   * Fills the survey form.
-   */
-  ngOnInit() {
-  }
 
   /**
    * Takes an object of type Survey

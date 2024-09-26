@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'mifosx-entity-datatable-tab',
   templateUrl: './entity-datatable-tab.component.html',
   styleUrls: ['./entity-datatable-tab.component.scss']
 })
-export class EntityDatatableTabComponent implements OnInit {
+export class EntityDatatableTabComponent {
 
   @Input() multiRowDatatableFlag = false;
   @Input() entityDatatable: any;
@@ -13,8 +13,5 @@ export class EntityDatatableTabComponent implements OnInit {
   @Input() entityId: string;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

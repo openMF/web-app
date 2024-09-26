@@ -75,7 +75,7 @@
             </button>
           </span>
           <span *ngIf="recurringDepositsAccountData.status.value !== 'Submitted and pending approval' && charge.amountOutstanding !== 0">
-            <span *ngIf="charge.chargeTimeType.value == 'Monthly Fee' || charge.chargeTimeType.value == 'Annual Fee'|| charge.chargeTimeType.value == 'Specified due date'">
+            <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'|| charge.chargeTimeType.value === 'Specified due date'">
               <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Pay Charge' | translate}}"
               *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); payCharge(charge.id)">
                 <i class="fa fa-dollar"></i>
