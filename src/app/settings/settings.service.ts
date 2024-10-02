@@ -15,7 +15,7 @@ import { environment } from '../../environments/environment';
 export class SettingsService {
 
   public static businessDateFormat = 'yyyy-MM-dd';
-  public static businessDateConfigName = 'enable_business_date';
+  public static businessDateConfigName = 'enable-business-date';
   public static businessDateType = 'BUSINESS_DATE';
   public static cobDateType = 'COB_DATE';
   minAllowedDate = new Date(1950, 0, 1);
