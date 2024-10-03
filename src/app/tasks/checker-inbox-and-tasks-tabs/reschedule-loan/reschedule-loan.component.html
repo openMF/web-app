@@ -40,12 +40,12 @@
 
     <ng-container matColumnDef="rescheduleRequestNo">
       <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Reschedule Request' | translate}}# </th>
-      <td mat-cell *matCellDef="let loan"> {{loan.id}} </td>
+      <td mat-cell *matCellDef="let request" class="view-details" [routerLink]="['../../clients', request.clientId , 'loans-accounts', request.loanId, 'loan-reschedules', request.id]"> {{request.id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="loanAccountNo">
       <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Loan Account' | translate}}# </th>
-      <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId , 'loans', loan.loanId, 'general']"> {{loan.loanAccountNumber}} </td>
+      <td mat-cell *matCellDef="let loan" class="view-details" [routerLink]="['../../clients', loan.clientId , 'loans-accounts', loan.loanId, 'general']"> {{loan.loanAccountNumber}} </td>
     </ng-container>
 
     <ng-container matColumnDef="rescheduleForm">

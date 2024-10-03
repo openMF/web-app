@@ -322,6 +322,14 @@ export class LoansService {
   }
 
   /**
+   * Returns the Loan Reschedule Preview
+   */
+  getLoanReschedulePreview(rescheduleId: any, ) {
+    const httpParams = new HttpParams().set('command', 'previewLoanReschedule');
+    return this.http.get(`/rescheduleloans/${rescheduleId}`, { params: httpParams });
+  }
+
+  /**
    * Returns the Loan Reschedule request
    */
   applyCommandLoanRescheduleRequests(rescheduleId: any, command: string, data: any) {

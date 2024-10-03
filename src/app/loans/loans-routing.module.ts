@@ -28,6 +28,7 @@ import { ViewRecieptComponent } from './loans-view/transactions/view-reciept/vie
 import { ExportTransactionsComponent } from './loans-view/transactions/export-transactions/export-transactions.component';
 import { GlimAccountComponent } from './glim-account/glim-account.component';
 import { CreateGlimAccountComponent } from './glim-account/create-glim-account/create-glim-account.component';
+import { ReschedulePreviewComponent } from './loans-view/reschedule-preview/reschedule-preview.component';
 
 /** Custom Resolvers */
 import { LoanDetailsResolver } from './common-resolvers/loan-details.resolver';
@@ -60,6 +61,7 @@ import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/ext
 import { LoanCollateralsResolver } from './common-resolvers/loan-collaterals.resolver';
 import { LoanDelinquencyDataResolver } from './common-resolvers/loan-delinquency-data.resolver';
 import { LoanDelinquencyActionsResolver } from './common-resolvers/loan-delinquency-actions.resolver';
+import { LoanReschedulePreviewResolver } from './common-resolvers/loan-reschedule-preview.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -146,7 +148,7 @@ const routes: Routes = [
           },
           {
             path: 'loan-reschedules',
-            data: {},
+            data: { breadcrumb: 'Reschedules' },
             resolve: {
               loanRescheduleData: LoanReschedulesResolver
             },
@@ -154,7 +156,20 @@ const routes: Routes = [
               {
                 path: '',
                 component: RescheduleLoanTabComponent
-              }
+              },
+              {
+                path: ':rescheduleId',
+                data: { routeParamBreadcrumb: 'rescheduleId' },
+                resolve: {
+                  loanRescheduleData: LoanReschedulePreviewResolver
+                },
+                children: [
+                  {
+                    path: '',
+                    component: ReschedulePreviewComponent
+                  }
+                ]
+              },
             ]
           },
           {
