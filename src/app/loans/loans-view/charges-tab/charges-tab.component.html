@@ -79,12 +79,12 @@
           </button>
         </span>
         <button class="account-action-button" mat-raised-button color="accent" matTooltip="{{ 'tooltips.Adjust Charge' | translate}}"
-          *ngIf="!charge.paid && status=='Active'"
+          *ngIf="!charge.paid && status==='Active'"
           (click)="routeEdit($event); adjustCharge(charge.id)">
           <i class="fa fa-pencil"></i>
         </button>
         <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Pay Charge' | translate}}"
-          *ngIf="charge.chargePayable && !charge.paid && status=='Active'"
+          *ngIf="charge.chargePayable && !charge.paid && status==='Active'"
           (click)="routeEdit($event); payCharge(charge.id)">
           <i class="fa fa-dollar"></i>
         </button>

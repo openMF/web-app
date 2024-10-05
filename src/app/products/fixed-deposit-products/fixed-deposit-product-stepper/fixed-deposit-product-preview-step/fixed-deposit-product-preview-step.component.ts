@@ -21,7 +21,7 @@ export class FixedDepositProductPreviewStepComponent implements OnInit, OnChange
   @Input() chartSlabsDisplayedColumns: any[];
   @Input() accountingRuleData: any;
   @Input() fixedDepositProduct: any;
-  @Output() submit = new EventEmitter();
+  @Output() submitEvent = new EventEmitter();
 
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
   incentivesDisplayedColumns: string[] = ['entityType', 'attributeName', 'conditionType', 'attributeValue', 'incentiveType', 'amount'];

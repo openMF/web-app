@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** Custom Services */
@@ -11,7 +11,7 @@ import { PopoverService } from '../configuration-wizard/popover/popover.service'
   templateUrl: './system.component.html',
   styleUrls: ['./system.component.scss']
 })
-export class SystemComponent implements OnInit, AfterViewInit {
+export class SystemComponent implements AfterViewInit {
 
   /* Reference of manage datatables */
   @ViewChild('datatables') datatables: ElementRef<any>;
@@ -52,9 +52,6 @@ export class SystemComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private configurationWizardService: ConfigurationWizardService,
               private popoverService: PopoverService) { }
-
-  ngOnInit() {
-  }
 
   /**
    * Popover function

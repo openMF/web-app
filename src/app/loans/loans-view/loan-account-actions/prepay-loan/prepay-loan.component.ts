@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { Currency } from 'app/shared/models/general.model';
   templateUrl: './prepay-loan.component.html',
   styleUrls: ['./prepay-loan.component.scss']
 })
-export class PrepayLoanComponent implements OnInit, OnDestroy {
+export class PrepayLoanComponent implements OnInit {
 
   @Input() dataObject: any;
   /** Loan Id */
@@ -69,9 +69,6 @@ export class PrepayLoanComponent implements OnInit, OnDestroy {
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
-  }
-
-  ngOnDestroy(): void {
   }
 
   /**

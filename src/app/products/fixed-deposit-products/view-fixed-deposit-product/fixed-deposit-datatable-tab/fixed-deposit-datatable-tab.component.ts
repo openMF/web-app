@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './fixed-deposit-datatable-tab.component.html',
   styleUrls: ['./fixed-deposit-datatable-tab.component.scss']
 })
-export class FixedDepositDatatableTabComponent implements OnInit {
+export class FixedDepositDatatableTabComponent {
   entityId: string;
   entityDatatable: any;
   multiRowDatatableFlag: boolean;
@@ -18,9 +18,6 @@ export class FixedDepositDatatableTabComponent implements OnInit {
       this.entityDatatable = data.fixedDepositDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
-  }
-
-  ngOnInit(): void {
   }
 
 }

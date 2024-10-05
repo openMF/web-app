@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './view-tax-component.component.html',
   styleUrls: ['./view-tax-component.component.scss']
 })
-export class ViewTaxComponentComponent implements OnInit {
+export class ViewTaxComponentComponent {
 
   /** tax Component Data. */
   taxComponentData: any;
@@ -23,9 +23,6 @@ export class ViewTaxComponentComponent implements OnInit {
     this.route.data.subscribe((data: { taxComponent: any }) => {
       this.taxComponentData = data.taxComponent;
     });
-  }
-
-  ngOnInit() {
   }
 
 }

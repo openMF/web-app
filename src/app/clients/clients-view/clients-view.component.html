@@ -192,7 +192,7 @@
         <button mat-menu-item (click)="doAction('Client Screen Reports')"> {{"labels.buttons.Client Screen Reports" | translate}} </button>
         <button mat-menu-item (click)="doAction('Create Standing Instructions')"
           *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'"> {{"labels.buttons.Create Standing Instructions" | translate}}</button>
-        <span *ngIf="clientViewData.status.value!='Transfer on hold'">
+        <span *ngIf="clientViewData.status.value!=='Transfer on hold'">
           <button mat-menu-item (click)="doAction('View Standing Instructions')"
             *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"> {{"labels.buttons.View Standing Instructions" | translate}}</button>
         </span>

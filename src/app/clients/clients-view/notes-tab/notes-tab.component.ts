@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -16,7 +16,7 @@ import { AuthenticationService } from 'app/core/authentication/authentication.se
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss']
 })
-export class NotesTabComponent implements OnInit {
+export class NotesTabComponent {
 
   /** Client ID */
   entityId: string;
@@ -40,8 +40,6 @@ export class NotesTabComponent implements OnInit {
       this.entityNotes = data.clientNotes;
     });
   }
-
-  ngOnInit() { }
 
   /**
    * Edits a client note.

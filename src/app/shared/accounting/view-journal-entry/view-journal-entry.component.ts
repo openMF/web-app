@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
@@ -10,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './view-journal-entry.component.html',
   styleUrls: ['./view-journal-entry.component.scss']
 })
-export class ViewJournalEntryComponent implements OnInit {
+export class ViewJournalEntryComponent {
 
   existsPaymentDetails = false;
   /**
@@ -21,9 +21,6 @@ export class ViewJournalEntryComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.existsPaymentDetails = (data.journalEntry.transactionDetails != null && data.journalEntry.transactionDetails.paymentDetails != null);
-  }
-
-  ngOnInit() {
   }
 
 }

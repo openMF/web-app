@@ -296,7 +296,7 @@
   <button mat-raised-button [routerLink]="['../']">
     {{'labels.buttons.Cancel' | translate}}
   </button>
-  <button mat-raised-button color="primary" (click)="submit.emit()" *mifosxHasPermission="taskPermission">
+  <button mat-raised-button color="primary" (click)="submitEvent.emit()" *mifosxHasPermission="taskPermission">
     {{'labels.buttons.Submit' | translate}}
   </button>
 </div>

@@ -2,7 +2,7 @@
   *ngIf="!(transactionData.reversed)">
   <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
     <button mat-raised-button color="primary"
-      *ngIf="!(transactionData.transactionType.value == 'Transfer' || transactionData.reversed == 'true')"
+      *ngIf="!(transactionData.transactionType.value === 'Transfer' || transactionData.reversed === 'true')"
       [routerLink]="'edit'">
       <fa-icon icon="edit" class="m-r-10"></fa-icon>{{"labels.buttons.Edit" | translate }}
     </button>

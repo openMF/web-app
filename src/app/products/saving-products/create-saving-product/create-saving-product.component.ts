@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -20,7 +20,7 @@ import { Accounting } from 'app/core/utils/accounting';
   templateUrl: './create-saving-product.component.html',
   styleUrls: ['./create-saving-product.component.scss']
 })
-export class CreateSavingProductComponent implements OnInit {
+export class CreateSavingProductComponent {
 
   @ViewChild(SavingProductDetailsStepComponent, { static: true }) savingProductDetailsStep: SavingProductDetailsStepComponent;
   @ViewChild(SavingProductCurrencyStepComponent, { static: true }) savingProductCurrencyStep: SavingProductCurrencyStepComponent;
@@ -48,9 +48,6 @@ export class CreateSavingProductComponent implements OnInit {
       this.savingProductsTemplate = data.savingProductsTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
-  }
-
-  ngOnInit() {
   }
 
   get savingProductDetailsForm() {

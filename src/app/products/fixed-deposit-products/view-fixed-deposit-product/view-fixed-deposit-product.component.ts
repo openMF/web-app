@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-fixed-deposit-product.component.scss']
 })
 
-export class ViewFixedDepositProductComponent implements OnInit {
+export class ViewFixedDepositProductComponent {
 
   fixedDepositDatatables: any = [];
 
@@ -24,9 +24,6 @@ export class ViewFixedDepositProductComponent implements OnInit {
         }
       });
     });
-  }
-
-  ngOnInit() {
   }
 
 }

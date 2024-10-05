@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -16,7 +16,7 @@ import { GroupsService } from '../../groups.service';
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss']
 })
-export class NotesTabComponent implements OnInit {
+export class NotesTabComponent {
 
   /** Group ID */
   entityId: string;
@@ -40,9 +40,6 @@ export class NotesTabComponent implements OnInit {
     this.route.data.subscribe((data: { groupNotes: any }) => {
       this.entityNotes = data.groupNotes;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

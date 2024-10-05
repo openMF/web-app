@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UntypedFormControl } from '@angular/forms';
 
@@ -11,7 +11,7 @@ import { UntypedFormControl } from '@angular/forms';
   templateUrl: './revert-transaction.component.html',
   styleUrls: ['./revert-transaction.component.scss']
 })
-export class RevertTransactionComponent implements OnInit {
+export class RevertTransactionComponent {
 
   /** Comments input form control. */
   comments = new UntypedFormControl('');
@@ -22,8 +22,5 @@ export class RevertTransactionComponent implements OnInit {
    */
   constructor(public dialogRef: MatDialogRef<RevertTransactionComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  ngOnInit() {
-  }
 
 }

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './reschedule-loan.component.html',
   styleUrls: ['./reschedule-loan.component.scss']
 })
-export class RescheduleLoanComponent implements OnInit {
+export class RescheduleLoanComponent {
 
   /** Loans Data */
   loans: any;
@@ -54,9 +54,6 @@ export class RescheduleLoanComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel(true, []);
     });
-  }
-
-  ngOnInit() {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */

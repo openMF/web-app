@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -10,7 +10,7 @@ import { ClientsService } from '../../clients.service';
   templateUrl: './documents-tab.component.html',
   styleUrls: ['./documents-tab.component.scss']
 })
-export class DocumentsTabComponent implements OnInit {
+export class DocumentsTabComponent {
   entityDocuments: any;
   entityId: string;
   entityType = 'clients';
@@ -22,9 +22,6 @@ export class DocumentsTabComponent implements OnInit {
       this.entityDocuments = data.clientDocuments;
     });
     this.entityId = this.route.parent.snapshot.paramMap.get('clientId');
-  }
-
-  ngOnInit() {
   }
 
   downloadDocument(documentId: string) {

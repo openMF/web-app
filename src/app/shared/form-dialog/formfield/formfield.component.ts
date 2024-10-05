@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 
 import { FormfieldBase } from './model/formfield-base';
@@ -8,14 +8,11 @@ import { FormfieldBase } from './model/formfield-base';
   templateUrl: './formfield.component.html',
   styleUrls: ['./formfield.component.scss']
 })
-export class FormfieldComponent implements OnInit {
+export class FormfieldComponent {
 
   @Input() form: UntypedFormGroup;
   @Input() formfield: FormfieldBase;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
  * Self service component.
@@ -11,11 +11,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './self-service.component.html',
   styleUrls: ['./self-service.component.scss']
 })
-export class SelfServiceComponent implements OnInit {
+export class SelfServiceComponent {
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -8,7 +8,7 @@ import { SettingsService } from 'app/settings/settings.service';
   templateUrl: './loans-account-schedule-step.component.html',
   styleUrls: ['./loans-account-schedule-step.component.scss']
 })
-export class LoansAccountScheduleStepComponent implements OnInit {
+export class LoansAccountScheduleStepComponent {
 
   /** Currency Code */
   @Input() currencyCode: string;
@@ -28,8 +28,6 @@ export class LoansAccountScheduleStepComponent implements OnInit {
     private route: ActivatedRoute) {
       this.loanId = this.route.snapshot.params['loanId'];
   }
-
-  ngOnInit(): void { }
 
   showRepaymentInfo(): void {
     this.repaymentScheduleDetails = {periods: []};

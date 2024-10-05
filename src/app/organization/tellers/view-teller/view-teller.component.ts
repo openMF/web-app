@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,7 +17,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   templateUrl: './view-teller.component.html',
   styleUrls: ['./view-teller.component.scss']
 })
-export class ViewTellerComponent implements OnInit {
+export class ViewTellerComponent {
 
   /** Teller data. */
   tellerData: any;
@@ -36,9 +36,6 @@ export class ViewTellerComponent implements OnInit {
     this.route.data.subscribe((data: { teller: any }) => {
       this.tellerData = data.teller;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

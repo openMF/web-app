@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -6,12 +6,9 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './session-timeout-dialog.component.html',
   styleUrls: ['./session-timeout-dialog.component.scss']
 })
-export class SessionTimeoutDialogComponent implements OnInit {
+export class SessionTimeoutDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<SessionTimeoutDialogComponent>) {
-  }
-
-  ngOnInit(): void {
   }
 
 }

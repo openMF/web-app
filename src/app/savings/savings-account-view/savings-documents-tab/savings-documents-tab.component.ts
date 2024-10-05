@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { UploadDocumentDialogComponent } from 'app/clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { environment } from 'environments/environment';
@@ -11,7 +10,7 @@ import { environment } from 'environments/environment';
   templateUrl: './savings-documents-tab.component.html',
   styleUrls: ['./savings-documents-tab.component.scss']
 })
-export class SavingsDocumentsTabComponent implements OnInit {
+export class SavingsDocumentsTabComponent {
 
   /** Stores the resolved savings documents data */
   entityDocuments: any;
@@ -31,9 +30,6 @@ export class SavingsDocumentsTabComponent implements OnInit {
       this.setSavingsDocumentsData(data.savingsDocuments);
     });
     this.entityId = this.route.parent.snapshot.paramMap.get('savingAccountId');
-  }
-
-  ngOnInit() {
   }
 
   setSavingsDocumentsData(data: any) {

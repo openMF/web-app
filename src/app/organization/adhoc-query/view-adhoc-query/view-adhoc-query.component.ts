@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,7 +17,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   templateUrl: './view-adhoc-query.component.html',
   styleUrls: ['./view-adhoc-query.component.scss']
 })
-export class ViewAdhocQueryComponent implements OnInit {
+export class ViewAdhocQueryComponent {
 
   /** Adhoc query data. */
   adhocQueryData: any;
@@ -36,9 +36,6 @@ export class ViewAdhocQueryComponent implements OnInit {
     this.route.data.subscribe((data: { adhocQuery: any }) => {
       this.adhocQueryData = data.adhocQuery;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

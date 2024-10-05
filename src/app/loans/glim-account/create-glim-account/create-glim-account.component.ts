@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -13,7 +13,7 @@ import { GlimTermsStepComponent } from './glim-account-stepper/glim-terms-step/g
   templateUrl: './create-glim-account.component.html',
   styleUrls: ['./create-glim-account.component.scss']
 })
-export class CreateGlimAccountComponent implements OnInit {
+export class CreateGlimAccountComponent {
 
   /** Imports all the step component */
   @ViewChild(GlimDetailsStepComponent, { static: true }) loansAccountDetailsStep: GlimDetailsStepComponent;
@@ -60,9 +60,6 @@ export class CreateGlimAccountComponent implements OnInit {
       this.gsimData = data.gsimData;
     });
    }
-
-  ngOnInit(): void {
-  }
 
   /**
    * Sets loans account product template and collateral template

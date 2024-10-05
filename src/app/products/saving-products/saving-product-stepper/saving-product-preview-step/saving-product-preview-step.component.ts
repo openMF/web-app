@@ -13,7 +13,7 @@ export class SavingProductPreviewStepComponent implements OnInit, OnChanges {
   @Input() accountingRuleData: any;
   @Input() savingProduct: any;
   @Input() taskPermission: string;
-  @Output() submit = new EventEmitter();
+  @Output() submitEvent = new EventEmitter();
 
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];

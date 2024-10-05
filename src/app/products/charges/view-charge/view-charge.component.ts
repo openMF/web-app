@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   templateUrl: './view-charge.component.html',
   styleUrls: ['./view-charge.component.scss']
 })
-export class ViewChargeComponent implements OnInit {
+export class ViewChargeComponent {
 
   /** Charge data. */
   chargeData: any;
@@ -47,9 +47,6 @@ export class ViewChargeComponent implements OnInit {
         this.maxCap = true;
       }
     });
-  }
-
-  ngOnInit() {
   }
 
   /**
