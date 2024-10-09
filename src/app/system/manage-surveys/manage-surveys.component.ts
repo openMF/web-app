@@ -5,6 +5,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
+/** Custom Services */
+import { SystemService } from '../system.service';
+
 /**
  * Manage Surveys component.
  */
@@ -31,7 +34,10 @@ export class ManageSurveysComponent implements OnInit {
    * Retrieves the surveys data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService,
+  ) {
     this.route.data.subscribe(( data: { surveys: any }) => {
       this.surveysData = data.surveys;
     });
@@ -39,12 +45,12 @@ export class ManageSurveysComponent implements OnInit {
 
   /**
    * Returns whether an survey is active based on its duration
-   * @param {number} validFrom Date valid from
-   * @param {number} validTo Date valid to
+   * @param {string} validFrom Date valid from (yyyy-MM-dd)
+   * @param {string} validTo Date valid to (yyyy-MM-dd)
    */
-  isActive(validFrom: number, validTo: number) {
-    const curdate = new Date().getTime();
-    return (curdate > validFrom && curdate < validTo);
+  isActive(validFrom: string, validTo: string) {
+    const curdate = new Date().toISOString().split('T')[0];
+    return (curdate >= validFrom && curdate <= validTo);
   }
 
   /**
@@ -76,6 +82,33 @@ export class ManageSurveysComponent implements OnInit {
    */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  /**
+   * Activates a survey.
+   * @param {any} survey Survey to activate.
+   */
+  activate(survey: any) {
+    this.systemService.activateSurvey(survey.id).subscribe(() => {
+      const today = new Date().toISOString().split('T')[0];
+      // This mimics the server-side logic
+      survey.validFrom = today;
+      survey.validTo = today;
+    });
+  }
+
+  /**
+   * Deactivates a survey.
+   * @param {any} survey Survey to deactivate.
+   */
+  deactivate(survey: any) {
+    this.systemService.deactivateSurvey(survey.id).subscribe(() => {
+      const date = new Date();
+      date.setDate(date.getDate() - 1); // Set to yesterday
+      const yesterday = date.toISOString().split('T')[0];
+      // This mimics the server-side logic
+      survey.validTo = yesterday;
+    });
   }
 
 }
