@@ -240,6 +240,24 @@ export class SystemService {
     return this.http.put(`/surveys/${surveyId}`, survey);
   }
 
+  /**
+   * Activates a survey.
+   * @param {number} surveyId Survey ID.
+   * @returns {Observable<any>}
+   */
+  activateSurvey(surveyId: number): Observable<any> {
+    return this.http.post(`/surveys/${surveyId}?command=activate`, null);
+  }
+
+  /**
+   * Deactivates a survey.
+   * @param {number} surveyId Survey ID.
+   * @returns {Observable<any>}
+   */
+  deactivateSurvey(surveyId: number): Observable<any> {
+    return this.http.post(`/surveys/${surveyId}?command=deactivate`, null);
+  }
+
 
   /**
    * @returns {Observable<any>} Fetches Jobs.
