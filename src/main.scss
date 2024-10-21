@@ -4,8 +4,9 @@
  */
 
 // Import Default Theme for MifosX
-@import "theme/mifosx-theme";
+@use 'theme/mifosx-theme';
 
 // Global Imports
+
 /* You can add global styles to this file, and also import other style files */
-@import "assets/styles/helper";
+@use 'assets/styles/helper';

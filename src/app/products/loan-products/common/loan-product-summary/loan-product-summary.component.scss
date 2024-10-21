@@ -1,4 +1,4 @@
-@import "assets/styles/colours";
+@use 'assets/styles/colours' as *;
 
 .tab-container {
   padding: 1%;
@@ -14,10 +14,12 @@ table {
 }
 
 .mat-elevation-z1 {
-  margin: 1em 0 1.5em 0;
+  margin: 1em 0 1.5em;
 }
 
-h2, h3, h4 {
+h2,
+h3,
+h4 {
   margin: 0;
   font-weight: 500;
 }
@@ -27,7 +29,7 @@ span {
 }
 
 mat-divider {
-  margin: 0 0 0.5em 0;
+  margin: 0 0 0.5em;
 }
 
 .mat-h3 {

@@ -1,4 +1,5 @@
-@import "assets/styles/helper";
+@use 'assets/styles/helper';
+@use 'assets/styles/colours' as *;
 
 .container {
   padding-bottom: 2%;
@@ -6,6 +7,7 @@
   .transaction-buttons {
     padding-bottom: 1rem;
     padding-top: 1rem;
+
     .accruals {
       padding-top: 1%;
     }
@@ -13,9 +15,10 @@
 
   table {
     width: 100%;
-    .account-action-button{
+
+    .account-action-button {
       min-width: 26px;
-      padding: 0 0 3px 0;
+      padding: 0 0 3px;
       margin: 0 2%;
       line-height: 25px;
     }
@@ -24,21 +27,27 @@
       text-decoration: line-through;
       color: $status-active-overdue;
     }
+
     .linked {
       color: $status-approved;
     }
+
     .accrual {
       color: $msg-default;
     }
+
     .down-payment {
       color: $status-downpayment;
     }
+
     .chargeoff {
       color: $status-chargeoff;
     }
+
     .reage {
       color: $status-reage;
     }
+
     .reamortize {
       color: $status-reamortize;
     }

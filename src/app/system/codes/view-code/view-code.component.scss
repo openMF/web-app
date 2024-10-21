@@ -1,18 +1,16 @@
-@media (min-width: 992px) {
-
+@media (width >= 992px) {
   .active-wrapper {
-      position: relative;
-  
-      .active {
-        padding: 0 0 17.5px 0;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
-  }
+    position: relative;
 
+    .active {
+      padding: 0 0 17.5px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
 }
 
 .options-wrapper {
-    padding: 18px 0 0 0;
+  padding: 18px 0 0;
 }

@@ -3,38 +3,46 @@
   max-width: 80rem;
   width: 90%;
   padding: 0;
+
   .header {
     padding: 1%;
+
     .header-title-group {
       .loan-card-title {
         color: white;
         width: 90%;
+
         p {
           color: white;
         }
       }
     }
+
     .profile-image-container {
       margin: 1%;
+
       .profile-image {
         object-fit: cover;
         border-radius: 20px;
       }
     }
+
     .loan-actions {
       align-self: flex-end;
       margin: 0 1%;
       // min-width: 72%;
     }
+
     .loan-span {
       margin: 0 0.5%;
     }
   }
+
   .navigation-tabs {
     overflow: auto;
   }
 }
 
-.loans-overview{
+.loans-overview {
   font-size: 14px;
 }

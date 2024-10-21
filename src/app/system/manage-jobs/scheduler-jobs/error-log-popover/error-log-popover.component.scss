@@ -1,47 +1,47 @@
 .message {
-    height: auto;
-    font-weight: 500;
+  height: auto;
+  font-weight: 500;
 }
 
 tr {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
-span:not(.note){
-    font-size: .9rem;
-    line-height: 14px    
+span:not(.note) {
+  font-size: 0.9rem;
+  line-height: 14px;
 }
 
 .note-text {
-    height: 7.95rem;
-    overflow: hidden;
-    display: inline-block;
-    position: relative;
-    text-align: left;
+  height: 7.95rem;
+  overflow: hidden;
+  display: inline-block;
+  position: relative;
+  text-align: left;
 }
 
 .note-field:not(.show)::after {
-    content: '...';
-    padding-left: .5rem;
-    position: absolute;
-    right: 0;
-    bottom: 0;
+  content: '...';
+  padding-left: 0.5rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .show {
-    overflow: visible;
-    text-overflow: none;
-    height: auto;
+  overflow: visible;
+  text-overflow: none;
+  height: auto;
 }
 
 button {
-    background: transparent;
-    font-size: small;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+  background: transparent;
+  font-size: small;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 button:hover {
-    text-decoration: none;
+  text-decoration: none;
 }

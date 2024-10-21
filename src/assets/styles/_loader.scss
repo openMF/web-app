@@ -11,15 +11,15 @@
   }
 
   .bottom {
-    border-width: 0 90px 90px 90px;
-    border-color: transparent transparent #1fb050 transparent;
+    border-width: 0 90px 90px;
+    border-color: transparent transparent #1fb050;
     bottom: calc(50% - 100px);
     left: calc(50% - 90px);
   }
 
   .top {
-    border-width: 90px 90px 0 90px;
-    border-color: #b4d575 transparent transparent transparent;
+    border-width: 90px 90px 0;
+    border-color: #b4d575 transparent transparent;
     top: calc(50% - 100px);
     left: calc(50% - 90px);
   }
@@ -39,8 +39,12 @@
   }
 
   @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
+    from {
+      transform: rotate(0deg);
+    }
 
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }

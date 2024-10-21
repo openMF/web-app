@@ -66,7 +66,7 @@ $accent: $peter-river;
 $status-active: #5cb85c;
 $status-inactive: #666f73;
 $status-paid: #666f73;
-$status-deleted: #000000;
+$status-deleted: #000;
 $status-pending: #ffa500;
 $status-approved: #4461e2;
 $status-chargeoff: #f39c12;
@@ -75,11 +75,11 @@ $status-downpayment: #16a085;
 $status-reage: #e08e0b;
 $status-reamortize: #4461e2;
 $status-transfer: #16a085;
-$status-active-overdue: #ff0000;
+$status-active-overdue: #f00;
 $status-matured: #ff4000;
 $state-done: #2af72a;
-$status-transfer-progress:#FF4000;
-$status-transfer-hold:#DF0101;
+$status-transfer-progress: #ff4000;
+$status-transfer-hold: #df0101;
 
 $error-log: #ffa726;
 

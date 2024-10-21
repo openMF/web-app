@@ -2,9 +2,10 @@
   padding: 1%;
   margin: 1%;
 
-  h3{
-    margin:1% auto;
+  h3 {
+    margin: 1% auto;
   }
+
   .performance-history-container {
     border: 1px solid;
     padding: 1%;
@@ -12,10 +13,12 @@
 
   table {
     width: 100%;
+
     td:hover {
       cursor: pointer;
     }
-    .account-action-button{
+
+    .account-action-button {
       min-width: 26px;
       padding: 0 6px;
       margin: 4px;
@@ -26,7 +29,6 @@
       cursor: pointer;
     }
   }
-
 }
 
 .heading-content {

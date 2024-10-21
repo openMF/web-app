@@ -1,19 +1,19 @@
 table {
-    width: 100%;
+  width: 100%;
 }
 
 // TODO: CONFIGURE THESE CLASSES GLOBALLY
 .is-differential {
-    color: #32cd32;
+  color: #32cd32;
 }
-  
+
 .not-is-differential {
-    color: #f44366;
+  color: #f44366;
 }
 
 .content {
-    div {
-      margin: 1rem 0;
-      word-wrap: break-word;
-    }
+  div {
+    margin: 1rem 0;
+    word-wrap: break-word;
+  }
 }

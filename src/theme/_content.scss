@@ -1,7 +1,8 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
+@use 'sass:map';
 
 @mixin account-view-component-theme($theme) {
-  $primary: map-get($theme, primary);
+  $primary: map.get($theme, primary);
 
   mifosx-view-bulk-import {
     .cover {
@@ -27,68 +28,80 @@
       max-width: 80rem;
       width: 90%;
       padding: 0;
+
+      i,
+      img:hover {
+        cursor: pointer;
+      }
+
       .header {
         background-color: mat.get-color-from-palette($primary, 500);
-
         padding: 1%;
-        .header-title-group {
-          .account-card-title {
-            color: white;
-            width: 90%;
-            p {
-              color: white;
-            }
+      }
 
-            .account-overview {
-              border: none;
-              max-width: 240px;
-              font-size: 14px;
+      .header-title-group {
+        .account-card-title {
+          color: white;
+          width: 90%;
+        }
 
-              tr:nth-child(even) {
-                background-color: transparent;
-              }
-            }
-          }
+        p {
+          color: white;
         }
-        .profile-image-container {
-          margin: 1%;
-          .profile-image {
-            object-fit: cover;
-            border-radius: 20px;
-          }
-          .signature {
-            background-color: mat.get-color-from-palette($primary, 500);
-          }
-        }
-        .account-actions {
-          align-self: flex-end;
-          margin: 0 1%;
-          i {
-            margin-bottom: 2px;
-            margin-right: 4px;
+
+        .account-overview {
+          border: none;
+          max-width: 240px;
+          font-size: 14px;
+
+          tr:nth-child(even) {
+            background-color: transparent;
           }
         }
       }
+
+      .profile-image-container {
+        margin: 1%;
+
+        .profile-image {
+          object-fit: cover;
+          border-radius: 20px;
+        }
+
+        .signature {
+          background-color: mat.get-color-from-palette($primary, 500);
+        }
+      }
+
+      .account-actions {
+        align-self: flex-end;
+        margin: 0 1%;
+
+        i {
+          margin-bottom: 2px;
+          margin-right: 4px;
+        }
+      }
+
       .navigation-tabs {
         background-color: #f2f2f2;
         overflow: auto;
       }
+
       .content {
         .savings-account-tables {
           padding: 1%;
           margin: 1%;
+
           .table-headers {
             margin: 0;
             padding: 6px;
           }
+
           td {
             padding: 3px;
           }
         }
-      }
-      i,
-      img:hover {
-        cursor: pointer;
       }
     }
   }

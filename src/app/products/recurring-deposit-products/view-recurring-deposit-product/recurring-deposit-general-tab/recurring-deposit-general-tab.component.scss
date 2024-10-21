@@ -1,4 +1,5 @@
-@import "assets/styles/helper";
+@use 'assets/styles/helper';
+@use 'assets/styles/colours' as *;
 
 .container {
   width: 100%;
@@ -16,11 +17,18 @@
 }
 
 .mat-elevation-z1 {
-  margin: 1em 0 1.5em 0;
+  margin: 1em 0 1.5em;
 }
 
 .interestCarts {
-  float:right;
+  float: right;
+}
+
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 500;
 }
 
 table {
@@ -48,21 +56,12 @@ table {
   }
 }
 
-.mat-elevation-z1 {
-  margin: 1em 0 1.5em 0;
-}
-
-h2, h3, h4 {
-  margin: 0;
-  font-weight: 500;
-}
-
 span {
   margin: 0.5em 0;
 }
 
 mat-divider {
-  margin: 0 0 0.5em 0;
+  margin: 0 0 0.5em;
 }
 
 .margin-t {
