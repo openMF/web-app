@@ -1,26 +1,28 @@
 .tab-container {
   padding: 1%;
   margin: 1%;
+
   h3 {
-    margin:1% auto;
+    margin: 1% auto;
   }
+
   table {
     width: 100%;
-  
+
     tr.incentives-row {
       height: 0;
-  
+
       > td {
         padding: 0;
       }
-  
+
       .incentives {
         overflow: hidden;
       }
-  
+
       .mat-card {
         border-radius: 0;
       }
     }
-  }  
+  }
 }

@@ -1,24 +1,22 @@
 @use '@angular/material' as mat;
 
 // Custom material palette
-@import 'material-palette';
+@use 'material-palette' as *;
 
 // Plus imports for other components in your app.
-@import '../app/groups/groups-view/groups-view.component-theme.scss';
-@import '../app/centers/centers-view/centers-view.component-theme.scss';
-@import '../app/home/dashboard/dashboard.component-theme.scss';
-@import '../app/shares/shares-account-view/shares-account-view.component-theme.scss';
-@import 'content';
-@import 'dark_content';
+@use '../app/groups/groups-view/groups-view.component-theme.scss' as *;
+@use '../app/centers/centers-view/centers-view.component-theme.scss' as *;
+@use '../app/home/dashboard/dashboard.component-theme.scss' as *;
+@use '../app/shares/shares-account-view/shares-account-view.component-theme.scss' as *;
+@use 'content' as *;
+@use 'dark_content' as *;
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.core();
 
-
 /* ################################## Light theme ################################### */
-
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
@@ -42,9 +40,7 @@ $mifosx-app-theme: mat.define-light-theme($mifosx-app-primary, $mifosx-app-accen
 @include shares-account-view-component-theme($mifosx-app-theme);
 @include account-view-component-theme($mifosx-app-theme);
 
-
 /* ################################## Dark theme ################################### */
-
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 $mifosx-app-dark-primary: mat.define-palette($dark-primary-palette);
@@ -56,10 +52,10 @@ $mifosx-app-dark-theme: mat.define-dark-theme($mifosx-app-dark-primary, $mifosx-
 
 // Include theme styles for core and each component used in your app.
 .dark-theme {
-    @include mat.all-component-themes($mifosx-app-dark-theme);
-    @include groups-view-component-theme($mifosx-app-dark-theme);
-    @include centers-view-component-theme($mifosx-app-dark-theme);
-    @include dashboard-component-theme($mifosx-app-dark-theme);
-    @include shares-account-view-component-theme($mifosx-app-dark-theme);
-    @include account-view-component-dark-theme($mifosx-app-dark-theme);
+  @include mat.all-component-themes($mifosx-app-dark-theme);
+  @include groups-view-component-theme($mifosx-app-dark-theme);
+  @include centers-view-component-theme($mifosx-app-dark-theme);
+  @include dashboard-component-theme($mifosx-app-dark-theme);
+  @include shares-account-view-component-theme($mifosx-app-dark-theme);
+  @include account-view-component-dark-theme($mifosx-app-dark-theme);
 }

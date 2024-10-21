@@ -1,8 +1,8 @@
-@use "@angular/material" as mat;
-
+@use '@angular/material' as mat;
+@use 'sass:map';
 
 @mixin account-view-component-dark-theme($theme) {
-  $primary: map-get($theme, primary);
+  $primary: map.get($theme, primary);
 
   mifosx-login {
     .login-container {
@@ -13,18 +13,18 @@
     .cover {
       .cover-content {
         color: white;
-    
+
         .cover-description {
           .cover-link {
             color: white !important;
-    
+
             &:hover {
               color: #d3d3d3;
             }
           }
         }
       }
-    }    
+    }
   }
 
   mifosx-login-form {
@@ -56,53 +56,57 @@
       width: 90%;
       padding: 0;
 
+      i,
+      img:hover {
+        cursor: pointer;
+      }
+
       .header {
         background-color: mat.get-color-from-palette($primary, 500);
-
         padding: 1%;
+      }
 
-        .header-title-group {
-          .account-card-title {
-            color: white;
-            width: 90%;
-
-            p {
-              color: white;
-            }
-
-            .account-overview {
-              border: none;
-              max-width: 240px;
-              font-size: 14px;
-
-              tr:nth-child(even) {
-                background-color: transparent !important;
-              }
-            }
-          }
+      .header-title-group {
+        .account-card-title {
+          color: white;
+          width: 90%;
         }
 
-        .profile-image-container {
-          margin: 1%;
-
-          .profile-image {
-            object-fit: cover;
-            border-radius: 20px;
-          }
-
-          .signature {
-            background-color: mat.get-color-from-palette($primary, 500);
-          }
+        p {
+          color: white;
         }
 
-        .account-actions {
-          align-self: flex-end;
-          margin: 0 1%;
+        .account-overview {
+          border: none;
+          max-width: 240px;
+          font-size: 14px;
 
-          i {
-            margin-bottom: 2px;
-            margin-right: 4px;
+          tr:nth-child(even) {
+            background-color: transparent !important;
           }
+        }
+      }
+
+      .profile-image-container {
+        margin: 1%;
+
+        .profile-image {
+          object-fit: cover;
+          border-radius: 20px;
+        }
+
+        .signature {
+          background-color: mat.get-color-from-palette($primary, 500);
+        }
+      }
+
+      .account-actions {
+        align-self: flex-end;
+        margin: 0 1%;
+
+        i {
+          margin-bottom: 2px;
+          margin-right: 4px;
         }
       }
 
@@ -127,11 +131,6 @@
           }
         }
       }
-
-      i,
-      img:hover {
-        cursor: pointer;
-      }
     }
   }
 
@@ -140,7 +139,6 @@
   mat-checkbox {
     color: white;
   }
-
 }
 
 body.dark-theme {
@@ -193,14 +191,14 @@ body.dark-theme {
     filter: invert(100%);
   }
 
+  a:any-link {
+    color: #0098ff !important;
+  }
+
   span.breadcrumb-link {
     a {
       color: #0098ff !important;
     }
-  }
-
-  a:-webkit-any-link {
-    color: #0098ff !important;
   }
 
   div.alert {
@@ -215,9 +213,10 @@ body.dark-theme {
   .cdk-drag-preview {
     box-sizing: border-box;
     border-radius: 4px;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-      0 8px 10px 1px rgba(0, 0, 0, 0.14),
-      0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    box-shadow:
+      0 5px 5px -3px rgb(0 0 0 / 20%),
+      0 8px 10px 1px rgb(0 0 0 / 14%),
+      0 3px 14px 2px rgb(0 0 0 / 12%);
     display: table;
     background-color: white;
     color: #303135;
@@ -233,7 +232,7 @@ body.dark-theme {
     .versions {
       color: white !important;
     }
-  
+
     .business-date {
       color: #0098ff;
     }
@@ -242,5 +241,4 @@ body.dark-theme {
   .external-asset-owner-status {
     color: white;
   }
-
 }

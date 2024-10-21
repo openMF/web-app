@@ -1,5 +1,5 @@
 .container {
-  .filter-button{
+  .filter-button {
     height: 2.5rem;
     margin-top: 1rem;
   }
@@ -7,14 +7,15 @@
 
 table {
   width: 100%;
-    .account-action-button{
-      min-width: 26px;
-      padding: 0 6px;
-      margin: 4px;
-      line-height: 25px;
-    }
+
+  .account-action-button {
+    min-width: 26px;
+    padding: 0 6px;
+    margin: 4px;
+    line-height: 25px;
+  }
 }
 
 .mat-divider {
-  border-top-color: #ffffff;
+  border-top-color: #fff;
 }
