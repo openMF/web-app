@@ -98,7 +98,7 @@ Access the webapp on http://localhost:4200 in your browser.
 It is possible to do a 'one-touch' installation of Mifos X Web App using containers (AKA "Docker").
 Fineract now packs the Mifos community-app web UI in it's docker deploy.
 
-As Prerequisites, you must have `docker` and `docker-compose` installed on your machine; see
+As Prerequisites, you must have `docker` and Docker Compose v2 or later installed on your machine; see
 [Docker Install](https://docs.docker.com/install/) and
 [Docker Compose Install](https://docs.docker.com/compose/install/).
 
@@ -106,7 +106,7 @@ Now to run a new MifosX Web App instance you can simply:
 
 1. `git clone https://github.com/openMF/web-app.git ; cd web-app`
 1. for windows, use `git clone https://github.com/openMF/web-app.git --config core.autocrlf=input ; cd web-app`
-1. `docker-compose up -d`
+1. `docker compose up -d`
 1. Access the webapp on http://localhost:4200 in your browser.
 
 You can also setup different configurations for the MifosX Web App using environment variables:
