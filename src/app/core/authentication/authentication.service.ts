@@ -89,6 +89,7 @@ export class AuthenticationService {
    */
   login(loginContext: LoginContext) {
     this.alertService.alert({ type: 'Authentication Start', message: 'Please wait...' });
+  
     this.rememberMe = loginContext.remember;
     this.storage = this.rememberMe ? localStorage : sessionStorage;
 
