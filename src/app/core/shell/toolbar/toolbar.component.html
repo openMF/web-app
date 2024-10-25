@@ -49,8 +49,9 @@
         {{ 'labels.menus.Configuration Wizard' | translate }}
       </a>
 
-       <a #accounting mat-tab-link class="tab-link" [routerLink]="['/accounting']">
-        <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
+       <a #reports mat-tab-link class="tab-link" [matMenuTriggerFor]="mCurrencyMenu"
+          #reportsMenuTrigger="matMenuTrigger">
+        <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
          Multi currency
       </a>
 
@@ -114,6 +115,15 @@
   <button mat-menu-item [routerLink]="['/reports', 'Fund']">{{ 'labels.menus.Funds' | translate }}</button>
   <button mat-menu-item [routerLink]="['/reports', 'Accounting']">{{ 'labels.menus.Accounting' | translate }}</button>
   <button mat-menu-item [routerLink]="['/xbrl']">{{ 'labels.menus.XBRL' | translate }}</button>
+</mat-menu>
+
+<!-- Toolbar Menus -->
+<mat-menu #mCurrencyMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item> </button>
+  <button mat-menu-item>Configuration</button>
+  <button mat-menu-item>GL Entry</button>
+  <button mat-menu-item>Reporting</button>
+  <button mat-menu-item> </button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
