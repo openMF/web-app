@@ -42,7 +42,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { DatePipe, LocationStrategy } from '@angular/common';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MenuComponent } from './multicurrency/menu/menu.component';
 
 /**
  * App Module
@@ -93,7 +92,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConfigurationWizardModule,
     AppRoutingModule
   ],
-  declarations: [WebAppComponent, NotFoundComponent, MenuComponent],
+  declarations: [WebAppComponent, NotFoundComponent],
   providers: [DatePipe],
   bootstrap: [WebAppComponent]
 })
