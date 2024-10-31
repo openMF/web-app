@@ -741,7 +741,7 @@
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
-      "8 characters long": "8자 길이",
+      "12 characters long": "12자 길이",
       "Amount must be": "금액은 다음과 같아야 합니다.",
       "At least one restricted product": "하나 이상의 제한된 제품",
       "At least one role": "역할이 하나 이상",

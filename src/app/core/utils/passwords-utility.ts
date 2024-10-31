@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 
 export class PasswordsUtility {
     // password regex pattern
-    public static PASSWORD_REGEX = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*[#$@$!%*?&])[A-Za-z\d#$@$!%*?&].{8,}$';
+    public static PASSWORD_REGEX = '^(?!.*(.)\\1)(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{12,50}$';
 
     public getPasswordValidators(): ValidatorFn[] {
         return [Validators.required, Validators.pattern(PasswordsUtility.PASSWORD_REGEX), Validators.maxLength(50), Validators.minLength(8)];
