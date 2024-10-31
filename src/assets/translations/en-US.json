@@ -743,7 +743,7 @@
         },
         "commons": {
             "50 characters long": "50 characters long",
-            "8 characters long": "8 characters long",
+            "12 characters long": "12 characters long",
             "Amount must be": "Amount must be",
             "At least one restricted product": "At least one restricted product",
             "At least one role": "At least one role",
