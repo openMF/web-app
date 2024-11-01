@@ -1,33 +1,42 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { UntypedFormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 /** Custom Imports. */
-import { activities } from './activities';
+import {activities} from './activities';
 
 /** Custom Services */
-import { AuthenticationService } from '../core/authentication/authentication.service';
-import { PopoverService } from '../configuration-wizard/popover/popover.service';
-import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
+import {AuthenticationService} from '../../core/authentication/authentication.service';
+import {PopoverService} from '../../configuration-wizard/popover/popover.service';
+import {ConfigurationWizardService} from '../../configuration-wizard/configuration-wizard.service';
 
 /** Custom Components */
-import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
+import {NextStepDialogComponent} from '../../configuration-wizard/next-step-dialog/next-step-dialog.component';
 
 /**
  * Home component.
  */
 @Component({
   selector: 'mifosx-home',
-  templateUrl: './currency.component.html',
-  styleUrls: ['./currency.component.scss']
+  templateUrl: './entry.component.html',
+  styleUrls: ['./entry.component.scss']
 })
-export class CurrencyComponent implements OnInit, AfterViewInit {
+export class EntryComponent implements OnInit, AfterViewInit {
+
+  journalEntryForm: UntypedFormGroup;
+  officeData: any;
+  currencyData: any;
+  paymentTypeData: any;
+  glAccountData: any;
+  minDate = new Date(2000, 0, 1);
+  maxDate = new Date();
+
 
   /** Username of authenticated user. */
   username: string;
@@ -50,6 +59,7 @@ export class CurrencyComponent implements OnInit, AfterViewInit {
   @ViewChild('templateSearchActivity', {static: false}) templateSearchActivity: TemplateRef<any>;
 
   /**
+   * @param formBuilder
    * @param {AuthenticationService} authenticationService Authentication Service.
    * @param {ActivatedRoute} activatedRoute ActivatedRoute.
    * @param {Router} router Router.
@@ -57,12 +67,14 @@ export class CurrencyComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private authenticationService: AuthenticationService,
+  constructor(private formBuilder: UntypedFormBuilder,
+              private authenticationService: AuthenticationService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog,
               private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) { }
+              private popoverService: PopoverService) {
+  }
 
   /**
    * Sets the username of the authenticated user.
@@ -82,9 +94,9 @@ export class CurrencyComponent implements OnInit, AfterViewInit {
    */
   setFilteredActivities() {
     this.filteredActivities = this.searchText.valueChanges
-    .pipe(
-      map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
-      map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
+      .pipe(
+        map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
+        map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
   }
 
   /**
@@ -138,7 +150,7 @@ export class CurrencyComponent implements OnInit, AfterViewInit {
    * Next Step (Organization) Dialog Configuration Wizard.
    */
   openNextStepDialog() {
-    const nextStepDialogRef = this.dialog.open( NextStepDialogComponent, {
+    const nextStepDialogRef = this.dialog.open(NextStepDialogComponent, {
       data: {
         nextStepName: 'Setup Organization',
         previousStepName: 'Home Tour',
@@ -146,15 +158,15 @@ export class CurrencyComponent implements OnInit, AfterViewInit {
       },
     });
     nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
-    if (response.nextStep) {
-      this.configurationWizardService.showHome = false;
-      this.configurationWizardService.showHomeSearchActivity = false;
-      this.configurationWizardService.showCreateOffice = true;
-      this.router.navigate(['/organization']);
+      if (response.nextStep) {
+        this.configurationWizardService.showHome = false;
+        this.configurationWizardService.showHomeSearchActivity = false;
+        this.configurationWizardService.showCreateOffice = true;
+        this.router.navigate(['/organization']);
       } else {
-      this.configurationWizardService.showHome = false;
-      this.configurationWizardService.showHomeSearchActivity = false;
-      this.router.navigate(['/home']);
+        this.configurationWizardService.showHome = false;
+        this.configurationWizardService.showHomeSearchActivity = false;
+        this.router.navigate(['/home']);
       }
     });
   }

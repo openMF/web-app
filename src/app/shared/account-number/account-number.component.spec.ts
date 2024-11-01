@@ -20,6 +20,7 @@ describe('AccountNumberComponent', () => {
   });
 
   it('should create', () => {
+    // @ts-ignore
     expect(component).toBeTruthy();
   });
 });

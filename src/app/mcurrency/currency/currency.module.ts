@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
 /** Custom Modules */
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { HomeRoutingModule } from './currency-routing.module';
-import { PipesModule } from '../pipes/pipes.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 /** Custom Components */
 import { CurrencyComponent } from './currency.component';

@@ -3,26 +3,26 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 /** Routing Imports */
-import { Route } from '../core/route/route.service';
+import { Route } from '../../core/route/route.service';
 
 /** Custom Components */
-import { EntryComponent } from './entry.component';
+import { ReportingComponent } from './reporting.component';
 
 /** Custom Resolvers */
-import { OfficesResolver } from '../accounting/common-resolvers/offices.resolver';
+import { OfficesResolver } from '../../accounting/common-resolvers/offices.resolver';
 
 /** Home and Dashboard Routes */
 const routes: Routes = [
   Route.withShell([
     {
-      path: 'entry',
-      redirectTo: '/entry',
+      path: 'reporting',
+      redirectTo: '/reporting',
       pathMatch: 'full'
     },
     {
-      path: 'entry',
-      component: EntryComponent,
-      data: { title: 'GL Entries' }
+      path: 'reporting',
+      component: ReportingComponent,
+      data: { title: 'Report' }
     }
   ])
 ];
@@ -37,4 +37,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [OfficesResolver]
 })
-export class EntryRoutingModule { }
+export class ReportingRoutingModule { }

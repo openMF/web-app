@@ -20,6 +20,7 @@ describe('AppComponent', () => {
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(WebAppComponent);
     const app = fixture.debugElement.componentInstance;
+    // @ts-ignore
     expect(app).toBeTruthy();
   }));
 });

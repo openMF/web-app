@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 /** Routing Imports */
-import { Route } from '../core/route/route.service';
+import { Route } from '../../core/route/route.service';
 
 /** Custom Components */
 import { CurrencyComponent } from './currency.component';
 
 /** Custom Resolvers */
-import { OfficesResolver } from '../accounting/common-resolvers/offices.resolver';
+import { OfficesResolver } from '../../accounting/common-resolvers/offices.resolver';
 
 /** Home and Dashboard Routes */
 const routes: Routes = [

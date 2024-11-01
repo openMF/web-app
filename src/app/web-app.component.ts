@@ -1,41 +1,41 @@
 /** Angular Imports */
-import { Component, OnInit, HostListener, HostBinding } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, OnInit, HostListener, HostBinding} from '@angular/core';
+import {Router, NavigationEnd, ActivatedRoute} from '@angular/router';
+import {Title} from '@angular/platform-browser';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { merge } from 'rxjs';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import {merge} from 'rxjs';
+import {filter, map, mergeMap} from 'rxjs/operators';
 
 /** Translation Imports */
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateService} from '@ngx-translate/core';
 
 /** Environment Configuration */
-import { environment } from 'environments/environment';
+import {environment} from 'environments/environment';
 
 /** Custom Services */
-import { Logger } from './core/logger/logger.service';
-import { ThemeStorageService } from './shared/theme-picker/theme-storage.service';
-import { AlertService } from './core/alert/alert.service';
-import { AuthenticationService } from './core/authentication/authentication.service';
-import { SettingsService } from './settings/settings.service';
-import { IdleTimeoutService } from './home/timeout-dialog/idle-timeout.service';
-import { SessionTimeoutDialogComponent } from './home/timeout-dialog/session-timeout-dialog.component';
+import {Logger} from './core/logger/logger.service';
+import {ThemeStorageService} from './shared/theme-picker/theme-storage.service';
+import {AlertService} from './core/alert/alert.service';
+import {AuthenticationService} from './core/authentication/authentication.service';
+import {SettingsService} from './settings/settings.service';
+import {IdleTimeoutService} from './home/timeout-dialog/idle-timeout.service';
+import {SessionTimeoutDialogComponent} from './home/timeout-dialog/session-timeout-dialog.component';
 
 /** Custom Items */
-import { Alert } from './core/alert/alert.model';
-import { KeyboardShortcutsConfiguration } from './keyboards-shortcut-config';
-import { Dates } from './core/utils/dates';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { I18nService } from './core/i18n/i18n.service';
-import { ThemingService } from './shared/theme-toggle/theming.service';
+import {Alert} from './core/alert/alert.model';
+import {KeyboardShortcutsConfiguration} from './keyboards-shortcut-config';
+import {Dates} from './core/utils/dates';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {I18nService} from './core/i18n/i18n.service';
+import {ThemingService} from './shared/theme-toggle/theming.service';
 
 /** Initialize Logger */
 const log = new Logger('MifosX');
 
-import { registerLocaleData } from '@angular/common';
+import {registerLocaleData} from '@angular/common';
 import localeCS from '@angular/common/locales/cs';
 import localeEN from '@angular/common/locales/en';
 import localeES from '@angular/common/locales/es';
@@ -48,6 +48,7 @@ import localeLV from '@angular/common/locales/lv';
 import localeNE from '@angular/common/locales/ne';
 import localePT from '@angular/common/locales/pt';
 import localeSW from '@angular/common/locales/sw';
+
 registerLocaleData(localeCS);
 registerLocaleData(localeEN);
 registerLocaleData(localeES);
@@ -71,12 +72,12 @@ registerLocaleData(localeSW);
   animations: [
     trigger('opacityScale', [
       transition(':enter', [
-          style({ opacity: 0, transform: 'scale(.95)' }),
-          animate('100ms ease-out', style({  opacity: 1, transform: 'scale(1)' }))
+        style({opacity: 0, transform: 'scale(.95)'}),
+        animate('100ms ease-out', style({opacity: 1, transform: 'scale(1)'}))
       ]),
       transition(':leave', [
-          style({ opacity: 1, transform: 'scale(1)' }),
-          animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))
+        style({opacity: 1, transform: 'scale(1)'}),
+        animate('75ms ease-in', style({opacity: 0, transform: 'scale(.95)'}))
       ])
     ])
   ]
@@ -113,7 +114,8 @@ export class WebAppComponent implements OnInit {
               private themingService: ThemingService,
               private dateUtils: Dates,
               private idle: IdleTimeoutService,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog) {
+  }
 
   @HostBinding('class') public cssClass: string;
 
@@ -219,7 +221,10 @@ export class WebAppComponent implements OnInit {
     if (environment.session.timeout.idleTimeout > 0) {
       this.idle.$onSessionTimeout.subscribe(() => {
         if (this.authenticationService.getUserLoggedIn()) {
-          this.alertService.alert({type: 'Session timeout', message: this.translateService.instant('labels.text.Session timed out')});
+          this.alertService.alert({
+            type: 'Session timeout',
+            message: this.translateService.instant('labels.text.Session timed out')
+          });
           this.dialog.open(SessionTimeoutDialogComponent);
           this.logout();
         }
@@ -229,7 +234,7 @@ export class WebAppComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+      .subscribe(() => this.router.navigate(['/login'], {replaceUrl: true}));
   }
 
   help() {
@@ -270,7 +275,7 @@ export class WebAppComponent implements OnInit {
           }
           break;
         default:
-          this.router.navigate([routeD.route], { relativeTo: this.activatedRoute });
+          this.router.navigate([routeD.route], {relativeTo: this.activatedRoute});
       }
     }
   }

@@ -3,13 +3,14 @@ import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
 /** Custom Modules */
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { EntryRoutingModule } from './entry-routing.module';
-import { PipesModule } from '../pipes/pipes.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 /** Custom Components */
 import { EntryComponent } from './entry.component';
 import { TranslateModule } from '@ngx-translate/core';
+import {DirectivesModule} from "../../directives/directives.module";
 
 /**
  * Home Component
@@ -17,13 +18,14 @@ import { TranslateModule } from '@ngx-translate/core';
  * Home and dashboard components should be declared here.
  */
 @NgModule({
-  imports: [
-    MatDialogModule,
-    SharedModule,
-    PipesModule,
-    EntryRoutingModule,
-    TranslateModule,
-  ],
+    imports: [
+        MatDialogModule,
+        SharedModule,
+        PipesModule,
+        EntryRoutingModule,
+        TranslateModule,
+        DirectivesModule,
+    ],
   declarations: [
     EntryComponent
   ],

@@ -1,33 +1,33 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { startWith, map } from 'rxjs/operators';
 
 /** Custom Imports. */
 import { activities } from './activities';
 
 /** Custom Services */
-import { AuthenticationService } from '../core/authentication/authentication.service';
-import { PopoverService } from '../configuration-wizard/popover/popover.service';
-import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
+import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { PopoverService } from '../../configuration-wizard/popover/popover.service';
+import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
 /** Custom Components */
-import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
+import { NextStepDialogComponent } from '../../configuration-wizard/next-step-dialog/next-step-dialog.component';
 
 /**
  * Home component.
  */
 @Component({
   selector: 'mifosx-home',
-  templateUrl: './entry.component.html',
-  styleUrls: ['./entry.component.scss']
+  templateUrl: './currency.component.html',
+  styleUrls: ['./currency.component.scss']
 })
-export class EntryComponent implements OnInit, AfterViewInit {
+export class CurrencyComponent implements OnInit, AfterViewInit {
 
   /** Username of authenticated user. */
   username: string;

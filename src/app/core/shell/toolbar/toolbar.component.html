@@ -119,11 +119,9 @@
 
 <!-- Toolbar Menus -->
 <mat-menu #mCurrencyMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item></button>
   <button mat-menu-item [routerLink]="['/currency']">Configuration</button>
   <button mat-menu-item [routerLink]="['/entry']">GL Entry</button>
-  <button mat-menu-item>Reporting</button>
-  <button mat-menu-item></button>
+  <button mat-menu-item [routerLink]="['/reporting']">Reporting</button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">

@@ -68,6 +68,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
       paymentTypes: any,
       glAccounts: any
     }) => {
+      console.log(data);
       this.officeData = data.offices;
       this.currencyData = data.currencies.selectedCurrencyOptions;
       this.paymentTypeData = data.paymentTypes;
