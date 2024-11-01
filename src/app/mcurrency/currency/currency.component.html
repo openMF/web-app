@@ -1,47 +1,64 @@
 <div class="container">
 
-    <mat-card>
+  <mat-card>
 
-        <mat-card-header>
-            <mat-card-title class="title">
-                Multi-Currency
-            </mat-card-title>
-        </mat-card-header>
+    <form [formGroup]="journalEntryForm" (ngSubmit)="submit()">
 
-        <img mat-card-image src="../../../assets/images/mifos_lg-logo.png" alt="Mifos X">
+      <mat-card-title>
+        <mat-label>Configure rate</mat-label>
+      </mat-card-title>
 
-    </mat-card>
+      <mat-card-content>
+
+        <div #createJournalFormRef fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+
+          <mat-label>Use live rate</mat-label>
+          <mat-checkbox [checked]=useLiveRate (change)="changeLiveRate()"></mat-checkbox>
+
+          <mat-form-field fxFlex="98%" *ngIf="!useLiveRate">
+            <mat-label>Dollars to UGX at {{ rate }}</mat-label>
+            <textarea [disabled]="useLiveRate" matInput formControlName="comments" cdkTextareaAutosize
+                      cdkAutosizeMinRows="2"
+                      (input)="updateRate($event.target.value)" ></textarea>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%" *ngIf="!useLiveRate">
+            <mat-label>UGX to Dollars at {{ 1 / rate }}</mat-label>
+            <textarea [disabled]="useLiveRate" matInput formControlName="comments" cdkTextareaAutosize
+                      cdkAutosizeMinRows="2"></textarea>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions *ngIf="!useLiveRate" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center"
+                        fxLayoutGap="5px">
+        <button mat-raised-button color="primary" [disabled]="useLiveRate"
+        >Save
+        </button>
+      </mat-card-actions>
+
+    </form>
+
+  </mat-card>
 
 </div>
 
-<ng-template #templateButtonDashboard let-popover="popover">
-    <h2>{{ "labels.heading.Dashboard" | translate }}</h2>
-    <p class="mw300">{{ "labels.text.This will navigate the user to the dashboard component." | translate }}</p>
-    <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button mat-raised-button color="warn"
-                (click)="popover.close();configurationWizardService.closeConfigWizard()">{{ "labels.buttons.Close" | translate }}
-        </button>
-        <button mat-raised-button color="primary"
-                (click)="popover.close();previousStep()">{{ "labels.buttons.Back" | translate }}
-        </button>
-        <button mat-raised-button color="primary"
-                (click)="popover.close();showPopover(templateSearchActivity, searchActivity,'bottom',true)">{{ "labels.buttons.Next" | translate }}
-        </button>
-    </div>
-</ng-template>
-
-<ng-template #templateSearchActivity let-popover="popover">
-    <h2>{{ "labels.heading.Search Activity" | translate }}</h2>
-    <p class="mw300">{{ "labels.text.This will navigate the user to the searched activity." | translate }}</p>
-    <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button mat-raised-button color="warn"
-                (click)="popover.close();configurationWizardService.closeConfigWizard()">{{ "labels.buttons.Close" | translate }}
-        </button>
-        <button mat-raised-button color="primary"
-                (click)="popover.close();showPopover(templateButtonDashboard, buttonDashboard,'bottom',true)">{{ "labels.buttons.Back" | translate }}
-        </button>
-        <button mat-raised-button color="primary"
-                (click)="popover.close();nextStep()">{{ "labels.buttons.Next" | translate }}
-        </button>
-    </div>
+<ng-template #templateCreateJournalFormRef let-popover="popover">
+  <h2>{{ "labels.heading.Add Journal Entry Form" | translate }}</h2>
+  <p class="mw300">{{ "labels.text.Red asterisk field" | translate }} <a
+    href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895310/Add+Journal+Entries"
+    target="_blank">{{ "labels.inputs.Add Journal Entries" | translate }}</a></p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn"
+            (click)="popover.close();configurationWizardService.closeConfigWizard()">{{ "labels.buttons.Close" | translate }}
+    </button>
+    <button mat-raised-button color="primary"
+            (click)="popover.close();previousStep()">{{ "labels.buttons.Back" | translate }}
+    </button>
+    <button mat-raised-button color="primary"
+            (click)="popover.close();nextStep()">{{ "labels.buttons.Next" | translate }}
+    </button>
+  </div>
 </ng-template>

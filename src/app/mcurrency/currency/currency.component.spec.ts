@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CurrencyComponent } from './currency.component';
 
-describe('HomeComponent', () => {
+describe('CreateJournalEntryComponent', () => {
   let component: CurrencyComponent;
   let fixture: ComponentFixture<CurrencyComponent>;
 
@@ -10,7 +10,7 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CurrencyComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

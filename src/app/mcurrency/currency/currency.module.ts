@@ -10,6 +10,7 @@ import { PipesModule } from '../../pipes/pipes.module';
 /** Custom Components */
 import { CurrencyComponent } from './currency.component';
 import { TranslateModule } from '@ngx-translate/core';
+import {DirectivesModule} from "../../directives/directives.module";
 
 /**
  * Home Component
@@ -23,6 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
     PipesModule,
     HomeRoutingModule,
     TranslateModule,
+    DirectivesModule,
   ],
   declarations: [
     CurrencyComponent

@@ -8,11 +8,15 @@
   }
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 .mat-list-base {
   padding-top: 0px;
 }
 
-a{
+a {
   text-decoration: none;
   color: black
 }
