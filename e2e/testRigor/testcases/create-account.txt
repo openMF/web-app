@@ -1,0 +1,8 @@
+log-in-and-validate
+navigate-to-accounting-creation
+create-account
+click "Chart of Accounts"
+//validate account created
+check that page contains "Filter"
+enter saved value "glAccountName" into "Filter"
+check that page contains saved value "glAccountName" below saved value "glAccountName"

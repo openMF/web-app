@@ -1,0 +1,7 @@
+log-in-and-validate
+navigate-to-offices
+create-organization
+enter saved value "officeName" into "Filter"
+check that page contains saved value "officeName" below saved value "officeName"
+check that page contains saved value "externalID" below saved value "officeName"
+check that page contains string with parameters "${todayDayOfMonthTwoDigits} ${todayMonth} ${todayYear}" on the right of saved value "externalID"

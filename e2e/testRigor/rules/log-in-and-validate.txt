@@ -1,0 +1,5 @@
+enter saved value "username" into field "Username"
+enter saved value "password" into field "Password"
+click exactly "Login"
+close-popup
+check that page contains string with parameters "Welcome, ${username}!"

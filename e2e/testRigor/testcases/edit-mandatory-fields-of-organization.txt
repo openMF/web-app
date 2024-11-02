@@ -1,0 +1,17 @@
+log-in-and-validate
+navigate-to-offices
+create-organization
+//edit  an organization
+enter saved value "officeName" into "Filter"
+click 2nd saved value "officeName"
+click "Edit"
+double click field "Office"
+enter delete
+generate unique name, then enter into field "Office" and save as "newOfficeName"
+click "Submit"
+check that page contains "General"
+check that page contains saved value "newOfficeName"
+//validate edited organization
+click "Manage Offices"
+enter saved value "newOfficeName" into "Filter"
+check that page contains saved value "newOfficeName" below saved value "newOfficeName"

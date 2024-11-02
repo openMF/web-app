@@ -1,0 +1,4 @@
+check that page contains field "Username"
+check that page contains field "Password"
+check that page contains button "Login"
+check that page contains button "Forgot Password?"
