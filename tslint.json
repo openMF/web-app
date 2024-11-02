@@ -3,6 +3,7 @@
     "node_modules/codelyzer"
   ],
   "rules": {
+    "no-empty-lifecycle-method": false,
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,

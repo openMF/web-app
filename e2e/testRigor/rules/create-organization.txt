@@ -1,0 +1,12 @@
+click "Create Office"
+generate unique name, then enter into "Office" and save as "officeName"
+generate unique name, then enter into "External ID" and save as "externalID"
+click "Parent Office"
+click "Head Office"
+pick-today-date
+click "Submit"
+// validate organization created
+enter saved value "officeName" into "Filter"
+check that page contains saved value "officeName" roughly below "Office Name"
+check that page contains saved value "externalID" roughly below "External ID"
+check that page contains string with parameters "${todayDayOfMonth} ${todayMonth} ${todayYear}" roughly below "Opened On"
