@@ -1,19 +1,20 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
+import {UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray} from '@angular/forms';
+import {Router, ActivatedRoute} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
 
 /** Custom Services */
 
-import { AccountingService } from '../../accounting/accounting.service';
-import { SettingsService } from 'app/settings/settings.service';
-import { Dates } from 'app/core/utils/dates';
-import { PopoverService } from '../../configuration-wizard/popover/popover.service';
-import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
+import {AccountingService} from '../../accounting/accounting.service';
+import {SettingsService} from 'app/settings/settings.service';
+import {Dates} from 'app/core/utils/dates';
+import {PopoverService} from '../../configuration-wizard/popover/popover.service';
+import {ConfigurationWizardService} from '../../configuration-wizard/configuration-wizard.service';
 
 /** Custom Dialog Component */
-import { NextStepDialogComponent } from '../../configuration-wizard/next-step-dialog/next-step-dialog.component';
+import {NextStepDialogComponent} from '../../configuration-wizard/next-step-dialog/next-step-dialog.component';
+
 /**
  * Create Journal Entry component.
  */
@@ -71,7 +72,23 @@ export class EntryComponent implements OnInit, AfterViewInit {
     }) => {
       console.log(data);
       this.officeData = data.offices;
-      this.currencyData = data.currencies.selectedCurrencyOptions;
+      //this.currencyData = data.currencies.selectedCurrencyOptions;
+      this.currencyData = [{
+        "code": "USD",
+        "name": "US Dollar",
+        "decimalPlaces": 2,
+        "displaySymbol": "$",
+        "nameCode": "currency.USD",
+        "displayLabel": "US Dollar ($)"
+      },
+        {
+          "code": "UGX",
+          "name": "Uganda Shilling",
+          "decimalPlaces": 2,
+          "displaySymbol": "USh",
+          "nameCode": "currency.UGX",
+          "displayLabel": "Uganda Shilling (USh)"
+        }]
       this.paymentTypeData = data.paymentTypes;
       this.glAccountData = data.glAccounts;
     });
@@ -163,7 +180,7 @@ export class EntryComponent implements OnInit, AfterViewInit {
       journalEntry.transactionDate = this.dateUtils.formatDate(journalEntry.transactionDate, this.settingsService.dateFormat);
     }
     this.accountingService.createJournalEntry(journalEntry).subscribe(response => {
-      this.router.navigate(['../transactions/view', response.transactionId], { relativeTo: this.route });
+      this.router.navigate(['../transactions/view', response.transactionId], {relativeTo: this.route});
     });
   }
 
@@ -208,7 +225,7 @@ export class EntryComponent implements OnInit, AfterViewInit {
    * Next Step (Products) Dialog Configuration Wizard.
    */
   openNextStepDialog() {
-    const nextStepDialogRef = this.dialog.open( NextStepDialogComponent, {
+    const nextStepDialogRef = this.dialog.open(NextStepDialogComponent, {
       data: {
         nextStepName: 'Setup Products',
         previousStepName: 'Accounting',

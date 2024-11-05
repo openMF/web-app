@@ -68,7 +68,6 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
       paymentTypes: any,
       glAccounts: any
     }) => {
-      console.log(data);
       this.officeData = data.offices;
       this.currencyData = data.currencies.selectedCurrencyOptions;
       this.paymentTypeData = data.paymentTypes;
@@ -77,6 +76,32 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * {
+   *   "code": "AFN",
+   *   "name": "Afghanistan Afghani",
+   *   "decimalPlaces": 2,
+   *   "nameCode": "currency.AFN",
+   *   "displayLabel": "Afghanistan Afghani [AFN]"
+   * }
+   *
+   * {
+   *   "code": "UGX",
+   *   "name": "Uganda Shilling",
+   *   "decimalPlaces": 2,
+   *   "displaySymbol": "USh",
+   *   "nameCode": "currency.UGX",
+   *   "displayLabel": "Uganda Shilling (USh)"
+   * }
+   *
+   * {
+   *   "code": "USD",
+   *   "name": "US Dollar",
+   *   "decimalPlaces": 2,
+   *   "displaySymbol": "$",
+   *   "nameCode": "currency.USD",
+   *   "displayLabel": "US Dollar ($)"
+   * }
+   *
    * Creates the journal entry form.
    */
   ngOnInit() {
