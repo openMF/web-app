@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Currency } from '../models/general.model';
 import { UntypedFormControl } from '@angular/forms';
 
@@ -7,7 +7,7 @@ import { UntypedFormControl } from '@angular/forms';
   templateUrl: './input-amount.component.html',
   styleUrls: ['./input-amount.component.scss']
 })
-export class InputAmountComponent implements OnInit {
+export class InputAmountComponent {
 
   @Input() isRequired = false;
   @Input() currency: Currency;
@@ -17,9 +17,6 @@ export class InputAmountComponent implements OnInit {
   displayHint = false;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   numberOnly(event: any): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;

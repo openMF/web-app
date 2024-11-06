@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -21,7 +21,7 @@ import { Accounting } from 'app/core/utils/accounting';
   templateUrl: './create-recurring-deposit-product.component.html',
   styleUrls: ['./create-recurring-deposit-product.component.scss']
 })
-export class CreateRecurringDepositProductComponent implements OnInit {
+export class CreateRecurringDepositProductComponent {
 
   @ViewChild(RecurringDepositProductDetailsStepComponent, { static: true }) recurringDepositProductDetailsStep: RecurringDepositProductDetailsStepComponent;
   @ViewChild(RecurringDepositProductCurrencyStepComponent, { static: true }) recurringDepositProductCurrencyStep: RecurringDepositProductCurrencyStepComponent;
@@ -50,9 +50,6 @@ export class CreateRecurringDepositProductComponent implements OnInit {
       this.recurringDepositProductsTemplate = data.recurringDepositProductsTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForSavings();
-  }
-
-  ngOnInit() {
   }
 
   get recurringDepositProductDetailsForm() {

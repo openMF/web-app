@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { SavingsService } from 'app/savings/savings.service';
@@ -8,7 +8,7 @@ import { SavingsService } from 'app/savings/savings.service';
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss']
 })
-export class NotesTabComponent implements OnInit {
+export class NotesTabComponent {
 
   entityId: string;
   username: string;
@@ -23,9 +23,6 @@ export class NotesTabComponent implements OnInit {
     this.route.data.subscribe((data: { savingAccountNotes: any }) => {
       this.entityNotes = data.savingAccountNotes;
     });
-  }
-
-  ngOnInit() {
   }
 
   addNote(noteContent: any) {

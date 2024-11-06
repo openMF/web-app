@@ -65,7 +65,7 @@
 
       <mat-menu #centerMenu="matMenu">
 
-        <span *ngIf="!(centerViewData.status.value=='Active')">
+        <span *ngIf="!(centerViewData.status.value==='Active')">
           <button mat-menu-item *mifosxHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')"><i
               class="fa fa-check-sign"></i> {{"labels.buttons.Activate" | translate}} </button>
         </span>

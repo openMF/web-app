@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './saving-product-datatable-tab.component.html',
   styleUrls: ['./saving-product-datatable-tab.component.scss']
 })
-export class SavingProductDatatableTabComponent implements OnInit {
+export class SavingProductDatatableTabComponent {
   entityId: string;
   entityDatatable: any;
   multiRowDatatableFlag: boolean;
@@ -18,9 +18,6 @@ export class SavingProductDatatableTabComponent implements OnInit {
       this.entityDatatable = data.savingProductDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
-  }
-
-  ngOnInit(): void {
   }
 
 }

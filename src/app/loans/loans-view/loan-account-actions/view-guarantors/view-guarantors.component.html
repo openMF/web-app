@@ -161,7 +161,7 @@
                 <fa-icon icon="eye" class="m-r-10"></fa-icon>
               </button>
               <button mat-raised-button class="account-action-button" color="primary"
-                *ngIf="guarantor.status && guarantor.guarantorType.id == 3 && guarantor.id">
+                *ngIf="guarantor.status && guarantor.guarantorType.id === 3 && guarantor.id">
                 <fa-icon icon="edit" class="m-r-10"></fa-icon>
               </button>
               <span *ngIf="guarantor.status">

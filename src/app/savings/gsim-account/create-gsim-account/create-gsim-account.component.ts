@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -21,7 +21,7 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-gsim-account.component.scss']
 })
 
-export class CreateGsimAccountComponent implements OnInit {
+export class CreateGsimAccountComponent {
 
   /** Savings Account Template */
   savingsAccountTemplate: any;
@@ -57,9 +57,6 @@ export class CreateGsimAccountComponent implements OnInit {
       this.savingsAccountTemplate = data.savingsAccountTemplate;
       this.dataSource = data.groupsData.activeClientMembers;
     });
-  }
-
-  ngOnInit(): void {
   }
 
   /**

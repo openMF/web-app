@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './member-groups.component.html',
   styleUrls: ['./member-groups.component.scss']
 })
-export class MemberGroupsComponent implements OnInit {
+export class MemberGroupsComponent {
 
   /** Columns to be displayed in the member groups table. */
   displayedColumns: string[] = ['accountNo', 'name'];
@@ -37,7 +37,5 @@ export class MemberGroupsComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-  ngOnInit() { }
 
 }

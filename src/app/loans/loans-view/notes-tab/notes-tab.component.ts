@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -12,7 +12,7 @@ import { AuthenticationService } from '../../../core/authentication/authenticati
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss']
 })
-export class NotesTabComponent implements OnInit {
+export class NotesTabComponent {
 
   entityId: string;
   username: string;
@@ -28,8 +28,6 @@ export class NotesTabComponent implements OnInit {
       this.entityNotes = data.loanNotes;
     });
   }
-
-  ngOnInit() { }
 
   addNote(noteContent: any) {
     this.loansService.createLoanNote(this.entityId, noteContent).subscribe((response: any) => {

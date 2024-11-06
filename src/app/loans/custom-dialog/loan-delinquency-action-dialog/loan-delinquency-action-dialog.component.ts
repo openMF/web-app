@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   templateUrl: './loan-delinquency-action-dialog.component.html',
   styleUrls: ['./loan-delinquency-action-dialog.component.scss']
 })
-export class LoanDelinquencyActionDialogComponent implements OnInit {
+export class LoanDelinquencyActionDialogComponent {
 
   delinquencyActionForm: UntypedFormGroup;
   /** Minimum date allowed. */
@@ -20,8 +20,6 @@ export class LoanDelinquencyActionDialogComponent implements OnInit {
     private formBuilder: UntypedFormBuilder) {
       this.createDelinquencyActionForm();
   }
-
-  ngOnInit(): void { }
 
   createDelinquencyActionForm() {
     this.delinquencyActionForm = this.formBuilder.group({

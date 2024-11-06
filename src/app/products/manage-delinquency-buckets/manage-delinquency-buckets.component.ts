@@ -1,18 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'mifosx-manage-delinquency-buckets',
   templateUrl: './manage-delinquency-buckets.component.html',
   styleUrls: ['./manage-delinquency-buckets.component.scss']
 })
-export class ManageDelinquencyBucketsComponent implements OnInit {
+export class ManageDelinquencyBucketsComponent {
   // Initialize an array of 2 boolean values, all set to false
   arrowBooleans: boolean[] = new Array(2).fill(false);
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   /**
    * Popover function

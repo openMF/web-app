@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
 
@@ -7,7 +7,7 @@ import { Currency } from 'app/shared/models/general.model';
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss']
 })
-export class GeneralTabComponent implements OnInit {
+export class GeneralTabComponent {
 
   fixedDepositsAccountData: any;
   entityType: string;
@@ -26,9 +26,6 @@ export class GeneralTabComponent implements OnInit {
     } else if (this.router.url.includes('centers')) {
       this.entityType = 'Center';
     }
-  }
-
-  ngOnInit(): void {
   }
 
 }
