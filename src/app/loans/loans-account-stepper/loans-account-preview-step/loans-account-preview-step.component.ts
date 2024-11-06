@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 /**
  * Create Loans Account Preview Step
@@ -9,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, S
   templateUrl: './loans-account-preview-step.component.html',
   styleUrls: ['./loans-account-preview-step.component.scss']
 })
-export class LoansAccountPreviewStepComponent implements OnInit, OnChanges {
+export class LoansAccountPreviewStepComponent implements OnChanges {
 
   /** Loans Account Template */
   @Input() loansAccountTemplate: any = [];
@@ -18,7 +18,7 @@ export class LoansAccountPreviewStepComponent implements OnInit, OnChanges {
   /** Loans Account Data */
   @Input() loansAccount: any;
   /** Submit Loans Account */
-  @Output() submit = new EventEmitter();
+  @Output() submitEvent = new EventEmitter();
 
   /** Charges Displayed Columns */
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date'];
@@ -28,8 +28,6 @@ export class LoansAccountPreviewStepComponent implements OnInit, OnChanges {
   productEnableDownPayment = false;
 
   constructor() { }
-
-  ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.productEnableDownPayment = this.loansAccountProductTemplate.product.enableDownPayment;

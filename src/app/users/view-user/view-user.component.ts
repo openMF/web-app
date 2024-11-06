@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -18,7 +18,7 @@ import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.scss']
 })
-export class ViewUserComponent implements OnInit {
+export class ViewUserComponent {
 
   /** User Data. */
   userData: any;
@@ -37,9 +37,6 @@ export class ViewUserComponent implements OnInit {
     this.route.data.subscribe((data: { user: any }) => {
       this.userData = data.user;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

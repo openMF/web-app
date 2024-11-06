@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,7 +17,7 @@ import { UserService } from '../user.service';
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.scss']
 })
-export class ViewUserComponent implements OnInit {
+export class ViewUserComponent {
 
   /** Self service user. */
   user: any;
@@ -37,9 +37,6 @@ export class ViewUserComponent implements OnInit {
     this.route.data.subscribe((data: { user: any }) => {
       this.user = data.user;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

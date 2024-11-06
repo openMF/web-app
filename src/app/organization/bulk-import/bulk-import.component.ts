@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
  * Bulk Import component.
@@ -9,13 +9,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './bulk-import.component.html',
   styleUrls: ['./bulk-import.component.scss']
 })
-export class BulkImportComponent implements OnInit {
+export class BulkImportComponent {
   // Initialize an array of 17 boolean values, all set to false
   arrowBooleans: boolean[] = new Array(17).fill(false);
 
   constructor() {}
-
-  ngOnInit() {}
 
   /**
    * Popover function

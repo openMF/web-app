@@ -19,7 +19,7 @@ export class ClientPreviewStepComponent {
   @Input() client: any;
 
   /** Form submission event */
-  @Output() submit = new EventEmitter();
+  @Output() submitEvent = new EventEmitter();
 
   constructor() { }
 

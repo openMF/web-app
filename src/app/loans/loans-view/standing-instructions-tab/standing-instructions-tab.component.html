@@ -23,8 +23,8 @@
       <ng-container matColumnDef="beneficiary">
         <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Beneficiary" | translate}} </th>
         <td mat-cell *matCellDef="let instruction">
-          <span *ngIf="instruction.fromClient.id != instruction.toClient.id"> {{instruction.toClient.displayName}} </span>
-          <span *ngIf="instruction.fromClient.id == instruction.toClient.id">{{"labels.inputs.Own Account" | translate}}</span>
+          <span *ngIf="instruction.fromClient.id !== instruction.toClient.id"> {{instruction.toClient.displayName}} </span>
+          <span *ngIf="instruction.fromClient.id === instruction.toClient.id">{{"labels.inputs.Own Account" | translate}}</span>
         </td>
       </ng-container>
 

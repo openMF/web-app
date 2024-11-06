@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
@@ -21,7 +21,7 @@ import { SettingsService } from 'app/settings/settings.service';
   templateUrl: './list-standing-instructions.component.html',
   styleUrls: ['./list-standing-instructions.component.scss']
 })
-export class ListStandingInstructionsComponent implements OnInit {
+export class ListStandingInstructionsComponent {
 
   /** Recurring Deposits Data */
   standingIntructionsTemplateData: any;
@@ -78,9 +78,6 @@ export class ListStandingInstructionsComponent implements OnInit {
       this.setParams();
       this.transferTypeDatas = this.standingIntructionsTemplateData.transferTypeOptions;
     });
-  }
-
-  ngOnInit() {
   }
 
   setParams() {

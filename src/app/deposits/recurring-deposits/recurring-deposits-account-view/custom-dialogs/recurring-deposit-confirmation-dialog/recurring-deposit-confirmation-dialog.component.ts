@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -6,7 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './recurring-deposit-confirmation-dialog.component.html',
   styleUrls: ['./recurring-deposit-confirmation-dialog.component.scss']
 })
-export class RecurringDepositConfirmationDialogComponent implements OnInit {
+export class RecurringDepositConfirmationDialogComponent {
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
@@ -14,8 +14,5 @@ export class RecurringDepositConfirmationDialogComponent implements OnInit {
    */
   constructor(public dialogRef: MatDialogRef<RecurringDepositConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  ngOnInit() {
-  }
 
 }

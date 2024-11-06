@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AdvancePaymentAllocationData, CreditAllocation, PaymentAllocation } from 'app/products/loan-products/loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
 @Component({
@@ -6,16 +6,13 @@ import { AdvancePaymentAllocationData, CreditAllocation, PaymentAllocation } fro
   templateUrl: './view-advance-paymeny-allocation.component.html',
   styleUrls: ['./view-advance-paymeny-allocation.component.scss']
 })
-export class ViewAdvancePaymenyAllocationComponent implements OnInit {
+export class ViewAdvancePaymenyAllocationComponent {
 
   @Input() paymentAllocation: PaymentAllocation | null;
   @Input() creditAllocation: CreditAllocation | null;
   @Input() advancePaymentAllocationData: AdvancePaymentAllocationData;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   transactionTypeValue(code: string): string {
     if (this.advancePaymentAllocationData == null) {

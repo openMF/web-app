@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './view-recurring-deposit-product.component.html',
   styleUrls: ['./view-recurring-deposit-product.component.scss']
 })
-export class ViewRecurringDepositProductComponent implements OnInit {
+export class ViewRecurringDepositProductComponent {
 
   recurringDepositDatatables: any = [];
 
@@ -19,9 +19,6 @@ export class ViewRecurringDepositProductComponent implements OnInit {
         }
       });
     });
-  }
-
-  ngOnInit() {
   }
 
 }

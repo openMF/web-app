@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
@@ -10,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './continue-setup-dialog.component.html',
   styleUrls: ['./continue-setup-dialog.component.scss']
 })
-export class ContinueSetupDialogComponent implements OnInit {
+export class ContinueSetupDialogComponent {
 
   /* Current Step Name*/
   stepName: number;
@@ -21,9 +21,6 @@ export class ContinueSetupDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ContinueSetupDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any) {
     this.stepName = data.stepName;
-  }
-
-  ngOnInit() {
   }
 
 }

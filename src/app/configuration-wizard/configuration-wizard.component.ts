@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 /**
@@ -10,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './configuration-wizard.component.html',
   styleUrls: ['./configuration-wizard.component.scss']
 })
-export class ConfigurationWizardComponent implements OnInit {
+export class ConfigurationWizardComponent {
 
   show: number;
   /**
@@ -18,8 +18,5 @@ export class ConfigurationWizardComponent implements OnInit {
    */
   constructor(public dialogRef: MatDialogRef<ConfigurationWizardComponent>,
   @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  ngOnInit() {
-  }
 
 }

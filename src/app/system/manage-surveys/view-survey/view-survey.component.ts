@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -14,7 +14,7 @@ import { SystemService } from 'app/system/system.service';
   templateUrl: './view-survey.component.html',
   styleUrls: ['./view-survey.component.scss']
 })
-export class ViewSurveyComponent implements OnInit {
+export class ViewSurveyComponent {
 
   /** Survey Data */
   surveyData: any;
@@ -36,9 +36,6 @@ export class ViewSurveyComponent implements OnInit {
     this.route.data.subscribe((data: { survey: any }) => {
       this.surveyData = data.survey;
     });
-  }
-
-  ngOnInit(): void {
   }
 
   /** Go to edit survey page. */
