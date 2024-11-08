@@ -1,12 +1,11 @@
-
-/* ############ Light mode palettes ################*/
+/* ############ Light mode palettes ################ */
 
 $primary-palette: (
   100: #5ba2ec,
   500: #1074b9,
   700: #004989,
   contrast: (
-    100: rgba(black, 0.87),
+    100: rgb(0 0 0 / 87%),
     500: white,
     700: white
   )
@@ -17,13 +16,13 @@ $accent-palette: (
   500: #b4d575,
   700: #83a447,
   contrast: (
-    100: rgba(black, 0.87),
-    500: rgba(black, 0.87),
-    700: rgba(black, 0.87)
+    100: rgb(0 0 0 / 87%),
+    500: rgb(0 0 0 / 87%),
+    700: rgb(0 0 0 / 87%)
   )
 );
 
-/* ############ Dark mode palettes ################*/
+/* ############ Dark mode palettes ################ */
 
 $dark-primary-palette: (
   100: #5ba2ec,
@@ -31,8 +30,8 @@ $dark-primary-palette: (
   700: #004989,
   contrast: (
     100: white,
-    500: rgba(white, 0.87),
-    700: rgba(white, 0.87)
+    500: rgb(255 255 255 / 87%),
+    700: rgb(255 255 255 / 87%)
   )
 );
 

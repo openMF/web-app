@@ -3,48 +3,59 @@
   max-width: 80rem;
   width: 90%;
   padding: 0;
+
   .header {
     padding: 1%;
-    .header-title-group {
-      .center-card-title {
+  }
+
+  .center-meeting {
+    align-self: flex-end;
+    width: 300px;
+    height: 140px;
+
+    div,
+    ng-template > div {
+      background-color: #0a6aac;
+
+      p {
         color: white;
-        width: 90%;
-        p {
-          color: white;
-        }
+        padding: 0 10px;
       }
-    }
-    .profile-image-container {
-      margin: 1%;
-      .profile-image {
-        object-fit: cover;
-        border-radius: 20px;
-      }
-    }
-    .center-meeting {
-      align-self: flex-end;
-      width: 300px;
-      height: 140px;
-      div, ng-template > div {
-        background-color: #0a6aac;
-        p {
-          color: white;
-          padding: 0 10px;
-        }
-      }
-    }
-    .center-actions {
-      align-self: flex-end;
-      margin: 0 1%;
     }
   }
+
+  .header-title-group {
+    .center-card-title {
+      color: white;
+      width: 90%;
+
+      p {
+        color: white;
+      }
+    }
+  }
+
+  .profile-image-container {
+    margin: 1%;
+
+    .profile-image {
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  }
+
+  .center-actions {
+    align-self: flex-end;
+    margin: 0 1%;
+  }
+
   .navigation-tabs {
     overflow: auto;
   }
 }
 
 .meetingDetails {
-  float:right;
+  float: right;
   margin-right: 10px;
   border: 1px black solid;
   padding: 10px;

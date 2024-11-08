@@ -19,7 +19,7 @@ mat-list-item {
 }
 
 .groupingName {
-  padding: 0px 10px;
+  padding: 0 10px;
 }
 
 .listPermission {
@@ -32,7 +32,7 @@ mat-list-item {
 }
 
 .inactive {
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .inactive:hover {

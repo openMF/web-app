@@ -1,17 +1,21 @@
 .action-buttons {
   width: 90%;
 }
+
 .sms-card {
   margin: 0 auto;
   width: 80%;
   padding: 0;
+
   .tab-content {
     padding: 1%;
     margin: 1%;
+
     .template-message {
       padding-inline: 1.5%;
       margin-top: 1%;
     }
+
     .search-button {
       max-width: 3%;
       max-height: 2%;

@@ -3,48 +3,61 @@
   max-width: 80rem;
   width: 90%;
   padding: 0;
-  .header {
-    padding: 1%;
-    .header-title-group {
-      .group-card-title {
-        color: white;
-        width: 90%;
-        mat-card-subtitle {
-          color: white;
-        }
-      }
-    }
-    .profile-image-container {
-      margin: 1%;
-      .profile-image {
-        object-fit: cover;
-        border-radius: 20px;
-      }
-    }
-    .group-meeting {
-      align-self: flex-end;
-      width: 300px;
-      div, ng-template > div {
-        background-color: #0a6aac;
-        p {
-          color: white;
-          padding: 0 10px;
-        }
-      }
-    }
-    .group-actions {
-      align-self: flex-end;
-      margin: 0 1%;
-      i {
-        margin-bottom: 2px;
-        margin-right: 4px;
-      }
-    }
-  }
-  .navigation-tabs {
-    overflow: auto;
-  }
+
   i:hover {
     cursor: pointer;
+  }
+
+  .header {
+    padding: 1%;
+  }
+
+  .header-title-group {
+    .group-card-title {
+      color: white;
+      width: 90%;
+
+      mat-card-subtitle {
+        color: white;
+      }
+    }
+  }
+
+  .profile-image-container {
+    margin: 1%;
+
+    .profile-image {
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  }
+
+  .group-meeting {
+    align-self: flex-end;
+    width: 300px;
+
+    div,
+    ng-template > div {
+      background-color: #0a6aac;
+
+      p {
+        color: white;
+        padding: 0 10px;
+      }
+    }
+  }
+
+  .group-actions {
+    align-self: flex-end;
+    margin: 0 1%;
+
+    i {
+      margin-bottom: 2px;
+      margin-right: 4px;
+    }
+  }
+
+  .navigation-tabs {
+    overflow: auto;
   }
 }

@@ -1,26 +1,29 @@
 .view-guarantors-account-tables {
-	padding: 1%;
-	margin: 1%;
-	.table-headers {
-		margin: 0;
-		padding: 6px;
-	}
-	td {
-		padding: 3px;
-	}
+  padding: 1%;
+  margin: 1%;
+
+  .table-headers {
+    margin: 0;
+    padding: 6px;
+  }
+
+  td {
+    padding: 3px;
+  }
 }
 
 table {
-	width: 100%;
-	.account-action-button{
-		min-width: 26px;
-		padding: 0 6px;
-		margin: 4px;
-		line-height: 25px;
-	}
+  width: 100%;
+
+  .account-action-button {
+    min-width: 26px;
+    padding: 0 6px;
+    margin: 4px;
+    line-height: 25px;
+  }
 }
 
-.heading-content{
+.heading-content {
   margin-bottom: 1%;
   margin-top: 1%;
   width: 100%;
@@ -31,5 +34,5 @@ table {
 }
 
 .container {
-    max-width: 73rem;
+  max-width: 73rem;
 }

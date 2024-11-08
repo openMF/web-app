@@ -6,16 +6,17 @@
   overflow-x: hidden;
 
   .search {
-      width: 100%;
-      padding: 12px;
-      mat-card-content {
-        width: 100%;
-      }
+    width: 100%;
+    padding: 12px;
 
-      mat-form-field {
-        width: 100%;
-      }
+    mat-card-content {
+      width: 100%;
     }
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
 
   .top-card {
     flex: 1 0 100%;
@@ -28,8 +29,7 @@
 
   .bottom-card {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+    flex-flow: row wrap;
     gap: 2px;
 
     .amount-collected,
@@ -41,8 +41,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
-
+@media screen and (width <= 768px) {
   .top-card,
   .bottom-card {
     flex-direction: column;

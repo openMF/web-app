@@ -1,12 +1,12 @@
-@import "assets/styles/colours";
+@use 'assets/styles/colours' as *;
 
 ::ng-deep .mat-tab-body-wrapper {
-    width: 96%;
-    margin: auto;
+  width: 96%;
+  margin: auto;
 }
 
 ::ng-deep .mat-tab-label.mat-tab-disabled {
-  padding: 0px;
+  padding: 0;
   margin: 0;
   justify-content: left;
   color: $status-approved;

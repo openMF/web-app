@@ -1,5 +1,6 @@
 .tab-container {
-  padding-bottom: 2%;
+  padding: 1% 1% 2%;
+  margin: 1%;
 
   h3 {
     margin: 1% auto;
@@ -8,6 +9,7 @@
   .transaction-buttons {
     padding-bottom: 1rem;
     padding-top: 1rem;
+
     .accruals {
       padding-top: 1%;
     }
@@ -28,20 +30,13 @@
   }
 }
 
-.tab-container {
-	padding: 1%;
-	margin: 1%;
-}
-
 .external-asset-owner-status {
   color: black;
 }
 
-.account-action-button{
+.account-action-button {
   min-width: 26px;
-  padding: 0 0 3px 0;
+  padding: 0 0 3px;
   margin: 0 2%;
   line-height: 25px;
 }
-
-

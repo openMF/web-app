@@ -1,12 +1,12 @@
 .cover {
-  background: url("../../assets/images/cover_image_resized.webp") no-repeat center center;
+  background: url('../../assets/images/cover_image_resized.webp') no-repeat center center;
   background-size: cover;
   position: relative;
   z-index: 0;
   max-width: 70vw;
 
   &::after {
-    content: "";
+    content: '';
     opacity: 0.5;
     background: linear-gradient(#000, #000);
     width: 100%;

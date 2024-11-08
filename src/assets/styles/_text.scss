@@ -10,9 +10,9 @@ html {
 body {
   font-weight: 400;
   font-size: 0.875rem;
-  color: rgba(0, 0, 0, 0.87);
+  color: rgb(0 0 0 / 87%);
   line-height: 1.5;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .lh-1 {
@@ -193,23 +193,23 @@ body {
 }
 
 .text-shadow {
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  text-shadow: 1px 1px 1px rgb(0 0 0 / 40%);
 }
 
 .text-rgb-2 {
-  color: rgba(0, 0, 0, 0.2);
+  color: rgb(0 0 0 / 20%);
 }
 
 .text-rgb-3 {
-  color: rgba(0, 0, 0, 0.3);
+  color: rgb(0 0 0 / 30%);
 }
 
 .text-rgb-4 {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgb(0 0 0 / 40%);
 }
 
 .text-rgb-5 {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgb(0 0 0 / 50%);
 }
 
 .no-ul,

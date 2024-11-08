@@ -1,4 +1,4 @@
-@import "assets/styles/colours";
+@use 'assets/styles/colours' as *;
 
 tr:hover {
   cursor: move;
@@ -7,10 +7,11 @@ tr:hover {
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
-              display: table;
+  box-shadow:
+    0 5px 5px -3px rgb(0 0 0 / 20%),
+    0 8px 10px 1px rgb(0 0 0 / 14%),
+    0 3px 14px 2px rgb(0 0 0 / 12%);
+  display: table;
   background-color: $white;
 }
 

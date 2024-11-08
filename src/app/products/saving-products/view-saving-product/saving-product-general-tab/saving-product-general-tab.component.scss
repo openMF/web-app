@@ -1,4 +1,5 @@
-@import "assets/styles/helper";
+@use 'assets/styles/helper';
+@use 'assets/styles/colours' as *;
 
 .tab-container {
   padding: 1%;
@@ -12,7 +13,14 @@
 }
 
 .interestCarts {
-  float:right;
+  float: right;
+}
+
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 500;
 }
 
 table {
@@ -41,12 +49,7 @@ table {
 }
 
 .mat-elevation-z1 {
-  margin: 1em 0 1.5em 0;
-}
-
-h2, h3, h4 {
-  margin: 0;
-  font-weight: 500;
+  margin: 1em 0 1.5em;
 }
 
 span {
@@ -54,7 +57,7 @@ span {
 }
 
 mat-divider {
-  margin: 0 0 0.5em 0;
+  margin: 0 0 0.5em;
 }
 
 .margin-t {

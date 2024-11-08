@@ -1,3 +1,9 @@
+h3,
+h4 {
+  font-weight: 500;
+  margin: 1em 0;
+}
+
 table {
   width: 100%;
 
@@ -23,19 +29,11 @@ table {
 }
 
 mat-divider {
-  margin: 1em 0 1em 0;
+  margin: 1em 0;
 }
 
 .mat-elevation-z1 {
-  margin: 1em 0 1.5em 0;
-}
-
-h3, h4 {
-  font-weight: 500;
-}
-
-h3, h4 {
-  margin: 1em 0;
+  margin: 1em 0 1.5em;
 }
 
 .margin-t {

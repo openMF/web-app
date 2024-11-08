@@ -33,8 +33,10 @@ $color: #e2e4ec;
   position: absolute;
   width: $bar;
   height: 8px;
-  background: linear-gradient(125deg, rgb(255, 255, 255), #c4d2e9, rgb(255, 255, 255));
-  animation: grow 4s linear infinite, move 4s linear infinite;
+  background: linear-gradient(125deg, rgb(255 255 255), #c4d2e9, rgb(255 255 255));
+  animation:
+    grow 4s linear infinite,
+    move 4s linear infinite;
   top: 82px;
 }
 
@@ -52,7 +54,7 @@ $color: #e2e4ec;
   }
 
   33.3% {
-    left: $foo / 2;
+    left: calc($foo / 2);
   }
 
   50% {
@@ -60,7 +62,7 @@ $color: #e2e4ec;
   }
 
   66.7% {
-    left: $foo / 2;
+    left: calc($foo / 2);
   }
 
   83.3% {
@@ -78,11 +80,11 @@ $color: #e2e4ec;
   }
 
   16.7% {
-    width: $foo / 2;
+    width: calc($foo / 2);
   }
 
   33.3% {
-    width: $foo / 2;
+    width: calc($foo / 2);
   }
 
   50% {
@@ -90,11 +92,11 @@ $color: #e2e4ec;
   }
 
   66.7% {
-    width: $foo / 2;
+    width: calc($foo / 2);
   }
 
   83.3% {
-    width: $foo / 2;
+    width: calc($foo / 2);
   }
 
   100% {

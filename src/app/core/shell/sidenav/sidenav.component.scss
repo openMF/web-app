@@ -19,9 +19,7 @@
     text-align: center;
     max-width: 15rem;
     z-index: 9999;
-    &:hover {
-      cursor: pointer;
-    }
+    cursor: pointer;
 
     .app-logo {
       width: auto;
@@ -46,7 +44,8 @@
       width: 72px;
       margin: 0 auto 8px;
       height: 72px;
-      border: 1px solid hsla(210, 8%, 51%, 0.13);
+      /* stylelint-disable-next-line color-function-notation */
+      border: 1px solid hsla(210deg, 8%, 51%, 13%);
       padding: 4px;
       border-radius: 50%;
     }
@@ -75,7 +74,7 @@
       }
 
       .text-muted {
-        color: rgba(0, 0, 0, 0.54);
+        color: rgba(0 0 0 / 54%);
       }
     }
   }
@@ -137,11 +136,8 @@
   .app-brand {
     .app-logo {
       margin: auto;
-      &:hover {
-        cursor: pointer;
-      }
     }
-    
+
     .app-logo-text {
       display: none;
     }
@@ -172,10 +168,12 @@
     }
   }
 }
+
 .sidebar-full {
   .navigation-panel {
     padding-top: 5%;
   }
+
   .app-sidenav {
     .icon-menu {
       flex-direction: row;

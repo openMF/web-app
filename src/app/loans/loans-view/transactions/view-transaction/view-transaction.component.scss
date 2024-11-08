@@ -1,7 +1,9 @@
-@import "assets/styles/helper";
+@use 'assets/styles/helper';
+@use 'assets/styles/colours' as *;
 
 .container {
   max-width: 37rem;
+
   .content {
     div {
       margin: 1rem 0;

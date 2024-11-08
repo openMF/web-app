@@ -2,10 +2,12 @@
   width: 70%;
   margin: 0 auto;
   padding: 5%;
-  @media screen and (min-width:960px) {
+
+  @media screen and (width >=960px) {
     [fxFlex]:nth-child(odd) {
       margin-right: 25px;
     }
+
     [fxFlex]:last-child {
       margin-right: 0;
     }

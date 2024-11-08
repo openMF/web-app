@@ -1,4 +1,5 @@
-@import "assets/styles/helper";
+@use 'assets/styles/helper';
+@use 'assets/styles/colours' as *;
 
 .breadcrumb-wrapper {
   margin: 0 auto;
@@ -18,7 +19,7 @@
     }
 
     .separator::before {
-      content: "";
+      content: '';
       border: 1.5px solid $mid-grey;
       margin: 0 0.6rem;
       font-size: 1.25rem;
@@ -40,7 +41,7 @@
         }
 
         &::after {
-          content: "/";
+          content: '/';
           margin: 0 0.4rem;
         }
       }
