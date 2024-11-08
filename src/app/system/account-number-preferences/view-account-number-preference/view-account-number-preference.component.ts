@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   templateUrl: './view-account-number-preference.component.html',
   styleUrls: ['./view-account-number-preference.component.scss']
 })
-export class ViewAccountNumberPreferenceComponent implements OnInit {
+export class ViewAccountNumberPreferenceComponent {
 
   /** Account Number Preference Data */
   accountNumberPreferenceData: any;
@@ -39,9 +39,6 @@ export class ViewAccountNumberPreferenceComponent implements OnInit {
     this.route.data.subscribe((data: { accountNumberPreference: any }) => {
       this.accountNumberPreferenceData = data.accountNumberPreference;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

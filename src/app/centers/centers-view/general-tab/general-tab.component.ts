@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss']
 })
-export class GeneralTabComponent implements OnInit {
+export class GeneralTabComponent {
 
   /** Savings Account Table Columns */
   savingsAccountColumns: string[] = ['Account No', 'Products', 'Balance', 'Actions'];
@@ -41,10 +41,6 @@ export class GeneralTabComponent implements OnInit {
       this.groupResourceData = data.centerViewData.groupMembers;
     });
   }
-
-  ngOnInit() {
-  }
-
 
   /**
    * Stops the propagation to view pages.

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +12,7 @@ import { AccountsFilterPipe } from '../../pipes/accounts-filter.pipe';
   templateUrl: './loan-account-table.component.html',
   styleUrls: ['./loan-account-table.component.scss']
 })
-export class LoanAccountTableComponent implements OnInit {
+export class LoanAccountTableComponent {
 
   /** Columns to be displayed in the loan accounts table. */
   displayedColumns: string[] = ['accountNo', 'productName', 'Type', 'Status'];
@@ -48,9 +48,6 @@ export class LoanAccountTableComponent implements OnInit {
    */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  ngOnInit() {
   }
 
   /**

@@ -76,7 +76,7 @@
       <ng-template matStepLabel>{{"labels.inputs.PREVIEW" | translate}}</ng-template>
 
       <mifosx-loans-account-preview-step [loansAccountTemplate]="loansAccountTemplate"
-        [loansAccountProductTemplate]="loansAccountProductTemplate" [loansAccount]="loansAccount" (submit)="submit()">
+        [loansAccountProductTemplate]="loansAccountProductTemplate" [loansAccount]="loansAccount" (submitEvent)="submit()">
       </mifosx-loans-account-preview-step>
 
     </mat-step>

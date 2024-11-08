@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -12,7 +12,7 @@ import { SettingsService } from 'app/settings/settings.service';
   templateUrl: './savings-transaction-general-tab.component.html',
   styleUrls: ['./savings-transaction-general-tab.component.scss']
 })
-export class SavingsTransactionGeneralTabComponent implements OnInit {
+export class SavingsTransactionGeneralTabComponent {
 
   accountId: string;
   transactionId: string;
@@ -29,9 +29,6 @@ export class SavingsTransactionGeneralTabComponent implements OnInit {
         this.transactionData = data.savingsAccountTransaction;
       });
     }
-
-  ngOnInit(): void {
-  }
 
   allowUndo(): boolean {
     if (this.transactionData.reversed && this.transactionData.transactionType.amountHold) {

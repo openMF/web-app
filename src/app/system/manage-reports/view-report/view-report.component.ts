@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,7 +17,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   templateUrl: './view-report.component.html',
   styleUrls: ['./view-report.component.scss']
 })
-export class ViewReportComponent implements OnInit {
+export class ViewReportComponent {
 
   /** Report Data. */
   reportData: any;
@@ -36,9 +36,6 @@ export class ViewReportComponent implements OnInit {
     this.route.data.subscribe((data: { report: any }) => {
       this.reportData = data.report;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

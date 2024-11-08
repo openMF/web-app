@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './view-share-product.component.html',
   styleUrls: ['./view-share-product.component.scss']
 })
-export class ViewShareProductComponent implements OnInit {
+export class ViewShareProductComponent {
 
   shareProductDatatables: any = [];
 
@@ -17,9 +17,6 @@ export class ViewShareProductComponent implements OnInit {
         this.shareProductDatatables.push(datatable);
       });
     });
-  }
-
-  ngOnInit() {
   }
 
 }

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -18,7 +18,7 @@ import { Location } from '@angular/common';
   templateUrl: './view-financial-activity-mapping.component.html',
   styleUrls: ['./view-financial-activity-mapping.component.scss']
 })
-export class ViewFinancialActivityMappingComponent implements OnInit {
+export class ViewFinancialActivityMappingComponent {
 
   /** Financial activity account ID. */
   financialActivityAccountId: any;
@@ -41,9 +41,6 @@ export class ViewFinancialActivityMappingComponent implements OnInit {
       this.financialActivityAccount = data.financialActivityAccount;
       this.financialActivityAccountId = data.financialActivityAccount.id;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

@@ -54,8 +54,7 @@ To manage type definitions, use standard `npm install|update|remove` commands.
 
 ## Enforcement
 
-Coding rules are enforced in this project via [TSLint](https://github.com/palantir/tslint).
-Angular-specific rules are also enforced via the [Codelyzer](https://github.com/mgechev/codelyzer) rule extensions.
+Coding rules are enforced in this project via [Angular ESLint](https://github.com/angular-eslint/angular-eslint).
 
 ## Learn more
 

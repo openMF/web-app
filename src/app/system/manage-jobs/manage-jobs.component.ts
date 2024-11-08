@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { SystemService } from '../system.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,15 +8,12 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './manage-jobs.component.html',
   styleUrls: ['./manage-jobs.component.scss']
 })
-export class ManageJobsComponent implements OnInit {
+export class ManageJobsComponent {
   /** Process running flag */
   isCatchUpRunning = true;
 
   constructor(private systemService: SystemService,
     private translateService: TranslateService) { }
-
-  ngOnInit(): void {
-  }
 
   onJobTabChange(event: MatTabChangeEvent) {
     if (event.index === 2) {

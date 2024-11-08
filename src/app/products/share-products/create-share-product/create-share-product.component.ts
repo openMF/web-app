@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -21,7 +21,7 @@ import { Accounting } from 'app/core/utils/accounting';
   templateUrl: './create-share-product.component.html',
   styleUrls: ['./create-share-product.component.scss']
 })
-export class CreateShareProductComponent implements OnInit {
+export class CreateShareProductComponent {
 
   @ViewChild(ShareProductDetailsStepComponent, { static: true }) shareProductDetailsStep: ShareProductDetailsStepComponent;
   @ViewChild(ShareProductCurrencyStepComponent, { static: true }) shareProductCurrencyStep: ShareProductCurrencyStepComponent;
@@ -50,9 +50,6 @@ export class CreateShareProductComponent implements OnInit {
       this.shareProductsTemplate = data.shareProductsTemplate;
     });
     this.accountingRuleData = this.accounting.getAccountingRulesForShares();
-  }
-
-  ngOnInit() {
   }
 
   get shareProductDetailsForm() {
