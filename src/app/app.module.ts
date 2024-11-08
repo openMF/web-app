@@ -42,6 +42,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { DatePipe, LocationStrategy } from '@angular/common';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {CurrencyModule} from "./mcurrency/currency/currency.module";
+import {EntryModule} from "./mcurrency/entry/entry.module";
+import {ReportingModule} from "./mcurrency/reporting/reporting.module";
 
 /**
  * App Module
@@ -70,6 +73,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     PortalModule,
     CoreModule,
     HomeModule,
+    CurrencyModule,
+    ReportingModule,
+    EntryModule,
     LoginModule,
     ProfileModule,
     SettingsModule,
