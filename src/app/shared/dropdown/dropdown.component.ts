@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss']
 })
-export class DropdownComponent implements OnInit {
+export class DropdownComponent {
 
   @Input() placeHolderText: string;
   @Input() labelText: string;
@@ -16,9 +16,6 @@ export class DropdownComponent implements OnInit {
   @Input() required: boolean;
 
   constructor(private translateService: TranslateService) { }
-
-  ngOnInit(): void {
-  }
 
   getPlaceHolderText(): string {
     return this.placeHolderText ? this.translateService.instant('labels.inputs.' + this.placeHolderText) : '';

@@ -24,7 +24,7 @@ export class SharesAccountPreviewStepComponent {
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
 
   /** Form submission event */
-  @Output() submit = new EventEmitter();
+  @Output() submitEvent = new EventEmitter();
 
   constructor() { }
 

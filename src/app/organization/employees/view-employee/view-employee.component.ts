@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './view-employee.component.html',
   styleUrls: ['./view-employee.component.scss']
 })
-export class ViewEmployeeComponent implements OnInit {
+export class ViewEmployeeComponent {
 
   /** Employee data. */
   employeeData: any;
@@ -23,9 +23,6 @@ export class ViewEmployeeComponent implements OnInit {
     this.route.data.subscribe((data: { employee: any }) => {
       this.employeeData = data.employee;
     });
-  }
-
-  ngOnInit() {
   }
 
 }

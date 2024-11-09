@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'mifosx-glim-preview-step',
   templateUrl: './glim-preview-step.component.html',
   styleUrls: ['./glim-preview-step.component.scss']
 })
-export class GlimPreviewStepComponent implements OnInit {
+export class GlimPreviewStepComponent {
 
 
   /** Loans Account Template */
@@ -15,7 +15,7 @@ export class GlimPreviewStepComponent implements OnInit {
   /** Loans Account Data */
   @Input() loansAccount: any;
   /** Submit Loans Account */
-  @Output() submit = new EventEmitter();
+  @Output() submitEvent = new EventEmitter();
 
   /** Charges Displayed Columns */
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date'];
@@ -23,8 +23,5 @@ export class GlimPreviewStepComponent implements OnInit {
   overdueChargesDisplayedColumns: string[] = ['name', 'type', 'amount', 'collectedon'];
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

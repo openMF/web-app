@@ -11,8 +11,11 @@
         <div fxFlexFill>
             <span fxFlex="50%">{{"labels.inputs.Repayments" | translate}}</span>
             <span fxFlex="50%">{{loanDetails.numberOfRepayments}} every {{loanDetails.repaymentEvery}}&nbsp;{{loanDetails.repaymentFrequencyType.value | translateKey:'catalogs' }}
-            <span *ngIf="loanDetails.repaymentFrequencyType?.id == 2 && loanDetails.repaymentFrequencyNthDayType?.id != 0 && loanDetails.repaymentFrequencyDayOfWeekType?.id != 0" class="m-l-10">
-              <span class="m-l-10">{{"labels.commons.on" | translate}}</span>{{loanDetails.repaymentFrequencyNthDayType?.value}}&nbsp;{{loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey:'catalogs' }}
+            <span *ngIf="loanDetails.repaymentFrequencyType?.id === 2 && loanDetails.repaymentFrequencyNthDayType?.id !== 0 && loanDetails.repaymentFrequencyDayOfWeekType?.id !== 0" class="m-l-10">
+              <span *ngIf="loanDetails.repaymentFrequencyDayOfWeekType">
+                <span class="m-l-10">{{"labels.commons.on" | translate}}</span>{{loanDetails.repaymentFrequencyNthDayType?.value}}
+                <span class="m-l-10">{{loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey:'catalogs' }}</span>
+              </span>
             </span>
             </span>
         </div>
@@ -163,7 +166,7 @@
             <span fxFlex="50%"> {{loanDetails.interestRecalculationData.calendarData.humanReadable}} </span>
         </div>
 
-        <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled && loanDetails.interestRecalculationData.interestRecalculationCompoundingType.id !=0">
+        <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled && loanDetails.interestRecalculationData.interestRecalculationCompoundingType.id !== 0">
             <span fxFlex="50%"> {{"labels.inputs.Frequency for compounding" | translate}}</span>
             <span fxFlex="50%"> {{loanDetails.interestRecalculationData.compoundingCalendarData.humanReadable}} </span>
         </div>

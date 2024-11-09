@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit , TemplateRef, ElementRef , ViewChild, AfterViewInit} from '@angular/core';
+import { Component, TemplateRef, ElementRef , ViewChild, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, Data } from '@angular/router';
 
 /** rxjs Imports */
@@ -50,7 +50,7 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss']
 })
-export class BreadcrumbComponent implements OnInit, AfterViewInit {
+export class BreadcrumbComponent implements AfterViewInit {
 
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
@@ -72,9 +72,6 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit {
               private popoverService: PopoverService,
               private translateService: TranslateService) {
     this.generateBreadcrumbs();
-  }
-
-  ngOnInit() {
   }
 
   /**

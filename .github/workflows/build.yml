@@ -34,8 +34,8 @@ jobs:
       - name: Npm install
         run: npm install
 
-      - name: Run tslint
-        run : npx tslint src/**/*.ts
+      - name: Run eslint
+        run : npx ng lint
 
       - name: Run build
         run : npm run build:prod

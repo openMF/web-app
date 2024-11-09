@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 
@@ -14,7 +14,7 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
     ])
   ]
 })
-export class RecurringDepositGeneralTabComponent implements OnInit {
+export class RecurringDepositGeneralTabComponent {
 
   recurringDepositProduct: any;
   recurringDepositProductTemplate: any;
@@ -31,9 +31,6 @@ export class RecurringDepositGeneralTabComponent implements OnInit {
       this.recurringDepositProduct = data.recurringDepositProduct;
       this.recurringDepositProductTemplate = data.recurringDepositProductsTemplate;
     });
-  }
-
-  ngOnInit(): void {
   }
 
 }

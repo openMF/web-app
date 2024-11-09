@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 /**
  * Content component.
@@ -9,11 +9,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent {
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

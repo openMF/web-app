@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 
@@ -14,7 +14,7 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
     ])
   ]
 })
-export class FixedDepositGeneralTabComponent implements OnInit {
+export class FixedDepositGeneralTabComponent {
   /** Fixed Deposit Product data. */
   fixedDepositProductData: any;
   fixedDepositProductsTemplate: any;
@@ -35,9 +35,6 @@ export class FixedDepositGeneralTabComponent implements OnInit {
       this.fixedDepositProductData = data.fixedDepositProduct;
       this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;
     });
-  }
-
-  ngOnInit(): void {
   }
 
 }

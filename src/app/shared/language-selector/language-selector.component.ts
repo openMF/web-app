@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 
 /** Custom Services */
@@ -17,7 +17,7 @@ import { SettingsService } from 'app/settings/settings.service';
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.scss']
 })
-export class LanguageSelectorComponent implements OnInit {
+export class LanguageSelectorComponent {
 
   /** Language selector form control. */
   languageSelector = new UntypedFormControl();
@@ -29,9 +29,6 @@ export class LanguageSelectorComponent implements OnInit {
    constructor(private translateService: TranslateService,
     private settingsService: SettingsService) {
     this.languageSelector.setValue(this.currentLanguage);
-  }
-
-  ngOnInit() {
   }
 
   /**

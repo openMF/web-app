@@ -31,7 +31,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Status' | translate }} </th>
         <td mat-cell *matCellDef="let jobHistoryData">
           <fa-icon *ngIf="jobHistoryData.status === 'success'" class="success" matTooltip="{{ 'tooltips.Successful' | translate}}" matTooltipPosition="right" icon="check-circle" size="lg"></fa-icon>
-          <fa-icon *ngIf="!(jobHistoryData.status == 'success')" class="fail" matTooltip="{{ 'tooltips.Failed' | translate}}" matTooltipPosition="right" icon="times-circle" size="lg"></fa-icon>
+          <fa-icon *ngIf="!(jobHistoryData.status === 'success')" class="fail" matTooltip="{{ 'tooltips.Failed' | translate}}" matTooltipPosition="right" icon="times-circle" size="lg"></fa-icon>
         </td>
       </ng-container>
 
@@ -43,7 +43,7 @@
       <ng-container matColumnDef="error_log">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Error Log' | translate }} </th>
         <td mat-cell *matCellDef="let jobHistoryData">
-          <button mat-icon-button class="errorlog" *ngIf="!(jobHistoryData.status == 'success')" matTooltip="{{ 'tooltips.Error Log' | translate}}" matTooltipPosition="right" (click)="openError(jobHistoryData.version)">
+          <button mat-icon-button class="errorlog" *ngIf="!(jobHistoryData.status === 'success')" matTooltip="{{ 'tooltips.Error Log' | translate}}" matTooltipPosition="right" (click)="openError(jobHistoryData.version)">
             <fa-icon icon="exclamation-circle" size="lg"></fa-icon>
           </button>
         </td>

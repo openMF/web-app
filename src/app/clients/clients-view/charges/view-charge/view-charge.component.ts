@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 
@@ -11,7 +11,7 @@ import { ClientsService } from 'app/clients/clients.service';
   templateUrl: './view-charge.component.html',
   styleUrls: ['./view-charge.component.scss']
 })
-export class ViewChargeComponent implements OnInit {
+export class ViewChargeComponent {
 
   /** Charge Data. */
   chargeData: any;
@@ -30,10 +30,6 @@ export class ViewChargeComponent implements OnInit {
       this.chargeData = data.clientChargeData;
     });
    }
-
-  ngOnInit() {
-
-  }
 
   /**
    * Waive Charge.

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CollateralsService } from '../collaterals.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +12,7 @@ import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.
   templateUrl: './view-collateral.component.html',
   styleUrls: ['./view-collateral.component.scss']
 })
-export class ViewCollateralComponent implements OnInit {
+export class ViewCollateralComponent {
 
   clientCollateralData: any;
 
@@ -27,9 +27,6 @@ export class ViewCollateralComponent implements OnInit {
     this.route.data.subscribe((data: {clientCollateralData: any}) => {
       this.clientCollateralData = data.clientCollateralData;
     });
-  }
-
-  ngOnInit(): void {
   }
 
   /**
