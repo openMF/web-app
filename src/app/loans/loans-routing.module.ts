@@ -60,6 +60,7 @@ import { ExternalAssetOwnerActiveTransferResolver } from './common-resolvers/ext
 import { LoanCollateralsResolver } from './common-resolvers/loan-collaterals.resolver';
 import { LoanDelinquencyDataResolver } from './common-resolvers/loan-delinquency-data.resolver';
 import { LoanDelinquencyActionsResolver } from './common-resolvers/loan-delinquency-actions.resolver';
+import { LoanTermVariationsTabComponent } from './loans-view/loan-term-variations-tab/loan-term-variations-tab.component';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -164,6 +165,14 @@ const routes: Routes = [
             resolve: {
               loanCollaterals: LoanCollateralsResolver
             }
+          },
+          {
+            path: 'term-variations',
+            component: LoanTermVariationsTabComponent,
+            data: { title: 'Loan Term Variations', breadcrumb: 'Loan Term Variations', routeParamBreadcrumb: false },
+            resolve: {
+              loanDetailsData: LoanDetailsResolver
+            },
           },
           {
             path: 'loan-tranche-details',
