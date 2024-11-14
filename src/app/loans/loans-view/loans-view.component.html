@@ -173,6 +173,12 @@
           {{"labels.inputs.Loan Tranche Details" | translate}}
         </a>
       </ng-container>
+      <ng-container *ngIf="loanDetailsData.loanTermVariations">
+        <a mat-tab-link [routerLink]="['./term-variations']" routerLinkActive #termVariations="routerLinkActive"
+          [active]="termVariations.isActive">
+          {{"labels.inputs.Term Variations" | translate}}
+        </a>
+      </ng-container>
       <ng-container *ngIf="loanDetailsData.overdueCharges.length > 0">
         <a mat-tab-link [routerLink]="['./overdue-charges']" routerLinkActive #overduecharges="routerLinkActive"
           [active]="overduecharges.isActive">

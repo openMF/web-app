@@ -82,6 +82,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LoanDelinquencyActionDialogComponent } from './custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
 import { LoanReagingComponent } from './loans-view/loan-account-actions/loan-reaging/loan-reaging.component';
 import { LoanReamortizeComponent } from './loans-view/loan-account-actions/loan-reamortize/loan-reamortize.component';
+import { LoanTermVariationsTabComponent } from './loans-view/loan-term-variations-tab/loan-term-variations-tab.component';
 
 /**
  * Loans Module
@@ -167,7 +168,8 @@ import { LoanReamortizeComponent } from './loans-view/loan-account-actions/loan-
     ExternalAssetTransferComponent,
     LoanDelinquencyActionDialogComponent,
     LoanReagingComponent,
-    LoanReamortizeComponent
+    LoanReamortizeComponent,
+    LoanTermVariationsTabComponent
   ],
   providers: [ ],
 })
