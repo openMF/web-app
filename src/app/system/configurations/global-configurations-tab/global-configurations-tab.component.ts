@@ -149,11 +149,4 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/system']);
   }
 
-  getTooltip(description: string): string {
-    if (description === undefined) {
-      return description;
-    }
-    return 'labels.text.No Description';
-  }
-
 }
