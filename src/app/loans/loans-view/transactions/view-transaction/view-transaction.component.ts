@@ -75,7 +75,7 @@ export class ViewTransactionComponent implements OnInit {
       this.transactionData = data.loansAccountTransaction;
       this.transactionType = this.transactionData.type;
       this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
-      this.allowUndo = !this.transactionData.manuallyReversed;
+      this.allowUndo = this.allowUndoTransaction(this.transactionData.manuallyReversed, this.transactionType);
       this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
       if (this.transactionData.transactionRelations) {
@@ -126,6 +126,16 @@ export class ViewTransactionComponent implements OnInit {
     return (transactionType.repayment || transactionType.interestPaymentWaiver
       || transactionType.goodwillCredit || transactionType.payoutRefund
       || transactionType.merchantIssuedRefund || transactionType.downPayment);
+  }
+
+  allowUndoTransaction(manuallyReversed: boolean, transactionType: LoanTransactionType): boolean {
+    if (manuallyReversed) {
+      return false;
+    }
+    if (transactionType.interestRefund) {
+      return false;
+    }
+    return true;
   }
 
   /**
