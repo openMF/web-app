@@ -78,21 +78,19 @@ export class ViewTransactionComponent implements OnInit {
       this.allowUndo = !this.transactionData.manuallyReversed;
       this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
-      if (this.allowChargeback) {
-        if (this.transactionData.transactionRelations) {
-          this.transactionRelations.data = this.transactionData.transactionRelations;
-          this.existTransactionRelations = (this.transactionData.transactionRelations.length > 0);
-          let amountRelations = 0;
-          this.transactionData.transactionRelations.forEach((relation: any) => {
-            if (relation.relationType === 'CHARGEBACK') {
-              amountRelations += relation.amount;
-              transactionsChargebackRelated = true;
-            }
-          });
-          this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
-          this.isFullRelated = (this.amountRelationsAllowed === 0);
-          this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.isFullRelated;
-        }
+      if (this.transactionData.transactionRelations) {
+        this.transactionRelations.data = this.transactionData.transactionRelations;
+        this.existTransactionRelations = (this.transactionData.transactionRelations.length > 0);
+        let amountRelations = 0;
+        this.transactionData.transactionRelations.forEach((relation: any) => {
+          if (relation.relationType === 'CHARGEBACK') {
+            amountRelations += relation.amount;
+            transactionsChargebackRelated = true;
+          }
+        });
+        this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
+        this.isFullRelated = (this.amountRelationsAllowed === 0);
+        this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.isFullRelated;
       }
       if (!this.allowChargeback) {
         this.allowEdition = false;
