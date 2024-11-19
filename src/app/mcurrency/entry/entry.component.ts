@@ -14,6 +14,7 @@ import {ConfigurationWizardService} from '../../configuration-wizard/configurati
 
 /** Custom Dialog Component */
 import {NextStepDialogComponent} from '../../configuration-wizard/next-step-dialog/next-step-dialog.component';
+import {EntryService} from "./entry.service";
 
 /**
  * Create Journal Entry component.
@@ -48,7 +49,7 @@ export class EntryComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the offices, currencies, payment types and gl accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {AccountingService} entryService multi currency entry Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -56,7 +57,7 @@ export class EntryComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor(private formBuilder: UntypedFormBuilder,
-              private accountingService: AccountingService,
+              private entryService: EntryService,
               private settingsService: SettingsService,
               private dateUtils: Dates,
               private route: ActivatedRoute,
@@ -179,7 +180,7 @@ export class EntryComponent implements OnInit, AfterViewInit {
     if (journalEntry.transactionDate) {
       journalEntry.transactionDate = this.dateUtils.formatDate(journalEntry.transactionDate, this.settingsService.dateFormat);
     }
-    this.accountingService.createJournalEntry(journalEntry).subscribe(response => {
+    this.entryService.createJournalEntry(journalEntry).subscribe(response => {
       this.router.navigate(['../transactions/view', response.transactionId], {relativeTo: this.route});
     });
   }

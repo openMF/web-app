@@ -11,21 +11,22 @@
       <mat-card-content>
 
         <div #createJournalFormRef fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-label>Use live rates</mat-label>
 
-          <mat-label>Use live rate</mat-label>
           <mat-checkbox [checked]=useLiveRate (change)="changeLiveRate()"></mat-checkbox>
 
-          <mat-form-field fxFlex="98%" *ngIf="!useLiveRate">
-            <mat-label>Dollars to UGX at {{ rate }}</mat-label>
-            <textarea [disabled]="useLiveRate" matInput formControlName="comments" cdkTextareaAutosize
-                      cdkAutosizeMinRows="2"
-                      (input)="updateRate($event.target.value)" ></textarea>
-          </mat-form-field>
+          <p fxLayout="row wrap" fxLayoutGap="2%" *ngIf="useLiveRate">
+            <mat-label *ngIf="!loadingLiveRate">1 Dollar is UGX {{ liveRate }}</mat-label>
+            <mat-label *ngIf="loadingLiveRate">Loading...</mat-label>
+          </p>
+
 
           <mat-form-field fxFlex="98%" *ngIf="!useLiveRate">
-            <mat-label>UGX to Dollars at {{ 1 / rate }}</mat-label>
-            <textarea [disabled]="useLiveRate" matInput formControlName="comments" cdkTextareaAutosize
-                      cdkAutosizeMinRows="2"></textarea>
+            <mat-label>1 Dollar in UGX</mat-label>
+            <textarea *ngIf="!useLiveRate" [disabled]="useLiveRate" matInput formControlName="comments"
+                      cdkTextareaAutosize
+                      cdkAutosizeMinRows="2"
+                      (input)="updateRate($event.target.value)"></textarea>
           </mat-form-field>
 
         </div>
@@ -34,8 +35,8 @@
 
       <mat-card-actions *ngIf="!useLiveRate" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center"
                         fxLayoutGap="5px">
-        <button mat-raised-button color="primary" [disabled]="useLiveRate"
-        >Save
+        <button mat-raised-button color="primary" [disabled]="useLiveRate">
+          Save
         </button>
       </mat-card-actions>
 
