@@ -70,6 +70,11 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "14.2.12",
+    "@angular-eslint/builder": "14.4.0",
+    "@angular-eslint/eslint-plugin": "14.4.0",
+    "@angular-eslint/eslint-plugin-template": "14.4.0",
+    "@angular-eslint/schematics": "14.4.0",
+    "@angular-eslint/template-parser": "14.4.0",
     "@angular/cli": "14.2.12",
     "@angular/compiler-cli": "14.3.0",
     "@angular/language-service": "14.3.0",
@@ -85,8 +90,10 @@
     "@types/lodash": "4.14.132",
     "@types/node": "12.11.1",
     "@types/vkbeautify": "^0.99.2",
-    "codelyzer": "6.0.0",
+    "@typescript-eslint/eslint-plugin": "5.43.0",
+    "@typescript-eslint/parser": "5.43.0",
     "cypress": "^10.7.0",
+    "eslint": "^8.28.0",
     "git-describe": "^4.1.1",
     "hads": "^3.0.3",
     "htmlhint": "1.1.4",
@@ -110,7 +117,6 @@
     "stylelint-scss": "3.6.1",
     "tailwindcss": "^3.3.3",
     "ts-node": "8.2.0",
-    "tslint": "~6.1.0",
     "typescript": "4.6.4"
   },
   "repository": {

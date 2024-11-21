@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -14,7 +14,7 @@ import { PopoverService } from '../configuration-wizard/popover/popover.service'
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.scss']
 })
-export class OrganizationComponent implements OnInit, AfterViewInit {
+export class OrganizationComponent implements AfterViewInit {
 
   shouldShowFundMapping = false;
   /* Reference of manage offices */
@@ -54,9 +54,6 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
               private router: Router,
               private configurationWizardService: ConfigurationWizardService,
               private popoverService: PopoverService) { }
-
-  ngOnInit() {
-  }
 
   /**
    * Popover function

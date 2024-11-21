@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +18,7 @@ import { SystemService } from '../../system.service';
   templateUrl: './view-hook.component.html',
   styleUrls: ['./view-hook.component.scss']
 })
-export class ViewHookComponent implements OnInit {
+export class ViewHookComponent {
 
   /** Hook Data. */
   hookData: any;
@@ -39,9 +39,6 @@ export class ViewHookComponent implements OnInit {
     this.route.data.subscribe((data: { hook: any }) => {
       this.hookData = data.hook;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**

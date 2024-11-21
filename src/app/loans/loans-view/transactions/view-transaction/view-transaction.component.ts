@@ -75,24 +75,22 @@ export class ViewTransactionComponent implements OnInit {
       this.transactionData = data.loansAccountTransaction;
       this.transactionType = this.transactionData.type;
       this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
-      this.allowUndo = !this.transactionData.manuallyReversed;
+      this.allowUndo = this.allowUndoTransaction(this.transactionData.manuallyReversed, this.transactionType);
       this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
-      if (this.allowChargeback) {
-        if (this.transactionData.transactionRelations) {
-          this.transactionRelations.data = this.transactionData.transactionRelations;
-          this.existTransactionRelations = (this.transactionData.transactionRelations.length > 0);
-          let amountRelations = 0;
-          this.transactionData.transactionRelations.forEach((relation: any) => {
-            if (relation.relationType === 'CHARGEBACK') {
-              amountRelations += relation.amount;
-              transactionsChargebackRelated = true;
-            }
-          });
-          this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
-          this.isFullRelated = (this.amountRelationsAllowed === 0);
-          this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.isFullRelated;
-        }
+      if (this.transactionData.transactionRelations) {
+        this.transactionRelations.data = this.transactionData.transactionRelations;
+        this.existTransactionRelations = (this.transactionData.transactionRelations.length > 0);
+        let amountRelations = 0;
+        this.transactionData.transactionRelations.forEach((relation: any) => {
+          if (relation.relationType === 'CHARGEBACK') {
+            amountRelations += relation.amount;
+            transactionsChargebackRelated = true;
+          }
+        });
+        this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
+        this.isFullRelated = (this.amountRelationsAllowed === 0);
+        this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.isFullRelated;
       }
       if (!this.allowChargeback) {
         this.allowEdition = false;
@@ -128,6 +126,16 @@ export class ViewTransactionComponent implements OnInit {
     return (transactionType.repayment || transactionType.interestPaymentWaiver
       || transactionType.goodwillCredit || transactionType.payoutRefund
       || transactionType.merchantIssuedRefund || transactionType.downPayment);
+  }
+
+  allowUndoTransaction(manuallyReversed: boolean, transactionType: LoanTransactionType): boolean {
+    if (manuallyReversed) {
+      return false;
+    }
+    if (transactionType.interestRefund) {
+      return false;
+    }
+    return true;
   }
 
   /**

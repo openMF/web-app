@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** Custom Services */
@@ -14,7 +14,7 @@ import { PopoverService } from '../configuration-wizard/popover/popover.service'
   templateUrl: './accounting.component.html',
   styleUrls: ['./accounting.component.scss']
 })
-export class AccountingComponent implements OnInit, AfterViewInit {
+export class AccountingComponent implements AfterViewInit {
 
   /* Reference of Chart of Accounts */
   @ViewChild('chartofAccounts') chartofAccounts: ElementRef<any>;
@@ -47,9 +47,6 @@ export class AccountingComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private configurationWizardService: ConfigurationWizardService,
               private popoverService: PopoverService) { }
-
-  ngOnInit() {
-  }
 
   /**
    * Popover function

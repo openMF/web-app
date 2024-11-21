@@ -62,7 +62,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
+      <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value === 2">
         <mat-label>{{"labels.inputs.Select On" | translate}}</mat-label>
         <mat-select formControlName="repaymentFrequencyNthDayType">
           <mat-option
@@ -73,7 +73,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value == 2">
+      <mat-form-field fxFlex="48%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value === 2">
         <mat-label>{{"labels.inputs.Select Day" | translate}}</mat-label>
         <mat-select formControlName="repaymentFrequencyDayOfWeekType">
           <mat-option

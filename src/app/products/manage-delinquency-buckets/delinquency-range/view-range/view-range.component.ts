@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
@@ -9,7 +9,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   templateUrl: './view-range.component.html',
   styleUrls: ['./view-range.component.scss']
 })
-export class ViewRangeComponent implements OnInit {
+export class ViewRangeComponent {
 
   /** Delinquency Range Data. */
   delinquencyRangeData: any;
@@ -21,9 +21,6 @@ export class ViewRangeComponent implements OnInit {
     this.route.data.subscribe((data: { delinquencyRange: any }) => {
       this.delinquencyRangeData = data.delinquencyRange;
     });
-  }
-
-  ngOnInit(): void {
   }
 
   deleteDelinquencyRange() {

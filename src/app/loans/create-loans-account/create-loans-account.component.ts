@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -21,7 +21,7 @@ import { LoansAccountDatatableStepComponent } from '../loans-account-stepper/loa
   templateUrl: './create-loans-account.component.html',
   styleUrls: ['./create-loans-account.component.scss']
 })
-export class CreateLoansAccountComponent implements OnInit {
+export class CreateLoansAccountComponent {
 
   /** Imports all the step component */
   @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
@@ -62,8 +62,6 @@ export class CreateLoansAccountComponent implements OnInit {
       this.loansAccountTemplate = data.loansAccountTemplate;
     });
   }
-
-  ngOnInit() { }
 
   /**
    * Sets loans account product template and collateral template

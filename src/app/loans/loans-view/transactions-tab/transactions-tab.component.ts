@@ -133,9 +133,10 @@ export class TransactionsTabComponent implements OnInit {
    * DOWN_PAYMENT:28
    * REAGE:29
    * REAMORTIZE:30
+   * INTEREST REFUND:33
    */
   showTransactions(transactionsData: LoanTransaction) {
-    if ([1, 2, 4, 9, 20, 21, 22, 23, 26, 28, 29, 30, 31].includes(transactionsData.type.id)) {
+    if ([1, 2, 4, 9, 20, 21, 22, 23, 26, 28, 29, 30, 31, 33].includes(transactionsData.type.id)) {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
   }
@@ -144,7 +145,9 @@ export class TransactionsTabComponent implements OnInit {
     if (transaction.manuallyReversed) {
       return false;
     }
-    return !(transaction.type.disbursement || transaction.type.chargeoff || this.isReAgoeOrReAmortize(transaction.type) );
+    return !(transaction.type.disbursement || transaction.type.chargeoff || this.isReAgoeOrReAmortize(transaction.type)
+      || transaction.type.interestRefund
+     );
   }
 
   loanTransactionColor(transaction: LoanTransaction): string {

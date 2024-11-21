@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 /** Custom Components */
 import { LoanAccountTableComponent } from '../loan-account-table/loan-account-table.component';
@@ -11,7 +11,7 @@ import { SavingsAccountTableComponent } from '../savings-account-table/savings-a
   templateUrl: './center-navigation.component.html',
   styleUrls: ['./center-navigation.component.scss']
 })
-export class CenterNavigationComponent implements OnInit {
+export class CenterNavigationComponent {
 
   @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
   @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
@@ -22,8 +22,5 @@ export class CenterNavigationComponent implements OnInit {
   @Input() groupData: any;
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

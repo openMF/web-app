@@ -28,7 +28,7 @@
                 <span class="m-r-10">{{'labels.text.' + entityType | translate}} {{"labels.inputs.name" | translate}} :</span> {{loanDetailsData.clientName ||
                 loanDetailsData.groupName}}<span class="m-l-5">({{loanDetailsData.clientAccountNo}})</span><br />
               </span>
-              <div *ngIf="loanDisplayArrearsDelinquency != 1">
+              <div *ngIf="loanDisplayArrearsDelinquency !== 1">
                 <table class="account-overview">
                   <tbody>
                     <tr *ngIf="loanDetailsData.delinquencyRange">
@@ -43,7 +43,7 @@
                       <td>{{loanDetailsData?.delinquent.pastDueDays | formatNumber }}</td>
                     </tr>
                     <tr *ngIf="loanDetailsData.delinquent && loanDetailsData.delinquent.delinquentDays > 0
-                      && loanDetailsData.delinquent.pastDueDays != loanDetailsData.delinquent.delinquentDays">
+                      && loanDetailsData.delinquent.pastDueDays !== loanDetailsData.delinquent.delinquentDays">
                       <td>{{"labels.inputs.Delinquent Days" | translate}} :</td>
                       <td>{{loanDetailsData?.delinquent.delinquentDays | formatNumber }}</td>
                     </tr>
@@ -171,6 +171,12 @@
         <a mat-tab-link [routerLink]="['./loan-tranche-details']" routerLinkActive
           #loanTrancheDetails="routerLinkActive" [active]="loanTrancheDetails.isActive">
           {{"labels.inputs.Loan Tranche Details" | translate}}
+        </a>
+      </ng-container>
+      <ng-container *ngIf="loanDetailsData.loanTermVariations">
+        <a mat-tab-link [routerLink]="['./term-variations']" routerLinkActive #termVariations="routerLinkActive"
+          [active]="termVariations.isActive">
+          {{"labels.inputs.Term Variations" | translate}}
         </a>
       </ng-container>
       <ng-container *ngIf="loanDetailsData.overdueCharges.length > 0">

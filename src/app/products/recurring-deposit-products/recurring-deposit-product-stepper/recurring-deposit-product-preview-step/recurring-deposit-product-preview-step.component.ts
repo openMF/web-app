@@ -21,7 +21,7 @@ export class RecurringDepositProductPreviewStepComponent implements OnInit, OnCh
   @Input() chartSlabsDisplayedColumns: any[];
   @Input() accountingRuleData: any;
   @Input() recurringDepositProduct: any;
-  @Output() submit = new EventEmitter();
+  @Output() submitEvent = new EventEmitter();
 
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
   incentivesDisplayedColumns: string[] = ['entityType', 'attributeName', 'conditionType', 'attributeValue', 'incentiveType', 'amount'];

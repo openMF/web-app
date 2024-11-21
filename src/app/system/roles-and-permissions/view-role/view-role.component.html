@@ -77,7 +77,7 @@
 
         <div fxFlex="30" fxLayout="column">
           <mat-list>
-            <mat-list-item [ngClass]="selectedItem == grouping ? 'active' : 'inactive'" *ngFor="let grouping of groupings" (click)="showPermissions(grouping)">
+            <mat-list-item [ngClass]="selectedItem === grouping ? 'active' : 'inactive'" *ngFor="let grouping of groupings" (click)="showPermissions(grouping)">
               <span class="groupingName">
                 {{ formatName(grouping) }}
               </span>

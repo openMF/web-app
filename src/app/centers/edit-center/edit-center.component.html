@@ -33,7 +33,7 @@
             <input matInput formControlName="externalId">
           </mat-form-field>
 
-          <ng-container *ngIf="centerData.status.value=='Pending'" (click)="activatedOnDatePicker.open()">
+          <ng-container *ngIf="centerData.status.value==='Pending'" (click)="activatedOnDatePicker.open()">
             <mat-form-field>
               <mat-label>{{"labels.inputs.Activation Date" | translate}}</mat-label>
               <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker" required

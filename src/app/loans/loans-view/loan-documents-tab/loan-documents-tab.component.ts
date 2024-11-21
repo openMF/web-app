@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -15,7 +15,7 @@ import { SettingsService } from 'app/settings/settings.service';
   templateUrl: './loan-documents-tab.component.html',
   styleUrls: ['./loan-documents-tab.component.scss']
 })
-export class LoanDocumentsTabComponent implements OnInit {
+export class LoanDocumentsTabComponent {
 
   /** Stores the resolved loan documents data */
   entityDocuments: any;
@@ -36,8 +36,6 @@ export class LoanDocumentsTabComponent implements OnInit {
         this.getLoanDocumentsData(data.loanDocuments);
       });
   }
-
-  ngOnInit() { }
 
   getLoanDocumentsData(data: any) {
     data.forEach((ele: any) => {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from '../loans.service';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -17,7 +17,7 @@ import { Dates } from 'app/core/utils/dates';
   templateUrl: './edit-loans-account.component.html',
   styleUrls: ['./edit-loans-account.component.scss']
 })
-export class EditLoansAccountComponent implements OnInit {
+export class EditLoansAccountComponent {
 
   @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
@@ -51,9 +51,6 @@ export class EditLoansAccountComponent implements OnInit {
       this.loansAccountAndTemplate = data.loansAccountAndTemplate;
     });
     this.loanId = this.route.snapshot.params['loanId'];
-  }
-
-  ngOnInit() {
   }
 
   /**

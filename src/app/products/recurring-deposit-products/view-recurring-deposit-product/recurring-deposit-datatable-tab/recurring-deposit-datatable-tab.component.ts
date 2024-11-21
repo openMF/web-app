@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './recurring-deposit-datatable-tab.component.html',
   styleUrls: ['./recurring-deposit-datatable-tab.component.scss']
 })
-export class RecurringDepositDatatableTabComponent implements OnInit {
+export class RecurringDepositDatatableTabComponent {
 
   entityId: string;
   entityDatatable: any;
@@ -19,9 +19,6 @@ export class RecurringDepositDatatableTabComponent implements OnInit {
       this.entityDatatable = data.recurringDepositDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
-  }
-
-  ngOnInit(): void {
   }
 
 }

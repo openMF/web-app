@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -17,7 +17,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   templateUrl: './view-rule.component.html',
   styleUrls: ['./view-rule.component.scss']
 })
-export class ViewRuleComponent implements OnInit {
+export class ViewRuleComponent {
 
   /** Accounting rule. */
   accountingRule: any;
@@ -36,9 +36,6 @@ export class ViewRuleComponent implements OnInit {
     this.route.data.subscribe((data: { accountingRule: any }) => {
       this.accountingRule = data.accountingRule;
     });
-  }
-
-  ngOnInit() {
   }
 
   /**
