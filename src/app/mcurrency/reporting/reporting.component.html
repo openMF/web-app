@@ -4,7 +4,7 @@
 
     <mat-card-header>
       <mat-card-title class="title">
-        Report
+        Multi-Currency Report
       </mat-card-title>
     </mat-card-header>
 
@@ -19,28 +19,55 @@
 
       <div class="mat-elevation-z8">
 
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table mat-table [dataSource]="dataSource" class="mat-table" style="table-layout: auto; width: 100%;">
 
-          <ng-container matColumnDef="reportName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "labels.inputs.name" | translate }}</th>
-            <td mat-cell *matCellDef="let report"> {{ report.reportName }}</td>
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef class="header-cell">Date</th>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.date }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="reportType">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "labels.inputs.Type" | translate }}</th>
-            <td mat-cell *matCellDef="let report"> {{ 'labels.text.' + report.reportType | translate }}</td>
+          <ng-container matColumnDef="creditAccount">
+            <th mat-header-cell *matHeaderCellDef class="header-cell">Credit Account</th>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.creditAccount }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="reportCategory">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ "labels.inputs.Category" | translate }}</th>
-            <td mat-cell *matCellDef="let report"> {{ 'labels.text.' + report.reportCategory | translate }}</td>
+          <ng-container matColumnDef="debitAccount">
+            <th mat-header-cell *matHeaderCellDef class="header-cell">Debit Account</th>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.debitAccount }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef class="header-cell">Description</th>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.description }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="debitUSD">
+            <th mat-header-cell *matHeaderCellDef class="header-cell">Debit (USD)</th>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.debitUSD }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="creditUSD">
+            <th mat-header-cell *matHeaderCellDef class="header-cell">Credit (USD)</th>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.creditUSD }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="conversionRate">
+            <th mat-header-cell *matHeaderCellDef class="header-cell">Conversion Rate</th>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.conversionRate }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="debitUGX">
+            <th mat-header-cell *matHeaderCellDef class="header-cell">Debit (UGX)</th>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.debitUGX }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="creditUGX">
+            <th mat-header-cell *matHeaderCellDef class="header-cell">Credit (UGX)</th>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.creditUGX }}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"
-              [routerLink]="['/reports','run', row.reportName]"
-              [queryParams]="{ type: row.reportType, id: row.id }"></tr>
-
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
         <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
@@ -48,7 +75,6 @@
       </div>
 
     </div>
-
 
   </mat-card>
 

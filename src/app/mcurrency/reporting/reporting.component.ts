@@ -29,7 +29,7 @@ import {MatTableDataSource} from "@angular/material/table";
   styleUrls: ['./reporting.component.scss']
 })
 export class ReportingComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['reportName', 'reportType', 'reportCategory'];
+  displayedColumns: string[] = ['date', 'creditAccount', 'debitAccount', 'description', 'debitUSD', 'creditUSD', 'conversionRate', 'debitUGX', 'creditUGX'];
   dataSource = new MatTableDataSource();
 
   /** Username of authenticated user. */
@@ -64,7 +64,7 @@ export class ReportingComponent implements OnInit, AfterViewInit {
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog,
-              private configurationWizardService: ConfigurationWizardService,
+              protected configurationWizardService: ConfigurationWizardService,
               private popoverService: PopoverService) { }
 
   /**

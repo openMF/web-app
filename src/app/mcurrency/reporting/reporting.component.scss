@@ -1,5 +1,5 @@
 .container {
-  max-width: 37rem;
+  max-width: 80rem;
 
   .title {
     font-size: 1.25rem;
@@ -16,3 +16,22 @@ a{
   text-decoration: none;
   color: black
 }
+
+.header-cell {
+  background-color: #f5f5f5; /* Light gray background for headers */
+  border: 1px solid #e0e0e0; /* Border around header cells */
+  padding: 8px; /* Add some padding */
+  text-align: left; /* Align text to the left */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+}
+
+.cell {
+  border: 1px solid #e0e0e0; /* Border around table cells */
+  padding: 8px; /* Add some padding */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+}
+
