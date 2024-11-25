@@ -1133,7 +1133,8 @@
       "Working Days": "Dias úteis",
       "You have created": "Você criou",
       "You can drag and drop the rows to set a Payment Allocations order": "Você pode arrastar e soltar as linhas para definir um pedido de alocações de pagamento",
-      "successfully select option": "com sucesso. Selecione uma das opções abaixo para prosseguir."
+      "successfully select option": "com sucesso. Selecione uma das opções abaixo para prosseguir.",
+      "Map Charge-off reasons to Expense accounts": "Mapear os motivos de baixa para as contas de despesas"
     },
     "inputs": {
       "accounting": {
@@ -2422,7 +2423,8 @@
       "valid": "válido",
       "INTEREST REFUND": "REEMBOLSO DE JUROS",
       "Supported Interest Refund Types": "Tipos de reembolso de juros suportados",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipos de reembolso de juros suportados"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipos de reembolso de juros suportados",
+      "Charge-off reason": "Motivo da cobrança"
     },
     "links": {
       "Community": "Comunidade",

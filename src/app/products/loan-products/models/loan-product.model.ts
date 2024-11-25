@@ -1,4 +1,4 @@
-import { AccountingMapping, ChargeToIncomeAccountMapping, Currency, PaymentChannelToFundSourceMapping } from 'app/shared/models/general.model';
+import {AccountingMapping, ChargeOffReasonsToExpenseMapping, ChargeToIncomeAccountMapping, Currency, PaymentChannelToFundSourceMapping} from 'app/shared/models/general.model';
 import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.model';
 import { CreditAllocation, PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 
@@ -124,6 +124,7 @@ export interface LoanProduct {
   paymentChannelToFundSourceMappings?:                       PaymentChannelToFundSourceMapping[];
   feeToIncomeAccountMappings?:                               ChargeToIncomeAccountMapping[];
   penaltyToIncomeAccountMappings?:                           ChargeToIncomeAccountMapping[];
+  chargeOffReasonsToExpenseMappings?:                        ChargeOffReasonsToExpenseMapping[];
   enableAccrualActivityPosting?:                             boolean;
   supportedInterestRefundTypes?:                             StringEnumOptionData[];
 }

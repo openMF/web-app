@@ -1133,7 +1133,8 @@
       "Working Days": "काम गर्ने दिनहरू",
       "You have created": "तपाईंले सिर्जना गर्नुभयो",
       "You can drag and drop the rows to set a Payment Allocations order": "तपाईंले भुक्तानी आवंटन आदेश सेट गर्न पङ्क्तिहरू तान्नुहोस् र छोड्न सक्नुहुन्छ",
-      "successfully select option": "सफलतापूर्वक। अगाडि बढ्नको लागि कृपया तलका विकल्पहरूबाट चयन गर्नुहोस्।"
+      "successfully select option": "सफलतापूर्वक। अगाडि बढ्नको लागि कृपया तलका विकल्पहरूबाट चयन गर्नुहोस्।",
+      "Map Charge-off reasons to Expense accounts": "खर्च खाताहरूमा चार्ज-अफ कारणहरू नक्सा गर्नुहोस्"
     },
     "inputs": {
       "accounting": {
@@ -2422,7 +2423,8 @@
       "valid": "मान्य",
       "INTEREST REFUND": "व्याज परतावा",
       "Supported Interest Refund Types": "समर्थित ब्याज फिर्ता प्रकारहरू",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "समर्थित व्याज परतावा प्रकार"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "समर्थित व्याज परतावा प्रकार",
+      "Charge-off reason": "चार्ज अफ कारण"
     },
     "links": {
       "Community": "समुदाय",

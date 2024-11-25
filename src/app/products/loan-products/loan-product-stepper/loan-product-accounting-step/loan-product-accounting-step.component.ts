@@ -8,6 +8,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { TranslateService } from '@ngx-translate/core';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import {ChargeOffReasonsToExpenseMapping} from '../../../../shared/models/general.model';
 
 @Component({
   selector: 'mifosx-loan-product-accounting-step',
@@ -31,9 +32,11 @@ export class LoanProductAccountingStepComponent implements OnInit {
   liabilityAccountData: any;
   incomeAndLiabilityAccountData: any;
   assetAndLiabilityAccountData: any;
+  chargeOffReasonOptions: any;
 
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId', 'actions'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
+  chargeOffReasonExpenseDisplayedColumns: string[] = ['chargeOffReasonCodeValueId', 'expenseGLAccountId', 'actions'];
 
   constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog,
@@ -52,6 +55,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
     this.liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
     this.incomeAndLiabilityAccountData = this.incomeAccountData.concat(this.liabilityAccountData);
     this.assetAndLiabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions || [];
+    this.chargeOffReasonOptions = this.loanProductsTemplate.chargeOffReasonOptions || [];
 
     this.loanProductAccountingForm.patchValue({
       'accountingRule': this.loanProductsTemplate.accountingRule.id
@@ -90,7 +94,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
           'incomeFromGoodwillCreditInterestAccountId': accountingMappings.incomeFromGoodwillCreditInterestAccount ? accountingMappings.incomeFromGoodwillCreditInterestAccount.id : '',
           'incomeFromGoodwillCreditFeesAccountId': accountingMappings.incomeFromGoodwillCreditFeesAccount ? accountingMappings.incomeFromGoodwillCreditFeesAccount.id : '',
           'incomeFromGoodwillCreditPenaltyAccountId': accountingMappings.incomeFromGoodwillCreditPenaltyAccount ? accountingMappings.incomeFromGoodwillCreditPenaltyAccount.id : '',
-          'advancedAccountingRules': (this.loanProductsTemplate.paymentChannelToFundSourceMappings || this.loanProductsTemplate.feeToIncomeAccountMappings || this.loanProductsTemplate.penaltyToIncomeAccountMappings) ? true : false
+          'advancedAccountingRules': (this.loanProductsTemplate.paymentChannelToFundSourceMappings || this.loanProductsTemplate.feeToIncomeAccountMappings || this.loanProductsTemplate.penaltyToIncomeAccountMappings || this.loanProductsTemplate.chargeOffReasonsToExpenseMappings) ? true : false
         });
 
         this.loanProductAccountingForm.setControl('paymentChannelToFundSourceMappings',
@@ -102,6 +106,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
         this.loanProductAccountingForm.setControl('penaltyToIncomeAccountMappings',
           this.formBuilder.array((this.loanProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) =>
           ({ chargeId: penaltyIncome.charge.id, incomeAccountId: penaltyIncome.incomeAccount.id }))));
+        this.loanProductAccountingForm.setControl('chargeOffReasonsToExpenseMappings',
+            this.formBuilder.array((this.loanProductsTemplate.chargeOffReasonsToExpenseMappings || []).map((m: ChargeOffReasonsToExpenseMapping) =>
+                ({ chargeOffReasonCodeValueId: m.chargeOffReasonCodeValueId, expenseGLAccountId: m.expenseGLAccountId }))));
     }
   }
 
@@ -141,10 +148,12 @@ export class LoanProductAccountingStepComponent implements OnInit {
                 this.loanProductAccountingForm.addControl('paymentChannelToFundSourceMappings', this.formBuilder.array([]));
                 this.loanProductAccountingForm.addControl('feeToIncomeAccountMappings', this.formBuilder.array([]));
                 this.loanProductAccountingForm.addControl('penaltyToIncomeAccountMappings', this.formBuilder.array([]));
+                this.loanProductAccountingForm.addControl('chargeOffReasonsToExpenseMappings', this.formBuilder.array([]));
               } else {
                 this.loanProductAccountingForm.removeControl('paymentChannelToFundSourceMappings');
                 this.loanProductAccountingForm.removeControl('feeToIncomeAccountMappings');
                 this.loanProductAccountingForm.removeControl('penaltyToIncomeAccountMappings');
+                this.loanProductAccountingForm.removeControl('chargeOffReasonsToExpenseMappings');
               }
             });
         } else {
@@ -195,6 +204,10 @@ export class LoanProductAccountingStepComponent implements OnInit {
     return this.loanProductAccountingForm.get('penaltyToIncomeAccountMappings') as UntypedFormArray;
   }
 
+  get chargeOffReasonsToExpenseMappings(): UntypedFormArray {
+    return this.loanProductAccountingForm.get('chargeOffReasonsToExpenseMappings') as UntypedFormArray;
+  }
+
   setLoanProductAccountingFormDirty() {
     if (this.loanProductAccountingForm.pristine) {
       this.loanProductAccountingForm.markAsDirty();
@@ -240,6 +253,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
       case 'PaymentFundSource': return { title: 'Configure Fund Sources for Payment Channels', formfields: this.getPaymentFundSourceFormfields(values) };
       case 'FeesIncome': return { title: 'Map Fees to Income Accounts', formfields: this.getFeesIncomeFormfields(values) };
       case 'PenaltyIncome': return { title: 'Map Penalties to Specific Income Accounts', formfields: this.getPenaltyIncomeFormfields(values) };
+      case 'ChargeOffReasonExpense': return { title: 'Map Charge-off reasons to Expense accounts', formfields: this.getChargeOffReasonExpenseFormfields(values) };
     }
   }
 
@@ -302,6 +316,28 @@ export class LoanProductAccountingStepComponent implements OnInit {
         label: 'Income Account',
         value: values ? values.incomeAccountId : this.incomeAccountData[0].id,
         options: { label: 'name', value: 'id', data: this.incomeAccountData },
+        required: true,
+        order: 2
+      })
+    ];
+    return formfields;
+  }
+
+  getChargeOffReasonExpenseFormfields(values?: any) {
+    const formfields: FormfieldBase[] = [
+      new SelectBase({
+        controlName: 'chargeOffReasonCodeValueId',
+        label: 'Charge-off reason',
+        value: values ? values.chargeOffReasonCodeValueId : this.chargeOffReasonOptions[0].id,
+        options: { label: 'name', value: 'id', data: this.chargeOffReasonOptions },
+        required: true,
+        order: 1
+      }),
+      new SelectBase({
+        controlName: 'expenseGLAccountId',
+        label: 'Expense Account',
+        value: values ? values.expenseGLAccountId : this.expenseAccountData[0].id,
+        options: { label: 'name', value: 'id', data: this.expenseAccountData },
         required: true,
         order: 2
       })

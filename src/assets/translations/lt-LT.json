@@ -1133,7 +1133,8 @@
       "Working Days": "Darbo dienos",
       "You have created": "Jūs sukūrėte",
       "You can drag and drop the rows to set a Payment Allocations order": "Galite nuvilkti eilutes, kad nustatytumėte mokėjimo paskirstymo tvarką",
-      "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių."
+      "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių.",
+      "Map Charge-off reasons to Expense accounts": "Nurodykite nurašymo priežastis išlaidų sąskaitoms"
     },
     "inputs": {
       "accounting": {
@@ -2422,7 +2423,8 @@
       "valid": "galioja",
       "INTEREST REFUND": "PALŪKANŲ GRĄŽINIMAS",
       "Supported Interest Refund Types": "Palaikomi palūkanų grąžinimo tipai",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Palaikomi palūkanų grąžinimo tipai"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Palaikomi palūkanų grąžinimo tipai",
+      "Charge-off reason": "Apmokestinimo priežastis"
     },
     "links": {
       "Community": "bendruomenė",
