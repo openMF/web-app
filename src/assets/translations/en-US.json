@@ -1134,7 +1134,8 @@
             "Working Days": "Working Days",
             "You have created": "You have created",
             "You can drag and drop the rows to set a Payment Allocations order": "You can drag and drop the rows to set a Payment Allocations order",
-            "successfully select option": "successfully. Please select from the options below to proceed furthur."
+            "successfully select option": "successfully. Please select from the options below to proceed further.",
+            "Map Charge-off reasons to Expense accounts": "Map Charge-off reasons to Expense accounts"
         },
         "inputs": {
             "accounting": {
@@ -2423,7 +2424,8 @@
             "valid": "valid",
             "INTEREST REFUND": "INTEREST REFUND",
             "Supported Interest Refund Types": "Supported Interest Refund Types",
-            "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types"
+            "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types",
+            "Charge-off reason": "Charge-off reason"
         },
         "links": {
             "Community": "Community",

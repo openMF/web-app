@@ -1131,7 +1131,8 @@
             "Working Days": "Días laborables",
             "You have created": "tu has creado",
             "You can drag and drop the rows to set a Payment Allocations order": "Puede arrastrar y soltar las filas para establecer un orden de asignaciones de pago",
-            "successfully select option": "exitosamente. Seleccione una de las opciones siguientes para continuar."
+            "successfully select option": "exitosamente. Seleccione una de las opciones siguientes para continuar.",
+            "Map Charge-off reasons to Expense accounts": "Asignar motivos de cancelación a cuentas de gastos"
         },
         "inputs": {
             "accounting": {
@@ -2421,7 +2422,8 @@
             "valid": "válido",
           "INTEREST REFUND": "REEMBOLSO DE INTERESES",
           "Supported Interest Refund Types": "Tipos de reembolso de intereses admitidos",
-          "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipos de reembolso de intereses admitidos"
+          "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipos de reembolso de intereses admitidos",
+            "Charge-off reason": "Motivo de la cancelación"
         },
         "links": {
             "Community": "Comunidad",

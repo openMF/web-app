@@ -1133,7 +1133,8 @@
       "Working Days": "Siku za kazi",
       "You have created": "Umeunda",
       "You can drag and drop the rows to set a Payment Allocations order": "Unaweza kuburuta na kudondosha safu mlalo ili kuweka agizo la Ugawaji wa Malipo",
-      "successfully select option": "kwa mafanikio. Tafadhali chagua kutoka kwa chaguo zilizo hapa chini ili kuendelea zaidi."
+      "successfully select option": "kwa mafanikio. Tafadhali chagua kutoka kwa chaguo zilizo hapa chini ili kuendelea zaidi.",
+      "Map Charge-off reasons to Expense accounts": "Sababu za Kutozwa kwa Ramani kwa akaunti za Gharama"
     },
     "inputs": {
       "accounting": {
@@ -2422,7 +2423,8 @@
       "valid": "halali",
       "INTEREST REFUND": "MAREJESHO YA RIBA",
       "Supported Interest Refund Types": "Aina za Urejeshaji wa Riba Zinazotumika",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Aina za kurejesha riba zinazotumika"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Aina za kurejesha riba zinazotumika",
+      "Charge-off reason": "Sababu ya malipo"
     },
     "links": {
       "Community": "Jumuiya",

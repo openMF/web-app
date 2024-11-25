@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DelinquencyBucket, LoanProduct } from '../../models/loan-product.model';
-import { AccountingMapping, Charge, ChargeToIncomeAccountMapping, GLAccount, PaymentChannelToFundSourceMapping, PaymentType, PaymentTypeOption } from '../../../../shared/models/general.model';
+import {AccountingMapping, Charge, ChargeOffReasonsToExpenseMapping, ChargeToIncomeAccountMapping, GLAccount, PaymentChannelToFundSourceMapping, PaymentType, PaymentTypeOption} from '../../../../shared/models/general.model';
 import { AdvancePaymentAllocationData, CreditAllocation, PaymentAllocation } from '../../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { LoanProducts } from '../../loan-products';
 import { CodeName, OptionData, StringEnumOptionData } from '../../../../shared/models/option-data.model';
@@ -25,6 +25,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
+  chargeOffReasonExpenseDisplayedColumns: string[] = ['chargeOffReasonCodeValueId', 'expenseGLAccountId'];
   accountingRuleData: string[] = [];
 
   isAdvancedPaymentAllocation = false;
@@ -35,6 +36,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   paymentChannelToFundSourceMappings: PaymentChannelToFundSourceMapping[] = [];
   feeToIncomeAccountMappings: ChargeToIncomeAccountMapping[] = [];
   penaltyToIncomeAccountMappings: ChargeToIncomeAccountMapping[] = [];
+  chargeOffReasonsToExpenseMappings: ChargeOffReasonsToExpenseMapping[] = [];
 
   constructor(private accounting: Accounting) { }
 
@@ -63,6 +65,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       this.paymentChannelToFundSourceMappings = this.loanProduct.paymentChannelToFundSourceMappings || [];
       this.feeToIncomeAccountMappings = this.loanProduct.feeToIncomeAccountMappings || [];
       this.penaltyToIncomeAccountMappings = this.loanProduct.penaltyToIncomeAccountMappings || [];
+      this.chargeOffReasonsToExpenseMappings = this.loanProduct.chargeOffReasonsToExpenseMappings || [];
 
     } else {
       this.accountingMappings = {};
@@ -125,6 +128,18 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
             this.penaltyToIncomeAccountMappings.push({
               incomeAccount: this.glAccountLookUp(m.incomeAccountId, incomeAccountData),
               charge: this.chargeLookUp(m.chargeId, this.loanProductsTemplate.penaltyOptions)
+            });
+          });
+        }
+
+        this.chargeOffReasonsToExpenseMappings = [];
+        if (this.loanProduct.chargeOffReasonsToExpenseMappings?.length > 0) {
+          this.loanProduct.chargeOffReasonsToExpenseMappings.forEach((m: ChargeOffReasonsToExpenseMapping) => {
+            this.chargeOffReasonsToExpenseMappings.push({
+              chargeOffReasonCodeValueId: m.chargeOffReasonCodeValueId,
+              chargeOffReason: this.optionDataLookUp(m.chargeOffReasonCodeValueId, this.loanProductsTemplate.chargeOffReasonOptions),
+              expenseGLAccountId: m.expenseGLAccountId,
+              expenseGLAccount: this.glAccountLookUp(m.expenseGLAccountId, expenseAccountData)
             });
           });
         }
@@ -326,7 +341,8 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   isAdvancedAccountingEnabled(): boolean {
     return (this.loanProduct.paymentChannelToFundSourceMappings?.length > 0
       || this.loanProduct.feeToIncomeAccountMappings?.length > 0
-      || this.loanProduct.penaltyToIncomeAccountMappings?.length > 0);
+      || this.loanProduct.penaltyToIncomeAccountMappings?.length > 0
+        || this.loanProduct.chargeOffReasonsToExpenseMappings?.length > 0);
   }
 
   getAccountingRuleName(value: string): string {

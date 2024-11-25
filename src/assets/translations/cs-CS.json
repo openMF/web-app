@@ -1132,7 +1132,8 @@
       "Working Days": "Pracovní dny",
       "You have created": "Vytvořili jste",
       "You can drag and drop the rows to set a Payment Allocations order": "Řádky můžete přetáhnout a nastavit tak příkaz přidělení plateb",
-      "successfully select option": "úspěšně. Chcete-li pokračovat dále, vyberte si z níže uvedených možností."
+      "successfully select option": "úspěšně. Chcete-li pokračovat dále, vyberte si z níže uvedených možností.",
+      "Map Charge-off reasons to Expense accounts": "Mapujte důvody pro zúčtování na výdajové účty"
     },
     "inputs": {
       "accounting": {
@@ -2422,7 +2423,8 @@
       "valid": "platný",
       "INTEREST REFUND": "VRÁCENÍ ÚROKU",
       "Supported Interest Refund Types": "Unterstützte Zinsrückerstattungsarten",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Podporované typy vrácení úroků"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Podporované typy vrácení úroků",
+      "Charge-off reason": "Důvod vyúčtování"
     },
     "links": {
       "Community": "Společenství",
