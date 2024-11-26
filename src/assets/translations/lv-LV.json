@@ -1133,7 +1133,8 @@
       "Working Days": "Darba dienas",
       "You have created": "Jūs esat izveidojis",
       "You can drag and drop the rows to set a Payment Allocations order": "Varat vilkt un nomest rindas, lai iestatītu maksājumu piešķiršanas pasūtījumu",
-      "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu."
+      "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu.",
+      "Map Charge-off reasons to Expense accounts": "Izmaksas iemeslu kartēšana izdevumu kontiem"
     },
     "inputs": {
       "accounting": {
@@ -2422,7 +2423,8 @@
       "valid": "derīgs",
       "INTEREST REFUND": "PROCENTU ATMAKSĀŠANA",
       "Supported Interest Refund Types": "Atbalstītie procentu atmaksas veidi",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Atbalstītie procentu atmaksas veidi"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Atbalstītie procentu atmaksas veidi",
+      "Charge-off reason": "Izmaksas iemesls"
     },
     "links": {
       "Community": "kopiena",

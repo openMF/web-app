@@ -1134,7 +1134,8 @@
       "Working Days": "일하는 날",
       "You have created": "당신이 창조했습니다",
       "You can drag and drop the rows to set a Payment Allocations order": "행을 끌어서 놓아 지불 할당 순서를 설정할 수 있습니다.",
-      "successfully select option": "성공적으로. 계속 진행하려면 아래 옵션 중에서 선택하세요."
+      "successfully select option": "성공적으로. 계속 진행하려면 아래 옵션 중에서 선택하세요.",
+      "Map Charge-off reasons to Expense accounts": "비용 계정에 대한 청구 취소 사유 매핑"
     },
     "inputs": {
       "accounting": {
@@ -2423,7 +2424,8 @@
       "valid": "유효한",
       "INTEREST REFUND": "이자환급",
       "Supported Interest Refund Types": "지원되는 이자 환불 유형",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "지원되는 이자 환불 유형"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "지원되는 이자 환불 유형",
+      "Charge-off reason": "청구 취소 사유"
     },
     "links": {
       "Community": "지역 사회",

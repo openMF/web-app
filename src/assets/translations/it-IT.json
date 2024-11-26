@@ -1133,7 +1133,8 @@
       "Working Days": "Giorni lavorativi",
       "You have created": "Hai creato",
       "You can drag and drop the rows to set a Payment Allocations order": "Vous pouvez faire glisser et déposer les lignes pour définir un ordre de répartition des paiements",
-      "successfully select option": "con successo. Seleziona una delle opzioni seguenti per procedere ulteriormente."
+      "successfully select option": "con successo. Seleziona una delle opzioni seguenti per procedere ulteriormente.",
+      "Map Charge-off reasons to Expense accounts": "Associa i motivi di addebito ai conti spese"
     },
     "inputs": {
       "accounting": {
@@ -2422,7 +2423,8 @@
       "valid": "valido",
       "INTEREST REFUND": "RIMBORSO DEGLI INTERESSI",
       "Supported Interest Refund Types": "Tipi di rimborso degli interessi supportati",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipi di rimborso degli interessi supportati"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipi di rimborso degli interessi supportati",
+      "Charge-off reason": "Motivo dell'addebito"
     },
     "links": {
       "Community": "Comunità",
