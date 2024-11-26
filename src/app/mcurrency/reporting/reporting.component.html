@@ -22,47 +22,47 @@
         <table mat-table [dataSource]="dataSource" class="mat-table" style="table-layout: auto; width: 100%;">
 
           <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef class="header-cell">Date</th>
+            <th mat-header-cell *matHeaderCellDef class="header-cell">{{'labels.inputs.Date' | translate}}</th>
             <td mat-cell *matCellDef="let element" class="cell">{{ element.date.toLocaleDateString() }}</td>
           </ng-container>
 
           <ng-container matColumnDef="creditAccount">
-            <th mat-header-cell *matHeaderCellDef class="header-cell">Credit Account</th>
+            <th mat-header-cell *matHeaderCellDef class="header-cell">{{'labels.inputs.Credit Account' | translate}}</th>
             <td mat-cell *matCellDef="let element" class="cell">{{ element.creditAccount }}</td>
           </ng-container>
 
           <ng-container matColumnDef="debitAccount">
-            <th mat-header-cell *matHeaderCellDef class="header-cell">Debit Account</th>
+            <th mat-header-cell *matHeaderCellDef class="header-cell">{{'labels.inputs.Debit Account' | translate}}</th>
             <td mat-cell *matCellDef="let element" class="cell">{{ element.debitAccount }}</td>
           </ng-container>
 
           <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef class="header-cell">Description</th>
+            <th mat-header-cell *matHeaderCellDef class="header-cell">{{'labels.inputs.Description' | translate}}</th>
             <td mat-cell *matCellDef="let element" class="cell">{{ element.description }}</td>
           </ng-container>
 
           <ng-container matColumnDef="debitUSD">
-            <th mat-header-cell *matHeaderCellDef class="header-cell">Debit (USD)</th>
+            <th mat-header-cell *matHeaderCellDef class="header-cell">{{'labels.inputs.Debit' | translate}} ({{'USD'}})</th>
             <td mat-cell *matCellDef="let element" class="cell">{{ element.debitUSD.toFixed(2) }}</td>
           </ng-container>
 
           <ng-container matColumnDef="creditUSD">
-            <th mat-header-cell *matHeaderCellDef class="header-cell">Credit (USD)</th>
+            <th mat-header-cell *matHeaderCellDef class="header-cell">{{'labels.inputs.Credit' | translate}} ({{'USD'}})</th>
             <td mat-cell *matCellDef="let element" class="cell">{{ element.creditUSD.toFixed(2) }}</td>
           </ng-container>
 
           <ng-container matColumnDef="conversionRate">
-            <th mat-header-cell *matHeaderCellDef class="header-cell">Conversion Rate</th>
+            <th mat-header-cell *matHeaderCellDef class="header-cell">{{'labels.inputs.Rate' | translate}}</th>
             <td mat-cell *matCellDef="let element" class="cell">{{ element.conversionRate.toFixed(2) }}</td>
           </ng-container>
 
           <ng-container matColumnDef="debitUGX">
-            <th mat-header-cell *matHeaderCellDef class="header-cell">Debit (UGX)</th>
+            <th mat-header-cell *matHeaderCellDef class="header-cell">{{'labels.inputs.Debit' | translate}} ({{'UGX'}})</th>
             <td mat-cell *matCellDef="let element" class="cell">{{ element.debitUGX.toFixed(2) }}</td>
           </ng-container>
 
           <ng-container matColumnDef="creditUGX">
-            <th mat-header-cell *matHeaderCellDef class="header-cell">Credit (UGX)</th>
+            <th mat-header-cell *matHeaderCellDef class="header-cell">{{'labels.inputs.Credit' | translate}} ({{'UGX'}})</th>
             <td mat-cell *matCellDef="let element" class="cell">{{ element.creditUGX.toFixed(2) }}</td>
           </ng-container>
 
