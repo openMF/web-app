@@ -23,7 +23,7 @@
 
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef class="header-cell">Date</th>
-            <td mat-cell *matCellDef="let element" class="cell">{{ element.date }}</td>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.date.toLocaleDateString() }}</td>
           </ng-container>
 
           <ng-container matColumnDef="creditAccount">
@@ -43,27 +43,27 @@
 
           <ng-container matColumnDef="debitUSD">
             <th mat-header-cell *matHeaderCellDef class="header-cell">Debit (USD)</th>
-            <td mat-cell *matCellDef="let element" class="cell">{{ element.debitUSD }}</td>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.debitUSD.toFixed(2) }}</td>
           </ng-container>
 
           <ng-container matColumnDef="creditUSD">
             <th mat-header-cell *matHeaderCellDef class="header-cell">Credit (USD)</th>
-            <td mat-cell *matCellDef="let element" class="cell">{{ element.creditUSD }}</td>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.creditUSD.toFixed(2) }}</td>
           </ng-container>
 
           <ng-container matColumnDef="conversionRate">
             <th mat-header-cell *matHeaderCellDef class="header-cell">Conversion Rate</th>
-            <td mat-cell *matCellDef="let element" class="cell">{{ element.conversionRate }}</td>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.conversionRate.toFixed(2) }}</td>
           </ng-container>
 
           <ng-container matColumnDef="debitUGX">
             <th mat-header-cell *matHeaderCellDef class="header-cell">Debit (UGX)</th>
-            <td mat-cell *matCellDef="let element" class="cell">{{ element.debitUGX }}</td>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.debitUGX.toFixed(2) }}</td>
           </ng-container>
 
           <ng-container matColumnDef="creditUGX">
             <th mat-header-cell *matHeaderCellDef class="header-cell">Credit (UGX)</th>
-            <td mat-cell *matCellDef="let element" class="cell">{{ element.creditUGX }}</td>
+            <td mat-cell *matCellDef="let element" class="cell">{{ element.creditUGX.toFixed(2) }}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
