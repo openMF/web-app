@@ -160,7 +160,8 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
           allowCompoundingOnEod: this.loanProduct.allowCompoundingOnEod,
           isArrearsBasedOnOriginalSchedule: this.loanProduct.isArrearsBasedOnOriginalSchedule,
           isCompoundingToBePostedAsTransaction: this.loanProduct.isCompoundingToBePostedAsTransaction,
-          recalculationRestFrequencyInterval: this.loanProduct.recalculationRestFrequencyInterval
+          recalculationRestFrequencyInterval: this.loanProduct.recalculationRestFrequencyInterval,
+          disallowInterestCalculationOnPastDue: this.loanProduct.disallowInterestCalculationOnPastDue,
         };
       }
 

@@ -433,6 +433,10 @@
         {{'labels.inputs.Is Arrears recognization based on original schedule' | translate}}?
       </mat-checkbox>
 
+      <mat-checkbox *ngIf="loanProductSettingsForm.value.loanScheduleType === 'PROGRESSIVE'" fxFlex="98%" labelPosition="before" formControlName="disallowInterestCalculationOnPastDue" class="margin-v">
+        {{'labels.inputs.Do not calculate interest on past due principal balances' | translate}}
+      </mat-checkbox>
+
     </div>
 
     <mat-divider fxFlex="98%"></mat-divider>

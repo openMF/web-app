@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './loan-term-variations-tab.component.html',
   styleUrls: ['./loan-term-variations-tab.component.scss']
 })
-export class LoanTermVariationsTabComponent implements OnInit {
+export class LoanTermVariationsTabComponent {
 
   /** Loan Details Data */
   loanTermVariationsData: any[] = [];
@@ -21,8 +21,4 @@ export class LoanTermVariationsTabComponent implements OnInit {
     });
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
   }
-
-  ngOnInit(): void {
-  }
-
 }

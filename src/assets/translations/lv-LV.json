@@ -1505,6 +1505,7 @@
       "Dividend Period End Date": "Dividenžu perioda beigu datums",
       "Dividend Period Start Date": "Dividenžu perioda sākuma datums",
       "Dividends": "Dividendes",
+      "Do not calculate interest on past due principal balances": "Neskaitīt procentus par kavētajiem pamatkapitāla atlikumiem",
       "Documents": "Dokumenti",
       "Document Key": "Dokumenta atslēga",
       "Document Type": "Dokumenta veids",

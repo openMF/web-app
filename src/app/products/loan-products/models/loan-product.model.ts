@@ -52,6 +52,7 @@ export interface LoanProduct {
   recalculationCompoundingFrequencyType?:                    number;
   recalculationRestFrequencyType?:                           number;
   allowCompoundingOnEod?:                                    boolean;
+  disallowInterestCalculationOnPastDue?:                     boolean;
   isArrearsBasedOnOriginalSchedule?:                         boolean;
   isCompoundingToBePostedAsTransaction?:                     boolean;
   recalculationRestFrequencyInterval?:                       number;
@@ -168,4 +169,5 @@ export interface InterestRecalculationData {
   isCompoundingToBePostedAsTransaction:   boolean;
   preClosureInterestCalculationStrategy:  OptionData;
   allowCompoundingOnEod:                  boolean;
+  disallowInterestCalculationOnPastDue:   boolean;
 }

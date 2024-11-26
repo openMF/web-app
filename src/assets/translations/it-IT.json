@@ -1505,6 +1505,7 @@
       "Dividend Period End Date": "Data di fine del periodo di dividendo",
       "Dividend Period Start Date": "Data di inizio del periodo di dividendo",
       "Dividends": "Dividendi",
+      "Do not calculate interest on past due principal balances": "Non calcolare interessi sui saldi principali scaduti",
       "Documents": "Documenti",
       "Document Key": "Chiave del documento",
       "Document Type": "tipo di documento",

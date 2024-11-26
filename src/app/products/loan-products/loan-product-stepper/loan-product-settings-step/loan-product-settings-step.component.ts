@@ -370,6 +370,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
           this.loanProductSettingsForm.removeControl('recalculationRestFrequencyType');
           this.loanProductSettingsForm.removeControl('isArrearsBasedOnOriginalSchedule');
         }
+        this.enableFieldsWhenScheduleTypeIsProgressiveAndInterestRateRecalculationEnabled();
       });
 
     this.loanProductSettingsForm.get('holdGuaranteeFunds').valueChanges
@@ -491,7 +492,23 @@ export class LoanProductSettingsStepComponent implements OnInit {
         this.setRescheduleStrategies();
       }
       this.processingStrategyService.initialize(this.isAdvancedTransactionProcessingStrategy);
+      this.enableFieldsWhenScheduleTypeIsProgressiveAndInterestRateRecalculationEnabled();
     });
+  }
+
+  private enableFieldsWhenScheduleTypeIsProgressiveAndInterestRateRecalculationEnabled() {
+    const isProgressiveLoan = this.loanProductSettingsForm.get('loanScheduleType').value === LoanProducts.LOAN_SCHEDULE_TYPE_PROGRESSIVE;
+    const isInterestRecalculationEnabled = this.loanProductSettingsForm.get('isInterestRecalculationEnabled').value == true;
+    const shouldControlExists = isProgressiveLoan && isInterestRecalculationEnabled;
+    const isControlExists = this.loanProductSettingsForm.contains('disallowInterestCalculationOnPastDue');
+
+    if (shouldControlExists && !isControlExists) {
+      this.loanProductSettingsForm.addControl('disallowInterestCalculationOnPastDue', new UntypedFormControl(''));
+      this.loanProductSettingsForm.patchValue({'disallowInterestCalculationOnPastDue': this.loanProductsTemplate.interestRecalculationData?.disallowInterestCalculationOnPastDue ?? false});
+    } else if (isControlExists && !shouldControlExists) {
+      this.loanProductSettingsForm.patchValue({'disallowInterestCalculationOnPastDue': undefined });
+      this.loanProductSettingsForm.removeControl('disallowInterestCalculationOnPastDue');
+    }
   }
 
   private setRescheduleStrategies() {

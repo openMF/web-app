@@ -542,15 +542,19 @@
     <div fxFlexFill *ngIf="loanProduct.interestRecalculationData.recalculationRestFrequencyType.id !== 1"
       fxLayout="row wrap" fxLayout.lt-md="column">
       <span fxFlex="47%">{{ 'labels.inputs.Frequency Interval for recalculation' | translate}}:</span>
-      <span  fxFlex="53%">{{ loanProduct.interestRecalculationData.recalculationRestFrequencyInterval }}</span>
+      <span fxFlex="53%">{{ loanProduct.interestRecalculationData.recalculationRestFrequencyInterval }}</span>
       <div fxFlexFill *ngIf="loanProduct.recalculationRestFrequencyDate">
         <span fxFlex="47%">{{ 'labels.inputs.Rest Frequency Date' | translate}}:</span>
-        <span  fxFlex="53%">{{ loanProduct.interestRecalculationData.recalculationRestFrequencyDate }}</span>
+        <span fxFlex="53%">{{ loanProduct.interestRecalculationData.recalculationRestFrequencyDate }}</span>
       </div>
     </div>
     <div fxFlexFill>
       <span fxFlex="47%">{{ 'labels.inputs.Is Arrears recognization based on original schedule' | translate}}:</span>
-      <span  fxFlex="53%">{{ loanProduct.isArrearsBasedOnOriginalSchedule | yesNo }}</span>
+      <span fxFlex="53%">{{ loanProduct.interestRecalculationData.isArrearsBasedOnOriginalSchedule | yesNo }}</span>
+    </div>
+    <div fxFlexFill *ngIf="loanProduct.loanScheduleType.code === 'PROGRESSIVE'">
+      <span fxFlex="47%">{{ 'labels.inputs.Do not calculate interest on past due principal balances' | translate}}:</span>
+      <span fxFlex="53%">{{ loanProduct.interestRecalculationData.disallowInterestCalculationOnPastDue | yesNo }}</span>
     </div>
   </div>
 
