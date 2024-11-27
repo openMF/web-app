@@ -9,7 +9,7 @@
   "description": "MifosX Web App is the default web application built on top of the Fineract platform for the Mifos user community leveraging the popular Angular framework.",
   "icons": [
     {
-      "src": "assets/images/MifosX_logo.png",
+      "src": "assets/images/",
       "sizes": "182x184",
       "type": "image/png"
     }

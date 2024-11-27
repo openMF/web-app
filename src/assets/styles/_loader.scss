@@ -1,46 +1,53 @@
 .loader-wrapper {
   height: 100vh;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 
-  .triangle {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    animation: rotate 0.8s infinite 0.2s;
+.logo {
+  width: 100px; /* Adjust the logo size */
+  height: auto; /* Maintain the aspect ratio */
+  margin-bottom: 20px; /* Space between logo and circle */
+}
+
+.circle {
+  width: 80px;
+  height: 80px;
+  border: 8px solid transparent;
+  border-top: 8px solid red; /* Initial color (Red) */
+  border-radius: 50%;
+  animation: spin 1s linear infinite, colorChange 2s ease-in-out infinite;
+}
+
+.loading-text {
+  margin-top: 20px; /* Space between circle and text */
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  color: #333; /* Text color */
+  font-weight: bold;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-
-  .bottom {
-    border-width: 0 90px 90px 90px;
-    border-color: transparent transparent #1fb050 transparent;
-    bottom: calc(50% - 100px);
-    left: calc(50% - 90px);
+  100% {
+    transform: rotate(360deg);
   }
+}
 
-  .top {
-    border-width: 90px 90px 0 90px;
-    border-color: #b4d575 transparent transparent transparent;
-    top: calc(50% - 100px);
-    left: calc(50% - 90px);
+@keyframes colorChange {
+  0% {
+    border-top-color: red; /* Start with red */
   }
-
-  .left {
-    border-width: 90px 0 90px 90px;
-    border-color: transparent transparent transparent #1074b9;
-    top: calc(50% - 90px);
-    left: calc(50% - 100px);
+  50% {
+    border-top-color: yellow; /* Change to yellow */
   }
-
-  .right {
-    border-width: 90px 90px 90px 0;
-    border-color: transparent #1daeec transparent transparent;
-    top: calc(50% - 90px);
-    right: calc(50% - 100px);
+  100% {
+    border-top-color: orange; /* change to orange */
   }
-
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
 }
