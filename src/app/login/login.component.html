@@ -1,35 +1,7 @@
-<!-- The viewport is divided into two parts having max-width 70% and 30% -->
+<!-- The viewport is divided into two parts having max-width 30% and 70% -->
 <div fxLayout="row">
 
-  <!--
-    Content in 70%: (TODO: Allow customization by organization)
-      Cover Image
-      Organization/Application Name
-      Organization/Application Description
-
-    This content will be hidden for smaller screens.
-  -->
-
-  <div fxFlex="70%" fxLayout="column" fxLayoutAlign="center center" fxHide.lt-sm class="cover">
-    <div class="cover-content">
-      <h1 class="mat-display-1 cover-title">{{ 'RL JAIN' | translate}}</h1>
-      <p class="mat-headline cover-description">
-        {{'R.L Jain Ltd is a Tier Three (3) Microfinance Institution based in Kampala and established in 2016, regulated by the Uganda Microfinance Regulatory Authority (UMRA)' | translate}}.
-        {{'for more information reach out on our website' | translate}}
-        <a href="https://rljain.net/" target="_blank" class="cover-link">{{'https://rljain.net/' | translate}}</a>
-      </p>
-    </div>
-  </div>
-
-  <!--
-    Content in 30%: (TODO: Allow customization of Name, Logo and Contact Information by organization)
-      Language Selector
-      Organization/Application Name with Logo
-      Form
-      Contact Information/Resources
-      Footer
-  -->
-
+  <!-- Content in 30%: Login Container -->
   <div fxLayout="column" fxFlex.gt-sm="1 0 30%" class="login-container">
 
     <!-- Language Selector to the extreme right -->
@@ -50,13 +22,7 @@
       <mifosx-tenant-selector></mifosx-tenant-selector>
     </div>
 
-    <!--
-      Type of Form:
-        Login
-        Reset Password
-        Two Factor Authentication
-        Forgot Password (TODO: Decision to be taken on providing this feature.)
-    -->
+    <!-- Login Form -->
     <div fxLayout="row" fxFlex="3 0 auto" fxLayoutAlign="center start">
       <mifosx-login-form *ngIf="!resetPassword && !twoFactorAuthenticationRequired"></mifosx-login-form>
       <mifosx-reset-password *ngIf="resetPassword"></mifosx-reset-password>
@@ -75,6 +41,18 @@
 
     <div fxLayout="row" fxLayoutAlign="end" class="m-b-20 m-r-10">
       <a (click)="reloadSettings()"><fa-icon icon="refresh"></fa-icon></a>
+    </div>
+  </div>
+
+  <!-- Content in 70%: Cover Image, Organization Name, and Description -->
+  <div fxFlex="70%" fxLayout="column" fxLayoutAlign="center center" fxHide.lt-sm class="cover">
+    <div class="cover-content">
+      <h1 class="mat-display-1 cover-title">{{ 'RL JAIN' | translate}}</h1>
+      <p class="mat-headline cover-description">
+        {{'R.L Jain Ltd is a Tier Three (3) Microfinance Institution based in Kampala and established in 2016, regulated by the Uganda Microfinance Regulatory Authority (UMRA)' | translate}}.
+        {{'for more information reach out on our website' | translate}}
+        <a href="https://rljain.net/" target="_blank" class="cover-link">{{'https://rljain.net/' | translate}}</a>
+      </p>
     </div>
   </div>
 
