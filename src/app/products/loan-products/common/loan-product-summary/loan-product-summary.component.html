@@ -14,6 +14,11 @@
     <span  fxFlex="53%">{{ loanProduct.shortName }}</span>
   </div>
 
+  <div fxFlexFill *ngIf="loanProduct.externalId">
+    <span fxFlex="47%">{{ 'labels.inputs.External Id' | translate}}:</span>
+    <span  fxFlex="53%">{{ loanProduct.externalId }}</span>
+  </div>
+
   <div fxFlexFill *ngIf="loanProduct.fundId">
     <span fxFlex="47%">{{ 'labels.inputs.Fund' | translate}}:</span>
     <span  fxFlex="53%">{{ loanProduct.fundName }}</span>
@@ -924,14 +929,14 @@
                 <ng-container matColumnDef="chargeOffReasonCodeValueId">
                     <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Charge-off reason' | translate}} </th>
                     <td mat-cell *matCellDef="let chargeOffReasonsToExpenseMapping">
-                        {{ chargeOffReasonsToExpenseMapping.chargeOffReason.name }}
+                        {{ chargeOffReasonsToExpenseMapping.chargeOffReasonsCodeValue.name }}
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="expenseGLAccountId">
                     <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Expense Account' | translate}} </th>
                     <td mat-cell *matCellDef="let chargeOffReasonsToExpenseMapping">
-                        {{ chargeOffReasonsToExpenseMapping.expenseGLAccount.name }}
+                        ({{ chargeOffReasonsToExpenseMapping.chargeOffExpenseAccount.glCode }}) {{ chargeOffReasonsToExpenseMapping.chargeOffExpenseAccount.name }}
                     </td>
                 </ng-container>
 
