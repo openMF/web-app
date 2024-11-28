@@ -737,7 +737,9 @@
       "Add periodic accrual entries": "Aggiungere voci di competenza periodica",
       "Accrual Activity Posting on Installment Due Date": "Registrazione dell'attività di competenza alla data di scadenza della rata",
       "Check loan repayment due": "Controllare il rimborso del prestito in scadenza",
-      "Transfer to Savings": "Trasferimento al risparmio"
+      "Transfer to Savings": "Trasferimento al risparmio",
+      "Zero interest after charge-off": "Zero interessi dopo la cancellazione",
+      "Accelerate maturity to charge-off date": "Accelerare la scadenza alla data di cancellazione"
     },
     "commons": {
       "50 characters long": "50 caratteri di lunghezza",
@@ -1791,6 +1793,7 @@
       "Loan Amount and Balance": "Importo e saldo del prestito",
       "Loan Approval": "Approvazione del prestito",
       "Loan Balance": "Saldo del prestito",
+      "Loan Charge-off behaviour": "Comportamento di cancellazione del prestito",
       "Loan Collateral Details": "Dettagli della garanzia del prestito",
       "Loan Cycle": "Ciclo del prestito",
       "Loan Disbursal": "Erogazione del prestito",

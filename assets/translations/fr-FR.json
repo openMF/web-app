@@ -737,7 +737,9 @@
       "Add periodic accrual entries": "Ajouter des entrées de régularisation périodiques",
       "Accrual Activity Posting on Installment Due Date": "Comptabilisation d'activité de régularisation à la date d'échéance du versement",
       "Check loan repayment due": "Vérifier le remboursement du prêt dû",
-      "Transfer to Savings": "Transfert vers l'épargne"
+      "Transfer to Savings": "Transfert vers l'épargne",
+      "Zero interest after charge-off": "Zéro intérêt après radiation",
+      "Accelerate maturity to charge-off date": "Accélérer la maturité jusqu'à la date de radiation"
     },
     "commons": {
       "50 characters long": "50 caractères",
@@ -1791,6 +1793,7 @@
       "Loan Amount and Balance": "Montant et solde du prêt",
       "Loan Approval": "Approbation du prêt",
       "Loan Balance": "Solde du prêt",
+      "Loan Charge-off behaviour": "Comportement en matière de radiation de prêts",
       "Loan Collateral Details": "Détails de la garantie de prêt",
       "Loan Cycle": "Cycle de prêt",
       "Loan Disbursal": "Décaissement du prêt",

@@ -735,7 +735,9 @@
             "Add periodic accrual entries": "Agregar entradas de devengo periódico",
             "Accrual Activity Posting on Installment Due Date": "Contabilización de devengo acumulado en la fecha de vencimiento del pago",
             "Check loan repayment due": "Verificar pagos a vencer de préstamos",
-            "Transfer to Savings": "Transferir a Ahorros"
+            "Transfer to Savings": "Transferir a Ahorros",
+            "Zero interest after charge-off": "Cero intereses después de la cancelación",
+            "Accelerate maturity to charge-off date": "Acelerar el vencimiento hasta la fecha de amortización"
         },
         "commons": {
             "50 characters long": "50 caracteres de largo",
@@ -1789,6 +1791,7 @@
             "Loan Amount and Balance": "Monto y saldo del Crédito",
             "Loan Approval": "Aprobación de Crédito",
             "Loan Balance": "Balance de Crédito",
+            "Loan Charge-off behaviour": "Comportamiento de cancelación de préstamos",
             "Loan Collateral Details": "Detalles de la garantía del Crédito",
             "Loan Cycle": "Ciclo de Crédito",
             "Loan Disbursal": "Desembolso del Crédito",

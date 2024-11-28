@@ -737,7 +737,9 @@
       "Add periodic accrual entries": "आवधिक संचय प्रविष्टिहरू थप्नुहोस्",
       "Accrual Activity Posting on Installment Due Date": "किस्ता तिर्ने मितिमा उपार्जन गतिविधि पोस्ट गर्दै",
       "Check loan repayment due": "ऋण तिर्न बाँकी जाँच गर्नुहोस्",
-      "Transfer to Savings": "बचतमा स्थानान्तरण गर्नुहोस्"
+      "Transfer to Savings": "बचतमा स्थानान्तरण गर्नुहोस्",
+      "Zero interest after charge-off": "चार्ज अफ पछि शून्य ब्याज",
+      "Accelerate maturity to charge-off date": "चार्ज अफ मितिमा परिपक्वतालाई गति दिनुहोस्"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -1791,6 +1793,7 @@
       "Loan Amount and Balance": "ऋण रकम र मौज्दात",
       "Loan Approval": "ऋण स्वीकृति",
       "Loan Balance": "ऋण शेष",
+      "Loan Charge-off behaviour": "ऋण चार्ज अफ व्यवहार",
       "Loan Collateral Details": "ऋण संपार्श्विक विवरण",
       "Loan Cycle": "ऋण चक्र",
       "Loan Disbursal": "ऋण वितरण",

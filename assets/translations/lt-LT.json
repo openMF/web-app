@@ -737,7 +737,9 @@
       "Add periodic accrual entries": "Pridėkite periodinius kaupimo įrašus",
       "Accrual Activity Posting on Installment Due Date": "Kaupimo veiklos registravimas įmokos mokėjimo dieną",
       "Check loan repayment due": "Patikrinkite paskolos grąžinimo terminą",
-      "Transfer to Savings": "Perkėlimas į santaupas"
+      "Transfer to Savings": "Perkėlimas į santaupas",
+      "Zero interest after charge-off": "Nulinės palūkanos po apmokestinimo",
+      "Accelerate maturity to charge-off date": "Paspartinkite terminą iki nurašymo datos"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -1791,6 +1793,7 @@
       "Loan Amount and Balance": "Paskolos suma ir likutis",
       "Loan Approval": "Paskolos patvirtinimas",
       "Loan Balance": "Paskolos likutis",
+      "Loan Charge-off behaviour": "Paskolos nurašymo elgesys",
       "Loan Collateral Details": "Paskolos užstato informacija",
       "Loan Cycle": "Paskolos ciklas",
       "Loan Disbursal": "Paskolos išmokėjimas",
