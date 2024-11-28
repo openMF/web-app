@@ -56,6 +56,11 @@
         </div>
 
         <div fxFlexFill>
+          <span fxFlex="50%">{{ 'labels.inputs.Loan Charge-off behaviour' | translate}}:</span>
+          <span fxFlex="50%">{{ loanDetails.chargeOffBehaviour.value | translateKey: 'catalogs' }}</span>
+        </div>
+
+        <div fxFlexFill>
             <span fxFlex="50%"> {{"labels.inputs.Grace: On Principal Payment" | translate}}</span>
             <span fxFlex="50%"> {{loanDetails.graceOnPrincipalPayment}} </span>
         </div>

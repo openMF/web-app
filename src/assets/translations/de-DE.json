@@ -737,7 +737,9 @@
       "Add periodic accrual entries": "Fügen Sie periodische Abgrenzungsposten hinzu",
       "Accrual Activity Posting on Installment Due Date": "Buchung der Abgrenzungsaktivität am Fälligkeitsdatum der Rate",
       "Check loan repayment due": "Prüfen Sie, ob die Kreditrückzahlung fällig ist",
-      "Transfer to Savings": "Übertragen auf Ersparnisse"
+      "Transfer to Savings": "Übertragen auf Ersparnisse",
+      "Zero interest after charge-off": "Null Zinsen nach Abschreibung",
+      "Accelerate maturity to charge-off date": "Fälligkeit bis zum Abschreibungsdatum beschleunigen"
     },
     "commons": {
       "50 characters long": "50 Zeichen lang",
@@ -1791,6 +1793,7 @@
       "Loan Amount and Balance": "Kreditbetrag und Saldo",
       "Loan Approval": "Kreditgenehmigung",
       "Loan Balance": "Kreditsaldo",
+      "Loan Charge-off behaviour": "Kreditabschreibungsverhalten",
       "Loan Collateral Details": "Details zur Kreditsicherheit",
       "Loan Cycle": "Kreditzyklus",
       "Loan Disbursal": "Kreditauszahlung",

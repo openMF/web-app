@@ -403,6 +403,17 @@
     <span  fxFlex="53%">{{ loanProduct.enableAutoRepaymentForDownPayment | yesNo }}</span>
   </div>
 
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation" fxLayout="row wrap" fxLayout.lt-md="column">
+    <h3 class="mat-h3" fxFlexFill>{{ 'labels.inputs.Loan Charge-off behaviour' | translate}}</h3>
+
+    <mat-divider [inset]="true"></mat-divider>
+
+    <div fxFlexFill>
+      <span fxFlex="47%">{{ 'labels.inputs.Loan Charge-off behaviour' | translate}}:</span>
+      <span  fxFlex="53%">{{ loanProduct.chargeOffBehaviour.value | translateKey:'catalogs' }}</span>
+    </div>
+  </div>
+
   <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Moratorium' | translate}}</h3>
 
   <div fxFlexFill *ngIf="loanProduct.delinquencyBucket">
