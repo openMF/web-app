@@ -128,6 +128,7 @@ export interface LoanProduct {
   chargeOffReasonToGLAccountMappings?:                       ChargeOffReasonsToGLAccountMapping[];
   enableAccrualActivityPosting?:                             boolean;
   supportedInterestRefundTypes?:                             StringEnumOptionData[];
+  chargeOffBehaviour?:                                       StringEnumOptionData;
 }
 
 

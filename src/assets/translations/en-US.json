@@ -739,7 +739,9 @@
             "Add periodic accrual entries": "Add periodic accrual entries",
             "Accrual Activity Posting on Installment Due Date": "Accrual Activity Posting on Installment Due Date",
             "Check loan repayment due": "Check loan repayment due",
-            "Transfer to Savings": "Transfer to Savings"
+            "Transfer to Savings": "Transfer to Savings",
+            "Zero interest after charge-off": "Zero interest after charge-off",
+            "Accelerate maturity to charge-off date": "Accelerate maturity to charge-off date"
         },
         "commons": {
             "50 characters long": "50 characters long",
@@ -1792,6 +1794,7 @@
             "Loan Amount and Balance": "Loan Amount and Balance",
             "Loan Approval": "Loan Approval",
             "Loan Balance": "Loan Balance",
+            "Loan Charge-off behaviour": "Loan Charge-off behaviour",
             "Loan Collateral Details": "Loan Collateral Details",
             "Loan Cycle": "Loan Cycle",
             "Loan Disbursal": "Loan Disbursal",

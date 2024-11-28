@@ -737,7 +737,9 @@
       "Add periodic accrual entries": "정기 발생 항목 추가",
       "Accrual Activity Posting on Installment Due Date": "할부 만기일에 대한 발생 활동 전기",
       "Check loan repayment due": "대출 상환 기한 확인",
-      "Transfer to Savings": "저축으로 이체"
+      "Transfer to Savings": "저축으로 이체",
+      "Zero interest after charge-off": "대손충당 후 이자 없음",
+      "Accelerate maturity to charge-off date": "만기일을 대금상환일로 앞당기세요"
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
@@ -1792,6 +1794,7 @@
       "Loan Amount and Balance": "대출금액 및 잔액",
       "Loan Approval": "대출 승인",
       "Loan Balance": "대출 잔액",
+      "Loan Charge-off behaviour": "대출 상환 거부 행동",
       "Loan Collateral Details": "대출 담보 세부정보",
       "Loan Cycle": "대출주기",
       "Loan Disbursal": "대출금 지급",

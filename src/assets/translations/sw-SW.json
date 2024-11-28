@@ -737,7 +737,9 @@
       "Add periodic accrual entries": "Ongeza maingizo ya mara kwa mara",
       "Accrual Activity Posting on Installment Due Date": "Shughuli ya Accrual Inachapisha Tarehe ya Kukamilisha Malipo ya Malipo",
       "Check loan repayment due": "Angalia ulipaji wa mkopo unaodaiwa",
-      "Transfer to Savings": "Hamisha kwa Akiba"
+      "Transfer to Savings": "Hamisha kwa Akiba",
+      "Zero interest after charge-off": "Riba sifuri baada ya kutozwa",
+      "Accelerate maturity to charge-off date": "Kuharakisha ukomavu hadi tarehe ya kukomesha malipo"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",
@@ -1791,6 +1793,7 @@
       "Loan Amount and Balance": "Kiasi cha Mkopo na Salio",
       "Loan Approval": "Idhini ya Mkopo",
       "Loan Balance": "Salio la Mkopo",
+      "Loan Charge-off behaviour": "Tabia ya kutoza mkopo",
       "Loan Collateral Details": "Maelezo ya Dhamana ya Mkopo",
       "Loan Cycle": "Mzunguko wa mkopo",
       "Loan Disbursal": "Utoaji wa mkopo",

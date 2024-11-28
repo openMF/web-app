@@ -135,6 +135,19 @@
 
     <span fxFlex="48%" fxHide.lt-md></span>
 
+    <div *ngIf="isAdvancedTransactionProcessingStrategy" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <h3 fxFlex="98%" class="mat-h4">{{'labels.inputs.Loan Charge-off behaviour' | translate}}</h3>
+
+      <mat-form-field fxFlex="30%">
+        <mat-label>{{'labels.inputs.Loan Charge-off behaviour' | translate}}</mat-label>
+        <mat-select formControlName="chargeOffBehaviour" required>
+          <mat-option *ngFor="let chargeOffBehaviour of chargeOffBehaviourData" [value]="chargeOffBehaviour.id">
+            {{ chargeOffBehaviour.value | translateKey:'catalogs' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <h4 fxFlex="98%" class="mat-h4 m-r-10">{{'labels.inputs.Moratorium' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.The moratorium information' | translate}}"></i></h4>
 
     <mat-form-field fxFlex="48%">

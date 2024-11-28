@@ -737,7 +737,9 @@
       "Add periodic accrual entries": "Pievienojiet periodiskus uzkrāšanas ierakstus",
       "Accrual Activity Posting on Installment Due Date": "Uzkrāšanas darbības grāmatošana iemaksas termiņā",
       "Check loan repayment due": "Pārbaudiet aizdevuma atmaksas termiņu",
-      "Transfer to Savings": "Pārskaitījums uz uzkrājumiem"
+      "Transfer to Savings": "Pārskaitījums uz uzkrājumiem",
+      "Zero interest after charge-off": "Nulle procenti pēc atskaitīšanas",
+      "Accelerate maturity to charge-off date": "Paātriniet dzēšanas termiņu līdz izņemšanas datumam"
     },
     "commons": {
       "50 characters long": "50 rakstzīmes garš",
@@ -1791,6 +1793,7 @@
       "Loan Amount and Balance": "Aizdevuma summa un atlikums",
       "Loan Approval": "Aizdevuma apstiprināšana",
       "Loan Balance": "Aizdevuma atlikums",
+      "Loan Charge-off behaviour": "Aizdevuma nomaksas uzvedība",
       "Loan Collateral Details": "Sīkāka informācija par aizdevuma nodrošinājumu",
       "Loan Cycle": "Aizdevuma cikls",
       "Loan Disbursal": "Aizdevuma izsniegšana",

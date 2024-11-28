@@ -737,7 +737,9 @@
       "Add periodic accrual entries": "Adicione entradas de acumulação periódicas",
       "Accrual Activity Posting on Installment Due Date": "Publicação de atividades de acumulação na data de vencimento da parcela",
       "Check loan repayment due": "Verifique o vencimento do empréstimo",
-      "Transfer to Savings": "Transferência para Poupança"
+      "Transfer to Savings": "Transferência para Poupança",
+      "Zero interest after charge-off": "Juros zero após baixa",
+      "Accelerate maturity to charge-off date": "Acelerar o vencimento até à data de baixa"
     },
     "commons": {
       "50 characters long": "50 caracteres",
@@ -1791,6 +1793,7 @@
       "Loan Amount and Balance": "Valor e saldo do empréstimo",
       "Loan Approval": "Aprovação de empréstimo",
       "Loan Balance": "Saldo do empréstimo",
+      "Loan Charge-off behaviour": "Comportamento de cobrança de empréstimos",
       "Loan Collateral Details": "Detalhes da garantia do empréstimo",
       "Loan Cycle": "Ciclo de Empréstimo",
       "Loan Disbursal": "Desembolso de empréstimo",

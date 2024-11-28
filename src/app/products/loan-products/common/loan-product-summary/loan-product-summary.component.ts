@@ -202,6 +202,9 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
           this.loanProduct.loanScheduleProcessingType = this.optionDataLookUpByCode(this.loanProduct.loanScheduleProcessingType,
             this.loanProductsTemplate.loanScheduleProcessingTypeOptions);
         }
+        if (!this.loanProduct.chargeOffBehaviour.value) {
+          this.loanProduct.chargeOffBehaviour = this.stringEnumOptionDataLookUp(this.loanProduct.chargeOffBehaviour, this.loanProductsTemplate.chargeOffBehaviourOptions);
+        }
       }
     }
 
@@ -230,6 +233,20 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
 
   optionDataLookUp(itemId: any, optionsData: any[]): OptionData {
     let optionData: OptionData | null;
+    optionsData.some((o: any) => {
+      if (o.id === itemId) {
+        optionData = {
+          id: o.id,
+          code: o.code,
+          value: o.value
+        };
+      }
+    });
+    return optionData;
+  }
+
+  stringEnumOptionDataLookUp(itemId: any, optionsData: any[]): StringEnumOptionData {
+    let optionData: StringEnumOptionData | null;
     optionsData.some((o: any) => {
       if (o.id === itemId) {
         optionData = {
