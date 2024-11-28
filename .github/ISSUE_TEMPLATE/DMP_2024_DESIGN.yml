@@ -1,7 +1,7 @@
 name: DMP 2024 Design Project Template
 description: List a new design project for Dedicated Mentoring Program 2024
-title: "[DMP 2024]: "
-labels: ["DMP 2024" , "Product Usability"]
+title: '[DMP 2024]: '
+labels: ['DMP 2024', 'Product Usability']
 body:
   - type: textarea
     id: ticket-description
@@ -10,7 +10,7 @@ body:
     attributes:
       label: Description
       description: Provide a brief description of the problem statement here. Include any relevant context or background information (user research findings, list of user personas / target users affected, etc.,.)
-  
+
   - type: textarea
     id: key-design-research-questions
     validations:
@@ -25,14 +25,14 @@ body:
       required: true
     attributes:
       label: Current State
-      description: Describe the current state of the problem. What are the gaps / unanswered questions wrt problem statements identified? What is the user experience like currently? 
+      description: Describe the current state of the problem. What are the gaps / unanswered questions wrt problem statements identified? What is the user experience like currently?
 
   - type: textarea
     id: desired-state
     validations:
       required: true
     attributes:
-      label: Desired State 
+      label: Desired State
       description: What is the roadmap for the intended users and the respective product? Please list if there are any product / feature specific expected goals. (These could be overall and not limited to the DMP project goals)
 
   - type: textarea
@@ -41,7 +41,7 @@ body:
       required: true
     attributes:
       label: Goals & Mid-Point Milestone
-      description: List the goals of the project (What is the expected end outcome from the project). Add the tasks that must be completed by Mid-point check-in i.e 1.5 months into the execution period 
+      description: List the goals of the project (What is the expected end outcome from the project). Add the tasks that must be completed by Mid-point check-in i.e 1.5 months into the execution period
       value: |
         ## Goals
         - [ ] [Goal 1]
@@ -102,10 +102,10 @@ body:
         - Ushahidi
         - Arghyam
         - Piramal Swasthya Management Research Institute
-        - Dimagi 
-        - Win Over Cancer 
-        - Protean 
-        - Thoughtworks 
+        - Dimagi
+        - Win Over Cancer
+        - Protean
+        - Thoughtworks
     validations:
       required: true
 
@@ -114,11 +114,11 @@ body:
     attributes:
       label: Domain
       options:
-        - ⁠Healthcare 
+        - ⁠Healthcare
         - ⁠Education
         - Financial Inclusion
         - ⁠Livelihoods
-        - ⁠Skilling 
+        - ⁠Skilling
         - ⁠Learning & Development
         - ⁠Agriculture
         - ⁠Service Delivery
@@ -134,4 +134,3 @@ body:
       description: Please tag relevant mentors for the ticket
     validations:
       required: true
-  
