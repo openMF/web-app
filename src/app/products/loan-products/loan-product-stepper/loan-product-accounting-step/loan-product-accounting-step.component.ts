@@ -8,7 +8,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { TranslateService } from '@ngx-translate/core';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import {ChargeOffReasonsToExpenseMapping} from '../../../../shared/models/general.model';
+import { ChargeOffReasonsToGLAccountMapping } from 'app/shared/models/general.model';
 
 @Component({
   selector: 'mifosx-loan-product-accounting-step',
@@ -107,8 +107,8 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.formBuilder.array((this.loanProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) =>
           ({ chargeId: penaltyIncome.charge.id, incomeAccountId: penaltyIncome.incomeAccount.id }))));
         this.loanProductAccountingForm.setControl('chargeOffReasonsToExpenseMappings',
-            this.formBuilder.array((this.loanProductsTemplate.chargeOffReasonsToExpenseMappings || []).map((m: ChargeOffReasonsToExpenseMapping) =>
-                ({ chargeOffReasonCodeValueId: m.chargeOffReasonCodeValueId, expenseGLAccountId: m.expenseGLAccountId }))));
+            this.formBuilder.array((this.loanProductsTemplate.chargeOffReasonsToExpenseMappings || []).map((m: ChargeOffReasonsToGLAccountMapping) =>
+                ({ chargeOffReasonCodeValueId: m.chargeOffReasonsCodeValue.id, expenseGLAccountId: m.chargeOffExpenseAccount.id }))));
     }
   }
 
@@ -324,25 +324,27 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getChargeOffReasonExpenseFormfields(values?: any) {
-    const formfields: FormfieldBase[] = [
-      new SelectBase({
-        controlName: 'chargeOffReasonCodeValueId',
-        label: 'Charge-off reason',
-        value: values ? values.chargeOffReasonCodeValueId : this.chargeOffReasonOptions[0].id,
-        options: { label: 'name', value: 'id', data: this.chargeOffReasonOptions },
-        required: true,
-        order: 1
-      }),
-      new SelectBase({
-        controlName: 'expenseGLAccountId',
-        label: 'Expense Account',
-        value: values ? values.expenseGLAccountId : this.expenseAccountData[0].id,
-        options: { label: 'name', value: 'id', data: this.expenseAccountData },
-        required: true,
-        order: 2
-      })
-    ];
-    return formfields;
+    if (values != null) {
+      const formfields: FormfieldBase[] = [
+        new SelectBase({
+          controlName: 'chargeOffReasonCodeValueId',
+          label: 'Charge-off reason',
+          value: values ? values.chargeOffReasonCodeValueId : this.chargeOffReasonOptions[0].id,
+          options: { label: 'name', value: 'id', data: this.chargeOffReasonOptions },
+          required: true,
+          order: 1
+        }),
+        new SelectBase({
+          controlName: 'expenseGLAccountId',
+          label: 'Expense Account',
+          value: values ? values.expenseGLAccountId : this.expenseAccountData[0].id,
+          options: { label: 'name', value: 'id', data: this.expenseAccountData },
+          required: true,
+          order: 2
+        })
+      ];
+      return formfields;
+    }
   }
 
   get isAccountingAccrualBased() {

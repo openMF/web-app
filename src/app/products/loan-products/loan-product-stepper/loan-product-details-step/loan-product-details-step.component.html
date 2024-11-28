@@ -2,7 +2,7 @@
 
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
 
-    <mat-form-field fxFlex="72%">
+    <mat-form-field fxFlex="98%">
       <mat-label>{{'labels.inputs.Product Name' | translate}}</mat-label>
       <input matInput formControlName="name" matTooltip="{{ 'tooltips.Product name is a unique identifier' | translate}}" required>
       <mat-error>
@@ -10,12 +10,17 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="24%">
+    <mat-form-field fxFlex="48%">
       <mat-label>{{'labels.inputs.Short Name' | translate}}</mat-label>
       <input matInput formControlName="shortName" maxlength="4" matTooltip="{{ 'tooltips.Short name is a unique identifier' | translate}}" required>
       <mat-error>
         {{'labels.inputs.Short Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
       </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="48%">
+      <mat-label>{{'labels.inputs.External Id' | translate}}</mat-label>
+      <input matInput formControlName="externalId" matTooltip="{{ 'tooltips.External Id is a unique identifier' | translate}}">
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
