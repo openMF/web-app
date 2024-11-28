@@ -14,6 +14,7 @@
   margin-bottom: 20px; /* Space between logo and circle */
 }
 
+
 .circle {
   width: 80px;
   height: 80px;
@@ -31,6 +32,21 @@
   font-weight: bold;
 }
 
+  .bottom {
+    border-width: 0 90px 90px;
+    border-color: transparent transparent #1fb050;
+    bottom: calc(50% - 100px);
+    left: calc(50% - 90px);
+  }
+
+  .top {
+    border-width: 90px 90px 0;
+    border-color: #b4d575 transparent transparent;
+    top: calc(50% - 100px);
+    left: calc(50% - 90px);
+  }
+
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -39,6 +55,7 @@
     transform: rotate(360deg);
   }
 }
+
 
 @keyframes colorChange {
   0% {
@@ -49,5 +66,14 @@
   }
   100% {
     border-top-color: orange; /* change to orange */
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
   }
 }

@@ -1,7 +1,8 @@
 @use '@angular/material' as mat;
+@use 'sass:map';
 
 @mixin centers-view-component-theme($theme) {
-  $primary: map-get($theme, primary);
+  $primary: map.get($theme, primary);
 
   mifosx-centers-view {
     .center-card {

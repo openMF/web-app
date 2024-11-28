@@ -1,10 +1,12 @@
-@import "assets/styles/helper";
+@use 'assets/styles/helper';
+@use 'assets/styles/colours' as *;
 
 .tab-container {
   padding: 1%;
   margin: 1%;
+
   .delete-button {
-      margin-left: 1%;
+    margin-left: 1%;
   }
 }
 

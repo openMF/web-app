@@ -1,7 +1,9 @@
 @use '@angular/material' as mat;
+@use 'sass:map';
 
 @mixin groups-view-component-theme($theme) {
-  $primary: map-get($theme, primary);
+  $primary: map.get($theme, primary);
+
   mifosx-groups-view {
     .group-card {
       .header {

@@ -1,11 +1,12 @@
 @use '@angular/material' as mat;
+@use 'sass:map';
 
 @mixin dashboard-component-theme($theme) {
-  $primary: map-get($theme, primary);
+  $primary: map.get($theme, primary);
 
   mifosx-dashboard {
-
-    .recent-activities, .frequent-activities {
+    .recent-activities,
+    .frequent-activities {
       .header {
         background-color: mat.get-color-from-palette($primary, 500);
         color: mat.get-contrast-color-from-palette($primary, 500);
@@ -14,16 +15,18 @@
 
     mifosx-amount-collected-pie,
     mifosx-amount-disbursed-pie,
-    mifosx-client-trends-bar  {
+    mifosx-client-trends-bar {
       .card {
         .header {
           background-color: mat.get-color-from-palette($primary, 500);
           color: mat.get-contrast-color-from-palette($primary, 500);
+
           mat-label,
           .mat-select-value,
           .mat-select-arrow {
             color: mat.get-contrast-color-from-palette($primary, 500);
           }
+
           .mat-form-field-underline,
           .mat-form-field-ripple {
             background-color: mat.get-contrast-color-from-palette($primary, 500);
@@ -31,6 +34,5 @@
         }
       }
     }
-
   }
 }

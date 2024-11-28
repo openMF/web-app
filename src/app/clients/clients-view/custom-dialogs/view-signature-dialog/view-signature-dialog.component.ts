@@ -6,6 +6,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 
+/** Node Types */
+import { Buffer } from 'buffer';
+
 /**
  * View signature dialog component.
  */
@@ -39,8 +42,9 @@ export class ViewSignatureDialogComponent implements OnInit {
   ngOnInit() {
     if (this.signatureId) {
       this.clientsService.getClientSignatureImage(this.clientId, this.signatureId).subscribe(
-        (base64Image: any) => {
-          this.signatureImage = this.sanitizer.bypassSecurityTrustResourceUrl(base64Image);
+        async (blob: any) => {
+          const buffer = Buffer.from(await blob.arrayBuffer())
+          this.signatureImage = 'data:' + blob.type + ';base64,' + buffer.toString('base64');
         }, (error: any) => {}
       );
     }

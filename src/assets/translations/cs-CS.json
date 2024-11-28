@@ -1505,6 +1505,7 @@
       "Dividend Period End Date": "Datum ukončení dividendového období",
       "Dividend Period Start Date": "Datum zahájení dividendového období",
       "Dividends": "Dividendy",
+      "Do not calculate interest on past due principal balances": "Neúčtovat úroky z dlužných hlavních zůstatků",
       "Documents": "Dokumenty",
       "Document Key": "Klíč dokumentu",
       "Document Type": "Typ dokumentu",

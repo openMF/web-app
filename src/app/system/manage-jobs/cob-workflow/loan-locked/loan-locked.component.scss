@@ -6,17 +6,21 @@
     color: #fff;
     background-color: #32cd32;
   }
+
   .mat-raised-button.mat-reject {
     color: #fff;
     background-color: #ffa726;
   }
+
   #search-button {
     height: 2.5rem;
     margin-top: 1rem;
   }
-  .view-details{
+
+  .view-details {
     cursor: pointer;
   }
+
   table {
     tr.select-row:hover {
       cursor: pointer;

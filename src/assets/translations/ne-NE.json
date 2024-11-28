@@ -1505,6 +1505,7 @@
       "Dividend Period End Date": "लाभांश अवधि समाप्ति मिति",
       "Dividend Period Start Date": "लाभांश अवधि सुरु मिति",
       "Dividends": "लाभांश",
+      "Do not calculate interest on past due principal balances": "बकाया मूल चित्तको ब्याज गणना नगर्नुहोस्।",
       "Documents": "कागजातहरू",
       "Document Key": "कागजात कुञ्जी",
       "Document Type": "कागजात प्रकार",

@@ -1,21 +1,26 @@
-@import "assets/styles/helper";
+@use 'assets/styles/helper';
 
 .tab-container {
   padding: 1%;
   margin: 1%;
+
   h3 {
-    margin:1% auto;
+    margin: 1% auto;
   }
+
   .action-button {
-      margin-left: auto;
+    margin-left: auto;
   }
+
   table {
     width: 100%;
-    .account-action-button{
+
+    .account-action-button {
       min-width: 26px;
-      padding: 0 0 3px 0;
+      padding: 0 0 3px;
       margin: 0 10%;
       line-height: 25px;
+
       .accruals {
         padding-top: 1%;
       }

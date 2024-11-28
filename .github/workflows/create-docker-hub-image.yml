@@ -3,8 +3,6 @@ name: Publish Image in Docker Hub
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
 
@@ -33,4 +31,3 @@ jobs:
 
     - name: Docker Hub Push  
       run: docker image push $DOCKER_ORGANIZATION/web-app:$WEB_APP_VERSION
-     

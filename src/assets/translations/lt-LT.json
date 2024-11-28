@@ -1505,6 +1505,7 @@
       "Dividend Period End Date": "Dividendų laikotarpio pabaigos data",
       "Dividend Period Start Date": "Dividendų laikotarpio pradžios data",
       "Dividends": "Dividendai",
+      "Do not calculate interest on past due principal balances": "Neskaičiuoti palūkanų už pradelstus pagrindinius likučius",
       "Documents": "Dokumentai",
       "Document Key": "Dokumento raktas",
       "Document Type": "dokumento tipas",

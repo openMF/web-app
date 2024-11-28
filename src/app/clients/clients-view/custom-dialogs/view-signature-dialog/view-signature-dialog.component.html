@@ -11,5 +11,5 @@
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>{{"labels.buttons.Close" | translate}}</button>
   <button mat-raised-button *ngIf="signatureId" color="warn" [mat-dialog-close]="{ delete: true }">{{"labels.buttons.Delete" | translate}}</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="{ upload: true }">{{ signatureId ? 'Reupload' : 'Upload'}}</button>
+  <button mat-raised-button *ngIf="!signatureId" color="primary" [mat-dialog-close]="{ upload: true }">{{"labels.buttons.Upload" | translate}}</button>
 </mat-dialog-actions>
