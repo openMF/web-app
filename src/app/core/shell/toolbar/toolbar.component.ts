@@ -63,7 +63,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
               private router: Router,
               private authenticationService: AuthenticationService,
               private popoverService: PopoverService,
-              private configurationWizardService: ConfigurationWizardService,
+              protected configurationWizardService: ConfigurationWizardService,
               private dialog: MatDialog,
               private changeDetector: ChangeDetectorRef) { }
 
