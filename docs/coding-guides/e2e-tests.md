@@ -18,15 +18,15 @@ These tests use [Protractor](https://github.com/angular/protractor), which is a 
 
 ## Page objects
 
-E2E tests should follow the *[Page Object](https://github.com/SeleniumHQ/selenium/wiki/PageObjects)* pattern.
+E2E tests should follow the _[Page Object](https://github.com/SeleniumHQ/selenium/wiki/PageObjects)_ pattern.
 
 #### What is a page object?
 
 A page object:
 
 - Models the objects on a page under test:
-  * *Properties* wrap page elements
-  * *Methods* wrap code that interacts with the page elements
+  - _Properties_ wrap page elements
+  - _Methods_ wrap code that interacts with the page elements
 - Simplifies the test scripts
 - Reduces the amount of duplicated code
 
@@ -43,11 +43,11 @@ export class LoginPage {
   passwordInput = element(by.css('input[name=^"password"]'));
   loginButton = element(by.css('button[(click)^="login"]'));
   registerButton = element(by.css('button[(click)^="register"]'));
-  
+
   navigateTo() {
     return browser.get('/');
   }
-  
+
   getGreetingText() {
     return element(by.css('.greeting')).getText();
   }
@@ -61,19 +61,19 @@ export class LoginPage {
 import { LoginPage } from './login.po';
 
 describe('Login', () => {
-  let page: LoginPage ;
+  let page: LoginPage;
 
   beforeEach(() => {
     page = new LoginPage();
     page.navigateTo();
   });
-  
+
   it('should navigate to the register page when the register button is clicked', () => {
     page.registerButton.click();
-   
+
     expect(browser.getCurrentUrl()).toContain('/register');
   });
-  
+
   it('should allow a user to log in', () => {
     page.emailInput.sendKeys('test@mail.com');
     page.passwordInput.sendKeys('abc123');
@@ -86,5 +86,5 @@ describe('Login', () => {
 
 ## Credits
 
-Parts of this guide were freely inspired by this 
+Parts of this guide were freely inspired by this
 [presentation](https://docs.google.com/presentation/d/1B6manhG0zEXkC-H-tPo2vwU06JhL8w9-XCF9oehXzAQ).
