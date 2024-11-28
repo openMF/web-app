@@ -1104,6 +1104,7 @@
       "Template Parameters": "Šablono parametrai",
       "Term Options": "Termino parinktys",
       "Terms": "Sąlygos",
+      "Term Variations": "Terminų variacijos",
       "Total Withdrawals": "Bendras išėmimas",
       "Transaction Details": "Pervedimo duomenys",
       "Transaction Reverted": "Sandoris grąžintas",
@@ -1132,7 +1133,8 @@
       "Working Days": "Darbo dienos",
       "You have created": "Jūs sukūrėte",
       "You can drag and drop the rows to set a Payment Allocations order": "Galite nuvilkti eilutes, kad nustatytumėte mokėjimo paskirstymo tvarką",
-      "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių."
+      "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių.",
+      "Map Charge-off reasons to Expense accounts": "Nurodykite nurašymo priežastis išlaidų sąskaitoms"
     },
     "inputs": {
       "accounting": {
@@ -1503,6 +1505,7 @@
       "Dividend Period End Date": "Dividendų laikotarpio pabaigos data",
       "Dividend Period Start Date": "Dividendų laikotarpio pradžios data",
       "Dividends": "Dividendai",
+      "Do not calculate interest on past due principal balances": "Neskaičiuoti palūkanų už pradelstus pagrindinius likučius",
       "Documents": "Dokumentai",
       "Document Key": "Dokumento raktas",
       "Document Type": "dokumento tipas",
@@ -2224,6 +2227,7 @@
       "Show Closed Centers": "Rodyti uždarus centrus",
       "Show Closed Groups": "Rodyti uždaras grupes",
       "Show Payment Details": "Rodyti išsamią mokėjimo informaciją",
+      "Specific to Installment": "Specifinis išsimokėtinai",
       "Staff": "Personalas",
       "Standing Instruction": "Stovėjimo instrukcija",
       "Standing Instruction Type": "Stovimos instrukcijos tipas",
@@ -2268,6 +2272,7 @@
       "Tenant": "Nuomininkas",
       "Tenant App Key": "Nuomininko programos raktas",
       "Tenant Id": "Nuomininko ID",
+      "Term Variations": "Terminų variacijos",
       "Terms vary based on loan cycle": "Sąlygos skiriasi priklausomai nuo paskolos ciklo",
       "Text": "Tekstas",
       "Theme": "tema",
@@ -2419,7 +2424,8 @@
       "valid": "galioja",
       "INTEREST REFUND": "PALŪKANŲ GRĄŽINIMAS",
       "Supported Interest Refund Types": "Palaikomi palūkanų grąžinimo tipai",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Palaikomi palūkanų grąžinimo tipai"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Palaikomi palūkanų grąžinimo tipai",
+      "Charge-off reason": "Apmokestinimo priežastis"
     },
     "links": {
       "Community": "bendruomenė",

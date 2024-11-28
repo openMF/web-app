@@ -1105,6 +1105,7 @@
       "Template Parameters": "템플릿 매개변수",
       "Term Options": "기간 옵션",
       "Terms": "자귀",
+      "Term Variations": "용어 변형",
       "Total Withdrawals": "총 출금",
       "Transaction Details": "상세 거래 내역",
       "Transaction Reverted": "거래가 되돌려졌습니다.",
@@ -1133,7 +1134,8 @@
       "Working Days": "일하는 날",
       "You have created": "당신이 창조했습니다",
       "You can drag and drop the rows to set a Payment Allocations order": "행을 끌어서 놓아 지불 할당 순서를 설정할 수 있습니다.",
-      "successfully select option": "성공적으로. 계속 진행하려면 아래 옵션 중에서 선택하세요."
+      "successfully select option": "성공적으로. 계속 진행하려면 아래 옵션 중에서 선택하세요.",
+      "Map Charge-off reasons to Expense accounts": "비용 계정에 대한 청구 취소 사유 매핑"
     },
     "inputs": {
       "accounting": {
@@ -1504,6 +1506,7 @@
       "Dividend Period End Date": "배당기간 종료일",
       "Dividend Period Start Date": "배당기간 개시일",
       "Dividends": "배당금",
+      "Do not calculate interest on past due principal balances": "연체된 원금 잔액에 대한 이자를 계산하지 마십시오",
       "Documents": "서류",
       "Document Key": "문서 키",
       "Document Type": "문서 유형",
@@ -2225,6 +2228,7 @@
       "Show Closed Centers": "닫힌 센터 표시",
       "Show Closed Groups": "닫힌 그룹 표시",
       "Show Payment Details": "결제 세부정보 표시",
+      "Specific to Installment": "할부에만 해당",
       "Staff": "직원",
       "Standing Instruction": "상임지도",
       "Standing Instruction Type": "상임 지시 유형",
@@ -2269,6 +2273,7 @@
       "Tenant": "거주자",
       "Tenant App Key": "테넌트 앱 키",
       "Tenant Id": "테넌트 ID",
+      "Term Variations": "용어 변형",
       "Terms vary based on loan cycle": "대출 주기에 따라 조건이 달라집니다.",
       "Text": "텍스트",
       "Theme": "주제",
@@ -2420,7 +2425,8 @@
       "valid": "유효한",
       "INTEREST REFUND": "이자환급",
       "Supported Interest Refund Types": "지원되는 이자 환불 유형",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "지원되는 이자 환불 유형"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "지원되는 이자 환불 유형",
+      "Charge-off reason": "청구 취소 사유"
     },
     "links": {
       "Community": "지역 사회",

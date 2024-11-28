@@ -1104,6 +1104,7 @@
       "Template Parameters": "Parametri del modello",
       "Term Options": "Opzioni dei termini",
       "Terms": "Termini",
+      "Term Variations": "Variazioni dei termini",
       "Total Withdrawals": "Prelievi totali",
       "Transaction Details": "Dettagli di Transazione",
       "Transaction Reverted": "Transazione annullata",
@@ -1132,7 +1133,8 @@
       "Working Days": "Giorni lavorativi",
       "You have created": "Hai creato",
       "You can drag and drop the rows to set a Payment Allocations order": "Vous pouvez faire glisser et déposer les lignes pour définir un ordre de répartition des paiements",
-      "successfully select option": "con successo. Seleziona una delle opzioni seguenti per procedere ulteriormente."
+      "successfully select option": "con successo. Seleziona una delle opzioni seguenti per procedere ulteriormente.",
+      "Map Charge-off reasons to Expense accounts": "Associa i motivi di addebito ai conti spese"
     },
     "inputs": {
       "accounting": {
@@ -1503,6 +1505,7 @@
       "Dividend Period End Date": "Data di fine del periodo di dividendo",
       "Dividend Period Start Date": "Data di inizio del periodo di dividendo",
       "Dividends": "Dividendi",
+      "Do not calculate interest on past due principal balances": "Non calcolare interessi sui saldi principali scaduti",
       "Documents": "Documenti",
       "Document Key": "Chiave del documento",
       "Document Type": "tipo di documento",
@@ -2224,6 +2227,7 @@
       "Show Closed Centers": "Mostra centri chiusi",
       "Show Closed Groups": "Mostra gruppi chiusi",
       "Show Payment Details": "Mostra i dettagli del pagamento",
+      "Specific to Installment": "Specifico per la rata",
       "Staff": "Personale",
       "Standing Instruction": "Istruzioni permanenti",
       "Standing Instruction Type": "Tipo di istruzione permanente",
@@ -2268,6 +2272,7 @@
       "Tenant": "Inquilino",
       "Tenant App Key": "Chiave dell'app del tenant",
       "Tenant Id": "ID inquilino",
+      "Term Variations": "Variazioni dei termini",
       "Terms vary based on loan cycle": "I termini variano in base al ciclo di prestito",
       "Text": "Testo",
       "Theme": "Tema",
@@ -2419,7 +2424,8 @@
       "valid": "valido",
       "INTEREST REFUND": "RIMBORSO DEGLI INTERESSI",
       "Supported Interest Refund Types": "Tipi di rimborso degli interessi supportati",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipi di rimborso degli interessi supportati"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipi di rimborso degli interessi supportati",
+      "Charge-off reason": "Motivo dell'addebito"
     },
     "links": {
       "Community": "Comunità",

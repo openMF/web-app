@@ -1104,6 +1104,7 @@
       "Template Parameters": "Veidnes parametri",
       "Term Options": "Termiņa opcijas",
       "Terms": "Noteikumi",
+      "Term Variations": "Terminu variācijas",
       "Total Withdrawals": "Kopējā izņemšana",
       "Transaction Details": "Darījuma informācija",
       "Transaction Reverted": "Darījums ir atsaukts",
@@ -1132,7 +1133,8 @@
       "Working Days": "Darba dienas",
       "You have created": "Jūs esat izveidojis",
       "You can drag and drop the rows to set a Payment Allocations order": "Varat vilkt un nomest rindas, lai iestatītu maksājumu piešķiršanas pasūtījumu",
-      "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu."
+      "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu.",
+      "Map Charge-off reasons to Expense accounts": "Izmaksas iemeslu kartēšana izdevumu kontiem"
     },
     "inputs": {
       "accounting": {
@@ -1503,6 +1505,7 @@
       "Dividend Period End Date": "Dividenžu perioda beigu datums",
       "Dividend Period Start Date": "Dividenžu perioda sākuma datums",
       "Dividends": "Dividendes",
+      "Do not calculate interest on past due principal balances": "Neskaitīt procentus par kavētajiem pamatkapitāla atlikumiem",
       "Documents": "Dokumenti",
       "Document Key": "Dokumenta atslēga",
       "Document Type": "Dokumenta veids",
@@ -2224,6 +2227,7 @@
       "Show Closed Centers": "Rādīt slēgtos centrus",
       "Show Closed Groups": "Rādīt slēgtās grupas",
       "Show Payment Details": "Rādīt maksājuma informāciju",
+      "Specific to Installment": "Īpaši uz nomaksu",
       "Staff": "Personāls",
       "Standing Instruction": "Pastāvīga instrukcija",
       "Standing Instruction Type": "Pastāvīgās instrukcijas veids",
@@ -2268,6 +2272,7 @@
       "Tenant": "Īrnieks",
       "Tenant App Key": "Īrnieka lietotnes atslēga",
       "Tenant Id": "Īrnieka ID",
+      "Term Variations": "Terminu variācijas",
       "Terms vary based on loan cycle": "Noteikumi atšķiras atkarībā no aizdevuma cikla",
       "Text": "Teksts",
       "Theme": "Tēma",
@@ -2419,7 +2424,8 @@
       "valid": "derīgs",
       "INTEREST REFUND": "PROCENTU ATMAKSĀŠANA",
       "Supported Interest Refund Types": "Atbalstītie procentu atmaksas veidi",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Atbalstītie procentu atmaksas veidi"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Atbalstītie procentu atmaksas veidi",
+      "Charge-off reason": "Izmaksas iemesls"
     },
     "links": {
       "Community": "kopiena",

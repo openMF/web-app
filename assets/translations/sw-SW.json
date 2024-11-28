@@ -1104,6 +1104,7 @@
       "Template Parameters": "Vigezo vya Kigezo",
       "Term Options": "Chaguzi za Muda",
       "Terms": "Masharti",
+      "Term Variations": "Tofauti za Muda",
       "Total Withdrawals": "Jumla ya Pesa",
       "Transaction Details": "Maelezo ya Muamala",
       "Transaction Reverted": "Muamala Umerejeshwa",
@@ -1132,7 +1133,8 @@
       "Working Days": "Siku za kazi",
       "You have created": "Umeunda",
       "You can drag and drop the rows to set a Payment Allocations order": "Unaweza kuburuta na kudondosha safu mlalo ili kuweka agizo la Ugawaji wa Malipo",
-      "successfully select option": "kwa mafanikio. Tafadhali chagua kutoka kwa chaguo zilizo hapa chini ili kuendelea zaidi."
+      "successfully select option": "kwa mafanikio. Tafadhali chagua kutoka kwa chaguo zilizo hapa chini ili kuendelea zaidi.",
+      "Map Charge-off reasons to Expense accounts": "Sababu za Kutozwa kwa Ramani kwa akaunti za Gharama"
     },
     "inputs": {
       "accounting": {
@@ -1503,6 +1505,7 @@
       "Dividend Period End Date": "Tarehe ya Mwisho ya Kipindi cha Gawio",
       "Dividend Period Start Date": "Tarehe ya Kuanza kwa Kipindi cha Gawio",
       "Dividends": "Gawio",
+      "Do not calculate interest on past due principal balances": "Usihesabu riba juu ya salio la msingi lililokawia",
       "Documents": "Nyaraka",
       "Document Key": "Ufunguo wa Hati",
       "Document Type": "Aina ya Hati",
@@ -2224,6 +2227,7 @@
       "Show Closed Centers": "Onyesha Vituo Vilivyofungwa",
       "Show Closed Groups": "Onyesha Vikundi Vilivyofungwa",
       "Show Payment Details": "Onyesha Maelezo ya Malipo",
+      "Specific to Installment": "Maalum kwa Installment",
       "Staff": "Wafanyakazi",
       "Standing Instruction": "Maagizo ya Kudumu",
       "Standing Instruction Type": "Aina ya Maagizo ya Kudumu",
@@ -2268,6 +2272,7 @@
       "Tenant": "Mpangaji",
       "Tenant App Key": "Ufunguo wa Programu ya Mpangaji",
       "Tenant Id": "Kitambulisho cha Mpangaji",
+      "Term Variations": "Tofauti za Muda",
       "Terms vary based on loan cycle": "Masharti yanatofautiana kulingana na mzunguko wa mkopo",
       "Text": "Maandishi",
       "Theme": "Mandhari",
@@ -2419,7 +2424,8 @@
       "valid": "halali",
       "INTEREST REFUND": "MAREJESHO YA RIBA",
       "Supported Interest Refund Types": "Aina za Urejeshaji wa Riba Zinazotumika",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Aina za kurejesha riba zinazotumika"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Aina za kurejesha riba zinazotumika",
+      "Charge-off reason": "Sababu ya malipo"
     },
     "links": {
       "Community": "Jumuiya",

@@ -1105,6 +1105,7 @@
             "Template Parameters": "Template Parameters",
             "Term Options": "Term Options",
             "Terms": "Terms",
+            "Term Variations": "Term Variations",
             "Total Withdrawals": "Total Withdrawals",
             "Transaction Details": "Transaction Details",
             "Transaction Reverted": "Transaction Reverted",
@@ -1133,7 +1134,8 @@
             "Working Days": "Working Days",
             "You have created": "You have created",
             "You can drag and drop the rows to set a Payment Allocations order": "You can drag and drop the rows to set a Payment Allocations order",
-            "successfully select option": "successfully. Please select from the options below to proceed furthur."
+            "successfully select option": "successfully. Please select from the options below to proceed further.",
+            "Map Charge-off reasons to Expense accounts": "Map Charge-off reasons to Expense accounts"
         },
         "inputs": {
             "accounting": {
@@ -1504,6 +1506,7 @@
             "Dividend Period End Date": "Dividend Period End Date",
             "Dividend Period Start Date": "Dividend Period Start Date",
             "Dividends": "Dividends",
+            "Do not calculate interest on past due principal balances": "Do not calculate interest on past due principal balances",
             "Documents": "Documents",
             "Document Key": "Document Key",
             "Document Type": "Document Type",
@@ -2225,6 +2228,7 @@
             "Show Closed Centers": "Show Closed Centers",
             "Show Closed Groups": "Show Closed Groups",
             "Show Payment Details": "Show Payment Details",
+            "Specific to Installment": "Specific to Installment",
             "Staff": "Staff",
             "Standing Instruction": "Standing Instruction",
             "Standing Instruction Type": "Standing Instruction Type",
@@ -2269,6 +2273,7 @@
             "Tenant": "Tenant",
             "Tenant App Key": "Tenant App Key",
             "Tenant Id": "Tenant Id",
+            "Term Variations": "Term Variations",
             "Terms vary based on loan cycle": "Terms vary based on loan cycle",
             "Text": "Text",
             "Theme": "Theme",
@@ -2420,7 +2425,8 @@
             "valid": "valid",
             "INTEREST REFUND": "INTEREST REFUND",
             "Supported Interest Refund Types": "Supported Interest Refund Types",
-            "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types"
+            "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types",
+            "Charge-off reason": "Charge-off reason"
         },
         "links": {
             "Community": "Community",

@@ -1103,6 +1103,7 @@
       "Template Parameters": "Parametry šablony",
       "Term Options": "Možnosti období",
       "Terms": "Podmínky",
+      "Term Variations": "Termínové variace",
       "Total Withdrawals": "Celkové výběry",
       "Transaction Details": "Detaily transakce",
       "Transaction Reverted": "Transakce vrácena",
@@ -1131,7 +1132,8 @@
       "Working Days": "Pracovní dny",
       "You have created": "Vytvořili jste",
       "You can drag and drop the rows to set a Payment Allocations order": "Řádky můžete přetáhnout a nastavit tak příkaz přidělení plateb",
-      "successfully select option": "úspěšně. Chcete-li pokračovat dále, vyberte si z níže uvedených možností."
+      "successfully select option": "úspěšně. Chcete-li pokračovat dále, vyberte si z níže uvedených možností.",
+      "Map Charge-off reasons to Expense accounts": "Mapujte důvody pro zúčtování na výdajové účty"
     },
     "inputs": {
       "accounting": {
@@ -1503,6 +1505,7 @@
       "Dividend Period End Date": "Datum ukončení dividendového období",
       "Dividend Period Start Date": "Datum zahájení dividendového období",
       "Dividends": "Dividendy",
+      "Do not calculate interest on past due principal balances": "Neúčtovat úroky z dlužných hlavních zůstatků",
       "Documents": "Dokumenty",
       "Document Key": "Klíč dokumentu",
       "Document Type": "Typ dokumentu",
@@ -2224,6 +2227,7 @@
       "Show Closed Centers": "Zobrazit uzavřená centra",
       "Show Closed Groups": "Zobrazit uzavřené skupiny",
       "Show Payment Details": "Zobrazit podrobnosti o platbě",
+      "Specific to Installment": "Specifické pro splátky",
       "Staff": "Personál",
       "Standing Instruction": "Stálý pokyn",
       "Standing Instruction Type": "Typ trvalého pokynu",
@@ -2268,6 +2272,7 @@
       "Tenant": "Nájemce",
       "Tenant App Key": "Klíč aplikace nájemce",
       "Tenant Id": "Id nájemce",
+      "Term Variations": "Termínové variace",
       "Terms vary based on loan cycle": "Podmínky se liší v závislosti na cyklu půjčky",
       "Text": "Text",
       "Theme": "Téma",
@@ -2419,7 +2424,8 @@
       "valid": "platný",
       "INTEREST REFUND": "VRÁCENÍ ÚROKU",
       "Supported Interest Refund Types": "Unterstützte Zinsrückerstattungsarten",
-      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Podporované typy vrácení úroků"
+      "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Podporované typy vrácení úroků",
+      "Charge-off reason": "Důvod vyúčtování"
     },
     "links": {
       "Community": "Společenství",
