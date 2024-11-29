@@ -1,0 +1,141 @@
+version: 2.1
+orbs:
+  slack: circleci/slack@4.12.5
+  aws-ecr: circleci/aws-ecr@8.2.1
+executors:
+  docker-executor:
+    docker:
+      - image: circleci/openjdk:17-buster-node-browsers-legacy
+jobs:
+  build:
+    docker:
+      - image: cimg/openjdk:17.0.0
+      - image: docker:17.05.0-ce-git
+    working_directory: ~/repo
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx512m
+      TERM: dumb
+    steps:
+      - checkout
+      - setup_remote_docker
+#       - slack/notify:
+#           event: fail
+#           mentions: '@here'
+#           template: basic_fail_1
+#       - slack/notify:
+#           event: pass
+#           template: basic_success_1
+      - run: ./gradlew clean bootJar
+      - aws-ecr/build-and-push-image:
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          extra-build-args: '--compress'
+          push-image: true
+          region: ap-south-1
+          registry-id: AWS_REGISTRY_ID
+          repo: web-app
+          repo-scan-on-push: true
+          role-arn: arn:aws:iam::419830066942:role/CustomAdmin
+          tag: latest
+      # - run: ./gradlew cucumberCli
+      # run tests! Slack Success/Fail Notification Step
+      #- run: ./gradlew test
+
+  build_and_push_tag_image:
+    executor: docker-executor
+    environment:
+      JVM_OPTS: -Xmx512m
+      TERM: dumb
+      GITHUB_TOKEN: ${GITHUB_TOKEN}  # Add the GitHub token as an environment variable
+
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.24
+      - run:
+          name: Build and Push Docker tag Image
+          command: |
+            # Set environment variables
+            IMAGE_TAG=$CIRCLE_TAG
+
+            # Check if the Docker image with the same tag already exists in Docker Hub
+            if curl -s -f -u "$DOCKERHUB_USERNAME":"$DOCKERHUB_PASSWORD" "https://hub.docker.com/v2/repositories/openmf/web-app/tags/$IMAGE_TAG" > /dev/null; then
+              echo "Skipping the build and push as the tag $IMAGE_TAG already exists in Docker Hub."
+              exit 0
+            fi
+
+            # Build and tag the Docker image
+            ./gradlew bootJar
+            docker build -t "openmf/web-app:$IMAGE_TAG" .
+
+            # Push the Docker image to Docker Hub
+            docker login -u "$DOCKERHUB_USERNAME" -p "$DOCKERHUB_PASSWORD"
+            docker push "openmf/web-app:$IMAGE_TAG"
+
+          # when: always  # The job will be executed even if there's no match for the tag filter
+
+  build_and_push_latest_image:
+    executor: docker-executor
+    environment:
+      JVM_OPTS: -Xmx512m
+      TERM: dumb
+
+    steps:
+      - checkout
+      # Install Docker to build and push the image
+      - setup_remote_docker:
+          version: 20.10.24
+
+      # Build the Docker image
+      - run:
+          name: Build Docker image
+          command: |
+            ./gradlew checkstyleMain
+            ./gradlew clean bootJar
+            docker build -t openmf/web-app:latest .
+            if [ "$CIRCLE_BRANCH" != "master" ]; then
+              PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+              PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+              JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
+              if [ -z "$JIRA_STORY" ]; then echo "Invalid PR title" && exit 1; else echo "Ticket NO: $JIRA_STORY"; fi
+              docker image tag openmf/$CIRCLE_PR_REPONAME:latest openmf/$CIRCLE_PR_REPONAME:$JIRA_STORY
+            fi
+
+      # Log in to DockerHub using environment variables
+      - run:
+          name: Login to DockerHub
+          command: echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+
+      # Push the Docker image to DockerHub
+      - run:
+          name: Push Docker image to DockerHub
+          command: |
+            if [ "$CIRCLE_BRANCH" = "master" ]; then
+            docker push openmf/web-app:latest
+            fi
+            if [ "$CIRCLE_BRANCH" != "master" ]; then
+            PR_NUMBER=$(basename $CIRCLE_PULL_REQUEST)
+            PR_TITLE=$(curl -sSL "https://api.github.com/repos/openmf/$CIRCLE_PR_REPONAME/pulls/$PR_NUMBER" | jq -r '.title')
+            JIRA_STORY=$(echo $PR_TITLE | cut -d "[" -f2 | cut -d "]" -f1 | tr '[A-Z]' '[a-z]')
+            docker push openmf/$CIRCLE_PR_REPONAME:${JIRA_STORY}
+            fi
+
+workflows:
+  build_and_push_image:
+    jobs:
+      - build:
+          context:
+            - AWS
+            - slack
+      - build_and_push_tag_image:
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/  # Match tags in the format v1.2.3
+          context:
+            - DOCKER
+      - build_and_push_latest_image:
+          requires:
+            - build
+          context:
+            - DOCKER
