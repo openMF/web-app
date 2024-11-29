@@ -109,6 +109,7 @@
     "karma-jasmine-html-reporter": "^2.0.0",
     "karma-junit-reporter": "1.2.0",
     "prettier": "^3.3.3",
+    "prettier-plugin-multiline-arrays": "^3.0.6",
     "protractor": "~7.0.0",
     "puppeteer": "^15.3.2",
     "stylelint": "^16.10.0",
