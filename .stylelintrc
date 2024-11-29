@@ -1,8 +1,13 @@
 {
-  "extends": ["stylelint-config-standard", "stylelint-config-recommended-scss"],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recommended-scss"
+  ],
   "rules": {
     "font-family-name-quotes": "always-where-recommended",
-    "font-family-no-missing-generic-family-keyword": [true, { "ignoreFontFamilies": ["FontAwesome"] }],
+    "font-family-no-missing-generic-family-keyword": [
+      true,
+      { "ignoreFontFamilies": ["FontAwesome"] }],
     "function-url-quotes": [
       "always",
       {
@@ -16,7 +21,9 @@
     "declaration-no-important": null,
     "at-rule-no-vendor-prefix": true,
     "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": [true, { "ignoreAtRules": ["tailwind"] }],
+    "scss/at-rule-no-unknown": [
+      true,
+      { "ignoreAtRules": ["tailwind"] }],
     "media-feature-name-no-vendor-prefix": true,
     "property-no-vendor-prefix": true,
     "selector-no-vendor-prefix": true,
@@ -35,7 +42,12 @@
     "selector-type-no-unknown": [
       true,
       {
-        "ignoreTypes": ["/^mat/", "/^mifosx/", "fa-icon", "ng-template"]
+        "ignoreTypes": [
+          "/^mat/",
+          "/^mifosx/",
+          "fa-icon",
+          "ng-template"
+        ]
       }
     ],
     "selector-pseudo-element-no-unknown": [
@@ -44,6 +56,16 @@
         "ignorePseudoElements": ["ng-deep"]
       }
     ],
-    "unit-allowed-list": ["px", "%", "em", "rem", "vw", "vh", "deg", "s", "ms"]
+    "unit-allowed-list": [
+      "px",
+      "%",
+      "em",
+      "rem",
+      "vw",
+      "vh",
+      "deg",
+      "s",
+      "ms"
+    ]
   }
 }
