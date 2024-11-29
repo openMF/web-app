@@ -1,44 +1,45 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="jobForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Job Name' | translate}}</mat-label>
-            <input matInput required formControlName="displayName">
+            <mat-label>{{ 'labels.inputs.Job Name' | translate }}</mat-label>
+            <input matInput required formControlName="displayName" />
             <mat-error *ngIf="jobForm.controls.displayName.hasError('required')">
-              {{'labels.inputs.Job Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+              {{ 'labels.inputs.Job Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Cron Expression' | translate}}</mat-label>
-            <input matInput required formControlName="cronExpression">
+            <mat-label>{{ 'labels.inputs.Cron Expression' | translate }}</mat-label>
+            <input matInput required formControlName="cronExpression" />
             <mat-error *ngIf="jobForm.controls.cronExpression.hasError('required')">
-              {{'labels.inputs.Cron Expression' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+              {{ 'labels.inputs.Cron Expression' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="active">
-            {{'labels.inputs.Is job active' | translate}}?
+            {{ 'labels.inputs.Is job active' | translate }}?
           </mat-checkbox>
-
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
-          <button mat-raised-button color="primary" [disabled]="!jobForm.valid" *mifosxHasPermission="'UPDATE_SCHEDULER'">{{'labels.buttons.Submit' | translate}}</button>
+          <button type="button" mat-raised-button [routerLink]="['../']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!jobForm.valid"
+            *mifosxHasPermission="'UPDATE_SCHEDULER'"
+          >
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
         </mat-card-actions>
-
       </mat-card-content>
-
     </form>
-
   </mat-card>
-
 </div>

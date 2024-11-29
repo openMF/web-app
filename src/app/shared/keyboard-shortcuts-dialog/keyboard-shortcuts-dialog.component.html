@@ -6,10 +6,18 @@
       <mat-divider [inset]="true"></mat-divider>
       <div fxFlexFill fxFlex="50%">
         <span fxFlex="50%">
-          <span *ngIf="item.ctrlKey"> <span class="modifierKey">{{ 'labels.inputs.Ctrl' | translate }}</span> + </span>
-          <span *ngIf="item.shiftKey"> <span class="modifierKey">{{ 'labels.inputs.Shift' | translate }}</span> + </span>
-          <span *ngIf="item.altKey"> <span class="modifierKey">{{ 'labels.inputs.Alt' | translate }}</span> + </span>
-          <span *ngIf="item.key"> <span class="modifierKey">{{ item.key }}</span></span>
+          <span *ngIf="item.ctrlKey">
+            <span class="modifierKey">{{ 'labels.inputs.Ctrl' | translate }}</span> +
+          </span>
+          <span *ngIf="item.shiftKey">
+            <span class="modifierKey">{{ 'labels.inputs.Shift' | translate }}</span> +
+          </span>
+          <span *ngIf="item.altKey">
+            <span class="modifierKey">{{ 'labels.inputs.Alt' | translate }}</span> +
+          </span>
+          <span *ngIf="item.key">
+            <span class="modifierKey">{{ item.key }}</span></span
+          >
         </span>
         <span fxFlex="50%">{{ item.title }}</span>
       </div>

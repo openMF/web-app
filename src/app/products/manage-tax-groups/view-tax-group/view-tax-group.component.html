@@ -1,20 +1,16 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_TAXGROUP'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.Edit' | translate}}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="33%" class="mat-body-strong">
-          {{'labels.inputs.Name' | translate}}
+          {{ 'labels.inputs.Name' | translate }}
         </div>
 
         <div fxFlex="67%">
@@ -22,37 +18,31 @@
         </div>
 
         <div fxFlex="34%" class="mat-body-strong">
-          {{'labels.inputs.Tax Component' | translate}}
+          {{ 'labels.inputs.Tax Component' | translate }}
         </div>
 
         <div fxFlex="33%" class="mat-body-strong">
-          {{'labels.inputs.Start Date' | translate}}
+          {{ 'labels.inputs.Start Date' | translate }}
         </div>
 
         <div fxFlex="33%" class="mat-body-strong">
-          {{'labels.inputs.End Date' | translate}}
+          {{ 'labels.inputs.End Date' | translate }}
+        </div>
+      </div>
+
+      <div fxLayout="row wrap" class="content" *ngFor="let taxcomponent of taxGroupData.taxAssociations">
+        <div fxFlex="34%">
+          {{ taxcomponent.taxComponent.name }}
         </div>
 
+        <div fxFlex="33%">
+          {{ taxcomponent.startDate | dateFormat }}
+        </div>
+
+        <div fxFlex="33%" *ngIf="taxcomponent.endDate !== undefined || taxcomponent.endDate !== null">
+          {{ taxcomponent.endDate | dateFormat }}
+        </div>
       </div>
-
-      <div fxLayout="row wrap" class="content"  *ngFor="let taxcomponent of taxGroupData.taxAssociations">
-
-          <div fxFlex="34%">
-            {{ taxcomponent.taxComponent.name }}
-          </div>
-
-          <div fxFlex="33%">
-            {{ taxcomponent.startDate | dateFormat }}
-          </div>
-
-          <div fxFlex="33%" *ngIf="taxcomponent.endDate !== undefined || taxcomponent.endDate !== null">
-            {{ taxcomponent.endDate | dateFormat }}
-          </div>
-
-      </div>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

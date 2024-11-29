@@ -1,38 +1,50 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="holidayForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
-            <input matInput required autofocus formControlName="name">
+            <input matInput required autofocus formControlName="name" />
             <mat-error *ngIf="holidayForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.name' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="fromDatePicker.open()">
             <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" required formControlName="fromDate">
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="fromDatePicker"
+              required
+              formControlName="fromDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatePicker></mat-datepicker>
             <mat-error *ngIf="holidayForm.controls.fromDate.hasError('required')">
-              {{ 'labels.inputs.From Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="toDatePicker.open()">
             <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="toDate">
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="toDatePicker"
+              required
+              formControlName="toDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatePicker></mat-datepicker>
             <mat-error *ngIf="holidayForm.controls.toDate.hasError('required')">
-              {{ 'labels.inputs.To Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.To Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -40,62 +52,78 @@
             <mat-label>{{ 'labels.inputs.Repayment Scheduling Type' | translate }}</mat-label>
             <mat-select required formControlName="reschedulingType">
               <mat-option *ngFor="let repayments of repaymentSchedulingTypes" [value]="repayments.id">
-                {{ repayments.value }} 
+                {{ repayments.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="holidayForm.controls.reschedulingType.hasError('required')">
-              {{ 'labels.inputs.Repayment Scheduling Type' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Repayment Scheduling Type' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="holidayForm.contains('repaymentsRescheduledTo')" (click)="repaymentDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Repayment scheduled to' | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="repaymentDatePicker" required formControlName="repaymentsRescheduledTo">
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="repaymentDatePicker"
+              required
+              formControlName="repaymentsRescheduledTo"
+            />
             <mat-datepicker-toggle matSuffix [for]="repaymentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #repaymentDatePicker></mat-datepicker>
             <mat-error *ngIf="holidayForm.controls.repaymentsRescheduledTo.hasError('required')">
-              {{ 'labels.inputs.Repayment scheduled to' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Repayment scheduled to' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-            <input matInput formControlName="description">
-          </mat-form-field>   
-          
+            <input matInput formControlName="description" />
+          </mat-form-field>
+
           <label>{{ 'labels.inputs.Select applicable offices' | translate }}</label>
 
           <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
               <button mat-icon-button disabled></button>
-              <mat-checkbox class="checklist-leaf-node"
-                            [checked]="checklistSelection.isSelected(node)"
-                            (change)="officeLeafItemSelectionToggle(node);">{{officesDict[node.item].name}}</mat-checkbox>
+              <mat-checkbox
+                class="checklist-leaf-node"
+                [checked]="checklistSelection.isSelected(node)"
+                (change)="officeLeafItemSelectionToggle(node)"
+                >{{ officesDict[node.item].name }}</mat-checkbox
+              >
             </mat-tree-node>
 
             <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-              <button type="button" mat-icon-button matTreeNodeToggle
-                      [attr.aria-label]="'toggle ' + node.filename">
+              <button type="button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
                 <mat-icon class="mat-icon-rtl-mirror">
-                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
                 </mat-icon>
               </button>
-              <mat-checkbox [checked]="descendantsAllSelected(node)"
-                            (change)="officeItemSelectionToggle(node)">{{ officesDict[node.item].name }}</mat-checkbox>
+              <mat-checkbox [checked]="descendantsAllSelected(node)" (change)="officeItemSelectionToggle(node)">{{
+                officesDict[node.item].name
+              }}</mat-checkbox>
             </mat-tree-node>
           </mat-tree>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!holidayForm.valid" *mifosxHasPermission="'CREATE_HOLIDAY'">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!holidayForm.valid"
+          *mifosxHasPermission="'CREATE_HOLIDAY'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

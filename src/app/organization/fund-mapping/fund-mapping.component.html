@@ -1,9 +1,6 @@
 <mat-card class="container" *ngIf="!isCollapsed">
-
   <form [formGroup]="fundMappingForm" (ngSubmit)="submit()">
-
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
-  
       <mat-form-field fxFlex="48%">
         <mat-label>{{ 'labels.inputs.Loan Status' | translate }}</mat-label>
         <mat-select formControlName="loanStatus" multiple>
@@ -25,7 +22,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-  
+
       <mat-form-field fxFlex="48%">
         <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
         <mat-select formControlName="offices" multiple>
@@ -46,32 +43,58 @@
 
       <mat-form-field fxFlex="31%" (click)="fromDatePicker.open()">
         <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" 
-          required formControlName="loanFromDate" required>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="fromDatePicker"
+          required
+          formControlName="loanFromDate"
+          required
+        />
         <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #fromDatePicker></mat-datepicker>
         <mat-error *ngIf="fundMappingForm.controls.loanFromDate.hasError('required')">
-          {{ 'labels.inputs.From Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+          {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%" (click)="toDatePicker.open()">
         <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" 
-          required formControlName="loanToDate" required>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="toDatePicker"
+          required
+          formControlName="loanToDate"
+          required
+        />
         <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #toDatePicker></mat-datepicker>
         <mat-error *ngIf="fundMappingForm.controls.loanToDate.hasError('required')">
-          {{ 'labels.inputs.To Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+          {{ 'labels.inputs.To Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
-  
-      <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="includeOutStandingAmountPercentage" class="margin-b">
+
+      <mat-checkbox
+        fxFlex="73%"
+        labelPosition="before"
+        formControlName="includeOutStandingAmountPercentage"
+        class="margin-b"
+      >
         {{ 'labels.inputs.Loan Outstanding Percentage' | translate }}
       </mat-checkbox>
-  
-      <div *ngIf="fundMappingForm.value.includeOutStandingAmountPercentage" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
 
+      <div
+        *ngIf="fundMappingForm.value.includeOutStandingAmountPercentage"
+        fxFlexFill
+        fxLayout="row wrap"
+        fxLayoutGap="2%"
+        fxLayout.lt-md="column"
+      >
         <mat-form-field *ngIf="fundMappingForm.contains('outStandingAmountPercentageCondition')" fxFlex="31%">
           <mat-label>{{ 'labels.inputs.Comparison Condition' | translate }}</mat-label>
           <mat-select required formControlName="outStandingAmountPercentageCondition">
@@ -83,42 +106,50 @@
             <mat-option value="=">=</mat-option>
           </mat-select>
           <mat-error *ngIf="fundMappingForm.controls.outStandingAmountPercentageCondition.hasError('required')">
-            {{ 'labels.inputs.Comparison Condition' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Comparison Condition' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
-  
+
         <mat-form-field *ngIf="fundMappingForm.contains('minOutStandingAmountPercentage')" fxFlex="31%">
           <mat-label>{{ 'labels.inputs.Minimum Value' | translate }}</mat-label>
-          <input type="number" matInput required formControlName="minOutStandingAmountPercentage">
+          <input type="number" matInput required formControlName="minOutStandingAmountPercentage" />
           <mat-error *ngIf="fundMappingForm.controls.minOutStandingAmountPercentage.hasError('required')">
-            {{ 'labels.inputs.Minimum Value' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Minimum Value' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field *ngIf="fundMappingForm.contains('outStandingAmountPercentage')" fxFlex="31%">
           <mat-label>{{ 'labels.inputs.Comparison Value' | translate }}</mat-label>
-          <input type="number" matInput required formControlName="outStandingAmountPercentage">
+          <input type="number" matInput required formControlName="outStandingAmountPercentage" />
           <mat-error *ngIf="fundMappingForm.controls.outStandingAmountPercentage.hasError('required')">
-            {{ 'labels.inputs.Comparison Value' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Comparison Value' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
-  
+
         <mat-form-field *ngIf="fundMappingForm.contains('maxOutStandingAmountPercentage')" fxFlex="31%">
           <mat-label>{{ 'labels.inputs.Maximum Value' | translate }}</mat-label>
-          <input type="number" matInput required formControlName="maxOutStandingAmountPercentage">
+          <input type="number" matInput required formControlName="maxOutStandingAmountPercentage" />
           <mat-error *ngIf="fundMappingForm.controls.maxOutStandingAmountPercentage.hasError('required')">
-            {{ 'labels.inputs.Maximum Value' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Maximum Value' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
-  
       </div>
-  
+
       <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="includeOutstandingAmount" class="margin-b">
         {{ 'labels.inputs.Loan Outstanding Amount' | translate }}
       </mat-checkbox>
-  
-      <div *ngIf="fundMappingForm.value.includeOutstandingAmount" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  
+
+      <div
+        *ngIf="fundMappingForm.value.includeOutstandingAmount"
+        fxFlexFill
+        fxLayout="row wrap"
+        fxLayoutGap="2%"
+        fxLayout.lt-md="column"
+      >
         <mat-form-field *ngIf="fundMappingForm.contains('outstandingAmountCondition')" fxFlex="31%">
           <mat-label>{{ 'labels.inputs.Comparison Condition' | translate }}</mat-label>
           <mat-select required formControlName="outstandingAmountCondition">
@@ -130,94 +161,87 @@
             <mat-option value="=">=</mat-option>
           </mat-select>
           <mat-error *ngIf="fundMappingForm.controls.outstandingAmountCondition.hasError('required')">
-            {{ 'labels.inputs.Comparison Condition' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Comparison Condition' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
-  
+
         <mat-form-field *ngIf="fundMappingForm.contains('minOutstandingAmount')" fxFlex="31%">
           <mat-label>{{ 'labels.inputs.Minimum Value' | translate }}</mat-label>
-          <input type="number" matInput required formControlName="minOutstandingAmount">
+          <input type="number" matInput required formControlName="minOutstandingAmount" />
           <mat-error *ngIf="fundMappingForm.controls.minOutstandingAmount.hasError('required')">
-            {{ 'labels.inputs.Minimum Value' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Minimum Value' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field *ngIf="fundMappingForm.contains('outstandingAmount')" fxFlex="31%">
           <mat-label>{{ 'labels.inputs.Comparison Value' | translate }}</mat-label>
-          <input type="number" matInput required formControlName="outstandingAmount">
+          <input type="number" matInput required formControlName="outstandingAmount" />
           <mat-error *ngIf="fundMappingForm.controls.outstandingAmount.hasError('required')">
-            {{ 'labels.inputs.Comparison Value' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Comparison Value' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
-  
+
         <mat-form-field *ngIf="fundMappingForm.contains('maxOutstandingAmount')" fxFlex="31%">
           <mat-label>{{ 'labels.inputs.Maximum Value' | translate }}</mat-label>
-          <input type="number" matInput required formControlName="maxOutstandingAmount">
+          <input type="number" matInput required formControlName="maxOutstandingAmount" />
           <mat-error *ngIf="fundMappingForm.controls.maxOutstandingAmount.hasError('required')">
-            {{ 'labels.inputs.Maximum Value' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+            {{ 'labels.inputs.Maximum Value' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
-  
       </div>
-
     </div>
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
+      <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
       <button mat-raised-button color="primary" [disabled]="!fundMappingForm.valid">
-        <fa-icon icon="search"></fa-icon>&nbsp; {{'labels.buttons.Summary' | translate }}
+        <fa-icon icon="search"></fa-icon>&nbsp; {{ 'labels.buttons.Summary' | translate }}
       </button>
     </mat-card-actions>
-  
-  </form>  
-
+  </form>
 </mat-card>
 
-
 <div class="container" *ngIf="isCollapsed">
-
   <mat-card>
-
     <div class="m-b-20">
       <button mat-raised-button color="primary" (click)="isCollapsed = false">
-        {{'labels.buttons.Parameters' | translate }}
+        {{ 'labels.buttons.Parameters' | translate }}
       </button>
     </div>
 
     <table class="mat-elevation-z1" mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Office Name' | translate }} </th>
-        <td mat-cell *matCellDef="let loan"> {{ loan.officeName }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office Name' | translate }}</th>
+        <td mat-cell *matCellDef="let loan">{{ loan.officeName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="productName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Product Name' | translate }} </th>
-        <td mat-cell *matCellDef="let loan"> {{ loan.loanProductName }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Product Name' | translate }}</th>
+        <td mat-cell *matCellDef="let loan">{{ loan.loanProductName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="count">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Count' | translate }} </th>
-        <td mat-cell *matCellDef="let loan"> {{ loan.count }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Count' | translate }}</th>
+        <td mat-cell *matCellDef="let loan">{{ loan.count }}</td>
       </ng-container>
 
       <ng-container matColumnDef="outstanding">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Outstanding' | translate }} </th>
-        <td mat-cell *matCellDef="let loan"> {{ loan.loanOutStanding }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Outstanding' | translate }}</th>
+        <td mat-cell *matCellDef="let loan">{{ loan.loanOutStanding }}</td>
       </ng-container>
 
       <ng-container matColumnDef="percentage">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Percentage' | translate }} </th>
-        <td mat-cell *matCellDef="let loan"> {{ loan.percentage }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Percentage' | translate }}</th>
+        <td mat-cell *matCellDef="let loan">{{ loan.percentage }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </mat-card>
-
 </div>

@@ -1,31 +1,33 @@
-<mat-tab-group animationDuration="0ms" fxLayout="row wrap" fxLayoutGap="2%"
-    fxLayout.lt-md="column">
+<mat-tab-group animationDuration="0ms" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <mat-tab *ngFor="let advancedPaymentAllocation of advancedPaymentAllocations">
+    <ng-template mat-tab-label>
+      {{ advancedPaymentAllocation.transaction.value | translateKey: 'catalogs' }}
+    </ng-template>
+    <mifosx-advance-payment-allocation-tab
+      [advancedPaymentAllocation]="advancedPaymentAllocation"
+      (allocationChanged)="allocationChanged($event)"
+      (transactionTypeRemoved)="transactionTypeRemoved($event)"
+    >
+    </mifosx-advance-payment-allocation-tab>
+  </mat-tab>
 
-    <mat-tab *ngFor="let advancedPaymentAllocation of advancedPaymentAllocations">
-        <ng-template mat-tab-label>
-            {{advancedPaymentAllocation.transaction.value | translateKey:'catalogs'}}
-        </ng-template>
-        <mifosx-advance-payment-allocation-tab [advancedPaymentAllocation]="advancedPaymentAllocation"
-            (allocationChanged)="allocationChanged($event)"
-            (transactionTypeRemoved)="transactionTypeRemoved($event)">
-        </mifosx-advance-payment-allocation-tab>
-    </mat-tab>
+  <mat-tab *ngFor="let advancedCreditAllocation of advancedCreditAllocations">
+    <ng-template mat-tab-label>
+      {{ advancedCreditAllocation.transaction.value | translateKey: 'catalogs' }}
+    </ng-template>
+    <mifosx-advance-payment-allocation-tab
+      [advancedCreditAllocation]="advancedCreditAllocation"
+      (allocationChanged)="allocationChanged($event)"
+      (transactionTypeRemoved)="transactionTypeRemoved($event)"
+    >
+    </mifosx-advance-payment-allocation-tab>
+  </mat-tab>
 
-    <mat-tab *ngFor="let advancedCreditAllocation of advancedCreditAllocations">
-        <ng-template mat-tab-label>
-            {{advancedCreditAllocation.transaction.value | translateKey:'catalogs'}}
-        </ng-template>
-        <mifosx-advance-payment-allocation-tab [advancedCreditAllocation]="advancedCreditAllocation"
-            (allocationChanged)="allocationChanged($event)"
-            (transactionTypeRemoved)="transactionTypeRemoved($event)">
-        </mifosx-advance-payment-allocation-tab>
-    </mat-tab>
-
-    <mat-tab disabled>
-        <ng-template mat-tab-label>
-            <button mat-icon-button (click)="addTransaction()">
-                <mat-icon><fa-icon icon="plus" size="sm"></fa-icon></mat-icon>
-            </button>
-        </ng-template>
-    </mat-tab>
+  <mat-tab disabled>
+    <ng-template mat-tab-label>
+      <button mat-icon-button (click)="addTransaction()">
+        <mat-icon><fa-icon icon="plus" size="sm"></fa-icon></mat-icon>
+      </button>
+    </ng-template>
+  </mat-tab>
 </mat-tab-group>

@@ -1,25 +1,21 @@
 <div class="tab-container mat-typography">
-
   <router-outlet>
-
-    <h3>{{"labels.heading.Family Members" | translate}}</h3>
+    <h3>{{ 'labels.heading.Family Members' | translate }}</h3>
 
     <div fxLayout="row" fxLayoutAlign="flex-end">
       <button mat-raised-button color="primary" [routerLink]="['./add']">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{"labels.buttons.Add" | translate}}
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
       </button>
     </div>
 
     <mat-accordion>
-
-      <mat-expansion-panel *ngFor="let member of clientFamilyMembers;index as i" class="family-member">
-
+      <mat-expansion-panel *ngFor="let member of clientFamilyMembers; index as i" class="family-member">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{displayName(member)}}
+            {{ displayName(member) }}
           </mat-panel-title>
           <mat-panel-description>
-            {{member.relationship}}
+            {{ member.relationship }}
           </mat-panel-description>
         </mat-expansion-panel-header>
 
@@ -27,31 +23,43 @@
 
         <div class="family-member-actions" fxLayout="row" fxLayoutAlign="flex-end">
           <button mat-button color="primary">
-            <fa-icon icon="edit" [routerLink]="[member.id,'edit']"></fa-icon>
+            <fa-icon icon="edit" [routerLink]="[member.id, 'edit']"></fa-icon>
           </button>
-          <button mat-button color="warn" (click)="deleteFamilyMember(member.clientId,member.id,member.firstName,i)">
+          <button mat-button color="warn" (click)="deleteFamilyMember(member.clientId, member.id, member.firstName, i)">
             <fa-icon icon="trash"></fa-icon>
           </button>
         </div>
 
         <p>
-          <span *ngIf="member.firstName">{{"labels.inputs.First Name" | translate}} : {{member.firstName}}<br /></span>
-          <span *ngIf="member.middleName">{{"labels.inputs.Middle Name" | translate}} : {{member.middleName}}<br /></span>
-          <span *ngIf="member.lastName">{{"labels.inputs.Last Name" | translate}} : {{member.lastName}}<br /></span>
-          <span *ngIf="member.qualification">{{"labels.inputs.Qualification" | translate}} : {{member.qualification}}<br /></span>
-          <span *ngIf="member.mobileNumber">{{"labels.inputs.Mobile Number" | translate}} : {{member.mobileNumber}}<br /></span>
-          <span *ngIf="member.age">{{"labels.inputs.Age" | translate}} : {{member.age}}<br /></span>
-          <span *ngIf="member.isDependent">{{"labels.inputs.Is Dependent" | translate}} : {{member.isDependent | yesNo}}<br /></span>
-          <span *ngIf="member.maritalStatus">{{"labels.inputs.Marital Status" | translate}} : {{member.maritalStatus}}<br /></span>
-          <span *ngIf="member.gender">{{"labels.inputs.Gender" | translate}} : {{member.gender}}<br /></span>
-          <span *ngIf="member.profession">{{"labels.inputs.Profession" | translate}} : {{member.profession}}<br /></span>
-          <span *ngIf="member.dateOfBirth">{{"labels.inputs.Date Of Birth" | translate}} : {{member.dateOfBirth | dateFormat}}<br /></span>
+          <span *ngIf="member.firstName"
+            >{{ 'labels.inputs.First Name' | translate }} : {{ member.firstName }}<br
+          /></span>
+          <span *ngIf="member.middleName"
+            >{{ 'labels.inputs.Middle Name' | translate }} : {{ member.middleName }}<br
+          /></span>
+          <span *ngIf="member.lastName">{{ 'labels.inputs.Last Name' | translate }} : {{ member.lastName }}<br /></span>
+          <span *ngIf="member.qualification"
+            >{{ 'labels.inputs.Qualification' | translate }} : {{ member.qualification }}<br
+          /></span>
+          <span *ngIf="member.mobileNumber"
+            >{{ 'labels.inputs.Mobile Number' | translate }} : {{ member.mobileNumber }}<br
+          /></span>
+          <span *ngIf="member.age">{{ 'labels.inputs.Age' | translate }} : {{ member.age }}<br /></span>
+          <span *ngIf="member.isDependent"
+            >{{ 'labels.inputs.Is Dependent' | translate }} : {{ member.isDependent | yesNo }}<br
+          /></span>
+          <span *ngIf="member.maritalStatus"
+            >{{ 'labels.inputs.Marital Status' | translate }} : {{ member.maritalStatus }}<br
+          /></span>
+          <span *ngIf="member.gender">{{ 'labels.inputs.Gender' | translate }} : {{ member.gender }}<br /></span>
+          <span *ngIf="member.profession"
+            >{{ 'labels.inputs.Profession' | translate }} : {{ member.profession }}<br
+          /></span>
+          <span *ngIf="member.dateOfBirth"
+            >{{ 'labels.inputs.Date Of Birth' | translate }} : {{ member.dateOfBirth | dateFormat }}<br
+          /></span>
         </p>
-
       </mat-expansion-panel>
-
     </mat-accordion>
-
   </router-outlet>
-
 </div>

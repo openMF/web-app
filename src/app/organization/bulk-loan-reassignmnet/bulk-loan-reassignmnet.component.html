@@ -1,159 +1,134 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="bulkLoanForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
           <mat-form-field fxFlex="48%">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required (selectionChange)="getOffice($event.value)">
               <mat-option *ngFor="let office of offices" [value]="office.id">
-                {{ office.name }} 
+                {{ office.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-        
         </div>
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
           <mat-form-field fxFlex="48%" (click)="assignmentDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Assignment Date' | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignmentDatePicker" required formControlName="assignmentDate">
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="assignmentDatePicker"
+              required
+              formControlName="assignmentDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignmentDatePicker></mat-datepicker>
             <mat-error *ngIf="bulkLoanForm.controls.assignmentDate.hasError('required')">
-              {{ 'labels.inputs.Assignment Date' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
           <mat-form-field fxFlex="48%" *ngIf="fromLoanOfficers !== undefined">
             <mat-label>{{ 'labels.inputs.From loan officer' | translate }}</mat-label>
             <mat-select required formControlName="fromLoanOfficerId" (selectionChange)="getFromOfficers($event.value)">
               <mat-option *ngFor="let fromOfficers of fromLoanOfficers" [value]="fromOfficers.id">
-                {{ fromOfficers.displayName }} 
+                {{ fromOfficers.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="bulkLoanForm.controls.fromLoanOfficerId.hasError('required')">
-              {{ 'labels.inputs.From Loan Officer' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.From Loan Officer' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
           <mat-form-field fxFlex="48%">
             <mat-label>{{ 'labels.inputs.To loan officer' | translate }}</mat-label>
             <mat-select required formControlName="toLoanOfficerId">
               <mat-option *ngFor="let toOfficers of toLoanOfficers" [value]="toOfficers.id">
-                {{ toOfficers.displayName }} 
+                {{ toOfficers.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="bulkLoanForm.controls.toLoanOfficerId.hasError('required')">
-              {{ 'labels.inputs.To Loan Officer' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.To Loan Officer' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
 
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
           <table *ngIf="officerTemplate !== undefined" fxFlex="48%">
-
             <thead>
-
-              <th> {{ 'labels.inputs.Clients' | translate }} </th>
-
+              <th>{{ 'labels.inputs.Clients' | translate }}</th>
             </thead>
 
             <tbody>
-
               <tr *ngFor="let clients of officerTemplate.accountSummaryCollection.clients">
-
                 <table>
-  
                   <tr>
-  
-                    <td> <strong> {{ clients.displayName }} </strong></td>
-  
+                    <td>
+                      <strong> {{ clients.displayName }} </strong>
+                    </td>
                   </tr>
 
                   <tr *ngFor="let loans of clients.loans">
-
-                    <td> 
-
-                      <mat-checkbox (change)="getLoans($event,loans.id)">{{ loans.productName}}({{ loans.accountNo }})</mat-checkbox>
-
+                    <td>
+                      <mat-checkbox (change)="getLoans($event, loans.id)"
+                        >{{ loans.productName }}({{ loans.accountNo }})</mat-checkbox
+                      >
                     </td>
-
                   </tr>
-  
                 </table>
-  
               </tr>
-
             </tbody>
-
           </table>
 
           <table *ngIf="officerTemplate !== undefined" fxFlex="48%">
-
             <thead>
-
-              <th> {{ 'labels.inputs.Groups' | translate }} </th>
-
+              <th>{{ 'labels.inputs.Groups' | translate }}</th>
             </thead>
 
             <tbody>
-
               <tr *ngFor="let groups of officerTemplate.accountSummaryCollection.groups">
-
                 <table>
-  
                   <tr>
-  
-                    <td> <strong> {{ groups.displayName }} </strong></td>
-  
+                    <td>
+                      <strong> {{ groups.displayName }} </strong>
+                    </td>
                   </tr>
 
                   <tr *ngFor="let loans of groups.loans">
-
-                    <td> 
-
-                      <mat-checkbox>{{ loans.productName}}({{ loans.accountNo }})</mat-checkbox>
-
+                    <td>
+                      <mat-checkbox>{{ loans.productName }}({{ loans.accountNo }})</mat-checkbox>
                     </td>
-
                   </tr>
-  
                 </table>
-  
               </tr>
-
             </tbody>
-
           </table>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!bulkLoanForm.valid" *mifosxHasPermission="'BULKREASSIGN_LOAN'">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!bulkLoanForm.valid"
+          *mifosxHasPermission="'BULKREASSIGN_LOAN'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-  <h3>{{datatableName}}</h3>
+  <h3>{{ datatableName }}</h3>
   <div fxLayout="row" fxLayoutAlign="flex-end" class="m-b-20">
     <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
@@ -15,43 +15,59 @@
   <mat-divider></mat-divider>
 
   <div class="m-t-10" *ngIf="dataObject.data.length > 0">
-
-    <div fxFlexFill *ngFor="let columnHeader of dataObject.columnHeaders;let i = index" [ngClass]="setAttributeClass(columnHeader.columnName)" >
-
+    <div
+      fxFlexFill
+      *ngFor="let columnHeader of dataObject.columnHeaders; let i = index"
+      [ngClass]="setAttributeClass(columnHeader.columnName)"
+    >
       <div fxFlex="40%" class="mat-body-strong left">
         {{ getInputName(columnHeader.columnName) }}
       </div>
 
-      <div fxFlex="68%" [ngSwitch]="getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)" class="right">
+      <div
+        fxFlex="68%"
+        [ngSwitch]="getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)"
+        class="right"
+      >
         <span *ngSwitchCase="'DATE'">
-          {{dataObject.data[0].row[i] | dateFormat}}
+          {{ dataObject.data[0].row[i] | dateFormat }}
         </span>
         <span *ngSwitchCase="'DATETIME'">
-          {{dataObject.data[0].row[i] | datetimeFormat}}
+          {{ dataObject.data[0].row[i] | datetimeFormat }}
         </span>
         <span *ngSwitchCase="'INTEGER'">
-          {{dataObject.data[0].row[i]}}
+          {{ dataObject.data[0].row[i] }}
         </span>
         <span *ngSwitchCase="'DECIMAL'">
-          {{dataObject.data[0].row[i] | formatNumber}}
+          {{ dataObject.data[0].row[i] | formatNumber }}
         </span>
         <span *ngSwitchCase="'TEXT'" class="long-text">
-          {{dataObject.data[0].row[i]}}
+          {{ dataObject.data[0].row[i] }}
         </span>
-        <textarea *ngSwitchCase="'JSON'" cdkTextareaAutosize="true" cdkAutosizeMaxRows="20" cdkAutosizeMinRows="1" style="width: 100%; height: 100%" [innerHTML]="dataObject.data[0].row[i].value | prettyPrint">
+        <textarea
+          *ngSwitchCase="'JSON'"
+          cdkTextareaAutosize="true"
+          cdkAutosizeMaxRows="20"
+          cdkAutosizeMinRows="1"
+          style="width: 100%; height: 100%"
+          [innerHTML]="dataObject.data[0].row[i].value | prettyPrint"
+        >
         </textarea>
         <span *ngSwitchDefault>
           <span class="m-r-5" *ngIf="isValidUrl(dataObject.data[0].row[i])">
-            <button mat-icon-button matTooltip="{{ 'tooltips.View Link' | translate }}" (click)="openSite(dataObject.data[0].row[i])"
-              matTooltipPosition="right" class="small-icon">
+            <button
+              mat-icon-button
+              matTooltip="{{ 'tooltips.View Link' | translate }}"
+              (click)="openSite(dataObject.data[0].row[i])"
+              matTooltipPosition="right"
+              class="small-icon"
+            >
               <fa-icon icon="eye" size="lg"></fa-icon>
             </button>
           </span>
-          {{dataObject.data[0].row[i]}}
+          {{ dataObject.data[0].row[i] }}
         </span>
       </div>
     </div>
-
   </div>
-
 </div>

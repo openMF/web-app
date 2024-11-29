@@ -1,40 +1,49 @@
-
 <div *ngIf="isLoading" class="loader">
   <div class="loading"></div>
 </div>
 
 <div class="savings-account-tables" fxLayout="row" fxLayoutGap="2%" *ngIf="!isLoading">
-
   <div fxFlex="49%" fxLayout="column" fxLayoutGap="4%">
     <div
-      *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval; else alternateDetails">
-      <h4 class="table-headers">{{'labels.heading.Savings Details' | translate}}</h4>
+      *ngIf="
+        !savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval;
+        else alternateDetails
+      "
+    >
+      <h4 class="table-headers">{{ 'labels.heading.Savings Details' | translate }}</h4>
       <table>
         <tbody>
           <tr>
-            <td>{{'labels.inputs.External Id' | translate}}</td>
+            <td>{{ 'labels.inputs.External Id' | translate }}</td>
             <td *ngIf="savingsAccountData.externalId">
-              <mifosx-external-identifier externalId="{{savingsAccountData.externalId}}"></mifosx-external-identifier>
+              <mifosx-external-identifier externalId="{{ savingsAccountData.externalId }}"></mifosx-external-identifier>
             </td>
-            <td *ngIf="!savingsAccountData.externalId">{{'labels.inputs.Not Provided' | translate}}</td>
+            <td *ngIf="!savingsAccountData.externalId">{{ 'labels.inputs.Not Provided' | translate }}</td>
           </tr>
           <tr>
-            <td>{{'labels.inputs.Activated On' | translate}}</td>
-            <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate |
-              dateFormat) : 'Not Activated'}}</td>
+            <td>{{ 'labels.inputs.Activated On' | translate }}</td>
+            <td>
+              {{
+                savingsAccountData.timeline.activatedOnDate
+                  ? (savingsAccountData.timeline.activatedOnDate | dateFormat)
+                  : 'Not Activated'
+              }}
+            </td>
           </tr>
           <tr>
-            <td>{{'labels.inputs.Field Officer' | translate}}</td>
-            <td>{{savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned'}}</td>
+            <td>{{ 'labels.inputs.Field Officer' | translate }}</td>
+            <td>{{ savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned' }}</td>
           </tr>
           <tr>
-            <td>{{'labels.inputs.Currency' | translate}}</td>
-            <td>{{savingsAccountData.currency.name}} [{{savingsAccountData.currency.code}}]</td>
+            <td>{{ 'labels.inputs.Currency' | translate }}</td>
+            <td>{{ savingsAccountData.currency.name }} [{{ savingsAccountData.currency.code }}]</td>
           </tr>
           <tr>
-            <td>{{'labels.inputs.Nominal Interest Rate' | translate}}</td>
+            <td>{{ 'labels.inputs.Nominal Interest Rate' | translate }}</td>
             <td class="r-amount">
-              <span *ngIf="savingsAccountData.nominalAnnualInterestRate">{{savingsAccountData.nominalAnnualInterestRate | formatNumber}} %</span>
+              <span *ngIf="savingsAccountData.nominalAnnualInterestRate"
+                >{{ savingsAccountData.nominalAnnualInterestRate | formatNumber }} %</span
+              >
               <span *ngIf="!savingsAccountData.nominalAnnualInterestRate">0 %</span>
             </td>
           </tr>
@@ -44,16 +53,18 @@
 
     <ng-template #alternateDetails>
       <div>
-        <h4 class="table-headers">{{'labels.heading.Savings Details' | translate}}</h4>
+        <h4 class="table-headers">{{ 'labels.heading.Savings Details' | translate }}</h4>
         <table>
           <tbody>
             <tr>
-              <td>{{'labels.inputs.Field Officer' | translate}}</td>
-              <td>{{savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned'}}</td>
+              <td>{{ 'labels.inputs.Field Officer' | translate }}</td>
+              <td>{{ savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned' }}</td>
             </tr>
             <tr>
-              <td>{{'labels.inputs.Balance' | translate}}</td>
-              <td class="r-amount">{{savingsAccountData.summary.accountBalance | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+              <td>{{ 'labels.inputs.Balance' | translate }}</td>
+              <td class="r-amount">
+                {{ savingsAccountData.summary.accountBalance | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -61,141 +72,175 @@
     </ng-template>
 
     <div *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
-      <h4 class="table-headers">{{'labels.heading.Performance History' | translate}}</h4>
+      <h4 class="table-headers">{{ 'labels.heading.Performance History' | translate }}</h4>
       <table>
         <tbody>
           <tr *ngIf="savingsAccountData.summary.totalDeposits">
-            <td>{{'labels.inputs.Total Deposits' | translate}}</td>
-            <td class="r-amount">{{savingsAccountData.summary.totalDeposits | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+            <td>{{ 'labels.inputs.Total Deposits' | translate }}</td>
+            <td class="r-amount">
+              {{ savingsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            </td>
           </tr>
           <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
-            <td>{{'labels.inputs.Total Interest Earned' | translate}}</td>
-            <td class="r-amount">{{savingsAccountData.summary.totalInterestEarned | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+            <td>{{ 'labels.inputs.Total Interest Earned' | translate }}</td>
+            <td class="r-amount">
+              {{ savingsAccountData.summary.totalInterestEarned | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <div fxFlex="49%"
-    *ngIf="isActive; else alternateSummary">
-    <h4 class="table-headers">{{'labels.heading.Account Summary' | translate}}</h4>
+  <div fxFlex="49%" *ngIf="isActive; else alternateSummary">
+    <h4 class="table-headers">{{ 'labels.heading.Account Summary' | translate }}</h4>
     <table>
       <tbody>
         <tr *ngIf="savingsAccountData.summary.totalWithdrawals">
-          <td>{{'labels.inputs.Total Withdrawls' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.summary.totalWithdrawals | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Total Withdrawls' | translate }}</td>
+          <td class="r-amount">
+            {{ savingsAccountData.summary.totalWithdrawals | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalWithdrawalFees">
-          <td>{{'labels.inputs.Withdrawals Fees' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.summary.totalWithdrawalFees | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Withdrawals Fees' | translate }}</td>
+          <td class="r-amount">
+            {{ savingsAccountData.summary.totalWithdrawalFees | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalAnnualFees">
-          <td>{{'labels.inputs.Annual Fees' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.summary.totalAnnualFees | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Annual Fees' | translate }}</td>
+          <td class="r-amount">
+            {{ savingsAccountData.summary.totalAnnualFees | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
-          <td>{{'labels.inputs.Interest Earned' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.summary.totalInterestEarned | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Interest Earned' | translate }}</td>
+          <td class="r-amount">
+            {{ savingsAccountData.summary.totalInterestEarned | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalInterestPosted">
-          <td>{{'labels.inputs.Interest Posted' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.summary.totalInterestPosted | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Interest Posted' | translate }}</td>
+          <td class="r-amount">
+            {{ savingsAccountData.summary.totalInterestPosted | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.interestNotPosted >= 0">
-          <td>{{'labels.inputs.Interest Earned Not Posted' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.summary.interestNotPosted | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Interest Earned Not Posted' | translate }}</td>
+          <td class="r-amount">
+            {{ savingsAccountData.summary.interestNotPosted | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalOverdraftInterestDerived">
-          <td>{{'labels.inputs.Interest On Overdraft' | translate}}</td>
+          <td>{{ 'labels.inputs.Interest On Overdraft' | translate }}</td>
           <td class="r-amount">
-            {{savingsAccountData.summary.totalOverdraftInterestDerived | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+            {{
+              savingsAccountData.summary.totalOverdraftInterestDerived
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.interestNotPosted < 0">
-          <td>{{'labels.inputs.Overdraft Interest Not Posted' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.summary.interestNotPosted | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Overdraft Interest Not Posted' | translate }}</td>
+          <td class="r-amount">
+            {{ savingsAccountData.summary.interestNotPosted | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.nominalAnnualInterestRate">
-          <td>{{'labels.inputs.Nominal Interest Rate' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.nominalAnnualInterestRate | formatNumber}} %</td>
+          <td>{{ 'labels.inputs.Nominal Interest Rate' | translate }}</td>
+          <td class="r-amount">{{ savingsAccountData.nominalAnnualInterestRate | formatNumber }} %</td>
         </tr>
         <tr>
-          <td>{{'labels.inputs.Interest Compounding Period' | translate}}</td>
-          <td>{{savingsAccountData.interestCompoundingPeriodType.value | translateKey:'catalogs'}}</td>
+          <td>{{ 'labels.inputs.Interest Compounding Period' | translate }}</td>
+          <td>{{ savingsAccountData.interestCompoundingPeriodType.value | translateKey: 'catalogs' }}</td>
         </tr>
         <tr>
-          <td>{{'labels.inputs.Interest Posting Period' | translate}}</td>
-          <td>{{savingsAccountData.interestPostingPeriodType.value | translateKey:'catalogs'}}</td>
+          <td>{{ 'labels.inputs.Interest Posting Period' | translate }}</td>
+          <td>{{ savingsAccountData.interestPostingPeriodType.value | translateKey: 'catalogs' }}</td>
         </tr>
         <tr>
-          <td>{{'labels.inputs.Interest Calculated Using' | translate}}</td>
-          <td>{{savingsAccountData.interestCalculationType.value | translateKey:'catalogs'}}</td>
+          <td>{{ 'labels.inputs.Interest Calculated Using' | translate }}</td>
+          <td>{{ savingsAccountData.interestCalculationType.value | translateKey: 'catalogs' }}</td>
         </tr>
         <tr>
-          <td>{{'labels.inputs.Days in Year' | translate}}</td>
-          <td>{{savingsAccountData.interestCalculationDaysInYearType.value | translateKey:'catalogs'}}</td>
+          <td>{{ 'labels.inputs.Days in Year' | translate }}</td>
+          <td>{{ savingsAccountData.interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}</td>
         </tr>
         <tr *ngIf="savingsAccountData.withdrawalFee">
-          <td>{{'labels.inputs.Withdrawal Fee' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.withdrawalFee.amount | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Withdrawal Fee' | translate }}</td>
+          <td class="r-amount">
+            {{ savingsAccountData.withdrawalFee.amount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.lastActiveTransactionDate">
-          <td>{{'labels.inputs.Last Active Transaction Date' | translate}}</td>
-          <td>{{savingsAccountData.lastActiveTransactionDate | dateFormat}}</td>
+          <td>{{ 'labels.inputs.Last Active Transaction Date' | translate }}</td>
+          <td>{{ savingsAccountData.lastActiveTransactionDate | dateFormat }}</td>
         </tr>
         <tr *ngIf="!(savingsAccountData.subStatus.id === 0)">
-          <td>{{'labels.inputs.Substatus' | translate}}</td>
-          <td>{{savingsAccountData.subStatus.value}}</td>
+          <td>{{ 'labels.inputs.Substatus' | translate }}</td>
+          <td>{{ savingsAccountData.subStatus.value }}</td>
         </tr>
         <tr *ngIf="savingsAccountData.daysToInactive">
-          <td>{{'labels.inputs.Days to Inactive' | translate}}</td>
-          <td>{{savingsAccountData.daysToInactive}}</td>
+          <td>{{ 'labels.inputs.Days to Inactive' | translate }}</td>
+          <td>{{ savingsAccountData.daysToInactive }}</td>
         </tr>
         <tr *ngIf="savingsAccountData.daysToDormancy">
-          <td>{{'labels.inputs.Days to Dormancy' | translate}}</td>
-          <td>{{savingsAccountData.daysToDormancy}}</td>
+          <td>{{ 'labels.inputs.Days to Dormancy' | translate }}</td>
+          <td>{{ savingsAccountData.daysToDormancy }}</td>
         </tr>
         <tr *ngIf="savingsAccountData.daysToEscheat">
-          <td>{{'labels.inputs.Days to Escheat' | translate}}</td>
-          <td>{{savingsAccountData.daysToEscheat}}</td>
+          <td>{{ 'labels.inputs.Days to Escheat' | translate }}</td>
+          <td>{{ savingsAccountData.daysToEscheat }}</td>
         </tr>
         <tr *ngIf="savingsAccountData.annualFee">
-          <td>{{'labels.inputs.Annual Fee' | translate}}</td>
+          <td>{{ 'labels.inputs.Annual Fee' | translate }}</td>
           <td class="r-amount">
-            {{savingsAccountData.annualFee.amount | currency:currency.code:'symbol-narrow':'1.2-2'}}
+            {{ savingsAccountData.annualFee.amount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.allowOverdraft">
-          <td>{{'labels.inputs.Overdraft Limit' | translate}}</td>
-          <td class="r-amount">{{savingsAccountData.overdraftLimit | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Overdraft Limit' | translate }}</td>
+          <td class="r-amount">
+            {{ savingsAccountData.overdraftLimit | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.allowOverdraft">
-          <td>{{'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate}}</td>
-          <td>{{savingsAccountData.minOverdraftForInterestCalculation | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+          <td>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</td>
+          <td>
+            {{
+              savingsAccountData.minOverdraftForInterestCalculation
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.minBalanceForInterestCalculation">
-          <td>{{'labels.inputs.Min Balance Required for Interest Calculation' | translate}}</td>
-          <td>{{savingsAccountData.minBalanceForInterestCalculation | formatNumber}}</td>
+          <td>{{ 'labels.inputs.Min Balance Required for Interest Calculation' | translate }}</td>
+          <td>{{ savingsAccountData.minBalanceForInterestCalculation | formatNumber }}</td>
         </tr>
         <tr *ngIf="savingsAccountData.minRequiredBalance">
-          <td>{{'labels.inputs.Minimum Required Balance' | translate}}</td>
-          <td>{{savingsAccountData.minRequiredBalance | formatNumber}}</td>
+          <td>{{ 'labels.inputs.Minimum Required Balance' | translate }}</td>
+          <td>{{ savingsAccountData.minRequiredBalance | formatNumber }}</td>
         </tr>
         <tr *ngIf="savingsAccountData.enforceMinRequiredBalance">
-          <td>{{'labels.inputs.Enforce Minimum Required Balance' | translate}}</td>
-          <td>{{savingsAccountData.enforceMinRequiredBalance | yesNo}}</td>
+          <td>{{ 'labels.inputs.Enforce Minimum Required Balance' | translate }}</td>
+          <td>{{ savingsAccountData.enforceMinRequiredBalance | yesNo }}</td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.lastInterestCalculationDate">
-          <td>{{'labels.inputs.Interest Recalculation Date' | translate}}</td>
-          <td>{{savingsAccountData.summary.lastInterestCalculationDate | dateFormat}}</td>
+          <td>{{ 'labels.inputs.Interest Recalculation Date' | translate }}</td>
+          <td>{{ savingsAccountData.summary.lastInterestCalculationDate | dateFormat }}</td>
         </tr>
         <tr *ngIf="savingsAccountData.onHoldFunds">
-          <td>{{'labels.inputs.On Hold Funds' | translate}}</td>
-          <td><a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{savingsAccountData.onHoldFunds | currency:currency.code:'symbol-narrow':'1.2-2'}}</a></td>
+          <td>{{ 'labels.inputs.On Hold Funds' | translate }}</td>
+          <td>
+            <a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{
+              savingsAccountData.onHoldFunds | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}</a>
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.withHoldTax">
-          <td>{{'labels.inputs.Withhold Tax Group' | translate}}</td>
-          <td>{{savingsAccountData.taxGroup.name}}</td>
+          <td>{{ 'labels.inputs.Withhold Tax Group' | translate }}</td>
+          <td>{{ savingsAccountData.taxGroup.name }}</td>
         </tr>
       </tbody>
     </table>
@@ -203,28 +248,32 @@
 
   <ng-template #alternateSummary>
     <div fxFlex="49%">
-      <h4 class="table-headers">{{'labels.heading.Account Summary' | translate}}</h4>
+      <h4 class="table-headers">{{ 'labels.heading.Account Summary' | translate }}</h4>
       <table>
         <tbody>
           <tr>
-            <td>{{'labels.inputs.External Id' | translate}}</td>
+            <td>{{ 'labels.inputs.External Id' | translate }}</td>
             <td *ngIf="savingsAccountData.externalId">
-              <mifosx-external-identifier externalId="{{savingsAccountData.externalId}}"></mifosx-external-identifier>
+              <mifosx-external-identifier externalId="{{ savingsAccountData.externalId }}"></mifosx-external-identifier>
             </td>
-            <td *ngIf="!savingsAccountData.externalId">{{'labels.inputs.Not Provided' | translate}}</td>
+            <td *ngIf="!savingsAccountData.externalId">{{ 'labels.inputs.Not Provided' | translate }}</td>
           </tr>
           <tr>
-            <td>{{'labels.inputs.Activated On' | translate}}</td>
-            <td>{{savingsAccountData.timeline.activatedOnDate ? (savingsAccountData.timeline.activatedOnDate |
-              dateFormat) : 'Not Activated'}}</td>
+            <td>{{ 'labels.inputs.Activated On' | translate }}</td>
+            <td>
+              {{
+                savingsAccountData.timeline.activatedOnDate
+                  ? (savingsAccountData.timeline.activatedOnDate | dateFormat)
+                  : 'Not Activated'
+              }}
+            </td>
           </tr>
           <tr>
-            <td>{{'labels.inputs.Currency' | translate}}</td>
-            <td>{{savingsAccountData.currency.name}} [{{savingsAccountData.currency.code}}]</td>
+            <td>{{ 'labels.inputs.Currency' | translate }}</td>
+            <td>{{ savingsAccountData.currency.name }} [{{ savingsAccountData.currency.code }}]</td>
           </tr>
         </tbody>
       </table>
     </div>
   </ng-template>
-
 </div>

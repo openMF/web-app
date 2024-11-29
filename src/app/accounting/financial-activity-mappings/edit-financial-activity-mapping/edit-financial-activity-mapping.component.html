@@ -1,18 +1,14 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="financialActivityMappingForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Financial Activity" | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Financial Activity' | translate }}</mat-label>
             <mat-select required formControlName="financialActivityId">
               <mat-option *ngFor="let financialActivity of financialActivityData" [value]="financialActivity.id">
-                ({{financialActivity.id}}) {{ 'labels.accounting.financialActivity.' + financialActivity.name | translate }}
+                ({{ financialActivity.id }})
+                {{ 'labels.accounting.financialActivity.' + financialActivity.name | translate }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -25,16 +21,21 @@
           >
           </mifosx-gl-account-selector>
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="financialActivityMappingForm.pristine" *mifosxHasPermission="'UPDATE_FINANCIALACTIVITYACCOUNT'">{{"labels.buttons.Submit" | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="financialActivityMappingForm.pristine"
+          *mifosxHasPermission="'UPDATE_FINANCIALACTIVITYACCOUNT'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

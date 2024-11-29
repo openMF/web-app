@@ -1,18 +1,14 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="paymentTypeForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
-            <input required matInput formControlName="name">
+            <input required matInput formControlName="name" />
             <mat-error *ngIf="paymentTypeForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Payment Type' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -27,23 +23,28 @@
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
-            <input required matInput formControlName="position">
+            <input required matInput formControlName="position" />
             <mat-error *ngIf="paymentTypeForm.controls.position.hasError('required')">
-              {{ 'labels.inputs.Position' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Position' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!paymentTypeForm.valid" *mifosxHasPermission="'UPDATE_PAYMENTTYPE'">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!paymentTypeForm.valid"
+          *mifosxHasPermission="'UPDATE_PAYMENTTYPE'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

@@ -1,58 +1,71 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="amazonS3ConfigurationForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
-            <mat-label>{{'labels.inputs.S3 Bucket Name' | translate}}</mat-label>
-            <input matInput required formControlName="s3_bucket_name">
+            <mat-label>{{ 'labels.inputs.S3 Bucket Name' | translate }}</mat-label>
+            <input matInput required formControlName="s3_bucket_name" />
             <mat-error *ngIf="amazonS3ConfigurationForm.controls.s3_bucket_name.hasError('required')">
-              {{'labels.inputs.S3 Bucket Name' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.S3 Bucket Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.S3 Access Key' | translate}}</mat-label>
-            <input matInput required type="{{ accessKeyInputType }}" formControlName="s3_access_key">
-            <button mat-button *ngIf="amazonS3ConfigurationForm.controls.s3_access_key.value" matSuffix mat-icon-button
-              (mousedown)="accessKeyInputType = 'text'" (mouseup)="accessKeyInputType = 'password'">
+            <mat-label>{{ 'labels.inputs.S3 Access Key' | translate }}</mat-label>
+            <input matInput required type="{{ accessKeyInputType }}" formControlName="s3_access_key" />
+            <button
+              mat-button
+              *ngIf="amazonS3ConfigurationForm.controls.s3_access_key.value"
+              matSuffix
+              mat-icon-button
+              (mousedown)="accessKeyInputType = 'text'"
+              (mouseup)="accessKeyInputType = 'password'"
+            >
               <fa-icon *ngIf="accessKeyInputType === 'password'" icon="eye"></fa-icon>
               <fa-icon *ngIf="accessKeyInputType === 'text'" icon="eye-slash"></fa-icon>
             </button>
             <mat-error *ngIf="amazonS3ConfigurationForm.controls.s3_access_key.hasError('required')">
-              {{'labels.inputs.S3 Access Key' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.S3 Access Key' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.S3 Secret Key' | translate}}</mat-label>
-            <input matInput required type="{{ secretKeyInputType }}" formControlName="s3_secret_key">
-            <button mat-button *ngIf="amazonS3ConfigurationForm.controls.s3_secret_key.value" matSuffix mat-icon-button
-              (mousedown)="secretKeyInputType = 'text'" (mouseup)="secretKeyInputType = 'password'">
+            <mat-label>{{ 'labels.inputs.S3 Secret Key' | translate }}</mat-label>
+            <input matInput required type="{{ secretKeyInputType }}" formControlName="s3_secret_key" />
+            <button
+              mat-button
+              *ngIf="amazonS3ConfigurationForm.controls.s3_secret_key.value"
+              matSuffix
+              mat-icon-button
+              (mousedown)="secretKeyInputType = 'text'"
+              (mouseup)="secretKeyInputType = 'password'"
+            >
               <fa-icon *ngIf="secretKeyInputType === 'password'" icon="eye"></fa-icon>
               <fa-icon *ngIf="secretKeyInputType === 'text'" icon="eye-slash"></fa-icon>
             </button>
             <mat-error *ngIf="amazonS3ConfigurationForm.controls.s3_secret_key.hasError('required')">
-              {{'labels.inputs.S3 Secret Key' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.S3 Secret Key' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!amazonS3ConfigurationForm.valid || amazonS3ConfigurationForm.pristine">{{'labels.buttons.Submit' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!amazonS3ConfigurationForm.valid || amazonS3ConfigurationForm.pristine"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

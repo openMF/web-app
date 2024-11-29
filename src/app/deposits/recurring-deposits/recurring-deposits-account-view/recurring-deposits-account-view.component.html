@@ -1,13 +1,14 @@
 <mat-card class="account-card">
-
   <mat-card-header fxLayout="column" class="header">
-
     <mat-card-title-group class="header-title-group">
-
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image" matTooltip="{{ 'tooltips.Recurring Deposits Account' | translate}}"
-            [src]="'assets/images/recurring-deposits_account_placeholder.png'">
+          <img
+            mat-card-md-image
+            class="profile-image"
+            matTooltip="{{ 'tooltips.Recurring Deposits Account' | translate }}"
+            [src]="'assets/images/recurring-deposits_account_placeholder.png'"
+          />
         </div>
       </div>
 
@@ -15,40 +16,55 @@
         <mat-card-title>
           <div fxFlex="60%">
             <h3>
-              <i class="fa fa-stop" [ngClass]="recurringDepositsAccountData.status.code | statusLookup"
-                [matTooltip]="recurringDepositsAccountData.status.value"></i>
-              {{"labels.inputs.Recurring Deposit" | translate }} : {{recurringDepositsAccountData.depositProductName}}
-              <mifosx-account-number accountNo="{{recurringDepositsAccountData.accountNo}}"></mifosx-account-number>
+              <i
+                class="fa fa-stop"
+                [ngClass]="recurringDepositsAccountData.status.code | statusLookup"
+                [matTooltip]="recurringDepositsAccountData.status.value"
+              ></i>
+              {{ 'labels.inputs.Recurring Deposit' | translate }} :
+              {{ recurringDepositsAccountData.depositProductName }}
+              <mifosx-account-number accountNo="{{ recurringDepositsAccountData.accountNo }}"></mifosx-account-number>
             </h3>
             <span class="account-overview">
-              {{'labels.text.' + entityType | translate}} {{"labels.inputs.name" | translate}}:
-              {{recurringDepositsAccountData.clientName ||
-              recurringDepositsAccountData.groupName}}
+              {{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }}:
+              {{ recurringDepositsAccountData.clientName || recurringDepositsAccountData.groupName }}
               <span class="m-l-10" *ngIf="recurringDepositsAccountData.clientAccountNo">
                 <mifosx-account-number
-                  accountNo="{{recurringDepositsAccountData.clientAccountNo}}"></mifosx-account-number>
+                  accountNo="{{ recurringDepositsAccountData.clientAccountNo }}"
+                ></mifosx-account-number>
               </span>
             </span>
           </div>
 
           <div
-            *ngIf="!recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval">
-            <h3> {{"labels.heading.Account Overview" | translate}} </h3>
+            *ngIf="
+              !recurringDepositsAccountData.status.rejected &&
+              !recurringDepositsAccountData.status.submittedAndPendingApproval
+            "
+          >
+            <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
             <table class="account-overview">
               <tbody>
                 <tr>
-                  <td>{{"labels.inputs.Current Balance" | translate }}</td>
-                  <td class="r-amount">{{recurringDepositsAccountData.summary.accountBalance |
-                    currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                  <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
+                  <td class="r-amount">
+                    {{
+                      recurringDepositsAccountData.summary.accountBalance
+                        | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                    }}
+                  </td>
                 </tr>
                 <tr>
-                  <td>{{"labels.inputs.Deposit Amount" | translate }}</td>
-                  <td class="r-amount">{{recurringDepositsAccountData.depositAmount |
-                    currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                  <td>{{ 'labels.inputs.Deposit Amount' | translate }}</td>
+                  <td class="r-amount">
+                    {{
+                      recurringDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                    }}
+                  </td>
                 </tr>
                 <tr>
-                  <td>{{"labels.inputs.Deposit Period" | translate }}</td>
-                  <td class="r-amount">{{recurringDepositsAccountData.depositPeriod | number}}</td>
+                  <td>{{ 'labels.inputs.Deposit Period' | translate }}</td>
+                  <td class="r-amount">{{ recurringDepositsAccountData.depositPeriod | number }}</td>
                 </tr>
               </tbody>
             </table>
@@ -57,78 +73,106 @@
           <span fxFlex="auto"></span>
 
           <div fxFlex="5%">
-            <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Loan account actions"
-              yPosition="below">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="accountMenu"
+              aria-label="Loan account actions"
+              yPosition="below"
+            >
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
               </mat-icon>
             </button>
           </div>
         </mat-card-title>
-
       </div>
 
       <mat-menu #accountMenu="matMenu">
         <ng-container *ngFor="let item of buttonConfig.singleButtons">
           <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
-            <i ngClass="{{item.icon}}"></i> {{'labels.menus.' + item.name | translate}}
+            <i ngClass="{{ item.icon }}"></i> {{ 'labels.menus.' + item.name | translate }}
           </button>
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.options.length">
-          <button mat-menu-item [matMenuTriggerFor]="More">{{'labels.menus.More' | translate}}</button>
+          <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
           <mat-menu #More="matMenu">
             <span *ngFor="let option of buttonConfig.options">
-              <button mat-menu-item *mifosxHasPermission="option.taskPermissionName"
-                (click)="doAction(option.name)">{{'labels.menus.' + option.name | translate}}</button>
+              <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">
+                {{ 'labels.menus.' + option.name | translate }}
+              </button>
             </span>
           </mat-menu>
         </ng-container>
-
       </mat-menu>
-
     </mat-card-title-group>
-
   </mat-card-header>
 
   <mat-card-content class="content">
-
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-        [active]="general.isActive">
-        {{"labels.inputs.General" | translate }}
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+      >
+        {{ 'labels.inputs.General' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./interest-rate-chart']" routerLinkActive #IRC="routerLinkActive"
-        [active]="IRC.isActive">
-        {{"labels.inputs.Interest Rate Chart" | translate }}
+      <a
+        mat-tab-link
+        [routerLink]="['./interest-rate-chart']"
+        routerLinkActive
+        #IRC="routerLinkActive"
+        [active]="IRC.isActive"
+      >
+        {{ 'labels.inputs.Interest Rate Chart' | translate }}
       </a>
       <ng-container *ngIf="showTransactions">
-        <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
-          [active]="transactions.isActive">
-          {{"labels.inputs.Transactions" | translate }}
+        <a
+          mat-tab-link
+          [routerLink]="['./transactions']"
+          routerLinkActive
+          #transactions="routerLinkActive"
+          [active]="transactions.isActive"
+        >
+          {{ 'labels.inputs.Transactions' | translate }}
         </a>
       </ng-container>
-      <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
-        [active]="charges.isActive">
-        {{"labels.inputs.Charges" | translate }}
+      <a
+        mat-tab-link
+        [routerLink]="['./charges']"
+        routerLinkActive
+        #charges="routerLinkActive"
+        [active]="charges.isActive"
+      >
+        {{ 'labels.inputs.Charges' | translate }}
       </a>
       <ng-container *ngIf="recurringDepositsAccountData.clientId">
-        <a mat-tab-link [routerLink]="['./standing-instructions-tab']" routerLinkActive
-          #standingInstructions="routerLinkActive" [active]="standingInstructions.isActive">
-          {{"labels.inputs.Standing Instructions" | translate }}
+        <a
+          mat-tab-link
+          [routerLink]="['./standing-instructions-tab']"
+          routerLinkActive
+          #standingInstructions="routerLinkActive"
+          [active]="standingInstructions.isActive"
+        >
+          {{ 'labels.inputs.Standing Instructions' | translate }}
         </a>
       </ng-container>
       <ng-container *ngFor="let savingsDatatable of savingsDatatables">
-        <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
-          [routerLink]="['./datatables',savingsDatatable.registeredTableName]" routerLinkActive
-          #datatable="routerLinkActive" [active]="datatable.isActive">
-          {{savingsDatatable.registeredTableName}}
+        <a
+          mat-tab-link
+          *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
+          [routerLink]="['./datatables', savingsDatatable.registeredTableName]"
+          routerLinkActive
+          #datatable="routerLinkActive"
+          [active]="datatable.isActive"
+        >
+          {{ savingsDatatable.registeredTableName }}
         </a>
       </ng-container>
     </nav>
 
     <router-outlet></router-outlet>
-
   </mat-card-content>
-
 </mat-card>

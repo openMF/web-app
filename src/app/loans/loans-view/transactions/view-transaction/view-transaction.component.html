@@ -1,33 +1,33 @@
-<div fxLayoutAlign="end" class="container m-b-20 transaction-buttons" fxLayoutGap="2%"
-  *ngIf="!(transactionData.type.contra)">
+<div
+  fxLayoutAlign="end"
+  class="container m-b-20 transaction-buttons"
+  fxLayoutGap="2%"
+  *ngIf="!transactionData.type.contra"
+>
   <span *mifosxHasPermission="'ADJUST_LOAN'">
     <button mat-raised-button color="primary" [routerLink]="'edit'" [disabled]="!allowEdition">
-      <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'Edit' | translate}}
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'Edit' | translate }}
     </button>
 
     <button mat-raised-button color="warn" (click)="undoTransaction()" [disabled]="!allowUndo">
-      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'Undo' | translate}}
+      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'Undo' | translate }}
     </button>
   </span>
   <span *mifosxHasPermission="'CHARGEBACK_LOAN'">
     <button mat-raised-button color="warn" [disabled]="!allowChargeback" (click)="chargebackTransaction()">
-      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'Chargeback' | translate}}
+      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'Chargeback' | translate }}
     </button>
   </span>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-        <div fxFlex="100%" [ngClass]="loanTransactionColor()">
-        </div>
+        <div fxFlex="100%" [ngClass]="loanTransactionColor()"></div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{ 'Transaction Id' | translate}}
+          {{ 'Transaction Id' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -35,17 +35,17 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.toLoanTransactionRelation">
-          {{ 'Repayment Transaction' | translate}}
+          {{ 'Repayment Transaction' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="transactionData.toLoanTransactionRelation">
           <a [href]="loanTransactionRelatedLink(transactionData.toLoanTransactionRelation.fromLoanTransaction)">
-              {{ transactionData.toLoanTransactionRelation.fromLoanTransaction }}
+            {{ transactionData.toLoanTransactionRelation.fromLoanTransaction }}
           </a>
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{ 'Type' | translate}}
+          {{ 'Type' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -53,7 +53,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{ 'Transaction Date' | translate}}
+          {{ 'Transaction Date' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -61,7 +61,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{ 'Currency' | translate}}
+          {{ 'Currency' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -69,65 +69,70 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{ 'Amount' | translate}}
+          {{ 'Amount' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ transactionData.amount | currency:transactionData.currency.code:'symbol-narrow':'1.2-2' }}
+          {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.externalId">
-          {{ 'External Id' | translate}}
+          {{ 'External Id' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="transactionData.externalId">
-          <mifosx-external-identifier externalId="{{transactionData.externalId}}" completed="true"></mifosx-external-identifier>
+          <mifosx-external-identifier
+            externalId="{{ transactionData.externalId }}"
+            completed="true"
+          ></mifosx-external-identifier>
         </div>
 
         <mat-divider *ngIf="existTransactionRelations" [inset]="true"></mat-divider>
 
         <div fxFlex="100%" class="mat-body-strong" *ngIf="existTransactionRelations">
-          {{ 'Linked Transactions' | translate}}
-          <br>
+          {{ 'Linked Transactions' | translate }}
+          <br />
 
           <table mat-table [dataSource]="transactionRelations">
-              <ng-container matColumnDef="relationType">
-                <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Relation Type" | translate}} </th>
-                <td mat-cell *matCellDef="let transactionRel" [matTooltip]="transactionRel.paymentType">
-                  {{ transactionRel.relationType | translate}}
-                </td>
-              </ng-container>
+            <ng-container matColumnDef="relationType">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Relation Type' | translate }}</th>
+              <td mat-cell *matCellDef="let transactionRel" [matTooltip]="transactionRel.paymentType">
+                {{ transactionRel.relationType | translate }}
+              </td>
+            </ng-container>
 
-              <ng-container matColumnDef="toTransaction">
-                <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction" | translate}} </th>
-                <td mat-cell *matCellDef="let transactionRel">
-                  <a [href]="loanTransactionRelatedLink(transactionRel.toLoanTransaction)">
-                    {{ transactionRel.toLoanTransaction }}
-                  </a>
-                </td>
-              </ng-container>
+            <ng-container matColumnDef="toTransaction">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Transaction' | translate }}</th>
+              <td mat-cell *matCellDef="let transactionRel">
+                <a [href]="loanTransactionRelatedLink(transactionRel.toLoanTransaction)">
+                  {{ transactionRel.toLoanTransaction }}
+                </a>
+              </td>
+            </ng-container>
 
-              <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount" | translate}} </th>
-                <td mat-cell *matCellDef="let transactionRel">
-                  {{ transactionRel.amount | currency }} {{ transactionData.currency.code }}
-                </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+              <td mat-cell *matCellDef="let transactionRel">
+                {{ transactionRel.amount | currency }} {{ transactionData.currency.code }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
         </div>
 
-        <mifosx-transaction-payment-detail *ngIf="transactionData.paymentDetailData"
-          [paymentDetailData]="transactionData.paymentDetailData">
+        <mifosx-transaction-payment-detail
+          *ngIf="transactionData.paymentDetailData"
+          [paymentDetailData]="transactionData.paymentDetailData"
+        >
         </mifosx-transaction-payment-detail>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">{{ 'labels.buttons.Back' | translate}}</button>
+        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
+          {{ 'labels.buttons.Back' | translate }}
+        </button>
       </div>
     </mat-card-content>
-
   </mat-card>
-
 </div>

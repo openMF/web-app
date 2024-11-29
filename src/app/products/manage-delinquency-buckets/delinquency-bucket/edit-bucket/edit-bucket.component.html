@@ -1,80 +1,86 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="bucketForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
           <mat-form-field fxFlex="100%">
-            <mat-label>{{"labels.inputs.Name" | translate}}</mat-label>
-            <input matInput required formControlName="name">
+            <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
+            <input matInput required formControlName="name" />
             <mat-error *ngIf="bucketForm.controls.name.hasError('required')">
-              {{"labels.inputs.Name" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" |translate}}</strong>
+              {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
-          <h3 fxFlex="40%" class="mat-h3">{{'labels.heading.Delinquency Ranges' | translate }}</h3>
+          <h3 fxFlex="40%" class="mat-h3">{{ 'labels.heading.Delinquency Ranges' | translate }}</h3>
 
           <div fxFlex="40%" fxLayout="row" fxLayoutAlign="start center">
             <button type="button" mat-raised-button color="primary" (click)="addDelinquencyRange()">
               <fa-icon icon="plus" class="m-r-10"></fa-icon>
-              {{"labels.buttons.Add" | translate}}
+              {{ 'labels.buttons.Add' | translate }}
             </button>
           </div>
 
           <table mat-table [dataSource]="rangesDataSource" [hidden]="rangesDataSource.length === 0">
-
             <ng-container matColumnDef="classification">
-              <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Classification" | translate}} </th>
-              <td mat-cell *matCellDef="let row"> {{ row.classification }}</td>
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Classification' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.classification }}</td>
               <td mat-cell *matCellDef="let row">
-                {{ row.rangeId | find: delinquencyRangesData:'id':'classification'}} </td>
+                {{ row.rangeId | find: delinquencyRangesData : 'id' : 'classification' }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="minimumAgeDays">
-              <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Days From" | translate}}</th>
-              <td mat-cell *matCellDef="let row"> {{ row.minimumAgeDays }}</td>
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Days From' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.minimumAgeDays }}</td>
               <td mat-cell *matCellDef="let row">
-                {{ row.rangeId | find: delinquencyRangesData:'id':'minimumAgeDays'}} </td>
+                {{ row.rangeId | find: delinquencyRangesData : 'id' : 'minimumAgeDays' }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="maximumAgeDays">
-              <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Days Till" | translate}} </th>
-              <td mat-cell *matCellDef="let row"> {{ row.maximumAgeDays }}</td>
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Days Till' | translate }}</th>
+              <td mat-cell *matCellDef="let row">{{ row.maximumAgeDays }}</td>
               <td mat-cell *matCellDef="let row">
-                {{ row.rangeId | find: delinquencyRangesData:'id':'maximumAgeDays'}} </td>
+                {{ row.rangeId | find: delinquencyRangesData : 'id' : 'maximumAgeDays' }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Actions' | translate }} </th>
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
               <td mat-cell *matCellDef="let row; let rowIndex = index">
-                <button type="button" mat-icon-button color="warn"
-                  (click)="deleteDelinquencyRange(rowIndex)" matTooltip="{{ 'tooltips.Delete' | translate}}"
-                  matTooltipPosition="left">
+                <button
+                  type="button"
+                  mat-icon-button
+                  color="warn"
+                  (click)="deleteDelinquencyRange(rowIndex)"
+                  matTooltip="{{ 'tooltips.Delete' | translate }}"
+                  matTooltipPosition="left"
+                >
                   <fa-icon icon="trash"></fa-icon>
                 </button>
               </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!dataWasChanged" *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!dataWasChanged"
+          *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

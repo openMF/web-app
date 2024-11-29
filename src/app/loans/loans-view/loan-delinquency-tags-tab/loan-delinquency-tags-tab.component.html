@@ -1,19 +1,20 @@
 <div class="container">
+  <h3>{{ 'labels.heading.Loan Delinquency Tags' | translate }}</h3>
 
-  <h3>{{"labels.heading.Loan Delinquency Tags" | translate}}</h3>
-
-  <table mat-table [dataSource]="loanDelinquencyTags" *ngIf="loanDelinquencyTags.length>0">
-
+  <table mat-table [dataSource]="loanDelinquencyTags" *ngIf="loanDelinquencyTags.length > 0">
     <ng-container matColumnDef="classification">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Delinquency Classification" | translate}} </th>
-      <td mat-cell *matCellDef="let item"> {{ item.delinquencyRange.classification }}
-        <span *ngIf="item.delinquencyRange.maximumAgeDays">( {{ item.delinquencyRange.minimumAgeDays }} - {{ item.delinquencyRange.maximumAgeDays }} )</span>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Delinquency Classification' | translate }}</th>
+      <td mat-cell *matCellDef="let item">
+        {{ item.delinquencyRange.classification }}
+        <span *ngIf="item.delinquencyRange.maximumAgeDays"
+          >( {{ item.delinquencyRange.minimumAgeDays }} - {{ item.delinquencyRange.maximumAgeDays }} )</span
+        >
         <span *ngIf="!item.delinquencyRange.maximumAgeDays">( {{ item.delinquencyRange.minimumAgeDays }} )</span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="addedOn">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Added On" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Added On' | translate }}</th>
       <td mat-cell *matCellDef="let item">
         <span *ngIf="item.addedOnDate">
           {{ item.addedOnDate | dateFormat }}
@@ -22,7 +23,7 @@
     </ng-container>
 
     <ng-container matColumnDef="liftedOn">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Lifted On" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Lifted On' | translate }}</th>
       <td mat-cell *matCellDef="let item">
         <span *ngIf="item.liftedOnDate">
           {{ item.liftedOnDate | dateFormat }}
@@ -31,73 +32,81 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="loanDelinquencyTagsColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: loanDelinquencyTagsColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: loanDelinquencyTagsColumns"></tr>
   </table>
 
   <div *ngIf="installmentLevelDelinquency.length > 0">
-
-    <h3>{{"labels.heading.Loan Delinquency Installment Tags" | translate}}</h3>
+    <h3>{{ 'labels.heading.Loan Delinquency Installment Tags' | translate }}</h3>
 
     <table mat-table [dataSource]="installmentLevelDelinquency">
-
       <ng-container matColumnDef="classification">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Delinquency Classification" | translate}} </th>
-        <td mat-cell *matCellDef="let item"> {{ item.classification }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Delinquency Classification' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.classification }}</td>
       </ng-container>
 
       <ng-container matColumnDef="minimumAgeDays">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Days" | translate}} </th>
-        <td mat-cell *matCellDef="let item"> {{ item.minimumAgeDays | formatNumber }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Days' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.minimumAgeDays | formatNumber }}</td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount" | translate}} </th>
-        <td mat-cell *matCellDef="let item"> {{ item.delinquentAmount | currency:currency.code:'symbol-narrow':'1.2-2' }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.delinquentAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="installmentDelinquencyTagsColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: installmentDelinquencyTagsColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: installmentDelinquencyTagsColumns"></tr>
     </table>
-
   </div>
 
   <div fxLayout="row" fxLayoutAlign="flex-end" class="m-t-20 m-b-10" *ngIf="allowPause">
-    <button mat-raised-button color="primary" (click)="createDelinquencyAction()" *mifosxHasPermission="'CREATE_DELINQUENCY_ACTION'">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="createDelinquencyAction()"
+      *mifosxHasPermission="'CREATE_DELINQUENCY_ACTION'"
+    >
       <fa-icon icon="pause" class="m-r-10"></fa-icon>{{ 'labels.buttons.Pause Delinquency Classification' | translate }}
     </button>
   </div>
 
   <div *ngIf="loanDelinquencyActions.length > 0" class="m-t-10">
-    <h3>{{"labels.heading.Loan Delinquency Actions" | translate}}</h3>
+    <h3>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h3>
 
     <table mat-table [dataSource]="loanDelinquencyActions">
-
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Action" | translate}} </th>
-        <td mat-cell *matCellDef="let item" ngClass="{{actionClass(item.action)}}"> {{ item.action }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
+        <td mat-cell *matCellDef="let item" ngClass="{{ actionClass(item.action) }}">{{ item.action }}</td>
       </ng-container>
 
       <ng-container matColumnDef="startDate">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Start Date" | translate}} </th>
-        <td mat-cell *matCellDef="let item"> {{ item.startDate | dateFormat }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Start Date' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.startDate | dateFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="endDate">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.End Date" | translate}} </th>
-        <td mat-cell *matCellDef="let item"> {{ item.endDate | dateFormat }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.End Date' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.endDate | dateFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="createdOn">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Created On" | translate}} </th>
-        <td mat-cell *matCellDef="let item"> {{ item.createdOn | datetimeFormat }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Created On' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.createdOn | datetimeFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let item">
           <span *ngIf="isCurrentAndPauseAction(item)">
-            <button mat-button color="primary" (click)="resumeDelinquencyClassification(item)"
-              *mifosxHasPermission="'CREATE_DELINQUENCY_ACTION'" matTooltip="{{'tooltips.Resume Delinquency Classification' | translate}}" >
+            <button
+              mat-button
+              color="primary"
+              (click)="resumeDelinquencyClassification(item)"
+              *mifosxHasPermission="'CREATE_DELINQUENCY_ACTION'"
+              matTooltip="{{ 'tooltips.Resume Delinquency Classification' | translate }}"
+            >
               <fa-icon icon="play" class="m-r-10"></fa-icon>
             </button>
           </span>
@@ -105,9 +114,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="loanDelinquencyActionsColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: loanDelinquencyActionsColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: loanDelinquencyActionsColumns"></tr>
     </table>
-
   </div>
-
 </div>

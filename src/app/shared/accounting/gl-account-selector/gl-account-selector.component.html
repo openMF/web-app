@@ -1,5 +1,5 @@
 <mat-form-field fxFlex="100%" *ngIf="required">
-  <mat-label>{{'labels.inputs.' + inputLabel | translate}}</mat-label>
+  <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
 
   <mat-select required [formControl]="inputFormControl">
     <mat-option>
@@ -10,18 +10,21 @@
     </mat-option>
   </mat-select>
   <mat-error *ngIf="inputFormControl.hasError('required')">
-    {{"labels.inputs.Account"| translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+    {{ 'labels.inputs.Account' | translate }} {{ 'labels.commons.is' | translate }}
+    <strong>{{ 'labels.commons.required' | translate }}</strong>
   </mat-error>
 </mat-form-field>
 
 <mat-form-field fxFlex="100%" *ngIf="!required">
-  <mat-label>{{'labels.inputs.' + inputLabel | translate}}</mat-label>
+  <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
 
   <mat-select [formControl]="inputFormControl">
     <mat-option>
-      <ngx-mat-select-search [formControl]="filterFormCtrl"
-        placeholderLabel="{{placeHolderLabel}}"
-        noEntriesFoundLabel="{{noEntriesFoundLabel}}">
+      <ngx-mat-select-search
+        [formControl]="filterFormCtrl"
+        placeholderLabel="{{ placeHolderLabel }}"
+        noEntriesFoundLabel="{{ noEntriesFoundLabel }}"
+      >
       </ngx-mat-select-search>
     </mat-option>
     <mat-option *ngFor="let glAccount of glAccountData | async" [value]="glAccount.id">

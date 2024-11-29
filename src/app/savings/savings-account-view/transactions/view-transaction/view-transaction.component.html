@@ -1,18 +1,27 @@
 <div class="container">
   <nav mat-tab-nav-bar class="navigation-tabs">
-    <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-      [active]="general.isActive">
-      {{'labels.heading.General' | translate}}
+    <a
+      mat-tab-link
+      [routerLink]="['./general']"
+      routerLinkActive
+      #general="routerLinkActive"
+      [active]="general.isActive"
+    >
+      {{ 'labels.heading.General' | translate }}
     </a>
     <ng-container *ngFor="let entityDatatable of entityDatatables">
-      <a mat-tab-link [routerLink]="['./datatables',entityDatatable.registeredTableName]" routerLinkActive
-        #datatable="routerLinkActive" [active]="datatable.isActive"
-        *mifosxHasPermission="'READ_' + entityDatatable.registeredTableName">
-        {{entityDatatable.registeredTableName}}
+      <a
+        mat-tab-link
+        [routerLink]="['./datatables', entityDatatable.registeredTableName]"
+        routerLinkActive
+        #datatable="routerLinkActive"
+        [active]="datatable.isActive"
+        *mifosxHasPermission="'READ_' + entityDatatable.registeredTableName"
+      >
+        {{ entityDatatable.registeredTableName }}
       </a>
     </ng-container>
   </nav>
 
   <router-outlet></router-outlet>
-
 </div>

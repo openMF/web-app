@@ -1,79 +1,92 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="groupForm">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
-            <mat-label>{{"labels.inputs.name" | translate }}</mat-label>
-            <input matInput required formControlName="name">
+            <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
+            <input matInput required formControlName="name" />
             <mat-error *ngIf="groupForm.controls.name.hasError('required')">
-              {{"labels.inputs.Group Name" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Group Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="groupForm.controls.name.hasError('pattern')">
-              {{"labels.inputs.Group Name" | translate }} <strong>{{"labels.inputs.cannot" | translate }}</strong> {{ "labels.commons.begin with a special character or number" | translate }}
+              {{ 'labels.inputs.Group Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.commons.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Office" | translate }}</mat-label>
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
-              {{ office.name }}
+                {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupForm.controls.officeId.hasError('required')">
-              {{"labels.inputs.Office" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Staff" | translate }}</mat-label>
+            <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffData" [value]="staff.id">
-              {{ staff.displayName }}
+                {{ staff.displayName }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field (click)="submittedOnDatePicker.open()">
-            <mat-label>{{"labels.inputs.Submitted On" | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="submittedOnDatePicker" required formControlName="submittedOnDate">
+            <mat-label>{{ 'labels.inputs.Submitted On' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="submittedOnDatePicker"
+              required
+              formControlName="submittedOnDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="groupForm.controls.submittedOnDate.hasError('required')">
-              {{"labels.inputs.Submission Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Submission Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="active">
-            {{"labels.inputs.Active" | translate }}
+            {{ 'labels.inputs.Active' | translate }}
           </mat-checkbox>
 
           <mat-form-field *ngIf="groupForm.controls.active.value" (click)="activationDatePicker.open()">
-            <mat-label>{{"labels.inputs.Activation Date" | translate }}</mat-label>
-            <input matInput [min]="groupForm.value.submittedOnDate" [max]="maxDate" [matDatepicker]="activationDatePicker" required formControlName="activationDate">
+            <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="groupForm.value.submittedOnDate"
+              [max]="maxDate"
+              [matDatepicker]="activationDatePicker"
+              required
+              formControlName="activationDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activationDatePicker></mat-datepicker>
             <mat-error *ngIf="groupForm.controls.activationDate.hasError('required')">
-              {{"labels.inputs.Activation Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.External id" | translate }}</mat-label>
-            <input matInput formControlName="externalId">
+            <mat-label>{{ 'labels.inputs.External id' | translate }}</mat-label>
+            <input matInput formControlName="externalId" />
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Add Clients" | translate }}</mat-label>
-            <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
+            <mat-label>{{ 'labels.inputs.Add Clients' | translate }}</mat-label>
+            <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete" />
           </mat-form-field>
-
         </div>
 
         <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
@@ -83,49 +96,47 @@
         </mat-autocomplete>
 
         <div fxLayout="row">
-
           <div class="mat-table" *ngIf="clientChoice.value">
             <div class="mat-header-row">
-              <div class="mat-header-cell">{{"labels.inputs.Client Details" | translate }}</div>
+              <div class="mat-header-cell">{{ 'labels.inputs.Client Details' | translate }}</div>
               <button mat-icon-button (click)="addClient()">
                 <fa-icon icon="plus"></fa-icon>
               </button>
             </div>
             <div class="mat-row">
-              <div class="mat-cell">{{"labels.inputs.name" | translate }}</div>
-              <div class="mat-cell">{{clientChoice.value.displayName}}</div>
+              <div class="mat-cell">{{ 'labels.inputs.name' | translate }}</div>
+              <div class="mat-cell">{{ clientChoice.value.displayName }}</div>
             </div>
             <div class="mat-row">
-              <div class="mat-cell">{{"labels.inputs.Id" | translate }}</div>
-              <div class="mat-cell">{{clientChoice.value.id}}</div>
+              <div class="mat-cell">{{ 'labels.inputs.Id' | translate }}</div>
+              <div class="mat-cell">{{ clientChoice.value.id }}</div>
             </div>
             <div class="mat-row">
-              <div class="mat-cell">{{"labels.inputs.Office" | translate }}</div>
-              <div class="mat-cell">{{clientChoice.value.officeName}}</div>
+              <div class="mat-cell">{{ 'labels.inputs.Office' | translate }}</div>
+              <div class="mat-cell">{{ clientChoice.value.officeName }}</div>
             </div>
           </div>
 
           <mat-nav-list *ngIf="clientMembers.length">
-            <h3 matSubheader>{{"labels.heading.Selected Clients" | translate }}</h3>
-            <div mat-list-item *ngFor="let client of clientMembers index as i">
-              <span matLine>{{client.displayName}}</span>
+            <h3 matSubheader>{{ 'labels.heading.Selected Clients' | translate }}</h3>
+            <div mat-list-item *ngFor="let client of clientMembers; index as i">
+              <span matLine>{{ client.displayName }}</span>
               <button mat-icon-button color="warn" (click)="removeClient(i)">
                 <fa-icon icon="trash"></fa-icon>
               </button>
             </div>
           </mat-nav-list>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!groupForm.valid" (click)="submit()">{{"labels.buttons.Submit" | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!groupForm.valid" (click)="submit()">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

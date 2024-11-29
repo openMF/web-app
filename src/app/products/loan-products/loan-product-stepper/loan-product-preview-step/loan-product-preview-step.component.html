@@ -1,24 +1,23 @@
-
 <mifosx-loan-product-summary
-[action]="'preview'"
-[loanProduct]="loanProduct"
-[loanProductsTemplate]="loanProductsTemplate"
-[useDueForRepaymentsConfigurations]="loanProduct.useDueForRepaymentsConfigurations"
-[paymentAllocations]="loanProduct.paymentAllocation"
-[creditAllocations]="loanProduct.creditAllocation"
-[supportedInterestRefundTypes]="loanProduct.supportedInterestRefundTypes"
+  [action]="'preview'"
+  [loanProduct]="loanProduct"
+  [loanProductsTemplate]="loanProductsTemplate"
+  [useDueForRepaymentsConfigurations]="loanProduct.useDueForRepaymentsConfigurations"
+  [paymentAllocations]="loanProduct.paymentAllocation"
+  [creditAllocations]="loanProduct.creditAllocation"
+  [supportedInterestRefundTypes]="loanProduct.supportedInterestRefundTypes"
 >
 </mifosx-loan-product-summary>
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Previous' | translate}}
+    {{ 'labels.buttons.Previous' | translate }}
   </button>
   <button mat-raised-button [routerLink]="['../']">
-    {{'labels.buttons.Cancel' | translate}}
+    {{ 'labels.buttons.Cancel' | translate }}
   </button>
   <button mat-raised-button color="primary" (click)="submitEvent.emit()">
-    {{'labels.buttons.Submit' | translate}}
+    {{ 'labels.buttons.Submit' | translate }}
   </button>
 </div>

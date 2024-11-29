@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>{{ data.parameterName ? ('labels.buttons.Edit' | translate) : ('labels.buttons.Add' | translate) }} {{'labels.heading.Report Parameter' | translate }}</h1>
+<h1 mat-dialog-title>
+  {{ data.parameterName ? ('labels.buttons.Edit' | translate) : ('labels.buttons.Add' | translate) }}
+  {{ 'labels.heading.Report Parameter' | translate }}
+</h1>
 
 <mat-dialog-content>
-
   <form [formGroup]="reportParameterForm">
-
     <div fxLayout="column">
-
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Select allowed parameter' | translate }}</mat-label>
         <mat-select required formControlName="parameterName">
@@ -14,23 +14,27 @@
           </mat-option>
         </mat-select>
         <mat-error *ngIf="reportParameterForm.controls.parameterName.hasError('required')">
-          {{ 'labels.inputs.Report Parameters' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+          {{ 'labels.inputs.Report Parameters' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>{{'labels.inputs.Parameter Name Passed to Pentaho' | translate }}</mat-label>
-        <input matInput formControlName="reportParameterName">
+        <mat-label>{{ 'labels.inputs.Parameter Name Passed to Pentaho' | translate }}</mat-label>
+        <input matInput formControlName="reportParameterName" />
       </mat-form-field>
-
     </div>
-
   </form>
-
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>{{'labels.buttons.Cancel' | translate}}</button>
-  <button mat-raised-button color="primary"
-    [disabled]="!reportParameterForm.valid || reportParameterForm.pristine" (click)="submit()">{{'labels.buttons.Submit' | translate }}</button>
+  <button mat-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!reportParameterForm.valid || reportParameterForm.pristine"
+    (click)="submit()"
+  >
+    {{ 'labels.buttons.Submit' | translate }}
+  </button>
 </mat-dialog-actions>

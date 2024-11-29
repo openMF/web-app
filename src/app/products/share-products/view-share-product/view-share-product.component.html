@@ -1,23 +1,29 @@
 <mat-card class="product-card">
-
   <mat-card-content>
-
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-        [active]="general.isActive">
-        {{'labels.inputs.General' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+      >
+        {{ 'labels.inputs.General' | translate }}
       </a>
       <ng-container *ngFor="let shareProductDatatable of shareProductDatatables">
-        <a mat-tab-link [routerLink]="['./datatables',shareProductDatatable.registeredTableName]" routerLinkActive
-          #datatable="routerLinkActive" [active]="datatable.isActive"
-          *mifosxHasPermission="'READ_' + shareProductDatatable.registeredTableName">
-          {{shareProductDatatable.registeredTableName}}
+        <a
+          mat-tab-link
+          [routerLink]="['./datatables', shareProductDatatable.registeredTableName]"
+          routerLinkActive
+          #datatable="routerLinkActive"
+          [active]="datatable.isActive"
+          *mifosxHasPermission="'READ_' + shareProductDatatable.registeredTableName"
+        >
+          {{ shareProductDatatable.registeredTableName }}
         </a>
       </ng-container>
     </nav>
 
     <router-outlet></router-outlet>
-
   </mat-card-content>
-
 </mat-card>

@@ -1,26 +1,23 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="editCenterForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
-            <mat-label>{{"labels.inputs.name" | translate}}</mat-label>
-            <input matInput required formControlName="name">
+            <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
+            <input matInput required formControlName="name" />
             <mat-error *ngIf="editCenterForm.controls.name.hasError('required')">
-              {{"labels.inputs.Center Name" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Center Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editCenterForm.controls.name.hasError('pattern')">
-              {{"labels.inputs.Center Name" | translate}} <strong>{{"labels.inputs.cannot" | translate}}</strong> {{"labels.inputs.begin with a special character or number" | translate}}
+              {{ 'labels.inputs.Center Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Staff" | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffs" [value]="staff.id">
                 {{ staff.displayName }}
@@ -29,34 +26,40 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.External Id" | translate}}</mat-label>
-            <input matInput formControlName="externalId">
+            <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+            <input matInput formControlName="externalId" />
           </mat-form-field>
 
-          <ng-container *ngIf="centerData.status.value==='Pending'" (click)="activatedOnDatePicker.open()">
+          <ng-container *ngIf="centerData.status.value === 'Pending'" (click)="activatedOnDatePicker.open()">
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Activation Date" | translate}}</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="activatedOnDatePicker" required
-                formControlName="activationDate">
+              <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="activatedOnDatePicker"
+                required
+                formControlName="activationDate"
+              />
               <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #activatedOnDatePicker></mat-datepicker>
               <mat-error *ngIf="editCenterForm.controls.activationDate.hasError('required')">
-                {{"labels.inputs.Activation Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+                {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
           </ng-container>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../general']">{{"labels.buttons.Cancel" | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!editCenterForm.valid">{{"labels.buttons.Confirm" | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../general']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!editCenterForm.valid">
+          {{ 'labels.buttons.Confirm' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

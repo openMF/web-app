@@ -1,23 +1,19 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Edit' | translate }}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
   <button mat-raised-button color="primary" [routerLink]="['viewhistory']">
-    {{'labels.buttons.View History' | translate }}
+    {{ 'labels.buttons.View History' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Job Name' | translate}}
+          {{ 'labels.inputs.Job Name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -25,39 +21,37 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Cron Expression' | translate}}
+          {{ 'labels.inputs.Cron Expression' | translate }}
         </div>
 
         <div fxFlex="50%">
           {{ jobData.cronExpression }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Is Active Job' | translate}}?
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Is Active Job' | translate }}?</div>
 
         <div fxFlex="50%">
           {{ jobData.active | yesNo }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Follow' | translate}}
+          {{ 'labels.inputs.Follow' | translate }}
         </div>
 
         <div fxFlex="50%">
-          <a href="http://www.cronmaker.com/">	{{'labels.text.Click Here To Generate Cron Expression' | translate}} </a>
+          <a href="http://www.cronmaker.com/">
+            {{ 'labels.text.Click Here To Generate Cron Expression' | translate }}
+          </a>
         </div>
-
       </div>
-
     </mat-card-content>
 
     <mat-card-actions>
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button type="button" color="primary" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Back' | translate}}</button>
+        <button type="button" color="primary" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Back' | translate }}
+        </button>
       </div>
     </mat-card-actions>
-
   </mat-card>
-
 </div>

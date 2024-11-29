@@ -1,84 +1,126 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-<div #buttonCreateLoanProduct class="in-block">
-  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_LOANPRODUCT'">
-    <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Create Loan Product' | translate}}
-  </button>
+  <div #buttonCreateLoanProduct class="in-block">
+    <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_LOANPRODUCT'">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Create Loan Product' | translate }}
+    </button>
   </div>
 </div>
 
 <div class="container">
-
   <div #filter fxLayout="row">
     <mat-form-field fxFlex>
-      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
   </div>
 
   <div #loanProductsTable class="mat-elevation-z8">
-
     <table mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Name' | translate}} </th>
-        <td mat-cell *matCellDef="let loanProduct"> {{ loanProduct.name }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
+        <td mat-cell *matCellDef="let loanProduct">{{ loanProduct.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="shortName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Short Name' | translate}} </th>
-        <td mat-cell *matCellDef="let loanProduct"> {{ loanProduct.shortName }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Short Name' | translate }}</th>
+        <td mat-cell *matCellDef="let loanProduct">{{ loanProduct.shortName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="closeDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Expiry Date' | translate}} </th>
-        <td mat-cell *matCellDef="let loanProduct"> {{ loanProduct.closeDate | dateFormat }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Expiry Date' | translate }}</th>
+        <td mat-cell *matCellDef="let loanProduct">{{ loanProduct.closeDate | dateFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Status' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
         <td mat-cell *matCellDef="let loanProduct">
           <div [className]="loanProduct.status | statusLookup">
-            <fa-icon matTooltip="{{ loanProduct.status === 'loanProduct.active' ? ( 'labels.inputs.Active' | translate ) : ('labels.catalogs.Inactive' | translate) }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+            <fa-icon
+              matTooltip="{{
+                loanProduct.status === 'loanProduct.active'
+                  ? ('labels.inputs.Active' | translate)
+                  : ('labels.catalogs.Inactive' | translate)
+              }}"
+              matTooltipPosition="right"
+              icon="circle"
+              size="lg"
+            ></fa-icon>
           </div>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id]" class="select-row"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
-
 </div>
 
 <ng-template #templateButtonCreateLoanProduct let-popover="popover">
-  <h2>{{'labels.heading.Create Loan Product' | translate}}t</h2>
-  <p class="mw300">{{'labels.text.This option allows you to create new loan product.' | translate}}</p>
+  <h2>{{ 'labels.heading.Create Loan Product' | translate }}t</h2>
+  <p class="mw300">{{ 'labels.text.This option allows you to create new loan product.' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Next' | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>{{'labels.heading.Search bar to filter loan products.' | translate}}</h4>
+  <h4>{{ 'labels.heading.Search bar to filter loan products.' | translate }}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateLoanProduct,buttonCreateLoanProduct, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateLoanProductsTable,loanProductsTable, 'top', true)">{{'labels.buttons.Next' | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonCreateLoanProduct, buttonCreateLoanProduct, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateLoanProductsTable, loanProductsTable, 'top', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateLoanProductsTable let-popover="popover">
-  <h4 class="mw300">{{'labels.heading.List of loan products in the organization' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">{{'labels.heading.Loan Products' | translate}}</a></h4>
+  <h4 class="mw300">
+    {{ 'labels.heading.List of loan products in the organization' | translate }}:
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102039585/Loan+Products" target="_blank">{{
+      'labels.heading.Loan Products' | translate
+    }}</a>
+  </h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>

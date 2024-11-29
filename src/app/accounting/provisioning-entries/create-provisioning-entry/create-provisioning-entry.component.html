@@ -1,40 +1,47 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="provisioningEntryForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field fxFlex (click)="datePicker.open()">
-            <mat-label>{{"labels.inputs.Date" | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="datePicker" required formControlName="date">
+            <mat-label>{{ 'labels.inputs.Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="datePicker"
+              required
+              formControlName="date"
+            />
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
             <mat-datepicker #datePicker></mat-datepicker>
             <mat-error *ngIf="provisioningEntryForm.controls.date.hasError('required')">
-              {{"labels.inputs.Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <div fxFlex>
             <mat-checkbox labelPosition="before" formControlName="createjournalentries">
-              {{"labels.inputs.Create Journal Entries" | translate}}
+              {{ 'labels.inputs.Create Journal Entries' | translate }}
             </mat-checkbox>
           </div>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!provisioningEntryForm.valid" *mifosxHasPermission="'CREATE_PROVISIONING_ENTRIES'">{{"labels.buttons.Submit" | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!provisioningEntryForm.valid"
+          *mifosxHasPermission="'CREATE_PROVISIONING_ENTRIES'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

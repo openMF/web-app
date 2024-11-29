@@ -1,203 +1,230 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
-
-  <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Details' | translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Details' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Product' | translate}}</span>
-    <span fxFlex="60%">{{ savingsAccount.productId | find:savingsAccountTemplate.productOptions:'id':'name' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Product' | translate }}</span>
+    <span fxFlex="60%">{{
+      savingsAccount.productId | find: savingsAccountTemplate.productOptions : 'id' : 'name'
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Submitted On' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Submitted On' | translate }}</span>
     <span fxFlex="60%">{{ savingsAccount.submittedOnDate | dateFormat }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.External Id' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.External Id' | translate }}</span>
     <span fxFlex="60%" *ngIf="savingsAccount.externalId">
-      <mifosx-external-identifier externalId="{{savingsAccount.externalId}}"></mifosx-external-identifier>
+      <mifosx-external-identifier externalId="{{ savingsAccount.externalId }}"></mifosx-external-identifier>
     </span>
     <span fxFlex="60%" *ngIf="!savingsAccount.externalId">
-      {{'labels.inputs.Unassigned' | translate}}
+      {{ 'labels.inputs.Unassigned' | translate }}
     </span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Field Officer' | translate}}</span>
-    <span fxFlex="60%">{{ savingsAccount.fieldOfficerId |
-      find:savingsAccountProductTemplate.fieldOfficerOptions:'id':'displayName' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Field Officer' | translate }}</span>
+    <span fxFlex="60%">{{
+      savingsAccount.fieldOfficerId | find: savingsAccountProductTemplate.fieldOfficerOptions : 'id' : 'displayName'
+    }}</span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Terms' | translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Terms' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Currency' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Currency' | translate }}</span>
     <span fxFlex="60%">{{ savingsAccountTermsForm.get('currencyCode').value }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Decimal Places' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Decimal Places' | translate }}</span>
     <span fxFlex="60%">{{ savingsAccountTermsForm.get('decimal').value }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Nominal Annual Interest' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Nominal Annual Interest' | translate }}:</span>
     <span fxFlex="60%">{{ savingsAccount.nominalAnnualInterestRate | formatNumber }} %</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Interest Compounding Period' | translate}}:</span>
-    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.interestCompoundingPeriodType |
-      find:savingsAccountProductTemplate.interestCompoundingPeriodTypeOptions:'id':'value') }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Interest Compounding Period' | translate }}:</span>
+    <span fxFlex="60%">{{
+      getCatalogTranslation(
+        savingsAccount.interestCompoundingPeriodType
+          | find: savingsAccountProductTemplate.interestCompoundingPeriodTypeOptions : 'id' : 'value'
+      )
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Interest Posting Period' | translate}}:</span>
-    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.interestPostingPeriodType |
-      find:savingsAccountProductTemplate.interestPostingPeriodTypeOptions:'id':'value') }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Interest Posting Period' | translate }}:</span>
+    <span fxFlex="60%">{{
+      getCatalogTranslation(
+        savingsAccount.interestPostingPeriodType
+          | find: savingsAccountProductTemplate.interestPostingPeriodTypeOptions : 'id' : 'value'
+      )
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Interest Calculated using' | translate}}:</span>
-    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.interestCalculationType |
-      find:savingsAccountProductTemplate.interestCalculationTypeOptions:'id':'value') }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Interest Calculated using' | translate }}:</span>
+    <span fxFlex="60%">{{
+      getCatalogTranslation(
+        savingsAccount.interestCalculationType
+          | find: savingsAccountProductTemplate.interestCalculationTypeOptions : 'id' : 'value'
+      )
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Days in Year' | translate}}:</span>
-    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.interestCalculationDaysInYearType |
-      find:savingsAccountProductTemplate.interestCalculationDaysInYearTypeOptions:'id':'value') }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Days in Year' | translate }}:</span>
+    <span fxFlex="60%">{{
+      getCatalogTranslation(
+        savingsAccount.interestCalculationDaysInYearType
+          | find: savingsAccountProductTemplate.interestCalculationDaysInYearTypeOptions : 'id' : 'value'
+      )
+    }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingsAccount.minRequiredOpeningBalance">
-    <span fxFlex="40%">{{'labels.inputs.Minimum Opening Balance' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Minimum Opening Balance' | translate }}:</span>
     <span fxFlex="60%">{{ savingsAccount.minRequiredOpeningBalance | formatNumber }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Apply Withdrawal Fee for Transfers' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Apply Withdrawal Fee for Transfers' | translate }}:</span>
     <span fxFlex="60%">{{ savingsAccount.withdrawalFeeForTransfers | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingsAccount.lockinPeriodFrequency">
-    <span fxFlex="40%">{{'labels.inputs.Lock-in Period' | translate}}:</span>
-    <span fxFlex="60%">{{ getCatalogTranslation(savingsAccount.lockinPeriodFrequency + ' ' + (savingsAccount.lockinPeriodFrequencyType |
-      find:savingsAccountProductTemplate.lockinPeriodFrequencyTypeOptions:'id':'value')) }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
+    <span fxFlex="60%">{{
+      getCatalogTranslation(
+        savingsAccount.lockinPeriodFrequency +
+          ' ' +
+          (savingsAccount.lockinPeriodFrequencyType
+            | find: savingsAccountProductTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value')
+      )
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Is Overdraft Allowed' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Is Overdraft Allowed' | translate }}:</span>
     <span fxFlex="60%">{{ savingsAccount.allowOverdraft | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingsAccount.minOverdraftForInterestCalculation">
-    <span fxFlex="40%">{{'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}:</span>
     <span fxFlex="60%">{{ savingsAccount.minOverdraftForInterestCalculation | formatNumber }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingsAccount.nominalAnnualInterestRateOverdraft">
-    <span fxFlex="40%">{{'labels.inputs.Nominal Annual Interest for Overdraft' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}:</span>
     <span fxFlex="60%">{{ savingsAccount.nominalAnnualInterestRateOverdraft | formatNumber }} %</span>
   </div>
 
   <div fxFlexFill *ngIf="savingsAccount.overdraftLimit">
-    <span fxFlex="40%">{{'labels.inputs.Maximum Overdraft Amount Limit' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Maximum Overdraft Amount Limit' | translate }}:</span>
     <span fxFlex="60%">{{ savingsAccount.overdraftLimit | formatNumber }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Enforce Minimum Balance' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Enforce Minimum Balance' | translate }}:</span>
     <span fxFlex="60%">{{ savingsAccount.enforceMinRequiredBalance | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingsAccount.minRequiredBalance">
-    <span fxFlex="40%">{{'labels.inputs.Minimum Balance' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Minimum Balance' | translate }}:</span>
     <span fxFlex="60%">{{ savingsAccount.minRequiredBalance }}</span>
   </div>
 
   <div fxFlexFill *ngIf="savingsAccount.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
-
-    <h3 class="mat-h3" fxFlexFill>{{'labels.inputs.Charges' | translate}}</h3>
+    <h3 class="mat-h3" fxFlexFill>{{ 'labels.inputs.Charges' | translate }}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
     <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingsAccount.charges">
-
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Name' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.name + ', ' + charge.currency.displaySymbol }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeCalculationType">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.chargeCalculationType.value | translateKey:'catalogs' }}
+          {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Amount' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.amount | formatNumber }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Date' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           <span
-            *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'">
-            {{(charge.dueDate | dateFormat) || 'Unassigned'}}
+            *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'"
+          >
+            {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
           </span>
           <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
-            {{(charge.feeOnMonthDay | dateFormat) || 'Unassigned'}}
+            {{ (charge.feeOnMonthDay | dateFormat) || 'Unassigned' }}
           </span>
           <span
-            *ngIf="!(charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'
-              || charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee')">
+            *ngIf="
+              !(
+                charge.chargeTimeType.value === 'Monthly Fee' ||
+                charge.chargeTimeType.value === 'Annual Fee' ||
+                charge.chargeTimeType.value === 'Specified due date' ||
+                charge.chargeTimeType.value === 'Weekly Fee'
+              )
+            "
+          >
             N/A
           </span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="repaymentsEvery">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Repayments Every' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Repayments Every' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.feeInterval || 'Not Provided' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeTimeType">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Collected On' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.chargeTimeType.value }}
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns;"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
     </table>
-
   </div>
-
 </div>
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Previous" | translate }}
+    {{ 'labels.buttons.Previous' | translate }}
   </button>
   <button mat-raised-button [routerLink]="['../..']">
-    {{"labels.buttons.Cancel" | translate }}
+    {{ 'labels.buttons.Cancel' | translate }}
   </button>
   <button mat-raised-button color="primary" (click)="submitEvent.emit()">
-    {{"labels.buttons.Submit" | translate }}
+    {{ 'labels.buttons.Submit' | translate }}
   </button>
 </div>

@@ -1,51 +1,63 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_FINANCIALACTIVITYACCOUNT'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['edit']"
+    *mifosxHasPermission="'UPDATE_FINANCIALACTIVITYACCOUNT'"
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Edit" | translate}}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
-  <button mat-raised-button color="warn" (click)="deleteFinancialActivityAccount()" *mifosxHasPermission="'DELETE_FINANCIALACTIVITYACCOUNT'">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="deleteFinancialActivityAccount()"
+    *mifosxHasPermission="'DELETE_FINANCIALACTIVITYACCOUNT'"
+  >
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Delete" | translate}}
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="50%" class="header">
-          {{"labels.inputs.Financial Activity" | translate}}
+          {{ 'labels.inputs.Financial Activity' | translate }}
         </div>
 
         <div fxFlex="50%">
-          ({{financialActivityAccount?.financialActivityData.id}}) {{ 'labels.accounting.financialActivity.' + financialActivityAccount?.financialActivityData.name | translate }}
+          ({{ financialActivityAccount?.financialActivityData.id }})
+          {{
+            'labels.accounting.financialActivity.' + financialActivityAccount?.financialActivityData.name | translate
+          }}
         </div>
 
         <div fxFlex="50%" class="header">
-          {{"labels.inputs.Account Type" | translate}}
+          {{ 'labels.inputs.Account Type' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ 'labels.inputs.accounting.' + financialActivityAccount?.financialActivityData.mappedGLAccountType | translate }}
+          {{
+            'labels.inputs.accounting.' + financialActivityAccount?.financialActivityData.mappedGLAccountType
+              | translate
+          }}
         </div>
 
-        <mifosx-gl-account-display fxFlex="100%"
+        <mifosx-gl-account-display
+          fxFlex="100%"
           [glAccount]="financialActivityAccount?.glAccountData"
           [accountTitle]="'Account Name'"
         >
         </mifosx-gl-account-display>
-
       </div>
-
     </mat-card-content>
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" color="primary" mat-raised-button [routerLink]="['../..']">{{  "labels.buttons.Back" | translate}}</button>
+      <button type="button" color="primary" mat-raised-button [routerLink]="['../..']">
+        {{ 'labels.buttons.Back' | translate }}
+      </button>
     </mat-card-actions>
   </mat-card>
-
 </div>

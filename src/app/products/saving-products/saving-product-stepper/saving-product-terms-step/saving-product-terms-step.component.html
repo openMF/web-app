@@ -1,76 +1,111 @@
 <form [formGroup]="savingProductTermsForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Nominal Annual Interest' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="{{ 'tooltips.The default interest rate set' | translate}}" formControlName="nominalAnnualInterestRate" required>
+      <mat-label>{{ 'labels.inputs.Nominal Annual Interest' | translate }}</mat-label>
+      <input
+        type="number"
+        matInput
+        matTooltip="{{ 'tooltips.The default interest rate set' | translate }}"
+        formControlName="nominalAnnualInterestRate"
+        required
+      />
       <mat-error>
-        {{'labels.inputs.Nominal Annual Interest' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Nominal Annual Interest' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <span fxFlex="48%" fxHide.lt-md></span>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Interest Compounding Period' | translate}}</mat-label>
-      <mat-select formControlName="interestCompoundingPeriodType" matTooltip="{{ 'tooltips.The period at which interest rate' | translate}}" required>
-        <mat-option *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData" [value]="interestCompoundingPeriodType.id">
-          {{ interestCompoundingPeriodType.value | translateKey:'catalogs' }}
+      <mat-label>{{ 'labels.inputs.Interest Compounding Period' | translate }}</mat-label>
+      <mat-select
+        formControlName="interestCompoundingPeriodType"
+        matTooltip="{{ 'tooltips.The period at which interest rate' | translate }}"
+        required
+      >
+        <mat-option
+          *ngFor="let interestCompoundingPeriodType of interestCompoundingPeriodTypeData"
+          [value]="interestCompoundingPeriodType.id"
+        >
+          {{ interestCompoundingPeriodType.value | translateKey: 'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
-        {{'labels.inputs.Interest Compounding Period' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Interest Compounding Period' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Interest Posting Period' | translate}}</mat-label>
-      <mat-select formControlName="interestPostingPeriodType" matTooltip="{{ 'tooltips.Interest rate is posted or credited to a saving account' | translate}}" required>
-        <mat-option *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData" [value]="interestPostingPeriodType.id">
-          {{ interestPostingPeriodType.value | translateKey:'catalogs' }}
+      <mat-label>{{ 'labels.inputs.Interest Posting Period' | translate }}</mat-label>
+      <mat-select
+        formControlName="interestPostingPeriodType"
+        matTooltip="{{ 'tooltips.Interest rate is posted or credited to a saving account' | translate }}"
+        required
+      >
+        <mat-option
+          *ngFor="let interestPostingPeriodType of interestPostingPeriodTypeData"
+          [value]="interestPostingPeriodType.id"
+        >
+          {{ interestPostingPeriodType.value | translateKey: 'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
-        {{'labels.inputs.Interest Posting Period' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Interest Posting Period' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Interest Calculated using' | translate}}</mat-label>
-      <mat-select formControlName="interestCalculationType" matTooltip="{{ 'tooltips.The method used to calculate interest' | translate}}" required>
-        <mat-option *ngFor="let interestCalculationType of interestCalculationTypeData" [value]="interestCalculationType.id">
-          {{ interestCalculationType.value | translateKey:'catalogs' }}
+      <mat-label>{{ 'labels.inputs.Interest Calculated using' | translate }}</mat-label>
+      <mat-select
+        formControlName="interestCalculationType"
+        matTooltip="{{ 'tooltips.The method used to calculate interest' | translate }}"
+        required
+      >
+        <mat-option
+          *ngFor="let interestCalculationType of interestCalculationTypeData"
+          [value]="interestCalculationType.id"
+        >
+          {{ interestCalculationType.value | translateKey: 'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
-        {{'labels.inputs.Interest Calculated using' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Interest Calculated using' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Days in Year' | translate}}</mat-label>
-      <mat-select formControlName="interestCalculationDaysInYearType" matTooltip="{{ 'tooltips.To calculate interest' | translate}}" required>
-        <mat-option *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData" [value]="interestCalculationDaysInYearType.id">
-          {{ interestCalculationDaysInYearType.value | translateKey:'catalogs' }}
+      <mat-label>{{ 'labels.inputs.Days in Year' | translate }}</mat-label>
+      <mat-select
+        formControlName="interestCalculationDaysInYearType"
+        matTooltip="{{ 'tooltips.To calculate interest' | translate }}"
+        required
+      >
+        <mat-option
+          *ngFor="let interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData"
+          [value]="interestCalculationDaysInYearType.id"
+        >
+          {{ interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}
         </mat-option>
       </mat-select>
       <mat-error>
-        {{'labels.inputs.Days in Year' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Days in Year' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Previous' | translate}}
+      {{ 'labels.buttons.Previous' | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      {{'labels.buttons.Next' | translate}}
+      {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>
-
 </form>

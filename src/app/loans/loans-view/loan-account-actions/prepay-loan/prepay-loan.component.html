@@ -1,27 +1,29 @@
 <div class="container mat-elevation-z8">
-
   <mat-card>
-
     <form [formGroup]="prepayLoanForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field (click)="transactionDatePicker.open()">
-            <mat-label>{{"labels.inputs.Transaction Date" | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
-              formControlName="transactionDate">
+            <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="transactionDatePicker"
+              required
+              formControlName="transactionDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             <mat-error *ngIf="prepayLoanForm.controls.transactionDate.hasError('required')">
-              {{"labels.inputs.Transaction Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <div fxLayout="row wrap" class="content">
             <div fxFlex="50%" class="mat-body-strong">
-              {{ 'Principal' | translate}}
+              {{ 'Principal' | translate }}
             </div>
 
             <div fxFlex="50%" class="r-amount right-label">
@@ -29,7 +31,7 @@
             </div>
 
             <div fxFlex="50%" class="mat-body-strong">
-              {{ 'Interest' | translate}}
+              {{ 'Interest' | translate }}
             </div>
 
             <div fxFlex="50%" class="r-amount right-label">
@@ -37,7 +39,7 @@
             </div>
 
             <div fxFlex="50%" class="mat-body-strong">
-              {{ 'Fees' | translate}}
+              {{ 'Fees' | translate }}
             </div>
 
             <div fxFlex="50%" class="r-amount right-label">
@@ -45,7 +47,7 @@
             </div>
 
             <div fxFlex="50%" class="mat-body-strong">
-              {{ 'Penalties' | translate}}
+              {{ 'Penalties' | translate }}
             </div>
 
             <div fxFlex="50%" class="r-amount right-label">
@@ -53,18 +55,21 @@
             </div>
           </div>
 
-          <mifosx-input-amount [currency]="currency" [isRequired]="true"
+          <mifosx-input-amount
+            [currency]="currency"
+            [isRequired]="true"
             [inputFormControl]="prepayLoanForm.controls.transactionAmount"
-            [inputLabel]="'Transaction Amount'">
+            [inputLabel]="'Transaction Amount'"
+          >
           </mifosx-input-amount>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.External Id" | translate}}</mat-label>
-            <input matInput formControlName="externalId">
+            <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+            <input matInput formControlName="externalId" />
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Payment Type" | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
             <mat-select formControlName="paymentTypeId">
               <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType.id">
                 {{ paymentType.name }}
@@ -76,7 +81,7 @@
             <span fxFlex="75%" class="expandcollapsebutton m-l-10 m-t-40" (click)="addPaymentDetails()">
               <mat-slide-toggle>
                 <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
-                  <span class="m-l-10">{{"labels.inputs.Show Payment Details" | translate}}</span>
+                  <span class="m-l-10">{{ 'labels.inputs.Show Payment Details' | translate }}</span>
                 </div>
               </mat-slide-toggle>
             </span>
@@ -84,48 +89,51 @@
 
           <ng-container *ngIf="showPaymentDetails">
             <mat-form-field>
-              <mat-label> {{"labels.inputs.Account" | translate}} #</mat-label>
-              <input matInput formControlName="accountNumber">
+              <mat-label> {{ 'labels.inputs.Account' | translate }} #</mat-label>
+              <input matInput formControlName="accountNumber" />
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Cheque" | translate}} #</mat-label>
-              <input matInput formControlName="checkNumber">
+              <mat-label>{{ 'labels.inputs.Cheque' | translate }} #</mat-label>
+              <input matInput formControlName="checkNumber" />
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Routing Code" | translate}}</mat-label>
-              <input matInput formControlName="routingCode">
+              <mat-label>{{ 'labels.inputs.Routing Code' | translate }}</mat-label>
+              <input matInput formControlName="routingCode" />
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Reciept" | translate}} #</mat-label>
-              <input matInput formControlName="receiptNumber">
+              <mat-label>{{ 'labels.inputs.Reciept' | translate }} #</mat-label>
+              <input matInput formControlName="receiptNumber" />
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Bank" | translate}} #</mat-label>
-              <input matInput formControlName="bankNumber">
+              <mat-label>{{ 'labels.inputs.Bank' | translate }} #</mat-label>
+              <input matInput formControlName="bankNumber" />
             </mat-form-field>
           </ng-container>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Note" | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
-
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel" | translate}}</button>
-          <button mat-raised-button color="primary" [disabled]="!prepayLoanForm.valid"
-            *mifosxHasPermission="'REPAYMENT_LOAN'">{{"labels.buttons.Submit" | translate}}</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!prepayLoanForm.valid"
+            *mifosxHasPermission="'REPAYMENT_LOAN'"
+          >
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
         </mat-card-actions>
-
       </mat-card-content>
-
     </form>
-
   </mat-card>
-
 </div>

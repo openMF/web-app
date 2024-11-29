@@ -1,9 +1,15 @@
 <h1 mat-dialog-title>{{ 'labels.buttons.Cancel' | translate }}</h1>
 <div mat-dialog-content>
-  <p *ngIf="!data.cancelContext">{{ 'labels.text.Are you sure you want to leave this page and lose all inputted data' | translate }}?</p>
-  <p *ngIf="data.cancelContext">{{ 'labels.text.Are you sure you want to cancel' | translate }} {{ data.cancelContext }} ?</p>
+  <p *ngIf="!data.cancelContext">
+    {{ 'labels.text.Are you sure you want to leave this page and lose all inputted data' | translate }}?
+  </p>
+  <p *ngIf="data.cancelContext">
+    {{ 'labels.text.Are you sure you want to cancel' | translate }} {{ data.cancelContext }} ?
+  </p>
 </div>
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.No' | translate }}</button>
-  <button mat-raised-button color="warn" [mat-dialog-close]="{ cancel: true }">{{ 'labels.buttons.Yes' | translate }}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="{ cancel: true }">
+    {{ 'labels.buttons.Yes' | translate }}
+  </button>
 </mat-dialog-actions>

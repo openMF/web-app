@@ -1,15 +1,10 @@
 <div class="container">
-
   <mat-card>
-
     <form>
-
       <mat-card-content>
-
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Office' | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select>
               <mat-option *ngFor="let office of officeData" [value]="office">
                 {{ office }}
@@ -18,7 +13,7 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Staff' | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select>
               <mat-option *ngFor="let staff of staffData" [value]="staff">
                 {{ staff }}
@@ -27,24 +22,24 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.User Name' | translate}}</mat-label>
-            <input type="text" matInput>
+            <mat-label>{{ 'labels.inputs.User Name' | translate }}</mat-label>
+            <input type="text" matInput />
           </mat-form-field>
 
           <span fxFlex="48%" fxHide.lt-md></span>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.First Name' | translate}}</mat-label>
-            <input type="text" matInput>
+            <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+            <input type="text" matInput />
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Last Name' | translate}}</mat-label>
-            <input type="text" matInput>
+            <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+            <input type="text" matInput />
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Gender' | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
             <mat-select>
               <mat-option *ngFor="let gender of genderData" [value]="gender">
                 {{ gender }}
@@ -53,33 +48,30 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="dateOfBirthDatePicker.open()">
-            <mat-label>{{'labels.inputs.Date of Birth' | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker">
+            <mat-label>{{ 'labels.inputs.Date of Birth' | translate }}</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" />
             <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Email' | translate}}</mat-label>
-            <input type="email" matInput>
+            <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
+            <input type="email" matInput />
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Mobile No' | translate}}</mat-label>
-            <input type="tel" matInput>
+            <mat-label>{{ 'labels.inputs.Mobile No' | translate }}</mat-label>
+            <input type="tel" matInput />
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary">{{'labels.buttons.Submit' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary">{{ 'labels.buttons.Submit' | translate }}</button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

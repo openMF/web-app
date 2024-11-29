@@ -2,21 +2,17 @@
 
 <!-- Global Web App Configuration Settings -->
 <div class="container">
-
   <mat-accordion>
-
     <mat-expansion-panel>
-
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{'labels.inputs.Main Configuration' | translate}}
+          {{ 'labels.inputs.Main Configuration' | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
-
         <mat-form-field>
-          <mat-label>{{'labels.inputs.Default Language' | translate}}</mat-label>
+          <mat-label>{{ 'labels.inputs.Default Language' | translate }}</mat-label>
           <mat-select [formControl]="language" [compareWith]="compareOptions">
             <mat-option *ngFor="let language of languages" [value]="language">
               {{ language.name }}
@@ -25,7 +21,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>{{'labels.inputs.Default Date Format' | translate}}</mat-label>
+          <mat-label>{{ 'labels.inputs.Default Date Format' | translate }}</mat-label>
           <mat-select [formControl]="dateFormat">
             <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat">
               {{ dateFormat }}
@@ -34,99 +30,83 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>{{'labels.inputs.Decimals to Display' | translate}}</mat-label>
+          <mat-label>{{ 'labels.inputs.Decimals to Display' | translate }}</mat-label>
           <mat-select [formControl]="decimalsToDisplay">
             <mat-option *ngFor="let decimalOpt of decimals" [value]="decimalOpt">
               {{ decimalOpt }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-
       </div>
-
     </mat-expansion-panel>
 
     <mat-expansion-panel>
-
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{'labels.inputs.Images' | translate}}
+          {{ 'labels.inputs.Images' | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
-
-        <span class="header">{{'labels.inputs.Favicon' | translate}}</span>
+        <span class="header">{{ 'labels.inputs.Favicon' | translate }}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
-        <span class="header">{{'labels.inputs.Cover Image' | translate}}</span>
+        <span class="header">{{ 'labels.inputs.Cover Image' | translate }}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
-        <span class="header">{{'labels.inputs.Logo' | translate}}</span>
+        <span class="header">{{ 'labels.inputs.Logo' | translate }}</span>
         <mifosx-file-upload></mifosx-file-upload>
 
-        <span class="header">{{'labels.inputs.Logo with Organization Name' | translate}}</span>
+        <span class="header">{{ 'labels.inputs.Logo with Organization Name' | translate }}</span>
         <mifosx-file-upload></mifosx-file-upload>
-
       </div>
-
     </mat-expansion-panel>
 
     <mat-expansion-panel>
-
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{'labels.inputs.Theme and Font' | translate}}
+          {{ 'labels.inputs.Theme and Font' | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
-
-        <span class="header">{{'labels.inputs.Theme' | translate}}</span>
+        <span class="header">{{ 'labels.inputs.Theme' | translate }}</span>
         <mifosx-theme-picker></mifosx-theme-picker>
 
         <mat-form-field>
-          <mat-label>{{'labels.inputs.Default Font' | translate}}</mat-label>
+          <mat-label>{{ 'labels.inputs.Default Font' | translate }}</mat-label>
           <mat-select>
             <mat-option *ngFor="let font of fonts" [value]="font">
               {{ font }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-
       </div>
-
     </mat-expansion-panel>
 
     <mat-expansion-panel>
-
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{'labels.inputs.Contact Information' | translate}}
+          {{ 'labels.inputs.Contact Information' | translate }}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
       <div fxLayout="column">
-
         <mat-form-field>
-          <mat-label>{{'labels.inputs.Website' | translate}}</mat-label>
-          <input type="url" matInput>
+          <mat-label>{{ 'labels.inputs.Website' | translate }}</mat-label>
+          <input type="url" matInput />
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>{{'labels.inputs.Email' | translate}}</mat-label>
-          <input type="email" matInput>
+          <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
+          <input type="email" matInput />
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>{{'labels.inputs.Contact No' | translate}}</mat-label>
-          <input type="tel" matInput>
+          <mat-label>{{ 'labels.inputs.Contact No' | translate }}</mat-label>
+          <input type="tel" matInput />
         </mat-form-field>
-
       </div>
-
     </mat-expansion-panel>
-
   </mat-accordion>
-
 </div>

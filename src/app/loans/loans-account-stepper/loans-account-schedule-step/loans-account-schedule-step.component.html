@@ -1,25 +1,26 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
-
   <button mat-flat-button color="primary" (click)="showRepaymentInfo()">
-    <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{"labels.inputs.Generate Repayment Schedule" | translate}}
+    <fa-icon icon="calendar" class="m-r-10"></fa-icon>{{ 'labels.inputs.Generate Repayment Schedule' | translate }}
   </button>
 
-  <mifosx-repayment-schedule-tab fxFlex="100%" [repaymentScheduleDetails]="repaymentScheduleDetails"
-    [currencyCode]="currencyCode">
+  <mifosx-repayment-schedule-tab
+    fxFlex="100%"
+    [repaymentScheduleDetails]="repaymentScheduleDetails"
+    [currencyCode]="currencyCode"
+  >
   </mifosx-repayment-schedule-tab>
-
 </div>
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Previous" | translate}}
+    {{ 'labels.buttons.Previous' | translate }}
   </button>
   <button mat-raised-button matStepperNext>
-    {{"labels.buttons.Next" | translate}}
+    {{ 'labels.buttons.Next' | translate }}
     <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
   <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
-    {{"labels.buttons.Cancel" | translate}}
+    {{ 'labels.buttons.Cancel' | translate }}
   </button>
 </div>

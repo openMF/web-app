@@ -1,64 +1,72 @@
 <div class="container">
-
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" class="action-buttons">
     <button mat-raised-button color="primary" [routerLink]="['../actions/Reschedule']">
-      {{"labels.buttons.Reschedule" | translate}}
+      {{ 'labels.buttons.Reschedule' | translate }}
     </button>
   </div>
 
   <table mat-table [dataSource]="loanRescheduleData">
-
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> # </th>
-      <td mat-cell *matCellDef="let item"> {{ item.id }} </td>
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let item">{{ item.id }}</td>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Status" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
       <td mat-cell *matCellDef="let item">
         <div [ngClass]="item.statusEnum.code | statusLookup">
           <fa-icon icon="stop"></fa-icon>
           <span class="m-l-10 status">
-            {{ item.statusEnum.value | translate}}
+            {{ item.statusEnum.value | translate }}
           </span>
         </div>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="rescheduleFromDate">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.From Date" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.From Date' | translate }}</th>
       <td mat-cell *matCellDef="let item">
         {{ item.rescheduleFromDate | dateFormat }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="reason">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Reason" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Reason' | translate }}</th>
       <td mat-cell *matCellDef="let item">
         {{ item.rescheduleReasonCodeValue.name }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
       <td mat-cell *matCellDef="let item">
         <span *ngIf="item.statusEnum.pendingApproval">
-          <button class="action-button" mat-raised-button color="warn" matTooltip="{{ 'tooltips.Reject Reschedule' | translate}}" matTooltipPosition="left"
-          (click)="manageRequest(item, 'Reject')">
-          <fa-icon icon="trash"></fa-icon>
-        </button>
-          <button class="action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Approve Reschedule' | translate}}" matTooltipPosition="right"
-            (click)="manageRequest(item, 'Approve')">
+          <button
+            class="action-button"
+            mat-raised-button
+            color="warn"
+            matTooltip="{{ 'tooltips.Reject Reschedule' | translate }}"
+            matTooltipPosition="left"
+            (click)="manageRequest(item, 'Reject')"
+          >
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+          <button
+            class="action-button"
+            mat-raised-button
+            color="primary"
+            matTooltip="{{ 'tooltips.Approve Reschedule' | translate }}"
+            matTooltipPosition="right"
+            (click)="manageRequest(item, 'Approve')"
+          >
             <fa-icon icon="check"></fa-icon>
           </button>
-
         </span>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="loanRescheduleDataColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: loanRescheduleDataColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: loanRescheduleDataColumns"></tr>
   </table>
-
 </div>

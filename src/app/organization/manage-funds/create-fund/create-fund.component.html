@@ -1,37 +1,32 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="fundForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
-            <input matInput required autofocus formControlName="name">
+            <input matInput required autofocus formControlName="name" />
             <mat-error *ngIf="fundForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.name' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
-            <input matInput autofocus formControlName="externalId">
+            <input matInput autofocus formControlName="externalId" />
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!fundForm.valid" *mifosxHasPermission="'CREATE_FUND'">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!fundForm.valid" *mifosxHasPermission="'CREATE_FUND'">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

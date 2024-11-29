@@ -1,46 +1,46 @@
 <mat-card class="loan-card">
-
   <mat-card-content>
-
-    <h2> {{"labels.heading.GLIM Account Overview" | translate}}</h2>
+    <h2>{{ 'labels.heading.GLIM Account Overview' | translate }}</h2>
 
     <table mat-table [dataSource]="dataSource">
-
       <ng-container matColumnDef="loanId">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Loan Id" | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Id' | translate }}</th>
         <td mat-cell *matCellDef="let element">
-          {{element.childLoanId}} </td>
+          {{ element.childLoanId }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="clientId">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Client ID" | translate}} </th>
-        <td mat-cell *matCellDef="let element">{{element.clientId}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client ID' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.clientId }}</td>
       </ng-container>
 
       <ng-container matColumnDef="clientName">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Client Name" | translate}} </th>
-        <td mat-cell *matCellDef="let element">{{element.clientName}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Name' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.clientName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="loanAccountNumber">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Loan Account Number" | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.childLoanAccountNo}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Account Number' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.childLoanAccountNo }}</td>
       </ng-container>
 
       <ng-container matColumnDef="clientPrincipalLoan">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Client Principal Loan" | translate}} </th>
-        <td mat-cell *matCellDef="let element" > {{element.childPrincipalAmount}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Principal Loan' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.childPrincipalAmount }}</td>
       </ng-container>
 
       <ng-container matColumnDef="groupPrincipalLoan">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Group Principal Loan" | translate}} </th>
-        <td mat-cell *matCellDef="let element" > {{element.parentPrincipalAmount}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Group Principal Loan' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.parentPrincipalAmount }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row  [routerLink]="['../../', row.childLoanId, 'general']" *matRowDef="let row; columns: displayedColumns;"></tr>
-
+      <tr
+        mat-row
+        [routerLink]="['../../', row.childLoanId, 'general']"
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
     </table>
-
   </mat-card-content>
 </mat-card>

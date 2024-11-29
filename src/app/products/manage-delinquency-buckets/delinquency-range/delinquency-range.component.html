@@ -1,45 +1,45 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_DELINQUENCY_RANGE'">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    {{'labels.text.Create Delinquency Range' | translate }}
+    {{ 'labels.text.Create Delinquency Range' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <div fxLayout="row">
     <mat-form-field fxFlex>
-      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
   </div>
 
   <div class="mat-elevation-z8">
-
     <table mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="classification">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="classification"> {{"labels.inputs.Classification" | translate}} </th>
-        <td mat-cell *matCellDef="let delinquencyRange"> {{ delinquencyRange.classification }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="classification">
+          {{ 'labels.inputs.Classification' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let delinquencyRange">{{ delinquencyRange.classification }}</td>
       </ng-container>
 
       <ng-container matColumnDef="minimumAgeDays">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="minimumAgeDays">{{"labels.inputs.Days From" | translate}} </th>
-        <td mat-cell *matCellDef="let delinquencyRange"> {{ delinquencyRange.minimumAgeDays }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="minimumAgeDays">
+          {{ 'labels.inputs.Days From' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let delinquencyRange">{{ delinquencyRange.minimumAgeDays }}</td>
       </ng-container>
 
       <ng-container matColumnDef="maximumAgeDays">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="maximumAgeDays"> {{"labels.inputs.Days Till" | translate}} </th>
-        <td mat-cell *matCellDef="let delinquencyRange"> {{ delinquencyRange.maximumAgeDays }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="maximumAgeDays">
+          {{ 'labels.inputs.Days Till' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let delinquencyRange">{{ delinquencyRange.maximumAgeDays }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id]" class="select-row"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
-
 </div>

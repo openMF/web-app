@@ -1,35 +1,36 @@
-<h1 mat-dialog-title>{{ data.columnName ? ('labels.buttons.Edit' | translate) : ('labels.buttons.Add' | translate) }} {{'labels.inputs.Column' | translate }}</h1>
+<h1 mat-dialog-title>
+  {{ data.columnName ? ('labels.buttons.Edit' | translate) : ('labels.buttons.Add' | translate) }}
+  {{ 'labels.inputs.Column' | translate }}
+</h1>
 
 <mat-dialog-content>
-
   <form [formGroup]="columnForm">
-
     <div fxLayout="column">
-
       <mat-form-field>
-        <mat-label>{{'labels.inputs.Column Name' | translate }}</mat-label>
-        <input matInput required formControlName="name">
+        <mat-label>{{ 'labels.inputs.Column Name' | translate }}</mat-label>
+        <input matInput required formControlName="name" />
         <mat-error *ngIf="columnForm.controls.name.hasError('required')">
-          {{'labels.inputs.Column Name' | translate }} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+          {{ 'labels.inputs.Column Name' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>{{'labels.inputs.Column Type' | translate }}</mat-label>
+        <mat-label>{{ 'labels.inputs.Column Type' | translate }}</mat-label>
         <mat-select required formControlName="type">
           <mat-option *ngFor="let columnType of columnTypeData" [value]="columnType.value">
-            {{ columnType.displayValue | translateKey:'inputs' }}
+            {{ columnType.displayValue | translateKey: 'inputs' }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field *ngIf="columnForm.value.type === 'String'">
-        <mat-label> {{'labels.inputs.Column Length' | translate }}</mat-label>
-        <input matInput required type="number" formControlName="length">
+        <mat-label> {{ 'labels.inputs.Column Length' | translate }}</mat-label>
+        <input matInput required type="number" formControlName="length" />
       </mat-form-field>
 
       <mat-form-field *ngIf="columnForm.value.type === 'Dropdown'">
-        <mat-label> {{'labels.inputs.Column Code' | translate }}</mat-label>
+        <mat-label> {{ 'labels.inputs.Column Code' | translate }}</mat-label>
         <mat-select required formControlName="code">
           <mat-option *ngFor="let columnCode of data.columnCodes" [value]="columnCode.name">
             {{ columnCode.name }}
@@ -38,25 +39,29 @@
       </mat-form-field>
 
       <div>
-        <mat-checkbox labelPosition="after" formControlName="mandatory">{{'labels.text.Mandatory' | translate}}</mat-checkbox>
+        <mat-checkbox labelPosition="after" formControlName="mandatory">{{
+          'labels.text.Mandatory' | translate
+        }}</mat-checkbox>
       </div>
 
       <div>
-        <mat-checkbox labelPosition="after" formControlName="unique">{{'labels.inputs.Unique' | translate}}</mat-checkbox>
+        <mat-checkbox labelPosition="after" formControlName="unique">{{
+          'labels.inputs.Unique' | translate
+        }}</mat-checkbox>
       </div>
 
       <div>
-        <mat-checkbox labelPosition="after" formControlName="indexed">{{'labels.inputs.Indexed' | translate}}</mat-checkbox>
+        <mat-checkbox labelPosition="after" formControlName="indexed">{{
+          'labels.inputs.Indexed' | translate
+        }}</mat-checkbox>
       </div>
-
     </div>
-
   </form>
-
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>{{'labels.buttons.Cancel' | translate }}</button>
-  <button mat-raised-button color="primary" [disabled]="!columnForm.valid || columnForm.pristine"
-    (click)="submit()">{{'labels.buttons.Submit' | translate }}</button>
+  <button mat-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="primary" [disabled]="!columnForm.valid || columnForm.pristine" (click)="submit()">
+    {{ 'labels.buttons.Submit' | translate }}
+  </button>
 </mat-dialog-actions>
