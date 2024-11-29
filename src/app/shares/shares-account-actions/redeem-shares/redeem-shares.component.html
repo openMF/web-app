@@ -1,45 +1,50 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="redeemSharesForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field (click)="requestedDatePicker.open()">
-            <mat-label>{{'labels.inputs.Request Date' | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="requestedDatePicker" required formControlName="requestedDate">
+            <mat-label>{{ 'labels.inputs.Request Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="requestedDatePicker"
+              required
+              formControlName="requestedDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="requestedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #requestedDatePicker></mat-datepicker>
             <mat-error *ngIf="redeemSharesForm.controls.requestedDate.hasError('required')">
-              {{'labels.inputs.Request Date' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Request Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Total No. of Shares' | translate}}</mat-label>
-            <input matInput required formControlName="requestedShares">
+            <mat-label>{{ 'labels.inputs.Total No. of Shares' | translate }}</mat-label>
+            <input matInput required formControlName="requestedShares" />
             <mat-error *ngIf="redeemSharesForm.controls.requestedShares.hasError('required')">
-              {{'labels.inputs.Requested Shares' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Requested Shares' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Current Price" | translate}}</mat-label>
-            <input matInput required formControlName="unitPrice">
+            <mat-label>{{ 'labels.inputs.Current Price' | translate }}</mat-label>
+            <input matInput required formControlName="unitPrice" />
           </mat-form-field>
         </div>
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="warn" [disabled]="!redeemSharesForm.valid">{{'labels.buttons.Submit' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="warn" [disabled]="!redeemSharesForm.valid">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

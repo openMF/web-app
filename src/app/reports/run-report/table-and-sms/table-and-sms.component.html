@@ -1,31 +1,39 @@
 <div class="container">
-
   <div *ngIf="!hideOutput && !toBeExportedToRepo">
-
     <div class="m-b-10" *ngIf="dataObject.report.type === 'Table'" fxLayoutGap="25px" fxLayoutAlign="end">
-      <button mat-raised-button color="primary" (click)="exportFile()" [disabled]="notExistsReportData"
-        matToolTip="{{'labels.text.Export the data to CSV file' | translate}}">
-        {{'labels.buttons.Export CSV' | translate}}
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="exportFile()"
+        [disabled]="notExistsReportData"
+        matToolTip="{{ 'labels.text.Export the data to CSV file' | translate }}"
+      >
+        {{ 'labels.buttons.Export CSV' | translate }}
       </button>
-      <button mat-raised-button color="primary" (click)="exportToXLS()" [disabled]="notExistsReportData"
-        matToolTip="{{'labels.text.Export the data to XLS file' | translate}}">
-        {{'labels.buttons.Export XLS' | translate}}
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="exportToXLS()"
+        [disabled]="notExistsReportData"
+        matToolTip="{{ 'labels.text.Export the data to XLS file' | translate }}"
+      >
+        {{ 'labels.buttons.Export XLS' | translate }}
       </button>
     </div>
 
     <div class="table-output" [hidden]="notExistsReportData">
       <table id="report-table" mat-table [dataSource]="dataSource">
-        <div *ngFor="let column of displayedColumns index as i">
+        <div *ngFor="let column of displayedColumns; index as i">
           <ng-container [matColumnDef]="column">
-            <th mat-header-cell *matHeaderCellDef>{{column}}</th>
+            <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
             <td mat-cell *matCellDef="let param">
-              <span *ngIf="isDecimal(i)">{{toDecimal(param.row[i])}}</span>
-              <span *ngIf="!isDecimal(i)">{{param.row[i]}}</span>
+              <span *ngIf="isDecimal(i)">{{ toDecimal(param.row[i]) }}</span>
+              <span *ngIf="!isDecimal(i)">{{ param.row[i] }}</span>
             </td>
           </ng-container>
         </div>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row"></tr>
       </table>
       <mat-paginator [pageSizeOptions]="[100, 200, 300]" showFirstLastButtons></mat-paginator>
     </div>
@@ -33,7 +41,7 @@
     <div class="alert" [hidden]="!notExistsReportData">
       <div class="message">
         <i class="fa fa-exclamation-circle alert-check"></i>
-        {{'labels.text.No report data was generated' | translate}}
+        {{ 'labels.text.No report data was generated' | translate }}
       </div>
     </div>
   </div>
@@ -41,7 +49,7 @@
   <div class="alert" *ngIf="!hideOutput && toBeExportedToRepo">
     <div class="message">
       <i class="fa fa-exclamation-circle alert-check"></i>
-      {{'labels.text.The report request' | translate}}
+      {{ 'labels.text.The report request' | translate }}
     </div>
   </div>
 
@@ -51,7 +59,7 @@
 
   <div class="back-button" *ngIf="!hideOutput">
     <button type="button" color="primary" mat-raised-button [routerLink]="['../..']">
-      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>{{"labels.buttons.Back" | translate}}</button>
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>{{ 'labels.buttons.Back' | translate }}
+    </button>
   </div>
-
 </div>

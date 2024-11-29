@@ -1,176 +1,170 @@
 <mat-card class="container" *ngIf="!isCollapsed">
-
   <div class="alert" *ngIf="noData">
-
     <div class="message">
       <i class="fa fa-exclamation-circle alert-check"></i>
-      {{"labels.text.No repayments and disbursal" | translate}}
+      {{ 'labels.text.No repayments and disbursal' | translate }}
     </div>
-
   </div>
 
   <form [formGroup]="collectionSheetForm" (ngSubmit)="previewCollectionSheet()">
-
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
-
       <mat-form-field fxFlex="98%">
-        <mat-label>{{"labels.inputs.Branch Office" | translate}}</mat-label>
+        <mat-label>{{ 'labels.inputs.Branch Office' | translate }}</mat-label>
         <mat-select formControlName="officeId" required>
           <mat-option *ngFor="let office of officesData" [value]="office.id">
             {{ office.name }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="collectionSheetForm.controls.officeId.hasError('required')">
-          {{"labels.inputs.Branch Office" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+          {{ 'labels.inputs.Branch Office' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="98%" (click)="transactionDatePicker.open()">
-        <mat-label>{{"labels.inputs.Repayment Date" | translate}}</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required
-          formControlName="transactionDate">
+        <mat-label>{{ 'labels.inputs.Repayment Date' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="transactionDatePicker"
+          required
+          formControlName="transactionDate"
+        />
         <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #transactionDatePicker></mat-datepicker>
         <mat-error *ngIf="collectionSheetForm.controls.transactionDate.hasError('required')">
-          {{"labels.inputs.Repayment Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+          {{ 'labels.inputs.Repayment Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field fxFlex="98%">
-        <mat-label>{{"labels.inputs.Staff" | translate}}</mat-label>
+        <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
         <mat-select formControlName="staffId">
           <mat-option *ngFor="let loanOfficer of loanOfficerData" [value]="loanOfficer.id">
             {{ loanOfficer.displayName }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-
     </div>
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-      <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate}}</button>
+      <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
       <button mat-raised-button color="primary" [disabled]="!collectionSheetForm.valid">
-        <fa-icon icon="search" class="m-r-10"></fa-icon> {{"labels.buttons.Collection Sheet" | translate}}
+        <fa-icon icon="search" class="m-r-10"></fa-icon> {{ 'labels.buttons.Collection Sheet' | translate }}
       </button>
     </mat-card-actions>
-
   </form>
-
 </mat-card>
 
 <div class="showcollectionsheet">
-
   <div class="container" *ngIf="isCollapsed">
-
     <mat-card>
-
       <div class="m-b-20">
         <button mat-raised-button color="primary" (click)="isCollapsed = false">
-          {{"labels.buttons.Parameters" | translate}}
+          {{ 'labels.buttons.Parameters' | translate }}
         </button>
       </div>
 
       <ng-container *ngIf="loansDataSource">
-
-        <h2 class="mat-h2">{{"labels.heading.Due Collections" | translate}}</h2>
+        <h2 class="mat-h2">{{ 'labels.heading.Due Collections' | translate }}</h2>
 
         <table class="mat-elevation-z1" mat-table [dataSource]="loansDataSource" matSort>
-
           <ng-container matColumnDef="loanAccount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Loan Account" | translate}} # </th>
-            <td mat-cell *matCellDef="let loan"> {{ loan.accountId }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Loan Account' | translate }} #</th>
+            <td mat-cell *matCellDef="let loan">{{ loan.accountId }}</td>
           </ng-container>
 
           <ng-container matColumnDef="productName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Product Name" | translate}} </th>
-            <td mat-cell *matCellDef="let loan"> {{ loan.productShortName }}({{ loan.productId }}) </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Product Name' | translate }}</th>
+            <td mat-cell *matCellDef="let loan">{{ loan.productShortName }}({{ loan.productId }})</td>
           </ng-container>
 
           <ng-container matColumnDef="clientName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Client Name" | translate}} </th>
-            <td mat-cell *matCellDef="let loan"> {{ loan.clientName }}({{ loan.clientId }}) </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Client Name' | translate }}</th>
+            <td mat-cell *matCellDef="let loan">{{ loan.clientName }}({{ loan.clientId }})</td>
           </ng-container>
 
           <ng-container matColumnDef="totalDue">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Total Due" | translate}} </th>
-            <td mat-cell *matCellDef="let loan"> {{ loan.totalDue }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Total Due' | translate }}</th>
+            <td mat-cell *matCellDef="let loan">{{ loan.totalDue }}</td>
           </ng-container>
 
           <ng-container matColumnDef="charges">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Charges" | translate}} </th>
-            <td mat-cell *matCellDef="let loan"> {{ loan.feeDue }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Charges' | translate }}</th>
+            <td mat-cell *matCellDef="let loan">{{ loan.feeDue }}</td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Actions" | translate}} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Actions' | translate }}</th>
             <td mat-cell *matCellDef="let loan; let i = index">
-              <button mat-raised-button color="primary" (click)="showAndStorePaymentDetails('loans/accounts', loan, i)">{{"labels.buttons.Add Payment" | translate}}</button>
+              <button mat-raised-button color="primary" (click)="showAndStorePaymentDetails('loans/accounts', loan, i)">
+                {{ 'labels.buttons.Add Payment' | translate }}
+              </button>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="loansDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: loansDisplayedColumns;"></tr>
-
+          <tr mat-row *matRowDef="let row; columns: loansDisplayedColumns"></tr>
         </table>
 
         <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
       </ng-container>
 
       <ng-container *ngIf="savingsDataSource">
-
-        <h2 class="mat-h2">{{"labels.inputs.Due Savings Collections" | translate}}</h2>
+        <h2 class="mat-h2">{{ 'labels.inputs.Due Savings Collections' | translate }}</h2>
 
         <table class="mat-elevation-z1" mat-table [dataSource]="savingsDataSource" matSort>
-
           <ng-container matColumnDef="depositAccount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Deposit Account" | translate}} </th>
-            <td mat-cell *matCellDef="let saving"> {{ saving.depositAccountType }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Deposit Account' | translate }}</th>
+            <td mat-cell *matCellDef="let saving">{{ saving.depositAccountType }}</td>
           </ng-container>
 
           <ng-container matColumnDef="savingsAccountNo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Savings Account" | translate}} # </th>
-            <td mat-cell *matCellDef="let saving"> {{ saving.accountId }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'labels.inputs.Savings Account' | translate }} #
+            </th>
+            <td mat-cell *matCellDef="let saving">{{ saving.accountId }}</td>
           </ng-container>
 
           <ng-container matColumnDef="productName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Product Name" | translate}} </th>
-            <td mat-cell *matCellDef="let saving"> {{ saving.productName }}({{ saving.productId }}) </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Product Name' | translate }}</th>
+            <td mat-cell *matCellDef="let saving">{{ saving.productName }}({{ saving.productId }})</td>
           </ng-container>
 
           <ng-container matColumnDef="clientName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Client Name" | translate}} </th>
-            <td mat-cell *matCellDef="let saving"> {{ saving.clientName }}({{ saving.clientId }}) </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Client Name' | translate }}</th>
+            <td mat-cell *matCellDef="let saving">{{ saving.clientName }}({{ saving.clientId }})</td>
           </ng-container>
 
           <ng-container matColumnDef="totalDue">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Total Due" | translate}} </th>
-            <td mat-cell *matCellDef="let saving"> {{ saving.dueAmount }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Total Due' | translate }}</th>
+            <td mat-cell *matCellDef="let saving">{{ saving.dueAmount }}</td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Actions" | translate}} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Actions' | translate }}</th>
             <td mat-cell *matCellDef="let saving; let j = index">
-              <button mat-raised-button color="primary" (click)="showAndStorePaymentDetails('savings', saving, j)">{{"labels.buttons.Add Payment" | translate}}</button>
+              <button mat-raised-button color="primary" (click)="showAndStorePaymentDetails('savings', saving, j)">
+                {{ 'labels.buttons.Add Payment' | translate }}
+              </button>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="savingsDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: savingsDisplayedColumns;"></tr>
-
+          <tr mat-row *matRowDef="let row; columns: savingsDisplayedColumns"></tr>
         </table>
 
         <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
       </ng-container>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate}}</button>
-        <button mat-raised-button color="primary" (click)="submit()">{{"labels.buttons.Submit" | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" (click)="submit()">{{ 'labels.buttons.Submit' | translate }}</button>
       </mat-card-actions>
-
     </mat-card>
-
   </div>
-
 </div>

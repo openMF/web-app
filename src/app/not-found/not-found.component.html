@@ -1,9 +1,10 @@
-  <div class="not-found-container">
-    <div id="title">404</div>
-    <div id="subtitle" class="f30">{{'not_found_subtitle' | translate}}</div>
-    <div class="back-button m-t-20">
-      <button type="button" (click)="goBack()" mat-raised-button>
-        <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-        {{'labels.buttons.Back' | translate}}</button>
-    </div>
+<div class="not-found-container">
+  <div id="title">404</div>
+  <div id="subtitle" class="f30">{{ 'not_found_subtitle' | translate }}</div>
+  <div class="back-button m-t-20">
+    <button type="button" (click)="goBack()" mat-raised-button>
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
   </div>
+</div>

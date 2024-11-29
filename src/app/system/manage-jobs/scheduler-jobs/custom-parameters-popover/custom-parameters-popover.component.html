@@ -1,13 +1,13 @@
-<h1 mat-dialog-title>{{'labels.buttons.Edit Job Custom Parameters' | translate}}</h1>
+<h1 mat-dialog-title>{{ 'labels.buttons.Edit Job Custom Parameters' | translate }}</h1>
 
 <mat-dialog-content>
   <div class="jobs-container">
     <div *ngFor="let job of selectedJobs">
       <mifosx-custom-parameters-table
-      [displayName]="job.displayName"
-      [jobId]="job.jobId"
-      [jobParameters]="job.jobParameters"
-      (retrieveData)="runSelectedJobs($event)"
+        [displayName]="job.displayName"
+        [jobId]="job.jobId"
+        [jobParameters]="job.jobParameters"
+        (retrieveData)="runSelectedJobs($event)"
       >
       </mifosx-custom-parameters-table>
     </div>
@@ -15,17 +15,17 @@
 </mat-dialog-content>
 
 <mat-list>
-  <mat-list-item *ngFor="let message of messages" class="message" [ngClass]="{'green' : message.status}">
-    {{message.message}}
+  <mat-list-item *ngFor="let message of messages" class="message" [ngClass]="{ green: message.status }">
+    {{ message.message }}
   </mat-list-item>
 </mat-list>
 
 <mat-dialog-actions>
   <button mat-raised-button color="primary" (click)="runSelectedJobs()">
     <fa-icon icon="play" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Run Selected Jobs' | translate}}
+    {{ 'labels.buttons.Run Selected Jobs' | translate }}
   </button>
   <button mat-raised-button color="warn" [mat-dialog-close]="{ show: 0 }">
-    {{'labels.buttons.Close Custom Parameters' | translate}}
+    {{ 'labels.buttons.Close Custom Parameters' | translate }}
   </button>
 </mat-dialog-actions>

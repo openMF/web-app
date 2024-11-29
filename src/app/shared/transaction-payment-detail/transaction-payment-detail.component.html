@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" class="content">
   <div fxFlex="50%" class="mat-body-strong">
-    {{ 'labels.inputs.Payment Type' | translate}}
+    {{ 'labels.inputs.Payment Type' | translate }}
   </div>
 
   <div fxFlex="50%">
@@ -10,26 +10,26 @@
 <table *ngIf="hasSomeValue()">
   <tbody>
     <tr>
-      <td class="mat-body-strong center" colspan="2">{{ 'labels.inputs.Payment Details' | translate}}</td>
+      <td class="mat-body-strong center" colspan="2">{{ 'labels.inputs.Payment Details' | translate }}</td>
     </tr>
     <tr *ngIf="isNotNullOrEmpty(paymentDetailData.accountNumber)">
-      <td class="mat-body-strong">{{ 'labels.inputs.Account No' | translate}}</td>
+      <td class="mat-body-strong">{{ 'labels.inputs.Account No' | translate }}</td>
       <td>{{ paymentDetailData.accountNumber }}</td>
     </tr>
     <tr *ngIf="isNotNullOrEmpty(paymentDetailData.checkNumber)">
-      <td class="mat-body-strong">{{ 'labels.inputs.Cheque Number' | translate}}</td>
+      <td class="mat-body-strong">{{ 'labels.inputs.Cheque Number' | translate }}</td>
       <td>{{ paymentDetailData.checkNumber }}</td>
     </tr>
     <tr *ngIf="isNotNullOrEmpty(paymentDetailData.routingCode)">
-      <td class="mat-body-strong">{{ 'labels.inputs.Routing Code' | translate}}</td>
+      <td class="mat-body-strong">{{ 'labels.inputs.Routing Code' | translate }}</td>
       <td class="mat-body-strong">{{ paymentDetailData.routingCode }}</td>
     </tr>
     <tr *ngIf="isNotNullOrEmpty(paymentDetailData.receiptNumber)">
-      <td class="mat-body-strong">{{ 'labels.inputs.Receipt No' | translate}}</td>
+      <td class="mat-body-strong">{{ 'labels.inputs.Receipt No' | translate }}</td>
       <td>{{ paymentDetailData.receiptNumber }}</td>
     </tr>
     <tr *ngIf="isNotNullOrEmpty(paymentDetailData.bankNumber)">
-      <td class="mat-body-strong">{{ 'labels.inputs.Bank No' | translate}}</td>
+      <td class="mat-body-strong">{{ 'labels.inputs.Bank No' | translate }}</td>
       <td>{{ paymentDetailData.bankNumber }}</td>
     </tr>
   </tbody>

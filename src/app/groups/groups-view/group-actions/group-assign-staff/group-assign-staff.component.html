@@ -1,36 +1,31 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="groupAssignStaffForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field fxFlex="48%">
-            <mat-label>{{"labels.inputs.Staff"  |translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffData" [value]="staff.id">
                 {{ staff.displayName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupAssignStaffForm.controls.staffId.hasError('required')">
-              {{"labels.inputs.Staff"  |translate}} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Staff' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">{{"labels.buttons.Cancel"  |translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!groupAssignStaffForm.valid">{{"labels.buttons.Confirm"  |translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!groupAssignStaffForm.valid">
+          {{ 'labels.buttons.Confirm' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

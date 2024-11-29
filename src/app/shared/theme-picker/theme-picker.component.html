@@ -7,7 +7,12 @@
     <mat-grid-tile *ngFor="let theme of themes">
       <div mat-menu-item (click)="installTheme(theme)">
         <div class="mifosx-theme-picker-swatch">
-          <fa-icon class="mifosx-theme-chosen-icon" *ngIf="currentTheme.href === theme.href" icon="check-circle" size="lg"></fa-icon>
+          <fa-icon
+            class="mifosx-theme-chosen-icon"
+            *ngIf="currentTheme.href === theme.href"
+            icon="check-circle"
+            size="lg"
+          ></fa-icon>
           <div class="mifosx-theme-picker-primary" [style.background]="theme.primary"></div>
           <div class="mifosx-theme-picker-accent" [style.background]="theme.accent"></div>
         </div>

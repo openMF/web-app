@@ -1,5 +1,4 @@
 <div class="container">
-
   <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #loansAccountStepper>
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
@@ -22,65 +21,71 @@
     </ng-template>
 
     <mat-step [stepControl]="loansAccountDetailsForm">
+      <ng-template matStepLabel>{{ 'labels.inputs.DETAILS' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{"labels.inputs.DETAILS" | translate}}</ng-template>
-
-      <mifosx-loans-account-details-step [loansAccountTemplate]="loansAccountTemplate"
-        (loansAccountProductTemplate)="setTemplate($event)" #loansAccountDetailsForm>
+      <mifosx-loans-account-details-step
+        [loansAccountTemplate]="loansAccountTemplate"
+        (loansAccountProductTemplate)="setTemplate($event)"
+        #loansAccountDetailsForm
+      >
       </mifosx-loans-account-details-step>
-
     </mat-step>
 
     <mat-step [stepControl]="loansAccountTermsForm">
+      <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{"labels.inputs.TERMS" | translate}}</ng-template>
-
-      <mifosx-loans-account-terms-step #loanAccountTerms [loansAccountProductTemplate]="loansAccountProductTemplate"
-      [loansAccountTemplate] = "loansAccountTemplate" [collateralOptions]="collateralOptions"
-      [loansAccountFormValid]="loansAccountFormValid" [loanPrincipal]="loanPrincipal">
+      <mifosx-loans-account-terms-step
+        #loanAccountTerms
+        [loansAccountProductTemplate]="loansAccountProductTemplate"
+        [loansAccountTemplate]="loansAccountTemplate"
+        [collateralOptions]="collateralOptions"
+        [loansAccountFormValid]="loansAccountFormValid"
+        [loanPrincipal]="loanPrincipal"
+      >
       </mifosx-loans-account-terms-step>
-
     </mat-step>
 
     <mat-step>
+      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{"labels.inputs.CHARGES" | translate}}</ng-template>
-
-      <mifosx-loans-account-charges-step #loanAccountCharges [loansAccountProductTemplate]="loansAccountProductTemplate"
+      <mifosx-loans-account-charges-step
+        #loanAccountCharges
+        [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountTemplate"
-        [loansAccountFormValid]="loansAccountFormValid">
+        [loansAccountFormValid]="loansAccountFormValid"
+      >
       </mifosx-loans-account-charges-step>
-
     </mat-step>
 
     <mat-step state="repayment" *ngIf="loansAccountFormValid" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.REPAYMENT SCHEDULE' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{"labels.inputs.REPAYMENT SCHEDULE" | translate}}</ng-template>
-
-      <mifosx-loans-account-schedule-step #loanAccountSchedule [loansAccountTemplate]="loansAccountTemplate"
-        [loansAccountProductTemplate]="loansAccountProductTemplate" [loansAccount]="loansAccount" [currencyCode]="currencyCode">
+      <mifosx-loans-account-schedule-step
+        #loanAccountSchedule
+        [loansAccountTemplate]="loansAccountTemplate"
+        [loansAccountProductTemplate]="loansAccountProductTemplate"
+        [loansAccount]="loansAccount"
+        [currencyCode]="currencyCode"
+      >
       </mifosx-loans-account-schedule-step>
-
     </mat-step>
 
     <mat-step *ngFor="let datatable of datatables">
-
-      <ng-template matStepLabel>{{datatable.registeredTableName}}</ng-template>
+      <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
 
       <mifosx-loans-account-datatable-step [datatableData]="datatable" #dtloan></mifosx-loans-account-datatable-step>
-
     </mat-step>
 
     <mat-step state="preview" *ngIf="loansAccountFormValid" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{"labels.inputs.PREVIEW" | translate}}</ng-template>
-
-      <mifosx-loans-account-preview-step [loansAccountTemplate]="loansAccountTemplate"
-        [loansAccountProductTemplate]="loansAccountProductTemplate" [loansAccount]="loansAccount" (submitEvent)="submit()">
+      <mifosx-loans-account-preview-step
+        [loansAccountTemplate]="loansAccountTemplate"
+        [loansAccountProductTemplate]="loansAccountProductTemplate"
+        [loansAccount]="loansAccount"
+        (submitEvent)="submit()"
+      >
       </mifosx-loans-account-preview-step>
-
     </mat-step>
-
   </mat-horizontal-stepper>
-
 </div>

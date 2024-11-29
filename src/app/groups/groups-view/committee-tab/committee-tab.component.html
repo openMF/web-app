@@ -1,52 +1,57 @@
 <div class="tab-container mat-typography">
-  
   <div fxLayout="row" fxLayoutAlign="start">
     <div class="m-b-10">
-      <h3>{{"labels.heading.Client Members" | translate }}</h3>
+      <h3>{{ 'labels.heading.Client Members' | translate }}</h3>
     </div>
     <div class="action-button m-b-10" fxLayoutGap="25px" *ngIf="groupStatus !== 'Closed'">
-      <button mat-raised-button class="f-right" color="primary"
-      *mifosxHasPermission="'ASSIGNROLE_GROUP'" [routerLink]="['add-role']">
-        <i class="fa fa-plus"></i>&nbsp; {{"labels.buttons.Add" | translate }}</button>
+      <button
+        mat-raised-button
+        class="f-right"
+        color="primary"
+        *mifosxHasPermission="'ASSIGNROLE_GROUP'"
+        [routerLink]="['add-role']"
+      >
+        <i class="fa fa-plus"></i>&nbsp; {{ 'labels.buttons.Add' | translate }}
+      </button>
     </div>
   </div>
 
   <div *ngIf="groupRolesData">
-    
     <table #rolesTable mat-table [dataSource]="groupRolesData" class="mat-elevation-z1 m-b-25">
-
       <ng-container matColumnDef="Name">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.name" | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.clientName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="Role">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Role" | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.role.name}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Role' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.role.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="Client Id">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Client Id" | translate }} </th>
-        <td mat-cell *matCellDef="let element"> {{element.clientId}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Id' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.clientId }}</td>
       </ng-container>
 
       <ng-container matColumnDef="Actions">
-        <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Actions" | translate }} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="groupStatus !== 'Closed'">
-            <button class="account-action-button" mat-raised-button color="warn"
-            *mifosxHasPermission="'UNASSIGNROLE_GROUP'" (click)="unassignRole(element.clientId, element.id)">
-            <i class="fa fa-ban" matTooltip="{{ 'tooltips.Unassign' | translate }}"></i>
+            <button
+              class="account-action-button"
+              mat-raised-button
+              color="warn"
+              *mifosxHasPermission="'UNASSIGNROLE_GROUP'"
+              (click)="unassignRole(element.clientId, element.id)"
+            >
+              <i class="fa fa-ban" matTooltip="{{ 'tooltips.Unassign' | translate }}"></i>
             </button>
           </span>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="groupRolesColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: groupRolesColumns;"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: groupRolesColumns"></tr>
     </table>
-
   </div>
-
 </div>

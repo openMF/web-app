@@ -1,70 +1,87 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="officeForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div #createOfficeFormRef fxLayout="column">
-
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
-            <input required matInput formControlName="name">
+            <input required matInput formControlName="name" />
             <mat-error *ngIf="officeForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Office' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Parent Office' | translate }}</mat-label>
             <mat-select required formControlName="parentId">
-              <mat-option *ngFor="let office of officeData" [value]="office.id" >
+              <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="officeForm.controls.parentId.hasError('required')">
-              {{ 'labels.inputs.Parent Office' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Parent Office' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="openedOnDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Opened On' | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" formControlName="openingDate" required [matDatepicker]="openedOnDatePicker">
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              formControlName="openingDate"
+              required
+              [matDatepicker]="openedOnDatePicker"
+            />
             <mat-datepicker-toggle matSuffix [for]="openedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #openedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="officeForm.controls.openingDate.hasError('required')">
-              {{ 'labels.inputs.Opening Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Opening Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External ID' | translate }}</mat-label>
-            <input matInput formControlName="externalId">
+            <input matInput formControlName="externalId" />
           </mat-form-field>
-          
         </div>
-        
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!officeForm.valid" *mifosxHasPermission="'CREATE_OFFICE'">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!officeForm.valid" *mifosxHasPermission="'CREATE_OFFICE'">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>
 
 <ng-template #templateCreateOfficeForm let-popover="popover">
-  <h2>{{'labels.heading.Create Office' | translate }}</h2>
-  <p class="mw400">{{'labels.text.Filling Details' | translate }}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141727/Manage+Offices" target="_blank">{{ 'labels.inputs.Manage Offices' | translate }}</a></p>
+  <h2>{{ 'labels.heading.Create Office' | translate }}</h2>
+  <p class="mw400">
+    {{ 'labels.text.Filling Details' | translate }}:
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141727/Manage+Offices" target="_blank">{{
+      'labels.inputs.Manage Offices' | translate
+    }}</a>
+  </p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close()">{{'labels.buttons.Create Office' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next Step' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close()">
+      {{ 'labels.buttons.Create Office' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next Step' | translate }}
+    </button>
   </div>
 </ng-template>

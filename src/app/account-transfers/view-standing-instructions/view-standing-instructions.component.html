@@ -1,122 +1,128 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['../', 'edit']">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-   {{"labels.buttons.Edit" | translate}}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
-  <button mat-raised-button color="primary" [routerLink]="['../', 'list-account-transactions']" *mifosxHasPermission="'READ_ACCOUNTTRANSFER'">
-    {{"labels.buttons.View Transactions History" | translate}}
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['../', 'list-account-transactions']"
+    *mifosxHasPermission="'READ_ACCOUNTTRANSFER'"
+  >
+    {{ 'labels.buttons.View Transactions History' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" fxLayout.lt-md="column">
-
         <h2 class="mat-h2" fxFlexFill>{{ standingInstructionsData.name }}</h2>
 
         <mat-divider [inset]="true"></mat-divider>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Applicant" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Applicant' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.fromClient.displayName }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Type" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Type' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.transferType.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{  "labels.inputs.Priority" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Priority' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.priority.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{  "labels.inputs.Status" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Status' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.status.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.From Account Type" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.From Account Type' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.fromAccountType.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.From Account" | translate}}:</span>
-          <span fxFlex="60%">{{ standingInstructionsData.fromAccount.productName }} - {{ standingInstructionsData.fromAccount.accountNo }}</span>
+          <span fxFlex="40%">{{ 'labels.inputs.From Account' | translate }}:</span>
+          <span fxFlex="60%"
+            >{{ standingInstructionsData.fromAccount.productName }} -
+            {{ standingInstructionsData.fromAccount.accountNo }}</span
+          >
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Destination" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Destination' | translate }}:</span>
           <span fxFlex="60%">
-            <span *ngIf="allowclientedit"> {{"labels.inputs.Within Bank" | translate}} </span>
-            <span *ngIf="!allowclientedit"> {{"labels.inputs.Own Account" | translate}} </span>
+            <span *ngIf="allowclientedit"> {{ 'labels.inputs.Within Bank' | translate }} </span>
+            <span *ngIf="!allowclientedit"> {{ 'labels.inputs.Own Account' | translate }} </span>
           </span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.To Office" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.To Office' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.toOffice.name }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Beneficiary" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Beneficiary' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.toClient.displayName }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.To Account Type" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.To Account Type' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.toAccountType.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.To Account" | translate}}:</span>
-          <span fxFlex="60%">{{ standingInstructionsData.toAccount.productName }} - {{standingInstructionsData.toAccount.accountNo}}</span>
+          <span fxFlex="40%">{{ 'labels.inputs.To Account' | translate }}:</span>
+          <span fxFlex="60%"
+            >{{ standingInstructionsData.toAccount.productName }} -
+            {{ standingInstructionsData.toAccount.accountNo }}</span
+          >
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Standing Instruction Type" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Standing Instruction Type' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.instructionType.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Amount" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Amount' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.amount }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Validity" | translate}}:</span>
-          <span fxFlex="60%">{{ standingInstructionsData.validFrom | dateFormat }} - {{ standingInstructionsData.validTill | dateFormat }}</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Validity' | translate }}:</span>
+          <span fxFlex="60%"
+            >{{ standingInstructionsData.validFrom | dateFormat }} -
+            {{ standingInstructionsData.validTill | dateFormat }}</span
+          >
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Recurrence Type" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Recurrence Type' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.recurrenceType.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Interval" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Interval' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.recurrenceInterval }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.Recurrence Frequency" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.Recurrence Frequency' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.recurrenceFrequency.value }}</span>
         </div>
 
         <div fxFlexFill>
-          <span fxFlex="40%">{{"labels.inputs.On Month Day" | translate}}:</span>
+          <span fxFlex="40%">{{ 'labels.inputs.On Month Day' | translate }}:</span>
           <span fxFlex="60%">{{ standingInstructionsData.recurrenceOnMonthDay | dateFormat }}</span>
         </div>
-
       </div>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

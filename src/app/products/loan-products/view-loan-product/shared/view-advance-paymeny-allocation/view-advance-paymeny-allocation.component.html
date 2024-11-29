@@ -9,10 +9,11 @@
   </mat-expansion-panel-header>
 
   <div fxFlexFill>
-
     <div fxFlexFill>
       <span fxFlex="40%">{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}:</span>
-      <span fxFlex="60%">{{ futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) | translateKey:'catalogs' }}</span>
+      <span fxFlex="60%">{{
+        futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) | translateKey: 'catalogs'
+      }}</span>
     </div>
 
     <div fxFlexFill>
@@ -26,9 +27,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let paymentAllocation of paymentAllocation.paymentAllocationOrder; let idx = index;">
-              <td>{{ (idx + 1) }}</td>
-              <td>{{ allocationRuleValue(paymentAllocation.paymentAllocationRule) | translateKey:'catalogs' }}</td>
+            <tr *ngFor="let paymentAllocation of paymentAllocation.paymentAllocationOrder; let idx = index">
+              <td>{{ idx + 1 }}</td>
+              <td>{{ allocationRuleValue(paymentAllocation.paymentAllocationRule) | translateKey: 'catalogs' }}</td>
             </tr>
           </tbody>
         </table>
@@ -47,7 +48,6 @@
   </mat-expansion-panel-header>
 
   <div fxFlexFill>
-
     <div fxFlexFill>
       <span fxFlex="40%">{{ 'labels.inputs.Credit Allocation Order' | translate }}</span>
       <span fxFlex="60%">
@@ -59,9 +59,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let creditAllocation of creditAllocation.creditAllocationOrder; let idx = index;">
-              <td>{{ (idx + 1) }}</td>
-              <td>{{ allocationRuleValue(creditAllocation.creditAllocationRule) | translateKey:'catalogs'}}</td>
+            <tr *ngFor="let creditAllocation of creditAllocation.creditAllocationOrder; let idx = index">
+              <td>{{ idx + 1 }}</td>
+              <td>{{ allocationRuleValue(creditAllocation.creditAllocationRule) | translateKey: 'catalogs' }}</td>
             </tr>
           </tbody>
         </table>

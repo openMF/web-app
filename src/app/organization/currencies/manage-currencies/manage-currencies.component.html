@@ -1,63 +1,82 @@
 <div class="container">
-
   <mat-card>
-
     <div #currencyFormRef>
-
-      <form #formRef="ngForm" [formGroup]="currencyForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
-        fxFlex="48%" (ngSubmit)="addCurrency()">
-
+      <form
+        #formRef="ngForm"
+        [formGroup]="currencyForm"
+        fxLayout="row"
+        fxLayoutAlign="start baseline"
+        fxLayoutGap="20px"
+        fxFlex="48%"
+        (ngSubmit)="addCurrency()"
+      >
         <mat-form-field fxFlex="calc(90%-20px)">
-            <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
-            <mat-select required formControlName="currency">
-              <mat-option>
-                <ngx-mat-select-search [formControl]="filterFormCtrl"></ngx-mat-select-search>
-              </mat-option>
-              <mat-option *ngFor="let currency of currencyData | async" [value]="currency">
-                ({{currency.code}}) {{ currency.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="currencyForm.controls.currency.hasError('required')">
-              {{ 'labels.inputs.Currency' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
-            </mat-error>
+          <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
+          <mat-select required formControlName="currency">
+            <mat-option>
+              <ngx-mat-select-search [formControl]="filterFormCtrl"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let currency of currencyData | async" [value]="currency">
+              ({{ currency.code }}) {{ currency.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="currencyForm.controls.currency.hasError('required')">
+            {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
         </mat-form-field>
 
-        <button mat-raised-button fxFlex color="primary" 
-          [disabled]="!currencyForm.valid" *mifosxHasPermission="'UPDATE_CURRENCY'">
+        <button
+          mat-raised-button
+          fxFlex
+          color="primary"
+          [disabled]="!currencyForm.valid"
+          *mifosxHasPermission="'UPDATE_CURRENCY'"
+        >
           <fa-icon icon="plus"></fa-icon>
         </button>
-
       </form>
-
     </div>
 
     <mat-grid-list cols="2" rowHeight="50px">
-
       <mat-grid-tile *ngFor="let currency of selectedCurrencies; index as i">
-
-        <input matInput [value]="currency.name">
+        <input matInput [value]="currency.name" />
 
         <div fxLayout="row" fxLayoutAlign="flex-start">
-          <button mat-button color="warn" (click)="deleteCurrency(currency.code, i)" *mifosxHasPermission="'UPDATE_CURRENCY'">
+          <button
+            mat-button
+            color="warn"
+            (click)="deleteCurrency(currency.code, i)"
+            *mifosxHasPermission="'UPDATE_CURRENCY'"
+          >
             <fa-icon icon="trash"></fa-icon>
           </button>
         </div>
-
       </mat-grid-tile>
-
     </mat-grid-list>
-
   </mat-card>
-
 </div>
 
 <ng-template #templateCurrencyFormRef let-popover="popover">
-  <h4>{{'labels.heading.Add Currency Form' | translate }}</h4>
-  <p class="mw400">{{ 'labels.text.Used to add currency' | translate }}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">{{ 'labels.inputs.Currency Configuration' | translate }}</a></p>
+  <h4>{{ 'labels.heading.Add Currency Form' | translate }}</h4>
+  <p class="mw400">
+    {{ 'labels.text.Used to add currency' | translate }}:
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">{{
+      'labels.inputs.Currency Configuration' | translate
+    }}</a>
+  </p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();">{{"labels.buttons.Add Currency' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{"labels.buttons.Back' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{"labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{"labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close()">
+      {{"labels.buttons.Add Currency' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{"labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{"labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>

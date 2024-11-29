@@ -1,28 +1,24 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Edit' | translate}}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="delete()">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Delete' | translate}}
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
   <button mat-raised-button color="primary" (click)="changeUserPassword()">
     <fa-icon icon="cog" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Change Password' | translate}}
+    {{ 'labels.buttons.Change Password' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Login Name' | translate}}
+          {{ 'labels.inputs.Login Name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -30,7 +26,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.First Name' | translate}}
+          {{ 'labels.inputs.First Name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -38,16 +34,15 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Last Name' | translate}}
+          {{ 'labels.inputs.Last Name' | translate }}
         </div>
 
         <div fxFlex="50%">
           {{ userData.lastname }}
         </div>
 
-
         <div fxFlex="50%" class="mat-body-strong" *ngIf="userData.email">
-          {{'labels.inputs.Email' | translate}}
+          {{ 'labels.inputs.Email' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="userData.email">
@@ -55,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Office' | translate}}
+          {{ 'labels.inputs.Office' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -63,7 +58,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Roles' | translate}}
+          {{ 'labels.inputs.Roles' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -71,14 +66,13 @@
             {{ role.name }}
           </span>
         </div>
-
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">{{ 'labels.buttons.Back' | translate}}</button>
+        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
+          {{ 'labels.buttons.Back' | translate }}
+        </button>
       </div>
     </mat-card-content>
-
   </mat-card>
-
 </div>

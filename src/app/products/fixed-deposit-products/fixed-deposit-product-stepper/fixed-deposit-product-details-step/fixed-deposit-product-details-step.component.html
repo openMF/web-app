@@ -1,42 +1,41 @@
 <form [formGroup]="fixedDepositProductDetailsForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Product Name' | translate}}</mat-label>
-      <input matInput formControlName="name" required>
+      <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
+      <input matInput formControlName="name" required />
       <mat-error *ngIf="fixedDepositProductDetailsForm.controls.name.hasError('required')">
-        {{'labels.inputs.Product Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Short Name' | translate}}</mat-label>
-      <input matInput formControlName="shortName" maxlength="4" required>
+      <mat-label>{{ 'labels.inputs.Short Name' | translate }}</mat-label>
+      <input matInput formControlName="shortName" maxlength="4" required />
       <mat-error *ngIf="fixedDepositProductDetailsForm.controls.shortName.hasError('required')">
-        {{'labels.inputs.Short Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Short Name' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="98%">
-      <mat-label>{{'labels.inputs.Description' | translate}}</mat-label>
+      <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
       <textarea matInput formControlName="description" required></textarea>
       <mat-error *ngIf="fixedDepositProductDetailsForm.controls.description.hasError('required')">
-        {{'labels.inputs.Description' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Previous' | translate}}
+      {{ 'labels.buttons.Previous' | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      {{'labels.buttons.Next' | translate}}
+      {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>
-
 </form>

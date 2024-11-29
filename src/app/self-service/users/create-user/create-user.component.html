@@ -1,7 +1,5 @@
 <div class="container" [class.small-width-container]="userType.value === 'Existing User'">
-
   <mat-card>
-
     <mat-card-header class="m-b-20">
       <mat-radio-group fxLayout="row" fxLayoutGap="20px" [formControl]="userType">
         <mat-radio-button *ngFor="let type of userTypes" [value]="type">
@@ -11,27 +9,24 @@
     </mat-card-header>
 
     <div *ngIf="userType.value === 'Existing User'">
-
       <form [formGroup]="createUserForm">
-
         <mat-card-content>
-
           <div fxLayout="column">
-
             <mat-form-field>
-              <mat-label>{{'labels.inputs.Office' | translate}}</mat-label>
+              <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
               <mat-select required formControlName="officeId">
                 <mat-option *ngFor="let office of offices" [value]="office.id">
                   {{ office.name }}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="createUserForm.controls.officeId.hasError('required')">
-                {{'labels.inputs.Office' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+                {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{'labels.inputs.Staff' | translate}}</mat-label>
+              <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
               <mat-select formControlName="staffId">
                 <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
                   {{ staff.displayName }}
@@ -40,52 +35,47 @@
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{'labels.inputs.Client' | translate}}</mat-label>
+              <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
               <mat-select>
                 <mat-option *ngFor="let client of clientData" [value]="client">
                   {{ client }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-
           </div>
-
         </mat-card-content>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
+          <button type="button" mat-raised-button [routerLink]="['../']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
           <button mat-raised-button color="accent">
             <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
-            {{'labels.buttons.Activate Self Service User' | translate}}
+            {{ 'labels.buttons.Activate Self Service User' | translate }}
           </button>
         </mat-card-actions>
-
       </form>
-
     </div>
 
     <div *ngIf="userType.value === 'New User'">
-
       <form [formGroup]="createUserForm">
-
         <mat-card-content>
-
           <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
             <mat-form-field>
-              <mat-label>{{'labels.inputs.Office' | translate}}</mat-label>
+              <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
               <mat-select required formControlName="officeId">
                 <mat-option *ngFor="let office of offices" [value]="office.id">
                   {{ office.name }}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="createUserForm.controls.officeId.hasError('required')">
-                {{'labels.inputs.Office' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+                {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'labels.inputs.Staff' | translate}}</mat-label>
+              <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
               <mat-select formControlName="staffId">
                 <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
                   {{ staff.displayName }}
@@ -94,24 +84,24 @@
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'labels.inputs.User Name' | translate}}</mat-label>
-              <input type="text" matInput>
+              <mat-label>{{ 'labels.inputs.User Name' | translate }}</mat-label>
+              <input type="text" matInput />
             </mat-form-field>
 
             <span fxFlex="48%" fxHide.lt-md></span>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'labels.inputs.First Name' | translate}}</mat-label>
-              <input type="text" matInput>
+              <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+              <input type="text" matInput />
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'labels.inputs.Last Name' | translate}}</mat-label>
-              <input type="text" matInput>
+              <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+              <input type="text" matInput />
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'labels.inputs.Gender' | translate}}</mat-label>
+              <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
               <mat-select>
                 <mat-option *ngFor="let gender of genderData" [value]="gender">
                   {{ gender }}
@@ -120,35 +110,31 @@
             </mat-form-field>
 
             <mat-form-field fxFlex="48%" (click)="dateOfBirthDatePicker.open()">
-              <mat-label>{{'labels.inputs.Date of Birth' | translate}}</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker">
+              <mat-label>{{ 'labels.inputs.Date of Birth' | translate }}</mat-label>
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" />
               <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'labels.inputs.Email' | translate}}</mat-label>
-              <input type="email" matInput>
+              <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
+              <input type="email" matInput />
             </mat-form-field>
 
             <mat-form-field fxFlex="48%">
-              <mat-label>{{'labels.inputs.Mobile No' | translate}}</mat-label>
-              <input type="tel" matInput>
+              <mat-label>{{ 'labels.inputs.Mobile No' | translate }}</mat-label>
+              <input type="tel" matInput />
             </mat-form-field>
-
           </div>
-
         </mat-card-content>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
-          <button mat-raised-button color="primary">{{'labels.buttons.Submit' | translate}}</button>
+          <button type="button" mat-raised-button [routerLink]="['../']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button mat-raised-button color="primary">{{ 'labels.buttons.Submit' | translate }}</button>
         </mat-card-actions>
-
       </form>
-
     </div>
-
   </mat-card>
-
 </div>

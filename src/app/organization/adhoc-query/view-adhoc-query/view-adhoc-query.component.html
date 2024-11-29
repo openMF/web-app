@@ -1,22 +1,18 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ADHOC'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Edit" | translate }}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteAdhocQuery()" *mifosxHasPermission="'DELETE_ADHOC'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Delete" | translate }}
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="50%" class="mat-body-strong">
           {{ 'labels.inputs.name' | translate }}
         </div>
@@ -64,11 +60,7 @@
         <div fxFlex="50%">
           {{ adhocQueryData.createdBy }}
         </div>
-
       </div>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

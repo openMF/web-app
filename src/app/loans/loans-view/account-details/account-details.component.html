@@ -1,191 +1,228 @@
 <div class="container p-b-20">
-  <h3> {{"labels.heading.Loan Details" | translate}} </h3>
+  <h3>{{ 'labels.heading.Loan Details' | translate }}</h3>
 
-    <div fxLayout="row wrap" fxLayout.lt-md="column">
-
-        <div fxFlexFill>
-            <span fxFlex="50%">{{"labels.inputs.Repayment Strategy" | translate}}</span>
-            <span fxFlex="50%">{{ loanDetails.transactionProcessingStrategyName | translateKey:'catalogs' }}</span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%">{{"labels.inputs.Repayments" | translate}}</span>
-            <span fxFlex="50%">{{loanDetails.numberOfRepayments}} every {{loanDetails.repaymentEvery}}&nbsp;{{loanDetails.repaymentFrequencyType.value | translateKey:'catalogs' }}
-            <span *ngIf="loanDetails.repaymentFrequencyType?.id === 2 && loanDetails.repaymentFrequencyNthDayType?.id !== 0 && loanDetails.repaymentFrequencyDayOfWeekType?.id !== 0" class="m-l-10">
-              <span *ngIf="loanDetails.repaymentFrequencyDayOfWeekType">
-                <span class="m-l-10">{{"labels.commons.on" | translate}}</span>{{loanDetails.repaymentFrequencyNthDayType?.value}}
-                <span class="m-l-10">{{loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey:'catalogs' }}</span>
-              </span>
-            </span>
-            </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.fixedLength">
-            <span fxFlex="50%"> {{"labels.inputs.Fixed Length" | translate}} </span>
-            <span fxFlex="50%"> {{loanDetails.fixedLength}} {{loanDetails.repaymentFrequencyType.value | translateKey:'catalogs' }}</span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Amortization" | translate}} </span>
-            <span fxFlex="50%"> {{loanDetails.amortizationType.value | translateKey:'catalogs' }} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.fixedPrincipalPercentagePerInstallment">
-            <span fxFlex="50%"> {{"labels.inputs.Principal Percentage Per Installment" | translate}} </span>
-            <span fxFlex="50%"> {{loanDetails.fixedPrincipalPercentagePerInstallment | formatNumber}} %</span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Equal Amortization" | translate}} </span>
-            <span fxFlex="50%"> {{loanDetails.isEqualAmortization | yesNo}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Interest" | translate}} </span>
-            <span fxFlex="50%"> {{loanDetails.annualInterestRate | formatNumber}} % {{"labels.text.per annum" | translate}} ({{loanDetails.interestRatePerPeriod}} %&nbsp; {{loanDetails.interestRateFrequencyType.value | translateKey:'catalogs' }}) </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Interest Type" | translate}} </span>
-            <span fxFlex="50%"> {{"labels.text." + loanDetails.interestType.value | translate}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%">{{ 'labels.inputs.Enable Down Payments' | translate}}:</span>
-            <span fxFlex="50%">{{ loanDetails.enableDownPayment | yesNo }}</span>
-        </div>
-
-        <div fxFlexFill>
-          <span fxFlex="50%">{{ 'labels.inputs.Loan Charge-off behaviour' | translate}}:</span>
-          <span fxFlex="50%">{{ loanDetails.chargeOffBehaviour.value | translateKey: 'catalogs' }}</span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Grace: On Principal Payment" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.graceOnPrincipalPayment}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Grace: On Interest Payment" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.graceOnInterestPayment}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Grace on Arrears Ageing" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.graceOnArrearsAgeing}} </span>
-        </div>
-
-        <div fxFlexFill>
-          <span fxFlex="50%"> {{"labels.inputs.Enable installment level Delinquency" | translate}} </span>
-          <span fxFlex="50%"> {{loanDetails.enableInstallmentLevelDelinquency | yesNo}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Fund Source" | translate}} </span>
-            <span fxFlex="50%" *ngIf="loanDetails.fundName"> {{loanDetails.fundName}} </span>
-            <span fxFlex="50%" *ngIf="!loanDetails.fundName"> {{"labels.inputs.Unassigned" | translate}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Interest Free Period" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.graceOnInterestCharged}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Interest Calculation Period" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.interestCalculationPeriodType.value | translateKey:'catalogs' }} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Allow Partial Interest Calculation with same as repayment" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.allowPartialPeriodInterestCalcualtion | yesNo}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Submitted on" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.submittedOnDate | dateFormat }} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Approved on" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.approvedOnDate | dateFormat }} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Disbursed on" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.actualDisbursementDate | dateFormat }} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Matures on" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.timeline.expectedMaturityDate | dateFormat }} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.canDefineInstallmentAmount">
-            <span fxFlex="50%"> {{"labels.inputs.Fixed EMI amount" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.fixedEmiAmount | formatNumber}} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.isTopup">
-            <span fxFlex="50%"> {{"labels.inputs.Is Topup Loan" | translate}}?</span>
-            <span fxFlex="50%"> {{loanDetails.isTopup | yesNo}} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.isTopup">
-            <span fxFlex="50%"> {{"labels.inputs.Loan closed with Topup" | translate}} </span>
-            <span fxFlex="50%"> <a href="#">{{loanDetails.closureLoanAccountNo}}</a> </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.isTopup">
-            <span fxFlex="50%"> {{"labels.inputs.Topup closure amount" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.topupAmount | formatNumber}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Recalculate Interest based on new terms" | translate}}</span>
-            <span fxFlex="50%">  {{loanDetails.isInterestRecalculationEnabled | yesNo}} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Days in year" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.daysInYearType.value | translateKey:'catalogs' }} </span>
-        </div>
-
-        <div fxFlexFill>
-            <span fxFlex="50%"> {{"labels.inputs.Days in month" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.daysInMonthType.value | translateKey:'catalogs' }} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled">
-            <span fxFlex="50%"> {{"labels.inputs.Interest recalculation compounding on" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.interestRecalculationData.interestRecalculationCompoundingType.value | translateKey:'catalogs' }} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled">
-            <span fxFlex="50%"> {{"labels.inputs.Advance payments adjustment type" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.interestRecalculationData.rescheduleStrategyType.value | translateKey:'catalogs' }} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled">
-            <span fxFlex="50%"> {{"labels.inputs.Frequency for recalculate Outstanding Principal" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.interestRecalculationData.calendarData.humanReadable}} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled && loanDetails.interestRecalculationData.interestRecalculationCompoundingType.id !== 0">
-            <span fxFlex="50%"> {{"labels.inputs.Frequency for compounding" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.interestRecalculationData.compoundingCalendarData.humanReadable}} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.isVariableInstallmentsAllowed">
-            <span fxFlex="50%"> {{"labels.inputs.Variable Installments Allowed" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.isVariableInstallmentsAllowed | yesNo}} </span>
-        </div>
-
-        <div fxFlexFill *ngIf="loanDetails.isVariableInstallmentsAllowed">
-            <span fxFlex="50%"> {{"labels.inputs.Gap between Installments" | translate}}</span>
-            <span fxFlex="50%"> {{loanDetails.minimumGap | formatNumber}}&nbsp;{{"labels.text.Days" | translate}}&nbsp;, Max:{{loanDetails.maximumGap | formatNumber}}&nbsp;{{"labels.text.Days" | translate}}) </span>
-        </div>
-
+  <div fxLayout="row wrap" fxLayout.lt-md="column">
+    <div fxFlexFill>
+      <span fxFlex="50%">{{ 'labels.inputs.Repayment Strategy' | translate }}</span>
+      <span fxFlex="50%">{{ loanDetails.transactionProcessingStrategyName | translateKey: 'catalogs' }}</span>
     </div>
 
+    <div fxFlexFill>
+      <span fxFlex="50%">{{ 'labels.inputs.Repayments' | translate }}</span>
+      <span fxFlex="50%"
+        >{{ loanDetails.numberOfRepayments }} every {{ loanDetails.repaymentEvery }}&nbsp;{{
+          loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs'
+        }}
+        <span
+          *ngIf="
+            loanDetails.repaymentFrequencyType?.id === 2 &&
+            loanDetails.repaymentFrequencyNthDayType?.id !== 0 &&
+            loanDetails.repaymentFrequencyDayOfWeekType?.id !== 0
+          "
+          class="m-l-10"
+        >
+          <span *ngIf="loanDetails.repaymentFrequencyDayOfWeekType">
+            <span class="m-l-10">{{ 'labels.commons.on' | translate }}</span
+            >{{ loanDetails.repaymentFrequencyNthDayType?.value }}
+            <span class="m-l-10">{{
+              loanDetails.repaymentFrequencyDayOfWeekType?.value | translateKey: 'catalogs'
+            }}</span>
+          </span>
+        </span>
+      </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.fixedLength">
+      <span fxFlex="50%"> {{ 'labels.inputs.Fixed Length' | translate }} </span>
+      <span fxFlex="50%">
+        {{ loanDetails.fixedLength }} {{ loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
+      >
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Amortization' | translate }} </span>
+      <span fxFlex="50%"> {{ loanDetails.amortizationType.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.fixedPrincipalPercentagePerInstallment">
+      <span fxFlex="50%"> {{ 'labels.inputs.Principal Percentage Per Installment' | translate }} </span>
+      <span fxFlex="50%"> {{ loanDetails.fixedPrincipalPercentagePerInstallment | formatNumber }} %</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Equal Amortization' | translate }} </span>
+      <span fxFlex="50%"> {{ loanDetails.isEqualAmortization | yesNo }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Interest' | translate }} </span>
+      <span fxFlex="50%">
+        {{ loanDetails.annualInterestRate | formatNumber }} % {{ 'labels.text.per annum' | translate }} ({{
+          loanDetails.interestRatePerPeriod
+        }}
+        %&nbsp; {{ loanDetails.interestRateFrequencyType.value | translateKey: 'catalogs' }})
+      </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Interest Type' | translate }} </span>
+      <span fxFlex="50%"> {{ 'labels.text.' + loanDetails.interestType.value | translate }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
+      <span fxFlex="50%">{{ loanDetails.enableDownPayment | yesNo }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}:</span>
+      <span fxFlex="50%">{{ loanDetails.chargeOffBehaviour.value | translateKey: 'catalogs' }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Grace: On Principal Payment' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.graceOnPrincipalPayment }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Grace: On Interest Payment' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.graceOnInterestPayment }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Grace on Arrears Ageing' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.graceOnArrearsAgeing }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Enable installment level Delinquency' | translate }} </span>
+      <span fxFlex="50%"> {{ loanDetails.enableInstallmentLevelDelinquency | yesNo }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Fund Source' | translate }} </span>
+      <span fxFlex="50%" *ngIf="loanDetails.fundName"> {{ loanDetails.fundName }} </span>
+      <span fxFlex="50%" *ngIf="!loanDetails.fundName"> {{ 'labels.inputs.Unassigned' | translate }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Interest Free Period' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.graceOnInterestCharged }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Interest Calculation Period' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.interestCalculationPeriodType.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%">
+        {{ 'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate }}</span
+      >
+      <span fxFlex="50%"> {{ loanDetails.allowPartialPeriodInterestCalcualtion | yesNo }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Submitted on' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.timeline.submittedOnDate | dateFormat }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Approved on' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.timeline.approvedOnDate | dateFormat }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Disbursed on' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.timeline.actualDisbursementDate | dateFormat }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Matures on' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.timeline.expectedMaturityDate | dateFormat }} </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.canDefineInstallmentAmount">
+      <span fxFlex="50%"> {{ 'labels.inputs.Fixed EMI amount' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.fixedEmiAmount | formatNumber }} </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.isTopup">
+      <span fxFlex="50%"> {{ 'labels.inputs.Is Topup Loan' | translate }}?</span>
+      <span fxFlex="50%"> {{ loanDetails.isTopup | yesNo }} </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.isTopup">
+      <span fxFlex="50%"> {{ 'labels.inputs.Loan closed with Topup' | translate }} </span>
+      <span fxFlex="50%">
+        <a href="#">{{ loanDetails.closureLoanAccountNo }}</a>
+      </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.isTopup">
+      <span fxFlex="50%"> {{ 'labels.inputs.Topup closure amount' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.topupAmount | formatNumber }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Recalculate Interest based on new terms' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.isInterestRecalculationEnabled | yesNo }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Days in year' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.daysInYearType.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Days in month' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.daysInMonthType.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled">
+      <span fxFlex="50%"> {{ 'labels.inputs.Interest recalculation compounding on' | translate }}</span>
+      <span fxFlex="50%">
+        {{
+          loanDetails.interestRecalculationData.interestRecalculationCompoundingType.value | translateKey: 'catalogs'
+        }}
+      </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled">
+      <span fxFlex="50%"> {{ 'labels.inputs.Advance payments adjustment type' | translate }}</span>
+      <span fxFlex="50%">
+        {{ loanDetails.interestRecalculationData.rescheduleStrategyType.value | translateKey: 'catalogs' }}
+      </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.isInterestRecalculationEnabled">
+      <span fxFlex="50%"> {{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.interestRecalculationData.calendarData.humanReadable }} </span>
+    </div>
+
+    <div
+      fxFlexFill
+      *ngIf="
+        loanDetails.isInterestRecalculationEnabled &&
+        loanDetails.interestRecalculationData.interestRecalculationCompoundingType.id !== 0
+      "
+    >
+      <span fxFlex="50%"> {{ 'labels.inputs.Frequency for compounding' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.interestRecalculationData.compoundingCalendarData.humanReadable }} </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.isVariableInstallmentsAllowed">
+      <span fxFlex="50%"> {{ 'labels.inputs.Variable Installments Allowed' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.isVariableInstallmentsAllowed | yesNo }} </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.isVariableInstallmentsAllowed">
+      <span fxFlex="50%"> {{ 'labels.inputs.Gap between Installments' | translate }}</span>
+      <span fxFlex="50%">
+        {{ loanDetails.minimumGap | formatNumber }}&nbsp;{{ 'labels.text.Days' | translate }}&nbsp;, Max:{{
+          loanDetails.maximumGap | formatNumber
+        }}&nbsp;{{ 'labels.text.Days' | translate }})
+      </span>
+    </div>
+  </div>
 </div>

@@ -1,7 +1,5 @@
 <div class="container">
-
   <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #savingProductStepper>
-
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -23,52 +21,49 @@
     </ng-template>
 
     <mat-step [stepControl]="savingProductDetailsForm" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.DETAILS' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{'labels.inputs.DETAILS' | translate}}</ng-template>
-
-      <mifosx-saving-product-details-step [savingProductsTemplate]="savingProductAndTemplate"></mifosx-saving-product-details-step>
-
+      <mifosx-saving-product-details-step
+        [savingProductsTemplate]="savingProductAndTemplate"
+      ></mifosx-saving-product-details-step>
     </mat-step>
 
     <mat-step [stepControl]="savingProductCurrencyForm" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.CURRENCY' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{'labels.inputs.CURRENCY' | translate}}</ng-template>
-
-      <mifosx-saving-product-currency-step [savingProductsTemplate]="savingProductAndTemplate"></mifosx-saving-product-currency-step>
-
+      <mifosx-saving-product-currency-step
+        [savingProductsTemplate]="savingProductAndTemplate"
+      ></mifosx-saving-product-currency-step>
     </mat-step>
 
     <mat-step [stepControl]="savingProductTermsForm" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{'labels.inputs.TERMS' | translate}}</ng-template>
-
-      <mifosx-saving-product-terms-step [savingProductsTemplate]="savingProductAndTemplate"></mifosx-saving-product-terms-step>
-
+      <mifosx-saving-product-terms-step
+        [savingProductsTemplate]="savingProductAndTemplate"
+      ></mifosx-saving-product-terms-step>
     </mat-step>
 
     <mat-step [stepControl]="savingProductSettingsForm" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.SETTINGS' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{'labels.inputs.SETTINGS' | translate}}</ng-template>
-
-      <mifosx-saving-product-settings-step [savingProductsTemplate]="savingProductAndTemplate"></mifosx-saving-product-settings-step>
-
+      <mifosx-saving-product-settings-step
+        [savingProductsTemplate]="savingProductAndTemplate"
+      ></mifosx-saving-product-settings-step>
     </mat-step>
 
     <mat-step completed>
-
-      <ng-template matStepLabel>{{'labels.inputs.CHARGES' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
       <mifosx-saving-product-charges-step
         [savingProductsTemplate]="savingProductAndTemplate"
         [currencyCode]="savingProductCurrencyForm.get('currencyCode')"
       >
       </mifosx-saving-product-charges-step>
-
     </mat-step>
 
     <mat-step [stepControl]="savingProductAccountingForm" completed>
-
-      <ng-template matStepLabel>{{'labels.inputs.ACCOUNTING' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.ACCOUNTING' | translate }}</ng-template>
 
       <mifosx-saving-product-accounting-step
         [savingProductsTemplate]="savingProductAndTemplate"
@@ -77,24 +72,19 @@
         [savingProductFormValid]="savingProductFormValidAndNotPristine"
       >
       </mifosx-saving-product-accounting-step>
-
     </mat-step>
 
     <mat-step state="preview" *ngIf="savingProductFormValidAndNotPristine" completed>
-
-      <ng-template matStepLabel>{{'labels.inputs.PREVIEW' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 
       <mifosx-saving-product-preview-step
         [savingProductsTemplate]="savingProductAndTemplate"
         [accountingRuleData]="accountingRuleData"
         [savingProduct]="savingProduct"
-        [taskPermission]='"UPDATE_SAVINGSPRODUCT"'
+        [taskPermission]="'UPDATE_SAVINGSPRODUCT'"
         (submitEvent)="submit()"
       >
       </mifosx-saving-product-preview-step>
-
     </mat-step>
-
   </mat-horizontal-stepper>
-
 </div>

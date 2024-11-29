@@ -1,29 +1,46 @@
 <div class="tab-container mat-typography">
-  <h3>{{"labels.heading.Notes" | translate}}</h3>
+  <h3>{{ 'labels.heading.Notes' | translate }}</h3>
   <div>
-    <form #formRef="ngForm" [formGroup]="noteForm" fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="20px"
-      (ngSubmit)="submit()">
+    <form
+      #formRef="ngForm"
+      [formGroup]="noteForm"
+      fxLayout="row"
+      fxLayoutAlign="start baseline"
+      fxLayoutGap="20px"
+      (ngSubmit)="submit()"
+    >
       <mat-form-field fxFlex="calc(90%-20px)">
-        <textarea formControlName="note" matInput placeholder="{{'labels.text.Write a note' | translate}} ...."></textarea>
+        <textarea
+          formControlName="note"
+          matInput
+          placeholder="{{ 'labels.text.Write a note' | translate }} ...."
+        ></textarea>
       </mat-form-field>
-      <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid" *mifosxHasPermission="'CREATE_GROUPNOTE'">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon> {{"labels.buttons.Add" | translate}}
+      <button
+        mat-raised-button
+        fxFlex
+        color="primary"
+        [disabled]="!noteForm.valid"
+        *mifosxHasPermission="'CREATE_GROUPNOTE'"
+      >
+        <fa-icon icon="plus" class="m-r-10"></fa-icon> {{ 'labels.buttons.Add' | translate }}
       </button>
     </form>
   </div>
   <mat-list>
-    <mat-list-item *ngFor="let centerNote of centerNotes; let i=index;">
+    <mat-list-item *ngFor="let centerNote of centerNotes; let i = index">
       <fa-icon icon="sticky-note" matListIcon></fa-icon>
-      <h3 matLine>{{centerNote.note}} </h3>
+      <h3 matLine>{{ centerNote.note }}</h3>
       <p matLine>
-        <span>{{"labels.inputs.Created By" | translate}}: {{centerNote.createdByUsername}}</span><br />
-        <span>{{"labels.inputs.Date" | translate}}: {{centerNote.createdOn | dateFormat}}</span>
+        <span>{{ 'labels.inputs.Created By' | translate }}: {{ centerNote.createdByUsername }}</span
+        ><br />
+        <span>{{ 'labels.inputs.Date' | translate }}: {{ centerNote.createdOn | dateFormat }}</span>
       </p>
       <div fxLayout="row" fxLayoutAlign="flex-start">
-        <button mat-button color="primary" (click)="editNote(centerNote.id,centerNote.note,i)">
+        <button mat-button color="primary" (click)="editNote(centerNote.id, centerNote.note, i)">
           <fa-icon icon="edit"></fa-icon>
         </button>
-        <button mat-button color="warn" (click)="deleteNote(centerNote.id,i)">
+        <button mat-button color="warn" (click)="deleteNote(centerNote.id, i)">
           <fa-icon icon="trash"></fa-icon>
         </button>
       </div>

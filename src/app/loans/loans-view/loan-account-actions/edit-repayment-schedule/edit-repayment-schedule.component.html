@@ -1,25 +1,30 @@
 <div class="container mat-elevation-z8">
-
   <mat-card>
     <mat-card-content>
-
       <div fxLayout="column">
-        <mifosx-repayment-schedule-tab fxFlex="100%"
+        <mifosx-repayment-schedule-tab
+          fxFlex="100%"
           [repaymentScheduleDetails]="repaymentScheduleDetails"
-          [forEditing]="true">
+          [forEditing]="true"
+        >
         </mifosx-repayment-schedule-tab>
       </div>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel" | translate}}</button>
-        <button type="button" (click)="reset()">{{"labels.buttons.Reset" | translate}}</button>
-        <button type="button" color="primary" mat-raised-button (click)="applyPattern()">{{"labels.buttons.Pattern" | translate}}</button>
-        <button type="button" color="primary" mat-raised-button [disabled]="!wasChanged" (click)="validate()">{{"labels.buttons.Validate" | translate}}</button>
-        <button type="button" color="primary" mat-raised-button [disabled]="!wasValidated" (click)="submit()">{{"labels.buttons.Submit" | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../general']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button type="button" (click)="reset()">{{ 'labels.buttons.Reset' | translate }}</button>
+        <button type="button" color="primary" mat-raised-button (click)="applyPattern()">
+          {{ 'labels.buttons.Pattern' | translate }}
+        </button>
+        <button type="button" color="primary" mat-raised-button [disabled]="!wasChanged" (click)="validate()">
+          {{ 'labels.buttons.Validate' | translate }}
+        </button>
+        <button type="button" color="primary" mat-raised-button [disabled]="!wasValidated" (click)="submit()">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

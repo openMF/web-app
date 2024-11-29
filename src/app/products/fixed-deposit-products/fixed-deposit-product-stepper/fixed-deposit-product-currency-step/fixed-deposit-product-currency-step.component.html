@@ -1,46 +1,45 @@
 <form [formGroup]="fixedDepositProductCurrencyForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Currency' | translate}}</mat-label>
+      <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
       <mat-select formControlName="currencyCode" required>
         <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
           {{ currency.name }}
         </mat-option>
       </mat-select>
       <mat-error>
-        {{'labels.inputs.Currency' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Decimal Places' | translate}}</mat-label>
-      <input type="number" matInput formControlName="digitsAfterDecimal" required>
+      <mat-label>{{ 'labels.inputs.Decimal Places' | translate }}</mat-label>
+      <input type="number" matInput formControlName="digitsAfterDecimal" required />
       <mat-error>
-        {{'labels.inputs.Decimal Places' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Decimal Places' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Currency in multiples of' | translate}}</mat-label>
-      <input type="number" matInput formControlName="inMultiplesOf">
+      <mat-label>{{ 'labels.inputs.Currency in multiples of' | translate }}</mat-label>
+      <input type="number" matInput formControlName="inMultiplesOf" />
       <mat-error>
-        {{'labels.inputs.Currency in multiples of' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Previous' | translate}}
+      {{ 'labels.buttons.Previous' | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      {{'labels.buttons.Next' | translate}}
+      {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>
-
 </form>

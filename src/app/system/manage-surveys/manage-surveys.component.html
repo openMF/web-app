@@ -1,71 +1,84 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['create']">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Create Surveys' | translate}}
+    {{ 'labels.buttons.Create Surveys' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <div fxLayout="row">
     <mat-form-field fxFlex>
-      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
   </div>
 
   <div class="mat-elevation-z8">
-
     <table mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="key">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Key' | translate}} </th>
-          <td mat-cell *matCellDef="let survey"> {{ survey.key }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Key' | translate }}</th>
+        <td mat-cell *matCellDef="let survey">{{ survey.key }}</td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Name' | translate}} </th>
-        <td mat-cell *matCellDef="let survey"> {{ survey.name }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
+        <td mat-cell *matCellDef="let survey">{{ survey.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Description' | translate }} </th>
-        <td mat-cell *matCellDef="let survey"> {{ survey.description }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Description' | translate }}</th>
+        <td mat-cell *matCellDef="let survey">{{ survey.description }}</td>
       </ng-container>
 
       <ng-container matColumnDef="countryCode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Country Code' | translate }} </th>
-        <td mat-cell *matCellDef="let survey"> {{ survey.countryCode }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Country Code' | translate }}</th>
+        <td mat-cell *matCellDef="let survey">{{ survey.countryCode }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Status' | translate }} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
         <td mat-cell *matCellDef="let survey">
-            <div [className]="isActive(survey.validFrom, survey.validTo) ? 'enabled' : 'disabled'">
-                <fa-icon matTooltip="{{ !isActive(survey.validFrom, survey.validTo) ? ('labels.inputs.Disabled' | translate) : ('labels.inputs.Enabled' | translate) }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
-            </div>
+          <div [className]="isActive(survey.validFrom, survey.validTo) ? 'enabled' : 'disabled'">
+            <fa-icon
+              matTooltip="{{
+                !isActive(survey.validFrom, survey.validTo)
+                  ? ('labels.inputs.Disabled' | translate)
+                  : ('labels.inputs.Enabled' | translate)
+              }}"
+              matTooltipPosition="right"
+              icon="circle"
+              size="lg"
+            ></fa-icon>
+          </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Action' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Action' | translate }}</th>
         <td mat-cell *matCellDef="let survey">
-          <button mat-button *ngIf="!isActive(survey.validFrom, survey.validTo)" color="accent" (click)="activate(survey); $event.stopPropagation();">
-            <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{'labels.buttons.Activate' | translate }}
+          <button
+            mat-button
+            *ngIf="!isActive(survey.validFrom, survey.validTo)"
+            color="accent"
+            (click)="activate(survey); $event.stopPropagation()"
+          >
+            <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{ 'labels.buttons.Activate' | translate }}
           </button>
-          <button mat-button *ngIf="isActive(survey.validFrom, survey.validTo)" color="warn" (click)="deactivate(survey); $event.stopPropagation();">
-            <fa-icon icon="lock" class="m-r-10"></fa-icon>{{'labels.buttons.Deactivate' | translate}}
+          <button
+            mat-button
+            *ngIf="isActive(survey.validFrom, survey.validTo)"
+            color="warn"
+            (click)="deactivate(survey); $event.stopPropagation()"
+          >
+            <fa-icon icon="lock" class="m-r-10"></fa-icon>{{ 'labels.buttons.Deactivate' | translate }}
           </button>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let survey; columns: displayedColumns;" [routerLink]="[survey.id]" class="select-row"></tr>
-
+      <tr mat-row *matRowDef="let survey; columns: displayedColumns" [routerLink]="[survey.id]" class="select-row"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
-
 </div>

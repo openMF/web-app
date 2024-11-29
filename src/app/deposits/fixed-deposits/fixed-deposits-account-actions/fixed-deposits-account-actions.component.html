@@ -1,9 +1,15 @@
 <mifosx-approve-fixed-deposits-account *ngIf="actions['Approve']"></mifosx-approve-fixed-deposits-account>
 <mifosx-reject-fixed-deposits-account *ngIf="actions['Reject']"></mifosx-reject-fixed-deposits-account>
 <mifosx-activate-fixed-deposits-account *ngIf="actions['Activate']"></mifosx-activate-fixed-deposits-account>
-<mifosx-undo-approval-fixed-deposits-account *ngIf="actions['Undo Approval'] || actions['Undo Activation']"></mifosx-undo-approval-fixed-deposits-account>
-<mifosx-withdraw-by-client-fixed-deposits-account *ngIf="actions['Withdrawn by Client']"></mifosx-withdraw-by-client-fixed-deposits-account>
+<mifosx-undo-approval-fixed-deposits-account
+  *ngIf="actions['Undo Approval'] || actions['Undo Activation']"
+></mifosx-undo-approval-fixed-deposits-account>
+<mifosx-withdraw-by-client-fixed-deposits-account
+  *ngIf="actions['Withdrawn by Client']"
+></mifosx-withdraw-by-client-fixed-deposits-account>
 <mifosx-add-charge-fixed-deposits-account *ngIf="actions['Add Charge']"></mifosx-add-charge-fixed-deposits-account>
-<mifosx-premature-close-fixed-deposits-account *ngIf="actions['Premature Close']"></mifosx-premature-close-fixed-deposits-account>
+<mifosx-premature-close-fixed-deposits-account
+  *ngIf="actions['Premature Close']"
+></mifosx-premature-close-fixed-deposits-account>
 <mifosx-close-fixed-deposits-account *ngIf="actions['Close']"></mifosx-close-fixed-deposits-account>
 <mifosx-fixed-deposits-cash-transaction *ngIf="actions['Withdrawal']"></mifosx-fixed-deposits-cash-transaction>

@@ -1,10 +1,8 @@
 <mat-card class="container">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
     <div fxFlexFill *ngIf="isFromClient">
       <span fxFlex="40%">
-        <h3 class="mat-h3">{{"labels.heading.Client Type" | translate}}</h3>
+        <h3 class="mat-h3">{{ 'labels.heading.Client Type' | translate }}</h3>
       </span>
       <span fxFlex="60%">
         <h3 class="mat-h3">{{ clientName }}</h3>
@@ -13,17 +11,17 @@
 
     <div fxFlexFill *ngIf="!isFromClient">
       <mat-form-field fxFlex="30%">
-        <input matInput placeholder="ClientName" [formControl]="clientNameControl">
+        <input matInput placeholder="ClientName" [formControl]="clientNameControl" />
       </mat-form-field>
       <mat-form-field fxFlex="30%">
-        <input matInput placeholder="From Client Id" [formControl]="fromClientId">
+        <input matInput placeholder="From Client Id" [formControl]="fromClientId" />
       </mat-form-field>
     </div>
 
     <mat-divider [inset]="true"></mat-divider>
 
     <mat-form-field fxFlex="30%">
-      <mat-label>{{"labels.inputs.Type" | translate}}</mat-label>
+      <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select [formControl]="transferType">
         <mat-option *ngFor="let transferTypeData of transferTypeDatas" [value]="transferTypeData.id">
           {{ transferTypeData.value }}
@@ -32,80 +30,102 @@
     </mat-form-field>
 
     <mat-form-field fxFlex="30%">
-      <input matInput placeholder="From Account Id" [formControl]="fromAccountId">
+      <input matInput placeholder="From Account Id" [formControl]="fromAccountId" />
     </mat-form-field>
 
-    <button mat-raised-button color="primary" *mifosxHasPermission="'READ_STANDINGINSTRUCTION'" (click)="filterStandingInstructions()" class="filter-button">
-      &nbsp;&nbsp;{{  "labels.buttons.Filter" | translate}}
+    <button
+      mat-raised-button
+      color="primary"
+      *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
+      (click)="filterStandingInstructions()"
+      class="filter-button"
+    >
+      &nbsp;&nbsp;{{ 'labels.buttons.Filter' | translate }}
     </button>
   </div>
 
-
   <table mat-table #instructionsTable [dataSource]="dataSource">
-
     <ng-container matColumnDef="client">
-      <th mat-header-cell *matHeaderCellDef> {{  "labels.inputs.Client" | translate}} </th>
-      <td mat-cell *matCellDef="let instruction">{{instruction.fromClient.displayName}}-{{instruction.fromClient.id}}
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client' | translate }}</th>
+      <td mat-cell *matCellDef="let instruction">
+        {{ instruction.fromClient.displayName }}-{{ instruction.fromClient.id }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="fromAccount">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.From Account" | translate}} </th>
-      <td mat-cell *matCellDef="let instruction">{{instruction.fromAccount.accountNo}}
-        ({{instruction.fromAccountType.value}})</td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.From Account' | translate }}</th>
+      <td mat-cell *matCellDef="let instruction">
+        {{ instruction.fromAccount.accountNo }} ({{ instruction.fromAccountType.value }})
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="beneficiary">
-      <th mat-header-cell *matHeaderCellDef>{{"labels.inputs.Beneficiary" | translate}} </th>
-      <td mat-cell *matCellDef="let instruction">{{instruction.toClient.displayName}}</td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Beneficiary' | translate }}</th>
+      <td mat-cell *matCellDef="let instruction">{{ instruction.toClient.displayName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="toAccount">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.To Account" | translate}} </th>
-      <td mat-cell *matCellDef="let instruction">{{instruction.toAccount.accountNo}}
-        ({{instruction.toAccountType.value}})</td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.To Account' | translate }}</th>
+      <td mat-cell *matCellDef="let instruction">
+        {{ instruction.toAccount.accountNo }} ({{ instruction.toAccountType.value }})
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount" | translate}} </th>
-      <td mat-cell *matCellDef="let instruction">{{instruction.instructionType.value}}/{{instruction.amount}}</td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+      <td mat-cell *matCellDef="let instruction">{{ instruction.instructionType.value }}/{{ instruction.amount }}</td>
     </ng-container>
 
     <ng-container matColumnDef="validity">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Validity" | translate}} </th>
-      <td mat-cell *matCellDef="let instruction">{{instruction.validFrom | dateFormat}} to {{instruction.validTill | dateFormat}}
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Validity' | translate }}</th>
+      <td mat-cell *matCellDef="let instruction">
+        {{ instruction.validFrom | dateFormat }} to {{ instruction.validTill | dateFormat }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef> {{  "labels.inputs.Actions" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
       <td mat-cell *matCellDef="let instruction">
-        <span *ngIf="instruction.status.value!=='Deleted'">
-          <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Edit Standing Instruction' | translate}}"
+        <span *ngIf="instruction.status.value !== 'Deleted'">
+          <button
+            class="account-action-button"
+            mat-raised-button
+            color="primary"
+            matTooltip="{{ 'tooltips.Edit Standing Instruction' | translate }}"
             *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'"
-            [routerLink]="['../', instruction.id, 'edit']">
+            [routerLink]="['../', instruction.id, 'edit']"
+          >
             <i class="fa fa-edit"></i>
           </button>
         </span>
-        <span *ngIf="instruction.status.value!=='Deleted'">
-          <button class="account-action-button" mat-raised-button color="warn" matTooltip="{{ 'tooltips.Delete Standing Instruction' | translate}}"
-            *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'" (click)="deleteStandingInstruction(instruction.id)">
+        <span *ngIf="instruction.status.value !== 'Deleted'">
+          <button
+            class="account-action-button"
+            mat-raised-button
+            color="warn"
+            matTooltip="{{ 'tooltips.Delete Standing Instruction' | translate }}"
+            *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'"
+            (click)="deleteStandingInstruction(instruction.id)"
+          >
             <i class="fa fa-times"></i>
           </button>
         </span>
-        <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.View Standing Instruction' | translate}}"
+        <button
+          class="account-action-button"
+          mat-raised-button
+          color="primary"
+          matTooltip="{{ 'tooltips.View Standing Instruction' | translate }}"
           *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
-          [routerLink]="['../', instruction.id, 'view']">
+          [routerLink]="['../', instruction.id, 'view']"
+        >
           <i class="fa fa-eye"></i>
         </button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
   <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
 </mat-card>

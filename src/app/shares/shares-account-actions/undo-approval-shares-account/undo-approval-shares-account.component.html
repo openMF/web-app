@@ -1,28 +1,20 @@
 <div class="container">
-
   <mat-card>
-
     <form (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div>
-
           <p class="mat-typography confirm-text">
-            {{'labels.text.Undo approval of shares account with ID' | translate}}: {{accountId}} ?
+            {{ 'labels.text.Undo approval of shares account with ID' | translate }}: {{ accountId }} ?
           </p>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="warn">{{'labels.buttons.Submit' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="warn">{{ 'labels.buttons.Submit' | translate }}</button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

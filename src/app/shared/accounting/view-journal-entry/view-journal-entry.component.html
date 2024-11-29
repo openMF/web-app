@@ -1,9 +1,7 @@
 <h1 mat-dialog-title>{{ 'labels.heading.View Journal Entry' | translate }}</h1>
 
 <div mat-dialog-content>
-
   <table>
-
     <tr>
       <th>{{ 'labels.inputs.Office' | translate }}</th>
       <td>{{ data.journalEntry.officeName }}</td>
@@ -44,9 +42,7 @@
         <span *ngIf="data.journalEntry.entryType.value === 'CREDIT'">{{ 'labels.inputs.Credit' | translate }}</span>
         <span *ngIf="data.journalEntry.entryType.value === 'DEBIT'">{{ 'labels.inputs.Debit' | translate }}</span>
       </th>
-      <td>
-        {{ data.journalEntry.currency.displaySymbol }} {{ data.journalEntry.amount | formatNumber }}
-      </td>
+      <td>{{ data.journalEntry.currency.displaySymbol }} {{ data.journalEntry.amount | formatNumber }}</td>
     </tr>
 
     <tr>
@@ -107,9 +103,7 @@
       <th>{{ 'labels.inputs.Submitted on' | translate }}</th>
       <td>{{ data.journalEntry.submittedOnDate | datetimeFormat }}</td>
     </tr>
-
   </table>
-
 </div>
 
 <mat-dialog-actions align="end">

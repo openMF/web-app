@@ -1,52 +1,50 @@
 <!doctype html>
 <html lang="en" class="h-full bg-gray-100">
-<head>
-  <meta charset="utf-8"/>
-  <title>{{'APP_NAME' | translate}}</title>
-  <base href="/"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="mobile-web-app-capable" content="yes">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{'APP_NAME' | translate}}</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
 
-  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-  <link rel="icon" type="image/png" href="assets/images/MifosX_logo.png" sizes="182x184">
-  <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon.png" sizes="182x184"/>
-  <link rel="manifest" href="manifest.json"/>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/png" href="assets/images/MifosX_logo.png" sizes="182x184" />
+    <link rel="apple-touch-icon" type="image/png" href="apple-touch-icon.png" sizes="182x184" />
+    <link rel="manifest" href="manifest.json" />
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Mono:300" rel="stylesheet">
-  <!-- Load environment variables -->
-  <script src="assets/env.js"></script>
-</head>
-<body class="h-full">
-  <!--[if lt IE 10]>
-    <p>
-      You are using an <strong>outdated</strong> browser.
-      Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
-    </p>
-  <![endif]-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Mono:300" rel="stylesheet" />
+    <!-- Load environment variables -->
+    <script src="assets/env.js"></script>
+  </head>
+  <body class="h-full">
+    <!--[if lt IE 10]>
+      <p>
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
 
-  <noscript>
-    <p>
-      This page requires JavaScript to work properly. Please enable JavaScript in your browser.
-    </p>
-  </noscript>
+    <noscript>
+      <p>This page requires JavaScript to work properly. Please enable JavaScript in your browser.</p>
+    </noscript>
 
-  <script>
-    // This hides the address bar on mobile browsers
-    // https://developers.google.com/web/fundamentals/native-hardware/fullscreen/
-    window.addEventListener('load',function() { window.scrollTo(0, 1); });
-  </script>
+    <script>
+      // This hides the address bar on mobile browsers
+      // https://developers.google.com/web/fundamentals/native-hardware/fullscreen/
+      window.addEventListener('load', function () {
+        window.scrollTo(0, 1);
+      });
+    </script>
 
-  <mifosx-web-app>
-    <div class="loader-wrapper">
-      <div class="bottom triangle"></div>
-      <div class="top triangle"></div>
-      <div class="left triangle"></div>
-      <div class="right triangle"></div>
-    </div>
-  </mifosx-web-app>
-
-
-</body>
+    <mifosx-web-app>
+      <div class="loader-wrapper">
+        <div class="bottom triangle"></div>
+        <div class="top triangle"></div>
+        <div class="left triangle"></div>
+        <div class="right triangle"></div>
+      </div>
+    </mifosx-web-app>
+  </body>
 </html>

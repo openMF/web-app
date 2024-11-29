@@ -1,6 +1,7 @@
 <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
-  <h4 class="m-b-15 right" fxFlex="90%">{{'labels.heading.You can drag and drop the rows to set a Payment Allocations order' | translate}}</h4>
+  <h4 class="m-b-15 right" fxFlex="90%">
+    {{ 'labels.heading.You can drag and drop the rows to set a Payment Allocations order' | translate }}
+  </h4>
 
   <div class="right" fxFlex="4%" *ngIf="!isDefault()">
     <button mat-button color="warn" (click)="removeTransaction()">
@@ -9,63 +10,79 @@
   </div>
 
   <div class="mat-elevation-z8 container m-t-15" *ngIf="paymentAllocationsData">
-    <table mat-table [dataSource]="paymentAllocationsData" #table cdkDropList
-      [cdkDropListData]="paymentAllocationsData" (cdkDropListDropped)="dropTable($event, false)">
-
+    <table
+      mat-table
+      [dataSource]="paymentAllocationsData"
+      #table
+      cdkDropList
+      [cdkDropListData]="paymentAllocationsData"
+      (cdkDropListDropped)="dropTable($event, false)"
+    >
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> </th>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let paymentAllocation">
-            <fa-icon icon="bars"></fa-icon>
+          <fa-icon icon="bars"></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="order">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Order' | translate }}</th>
-        <td mat-cell *matCellDef="let paymentAllocation; let rowIndex = index"> {{ (rowIndex + 1) }} </td>
+        <td mat-cell *matCellDef="let paymentAllocation; let rowIndex = index">{{ rowIndex + 1 }}</td>
       </ng-container>
 
       <ng-container matColumnDef="allocationRule">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Allocation Rule' | translate }}</th>
-        <td mat-cell *matCellDef="let paymentAllocation"> {{ paymentAllocation.value | translateKey:'catalogs' }} </td>
+        <td mat-cell *matCellDef="let paymentAllocation">{{ paymentAllocation.value | translateKey: 'catalogs' }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row cdkDrag [cdkDragData]="row" *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row cdkDrag [cdkDragData]="row" *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
 
   <div class="mat-elevation-z8 container m-t-15 m-b-15" *ngIf="creditAllocationsData">
-    <table mat-table [dataSource]="creditAllocationsData" #table cdkDropList
-      [cdkDropListData]="creditAllocationsData" (cdkDropListDropped)="dropTable($event, true)">
-
+    <table
+      mat-table
+      [dataSource]="creditAllocationsData"
+      #table
+      cdkDropList
+      [cdkDropListData]="creditAllocationsData"
+      (cdkDropListDropped)="dropTable($event, true)"
+    >
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> </th>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let creditAllocation">
-            <fa-icon icon="bars"></fa-icon>
+          <fa-icon icon="bars"></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="order">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Order' | translate }}</th>
-        <td mat-cell *matCellDef="let creditAllocation; let rowIndex = index"> {{ (rowIndex + 1) }} </td>
+        <td mat-cell *matCellDef="let creditAllocation; let rowIndex = index">{{ rowIndex + 1 }}</td>
       </ng-container>
 
       <ng-container matColumnDef="allocationRule">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Credit Allocation Rule' | translate }}</th>
-        <td mat-cell *matCellDef="let creditAllocation"> {{ creditAllocation.value | translateKey:'catalogs' }} </td>
+        <td mat-cell *matCellDef="let creditAllocation">{{ creditAllocation.value | translateKey: 'catalogs' }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row cdkDrag [cdkDragData]="row" *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row cdkDrag [cdkDragData]="row" *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
   </div>
 
-  <mat-form-field fxFlex="33%" class="m-t-20" *ngIf="advancedPaymentAllocation && advancedPaymentAllocation.futureInstallmentAllocationRules">
+  <mat-form-field
+    fxFlex="33%"
+    class="m-t-20"
+    *ngIf="advancedPaymentAllocation && advancedPaymentAllocation.futureInstallmentAllocationRules"
+  >
     <mat-label>{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}</mat-label>
     <mat-select [formControl]="futureInstallmentAllocationRule">
-      <mat-option *ngFor="let futureInstallmentAllocationRule of advancedPaymentAllocation.futureInstallmentAllocationRules"
-        [value]="futureInstallmentAllocationRule.code">
-        {{ futureInstallmentAllocationRule.value | translateKey:'catalogs' }}
+      <mat-option
+        *ngFor="let futureInstallmentAllocationRule of advancedPaymentAllocation.futureInstallmentAllocationRules"
+        [value]="futureInstallmentAllocationRule.code"
+      >
+        {{ futureInstallmentAllocationRule.value | translateKey: 'catalogs' }}
       </mat-option>
     </mat-select>
   </mat-form-field>

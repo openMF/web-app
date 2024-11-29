@@ -1,31 +1,32 @@
-<div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%"
-  *ngIf="!(transactionData.reversed)">
+<div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%" *ngIf="!transactionData.reversed">
   <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
-    <button mat-raised-button color="primary"
+    <button
+      mat-raised-button
+      color="primary"
       *ngIf="!(transactionData.transactionType.value === 'Transfer' || transactionData.reversed === 'true')"
-      [routerLink]="'edit'">
-      <fa-icon icon="edit" class="m-r-10"></fa-icon>{{"labels.buttons.Edit" | translate }}
+      [routerLink]="'edit'"
+    >
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
     </button>
   </span>
-  <button mat-raised-button color="warn"
+  <button
+    mat-raised-button
+    color="warn"
     *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
-    (click)="undoTransaction()">
-    <fa-icon icon="undo" class="m-r-10"></fa-icon>{{"labels.buttons.Undo" | translate }}
+    (click)="undoTransaction()"
+  >
+    <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-        <div fxFlex="100%" [ngClass]="transactionColor()">
-        </div>
+        <div fxFlex="100%" [ngClass]="transactionColor()"></div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Transaction Id" | translate }}
+          {{ 'labels.inputs.Transaction Id' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -33,7 +34,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Type" | translate }}
+          {{ 'labels.inputs.Type' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -41,7 +42,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Transaction Date" | translate }}
+          {{ 'labels.inputs.Transaction Date' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -49,7 +50,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Currency" | translate }}
+          {{ 'labels.inputs.Currency' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -57,32 +58,33 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Amount" | translate }}
+          {{ 'labels.inputs.Amount' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ transactionData.amount | currency:transactionData.currency.code:'symbol-narrow':'1.2-2'}}
+          {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
         <div fxFlex="50%" *ngIf="transactionData.note" class="mat-body-strong">
-          {{"labels.inputs.Note" | translate }}
+          {{ 'labels.inputs.Note' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="transactionData.note">
           {{ transactionData.note }}
         </div>
 
-        <mifosx-transaction-payment-detail *ngIf="transactionData.paymentDetailData"
-          [paymentDetailData]="transactionData.paymentDetailData">
+        <mifosx-transaction-payment-detail
+          *ngIf="transactionData.paymentDetailData"
+          [paymentDetailData]="transactionData.paymentDetailData"
+        >
         </mifosx-transaction-payment-detail>
-
       </div>
-
     </mat-card-content>
 
     <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" class="m-b-20">
-      <button type="button" color="primary" mat-raised-button (click)="goBack()">{{  "labels.buttons.Back" | translate}}</button>
+      <button type="button" color="primary" mat-raised-button (click)="goBack()">
+        {{ 'labels.buttons.Back' | translate }}
+      </button>
     </mat-card-actions>
   </mat-card>
-
 </div>
