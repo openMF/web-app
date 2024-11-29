@@ -49,6 +49,7 @@ testem.log
 /typings
 /reports
 /src/translations/template.*
+.eslintcache
 
 # System Files
 .DS_Store
