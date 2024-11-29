@@ -1,6 +1,4 @@
 /dist
 /node_modules
 **/.git
-*.js
-*.json
 *.ts
