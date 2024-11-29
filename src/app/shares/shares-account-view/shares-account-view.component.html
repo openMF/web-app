@@ -1,48 +1,56 @@
 <mat-card class="account-card">
-
   <mat-card-header fxLayout="column" class="header">
-
     <mat-card-title-group class="header-title-group">
-
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image" matTooltip="{{ 'tooltips.Shares Account' | translate}}"
-            src="assets/images/shares_account_placeholder.png">
+          <img
+            mat-card-md-image
+            class="profile-image"
+            matTooltip="{{ 'tooltips.Shares Account' | translate }}"
+            src="assets/images/shares_account_placeholder.png"
+          />
         </div>
       </div>
 
       <div class="mat-typography account-card-title">
         <mat-card-title>
           <div fxLayout="row" fxLayout.lt-md="column">
-
             <div fxFlex="60%">
               <h3>
-                <i class="fa fa-stop" [ngClass]="sharesAccountData.status.code | statusLookup"
-                  [matTooltip]="sharesAccountData.status.value"></i>
-                <span class="m-r-5">{{'labels.inputs.Share Product' | translate}} :</span>
-                <span class="m-r-5"><mifosx-long-text
-                    textValue="{{sharesAccountData.productName}}"></mifosx-long-text></span>
-                <mifosx-account-number accountNo="{{sharesAccountData.accountNo}}"
-                  display="left"></mifosx-account-number>
+                <i
+                  class="fa fa-stop"
+                  [ngClass]="sharesAccountData.status.code | statusLookup"
+                  [matTooltip]="sharesAccountData.status.value"
+                ></i>
+                <span class="m-r-5">{{ 'labels.inputs.Share Product' | translate }} :</span>
+                <span class="m-r-5"
+                  ><mifosx-long-text textValue="{{ sharesAccountData.productName }}"></mifosx-long-text
+                ></span>
+                <mifosx-account-number
+                  accountNo="{{ sharesAccountData.accountNo }}"
+                  display="left"
+                ></mifosx-account-number>
               </h3>
               <span class="shares-overview">
-                <span class="m-r-10">{{'labels.text.' + entityType | translate}} {{"labels.inputs.name" | translate}}
-                  :</span>{{sharesAccountData.clientName || sharesAccountData.groupName}}
-                  <span class="m-l-10" *ngIf="sharesAccountData.clientAccountNo">
-                    <mifosx-account-number accountNo="{{sharesAccountData.clientAccountNo}}"></mifosx-account-number>
-                  </span>
+                <span class="m-r-10"
+                  >{{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }} :</span
+                >{{ sharesAccountData.clientName || sharesAccountData.groupName }}
+                <span class="m-l-10" *ngIf="sharesAccountData.clientAccountNo">
+                  <mifosx-account-number accountNo="{{ sharesAccountData.clientAccountNo }}"></mifosx-account-number>
+                </span>
               </span>
               <div>
                 <table class="account-overview">
                   <tbody>
                     <tr>
-                      <td>{{"labels.inputs.Current Market Price" | translate}} :</td>
-                      <td>{{sharesAccountData.currentMarketPrice | formatNumber}}</td>
+                      <td>{{ 'labels.inputs.Current Market Price' | translate }} :</td>
+                      <td>{{ sharesAccountData.currentMarketPrice | formatNumber }}</td>
                     </tr>
                     <tr *ngIf="sharesAccountData.lockinPeriod">
-                      <td>{{"labels.inputs.Lockin Period" | translate}} :</td>
+                      <td>{{ 'labels.inputs.Lockin Period' | translate }} :</td>
                       <td>
-                        {{sharesAccountData.lockinPeriod}} {{sharesAccountData.lockPeriodTypeEnum.value | translateKey:'catalogs'}}
+                        {{ sharesAccountData.lockinPeriod }}
+                        {{ sharesAccountData.lockPeriodTypeEnum.value | translateKey: 'catalogs' }}
                       </td>
                     </tr>
                   </tbody>
@@ -53,68 +61,90 @@
             <span fxFlex="auto"></span>
 
             <div fxFlex="4%">
-              <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Share account actions"
-                yPosition="below" *ngIf="buttonConfig.singleButtons.length > 0">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="accountMenu"
+                aria-label="Share account actions"
+                yPosition="below"
+                *ngIf="buttonConfig.singleButtons.length > 0"
+              >
                 <mat-icon matListIcon class="actions-menu">
                   <fa-icon icon="bars" size="sm"></fa-icon>
                 </mat-icon>
               </button>
             </div>
           </div>
-
         </mat-card-title>
       </div>
-
     </mat-card-title-group>
 
     <mat-menu #accountMenu="matMenu">
-
       <ng-container *ngFor="let item of buttonConfig.singleButtons">
         <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
           <mat-icon matListIcon>
-            <fa-icon icon="{{item.icon}}" size="sm"></fa-icon>
+            <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{'labels.menus.' + item.name | translate}}</span>
+          <span>{{ 'labels.menus.' + item.name | translate }}</span>
         </button>
       </ng-container>
 
       <ng-container *ngIf="buttonConfig.options.length">
-        <button mat-menu-item [matMenuTriggerFor]="More">{{'labels.menus.More' | translate}}</button>
+        <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
         <mat-menu #More="matMenu">
           <span *ngFor="let option of buttonConfig.options">
-            <button mat-menu-item *mifosxHasPermission="option.taskPermissionName"
-              (click)="doAction(option.name)">{{'labels.menus.' + option.name | translate}}</button>
+            <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">
+              {{ 'labels.menus.' + option.name | translate }}
+            </button>
           </span>
         </mat-menu>
       </ng-container>
-
     </mat-menu>
-
   </mat-card-header>
 
   <mat-card-content class="content">
-
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-        [active]="general.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTPURCHASE'">
-        {{'labels.inputs.General' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+        *mifosxHasPermission="'READ_SHAREACCOUNTPURCHASE'"
+      >
+        {{ 'labels.inputs.General' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
-        [active]="transactions.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTPURCHASE'">
-        {{'labels.inputs.Transactions' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./transactions']"
+        routerLinkActive
+        #transactions="routerLinkActive"
+        [active]="transactions.isActive"
+        *mifosxHasPermission="'READ_SHAREACCOUNTPURCHASE'"
+      >
+        {{ 'labels.inputs.Transactions' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
-        [active]="charges.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTCHARGE'">
-        {{'labels.inputs.Charges' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./charges']"
+        routerLinkActive
+        #charges="routerLinkActive"
+        [active]="charges.isActive"
+        *mifosxHasPermission="'READ_SHAREACCOUNTCHARGE'"
+      >
+        {{ 'labels.inputs.Charges' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./dividends']" routerLinkActive #dividends="routerLinkActive"
-        [active]="dividends.isActive" *mifosxHasPermission="'READ_SHAREACCOUNTDIVIDENDS'">
-        {{'labels.inputs.Dividends' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./dividends']"
+        routerLinkActive
+        #dividends="routerLinkActive"
+        [active]="dividends.isActive"
+        *mifosxHasPermission="'READ_SHAREACCOUNTDIVIDENDS'"
+      >
+        {{ 'labels.inputs.Dividends' | translate }}
       </a>
     </nav>
 
     <router-outlet></router-outlet>
-
   </mat-card-content>
-
 </mat-card>

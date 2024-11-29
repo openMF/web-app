@@ -1,20 +1,18 @@
-<h1 mat-dialog-title>{{"labels.buttons.Add Event" | translate}}</h1>
+<h1 mat-dialog-title>{{ 'labels.buttons.Add Event' | translate }}</h1>
 
 <mat-dialog-content>
-
   <form [formGroup]="eventForm">
-
     <div fxLayout="column">
-
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Select Grouping' | translate }}</mat-label>
         <mat-select required formControlName="grouping">
           <mat-option *ngFor="let grouping of data.groupings" [value]="grouping.name">
-            {{ grouping.name | translateKey:'catalogs' }}
+            {{ grouping.name | translateKey: 'catalogs' }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="eventForm.controls.grouping.hasError('required')">
-          {{ 'labels.inputs.Grouping' | translate }} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+          {{ 'labels.inputs.Grouping' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -26,7 +24,8 @@
           </mat-option>
         </mat-select>
         <mat-error *ngIf="eventForm.controls.entity.hasError('required')">
-          {{ 'labels.inputs.Entity' | translate }} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+          {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -38,18 +37,17 @@
           </mat-option>
         </mat-select>
         <mat-error *ngIf="eventForm.controls.action.hasError('required')">
-          {{'labels.inputs.Action' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+          {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
-
     </div>
-
   </form>
-
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>{{'labels.buttons.Cancel' | translate}}</button>
-  <button mat-raised-button color="primary"
-    [disabled]="!eventForm.valid || eventForm.pristine" (click)="submit()">{{'labels.buttons.Submit' | translate}}</button>
+  <button mat-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button mat-raised-button color="primary" [disabled]="!eventForm.valid || eventForm.pristine" (click)="submit()">
+    {{ 'labels.buttons.Submit' | translate }}
+  </button>
 </mat-dialog-actions>

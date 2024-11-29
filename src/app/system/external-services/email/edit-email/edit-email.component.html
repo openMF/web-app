@@ -1,81 +1,91 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="emailConfigurationForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Username' | translate}}</mat-label>
-            <input matInput required formControlName="username">
+            <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
+            <input matInput required formControlName="username" />
             <mat-error *ngIf="emailConfigurationForm.controls.username.hasError('required')">
-              {{'labels.inputs.Username' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Username' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Password' | translate}}</mat-label>
-            <input matInput required type="{{ passwordInputType }}" formControlName="password">
-            <button mat-button *ngIf="emailConfigurationForm.controls.password.value" matSuffix mat-icon-button
-              (mousedown)="passwordInputType = 'text'" (mouseup)="passwordInputType = 'password'">
+            <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
+            <input matInput required type="{{ passwordInputType }}" formControlName="password" />
+            <button
+              mat-button
+              *ngIf="emailConfigurationForm.controls.password.value"
+              matSuffix
+              mat-icon-button
+              (mousedown)="passwordInputType = 'text'"
+              (mouseup)="passwordInputType = 'password'"
+            >
               <fa-icon *ngIf="passwordInputType === 'password'" icon="eye"></fa-icon>
               <fa-icon *ngIf="passwordInputType === 'text'" icon="eye-slash"></fa-icon>
             </button>
             <mat-error *ngIf="emailConfigurationForm.controls.password.hasError('required')">
-              {{'labels.inputs.Password' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Password' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Host' | translate}}</mat-label>
-            <input matInput required formControlName="host">
+            <mat-label>{{ 'labels.inputs.Host' | translate }}</mat-label>
+            <input matInput required formControlName="host" />
             <mat-error *ngIf="emailConfigurationForm.controls.host.hasError('required')">
-              {{'labels.inputs.Host' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Host' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Port' | translate}}</mat-label>
-            <input matInput type="number" required formControlName="port">
+            <mat-label>{{ 'labels.inputs.Port' | translate }}</mat-label>
+            <input matInput type="number" required formControlName="port" />
             <mat-error *ngIf="emailConfigurationForm.controls.port.hasError('required')">
-              {{'labels.inputs.Port' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Port' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="useTLS" class="margin-v">
-            {{'labels.inputs.Use TLS' | translate}}?
+            {{ 'labels.inputs.Use TLS' | translate }}?
           </mat-checkbox>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.From Email' | translate}}</mat-label>
-            <input matInput type="email" required formControlName="fromEmail">
+            <mat-label>{{ 'labels.inputs.From Email' | translate }}</mat-label>
+            <input matInput type="email" required formControlName="fromEmail" />
             <mat-error *ngIf="emailConfigurationForm.controls.fromEmail.hasError('required')">
-              {{'labels.inputs.From Email' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.From Email' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.From Name' | translate}}</mat-label>
-            <input matInput required formControlName="fromName">
+            <mat-label>{{ 'labels.inputs.From Name' | translate }}</mat-label>
+            <input matInput required formControlName="fromName" />
             <mat-error *ngIf="emailConfigurationForm.controls.fromName.hasError('required')">
-              {{'labels.inputs.From Name' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.From Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary"
-          [disabled]="!emailConfigurationForm.valid || emailConfigurationForm.pristine">{{'labels.buttons.Submit' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!emailConfigurationForm.valid || emailConfigurationForm.pristine"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

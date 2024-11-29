@@ -1,32 +1,27 @@
 <div class="container">
-
   <mat-card class="card" fxLayout="column" fxLayoutGap="40px">
-
     <div fxLayout="row" class="search">
       <mat-card-content>
-
         <mat-form-field>
-          <mat-label>{{'labels.placeholders.Search Activity' | translate}}</mat-label>
-          <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText">
+          <mat-label>{{ 'labels.placeholders.Search Activity' | translate }}</mat-label>
+          <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText" />
         </mat-form-field>
 
         <mat-autocomplete #activitySearch="matAutocomplete">
           <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
-            <span>{{activity.activity}}</span>
+            <span>{{ activity.activity }}</span>
           </mat-option>
         </mat-autocomplete>
-
       </mat-card-content>
     </div>
 
     <div fxLayout="row" class="top-card">
-        <div class="trends-bar">
-          <mifosx-client-trends-bar></mifosx-client-trends-bar>
-        </div>
+      <div class="trends-bar">
+        <mifosx-client-trends-bar></mifosx-client-trends-bar>
+      </div>
     </div>
 
     <div fxLayout="row" class="bottom-card">
-
       <div class="amount-disbursed">
         <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
       </div>
@@ -34,9 +29,6 @@
       <div class="amount-collected">
         <mifosx-amount-collected-pie></mifosx-amount-collected-pie>
       </div>
-
     </div>
-
   </mat-card>
-
 </div>

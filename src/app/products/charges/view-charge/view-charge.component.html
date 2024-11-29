@@ -1,24 +1,20 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{"labels.heading.Edit" | translate}}
+    {{ 'labels.heading.Edit' | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteCharge()" *mifosxHasPermission="'DELETE_CHARGE'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{"labels.heading.Delete" | translate}}
+    {{ 'labels.heading.Delete' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Charge Name" | translate}}
+          {{ 'labels.inputs.Charge Name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -26,15 +22,15 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Charge Applies To" | translate}}
+          {{ 'labels.inputs.Charge Applies To' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeAppliesTo.value | translateKey:'catalogs' }}
+          {{ chargeData.chargeAppliesTo.value | translateKey: 'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Penalty" | translate}}
+          {{ 'labels.inputs.Penalty' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -42,7 +38,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Currency" | translate}}
+          {{ 'labels.inputs.Currency' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -50,7 +46,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Amount" | translate}}
+          {{ 'labels.inputs.Amount' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -58,7 +54,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="minCap">
-          {{"labels.inputs.Minimum Charge Cap" | translate}}
+          {{ 'labels.inputs.Minimum Charge Cap' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="minCap">
@@ -66,7 +62,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="maxCap">
-          {{"labels.inputs.Maximum Charge Cap" | translate}}
+          {{ 'labels.inputs.Maximum Charge Cap' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="maxCap">
@@ -74,31 +70,31 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Charge Time Type" | translate}}
+          {{ 'labels.inputs.Charge Time Type' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeTimeType.value | translateKey:'catalogs' }}
+          {{ chargeData.chargeTimeType.value | translateKey: 'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Charge Calculation Type" | translate}}
+          {{ 'labels.inputs.Charge Calculation Type' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargeCalculationType.value | translateKey:'catalogs' }}
+          {{ chargeData.chargeCalculationType.value | translateKey: 'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Charge Payment Mode" | translate}}
+          {{ 'labels.inputs.Charge Payment Mode' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ chargeData.chargePaymentMode.value | translateKey:'catalogs' }}
+          {{ chargeData.chargePaymentMode.value | translateKey: 'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.status.Active" | translate}}
+          {{ 'labels.status.Active' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -106,41 +102,47 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency">
-          {{"labels.inputs.Add Fee Frequency" | translate}}
+          {{ 'labels.inputs.Add Fee Frequency' | translate }}
         </div>
 
-        <div fxFlex="50%"
-          *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency && chargeData.feeFrequency">
-          {{ chargeData.feeFrequency.value | translateKey:'catalogs' }}
+        <div
+          fxFlex="50%"
+          *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency && chargeData.feeFrequency"
+        >
+          {{ chargeData.feeFrequency.value | translateKey: 'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
-          {{"labels.inputs.Frequency Interval" | translate}}
+          {{ 'labels.inputs.Frequency Interval' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
           {{ chargeData.feeInterval }}
         </div>
 
-        <mifosx-gl-account-display fxFlex="100%" [accountTitle]="'Income From Charges'" *ngIf="chargeData.incomeOrLiabilityAccount"
-            [glAccount]="chargeData.incomeOrLiabilityAccount" [withTitle]="'50%'">
+        <mifosx-gl-account-display
+          fxFlex="100%"
+          [accountTitle]="'Income From Charges'"
+          *ngIf="chargeData.incomeOrLiabilityAccount"
+          [glAccount]="chargeData.incomeOrLiabilityAccount"
+          [withTitle]="'50%'"
+        >
         </mifosx-gl-account-display>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.taxGroup">
-          {{"labels.inputs.Tax Group" | translate}}
+          {{ 'labels.inputs.Tax Group' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="chargeData.taxGroup">
           {{ chargeData.taxGroup.name }}
         </div>
-
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">{{ 'labels.buttons.Back' | translate}}</button>
+        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
+          {{ 'labels.buttons.Back' | translate }}
+        </button>
       </div>
     </mat-card-content>
-
   </mat-card>
-
 </div>

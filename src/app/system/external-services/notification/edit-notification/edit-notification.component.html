@@ -1,48 +1,49 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="notificationConfigurationForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Server Key' | translate}}</mat-label>
-            <input matInput required formControlName="server_key">
+            <mat-label>{{ 'labels.inputs.Server Key' | translate }}</mat-label>
+            <input matInput required formControlName="server_key" />
             <mat-error *ngIf="notificationConfigurationForm.controls.server_key.hasError('required')">
-              {{'labels.inputs.Server Key' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Server Key' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.GCM End Point' | translate}}</mat-label>
-            <input matInput required formControlName="gcm_end_point">
+            <mat-label>{{ 'labels.inputs.GCM End Point' | translate }}</mat-label>
+            <input matInput required formControlName="gcm_end_point" />
             <mat-error *ngIf="notificationConfigurationForm.controls.gcm_end_point.hasError('required')">
-              {{'labels.inputs.GCM End Point' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.GCM End Point' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.FCM End Point' | translate}}</mat-label>
-            <input matInput required formControlName="fcm_end_point">
+            <mat-label>{{ 'labels.inputs.FCM End Point' | translate }}</mat-label>
+            <input matInput required formControlName="fcm_end_point" />
             <mat-error *ngIf="notificationConfigurationForm.controls.fcm_end_point.hasError('required')">
-              {{'labels.inputs.FCM End Point' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.FCM End Point' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!notificationConfigurationForm.valid || notificationConfigurationForm.pristine">{{'labels.buttons.Submit' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!notificationConfigurationForm.valid || notificationConfigurationForm.pristine"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

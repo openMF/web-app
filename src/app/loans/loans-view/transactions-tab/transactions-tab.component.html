@@ -1,111 +1,207 @@
 <div class="container">
-
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" class="transaction-buttons" *ngIf="checkStatus()">
     <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
-      {{"labels.inputs.Hide Reversed" | translate}}</mat-checkbox>
+      {{ 'labels.inputs.Hide Reversed' | translate }}</mat-checkbox
+    >
     <mat-checkbox [formControl]="hideAccrualsParam" (click)="hideAccruals()" class="accruals">
-      {{"labels.inputs.Hide Accruals" | translate}}</mat-checkbox>
+      {{ 'labels.inputs.Hide Accruals' | translate }}</mat-checkbox
+    >
     <button mat-raised-button color="primary" class="transaction-button" [routerLink]="['export']">
-      {{"labels.buttons.Export" | translate}}
+      {{ 'labels.buttons.Export' | translate }}
     </button>
   </div>
 
   <table mat-table [dataSource]="dataSource" matSort>
-
     <ng-container matColumnDef="row">
-      <td mat-cell *matCellDef="let transaction; let idx = index;" (click)="showTransactions(transaction)">{{(idx + 1)}}</td>
+      <td mat-cell *matCellDef="let transaction; let idx = index" (click)="showTransactions(transaction)">
+        {{ idx + 1 }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="id">
-      <td mat-cell *matCellDef="let transaction" class="td-select" [ngClass]="loanTransactionColor(transaction)" (click)="showTransactions(transaction)">{{ transaction.id }}</td>
+      <td
+        mat-cell
+        *matCellDef="let transaction"
+        class="td-select"
+        [ngClass]="loanTransactionColor(transaction)"
+        (click)="showTransactions(transaction)"
+      >
+        {{ transaction.id }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="office">
-      <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)" (click)="showTransactions(transaction)">{{ transaction.officeName }}</td>
+      <td
+        mat-cell
+        *matCellDef="let transaction"
+        [ngClass]="loanTransactionColor(transaction)"
+        (click)="showTransactions(transaction)"
+      >
+        {{ transaction.officeName }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="externalId">
       <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)">
-        <mifosx-external-identifier externalId="{{transaction.externalId}}"></mifosx-external-identifier>
+        <mifosx-external-identifier externalId="{{ transaction.externalId }}"></mifosx-external-identifier>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="date">
-      <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)" (click)="showTransactions(transaction)"> {{ transaction.date | dateFormat }} </td>
+      <td
+        mat-cell
+        *matCellDef="let transaction"
+        [ngClass]="loanTransactionColor(transaction)"
+        (click)="showTransactions(transaction)"
+      >
+        {{ transaction.date | dateFormat }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="transactionType">
-      <td mat-cell *matCellDef="let transaction" [ngClass]="loanTransactionColor(transaction)" (click)="showTransactions(transaction)"> {{ transaction.type.value }} </td>
+      <td
+        mat-cell
+        *matCellDef="let transaction"
+        [ngClass]="loanTransactionColor(transaction)"
+        (click)="showTransactions(transaction)"
+      >
+        {{ transaction.type.value }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" (click)="showTransactions(transaction)"
-        [ngClass]="loanTransactionColor(transaction)"> {{ transaction.amount | formatNumber }} </td>
+      <td
+        mat-cell
+        class="r-amount td-min-space"
+        *matCellDef="let transaction"
+        (click)="showTransactions(transaction)"
+        [ngClass]="loanTransactionColor(transaction)"
+      >
+        {{ transaction.amount | formatNumber }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="principal">
-      <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" (click)="showTransactions(transaction)"
-        [ngClass]="loanTransactionColor(transaction)"> {{ transaction.principalPortion | formatNumber }} </td>
+      <td
+        mat-cell
+        class="r-amount td-min-space"
+        *matCellDef="let transaction"
+        (click)="showTransactions(transaction)"
+        [ngClass]="loanTransactionColor(transaction)"
+      >
+        {{ transaction.principalPortion | formatNumber }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="interest">
-      <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" (click)="showTransactions(transaction)"
-        [ngClass]="loanTransactionColor(transaction)"> {{ transaction.interestPortion | formatNumber }} </td>
+      <td
+        mat-cell
+        class="r-amount td-min-space"
+        *matCellDef="let transaction"
+        (click)="showTransactions(transaction)"
+        [ngClass]="loanTransactionColor(transaction)"
+      >
+        {{ transaction.interestPortion | formatNumber }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="fee">
-      <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" (click)="showTransactions(transaction)"
-        [ngClass]="loanTransactionColor(transaction)"> {{ transaction.feeChargesPortion | formatNumber }} </td>
+      <td
+        mat-cell
+        class="r-amount td-min-space"
+        *matCellDef="let transaction"
+        (click)="showTransactions(transaction)"
+        [ngClass]="loanTransactionColor(transaction)"
+      >
+        {{ transaction.feeChargesPortion | formatNumber }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="penalties">
-      <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" (click)="showTransactions(transaction)"
-        [ngClass]="loanTransactionColor(transaction)"> {{ transaction.penaltyChargesPortion | formatNumber }} </td>
+      <td
+        mat-cell
+        class="r-amount td-min-space"
+        *matCellDef="let transaction"
+        (click)="showTransactions(transaction)"
+        [ngClass]="loanTransactionColor(transaction)"
+      >
+        {{ transaction.penaltyChargesPortion | formatNumber }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="loanBalance">
-      <td mat-cell class="r-amount td-min-space" *matCellDef="let transaction" (click)="showTransactions(transaction)"
-        [ngClass]="loanTransactionColor(transaction)"> {{ transaction.outstandingLoanBalance | formatNumber }} </td>
+      <td
+        mat-cell
+        class="r-amount td-min-space"
+        *matCellDef="let transaction"
+        (click)="showTransactions(transaction)"
+        [ngClass]="loanTransactionColor(transaction)"
+      >
+        {{ transaction.outstandingLoanBalance | formatNumber }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <td mat-cell *matCellDef="let transaction" class="center">
-        <button mat-icon-button [matMenuTriggerFor]="transactionMenu" aria-label="" class="action-button" *ngIf="displaySubMenu(transaction)">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="transactionMenu"
+          aria-label=""
+          class="action-button"
+          *ngIf="displaySubMenu(transaction)"
+        >
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #transactionMenu="matMenu">
           <span *ngIf="!isReAgoeOrReAmortize(transaction.type)">
             <button mat-menu-item (click)="showTransactions(transaction)">
               <mat-icon><fa-icon icon="eye" size="sm"></fa-icon></mat-icon>
-              <span>{{ 'labels.text.View Transaction' | translate}}</span>
+              <span>{{ 'labels.text.View Transaction' | translate }}</span>
             </button>
           </span>
           <span *ngIf="allowUndoTransaction(transaction)">
             <button mat-menu-item *mifosxHasPermission="'ADJUST_LOAN'" (click)="undoTransaction(transaction, $event)">
               <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
-              <span>{{ 'tooltips.Undo Transaction' | translate}}</span>
-            </button>       
-            <button mat-menu-item class="account-action-button" (click)="routeEdit($event)" [routerLink]="[transaction.id, 'reciept']">
+              <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
+            </button>
+            <button
+              mat-menu-item
+              class="account-action-button"
+              (click)="routeEdit($event)"
+              [routerLink]="[transaction.id, 'reciept']"
+            >
               <mat-icon><fa-icon icon="receipt" size="sm"></fa-icon></mat-icon>
-              <span>{{ 'tooltips.View Receipts' | translate}}</span>
+              <span>{{ 'tooltips.View Receipts' | translate }}</span>
             </button>
           </span>
           <span *ngIf="isReAge(transaction.type) && !transaction.manuallyReversed">
-            <button mat-menu-item *mifosxHasPermission="'UNDO_REAGE_LOAN'" (click)="undoReAgeOrReAmortize(transaction, $event)">
+            <button
+              mat-menu-item
+              *mifosxHasPermission="'UNDO_REAGE_LOAN'"
+              (click)="undoReAgeOrReAmortize(transaction, $event)"
+            >
               <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
-              <span>{{ 'labels.menus.Undo Re-Age' | translate}}</span>
-            </button>   
+              <span>{{ 'labels.menus.Undo Re-Age' | translate }}</span>
+            </button>
           </span>
           <span *ngIf="isReAmortize(transaction.type) && !transaction.manuallyReversed">
-            <button mat-menu-item *mifosxHasPermission="'UNDO_REAMORTIZE_LOAN'" (click)="undoReAgeOrReAmortize(transaction, $event)">
+            <button
+              mat-menu-item
+              *mifosxHasPermission="'UNDO_REAMORTIZE_LOAN'"
+              (click)="undoReAgeOrReAmortize(transaction, $event)"
+            >
               <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
-              <span>{{ 'labels.menus.Undo Re-Amortize' | translate}}</span>
-            </button>   
+              <span>{{ 'labels.menus.Undo Re-Amortize' | translate }}</span>
+            </button>
           </span>
           <span *ngIf="viewJournalEntry(transaction.type)">
-            <button mat-menu-item (click)="routeEdit($event)" [routerLink]="['/','journal-entry', 'view', 'L'+transaction.id ]">
+            <button
+              mat-menu-item
+              (click)="routeEdit($event)"
+              [routerLink]="['/', 'journal-entry', 'view', 'L' + transaction.id]"
+            >
               <mat-icon><fa-icon icon="table-cells" size="sm"></fa-icon></mat-icon>
-              <span>{{ 'tooltips.View Journal Entries' | translate}}</span>
+              <span>{{ 'tooltips.View Journal Entries' | translate }}</span>
             </button>
           </span>
         </mat-menu>
@@ -114,80 +210,90 @@
 
     <!-- Sub header -->
     <ng-container matColumnDef="h1-row">
-      <th mat-header-cell *matHeaderCellDef> # </th>
+      <th mat-header-cell *matHeaderCellDef>#</th>
     </ng-container>
 
     <ng-container matColumnDef="h1-id">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Id" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Id' | translate }}</th>
     </ng-container>
 
     <ng-container matColumnDef="h1-office">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Office" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Office' | translate }}</th>
     </ng-container>
 
     <ng-container matColumnDef="h1-external-id">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.External Id" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
     </ng-container>
-    
+
     <ng-container matColumnDef="h1-transaction-date">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction Date" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Transaction Date' | translate }}</th>
     </ng-container>
-    
+
     <ng-container matColumnDef="h1-transaction-type">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Transaction Type" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Transaction Type' | translate }}</th>
     </ng-container>
 
     <ng-container matColumnDef="h1-space">
-      <th mat-header-cell *matHeaderCellDef> </th>
+      <th mat-header-cell *matHeaderCellDef></th>
     </ng-container>
-    
+
     <ng-container matColumnDef="h1-breakdown">
-      <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="4"> {{"labels.inputs.Breakdown" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef class="center" [attr.colspan]="4">
+        {{ 'labels.inputs.Breakdown' | translate }}
+      </th>
     </ng-container>
-    
+
     <ng-container matColumnDef="h1-loan-balance">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Loan Balance" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Balance' | translate }}</th>
     </ng-container>
-    
+
     <ng-container matColumnDef="h1-actions">
-      <th mat-header-cell *matHeaderCellDef class="center"> {{"labels.inputs.Actions" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef class="center">{{ 'labels.inputs.Actions' | translate }}</th>
     </ng-container>
 
     <!-- Sub header -->
     <ng-container matColumnDef="h2-space">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="6"> </th>
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="6"></th>
     </ng-container>
 
     <ng-container matColumnDef="h2-amount">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1"> {{"labels.inputs.Amount" | translate}} </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1">
+        {{ 'labels.inputs.Amount' | translate }}
+      </th>
     </ng-container>
 
     <ng-container matColumnDef="h2-principal">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1"> {{"labels.inputs.Principal" | translate}} </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1">
+        {{ 'labels.inputs.Principal' | translate }}
+      </th>
     </ng-container>
 
     <ng-container matColumnDef="h2-interest">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1"> {{"labels.inputs.Interest" | translate}} </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1">
+        {{ 'labels.inputs.Interest' | translate }}
+      </th>
     </ng-container>
 
     <ng-container matColumnDef="h2-fees">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1"> {{"labels.inputs.Fees" | translate}} </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1">
+        {{ 'labels.inputs.Fees' | translate }}
+      </th>
     </ng-container>
 
     <ng-container matColumnDef="h2-penalties">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1"> {{"labels.inputs.Penalties" | translate}} </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef [attr.colspan]="1">
+        {{ 'labels.inputs.Penalties' | translate }}
+      </th>
     </ng-container>
 
     <ng-container matColumnDef="h2-action">
-      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> </th>
+      <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"></th>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedHeader1Columns"></tr>
     <tr mat-header-row *matHeaderRowDef="displayedHeader2Columns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"></tr>
-
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row"></tr>
   </table>
 
   <mat-paginator [pageSize]="100" [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
-
 </div>

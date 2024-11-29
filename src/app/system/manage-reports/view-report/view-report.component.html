@@ -1,35 +1,27 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_REPORT'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Edit' | translate }}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
 
   <span *ngIf="!reportData.coreReport">
     <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_REPORT'">
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Delete' | translate }}
+      {{ 'labels.buttons.Delete' | translate }}
     </button>
   </span>
-
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-title>{{ reportData.reportName }}</mat-card-title>
 
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
-        <div fxFlex="50%" class="mat-body-strong">
-          {{ 'labels.inputs.Report Type' | translate }}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Report Type' | translate }}:</div>
 
         <div fxFlex="50%">
-          {{ reportData.reportType | translateKey:'text' }}
+          {{ reportData.reportType | translateKey: 'text' }}
         </div>
 
         <div *ngIf="reportData.reportSubType" fxFlex="50%" class="mat-body-strong">
@@ -37,37 +29,27 @@
         </div>
 
         <div *ngIf="reportData.reportSubType" fxFlex="50%">
-          {{ reportData.reportSubType | translateKey:'text' }}
+          {{ reportData.reportSubType | translateKey: 'text' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{ 'labels.inputs.Report Category' | translate }}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Report Category' | translate }}:</div>
 
         <div fxFlex="50%">
-          {{ reportData.reportCategory | translateKey:'catalogs' }}
+          {{ reportData.reportCategory | translateKey: 'catalogs' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{ 'labels.inputs.Core Report' | translate }}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Core Report' | translate }}:</div>
 
         <div fxFlex="50%">
           {{ reportData.coreReport | yesNo }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{ 'labels.inputs.User Report' | translate }}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.User Report' | translate }}:</div>
 
         <div fxFlex="50%">
           {{ reportData.useReport | yesNo }}
         </div>
-
       </div>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

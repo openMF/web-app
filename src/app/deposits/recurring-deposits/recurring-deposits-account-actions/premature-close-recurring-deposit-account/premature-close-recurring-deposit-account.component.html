@@ -1,35 +1,36 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="prematureCloseRecurringDepositsAccountForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field (click)="closedOnDatePicker.open()">
-            <mat-label>{{"labels.inputs.Closed On" | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closedOnDatePicker" required
-              formControlName="closedOnDate">
+            <mat-label>{{ 'labels.inputs.Closed On' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="closedOnDatePicker"
+              required
+              formControlName="closedOnDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="prematureCloseRecurringDepositsAccountForm.controls.closedOnDate.hasError('required')">
-              {{"labels.inputs.Closed On Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Closed On Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">{{"labels.buttons.Cancel" | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!prematureCloseRecurringDepositsAccountForm">{{"labels.buttons.Confirm" | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!prematureCloseRecurringDepositsAccountForm">
+          {{ 'labels.buttons.Confirm' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

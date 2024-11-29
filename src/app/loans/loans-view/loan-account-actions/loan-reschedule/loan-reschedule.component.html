@@ -1,107 +1,130 @@
 <div class="container mat-elevation-z8">
-
   <mat-card>
-
     <form [formGroup]="rescheduleLoanForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field (click)="rescheduleDatePicker.open()">
-            <mat-label>{{"labels.inputs.Reschedule from Installment On" | translate}}</mat-label>
-            <input matInput [min]="minDate" [matDatepicker]="rescheduleDatePicker" required
-              formControlName="rescheduleFromDate">
+            <mat-label>{{ 'labels.inputs.Reschedule from Installment On' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [matDatepicker]="rescheduleDatePicker"
+              required
+              formControlName="rescheduleFromDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="rescheduleDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rescheduleDatePicker></mat-datepicker>
             <mat-error *ngIf="rescheduleLoanForm.controls.rescheduleFromDate.hasError('required')">
-              {{"labels.inputs.Reschedule Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Reschedule Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Reason for Rescheduling" | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Reason for Rescheduling' | translate }}</mat-label>
             <mat-select formControlName="rescheduleReasonId">
               <mat-option *ngFor="let rescheduleReasonCode of codes" [value]="rescheduleReasonCode.id">
                 {{ rescheduleReasonCode.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="rescheduleLoanForm.controls.rescheduleReasonId.hasError('required')">
-              {{"labels.inputs.Reason for Rescheduling" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Reason for Rescheduling' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="submittedDatePicker.open()">
-            <mat-label>{{"labels.inputs.Submitted On" | translate}}</mat-label>
-            <input matInput [min]="minDate" [matDatepicker]="submittedDatePicker" required
-              formControlName="submittedOnDate">
+            <mat-label>{{ 'labels.inputs.Submitted On' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [matDatepicker]="submittedDatePicker"
+              required
+              formControlName="submittedOnDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="submittedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedDatePicker></mat-datepicker>
             <mat-error *ngIf="rescheduleLoanForm.controls.submittedOnDate.hasError('required')">
-              {{"labels.inputs.Submitted On Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Submitted On Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Comments" | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Comments' | translate }}</mat-label>
             <textarea matInput formControlName="rescheduleReasonComment"></textarea>
           </mat-form-field>
 
-          <mat-checkbox [formControl]="changeRepaymentDate"> {{"labels.inputs.Change Repayment Date" | translate}} </mat-checkbox>
+          <mat-checkbox [formControl]="changeRepaymentDate">
+            {{ 'labels.inputs.Change Repayment Date' | translate }}
+          </mat-checkbox>
 
           <ng-container *ngIf="changeRepaymentDate.value">
             <mat-form-field (click)="installmentrescheduledDatePicker.open()">
-              <mat-label>{{"labels.inputs.Installment Rescheduled to" | translate}}</mat-label>
-              <input matInput [min]="minDate" [matDatepicker]="installmentrescheduledDatePicker"
-                formControlName="adjustedDueDate">
+              <mat-label>{{ 'labels.inputs.Installment Rescheduled to' | translate }}</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [matDatepicker]="installmentrescheduledDatePicker"
+                formControlName="adjustedDueDate"
+              />
               <mat-datepicker-toggle matSuffix [for]="installmentrescheduledDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #installmentrescheduledDatePicker></mat-datepicker>
             </mat-form-field>
           </ng-container>
 
-          <mat-checkbox [formControl]="introduceGracePeriods"> {{"labels.inputs.Introduce Mid-term grace periods" | translate}} </mat-checkbox>
+          <mat-checkbox [formControl]="introduceGracePeriods">
+            {{ 'labels.inputs.Introduce Mid-term grace periods' | translate }}
+          </mat-checkbox>
 
           <ng-container *ngIf="introduceGracePeriods.value">
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Principal Grace Periods" | translate}} </mat-label>
-              <input matInput formControlName="graceOnPrincipal">
+              <mat-label>{{ 'labels.inputs.Principal Grace Periods' | translate }} </mat-label>
+              <input matInput formControlName="graceOnPrincipal" />
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Interest Grace Periods" | translate}} </mat-label>
-              <input matInput formControlName="graceOnInterest">
+              <mat-label>{{ 'labels.inputs.Interest Grace Periods' | translate }} </mat-label>
+              <input matInput formControlName="graceOnInterest" />
             </mat-form-field>
           </ng-container>
 
-          <mat-checkbox [formControl]="extendRepaymentPeriod"> {{"labels.inputs.Extend Repayment Period" | translate}} </mat-checkbox>
+          <mat-checkbox [formControl]="extendRepaymentPeriod">
+            {{ 'labels.inputs.Extend Repayment Period' | translate }}
+          </mat-checkbox>
 
           <ng-container *ngIf="extendRepaymentPeriod.value">
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Number Of new Repayments" | translate}}</mat-label>
-              <input matInput formControlName="extraTerms">
+              <mat-label>{{ 'labels.inputs.Number Of new Repayments' | translate }}</mat-label>
+              <input matInput formControlName="extraTerms" />
             </mat-form-field>
           </ng-container>
 
-          <mat-checkbox [formControl]="adjustinterestrates"> {{"labels.inputs.Adjust interest rates for remainder of loan" | translate}} </mat-checkbox>
+          <mat-checkbox [formControl]="adjustinterestrates">
+            {{ 'labels.inputs.Adjust interest rates for remainder of loan' | translate }}
+          </mat-checkbox>
           <ng-container *ngIf="adjustinterestrates.value">
             <mat-form-field>
-              <mat-label>{{"labels.inputs.New Interest Rate" | translate}}</mat-label>
-              <input matInput formControlName="newInterestRate">
+              <mat-label>{{ 'labels.inputs.New Interest Rate' | translate }}</mat-label>
+              <input matInput formControlName="newInterestRate" />
             </mat-form-field>
           </ng-container>
-
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel" | translate}}</button>
-          <button mat-raised-button color="primary" [disabled]="!rescheduleLoanForm.valid"
-            *mifosxHasPermission="'APPROVE_RESCHEDULELOAN'">{{"labels.buttons.Submit" | translate}}</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!rescheduleLoanForm.valid"
+            *mifosxHasPermission="'APPROVE_RESCHEDULELOAN'"
+          >
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
         </mat-card-actions>
-
       </mat-card-content>
-
     </form>
-
   </mat-card>
-
 </div>

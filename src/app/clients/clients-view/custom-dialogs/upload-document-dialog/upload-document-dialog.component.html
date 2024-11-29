@@ -1,27 +1,34 @@
-<h1 mat-dialog-title>{{"labels.heading.Upload" | translate}} {{ entityType }} {{"labels.heading.Documents" | translate}}</h1>
+<h1 mat-dialog-title>
+  {{ 'labels.heading.Upload' | translate }} {{ entityType }} {{ 'labels.heading.Documents' | translate }}
+</h1>
 <div>
   <form [formGroup]="uploadDocumentForm" fxLayout="column">
-
     <mat-form-field fxFlex>
-      <mat-label>{{"labels.inputs.File Name" | translate}}</mat-label>
+      <mat-label>{{ 'labels.inputs.File Name' | translate }}</mat-label>
       <input formControlName="fileName" required matInput />
       <mat-error *ngIf="uploadDocumentForm.controls.fileName.hasError('required')">
-        {{"labels.inputs.File Name" | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.File Name' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex *ngIf="!documentIdentifier">
-      <mat-label>{{"labels.inputs.Description" | translate}}</mat-label>
+      <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
       <input formControlName="description" matInput />
     </mat-form-field>
 
     <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
 
     <mat-dialog-actions align="end">
-      <button mat-raised-button mat-dialog-close>{{"labels.buttons.Cancel" | translate}}</button>
-      <button mat-raised-button color="primary" [disabled]="!uploadDocumentForm.valid"
-        [mat-dialog-close]="uploadDocumentForm.value">{{"labels.buttons.Confirm" | translate}}</button>
+      <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!uploadDocumentForm.valid"
+        [mat-dialog-close]="uploadDocumentForm.value"
+      >
+        {{ 'labels.buttons.Confirm' | translate }}
+      </button>
     </mat-dialog-actions>
-
   </form>
 </div>

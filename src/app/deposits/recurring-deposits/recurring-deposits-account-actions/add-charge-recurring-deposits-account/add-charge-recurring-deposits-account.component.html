@@ -1,46 +1,45 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="recurringDepositsChargeForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Charge" | translate }}</mat-label>
+            <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
             <mat-select required formControlName="chargeId">
               <mat-option *ngFor="let savingsCharge of savingsChargeOptions" [value]="savingsCharge.id">
                 {{ savingsCharge.name + ' (' + savingsCharge.currency.name + ')' }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="recurringDepositsChargeForm.controls.chargeId.hasError('required')">
-              {{"labels.inputs.Charge" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Charge' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <div *ngIf="chargeDetails" fxLayout="column">
-
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Amount" | translate }}</mat-label>
+              <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
               <input type="number" required matInput formControlName="amount" />
               <mat-error *ngIf="recurringDepositsChargeForm.controls.amount.hasError('required')">
-                {{"labels.inputs.Amount" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Charge Calculation" | translate }}</mat-label>
+              <mat-label>{{ 'labels.inputs.Charge Calculation' | translate }}</mat-label>
               <mat-select formControlName="chargeCalculationType">
-                <mat-option *ngFor="let chargeCalculation of chargeDetails.chargeCalculationTypeOptions"
-                  [value]="chargeCalculation.id">
+                <mat-option
+                  *ngFor="let chargeCalculation of chargeDetails.chargeCalculationTypeOptions"
+                  [value]="chargeCalculation.id"
+                >
                   {{ chargeCalculation.value }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{"labels.inputs.Charge time type" | translate }}</mat-label>
+              <mat-label>{{ 'labels.inputs.Charge time type' | translate }}</mat-label>
               <mat-select formControlName="chargeTimeType">
                 <mat-option *ngFor="let chargeTime of chargeDetails.chargeTimeTypeOptions" [value]="chargeTime.id">
                   {{ chargeTime.value }}
@@ -49,45 +48,60 @@
             </mat-form-field>
 
             <mat-form-field *ngIf="recurringDepositsChargeForm.contains('dueDate')" (click)="dueDatePicker.open()">
-              <mat-label>{{"labels.inputs.Due for collection on" | translate }}</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required
-                formControlName="dueDate">
+              <mat-label>{{ 'labels.inputs.Due for collection on' | translate }}</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="dueDatePicker"
+                required
+                formControlName="dueDate"
+              />
               <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #dueDatePicker></mat-datepicker>
               <mat-error *ngIf="recurringDepositsChargeForm.controls.dueDate.hasError('required')">
-                {{"labels.inputs.Due for collection on" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+                {{ 'labels.inputs.Due for collection on' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field *ngIf="recurringDepositsChargeForm.contains('feeOnMonthDay')" (click)="feeOnMonthDayPicker.open()">
-              <mat-label>{{"labels.inputs.Due On" | translate }}</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="feeOnMonthDayPicker" required
-                formControlName="feeOnMonthDay">
+            <mat-form-field
+              *ngIf="recurringDepositsChargeForm.contains('feeOnMonthDay')"
+              (click)="feeOnMonthDayPicker.open()"
+            >
+              <mat-label>{{ 'labels.inputs.Due On' | translate }}</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="feeOnMonthDayPicker"
+                required
+                formControlName="feeOnMonthDay"
+              />
               <mat-datepicker-toggle matSuffix [for]="feeOnMonthDayPicker"></mat-datepicker-toggle>
               <mat-datepicker #feeOnMonthDayPicker></mat-datepicker>
               <mat-error *ngIf="recurringDepositsChargeForm.controls.feeOnMonthDay.hasError('required')">
-                {{"labels.inputs.Due Date" | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+                {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field *ngIf="recurringDepositsChargeForm.contains('feeInterval')">
-              <mat-label>{{"labels.inputs.Repeats Every" | translate }}</mat-label>
+              <mat-label>{{ 'labels.inputs.Repeats Every' | translate }}</mat-label>
               <input matInput formControlName="feeInterval" />
             </mat-form-field>
-
           </div>
-
         </div>
 
         <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
-          <button type="button" mat-raised-button [routerLink]="['../../']">{{"labels.buttons.Cancel" | translate }}</button>
-          <button mat-raised-button color="primary" [disabled]="!recurringDepositsChargeForm.valid">{{"labels.buttons.Submit" | translate }}</button>
+          <button type="button" mat-raised-button [routerLink]="['../../']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button mat-raised-button color="primary" [disabled]="!recurringDepositsChargeForm.valid">
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
         </mat-card-actions>
-
       </mat-card-content>
-
     </form>
-
   </mat-card>
-
 </div>

@@ -1,32 +1,36 @@
 <div class="container mat-elevation-z8">
-
   <mat-card>
-
     <div class="view-guarantors-account-tables" fxLayout="row" fxLayoutGap="2%">
-
       <div fxFlex="49%">
         <table>
           <tbody>
             <tr>
-              <td>{{"labels.inputs.Disbursement Date" | translate}}</td>
-              <td>{{dataObject.timeline.actualDisbursementDate}}<span
-                  *ngIf="!dataObject.timeline.actualDisbursementDate">{{"labels.inputs.Not Available" | translate}}</span></td>
+              <td>{{ 'labels.inputs.Disbursement Date' | translate }}</td>
+              <td>
+                {{ dataObject.timeline.actualDisbursementDate
+                }}<span *ngIf="!dataObject.timeline.actualDisbursementDate">{{
+                  'labels.inputs.Not Available' | translate
+                }}</span>
+              </td>
             </tr>
             <tr>
-              <td>{{"labels.inputs.Currency" | translate}}</td>
-              <td>{{dataObject.currency.name}}</td>
+              <td>{{ 'labels.inputs.Currency' | translate }}</td>
+              <td>{{ dataObject.currency.name }}</td>
             </tr>
             <tr>
-              <td>{{"labels.inputs.Loan Officer" | translate}}</td>
-              <td>{{dataObject.loanOfficerName}} <span *ngIf="!dataObject.loanOfficerName">{{"labels.inputs.Unassigned" | translate}}</span>
+              <td>{{ 'labels.inputs.Loan Officer' | translate }}</td>
+              <td>
+                {{ dataObject.loanOfficerName }}
+                <span *ngIf="!dataObject.loanOfficerName">{{ 'labels.inputs.Unassigned' | translate }}</span>
                 <span *ngIf="dataObject.loanOfficerName">
                   <fa-icon icon="times"></fa-icon>
-                </span></td>
+                </span>
+              </td>
             </tr>
             <tr>
-              <td>{{"labels.inputs.External Id" | translate}}</td>
+              <td>{{ 'labels.inputs.External Id' | translate }}</td>
               <td>
-                <mifosx-external-identifier externalId="{{dataObject.externalId}}"></mifosx-external-identifier>
+                <mifosx-external-identifier externalId="{{ dataObject.externalId }}"></mifosx-external-identifier>
               </td>
             </tr>
           </tbody>
@@ -37,27 +41,29 @@
         <table>
           <tbody>
             <tr>
-              <td>{{"labels.inputs.Loan Purpose" | translate}}</td>
+              <td>{{ 'labels.inputs.Loan Purpose' | translate }}</td>
               <td>
-                {{dataObject.loanPurposeName}} <span *ngIf="!dataObject.loanPurposeName"> {{"labels.inputs.Not Provided" | translate}} </span>
+                {{ dataObject.loanPurposeName }}
+                <span *ngIf="!dataObject.loanPurposeName"> {{ 'labels.inputs.Not Provided' | translate }} </span>
               </td>
             </tr>
             <tr>
-              <td>{{"labels.inputs.Approved Amount" | translate}}</td>
+              <td>{{ 'labels.inputs.Approved Amount' | translate }}</td>
               <td>
-                <span>{{dataObject.approvedPrincipal | formatNumber}}</span>
+                <span>{{ dataObject.approvedPrincipal | formatNumber }}</span>
               </td>
             </tr>
             <tr>
-              <td>{{"labels.inputs.Disburse Amount" | translate}}</td>
+              <td>{{ 'labels.inputs.Disburse Amount' | translate }}</td>
               <td>
-                <span>{{dataObject.principal | formatNumber}}</span>
+                <span>{{ dataObject.principal | formatNumber }}</span>
               </td>
             </tr>
             <tr>
-              <td>{{"labels.inputs.Arrears By" | translate}}</td>
-              <td>{{dataObject.summary.totalOverdue | formatNumber}}
-                <span *ngIf="dataObject.summary.totalOverdue < 0">{{"labels.inputs.Not Provided" | translate}}</span>
+              <td>{{ 'labels.inputs.Arrears By' | translate }}</td>
+              <td>
+                {{ dataObject.summary.totalOverdue | formatNumber }}
+                <span *ngIf="dataObject.summary.totalOverdue < 0">{{ 'labels.inputs.Not Provided' | translate }}</span>
               </td>
             </tr>
           </tbody>
@@ -66,107 +72,118 @@
     </div>
 
     <div fxFlexFill *ngIf="guarantorDetails" fxLayout="row wrap" fxLayout.lt-md="column">
-
       <!-- guarantors details table -->
       <div class="heading-content">
         <div fxLayout="column" fxFlex="50%">
           <div class="heading-name">
-            <h3>{{"labels.heading.Guarantors Details" | translate}}</h3>
+            <h3>{{ 'labels.heading.Guarantors Details' | translate }}</h3>
           </div>
         </div>
         <div fxLayout="column" fxFlex="50%">
           <div fxLayout="row" fxLayoutAlign="flex-end">
-            <button mat-raised-button class="f-right" color="primary"
-              (click)="toggleGuarantorsDetailsOverview()">{{showDeletedGuarantorsAccounts?'Hide Deleted Guarantors':'Show Deleted Guarantors'}}</button>
+            <button mat-raised-button class="f-right" color="primary" (click)="toggleGuarantorsDetailsOverview()">
+              {{ showDeletedGuarantorsAccounts ? 'Hide Deleted Guarantors' : 'Show Deleted Guarantors' }}
+            </button>
           </div>
         </div>
       </div>
 
-      <table fxFlexFill mat-table
-        [dataSource]="guarantorDetails|accountsFilter:'guarantor':showDeletedGuarantorsAccounts">
+      <table
+        fxFlexFill
+        mat-table
+        [dataSource]="guarantorDetails | accountsFilter: 'guarantor' : showDeletedGuarantorsAccounts"
+      >
         <ng-container matColumnDef="fullname">
-          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.name" | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
           <td mat-cell *matCellDef="let guarantor">
             <span *ngIf="!guarantor.guarantorFundingDetails">
-              {{guarantor.firstname}} &nbsp; {{guarantor.lastname}}
+              {{ guarantor.firstname }} &nbsp; {{ guarantor.lastname }}
             </span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="relationship">
-          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Relationship" | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Relationship' | translate }}</th>
           <td mat-cell *matCellDef="let guarantor">
             <span *ngIf="!guarantor.guarantorFundingDetails">
-              {{guarantor.clientRelationshipType.name}}
+              {{ guarantor.clientRelationshipType.name }}
             </span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="guarantortype">
-          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Guarantor Type" | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Guarantor Type' | translate }}</th>
           <td mat-cell *matCellDef="let guarantor">
             <span *ngIf="!guarantor.guarantorFundingDetails">
-              {{guarantor.guarantorType.value}}
+              {{ guarantor.guarantorType.value }}
             </span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="depositAccount">
-          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Deposit Account" | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Deposit Account' | translate }}</th>
           <td mat-cell *matCellDef="let guarantor">
-            <span *ngIf="!guarantor.guarantorFundingDetails">
-
-            </span>
+            <span *ngIf="!guarantor.guarantorFundingDetails"> </span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="amount">
-          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Amount" | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
           <td mat-cell *matCellDef="let guarantor">
-            <span *ngIf="!guarantor.guarantorFundingDetails">
-
-            </span>
+            <span *ngIf="!guarantor.guarantorFundingDetails"> </span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="remainingAmount">
-          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Remaining Amount" | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Remaining Amount' | translate }}</th>
           <td mat-cell *matCellDef="let guarantor">
-            <span *ngIf="!guarantor.guarantorFundingDetails">
-
-            </span>
+            <span *ngIf="!guarantor.guarantorFundingDetails"> </span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Status" | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
           <td mat-cell *matCellDef="let guarantor">
             <span *ngIf="!guarantor.guarantorFundingDetails">
               <span *ngIf="guarantor.status">
-                {{"labels.inputs.Active" | translate}}
+                {{ 'labels.inputs.Active' | translate }}
               </span>
               <span *ngIf="!guarantor.status">
-                {{"labels.inputs.Deleted" | translate}}
+                {{ 'labels.inputs.Deleted' | translate }}
               </span>
             </span>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Action" | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
           <td mat-cell *matCellDef="let guarantor; let id = index">
             <span *ngIf="!guarantor.guarantorFundingDetails">
-              <button mat-raised-button class="account-action-button" color="primary"
-                *mifosxHasPermission="'READ_SAVINGSACCOUNT'" (click)="viewGuarantorDetails(guarantor)">
+              <button
+                mat-raised-button
+                class="account-action-button"
+                color="primary"
+                *mifosxHasPermission="'READ_SAVINGSACCOUNT'"
+                (click)="viewGuarantorDetails(guarantor)"
+              >
                 <fa-icon icon="eye" class="m-r-10"></fa-icon>
               </button>
-              <button mat-raised-button class="account-action-button" color="primary"
-                *ngIf="guarantor.status && guarantor.guarantorType.id === 3 && guarantor.id">
+              <button
+                mat-raised-button
+                class="account-action-button"
+                color="primary"
+                *ngIf="guarantor.status && guarantor.guarantorType.id === 3 && guarantor.id"
+              >
                 <fa-icon icon="edit" class="m-r-10"></fa-icon>
               </button>
               <span *ngIf="guarantor.status">
-                <button mat-raised-button class="account-action-button" color="warn"
-                  *mifosxHasPermission="'DELETE_GUARANTOR'" (click)="deleteGuarantor(guarantor.id)">
+                <button
+                  mat-raised-button
+                  class="account-action-button"
+                  color="warn"
+                  *mifosxHasPermission="'DELETE_GUARANTOR'"
+                  (click)="deleteGuarantor(guarantor.id)"
+                >
                   <fa-icon icon="trash" class="m-r-10"></fa-icon>
                 </button>
               </span>
@@ -176,10 +193,7 @@
 
         <tr mat-header-row *matHeaderRowDef="guarantorsDisplayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: guarantorsDisplayedColumns"></tr>
-
       </table>
     </div>
-
   </mat-card>
-
 </div>

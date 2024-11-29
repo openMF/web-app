@@ -1,39 +1,57 @@
 <mat-card class="account-card">
-
   <mat-card-header fxLayout="column" class="header">
-
     <mat-card-title-group class="header-title-group">
-
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image"
-            [src]="(clientImage)?clientImage:'assets/images/user_placeholder.png'">
+          <img
+            mat-card-md-image
+            class="profile-image"
+            [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
+          />
         </div>
         <div fxLayoutAlign="center center" class="m-b-5">
-          <button class="client-image-button" mat-raised-button (click)="doAction('Upload Image')"
-            matTooltip="{{ 'tooltips.Upload Image' | translate}}" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
+          <button
+            class="client-image-button"
+            mat-raised-button
+            (click)="doAction('Upload Image')"
+            matTooltip="{{ 'tooltips.Upload Image' | translate }}"
+            *mifosxHasPermission="'CREATE_CLIENTIMAGE'"
+          >
             <i class="fa fa-upload"></i>
           </button>
-          <button class="client-image-button" mat-raised-button (click)="doAction('Capture Image')"
-            matTooltip="{{ 'tooltips.Capture Image' | translate}}" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
+          <button
+            class="client-image-button"
+            mat-raised-button
+            (click)="doAction('Capture Image')"
+            matTooltip="{{ 'tooltips.Capture Image' | translate }}"
+            *mifosxHasPermission="'CREATE_CLIENTIMAGE'"
+          >
             <i class="fa fa-camera"></i>
           </button>
-          <button class="client-image-button" mat-raised-button (click)="doAction('Delete Image')"
-            matTooltip="{{ 'tooltips.Delete Image' | translate}}" *mifosxHasPermission="'DELETE_CLIENTIMAGE'">
+          <button
+            class="client-image-button"
+            mat-raised-button
+            (click)="doAction('Delete Image')"
+            matTooltip="{{ 'tooltips.Delete Image' | translate }}"
+            *mifosxHasPermission="'DELETE_CLIENTIMAGE'"
+          >
             <i class="fa fa-trash"></i>
           </button>
-          <br>
+          <br />
         </div>
-        <p (click)="doAction('View Signature')" class="signature">{{"labels.inputs.View Signature" | translate}}</p>
+        <p (click)="doAction('View Signature')" class="signature">{{ 'labels.inputs.View Signature' | translate }}</p>
       </div>
 
       <div class="mat-typography account-card-title">
-
         <mat-card-title fxLayout="row wrap" class="content">
           <h3 fxFlex="95%">
-            <i class="fa fa-stop" [ngClass]="clientViewData.status.code|statusLookup"
-              matTooltip="{{'labels.status.' + clientViewData.status.value | translate}}"></i>
-            <b>{{"labels.inputs.Client Name" | translate}} :</b><mifosx-entity-name entityName="{{clientViewData.displayName}}"></mifosx-entity-name>
+            <i
+              class="fa fa-stop"
+              [ngClass]="clientViewData.status.code | statusLookup"
+              matTooltip="{{ 'labels.status.' + clientViewData.status.value | translate }}"
+            ></i>
+            <b>{{ 'labels.inputs.Client Name' | translate }} :</b
+            ><mifosx-entity-name entityName="{{ clientViewData.displayName }}"></mifosx-entity-name>
           </h3>
           <div fxFlex="5%">
             <button mat-icon-button [matMenuTriggerFor]="clientMenu" aria-label="Client actions" yPosition="below">
@@ -50,56 +68,90 @@
               <table class="account-overview">
                 <tbody>
                   <tr>
-                    <td><b>{{"labels.inputs.Office" | translate}}</b></td>
-                    <td><mifosx-entity-name entityName="{{clientViewData.officeName}}"></mifosx-entity-name></td>
+                    <td>
+                      <b>{{ 'labels.inputs.Office' | translate }}</b>
+                    </td>
+                    <td><mifosx-entity-name entityName="{{ clientViewData.officeName }}"></mifosx-entity-name></td>
                   </tr>
                   <tr>
-                    <td><b>{{"labels.inputs.Client" | translate}}</b></td>
-                    <td><mifosx-account-number accountNo="{{clientViewData.accountNo}}"></mifosx-account-number></td>
+                    <td>
+                      <b>{{ 'labels.inputs.Client' | translate }}</b>
+                    </td>
+                    <td><mifosx-account-number accountNo="{{ clientViewData.accountNo }}"></mifosx-account-number></td>
                   </tr>
                   <tr>
-                    <td><b>{{"labels.inputs.External Id" | translate}}</b></td>
-                    <td><mifosx-external-identifier externalId="{{clientViewData.externalId}}" completed="true"></mifosx-external-identifier></td>
+                    <td>
+                      <b>{{ 'labels.inputs.External Id' | translate }}</b>
+                    </td>
+                    <td>
+                      <mifosx-external-identifier
+                        externalId="{{ clientViewData.externalId }}"
+                        completed="true"
+                      ></mifosx-external-identifier>
+                    </td>
                   </tr>
                   <tr *ngIf="clientViewData.activationDate">
-                    <td><b>{{"labels.inputs.Activation Date" | translate}}</b></td>
-                    <td>{{clientViewData.activationDate | dateFormat}}</td>
+                    <td>
+                      <b>{{ 'labels.inputs.Activation Date' | translate }}</b>
+                    </td>
+                    <td>{{ clientViewData.activationDate | dateFormat }}</td>
                   </tr>
                   <tr>
-                    <td><b>{{"labels.inputs.Staff" | translate}}</b></td>
-                    <td *ngIf="clientViewData.staffName">{{clientViewData.staffName}}</td>
-                    <td *ngIf="!clientViewData.staffName">{{'labels.inputs.Unassigned' | translate}}</td>
+                    <td>
+                      <b>{{ 'labels.inputs.Staff' | translate }}</b>
+                    </td>
+                    <td *ngIf="clientViewData.staffName">{{ clientViewData.staffName }}</td>
+                    <td *ngIf="!clientViewData.staffName">{{ 'labels.inputs.Unassigned' | translate }}</td>
                   </tr>
                 </tbody>
-              </table> 
+              </table>
             </div>
             <div fxFlex="50%">
               <table class="account-overview">
                 <tbody>
                   <tr *ngIf="clientViewData.groups.length > 0">
-                    <td><b>{{"labels.inputs.Member Of" | translate}}</b></td>
-                    <td><span *ngFor="let group of clientViewData.groups">
-                      <span class="m-r-3">{{group.name}}</span>
-                    </span></td>
+                    <td>
+                      <b>{{ 'labels.inputs.Member Of' | translate }}</b>
+                    </td>
+                    <td>
+                      <span *ngFor="let group of clientViewData.groups">
+                        <span class="m-r-3">{{ group.name }}</span>
+                      </span>
+                    </td>
                   </tr>
                   <tr *ngIf="clientViewData.clientType">
-                    <td><b>{{"labels.inputs.Client Type" | translate}}</b></td>
-                    <td>{{clientViewData.clientType.name}}</td>
+                    <td>
+                      <b>{{ 'labels.inputs.Client Type' | translate }}</b>
+                    </td>
+                    <td>{{ clientViewData.clientType.name }}</td>
                   </tr>
                   <tr>
-                    <td><b>{{"labels.inputs.Mobile Number" | translate}}</b></td>
-                    <td><mifosx-external-identifier externalId="{{clientViewData.mobileNo}}" completed="true"></mifosx-external-identifier></td>
+                    <td>
+                      <b>{{ 'labels.inputs.Mobile Number' | translate }}</b>
+                    </td>
+                    <td>
+                      <mifosx-external-identifier
+                        externalId="{{ clientViewData.mobileNo }}"
+                        completed="true"
+                      ></mifosx-external-identifier>
+                    </td>
                   </tr>
                   <tr>
-                    <td><b>{{"labels.inputs.Email" | translate}}</b></td>
-                    <td><mifosx-external-identifier externalId="{{clientViewData.emailAddress}}" completed="true"></mifosx-external-identifier></td>
+                    <td>
+                      <b>{{ 'labels.inputs.Email' | translate }}</b>
+                    </td>
+                    <td>
+                      <mifosx-external-identifier
+                        externalId="{{ clientViewData.emailAddress }}"
+                        completed="true"
+                      ></mifosx-external-identifier>
+                    </td>
                   </tr>
                 </tbody>
-              </table> 
+              </table>
             </div>
           </div>
         </mat-card-subtitle>
-
       </div>
 
       <mat-menu #clientMenu="matMenu">
@@ -107,28 +159,28 @@
           <mat-icon matListIcon>
             <fa-icon icon="edit" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{"labels.buttons.Edit" | translate}}</span>
+          <span>{{ 'labels.buttons.Edit' | translate }}</span>
         </button>
 
         <button *ngIf="isActive()" mat-menu-item [matMenuTriggerFor]="accountApplications">
           <mat-icon matListIcon>
             <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{"labels.buttons.Applications" | translate}}</span>
+          <span>{{ 'labels.buttons.Applications' | translate }}</span>
         </button>
 
         <button mat-menu-item [matMenuTriggerFor]="Actions">
           <mat-icon matListIcon>
             <fa-icon icon="tasks" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{"labels.buttons.Actions" | translate}}</span>
+          <span>{{ 'labels.buttons.Actions' | translate }}</span>
         </button>
 
         <button mat-menu-item (click)="doAction('Assign Staff')" *ngIf="!clientViewData.staffId">
           <mat-icon matListIcon>
             <fa-icon icon="user-tie" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{"labels.buttons.Assign Staff" | translate}}</span>
+          <span>{{ 'labels.buttons.Assign Staff' | translate }}</span>
         </button>
 
         <span *ngIf="clientViewData.staffId">
@@ -136,110 +188,213 @@
             <mat-icon matListIcon>
               <fa-icon icon="user-tie" size="sm"></fa-icon>
             </mat-icon>
-            <span>{{"labels.buttons.Unassign Staff" | translate}}</span>
+            <span>{{ 'labels.buttons.Unassign Staff' | translate }}</span>
           </button>
         </span>
 
-        <button mat-menu-item [matMenuTriggerFor]="More">{{"labels.buttons.More" | translate}}</button>
-
+        <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>
       </mat-menu>
 
       <mat-menu #accountApplications="matMenu">
-        <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'"
-          [routerLink]="['loans-accounts', 'create']">{{"labels.buttons.New Loan Account" | translate}}</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
-          [routerLink]="['savings-accounts', 'create']">{{"labels.buttons.New Savings Account" | translate}}</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'"
-          [routerLink]="['shares-accounts', 'create']">{{"labels.buttons.New Share Account" | translate}}</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_RECURRINGDEPOSITACCOUNT'"
-          [routerLink]="['recurring-deposits-accounts', 'create-recurring-deposits-account']">{{"labels.buttons.New Recurring Deposit Account" | translate}}</button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_FIXEDDEPOSITACCOUNT'"
-          [routerLink]="['fixed-deposits-accounts', 'create']">{{"labels.buttons.New Fixed Deposits Account" | translate}}</button>
+        <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'" [routerLink]="['loans-accounts', 'create']">
+          {{ 'labels.buttons.New Loan Account' | translate }}
+        </button>
+        <button
+          mat-menu-item
+          *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
+          [routerLink]="['savings-accounts', 'create']"
+        >
+          {{ 'labels.buttons.New Savings Account' | translate }}
+        </button>
+        <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">
+          {{ 'labels.buttons.New Share Account' | translate }}
+        </button>
+        <button
+          mat-menu-item
+          *mifosxHasPermission="'CREATE_RECURRINGDEPOSITACCOUNT'"
+          [routerLink]="['recurring-deposits-accounts', 'create-recurring-deposits-account']"
+        >
+          {{ 'labels.buttons.New Recurring Deposit Account' | translate }}
+        </button>
+        <button
+          mat-menu-item
+          *mifosxHasPermission="'CREATE_FIXEDDEPOSITACCOUNT'"
+          [routerLink]="['fixed-deposits-accounts', 'create']"
+        >
+          {{ 'labels.buttons.New Fixed Deposits Account' | translate }}
+        </button>
       </mat-menu>
 
       <mat-menu #Actions="matMenu">
-        <button mat-menu-item (click)="doAction('Close')">{{"labels.buttons.Close" | translate}}</button>
-        <button mat-menu-item (click)="doAction('Transfer Client')">{{"labels.buttons.Transfer Client" | translate}}</button>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item
-            (click)="doAction('Activate')">{{"labels.buttons.Activate" | translate}}</button></span>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item
-            (click)="doAction('Withdraw')">{{"labels.buttons.Withdraw" | translate}}</button></span>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item
-            (click)="doAction('Reject')">{{"labels.buttons.Reject" | translate}}</button></span>
-        <span *ngIf="clientViewData.status.value === 'Pending'"><button mat-menu-item
-            *mifosxHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">{{"labels.buttons.Delete" | translate}}</button></span>
-        <span *ngIf="clientViewData.status.value === 'Closed'"><button mat-menu-item
-            (click)="doAction('Reactivate')">{{"labels.buttons.Reactivate" | translate}}</button></span>
-        <span *ngIf="clientViewData.status.value === 'Rejected'"><button mat-menu-item
-            (click)="doAction('Undo Rejection')">{{"labels.buttons.Undo Rejection" | translate}}</button></span>
-        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
-            (click)="doAction('Undo Transfer')">{{"labels.buttons.Undo Transfer" | translate}}</button></span>
-        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
-            (click)="doAction('Accept Transfer')">{{"labels.buttons.Accept Transfer" | translate}}</button></span>
-        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"><button mat-menu-item
-            (click)="doAction('Reject Transfer')">{{"labels.buttons.Reject transfer" | translate}}</button></span>
+        <button mat-menu-item (click)="doAction('Close')">{{ 'labels.buttons.Close' | translate }}</button>
+        <button mat-menu-item (click)="doAction('Transfer Client')">
+          {{ 'labels.buttons.Transfer Client' | translate }}
+        </button>
+        <span *ngIf="clientViewData.status.value === 'Pending'"
+          ><button mat-menu-item (click)="doAction('Activate')">
+            {{ 'labels.buttons.Activate' | translate }}
+          </button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Pending'"
+          ><button mat-menu-item (click)="doAction('Withdraw')">
+            {{ 'labels.buttons.Withdraw' | translate }}
+          </button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Pending'"
+          ><button mat-menu-item (click)="doAction('Reject')">{{ 'labels.buttons.Reject' | translate }}</button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Pending'"
+          ><button mat-menu-item *mifosxHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">
+            {{ 'labels.buttons.Delete' | translate }}
+          </button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Closed'"
+          ><button mat-menu-item (click)="doAction('Reactivate')">
+            {{ 'labels.buttons.Reactivate' | translate }}
+          </button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Rejected'"
+          ><button mat-menu-item (click)="doAction('Undo Rejection')">
+            {{ 'labels.buttons.Undo Rejection' | translate }}
+          </button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
+          ><button mat-menu-item (click)="doAction('Undo Transfer')">
+            {{ 'labels.buttons.Undo Transfer' | translate }}
+          </button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
+          ><button mat-menu-item (click)="doAction('Accept Transfer')">
+            {{ 'labels.buttons.Accept Transfer' | translate }}
+          </button></span
+        >
+        <span *ngIf="clientViewData.status.value === 'Transfer in progress'"
+          ><button mat-menu-item (click)="doAction('Reject Transfer')">
+            {{ 'labels.buttons.Reject transfer' | translate }}
+          </button></span
+        >
       </mat-menu>
 
       <mat-menu #More="matMenu">
-        <button mat-menu-item (click)="doAction('Add Charge')" *mifosxHasPermission="'CREATE_CLIENTCHARGE'"> {{"labels.buttons.Add Charge" | translate}}
+        <button mat-menu-item (click)="doAction('Add Charge')" *mifosxHasPermission="'CREATE_CLIENTCHARGE'">
+          {{ 'labels.buttons.Add Charge' | translate }}
         </button>
-        <button mat-menu-item (click)="doAction('Create Collateral')">{{"labels.buttons.Create Collateral" | translate}}</button>
-        <button mat-menu-item (click)="doAction('Survey')">{{"labels.buttons.Survey" | translate}}</button>
-        <button mat-menu-item (click)="doAction('Update Default Savings')"
-          *mifosxHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"> {{"labels.buttons.Update Default Savings" | translate}} </button>
-        <button mat-menu-item (click)="doAction('Upload Signature')" *mifosxHasPermission="'CREATE_CLIENTIMAGE'"> {{"labels.buttons.Upload Signature" | translate}} </button>
-        <button mat-menu-item (click)="doAction('Delete Signature')" *mifosxHasPermission="'DELETE_CLIENTIMAGE'"> {{"labels.buttons.Delete Signature" | translate}} </button>
-        <button mat-menu-item (click)="doAction('Client Screen Reports')"> {{"labels.buttons.Client Screen Reports" | translate}} </button>
-        <button mat-menu-item (click)="doAction('Create Standing Instructions')"
-          *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'"> {{"labels.buttons.Create Standing Instructions" | translate}}</button>
-        <span *ngIf="clientViewData.status.value!=='Transfer on hold'">
-          <button mat-menu-item (click)="doAction('View Standing Instructions')"
-            *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"> {{"labels.buttons.View Standing Instructions" | translate}}</button>
+        <button mat-menu-item (click)="doAction('Create Collateral')">
+          {{ 'labels.buttons.Create Collateral' | translate }}
+        </button>
+        <button mat-menu-item (click)="doAction('Survey')">{{ 'labels.buttons.Survey' | translate }}</button>
+        <button
+          mat-menu-item
+          (click)="doAction('Update Default Savings')"
+          *mifosxHasPermission="'UPDATESAVINGSACCOUNT_CLIENT'"
+        >
+          {{ 'labels.buttons.Update Default Savings' | translate }}
+        </button>
+        <button mat-menu-item (click)="doAction('Upload Signature')" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
+          {{ 'labels.buttons.Upload Signature' | translate }}
+        </button>
+        <button mat-menu-item (click)="doAction('Delete Signature')" *mifosxHasPermission="'DELETE_CLIENTIMAGE'">
+          {{ 'labels.buttons.Delete Signature' | translate }}
+        </button>
+        <button mat-menu-item (click)="doAction('Client Screen Reports')">
+          {{ 'labels.buttons.Client Screen Reports' | translate }}
+        </button>
+        <button
+          mat-menu-item
+          (click)="doAction('Create Standing Instructions')"
+          *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'"
+        >
+          {{ 'labels.buttons.Create Standing Instructions' | translate }}
+        </button>
+        <span *ngIf="clientViewData.status.value !== 'Transfer on hold'">
+          <button
+            mat-menu-item
+            (click)="doAction('View Standing Instructions')"
+            *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
+          >
+            {{ 'labels.buttons.View Standing Instructions' | translate }}
+          </button>
         </span>
-        <button mat-menu-item (click)="doAction('Create Self Service User')"> {{"labels.buttons.Create Self Service User" | translate}}</button>
+        <button mat-menu-item (click)="doAction('Create Self Service User')">
+          {{ 'labels.buttons.Create Self Service User' | translate }}
+        </button>
       </mat-menu>
-
     </mat-card-title-group>
-
   </mat-card-header>
 
   <mat-card-content>
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-        [active]="general.isActive">
-        {{"labels.inputs.General" | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+      >
+        {{ 'labels.inputs.General' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./address']" routerLinkActive #address="routerLinkActive"
-        [active]="address.isActive">
-        {{"labels.inputs.Address" | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./address']"
+        routerLinkActive
+        #address="routerLinkActive"
+        [active]="address.isActive"
+      >
+        {{ 'labels.inputs.Address' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./family-members']" routerLinkActive #familyMembers="routerLinkActive"
-        [active]="familyMembers.isActive">
-        {{"labels.inputs.Family Members" | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./family-members']"
+        routerLinkActive
+        #familyMembers="routerLinkActive"
+        [active]="familyMembers.isActive"
+      >
+        {{ 'labels.inputs.Family Members' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./identities']" routerLinkActive #identities="routerLinkActive"
-        [active]="identities.isActive" *mifosxHasPermission="'READ_CLIENTIDENTIFIER'">
-        {{"labels.inputs.Identities" | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./identities']"
+        routerLinkActive
+        #identities="routerLinkActive"
+        [active]="identities.isActive"
+        *mifosxHasPermission="'READ_CLIENTIDENTIFIER'"
+      >
+        {{ 'labels.inputs.Identities' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./documents']" routerLinkActive #documents="routerLinkActive"
-        [active]="documents.isActive" *mifosxHasPermission="'READ_DOCUMENT'">
-        {{"labels.inputs.Documents" | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./documents']"
+        routerLinkActive
+        #documents="routerLinkActive"
+        [active]="documents.isActive"
+        *mifosxHasPermission="'READ_DOCUMENT'"
+      >
+        {{ 'labels.inputs.Documents' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive" [active]="notes.isActive"
-        *mifosxHasPermission="'READ_CLIENTNOTE'">
-        {{"labels.inputs.Notes" | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./notes']"
+        routerLinkActive
+        #notes="routerLinkActive"
+        [active]="notes.isActive"
+        *mifosxHasPermission="'READ_CLIENTNOTE'"
+      >
+        {{ 'labels.inputs.Notes' | translate }}
       </a>
       <ng-container *ngFor="let clientDatatable of clientDatatables">
-        <a mat-tab-link [routerLink]="['./datatables',clientDatatable.registeredTableName]" routerLinkActive
-          #datatable="routerLinkActive" [active]="datatable.isActive"
-          *mifosxHasPermission="'READ_' + clientDatatable.registeredTableName">
-          {{clientDatatable.registeredTableName}}
+        <a
+          mat-tab-link
+          [routerLink]="['./datatables', clientDatatable.registeredTableName]"
+          routerLinkActive
+          #datatable="routerLinkActive"
+          [active]="datatable.isActive"
+          *mifosxHasPermission="'READ_' + clientDatatable.registeredTableName"
+        >
+          {{ clientDatatable.registeredTableName }}
         </a>
       </ng-container>
     </nav>
 
     <router-outlet></router-outlet>
-
   </mat-card-content>
-
 </mat-card>

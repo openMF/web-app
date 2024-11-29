@@ -1,42 +1,45 @@
 <div class="container mat-elevation-z8">
-
   <mat-card>
-
     <form [formGroup]="applyAnnualFeesForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field (click)="dueDatePicker.open()">
-            <mat-label>{{'labels.inputs.Annual Fees Transaction Date' | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dueDatePicker" required formControlName="dueDate">
+            <mat-label>{{ 'labels.inputs.Annual Fees Transaction Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="dueDatePicker"
+              required
+              formControlName="dueDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
             <mat-error *ngIf="applyAnnualFeesForm.controls.dueDate.hasError('required')">
-              {{'labels.inputs.Due Date' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Amount' | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input type="number" formControlName="amount" required matInput />
             <mat-error *ngIf="applyAnnualFeesForm.controls.amount.hasError('required')">
-              {{'labels.inputs.Amount' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!applyAnnualFeesForm.valid">{{'labels.buttons.Confirm' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!applyAnnualFeesForm.valid">
+          {{ 'labels.buttons.Confirm' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

@@ -1,65 +1,63 @@
 <div class="tab-container mat-typography">
-
-    <div class="shares-account-tables" fxLayout="row" fxLayoutGap="2%">
-
-        <div fxFlex="49%">
-            <h4 class="table-headers">{{'labels.heading.Shares Details' | translate}}</h4>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>{{'labels.inputs.Activated On' | translate}}</td>
-                        <td *ngIf="sharesAccountData.timeline.activatedDate">
-                            {{sharesAccountData.timeline.activatedDate | dateFormat}}
-                        </td>
-                        <td *ngIf="!sharesAccountData.timeline.activatedDate">
-                            {{ 'labels.text.Not Activated' | translate}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>{{'labels.inputs.Currency' | translate}}</td>
-                        <td>{{sharesAccountData.currency.name}} [{{sharesAccountData.currency.code}}]</td>
-                    </tr>
-                    <tr>
-                        <td>{{'labels.inputs.External Id' | translate}}</td>
-                        <td *ngIf="sharesAccountData.externalId">
-                            <mifosx-external-identifier
-                                externalId="{{sharesAccountData.externalId}}"></mifosx-external-identifier>
-                        </td>
-                        <td *ngIf="!sharesAccountData.externalId">
-                            {{'labels.inputs.Unassigned' | translate}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>{{'labels.inputs.Linked Savings Account(Dividend Posting)' | translate}}</td>
-                        <td *ngIf="sharesAccountData.savingsAccountNumber">
-                            <mifosx-account-number accountType="2"
-                                clientId="{{sharesAccountData.clientId}}" accountId="{{sharesAccountData.savingsAccountId}}"
-                                accountNo="{{sharesAccountData.savingsAccountNumber}}"></mifosx-account-number>
-                        </td>
-                        <td *ngIf="!sharesAccountData.savingsAccountNumber">
-                            {{'labels.inputs.Unassigned' | translate}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div fxFlex="49%">
-            <h4 class="table-headers">{{'labels.heading.Account Summary' | translate}}</h4>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>{{'labels.inputs.Pending for Approval Shares' | translate}}</td>
-                        <td class="r-amount">{{sharesAccountData.summary.totalPendingForApprovalShares | formatNumber}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{'labels.inputs.Approved Shares' | translate}}</td>
-                        <td class="r-amount">{{sharesAccountData.summary.totalApprovedShares | formatNumber}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
+  <div class="shares-account-tables" fxLayout="row" fxLayoutGap="2%">
+    <div fxFlex="49%">
+      <h4 class="table-headers">{{ 'labels.heading.Shares Details' | translate }}</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>{{ 'labels.inputs.Activated On' | translate }}</td>
+            <td *ngIf="sharesAccountData.timeline.activatedDate">
+              {{ sharesAccountData.timeline.activatedDate | dateFormat }}
+            </td>
+            <td *ngIf="!sharesAccountData.timeline.activatedDate">
+              {{ 'labels.text.Not Activated' | translate }}
+            </td>
+          </tr>
+          <tr>
+            <td>{{ 'labels.inputs.Currency' | translate }}</td>
+            <td>{{ sharesAccountData.currency.name }} [{{ sharesAccountData.currency.code }}]</td>
+          </tr>
+          <tr>
+            <td>{{ 'labels.inputs.External Id' | translate }}</td>
+            <td *ngIf="sharesAccountData.externalId">
+              <mifosx-external-identifier externalId="{{ sharesAccountData.externalId }}"></mifosx-external-identifier>
+            </td>
+            <td *ngIf="!sharesAccountData.externalId">
+              {{ 'labels.inputs.Unassigned' | translate }}
+            </td>
+          </tr>
+          <tr>
+            <td>{{ 'labels.inputs.Linked Savings Account(Dividend Posting)' | translate }}</td>
+            <td *ngIf="sharesAccountData.savingsAccountNumber">
+              <mifosx-account-number
+                accountType="2"
+                clientId="{{ sharesAccountData.clientId }}"
+                accountId="{{ sharesAccountData.savingsAccountId }}"
+                accountNo="{{ sharesAccountData.savingsAccountNumber }}"
+              ></mifosx-account-number>
+            </td>
+            <td *ngIf="!sharesAccountData.savingsAccountNumber">
+              {{ 'labels.inputs.Unassigned' | translate }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
+    <div fxFlex="49%">
+      <h4 class="table-headers">{{ 'labels.heading.Account Summary' | translate }}</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>{{ 'labels.inputs.Pending for Approval Shares' | translate }}</td>
+            <td class="r-amount">{{ sharesAccountData.summary.totalPendingForApprovalShares | formatNumber }}</td>
+          </tr>
+          <tr>
+            <td>{{ 'labels.inputs.Approved Shares' | translate }}</td>
+            <td class="r-amount">{{ sharesAccountData.summary.totalApprovedShares | formatNumber }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

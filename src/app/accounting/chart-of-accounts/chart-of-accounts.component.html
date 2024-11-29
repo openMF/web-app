@@ -10,9 +10,14 @@
     </mat-button-toggle-group>
   </div>
   <div #buttonAddAccount>
-    <button mat-raised-button color="primary" [routerLink]="['gl-accounts/create']" *mifosxHasPermission="'CREATE_GLACCOUNT'">
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['gl-accounts/create']"
+      *mifosxHasPermission="'CREATE_GLACCOUNT'"
+    >
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{"labels.buttons.Add Account" | translate}}
+      {{ 'labels.buttons.Add Account' | translate }}
     </button>
   </div>
 </div>
@@ -20,83 +25,100 @@
 <!-- List View -->
 
 <div class="container" [hidden]="viewGroup.value !== 'listView'">
-
   <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
   </div>
 
   <div #accountsTable class="mat-elevation-z8">
-
     <table mat-table [dataSource]="tableDataSource" matSort>
-
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Account" | translate}} </th>
-        <td mat-cell *matCellDef="let glAccount"> {{ glAccount.name }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Account' | translate }}</th>
+        <td mat-cell *matCellDef="let glAccount">{{ glAccount.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="glCode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.GL Code" | translate}} </th>
-        <td mat-cell *matCellDef="let glAccount"> {{ glAccount.glCode }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.GL Code' | translate }}</th>
+        <td mat-cell *matCellDef="let glAccount">{{ glAccount.glCode }}</td>
       </ng-container>
 
       <ng-container matColumnDef="glAccountType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Type" | translate}} </th>
-        <td mat-cell *matCellDef="let glAccount"> {{ 'labels.inputs.accounting.' + glAccount.type.value | translate }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Type' | translate }}</th>
+        <td mat-cell *matCellDef="let glAccount">
+          {{ 'labels.inputs.accounting.' + glAccount.type.value | translate }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="disabled">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Disabled" | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Disabled' | translate }}</th>
         <td mat-cell *matCellDef="let glAccount">
           <div [className]="glAccount.disabled === true ? 'disabled' : 'enabled'">
-            <fa-icon matTooltip="{{ glAccount.disabled === true ? 'Disabled' : 'Enabled' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+            <fa-icon
+              matTooltip="{{ glAccount.disabled === true ? 'Disabled' : 'Enabled' }}"
+              matTooltipPosition="right"
+              icon="circle"
+              size="lg"
+            ></fa-icon>
           </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="manualEntriesAllowed">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Manual Entries Allowed" | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Manual Entries Allowed' | translate }}
+        </th>
         <td mat-cell *matCellDef="let glAccount">
-          <fa-icon *ngIf="glAccount.manualEntriesAllowed" class="manual-entries-allowed" matTooltip="{{ 'tooltips.Allowed' | translate}}" matTooltipPosition="right" icon="check-circle" size="lg"></fa-icon>
-          <fa-icon *ngIf="!glAccount.manualEntriesAllowed" class="manual-entries-not-allowed" matTooltip="{{ 'tooltips.' | translate}}" matTooltipPosition="right" icon="times-circle" size="lg"></fa-icon>
+          <fa-icon
+            *ngIf="glAccount.manualEntriesAllowed"
+            class="manual-entries-allowed"
+            matTooltip="{{ 'tooltips.Allowed' | translate }}"
+            matTooltipPosition="right"
+            icon="check-circle"
+            size="lg"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="!glAccount.manualEntriesAllowed"
+            class="manual-entries-not-allowed"
+            matTooltip="{{ 'tooltips.' | translate }}"
+            matTooltipPosition="right"
+            icon="times-circle"
+            size="lg"
+          ></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="usedAs">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Used as" | translate}} </th>
-        <td mat-cell *matCellDef="let glAccount"> {{ glAccount.usage.value }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Used as' | translate }}</th>
+        <td mat-cell *matCellDef="let glAccount">{{ glAccount.usage.value }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['gl-accounts/view', row.id]" class="select-row"></tr>
-
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [routerLink]="['gl-accounts/view', row.id]"
+        class="select-row"
+      ></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
-
 </div>
-
 
 <!-- Tree View -->
 
 <div class="container" [hidden]="viewGroup.value !== 'treeView'">
-
   <div class="m-b-20" fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px">
     <button mat-raised-button (click)="toggleExpandCollapse()">
-      {{ (isTreeExpanded ? "labels.buttons.Collapse All" : "labels.buttons.Expand All") | translate }}
+      {{ (isTreeExpanded ? 'labels.buttons.Collapse All' : 'labels.buttons.Expand All') | translate }}
     </button>
   </div>
 
   <div fxLayout="row" fxLayoutGap="4%" fxLayout.lt-md="column">
-
     <div class="mat-elevation-z8" fxFlex>
-
       <mat-tree [dataSource]="nestedTreeDataSource" [treeControl]="nestedTreeControl" class="gl-account-tree">
-
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
           <li class="mat-tree-node">
             <button mat-icon-button disabled></button>
@@ -111,7 +133,10 @@
           <li>
             <div class="mat-tree-node">
               <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
-                <fa-icon class="mat-icon-rtl-mirror" icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></fa-icon>
+                <fa-icon
+                  class="mat-icon-rtl-mirror"
+                  icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"
+                ></fa-icon>
               </button>
               <span (click)="viewGLAccountNode(node)">
                 <span *ngIf="node.glCode" class="m-r-10">{{ '(' + node.glCode + ')' }}</span>
@@ -123,21 +148,15 @@
             </ul>
           </li>
         </mat-nested-tree-node>
-
       </mat-tree>
-
     </div>
 
     <div fxFlex="48%" *ngIf="glAccount">
-
       <mat-card>
-
         <mat-card-content>
-
           <div fxLayout="row wrap" class="content">
-
             <div fxFlex="50%" class="header">
-              {{"labels.inputs.Account Name" | translate}}
+              {{ 'labels.inputs.Account Name' | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -145,7 +164,7 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              {{"labels.inputs.GL Code" | translate}}
+              {{ 'labels.inputs.GL Code' | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -153,7 +172,7 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              {{"labels.inputs.Account Type" | translate}}
+              {{ 'labels.inputs.Account Type' | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -161,7 +180,7 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              {{"labels.inputs.Account Usage" | translate}}
+              {{ 'labels.inputs.Account Usage' | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -169,7 +188,7 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              {{"labels.inputs.Manual Entries Allowed" | translate}}
+              {{ 'labels.inputs.Manual Entries Allowed' | translate }}
             </div>
 
             <div fxFlex="50%">
@@ -177,59 +196,103 @@
             </div>
 
             <div fxFlex="50%" class="header">
-              {{"labels.inputs.Description" | translate}}
+              {{ 'labels.inputs.Description' | translate }}
             </div>
 
             <div fxFlex="50%">
               {{ glAccount.description }}
             </div>
-
           </div>
-
         </mat-card-content>
-
       </mat-card>
-
     </div>
-
   </div>
-
 </div>
 
 <ng-template #templateButtonTreeView let-popover="popover">
-  <h2>{{"labels.heading.Tree View" | translate}}</h2>
-  <p class="mw300">{{"labels.text.Alternative way-Tree view" | translate}}</p>
+  <h2>{{ 'labels.heading.Tree View' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Alternative way-Tree view' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateButtonAddAccount, buttonAddAccount, 'bottom', true);">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonAddAccount, buttonAddAccount, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateButtonAddAccount let-popover="popover">
-  <h2>{{"labels.heading.Add Account" | translate}}</h2>
-  <p class="mw300">{{"labels.text.Create New GL Account"|translate}}</p>
+  <h2>{{ 'labels.heading.Add Account' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Create New GL Account' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonTreeView, buttonTreeView , 'bottom', true);">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonTreeView, buttonTreeView, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>{{"labels.heading.Search bar to filter GL accounts." | translate}}</h4>
+  <h4>{{ 'labels.heading.Search bar to filter GL accounts.' | translate }}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateButtonAddAccount, buttonAddAccount, 'bottom', true);">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccountsTable, accountsTable, 'top', true);">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonAddAccount, buttonAddAccount, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateAccountsTable, accountsTable, 'top', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateAccountsTable let-popover="popover">
-  <h4 class="mw300">{{"labels.heading.List of chart of all the accounts being used by your organization." | translate}}</h4>
+  <h4 class="mw300">
+    {{ 'labels.heading.List of chart of all the accounts being used by your organization.' | translate }}
+  </h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true);">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>

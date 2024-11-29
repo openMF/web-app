@@ -1,39 +1,58 @@
 <div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%">
   <span
-    *ngIf="!(transactionData.interestedPostedAsOn === false && (transactionData.transactionType.id === 17 || transactionData.transactionType.id === 3))">
+    *ngIf="
+      !(
+        transactionData.interestedPostedAsOn === false &&
+        (transactionData.transactionType.id === 17 || transactionData.transactionType.id === 3)
+      )
+    "
+  >
     <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
-      <button mat-raised-button color="primary" *ngIf="transactionData.transactionType.value === 'Transfer' || transactionData.reversed === 'true'
-          || transactionData.transactionType.id===3 || transactionData.transactionType.id===17" [routerLink]="'edit'">
-        <fa-icon icon="edit" class="m-r-10"></fa-icon>{{"labels.buttons.Edit" | translate}}
+      <button
+        mat-raised-button
+        color="primary"
+        *ngIf="
+          transactionData.transactionType.value === 'Transfer' ||
+          transactionData.reversed === 'true' ||
+          transactionData.transactionType.id === 3 ||
+          transactionData.transactionType.id === 17
+        "
+        [routerLink]="'edit'"
+      >
+        <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
       </button>
     </span>
   </span>
   <span *ngIf="!transactionData.reversed && transactionData.transactionType.amountHold">
-    <button mat-raised-button color="primary" *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
-      (click)="releaseAmount()">
-      <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{"labels.buttons.Release Amount" | translate}}
+    <button
+      mat-raised-button
+      color="primary"
+      *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
+      (click)="releaseAmount()"
+    >
+      <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{ 'labels.buttons.Release Amount' | translate }}
     </button>
   </span>
   <span *ngIf="allowUndo()">
-    <button mat-raised-button color="warn" *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
-      (click)="undoTransaction()">
-      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{"labels.buttons.Undo" | translate}}
+    <button
+      mat-raised-button
+      color="warn"
+      *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
+      (click)="undoTransaction()"
+    >
+      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
     </button>
   </span>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-        <div fxFlex="100%" [ngClass]="transactionColor()">
-        </div>
+        <div fxFlex="100%" [ngClass]="transactionColor()"></div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Id" | translate}}
+          {{ 'labels.inputs.Id' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -41,15 +60,15 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Transaction Type" | translate}}
+          {{ 'labels.inputs.Transaction Type' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ transactionData.transactionType.value | translateKey:'catalogs' }}
+          {{ transactionData.transactionType.value | translateKey: 'catalogs' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Transaction Date" | translate}}
+          {{ 'labels.inputs.Transaction Date' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -57,7 +76,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Currency" | translate}}
+          {{ 'labels.inputs.Currency' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -65,33 +84,33 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Amount" | translate }}
+          {{ 'labels.inputs.Amount' | translate }}
         </div>
 
         <div fxFlex="50%">
-          {{ transactionData.amount | currency:transactionData.currency.code:'symbol-narrow':'1.2-2' }}
+          {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.note">
-          {{"labels.inputs.Note" | translate}}
+          {{ 'labels.inputs.Note' | translate }}
         </div>
 
         <div fxFlex="50%" *ngIf="transactionData.note">
           {{ transactionData.note }}
         </div>
 
-        <mifosx-transaction-payment-detail *ngIf="transactionData.paymentDetailData"
-          [paymentDetailData]="transactionData.paymentDetailData">
+        <mifosx-transaction-payment-detail
+          *ngIf="transactionData.paymentDetailData"
+          [paymentDetailData]="transactionData.paymentDetailData"
+        >
         </mifosx-transaction-payment-detail>
-
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../../']">{{ 'labels.buttons.Back' |
-          translate}}</button>
+        <button type="button" mat-raised-button color="primary" [routerLink]="['../../']">
+          {{ 'labels.buttons.Back' | translate }}
+        </button>
       </div>
     </mat-card-content>
-
   </mat-card>
-
 </div>

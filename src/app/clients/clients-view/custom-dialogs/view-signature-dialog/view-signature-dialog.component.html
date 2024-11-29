@@ -1,15 +1,19 @@
-<h1 mat-dialog-title>{{"labels.heading.View Client Signature" | translate}}</h1>
+<h1 mat-dialog-title>{{ 'labels.heading.View Client Signature' | translate }}</h1>
 
 <div *ngIf="signatureId" mat-dialog-content>
-  <img [src]="signatureImage" alt="Signature">
+  <img [src]="signatureImage" alt="Signature" />
 </div>
 
 <div *ngIf="!signatureId" mat-dialog-content>
-  <p>{{"labels.text.Client Signature is not provided." | translate}}</p>
+  <p>{{ 'labels.text.Client Signature is not provided.' | translate }}</p>
 </div>
 
 <mat-dialog-actions align="end">
-  <button mat-raised-button mat-dialog-close>{{"labels.buttons.Close" | translate}}</button>
-  <button mat-raised-button *ngIf="signatureId" color="warn" [mat-dialog-close]="{ delete: true }">{{"labels.buttons.Delete" | translate}}</button>
-  <button mat-raised-button *ngIf="!signatureId" color="primary" [mat-dialog-close]="{ upload: true }">{{"labels.buttons.Upload" | translate}}</button>
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Close' | translate }}</button>
+  <button mat-raised-button *ngIf="signatureId" color="warn" [mat-dialog-close]="{ delete: true }">
+    {{ 'labels.buttons.Delete' | translate }}
+  </button>
+  <button mat-raised-button *ngIf="!signatureId" color="primary" [mat-dialog-close]="{ upload: true }">
+    {{ 'labels.buttons.Upload' | translate }}
+  </button>
 </mat-dialog-actions>

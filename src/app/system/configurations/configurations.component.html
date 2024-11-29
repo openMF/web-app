@@ -1,13 +1,12 @@
 <mat-card class="configurations-card">
   <mat-card-content>
     <mat-tab-group #tabGroup mat-align-tabs="center">
-      <mat-tab label="{{'labels.inputs.Global Configurations' | translate}}">
+      <mat-tab label="{{ 'labels.inputs.Global Configurations' | translate }}">
         <mifosx-global-configurations-tab></mifosx-global-configurations-tab>
       </mat-tab>
-      <mat-tab label="{{'labels.inputs.Business Date' | translate}}" *ngIf="isBusinessDateEnabled">
+      <mat-tab label="{{ 'labels.inputs.Business Date' | translate }}" *ngIf="isBusinessDateEnabled">
         <mifosx-business-date-tab></mifosx-business-date-tab>
       </mat-tab>
     </mat-tab-group>
-
   </mat-card-content>
 </mat-card>

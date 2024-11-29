@@ -20,7 +20,7 @@ As DevOps I want Health liveness Probe on the microservice so that the health of
 **Acceptance Criteria:**
 
 - [ ] [LIST ITEMS]  
-      i.e.
+       i.e.
 
 - [ ] Negative use-cases for Unit Tests in the "common streaming library"
 - [ ] Integration tests in the "common streaming library"

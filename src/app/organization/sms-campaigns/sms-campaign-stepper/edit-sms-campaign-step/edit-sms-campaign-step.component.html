@@ -1,12 +1,11 @@
 <form [formGroup]="smsCampaignDetailsForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
-
     <mat-form-field fxFlex="48%">
       <mat-label>{{ 'labels.inputs.Campaign Name' | translate }}</mat-label>
-      <input matInput formControlName="campaignName" required>
+      <input matInput formControlName="campaignName" required />
       <mat-error>
-        {{ 'labels.inputs.Campaign Name' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Campaign Name' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -27,7 +26,8 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Trigger Type' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Trigger Type' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -35,14 +35,25 @@
       {{ 'labels.inputs.Is Notification' | translate }}?
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.controls.recurrenceStartDate" (click)="recurrenceStartDatePicker.open()">
+    <mat-form-field
+      fxFlex="48%"
+      *ngIf="smsCampaignDetailsForm.controls.recurrenceStartDate"
+      (click)="recurrenceStartDatePicker.open()"
+    >
       <mat-label>{{ 'labels.inputs.Schedule Date' | translate }}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceStartDatePicker"
-        formControlName="recurrenceStartDate" required>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="recurrenceStartDatePicker"
+        formControlName="recurrenceStartDate"
+        required
+      />
       <mat-datepicker-toggle matSuffix [for]="recurrenceStartDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #recurrenceStartDatePicker></mat-datepicker>
       <mat-error>
-        {{ 'labels.inputs.Schedule Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Schedule Date' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -54,14 +65,16 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Business Rule' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Business Rule' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
-
   </div>
 
-  <mifosx-edit-business-rule-parameters [paramData]="paramData" [smsCampaign]="smsCampaign"
-    (templateParameters)="passParameters($event)">
+  <mifosx-edit-business-rule-parameters
+    [paramData]="paramData"
+    [smsCampaign]="smsCampaign"
+    (templateParameters)="passParameters($event)"
+  >
   </mifosx-edit-business-rule-parameters>
-
 </form>

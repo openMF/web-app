@@ -1,21 +1,21 @@
 <mat-card class="group-card">
-
   <mat-card-header fxLayout="column" class="header">
-
     <mat-card-title-group class="header-title-group">
-
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image" src="assets/images/group_placeholder.png">
+          <img mat-card-md-image class="profile-image" src="assets/images/group_placeholder.png" />
         </div>
       </div>
 
       <div class="mat-typography group-card-title">
         <mat-card-title>
           <h3 fxFlex="95%">
-            <i class="fa fa-stop" [ngClass]="groupViewData.status.code|statusLookup"
-              [matTooltip]="groupViewData.status.value"></i>
-              {{"labels.heading.Group Name"  |translate}} : {{groupViewData.name}}
+            <i
+              class="fa fa-stop"
+              [ngClass]="groupViewData.status.code | statusLookup"
+              [matTooltip]="groupViewData.status.value"
+            ></i>
+            {{ 'labels.heading.Group Name' | translate }} : {{ groupViewData.name }}
           </h3>
 
           <div fxFlex="5%">
@@ -29,28 +29,33 @@
 
         <mat-card-subtitle>
           <div fxFlex="45%">
-            <b>{{"labels.inputs.Group"  |translate}} :</b> {{groupViewData.name}} | <b>{{"labels.inputs.Center Name"  |translate}}:</b> {{groupViewData.centerName}} | <b>{{"labels.inputs.Staff"  |translate}}:</b>
-            {{groupViewData.staffName || 'Unassigned'}}<br />
-            <b>{{"labels.inputs.Office Name"  |translate}} :</b> {{groupViewData.officeName}}<br />
-            <b>{{"labels.inputs.Activation Date"  |translate}} :</b> {{(groupViewData.activationDate)?(groupViewData.activationDate | dateFormat) :'Not Activated'}}<br />
+            <b>{{ 'labels.inputs.Group' | translate }} :</b> {{ groupViewData.name }} |
+            <b>{{ 'labels.inputs.Center Name' | translate }}:</b> {{ groupViewData.centerName }} |
+            <b>{{ 'labels.inputs.Staff' | translate }}:</b> {{ groupViewData.staffName || 'Unassigned' }}<br />
+            <b>{{ 'labels.inputs.Office Name' | translate }} :</b> {{ groupViewData.officeName }}<br />
+            <b>{{ 'labels.inputs.Activation Date' | translate }} :</b>
+            {{ groupViewData.activationDate ? (groupViewData.activationDate | dateFormat) : 'Not Activated' }}<br />
             <span *ngIf="!groupViewData.active">
-              <b>{{"labels.inputs.Closure Date"  |translate}} :</b> {{groupViewData.timeline.closedOnDate | dateFormat}}
+              <b>{{ 'labels.inputs.Closure Date' | translate }} :</b>
+              {{ groupViewData.timeline.closedOnDate | dateFormat }}
             </span>
           </div>
-          <div  fxFlex="45%" class="group-meeting" fxLayoutAlign="start start">
+          <div fxFlex="45%" class="group-meeting" fxLayoutAlign="start start">
             <div *ngIf="groupViewData.collectionMeetingCalendar; else unassigned">
               <p>
-                {{"labels.inputs.Next Meeting on"  |translate}}: {{groupViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | dateFormat}}
+                {{ 'labels.inputs.Next Meeting on' | translate }}:
+                {{ groupViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | dateFormat }}
                 <i class="fa fa-edit" *ngIf="editMeeting" (click)="doAction('Edit Meeting')"></i><br />
-                {{"labels.inputs.Meeting Frequency"  |translate}}: {{groupViewData.collectionMeetingCalendar?.frequency.value | lowercase}}
+                {{ 'labels.inputs.Meeting Frequency' | translate }}:
+                {{ groupViewData.collectionMeetingCalendar?.frequency.value | lowercase }}
               </p>
             </div>
             <ng-template #unassigned>
               <div>
                 <p>
-                  {{"labels.inputs.Next Meeting on"  |translate}}: {{"labels.inputs.Unassigned"  |translate}}
+                  {{ 'labels.inputs.Next Meeting on' | translate }}: {{ 'labels.inputs.Unassigned' | translate }}
                   <i class="fa fa-calendar"></i><br />
-                  {{"labels.inputs.Meeting Frequency"  |translate}}: {{"labels.inputs.N/A"  |translate}}
+                  {{ 'labels.inputs.Meeting Frequency' | translate }}: {{ 'labels.inputs.N/A' | translate }}
                 </p>
               </div>
             </ng-template>
@@ -59,111 +64,156 @@
       </div>
 
       <mat-menu #groupMenu="matMenu">
-
-        <span *ngIf="!(groupViewData.status.value==='Active')">
+        <span *ngIf="!(groupViewData.status.value === 'Active')">
           <button mat-menu-item *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Activate')">
             <mat-icon matListIcon>
               <fa-icon icon="checkSign" size="sm"></fa-icon>
             </mat-icon>
-            <span>{{"labels.buttons.Activate"  |translate}}</span>
+            <span>{{ 'labels.buttons.Activate' | translate }}</span>
           </button>
         </span>
         <button mat-menu-item *mifosxHasPermission="'UPDATE_GROUP'" (click)="doAction('Edit')">
           <mat-icon matListIcon>
             <fa-icon icon="edit" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{"labels.buttons.Edit"  |translate}}</span>
+          <span>{{ 'labels.buttons.Edit' | translate }}</span>
         </button>
         <button mat-menu-item *mifosxHasPermission="'CREATE_CLIENT'" (click)="doAction('Manage Members')">
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{"labels.buttons.Add Clients"  |translate}}</span>
+          <span>{{ 'labels.buttons.Add Clients' | translate }}</span>
         </button>
-        <button mat-menu-item *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'"
-          (click)="doAction('Transfer Clients')">
+        <button mat-menu-item *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
           <mat-icon matListIcon>
             <fa-icon icon="users" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{"labels.buttons.Transfer Clients"  |translate}}</span>
+          <span>{{ 'labels.buttons.Transfer Clients' | translate }}</span>
         </button>
         <button mat-menu-item *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'" (click)="doAction('Manage Members')">
           <mat-icon matListIcon>
             <fa-icon icon="user" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{"labels.buttons.Manage Members"  |translate}}</span>
+          <span>{{ 'labels.buttons.Manage Members' | translate }}</span>
         </button>
 
         <button mat-menu-item *ngIf="groupViewData.active" [matMenuTriggerFor]="AccountApplications">
           <mat-icon matListIcon>
             <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
           </mat-icon>
-          <span>{{"labels.buttons.Applications"  |translate}}</span>
+          <span>{{ 'labels.buttons.Applications' | translate }}</span>
         </button>
 
         <mat-menu #AccountApplications="matMenu">
           <span *ngIf="groupViewData.clientMembers">
-            <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">{{"labels.buttons.Bulk JLG Loan Application"  |translate}}</button></span>
-          <button mat-menu-item *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
-            [routerLink]="['savings-accounts', 'create']">{{"labels.buttons.Group Saving Application"  |translate}}</button>
+            <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'">
+              {{ 'labels.buttons.Bulk JLG Loan Application' | translate }}
+            </button></span
+          >
+          <button
+            mat-menu-item
+            *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
+            [routerLink]="['savings-accounts', 'create']"
+          >
+            {{ 'labels.buttons.Group Saving Application' | translate }}
+          </button>
           <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'" [routerLink]="['loans-accounts', 'create']">
-            {{"labels.buttons.Group Loan Application"  |translate}}</button>
+            {{ 'labels.buttons.Group Loan Application' | translate }}
+          </button>
           <button mat-menu-item [routerLink]="['loans-accounts', 'glim-account', 'create']">
-            {{"labels.buttons.GLIM Loan Application"  |translate}}</button>
-          <button mat-menu-item [routerLink]="['savings-accounts', 'gsim-account' , 'create']"> 
-            {{"labels.buttons.GSIM Application"  |translate}}
+            {{ 'labels.buttons.GLIM Loan Application' | translate }}
+          </button>
+          <button mat-menu-item [routerLink]="['savings-accounts', 'gsim-account', 'create']">
+            {{ 'labels.buttons.GSIM Application' | translate }}
           </button>
         </mat-menu>
 
-        <button mat-menu-item [matMenuTriggerFor]="More">{{"labels.buttons.More"  |translate}}</button>
+        <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>
         <mat-menu #More="matMenu">
           <span *ngIf="groupViewData.collectionMeetingCalendar">
-            <button mat-menu-item *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'"
-              (click)="doAction('Attendance')">{{"labels.buttons.Attendance"  |translate}}</button></span>
+            <button
+              mat-menu-item
+              *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'"
+              (click)="doAction('Attendance')"
+            >
+              {{ 'labels.buttons.Attendance' | translate }}
+            </button></span
+          >
           <span *ngIf="!groupViewData.staffId">
             <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">
-              {{"labels.buttons.Assign Staff"  |translate}}</button></span>
+              {{ 'labels.buttons.Assign Staff' | translate }}
+            </button></span
+          >
           <span *ngIf="groupViewData.staffId">
-            <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'"
-              (click)="doAction('Unassign Staff')">{{"labels.buttons.Unassign Staff"  |translate}}</button></span>
+            <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">
+              {{ 'labels.buttons.Unassign Staff' | translate }}
+            </button></span
+          >
           <span
-            *ngIf="!(groupViewData.centerId || groupViewData.collectionMeetingCalendar) && groupViewData.status.value==='Active'">
+            *ngIf="
+              !(groupViewData.centerId || groupViewData.collectionMeetingCalendar) &&
+              groupViewData.status.value === 'Active'
+            "
+          >
             <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">
-              {{"labels.buttons.Attach Meeting"  |translate}}</button></span>
-          <button mat-menu-item *mifosxHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">{{"labels.buttons.Close"  |translate}}</button>
-          <button mat-menu-item *mifosxHasPermission="'DELETE_GROUP'" (click)="doAction('Delete')">{{"labels.buttons.Delete"  |translate}}</button>
+              {{ 'labels.buttons.Attach Meeting' | translate }}
+            </button></span
+          >
+          <button mat-menu-item *mifosxHasPermission="'CLOSE_GROUP'" (click)="doAction('Close')">
+            {{ 'labels.buttons.Close' | translate }}
+          </button>
+          <button mat-menu-item *mifosxHasPermission="'DELETE_GROUP'" (click)="doAction('Delete')">
+            {{ 'labels.buttons.Delete' | translate }}
+          </button>
         </mat-menu>
       </mat-menu>
     </mat-card-title-group>
-
   </mat-card-header>
 
   <mat-card-content>
-
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-        [active]="general.isActive">
-        {{"labels.inputs.General"  |translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+      >
+        {{ 'labels.inputs.General' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./notes']" *mifosxHasPermission="'READ_GROUPNOTE'" routerLinkActive
-        #notes="routerLinkActive" [active]="notes.isActive">
-        {{"labels.inputs.Notes"  |translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./notes']"
+        *mifosxHasPermission="'READ_GROUPNOTE'"
+        routerLinkActive
+        #notes="routerLinkActive"
+        [active]="notes.isActive"
+      >
+        {{ 'labels.inputs.Notes' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./committee']" routerLinkActive #committee="routerLinkActive"
-        [active]="committee.isActive">
-        {{"labels.inputs.Committee"  |translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./committee']"
+        routerLinkActive
+        #committee="routerLinkActive"
+        [active]="committee.isActive"
+      >
+        {{ 'labels.inputs.Committee' | translate }}
       </a>
       <span *ngFor="let groupDatatable of groupDatatables">
-        <a mat-tab-link *mifosxHasPermission="'READ_' + groupDatatable.registeredTableName"
-          [routerLink]="['./datatables',groupDatatable.registeredTableName]" routerLinkActive
-          #datatable="routerLinkActive" [active]="datatable.isActive">
-          {{groupDatatable.registeredTableName}}
+        <a
+          mat-tab-link
+          *mifosxHasPermission="'READ_' + groupDatatable.registeredTableName"
+          [routerLink]="['./datatables', groupDatatable.registeredTableName]"
+          routerLinkActive
+          #datatable="routerLinkActive"
+          [active]="datatable.isActive"
+        >
+          {{ groupDatatable.registeredTableName }}
         </a>
       </span>
     </nav>
 
     <router-outlet></router-outlet>
-
   </mat-card-content>
-
 </mat-card>

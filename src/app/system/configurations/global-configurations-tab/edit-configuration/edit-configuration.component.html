@@ -1,52 +1,51 @@
 <div class="container space">
-
   <mat-card>
-
     <form [formGroup]="configurationForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Configuration Name' | translate}}</mat-label>
-            <input matInput required formControlName="name">
+            <mat-label>{{ 'labels.inputs.Configuration Name' | translate }}</mat-label>
+            <input matInput required formControlName="name" />
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Description' | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
             <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Number Value' | translate}}</mat-label>
-            <input matInput type="number" formControlName="value">
+            <mat-label>{{ 'labels.inputs.Number Value' | translate }}</mat-label>
+            <input matInput type="number" formControlName="value" />
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.String Value' | translate}}</mat-label>
-            <input matInput formControlName="stringValue">
+            <mat-label>{{ 'labels.inputs.String Value' | translate }}</mat-label>
+            <input matInput formControlName="stringValue" />
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" (click)="configurationDatePicker.open()">
-            <mat-label>{{'labels.inputs.Date Value' | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="configurationDatePicker" formControlName="dateValue">
+            <mat-label>{{ 'labels.inputs.Date Value' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="configurationDatePicker"
+              formControlName="dateValue"
+            />
             <mat-datepicker-toggle matSuffix [for]="configurationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #configurationDatePicker></mat-datepicker>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../..']"> {{'labels.buttons.Cancel' | translate}} </button>
+        <button type="button" mat-raised-button [routerLink]="['../..']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
         <button mat-raised-button color="primary" [disabled]="configurationForm.pristine || !configurationForm.valid">
-          {{'labels.buttons.Submit' | translate}} </button>
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

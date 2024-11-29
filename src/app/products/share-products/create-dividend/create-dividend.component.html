@@ -1,52 +1,63 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="createDividendForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field (click)="startDatePicker.open()">
-            <mat-label>{{'labels.inputs.Dividend Period Start Date' | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" required formControlName="dividendPeriodStartDate">
+            <mat-label>{{ 'labels.inputs.Dividend Period Start Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="startDatePicker"
+              required
+              formControlName="dividendPeriodStartDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             <mat-error *ngIf="createDividendForm.controls.dividendPeriodStartDate.hasError('required')">
-              {{'labels.inputs.Starting Date' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+              {{ 'labels.inputs.Starting Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="endDatePicker.open()">
-            <mat-label>{{'labels.inputs.Dividend Period End Date' | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" required formControlName="dividendPeriodEndDate">
+            <mat-label>{{ 'labels.inputs.Dividend Period End Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="endDatePicker"
+              required
+              formControlName="dividendPeriodEndDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
             <mat-error *ngIf="createDividendForm.controls.dividendPeriodEndDate.hasError('required')">
-              {{'labels.inputs.End Date' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+              {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Dividend Amount' | translate}}</mat-label>
-            <input matInput required formControlName="dividendAmount">
+            <mat-label>{{ 'labels.inputs.Dividend Amount' | translate }}</mat-label>
+            <input matInput required formControlName="dividendAmount" />
             <mat-error *ngIf="createDividendForm.controls.dividendAmount.hasError('required')">
-              {{ 'labels.inputs.Amount' | translate }} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!createDividendForm.valid">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!createDividendForm.valid">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

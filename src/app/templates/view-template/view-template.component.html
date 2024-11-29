@@ -1,27 +1,21 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_TEMPLATE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Edit' | translate}}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
 
   <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_TEMPLATE'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Delete' | translate}}
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
-
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.name' | translate}}
+          {{ 'labels.inputs.name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -29,7 +23,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Entity' | translate}}
+          {{ 'labels.inputs.Entity' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -37,7 +31,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Type' | translate}}
+          {{ 'labels.inputs.Type' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -45,15 +39,11 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Text' | translate}}
+          {{ 'labels.inputs.Text' | translate }}
         </div>
 
         <div fxFlex="50%" [innerHTML]="templateData.text"></div>
-
       </div>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

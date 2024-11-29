@@ -1,65 +1,64 @@
 <div fxLayout="column">
-
   <mat-divider fxFlex="98%"></mat-divider>
 
-  <h3 fxFlex="98%" class="mat-h3">{{'labels.heading.Business Rule Parameters' | translate }}</h3>
+  <h3 fxFlex="98%" class="mat-h3">{{ 'labels.heading.Business Rule Parameters' | translate }}</h3>
 
   <form [formGroup]="ReportForm">
-
     <div fxLayout="row wrap" fxLayoutGap="2%">
-
-      <ng-container  *ngFor="let param of paramData" [ngSwitch]="param.displayType">
-
+      <ng-container *ngFor="let param of paramData" [ngSwitch]="param.displayType">
         <ng-container *ngIf="ReportForm.controls[param.name]">
-
           <mat-form-field fxFlex="48%" *ngSwitchCase="'text'">
-            <mat-label>{{param.label}}</mat-label>
-            <input matInput required [formControlName]="param.name">
+            <mat-label>{{ param.label }}</mat-label>
+            <input matInput required [formControlName]="param.name" />
             <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
-              {{param.label}} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ param.label }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
-            <mat-label>{{param.label}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="runReportDatePicker" required
-              [formControlName]="param.name">
+            <mat-label>{{ param.label }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="runReportDatePicker"
+              required
+              [formControlName]="param.name"
+            />
             <mat-datepicker-toggle matSuffix [for]="runReportDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #runReportDatePicker></mat-datepicker>
             <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
-              {{param.label}} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ param.label }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%" *ngSwitchCase="'select'">
-            <mat-label>{{param.label}}</mat-label>
+            <mat-label>{{ param.label }}</mat-label>
             <mat-select required [formControlName]="param.name" [compareWith]="compareOptions">
               <mat-option *ngFor="let option of param.selectOptions" [value]="option">
-                {{option.name}}
+                {{ option.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
-              {{param.label}} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ param.label }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </ng-container>
-
       </ng-container>
-
     </div>
-
   </form>
-
 </div>
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious disabled>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Previous' | translate }}
+    {{ 'labels.buttons.Previous' | translate }}
   </button>
   <button mat-raised-button matStepperNext>
-    {{'labels.buttons.Next' | translate }}
+    {{ 'labels.buttons.Next' | translate }}
     <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
 </div>

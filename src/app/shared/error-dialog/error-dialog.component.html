@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>{{'Error Log' | translate}}</h1>
+<h1 mat-dialog-title>{{ 'Error Log' | translate }}</h1>
 
 <div mat-dialog-content>
-    <p *ngIf="!showAsCode"> {{ data }}</p>
-    <span *ngIf="showAsCode" [innerHTML]="data"></span>
+  <p *ngIf="!showAsCode">{{ data }}</p>
+  <span *ngIf="showAsCode" [innerHTML]="data"></span>
 </div>
 
 <mat-dialog-actions align="left">
-    <button mat-raised-button mat-dialog-close>{{'Cancel' | translate}}</button>
+  <button mat-raised-button mat-dialog-close>{{ 'Cancel' | translate }}</button>
 </mat-dialog-actions>

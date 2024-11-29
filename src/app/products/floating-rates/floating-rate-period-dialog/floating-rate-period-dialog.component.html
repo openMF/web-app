@@ -1,41 +1,43 @@
-<h1 mat-dialog-title>{{'labels.inputs.Floating Rate Periods' | translate}}</h1>
+<h1 mat-dialog-title>{{ 'labels.inputs.Floating Rate Periods' | translate }}</h1>
 
 <mat-dialog-content>
-
   <form [formGroup]="floatingRatePeriodForm">
-
     <div fxLayout="column">
-
       <mat-form-field (click)="fromDatePicker.open()">
-        <mat-label>{{'labels.inputs.From Date' | translate}}</mat-label>
-        <input required matInput formControlName="fromDate" [min]="minDate" [matDatepicker]="fromDatePicker">
+        <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
+        <input required matInput formControlName="fromDate" [min]="minDate" [matDatepicker]="fromDatePicker" />
         <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #fromDatePicker></mat-datepicker>
         <mat-error *ngIf="floatingRatePeriodForm.controls.fromDate.hasError('required')">
-          {{'labels.inputs.From Date' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+          {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>{{'labels.inputs.Interest Rate' | translate}}</mat-label>
-        <input matInput type="number" required formControlName="interestRate">
+        <mat-label>{{ 'labels.inputs.Interest Rate' | translate }}</mat-label>
+        <input matInput type="number" required formControlName="interestRate" />
         <mat-error *ngIf="floatingRatePeriodForm.controls.interestRate.hasError('required')">
-          {{'labels.inputs.Interest Rate' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+          {{ 'labels.inputs.Interest Rate' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-checkbox class="is-differential" formControlName="isDifferentialToBaseLendingRate" labelPosition="after">
-        {{'labels.inputs.Is Differential' | translate}}?
+        {{ 'labels.inputs.Is Differential' | translate }}?
       </mat-checkbox>
-
     </div>
-
   </form>
-
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>{{'labels.buttons.Cancel' | translate}}</button>
-  <button mat-raised-button color="primary"
-    [disabled]="!floatingRatePeriodForm.valid || floatingRatePeriodForm.pristine" (click)="submit()">{{'labels.buttons.Submit' | translate}}</button>
+  <button mat-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!floatingRatePeriodForm.valid || floatingRatePeriodForm.pristine"
+    (click)="submit()"
+  >
+    {{ 'labels.buttons.Submit' | translate }}
+  </button>
 </mat-dialog-actions>

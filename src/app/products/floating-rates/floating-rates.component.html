@@ -1,56 +1,80 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_FLOATINGRATE'">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Create Floating Rate' | translate}}
+    {{ 'labels.buttons.Create Floating Rate' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
   </div>
 
   <div class="mat-elevation-z8">
-
     <table mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Name' | translate}} </th>
-        <td mat-cell *matCellDef="let floatingRate"> {{ floatingRate.name }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
+        <td mat-cell *matCellDef="let floatingRate">{{ floatingRate.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="createdBy">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Created By' | translate}} </th>
-        <td mat-cell *matCellDef="let floatingRate"> {{ floatingRate.createdBy }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Created By' | translate }}</th>
+        <td mat-cell *matCellDef="let floatingRate">{{ floatingRate.createdBy }}</td>
       </ng-container>
 
       <ng-container matColumnDef="isBaseLendingRate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Is Base Lending Rate' | translate}}? </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Is Base Lending Rate' | translate }}?
+        </th>
         <td mat-cell *matCellDef="let floatingRate">
-          <fa-icon *ngIf="floatingRate.isBaseLendingRate" icon="check-circle" size="lg" class="is-base-lending-rate-or-active" matTooltip="{{ 'tooltips.Yes' | translate }}" matTooltipPosition="right"></fa-icon>
-          <fa-icon *ngIf="!floatingRate.isBaseLendingRate" icon="times-circle" size="lg" class="not-is-base-lending-rate-or-active" matTooltip="{{ 'tooltips.No' | translate }}" matTooltipPosition="right"></fa-icon>
+          <fa-icon
+            *ngIf="floatingRate.isBaseLendingRate"
+            icon="check-circle"
+            size="lg"
+            class="is-base-lending-rate-or-active"
+            matTooltip="{{ 'tooltips.Yes' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="!floatingRate.isBaseLendingRate"
+            icon="times-circle"
+            size="lg"
+            class="not-is-base-lending-rate-or-active"
+            matTooltip="{{ 'tooltips.No' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="isActive">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.catalogs.Active' | translate}} </th>
-          <td mat-cell *matCellDef="let floatingRate">
-            <fa-icon *ngIf="floatingRate.isActive" icon="check-circle" size="lg" class="is-base-lending-rate-or-active" matTooltip="{{ 'tooltips.Yes' | translate }}" matTooltipPosition="right"></fa-icon>
-            <fa-icon *ngIf="!floatingRate.isActive" icon="times-circle" size="lg" class="not-is-base-lending-rate-or-active" matTooltip="{{ 'tooltips.No' | translate }}" matTooltipPosition="right"></fa-icon>
-          </td>
-        </ng-container>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.catalogs.Active' | translate }}</th>
+        <td mat-cell *matCellDef="let floatingRate">
+          <fa-icon
+            *ngIf="floatingRate.isActive"
+            icon="check-circle"
+            size="lg"
+            class="is-base-lending-rate-or-active"
+            matTooltip="{{ 'tooltips.Yes' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="!floatingRate.isActive"
+            icon="times-circle"
+            size="lg"
+            class="not-is-base-lending-rate-or-active"
+            matTooltip="{{ 'tooltips.No' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+        </td>
+      </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" [routerLink]="[row.id]"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row" [routerLink]="[row.id]"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
-
 </div>

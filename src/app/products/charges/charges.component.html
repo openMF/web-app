@@ -2,121 +2,169 @@
   <div #buttonCreateCharge class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CHARGE'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{"labels.text.Create Charge" | translate}}
+      {{ 'labels.text.Create Charge' | translate }}
     </button>
   </div>
 </div>
 
 <div class="container">
-
   <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex fxFlex="68%">
-      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
     <mat-form-field fxFlex fxFlex="28%">
-      <mat-select placeholder="{{'labels.inputs.Filter' | translate}}" (selectionChange)="filterByAppliesTo($event.value)">
+      <mat-select
+        placeholder="{{ 'labels.inputs.Filter' | translate }}"
+        (selectionChange)="filterByAppliesTo($event.value)"
+      >
         <mat-option *ngFor="let chargeAppliesTo of chargeAppliesToOptions" [value]="chargeAppliesTo.id">
-          {{ chargeAppliesTo.value | translateKey:'catalogs' }}
+          {{ chargeAppliesTo.value | translateKey: 'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
   <div #chargesTable class="mat-elevation-z8">
-
     <table mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Name" | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="chargeAppliesTo">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Applies To" | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.chargeAppliesTo.value | translateKey:'catalogs' }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Applies To' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.chargeAppliesTo.value | translateKey: 'catalogs' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="chargeTimeType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Time" | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value | translateKey:'catalogs' }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Time' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value | translateKey: 'catalogs' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="chargeCalculationType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Calculation" | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.chargeCalculationType.value | translateKey:'catalogs' }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Calculation' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Amount" | translate}} </th>
-        <td mat-cell *matCellDef="let charge" class="r-amount"> {{ charge.amount | formatNumber }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Amount' | translate }}</th>
+        <td mat-cell *matCellDef="let charge" class="r-amount">{{ charge.amount | formatNumber }}</td>
       </ng-container>
 
       <ng-container matColumnDef="penalty">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.commons.Is" | translate}}
-          {{"labels.inputs.Penalty" | translate}}? </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.commons.Is' | translate }} {{ 'labels.inputs.Penalty' | translate }}?
+        </th>
         <td mat-cell *matCellDef="let charge" class="center">
-          <fa-icon *ngIf="charge.penalty" icon="check-circle" size="lg" class="ispenalty" matTooltip="{{ 'tooltips.Yes' | translate }}"
-            matTooltipPosition="right"></fa-icon>
-          <fa-icon *ngIf="!charge.penalty" icon="times-circle" size="lg" class="nopenalty" matTooltip="{{ 'tooltips.No' | translate }}"
-            matTooltipPosition="right"></fa-icon>
+          <fa-icon
+            *ngIf="charge.penalty"
+            icon="check-circle"
+            size="lg"
+            class="ispenalty"
+            matTooltip="{{ 'tooltips.Yes' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="!charge.penalty"
+            icon="times-circle"
+            size="lg"
+            class="nopenalty"
+            matTooltip="{{ 'tooltips.No' | translate }}"
+            matTooltipPosition="right"
+          ></fa-icon>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="active">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.commons.Is" | translate}}
-          {{"labels.status.Active" | translate}}? </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.commons.Is' | translate }} {{ 'labels.status.Active' | translate }}?
+        </th>
         <td mat-cell *matCellDef="let charge" class="center">
           <div [className]="charge.active === true ? 'true' : 'false'">
-            <fa-icon matTooltip="{{ charge.active === true ? ( 'labels.inputs.Active' | translate ) : ('labels.catalogs.Inactive' | translate) }}" matTooltipPosition="right"
-              icon="circle" size="lg"></fa-icon>
+            <fa-icon
+              matTooltip="{{
+                charge.active === true ? ('labels.inputs.Active' | translate) : ('labels.catalogs.Inactive' | translate)
+              }}"
+              matTooltipPosition="right"
+              icon="circle"
+              size="lg"
+            ></fa-icon>
           </div>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id]" class="select-row"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
-
 </div>
 
 <ng-template #templateButtonCreateCharge let-popover="popover">
-  <h2>{{"labels.text.Create Charge" | translate}}</h2>
-  <p class="mw300">{{"labels.text.Supports Loan charges, Savings & deposits" | translate}}</p>
+  <h2>{{ 'labels.text.Create Charge' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Supports Loan charges, Savings & deposits' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>{{"labels.heading.Search bar to filter charges." | translate}}</h4>
+  <h4>{{ 'labels.heading.Search bar to filter charges.' | translate }}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonCreateCharge,buttonCreateCharge , 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateChargesTable,chargesTable, 'top', true)">{{'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonCreateCharge, buttonCreateCharge, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateChargesTable, chargesTable, 'top', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateChargesTable let-popover="popover">
-  <h4 class="mw300">{{"labels.heading.List of charges in the organization. For more details click" | translate}}: <a
-      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/72908813/Charges" target="_blank">{{'labels.heading.Charges' | translate}}</a></h4>
+  <h4 class="mw300">
+    {{ 'labels.heading.List of charges in the organization. For more details click' | translate }}:
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/72908813/Charges" target="_blank">{{
+      'labels.heading.Charges' | translate
+    }}</a>
+  </h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>

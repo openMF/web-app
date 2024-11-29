@@ -1,7 +1,5 @@
 <div class="container">
-
   <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #smsCampaignStepper>
-
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -23,19 +21,16 @@
     </ng-template>
 
     <mat-step [stepControl]="smsCampaignForm">
-
       <ng-template matStepLabel>{{ 'labels.inputs.CAMPAIGN' | translate }}</ng-template>
 
-      <mifosx-sms-campaign-step 
+      <mifosx-sms-campaign-step
         [smsCampaignTemplate]="smsCampaignTemplate"
         (templateParameters)="setParameters($event)"
       >
       </mifosx-sms-campaign-step>
-
     </mat-step>
 
     <mat-step>
-
       <ng-template matStepLabel>{{ 'labels.inputs.MESSAGE' | translate }}</ng-template>
 
       <mifosx-campaign-message-step
@@ -43,21 +38,17 @@
         [smsCampaignFormValid]="smsCampaignForm.valid"
       >
       </mifosx-campaign-message-step>
-
     </mat-step>
 
     <mat-step state="preview" *ngIf="smsCampaignForm.valid" completed>
-
       <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 
-      <mifosx-campaign-preview-step 
+      <mifosx-campaign-preview-step
         [smsCampaignTemplate]="smsCampaignTemplate"
-        [campaign]="smsCampaign" (submitEvent)="submit()"
+        [campaign]="smsCampaign"
+        (submitEvent)="submit()"
       >
       </mifosx-campaign-preview-step>
-
     </mat-step>
-
   </mat-horizontal-stepper>
-
 </div>

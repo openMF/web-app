@@ -1,26 +1,26 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ACCOUNTINGRULE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Edit"|translate}}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
-  <button mat-raised-button color="warn" (click)="deleteAccountingRule()" *mifosxHasPermission="'DELETE_ACCOUNTINGRULE'">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="deleteAccountingRule()"
+    *mifosxHasPermission="'DELETE_ACCOUNTINGRULE'"
+  >
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Delete" | translate}}
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
 </div>
 
 <div class="container" fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column">
-
   <div fxFlex="48%">
-
     <mat-card>
-
       <mat-card-content>
-
         <div fxLayout="row wrap" class="content">
-
           <div fxFlex="50%" class="header">
-            {{"labels.inputs.Office" | translate}}
+            {{ 'labels.inputs.Office' | translate }}
           </div>
 
           <div fxFlex="50%">
@@ -28,7 +28,7 @@
           </div>
 
           <div fxFlex="50%" class="header" *ngIf="accountingRule.description">
-            {{"labels.inputs.Description" | translate}}
+            {{ 'labels.inputs.Description' | translate }}
           </div>
 
           <div fxFlex="50%" *ngIf="accountingRule.description">
@@ -36,7 +36,7 @@
           </div>
 
           <div fxFlex="50%" class="header">
-            {{"labels.inputs.Multiple Debit Entries Allowed" | translate}}
+            {{ 'labels.inputs.Multiple Debit Entries Allowed' | translate }}
           </div>
 
           <div fxFlex="50%">
@@ -44,32 +44,24 @@
           </div>
 
           <div fxFlex="50%" class="header">
-            {{"labels.inputs.Multiple Credit Entries Allowed" | translate}}
+            {{ 'labels.inputs.Multiple Credit Entries Allowed' | translate }}
           </div>
 
           <div fxFlex="50%">
             {{ accountingRule.allowMultipleCreditEntries }}
           </div>
-
         </div>
-
       </mat-card-content>
-
     </mat-card>
-
   </div>
 
   <div fxFlex>
-
     <mat-card>
-
       <mat-card-content>
-
         <div fxLayout="row" class="content">
-
           <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.debitTags">
             <div class="header">
-              {{"labels.inputs.Debit Tags" | translate}}
+              {{ 'labels.inputs.Debit Tags' | translate }}
             </div>
             <div *ngFor="let debitTag of accountingRule.debitTags">
               {{ debitTag.tag.name }}
@@ -78,7 +70,7 @@
 
           <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.debitAccounts">
             <div class="header">
-              {{"labels.inputs.Debit Account Name" | translate}}
+              {{ 'labels.inputs.Debit Account Name' | translate }}
             </div>
             <div *ngFor="let debitAccount of accountingRule.debitAccounts">
               {{ debitAccount.name + ' (' + debitAccount.glCode + ')' }}
@@ -87,7 +79,7 @@
 
           <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.creditTags">
             <div class="header">
-              {{"labels.inputs.Credit Tags" | translate}}
+              {{ 'labels.inputs.Credit Tags' | translate }}
             </div>
             <div *ngFor="let creditTag of accountingRule.creditTags">
               {{ creditTag.tag.name }}
@@ -96,19 +88,14 @@
 
           <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.creditAccounts">
             <div class="header">
-              {{"labels.inputs.Credit Account Name" | translate}}
+              {{ 'labels.inputs.Credit Account Name' | translate }}
             </div>
             <div *ngFor="let creditAccount of accountingRule.creditAccounts">
               {{ creditAccount.name + ' (' + creditAccount.glCode + ')' }}
             </div>
           </div>
-
         </div>
-
       </mat-card-content>
-
     </mat-card>
-
   </div>
-
 </div>

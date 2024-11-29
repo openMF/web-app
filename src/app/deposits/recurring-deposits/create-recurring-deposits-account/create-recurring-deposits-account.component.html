@@ -1,5 +1,4 @@
 <div class="container">
-
   <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #recurringDepositAccountStepper>
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
@@ -22,73 +21,66 @@
     </ng-template>
 
     <mat-step [stepControl]="recurringDepositAccountDetailsForm">
-
-      <ng-template matStepLabel>{{"labels.inputs.DETAILS" | translate }}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.DETAILS' | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-details-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
-        (recurringDepositsAccountProductTemplate)="setTemplate($event)">
+        (recurringDepositsAccountProductTemplate)="setTemplate($event)"
+      >
       </mifosx-recurring-deposits-account-details-step>
-
     </mat-step>
 
     <mat-step [stepControl]="recurringDepositAccountTermsForm">
-
-      <ng-template matStepLabel>{{"labels.inputs.TERMS" | translate }}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-terms-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
-        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate">
+        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
+      >
       </mifosx-recurring-deposits-account-terms-step>
-
     </mat-step>
 
     <mat-step [stepControl]="recurringDepositAccountSettingsForm">
-
-      <ng-template matStepLabel>{{"labels.inputs.SETTINGS" | translate }}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.SETTINGS' | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-settings-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
-        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate">
+        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
+      >
       </mifosx-recurring-deposits-account-settings-step>
-
     </mat-step>
 
     <mat-step>
-
-      <ng-template matStepLabel>{{"labels.inputs.INTEREST RATE CHART" | translate }}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.INTEREST RATE CHART' | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-interest-rate-chart-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
-        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate">
+        [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
+      >
       </mifosx-recurring-deposits-account-interest-rate-chart-step>
-
     </mat-step>
 
     <mat-step>
-
-      <ng-template matStepLabel>{{"labels.inputs.CHARGES" | translate }}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-charges-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
         [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
-        [recurringDepositAccountFormValid]="recurringDepositAccountFormValid">
+        [recurringDepositAccountFormValid]="recurringDepositAccountFormValid"
+      >
       </mifosx-recurring-deposits-account-charges-step>
-
     </mat-step>
 
     <mat-step state="preview" *ngIf="recurringDepositAccountFormValid" completed>
-
-      <ng-template matStepLabel>{{"labels.inputs.PREVIEW" | translate }}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 
       <mifosx-recurring-deposits-account-preview-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
         [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
-        [recurringDepositAccountData]="recurringDepositAccountData" (submitEvent)="submit()">
+        [recurringDepositAccountData]="recurringDepositAccountData"
+        (submitEvent)="submit()"
+      >
       </mifosx-recurring-deposits-account-preview-step>
-
     </mat-step>
-
   </mat-horizontal-stepper>
-
 </div>

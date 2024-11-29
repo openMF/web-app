@@ -2,88 +2,93 @@
   <!-- TODO: Update to show only Activate/Inactivate button at a time according to selection in table. -->
   <button mat-raised-button color="accent">
     <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Activate' | translate}}
+    {{ 'labels.buttons.Activate' | translate }}
   </button>
   <button mat-raised-button color="warn">
     <fa-icon icon="lock" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Deactivate' | translate}}
+    {{ 'labels.buttons.Deactivate' | translate }}
   </button>
   <button mat-raised-button color="primary" [routerLink]="['create']">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Create User' | translate}}
+    {{ 'labels.buttons.Create User' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <div fxLayout="row">
     <mat-form-field fxFlex>
-      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
-      <input matInput type="text" (keyup)="applyFilter($event.target.value)">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput type="text" (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
   </div>
 
   <div class="mat-elevation-z8">
-
     <table mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
-          <mat-checkbox (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          <mat-checkbox
+            (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+          >
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selection.toggle(row) : null"
-                        [checked]="selection.isSelected(row)">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+          >
           </mat-checkbox>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.name' | translate}} </th>
-        <td mat-cell *matCellDef="let user"> {{ user.name }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.User ID' | translate}} </th>
-        <td mat-cell *matCellDef="let user"> {{ user.id }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.User ID' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.id }}</td>
       </ng-container>
 
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Email ID' | translate}} </th>
-        <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Email ID' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="isSelfServiceUser"> {{'labels.inputs.Status' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="isSelfServiceUser">
+          {{ 'labels.inputs.Status' | translate }}
+        </th>
         <td mat-cell *matCellDef="let user">
           <div [className]="user.isSelfServiceUser === true ? 'active' : 'inactive'">
-            <fa-icon matTooltip="{{ user.isSelfServiceUser === true ? 'Active' : 'Inactive' }}" matTooltipPosition="right" icon="circle" size="lg"></fa-icon>
+            <fa-icon
+              matTooltip="{{ user.isSelfServiceUser === true ? 'Active' : 'Inactive' }}"
+              matTooltipPosition="right"
+              icon="circle"
+              size="lg"
+            ></fa-icon>
           </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Office' | translate}} </th>
-        <td mat-cell *matCellDef="let user"> {{ user.officeName }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.officeName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="staff">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Staff' | translate}} </th>
-        <td mat-cell *matCellDef="let user"> {{ user.staff }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Staff' | translate }}</th>
+        <td mat-cell *matCellDef="let user">{{ user.staff }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['view',row.id]"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="['view', row.id]"></tr>
       <!-- TODO: Update route once API is setup. -->
-
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
-
 </div>
