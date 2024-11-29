@@ -3,7 +3,7 @@
 [Angular](https://angular.io) (aka Angular 2, 4, 5, 6...) is a new framework completely rewritten from the ground up,
 replacing the now well-known [AngularJS](https://angularjs.org) framework (aka Angular 1.x).
 
-More that just a framework, Angular should now be considered as a whole *platform* which comes with a complete set of
+More that just a framework, Angular should now be considered as a whole _platform_ which comes with a complete set of
 tools, like its own [CLI](https://github.com/angular/angular-cli), [debug utilities](https://augury.angular.io) or
 [performance tools](https://github.com/angular/angular/tree/master/packages/benchpress).
 
@@ -48,37 +48,37 @@ like [reactive programming](#reactive-programming), [unidirectional data flow](#
 These concepts are difficult to resume in a few words, and despite being tightly related to each other they concern
 specific parts of an application flow, each being quite deep to learn on its own.
 
-You will essentially find here a list of good starting points to learn more on these subjects. 
+You will essentially find here a list of good starting points to learn more on these subjects.
 
 #### Reactive programming
 
-You may not be aware of it, but Angular is now a *reactive system* by design.
+You may not be aware of it, but Angular is now a _reactive system_ by design.
 Although you are not forced to use reactive programming patterns, they make the core of the framework and it is
 definitely recommended to learn them if you want to leverage the best of Angular.
 
-Angular uses [RxJS](http://reactivex.io/rxjs/) to implement the *Observable* pattern.
+Angular uses [RxJS](http://reactivex.io/rxjs/) to implement the _Observable_ pattern.
 
-> An *Observable* is a stream of asynchronous events that can be processed with array-like operators.
+> An _Observable_ is a stream of asynchronous events that can be processed with array-like operators.
 
 ##### From promises to observables
 
-While AngularJS used to rely heavily on [*Promises*](https://docs.angularjs.org/api/ng/service/$q) to handle
-asynchronous events, *Observables* are now used instead in Angular. Even though in specific cases like for HTTP
-requests, an *Observable* can be converted into a *Promise*, it is recommended to embrace the new paradigm as it can a
-lot more than *Promises*, with way less code. This transition is also explained in the 
+While AngularJS used to rely heavily on [_Promises_](https://docs.angularjs.org/api/ng/service/$q) to handle
+asynchronous events, _Observables_ are now used instead in Angular. Even though in specific cases like for HTTP
+requests, an _Observable_ can be converted into a _Promise_, it is recommended to embrace the new paradigm as it can a
+lot more than _Promises_, with way less code. This transition is also explained in the
 [Angular tutorial](https://angular.io/tutorial/toh-pt6#!%23observables).
 Once you have made the switch, you will never look back again.
 
 ##### Learning references
- 
+
 - [What is reactive programming?](http://paulstovell.com/blog/reactive-programming), explained nicely through a simple
-  imaged story *(5 min)*
+  imaged story _(5 min)_
 
 - [The introduction to reactive programming you've been missing](https://gist.github.com/staltz/868e7e9bc2a7b8c1f754),
-  the title says it all *(30 min)*
+  the title says it all _(30 min)_
 
 - [Functional reactive programming for Angular 2 developers](http://blog.angular-university.io/functional-reactive-programming-for-angular-2-developers-rxjs-and-observables/),
-  see the functional reactive programming principles in practice with Angular *(15 min)*
+  see the functional reactive programming principles in practice with Angular _(15 min)_
 
 - [RxMarbles](http://rxmarbles.com), a graphical representation of Rx operators that greatly help to understand their
   usage
@@ -95,13 +95,13 @@ with substantial performance improvements.
 **Wait, then why the Angular documentation have mention of a
 [two-way binding syntax](https://angular.io/guide/template-syntax#binding-syntax-an-overview)?**
 
-If you look closely, the new two-way binding syntax is just syntactic sugar to combine two *one-way* bindings (a
-*property* and *event* binding), keeping the data flow unidirectional.
+If you look closely, the new two-way binding syntax is just syntactic sugar to combine two _one-way_ bindings (a
+_property_ and _event_ binding), keeping the data flow unidirectional.
 
 This change is really important, as it was often the cause of performance issues with AngularJS, and it one of the
 pillars enabling better performance in new Angular apps.
 
-While Angular tries to stay *pattern-agnostic* and can be used with conventional MV* patterns, it was designed with
+While Angular tries to stay _pattern-agnostic_ and can be used with conventional MV\* patterns, it was designed with
 reactive programming in mind and really shines when used with reactive data flow patterns like
 [redux](http://redux.js.org/docs/basics/DataFlow.html),
 [Flux](https://facebook.github.io/flux/docs/in-depth-overview.html#content) or
@@ -112,25 +112,25 @@ reactive programming in mind and really shines when used with reactive data flow
 As applications grow in size, keeping track of the all its individual components state and data flows can become
 tedious, and tend to be difficult to manage and debug.
 
-The main goal of using a centralized state management is to make state changes *predictable* by imposing certain
-restrictions on how and when updates can happen, using *unidirectional data flow*.
+The main goal of using a centralized state management is to make state changes _predictable_ by imposing certain
+restrictions on how and when updates can happen, using _unidirectional data flow_.
 
 This approach was first made popular with React with introduction of the
 [Flux](https://facebook.github.io/flux/docs/in-depth-overview.html#content) architecture. Many libraries emerged then
 trying to adapt and refine the original concept, and one of these gained massive popularity by providing a simpler,
 elegant alternative: [Redux](http://redux.js.org/docs/basics/DataFlow.html).
 
-Redux is at the same time a library (with the big *R*) and a design pattern (with the little *r*), the latter being
+Redux is at the same time a library (with the big _R_) and a design pattern (with the little _r_), the latter being
 framework-agnostic and working very well with Angular.
 
-The *redux* design pattern is based on these [3 principles](http://redux.js.org/docs/introduction/ThreePrinciples.html):
+The _redux_ design pattern is based on these [3 principles](http://redux.js.org/docs/introduction/ThreePrinciples.html):
 
-- The application state is a *single immutable* data structure
-- A state change is triggered by an *action*, an object describing what happened
-- Pure functions called *reducers* take the previous state and the next action to compute the new state
+- The application state is a _single immutable_ data structure
+- A state change is triggered by an _action_, an object describing what happened
+- Pure functions called _reducers_ take the previous state and the next action to compute the new state
 
 The core concepts behind these principles are nicely explained in
-[this example](http://redux.js.org/docs/introduction/CoreConcepts.html) *(3 min)*.
+[this example](http://redux.js.org/docs/introduction/CoreConcepts.html) _(3 min)_.
 
 ##### Which library to use?
 
@@ -142,10 +142,10 @@ utilities.
 Here are some resources to get started:
 
 - [Build a better Angular 2 application with redux and ngrx](http://onehungrymind.com/build-better-angular-2-application-redux-ngrx/),
-  a nice tutorial for @ngrx/store *(30 min)*
+  a nice tutorial for @ngrx/store _(30 min)_
 
 - [Comprehensive introduction to @ngrx/store](https://gist.github.com/btroncone/a6e4347326749f938510), an in-depth
-  walkthrough to this library usage in Angular *(60 min)*
+  walkthrough to this library usage in Angular _(60 min)_
 
 ##### When to use it?
 

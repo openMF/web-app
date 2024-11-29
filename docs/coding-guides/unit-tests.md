@@ -1,8 +1,8 @@
 # Unit tests coding guide
 
 The main objective of unit tests is to detect regressions and to help you design software components. A suite of
-*good* unit tests can be *immensely* valuable for your project and makes it easier to refactor and expand your code.
-But keep in mind that a suite of *bad* unit tests can also be *immensely* painful, and hurt your development by
+_good_ unit tests can be _immensely_ valuable for your project and makes it easier to refactor and expand your code.
+But keep in mind that a suite of _bad_ unit tests can also be _immensely_ painful, and hurt your development by
 inhibiting your ability to refactor or alter your code in any way.
 
 ## What to test?
@@ -25,12 +25,12 @@ integration and interactions with other app components based on real use cases s
 - Test only one code unit at a time: if you cannot do this, it means you have an architecture problem in your app
 - Mock out all external dependencies and state: if there is too much to mock, it is often a sign that maybe you
   should split your tested module into several more independent modules
-- Clearly separate or identify these 3 stages of each unit test (the *3A*): *arrange*, *act* and *assert*
+- Clearly separate or identify these 3 stages of each unit test (the _3A_): _arrange_, _act_ and _assert_
 - When you fix a bug, add a test case for it to prevent regression
 
 ## Pitfalls
 
-- Sometimes your architecture might mean your code modify static variables during unit tests. Avoid this if you can, 
+- Sometimes your architecture might mean your code modify static variables during unit tests. Avoid this if you can,
   but if you can't, at least make sure each test resets the relevant statics before and after your tests.
 - Don’t unit-test configuration settings
 - Improving test coverage is good, but having meaningful tests is better: start with the latter first, and **only after

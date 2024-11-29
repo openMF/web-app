@@ -14,11 +14,12 @@ we also have setup a backend proxy to redirect API calls to whatever URL and por
 In the root folder you will find a `proxy.conf.js`, containing the backend proxy configuration.
 
 The interesting part is there:
+
 ```js
 const proxyConfig = [
   {
     context: '/api',
-    pathRewrite: {'^/api': ''},
+    pathRewrite: { '^/api': '' },
     target: 'http://api.icndb.com',
     changeOrigin: true
   }
@@ -33,7 +34,7 @@ For the complete set of options, see the `http-proxy-middleware`
 ### Corporate proxy support
 
 To allow external API calls redirection through a corporate proxy, you will also find a `setupForCorporateProxy()`
-function in the proxy configuration file. By default, this method configures a corporate proxy agent based on the 
+function in the proxy configuration file. By default, this method configures a corporate proxy agent based on the
 `HTTP_PROXY` environment variable, see the [corporate proxy documentation](corporate-proxy.md) for more details.
 
 If you need to, you can further customize this function to fit the network of your working environment.
