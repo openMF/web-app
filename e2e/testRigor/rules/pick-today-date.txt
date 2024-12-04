@@ -1,0 +1,2 @@
+click field "Opened On" if exists
+click exactly saved value "todayDayOfMonth" roughly below saved value "todayMonthShort"

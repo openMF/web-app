@@ -1,0 +1,8 @@
+click "Account Type"
+click "INCOME"
+generate unique name, then enter into "Account Name" and save as "glAccountName"
+click "Account Usage"
+click "DETAIL"
+generate unique name, then enter into "GL Code" and save as "glCode"
+click "Submit"
+check that page doesn't contain "Submit"
