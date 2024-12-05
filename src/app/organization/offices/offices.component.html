@@ -1,5 +1,4 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-
   <mat-button-toggle-group [formControl]="viewGroup">
     <mat-button-toggle value="listView">
       <fa-icon icon="list"></fa-icon>
@@ -12,84 +11,80 @@
   <div #buttonCreateOffice class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_OFFICE'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Create Office' | translate }}
+      {{ 'labels.buttons.Create Office' | translate }}
     </button>
   </div>
 
   <div #buttonImportOffices class="in-block">
-    <button mat-raised-button color="primary" *mifosxHasPermission="'CREATE_OFFICE'"
-      [routerLink]="['/organization', 'bulk-import', 'Offices']">
+    <button
+      mat-raised-button
+      color="primary"
+      *mifosxHasPermission="'CREATE_OFFICE'"
+      [routerLink]="['/organization', 'bulk-import', 'Offices']"
+    >
       <fa-icon icon="upload" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Import Offices' | translate }}
+      {{ 'labels.buttons.Import Offices' | translate }}
     </button>
   </div>
-
 </div>
 
 <div class="container" [hidden]="viewGroup.value !== 'listView'">
-
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>{{ 'Filter'| translate}}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-label>{{ 'Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
   </div>
 
   <!-- List View -->
   <div class="mat-elevation-z8">
-
     <table mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{' Office Name '|translate}}</th>
-        <td mat-cell *matCellDef="let offices"> {{ offices.name }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' Office Name ' | translate }}</th>
+        <td mat-cell *matCellDef="let offices">{{ offices.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="externalId">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{' External ID '|translate}}</th>
-        <td mat-cell *matCellDef="let offices"> {{ offices.externalId }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' External ID ' | translate }}</th>
+        <td mat-cell *matCellDef="let offices">{{ offices.externalId }}</td>
       </ng-container>
 
       <ng-container matColumnDef="parentName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{' Parent Office '|translate}}</th>
-        <td mat-cell *matCellDef="let offices"> {{ offices.parentName }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' Parent Office ' | translate }}</th>
+        <td mat-cell *matCellDef="let offices">{{ offices.parentName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="openingDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{' Opened On '|translate}}</th>
-        <td mat-cell *matCellDef="let offices"> {{ offices.openingDate | dateFormat }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' Opened On ' | translate }}</th>
+        <td mat-cell *matCellDef="let offices">{{ offices.openingDate | dateFormat }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row"
-        [routerLink]="[row.id, 'general']"></tr>
-
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="select-row"
+        [routerLink]="[row.id, 'general']"
+      ></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
 </div>
 
 <!-- Tree View -->
 <div class="container" [hidden]="viewGroup.value !== 'treeView'">
-
   <div class="m-b-20" fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px">
     <button mat-raised-button (click)="toggleExpandCollapse()">
-      {{ (isTreeExpanded ? "labels.buttons.Collapse All" : "labels.buttons.Expand All") | translate }}
+      {{ (isTreeExpanded ? 'labels.buttons.Collapse All' : 'labels.buttons.Expand All') | translate }}
     </button>
   </div>
 
   <div fxLayout="row" fxLayoutGap="4%" fxLayout.lt-md="column">
-
     <div fxFlex>
-
       <mat-card>
-
         <mat-card-content>
-
           <mat-tree [dataSource]="nestedTreeDataSource" [treeControl]="nestedTreeControl" class="office-tree">
-
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
               <li class="mat-tree-node">
                 <button mat-icon-button disabled></button>
@@ -103,8 +98,10 @@
               <li>
                 <div class="mat-tree-node">
                   <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
-                    <fa-icon class="mat-icon-rtl-mirror"
-                      icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"></fa-icon>
+                    <fa-icon
+                      class="mat-icon-rtl-mirror"
+                      icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"
+                    ></fa-icon>
                   </button>
                   <span (click)="viewOfficeNode(node)" class="m-r-10">
                     {{ node.name }}
@@ -115,23 +112,15 @@
                 </ul>
               </li>
             </mat-nested-tree-node>
-
           </mat-tree>
-
         </mat-card-content>
-
       </mat-card>
-
     </div>
 
     <div fxFlex="48%" *ngIf="office">
-
       <mat-card>
-
         <mat-card-content>
-
           <div fxLayout="row">
-
             <mat-card-title>
               {{ office.name }}
             </mat-card-title>
@@ -141,17 +130,13 @@
                 <fa-icon icon="times"></fa-icon>
               </button>
             </div>
-
           </div>
 
           <mat-tab-group>
-
             <mat-tab label="General">
-
               <div fxLayout="row wrap" class="content">
-
                 <div fxFlex="50%" class="mat-body-strong" *ngIf="office.parentId">
-                  {{'Parent Office'|translate}}
+                  {{ 'Parent Office' | translate }}
                 </div>
 
                 <div fxFlex="50%" *ngIf="office.parentId">
@@ -159,7 +144,7 @@
                 </div>
 
                 <div fxFlex="50%" class="mat-body-strong">
-                 {{' Opened On'|translate}}
+                  {{ ' Opened On' | translate }}
                 </div>
 
                 <div fxFlex="50%">
@@ -167,88 +152,129 @@
                 </div>
 
                 <div fxFlex="50%" class="mat-body-strong" *ngIf="office.externalId">
-                  {{'External Id'|translate}}
+                  {{ 'External Id' | translate }}
                 </div>
 
                 <div fxFlex="50%" *ngIf="office.externalId">
-                  <mifosx-external-identifier externalId="{{office.externalId}}"></mifosx-external-identifier>
+                  <mifosx-external-identifier externalId="{{ office.externalId }}"></mifosx-external-identifier>
                 </div>
-
               </div>
-
             </mat-tab>
 
             <mat-tab *ngFor="let dataTable of dataTablesData" label="{{ dataTable.registeredTableName }}"></mat-tab>
-
           </mat-tab-group>
-
         </mat-card-content>
-
       </mat-card>
-
     </div>
-
   </div>
-
 </div>
 
 <ng-template #templateButtonTreeView let-popover="popover">
-  <h2>{{'labels.heading.Tree View' | translate }}</h2>
+  <h2>{{ 'labels.heading.Tree View' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Launch an alternative view for office hierarchy' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">{{'labels.buttons.Back' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonCreateOffice,buttonCreateOffice,'bottom', true);">{{'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateButtonCreateOffice let-popover="popover">
-  <h2>{{'labels.heading.Create Office' | translate }}</h2>
+  <h2>{{ 'labels.heading.Create Office' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Create new offices' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonTreeView,buttonTreeView,'bottom', true);">{{'labels.buttons.Back' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonImportOffices,buttonImportOffices,'bottom', true);">{{'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonTreeView, buttonTreeView, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateButtonImportOffices let-popover="popover">
-  <h2>{{'labels.heading.Import Offices' | translate }}</h2>
+  <h2>{{ 'labels.heading.Import Offices' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Launch the Bulk import/Offices' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonCreateOffice,buttonCreateOffice,'bottom', true);">{{'labels.buttons.Back' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">{{'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>{{'labels.heading.Search bar to filter offices.' | translate }}</h4>
+  <h4>{{ 'labels.heading.Search bar to filter offices.' | translate }}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateButtonImportOffices,buttonImportOffices,'bottom', true);">{{'labels.buttons.Back' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateTableOffices,tableOffices,'top', true);">{{'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateTableOffices, tableOffices, 'top', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateTableOffices let-popover="popover">
-  <h4>{{'labels.heading.List of offices in the organization.' | translate }}</h4>
+  <h4>{{ 'labels.heading.List of offices in the organization.' | translate }}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter,filter,'bottom', true);">{{'labels.buttons.Back' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>

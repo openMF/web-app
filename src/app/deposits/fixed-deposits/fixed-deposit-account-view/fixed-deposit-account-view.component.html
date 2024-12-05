@@ -1,45 +1,65 @@
 <mat-card class="account-card">
-
   <mat-card-header fxLayout="column" class="header">
-
     <mat-card-title-group class="header-title-group">
-
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image"
+          <img
+            mat-card-md-image
+            class="profile-image"
             matTooltip="{{ 'tooltips.Fixed Deposits Account' | translate }}"
-            [src]="'assets/images/fd_account_placeholder.png'">
+            [src]="'assets/images/fd_account_placeholder.png'"
+          />
         </div>
       </div>
 
       <div class="mat-typography account-card-title">
         <mat-card-title>
-
           <div fxFlex="60%">
             <h3>
-              <i class="fa fa-stop" [ngClass]="fixedDepositsAccountData.status.code | statusLookup" [matTooltip]="fixedDepositsAccountData.status.value"></i>
-              {{"labels.inputs.Fixed Deposit Product" | translate }} : {{fixedDepositsAccountData.depositProductName}}
-              <mifosx-account-number accountNo="{{fixedDepositsAccountData.accountNo}}"></mifosx-account-number>
+              <i
+                class="fa fa-stop"
+                [ngClass]="fixedDepositsAccountData.status.code | statusLookup"
+                [matTooltip]="fixedDepositsAccountData.status.value"
+              ></i>
+              {{ 'labels.inputs.Fixed Deposit Product' | translate }} :
+              {{ fixedDepositsAccountData.depositProductName }}
+              <mifosx-account-number accountNo="{{ fixedDepositsAccountData.accountNo }}"></mifosx-account-number>
             </h3>
             <span class="account-overview">
-              <span class="m-r-10">{{'labels.text.' + entityType | translate}} :</span> {{fixedDepositsAccountData.clientName || fixedDepositsAccountData.groupName}}
+              <span class="m-r-10">{{ 'labels.text.' + entityType | translate }} :</span>
+              {{ fixedDepositsAccountData.clientName || fixedDepositsAccountData.groupName }}
               <span class="m-l-10" *ngIf="fixedDepositsAccountData.clientAccountNo">
-                <mifosx-account-number accountNo="{{fixedDepositsAccountData.clientAccountNo}}"></mifosx-account-number>
+                <mifosx-account-number
+                  accountNo="{{ fixedDepositsAccountData.clientAccountNo }}"
+                ></mifosx-account-number>
               </span>
             </span>
           </div>
 
-          <div *ngIf="!fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval" fxFlex="30%"  fxLayout="column">
-            <h3 fxFlex="100%"> {{"labels.heading.Account Overview" | translate}} </h3>
+          <div
+            *ngIf="
+              !fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval
+            "
+            fxFlex="30%"
+            fxLayout="column"
+          >
+            <h3 fxFlex="100%">{{ 'labels.heading.Account Overview' | translate }}</h3>
             <table class="account-overview" fxFlex="100%">
               <tbody>
                 <tr>
-                  <td fxFlex="70%">{{"labels.inputs.Current Balance" | translate }}</td>
-                  <td fxFlex="30%" class="r-amount">{{fixedDepositsAccountData.summary.accountBalance | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                  <td fxFlex="70%">{{ 'labels.inputs.Current Balance' | translate }}</td>
+                  <td fxFlex="30%" class="r-amount">
+                    {{
+                      fixedDepositsAccountData.summary.accountBalance
+                        | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                    }}
+                  </td>
                 </tr>
                 <tr>
-                  <td fxFlex="70%">{{"labels.inputs.Deposit Amount" | translate }}</td>
-                  <td fxFlex="30%" class="r-amount">{{fixedDepositsAccountData.depositAmount | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                  <td fxFlex="70%">{{ 'labels.inputs.Deposit Amount' | translate }}</td>
+                  <td fxFlex="30%" class="r-amount">
+                    {{ fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -48,8 +68,12 @@
           <span fxFlex="auto"></span>
 
           <div fxFlex="5%">
-            <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Fixed Deposit account actions"
-              yPosition="below">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="accountMenu"
+              aria-label="Fixed Deposit account actions"
+              yPosition="below"
+            >
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
               </mat-icon>
@@ -61,59 +85,86 @@
       <mat-menu #accountMenu="matMenu">
         <ng-container *ngFor="let button of buttonConfig.singleButtons">
           <button mat-menu-item (click)="doAction(button.name)">
-            <i ngClass="{{button.icon}}"></i> {{button.name | translateKey:'menus'}}</button>
+            <i ngClass="{{ button.icon }}"></i> {{ button.name | translateKey: 'menus' }}
+          </button>
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.options.length">
-          <button mat-menu-item [matMenuTriggerFor]="More">{{'More' | translateKey:'menus'}}</button>
+          <button mat-menu-item [matMenuTriggerFor]="More">{{ 'More' | translateKey: 'menus' }}</button>
           <mat-menu #More="matMenu">
             <span *ngFor="let option of buttonConfig.options">
-              <button mat-menu-item (click)="doAction(option.name)">{{option.name | translateKey:'menus'}}</button>
+              <button mat-menu-item (click)="doAction(option.name)">{{ option.name | translateKey: 'menus' }}</button>
             </span>
           </mat-menu>
         </ng-container>
       </mat-menu>
-
     </mat-card-title-group>
-
   </mat-card-header>
 
   <mat-card-content class="content">
-
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-      [active]="general.isActive">
-      {{"labels.inputs.General" | translate }}
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+      >
+        {{ 'labels.inputs.General' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./interest-rate-chart']" routerLinkActive #IRC="routerLinkActive"
-      [active]="IRC.isActive">
-      {{"labels.inputs.Interest Rate Chart" | translate }}
+      <a
+        mat-tab-link
+        [routerLink]="['./interest-rate-chart']"
+        routerLinkActive
+        #IRC="routerLinkActive"
+        [active]="IRC.isActive"
+      >
+        {{ 'labels.inputs.Interest Rate Chart' | translate }}
       </a>
       <span *ngIf="showTransactions">
-        <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
-        [active]="transactions.isActive">
-        {{"labels.inputs.Transactions" | translate }}
+        <a
+          mat-tab-link
+          [routerLink]="['./transactions']"
+          routerLinkActive
+          #transactions="routerLinkActive"
+          [active]="transactions.isActive"
+        >
+          {{ 'labels.inputs.Transactions' | translate }}
         </a>
       </span>
-      <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
-      [active]="charges.isActive">
-      {{"labels.inputs.Charges" | translate }}
+      <a
+        mat-tab-link
+        [routerLink]="['./charges']"
+        routerLinkActive
+        #charges="routerLinkActive"
+        [active]="charges.isActive"
+      >
+        {{ 'labels.inputs.Charges' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive #standingInstructions="routerLinkActive"
-        [active]="standingInstructions.isActive" *ngIf="fixedDepositsAccountData.clientId">
-        {{"labels.inputs.Standing Instructions" | translate }}
+      <a
+        mat-tab-link
+        [routerLink]="['./standing-instructions']"
+        routerLinkActive
+        #standingInstructions="routerLinkActive"
+        [active]="standingInstructions.isActive"
+        *ngIf="fixedDepositsAccountData.clientId"
+      >
+        {{ 'labels.inputs.Standing Instructions' | translate }}
       </a>
       <ng-container *ngFor="let savingsDatatable of savingsDatatables">
-        <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
-          [routerLink]="['./datatables',savingsDatatable.registeredTableName]" routerLinkActive
-          #datatable="routerLinkActive" [active]="datatable.isActive">
-          {{savingsDatatable.registeredTableName}}
+        <a
+          mat-tab-link
+          *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
+          [routerLink]="['./datatables', savingsDatatable.registeredTableName]"
+          routerLinkActive
+          #datatable="routerLinkActive"
+          [active]="datatable.isActive"
+        >
+          {{ savingsDatatable.registeredTableName }}
         </a>
       </ng-container>
     </nav>
 
     <router-outlet></router-outlet>
-
   </mat-card-content>
-
 </mat-card>

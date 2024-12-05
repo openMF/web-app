@@ -1,7 +1,6 @@
 <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="2%">
-
   <mat-form-field [fxFlex]="flex || '83%'">
-    <input matInput [readonly]="true" [value]="fileName || ''" placeholder="No file selected">
+    <input matInput [readonly]="true" [value]="fileName || ''" placeholder="No file selected" />
   </mat-form-field>
 
   <span fxFlex="10%" fxFlexAlign="center">
@@ -11,7 +10,6 @@
       {{ 'labels.buttons.Browse' | translate }}
     </button>
   </span>
-
 </div>
 
-<input type="file" #uploadFile accept="{{acceptFilter}}" (change)="onFileSelect($event)" [style.display]="'none'">
+<input type="file" #uploadFile accept="{{ acceptFilter }}" (change)="onFileSelect($event)" [style.display]="'none'" />

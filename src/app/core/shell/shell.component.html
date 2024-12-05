@@ -1,6 +1,5 @@
 <!-- Application Shell -->
 <mat-sidenav-container id="mifosx-shell-container" autosize>
-
   <!-- Sidenav -->
   <mat-sidenav
     #sidenav
@@ -11,15 +10,13 @@
     }"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false">
-
+    [opened]="(isHandset$ | async) === false"
+  >
     <mifosx-sidenav [sidenavCollapsed]="sidenavCollapsed"></mifosx-sidenav>
-
   </mat-sidenav>
 
   <!-- Content -->
   <mat-sidenav-content class="sidenav">
-
     <!-- Toolbar -->
     <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"></mifosx-toolbar>
     <!-- Progress Bar -->
@@ -33,7 +30,5 @@
     <mifosx-content></mifosx-content>
     <!-- Footer -->
     <mifosx-footer></mifosx-footer>
-
   </mat-sidenav-content>
-
 </mat-sidenav-container>

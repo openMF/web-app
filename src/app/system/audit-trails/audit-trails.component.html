@@ -1,80 +1,92 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
   <button mat-raised-button color="primary" (click)="downloadCSV()">
     <fa-icon icon="file" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Download CSV' | translate}}
+    {{ 'labels.buttons.Download CSV' | translate }}
   </button>
 </div>
 
 <div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
   <mat-form-field fxFlex="48%">
-    <mat-label>{{'labels.inputs.Resource ID' | translate}}</mat-label>
-    <input matInput [formControl]="resourceId">
+    <mat-label>{{ 'labels.inputs.Resource ID' | translate }}</mat-label>
+    <input matInput [formControl]="resourceId" />
   </mat-form-field>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>{{'labels.inputs.Status' | translate}}</mat-label>
+    <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
     <mat-select [formControl]="processingResult" (selectionChange)="applyFilter($event.value, 'processingResult')">
-      <mat-option *ngFor="let processingResult of auditTrailSearchTemplateData.processingResults" [value]="processingResult.id">
+      <mat-option
+        *ngFor="let processingResult of auditTrailSearchTemplateData.processingResults"
+        [value]="processingResult.id"
+      >
         {{ processingResult.processingResult }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>{{'labels.inputs.User' | translate}}</mat-label>
-    <input matInput [formControl]="user" [matAutocomplete]="userNameAutocomplete">
+    <mat-label>{{ 'labels.inputs.User' | translate }}</mat-label>
+    <input matInput [formControl]="user" [matAutocomplete]="userNameAutocomplete" />
   </mat-form-field>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>{{'labels.inputs.Action' | translate}}</mat-label>
-    <input matInput [formControl]="actionName" [matAutocomplete]="actionNameAutocomplete">
+    <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
+    <input matInput [formControl]="actionName" [matAutocomplete]="actionNameAutocomplete" />
   </mat-form-field>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>{{'labels.inputs.Entity' | translate}}</mat-label>
-    <input matInput [formControl]="entityName" [matAutocomplete]="entityNameAutocomplete">
+    <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
+    <input matInput [formControl]="entityName" [matAutocomplete]="entityNameAutocomplete" />
   </mat-form-field>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>{{'labels.inputs.Checker' | translate}}</mat-label>
-    <input matInput [formControl]="checker" [matAutocomplete]="checkerAutocomplete">
+    <mat-label>{{ 'labels.inputs.Checker' | translate }}</mat-label>
+    <input matInput [formControl]="checker" [matAutocomplete]="checkerAutocomplete" />
   </mat-form-field>
 
   <mat-form-field fxFlex="48%" (click)="fromDatePicker.open()">
-    <mat-label>{{'labels.inputs.Maker From Date' | translate}}</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" [formControl]="fromDate">
+    <mat-label>{{ 'labels.inputs.Maker From Date' | translate }}</mat-label>
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" [formControl]="fromDate" />
     <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #fromDatePicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="48%" (click)="toDatePicker.open()">
-    <mat-label>{{'labels.inputs.Maker To Date' | translate}}</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" [formControl]="toDate">
+    <mat-label>{{ 'labels.inputs.Maker To Date' | translate }}</mat-label>
+    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" [formControl]="toDate" />
     <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #toDatePicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="48%" (click)="checkedFromDatePicker.open()">
-    <mat-label>{{'labels.inputs.Checker From Date' | translate}}</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="checkedFromDatePicker"
-      [formControl]="checkedFromDate">
+    <mat-label>{{ 'labels.inputs.Checker From Date' | translate }}</mat-label>
+    <input
+      matInput
+      [min]="minDate"
+      [max]="maxDate"
+      [matDatepicker]="checkedFromDatePicker"
+      [formControl]="checkedFromDate"
+    />
     <mat-datepicker-toggle matSuffix [for]="checkedFromDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #checkedFromDatePicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field fxFlex="48%" (click)="checkedToDatePicker.open()">
-    <mat-label>{{'labels.inputs.Checked To Date' | translate}}</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="checkedToDatePicker" [formControl]="checkedToDate">
+    <mat-label>{{ 'labels.inputs.Checked To Date' | translate }}</mat-label>
+    <input
+      matInput
+      [min]="minDate"
+      [max]="maxDate"
+      [matDatepicker]="checkedToDatePicker"
+      [formControl]="checkedToDate"
+    />
     <mat-datepicker-toggle matSuffix [for]="checkedToDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #checkedToDatePicker></mat-datepicker>
   </mat-form-field>
-
 </div>
 
 <!-- Autocomplete data -->
 <mat-autocomplete autoActiveFirstOption #userNameAutocomplete="matAutocomplete" [displayWith]="displayUserName">
-  <mat-option *ngFor="let user of filteredUserData | async " [value]="{ id: user.id, name: user.username }">
+  <mat-option *ngFor="let user of filteredUserData | async" [value]="{ id: user.id, name: user.username }">
     {{ user.username }}
   </mat-option>
 </mat-autocomplete>
@@ -92,71 +104,71 @@
 </mat-autocomplete>
 
 <mat-autocomplete autoActiveFirstOption #checkerAutocomplete="matAutocomplete" [displayWith]="displayUserName">
-  <mat-option *ngFor="let user of filteredCheckerData | async " [value]="{ id: user.id, name: user.username }">
+  <mat-option *ngFor="let user of filteredCheckerData | async" [value]="{ id: user.id, name: user.username }">
     {{ user.username }}
   </mat-option>
 </mat-autocomplete>
 
 <div class="container mat-elevation-z8 table-container">
-
   <table mat-table [dataSource]="dataSource" matSort>
-
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Trail ID' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.id }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Trail ID' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.id }}</td>
     </ng-container>
 
     <ng-container matColumnDef="resourceId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Resource ID' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.resourceId }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Resource ID' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.resourceId }}</td>
     </ng-container>
 
     <ng-container matColumnDef="processingResult">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Status' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.processingResult }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.processingResult }}</td>
     </ng-container>
 
     <ng-container matColumnDef="maker">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header > {{'labels.inputs.Made By' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.maker }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Made By' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.maker }}</td>
     </ng-container>
 
     <ng-container matColumnDef="actionName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Action' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.actionName }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Action' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.actionName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="entityName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Entity' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.entityName }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Entity' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.entityName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Office' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.officeName }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.officeName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="madeOnDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Made Date' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.madeOnDate  | dateFormat  }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Made Date' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.madeOnDate | dateFormat }}</td>
     </ng-container>
 
     <ng-container matColumnDef="checker">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header > {{'labels.inputs.Checker' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.checker  }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Checker' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.checker }}</td>
     </ng-container>
 
     <ng-container matColumnDef="checkedOnDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Checked Date' | translate}} </th>
-      <td mat-cell *matCellDef="let auditTrail"> {{ auditTrail.checkedOnDate  | dateFormat  }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Checked Date' | translate }}</th>
+      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.checkedOnDate | dateFormat }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id]" class="select-row">
-    </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
   </table>
 
-  <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]"
-    showFirstLastButtons></mat-paginator>
-
+  <mat-paginator
+    [length]="dataSource?.records$ | async"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons
+  ></mat-paginator>
 </div>

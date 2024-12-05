@@ -1,11 +1,13 @@
 <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
   <mat-form-field fxFlex="48%">
-    <mat-label>{{'labels.inputs.Charge' | translate}}</mat-label>
+    <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
     <mat-select #charge>
       <mat-option
-        *ngFor="let charge of chargeData | chargesFilter:chargesDataSource:currencyCode.value:multiDisburseLoan.value"
-        [value]="charge">
+        *ngFor="
+          let charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value : multiDisburseLoan.value
+        "
+        [value]="charge"
+      >
         {{ charge.name }}
       </mat-option>
     </mat-select>
@@ -14,43 +16,48 @@
   <div fxFlex="48%" fxFlexAlign="center">
     <button type="button" mat-raised-button color="primary" (click)="addCharge(charge)" [disabled]="!charge.value">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Add' | translate}}
+      {{ 'labels.buttons.Add' | translate }}
     </button>
   </div>
 
-  <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargesDataSource | chargesPenaltyFilter:false"
-    #chargesTable [hidden]="chargesTable.dataSource.length === 0">
-
+  <table
+    fxFlex="98%"
+    class="mat-elevation-z1"
+    mat-table
+    [dataSource]="chargesDataSource | chargesPenaltyFilter: false"
+    #chargesTable
+    [hidden]="chargesTable.dataSource.length === 0"
+  >
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Name' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.name + ', ' + charge.currency.displaySymbol }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="chargeCalculationType">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.chargeCalculationType.value | translateKey:'catalogs' }}
+        {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Amount' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
         {{ charge.amount | formatNumber }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="chargeTimeType">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Collected On' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.chargeTimeType.value | translateKey:'catalogs' }}
+        {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
         <button mat-icon-button color="warn" (click)="deleteCharge(charge)">
           <fa-icon icon="trash"></fa-icon>
@@ -59,67 +66,78 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
   <mat-divider fxFlex="98%"></mat-divider>
 
   <div fxFlex="98%">
-    <h3 class="mat-h3">{{'labels.inputs.Overdue Charges' | translate}}</h3>
+    <h3 class="mat-h3">{{ 'labels.inputs.Overdue Charges' | translate }}</h3>
   </div>
 
   <mat-form-field fxFlex="48%">
-    <mat-label>{{'labels.inputs.Overdue Charge' | translate}}</mat-label>
+    <mat-label>{{ 'labels.inputs.Overdue Charge' | translate }}</mat-label>
     <mat-select #overdueCharge>
-      <mat-option *ngFor="let overdueCharge of overdueChargeData | chargesFilter:chargesDataSource:currencyCode.value"
-        [value]="overdueCharge">
+      <mat-option
+        *ngFor="let overdueCharge of overdueChargeData | chargesFilter: chargesDataSource : currencyCode.value"
+        [value]="overdueCharge"
+      >
         {{ overdueCharge.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 
   <div fxFlex="48%" fxFlexAlign="center">
-    <button type="button" mat-raised-button color="primary" (click)="addCharge(overdueCharge)"
-      [disabled]="!overdueCharge.value">
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="addCharge(overdueCharge)"
+      [disabled]="!overdueCharge.value"
+    >
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Add' | translate}}
+      {{ 'labels.buttons.Add' | translate }}
     </button>
   </div>
 
-  <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargesDataSource | chargesPenaltyFilter:true"
-    #overdueChargesTable [hidden]="overdueChargesTable.dataSource.length === 0">
-
+  <table
+    fxFlex="98%"
+    class="mat-elevation-z1"
+    mat-table
+    [dataSource]="chargesDataSource | chargesPenaltyFilter: true"
+    #overdueChargesTable
+    [hidden]="overdueChargesTable.dataSource.length === 0"
+  >
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Name' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
       <td mat-cell *matCellDef="let overdueCharge">
         {{ overdueCharge.name + ', ' + overdueCharge.currency.displaySymbol }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="chargeCalculationType">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
       <td mat-cell *matCellDef="let overdueCharge">
-        {{ overdueCharge.chargeCalculationType.value | translateKey:'catalogs' }}
+        {{ overdueCharge.chargeCalculationType.value | translateKey: 'catalogs' }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Amount' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
       <td mat-cell *matCellDef="let overdueCharge">
         {{ overdueCharge.amount | formatNumber }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="chargeTimeType">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Collected On' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
       <td mat-cell *matCellDef="let overdueCharge">
-        {{ overdueCharge.chargeTimeType.value | translateKey:'catalogs' }}
+        {{ overdueCharge.chargeTimeType.value | translateKey: 'catalogs' }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
       <td mat-cell *matCellDef="let overdueCharge">
         <button mat-icon-button color="warn" (click)="deleteCharge(overdueCharge)">
           <fa-icon icon="trash"></fa-icon>
@@ -128,19 +146,17 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-
 </div>
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Previous' | translate}}
+    {{ 'labels.buttons.Previous' | translate }}
   </button>
   <button mat-raised-button matStepperNext>
-    {{'labels.buttons.Next' | translate}}
+    {{ 'labels.buttons.Next' | translate }}
     <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
 </div>

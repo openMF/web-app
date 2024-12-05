@@ -1,27 +1,29 @@
-<h2 mat-dialog-title><span class="m-r-10">{{'labels.inputs.Job Name' | translate}}:</span>{{job.displayName}}</h2>
+<h2 mat-dialog-title>
+  <span class="m-r-10">{{ 'labels.inputs.Job Name' | translate }}:</span>{{ job.displayName }}
+</h2>
 <mat-dialog-content>
-    <table class="m-b-5">
-        <tbody>
-            <tr class="m-b-20">
-                <td class="header">{{'labels.inputs.Start Time' | translate}}</td>
-                <td>{{job.lastRunHistory.jobRunStartTime | datetimeFormat}}</td>
-                <td class="header">{{'labels.inputs.End Time' | translate}}</td>
-                <td>{{job.lastRunHistory.jobRunEndTime | datetimeFormat}}</td>
-            </tr>
-            <tr>
-                <td colspan="4" class="message">
-                    <div #content class="note-field" [class.show]="show" [class.note-text]="content.scrollHeight > 18">
-                        <span>{{job.lastRunHistory.jobRunErrorLog}}</span>
-                    </div>
-                    <button mat-flat-button *ngIf="content.scrollHeight > 18" class="show-button" (click)="show = !show">
-                        {{ buttonLabel() }}
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+  <table class="m-b-5">
+    <tbody>
+      <tr class="m-b-20">
+        <td class="header">{{ 'labels.inputs.Start Time' | translate }}</td>
+        <td>{{ job.lastRunHistory.jobRunStartTime | datetimeFormat }}</td>
+        <td class="header">{{ 'labels.inputs.End Time' | translate }}</td>
+        <td>{{ job.lastRunHistory.jobRunEndTime | datetimeFormat }}</td>
+      </tr>
+      <tr>
+        <td colspan="4" class="message">
+          <div #content class="note-field" [class.show]="show" [class.note-text]="content.scrollHeight > 18">
+            <span>{{ job.lastRunHistory.jobRunErrorLog }}</span>
+          </div>
+          <button mat-flat-button *ngIf="content.scrollHeight > 18" class="show-button" (click)="show = !show">
+            {{ buttonLabel() }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </mat-dialog-content>
 
 <mat-dialog-actions align="center">
-    <button mat-raised-button mat-dialog-close>{{"labels.buttons.Close" | translate}}</button>
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Close' | translate }}</button>
 </mat-dialog-actions>

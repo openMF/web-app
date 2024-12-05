@@ -1,50 +1,59 @@
 <div class="container mat-elevation-z8">
-
   <mat-card>
-
-    <h2 mat-title *ngIf="transactionType.holdamount">{{'labels.heading.Hold Amount' | translate}}</h2>
-    <h2 mat-title *ngIf="transactionType.blockaccount">{{'labels.heading.Block Savings Account' | translate}}</h2>
+    <h2 mat-title *ngIf="transactionType.holdamount">{{ 'labels.heading.Hold Amount' | translate }}</h2>
+    <h2 mat-title *ngIf="transactionType.blockaccount">{{ 'labels.heading.Block Savings Account' | translate }}</h2>
 
     <form [formGroup]="manageSavingsAccountForm" (ngSubmit)="submit()">
-
       <mat-card-content fxLayout="column">
-
         <mat-form-field>
-          <mat-label>{{'labels.inputs.Reason' | translate}}</mat-label>
+          <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
           <mat-select required formControlName="reasonForBlock">
             <mat-option *ngFor="let codeValue of reasonOptions" [value]="codeValue.id">
               {{ codeValue.name }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="manageSavingsAccountForm.controls.reasonForBlock.hasError('required')">
-            {{'labels.inputs.Reason' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+            {{ 'labels.inputs.Reason' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field fxFlex (click)="transactionDatePicker.open()" *ngIf="transactionType.holdamount">
-          <mat-label>{{'labels.inputs.Transaction Date' | translate}}</mat-label>
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required formControlName="transactionDate">
+          <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="transactionDatePicker"
+            required
+            formControlName="transactionDate"
+          />
           <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDatePicker></mat-datepicker>
           <mat-error *ngIf="manageSavingsAccountForm.controls.transactionDate.hasError('required')">
-            {{'labels.inputs.Transaction Date' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+            {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
-        <mifosx-input-amount [currency]="currency" [isRequired]="true" *ngIf="transactionType.holdamount"
+        <mifosx-input-amount
+          [currency]="currency"
+          [isRequired]="true"
+          *ngIf="transactionType.holdamount"
           [inputFormControl]="manageSavingsAccountForm.controls.transactionAmount"
-          [inputLabel]="'Transaction Amount'">
+          [inputLabel]="'Transaction Amount'"
+        >
         </mifosx-input-amount>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../transactions']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!manageSavingsAccountForm.valid">{{'labels.buttons.Confirm' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../transactions']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!manageSavingsAccountForm.valid">
+          {{ 'labels.buttons.Confirm' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

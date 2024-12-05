@@ -1,74 +1,103 @@
 <form [formGroup]="shareProductSettingsForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
-    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Shares per Client' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.These fields are used to define the minimum, default, maximum shares per customer' | translate}}"></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">
+      {{ 'labels.inputs.Shares per Client' | translate }}
+      <i
+        class="fas fa-question"
+        matTooltip="{{
+          'tooltips.These fields are used to define the minimum, default, maximum shares per customer' | translate
+        }}"
+      ></i>
+    </h4>
 
     <mat-form-field fxFlex="31%">
-      <mat-label>{{'labels.inputs.Minimum' | translate}}</mat-label>
-      <input type="number" matInput formControlName="minimumShares">
+      <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
+      <input type="number" matInput formControlName="minimumShares" />
     </mat-form-field>
 
     <mat-form-field fxFlex="31%">
-      <mat-label>{{'labels.inputs.Default' | translate}}</mat-label>
-      <input type="number" matInput formControlName="nominalShares" required>
+      <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
+      <input type="number" matInput formControlName="nominalShares" required />
       <mat-error>
-        {{'labels.inputs.Default Shares per Client' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Default Shares per Client' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="31%">
-      <mat-label>{{'labels.inputs.Maximum' | translate}}</mat-label>
-      <input type="number" matInput formControlName="maximumShares">
+      <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
+      <input type="number" matInput formControlName="maximumShares" />
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Minimum Active Period' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.Minimum active period to consider for dividend calculations' | translate}}"></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">
+      {{ 'labels.inputs.Minimum Active Period' | translate }}
+      <i
+        class="fas fa-question"
+        matTooltip="{{ 'tooltips.Minimum active period to consider for dividend calculations' | translate }}"
+      ></i>
+    </h4>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
-      <input type="number" matInput formControlName="minimumActivePeriodForDividends">
+      <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
+      <input type="number" matInput formControlName="minimumActivePeriodForDividends" />
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Type' | translate}}</mat-label>
+      <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="minimumactiveperiodFrequencyType">
-        <mat-option *ngFor="let minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData" [value]="minimumActivePeriodFrequencyType.id">
-          {{ minimumActivePeriodFrequencyType.value | translateKey:'catalogs' }}
+        <mat-option
+          *ngFor="let minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData"
+          [value]="minimumActivePeriodFrequencyType.id"
+        >
+          {{ minimumActivePeriodFrequencyType.value | translateKey: 'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{'labels.inputs.Lock-in Period' | translate}} <i class="fas fa-question" matTooltip="{{ 'tooltips.Used to indicate the length of time' | translate}}"></i></h4>
+    <h4 fxFlex="98%" class="mat-h4">
+      {{ 'labels.inputs.Lock-in Period' | translate }}
+      <i class="fas fa-question" matTooltip="{{ 'tooltips.Used to indicate the length of time' | translate }}"></i>
+    </h4>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Frequency' | translate}}</mat-label>
-      <input type="number" matInput formControlName="lockinPeriodFrequency">
+      <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
+      <input type="number" matInput formControlName="lockinPeriodFrequency" />
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Type' | translate}}</mat-label>
+      <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
-        <mat-option *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData" [value]="lockinPeriodFrequencyType.id">
-          {{ lockinPeriodFrequencyType.value | translateKey:'catalogs' }}
+        <mat-option
+          *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData"
+          [value]="lockinPeriodFrequencyType.id"
+        >
+          {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox fxFlex="98%" class="margin-v" labelPosition="before" matTooltip="{{ 'tooltips.Indicates whether the dividends can be processed even share account of this share product is inactive' | translate}}" formControlName="allowDividendCalculationForInactiveClients">
-      {{'labels.inputs.Allow dividends for inactive clients' | translate}}
+    <mat-checkbox
+      fxFlex="98%"
+      class="margin-v"
+      labelPosition="before"
+      matTooltip="{{
+        'tooltips.Indicates whether the dividends can be processed even share account of this share product is inactive'
+          | translate
+      }}"
+      formControlName="allowDividendCalculationForInactiveClients"
+    >
+      {{ 'labels.inputs.Allow dividends for inactive clients' | translate }}
     </mat-checkbox>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Previous' | translate}}
+      {{ 'labels.buttons.Previous' | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      {{'labels.buttons.Next' | translate}}
+      {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>
-
 </form>

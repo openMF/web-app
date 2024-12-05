@@ -1,29 +1,56 @@
 <mifosx-loans-account-close [dataObject]="actionButtonData" *ngIf="actions['Close']"></mifosx-loans-account-close>
 <mifosx-undo-approval *ngIf="actions['Undo Approval']"></mifosx-undo-approval>
-<mifosx-assign-loan-officer *ngIf="actions['Assign Loan Officer']" [dataObject]="actionButtonData" ></mifosx-assign-loan-officer>
+<mifosx-assign-loan-officer
+  *ngIf="actions['Assign Loan Officer']"
+  [dataObject]="actionButtonData"
+></mifosx-assign-loan-officer>
 <mifosx-foreclosure [dataObject]="actionButtonData" *ngIf="actions['Foreclosure']"></mifosx-foreclosure>
 <mifosx-prepay-loan [dataObject]="actionButtonData" *ngIf="actions['Prepay Loan']"></mifosx-prepay-loan>
 <mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Make Repayment']"></mifosx-make-repayment>
 <mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Goodwill Credit']"></mifosx-make-repayment>
-<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Interest Payment Waiver']"></mifosx-make-repayment>
+<mifosx-make-repayment
+  [dataObject]="actionButtonData"
+  *ngIf="actions['Interest Payment Waiver']"
+></mifosx-make-repayment>
 <mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Payout Refund']"></mifosx-make-repayment>
-<mifosx-make-repayment [dataObject]="actionButtonData" *ngIf="actions['Merchant Issued Refund']"></mifosx-make-repayment>
-<mifosx-loan-credit-balance-refund [dataObject]="actionButtonData" *ngIf="actions['Credit Balance Refund']"></mifosx-loan-credit-balance-refund>
+<mifosx-make-repayment
+  [dataObject]="actionButtonData"
+  *ngIf="actions['Merchant Issued Refund']"
+></mifosx-make-repayment>
+<mifosx-loan-credit-balance-refund
+  [dataObject]="actionButtonData"
+  *ngIf="actions['Credit Balance Refund']"
+></mifosx-loan-credit-balance-refund>
 <mifosx-waive-interest [dataObject]="actionButtonData" *ngIf="actions['Waive Interest']"></mifosx-waive-interest>
 <mifosx-write-off-page [dataObject]="actionButtonData" *ngIf="actions['Write Off']"></mifosx-write-off-page>
-<mifosx-close-as-rescheduled [dataObject]="actionButtonData" *ngIf="actions['Close (as Rescheduled)']"></mifosx-close-as-rescheduled>
+<mifosx-close-as-rescheduled
+  [dataObject]="actionButtonData"
+  *ngIf="actions['Close (as Rescheduled)']"
+></mifosx-close-as-rescheduled>
 <mifosx-loan-reschedule [dataObject]="actionButtonData" *ngIf="actions['Reschedule']"></mifosx-loan-reschedule>
-<mifosx-recovery-repayment [dataObject]="actionButtonData" *ngIf="actions['Recovery Payment']"></mifosx-recovery-repayment>
+<mifosx-recovery-repayment
+  [dataObject]="actionButtonData"
+  *ngIf="actions['Recovery Payment']"
+></mifosx-recovery-repayment>
 <mifosx-view-guarantors [dataObject]="actionButtonData" *ngIf="actions['View Guarantors']"></mifosx-view-guarantors>
 <mifosx-create-guarantor [dataObject]="actionButtonData" *ngIf="actions['Create Guarantor']"></mifosx-create-guarantor>
-<mifosx-disburse-to-savings-account [dataObject]="actionButtonData" *ngIf="actions['Disburse to Savings']"></mifosx-disburse-to-savings-account>
+<mifosx-disburse-to-savings-account
+  [dataObject]="actionButtonData"
+  *ngIf="actions['Disburse to Savings']"
+></mifosx-disburse-to-savings-account>
 <mifosx-reject-loan *ngIf="actions['Reject']"></mifosx-reject-loan>
 <mifosx-disburse [dataObject]="actionButtonData" *ngIf="actions['Disburse']"></mifosx-disburse>
 <mifosx-withdrawn-by-client *ngIf="actions['Withdrawn by Client']"></mifosx-withdrawn-by-client>
 <mifosx-add-collateral [dataObject]="actionButtonData" *ngIf="actions['Add Collateral']"></mifosx-add-collateral>
-<mifosx-undo-disbursal *ngIf="actions['Undo Disbursal'] || actions['Undo Last Disbursal']" [actionName]="actionName"></mifosx-undo-disbursal>
-<mifosx-loan-screen-reports [dataObject]="actionButtonData" *ngIf="actions['Loan Screen Reports']"></mifosx-loan-screen-reports>
-<mifosx-approve-loan *ngIf="actions['Approve']" ></mifosx-approve-loan>
+<mifosx-undo-disbursal
+  *ngIf="actions['Undo Disbursal'] || actions['Undo Last Disbursal']"
+  [actionName]="actionName"
+></mifosx-undo-disbursal>
+<mifosx-loan-screen-reports
+  [dataObject]="actionButtonData"
+  *ngIf="actions['Loan Screen Reports']"
+></mifosx-loan-screen-reports>
+<mifosx-approve-loan *ngIf="actions['Approve']"></mifosx-approve-loan>
 <mifosx-add-loan-charge *ngIf="actions['Add Loan Charge']"></mifosx-add-loan-charge>
 <mifosx-edit-repayment-schedule *ngIf="actions['Edit Repayment Schedule']"></mifosx-edit-repayment-schedule>
 <mifosx-charge-off [dataObject]="actionButtonData" *ngIf="actions['Charge-Off']"></mifosx-charge-off>

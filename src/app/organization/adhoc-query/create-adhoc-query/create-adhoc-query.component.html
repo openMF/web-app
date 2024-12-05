@@ -1,18 +1,14 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="adhocQueryForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
-            <input matInput required formControlName="name">
+            <input matInput required formControlName="name" />
             <mat-error *ngIf="adhocQueryForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.name' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -20,15 +16,17 @@
             <mat-label>{{ 'labels.inputs.SQL Query' | translate }}</mat-label>
             <textarea matInput required formControlName="query"></textarea>
             <mat-error *ngIf="adhocQueryForm.controls.query.hasError('required')">
-              {{ 'labels.inputs.SQL Query' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.SQL Query' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Insert into table' | translate }}</mat-label>
-            <input matInput required formControlName="tableName">
+            <input matInput required formControlName="tableName" />
             <mat-error *ngIf="adhocQueryForm.controls.tableName.hasError('required')">
-              {{ 'labels.inputs.Insert into table' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Insert into table' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -36,15 +34,17 @@
             <mat-label>{{ 'labels.inputs.Table Fields' | translate }}</mat-label>
             <textarea matInput required formControlName="tableFields"></textarea>
             <mat-error *ngIf="adhocQueryForm.controls.tableFields.hasError('required')">
-              {{ 'labels.inputs.Table Fields' | translate }} {{ "labels.commons.are"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Table Fields' | translate }} {{ 'labels.commons.are' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
-            <input matInput formControlName="email">
+            <input matInput formControlName="email" />
             <mat-error *ngIf="adhocQueryForm.controls.email.hasError('email')">
-              {{ 'labels.inputs.Email' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.invalid"  |translate}}</strong>
+              {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.invalid' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -59,30 +59,36 @@
 
           <mat-form-field *ngIf="adhocQueryForm.controls.reportRunFrequency.value === 5">
             <mat-label>{{ 'labels.inputs.Custom Report Run Frequency (Days)' | translate }}</mat-label>
-            <input type="number" matInput required formControlName="reportRunEvery">
+            <input type="number" matInput required formControlName="reportRunEvery" />
             <mat-error *ngIf="adhocQueryForm.controls.reportRunEvery.hasError('required')">
-              {{ 'labels.inputs.Custom Report Run Frequency' | translate }} {{ "labels.commons.is"  |translate}} <strong>{{ "labels.commons.required"  |translate}}</strong>
+              {{ 'labels.inputs.Custom Report Run Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="adhocQueryForm.controls.reportRunEvery.hasError('min')">
-              {{ 'labels.inputs.Custom Report Run Frequency' | translate }} <strong>{{ "labels.commons.must be larger than 0"  |translate}}</strong>
+              {{ 'labels.inputs.Custom Report Run Frequency' | translate }}
+              <strong>{{ 'labels.commons.must be larger than 0' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="isActive">
             {{ 'labels.inputs.Active' | translate }}
           </mat-checkbox>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!adhocQueryForm.valid" *mifosxHasPermission="'CREATE_ADHOC'">{{"labels.buttons.Submit" | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!adhocQueryForm.valid"
+          *mifosxHasPermission="'CREATE_ADHOC'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

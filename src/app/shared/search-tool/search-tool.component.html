@@ -1,19 +1,25 @@
-<div *ngIf="searchVisible" class="search-bar" fxFlex="auto" fxHide.lt-sm="true" fxLayout="row" fxLayoutGap="2%" [@fadeInOut]>
-
+<div
+  *ngIf="searchVisible"
+  class="search-bar"
+  fxFlex="auto"
+  fxHide.lt-sm="true"
+  fxLayout="row"
+  fxLayoutGap="2%"
+  [@fadeInOut]
+>
   <mat-form-field class="search">
     <mat-label>{{ 'labels.text.Search' | translate }}</mat-label>
-    <input matInput type="text" [formControl]="query" (keydown.enter)="search()">
+    <input matInput type="text" [formControl]="query" (keydown.enter)="search()" />
   </mat-form-field>
 
   <mat-form-field class="resource">
     <mat-label>{{ 'labels.inputs.Resource' | translate }}</mat-label>
     <mat-select [formControl]="resource">
       <mat-option *ngFor="let option of resourceOptions" [value]="option.value">
-        {{'labels.text.' + option.name | translate }}
+        {{ 'labels.text.' + option.name | translate }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-
 </div>
 
 <div class="search-icon">

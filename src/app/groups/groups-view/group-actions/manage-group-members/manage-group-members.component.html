@@ -1,10 +1,8 @@
 <div class="container" fxLayout="row" fxLayoutGap="3%">
-
   <mat-card fxFlex class="client-card" fxLayout="column" fxLayoutGap="2%">
-
     <mat-form-field fxFlex="30%">
-      <mat-label>{{"labels.inputs.Add Clients"  |translate}}</mat-label>
-      <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete">
+      <mat-label>{{ 'labels.inputs.Add Clients' | translate }}</mat-label>
+      <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete" />
     </mat-form-field>
 
     <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
@@ -15,45 +13,47 @@
 
     <div class="mat-table">
       <div class="mat-header-row">
-        <div class="mat-header-cell">{{"labels.inputs.Client Details"  |translate}}</div>
+        <div class="mat-header-cell">{{ 'labels.inputs.Client Details' | translate }}</div>
         <button mat-icon-button (click)="addClient()">
           <fa-icon icon="plus"></fa-icon>
         </button>
       </div>
       <div class="mat-row">
-        <div class="mat-cell">{{"labels.inputs.name"  |translate}}</div>
-        <div class="mat-cell">{{clientChoice.value.displayName}}</div>
+        <div class="mat-cell">{{ 'labels.inputs.name' | translate }}</div>
+        <div class="mat-cell">{{ clientChoice.value.displayName }}</div>
       </div>
       <div class="mat-row">
-        <div class="mat-cell">{{"labels.inputs.Id"  |translate}}</div>
-        <div class="mat-cell">{{clientChoice.value.id}}</div>
+        <div class="mat-cell">{{ 'labels.inputs.Id' | translate }}</div>
+        <div class="mat-cell">{{ clientChoice.value.id }}</div>
       </div>
       <div class="mat-row">
-        <div class="mat-cell">{{"labels.inputs.Office"  |translate}}</div>
-        <div class="mat-cell">{{clientChoice.value.officeName}}</div>
+        <div class="mat-cell">{{ 'labels.inputs.Office' | translate }}</div>
+        <div class="mat-cell">{{ clientChoice.value.officeName }}</div>
       </div>
     </div>
-
   </mat-card>
 
   <mat-card fxFlex="50%">
+    <h3 matSubheader>{{ 'labels.heading.Client Members' | translate }}</h3>
 
-    <h3 matSubheader>{{"labels.heading.Client Members"  |translate}}</h3>
-
-    <mat-nav-list  *ngIf="clientMembers?.length">
-      <div mat-list-item *ngFor="let client of clientMembers index as i">
-        <span matLine class="p-t-10">{{client.displayName}}</span>
+    <mat-nav-list *ngIf="clientMembers?.length">
+      <div mat-list-item *ngFor="let client of clientMembers; index as i">
+        <span matLine class="p-t-10">{{ client.displayName }}</span>
         <div fxFlex></div>
-        <button mat-icon-button color="warn" (click)="removeClient(i, client)" matTooltip="{{ 'tooltips.Remove Client from Group' | translate }}" matTooltipPosition="left">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="removeClient(i, client)"
+          matTooltip="{{ 'tooltips.Remove Client from Group' | translate }}"
+          matTooltipPosition="left"
+        >
           <fa-icon icon="trash"></fa-icon>
         </button>
       </div>
     </mat-nav-list>
-
   </mat-card>
 
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-    <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Back"  |translate}}</button>
+    <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Back' | translate }}</button>
   </div>
-
 </div>

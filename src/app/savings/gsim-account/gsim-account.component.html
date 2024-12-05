@@ -1,65 +1,99 @@
 <div class="tab-container mat-typography">
+  <div style="margin-top: 5px">
+    <h2>{{ 'labels.heading.GSIM Account Overview' | translate }}</h2>
 
-    <div style="margin-top: 5px;">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="clientDetails">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Client' | translate }} {{ 'labels.inputs.Details' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.displayName }}
+        </td>
+      </ng-container>
 
-      <h2>{{ 'labels.heading.GSIM Account Overview' | translate }}</h2>
+      <ng-container matColumnDef="savingsAccount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Saving Account' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup" [matTooltip]="element.status.value"></i>
+          {{ element.accountNo }}
+        </td>
+      </ng-container>
 
-      <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="products">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.menus.Products' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.productName }}</td>
+      </ng-container>
 
-        <ng-container matColumnDef="clientDetails">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Client' | translate}} {{'labels.inputs.Details' | translate}} </th>
-          <td mat-cell *matCellDef="let element">
-            {{element.displayName}} </td>
-        </ng-container>
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Balance' | translate }}</th>
+        <td mat-cell *matCellDef="let element"></td>
+      </ng-container>
 
-        <ng-container matColumnDef="savingsAccount">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Saving Account' | translate}} </th>
-          <td mat-cell *matCellDef="let element"><i class="fa fa-stop" [ngClass]="element.status.code|statusLookup" [matTooltip]="element.status.value"></i> {{element.accountNo}} </td>
-        </ng-container>
+      <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            *ngIf="element.status.active"
+            class="account-action-button"
+            mat-raised-button
+            color="primary"
+            (click)="routeEdit($event)"
+            [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
+          >
+            <i class="fa fa-arrow-up" matTooltip="{{ 'tooltips.Deposit' | translate }}"></i>
+          </button>
+          <button
+            *ngIf="element.status.active"
+            class="account-action-button"
+            mat-raised-button
+            color="primary"
+            (click)="routeEdit($event)"
+            [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
+          >
+            <i class="fa fa-arrow-down" matTooltip="{{ 'tooltips.Withdraw' | translate }}"></i>
+          </button>
+          <button
+            *ngIf="element.status.submittedAndPendingApproval"
+            class="account-action-button"
+            mat-raised-button
+            color="primary"
+            (click)="routeEdit($event)"
+            [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Approve']"
+          >
+            <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
+          </button>
+          <button
+            *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
+            class="account-action-button"
+            mat-raised-button
+            color="primary"
+            (click)="routeEdit($event)"
+            [routerLink]="['../../../', 'savings-accounts', element.id, 'actions', 'Undo Approval']"
+          >
+            <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approval' | translate }}"></i>
+          </button>
+          <button
+            *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
+            class="account-action-button"
+            mat-raised-button
+            color="primary"
+            (click)="routeEdit($event)"
+            [routerLink]="['../../', element.id, 'actions', 'Activate']"
+          >
+            <i class="fa fa-check-circle" matTooltip="{{ 'tooltips.Activate' | translate }}"></i>
+          </button>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="products">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.menus.Products' | translate}} </th>
-          <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
-        </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        [routerLink]="['../../', row.id, 'transactions']"
+        *matRowDef="let row; columns: displayedColumns"
+      ></tr>
+    </table>
 
-        <ng-container matColumnDef="balance">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Balance' | translate}} </th>
-          <td mat-cell *matCellDef="let element" >  </td>
-        </ng-container>
-
-        <ng-container matColumnDef="Actions">
-          <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Actions' | translate }} </th>
-          <td mat-cell *matCellDef="let element">
-            <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
-              (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Deposit']">
-              <i class="fa fa-arrow-up" matTooltip="{{ 'tooltips.Deposit' | translate}}"></i>
-            </button>
-            <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary"
-              (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Withdrawal']">
-              <i class="fa fa-arrow-down" matTooltip="{{ 'tooltips.Withdraw' | translate}}"></i>
-            </button>
-            <button *ngIf="element.status.submittedAndPendingApproval" class="account-action-button" mat-raised-button color="primary"
-              (click)="routeEdit($event)" [routerLink]="['../','savings-accounts', element.id, 'actions', 'Approve']">
-              <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate}}"></i>
-            </button>
-            <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-              class="account-action-button" mat-raised-button color="primary"
-              (click)="routeEdit($event)" [routerLink]="['../../../','savings-accounts', element.id, 'actions', 'Undo Approval']">
-              <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approval' | translate}}"></i>
-            </button>
-            <button *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
-              class="account-action-button" mat-raised-button color="primary"
-              (click)="routeEdit($event)" [routerLink]="['../../', element.id, 'actions', 'Activate']">
-              <i class="fa fa-check-circle" matTooltip="{{ 'tooltips.Activate' | translate}}"></i>
-            </button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row  [routerLink]="['../../', row.id, 'transactions']" *matRowDef="let row; columns: displayedColumns;"></tr>
-
-      </table>
-
-      <mat-paginator [pageSizeOptions]="[10, 20, 25]" showFirstLastButtons></mat-paginator>
-
+    <mat-paginator [pageSizeOptions]="[10, 20, 25]" showFirstLastButtons></mat-paginator>
   </div>
+</div>

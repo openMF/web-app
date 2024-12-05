@@ -1,74 +1,77 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="editUserForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Username' | translate}}</mat-label>
-            <input matInput required formControlName="username"/>
+            <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
+            <input matInput required formControlName="username" />
             <mat-error *ngIf="editUserForm.controls.username.hasError('required')">
-              {{'labels.inputs.Username' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Username' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Email' | translate}}</mat-label>
-            <input matInput required formControlName="email">
+            <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
+            <input matInput required formControlName="email" />
             <mat-error *ngIf="editUserForm.controls.email.hasError('email')">
-              {{'labels.inputs.Email' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.invalid' | translate}}</strong>
+              {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{"labels.commons.invalid' | translate}}</strong>
             </mat-error>
             <mat-error *ngIf="editUserForm.controls.email.hasError('required')">
-              {{'labels.inputs.Email' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.First Name' | translate}}</mat-label>
-            <input matInput required formControlName="firstname"/>
+            <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+            <input matInput required formControlName="firstname" />
             <mat-error *ngIf="editUserForm.controls.firstname.hasError('pattern')">
-              {{'labels.inputs.First Name' | translate}} <strong>{{"labels.commons.cannot begin with a special character or number" | translate}}</strong>
+              {{ 'labels.inputs.First Name' | translate }}
+              <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editUserForm.controls.firstname.hasError('required')">
-              {{'labels.inputs.First Name' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Last Name' | translate}}</mat-label>
-            <input matInput required formControlName="lastname"/>
+            <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+            <input matInput required formControlName="lastname" />
             <mat-error *ngIf="editUserForm.controls.lastname.hasError('pattern')">
-              {{'labels.inputs.Last Name' | translate}} <strong>{{"labels.commons.cannot begin with a special character or number" | translate}}</strong>
+              {{ 'labels.inputs.Last Name' | translate }}
+              <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editUserForm.controls.lastname.hasError('required')">
-              {{'labels.inputs.Last Name' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <div class="password-never-expires-wrapper" fxFlex="48%">
-            <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires" >
-              {{'labels.inputs.Password never expires' | translate}}
+            <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires">
+              {{ 'labels.inputs.Password never expires' | translate }}
             </mat-checkbox>
           </div>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Office' | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId" (selectionChange)="officeChanged($event.value)">
               <mat-option *ngFor="let office of officesData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="editUserForm.controls.officeId.hasError('required')">
-              {{'labels.inputs.Office' | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Staff' | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffData" [value]="staff.id">
                 {{ staff.displayName }}
@@ -77,28 +80,28 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.Roles' | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Roles' | translate }}</mat-label>
             <mat-select required formControlName="roles" multiple>
               <mat-option *ngFor="let role of rolesData" [value]="role.id">
                 {{ role.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="editUserForm.controls.roles.hasError('required')">
-              {{"labels.commons.At least one role" | translate}} <strong>{{"labels.commons.must be selected" | translate}}</strong>
+              {{ 'labels.commons.At least one role' | translate }}
+              <strong>{{ 'labels.commons.must be selected' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!editUserForm.valid">{{'labels.buttons.Submit' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!editUserForm.valid">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

@@ -1,17 +1,15 @@
 <form [formGroup]="smsCampaignDetailsForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
-
     <mat-form-field fxFlex="48%">
       <mat-label>{{ 'labels.inputs.Campaign Name' | translate }}</mat-label>
-      <input matInput formControlName="campaignName" required>
+      <input matInput formControlName="campaignName" required />
       <mat-error>
-        {{ 'labels.inputs.Campaign Name' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Campaign Name' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%"
-      *ngIf="!smsCampaignDetailsForm.controls.isNotification.value">
+    <mat-form-field fxFlex="48%" *ngIf="!smsCampaignDetailsForm.controls.isNotification.value">
       <mat-label>{{ 'labels.inputs.SMS Provider' | translate }}</mat-label>
       <mat-select formControlName="providerId">
         <mat-option *ngFor="let provider of smsProviders" [value]="provider.id">
@@ -28,7 +26,8 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Trigger Type' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Trigger Type' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -36,20 +35,29 @@
       {{ 'labels.inputs.Is Notification' | translate }}?
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%"
-      *ngIf="smsCampaignDetailsForm.contains('recurrenceStartDate')" (click)="recurrenceStartDatePicker.open()">
+    <mat-form-field
+      fxFlex="48%"
+      *ngIf="smsCampaignDetailsForm.contains('recurrenceStartDate')"
+      (click)="recurrenceStartDatePicker.open()"
+    >
       <mat-label>{{ 'labels.inputs.Schedule Date' | translate }}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="recurrenceStartDatePicker"
-        formControlName="recurrenceStartDate" required>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="recurrenceStartDatePicker"
+        formControlName="recurrenceStartDate"
+        required
+      />
       <mat-datepicker-toggle matSuffix [for]="recurrenceStartDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #recurrenceStartDatePicker></mat-datepicker>
       <mat-error>
-        {{ 'labels.inputs.Schedule Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Schedule Date' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%"
-      *ngIf="smsCampaignDetailsForm.contains('frequency')">
+    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.contains('frequency')">
       <mat-label>{{ 'labels.inputs.Repeats' | translate }}</mat-label>
       <mat-select formControlName="frequency" required>
         <mat-option [value]="1">{{ 'labels.inputs.Daily' | translate }}</mat-option>
@@ -58,12 +66,12 @@
         <mat-option [value]="4">{{ 'labels.inputs.Yearly' | translate }}</mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Repetition Frequency' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Repetition Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%"
-      *ngIf="smsCampaignDetailsForm.contains('interval')">
+    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.contains('interval')">
       <mat-label>{{ 'labels.inputs.Repetition Interval' | translate }}</mat-label>
       <mat-select formControlName="interval" required>
         <mat-option *ngFor="let interval of repetitionIntervals" [value]="interval">
@@ -71,12 +79,12 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Repetition Interval' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Repetition Interval' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%"
-      *ngIf="smsCampaignDetailsForm.contains('repeatsOnDay')">
+    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.contains('repeatsOnDay')">
       <mat-label>{{ 'labels.inputs.Repeats on Day' | translate }}</mat-label>
       <mat-select formControlName="repeatsOnDay" required>
         <mat-option value="1">{{ 'labels.inputs.Monday' | translate }}</mat-option>
@@ -88,8 +96,8 @@
         <mat-option value="7">{{ 'labels.inputs.Sunday' | translate }}</mat-option>
       </mat-select>
       <mat-error>
-        {{"labels.inputs.At least" |translate}} <strong>{{"labels.inputs.one" |translate}}</strong> {{"labels.inputs.day must be selected" |translate}}
-
+        {{ 'labels.inputs.At least' | translate }} <strong>{{ 'labels.inputs.one' | translate }}</strong>
+        {{ 'labels.inputs.day must be selected' | translate }}
       </mat-error>
     </mat-form-field>
 
@@ -101,14 +109,20 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Business Rule' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+        {{ 'labels.inputs.Business Rule' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
-
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%"
-    *ngIf="!smsCampaignDetailsForm.controls.runReportId.value">
+  <div
+    fxLayout="row"
+    class="margin-t"
+    fxLayout.xs="column"
+    fxLayoutAlign="center"
+    fxLayoutGap="2%"
+    *ngIf="!smsCampaignDetailsForm.controls.runReportId.value"
+  >
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}
@@ -125,5 +139,4 @@
     (templateParameters)="passParameters($event)"
   >
   </mifosx-business-rule-parameters>
-
 </form>

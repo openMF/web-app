@@ -1,7 +1,5 @@
 <div class="container">
-
   <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #loanProductStepper>
-
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -23,24 +21,23 @@
     </ng-template>
 
     <mat-step [stepControl]="loanProductDetailsForm">
+      <ng-template matStepLabel>{{ 'labels.inputs.DETAILS' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{'labels.inputs.DETAILS' | translate}}</ng-template>
-
-      <mifosx-loan-product-details-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-details-step>
-
+      <mifosx-loan-product-details-step
+        [loanProductsTemplate]="loanProductsTemplate"
+      ></mifosx-loan-product-details-step>
     </mat-step>
 
     <mat-step [stepControl]="loanProductCurrencyForm">
+      <ng-template matStepLabel>{{ 'labels.inputs.CURRENCY' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{'labels.inputs.CURRENCY' | translate}}</ng-template>
-
-      <mifosx-loan-product-currency-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-currency-step>
-
+      <mifosx-loan-product-currency-step
+        [loanProductsTemplate]="loanProductsTemplate"
+      ></mifosx-loan-product-currency-step>
     </mat-step>
 
     <mat-step [stepControl]="loanProductSettingsForm">
-
-      <ng-template matStepLabel>{{'labels.inputs.SETTINGS' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.SETTINGS' | translate }}</ng-template>
 
       <mifosx-loan-product-settings-step
         [loanProductsTemplate]="loanProductsTemplate"
@@ -48,11 +45,10 @@
         (advancePaymentStrategy)="advancePaymentStrategy($event)"
       >
       </mifosx-loan-product-settings-step>
-
     </mat-step>
 
     <mat-step *ngIf="isAdvancedPaymentStrategy" [stepControl]="loanProductInterestRefundForm">
-      <ng-template matStepLabel>{{'labels.inputs.INTEREST REFUND' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.INTEREST REFUND' | translate }}</ng-template>
       <mifosx-loan-product-interest-refund-step
         [loanProductsTemplate]="loanProductsTemplate"
         (supportedInterestRefundTypes)="setSupportedInterestRefundTypes($event)"
@@ -61,36 +57,31 @@
     </mat-step>
 
     <mat-step *ngIf="isAdvancedPaymentStrategy">
-
-      <ng-template matStepLabel>{{'labels.inputs.PAYMENT ALLOCATION' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.PAYMENT ALLOCATION' | translate }}</ng-template>
 
       <mifosx-loan-product-payment-strategy-step
-      [advancedPaymentAllocations]="advancedPaymentAllocations"
-      [advancedCreditAllocations]="advancedCreditAllocations"
-      [advancedPaymentAllocationTransactionTypes]="loanProductsTemplate.advancedPaymentAllocationTransactionTypes"
-      [paymentAllocationOrderDefault]="loanProductsTemplate.advancedPaymentAllocationTypes"
-      [advancedCreditAllocationTransactionTypes]="loanProductsTemplate.creditAllocationTransactionTypes"
-      [creditAllocationOrderDefault]="loanProductsTemplate.creditAllocationAllocationTypes"
-      (setPaymentAllocation)="setPaymentAllocation($event)"
-      (setCreditAllocation)="setCreditAllocation($event)"
+        [advancedPaymentAllocations]="advancedPaymentAllocations"
+        [advancedCreditAllocations]="advancedCreditAllocations"
+        [advancedPaymentAllocationTransactionTypes]="loanProductsTemplate.advancedPaymentAllocationTransactionTypes"
+        [paymentAllocationOrderDefault]="loanProductsTemplate.advancedPaymentAllocationTypes"
+        [advancedCreditAllocationTransactionTypes]="loanProductsTemplate.creditAllocationTransactionTypes"
+        [creditAllocationOrderDefault]="loanProductsTemplate.creditAllocationAllocationTypes"
+        (setPaymentAllocation)="setPaymentAllocation($event)"
+        (setCreditAllocation)="setCreditAllocation($event)"
       >
       </mifosx-loan-product-payment-strategy-step>
 
       <mifosx-stepper-buttons></mifosx-stepper-buttons>
-
     </mat-step>
 
     <mat-step [stepControl]="loanProductTermsForm">
-
-      <ng-template matStepLabel>{{'labels.inputs.TERMS' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
       <mifosx-loan-product-terms-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-terms-step>
-
     </mat-step>
 
     <mat-step>
-
-      <ng-template matStepLabel>{{'labels.inputs.CHARGES' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
       <mifosx-loan-product-charges-step
         [loanProductsTemplate]="loanProductsTemplate"
@@ -98,12 +89,10 @@
         [multiDisburseLoan]="loanProductSettingsForm.get('multiDisburseLoan')"
       >
       </mifosx-loan-product-charges-step>
-
     </mat-step>
 
     <mat-step [stepControl]="loanProductAccountingForm">
-
-      <ng-template matStepLabel>{{'labels.inputs.ACCOUNTING' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.ACCOUNTING' | translate }}</ng-template>
 
       <mifosx-loan-product-accounting-step
         [loanProductsTemplate]="loanProductsTemplate"
@@ -111,12 +100,10 @@
         [loanProductFormValid]="loanProductFormValid"
       >
       </mifosx-loan-product-accounting-step>
-
     </mat-step>
 
     <mat-step state="preview" *ngIf="loanProductFormValid" completed>
-
-      <ng-template matStepLabel>{{'labels.inputs.PREVIEW' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 
       <mifosx-loan-product-preview-step
         [loanProductsTemplate]="loanProductsTemplate"
@@ -125,9 +112,6 @@
         (submitEvent)="submit()"
       >
       </mifosx-loan-product-preview-step>
-
     </mat-step>
-
   </mat-horizontal-stepper>
-
 </div>

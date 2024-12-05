@@ -1,43 +1,52 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="codeForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
-          <div #codeFormRef fxLayout="column">
-
-            <mat-form-field>
-              <mat-label>{{'labels.inputs.Code Name' | translate}}</mat-label>
-              <input matInput required formControlName="name">
-              <mat-error *ngIf="codeForm.controls.name.hasError('required')">
-                {{'labels.inputs.Code Name' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
-              </mat-error>
-            </mat-form-field>
-
-          </div>
-
+        <div #codeFormRef fxLayout="column">
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Code Name' | translate }}</mat-label>
+            <input matInput required formControlName="name" />
+            <mat-error *ngIf="codeForm.controls.name.hasError('required')">
+              {{ 'labels.inputs.Code Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!codeForm.valid" *mifosxHasPermission="'CREATE_CODE'">{{'labels.buttons.Submit' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!codeForm.valid" *mifosxHasPermission="'CREATE_CODE'">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>
 
 <ng-template #templateCodeFormRef let-data let-popover="popover">
-  <h2>{{'labels.heading.Create Code' | translate}}</h2>
-  <p class="mw400">{{'labels.text.To create code,create' | translate}}<br> {{'labels.text.For more details click' | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895350/Manage+Codes" target="_blank">{{'labels.inputs.Manage Codes' | translate}}</a></p>
+  <h2>{{ 'labels.heading.Create Code' | translate }}</h2>
+  <p class="mw400">
+    {{ 'labels.text.To create code,create' | translate }}<br />
+    {{ 'labels.text.For more details click' | translate }}:
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895350/Manage+Codes" target="_blank">{{
+      'labels.inputs.Manage Codes' | translate
+    }}</a>
+  </p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close()">{{'labels.buttons.Create Code' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close()">
+      {{ 'labels.buttons.Create Code' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>

@@ -1,81 +1,100 @@
 <div class="tab-container mat-typography" *ngIf="loans && loans.length > 0">
-
   <div fxLayout="row" fxLayoutAlign="start center">
     <div class="search-box" fxFlex="40%">
       <mat-form-field fxFlex="90%">
-        <input matInput placeholder="Filter by loan Id or error" (keyup)="applyFilter($event.target.value)">
+        <input matInput placeholder="Filter by loan Id or error" (keyup)="applyFilter($event.target.value)" />
       </mat-form-field>
     </div>
     <div fxFlex="60%" *ngIf="allowRunInlineJob">
       <button mat-raised-button color="success" *mifosxHasPermission="'EXECUTE_INLINE_JOB'" (click)="runInlineCOB()">
-        <fa-icon icon="play" class="m-r-10"></fa-icon>{{'Start inline COB' | translate}}
+        <fa-icon icon="play" class="m-r-10"></fa-icon>{{ 'Start inline COB' | translate }}
       </button>
     </div>
   </div>
 
   <table mat-table [dataSource]="dataSource">
-
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        <mat-checkbox
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+          [aria-label]="checkboxLabel()"
+        >
         </mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+          [aria-label]="checkboxLabel(row)"
+        >
         </mat-checkbox>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="loanId">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Loan Id" | translate}} </th>
-      <td mat-cell *matCellDef="let loan" class="view-details"> {{loan.loanId}} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Id' | translate }}</th>
+      <td mat-cell *matCellDef="let loan" class="view-details">{{ loan.loanId }}</td>
     </ng-container>
 
     <ng-container matColumnDef="lockPlacedOn">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Lock Placed On" | translate}} </th>
-      <td mat-cell *matCellDef="let loan" class="view-details"> {{loan.lockPlacedOn | datetimeFormat}} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Lock Placed On' | translate }}</th>
+      <td mat-cell *matCellDef="let loan" class="view-details">{{ loan.lockPlacedOn | datetimeFormat }}</td>
     </ng-container>
 
     <ng-container matColumnDef="lockOwner">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Lock Owner" | translate}} </th>
-      <td mat-cell *matCellDef="let loan" class="view-details"> {{loan.lockOwner}} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Lock Owner' | translate }}</th>
+      <td mat-cell *matCellDef="let loan" class="view-details">{{ loan.lockOwner }}</td>
     </ng-container>
 
     <ng-container matColumnDef="error">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Error" | translate}} </th>
-      <td mat-cell *matCellDef="let loan" class="view-details"> {{loan.error}} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Error' | translate }}</th>
+      <td mat-cell *matCellDef="let loan" class="view-details">{{ loan.error }}</td>
     </ng-container>
 
     <ng-container matColumnDef="details">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.heading.Details" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Details' | translate }}</th>
       <td mat-cell *matCellDef="let loan" class="view-details">
-        <button mat-icon-button class="error-log" matTooltip="{{ 'tooltips.Error details' | translate}}" (click)="showDetails(loan)" matTooltipPosition="left">
+        <button
+          mat-icon-button
+          class="error-log"
+          matTooltip="{{ 'tooltips.Error details' | translate }}"
+          (click)="showDetails(loan)"
+          matTooltipPosition="left"
+        >
           <fa-icon icon="exclamation-circle" size="lg"></fa-icon>
         </button>
-        <button mat-icon-button matTooltip="{{ 'tooltips.View Loan Account' | translate}}" (click)="viewLoanAccount(loan)" matTooltipPosition="right">
+        <button
+          mat-icon-button
+          matTooltip="{{ 'tooltips.View Loan Account' | translate }}"
+          (click)="viewLoanAccount(loan)"
+          matTooltipPosition="right"
+        >
           <fa-icon icon="eye" size="lg"></fa-icon>
         </button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-    </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
   </table>
 
-  <mat-paginator [hidden]="!showPaginator" [pageSizeOptions]="[100, 500, 1000, 5000]" [pageSize]="pageSize"
-    [pageIndex]="currentPage" showFirstLastButtons (page)="changePaging($event)">
+  <mat-paginator
+    [hidden]="!showPaginator"
+    [pageSizeOptions]="[100, 500, 1000, 5000]"
+    [pageSize]="pageSize"
+    [pageIndex]="currentPage"
+    showFirstLastButtons
+    (page)="changePaging($event)"
+  >
   </mat-paginator>
-
 </div>
 
 <div class="alert" *ngIf="loans && loans.length === 0">
-
   <div class="message">
     <i class="fa fa-exclamation-circle alert-check"></i>
-    {{"labels.text.No loan locked available" | translate}}.
+    {{ 'labels.text.No loan locked available' | translate }}.
   </div>
-
 </div>

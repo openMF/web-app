@@ -1,10 +1,12 @@
 <div>
-  <mifosx-datatable-multi-row *ngIf="multiRowDatatableFlag"
+  <mifosx-datatable-multi-row
+    *ngIf="multiRowDatatableFlag"
     [entityType]="entityType"
     [entityId]="entityId"
     [dataObject]="entityDatatable"
   ></mifosx-datatable-multi-row>
-  <mifosx-datatable-single-row *ngIf="!multiRowDatatableFlag"
+  <mifosx-datatable-single-row
+    *ngIf="!multiRowDatatableFlag"
     [entityType]="entityType"
     [entityId]="entityId"
     [dataObject]="entityDatatable"

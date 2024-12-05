@@ -1,27 +1,25 @@
 <div class="container input">
-
   <mat-card *ngIf="!isCollapsed">
-
     <form [formGroup]="instructionForm" (ngSubmit)="search()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Client Name' | translate }}</mat-label>
-            <input matInput formControlName="clientName">
+            <input matInput formControlName="clientName" />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Client Id' | translate }}</mat-label>
-            <input matInput formControlName="clientId">
+            <input matInput formControlName="clientId" />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Transfer Type' | translate }}</mat-label>
             <mat-select formControlName="transferType">
-              <mat-option *ngFor="let transferType of standingInstructionsTemplate.transferTypeOptions" [value]="transferType.id">
+              <mat-option
+                *ngFor="let transferType of standingInstructionsTemplate.transferTypeOptions"
+                [value]="transferType.id"
+              >
                 {{ transferType.value }}
               </mat-option>
             </mat-select>
@@ -30,7 +28,10 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
             <mat-select formControlName="fromAccountType">
-              <mat-option *ngFor="let accountType of standingInstructionsTemplate.fromAccountTypeOptions" [value]="accountType.id">
+              <mat-option
+                *ngFor="let accountType of standingInstructionsTemplate.fromAccountTypeOptions"
+                [value]="accountType.id"
+              >
                 {{ accountType.value }}
               </mat-option>
             </mat-select>
@@ -38,45 +39,46 @@
 
           <mat-form-field *ngIf="instructionForm.contains('fromAccountId')">
             <mat-label>{{ 'labels.inputs.From Account ID' | translate }}</mat-label>
-            <input matInput formControlName="fromAccountId">
+            <input matInput formControlName="fromAccountId" />
           </mat-form-field>
 
           <mat-form-field (click)="fromDatePicker.open()">
             <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" formControlName="fromDate" [matDatepicker]="fromDatePicker">
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              formControlName="fromDate"
+              [matDatepicker]="fromDatePicker"
+            />
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatePicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field (click)="toDatePicker.open()">
             <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" formControlName="toDate" [matDatepicker]="toDatePicker">
+            <input matInput [min]="minDate" [max]="maxDate" formControlName="toDate" [matDatepicker]="toDatePicker" />
             <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatePicker></mat-datepicker>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
         <button mat-raised-button color="primary" *mifosxHasPermission="'READ_STANDINGINSTRUCTION'">
           <fa-icon icon="search"></fa-icon>
           &nbsp; {{ 'labels.buttons.Search Instructions' | translate }}
         </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>
 
 <div class="container output" *ngIf="isCollapsed">
-
   <mat-card>
-
     <div class="m-b-20">
       <button mat-raised-button color="primary" (click)="isCollapsed = false">
         {{ 'labels.buttons.Parameters' | translate }}
@@ -84,58 +86,68 @@
     </div>
 
     <table class="mat-elevation-z1" mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="fromClient">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.From Client' | translate }} </th>
-        <td mat-cell *matCellDef="let instruction"> {{ instruction.fromClient.displayName }}({{ instruction.fromClient.id }}) </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.From Client' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          {{ instruction.fromClient.displayName }}({{ instruction.fromClient.id }})
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="fromAccount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.From Account' | translate }} </th>
-        <td mat-cell *matCellDef="let instruction"> {{ instruction.fromAccount.productName }}({{ instruction.fromAccount.id }}) </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.From Account' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          {{ instruction.fromAccount.productName }}({{ instruction.fromAccount.id }})
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="toClient">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.To Client' | translate }} </th>
-        <td mat-cell *matCellDef="let instruction"> {{ instruction.toClient.displayName }}({{ instruction.toClient.id }}) </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.To Client' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          {{ instruction.toClient.displayName }}({{ instruction.toClient.id }})
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="toAccount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.To Account' | translate }} </th>
-        <td mat-cell *matCellDef="let instruction"> {{ instruction.toAccount.productName }}({{ instruction.toAccount.id }}) </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.To Account' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">
+          {{ instruction.toAccount.productName }}({{ instruction.toAccount.id }})
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="executionTime">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Execution Time' | translate }} </th>
-        <td mat-cell *matCellDef="let instruction"> {{ instruction.executionTime }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Execution Time' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">{{ instruction.executionTime }}</td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Amount' | translate }} </th>
-        <td mat-cell *matCellDef="let instruction"> {{ instruction.amount | formatNumber }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Amount' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">{{ instruction.amount | formatNumber }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Status' | translate }} </th>
-        <td mat-cell *matCellDef="let instruction"> {{ instruction.status }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
+        <td mat-cell *matCellDef="let instruction">{{ instruction.status }}</td>
       </ng-container>
 
       <ng-container matColumnDef="errorLog">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Error Log' | translate }} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Error Log' | translate }}</th>
         <td mat-cell *matCellDef="let instruction">
-          <button *ngIf="instruction.status === 'failed'" class="error-log" mat-raised-button color="warn" [matTooltip]="instruction.errorLog">
+          <button
+            *ngIf="instruction.status === 'failed'"
+            class="error-log"
+            mat-raised-button
+            color="warn"
+            [matTooltip]="instruction.errorLog"
+          >
             <i class="fa fa-exclamation"></i>
           </button>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </mat-card>
-
 </div>

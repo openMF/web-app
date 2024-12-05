@@ -1,74 +1,63 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CRITERIA'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Edit' | translate }}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteCriteria()" *mifosxHasPermission="'DELETE_CRITERIA'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Delete' | translate }}
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
-        <h2 class="mat-h2" fxFlexFill>{{provisioningData.criteriaName}}</h2>
+        <h2 class="mat-h2" fxFlexFill>{{ provisioningData.criteriaName }}</h2>
         <mat-divider [inset]="true"></mat-divider>
 
-         <div fxFlexFill class="loanProduct">
+        <div fxFlexFill class="loanProduct">
           <span fxFlex="40%">{{ 'labels.inputs.Loan Product' | translate }}:</span>
           <span fxFlex="60%">{{ loanProducts }}</span>
         </div>
-
       </div>
 
       <div>
-
         <table mat-table class="mat-elevation-z1" [dataSource]="dataSource">
-
           <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Category' | translate }} </th>
-            <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.categoryName}} </td>
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Category' | translate }}</th>
+            <td mat-cell *matCellDef="let provisioningData">{{ provisioningData.categoryName }}</td>
           </ng-container>
 
           <ng-container matColumnDef="minAge">
-            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Min Age' | translate }} </th>
-            <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.minAge}} </td>
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Min Age' | translate }}</th>
+            <td mat-cell *matCellDef="let provisioningData">{{ provisioningData.minAge }}</td>
           </ng-container>
 
           <ng-container matColumnDef="maxAge">
-            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Max Age' | translate }} </th>
-            <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.maxAge}} </td>
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Max Age' | translate }}</th>
+            <td mat-cell *matCellDef="let provisioningData">{{ provisioningData.maxAge }}</td>
           </ng-container>
 
           <ng-container matColumnDef="percentage">
-            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Percentage' | translate }} </th>
-            <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.provisioningPercentage}} </td>
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Percentage' | translate }}</th>
+            <td mat-cell *matCellDef="let provisioningData">{{ provisioningData.provisioningPercentage }}</td>
           </ng-container>
 
           <ng-container matColumnDef="liabilityAccount">
-            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Liability Account' | translate }} </th>
-            <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.liabilityName}} </td>
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Liability Account' | translate }}</th>
+            <td mat-cell *matCellDef="let provisioningData">{{ provisioningData.liabilityName }}</td>
           </ng-container>
 
           <ng-container matColumnDef="expenseAccount">
-            <th mat-header-cell *matHeaderCellDef> {{ 'labels.inputs.Expense Account' | translate }} </th>
-            <td mat-cell *matCellDef="let provisioningData"> {{provisioningData.expenseName}} </td>
+            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Expense Account' | translate }}</th>
+            <td mat-cell *matCellDef="let provisioningData">{{ provisioningData.expenseName }}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-
       </div>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

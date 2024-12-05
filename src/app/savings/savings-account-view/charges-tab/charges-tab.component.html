@@ -1,100 +1,137 @@
 <div class="tab-container mat-typography">
-
   <div fxLayout="row" fxLayoutAlign="start">
     <div class="m-b-10">
       <h3>{{ 'labels.inputs.Charges' | translate }}</h3>
     </div>
     <div class="action-button m-b-20" *ngIf="this.chargesData">
       <button mat-raised-button color="primary" (click)="toggleCharges()">
-        {{showInactiveCharges ? viewAllChargeButtons('View Active Charges') : viewAllChargeButtons('View Inactive
-        Charges')}}</button>
+        {{
+          showInactiveCharges
+            ? viewAllChargeButtons('View Active Charges')
+            : viewAllChargeButtons(
+                'View Inactive
+        Charges'
+              )
+        }}
+      </button>
     </div>
   </div>
 
   <div class="mat-elevation-z1 m-b-25">
-
     <table mat-table #chargesTable [dataSource]="dataSource">
-
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Name' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="feeOrPenalty">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Charge Type' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.penalty ? 'Penalty' : 'Fee' | translateKey:'catalogs' }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Charge Type' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.penalty ? 'Penalty' : ('Fee' | translateKey: 'catalogs') }}</td>
       </ng-container>
 
       <ng-container matColumnDef="paymentDueAt">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Payment Due At' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value | translateKey:'catalogs' }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Due At' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value | translateKey: 'catalogs' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="dueAsOf">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Due As Of' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.dueDate | dateFormat }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Due As Of' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.dueDate | dateFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="repeatsOn">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Repeats On (M/d)' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.feeOnMonthDay ? charge.feeOnMonthDay.join('/') : '' }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Repeats On (M/d)' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.feeOnMonthDay ? charge.feeOnMonthDay.join('/') : '' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="calculationType">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Calculation Type' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{ charge.chargeCalculationType.value | translateKey:'catalogs' }} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Calculation Type' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}</td>
       </ng-container>
 
       <ng-container matColumnDef="due">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Due' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.amount | currency:charge.currency.code:'symbol-narrow':'1.2-2'}}
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Due' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.amount | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="paid">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Paid' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.amountPaid |
-          currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Paid' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.amountPaid | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="waived">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Waived' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.amountWaived |
-          currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Waived' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.amountWaived | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="outstanding">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Outstanding' | translate}} </th>
-        <td mat-cell *matCellDef="let charge"> {{charge.amountOutstanding |
-          currency:charge.currency.code:'symbol-narrow':'1.2-2'}} </td>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Outstanding' | translate }}</th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.amountOutstanding | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           <span *ngIf="savingsAccountData.status.value === 'Submitted and pending approval'">
-            <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Edit Charge' | translate }}"
-              *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); editCharge(charge)">
+            <button
+              class="account-action-button"
+              mat-raised-button
+              color="primary"
+              matTooltip="{{ 'tooltips.Edit Charge' | translate }}"
+              *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'"
+              (click)="routeEdit($event); editCharge(charge)"
+            >
               <i class="fa fa-pencil"></i>
             </button>
-            <button class="account-action-button" mat-raised-button color="warn" matTooltip="{{ 'tooltips.Delete Charge' | translate }}"
-              *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); deleteCharge(charge.id)">
+            <button
+              class="account-action-button"
+              mat-raised-button
+              color="warn"
+              matTooltip="{{ 'tooltips.Delete Charge' | translate }}"
+              *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'"
+              (click)="routeEdit($event); deleteCharge(charge.id)"
+            >
               <i class="fa fa-trash"></i>
             </button>
           </span>
           <span *ngIf="savingsAccountData.status.value === 'Active' && charge.amountOutstanding !== 0">
-            <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Pay Charge' | translate }}"
-              *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); payCharge(charge.id)">
+            <button
+              class="account-action-button"
+              mat-raised-button
+              color="primary"
+              matTooltip="{{ 'tooltips.Pay Charge' | translate }}"
+              *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'"
+              (click)="routeEdit($event); payCharge(charge.id)"
+            >
               <i class="fa fa-dollar"></i>
             </button>
-            <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Waive Charge' | translate }}"
-              *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="routeEdit($event); waiveCharge(charge.id)">
+            <button
+              class="account-action-button"
+              mat-raised-button
+              color="primary"
+              matTooltip="{{ 'tooltips.Waive Charge' | translate }}"
+              *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'"
+              (click)="routeEdit($event); waiveCharge(charge.id)"
+            >
               <i class="fa fa-flag"></i>
             </button>
             <ng-container *ngIf="isRecurringCharge(charge)">
-              <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Inactivate Charge' | translate }}"
+              <button
+                class="account-action-button"
+                mat-raised-button
+                color="primary"
+                matTooltip="{{ 'tooltips.Inactivate Charge' | translate }}"
                 *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'"
-                (click)="routeEdit($event); inactivateCharge(charge.id)">
+                (click)="routeEdit($event); inactivateCharge(charge.id)"
+              >
                 <i class="fa fa-ban"></i>
               </button>
             </ng-container>
@@ -103,10 +140,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" [routerLink]="[row.id]"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row" [routerLink]="[row.id]"></tr>
     </table>
-
   </div>
-
 </div>

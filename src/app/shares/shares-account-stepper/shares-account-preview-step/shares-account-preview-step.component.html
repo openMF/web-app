@@ -1,132 +1,145 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
-
-  <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Details' | translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Details' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Product' | translate}}</span>
-    <span fxFlex="60%">{{ sharesAccount.productId | find:sharesAccountTemplate.productOptions:'id':'name' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Product' | translate }}</span>
+    <span fxFlex="60%">{{ sharesAccount.productId | find: sharesAccountTemplate.productOptions : 'id' : 'name' }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Submitted On' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Submitted On' | translate }}</span>
     <span fxFlex="60%">{{ sharesAccount.submittedDate | dateFormat }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.External Id' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.External Id' | translate }}</span>
     <span fxFlex="60%" *ngIf="sharesAccount.externalId">
-      <mifosx-external-identifier externalId="{{sharesAccount.externalId}}"></mifosx-external-identifier>
+      <mifosx-external-identifier externalId="{{ sharesAccount.externalId }}"></mifosx-external-identifier>
     </span>
     <span fxFlex="60%" *ngIf="!sharesAccount.externalId">
-      {{'labels.inputs.Unassigned' | translate}}
+      {{ 'labels.inputs.Unassigned' | translate }}
     </span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Terms' | translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Terms' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Currency' | translate}}</span>
-    <span fxFlex="60%">{{ sharesAccountTermsForm.get('currencyCode').value | find:[sharesAccountProductTemplate.currency]:'code':'displayLabel' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Currency' | translate }}</span>
+    <span fxFlex="60%">{{
+      sharesAccountTermsForm.get('currencyCode').value
+        | find: [sharesAccountProductTemplate.currency] : 'code' : 'displayLabel'
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Total Number of Shares' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Total Number of Shares' | translate }}</span>
     <span fxFlex="60%">{{ sharesAccount.requestedShares | formatNumber }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Current Price' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Current Price' | translate }}</span>
     <span fxFlex="60%">{{ sharesAccountTermsForm.get('unitPrice').value | formatNumber }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Amount' | translate}}</span>
-    <span fxFlex="60%">{{ (sharesAccount.requestedShares * sharesAccountTermsForm.get('unitPrice').value) | formatNumber }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Amount' | translate }}</span>
+    <span fxFlex="60%">{{
+      sharesAccount.requestedShares * sharesAccountTermsForm.get('unitPrice').value | formatNumber
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Default Savings Account' | translate}}</span>
-    <span fxFlex="60%">{{ sharesAccount.savingsAccountId | find:sharesAccountProductTemplate.clientSavingsAccounts:'id':'accountNo' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Default Savings Account' | translate }}</span>
+    <span fxFlex="60%">{{
+      sharesAccount.savingsAccountId | find: sharesAccountProductTemplate.clientSavingsAccounts : 'id' : 'accountNo'
+    }}</span>
   </div>
 
   <div fxFlexFill *ngIf="sharesAccount.minimumActivePeriod">
-    <span fxFlex="40%">{{'labels.inputs.Minimum Active Period' | translate}}</span>
-    <span fxFlex="60%">{{sharesAccount.minimumActivePeriod}}&nbsp;{{sharesAccount.minimumActivePeriodFrequencyType | find:sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions:'id':'value' | translateKey:'catalogs'}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Minimum Active Period' | translate }}</span>
+    <span fxFlex="60%"
+      >{{ sharesAccount.minimumActivePeriod }}&nbsp;{{
+        sharesAccount.minimumActivePeriodFrequencyType
+          | find: sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions : 'id' : 'value'
+          | translateKey: 'catalogs'
+      }}</span
+    >
   </div>
 
   <div fxFlexFill *ngIf="sharesAccount.lockinPeriodFrequency">
-    <span fxFlex="40%">{{'labels.inputs.Lock-in Period' | translate}}</span>
-    <span fxFlex="60%">{{sharesAccount.lockinPeriodFrequency}}&nbsp;{{sharesAccount.lockinPeriodFrequencyType | find:sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions:'id':'value' | translateKey:'catalogs'}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Lock-in Period' | translate }}</span>
+    <span fxFlex="60%"
+      >{{ sharesAccount.lockinPeriodFrequency }}&nbsp;{{
+        sharesAccount.lockinPeriodFrequencyType
+          | find: sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value'
+          | translateKey: 'catalogs'
+      }}</span
+    >
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Application Date' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Application Date' | translate }}</span>
     <span fxFlex="60%">{{ sharesAccount.applicationDate | dateFormat }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Allow dividends for inactive clients' | translate}}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Allow dividends for inactive clients' | translate }}</span>
     <span fxFlex="60%">{{ sharesAccount.allowDividendCalculationForInactiveClients | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="sharesAccount.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
-
-    <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Charges' | translate}}</h3>
+    <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Charges' | translate }}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
     <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="sharesAccount.charges">
-
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.name' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.name + ', ' + charge.currency.displaySymbol }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeCalculationType">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.chargeCalculationType.value | translateKey:'catalogs' }}
+          {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Amount' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.amount || charge.amountOrPercentage }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeTimeType">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Collected On' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.chargeTimeType.value | translateKey:'catalogs' }}
+          {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns;"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
     </table>
-
   </div>
-
 </div>
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Previous' | translate}}
+    {{ 'labels.buttons.Previous' | translate }}
   </button>
   <button mat-raised-button [routerLink]="['../']">
-    {{'labels.buttons.Cancel' | translate}}
+    {{ 'labels.buttons.Cancel' | translate }}
   </button>
   <button mat-raised-button color="primary" (click)="submitEvent.emit()">
-    {{'labels.buttons.Submit' | translate}}
+    {{ 'labels.buttons.Submit' | translate }}
   </button>
 </div>

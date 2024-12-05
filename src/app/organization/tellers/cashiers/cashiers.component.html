@@ -1,65 +1,85 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-
-  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CASHIERS_FOR_TELLER'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['create']"
+    *mifosxHasPermission="'CREATE_CASHIERS_FOR_TELLER'"
+  >
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.New Cashier' | translate }}
   </button>
-
 </div>
 
 <div class="container">
-
   <div fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
-      <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
-      <input matInput (keyup)="applyFilter($event.target.value)">
+      <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+      <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
   </div>
 
   <div class="mat-elevation-z8">
-
     <table mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="period">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Period' | translate }} </th>
-        <td mat-cell *matCellDef="let cashier"> {{ cashier.startDate | dateFormat }} - {{ cashier.endDate | dateFormat }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Period' | translate }}</th>
+        <td mat-cell *matCellDef="let cashier">
+          {{ cashier.startDate | dateFormat }} - {{ cashier.endDate | dateFormat }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="staffName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Cashier/Staff' | translate }} </th>
-        <td mat-cell *matCellDef="let cashier"> {{ cashier.staffName }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Cashier/Staff' | translate }}</th>
+        <td mat-cell *matCellDef="let cashier">{{ cashier.staffName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="isFullDay">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Full Day/Time' | translate }} </th>
-        <td mat-cell *matCellDef="let cashier"> {{ cashier.isFullDay | yesNo }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Full Day/Time' | translate }}</th>
+        <td mat-cell *matCellDef="let cashier">{{ cashier.isFullDay | yesNo }}</td>
       </ng-container>
 
       <ng-container matColumnDef="vaultActions">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Vault Actions' | translate }} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Vault Actions' | translate }}</th>
         <td mat-cell *matCellDef="let cashier">
-          <button class="cashier-action-button" mat-raised-button color="accent" matTooltip="{{ 'tooltips.Allocate Cash' | translate }}"
-            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'allocate']" *mifosxHasPermission="'ALLOCATECASHIER_TELLER'">
+          <button
+            class="cashier-action-button"
+            mat-raised-button
+            color="accent"
+            matTooltip="{{ 'tooltips.Allocate Cash' | translate }}"
+            (click)="routeEdit($event)"
+            [routerLink]="[cashier.id, 'allocate']"
+            *mifosxHasPermission="'ALLOCATECASHIER_TELLER'"
+          >
             <i class="fa fa-arrow-up"></i>
           </button>
-          <button class="cashier-action-button" mat-raised-button color="warn" matTooltip="{{ 'tooltips.Settle Cash' | translate }}"
-            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'settle']" *mifosxHasPermission="'SETTLECASHIER_TELLER'">
+          <button
+            class="cashier-action-button"
+            mat-raised-button
+            color="warn"
+            matTooltip="{{ 'tooltips.Settle Cash' | translate }}"
+            (click)="routeEdit($event)"
+            [routerLink]="[cashier.id, 'settle']"
+            *mifosxHasPermission="'SETTLECASHIER_TELLER'"
+          >
             <i class="fa fa-arrow-down"></i>
           </button>
-          <button class="cashier-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.View Transactions' | translate }}"
-            (click)="routeEdit($event)" [routerLink]="[cashier.id, 'transactions']" *mifosxHasPermission="'ALLOCATECASHIER_TELLER'">
+          <button
+            class="cashier-action-button"
+            mat-raised-button
+            color="primary"
+            matTooltip="{{ 'tooltips.View Transactions' | translate }}"
+            (click)="routeEdit($event)"
+            [routerLink]="[cashier.id, 'transactions']"
+            *mifosxHasPermission="'ALLOCATECASHIER_TELLER'"
+          >
             <i class="fa fa-eye"></i>
           </button>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" [routerLink]="[row.id]"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row" [routerLink]="[row.id]"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
-
 </div>

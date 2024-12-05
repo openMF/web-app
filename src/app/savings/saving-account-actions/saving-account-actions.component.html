@@ -2,14 +2,22 @@
 <mifosx-reject-savings-account *ngIf="actions['Reject']"></mifosx-reject-savings-account>
 <mifosx-activate-savings-account *ngIf="actions['Activate']"></mifosx-activate-savings-account>
 <mifosx-undo-approval-savings-account *ngIf="actions['Undo Approval']"></mifosx-undo-approval-savings-account>
-<mifosx-post-interest-as-on-savings-account *ngIf="actions['Post Interest As On']"></mifosx-post-interest-as-on-savings-account>
+<mifosx-post-interest-as-on-savings-account
+  *ngIf="actions['Post Interest As On']"
+></mifosx-post-interest-as-on-savings-account>
 <mifosx-savings-account-assign-staff *ngIf="actions['Assign Staff']"></mifosx-savings-account-assign-staff>
 <mifosx-savings-account-unassign-staff *ngIf="actions['Unassign Staff']"></mifosx-savings-account-unassign-staff>
-<mifosx-withdraw-by-client-savings-account *ngIf="actions['Withdrawn by Client']"></mifosx-withdraw-by-client-savings-account>
+<mifosx-withdraw-by-client-savings-account
+  *ngIf="actions['Withdrawn by Client']"
+></mifosx-withdraw-by-client-savings-account>
 <mifosx-add-charge-savings-account *ngIf="actions['Add Charge']"></mifosx-add-charge-savings-account>
 <mifosx-savings-transactions *ngIf="actions['Withdrawal'] || actions['Deposit']"></mifosx-savings-transactions>
 <mifosx-close-savings-account *ngIf="actions['Close']"></mifosx-close-savings-account>
-<mifosx-apply-annual-fees-savings-account *ngIf="actions['Apply Annual Fees']"></mifosx-apply-annual-fees-savings-account>
-<mifosx-manage-savings-account [currency]="currency"
-    *ngIf="actions['Hold Amount'] || actions['Block Account'] || actions['Block Deposit'] || actions['Block Withdrawal']">
+<mifosx-apply-annual-fees-savings-account
+  *ngIf="actions['Apply Annual Fees']"
+></mifosx-apply-annual-fees-savings-account>
+<mifosx-manage-savings-account
+  [currency]="currency"
+  *ngIf="actions['Hold Amount'] || actions['Block Account'] || actions['Block Deposit'] || actions['Block Withdrawal']"
+>
 </mifosx-manage-savings-account>

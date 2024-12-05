@@ -2,8 +2,13 @@
   <span matPrefix class="m-r-10">
     <fa-icon icon="building" size="lg"></fa-icon>
   </span>
-  <mat-label>{{'labels.inputs.Tenant' | translate}}</mat-label>
-  <mat-select [disabled]="!allowSelection()" [formControl]="tenantSelector" (selectionChange)="setTenantIdentifier()" class="tenantselector">
+  <mat-label>{{ 'labels.inputs.Tenant' | translate }}</mat-label>
+  <mat-select
+    [disabled]="!allowSelection()"
+    [formControl]="tenantSelector"
+    (selectionChange)="setTenantIdentifier()"
+    class="tenantselector"
+  >
     <mat-option *ngFor="let tenant of tenants" [value]="tenant">
       {{ tenant }}
     </mat-option>

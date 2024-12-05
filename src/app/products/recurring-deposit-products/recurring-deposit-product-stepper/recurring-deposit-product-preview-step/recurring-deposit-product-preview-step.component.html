@@ -1,431 +1,569 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
-
   <h2 class="mat-h2" fxFlexFill>{{ recurringDepositProduct.name }}</h2>
 
   <mat-divider fxFlexFill></mat-divider>
 
-  <h3 class="mat-h3" fxFlexFill>{{'labels.inputs.Details' | translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.inputs.Details' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Short Name' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Short Name' | translate }}:</span>
     <span fxFlex="60%">{{ recurringDepositProduct.shortName }}</span>
   </div>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.description">
-    <span fxFlex="40%">{{'labels.inputs.Description' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Description' | translate }}:</span>
     <span fxFlex="60%">{{ recurringDepositProduct.description }}</span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>{{'labels.inputs.Currency' | translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.inputs.Currency' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Currency' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.currencyCode | find:recurringDepositProductsTemplate.currencyOptions:'code':'name' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Currency' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.currencyCode | find: recurringDepositProductsTemplate.currencyOptions : 'code' : 'name'
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Decimal Places' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
     <span fxFlex="60%">{{ recurringDepositProduct.digitsAfterDecimal }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Currency in multiples of' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
     <span fxFlex="60%">{{ recurringDepositProduct.inMultiplesOf }}</span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Terms' | translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Terms' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Deposit Amount' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.depositAmount + ' (Min: ' + (recurringDepositProduct.minDepositAmount ? recurringDepositProduct.minDepositAmount : recurringDepositProduct.depositAmount) + ', Max: ' + (recurringDepositProduct.maxDepositAmount ? recurringDepositProduct.maxDepositAmount : recurringDepositProduct.depositAmount) + ')' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Deposit Amount' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.depositAmount +
+        ' (Min: ' +
+        (recurringDepositProduct.minDepositAmount
+          ? recurringDepositProduct.minDepositAmount
+          : recurringDepositProduct.depositAmount) +
+        ', Max: ' +
+        (recurringDepositProduct.maxDepositAmount
+          ? recurringDepositProduct.maxDepositAmount
+          : recurringDepositProduct.depositAmount) +
+        ')'
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Interest Compounding Period' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.interestCompoundingPeriodType | find:recurringDepositProductsTemplate.interestCompoundingPeriodTypeOptions:'id':'value' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Interest Compounding Period' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.interestCompoundingPeriodType
+        | find: recurringDepositProductsTemplate.interestCompoundingPeriodTypeOptions : 'id' : 'value'
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Interest Posting Period' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.interestPostingPeriodType | find:recurringDepositProductsTemplate.interestPostingPeriodTypeOptions:'id':'value' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Interest Posting Period' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.interestPostingPeriodType
+        | find: recurringDepositProductsTemplate.interestPostingPeriodTypeOptions : 'id' : 'value'
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Interest Calculated using' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.interestCalculationType | find:recurringDepositProductsTemplate.interestCalculationTypeOptions:'id':'value' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Interest Calculated using' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.interestCalculationType
+        | find: recurringDepositProductsTemplate.interestCalculationTypeOptions : 'id' : 'value'
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Days in Year' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.interestCalculationDaysInYearType | find:recurringDepositProductsTemplate.interestCalculationDaysInYearTypeOptions:'id':'value' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Days in Year' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.interestCalculationDaysInYearType
+        | find: recurringDepositProductsTemplate.interestCalculationDaysInYearTypeOptions : 'id' : 'value'
+    }}</span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Settings' | translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Settings' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.lockinPeriodFrequency">
-    <span fxFlex="40%">{{'labels.inputs.Lock-in Period' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.lockinPeriodFrequency + ' ' + (recurringDepositProduct.lockinPeriodFrequencyType | find:recurringDepositProductsTemplate.lockinPeriodFrequencyTypeOptions:'id':'value') }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.lockinPeriodFrequency +
+        ' ' +
+        (recurringDepositProduct.lockinPeriodFrequencyType
+          | find: recurringDepositProductsTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value')
+    }}</span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Minimum Deposit Term' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.minDepositTerm + ' ' + (recurringDepositProduct.minDepositTermTypeId | find:recurringDepositProductsTemplate.periodFrequencyTypeOptions:'id':'value') }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Minimum Deposit Term' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.minDepositTerm +
+        ' ' +
+        (recurringDepositProduct.minDepositTermTypeId
+          | find: recurringDepositProductsTemplate.periodFrequencyTypeOptions : 'id' : 'value')
+    }}</span>
   </div>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.inMultiplesOfDepositTerm">
-    <span fxFlex="40%">{{'labels.inputs.And thereafter, in Multiples of' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.inMultiplesOfDepositTerm + ' ' + (recurringDepositProduct.inMultiplesOfDepositTermTypeId | find:recurringDepositProductsTemplate.periodFrequencyTypeOptions:'id':'value') }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.And thereafter, in Multiples of' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.inMultiplesOfDepositTerm +
+        ' ' +
+        (recurringDepositProduct.inMultiplesOfDepositTermTypeId
+          | find: recurringDepositProductsTemplate.periodFrequencyTypeOptions : 'id' : 'value')
+    }}</span>
   </div>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.maxDepositTerm">
-    <span fxFlex="40%">{{'labels.inputs.Minimum Deposit Term' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.maxDepositTerm + ' ' + (recurringDepositProduct.maxDepositTermTypeId | find:recurringDepositProductsTemplate.periodFrequencyTypeOptions:'id':'value') }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Minimum Deposit Term' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.maxDepositTerm +
+        ' ' +
+        (recurringDepositProduct.maxDepositTermTypeId
+          | find: recurringDepositProductsTemplate.periodFrequencyTypeOptions : 'id' : 'value')
+    }}</span>
   </div>
   <!-- For Pre-mature closure -->
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Apply Penal Interest (less)' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Apply Penal Interest (less)' | translate }}:</span>
     <span fxFlex="60%">{{ recurringDepositProduct.preClosurePenalApplicable | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.preClosurePenalApplicable">
-    <span fxFlex="40%">{{'labels.inputs.Penal Interest' | translate}} (%):</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.preClosurePenalInterest + '% (' + (recurringDepositProduct.preClosurePenalInterestOnTypeId | find:recurringDepositProductsTemplate.preClosurePenalInterestOnTypeOptions:'id':'value') + ')' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Penal Interest' | translate }} (%):</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.preClosurePenalInterest +
+        '% (' +
+        (recurringDepositProduct.preClosurePenalInterestOnTypeId
+          | find: recurringDepositProductsTemplate.preClosurePenalInterestOnTypeOptions : 'id' : 'value') +
+        ')'
+    }}</span>
   </div>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.isMandatoryDeposit !== undefined">
-    <span fxFlex="40%">{{'labels.inputs.Recurring Deposit Type' | translate}}:</span>
-    <span fxFlex="60%" *ngIf="recurringDepositProduct.isMandatoryDeposit"> {{'labels.text.Mandatory' | translate}} </span>
-    <span fxFlex="60%" *ngIf="!recurringDepositProduct.isMandatoryDeposit"> {{'labels.text.Voluntary' | translate}} </span>
+    <span fxFlex="40%">{{ 'labels.inputs.Recurring Deposit Type' | translate }}:</span>
+    <span fxFlex="60%" *ngIf="recurringDepositProduct.isMandatoryDeposit">
+      {{ 'labels.text.Mandatory' | translate }}
+    </span>
+    <span fxFlex="60%" *ngIf="!recurringDepositProduct.isMandatoryDeposit">
+      {{ 'labels.text.Voluntary' | translate }}
+    </span>
   </div>
   <!--  -->
   <div fxFlexFill>
-    <span fxFlex="40%">{{'labels.inputs.Withhold Tax is Applicable' | translate}}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Withhold Tax is Applicable' | translate }}:</span>
     <span fxFlex="60%">{{ recurringDepositProduct.withHoldTax | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.withHoldTax">
-    <span fxFlex="40%">{{'labels.inputs.Tax Group' | translate}}:</span>
-    <span fxFlex="60%">{{ recurringDepositProduct.taxGroupId | find:recurringDepositProductsTemplate.taxGroupOptions:'id':'name' }}</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Tax Group' | translate }}:</span>
+    <span fxFlex="60%">{{
+      recurringDepositProduct.taxGroupId | find: recurringDepositProductsTemplate.taxGroupOptions : 'id' : 'name'
+    }}</span>
   </div>
 
   <div fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column" *ngIf="recurringDepositProduct.charts.length !== 0">
-
-    <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Interest Rate Charts' | translate}}</h3>
+    <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Interest Rate Charts' | translate }}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
-    <div fxFlexFill *ngFor="let chart of recurringDepositProduct.charts; let chartIndex = index" fxLayout="row wrap" fxLayout.lt-md="column">
-
+    <div
+      fxFlexFill
+      *ngFor="let chart of recurringDepositProduct.charts; let chartIndex = index"
+      fxLayout="row wrap"
+      fxLayout.lt-md="column"
+    >
       <div fxFlexFill *ngIf="chart.name">
-        <span fxFlex="40%">{{'labels.inputs.Name' | translate}}:</span>
+        <span fxFlex="40%">{{ 'labels.inputs.Name' | translate }}:</span>
         <span fxFlex="60%">{{ chart.name }}</span>
       </div>
 
       <div fxFlexFill>
-        <span fxFlex="40%">{{'labels.inputs.From Date' | translate}}:</span>
+        <span fxFlex="40%">{{ 'labels.inputs.From Date' | translate }}:</span>
         <span fxFlex="60%">{{ chart.fromDate | dateFormat }}</span>
       </div>
 
       <div fxFlexFill *ngIf="chart.endDate">
-        <span fxFlex="40%">{{'labels.inputs.End Date' | translate}}:</span>
+        <span fxFlex="40%">{{ 'labels.inputs.End Date' | translate }}:</span>
         <span fxFlex="60%">{{ chart.endDate | dateFormat }}</span>
       </div>
 
       <div fxFlexFill *ngIf="chart.description">
-        <span fxFlex="40%">{{'labels.inputs.Description' | translate}}:</span>
+        <span fxFlex="40%">{{ 'labels.inputs.Description' | translate }}:</span>
         <span fxFlex="60%">{{ chart.description }}</span>
       </div>
 
       <div fxFlexFill>
-        <span fxFlex="40%">{{'labels.inputs.Primary Grouping by Amount' | translate}}:</span>
+        <span fxFlex="40%">{{ 'labels.inputs.Primary Grouping by Amount' | translate }}:</span>
         <span fxFlex="60%">{{ recurringDepositProduct.isPrimaryGroupingByAmount | yesNo }}</span>
       </div>
 
-      <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="chart.chartSlabs" *ngIf="chart.chartSlabs.length !== 0" multiTemplateDataRows>
-
+      <table
+        fxFlexFill
+        class="mat-elevation-z1"
+        mat-table
+        [dataSource]="chart.chartSlabs"
+        *ngIf="chart.chartSlabs.length !== 0"
+        multiTemplateDataRows
+      >
         <ng-container matColumnDef="period">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Period' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Period' | translate }}</th>
           <td mat-cell *matCellDef="let chartSlab">
-            {{ chartSlab.fromPeriod + ' - ' + chartSlab.toPeriod + ' ' + (chartSlab.periodType | find:recurringDepositProductsTemplate.chartTemplate.periodTypes:'id':'value') }}
+            {{
+              chartSlab.fromPeriod +
+                ' - ' +
+                chartSlab.toPeriod +
+                ' ' +
+                (chartSlab.periodType
+                  | find: recurringDepositProductsTemplate.chartTemplate.periodTypes : 'id' : 'value')
+            }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="amountRange">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Amount Range' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount Range' | translate }}</th>
           <td mat-cell *matCellDef="let chartSlab">
             {{ chartSlab.amountRangeFrom + ' - ' + chartSlab.amountRangeTo }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="annualInterestRate">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Interest' | translate}} </th>
-          <td mat-cell *matCellDef="let chartSlab">
-            {{ chartSlab.annualInterestRate | formatNumber }} %
-          </td>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Interest' | translate }}</th>
+          <td mat-cell *matCellDef="let chartSlab">{{ chartSlab.annualInterestRate | formatNumber }} %</td>
         </ng-container>
 
         <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Description' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Description' | translate }}</th>
           <td mat-cell *matCellDef="let chartSlab">
             {{ chartSlab.description }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
           <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex">
-            <button mat-button color="primary" (click)="expandChartSlabIndex[chartIndex] = expandChartSlabIndex[chartIndex] === chartSlabIndex ? null : chartSlabIndex" [disabled]="chartSlab.incentives.length === 0">
+            <button
+              mat-button
+              color="primary"
+              (click)="
+                expandChartSlabIndex[chartIndex] =
+                  expandChartSlabIndex[chartIndex] === chartSlabIndex ? null : chartSlabIndex
+              "
+              [disabled]="chartSlab.incentives.length === 0"
+            >
               <span *ngIf="expandChartSlabIndex[chartIndex] !== chartSlabIndex">
                 <fa-icon icon="eye" class="m-r-10"></fa-icon>
-                {{'labels.buttons.View Incentives' | translate}}
+                {{ 'labels.buttons.View Incentives' | translate }}
               </span>
               <span *ngIf="expandChartSlabIndex[chartIndex] === chartSlabIndex">
                 <fa-icon icon="eye-slash" class="m-r-10"></fa-icon>
-                {{'labels.buttons.Hide Incentives' | translate}}
+                {{ 'labels.buttons.Hide Incentives' | translate }}
               </span>
             </button>
           </td>
         </ng-container>
 
         <ng-container matColumnDef="incentives">
-          <td mat-cell *matCellDef="let chartSlab; let chartSlabIndex = dataIndex" [attr.colspan]="chartSlabsDisplayedColumns[chartIndex].length">
-            <div fxLayout="row wrap" fxFlexFill class="incentives" [@expandChartSlab]="chartSlabIndex === expandChartSlabIndex[chartIndex] ? 'expanded' : 'collapsed'">
+          <td
+            mat-cell
+            *matCellDef="let chartSlab; let chartSlabIndex = dataIndex"
+            [attr.colspan]="chartSlabsDisplayedColumns[chartIndex].length"
+          >
+            <div
+              fxLayout="row wrap"
+              fxFlexFill
+              class="incentives"
+              [@expandChartSlab]="chartSlabIndex === expandChartSlabIndex[chartIndex] ? 'expanded' : 'collapsed'"
+            >
               <mat-card fxLayout="row wrap" fxFlexFill>
-
                 <h4 class="mat-h4" fxFlex="23%">
-                  {{'labels.heading.Incentives' | translate}}
+                  {{ 'labels.heading.Incentives' | translate }}
                 </h4>
 
                 <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="chartSlab.incentives">
-
                   <ng-container matColumnDef="entityType">
-                    <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Entity Type' | translate}} </th>
+                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Entity Type' | translate }}</th>
                     <td mat-cell *matCellDef="let incentive">
-                      {{ incentive.entityType | find:recurringDepositProductsTemplate.chartTemplate.entityTypeOptions:'id':'value' }}
+                      {{
+                        incentive.entityType
+                          | find: recurringDepositProductsTemplate.chartTemplate.entityTypeOptions : 'id' : 'value'
+                      }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="attributeName">
-                    <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Attribute Name' | translate}} </th>
+                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Attribute Name' | translate }}</th>
                     <td mat-cell *matCellDef="let incentive">
-                      {{ incentive.attributeName | find:recurringDepositProductsTemplate.chartTemplate.attributeNameOptions:'id':'value' }}
+                      {{
+                        incentive.attributeName
+                          | find: recurringDepositProductsTemplate.chartTemplate.attributeNameOptions : 'id' : 'value'
+                      }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="conditionType">
-                    <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Condition Type' | translate}} </th>
+                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Condition Type' | translate }}</th>
                     <td mat-cell *matCellDef="let incentive">
-                      {{ incentive.conditionType | find:recurringDepositProductsTemplate.chartTemplate.conditionTypeOptions:'id':'value' }}
+                      {{
+                        incentive.conditionType
+                          | find: recurringDepositProductsTemplate.chartTemplate.conditionTypeOptions : 'id' : 'value'
+                      }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="attributeValue">
-                    <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Attribute Value' | translate}} </th>
+                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Attribute Value' | translate }}</th>
                     <td mat-cell *matCellDef="let incentive" [ngSwitch]="incentive.attributeName">
-                      <span *ngSwitchCase="2">{{ incentive.attributeValue | find:recurringDepositProductsTemplate.chartTemplate.genderOptions:'id':'name' }}</span>
+                      <span *ngSwitchCase="2">{{
+                        incentive.attributeValue
+                          | find: recurringDepositProductsTemplate.chartTemplate.genderOptions : 'id' : 'name'
+                      }}</span>
                       <span *ngSwitchCase="3">{{ incentive.attributeValue }}</span>
-                      <span *ngSwitchCase="4">{{ incentive.attributeValue | find:recurringDepositProductsTemplate.chartTemplate.clientTypeOptions:'id':'name' }}</span>
-                      <span *ngSwitchCase="5">{{ incentive.attributeValue | find:recurringDepositProductsTemplate.chartTemplate.clientClassificationOptions:'id':'name' }}</span>
+                      <span *ngSwitchCase="4">{{
+                        incentive.attributeValue
+                          | find: recurringDepositProductsTemplate.chartTemplate.clientTypeOptions : 'id' : 'name'
+                      }}</span>
+                      <span *ngSwitchCase="5">{{
+                        incentive.attributeValue
+                          | find
+                            : recurringDepositProductsTemplate.chartTemplate.clientClassificationOptions
+                            : 'id'
+                            : 'name'
+                      }}</span>
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="incentiveType">
-                    <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Incentive Type' | translate}} </th>
+                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Incentive Type' | translate }}</th>
                     <td mat-cell *matCellDef="let incentive">
-                      {{ incentive.incentiveType | find:recurringDepositProductsTemplate.chartTemplate.incentiveTypeOptions:'id':'value'}}
+                      {{
+                        incentive.incentiveType
+                          | find: recurringDepositProductsTemplate.chartTemplate.incentiveTypeOptions : 'id' : 'value'
+                      }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="amount">
-                    <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Amount' | translate}} </th>
+                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
                     <td mat-cell *matCellDef="let incentive">
                       {{ incentive.amount | formatNumber }}
                     </td>
                   </ng-container>
 
                   <tr mat-header-row *matHeaderRowDef="incentivesDisplayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: incentivesDisplayedColumns;"></tr>
-
+                  <tr mat-row *matRowDef="let row; columns: incentivesDisplayedColumns"></tr>
                 </table>
-
               </mat-card>
             </div>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="chartSlabsDisplayedColumns[chartIndex]"></tr>
-        <tr mat-row *matRowDef="let row; columns: chartSlabsDisplayedColumns[chartIndex];"></tr>
-        <tr mat-row *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns;" class="incentives-row"></tr>
-
+        <tr mat-row *matRowDef="let row; columns: chartSlabsDisplayedColumns[chartIndex]"></tr>
+        <tr mat-row *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns" class="incentives-row"></tr>
       </table>
 
       <mat-divider fxFlexFill></mat-divider>
-
     </div>
-
   </div>
 
   <div fxFlexFill *ngIf="recurringDepositProduct.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
-
-    <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Charges' | translate}}</h3>
+    <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Charges' | translate }}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
     <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="recurringDepositProduct.charges">
-
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Name' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.name + ', ' + charge.currency.displaySymbol }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeCalculationType">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Type' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.chargeCalculationType.value }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Amount' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.amount  }}
+          {{ charge.amount }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargeTimeType">
-        <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Collected On' | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Collected On' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.chargeTimeType.value }}
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="chargesDisplayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns;"></tr>
-
+      <tr mat-row *matRowDef="let row; columns: chargesDisplayedColumns"></tr>
     </table>
-
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Accounting' | translate}}</h3>
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Accounting' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 
-  <mifosx-view-savings-accounting-details *ngIf="!isNoneAccounting()"
-  [accountingRule]="accountingRule"
-  [accountingMappings]="accountingMappings"
+  <mifosx-view-savings-accounting-details
+    *ngIf="!isNoneAccounting()"
+    [accountingRule]="accountingRule"
+    [accountingMappings]="accountingMappings"
   >
   </mifosx-view-savings-accounting-details>
 
-  <div *ngIf="recurringDepositProduct.advancedAccountingRules && (recurringDepositProduct.paymentChannelToFundSourceMappings?.length || recurringDepositProduct.feeToIncomeAccountMappings?.length || recurringDepositProduct.penaltyToIncomeAccountMappings?.length)" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
-
-    <h3 class="mat-h3" fxFlexFill>{{'labels.heading.Advanced Accounting Rules' | translate}}</h3>
+  <div
+    *ngIf="
+      recurringDepositProduct.advancedAccountingRules &&
+      (recurringDepositProduct.paymentChannelToFundSourceMappings?.length ||
+        recurringDepositProduct.feeToIncomeAccountMappings?.length ||
+        recurringDepositProduct.penaltyToIncomeAccountMappings?.length)
+    "
+    fxFlexFill
+    fxLayout="row wrap"
+    fxLayout.lt-md="column"
+  >
+    <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
 
     <mat-divider fxFlexFill></mat-divider>
 
-    <div *ngIf="recurringDepositProduct.paymentChannelToFundSourceMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+    <div
+      *ngIf="recurringDepositProduct.paymentChannelToFundSourceMappings?.length"
+      fxFlexFill
+      fxLayout="row wrap"
+      fxLayout.lt-md="column"
+    >
+      <h4 class="mat-h4" fxFlexFill>{{ 'labels.heading.Fund Sources for Payment Channels' | translate }}</h4>
 
-      <h4 class="mat-h4" fxFlexFill>{{'labels.heading.Fund Sources for Payment Channels' | translate}}</h4>
-
-      <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="recurringDepositProduct.paymentChannelToFundSourceMappings">
-
+      <table
+        fxFlexFill
+        class="mat-elevation-z1"
+        mat-table
+        [dataSource]="recurringDepositProduct.paymentChannelToFundSourceMappings"
+      >
         <ng-container matColumnDef="paymentTypeId">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Payment Type' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Type' | translate }}</th>
           <td mat-cell *matCellDef="let paymentFundSource">
-            {{ paymentFundSource.paymentTypeId | find:recurringDepositProductsTemplate.paymentTypeOptions:'id':'name' }}
+            {{
+              paymentFundSource.paymentTypeId
+                | find: recurringDepositProductsTemplate.paymentTypeOptions : 'id' : 'name'
+            }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="fundSourceAccountId">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Fund Source' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fund Source' | translate }}</th>
           <td mat-cell *matCellDef="let paymentFundSource">
-            {{ paymentFundSource.fundSourceAccountId | find:recurringDepositProductsTemplate.accountingMappingOptions.assetAccountOptions:'id':'name' }}
+            {{
+              paymentFundSource.fundSourceAccountId
+                | find: recurringDepositProductsTemplate.accountingMappingOptions.assetAccountOptions : 'id' : 'name'
+            }}
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="paymentFundSourceDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns;"></tr>
-
+        <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns"></tr>
       </table>
-
     </div>
 
-    <div *ngIf="recurringDepositProduct.feeToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+    <div
+      *ngIf="recurringDepositProduct.feeToIncomeAccountMappings?.length"
+      fxFlexFill
+      fxLayout="row wrap"
+      fxLayout.lt-md="column"
+    >
+      <h4 class="mat-h4" fxFlexFill>{{ 'labels.heading.Fees to Specific Income Accounts' | translate }}</h4>
 
-      <h4 class="mat-h4" fxFlexFill>{{'labels.heading.Fees to Specific Income Accounts' | translate}}</h4>
-
-      <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="recurringDepositProduct.feeToIncomeAccountMappings">
-
+      <table
+        fxFlexFill
+        class="mat-elevation-z1"
+        mat-table
+        [dataSource]="recurringDepositProduct.feeToIncomeAccountMappings"
+      >
         <ng-container matColumnDef="chargeId">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Fees' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fees' | translate }}</th>
           <td mat-cell *matCellDef="let feesIncome">
-            {{ feesIncome.chargeId | find:recurringDepositProductsTemplate.chargeOptions:'id':'name' }}
+            {{ feesIncome.chargeId | find: recurringDepositProductsTemplate.chargeOptions : 'id' : 'name' }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="incomeAccountId">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Income Account' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
           <td mat-cell *matCellDef="let feesIncome">
-            {{ feesIncome.incomeAccountId | find:recurringDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}
+            {{
+              feesIncome.incomeAccountId
+                | find: recurringDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
+            }}
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
-
+        <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
       </table>
-
     </div>
 
-    <div *ngIf="recurringDepositProduct.penaltyToIncomeAccountMappings?.length" fxFlexFill fxLayout="row wrap" fxLayout.lt-md="column">
+    <div
+      *ngIf="recurringDepositProduct.penaltyToIncomeAccountMappings?.length"
+      fxFlexFill
+      fxLayout="row wrap"
+      fxLayout.lt-md="column"
+    >
+      <h4 class="mat-h4" fxFlexFill>{{ 'labels.heading.Penalties to Specific Income Accounts' | translate }}</h4>
 
-      <h4 class="mat-h4" fxFlexFill>{{'labels.heading.Penalties to Specific Income Accounts' | translate}}</h4>
-
-      <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="recurringDepositProduct.penaltyToIncomeAccountMappings">
-
+      <table
+        fxFlexFill
+        class="mat-elevation-z1"
+        mat-table
+        [dataSource]="recurringDepositProduct.penaltyToIncomeAccountMappings"
+      >
         <ng-container matColumnDef="chargeId">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Penalty' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Penalty' | translate }}</th>
           <td mat-cell *matCellDef="let penaltyIncome">
-            {{ penaltyIncome.chargeId  | find:recurringDepositProductsTemplate.penaltyOptions:'id':'name' }}
+            {{ penaltyIncome.chargeId | find: recurringDepositProductsTemplate.penaltyOptions : 'id' : 'name' }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="incomeAccountId">
-          <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Income Account' | translate}} </th>
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
           <td mat-cell *matCellDef="let penaltyIncome">
-            {{ penaltyIncome.incomeAccountId | find:recurringDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions:'id':'name' }}
+            {{
+              penaltyIncome.incomeAccountId
+                | find: recurringDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
+            }}
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="feesPenaltyIncomeDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns;"></tr>
-
+        <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
       </table>
-
     </div>
-
   </div>
-
 </div>
 
 <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Previous' | translate}}
+    {{ 'labels.buttons.Previous' | translate }}
   </button>
   <button mat-raised-button [routerLink]="['../']">
-    {{'labels.buttons.Cancel' | translate}}
+    {{ 'labels.buttons.Cancel' | translate }}
   </button>
   <button mat-raised-button color="primary" (click)="submitEvent.emit()">
-    {{'labels.buttons.Submit' | translate}}    
+    {{ 'labels.buttons.Submit' | translate }}
   </button>
 </div>

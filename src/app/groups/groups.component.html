@@ -1,58 +1,66 @@
 <mat-card class="container">
-
   <div fxLayout="row" fxLayoutAlign="start center">
     <div class="search-box">
       <mat-form-field>
-        <input matInput placeholder="Search by Name" [formControl]="name">
+        <input matInput placeholder="Search by Name" [formControl]="name" />
       </mat-form-field>
-      <mat-checkbox #showClosedGroups labelPosition="after" (change)="changeShowClosedGroups()">{{"labels.inputs.Show Closed Groups"  |translate}}</mat-checkbox>
+      <mat-checkbox #showClosedGroups labelPosition="after" (change)="changeShowClosedGroups()">{{
+        'labels.inputs.Show Closed Groups' | translate
+      }}</mat-checkbox>
     </div>
     <div class="action-button" fxLayoutGap="25px">
       <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Groups']">
-        <fa-icon icon="download" class="m-r-10"></fa-icon>{{"labels.buttons.Import Group"  |translate}}
+        <fa-icon icon="download" class="m-r-10"></fa-icon>{{ 'labels.buttons.Import Group' | translate }}
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GROUP'">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{"labels.buttons.Create Group"  |translate}}
+        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Create Group' | translate }}
       </button>
     </div>
   </div>
 
   <table mat-table [dataSource]="dataSource" matSort>
-
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.name"  |translate}} </th>
-      <td mat-cell *matCellDef="let group"> {{ group.name }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
+      <td mat-cell *matCellDef="let group">{{ group.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="accountNo">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Account"  |translate}} # </th>
-      <td mat-cell *matCellDef="let group"> {{ group.accountNo }} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account' | translate }} #</th>
+      <td mat-cell *matCellDef="let group">{{ group.accountNo }}</td>
     </ng-container>
 
     <ng-container matColumnDef="externalId">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.External Id"  |translate}} </th>
-      <td mat-cell *matCellDef="let group"> {{ group.externalId }} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.External Id' | translate }}</th>
+      <td mat-cell *matCellDef="let group">{{ group.externalId }}</td>
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> {{"labels.inputs.Status"  |translate}} </th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
       <td mat-cell *matCellDef="let row">
-        <div [ngClass]="row.status.code|statusLookup">
+        <div [ngClass]="row.status.code | statusLookup">
           <fa-icon icon="stop"></fa-icon>
         </div>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Office Name"  |translate}} </th>
-      <td mat-cell *matCellDef="let group"> {{ group.officeName }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office Name' | translate }}</th>
+      <td mat-cell *matCellDef="let group">{{ group.officeName }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id,'general']" class="select-row"></tr>
-
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [routerLink]="[row.id, 'general']"
+      class="select-row"
+    ></tr>
   </table>
 
-  <mat-paginator [length]="dataSource?.records$ | async" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
+  <mat-paginator
+    [length]="dataSource?.records$ | async"
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons
+  ></mat-paginator>
 </mat-card>

@@ -1,51 +1,68 @@
 <form [formGroup]="datatableForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
     <div *ngFor="let datatableInput of datatableInputs" fxFlex="48%">
       <mat-form-field fxFlex="100%" *ngIf="!isBoolean(datatableInput.columnDisplayType)">
+        <mat-label>{{ getInputName(datatableInput) }}</mat-label>
 
-        <mat-label>{{getInputName(datatableInput)}}</mat-label>
-
-        <mat-select *ngIf="isDropdown(datatableInput.columnDisplayType)" formControlName="{{datatableInput.controlName}}">
+        <mat-select
+          *ngIf="isDropdown(datatableInput.columnDisplayType)"
+          formControlName="{{ datatableInput.controlName }}"
+        >
           <mat-option *ngFor="let code of datatableInput.columnValues" [value]="code.id">
             {{ code.value }}
           </mat-option>
         </mat-select>
 
-        <input matInput type="number" *ngIf="isNumeric(datatableInput.columnDisplayType)"
-        formControlName="{{datatableInput.controlName}}">
+        <input
+          matInput
+          type="number"
+          *ngIf="isNumeric(datatableInput.columnDisplayType)"
+          formControlName="{{ datatableInput.controlName }}"
+        />
 
-        <input matInput *ngIf="isString(datatableInput.columnDisplayType)"
-        formControlName="{{datatableInput.controlName}}">
+        <input
+          matInput
+          *ngIf="isString(datatableInput.columnDisplayType)"
+          formControlName="{{ datatableInput.controlName }}"
+        />
 
-        <textarea matInput *ngIf="isText(datatableInput.columnDisplayType)"
-        formControlName="{{datatableInput.controlName}}"></textarea>
+        <textarea
+          matInput
+          *ngIf="isText(datatableInput.columnDisplayType)"
+          formControlName="{{ datatableInput.controlName }}"
+        ></textarea>
 
         <span *ngIf="isDate(datatableInput.columnDisplayType)" (click)="datePicker.open()">
-          <input matInput [matDatepicker]="datePicker" formControlName="{{datatableInput.controlName}}" class="date-picker">
+          <input
+            matInput
+            [matDatepicker]="datePicker"
+            formControlName="{{ datatableInput.controlName }}"
+            class="date-picker"
+          />
           <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
           <mat-datepicker #datePicker></mat-datepicker>
         </span>
       </mat-form-field>
 
-      <mat-checkbox *ngIf="isBoolean(datatableInput.columnDisplayType)" formControlName="{{datatableInput.controlName}}"
-        labelPosition="before" class="margin-v">
-        {{getInputName(datatableInput)}}
+      <mat-checkbox
+        *ngIf="isBoolean(datatableInput.columnDisplayType)"
+        formControlName="{{ datatableInput.controlName }}"
+        labelPosition="before"
+        class="margin-v"
+      >
+        {{ getInputName(datatableInput) }}
       </mat-checkbox>
     </div>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      {{"labels.buttons.Previous" | translate}}
+      {{ 'labels.buttons.Previous' | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      {{"labels.buttons.Next" | translate}}
+      {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>
-
 </form>

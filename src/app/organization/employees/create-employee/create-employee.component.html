@@ -1,13 +1,8 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="employeeForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div #createEmployeeFormRef fxLayout="column">
-          
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
@@ -16,73 +11,104 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="employeeForm.controls.officeId.hasError('required')">
-              {{'labels.inputs.Office' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
-          
-          <mat-form-field>
-            <mat-label>{{'labels.inputs.First Name' | translate }}</mat-label>
-            <input matInput required formControlName="firstname">
-            <mat-error *ngIf="employeeForm.controls.firstname.hasError('required')">
-              {{'labels.inputs.First Name' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
-            </mat-error>
-            <mat-error *ngIf="employeeForm.controls.firstname.hasError('pattern')">
-              {{'labels.inputs.First Name' | translate }} <strong>{{'labels.inputs.cannot' | translate }}</strong> {{'labels.inputs.begin with a special character or number' | translate }}
+              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Last Name' | translate }}</mat-label>
-            <input matInput required formControlName="lastname">
+            <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+            <input matInput required formControlName="firstname" />
+            <mat-error *ngIf="employeeForm.controls.firstname.hasError('required')">
+              {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="employeeForm.controls.firstname.hasError('pattern')">
+              {{ 'labels.inputs.First Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.begin with a special character or number' | translate }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+            <input matInput required formControlName="lastname" />
             <mat-error *ngIf="employeeForm.controls.lastname.hasError('required')">
-              {{'labels.inputs.Last Name' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="employeeForm.controls.lastname.hasError('pattern')">
-              {{'labels.inputs.Last Name' | translate }} <strong>{{'labels.inputs.cannot' | translate }}</strong> {{'labels.inputs.begin with a special character or number' | translate }}
+              {{ 'labels.inputs.Last Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="isLoanOfficer" class="loan-officer">
-            {{'labels.inputs.Is Loan Officer' | translate }}
+            {{ 'labels.inputs.Is Loan Officer' | translate }}
           </mat-checkbox>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Mobile Number for SMS' | translate }}</mat-label>
-            <input matInput formControlName="mobileNo">
+            <mat-label>{{ 'labels.inputs.Mobile Number for SMS' | translate }}</mat-label>
+            <input matInput formControlName="mobileNo" />
           </mat-form-field>
 
           <mat-form-field (click)="joiningDatePicker.open()">
-            <mat-label>{{'labels.inputs.Joining Date' | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="joiningDatePicker" required formControlName="joiningDate">
+            <mat-label>{{ 'labels.inputs.Joining Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="joiningDatePicker"
+              required
+              formControlName="joiningDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #joiningDatePicker></mat-datepicker>
             <mat-error *ngIf="employeeForm.controls.joiningDate.hasError('required')">
-              {{'labels.inputs.Joining Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Joining Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!employeeForm.valid" *mifosxHasPermission="'CREATE_STAFF'">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!employeeForm.valid"
+          *mifosxHasPermission="'CREATE_STAFF'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>
 
 <ng-template #templateCreateEmployeeForm let-popover="popover">
   <h2>{{ 'labels.heading.Create Employee' | translate }}</h2>
-  <p class="mw400">{{'labels.text.Start filling the details' | translate }} <br> {{'labels.text.For more details click' | translate }}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141732/Manage+Employees" target="_blank">{{'labels.inputs.Manage Employees' | translate }}</a></p>
+  <p class="mw400">
+    {{ 'labels.text.Start filling the details' | translate }} <br />
+    {{ 'labels.text.For more details click' | translate }}:
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141732/Manage+Employees" target="_blank">{{
+      'labels.inputs.Manage Employees' | translate
+    }}</a>
+  </p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close()">{{'labels.buttons.Create Employee' | translate }}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate }}</button> 
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate }}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close()">
+      {{ 'labels.buttons.Create Employee' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>

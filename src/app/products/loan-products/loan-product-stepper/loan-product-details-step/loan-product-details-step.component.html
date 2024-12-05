@@ -1,71 +1,109 @@
 <form [formGroup]="loanProductDetailsForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
-
     <mat-form-field fxFlex="98%">
-      <mat-label>{{'labels.inputs.Product Name' | translate}}</mat-label>
-      <input matInput formControlName="name" matTooltip="{{ 'tooltips.Product name is a unique identifier' | translate}}" required>
+      <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        matTooltip="{{ 'tooltips.Product name is a unique identifier' | translate }}"
+        required
+      />
       <mat-error>
-        {{'labels.inputs.Product Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Short Name' | translate}}</mat-label>
-      <input matInput formControlName="shortName" maxlength="4" matTooltip="{{ 'tooltips.Short name is a unique identifier' | translate}}" required>
+      <mat-label>{{ 'labels.inputs.Short Name' | translate }}</mat-label>
+      <input
+        matInput
+        formControlName="shortName"
+        maxlength="4"
+        matTooltip="{{ 'tooltips.Short name is a unique identifier' | translate }}"
+        required
+      />
       <mat-error>
-        {{'labels.inputs.Short Name' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Short Name' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.External Id' | translate}}</mat-label>
-      <input matInput formControlName="externalId" matTooltip="{{ 'tooltips.External Id is a unique identifier' | translate}}">
+      <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
+      <input
+        matInput
+        formControlName="externalId"
+        matTooltip="{{ 'tooltips.External Id is a unique identifier' | translate }}"
+      />
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Fund' | translate}}</mat-label>
-      <mat-select matTooltip="{{ 'tooltips.Loan products may be assigned' | translate}}" formControlName="fundId">
+      <mat-label>{{ 'labels.inputs.Fund' | translate }}</mat-label>
+      <mat-select matTooltip="{{ 'tooltips.Loan products may be assigned' | translate }}" formControlName="fundId">
         <mat-option *ngFor="let fund of fundData" [value]="fund.id">
           {{ fund.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox labelPosition="before" matTooltip="{{ 'tooltips.A borrower loan counter (cycle)' | translate}}" formControlName="includeInBorrowerCycle" fxFlex="48%">
-      {{'labels.inputs.Include in Customer Loan Counter' | translate}}
+    <mat-checkbox
+      labelPosition="before"
+      matTooltip="{{ 'tooltips.A borrower loan counter (cycle)' | translate }}"
+      formControlName="includeInBorrowerCycle"
+      fxFlex="48%"
+    >
+      {{ 'labels.inputs.Include in Customer Loan Counter' | translate }}
     </mat-checkbox>
 
     <mat-form-field fxFlex="48%" (click)="startDatePicker.open()">
-      <mat-label>{{'labels.inputs.Start Date' | translate}}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker" matTooltip="{{ 'tooltips.loan product will be active and available to clients' | translate}}" formControlName="startDate">
+      <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="startDatePicker"
+        matTooltip="{{ 'tooltips.loan product will be active and available to clients' | translate }}"
+        formControlName="startDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%" (click)="closeDatePicker.open()">
-      <mat-label>{{'labels.inputs.Close Date' | translate}}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closeDatePicker" matTooltip="{{ 'tooltips.loan product will become inactive and unavailable to clients' | translate}}" formControlName="closeDate">
+      <mat-label>{{ 'labels.inputs.Close Date' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="closeDatePicker"
+        matTooltip="{{ 'tooltips.loan product will become inactive and unavailable to clients' | translate }}"
+        formControlName="closeDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="closeDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #closeDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="98%">
-      <mat-label>{{'labels.inputs.Description' | translate}}</mat-label>
-      <textarea matInput matTooltip="{{ 'tooltips.Provide additional information' | translate}}" formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+      <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+      <textarea
+        matInput
+        matTooltip="{{ 'tooltips.Provide additional information' | translate }}"
+        formControlName="description"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="2"
+      ></textarea>
     </mat-form-field>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Previous' | translate}}
+      {{ 'labels.buttons.Previous' | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      {{'labels.buttons.Next' | translate}}
+      {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>
-
 </form>
