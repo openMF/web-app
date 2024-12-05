@@ -9,7 +9,7 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    'browserName': process.env.PROTRACTOR_BROWSER || 'chrome'
+    browserName: process.env.PROTRACTOR_BROWSER || 'chrome'
   },
   // Only works with Chrome and Firefox
   directConnect: true,
@@ -18,7 +18,7 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 60000,
-    print: function() {}
+    print: function () {}
   },
   onPrepare() {
     require('ts-node').register({
