@@ -19,6 +19,7 @@ import { NextStepDialogComponent } from '../../../configuration-wizard/next-step
 import { CustomParametersPopoverComponent } from './custom-parameters-popover/custom-parameters-popover.component';
 import { SchedulerJob } from './models/scheduler-job.model';
 import { ErrorLogPopoverComponent } from './error-log-popover/error-log-popover.component';
+import { RunSelectedJobsPopoverComponent } from './run-selected-jobs-popover/run-selected-jobs-popover.component';
 
 /**
  * Manage scheduler jobs component.
@@ -262,6 +263,32 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+
+  /**
+   * Open Run Selected Jobs Confirmation Dialog
+   */
+  openRunSelectedJobsDialog() {
+    const dialog = this.dialog.open(RunSelectedJobsPopoverComponent, {
+      data: {
+        selectedJobs: this.selection
+      }
+    });
+
+    dialog.componentInstance.confirmedJobs.subscribe(result => {
+      if (result) {
+        const selectedJobs = this.selection.selected;
+        const confirmedJobIds = result.map(job => job.jobId);
+
+        selectedJobs.forEach(job => {
+          if (!confirmedJobIds.includes(job.jobId)) {
+            this.selection.deselect(job);
+          }
+        });
+
+        dialog.close();
+      }
+    });
   }
 
 }
