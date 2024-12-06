@@ -11,6 +11,7 @@
   "homepage": "https://github.com/openMF/web-app",
   "license": "MPL-2.0",
   "scripts": {
+    "prepare": "husky",
     "ng": "ng",
     "build": "node version.js && npm run env -s && ng build --configuration production --output-hashing=none",
     "build:prod": "node version.js && node --max-old-space-size=16384 ./node_modules/@angular/cli/bin/ng build --configuration production --output-hashing=none --base-href=/web-app/",
@@ -98,6 +99,7 @@
     "hads": "^3.0.3",
     "htmlhint": "1.1.4",
     "https-proxy-agent": "2.2.1",
+    "husky": "^9.1.7",
     "jasmine-core": "^4.2.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.4.0",
@@ -108,6 +110,7 @@
     "karma-jasmine": "^5.1.0",
     "karma-jasmine-html-reporter": "^2.0.0",
     "karma-junit-reporter": "1.2.0",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
     "protractor": "~7.0.0",
     "puppeteer": "^15.3.2",
@@ -129,5 +132,10 @@
   "engines": {
     "node": ">= 16.15.1",
     "npm": ">= 8.11.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --cache",
+    "*.{css,scss}": "stylelint",
+    "*": "prettier --check --ignore-unknown"
   }
 }
