@@ -339,7 +339,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
    runSelectedJob(jobId: string): Promise<any> {
-    return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload).toPromise();
+    return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload, { observe: 'response' }).toPromise();
   }
 
   /**

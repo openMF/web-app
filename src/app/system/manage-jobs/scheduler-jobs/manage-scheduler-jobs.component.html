@@ -1,6 +1,7 @@
 <div class="container m-b-20 space-top" fxLayout="row" fxLayoutGap="20px">
   <div #schedulerStatus>
-    <h2 class="no-m">{{'labels.heading.Scheduler Status' | translate}}:<span class="m-l-20 m-r-20">{{ schedulerActive ? ( 'labels.inputs.Active' | translate ) : ('labels.catalogs.Inactive' | translate) }}</span>
+    <h2 class="no-m">{{'labels.heading.Scheduler Status' | translate}}:<span class="m-l-20 m-r-20">{{ schedulerActive ?
+        ( 'labels.inputs.Active' | translate ) : ('labels.catalogs.Inactive' | translate) }}</span>
     </h2>
   </div>
   <button mat-raised-button class="suspend" (click)="suspendScheduler()" *ngIf="schedulerActive">
@@ -24,7 +25,7 @@
   </div>
 
   <div class="space-top" fxLayout="row" fxLayoutGap="20px">
-    <button mat-raised-button color="primary" (click)="runSelectedJobs()" [disabled]="!isAnyJobSelected()">
+    <button mat-raised-button color="primary" (click)="openRunSelectedJobsDialog()" [disabled]="!isAnyJobSelected()">
       <fa-icon icon="play" class="m-r-10"></fa-icon>
       {{'labels.buttons.Run Selected Jobs' | translate}}
     </button>
@@ -75,12 +76,14 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Previous Run' | translate}} </th>
         <td mat-cell *matCellDef="let job">
           <div *ngIf="job.lastRunHistory">
-            <fa-icon *ngIf="job.lastRunHistory.status === 'success'" class="success" [matTooltip]="('tooltips.Successful' | translate)"
-              matTooltipPosition="right" icon="check-circle" size="lg"></fa-icon>
-            <fa-icon *ngIf="!(job.lastRunHistory.status === 'success')" class="fail" [matTooltip]="('tooltips.Failed' | translate)"
-              matTooltipPosition="right" icon="times-circle" size="lg"></fa-icon>
-          <span *ngIf="job.lastRunHistory" class="m-l-5">
-            {{ job.lastRunHistory.jobRunStartTime | datetimeFormat}}</span>
+            <fa-icon *ngIf="job.lastRunHistory.status === 'success'" class="success"
+              [matTooltip]="('tooltips.Successful' | translate)" matTooltipPosition="right" icon="check-circle"
+              size="lg"></fa-icon>
+            <fa-icon *ngIf="!(job.lastRunHistory.status === 'success')" class="fail"
+              [matTooltip]="('tooltips.Failed' | translate)" matTooltipPosition="right" icon="times-circle"
+              size="lg"></fa-icon>
+            <span *ngIf="job.lastRunHistory" class="m-l-5">
+              {{ job.lastRunHistory.jobRunStartTime | datetimeFormat}}</span>
           </div>
         </td>
       </ng-container>
@@ -94,8 +97,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Currently Running' | translate}} </th>
         <td mat-cell *matCellDef="let job" class="center">
           <div [className]="job.currentlyRunning === true ? 'currently-running' : 'not-currently-running'">
-            <fa-icon matTooltip="{{ job.currentlyRunning === true | yesNo }}" matTooltipPosition="right"
-              icon="circle" size="lg"></fa-icon>
+            <fa-icon matTooltip="{{ job.currentlyRunning === true | yesNo }}" matTooltipPosition="right" icon="circle"
+              size="lg"></fa-icon>
           </div>
         </td>
       </ng-container>
@@ -104,8 +107,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'labels.inputs.Error Log' | translate}} </th>
         <td mat-cell *matCellDef="let job" class="center">
           <button mat-icon-button class="errorlog" (click)="showErrorLog(job)"
-            *ngIf="!(job.lastRunHistory && job.lastRunHistory.status === 'success')" matTooltip="{{'labels.inputs.Error Log' | translate}}"
-            matTooltipPosition="right">
+            *ngIf="!(job.lastRunHistory && job.lastRunHistory.status === 'success')"
+            matTooltip="{{'labels.inputs.Error Log' | translate}}" matTooltipPosition="right">
             <fa-icon icon="exclamation-circle" size="lg"></fa-icon>
           </button>
         </td>
@@ -123,13 +126,9 @@
 </div>
 
 <div class="container space-top" fxLayout="row" fxLayoutGap="20px">
-  <button mat-raised-button color="primary" (click)="runSelectedJobs()" [disabled]="!isAnyJobSelected()">
+  <button mat-raised-button color="primary" (click)="openRunSelectedJobsDialog()" [disabled]="!isAnyJobSelected()">
     <fa-icon icon="play" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Run Selected Jobs' | translate}}<ng-template #templateSchedulerJobs let-data let-popover="popover">
-      <h2>{{'labels.heading.Template' | translate}}</h2>
-      <p>{{'labels.text.Template I am trying to use' | translate}}.</p>
-      <button (click)="popover.close();nextStepSchedulerJobs()">{{'labels.buttons.Next' | translate }}</button>
-    </ng-template>
+    {{'labels.buttons.Run Selected Jobs' | translate}}
   </button>
   <button mat-raised-button color="primary" (click)="refresh()">
     <fa-icon icon="sync" class="m-r-10"></fa-icon>
@@ -141,10 +140,13 @@
   <h4>{{'labels.heading.Scheduler status' | translate}}.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' | translate}}</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' |
+      translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();previousStep()">{{'labels.buttons.Back' |
+      translate}}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">{{'labels.buttons.Next' | translate}}</button>
+      (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">{{'labels.buttons.Next' |
+      translate}}</button>
   </div>
 </ng-template>
 
@@ -152,22 +154,29 @@
   <h4>{{'labels.heading.Search bar to filter jobs' | translate }}.</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' |
+      translate}}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateSchedulerStatus,schedulerStatus, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
+      (click)="popover.close();showPopover(templateSchedulerStatus,schedulerStatus, 'bottom', true)">{{'labels.buttons.Back'
+      | translate}}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateJobsTable,jobsTable, 'top', true)">{{'labels.buttons.Next' | translate}}</button>
+      (click)="popover.close();showPopover(templateJobsTable,jobsTable, 'top', true)">{{'labels.buttons.Next' |
+      translate}}</button>
   </div>
 </ng-template>
 
 <ng-template #templateJobsTable let-data let-popover="popover">
   <h4>{{'labels.heading.List of all scheduled batch jobs' | translate }} <a
-      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895356/Manage+Scheduler+Jobs" target="_blank">{{'labels.heading.Schedular Jobs' | translate}}</a></h4>
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895356/Manage+Scheduler+Jobs"
+      target="_blank">{{'labels.heading.Schedular Jobs' | translate}}</a></h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn"
-      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' | translate}}</button>
+      (click)="popover.close();configurationWizardService.closeConfigWizard()">{{'labels.buttons.Close' |
+      translate}}</button>
     <button mat-raised-button color="primary"
-      (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">{{'labels.buttons.Back' | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' | translate}}</button>
+      (click)="popover.close();showPopover(templateFilter, filter, 'bottom', true)">{{'labels.buttons.Back' |
+      translate}}</button>
+    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{'labels.buttons.Next' |
+      translate}}</button>
   </div>
 </ng-template>
