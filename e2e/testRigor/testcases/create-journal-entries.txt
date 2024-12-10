@@ -1,0 +1,32 @@
+log-in-and-validate
+navigate-to-accounting-creation
+create-account
+//navigate to journal
+click "Accounting"
+click "Create Journal Entries"
+//create a new Journal Entrie
+enter string with parameters "${todayMonthNumber}/${todayDayOfMonth}/${todayYear}" into "Transaction Date"
+click "Office"
+click "Office"
+click "Head Office"
+click "Currency"
+click "US Dollar"
+click "Affected GL Entry (Debit)"
+type saved value "glAccountName"
+click string with parameters "(${glCode}) ${glAccountName}"
+click "Affected GL Entry (Credit)"
+type saved value "glAccountName"
+click string with parameters "(${glCode}) ${glAccountName}" roughly below "Affected GL Entry (Credit)"
+click "Payment Type"
+click "Money Transfer"
+enter "300" into "Debit Amount"
+enter "300" into "Credit Amount"
+generate from template "%*********", then enter into "Reference Number" and save as "referenceNumber"
+click "Submit"
+//validate Transactions
+check that page contains "Revert Transaction"
+grab value from the right of "Transactions" and save as "transactionID"
+click "Journal Entries"
+enter saved value "transactionID" into "Transaction ID"
+check that page contains saved value "glAccountName" below saved value "transactionID"
+check that page contains saved value "transactionID" on the left of saved value "glAccountName"
