@@ -145,7 +145,6 @@ export class ChargesComponent implements OnInit, AfterViewInit {
   }
 
   filterByAppliesTo(chargeAppliesTo: number) {
-    console.log(chargeAppliesTo);
     const filteredCharges: Charge[] = this.chargeData.filter((charge: Charge) => {
       return (charge.chargeAppliesTo.id === chargeAppliesTo);
     });

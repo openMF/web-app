@@ -9,7 +9,7 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="action-button" fxLayoutGap="25px" *ngIf="jobStepsData.length > 0">
+  <div class="action-button" fxLayoutGap="25px" *ngIf="jobStepName">
     <button mat-raised-button color="primary" (click)="addJobStep()">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Link Job Step' | translate}}
     </button>
