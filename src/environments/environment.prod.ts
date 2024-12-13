@@ -13,13 +13,15 @@ export const environment = {
   'https://dev.mifos.io,https://demo.mifos.io,https://qa.mifos.io,https://staging.mifos.io,https://mobile.mifos.io,https://demo.fineract.dev,https://localhost:8443',
   // For connecting to server running elsewhere set the base API URL
   baseApiUrl: window['env']['fineractApiUrl'] || window.location.protocol + '//' + window.location.hostname,
+  oauthServerUrl: window['env']['oauthServerUrl'] || window['env']['fineractApiUrl'] + window['env']['apiProvider'],
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: window['env']['apiProvider'] || '/fineract-provider/api',
   apiVersion: window['env']['apiVersion'] || '/v1',
   serverUrl: '',
   oauth: {
-    enabled: false,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
-    serverUrl: ''
+    enabled: window['env']['oauthServerEnabled'] || false,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
+    serverUrl: window['env']['oauthServerUrl'] || '',
+    appId: window['env']['oauthAppId'] || ''
   },
   warningDialog: {
     title: 'Warning',
@@ -47,4 +49,4 @@ export const environment = {
 
 // Server URL
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
-environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;
+

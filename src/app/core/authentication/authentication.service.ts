@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, of } from 'rxjs';
@@ -94,11 +94,15 @@ export class AuthenticationService {
 
     if (environment.oauth.enabled) {
       let httpParams = new HttpParams();
-      httpParams = httpParams.set('client_id', 'community-app');
+      httpParams = httpParams.set('username', loginContext.username);
+      httpParams = httpParams.set('password', loginContext.password);
+      httpParams = httpParams.set('client_id', `${environment.oauth.appId}`);      
       httpParams = httpParams.set('grant_type', 'password');
-      return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
+      let headers = new HttpHeaders();
+      headers = headers.set('Content-Type', 'application/x-www-form-urlencoded')
+      return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/token`, httpParams.toString(), {headers: headers})
         .pipe(
-          map((tokenResponse: OAuth2Token) => {
+          map((tokenResponse: OAuth2Token) => {            
             this.getUserDetails(tokenResponse);
             return of(true);
           })
@@ -120,10 +124,11 @@ export class AuthenticationService {
    * Sets the oauth2 token refresh time.
    * @param {OAuth2Token} tokenResponse OAuth2 Token details.
    */
-  private getUserDetails(tokenResponse: OAuth2Token) {
-    const httpParams = new HttpParams().set('access_token', tokenResponse.access_token);
+  private getUserDetails(tokenResponse: OAuth2Token) {    
     this.refreshTokenOnExpiry(tokenResponse.expires_in);
-    this.http.get('/userdetails', { params: httpParams })
+    let headers = new HttpHeaders();    
+    headers = headers.set('Authorization', 'bearer '+tokenResponse.access_token)
+    this.http.disableApiPrefix().get(`${environment.serverUrl}/userdetails`,{ headers: headers })
       .subscribe((credentials: Credentials) => {
         this.onLoginSuccess(credentials);
         if (!credentials.shouldRenewPassword) {
@@ -136,7 +141,7 @@ export class AuthenticationService {
    * Sets the oauth2 token to refresh on expiry.
    * @param {number} expiresInTime OAuth2 token expiry time in seconds.
    */
-  private refreshTokenOnExpiry(expiresInTime: number) {
+  private refreshTokenOnExpiry(expiresInTime: number) {    
     setTimeout(() => this.refreshOAuthAccessToken(), expiresInTime * 1000);
   }
 
@@ -144,13 +149,21 @@ export class AuthenticationService {
    * Refreshes the oauth2 authorization token.
    */
   private refreshOAuthAccessToken() {
-    const oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey)).refresh_token;
-    this.authenticationInterceptor.removeAuthorization();
-    let httpParams = new HttpParams();
-    httpParams = httpParams.set('client_id', 'community-app');
-    httpParams = httpParams.set('grant_type', 'refresh_token');
+    var oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey));
+    if (oAuthRefreshToken == null) {
+      return;
+    }
+    oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey)).refresh_token;    
+    this.authenticationInterceptor.removeAuthorization();    
+    const credentials = JSON.parse(this.storage.getItem(this.credentialsStorageKey));    
+    let httpParams = new HttpParams();    
+    httpParams = httpParams.set('username', credentials.username);
+    httpParams = httpParams.set('client_id', `${environment.oauth.appId}`);
     httpParams = httpParams.set('refresh_token', oAuthRefreshToken);
-    this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
+    httpParams = httpParams.set('grant_type', 'refresh_token');
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/x-www-form-urlencoded')
+    return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/token`, httpParams.toString(), {headers: headers})
       .subscribe((tokenResponse: OAuth2Token) => {
         this.storage.setItem(this.oAuthTokenDetailsStorageKey, JSON.stringify(tokenResponse));
         this.authenticationInterceptor.setAuthorizationToken(tokenResponse.access_token);
@@ -160,7 +173,7 @@ export class AuthenticationService {
         this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
       });
   }
-
+  
   /**
    * Sets the authorization token followed by one of the following:
    *
@@ -194,6 +207,22 @@ export class AuthenticationService {
   }
 
   /**
+   * Logout ongoing Oauth2 session.
+   */
+  private logoutAuthSession() {
+    const oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey)).refresh_token;
+    const credentials = JSON.parse(this.storage.getItem(this.credentialsStorageKey));    
+    this.authenticationInterceptor.removeAuthorizationTenant();    
+    let httpParams = new HttpParams();    
+    httpParams = httpParams.set('username', credentials.username);
+    httpParams = httpParams.set('client_id', `${environment.oauth.appId}`);
+    httpParams = httpParams.set('refresh_token', oAuthRefreshToken);
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/x-www-form-urlencoded')
+    return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/logout`, httpParams.toString(), {headers: headers}).subscribe();
+  }
+
+  /**
    * Logs out the authenticated user and clears the credentials from storage.
    * @returns {Observable<boolean>} True if the user was logged out successfully.
    */
@@ -202,6 +231,10 @@ export class AuthenticationService {
     if (twoFactorToken) {
       this.http.post('/twofactor/invalidate', { token: twoFactorToken.token }).subscribe();
       this.authenticationInterceptor.removeTwoFactorAuthorization();
+    }
+    const oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey));
+    if (oAuthRefreshToken) {
+      this.logoutAuthSession();
     }
     this.authenticationInterceptor.removeAuthorization();
     this.setCredentials();
