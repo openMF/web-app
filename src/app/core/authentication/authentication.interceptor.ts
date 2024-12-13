@@ -18,6 +18,7 @@ const httpOptions = {
 
 /** Authorization header. */
 const authorizationHeader = 'Authorization';
+const authorizationTenantHeader = 'Fineract-Platform-TenantId';
 /** Two factor access token header. */
 const twoFactorAccessTokenHeader = 'Fineract-Platform-TFA-Token';
 
@@ -65,6 +66,14 @@ export class AuthenticationInterceptor implements HttpInterceptor {
    */
   removeAuthorization() {
     delete httpOptions.headers[authorizationHeader];
+  }
+
+  /**
+   * Removes the authorization header.
+   */
+  removeAuthorizationTenant() {
+    delete httpOptions.headers[authorizationHeader];
+    delete httpOptions.headers[authorizationTenantHeader];
   }
 
   /**
