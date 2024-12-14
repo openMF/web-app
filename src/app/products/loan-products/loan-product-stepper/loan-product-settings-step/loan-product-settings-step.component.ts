@@ -63,7 +63,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       .subscribe((isLinkedToFloatingInterestRates: any) => {
         if (isLinkedToFloatingInterestRates) {
           this.loanProductSettingsForm.get('isInterestRecalculationEnabled').setValue(true);
-          this.loanProductSettingsForm.get('allowPartialPeriodInterestCalcualtion').setValue(true);
+          this.loanProductSettingsForm.get('allowPartialPeriodInterestCalculation').setValue(true);
         }
       });
 
@@ -96,7 +96,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'interestType': this.loanProductsTemplate.interestType.id,
       'isEqualAmortization': this.loanProductsTemplate.isEqualAmortization,
       'interestCalculationPeriodType': this.loanProductsTemplate.interestCalculationPeriodType.id,
-      'allowPartialPeriodInterestCalcualtion': this.loanProductsTemplate.allowPartialPeriodInterestCalcualtion,
+      'allowPartialPeriodInterestCalculation': this.loanProductsTemplate.allowPartialPeriodInterestCalculation,
       'transactionProcessingStrategyCode': transactionProcessingStrategyCode,
       'graceOnPrincipalPayment': this.loanProductsTemplate.graceOnPrincipalPayment,
       'graceOnInterestPayment': this.loanProductsTemplate.graceOnInterestPayment,
@@ -235,7 +235,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       'holdGuaranteeFunds': [false],
       'multiDisburseLoan': [false],
       'allowAttributeConfiguration': [true],
-      'allowPartialPeriodInterestCalcualtion': [false],
+      'allowPartialPeriodInterestCalculation': [false],
       'allowAttributeOverrides': this.formBuilder.group({
         'amortizationType': [true],
         'interestType': [true],
@@ -263,7 +263,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanProductSettingsForm.get('interestCalculationPeriodType').valueChanges
       .subscribe((interestCalculationPeriodType: any) => {
         if (interestCalculationPeriodType === 0) {
-          this.loanProductSettingsForm.patchValue({ 'allowPartialPeriodInterestCalcualtion': false });
+          this.loanProductSettingsForm.patchValue({ 'allowPartialPeriodInterestCalculation': false });
         }
       });
 
