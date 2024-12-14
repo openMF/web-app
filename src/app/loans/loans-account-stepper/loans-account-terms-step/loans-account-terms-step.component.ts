@@ -146,7 +146,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         interestType: this.loansAccountTermsData.interestType.id,
         isFloatingInterestRate: this.loansAccountTermsData.isLoanProductLinkedToFloatingRate ? false : '',
         interestCalculationPeriodType: this.loansAccountTermsData.interestCalculationPeriodType.id,
-        allowPartialPeriodInterestCalcualtion: this.loansAccountTermsData.allowPartialPeriodInterestCalcualtion,
+        allowPartialPeriodInterestCalculation: this.loansAccountTermsData.allowPartialPeriodInterestCalculation,
         inArrearsTolerance: this.loansAccountTermsData.inArrearsTolerance,
         graceOnPrincipalPayment: this.loansAccountTermsData.graceOnPrincipalPayment,
         graceOnInterestPayment: this.loansAccountTermsData.graceOnInterestPayment,
@@ -203,7 +203,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       }
       if (!allowAttributeOverrides.interestCalculationPeriodType) {
         this.loansAccountTermsForm.controls.interestCalculationPeriodType.disable();
-        this.loansAccountTermsForm.controls.allowPartialPeriodInterestCalcualtion.disable();
+        this.loansAccountTermsForm.controls.allowPartialPeriodInterestCalculation.disable();
       }
       if (!allowAttributeOverrides.inArrearsTolerance) {
         this.loansAccountTermsForm.controls.inArrearsTolerance.disable();
@@ -251,7 +251,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         interestType: this.loansAccountTermsData.interestType.id,
         isFloatingInterestRate: this.loansAccountTermsData.isLoanProductLinkedToFloatingRate ? false : '',
         interestCalculationPeriodType: this.loansAccountTermsData.interestCalculationPeriodType.id,
-        allowPartialPeriodInterestCalcualtion: this.loansAccountTermsData.allowPartialPeriodInterestCalcualtion,
+        allowPartialPeriodInterestCalculation: this.loansAccountTermsData.allowPartialPeriodInterestCalculation,
         inArrearsTolerance: this.loansAccountTermsData.inArrearsTolerance,
         graceOnPrincipalPayment: this.loansAccountTermsData.graceOnPrincipalPayment,
         graceOnInterestPayment: this.loansAccountTermsData.graceOnInterestPayment,
@@ -396,7 +396,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         Validators.required
       ],
       interestCalculationPeriodType: [''],
-      allowPartialPeriodInterestCalcualtion: [''],
+      allowPartialPeriodInterestCalculation: [''],
       inArrearsTolerance: [''],
       graceOnInterestCharged: [''],
       graceOnPrincipalPayment: [''],
