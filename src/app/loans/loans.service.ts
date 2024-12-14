@@ -600,7 +600,7 @@ export class LoansService {
     }
 
     if (loansAccountData.interestCalculationPeriodType === 0) {
-      loansAccountData.allowPartialPeriodInterestCalcualtion = false;
+      loansAccountData.allowPartialPeriodInterestCalculation = false;
     }
     if (!(loansAccountData.isFloatingInterestRate === false)) {
       delete loansAccountData.isFloatingInterestRate;
