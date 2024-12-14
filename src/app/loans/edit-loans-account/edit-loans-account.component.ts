@@ -150,7 +150,7 @@ export class EditLoansAccountComponent {
     }
 
     if (loansAccountData.interestCalculationPeriodType === 0) {
-      loansAccountData.allowPartialPeriodInterestCalcualtion = false;
+      loansAccountData.allowPartialPeriodInterestCalculation = false;
     }
     if (
       !loansAccountData.isLoanProductLinkedToFloatingRate ||
@@ -161,6 +161,12 @@ export class EditLoansAccountComponent {
     loansAccountData.principal = loansAccountData.principalAmount;
     delete loansAccountData.principalAmount;
     delete loansAccountData.multiDisburseLoan;
+
+    // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
+    // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
+    loansAccountData.allowPartialPeriodInterestCalcualtion = loansAccountData.allowPartialPeriodInterestCalculation;
+    delete loansAccountData.allowPartialPeriodInterestCalculation;
+
     this.loansService.updateLoansAccount(this.loanId, loansAccountData).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
