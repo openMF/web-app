@@ -934,17 +934,17 @@
 
       </div>
 
-        <div *ngIf="chargeOffReasonsToExpenseMappings.length" fxFlexFill fxLayout="row wrap"
+        <div *ngIf="chargeOffReasonToExpenseAccountMappings.length" fxFlexFill fxLayout="row wrap"
              fxLayout.lt-md="column">
 
             <h4 class="mat-h4" fxFlexFill>{{'labels.heading.Map Charge-off reasons to Expense accounts' | translate}}</h4>
 
-            <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="chargeOffReasonsToExpenseMappings">
+            <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="chargeOffReasonToExpenseAccountMappings">
 
                 <ng-container matColumnDef="chargeOffReasonCodeValueId">
                     <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Charge-off reason' | translate}} </th>
                     <td mat-cell *matCellDef="let chargeOffReasonsToExpenseMapping">
-                        {{ chargeOffReasonsToExpenseMapping.chargeOffReasonsCodeValue.name }}
+                        {{ chargeOffReasonsToExpenseMapping.chargeOffReasonCodeValue.name }}
                     </td>
                 </ng-container>
 
