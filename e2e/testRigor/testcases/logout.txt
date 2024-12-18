@@ -1,0 +1,14 @@
+validate-login-page
+log-in-and-validate
+check that page doesn't contain field "Username"
+check that page doesn't contain field "Password"
+check that page doesn't contain button "Login"
+check that page doesn't contain button "Forgot Password?"
+check that page contains button "Institution"
+check that page contains button "Accounting"
+check that page contains button "Reports"
+check that page contains button "Admin"
+check that page contains button "Self Service"
+check that page contains button "Configuration Wizard"
+logout
+validate-login-page

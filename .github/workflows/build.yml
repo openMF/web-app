@@ -16,6 +16,11 @@ jobs:
     name: Run Lint and Deploy
     runs-on: ubuntu-latest
 
+    # testRigor values for workflow testing
+    env:
+      MIFOS_TEST_SUITE_ID: ${{ secrets.TEST_SUITE_ID }}
+      MIFOS_AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -40,6 +45,12 @@ jobs:
       - name: Run build
         run: npm run build:prod
 
+      - name: Install testRigor Command Line
+        run : npm install -g testrigor-cli
+
+      - name: Run testRigor tests
+        run: . ../../e2e/testRigor/run_testrigor_tests.sh
+      
       - name: Deploy to github pages
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4

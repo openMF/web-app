@@ -1,0 +1,8 @@
+// Setting wrong credentials
+save value "wrong" as "username"
+save value "wrong" as "password"
+enter saved value "username" into field "Username"
+enter saved value "password" into field "Password"
+click exactly "Login"
+// validate invalid login message
+check that page contains "Invalid User Details. Please try again!"

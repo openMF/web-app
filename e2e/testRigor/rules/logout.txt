@@ -1,0 +1,2 @@
+click third "menu" on the right of "Search"
+click "Sign Out"
