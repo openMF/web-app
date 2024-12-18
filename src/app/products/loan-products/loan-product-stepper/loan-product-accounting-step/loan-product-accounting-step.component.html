@@ -337,12 +337,12 @@
           <h4 fxFlex="33%" class="mat-h4">{{'labels.heading.Map Charge-off reasons to Expense accounts' | translate}}</h4>
 
           <div fxFlex="63%">
-              <button type="button" mat-raised-button color="primary" (click)="add('ChargeOffReasonExpense', chargeOffReasonsToExpenseMappings)">
+              <button type="button" mat-raised-button color="primary" (click)="add('ChargeOffReasonExpense', chargeOffReasonToExpenseAccountMappings)">
                   <fa-icon icon="plus" class="m-r-10"></fa-icon>
                   {{'labels.buttons.Add' | translate}}
               </button>
           </div>
-          <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargeOffReasonsToExpenseMappings.value" *ngIf="chargeOffReasonsToExpenseMappings.value.length !== 0">
+          <table fxFlex="98%" class="mat-elevation-z1" mat-table [dataSource]="chargeOffReasonToExpenseAccountMappings.value" *ngIf="chargeOffReasonToExpenseAccountMappings.value.length !== 0">
 
               <ng-container matColumnDef="chargeOffReasonCodeValueId">
                   <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Charge-off reason' | translate}} </th>
@@ -361,10 +361,10 @@
               <ng-container matColumnDef="actions">
                   <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Actions' | translate}} </th>
                   <td mat-cell *matCellDef="let chargeOffReasonsToExpenseMapping; let i = index">
-                      <button mat-icon-button color="primary" (click)="edit('ChargeOffReasonExpense', chargeOffReasonsToExpenseMappings, i)">
+                      <button mat-icon-button color="primary" (click)="edit('ChargeOffReasonExpense', chargeOffReasonToExpenseAccountMappings, i)">
                           <fa-icon icon="edit"></fa-icon>
                       </button>
-                      <button mat-icon-button color="warn" (click)="delete(chargeOffReasonsToExpenseMappings, i)">
+                      <button mat-icon-button color="warn" (click)="delete(chargeOffReasonToExpenseAccountMappings, i)">
                           <fa-icon icon="trash"></fa-icon>
                       </button>
                   </td>
