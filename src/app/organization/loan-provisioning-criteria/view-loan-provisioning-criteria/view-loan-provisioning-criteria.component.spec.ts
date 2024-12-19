@@ -8,9 +8,8 @@ describe('ViewLoanProvisioningCriteriaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewLoanProvisioningCriteriaComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewLoanProvisioningCriteriaComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

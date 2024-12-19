@@ -30,7 +30,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./charges-tab.component.scss']
 })
 export class ChargesTabComponent implements OnInit {
-
   /** Savings Account Data */
   savingsAccountData: any;
   /** Charges Data */
@@ -66,13 +65,15 @@ export class ChargesTabComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private savingsService: SavingsService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private router: Router,
-              private dialog: MatDialog,
-              private settingsService: SettingsService,
-            private translateService: TranslateService) {
+  constructor(
+    private savingsService: SavingsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    private dialog: MatDialog,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {
     this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.chargesData = this.savingsAccountData.charges;
@@ -80,7 +81,7 @@ export class ChargesTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    const activeCharges = this.chargesData ? this.chargesData.filter(charge => charge.isActive) : [];
+    const activeCharges = this.chargesData ? this.chargesData.filter((charge) => charge.isActive) : [];
     this.dataSource = new MatTableDataSource(activeCharges);
   }
 
@@ -90,15 +91,14 @@ export class ChargesTabComponent implements OnInit {
   toggleCharges() {
     this.showInactiveCharges = !this.showInactiveCharges;
     if (!this.showInactiveCharges) {
-      const activeCharges = this.chargesData.filter(charge => charge.isActive);
+      const activeCharges = this.chargesData.filter((charge) => charge.isActive);
       this.dataSource.data = activeCharges;
     } else {
-      const inActiveCharges = this.chargesData.filter(charge => !charge.isActive);
+      const inActiveCharges = this.chargesData.filter((charge) => !charge.isActive);
       this.dataSource.data = inActiveCharges;
     }
     this.chargesTableRef.renderRows();
   }
-
 
   /**
    * Pays the charge.
@@ -120,6 +120,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -137,7 +138,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'paycharge', dataObject, chargeId)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'paycharge', dataObject, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -153,7 +155,8 @@ export class ChargesTabComponent implements OnInit {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'waive', {}, chargeId)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'waive', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -169,7 +172,8 @@ export class ChargesTabComponent implements OnInit {
     const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -190,6 +194,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
+
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
@@ -206,7 +211,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService.editSavingsAccountCharge(this.savingsAccountData.id, dataObject, charge.id)
+        this.savingsService
+          .editSavingsAccountCharge(this.savingsAccountData.id, dataObject, charge.id)
           .subscribe(() => {
             this.reload();
           });
@@ -224,10 +230,9 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.savingsService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -237,7 +242,11 @@ export class ChargesTabComponent implements OnInit {
    * @param {any} charge Charge
    */
   isRecurringCharge(charge: any) {
-    return charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee' || charge.chargeTimeType.value === 'Weekly Fee';
+    return (
+      charge.chargeTimeType.value === 'Monthly Fee' ||
+      charge.chargeTimeType.value === 'Annual Fee' ||
+      charge.chargeTimeType.value === 'Weekly Fee'
+    );
   }
 
   /**
@@ -254,13 +263,14 @@ export class ChargesTabComponent implements OnInit {
    */
   private reload() {
     const url: string = this.router.url;
-    const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length);
-    this.router.navigateByUrl(refreshUrl, {skipLocationChange: true})
-      .then(() => this.router.navigate([url]));
+    const refreshUrl: string = this.router.url.slice(
+      0,
+      this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length
+    );
+    this.router.navigateByUrl(refreshUrl, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 
   viewAllChargeButtons(text: string): string {
     return this.translateService.instant('labels.buttons.' + text);
   }
-
 }

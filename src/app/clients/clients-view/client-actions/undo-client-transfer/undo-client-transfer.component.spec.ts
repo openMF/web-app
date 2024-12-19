@@ -8,9 +8,8 @@ describe('UndoClientTransferComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UndoClientTransferComponent ]
-    })
-    .compileComponents();
+      declarations: [UndoClientTransferComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

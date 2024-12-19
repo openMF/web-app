@@ -8,9 +8,8 @@ describe('AmazonS3Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AmazonS3Component ]
-    })
-    .compileComponents();
+      declarations: [AmazonS3Component]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

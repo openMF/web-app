@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-teller.component.scss']
 })
 export class CreateTellerComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -38,17 +37,21 @@ export class CreateTellerComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
-    this.tellerStatusesData = [{'id': 300, 'code': '300', 'value': 'Active'},
-     {'id': 400, 'code': '400', 'value': 'Inactive'}];
+    this.tellerStatusesData = [
+      { id: 300, code: '300', value: 'Active' },
+      { id: 400, code: '400', value: 'Inactive' }
+    ];
   }
 
   /**
@@ -64,12 +67,26 @@ export class CreateTellerComponent implements OnInit {
    */
   createTellerForm() {
     this.tellerForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'name': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'description': [''],
-      'startDate': ['', Validators.required],
-      'endDate': [''],
-      'status': ['', Validators.required],
+      officeId: [
+        '',
+        Validators.required
+      ],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('(^[A-z]).*')]
+      ],
+      description: [''],
+      startDate: [
+        '',
+        Validators.required
+      ],
+      endDate: [''],
+      status: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -95,8 +112,13 @@ export class CreateTellerComponent implements OnInit {
       locale
     };
     this.organizationService.createTeller(data).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

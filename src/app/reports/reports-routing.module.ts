@@ -70,6 +70,7 @@ const routes: Routes = [
       ]
     }
   ])
+
 ];
 
 /**
@@ -88,4 +89,4 @@ const routes: Routes = [
     GlAccountsResolver
   ]
 })
-export class ReportsRoutingModule { }
+export class ReportsRoutingModule {}

@@ -23,7 +23,6 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./holidays.component.scss']
 })
 export class HolidaysComponent implements OnInit, AfterViewInit {
-
   /** Office selector. */
   officeSelector = new UntypedFormControl();
   /** Holidays data. */
@@ -31,7 +30,13 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   /** Offices data. */
   officeData: any;
   /** Columns to be displayed in holidays table. */
-  displayedColumns: string[] = ['name', 'fromDate', 'toDate', 'repaymentsRescheduledTo', 'status'];
+  displayedColumns: string[] = [
+    'name',
+    'fromDate',
+    'toDate',
+    'repaymentsRescheduledTo',
+    'status'
+  ];
   /** Data source for holidays table. */
   dataSource: MatTableDataSource<any>;
 
@@ -58,12 +63,14 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { offices: any }) => {
+  constructor(
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -112,7 +119,12 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -122,13 +134,13 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showHolidayPage === true) {
       setTimeout(() => {
-          this.showPopover(this.templateButtonCreateHoliday, this.buttonCreateHoliday.nativeElement, 'bottom', true);
+        this.showPopover(this.templateButtonCreateHoliday, this.buttonCreateHoliday.nativeElement, 'bottom', true);
       });
     }
 
     if (this.configurationWizardService.showHolidayFilter === true) {
       setTimeout(() => {
-          this.showPopover(this.templateFilterRef, this.filterRef.nativeElement, 'bottom', true);
+        this.showPopover(this.templateFilterRef, this.filterRef.nativeElement, 'bottom', true);
       });
     }
   }

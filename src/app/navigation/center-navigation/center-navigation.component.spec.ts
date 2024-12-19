@@ -8,9 +8,8 @@ describe('CenterNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CenterNavigationComponent ]
-    })
-    .compileComponents();
+      declarations: [CenterNavigationComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

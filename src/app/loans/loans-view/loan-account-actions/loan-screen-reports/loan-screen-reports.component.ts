@@ -16,7 +16,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./loan-screen-reports.component.scss']
 })
 export class LoanScreenReportsComponent implements OnInit {
-
   @Input() dataObject: any;
   /** Loan Screen Reportform. */
   loanScreenReportForm: UntypedFormGroup;
@@ -38,11 +37,13 @@ export class LoanScreenReportsComponent implements OnInit {
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {Renderer2} renderer Renderer 2
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private loansService: LoansService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private renderer: Renderer2) {
+    private renderer: Renderer2
+  ) {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
@@ -59,7 +60,7 @@ export class LoanScreenReportsComponent implements OnInit {
    */
   createLoanScreenReportForm() {
     this.loanScreenReportForm = this.formBuilder.group({
-      'templateId': ['']
+      templateId: ['']
     });
   }
 
@@ -86,5 +87,4 @@ export class LoanScreenReportsComponent implements OnInit {
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
     });
   }
-
 }

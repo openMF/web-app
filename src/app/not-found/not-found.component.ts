@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'mifosx-not-found',
@@ -7,11 +7,9 @@ import {Location} from '@angular/common';
   styleUrls: ['./not-found.component.scss']
 })
 export class NotFoundComponent {
-
-constructor(private location: Location) {}
+  constructor(private location: Location) {}
 
   goBack(): void {
-  this.location.back();
+    this.location.back();
   }
-
 }

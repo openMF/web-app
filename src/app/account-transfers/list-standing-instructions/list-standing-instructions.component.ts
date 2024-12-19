@@ -22,7 +22,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./list-standing-instructions.component.scss']
 })
 export class ListStandingInstructionsComponent {
-
   /** Recurring Deposits Data */
   standingIntructionsTemplateData: any;
   /** Instructions Data */
@@ -50,13 +49,20 @@ export class ListStandingInstructionsComponent {
   /** Data source for instructions table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in instructions table. */
-  displayedColumns: string[] = ['client', 'fromAccount', 'beneficiary', 'toAccount', 'amount', 'validity', 'actions'];
+  displayedColumns: string[] = [
+    'client',
+    'fromAccount',
+    'beneficiary',
+    'toAccount',
+    'amount',
+    'validity',
+    'actions'
+  ];
 
   /** Instruction Table Reference */
   @ViewChild('instructionsTable', { static: true }) instructionTableRef: MatTable<Element>;
   /** Paginator for centers table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
 
   /**
    * Retrieves Standing Instructions Data from `resolve`.
@@ -65,10 +71,12 @@ export class ListStandingInstructionsComponent {
    * @param {SettingsService} settingsService Settings Service
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { standingIntructionsTemplate: any }) => {
       this.standingIntructionsTemplateData = data.standingIntructionsTemplate;
       if (data.standingIntructionsTemplate.fromClient) {
@@ -106,7 +114,7 @@ export class ListStandingInstructionsComponent {
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
     const searchData = {
-      clientId : this.standingIntructionsTemplateData.fromClient.id || this.fromClientId.value,
+      clientId: this.standingIntructionsTemplateData.fromClient.id || this.fromClientId.value,
       clientName: this.standingIntructionsTemplateData.fromClient.displayName || this.clientNameControl.value,
       locale,
       dateFormat,
@@ -130,11 +138,8 @@ export class ListStandingInstructionsComponent {
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountTransfersService.deleteStandingInstrucions(instructionId)
-          .subscribe(() => {});
+        this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {});
       }
     });
   }
-
 }
-

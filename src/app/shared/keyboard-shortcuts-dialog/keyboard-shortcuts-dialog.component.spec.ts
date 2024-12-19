@@ -8,9 +8,8 @@ describe('KeyboardShortcutsDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KeyboardShortcutsDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [KeyboardShortcutsDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

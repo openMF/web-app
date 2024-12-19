@@ -23,7 +23,6 @@ import { Location } from '@angular/common';
   styleUrls: ['./view-transaction.component.scss']
 })
 export class ViewTransactionComponent {
-
   /** Transaction data. */
   transactionData: any;
 
@@ -36,14 +35,16 @@ export class ViewTransactionComponent {
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private recurringDepositsService: RecurringDepositsService,
+  constructor(
+    private recurringDepositsService: RecurringDepositsService,
     private route: ActivatedRoute,
     private location: Location,
     private dateUtils: Dates,
     private router: Router,
     public dialog: MatDialog,
     private translateService: TranslateService,
-    private settingsService: SettingsService, ) {
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { recurringDepositsAccountTransaction: any }) => {
       this.transactionData = data.recurringDepositsAccountTransaction;
     });
@@ -54,20 +55,32 @@ export class ViewTransactionComponent {
    */
   undoTransaction() {
     const accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
-    const undoTransactionAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, { data: { heading: this.translateService.instant('labels.heading.Undo Transaction'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to undo this transaction ?') } });
+    const undoTransactionAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Undo Transaction'),
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to undo this transaction ?'
+        )
+      }
+    });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
-          transactionDate: this.dateUtils.formatDate(this.transactionData.date && new Date(this.transactionData.date), dateFormat),
+          transactionDate: this.dateUtils.formatDate(
+            this.transactionData.date && new Date(this.transactionData.date),
+            dateFormat
+          ),
           transactionAmount: 0,
           dateFormat,
           locale
         };
-        this.recurringDepositsService.executeRecurringDepositsAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.recurringDepositsService
+          .executeRecurringDepositsAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id)
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }

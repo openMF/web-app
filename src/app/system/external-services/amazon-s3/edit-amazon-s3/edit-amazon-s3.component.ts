@@ -15,7 +15,6 @@ import { SystemService } from 'app/system/system.service';
   styleUrls: ['./edit-amazon-s3.component.scss']
 })
 export class EditAmazonS3Component implements OnInit {
-
   /** Amazon S3 Configuration data */
   amazonS3ConfigurationData: any;
   /** Amazon S3 Configuration Form */
@@ -32,10 +31,12 @@ export class EditAmazonS3Component implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { amazonS3Configuration: any }) => {
       this.amazonS3ConfigurationData = data.amazonS3Configuration;
     });
@@ -55,9 +56,18 @@ export class EditAmazonS3Component implements OnInit {
    */
   createAmazonS3ConfigurationForm() {
     this.amazonS3ConfigurationForm = this.formBuilder.group({
-      's3_bucket_name': [this.amazonS3ConfigurationData[1].value, Validators.required],
-      's3_access_key': [this.amazonS3ConfigurationData[0].value, Validators.required],
-      's3_secret_key': [this.amazonS3ConfigurationData[2].value, Validators.required]
+      s3_bucket_name: [
+        this.amazonS3ConfigurationData[1].value,
+        Validators.required
+      ],
+      s3_access_key: [
+        this.amazonS3ConfigurationData[0].value,
+        Validators.required
+      ],
+      s3_secret_key: [
+        this.amazonS3ConfigurationData[2].value,
+        Validators.required
+      ]
     });
   }
 
@@ -72,5 +82,4 @@ export class EditAmazonS3Component implements OnInit {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
-
 }

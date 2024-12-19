@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./allocate-cash.component.scss']
 })
 export class AllocateCashComponent implements OnInit {
-
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -36,13 +35,15 @@ export class AllocateCashComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService,
-              private router: Router) {
-    this.route.data.subscribe((data: { cashierTemplate: any}) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { cashierTemplate: any }) => {
       this.cashierData = data.cashierTemplate;
     });
   }
@@ -57,14 +58,34 @@ export class AllocateCashComponent implements OnInit {
    */
   setCashierForm() {
     this.allocateCashForm = this.formBuilder.group({
-      'office': [{value: this.cashierData.officeName, disabled: true}],
-      'tellerName': [{value: this.cashierData.tellerName, disabled: true}],
-      'cashier': [{value: this.cashierData.cashierName, disabled: true}],
-      'assignmentPeriod': [{value: this.dateUtils.formatDate(this.cashierData.startDate, 'dd MMMM yyyy') + ' - ' + this.dateUtils.formatDate(this.cashierData.endDate, 'dd MMMM yyyy'), disabled: true}],
-      'txnDate': [new Date(), Validators.required],
-      'currencyCode': ['', Validators.required],
-      'txnAmount': ['', Validators.required],
-      'txnNote': ['', Validators.required]
+      office: [{ value: this.cashierData.officeName, disabled: true }],
+      tellerName: [{ value: this.cashierData.tellerName, disabled: true }],
+      cashier: [{ value: this.cashierData.cashierName, disabled: true }],
+      assignmentPeriod: [
+        {
+          value:
+            this.dateUtils.formatDate(this.cashierData.startDate, 'dd MMMM yyyy') +
+            ' - ' +
+            this.dateUtils.formatDate(this.cashierData.endDate, 'dd MMMM yyyy'),
+          disabled: true
+        }
+      ],
+      txnDate: [
+        new Date(),
+        Validators.required
+      ],
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      txnAmount: [
+        '',
+        Validators.required
+      ],
+      txnNote: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -84,9 +105,10 @@ export class AllocateCashComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, data).subscribe((response: any) => {
-      this.router.navigate(['../'], {relativeTo: this.route});
-    });
+    this.organizationService
+      .allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, data)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
-
 }

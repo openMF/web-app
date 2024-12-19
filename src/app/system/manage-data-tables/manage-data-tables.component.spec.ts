@@ -8,9 +8,8 @@ describe('ManageDataTablesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageDataTablesComponent ]
-    })
-    .compileComponents();
+      declarations: [ManageDataTablesComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

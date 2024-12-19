@@ -22,14 +22,19 @@ import { Accounting } from 'app/core/utils/accounting';
   styleUrls: ['./edit-share-product.component.scss']
 })
 export class EditShareProductComponent {
-
-  @ViewChild(ShareProductDetailsStepComponent, { static: true }) shareProductDetailsStep: ShareProductDetailsStepComponent;
-  @ViewChild(ShareProductCurrencyStepComponent, { static: true }) shareProductCurrencyStep: ShareProductCurrencyStepComponent;
+  @ViewChild(ShareProductDetailsStepComponent, { static: true })
+  shareProductDetailsStep: ShareProductDetailsStepComponent;
+  @ViewChild(ShareProductCurrencyStepComponent, { static: true })
+  shareProductCurrencyStep: ShareProductCurrencyStepComponent;
   @ViewChild(ShareProductTermsStepComponent, { static: true }) shareProductTermsStep: ShareProductTermsStepComponent;
-  @ViewChild(ShareProductSettingsStepComponent, { static: true }) shareProductSettingsStep: ShareProductSettingsStepComponent;
-  @ViewChild(ShareProductMarketPriceStepComponent, { static: true }) shareProductMarketPriceStep: ShareProductMarketPriceStepComponent;
-  @ViewChild(ShareProductChargesStepComponent, { static: true }) shareProductChargesStep: ShareProductChargesStepComponent;
-  @ViewChild(ShareProductAccountingStepComponent, { static: true }) shareProductAccountingStep: ShareProductAccountingStepComponent;
+  @ViewChild(ShareProductSettingsStepComponent, { static: true })
+  shareProductSettingsStep: ShareProductSettingsStepComponent;
+  @ViewChild(ShareProductMarketPriceStepComponent, { static: true })
+  shareProductMarketPriceStep: ShareProductMarketPriceStepComponent;
+  @ViewChild(ShareProductChargesStepComponent, { static: true })
+  shareProductChargesStep: ShareProductChargesStepComponent;
+  @ViewChild(ShareProductAccountingStepComponent, { static: true })
+  shareProductAccountingStep: ShareProductAccountingStepComponent;
 
   shareProductAndTemplate: any;
   accountingRuleData: string[] = [];
@@ -41,11 +46,13 @@ export class EditShareProductComponent {
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(private route: ActivatedRoute,
-              private productsService: ProductsService,
-              private router: Router,
-              private settingsService: SettingsService,
-              private accounting: Accounting) {
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private router: Router,
+    private settingsService: SettingsService,
+    private accounting: Accounting
+  ) {
     this.route.data.subscribe((data: { shareProductAndTemplate: any }) => {
       this.shareProductAndTemplate = data.shareProductAndTemplate;
     });
@@ -84,15 +91,13 @@ export class EditShareProductComponent {
       this.shareProductSettingsForm.valid &&
       this.shareProductMarketPriceForm.valid &&
       this.shareProductAccountingForm.valid &&
-      (
-        !this.shareProductDetailsForm.pristine ||
+      (!this.shareProductDetailsForm.pristine ||
         !this.shareProductCurrencyForm.pristine ||
         !this.shareProductTermsForm.pristine ||
         !this.shareProductSettingsForm.pristine ||
         !this.shareProductMarketPriceForm.pristine ||
         !this.shareProductChargesStep.pristine ||
-        !this.shareProductAccountingForm.pristine
-      )
+        !this.shareProductAccountingForm.pristine)
     );
   }
 
@@ -115,10 +120,16 @@ export class EditShareProductComponent {
       chargesSelected: this.shareProduct.chargesSelected.map((charge: any) => ({ id: charge.id })),
       locale: this.settingsService.language.code // locale required for digitsAfterDecimal
     };
-    this.productsService.updateShareProduct(this.shareProductAndTemplate.id, shareProduct)
+    this.productsService
+      .updateShareProduct(this.shareProductAndTemplate.id, shareProduct)
       .subscribe((response: any) => {
-        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
       });
   }
-
 }

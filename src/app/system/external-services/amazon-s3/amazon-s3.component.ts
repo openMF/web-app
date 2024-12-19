@@ -13,11 +13,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./amazon-s3.component.scss']
 })
 export class AmazonS3Component implements OnInit {
-
   /** Amazon S3 configuration data. */
   amazonS3ConfigurationData: any;
   /** Columns to be displayed in Amazon S3 configuration table. */
-  displayedColumns: string[] = ['name', 'value'];
+  displayedColumns: string[] = [
+    'name',
+    'value'
+  ];
   /** Data source for Amazon S3 configuration table. */
   dataSource: MatTableDataSource<any>;
 
@@ -56,5 +58,4 @@ export class AmazonS3Component implements OnInit {
     }
     return value;
   }
-
 }

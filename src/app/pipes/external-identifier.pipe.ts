@@ -4,7 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'externalIdentifier'
 })
 export class ExternalIdentifierPipe implements PipeTransform {
-
   transform(externalId: string): string {
     const limit = 20;
     if (!externalId) {
@@ -17,9 +16,8 @@ export class ExternalIdentifierPipe implements PipeTransform {
         return values[4];
       } else {
         const inputLen = externalId.length;
-        return inputLen > limit ? externalId.substring((inputLen - limit), inputLen) : externalId;
+        return inputLen > limit ? externalId.substring(inputLen - limit, inputLen) : externalId;
       }
     }
   }
-
 }

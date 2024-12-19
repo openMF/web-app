@@ -8,9 +8,8 @@ describe('WorkflowDiagramComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WorkflowDiagramComponent ]
-    })
-    .compileComponents();
+      declarations: [WorkflowDiagramComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

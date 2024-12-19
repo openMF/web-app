@@ -8,9 +8,8 @@ describe('UnassignRoleDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UnassignRoleDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [UnassignRoleDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -10,14 +10,15 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./view-range.component.scss']
 })
 export class ViewRangeComponent {
-
   /** Delinquency Range Data. */
   delinquencyRangeData: any;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private productsService: ProductsService) {
+    private productsService: ProductsService
+  ) {
     this.route.data.subscribe((data: { delinquencyRange: any }) => {
       this.delinquencyRangeData = data.delinquencyRange;
     });
@@ -35,5 +36,4 @@ export class ViewRangeComponent {
       }
     });
   }
-
 }

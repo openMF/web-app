@@ -7,10 +7,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./release-amount-dialog.component.scss']
 })
 export class ReleaseAmountDialogComponent {
-
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<ReleaseAmountDialogComponent>) { }
-
+  constructor(public dialogRef: MatDialogRef<ReleaseAmountDialogComponent>) {}
 }

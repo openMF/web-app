@@ -23,7 +23,6 @@ import { AddEventDialogComponent } from '../add-event-dialog/add-event-dialog.co
   styleUrls: ['./edit-hook.component.scss']
 })
 export class EditHookComponent implements OnInit {
-
   /** Hooks Template Data. */
   hooksTemplateData: any;
   /** Hook Data. */
@@ -31,7 +30,11 @@ export class EditHookComponent implements OnInit {
   /** Hook Form. */
   hookForm: UntypedFormGroup;
   /** Columns to be displayed in events table. */
-  displayedColumns: string[] = ['entityName', 'actionName', 'actions'];
+  displayedColumns: string[] = [
+    'entityName',
+    'actionName',
+    'actions'
+  ];
   /** Data source for events table. */
   dataSource: MatTableDataSource<any>;
   /** Events Data. */
@@ -50,13 +53,15 @@ export class EditHookComponent implements OnInit {
    * @param {MatDialog} dialog Dialog Reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private systemService: SystemService,
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private dialog: MatDialog,
-    private translateService: TranslateService) {
-    this.route.data.subscribe((data: { hooksTemplate: any, hook: any }) => {
+    private translateService: TranslateService
+  ) {
+    this.route.data.subscribe((data: { hooksTemplate: any; hook: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
       this.hookData = data.hook;
       this.eventsData = data.hook.events ? data.hook.events : [];
@@ -84,15 +89,59 @@ export class EditHookComponent implements OnInit {
    */
   createHookForm() {
     this.hookForm = this.formBuilder.group({
-      'name': [{ value: this.hookData.name, disabled: true }, Validators.required],
-      'displayName': [this.hookData.displayName, Validators.required],
-      'isActive': [this.hookData.isActive],
-      'phoneNumber': [{ value: this.hookData.name === 'SMS Bridge' ? this.hookData.config[1].fieldValue : '', disabled: this.hookData.name !== 'SMS Bridge' }, Validators.required],
-      'smsProvider': [{ value: this.hookData.name === 'SMS Bridge' ? this.hookData.config[2].fieldValue : '', disabled: this.hookData.name !== 'SMS Bridge' }, Validators.required],
-      'smsProviderAccountId': [{ value: this.hookData.name === 'SMS Bridge' ? this.hookData.config[3].fieldValue : '', disabled: this.hookData.name !== 'SMS Bridge' }, Validators.required],
-      'smsProviderToken': [{ value: this.hookData.name === 'SMS Bridge' ? this.hookData.config[4].fieldValue : '', disabled: this.hookData.name !== 'SMS Bridge' }, Validators.required],
-      'contentType': [{ value: this.hookData.name === 'Web' ? this.hookData.config[0].fieldValue : '', disabled: this.hookData.name !== 'Web' }, Validators.required],
-      'payloadUrl': [this.hookData.name === 'Web' ? this.hookData.config[1].fieldValue : this.hookData.config[0].fieldValue, Validators.required]
+      name: [
+        { value: this.hookData.name, disabled: true },
+        Validators.required
+      ],
+      displayName: [
+        this.hookData.displayName,
+        Validators.required
+      ],
+      isActive: [this.hookData.isActive],
+      phoneNumber: [
+        {
+          value: this.hookData.name === 'SMS Bridge' ? this.hookData.config[1].fieldValue : '',
+          disabled: this.hookData.name !== 'SMS Bridge'
+        },
+        Validators.required
+
+      ],
+      smsProvider: [
+        {
+          value: this.hookData.name === 'SMS Bridge' ? this.hookData.config[2].fieldValue : '',
+          disabled: this.hookData.name !== 'SMS Bridge'
+        },
+        Validators.required
+
+      ],
+      smsProviderAccountId: [
+        {
+          value: this.hookData.name === 'SMS Bridge' ? this.hookData.config[3].fieldValue : '',
+          disabled: this.hookData.name !== 'SMS Bridge'
+        },
+        Validators.required
+
+      ],
+      smsProviderToken: [
+        {
+          value: this.hookData.name === 'SMS Bridge' ? this.hookData.config[4].fieldValue : '',
+          disabled: this.hookData.name !== 'SMS Bridge'
+        },
+        Validators.required
+
+      ],
+      contentType: [
+        {
+          value: this.hookData.name === 'Web' ? this.hookData.config[0].fieldValue : '',
+          disabled: this.hookData.name !== 'Web'
+        },
+        Validators.required
+
+      ],
+      payloadUrl: [
+        this.hookData.name === 'Web' ? this.hookData.config[1].fieldValue : this.hookData.config[0].fieldValue,
+        Validators.required
+      ]
     });
   }
 
@@ -121,7 +170,12 @@ export class EditHookComponent implements OnInit {
    */
   deleteEvent(index: number) {
     const deleteEventDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.event with entity name of') + ' ' + this.eventsData[index].entityName }
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.inputs.event with entity name of') +
+          ' ' +
+          this.eventsData[index].entityName
+      }
     });
     deleteEventDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -138,11 +192,17 @@ export class EditHookComponent implements OnInit {
    */
   submit() {
     const hook: {
-      name: string, isActive: boolean, displayName: string, events: any,
+      name: string;
+      isActive: boolean;
+      displayName: string;
+      events: any;
       config: {
-        'Payload URL': string, 'Content Type'?: string, 'SMS Provider'?: string,
-        'SMS Provider Account Id'?: string, 'SMS Provider Token'?: string
-      }
+        'Payload URL': string;
+        'Content Type'?: string;
+        'SMS Provider'?: string;
+        'SMS Provider Account Id'?: string;
+        'SMS Provider Token'?: string;
+      };
     } = {
       name: this.hookForm.get('name').value,
       isActive: this.hookForm.get('isActive').value,
@@ -152,14 +212,16 @@ export class EditHookComponent implements OnInit {
         'Payload URL': this.hookForm.get('payloadUrl').value,
         'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
         'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
-        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled ? this.hookForm.get('smsProviderAccountId').value : undefined,
-        'SMS Provider Token': this.hookForm.get('smsProviderToken').enabled ? this.hookForm.get('smsProviderToken').value : undefined
+        'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled
+          ? this.hookForm.get('smsProviderAccountId').value
+          : undefined,
+        'SMS Provider Token': this.hookForm.get('smsProviderToken').enabled
+          ? this.hookForm.get('smsProviderToken').value
+          : undefined
       }
     };
-    this.systemService.updateHook(this.hookData.id, hook)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    this.systemService.updateHook(this.hookData.id, hook).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
-
 }

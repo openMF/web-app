@@ -13,19 +13,17 @@ import { ClientsService } from '../clients.service';
  */
 @Injectable()
 export class ClientDocumentsResolver implements Resolve<Object> {
+  /**
+   * @param {ClientsService} ClientsService Clients service.
+   */
+  constructor(private clientsService: ClientsService) {}
 
-    /**
-     * @param {ClientsService} ClientsService Clients service.
-     */
-    constructor(private clientsService: ClientsService) { }
-
-    /**
-     * Returns the Client's Documents data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.paramMap.get('clientId');
-        return this.clientsService.getClientDocuments(clientId);
-    }
-
+  /**
+   * Returns the Client's Documents data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const clientId = route.parent.paramMap.get('clientId');
+    return this.clientsService.getClientDocuments(clientId);
+  }
 }

@@ -8,9 +8,8 @@ describe('MigrateOpeningBalancesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MigrateOpeningBalancesComponent ]
-    })
-    .compileComponents();
+      declarations: [MigrateOpeningBalancesComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

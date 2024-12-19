@@ -8,9 +8,8 @@ describe('ShareProductDetailsStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShareProductDetailsStepComponent ]
-    })
-    .compileComponents();
+      declarations: [ShareProductDetailsStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

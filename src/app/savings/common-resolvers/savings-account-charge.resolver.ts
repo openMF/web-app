@@ -13,11 +13,10 @@ import { SavingsService } from '../savings.service';
  */
 @Injectable()
 export class SavingsAccountChargeResolver implements Resolve<Object> {
-
   /**
    * @param {SavingsService} SavingsService Savings service.
    */
-  constructor(private savingsService: SavingsService) { }
+  constructor(private savingsService: SavingsService) {}
 
   /**
    * Returns the Savings Account Charge data.
@@ -29,5 +28,4 @@ export class SavingsAccountChargeResolver implements Resolve<Object> {
     const chargeId = route.paramMap.get('id');
     return this.savingsService.getSavingsAccountCharge(savingAccountId, chargeId);
   }
-
 }

@@ -13,11 +13,10 @@ import { SavingsService } from '../savings.service';
  */
 @Injectable()
 export class SavingsAccountTransactionTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {SavingsService} SavingsService Savings service.
    */
-  constructor(private savingsService: SavingsService) { }
+  constructor(private savingsService: SavingsService) {}
 
   /**
    * Returns the Savings Account Transaction Template data.
@@ -29,5 +28,4 @@ export class SavingsAccountTransactionTemplateResolver implements Resolve<Object
     const transactionId = route.paramMap.get('id');
     return this.savingsService.getSavingsAccountTransactionTemplate(savingAccountId, transactionId);
   }
-
 }

@@ -20,7 +20,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-campaign.component.scss']
 })
 export class CreateCampaignComponent {
-
   /** SMS Campaign Template */
   smsCampaignTemplate: any;
   /** Run report headers */
@@ -39,11 +38,13 @@ export class CreateCampaignComponent {
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { smsCampaignTemplate: any }) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
     });
@@ -95,8 +96,13 @@ export class CreateCampaignComponent {
       smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(prevRecurrenceDate, dateTimeFormat);
     }
     this.organizationService.createSmsCampaign(smsCampaign).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

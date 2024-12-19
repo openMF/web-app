@@ -13,7 +13,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class SettingsService {
-
   public static businessDateFormat = 'yyyy-MM-dd';
   public static businessDateConfigName = 'enable-business-date';
   public static businessDateType = 'BUSINESS_DATE';
@@ -21,8 +20,10 @@ export class SettingsService {
   minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
 
-  constructor(private alertService: AlertService,
-    private dateUtils: Dates) { }
+  constructor(
+    private alertService: AlertService,
+    private dateUtils: Dates
+  ) {}
 
   /**
    * Sets date format setting throughout the app.
@@ -36,7 +37,7 @@ export class SettingsService {
    * Sets language setting throughout the app.
    * @param {any} language Language.
    */
-  setLanguage(language: { name: string, code: string }) {
+  setLanguage(language: { name: string; code: string }) {
     localStorage.setItem('mifosXLanguage', JSON.stringify(language));
   }
 
@@ -241,8 +242,10 @@ export class SettingsService {
       if (data.type === dateType) {
         const dateVal = new Date(data.date);
         this.setBusinessDate(this.dateUtils.formatDate(dateVal, SettingsService.businessDateFormat));
-        this.alertService.alert({ type: dateType + ' Set',
-          message: this.dateUtils.formatDate(dateVal, this.dateFormat())});
+        this.alertService.alert({
+          type: dateType + ' Set',
+          message: this.dateUtils.formatDate(dateVal, this.dateFormat())
+        });
         return;
       }
     });
@@ -255,5 +258,4 @@ export class SettingsService {
   get themeDarkEnabled() {
     return JSON.parse(localStorage.getItem('mifosXThemeDarkEnabled'));
   }
-
 }

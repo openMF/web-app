@@ -12,7 +12,7 @@ import { SystemService } from '../../system.service';
 @Component({
   selector: 'mifosx-edit-role',
   templateUrl: './edit-role.component.html',
-  styleUrls: ['./edit-role.component.scss'],
+  styleUrls: ['./edit-role.component.scss']
 })
 export class EditRoleComponent implements OnInit {
   /** Role Form */
@@ -50,8 +50,14 @@ export class EditRoleComponent implements OnInit {
    */
   createRoleForm() {
     this.roleForm = this.formBuilder.group({
-      name: [{ value: this.roleData.name, disabled: true }, Validators.required],
-      description: [this.roleData.description, Validators.required],
+      name: [
+        { value: this.roleData.name, disabled: true },
+        Validators.required
+      ],
+      description: [
+        this.roleData.description,
+        Validators.required
+      ]
     });
   }
 

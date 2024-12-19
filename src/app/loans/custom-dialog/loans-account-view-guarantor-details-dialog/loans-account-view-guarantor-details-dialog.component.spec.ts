@@ -8,9 +8,8 @@ describe('LoansAccountViewGuarantorDetailsDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoansAccountViewGuarantorDetailsDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [LoansAccountViewGuarantorDetailsDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

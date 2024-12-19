@@ -8,9 +8,8 @@ describe('GroupTransferClientsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupTransferClientsComponent ]
-    })
-    .compileComponents();
+      declarations: [GroupTransferClientsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

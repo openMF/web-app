@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./reject-loan.component.scss']
 })
 export class RejectLoanComponent implements OnInit {
-
   /** Loan Id. */
   loanId: any;
   /** Reject Loan form. */
@@ -34,12 +33,14 @@ export class RejectLoanComponent implements OnInit {
    * @param route Activated Route.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private router: Router,
-              private route: ActivatedRoute,
-              private loanService: LoansService,
-              private dateUtils: Dates,
-              private settingsService: SettingsService ) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private loanService: LoansService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
@@ -53,8 +54,11 @@ export class RejectLoanComponent implements OnInit {
    */
   setRejectLoanForm() {
     this.rejectLoanForm = this.formBuilder.group({
-      'rejectedOnDate': [new Date(), Validators.required],
-      'note': ['']
+      rejectedOnDate: [
+        new Date(),
+        Validators.required
+      ],
+      note: ['']
     });
   }
 
@@ -78,5 +82,4 @@ export class RejectLoanComponent implements OnInit {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
-
 }

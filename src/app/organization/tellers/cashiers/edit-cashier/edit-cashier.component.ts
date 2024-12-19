@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./edit-cashier.component.scss']
 })
 export class EditCashierComponent implements OnInit {
-
   /** Cashier Data. */
   cashierData: any = new Object();
   /** Edit cashier form. */
@@ -38,16 +37,20 @@ export class EditCashierComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService ) {
-    this.route.data.subscribe((data: { cashier: any, cashierTemplate: any }) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { cashier: any; cashierTemplate: any }) => {
       this.cashierData.data = data.cashier;
       this.cashierData.template = data.cashierTemplate;
-      this.isStaffId = this.cashierData.template.staffOptions.some((element: any) => element.id === this.cashierData.data.staffId);
+      this.isStaffId = this.cashierData.template.staffOptions.some(
+        (element: any) => element.id === this.cashierData.data.staffId
+      );
     });
   }
 
@@ -61,11 +64,20 @@ export class EditCashierComponent implements OnInit {
    */
   setEditChargeForm() {
     this.editCashierForm = this.formBuilder.group({
-      'staffId': [{value: this.cashierData.data.staffId, disabled: true}],
-      'description': [this.cashierData.data.description],
-      'startDate': [this.cashierData.data.startDate && new Date(this.cashierData.data.startDate), Validators.required],
-      'endDate': [this.cashierData.data.endDate && new Date(this.cashierData.data.endDate), Validators.required],
-      'isFullDay': [this.cashierData.data.isFullDay, Validators.required]
+      staffId: [{ value: this.cashierData.data.staffId, disabled: true }],
+      description: [this.cashierData.data.description],
+      startDate: [
+        this.cashierData.data.startDate && new Date(this.cashierData.data.startDate),
+        Validators.required
+      ],
+      endDate: [
+        this.cashierData.data.endDate && new Date(this.cashierData.data.endDate),
+        Validators.required
+      ],
+      isFullDay: [
+        this.cashierData.data.isFullDay,
+        Validators.required
+      ]
     });
   }
 
@@ -90,9 +102,10 @@ export class EditCashierComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, data).subscribe((response: any) => {
-      this.router.navigate(['../'], {relativeTo: this.route});
-    });
+    this.organizationService
+      .updateCashier(this.cashierData.data.tellerId, this.cashierData.data.id, data)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
-
 }

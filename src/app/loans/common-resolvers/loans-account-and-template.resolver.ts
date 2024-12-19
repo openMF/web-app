@@ -13,17 +13,17 @@ import { LoansService } from '../loans.service';
  */
 @Injectable()
 export class LoansAccountAndTemplateResolver implements Resolve<Object> {
-    /**
-     * @param {ProductsService} productsService Products service.
-     */
-    constructor(private loansService: LoansService) { }
+  /**
+   * @param {ProductsService} productsService Products service.
+   */
+  constructor(private loansService: LoansService) {}
 
-    /**
-     * Returns the loan account template data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-      const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-      return this.loansService.getLoansAccountAndTemplateResource(loanId);
-    }
+  /**
+   * Returns the loan account template data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
+    return this.loansService.getLoansAccountAndTemplateResource(loanId);
+  }
 }

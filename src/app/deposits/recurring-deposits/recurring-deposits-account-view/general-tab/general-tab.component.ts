@@ -8,14 +8,15 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./general-tab.component.scss']
 })
 export class GeneralTabComponent {
-
   recurringDepositsAccountData: any;
   isprematureAllowed = false;
   entityType: string;
   currency: Currency;
 
-  constructor(private route: ActivatedRoute,
-    private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.currency = this.recurringDepositsAccountData.currency;
@@ -29,5 +30,4 @@ export class GeneralTabComponent {
       }
     });
   }
-
 }

@@ -8,9 +8,8 @@ describe('UndoClientRejectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UndoClientRejectionComponent ]
-    })
-    .compileComponents();
+      declarations: [UndoClientRejectionComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -13,21 +13,19 @@ import { LoansService } from '../loans.service';
  */
 @Injectable()
 export class LoansAccountChargeResolver implements Resolve<Object> {
+  /**
+   * @param {LoansService} LoansService Loans service.
+   */
+  constructor(private loansService: LoansService) {}
 
-    /**
-     * @param {LoansService} LoansService Loans service.
-     */
-    constructor(private loansService: LoansService) { }
-
-    /**
-     * Returns the Loans Account Charge data.
-     * @param {ActivatedRouteSnapshot} route Route Snapshot
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-      const loanId = route.paramMap.get('loanId');
-      const chargeId = route.paramMap.get('id');
-      return this.loansService.getLoansAccountCharge(loanId, chargeId);
-    }
-
+  /**
+   * Returns the Loans Account Charge data.
+   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const loanId = route.paramMap.get('loanId');
+    const chargeId = route.paramMap.get('id');
+    return this.loansService.getLoansAccountCharge(loanId, chargeId);
+  }
 }

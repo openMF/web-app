@@ -8,9 +8,8 @@ describe('ClientFamilyMembersStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientFamilyMembersStepComponent ]
-    })
-    .compileComponents();
+      declarations: [ClientFamilyMembersStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

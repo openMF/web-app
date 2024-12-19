@@ -13,7 +13,6 @@ import { ProductsService } from '../../products.service';
  */
 @Injectable()
 export class DelinquencyBucketComponentsResolver implements Resolve<Object> {
-
   /**
    * @param {ProductsService} productsService Products service.
    */
@@ -23,7 +22,7 @@ export class DelinquencyBucketComponentsResolver implements Resolve<Object> {
    * Returns the delinquency buckets data.
    * @returns {Observable<any>}
    */
-   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const delinquentcyBucketId = route.paramMap.get('bucketId');
     if (delinquentcyBucketId === null) {
       return this.productsService.getDelinquencyBuckets();
@@ -31,5 +30,4 @@ export class DelinquencyBucketComponentsResolver implements Resolve<Object> {
       return this.productsService.getDelinquencyBucket(delinquentcyBucketId);
     }
   }
-
 }

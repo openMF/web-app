@@ -21,18 +21,20 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./edit-savings-account.component.scss']
 })
 export class EditSavingsAccountComponent {
-
   /** Savings Account Template */
   savingsAccountAndTemplate: any;
   /** Savings Account Product Template */
   savingsAccountProductTemplate: any;
 
   /** Savings Account Details Step */
-  @ViewChild(SavingsAccountDetailsStepComponent, { static: true }) savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
+  @ViewChild(SavingsAccountDetailsStepComponent, { static: true })
+  savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
   /** Savings Account Terms Step */
-  @ViewChild(SavingsAccountTermsStepComponent, { static: true }) savingsAccountTermsStep: SavingsAccountTermsStepComponent;
+  @ViewChild(SavingsAccountTermsStepComponent, { static: true })
+  savingsAccountTermsStep: SavingsAccountTermsStepComponent;
   /** Savings Account Charges Step */
-  @ViewChild(SavingsAccountChargesStepComponent, { static: true }) savingsAccountChargesStep: SavingsAccountChargesStepComponent;
+  @ViewChild(SavingsAccountChargesStepComponent, { static: true })
+  savingsAccountChargesStep: SavingsAccountChargesStepComponent;
 
   /**
    * Fetches savings account template from `resolve`
@@ -42,12 +44,13 @@ export class EditSavingsAccountComponent {
    * @param {SavingsService} savingsService Savings Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private savingsService: SavingsService,
-              private settingsService: SettingsService
-              ) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private savingsService: SavingsService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { savingsAccountAndTemplate: any }) => {
       this.savingsAccountAndTemplate = data.savingsAccountAndTemplate;
     });
@@ -82,11 +85,9 @@ export class EditSavingsAccountComponent {
     return (
       this.savingsAccountDetailsForm.valid &&
       this.savingsAccountTermsForm.valid &&
-      (
-        !this.savingsAccountDetailsForm.pristine ||
+      (!this.savingsAccountDetailsForm.pristine ||
         !this.savingsAccountTermsForm.pristine ||
-        !this.savingsAccountChargesStep.pristine
-      )
+        !this.savingsAccountChargesStep.pristine)
     );
   }
 
@@ -128,9 +129,10 @@ export class EditSavingsAccountComponent {
     } else {
       savingsAccount.groupId = this.savingsAccountAndTemplate.groupId;
     }
-    this.savingsService.updateSavingsAccount(this.savingsAccountAndTemplate.id, savingsAccount).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .updateSavingsAccount(this.savingsAccountAndTemplate.id, savingsAccount)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
-
 }

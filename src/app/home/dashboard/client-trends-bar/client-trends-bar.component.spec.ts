@@ -8,9 +8,8 @@ describe('ClientTrendsBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientTrendsBarComponent ]
-    })
-    .compileComponents();
+      declarations: [ClientTrendsBarComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

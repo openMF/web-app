@@ -11,8 +11,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./completion-dialog.component.scss']
 })
 export class CompletionDialogComponent {
-
-  constructor(public dialogRef: MatDialogRef<CompletionDialogComponent>,
-  @Inject(MAT_DIALOG_DATA) public data: any) { }
-
+  constructor(
+    public dialogRef: MatDialogRef<CompletionDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 }

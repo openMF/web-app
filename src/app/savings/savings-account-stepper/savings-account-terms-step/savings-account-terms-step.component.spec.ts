@@ -8,9 +8,8 @@ describe('SavingsAccountTermsStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SavingsAccountTermsStepComponent ]
-    })
-    .compileComponents();
+      declarations: [SavingsAccountTermsStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

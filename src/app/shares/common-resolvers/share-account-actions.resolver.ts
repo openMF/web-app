@@ -13,11 +13,10 @@ import { SharesService } from '../shares.service';
  */
 @Injectable()
 export class ShareAccountActionsResolver implements Resolve<Object> {
-
   /**
    * @param {sharesService} SharesService Shares service.
    */
-  constructor(private sharesService: SharesService) { }
+  constructor(private sharesService: SharesService) {}
 
   /**
    * Returns the Shares account actions data.
@@ -37,5 +36,4 @@ export class ShareAccountActionsResolver implements Resolve<Object> {
         return undefined;
     }
   }
-
 }

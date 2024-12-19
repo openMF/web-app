@@ -17,11 +17,17 @@ import { of } from 'rxjs';
   styleUrls: ['./sms-campaigns.component.scss']
 })
 export class SmsCampaignsComponent implements OnInit {
-
   /** SMS Campaigns data. */
   smsCampaignsData: any;
   /** Columns to be displayed in sms campaigns table. */
-  displayedColumns: string[] = ['campaignName', 'campaignMessage', 'campaignType.value', 'triggerType.value', 'campaignStatus.value', 'smsCampaignTimeLine.submittedByUsername'];
+  displayedColumns: string[] = [
+    'campaignName',
+    'campaignMessage',
+    'campaignType.value',
+    'triggerType.value',
+    'campaignStatus.value',
+    'smsCampaignTimeLine.submittedByUsername'
+  ];
   /** Data source for SMS campaigns table. */
   dataSource: MatTableDataSource<any>;
 
@@ -35,7 +41,7 @@ export class SmsCampaignsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { smsCampaigns: any }) => {
+    this.route.data.subscribe((data: { smsCampaigns: any }) => {
       this.smsCampaignsData = data.smsCampaigns.pageItems;
     });
   }
@@ -62,15 +68,19 @@ export class SmsCampaignsComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.smsCampaignsData);
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'campaignType.value': return item.campaignType.value;
-        case 'triggerType.value': return item.triggerType.value;
-        case 'campaignStatus.value': return item.campaignStatus.value;
-        case 'smsCampaignTimeLine.submittedByUsername': return item.smsCampaignTimeLine.submittedByUsername;
-        default: return item[property];
+        case 'campaignType.value':
+          return item.campaignType.value;
+        case 'triggerType.value':
+          return item.triggerType.value;
+        case 'campaignStatus.value':
+          return item.campaignStatus.value;
+        case 'smsCampaignTimeLine.submittedByUsername':
+          return item.smsCampaignTimeLine.submittedByUsername;
+        default:
+          return item[property];
       }
     };
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

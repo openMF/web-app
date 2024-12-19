@@ -22,7 +22,6 @@ import { NextStepDialogComponent } from '../../configuration-wizard/next-step-di
   styleUrls: ['./create-journal-entry.component.scss']
 })
 export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
-
   /** Minimum transaction date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum transaction date allowed. */
@@ -53,7 +52,8 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private accountingService: AccountingService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
@@ -61,13 +61,9 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
     private router: Router,
     private dialog: MatDialog,
     private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService) {
-    this.route.data.subscribe((data: {
-      offices: any,
-      currencies: any,
-      paymentTypes: any,
-      glAccounts: any
-    }) => {
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { offices: any; currencies: any; paymentTypes: any; glAccounts: any }) => {
       this.officeData = data.offices;
       this.currencyData = data.currencies.selectedCurrencyOptions;
       this.paymentTypeData = data.paymentTypes;
@@ -88,19 +84,28 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    */
   createJournalEntryForm() {
     this.journalEntryForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'currencyCode': ['', Validators.required],
-      'debits': this.formBuilder.array([this.createAffectedGLEntryForm()]),
-      'credits': this.formBuilder.array([this.createAffectedGLEntryForm()]),
-      'referenceNumber': [''],
-      'transactionDate': ['', Validators.required],
-      'paymentTypeId': [''],
-      'accountNumber': [''],
-      'checkNumber': [''],
-      'routingCode': [''],
-      'receiptNumber': [''],
-      'bankNumber': [''],
-      'comments': ['']
+      officeId: [
+        '',
+        Validators.required
+      ],
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      debits: this.formBuilder.array([this.createAffectedGLEntryForm()]),
+      credits: this.formBuilder.array([this.createAffectedGLEntryForm()]),
+      referenceNumber: [''],
+      transactionDate: [
+        '',
+        Validators.required
+      ],
+      paymentTypeId: [''],
+      accountNumber: [''],
+      checkNumber: [''],
+      routingCode: [''],
+      receiptNumber: [''],
+      bankNumber: [''],
+      comments: ['']
     });
   }
 
@@ -110,8 +115,14 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    */
   createAffectedGLEntryForm(): UntypedFormGroup {
     return this.formBuilder.group({
-      'glAccountId': ['', Validators.required],
-      'amount': ['', Validators.required]
+      glAccountId: [
+        '',
+        Validators.required
+      ],
+      amount: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -158,10 +169,19 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
     journalEntry.locale = this.settingsService.language.code;
     journalEntry.dateFormat = this.settingsService.dateFormat;
     if (journalEntry.transactionDate) {
-      journalEntry.transactionDate = this.dateUtils.formatDate(journalEntry.transactionDate, this.settingsService.dateFormat);
+      journalEntry.transactionDate = this.dateUtils.formatDate(
+        journalEntry.transactionDate,
+        this.settingsService.dateFormat
+      );
     }
-    this.accountingService.createJournalEntry(journalEntry).subscribe(response => {
-      this.router.navigate(['../transactions/view', response.transactionId], { relativeTo: this.route });
+    this.accountingService.createJournalEntry(journalEntry).subscribe((response) => {
+      this.router.navigate(
+        [
+          '../transactions/view',
+          response.transactionId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
 
@@ -172,7 +192,12 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -206,21 +231,21 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    * Next Step (Products) Dialog Configuration Wizard.
    */
   openNextStepDialog() {
-    const nextStepDialogRef = this.dialog.open( NextStepDialogComponent, {
+    const nextStepDialogRef = this.dialog.open(NextStepDialogComponent, {
       data: {
         nextStepName: 'Setup Products',
         previousStepName: 'Accounting',
         stepPercentage: 74
-      },
+      }
     });
     nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
-    if (response.nextStep) {
-      this.configurationWizardService.showCreateJournalEntries = false;
-      this.configurationWizardService.showCharges = true;
-      this.router.navigate(['/products']);
+      if (response.nextStep) {
+        this.configurationWizardService.showCreateJournalEntries = false;
+        this.configurationWizardService.showCharges = true;
+        this.router.navigate(['/products']);
       } else {
-      this.configurationWizardService.showCreateJournalEntries = false;
-      this.router.navigate(['/home']);
+        this.configurationWizardService.showCreateJournalEntries = false;
+        this.router.navigate(['/home']);
       }
     });
   }

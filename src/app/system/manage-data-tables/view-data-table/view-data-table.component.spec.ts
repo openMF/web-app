@@ -8,9 +8,8 @@ describe('ViewDataTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewDataTableComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewDataTableComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

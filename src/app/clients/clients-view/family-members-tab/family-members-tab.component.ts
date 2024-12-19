@@ -18,7 +18,6 @@ import { ClientsService } from '../../clients.service';
   styleUrls: ['./family-members-tab.component.scss']
 })
 export class FamilyMembersTabComponent {
-
   /** Client Family Members */
   clientFamilyMembers: any;
 
@@ -27,9 +26,11 @@ export class FamilyMembersTabComponent {
    * @param {ClientsService} clientsService Clients Service
    * @param {MatDialog }dialog Mat Dialog
    */
-  constructor(private route: ActivatedRoute,
-              private clientsService: ClientsService,
-              public dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private clientsService: ClientsService,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { clientFamilyMembers: any }) => {
       this.clientFamilyMembers = data.clientFamilyMembers;
     });
@@ -44,10 +45,9 @@ export class FamilyMembersTabComponent {
     });
     deleteFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.clientsService.deleteFamilyMember(clientId, id)
-          .subscribe(() => {
-            this.clientFamilyMembers.splice(index, 1);
-          });
+        this.clientsService.deleteFamilyMember(clientId, id).subscribe(() => {
+          this.clientFamilyMembers.splice(index, 1);
+        });
       }
     });
   }
@@ -62,5 +62,4 @@ export class FamilyMembersTabComponent {
     }
     return fullName;
   }
-
 }

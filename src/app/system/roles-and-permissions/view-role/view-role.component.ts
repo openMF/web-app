@@ -21,7 +21,6 @@ import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dial
   styleUrls: ['./view-role.component.scss']
 })
 export class ViewRoleComponent implements OnInit {
-
   /** Role Permissions Data */
   rolePermissionService: any;
   /** Stores the current grouping */
@@ -46,11 +45,11 @@ export class ViewRoleComponent implements OnInit {
   backupform: UntypedFormGroup;
   /** Temporarily stores Permission data */
   tempPermissionUIData: {
-    permissions: { code: string }[]
+    permissions: { code: string }[];
   }[];
   /** Stores permissions */
   permissions: {
-    permissions: { code: string, id: number }[]
+    permissions: { code: string; id: number }[];
   };
 
   /**
@@ -62,12 +61,14 @@ export class ViewRoleComponent implements OnInit {
    * @param {MatDialog} dialog Shared Dialog Boxes.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private systemService: SystemService,
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { roledetails: any }) => {
       this.rolePermissionService = data.roledetails;
     });
@@ -94,17 +95,24 @@ export class ViewRoleComponent implements OnInit {
    */
   createForm() {
     this.formGroup = this.formBuilder.group({
-      roster: this.formBuilder.array(this.rolePermissionService.permissionUsageData.map((elem: any) => this.createMemberGroup(elem)))
+      roster: this.formBuilder.array(
+        this.rolePermissionService.permissionUsageData.map((elem: any) => this.createMemberGroup(elem))
+      )
     });
-
   }
 
   createMemberGroup(permission: any): UntypedFormGroup {
     return this.formBuilder.group({
       ...permission,
       ...{
-        code: [permission.code, Validators.required],
-        selected: [{ value: permission.selected, disabled: true }, Validators.required]
+        code: [
+          permission.code,
+          Validators.required
+        ],
+        selected: [
+          { value: permission.selected, disabled: true },
+          Validators.required
+        ]
       }
     });
   }
@@ -113,9 +121,11 @@ export class ViewRoleComponent implements OnInit {
    * Groups the permissions based on rules
    */
   groupRules() {
-    this.tempPermissionUIData = [{
-      permissions: []
-    }];
+    this.tempPermissionUIData = [
+      {
+        permissions: []
+      }
+    ];
     for (const i in this.rolePermissionService.permissionUsageData) {
       if (this.rolePermissionService.permissionUsageData[i]) {
         if (this.rolePermissionService.permissionUsageData[i].grouping !== this.currentGrouping) {
@@ -123,7 +133,11 @@ export class ViewRoleComponent implements OnInit {
           this.groupings.push(this.currentGrouping);
           this.tempPermissionUIData[this.currentGrouping] = { permissions: [] };
         }
-        const temp = { code: this.rolePermissionService.permissionUsageData[i].code, id: i, selected: this.rolePermissionService.permissionUsageData[i].selected };
+        const temp = {
+          code: this.rolePermissionService.permissionUsageData[i].code,
+          id: i,
+          selected: this.rolePermissionService.permissionUsageData[i].selected
+        };
         this.tempPermissionUIData[this.currentGrouping].permissions.push(temp);
       }
     }
@@ -210,7 +224,7 @@ export class ViewRoleComponent implements OnInit {
     const permissionData = {
       permissions: {}
     };
-    for (let i = 0; i < value.length; i++ ) {
+    for (let i = 0; i < value.length; i++) {
       data[value[i].code] = value[i].selected;
     }
     permissionData.permissions = data;
@@ -253,12 +267,10 @@ export class ViewRoleComponent implements OnInit {
     });
     deleteRoleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteRole(this.roleId)
-          .subscribe(() => {
-            this.router.navigate(['/system/roles-and-permissions']);
-          });
+        this.systemService.deleteRole(this.roleId).subscribe(() => {
+          this.router.navigate(['/system/roles-and-permissions']);
+        });
       } else {
-
       }
     });
   }
@@ -272,12 +284,10 @@ export class ViewRoleComponent implements OnInit {
     });
     enableRoleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.enable) {
-        this.systemService.enableRole(this.roleId)
-          .subscribe(() => {
-            this.router.navigate(['/system/roles-and-permissions']);
-          });
+        this.systemService.enableRole(this.roleId).subscribe(() => {
+          this.router.navigate(['/system/roles-and-permissions']);
+        });
       } else {
-
       }
     });
   }
@@ -291,14 +301,11 @@ export class ViewRoleComponent implements OnInit {
     });
     deleteRoleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.disable) {
-        this.systemService.disableRole(this.roleId)
-          .subscribe(() => {
-            this.router.navigate(['/system/roles-and-permissions']);
-          });
+        this.systemService.disableRole(this.roleId).subscribe(() => {
+          this.router.navigate(['/system/roles-and-permissions']);
+        });
       } else {
-
       }
     });
   }
-
 }

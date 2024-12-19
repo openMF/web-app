@@ -13,7 +13,6 @@ import { TemplatesService } from '../templates.service';
  */
 @Injectable()
 export class TemplatesResolver implements Resolve<Object> {
-
   /**
    * @param {TemplatesService} templatesService Templates service.
    */
@@ -26,5 +25,4 @@ export class TemplatesResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.templatesService.getTemplates();
   }
-
 }

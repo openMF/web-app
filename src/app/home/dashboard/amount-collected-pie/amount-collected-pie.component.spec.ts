@@ -8,9 +8,8 @@ describe('AmountCollectedPieComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AmountCollectedPieComponent ]
-    })
-    .compileComponents();
+      declarations: [AmountCollectedPieComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

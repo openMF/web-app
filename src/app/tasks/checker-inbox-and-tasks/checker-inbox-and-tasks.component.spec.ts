@@ -8,9 +8,8 @@ describe('CheckerInboxAndTasksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CheckerInboxAndTasksComponent ]
-    })
-    .compileComponents();
+      declarations: [CheckerInboxAndTasksComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

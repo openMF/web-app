@@ -9,10 +9,8 @@ import { FormfieldBase } from './model/formfield-base';
   styleUrls: ['./formfield.component.scss']
 })
 export class FormfieldComponent {
-
   @Input() form: UntypedFormGroup;
   @Input() formfield: FormfieldBase;
 
-  constructor() { }
-
+  constructor() {}
 }

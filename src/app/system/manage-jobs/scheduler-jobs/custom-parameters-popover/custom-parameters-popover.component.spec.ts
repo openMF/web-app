@@ -8,9 +8,8 @@ describe('CustomParametersPopoverComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomParametersPopoverComponent ]
-    })
-    .compileComponents();
+      declarations: [CustomParametersPopoverComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

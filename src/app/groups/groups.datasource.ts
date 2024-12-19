@@ -11,7 +11,6 @@ import { GroupsService } from './groups.service';
  * Groups custom data source to implement server side filtering, pagination and sorting.
  */
 export class GroupsDataSource implements DataSource<any> {
-
   /** groups behavior subject to represent loaded groups page. */
   private groupsSubject = new BehaviorSubject<any[]>([]);
   /** Records subject to represent total number of filtered groups records. */
@@ -22,7 +21,7 @@ export class GroupsDataSource implements DataSource<any> {
   /**
    * @param {GroupsService} groupsService Groups Service
    */
-  constructor(private groupsService: GroupsService) { }
+  constructor(private groupsService: GroupsService) {}
 
   /**
    * Gets groups on the basis of provided parameters and emits the value.
@@ -33,14 +32,20 @@ export class GroupsDataSource implements DataSource<any> {
    * @param {number} limit Number of entries within the page.
    * @param {boolean} groupActive Specify whether to only filter active groups.
    */
-  getGroups(filterBy: any, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, groupActive: boolean = true) {
+  getGroups(
+    filterBy: any,
+    orderBy: string = '',
+    sortOrder: string = '',
+    pageIndex: number = 0,
+    limit: number = 10,
+    groupActive: boolean = true
+  ) {
     this.groupsSubject.next([]);
-    this.groupsService.getGroups(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
-      .subscribe((groups: any) => {
-        groups.pageItems = (groupActive) ? (groups.pageItems.filter((group: any) => group.active)) : groups.pageItems;
-        this.recordsSubject.next(groups.totalFilteredRecords);
-        this.groupsSubject.next(groups.pageItems);
-      });
+    this.groupsService.getGroups(filterBy, orderBy, sortOrder, pageIndex * limit, limit).subscribe((groups: any) => {
+      groups.pageItems = groupActive ? groups.pageItems.filter((group: any) => group.active) : groups.pageItems;
+      this.recordsSubject.next(groups.totalFilteredRecords);
+      this.groupsSubject.next(groups.pageItems);
+    });
   }
 
   /**
@@ -57,5 +62,4 @@ export class GroupsDataSource implements DataSource<any> {
     this.groupsSubject.complete();
     this.recordsSubject.complete();
   }
-
 }

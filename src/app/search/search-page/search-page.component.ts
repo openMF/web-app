@@ -19,7 +19,15 @@ export class SearchPageComponent {
   /** Datasource for loans disbursal table */
   dataSource: MatTableDataSource<SearchData>;
   /** Displayed Columns for serach results */
-  displayedColumns: string[] = ['entityType', 'entityName', 'entityAccount', 'externalId', 'parentType', 'parentName', 'details'];
+  displayedColumns: string[] = [
+    'entityType',
+    'entityName',
+    'entityAccount',
+    'externalId',
+    'parentType',
+    'parentName',
+    'details'
+  ];
   /** Paginator for the table */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -29,12 +37,14 @@ export class SearchPageComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe(( data: { searchResults: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { searchResults: any }) => {
       this.dataSource = new MatTableDataSource(data.searchResults);
       this.dataSource.paginator = this.paginator;
-      this.hasResults = (data.searchResults.length > 0);
+      this.hasResults = data.searchResults.length > 0;
       this.overload = data.searchResults.length > 200 ? true : false;
       if (this.overload) {
         this.dataSource = new MatTableDataSource(data.searchResults.slice(0, 200));
@@ -49,33 +59,75 @@ export class SearchPageComponent {
   navigate(entity: SearchData) {
     switch (entity.entityType) {
       case 'CLIENT':
-        this.router.navigate(['clients', entity.entityId, 'general']);
+        this.router.navigate([
+          'clients',
+          entity.entityId,
+          'general'
+        ]);
         break;
       case 'CLIENTIDENTIFIER':
-        this.router.navigate(['clients', entity.parentId, 'general']);
+        this.router.navigate([
+          'clients',
+          entity.parentId,
+          'general'
+        ]);
         break;
       case 'CENTER':
-        this.router.navigate(['centers', entity.entityId]);
+        this.router.navigate([
+          'centers',
+          entity.entityId
+        ]);
         break;
       case 'GROUP':
-        this.router.navigate(['groups', entity.entityId]);
+        this.router.navigate([
+          'groups',
+          entity.entityId
+        ]);
         break;
       case 'SHARE':
-        this.router.navigate(['clients', entity.parentId, 'shares-accounts', entity.entityId]);
+        this.router.navigate([
+          'clients',
+          entity.parentId,
+          'shares-accounts',
+          entity.entityId
+        ]);
         break;
       case 'SAVING':
         if (entity.subEntityType === 'depositAccountType.recurringDeposit') {
-            this.router.navigate(['clients', entity.parentId, 'recurring-deposits-accounts', entity.entityId, 'transactions']);
+          this.router.navigate([
+            'clients',
+            entity.parentId,
+            'recurring-deposits-accounts',
+            entity.entityId,
+            'transactions'
+          ]);
         } else if (entity.subEntityType === 'depositAccountType.fixedDeposit') {
-            this.router.navigate(['clients', entity.parentId, 'fixed-deposits-accounts', entity.entityId, 'transactions']);
+          this.router.navigate([
+            'clients',
+            entity.parentId,
+            'fixed-deposits-accounts',
+            entity.entityId,
+            'transactions'
+          ]);
         } else if (entity.subEntityType === 'depositAccountType.savingsDeposit') {
-            this.router.navigate(['clients', entity.parentId, 'savings-accounts', entity.entityId, 'transactions']);
+          this.router.navigate([
+            'clients',
+            entity.parentId,
+            'savings-accounts',
+            entity.entityId,
+            'transactions'
+          ]);
         }
         break;
       case 'LOAN':
-        this.router.navigate(['clients', entity.parentId, 'loans-accounts', entity.entityId, 'general']);
+        this.router.navigate([
+          'clients',
+          entity.parentId,
+          'loans-accounts',
+          entity.entityId,
+          'general'
+        ]);
         break;
     }
   }
-
 }

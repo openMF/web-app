@@ -20,7 +20,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./standing-instructions-history.component.scss']
 })
 export class StandingInstructionsHistoryComponent implements OnInit {
-
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -33,7 +32,16 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   isCollapsed = false;
 
   /** Columns to be displayed in instructions table. */
-  displayedColumns: string[] = ['fromClient', 'fromAccount', 'toClient', 'toAccount', 'executionTime', 'amount', 'status', 'errorLog'];
+  displayedColumns: string[] = [
+    'fromClient',
+    'fromAccount',
+    'toClient',
+    'toAccount',
+    'executionTime',
+    'amount',
+    'status',
+    'errorLog'
+  ];
   /** Data source for instructions table. */
   dataSource: MatTableDataSource<any>;
 
@@ -51,12 +59,14 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private dateUtils: Dates) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { standingInstructionsTemplate: any }) => {
       this.standingInstructionsTemplate = data.standingInstructionsTemplate;
     });
@@ -73,12 +83,12 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    */
   createInstructionForm() {
     this.instructionForm = this.formBuilder.group({
-      'clientName': [''],
-      'clientId': [''],
-      'transferType': [''],
-      'fromAccountType': [''],
-      'fromDate': [''],
-      'toDate': ['']
+      clientName: [''],
+      clientId: [''],
+      transferType: [''],
+      fromAccountType: [''],
+      fromDate: [''],
+      toDate: ['']
     });
   }
 
@@ -126,5 +136,4 @@ export class StandingInstructionsHistoryComponent implements OnInit {
       this.setInstructions(response.pageItems);
     });
   }
-
 }

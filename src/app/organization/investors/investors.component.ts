@@ -18,14 +18,13 @@ import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.co
   styleUrls: ['./investors.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
+
+  ]
 })
 export class InvestorsComponent implements OnInit {
-
   /** Minimum transaction date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum transaction date allowed. */
@@ -74,13 +73,25 @@ export class InvestorsComponent implements OnInit {
   ];
 
   /** Columns to be displayed in investors table. */
-  displayedColumns: string[] = ['status', 'effectiveFrom', 'ownerExternalId', 'loanAccount', 'transferExternalId', 'settlementDate', 'purchasePriceRatio', 'totalAmount', 'actions'];
-  constructor(private settingsService: SettingsService,
+  displayedColumns: string[] = [
+    'status',
+    'effectiveFrom',
+    'ownerExternalId',
+    'loanAccount',
+    'transferExternalId',
+    'settlementDate',
+    'purchasePriceRatio',
+    'totalAmount',
+    'actions'
+  ];
+  constructor(
+    private settingsService: SettingsService,
     private router: Router,
     private dialog: MatDialog,
     private externalAssetOwner: ExternalAssetOwner,
     private externalAssetOwnerService: ExternalAssetOwnerService,
-    private dateUtils: Dates) { }
+    private dateUtils: Dates
+  ) {}
 
   ngOnInit(): void {
     this.maxDate = this.settingsService.maxAllowedDate;
@@ -118,9 +129,9 @@ export class InvestorsComponent implements OnInit {
   searchEAO(): void {
     this.isLoading = true;
     const payload: any = {
-      'request': {},
-      'page': this.currentPage,
-      'size': this.pageSize
+      request: {},
+      page: this.currentPage,
+      size: this.pageSize
     };
     const dateFormat = 'yyyy-MM-dd';
     const request: any = {};
@@ -142,12 +153,11 @@ export class InvestorsComponent implements OnInit {
     payload['request'] = request;
     this.externalAssetOwnerService.searchExternalAssetOwnerTransfer(payload).subscribe((response: any) => {
       this.totalRows = response.totalElements;
-      this.existsDataToFilter = (response.totalElements > 0);
+      this.existsDataToFilter = response.totalElements > 0;
       this.dataSource.data = response.content;
       this.searchResults = response.content;
       this.isLoading = false;
     });
-
   }
 
   transform(data: any): any {
@@ -169,18 +179,18 @@ export class InvestorsComponent implements OnInit {
         const payload: any = {
           transferExternalId: transfer.transferExternalId
         };
-        this.externalAssetOwnerService.executeExternalAssetOwnerTransferCommand(transfer.transferId, payload, 'cancel')
+        this.externalAssetOwnerService
+          .executeExternalAssetOwnerTransferCommand(transfer.transferId, payload, 'cancel')
           .subscribe((result: any) => {
             this.reload();
-        });
+          });
       }
     });
   }
 
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/`, {skipLocationChange: true})
-      .then(() => this.router.navigate([url]));
+    this.router.navigateByUrl(`/`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 
   private resetPaginator() {

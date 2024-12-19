@@ -8,13 +8,14 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./general-tab.component.scss']
 })
 export class GeneralTabComponent {
-
   fixedDepositsAccountData: any;
   entityType: string;
   currency: Currency;
 
-  constructor(private route: ActivatedRoute,
-    private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.currency = this.fixedDepositsAccountData.currency;
@@ -27,5 +28,4 @@ export class GeneralTabComponent {
       this.entityType = 'Center';
     }
   }
-
 }

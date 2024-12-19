@@ -11,7 +11,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./next-step-dialog.component.scss']
 })
 export class NextStepDialogComponent {
-
   /* Step Percentage */
   stepPercentage: number;
   /* Next Step Name */
@@ -22,11 +21,12 @@ export class NextStepDialogComponent {
   /**
    * @param {MatDialogRef<NextStepDialogComponent>} dialogRef MatDialogRef<NextStepDialogComponent>.
    */
-  constructor(public dialogRef: MatDialogRef<NextStepDialogComponent>,
-  @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.stepPercentage = data.stepPercentage;
-      this.nextStepName = data.nextStepName;
-      this.previousStepName = data.previousStepName;
+  constructor(
+    public dialogRef: MatDialogRef<NextStepDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.stepPercentage = data.stepPercentage;
+    this.nextStepName = data.nextStepName;
+    this.previousStepName = data.previousStepName;
   }
-
 }

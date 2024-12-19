@@ -18,7 +18,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./view-report.component.scss']
 })
 export class ViewReportComponent {
-
   /** Report Data. */
   reportData: any;
 
@@ -29,10 +28,12 @@ export class ViewReportComponent {
    * @param {MatDialog} dialog Dialog Reference.
    * @param {Router} router Router for navigation.
    */
-  constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private dialog: MatDialog,
-              private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { report: any }) => {
       this.reportData = data.report;
     });
@@ -47,10 +48,9 @@ export class ViewReportComponent {
     });
     deleteReportDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteReport(this.reportData.id)
-          .subscribe(() => {
-            this.router.navigate(['/system/reports']);
-          });
+        this.systemService.deleteReport(this.reportData.id).subscribe(() => {
+          this.router.navigate(['/system/reports']);
+        });
       }
     });
   }

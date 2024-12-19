@@ -29,7 +29,7 @@ import { CreateTemplateComponent } from './create-template/create-template.compo
     TemplatesComponent,
     ViewTemplateComponent,
     EditTemplateComponent,
-    CreateTemplateComponent,
+    CreateTemplateComponent
   ]
 })
-export class TemplatesModule { }
+export class TemplatesModule {}

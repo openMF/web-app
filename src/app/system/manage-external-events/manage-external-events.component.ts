@@ -11,7 +11,6 @@ import { SystemService } from '../system.service';
   styleUrls: ['./manage-external-events.component.scss']
 })
 export class ManageExternalEventsComponent implements OnInit {
-
   /** Events Data. */
   eventsData: any;
   externalEventConfigurations: any = {};
@@ -19,17 +18,22 @@ export class ManageExternalEventsComponent implements OnInit {
   existAnyUpdate = false;
 
   /** Columns to be displayed in events table. */
-  displayedColumns: string[] = ['eventType', 'status'];
+  displayedColumns: string[] = [
+    'eventType',
+    'status'
+  ];
   /** Data source for reports table. */
   dataSource: MatTableDataSource<any>;
 
-   /** Paginator for reports table. */
-   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-   /** Sorter for reports table. */
-   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  /** Paginator for reports table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  /** Sorter for reports table. */
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private route: ActivatedRoute,
-    private systemService: SystemService) {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService
+  ) {
     this.route.data.subscribe((data: { events: any }) => {
       this.eventsData = data.events.externalEventConfiguration;
     });

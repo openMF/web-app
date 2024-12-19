@@ -8,9 +8,8 @@ describe('GlobalConfigurationsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GlobalConfigurationsTabComponent ]
-    })
-    .compileComponents();
+      declarations: [GlobalConfigurationsTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./recurring-deposit-datatable-tab.component.scss']
 })
 export class RecurringDepositDatatableTabComponent {
-
   entityId: string;
   entityDatatable: any;
   multiRowDatatableFlag: boolean;
@@ -20,5 +19,4 @@ export class RecurringDepositDatatableTabComponent {
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
-
 }

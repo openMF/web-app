@@ -13,7 +13,6 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class FloatingRateResolver implements Resolve<Object> {
-
   /**
    * @param {ProductsService} productsService Products service.
    */
@@ -27,5 +26,4 @@ export class FloatingRateResolver implements Resolve<Object> {
     const floatingRateId = route.paramMap.get('id');
     return this.productsService.getFloatingRate(floatingRateId);
   }
-
 }

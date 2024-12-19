@@ -8,9 +8,8 @@ describe('SearchJournalEntryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchJournalEntryComponent ]
-    })
-    .compileComponents();
+      declarations: [SearchJournalEntryComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -16,7 +16,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-provisioning-entry.component.scss']
 })
 export class CreateProvisioningEntryComponent implements OnInit {
-
   /** Minimum provisioning date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum provisioning date allowed. */
@@ -31,12 +30,14 @@ export class CreateProvisioningEntryComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private accountingService: AccountingService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   /**
    * Creates the provisioning entry form.
@@ -51,8 +52,11 @@ export class CreateProvisioningEntryComponent implements OnInit {
    */
   createProvisioningEntryForm() {
     this.provisioningEntryForm = this.formBuilder.group({
-      'date': ['', Validators.required],
-      'createjournalentries': [false]
+      date: [
+        '',
+        Validators.required
+      ],
+      createjournalentries: [false]
     });
   }
 
@@ -68,10 +72,14 @@ export class CreateProvisioningEntryComponent implements OnInit {
     if (provisioningEntry.date instanceof Date) {
       provisioningEntry.date = this.dateUtils.formatDate(provisioningEntry.date, this.settingsService.dateFormat);
     }
-    this.accountingService.createProvisioningEntry(provisioningEntry)
-      .subscribe((response: any) => {
-        this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
-      });
+    this.accountingService.createProvisioningEntry(provisioningEntry).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../view',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
-
 }

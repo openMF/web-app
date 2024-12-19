@@ -19,7 +19,6 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   styleUrls: ['./view-charge.component.scss']
 })
 export class ViewChargeComponent {
-
   /** Charge data. */
   chargeData: any;
   /** Boolean for MinCap and MaxCap */
@@ -33,11 +32,13 @@ export class ViewChargeComponent {
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private productsService: ProductsService,
+  constructor(
+    private productsService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private translateService: TranslateService) {
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { charge: any }) => {
       this.chargeData = data.charge;
       if (this.chargeData.minCap) {
@@ -54,16 +55,14 @@ export class ViewChargeComponent {
    */
   deleteCharge() {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + this.chargeData.id}
+      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + this.chargeData.id }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteCharge(this.chargeData.id)
-          .subscribe(() => {
-            this.router.navigate(['/products/charges']);
-          });
+        this.productsService.deleteCharge(this.chargeData.id).subscribe(() => {
+          this.router.navigate(['/products/charges']);
+        });
       }
     });
   }
-
 }

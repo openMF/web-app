@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SharesService {
-
   /**
    * @param {HttpClient} http Http Client
    */
@@ -74,5 +73,4 @@ export class SharesService {
     const httpParams = new HttpParams().set('command', command);
     return this.http.post(`/accounts/share/${accountId}`, data, { params: httpParams });
   }
-
 }

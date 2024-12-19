@@ -18,7 +18,6 @@ import { OrganizationService } from 'app/organization/organization.service';
   styleUrls: ['./view-cashier.component.scss']
 })
 export class ViewCashierComponent {
-
   /** Cashier data. */
   cashierData: any;
 
@@ -29,10 +28,12 @@ export class ViewCashierComponent {
    * @param {OrganizationService} organizationService Organization Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private organizationService: OrganizationService,
-              public dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private organizationService: OrganizationService,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { cashier: any }) => {
       this.cashierData = data.cashier;
     });
@@ -48,10 +49,9 @@ export class ViewCashierComponent {
     deleteCashierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.organizationService.deleteCashier(this.cashierData.tellerId, this.cashierData.id).subscribe(() => {
-          this.router.navigate(['../'], {relativeTo: this.route});
+          this.router.navigate(['../'], { relativeTo: this.route });
         });
       }
     });
   }
-
 }

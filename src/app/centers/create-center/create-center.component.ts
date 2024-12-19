@@ -18,7 +18,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-center.component.scss']
 })
 export class CreateCenterComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -46,13 +45,15 @@ export class CreateCenterComponent implements OnInit {
    * @param {GroupsService} groupService GroupsService.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private centerService: CentersService,
     private settingsService: SettingsService,
     private groupService: GroupsService,
-    private dateUtils: Dates) {
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -71,12 +72,23 @@ export class CreateCenterComponent implements OnInit {
    */
   createCenterForm() {
     this.centerForm = this.formBuilder.group({
-      'name': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'officeId': ['', Validators.required],
-      'submittedOnDate': ['', Validators.required],
-      'staffId': [''],
-      'externalId': [''],
-      'active': [''],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('(^[A-z]).*')]
+      ],
+      officeId: [
+        '',
+        Validators.required
+      ],
+      submittedOnDate: [
+        '',
+        Validators.required
+      ],
+      staffId: [''],
+      externalId: [''],
+      active: ['']
     });
     this.buildDependencies();
   }
@@ -156,5 +168,4 @@ export class CreateCenterComponent implements OnInit {
       this.router.navigate(['../centers']);
     });
   }
-
 }

@@ -14,7 +14,6 @@ import { GlimTermsStepComponent } from './glim-account-stepper/glim-terms-step/g
   styleUrls: ['./create-glim-account.component.scss']
 })
 export class CreateGlimAccountComponent {
-
   /** Imports all the step component */
   @ViewChild(GlimDetailsStepComponent, { static: true }) loansAccountDetailsStep: GlimDetailsStepComponent;
   @ViewChild(GlimTermsStepComponent, { static: true }) loansAccountTermsStep: GlimTermsStepComponent;
@@ -48,24 +47,26 @@ export class CreateGlimAccountComponent {
    * @param {LoansService} loansService Loans Service.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private loansService: LoansService,
     private settingsService: SettingsService,
     public dialog: MatDialog,
-    private dateUtils: Dates) {
-    this.route.data.subscribe((data: {loansAccountTemplate: any, gsimData: any, groupsData: any}) => {
+    private dateUtils: Dates
+  ) {
+    this.route.data.subscribe((data: { loansAccountTemplate: any; gsimData: any; groupsData: any }) => {
       this.loansAccountTemplate = data.loansAccountTemplate;
       this.activeClientMembers = data.groupsData.activeClientMembers;
       this.gsimData = data.gsimData;
     });
-   }
+  }
 
   /**
    * Sets loans account product template and collateral template
    * @param {any} $event API response
    */
-   setTemplate($event: any) {
+  setTemplate($event: any) {
     this.loansAccountProductTemplate = $event;
   }
 
@@ -81,10 +82,7 @@ export class CreateGlimAccountComponent {
 
   /** Checks wheter all the forms in different steps are valid or not */
   get loansAccountFormValid() {
-    return (
-      this.loansAccountDetailsForm.valid &&
-      this.loansAccountTermsForm.valid
-    );
+    return this.loansAccountDetailsForm.valid && this.loansAccountTermsForm.valid;
   }
 
   /** Gets principal Amount */
@@ -98,7 +96,7 @@ export class CreateGlimAccountComponent {
     return {
       ...this.loansAccountDetailsStep.loansAccountDetails,
       ...this.loansAccountTermsStep.loansAccountTerms,
-      ...this.loansAccountChargesStep.loansAccountCharges,
+      ...this.loansAccountChargesStep.loansAccountCharges
     };
   }
 
@@ -110,12 +108,12 @@ export class CreateGlimAccountComponent {
       ...this.loansAccount,
       charges: this.loansAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
-        amount: charge.amount,
+        amount: charge.amount
       })),
       clientId: client.id,
       totalLoan: this.totalLoan,
       loanType: 'glim',
-      amortizationType:	1,
+      amortizationType: 1,
       isParentAccount: true,
       principal: client.principal,
       syncDisbursementWithMeeting: false,
@@ -138,11 +136,10 @@ export class CreateGlimAccountComponent {
     for (let index = 0; index < memberSelected.length; index++) {
       requestData.push({
         requestId: index.toString(),
-        method : 'POST',
+        method: 'POST',
         relativeUrl: 'loans',
-        body : this.setData( memberSelected[ index ] )
-      }
-      );
+        body: this.setData(memberSelected[index])
+      });
     }
     return requestData;
   }
@@ -165,5 +162,4 @@ export class CreateGlimAccountComponent {
       this.router.navigate(['../../../'], { relativeTo: this.route });
     });
   }
-
 }

@@ -11,11 +11,10 @@ import { Observable } from 'rxjs';
  */
 @Injectable()
 export class OfficeDatatableResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService Products service.
    */
-  constructor(private systemService: SystemService) { }
+  constructor(private systemService: SystemService) {}
 
   /**
    * Returns the Office's Datatable data.
@@ -26,5 +25,4 @@ export class OfficeDatatableResolver implements Resolve<Object> {
     const datatableName = route.paramMap.get('datatableName');
     return this.systemService.getEntityDatatable(officeId, datatableName);
   }
-
 }

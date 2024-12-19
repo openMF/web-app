@@ -17,7 +17,6 @@ import { of } from 'rxjs';
   styleUrls: ['./products-mix.component.scss']
 })
 export class ProductsMixComponent implements OnInit {
-
   /** productMix data. */
   productMixData: any;
   /** Columns to be displayed in products mix table. */
@@ -34,7 +33,7 @@ export class ProductsMixComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { products: any }) => {
+    this.route.data.subscribe((data: { products: any }) => {
       this.productMixData = data.products;
     });
   }
@@ -62,5 +61,4 @@ export class ProductsMixComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

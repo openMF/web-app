@@ -8,9 +8,8 @@ describe('LoanDelinquencyActionDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoanDelinquencyActionDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanDelinquencyActionDialogComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoanDelinquencyActionDialogComponent);
     component = fixture.componentInstance;

@@ -17,7 +17,6 @@ import { AuthenticationService } from 'app/core/authentication/authentication.se
   styleUrls: ['./notes-tab.component.scss']
 })
 export class NotesTabComponent {
-
   /** Client ID */
   entityId: string;
   /** Username */
@@ -30,9 +29,11 @@ export class NotesTabComponent {
    * @param {ClientsService} clientsService Clients Service
    * @param {AuthenticationService} authenticationService Authentication Service
    */
-  constructor(private route: ActivatedRoute,
-              private clientsService: ClientsService,
-              private authenticationService: AuthenticationService) {
+  constructor(
+    private route: ActivatedRoute,
+    private clientsService: ClientsService,
+    private authenticationService: AuthenticationService
+  ) {
     const credentials = this.authenticationService.getCredentials();
     this.username = credentials.username;
     this.entityId = this.route.parent.snapshot.params['clientId'];
@@ -59,10 +60,9 @@ export class NotesTabComponent {
    * @param {number} index Index
    */
   deleteNote(noteId: string, index: number) {
-    this.clientsService.deleteClientNote(this.entityId, noteId)
-      .subscribe(() => {
-        this.entityNotes.splice(index, 1);
-      });
+    this.clientsService.deleteClientNote(this.entityId, noteId).subscribe(() => {
+      this.entityNotes.splice(index, 1);
+    });
   }
 
   /**
@@ -78,5 +78,4 @@ export class NotesTabComponent {
       });
     });
   }
-
 }

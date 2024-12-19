@@ -19,7 +19,6 @@ import { Location } from '@angular/common';
   styleUrls: ['./view-financial-activity-mapping.component.scss']
 })
 export class ViewFinancialActivityMappingComponent {
-
   /** Financial activity account ID. */
   financialActivityAccountId: any;
   /** Financial activity account data. */
@@ -32,11 +31,13 @@ export class ViewFinancialActivityMappingComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog,
-              private location: Location) {
+  constructor(
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private location: Location
+  ) {
     this.route.data.subscribe((data: { financialActivityAccount: any }) => {
       this.financialActivityAccount = data.financialActivityAccount;
       this.financialActivityAccountId = data.financialActivityAccount.id;
@@ -52,10 +53,9 @@ export class ViewFinancialActivityMappingComponent {
     });
     deleteFinancialActivityAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteFinancialActivityAccount(this.financialActivityAccountId)
-          .subscribe(() => {
-            this.router.navigate(['/accounting/financial-activity-mappings']);
-          });
+        this.accountingService.deleteFinancialActivityAccount(this.financialActivityAccountId).subscribe(() => {
+          this.router.navigate(['/accounting/financial-activity-mappings']);
+        });
       }
     });
   }
@@ -63,5 +63,4 @@ export class ViewFinancialActivityMappingComponent {
   goBack(): void {
     this.location.back();
   }
-
 }

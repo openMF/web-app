@@ -8,9 +8,8 @@ describe('EditFloatingRateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditFloatingRateComponent ]
-    })
-    .compileComponents();
+      declarations: [EditFloatingRateComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

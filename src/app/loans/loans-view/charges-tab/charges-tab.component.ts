@@ -30,7 +30,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./charges-tab.component.scss']
 })
 export class ChargesTabComponent implements OnInit {
-
   /** Loan Details Data */
   loanDetails: any;
   /** Charges Data */
@@ -38,7 +37,18 @@ export class ChargesTabComponent implements OnInit {
   /** Status */
   status: any;
   /** Columns to be displayed in charges table. */
-  displayedColumns: string[] = ['name', 'feepenalty', 'paymentdueat', 'dueDate', 'calculationtype', 'due', 'paid', 'waived', 'outstanding', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'feepenalty',
+    'paymentdueat',
+    'dueDate',
+    'calculationtype',
+    'due',
+    'paid',
+    'waived',
+    'outstanding',
+    'actions'
+  ];
   /** Data source for charges table. */
   dataSource: MatTableDataSource<any>;
 
@@ -54,14 +64,16 @@ export class ChargesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private loansService: LoansService,
+  constructor(
+    private loansService: LoansService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
     private translateService: TranslateService,
     public dialog: MatDialog,
     private settingsService: SettingsService,
-    private systemService: SystemService) {
+    private systemService: SystemService
+  ) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });
@@ -69,21 +81,28 @@ export class ChargesTabComponent implements OnInit {
 
   ngOnInit() {
     this.systemService.getConfigurationByName('charge-accrual-date').subscribe((config: GlobalConfiguration) => {
-      this.useDueDate = (config.stringValue === 'due-date');
+      this.useDueDate = config.stringValue === 'due-date';
     });
     this.chargesData = this.loanDetails.charges;
     this.status = this.loanDetails.status.value;
     let actionFlag;
     this.chargesData.forEach((element: any) => {
       element.dueDate = this.dateUtils.parseDate(element.dueDate);
-      if (element.paid || element.waived || element.chargeTimeType.value === 'Disbursement' || this.loanDetails.status.value !== 'Active') {
+      if (
+        element.paid ||
+        element.waived ||
+        element.chargeTimeType.value === 'Disbursement' ||
+        this.loanDetails.status.value !== 'Active'
+      ) {
         actionFlag = true;
       } else {
         actionFlag = false;
       }
       element.actionFlag = actionFlag;
     });
-    this.chargesData = this.chargesData.sort(function (a: any, b: any) { return b.dueDate - a.dueDate; });
+    this.chargesData = this.chargesData.sort(function (a: any, b: any) {
+      return b.dueDate - a.dueDate;
+    });
     this.dataSource = new MatTableDataSource(this.chargesData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -110,6 +129,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -127,7 +147,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.loansService.executeLoansAccountChargesCommand(this.loanDetails.id, 'pay', dataObject, chargeId)
+        this.loansService
+          .executeLoansAccountChargesCommand(this.loanDetails.id, 'pay', dataObject, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -140,10 +161,19 @@ export class ChargesTabComponent implements OnInit {
    * @param {any} chargeId Charge Id
    */
   waiveCharge(chargeId: any) {
-    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: this.translateService.instant('labels.heading.Waive Charge'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id') + `${chargeId} ?`, type: 'Basic' } });
+    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Waive Charge'),
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id') +
+          `${chargeId} ?`,
+        type: 'Basic'
+      }
+    });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loansService.executeLoansAccountChargesCommand(this.loanDetails.id, 'waive', {}, chargeId)
+        this.loansService
+          .executeLoansAccountChargesCommand(this.loanDetails.id, 'waive', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -164,6 +194,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
+
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
@@ -180,10 +211,9 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.loansService.editLoansAccountCharge(this.loanDetails.id, dataObject, charge.id)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.loansService.editLoansAccountCharge(this.loanDetails.id, dataObject, charge.id).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -198,10 +228,9 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoansAccountCharge(this.loanDetails.id, chargeId)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.loansService.deleteLoansAccountCharge(this.loanDetails.id, chargeId).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -221,8 +250,8 @@ export class ChargesTabComponent implements OnInit {
   private reload() {
     const clientId = this.loanDetails.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

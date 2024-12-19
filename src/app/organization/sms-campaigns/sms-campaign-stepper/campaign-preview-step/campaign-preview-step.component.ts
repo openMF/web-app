@@ -10,7 +10,6 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
   styleUrls: ['./campaign-preview-step.component.scss']
 })
 export class CampaignPreviewStepComponent implements OnInit {
-
   /** SMS Campaign */
   @Input() campaign: any;
   /** [Optional] SMS Campaign Template for create form */
@@ -24,9 +23,9 @@ export class CampaignPreviewStepComponent implements OnInit {
   smsProviders: any[];
 
   /** Emits submit() event */
-  @Output() submitEvent = new EventEmitter;
+  @Output() submitEvent = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Sets SMS providers and trigger types options.
@@ -35,5 +34,4 @@ export class CampaignPreviewStepComponent implements OnInit {
     this.triggerTypes = this.smsCampaignTemplate.triggerTypeOptions;
     this.smsProviders = this.smsCampaignTemplate.smsProviderOptions;
   }
-
 }

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve} from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -13,7 +13,6 @@ import { SystemService } from '../../system.service';
  */
 @Injectable()
 export class HookResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService System service.
    */
@@ -27,5 +26,4 @@ export class HookResolver implements Resolve<Object> {
     const hookId = route.paramMap.get('id');
     return this.systemService.getHook(hookId);
   }
-
 }

@@ -17,11 +17,17 @@ import { AccountingService } from '../accounting.service';
   styleUrls: ['./provisioning-entries.component.scss']
 })
 export class ProvisioningEntriesComponent implements OnInit {
-
   /** Provisioning entry data. */
   provisioningEntryData: any;
   /** Columns to be displayed in provisioning entries table. */
-  displayedColumns: string[] = ['createdUser', 'createdDate', 'journalEntry', 'viewReport', 'recreateProvisioning', 'viewJournalEntry'];
+  displayedColumns: string[] = [
+    'createdUser',
+    'createdDate',
+    'journalEntry',
+    'viewReport',
+    'recreateProvisioning',
+    'viewJournalEntry'
+  ];
   /** Data source for provisioning entries table. */
   dataSource: MatTableDataSource<any>;
 
@@ -36,9 +42,11 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { provisioningEntries: any }) => {
       this.provisioningEntryData = data.provisioningEntries.pageItems;
     });
@@ -74,10 +82,15 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {string} provisioningEntryId Provisioning entry id.
    */
   recreateProvisioning($event: Event, provisioningEntryId: string) {
-    this.accountingService.recreateProvisioningEntries(provisioningEntryId)
-      .subscribe((response: any) => {
-        this.router.navigate(['view', response.resourceId], { relativeTo: this.route });
-      });
+    this.accountingService.recreateProvisioningEntries(provisioningEntryId).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          'view',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
     $event.stopPropagation();
   }
 
@@ -87,8 +100,13 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {number} provisioningEntryId Provisioning entry id.
    */
   viewJournalEntry($event: Event, provisioningEntryId: number) {
-    this.router.navigate(['journal-entries/view', provisioningEntryId], { relativeTo: this.route });
+    this.router.navigate(
+      [
+        'journal-entries/view',
+        provisioningEntryId
+      ],
+      { relativeTo: this.route }
+    );
     $event.stopPropagation();
   }
-
 }

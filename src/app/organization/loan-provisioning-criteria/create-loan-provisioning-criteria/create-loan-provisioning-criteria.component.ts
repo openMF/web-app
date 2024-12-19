@@ -26,7 +26,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./create-loan-provisioning-criteria.component.scss']
 })
 export class CreateLoanProvisioningCriteriaComponent implements OnInit {
-
   /** Loan Provisioning Criteria form. */
   provisioningCriteriaForm: UntypedFormGroup;
   /** Loan Provisioning Criteria Template */
@@ -37,16 +36,24 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
   expenseAccounts: any;
 
   /** Columns to be displayed in definitions table. */
-  displayedColumns: string[] = ['category', 'minAge', 'maxAge', 'percentage', 'liabilityAccount', 'expenseAccount', 'edit'];
+  displayedColumns: string[] = [
+    'category',
+    'minAge',
+    'maxAge',
+    'percentage',
+    'liabilityAccount',
+    'expenseAccount',
+    'edit'
+  ];
   /** Criteria Definitions Array */
   definitions: {
-    categoryId: number,
-    categoryName: string,
-    maxAge?: number,
-    minAge?: number,
-    liabilityAccount?: string,
-    expenseAccount?: string,
-    provisioningPercentage?: number
+    categoryId: number;
+    categoryName: string;
+    maxAge?: number;
+    minAge?: number;
+    liabilityAccount?: string;
+    expenseAccount?: string;
+    provisioningPercentage?: number;
   }[] = [];
   /** Checks Definitons Table Validity */
   isDefinitionValid: any = {};
@@ -59,18 +66,24 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService,
-              private router: Router,
-              public dialog: MatDialog,
-              private route: ActivatedRoute) {
-     this.route.data.subscribe((data: { loanProvisioningCriteriaTemplate: any }) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private router: Router,
+    public dialog: MatDialog,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.subscribe((data: { loanProvisioningCriteriaTemplate: any }) => {
       this.loanProvisioningCriteriaTemplate = data.loanProvisioningCriteriaTemplate;
       this.definitions = this.loanProvisioningCriteriaTemplate.definitions;
-      this.liabilityAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter((account: any) => account.type.value === 'LIABILITY');
-      this.expenseAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter((account: any) => account.type.value === 'EXPENSE');
-     });
+      this.liabilityAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter(
+        (account: any) => account.type.value === 'LIABILITY'
+      );
+      this.expenseAccounts = this.loanProvisioningCriteriaTemplate.glAccounts.filter(
+        (account: any) => account.type.value === 'EXPENSE'
+      );
+    });
   }
 
   ngOnInit() {
@@ -82,8 +95,11 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
    */
   createProvisioningCriteriaForm() {
     this.provisioningCriteriaForm = this.formBuilder.group({
-      'criteriaName': ['', Validators.required],
-      'loanProducts': ['']
+      criteriaName: [
+        '',
+        Validators.required
+      ],
+      loanProducts: ['']
     });
   }
 
@@ -119,46 +135,56 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
    */
   getDefinitionFormFields(definition: any) {
     const formfields: FormfieldBase[] = [];
-    formfields.push(new InputBase({
-      controlName: 'minAge',
-      label: 'Min Age',
-      value: definition ? definition.minAge : '',
-      type: 'number',
-      required: true,
-      order: 1
-    }));
-    formfields.push(new InputBase({
-      controlName: 'maxAge',
-      label: 'Max Age',
-      value: definition ? definition.maxAge : '',
-      type: 'number',
-      required: true,
-      order: 2
-    }));
-    formfields.push(new InputBase({
-      controlName: 'provisioningPercentage',
-      label: 'Percentage (%)',
-      value: definition ? definition.provisioningPercentage : '',
-      type: 'number',
-      required: true,
-      order: 3
-    }));
-    formfields.push(new SelectBase({
-      controlName: 'liabilityAccount',
-      label: 'Liability Account',
-      value: definition ? definition.liabilityAccount : '',
-      options: { label: 'name', value: 'id', data: this.liabilityAccounts },
-      required: true,
-      order: 4
-    }));
-    formfields.push(new SelectBase({
-      controlName: 'expenseAccount',
-      label: 'Expense Account',
-      value: definition ? definition.expenseAccount : '',
-      options: { label: 'name', value: 'id', data: this.expenseAccounts },
-      required: true,
-      order: 5
-    }));
+    formfields.push(
+      new InputBase({
+        controlName: 'minAge',
+        label: 'Min Age',
+        value: definition ? definition.minAge : '',
+        type: 'number',
+        required: true,
+        order: 1
+      })
+    );
+    formfields.push(
+      new InputBase({
+        controlName: 'maxAge',
+        label: 'Max Age',
+        value: definition ? definition.maxAge : '',
+        type: 'number',
+        required: true,
+        order: 2
+      })
+    );
+    formfields.push(
+      new InputBase({
+        controlName: 'provisioningPercentage',
+        label: 'Percentage (%)',
+        value: definition ? definition.provisioningPercentage : '',
+        type: 'number',
+        required: true,
+        order: 3
+      })
+    );
+    formfields.push(
+      new SelectBase({
+        controlName: 'liabilityAccount',
+        label: 'Liability Account',
+        value: definition ? definition.liabilityAccount : '',
+        options: { label: 'name', value: 'id', data: this.liabilityAccounts },
+        required: true,
+        order: 4
+      })
+    );
+    formfields.push(
+      new SelectBase({
+        controlName: 'expenseAccount',
+        label: 'Expense Account',
+        value: definition ? definition.expenseAccount : '',
+        options: { label: 'name', value: 'id', data: this.expenseAccounts },
+        required: true,
+        order: 5
+      })
+    );
     return formfields;
   }
 
@@ -166,7 +192,8 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
    * Returns validity of form and table.
    */
   get provisioningCriteriaFormValid() {
-    const definitionsValid: boolean = Object.entries(this.isDefinitionValid).length === this.definitions.length ? true : false;
+    const definitionsValid: boolean =
+      Object.entries(this.isDefinitionValid).length === this.definitions.length ? true : false;
     return this.provisioningCriteriaForm.valid && definitionsValid;
   }
 
@@ -186,8 +213,13 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
       locale
     };
     this.organizationService.createProvisioningCriteria(loanProvisioningCriteria).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

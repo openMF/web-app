@@ -13,11 +13,10 @@ import { LoansService } from '../loans.service';
  */
 @Injectable()
 export class LoansAccountTransactionResolver implements Resolve<Object> {
-
   /**
    * @param {LoansService} LoansService Loans service.
    */
-  constructor(private loansService: LoansService) { }
+  constructor(private loansService: LoansService) {}
 
   /**
    * Returns the Loans Account Transaction data.
@@ -29,5 +28,4 @@ export class LoansAccountTransactionResolver implements Resolve<Object> {
     const transactionId = route.paramMap.get('id');
     return this.loansService.getLoansAccountTransaction(loanId, transactionId);
   }
-
 }

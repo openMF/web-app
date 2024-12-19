@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { SystemService } from '../system.service';
 
@@ -11,17 +7,16 @@ import { SystemService } from '../system.service';
   providedIn: 'root'
 })
 export class ManageExternalEventsResolver implements Resolve<boolean> {
-
   /**
    * @param {SystemService} systemService System service.
    */
-   constructor(private systemService: SystemService) {}
+  constructor(private systemService: SystemService) {}
 
-   /**
-    * Returns the Configuration data.
-    * @returns {Observable<any>}
-    */
-   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-     return this.systemService.getExternalEventConfiguration();
-   }
+  /**
+   * Returns the Configuration data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    return this.systemService.getExternalEventConfiguration();
+  }
 }

@@ -14,25 +14,24 @@ import { SharesService } from '../shares.service';
   styleUrls: ['./shares-account-actions.component.scss']
 })
 export class SharesAccountActionsComponent {
-
   /** Shares Account Data */
   sharesAccountData: any;
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
-    'Approve': boolean
-    'Reject': boolean
-    'Close': boolean
-    'Activate': boolean
-    'Undo Approval': boolean
-    'Apply Additional Shares': boolean
-    'Redeem Shares': boolean
-    'Approve Additional Shares': boolean
-    'Reject Additional Shares': boolean
+    Approve: boolean;
+    Reject: boolean;
+    Close: boolean;
+    Activate: boolean;
+    'Undo Approval': boolean;
+    'Apply Additional Shares': boolean;
+    'Redeem Shares': boolean;
+    'Approve Additional Shares': boolean;
+    'Reject Additional Shares': boolean;
   } = {
-    'Approve': false,
-    'Reject': false,
-    'Close': false,
-    'Activate': false,
+    Approve: false,
+    Reject: false,
+    Close: false,
+    Activate: false,
     'Undo Approval': false,
     'Apply Additional Shares': false,
     'Redeem Shares': false,
@@ -47,5 +46,4 @@ export class SharesAccountActionsComponent {
     const name = this.route.snapshot.params['name'];
     this.actions[name] = true;
   }
-
 }

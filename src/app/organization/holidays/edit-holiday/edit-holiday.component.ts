@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./edit-holiday.component.scss']
 })
 export class EditHolidayComponent implements OnInit {
-
   /** Edit Holiday form. */
   holidayForm: UntypedFormGroup;
   /** Holiday data. */
@@ -39,17 +38,19 @@ export class EditHolidayComponent implements OnInit {
    * @param {OrganizationService} organizatioService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private organizatioService: OrganizationService,
-              private settingsService: SettingsService,
-              private router: Router ) {
-    this.route.data.subscribe((data: { holiday: any, holidayTemplate: any }) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private organizatioService: OrganizationService,
+    private settingsService: SettingsService,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { holiday: any; holidayTemplate: any }) => {
       this.holidayData = data.holiday;
       this.holidayData.repaymentSchedulingTypes = data.holidayTemplate;
       this.reSchedulingType = this.holidayData.reschedulingType;
-      if ( this.holidayData.status.value === 'Active' ) {
+      if (this.holidayData.status.value === 'Active') {
         this.isActiveHoliday = true;
       } else {
         this.isActiveHoliday = false;
@@ -70,15 +71,33 @@ export class EditHolidayComponent implements OnInit {
    */
   setEditForm() {
     this.holidayForm = this.formBuilder.group({
-      'name': [this.holidayData.name, Validators.required],
-      'description': [this.holidayData.description]
+      name: [
+        this.holidayData.name,
+        Validators.required
+      ],
+      description: [this.holidayData.description]
     });
     if (!this.isActiveHoliday) {
-      this.holidayForm.addControl('fromDate', new UntypedFormControl(this.holidayData.fromDate && new Date(this.holidayData.fromDate), Validators.required));
-      this.holidayForm.addControl('toDate', new UntypedFormControl(this.holidayData.toDate && new Date(this.holidayData.toDate), Validators.required));
-      this.holidayForm.addControl('reschedulingType', new UntypedFormControl(this.holidayData.reschedulingType, Validators.required));
+      this.holidayForm.addControl(
+        'fromDate',
+        new UntypedFormControl(this.holidayData.fromDate && new Date(this.holidayData.fromDate), Validators.required)
+      );
+      this.holidayForm.addControl(
+        'toDate',
+        new UntypedFormControl(this.holidayData.toDate && new Date(this.holidayData.toDate), Validators.required)
+      );
+      this.holidayForm.addControl(
+        'reschedulingType',
+        new UntypedFormControl(this.holidayData.reschedulingType, Validators.required)
+      );
       if (this.reSchedulingType === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl(this.holidayData.repaymentsRescheduledTo && new Date(this.holidayData.repaymentsRescheduledTo), Validators.required));
+        this.holidayForm.addControl(
+          'repaymentsRescheduledTo',
+          new UntypedFormControl(
+            this.holidayData.repaymentsRescheduledTo && new Date(this.holidayData.repaymentsRescheduledTo),
+            Validators.required
+          )
+        );
       }
     }
   }
@@ -87,7 +106,7 @@ export class EditHolidayComponent implements OnInit {
    * Get Rescheduling Type.
    */
   getReschedulingType() {
-    this.holidayForm.get('reschedulingType').valueChanges.subscribe( (option: any) => {
+    this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
       this.reSchedulingType = option;
       if (option === 2) {
         this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl(new Date(), Validators.required));
@@ -105,7 +124,7 @@ export class EditHolidayComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     if (!this.isActiveHoliday) {
-      if (this.reSchedulingType === 2 ) {
+      if (this.reSchedulingType === 2) {
         const repaymentScheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
         holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(repaymentScheduledTo, dateFormat);
       }
@@ -123,10 +142,9 @@ export class EditHolidayComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizatioService.updateHoliday(this.holidayData.id, data).subscribe(response => {
+    this.organizatioService.updateHoliday(this.holidayData.id, data).subscribe((response) => {
       /** TODO Add Redirects to ViewMakerCheckerTask page. */
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

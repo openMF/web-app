@@ -8,9 +8,8 @@ describe('GroupNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupNavigationComponent ]
-    })
-    .compileComponents();
+      declarations: [GroupNavigationComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

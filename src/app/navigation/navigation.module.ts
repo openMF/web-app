@@ -42,4 +42,4 @@ import { MemberGroupsComponent } from './member-groups/member-groups.component';
     MemberGroupsComponent
   ]
 })
-export class NavigationModule { }
+export class NavigationModule {}

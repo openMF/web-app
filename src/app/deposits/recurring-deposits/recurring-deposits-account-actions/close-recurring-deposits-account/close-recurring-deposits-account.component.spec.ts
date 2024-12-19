@@ -8,9 +8,8 @@ describe('CloseRecurringDepositsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CloseRecurringDepositsAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [CloseRecurringDepositsAccountComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

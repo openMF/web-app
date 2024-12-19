@@ -23,12 +23,14 @@ export class ViewTransactionComponent {
 
   /**
    */
-  constructor(private savingsService: SavingsService,
-      private route: ActivatedRoute,
-      private dateUtils: Dates,
-      private router: Router,
-      public dialog: MatDialog,
-      private settingsService: SettingsService) {
+  constructor(
+    private savingsService: SavingsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    public dialog: MatDialog,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { fixedDepositsAccountTransaction: any }) => {
       this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
       this.transactionData = data.fixedDepositsAccountTransaction;
@@ -53,16 +55,20 @@ export class ViewTransactionComponent {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
-          transactionDate: this.dateUtils.formatDate(this.transactionData.date && new Date(this.transactionData.date), dateFormat),
+          transactionDate: this.dateUtils.formatDate(
+            this.transactionData.date && new Date(this.transactionData.date),
+            dateFormat
+          ),
           transactionAmount: 0,
           dateFormat,
           locale
         };
-        this.savingsService.executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.savingsService
+          .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id)
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }
-
 }

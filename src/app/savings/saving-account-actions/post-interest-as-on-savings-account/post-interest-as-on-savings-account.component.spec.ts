@@ -8,9 +8,8 @@ describe('PostInterestAsOnSavingsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PostInterestAsOnSavingsAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [PostInterestAsOnSavingsAccountComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

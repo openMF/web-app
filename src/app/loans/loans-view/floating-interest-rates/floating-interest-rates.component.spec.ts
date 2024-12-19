@@ -8,9 +8,8 @@ describe('FloatingInterestRatesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FloatingInterestRatesComponent ]
-    })
-    .compileComponents();
+      declarations: [FloatingInterestRatesComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

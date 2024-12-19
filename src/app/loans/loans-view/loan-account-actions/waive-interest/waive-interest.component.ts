@@ -18,7 +18,6 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./waive-interest.component.scss']
 })
 export class WaiveInterestComponent implements OnInit {
-
   @Input() dataObject: any;
 
   /** Loan Interest form. */
@@ -36,12 +35,14 @@ export class WaiveInterestComponent implements OnInit {
    * @param {LoansService} loanService Loan Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private router: Router,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private loanService: LoansService,
-              private route: ActivatedRoute) { }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private router: Router,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private loanService: LoansService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
@@ -56,9 +57,15 @@ export class WaiveInterestComponent implements OnInit {
    */
   setLoanInterestForm() {
     this.loanInterestForm = this.formBuilder.group({
-      'transactionAmount': [this.dataObject.amount, Validators.required],
-      'transactionDate': [this.dataObject.date && new Date(this.dataObject.date), Validators.required],
-      'note': ['']
+      transactionAmount: [
+        this.dataObject.amount,
+        Validators.required
+      ],
+      transactionDate: [
+        this.dataObject.date && new Date(this.dataObject.date),
+        Validators.required
+      ],
+      note: ['']
     });
   }
 
@@ -81,8 +88,7 @@ export class WaiveInterestComponent implements OnInit {
     data['transactionAmount'] = data['transactionAmount'] * 1;
     const loanId = this.route.snapshot.params['loanId'];
     this.loanService.submitLoanActionButton(loanId, data, 'waiveinterest').subscribe((response: any) => {
-      this.router.navigate(['../../general'], {relativeTo: this.route});
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
-
 }

@@ -15,7 +15,6 @@ import { OrganizationService } from '../../organization.service';
   styleUrls: ['./create-adhoc-query.component.scss']
 })
 export class CreateAdhocQueryComponent implements OnInit {
-
   /** Adhoc Query form. */
   adhocQueryForm: UntypedFormGroup;
   /** Adhoc Query template data. */
@@ -30,10 +29,12 @@ export class CreateAdhocQueryComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { adhocQueryTemplate: any }) => {
       this.adhocQueryTemplateData = data.adhocQueryTemplate;
     });
@@ -53,13 +54,28 @@ export class CreateAdhocQueryComponent implements OnInit {
   createAdhocQueryForm() {
     this.reportRunFrequencyData = this.adhocQueryTemplateData.reportRunFrequencies;
     this.adhocQueryForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'query': ['', Validators.required],
-      'tableName': ['', Validators.required],
-      'tableFields': ['', Validators.required],
-      'email': ['', Validators.email],
-      'reportRunFrequency': [''],
-      'isActive': [false]
+      name: [
+        '',
+        Validators.required
+      ],
+      query: [
+        '',
+        Validators.required
+      ],
+      tableName: [
+        '',
+        Validators.required
+      ],
+      tableFields: [
+        '',
+        Validators.required
+      ],
+      email: [
+        '',
+        Validators.email
+      ],
+      reportRunFrequency: [''],
+      isActive: [false]
     });
   }
 
@@ -67,9 +83,14 @@ export class CreateAdhocQueryComponent implements OnInit {
    * Sets the conditional controls of the adhoc query form
    */
   setConditionalControls() {
-    this.adhocQueryForm.get('reportRunFrequency').valueChanges.subscribe(reportRunFrequencyId => {
+    this.adhocQueryForm.get('reportRunFrequency').valueChanges.subscribe((reportRunFrequencyId) => {
       if (reportRunFrequencyId === 5) {
-        this.adhocQueryForm.addControl('reportRunEvery', new UntypedFormControl('', [Validators.required, Validators.min(1)]));
+        this.adhocQueryForm.addControl(
+          'reportRunEvery',
+          new UntypedFormControl('', [
+            Validators.required,
+            Validators.min(1)])
+        );
       } else {
         this.adhocQueryForm.removeControl('reportRunEvery');
       }
@@ -82,8 +103,13 @@ export class CreateAdhocQueryComponent implements OnInit {
    */
   submit() {
     this.organizationService.createAdhocQuery(this.adhocQueryForm.value).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

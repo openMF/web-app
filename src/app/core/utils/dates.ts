@@ -6,7 +6,6 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class Dates {
-
   public static DEFAULT_DATEFORMAT = 'yyyy-MM-dd';
   public static DEFAULT_DATETIMEFORMAT = 'yyyy-MM-dd HH:mm';
 
@@ -47,5 +46,4 @@ export class Dates {
     }
     return JSON.parse(localStorage.getItem('mifosXLanguage'));
   }
-
 }

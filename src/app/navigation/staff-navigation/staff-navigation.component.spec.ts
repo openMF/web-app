@@ -8,9 +8,8 @@ describe('StaffNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StaffNavigationComponent ]
-    })
-    .compileComponents();
+      declarations: [StaffNavigationComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -13,11 +13,10 @@ import { SharesService } from '../shares.service';
  */
 @Injectable()
 export class SharesAccountViewResolver implements Resolve<Object> {
-
   /**
    * @param {SharesService} SharesService Shares service.
    */
-  constructor(private sharesService: SharesService) { }
+  constructor(private sharesService: SharesService) {}
 
   /**
    * Returns the Shares Account data.
@@ -28,5 +27,4 @@ export class SharesAccountViewResolver implements Resolve<Object> {
     const shareAccountId = route.paramMap.get('shareAccountId') || route.parent.paramMap.get('shareAccountId');
     return this.sharesService.getSharesAccountData(shareAccountId, false);
   }
-
 }

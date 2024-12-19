@@ -13,7 +13,6 @@ import { SystemService } from '../../../system.service';
  */
 @Injectable()
 export class ViewSchedulerJobResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService System service.
    */
@@ -27,5 +26,4 @@ export class ViewSchedulerJobResolver implements Resolve<Object> {
     const jobId = route.paramMap.get('id');
     return this.systemService.getSelectedJob(jobId);
   }
-
 }

@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SavingsService {
-
   constructor(private http: HttpClient) {}
 
   /**
@@ -53,7 +52,7 @@ export class SavingsService {
    * @returns {Observable<any>} Savings data.
    */
   getSavingsAccountData(accountId: string): Observable<any> {
-    const httpParams = new HttpParams().set('associations', 'all' );
+    const httpParams = new HttpParams().set('associations', 'all');
     return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
   }
 
@@ -62,9 +61,7 @@ export class SavingsService {
    * @returns {Observable<any>} Savings account and template.
    */
   getSavingsAccountAndTemplate(accountId: string, template: boolean): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('template', template.toString())
-      .set('associations', 'charges' );
+    const httpParams = new HttpParams().set('template', template.toString()).set('associations', 'charges');
     return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
   }
 
@@ -77,8 +74,12 @@ export class SavingsService {
    * @returns {Observable<any>} Standing Instructions
    */
   getStandingInstructions(
-    clientId: string, clientName: string, fromAccountId: string,
-    locale: string, dateFormat: string): Observable<any> {
+    clientId: string,
+    clientName: string,
+    fromAccountId: string,
+    locale: string,
+    dateFormat: string
+  ): Observable<any> {
     const httpParams = new HttpParams()
       .set('clientId', clientId)
       .set('clientName', clientName)
@@ -162,7 +163,7 @@ export class SavingsService {
    * @returns {Observable<any>} Savings account template.
    */
   getSavingsAccountTemplate(entityId: string, productId?: string, isGroup?: boolean): Observable<any> {
-    let httpParams = new HttpParams().set( isGroup ? 'groupId' : 'clientId', entityId);
+    let httpParams = new HttpParams().set(isGroup ? 'groupId' : 'clientId', entityId);
     httpParams = productId ? httpParams.set('productId', productId) : httpParams;
     return this.http.get('/savingsaccounts/template', { params: httpParams });
   }
@@ -239,10 +240,17 @@ export class SavingsService {
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  executeSavingsAccountTransactionsCommand(accountId: string, command: string, data: any, transactionId?: any): Observable<any> {
+  executeSavingsAccountTransactionsCommand(
+    accountId: string,
+    command: string,
+    data: any,
+    transactionId?: any
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     if (transactionId) {
-      return this.http.post(`/savingsaccounts/${accountId}/transactions/${transactionId}`, data, { params: httpParams });
+      return this.http.post(`/savingsaccounts/${accountId}/transactions/${transactionId}`, data, {
+        params: httpParams
+      });
     }
     return this.http.post(`/savingsaccounts/${accountId}/transactions`, data, { params: httpParams });
   }
@@ -291,8 +299,8 @@ export class SavingsService {
    * @param savingAccountId GSIM Account Id of account to get data for.
    * @returns {Observable<any>} Savings data.
    */
-   getGSIMAccountData(savingAccountId: string, groupId: string): Observable<any> {
-    const httpParams = new HttpParams().set('parentGSIMAccountNo', savingAccountId );
+  getGSIMAccountData(savingAccountId: string, groupId: string): Observable<any> {
+    const httpParams = new HttpParams().set('parentGSIMAccountNo', savingAccountId);
     return this.http.get(`/groups/${groupId}/gsimaccounts`, { params: httpParams });
   }
 
@@ -360,5 +368,4 @@ export class SavingsService {
   loadSavingsDocument(savingAccountId: any, data: any): Observable<any> {
     return this.http.post(`/savings/${savingAccountId}/documents`, data);
   }
-
 }

@@ -8,7 +8,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./fixed-deposit-product-terms-step.component.scss']
 })
 export class FixedDepositProductTermsStepComponent implements OnInit {
-
   @Input() fixedDepositProductsTemplate: any;
 
   fixedDepositProductTermsForm: UntypedFormGroup;
@@ -26,33 +25,49 @@ export class FixedDepositProductTermsStepComponent implements OnInit {
     this.interestCompoundingPeriodTypeData = this.fixedDepositProductsTemplate.interestCompoundingPeriodTypeOptions;
     this.interestPostingPeriodTypeData = this.fixedDepositProductsTemplate.interestPostingPeriodTypeOptions;
     this.interestCalculationTypeData = this.fixedDepositProductsTemplate.interestCalculationTypeOptions;
-    this.interestCalculationDaysInYearTypeData = this.fixedDepositProductsTemplate.interestCalculationDaysInYearTypeOptions;
+    this.interestCalculationDaysInYearTypeData =
+      this.fixedDepositProductsTemplate.interestCalculationDaysInYearTypeOptions;
 
     if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
       this.fixedDepositProductTermsForm.patchValue({
-        'minDepositAmount': this.fixedDepositProductsTemplate.minDepositAmount,
-        'depositAmount': this.fixedDepositProductsTemplate.depositAmount,
-        'maxDepositAmount': this.fixedDepositProductsTemplate.maxDepositAmount,
+        minDepositAmount: this.fixedDepositProductsTemplate.minDepositAmount,
+        depositAmount: this.fixedDepositProductsTemplate.depositAmount,
+        maxDepositAmount: this.fixedDepositProductsTemplate.maxDepositAmount
       });
     }
 
     this.fixedDepositProductTermsForm.patchValue({
-      'interestCompoundingPeriodType': this.fixedDepositProductsTemplate.interestCompoundingPeriodType.id,
-      'interestPostingPeriodType': this.fixedDepositProductsTemplate.interestPostingPeriodType.id,
-      'interestCalculationType': this.fixedDepositProductsTemplate.interestCalculationType.id,
-      'interestCalculationDaysInYearType': this.fixedDepositProductsTemplate.interestCalculationDaysInYearType.id
+      interestCompoundingPeriodType: this.fixedDepositProductsTemplate.interestCompoundingPeriodType.id,
+      interestPostingPeriodType: this.fixedDepositProductsTemplate.interestPostingPeriodType.id,
+      interestCalculationType: this.fixedDepositProductsTemplate.interestCalculationType.id,
+      interestCalculationDaysInYearType: this.fixedDepositProductsTemplate.interestCalculationDaysInYearType.id
     });
   }
 
   createFixedDepositProductTermsForm() {
     this.fixedDepositProductTermsForm = this.formBuilder.group({
-      'minDepositAmount': [''],
-      'depositAmount': ['', Validators.required],
-      'maxDepositAmount': [''],
-      'interestCompoundingPeriodType': ['', Validators.required],
-      'interestPostingPeriodType': ['', Validators.required],
-      'interestCalculationType': ['', Validators.required],
-      'interestCalculationDaysInYearType': ['', Validators.required]
+      minDepositAmount: [''],
+      depositAmount: [
+        '',
+        Validators.required
+      ],
+      maxDepositAmount: [''],
+      interestCompoundingPeriodType: [
+        '',
+        Validators.required
+      ],
+      interestPostingPeriodType: [
+        '',
+        Validators.required
+      ],
+      interestCalculationType: [
+        '',
+        Validators.required
+      ],
+      interestCalculationDaysInYearType: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -65,5 +80,4 @@ export class FixedDepositProductTermsStepComponent implements OnInit {
     }
     return fixedDepositProductTerms;
   }
-
 }

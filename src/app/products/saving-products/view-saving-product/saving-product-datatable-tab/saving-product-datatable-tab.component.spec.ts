@@ -8,9 +8,8 @@ describe('SavingProductDatatableTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SavingProductDatatableTabComponent ]
-    })
-    .compileComponents();
+      declarations: [SavingProductDatatableTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

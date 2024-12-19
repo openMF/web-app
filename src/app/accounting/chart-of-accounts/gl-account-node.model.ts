@@ -2,7 +2,6 @@
  * GL Account Node model.
  */
 export class GLAccountNode {
-
   /** GL Account Node children. */
   children: GLAccountNode[];
 
@@ -13,12 +12,14 @@ export class GLAccountNode {
   manualEntriesAllowed: boolean;
   description: string;
 
-  constructor(name: string,
-              glCode: string = '',
-              type: string = '',
-              usage: string = '',
-              manualEntriesAllowed: boolean = false,
-              description: string = '') {
+  constructor(
+    name: string,
+    glCode: string = '',
+    type: string = '',
+    usage: string = '',
+    manualEntriesAllowed: boolean = false,
+    description: string = ''
+  ) {
     this.name = name;
     this.glCode = glCode;
     this.type = type;
@@ -27,5 +28,4 @@ export class GLAccountNode {
     this.description = description;
     this.children = [];
   }
-
 }

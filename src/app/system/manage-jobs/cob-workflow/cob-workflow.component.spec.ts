@@ -8,9 +8,8 @@ describe('CobWorkflowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CobWorkflowComponent ]
-    })
-    .compileComponents();
+      declarations: [CobWorkflowComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

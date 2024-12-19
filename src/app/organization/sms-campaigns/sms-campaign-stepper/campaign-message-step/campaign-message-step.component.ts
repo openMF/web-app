@@ -11,7 +11,6 @@ import { UntypedFormControl } from '@angular/forms';
   styleUrls: ['./campaign-message-step.component.scss']
 })
 export class CampaignMessageStepComponent implements OnChanges {
-
   /** Column headers */
   @Input() templateParameters: any[];
   /** Valdity check for sms campaign form */
@@ -24,7 +23,7 @@ export class CampaignMessageStepComponent implements OnChanges {
   /** Column header names */
   parameterLabels: any[];
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Sets template parameters once response headers are retrieved.
@@ -58,5 +57,4 @@ export class CampaignMessageStepComponent implements OnChanges {
     const newText = prevText + ` {{${label}}} `;
     this.message.patchValue(newText);
   }
-
 }
