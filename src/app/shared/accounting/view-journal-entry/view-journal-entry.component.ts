@@ -11,16 +11,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./view-journal-entry.component.scss']
 })
 export class ViewJournalEntryComponent {
-
   existsPaymentDetails = false;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides journal entry.
    */
-  constructor(public dialogRef: MatDialogRef<ViewJournalEntryComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
-
-    this.existsPaymentDetails = (data.journalEntry.transactionDetails != null && data.journalEntry.transactionDetails.paymentDetails != null);
+  constructor(
+    public dialogRef: MatDialogRef<ViewJournalEntryComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.existsPaymentDetails =
+      data.journalEntry.transactionDetails != null && data.journalEntry.transactionDetails.paymentDetails != null;
   }
-
 }

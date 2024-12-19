@@ -18,7 +18,6 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./edit-transaction.component.scss']
 })
 export class EditTransactionComponent implements OnInit {
-
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -27,11 +26,11 @@ export class EditTransactionComponent implements OnInit {
   editTransactionForm: UntypedFormGroup;
   /** Recurring Deposits transaction payment options. */
   paymentTypeOptions: {
-    id: number,
-    name: string,
-    description: string,
-    isCashPayment: boolean,
-    position: number
+    id: number;
+    name: string;
+    description: string;
+    isCashPayment: boolean;
+    position: number;
   }[];
   /** Flag to enable payment details fields. */
   addPaymentDetailsFlag: Boolean = false;
@@ -50,12 +49,14 @@ export class EditTransactionComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
     private recurringDepositsService: RecurringDepositsService,
-    private settingsService: SettingsService, ) {
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { recurringDepositsAccountTransactionTemplate: any }) => {
       this.transactionTemplateData = data.recurringDepositsAccountTransactionTemplate;
       if (this.transactionTemplateData.currency) {
@@ -73,9 +74,9 @@ export class EditTransactionComponent implements OnInit {
     this.maxDate = this.settingsService.businessDate;
     this.createEditTransactionForm();
     this.editTransactionForm.patchValue({
-      'transactionDate': this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),
-      'transactionAmount': this.transactionTemplateData.amount,
-      'paymentTypeId': this.transactionTemplateData.paymentTypeId
+      transactionDate: this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),
+      transactionAmount: this.transactionTemplateData.amount,
+      paymentTypeId: this.transactionTemplateData.paymentTypeId
     });
   }
 
@@ -84,9 +85,15 @@ export class EditTransactionComponent implements OnInit {
    */
   createEditTransactionForm() {
     this.editTransactionForm = this.formBuilder.group({
-      'transactionDate': ['', Validators.required],
-      'transactionAmount': ['', Validators.required],
-      'paymentTypeId': [''],
+      transactionDate: [
+        '',
+        Validators.required
+      ],
+      transactionAmount: [
+        '',
+        Validators.required
+      ],
+      paymentTypeId: ['']
     });
   }
 
@@ -127,10 +134,15 @@ export class EditTransactionComponent implements OnInit {
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.recurringDepositsService.executeRecurringDepositsAccountTransactionsCommand(this.recurringDepositAccountId, 'modify', data, this.transactionTemplateData.id)
-      .subscribe(res => {
+    this.recurringDepositsService
+      .executeRecurringDepositsAccountTransactionsCommand(
+        this.recurringDepositAccountId,
+        'modify',
+        data,
+        this.transactionTemplateData.id
+      )
+      .subscribe((res) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
-
 }

@@ -15,16 +15,15 @@ import { UntypedFormControl } from '@angular/forms';
     trigger('fadeInOut', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate(500, style({ opacity: 1 }))
-      ]),
+        animate(500, style({ opacity: 1 }))]),
       transition(':leave', [
-        animate(500, style({ opacity: 0 }))
-      ])
+        animate(500, style({ opacity: 0 }))])
+
     ])
+
   ]
 })
 export class SearchToolComponent {
-
   /** Query Form Control */
   query = new UntypedFormControl('');
   /** Resource Form Control */
@@ -57,7 +56,7 @@ export class SearchToolComponent {
     {
       name: 'Loans',
       value: 'loans'
-    },
+    }
   ];
 
   /**
@@ -84,5 +83,4 @@ export class SearchToolComponent {
     };
     this.router.navigate(['/search'], { queryParams: queryParams });
   }
-
 }

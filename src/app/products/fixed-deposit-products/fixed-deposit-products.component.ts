@@ -21,11 +21,13 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./fixed-deposit-products.component.scss']
 })
 export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
-
   /** Fixed deposit products data. */
   fixedDepositProductData: any;
   /** Columns to be displayed in fixed deposit products table. */
-  displayedColumns: string[] = ['name', 'shortName'];
+  displayedColumns: string[] = [
+    'name',
+    'shortName'
+  ];
   /** Data source for fixed deposit products table. */
   dataSource: MatTableDataSource<any>;
 
@@ -50,11 +52,13 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { fixedDepositProducts: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { fixedDepositProducts: any }) => {
       this.fixedDepositProductData = data.fixedDepositProducts;
     });
   }
@@ -89,7 +93,12 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showFixedDepositProductsPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonCreateFixedProduct, this.buttonCreateFixedProduct.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonCreateFixedProduct,
+          this.buttonCreateFixedProduct.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
 
@@ -107,7 +116,12 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -130,5 +144,4 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showFixedDepositProducts = true;
     this.router.navigate(['/products']);
   }
-
 }

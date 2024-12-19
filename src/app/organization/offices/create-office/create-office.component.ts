@@ -1,6 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef , ViewChild,
-         AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -24,7 +23,6 @@ import { ContinueSetupDialogComponent } from '../../../configuration-wizard/cont
   styleUrls: ['./create-office.component.scss']
 })
 export class CreateOfficeComponent implements OnInit, AfterViewInit {
-
   /** Office form. */
   officeForm: UntypedFormGroup;
   /** Office Data */
@@ -51,15 +49,17 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private popoverService: PopoverService,
-              private configurationWizardService: ConfigurationWizardService,
-              public dialog: MatDialog) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private popoverService: PopoverService,
+    private configurationWizardService: ConfigurationWizardService,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -75,10 +75,19 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
    */
   createofficeForm() {
     this.officeForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'parentId': ['', Validators.required],
-      'openingDate': ['', Validators.required],
-      'externalId': [''],
+      name: [
+        '',
+        Validators.required
+      ],
+      parentId: [
+        '',
+        Validators.required
+      ],
+      openingDate: [
+        '',
+        Validators.required
+      ],
+      externalId: ['']
     });
   }
 
@@ -99,7 +108,7 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
       dateFormat,
       locale
     };
-    this.organizationService.createOffice(data).subscribe(response => {
+    this.organizationService.createOffice(data).subscribe((response) => {
       if (this.configurationWizardService.showOfficeForm === true) {
         this.configurationWizardService.showOfficeForm = false;
         this.openDialog();
@@ -116,21 +125,21 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
     const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
       data: {
         stepName: 'office'
-      },
+      }
     });
     continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
       if (response.step === 1) {
-          this.configurationWizardService.showOfficeForm = false;
-          this.router.navigate(['../'], { relativeTo: this.route });
-        } else if (response.step === 2) {
-          this.configurationWizardService.showOfficeForm = true;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigate(['/organization/offices/create']);
-        } else if (response.step === 3) {
-          this.configurationWizardService.showOfficeForm = false;
-          this.configurationWizardService.showAddEditCurrency = true;
-          this.router.navigate(['/organization']);
+        this.configurationWizardService.showOfficeForm = false;
+        this.router.navigate(['../'], { relativeTo: this.route });
+      } else if (response.step === 2) {
+        this.configurationWizardService.showOfficeForm = true;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/organization/offices/create']);
+      } else if (response.step === 3) {
+        this.configurationWizardService.showOfficeForm = false;
+        this.configurationWizardService.showAddEditCurrency = true;
+        this.router.navigate(['/organization']);
       }
     });
   }
@@ -142,7 +151,12 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -152,7 +166,7 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showOfficeForm === true) {
       setTimeout(() => {
-          this.showPopover(this.templateCreateOfficeForm, this.createOfficeFormRef.nativeElement, 'right', true);
+        this.showPopover(this.templateCreateOfficeForm, this.createOfficeFormRef.nativeElement, 'right', true);
       });
     }
   }

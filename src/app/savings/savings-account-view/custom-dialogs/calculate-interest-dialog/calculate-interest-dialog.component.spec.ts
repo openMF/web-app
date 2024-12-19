@@ -8,9 +8,8 @@ describe('CalculateInterestDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalculateInterestDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [CalculateInterestDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

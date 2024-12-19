@@ -15,7 +15,6 @@ import { PopoverService } from '../configuration-wizard/popover/popover.service'
   styleUrls: ['./organization.component.scss']
 })
 export class OrganizationComponent implements AfterViewInit {
-
   shouldShowFundMapping = false;
   /* Reference of manage offices */
   @ViewChild('office') office: ElementRef<any>;
@@ -50,10 +49,12 @@ export class OrganizationComponent implements AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {}
 
   /**
    * Popover function
@@ -63,7 +64,12 @@ export class OrganizationComponent implements AfterViewInit {
    * @param backdrop Boolean.
    * @param arrowNumber - The index of the boolean value to toggle.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -73,32 +79,32 @@ export class OrganizationComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showCreateOffice === true) {
       setTimeout(() => {
-          this.showPopover(this.templateOffice, this.office.nativeElement, 'bottom', true);
+        this.showPopover(this.templateOffice, this.office.nativeElement, 'bottom', true);
       });
     }
     if (this.configurationWizardService.showAddEditCurrency === true) {
       setTimeout(() => {
-          this.showPopover(this.templateAddEditCurrency, this.addEditCurrency.nativeElement, 'bottom', true);
+        this.showPopover(this.templateAddEditCurrency, this.addEditCurrency.nativeElement, 'bottom', true);
       });
     }
     if (this.configurationWizardService.showCreateHoliday === true) {
       setTimeout(() => {
-          this.showPopover(this.templateHolidays, this.holidays.nativeElement, 'bottom', true);
+        this.showPopover(this.templateHolidays, this.holidays.nativeElement, 'bottom', true);
       });
     }
     if (this.configurationWizardService.showCreateEmployee === true) {
       setTimeout(() => {
-          this.showPopover(this.templateEmployee, this.employee.nativeElement, 'bottom', true);
+        this.showPopover(this.templateEmployee, this.employee.nativeElement, 'bottom', true);
       });
     }
     if (this.configurationWizardService.showDefineWorkingDays === true) {
       setTimeout(() => {
-          this.showPopover(this.templateWorkingDays, this.workingDays.nativeElement, 'bottom', true);
+        this.showPopover(this.templateWorkingDays, this.workingDays.nativeElement, 'bottom', true);
       });
     }
     if (this.configurationWizardService.showManageFunds === true) {
       setTimeout(() => {
-          this.showPopover(this.templateManageFunds, this.manageFunds.nativeElement, 'bottom', true);
+        this.showPopover(this.templateManageFunds, this.manageFunds.nativeElement, 'bottom', true);
       });
     }
   }
@@ -207,7 +213,7 @@ export class OrganizationComponent implements AfterViewInit {
     this.router.navigate(['/products/recurring-deposit-products']);
   }
 
-  arrowBooleansToggle(arrowNumber:  number) {
+  arrowBooleansToggle(arrowNumber: number) {
     // Toggle the boolean value at the given index
     this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }

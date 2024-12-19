@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./undo-client-transfer.component.scss']
 })
 export class UndoClientTransferComponent implements OnInit {
-
   /** Undo Client Transfer form. */
   undoClientTransferForm: UntypedFormGroup;
   /** Client Id */
@@ -31,12 +30,14 @@ export class UndoClientTransferComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
     });
@@ -55,8 +56,8 @@ export class UndoClientTransferComponent implements OnInit {
    */
   createUndoClientTransferForm() {
     this.undoClientTransferForm = this.formBuilder.group({
-      'transferDate': {value: new Date(this.transferDate), disabled: true},
-      'note': ['']
+      transferDate: { value: new Date(this.transferDate), disabled: true },
+      note: ['']
     });
   }
 
@@ -79,5 +80,4 @@ export class UndoClientTransferComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

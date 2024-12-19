@@ -34,6 +34,6 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inb
     RescheduleLoanComponent,
     ViewCheckerInboxComponent
   ],
-  providers: [ ]
+  providers: []
 })
-export class TasksModule { }
+export class TasksModule {}

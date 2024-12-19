@@ -10,7 +10,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./shares-account-preview-step.component.scss']
 })
 export class SharesAccountPreviewStepComponent {
-
   /** Shares Account Product Template */
   @Input() sharesAccountProductTemplate: any;
   /** Shares Account Template */
@@ -21,11 +20,15 @@ export class SharesAccountPreviewStepComponent {
   @Input() sharesAccount: any;
 
   /** Display columns for charges table. */
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
+  chargesDisplayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType'
+  ];
 
   /** Form submission event */
   @Output() submitEvent = new EventEmitter();
 
-  constructor() { }
-
+  constructor() {}
 }

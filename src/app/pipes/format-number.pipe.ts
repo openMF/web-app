@@ -6,10 +6,10 @@ import { SettingsService } from 'app/settings/settings.service';
   name: 'formatNumber'
 })
 export class FormatNumberPipe implements PipeTransform {
-
-  constructor(private decimalFormat: DecimalPipe,
-    private settingsService: SettingsService) {
-  }
+  constructor(
+    private decimalFormat: DecimalPipe,
+    private settingsService: SettingsService
+  ) {}
 
   transform(value: string | number, defaultValue: any): string {
     if (!value) {
@@ -19,5 +19,4 @@ export class FormatNumberPipe implements PipeTransform {
     const format = `1.${decimals}-${decimals}`;
     return this.decimalFormat.transform(value, format);
   }
-
 }

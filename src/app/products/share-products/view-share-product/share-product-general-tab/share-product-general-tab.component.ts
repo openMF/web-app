@@ -8,14 +8,23 @@ import { Accounting } from 'app/core/utils/accounting';
   styleUrls: ['./share-product-general-tab.component.scss']
 })
 export class ShareProductGeneralTabComponent {
-
   shareProduct: any;
 
-  marketPriceDisplayedColumns: string[] = ['fromDate', 'shareValue'];
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
+  marketPriceDisplayedColumns: string[] = [
+    'fromDate',
+    'shareValue'
+  ];
+  chargesDisplayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType'
+  ];
 
-  constructor(private route: ActivatedRoute,
-      private accounting: Accounting) {
+  constructor(
+    private route: ActivatedRoute,
+    private accounting: Accounting
+  ) {
     this.route.data.subscribe((data: { shareProduct: any }) => {
       this.shareProduct = data.shareProduct;
     });
@@ -24,5 +33,4 @@ export class ShareProductGeneralTabComponent {
   getAccountingRuleName(value: string): string {
     return this.accounting.getAccountRuleName(value.toUpperCase());
   }
-
 }

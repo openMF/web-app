@@ -4,7 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'find'
 })
 export class FindPipe implements PipeTransform {
-
   transform(value: any, options: any, key: string, property: string): any {
     let optionFound;
     if (options) {
@@ -12,5 +11,4 @@ export class FindPipe implements PipeTransform {
     }
     return optionFound ? optionFound[property] : '';
   }
-
 }

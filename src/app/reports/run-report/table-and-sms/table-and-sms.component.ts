@@ -25,7 +25,6 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./table-and-sms.component.scss']
 })
 export class TableAndSmsComponent implements OnChanges {
-
   /** Run Report Data */
   @Input() dataObject: any;
 
@@ -49,10 +48,12 @@ export class TableAndSmsComponent implements OnChanges {
    * @param {ReportsService} reportsService Reports Service
    * @param {DecimalPipe} decimalPipe Decimal Pipe
    */
-  constructor(private reportsService: ReportsService,
-          public dialog: MatDialog,
-          private decimalPipe: DecimalPipe,
-          private progressBarService: ProgressBarService) { }
+  constructor(
+    private reportsService: ReportsService,
+    public dialog: MatDialog,
+    private decimalPipe: DecimalPipe,
+    private progressBarService: ProgressBarService
+  ) {}
 
   /**
    * Fetches run report data post changes in run report form.
@@ -66,21 +67,22 @@ export class TableAndSmsComponent implements OnChanges {
 
   getRunReportData() {
     const exportS3 = this.dataObject.formData.exportS3;
-    this.reportsService.getRunReportData(this.dataObject.report.name, this.dataObject.formData)
-    .subscribe( (res: any) => {
-      this.toBeExportedToRepo = exportS3;
-      if (!this.toBeExportedToRepo) {
-        this.csvData = res.data;
-        this.notExistsReportData = (res.data.length === 0);
-        this.setOutputTable(res.data);
-        res.columnHeaders.forEach((header: any) => {
-          this.columnTypes.push(header.columnDisplayType);
-          this.displayedColumns.push(header.columnName);
-        });
-      }
-      this.hideOutput = false;
-      this.progressBarService.decrease();
-    });
+    this.reportsService
+      .getRunReportData(this.dataObject.report.name, this.dataObject.formData)
+      .subscribe((res: any) => {
+        this.toBeExportedToRepo = exportS3;
+        if (!this.toBeExportedToRepo) {
+          this.csvData = res.data;
+          this.notExistsReportData = res.data.length === 0;
+          this.setOutputTable(res.data);
+          res.columnHeaders.forEach((header: any) => {
+            this.columnTypes.push(header.columnDisplayType);
+            this.displayedColumns.push(header.columnName);
+          });
+        }
+        this.hideOutput = false;
+        this.progressBarService.decrease();
+      });
   }
 
   /**
@@ -99,11 +101,11 @@ export class TableAndSmsComponent implements OnChanges {
    */
   exportFile() {
     const delimiterOptions: any[] = [
-      {name: 'Comma (,)', char: ','},
-      {name: 'Colon (:)', char: ':'},
-      {name: 'SemiColon (;)', char: ';'},
-      {name: 'Pipe (|)', char: '|'},
-      {name: 'Space ( )', char: ' '},
+      { name: 'Comma (,)', char: ',' },
+      { name: 'Colon (:)', char: ':' },
+      { name: 'SemiColon (;)', char: ';' },
+      { name: 'Pipe (|)', char: '|' },
+      { name: 'Space ( )', char: ' ' }
     ];
     const fileName = `${this.dataObject.report.name}.csv`;
     const formfields: FormfieldBase[] = [
@@ -123,6 +125,7 @@ export class TableAndSmsComponent implements OnChanges {
         required: true,
         order: 2
       })
+
     ];
     const data = {
       title: 'Export data to File',
@@ -146,7 +149,7 @@ export class TableAndSmsComponent implements OnChanges {
       }
       return row;
     });
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, {header: this.displayedColumns});
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, { header: this.displayedColumns });
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Report');
     XLSX.writeFile(wb, fileName);
@@ -184,5 +187,4 @@ export class TableAndSmsComponent implements OnChanges {
   isDecimal(index: number) {
     return this.columnTypes[index] === 'DECIMAL';
   }
-
 }

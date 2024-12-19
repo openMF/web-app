@@ -7,11 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoanProductDatatablesResolver implements Resolve<boolean> {
-
   /**
    * @param {SystemService} systemService Products service.
    */
-  constructor(private systemService: SystemService) { }
+  constructor(private systemService: SystemService) {}
 
   /**
    * Returns the loan product data.

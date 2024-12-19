@@ -13,11 +13,10 @@ import { SavingsService } from '../savings.service';
  */
 @Injectable()
 export class SavingsDatatablesResolver implements Resolve<Object> {
-
   /**
    * @param {SavingsService} SavingsService Savings service.
    */
-  constructor(private savingsService: SavingsService) { }
+  constructor(private savingsService: SavingsService) {}
 
   /**
    * Returns the Saving Account's Datatables data.
@@ -26,5 +25,4 @@ export class SavingsDatatablesResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.savingsService.getSavingsDatatables();
   }
-
 }

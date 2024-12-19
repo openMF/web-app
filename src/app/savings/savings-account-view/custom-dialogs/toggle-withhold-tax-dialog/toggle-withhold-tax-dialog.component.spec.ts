@@ -8,9 +8,8 @@ describe('ToggleWithholdTaxDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ToggleWithholdTaxDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ToggleWithholdTaxDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

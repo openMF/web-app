@@ -11,18 +11,16 @@ import { KeyboardShortcutsConfiguration } from '../../keyboards-shortcut-config'
   styleUrls: ['./keyboard-shortcuts-dialog.component.scss']
 })
 export class KeyboardShortcutsDialogComponent implements OnInit {
-
   buttonConfig: KeyboardShortcutsConfiguration;
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides a deleteContext.
    */
-  constructor(public dialogRef: MatDialogRef<KeyboardShortcutsDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<KeyboardShortcutsDialogComponent>) {}
 
   ngOnInit() {
     this.dialogRef.updateSize(`800px`);
     this.buttonConfig = new KeyboardShortcutsConfiguration();
   }
-
 }

@@ -58,4 +58,4 @@ import { EditCenterComponent } from './edit-center/edit-center.component';
     EditCenterComponent
   ]
 })
-export class CentersModule { }
+export class CentersModule {}

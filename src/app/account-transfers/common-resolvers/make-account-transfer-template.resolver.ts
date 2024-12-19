@@ -13,34 +13,32 @@ import { AccountTransfersService } from '../account-transfers.service';
  */
 @Injectable()
 export class MakeAccountTransferTemplateResolver implements Resolve<Object> {
+  accountTypeId: string;
+  id: any;
+  /**
+   * @param {accountTransfersService} AccountTransfersService Account Transfers service.
+   */
+  constructor(private accountTransfersService: AccountTransfersService) {}
 
-    accountTypeId: string;
-    id: any;
-    /**
-     * @param {accountTransfersService} AccountTransfersService Account Transfers service.
-     */
-    constructor(private accountTransfersService: AccountTransfersService) { }
-
-    /**
-     * Returns the Standing Instructions Data.
-     * @param {ActivatedRouteSnapshot} route Route Snapshot
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const accountType = route.queryParamMap.get('accountType');
-        switch (accountType) {
-            case 'fromloans':
-                this.accountTypeId = '1';
-                this.id = route.queryParamMap.get('loanId');
-                break;
-            case 'fromsavings':
-                this.accountTypeId = '2';
-                this.id = route.queryParamMap.get('savingsId');
-                break;
-            default:
-                this.accountTypeId = '0';
-        }
-        return this.accountTransfersService.newAccountTranferResource(this.id, this.accountTypeId);
+  /**
+   * Returns the Standing Instructions Data.
+   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const accountType = route.queryParamMap.get('accountType');
+    switch (accountType) {
+      case 'fromloans':
+        this.accountTypeId = '1';
+        this.id = route.queryParamMap.get('loanId');
+        break;
+      case 'fromsavings':
+        this.accountTypeId = '2';
+        this.id = route.queryParamMap.get('savingsId');
+        break;
+      default:
+        this.accountTypeId = '0';
     }
-
+    return this.accountTransfersService.newAccountTranferResource(this.id, this.accountTypeId);
+  }
 }

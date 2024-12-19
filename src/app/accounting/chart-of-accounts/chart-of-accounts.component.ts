@@ -29,13 +29,19 @@ import { TreeControlService } from 'app/shared/common-logic/tree-control.service
   styleUrls: ['./chart-of-accounts.component.scss']
 })
 export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
-
   /** Button toggle group form control for type of view. (list/tree) */
   viewGroup = new UntypedFormControl('listView');
   /** GL Account data. */
   glAccountData: any;
   /** Columns to be displayed in chart of accounts table. */
-  displayedColumns: string[] = ['name', 'glCode', 'glAccountType', 'disabled', 'manualEntriesAllowed', 'usedAs'];
+  displayedColumns: string[] = [
+    'name',
+    'glCode',
+    'glAccountType',
+    'disabled',
+    'manualEntriesAllowed',
+    'usedAs'
+  ];
   /** Data source for chart of accounts table. */
   tableDataSource: MatTableDataSource<any>;
   /** Nested tree control for chart of accounts tree. */
@@ -69,12 +75,14 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private glAccountTreeService: GlAccountTreeService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private treeControlService: TreeControlService,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+  constructor(
+    private glAccountTreeService: GlAccountTreeService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private treeControlService: TreeControlService,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
     this.route.data.subscribe((data: { chartOfAccounts: any }) => {
       this.glAccountData = data.chartOfAccounts;
       glAccountTreeService.initialize(this.glAccountData);
@@ -102,9 +110,12 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
     this.tableDataSource.paginator = this.paginator;
     this.tableDataSource.sortingDataAccessor = (glAccount: any, property: any) => {
       switch (property) {
-        case 'glAccountType': return glAccount.type.value;
-        case 'usedAs': return glAccount.usage.value;
-        default: return glAccount[property];
+        case 'glAccountType':
+          return glAccount.type.value;
+        case 'usedAs':
+          return glAccount.usage.value;
+        default:
+          return glAccount[property];
       }
     };
     this.tableDataSource.sort = this.sort;
@@ -158,7 +169,12 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -188,5 +204,4 @@ export class ChartOfAccountsComponent implements AfterViewInit, OnInit {
   toggleExpandCollapse() {
     this.isTreeExpanded = this.treeControlService.toggleExpandCollapse(this.nestedTreeControl, this.isTreeExpanded);
   }
-
 }

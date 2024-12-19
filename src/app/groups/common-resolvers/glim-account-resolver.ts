@@ -13,11 +13,10 @@ import { GroupsService } from '../groups.service';
  */
 @Injectable()
 export class GLIMAccountsResolver implements Resolve<Object> {
-
   /**
    * @param {GroupsService} groupsService Groups service.
    */
-  constructor(private groupsService: GroupsService) { }
+  constructor(private groupsService: GroupsService) {}
 
   /**
    * Returns the Group's GLIM Loans Acccounts data.
@@ -28,5 +27,4 @@ export class GLIMAccountsResolver implements Resolve<Object> {
     const groupId = route.parent.paramMap.get('groupId');
     return this.groupsService.getGLIMAccountsData(groupId);
   }
-
 }

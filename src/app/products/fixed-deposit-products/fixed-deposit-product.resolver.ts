@@ -13,11 +13,10 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class FixedDepositProductResolver implements Resolve<Object> {
-
   /**
    * @param {ProductsService} productsService Products service.
    */
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService) {}
 
   /**
    * Returns the fixed deposit product data.
@@ -27,5 +26,4 @@ export class FixedDepositProductResolver implements Resolve<Object> {
     const productId = route.parent.paramMap.get('productId');
     return this.productsService.getFixedDepositProduct(productId);
   }
-
 }

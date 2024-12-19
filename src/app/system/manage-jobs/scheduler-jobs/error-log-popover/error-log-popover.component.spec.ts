@@ -8,9 +8,8 @@ describe('ErrorLogPopoverComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ErrorLogPopoverComponent ]
-    })
-    .compileComponents();
+      declarations: [ErrorLogPopoverComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorLogPopoverComponent);
     component = fixture.componentInstance;

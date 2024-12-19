@@ -31,7 +31,6 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./manage-funds.component.scss']
 })
 export class ManageFundsComponent implements OnInit, AfterViewInit {
-
   /** Manage Funds data. */
   fundsData: any;
   /** New Fund form */
@@ -44,7 +43,10 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
   /* Template for popover on funds form */
   @ViewChild('templateFundFormRef') templateFundFormRef: TemplateRef<any>;
   /** Columns to be displayed in funds table. */
-  displayedColumns: string[] = ['name', 'externalId'];
+  displayedColumns: string[] = [
+    'name',
+    'externalId'
+  ];
   /** Data source for Funds table. */
   dataSource: MatTableDataSource<any>;
 
@@ -63,14 +65,16 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private formBuilder: UntypedFormBuilder,
-              private organizationservice: OrganizationService,
-              public dialog: MatDialog,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { funds: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: UntypedFormBuilder,
+    private organizationservice: OrganizationService,
+    public dialog: MatDialog,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { funds: any }) => {
       this.fundsData = data.funds;
     });
   }
@@ -79,7 +83,6 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource(this.fundsData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
   }
 
   /**
@@ -95,7 +98,10 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
    */
   createFundForm() {
     this.fundForm = this.formBuilder.group({
-      'name': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -105,10 +111,10 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
   addFund() {
     const newFund = this.fundForm.value;
     this.organizationservice.createFund(newFund).subscribe((response: any) => {
-        this.fundsData.push({
-          id: response.resourceId,
-          name: newFund.name
-        });
+      this.fundsData.push({
+        id: response.resourceId,
+        name: newFund.name
+      });
       this.formRef.resetForm();
       if (this.configurationWizardService.showManageFunds === true) {
         this.configurationWizardService.showManageFunds = false;
@@ -131,7 +137,8 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
         value: fundContent,
         type: 'text',
         required: true
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Fund',
@@ -155,7 +162,12 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -165,7 +177,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showManageFunds === true) {
       setTimeout(() => {
-          this.showPopover(this.templateFundFormRef, this.fundFormRef.nativeElement, 'bottom', true);
+        this.showPopover(this.templateFundFormRef, this.fundFormRef.nativeElement, 'bottom', true);
       });
     }
   }
@@ -193,10 +205,10 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
     const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
       data: {
         stepName: 'fund'
-      },
+      }
     });
     continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
-    if (response.step === 1) {
+      if (response.step === 1) {
         this.configurationWizardService.showManageFunds = false;
         this.router.navigate(['../'], { relativeTo: this.route });
       } else if (response.step === 2) {

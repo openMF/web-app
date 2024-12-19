@@ -171,6 +171,6 @@ import { LoanTermVariationsTabComponent } from './loans-view/loan-term-variation
     LoanReamortizeComponent,
     LoanTermVariationsTabComponent
   ],
-  providers: [ ],
+  providers: []
 })
 export class LoansModule {}

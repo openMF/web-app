@@ -13,18 +13,16 @@ import { ClientsService } from '../clients.service';
  */
 @Injectable()
 export class ClientAddressTemplateResolver implements Resolve<Object> {
+  /**
+   * @param {ClientsService} ClientsService Clients service.
+   */
+  constructor(private clientsService: ClientsService) {}
 
-    /**
-     * @param {ClientsService} ClientsService Clients service.
-     */
-    constructor(private clientsService: ClientsService) { }
-
-    /**
-     * Returns the Client Address Field Configuration.
-     * @returns {Observable<any>}
-     */
-    resolve(): Observable<any> {
-        return this.clientsService.getClientAddressTemplate();
-    }
-
+  /**
+   * Returns the Client Address Field Configuration.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.clientsService.getClientAddressTemplate();
+  }
 }

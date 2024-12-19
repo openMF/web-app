@@ -8,9 +8,8 @@ describe('ViewSignatureDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewSignatureDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewSignatureDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -15,15 +15,20 @@ const routes: Routes = [
       children: [
         {
           path: 'individual-collection-sheet',
-          data: { title: 'Individual Collection Sheet', breadcrumb: 'Individual Collection Sheet', routeParamBreadcrumb: false },
+          data: {
+            title: 'Individual Collection Sheet',
+            breadcrumb: 'Individual Collection Sheet',
+            routeParamBreadcrumb: false
+          },
           component: IndividualCollectionSheetComponent,
           resolve: {
             officesData: OfficesResolver
           }
-        },
+        }
       ]
     }
   ])
+
 ];
 
 @NgModule({
@@ -31,4 +36,4 @@ const routes: Routes = [
   providers: [],
   exports: [RouterModule]
 })
-export class CollectionsRoutingModule { }
+export class CollectionsRoutingModule {}

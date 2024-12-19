@@ -15,9 +15,11 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./saving-products.component.scss']
 })
 export class SavingProductsComponent implements OnInit, AfterViewInit {
-
   savingProductsData: any;
-  displayedColumns: string[] = ['name', 'shortName'];
+  displayedColumns: string[] = [
+    'name',
+    'shortName'
+  ];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -38,10 +40,12 @@ export class SavingProductsComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
     this.route.data.subscribe((data: { savingProducts: any }) => {
       this.savingProductsData = data.savingProducts;
     });
@@ -81,7 +85,12 @@ export class SavingProductsComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 

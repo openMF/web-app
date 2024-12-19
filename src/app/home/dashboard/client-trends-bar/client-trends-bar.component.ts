@@ -23,7 +23,6 @@ import Chart from 'chart.js';
   styleUrls: ['./client-trends-bar.component.scss']
 })
 export class ClientTrendsBarComponent implements OnInit {
-
   /** Static Form control for office Id */
   officeId = new UntypedFormControl();
   /** Static Form control for time scale */
@@ -41,10 +40,12 @@ export class ClientTrendsBarComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(private homeService: HomeService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+  constructor(
+    private homeService: HomeService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates
+  ) {
+    this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -67,7 +68,8 @@ export class ClientTrendsBarComponent implements OnInit {
    * Fetches data accordingly and sets charts based on fetched data.
    */
   getChartData() {
-    merge(this.officeId.valueChanges, this.timescale.valueChanges).pipe(skip(1))
+    merge(this.officeId.valueChanges, this.timescale.valueChanges)
+      .pipe(skip(1))
       .subscribe(() => {
         const officeId = this.officeId.value;
         const timescale = this.timescale.value;
@@ -75,7 +77,10 @@ export class ClientTrendsBarComponent implements OnInit {
           case 'Day':
             const clientsByDay = this.homeService.getClientTrendsByDay(officeId);
             const loansByDay = this.homeService.getLoanTrendsByDay(officeId);
-            forkJoin([clientsByDay, loansByDay]).subscribe((data: any[]) => {
+            forkJoin([
+              clientsByDay,
+              loansByDay
+            ]).subscribe((data: any[]) => {
               const dayLabels = this.getLabels(timescale);
               const clientCounts = this.getCounts(data[0], dayLabels, timescale, 'client');
               const loanCounts = this.getCounts(data[1], dayLabels, timescale, 'loan');
@@ -86,7 +91,10 @@ export class ClientTrendsBarComponent implements OnInit {
           case 'Week':
             const clientsByWeek = this.homeService.getClientTrendsByWeek(officeId);
             const loansByWeek = this.homeService.getLoanTrendsByWeek(officeId);
-            forkJoin([clientsByWeek, loansByWeek]).subscribe((data: any[]) => {
+            forkJoin([
+              clientsByWeek,
+              loansByWeek
+            ]).subscribe((data: any[]) => {
               const weekLabels = this.getLabels(timescale);
               const clientCounts = this.getCounts(data[0], weekLabels, timescale, 'client');
               const loanCounts = this.getCounts(data[1], weekLabels, timescale, 'loan');
@@ -97,7 +105,10 @@ export class ClientTrendsBarComponent implements OnInit {
           case 'Month':
             const clientsByMonth = this.homeService.getClientTrendsByMonth(officeId);
             const loansByMonth = this.homeService.getLoanTrendsByMonth(officeId);
-            forkJoin([clientsByMonth, loansByMonth]).subscribe((data: any[]) => {
+            forkJoin([
+              clientsByMonth,
+              loansByMonth
+            ]).subscribe((data: any[]) => {
               const monthLabels = this.getLabels(timescale);
               const clientCounts = this.getCounts(data[0], monthLabels, timescale, 'client');
               const loanCounts = this.getCounts(data[1], monthLabels, timescale, 'loan');
@@ -106,7 +117,7 @@ export class ClientTrendsBarComponent implements OnInit {
             });
             break;
         }
-    });
+      });
   }
 
   /**
@@ -130,9 +141,7 @@ export class ClientTrendsBarComponent implements OnInit {
         while (labelsArray.length < 12) {
           date.setDate(date.getDate() - 7);
           /** Gets current week number */
-          const weekNumber = Math.ceil(
-            (((date.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7
-          );
+          const weekNumber = Math.ceil(((date.getTime() - onejan.getTime()) / 86400000 + onejan.getDay() + 1) / 7);
           labelsArray.push(weekNumber);
         }
         break;
@@ -155,7 +164,7 @@ export class ClientTrendsBarComponent implements OnInit {
    * @param {string} type 'client' or 'loan'.
    */
   getCounts(response: any[], labels: any[], timescale: string, type: string) {
-    let counts: number[]  = [];
+    let counts: number[] = [];
     switch (timescale) {
       case 'Day':
         labels.forEach((label: any) => {
@@ -197,10 +206,10 @@ export class ClientTrendsBarComponent implements OnInit {
       switch (type) {
         case 'client':
           counts.push(span.count);
-        break;
+          break;
         case 'loan':
           counts.push(span.lcount);
-        break;
+          break;
       }
     } else {
       counts.push(0);
@@ -236,22 +245,22 @@ export class ClientTrendsBarComponent implements OnInit {
               backgroundColor: 'red',
               borderColor: 'red',
               borderWidth: 2,
-              fill: false,
+              fill: false
             }
           ]
         },
         options: {
           responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Values',
-                            fontColor: '#1074B9'
-                        }
-                    },
-                }
+          scales: {
+            y: {
+              beginAtZero: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Values',
+                fontColor: '#1074B9'
+              }
+            }
+          }
         }
       });
     } else {
@@ -261,5 +270,4 @@ export class ClientTrendsBarComponent implements OnInit {
       this.chart.update();
     }
   }
-
 }

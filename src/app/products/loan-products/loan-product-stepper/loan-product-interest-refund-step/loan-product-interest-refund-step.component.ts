@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { StringEnumOptionData } from '../../../../shared/models/option-data.model';
 
 @Component({
@@ -8,7 +8,6 @@ import { StringEnumOptionData } from '../../../../shared/models/option-data.mode
   styleUrls: ['./loan-product-interest-refund-step.component.scss']
 })
 export class LoanProductInterestRefundStepComponent implements OnInit {
-
   @Input() loanProductsTemplate: any;
   @Output() supportedInterestRefundTypes = new EventEmitter<StringEnumOptionData[]>();
 
@@ -26,32 +25,33 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
     const values: StringEnumOptionData[] = this.loanProductsTemplate.supportedInterestRefundTypes;
     const supportedInterestRefundTypes: string[] = this.mapStringEnumOptionToIdList(values);
     this.loanProductInterestRefundForm.patchValue({
-      'supportedInterestRefundTypes': supportedInterestRefundTypes
+      supportedInterestRefundTypes: supportedInterestRefundTypes
     });
     this.supportedInterestRefundTypes.emit(values);
   }
 
   createLoanProductInterestRefundForm() {
     this.loanProductInterestRefundForm = this.formBuilder.group({
-      'supportedInterestRefundTypes': ''
+      supportedInterestRefundTypes: ''
     });
   }
 
   setConditionalControls() {
-    this.loanProductInterestRefundForm.get('supportedInterestRefundTypes').valueChanges
-      .subscribe(value => {
-        this.supportedInterestRefundTypes.emit(this.mapIdToStringEnumOptionList(value, this.loanProductsTemplate.supportedInterestRefundTypesOptions));
-      });
+    this.loanProductInterestRefundForm.get('supportedInterestRefundTypes').valueChanges.subscribe((value) => {
+      this.supportedInterestRefundTypes.emit(
+        this.mapIdToStringEnumOptionList(value, this.loanProductsTemplate.supportedInterestRefundTypesOptions)
+      );
+    });
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {
     if (!incomingValues) {
       return [];
     }
-    return incomingValues.map(v => v.id);
+    return incomingValues.map((v) => v.id);
   }
 
   mapIdToStringEnumOptionList(incomingValues: string[], options: StringEnumOptionData[]): StringEnumOptionData[] {
-    return options.filter(v => incomingValues.includes(v.id));
+    return options.filter((v) => incomingValues.includes(v.id));
   }
 }

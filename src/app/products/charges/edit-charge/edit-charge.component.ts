@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 
-
 /**
  * Edit Charge component.
  */
@@ -17,7 +16,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./edit-charge.component.scss']
 })
 export class EditChargeComponent implements OnInit {
-
   /** Selected Data. */
   chargeData: any;
   /** Charge form. */
@@ -53,11 +51,13 @@ export class EditChargeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private productsService: ProductsService,
+  constructor(
+    private productsService: ProductsService,
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargeData = data.chargesTemplate;
     });
@@ -71,19 +71,37 @@ export class EditChargeComponent implements OnInit {
    * Edit Charge form.
    */
   editChargeForm() {
-    this.showFeeOptions = (this.chargeData.feeInterval && this.chargeData.feeInterval > 0);
+    this.showFeeOptions = this.chargeData.feeInterval && this.chargeData.feeInterval > 0;
 
     this.chargeForm = this.formBuilder.group({
-      'name': [this.chargeData.name, Validators.required],
-      'chargeAppliesTo': [{ value: this.chargeData.chargeAppliesTo.id, disabled: true }, Validators.required],
-      'currencyCode': [this.chargeData.currency.code, Validators.required],
-      'amount': [this.chargeData.amount, Validators.required],
-      'active': [this.chargeData.active],
-      'penalty': [this.chargeData.penalty],
-      'minCap': [this.chargeData.minCap],
-      'maxCap': [this.chargeData.maxCap],
-      'chargeTimeType': [this.chargeData.chargeTimeType.id, Validators.required],
-      'chargeCalculationType': [this.chargeData.chargeCalculationType.id, Validators.required],
+      name: [
+        this.chargeData.name,
+        Validators.required
+      ],
+      chargeAppliesTo: [
+        { value: this.chargeData.chargeAppliesTo.id, disabled: true },
+        Validators.required
+      ],
+      currencyCode: [
+        this.chargeData.currency.code,
+        Validators.required
+      ],
+      amount: [
+        this.chargeData.amount,
+        Validators.required
+      ],
+      active: [this.chargeData.active],
+      penalty: [this.chargeData.penalty],
+      minCap: [this.chargeData.minCap],
+      maxCap: [this.chargeData.maxCap],
+      chargeTimeType: [
+        this.chargeData.chargeTimeType.id,
+        Validators.required
+      ],
+      chargeCalculationType: [
+        this.chargeData.chargeCalculationType.id,
+        Validators.required
+      ]
     });
     switch (this.chargeData.chargeAppliesTo.value) {
       case 'Loan': {
@@ -91,12 +109,15 @@ export class EditChargeComponent implements OnInit {
         this.chargeCalculationTypeOptions = this.chargeData.loanChargeCalculationTypeOptions;
         this.addFeeFrequency = true;
         this.chargePaymentMode = true;
-        this.chargeForm.addControl('chargePaymentMode', this.formBuilder.control(this.chargeData.chargePaymentMode.id, Validators.required));
+        this.chargeForm.addControl(
+          'chargePaymentMode',
+          this.formBuilder.control(this.chargeData.chargePaymentMode.id, Validators.required)
+        );
         if (this.showFeeOptions) {
           this.getFeeFrequency(this.showFeeOptions);
           this.chargeForm.patchValue({
-            'feeInterval': this.chargeData.feeInterval,
-            'feeFrequency': this.chargeData.feeFrequency.id
+            feeInterval: this.chargeData.feeInterval,
+            feeFrequency: this.chargeData.feeFrequency.id
           });
         }
         break;
@@ -120,12 +141,18 @@ export class EditChargeComponent implements OnInit {
         this.chargeTimeTypeOptions = this.chargeData.clientChargeTimeTypeOptions;
         this.showGLAccount = true;
         this.addFeeFrequency = false;
-        this.chargeForm.addControl('incomeAccountId', this.formBuilder.control(this.chargeData.incomeOrLiabilityAccount.id, Validators.required));
+        this.chargeForm.addControl(
+          'incomeAccountId',
+          this.formBuilder.control(this.chargeData.incomeOrLiabilityAccount.id, Validators.required)
+        );
         break;
       }
     }
     if (this.chargeData.taxGroup) {
-      this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: this.chargeData.taxGroup.id, disabled: true }));
+      this.chargeForm.addControl(
+        'taxGroupId',
+        this.formBuilder.control({ value: this.chargeData.taxGroup.id, disabled: true })
+      );
     } else {
       this.chargeForm.addControl('taxGroupId', this.formBuilder.control({ value: '' }));
     }
@@ -160,10 +187,8 @@ export class EditChargeComponent implements OnInit {
     if (!charges.maxCap) {
       delete charges.maxCap;
     }
-    this.productsService.updateCharge(this.chargeData.id.toString(), charges)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    this.productsService.updateCharge(this.chargeData.id.toString(), charges).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
-
 }

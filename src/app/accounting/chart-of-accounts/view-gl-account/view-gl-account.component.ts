@@ -19,7 +19,6 @@ import { Location } from '@angular/common';
   styleUrls: ['./view-gl-account.component.scss']
 })
 export class ViewGlAccountComponent {
-
   /** GL Account. */
   glAccount: any;
 
@@ -30,11 +29,13 @@ export class ViewGlAccountComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog,
-              private location: Location) {
+  constructor(
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private location: Location
+  ) {
     this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });
@@ -49,10 +50,9 @@ export class ViewGlAccountComponent {
     });
     deleteGlAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteGlAccount(this.glAccount.id)
-          .subscribe(() => {
-            this.router.navigate(['/accounting/chart-of-accounts']);
-          });
+        this.accountingService.deleteGlAccount(this.glAccount.id).subscribe(() => {
+          this.router.navigate(['/accounting/chart-of-accounts']);
+        });
       }
     });
   }
@@ -61,7 +61,8 @@ export class ViewGlAccountComponent {
    * Changes state of gl account. (enabled/disabled)
    */
   changeGlAccountState() {
-    this.accountingService.updateGlAccount(this.glAccount.id, { disabled: !this.glAccount.disabled })
+    this.accountingService
+      .updateGlAccount(this.glAccount.id, { disabled: !this.glAccount.disabled })
       .subscribe((response: any) => {
         this.glAccount.disabled = response.changes.disabled;
       });
@@ -70,5 +71,4 @@ export class ViewGlAccountComponent {
   goBack(): void {
     this.location.back();
   }
-
 }

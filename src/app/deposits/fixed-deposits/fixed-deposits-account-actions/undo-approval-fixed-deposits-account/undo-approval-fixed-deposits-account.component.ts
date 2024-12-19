@@ -16,7 +16,6 @@ import { FixedDepositsService } from '../../fixed-deposits.service';
   styleUrls: ['./undo-approval-fixed-deposits-account.component.scss']
 })
 export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
-
   /** Undo Approval Fixed Deposits Account form. */
   undoApprovalFixedDepositsAccountForm: UntypedFormGroup;
   /** Fixed Deposits Account Id */
@@ -32,11 +31,13 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private savingsService: SavingsService,
-              private fixedDepositsService: FixedDepositsService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsService: SavingsService,
+    private fixedDepositsService: FixedDepositsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.undoCommand = 'undoapproval'; // Default command
     this.undoAction = this.route.snapshot.params['name'];
     if (this.undoAction === 'Undo Activation') {
@@ -57,7 +58,7 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
    */
   createUndoApprovalFixedDepositsAccountForm() {
     this.undoApprovalFixedDepositsAccountForm = this.formBuilder.group({
-      'note': ['']
+      note: ['']
     });
   }
 
@@ -67,17 +68,18 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
    */
   submit() {
     const data = {
-      ...this.undoApprovalFixedDepositsAccountForm.value,
+      ...this.undoApprovalFixedDepositsAccountForm.value
     };
     if (this.undoAction === 'Undo Activation') {
-      this.fixedDepositsService.executeFixedDepositsAccountCommand(this.accountId, this.undoCommand, data).subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+      this.fixedDepositsService
+        .executeFixedDepositsAccountCommand(this.accountId, this.undoCommand, data)
+        .subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
     } else {
       this.savingsService.executeSavingsAccountCommand(this.accountId, this.undoCommand, data).subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });
     }
   }
-
 }

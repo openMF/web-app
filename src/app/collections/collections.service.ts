@@ -12,8 +12,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CollectionsService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Returns all the offices
@@ -27,9 +26,7 @@ export class CollectionsService {
    * @param {officeId} OfficeId any
    */
   getStaffs(officeId: any): Observable<any> {
-    const httpParams = new HttpParams()
-                      .set('officeId', officeId)
-                      .set('status', 'all');
+    const httpParams = new HttpParams().set('officeId', officeId).set('status', 'all');
     return this.http.get(`/staff`, { params: httpParams });
   }
 
@@ -50,5 +47,4 @@ export class CollectionsService {
     const httpParams = new HttpParams().set('command', 'saveCollectionSheet');
     return this.http.post(`/collectionsheet`, data, { params: httpParams });
   }
-
 }

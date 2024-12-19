@@ -13,18 +13,16 @@ import { TasksService } from '../tasks.service';
  */
 @Injectable()
 export class GetRescheduleLoans implements Resolve<Object> {
+  /**
+   * @param {TasksService} tasksService Tasks service.
+   */
+  constructor(private tasksService: TasksService) {}
 
-    /**
-     * @param {TasksService} tasksService Tasks service.
-     */
-    constructor(private tasksService: TasksService) { }
-
-    /**
-     * Returns the pending reschedule data.
-     * @returns {Observable<any>}
-     */
-    resolve(): Observable<any> {
-        return this.tasksService.getPendingRescheduleLoans();
-    }
-
+  /**
+   * Returns the pending reschedule data.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.tasksService.getPendingRescheduleLoans();
+  }
 }

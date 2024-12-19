@@ -21,7 +21,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./reschedule-loan.component.scss']
 })
 export class RescheduleLoanComponent {
-
   /** Loans Data */
   loans: any;
   /** Datasource */
@@ -31,7 +30,14 @@ export class RescheduleLoanComponent {
   /** Batch Requests */
   batchRequests: any[];
   /** Displayed Columns */
-  displayedColumns: string[] = ['select', 'client', 'rescheduleRequestNo', 'loanAccountNo', 'rescheduleForm', 'rescheduleReason'];
+  displayedColumns: string[] = [
+    'select',
+    'client',
+    'rescheduleRequestNo',
+    'loanAccountNo',
+    'rescheduleForm',
+    'rescheduleReason'
+  ];
 
   /**
    * Retrieves the reschedule loan data from `resolve`.
@@ -42,13 +48,15 @@ export class RescheduleLoanComponent {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private dateUtils: Dates,
     private router: Router,
     private settingsService: SettingsService,
     private translateService: TranslateService,
-    private tasksService: TasksService) {
+    private tasksService: TasksService
+  ) {
     this.route.data.subscribe((data: { recheduleLoansData: any }) => {
       this.loans = data.recheduleLoansData;
       this.dataSource = new MatTableDataSource(this.loans);
@@ -65,9 +73,9 @@ export class RescheduleLoanComponent {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach((row: any) => this.selection.select(row));
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((row: any) => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -80,7 +88,13 @@ export class RescheduleLoanComponent {
 
   bulkLoanReschedule(action: string) {
     const rescheduleLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Reschedule Loan'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to') + action + this.translateService.instant('labels.dialogContext.the Reschedule Loan') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Reschedule Loan'),
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want to') +
+          action +
+          this.translateService.instant('labels.dialogContext.the Reschedule Loan')
+      }
     });
     rescheduleLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -126,8 +140,8 @@ export class RescheduleLoanComponent {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/checker-inbox-and-tasks`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/checker-inbox-and-tasks`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

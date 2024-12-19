@@ -8,7 +8,6 @@ import { UntypedFormControl } from '@angular/forms';
   styleUrls: ['./input-amount.component.scss']
 })
 export class InputAmountComponent {
-
   @Input() isRequired = false;
   @Input() currency: Currency;
   @Input() inputLabel: string;
@@ -16,10 +15,10 @@ export class InputAmountComponent {
 
   displayHint = false;
 
-  constructor() { }
+  constructor() {}
 
   numberOnly(event: any): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
+    const charCode = event.which ? event.which : event.keyCode;
     if (charCode === 46) {
       if (!(this.inputFormControl.value.indexOf('.') > -1)) {
         return true;
@@ -38,5 +37,4 @@ export class InputAmountComponent {
   inputFocus(): void {
     this.displayHint = true;
   }
-
 }

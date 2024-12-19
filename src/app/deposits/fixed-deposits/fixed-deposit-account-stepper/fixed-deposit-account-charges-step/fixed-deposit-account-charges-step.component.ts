@@ -23,7 +23,6 @@ import { Charge, Currency } from 'app/shared/models/general.model';
   styleUrls: ['./fixed-deposit-account-charges-step.component.scss']
 })
 export class FixedDepositAccountChargesStepComponent implements OnInit, OnChanges {
-
   /** Fixed deposits account template */
   @Input() fixedDepositsAccountTemplate: any;
   /** Fixed deposits account and product template */
@@ -38,7 +37,15 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   /** Charges Data Source */
   chargesDataSource: {}[] = [];
   /** Charges table columns */
-  displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date', 'repaymentsEvery', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'date',
+    'repaymentsEvery',
+    'action'
+  ];
   /** For Edit Fixed Deposits Account Form */
   isChargesPatched = false;
   /** Component is pristine if there has been no changes by user interaction */
@@ -49,14 +56,17 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(public dialog: MatDialog,
-              private dateUtils: Dates,
-              private settingsService: SettingsService) { }
+  constructor(
+    public dialog: MatDialog,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit() {
     this.chargesDataSource = [];
     if (this.fixedDepositsAccountTemplate.id && this.fixedDepositsAccountTemplate.charges) {
-      this.chargesDataSource = this.fixedDepositsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
+      this.chargesDataSource =
+        this.fixedDepositsAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
     }
   }
 
@@ -69,8 +79,9 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
       }
     }
     if (this.fixedDepositsAccountProductTemplate) {
-      this.chargeData = this.fixedDepositsAccountProductTemplate.chargeOptions
-        .filter((c: Charge) => c.currency.code === this.currency.code);
+      this.chargeData = this.fixedDepositsAccountProductTemplate.chargeOptions.filter(
+        (c: Charge) => c.currency.code === this.currency.code
+      );
     }
   }
 
@@ -95,7 +106,8 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
         value: charge.amount,
         type: 'number',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Charge Amount',
@@ -125,7 +137,8 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Charge Date',
@@ -166,7 +179,8 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
         value: charge.feeInterval,
         type: 'text',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Charge Fee Interval',
@@ -200,5 +214,4 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
   get fixedDepositAccountCharges() {
     return { charges: this.chargesDataSource };
   }
-
 }

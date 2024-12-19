@@ -68,7 +68,6 @@ import { StandingInstructionsHistoryComponent } from './standing-instructions-hi
 import { FundMappingComponent } from './fund-mapping/fund-mapping.component';
 import { CreateHolidayComponent } from './holidays/create-holiday/create-holiday.component';
 
-
 /** Custom Service */
 import { OfficeItemNode } from './holidays/create-holiday/office-item.class';
 import { OfficeItemFlatNode } from './holidays/create-holiday/office-flat-item.class';
@@ -78,7 +77,6 @@ import { CreateFundComponent } from './manage-funds/create-fund/create-fund.comp
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
 import { InvestorsComponent } from './investors/investors.component';
-
 
 /**
  * Organization Module
@@ -164,4 +162,4 @@ import { InvestorsComponent } from './investors/investors.component';
     OfficeItemNode
   ]
 })
-export class OrganizationModule { }
+export class OrganizationModule {}

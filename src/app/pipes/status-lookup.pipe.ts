@@ -4,13 +4,12 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'statusLookup'
 })
 export class StatusLookupPipe implements PipeTransform {
-
   transform(status: string): string {
     const cssClassNameLookup = {
-      'true': 'status-active',
-      'false': 'status-deleted',
-      'Active': 'status-active',
-      'Block': 'status-block',
+      true: 'status-active',
+      false: 'status-deleted',
+      Active: 'status-active',
+      Block: 'status-block',
       'charges.StatusType.active.true': 'status-active',
       'loanStatusType.submitted.and.pending.approval': 'status-pending',
       'loanStatusType.approved': 'status-approved',

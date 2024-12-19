@@ -3,7 +3,7 @@ import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router, } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -33,7 +33,12 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   /** Offices data. */
   officesData: any;
   /** Columns to be displayed in offices table. */
-  displayedColumns: string[] = ['name', 'externalId', 'parentName', 'openingDate'];
+  displayedColumns: string[] = [
+    'name',
+    'externalId',
+    'parentName',
+    'openingDate'
+  ];
   /** Data source for offices table. */
   dataSource: MatTableDataSource<any>;
   /** Nested tree control for offices tree. */
@@ -52,7 +57,6 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   /** Sorter for offices table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-
   /* Reference of tree view button */
   @ViewChild('buttonTreeView') buttonTreeView: ElementRef<any>;
   /* Template for popover on tree view button */
@@ -70,13 +74,15 @@ export class OfficesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private officeTreeService: OfficeTreeService,
     private treeControlService: TreeControlService,
     private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { offices: any, officeDataTables: any }) => {
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { offices: any; officeDataTables: any }) => {
       this.officesData = data.offices;
       officeTreeService.initialize(this.officesData);
       this.dataTablesData = data.officeDataTables;
@@ -96,7 +102,7 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   /**
    * Sets the offices table.
    */
-   ngOnInit() {
+  ngOnInit() {
     this.setOffices();
     this.officeTreeService.treeDataChange.subscribe((officeTreeData: OfficeNode[]) => {
       this.nestedTreeDataSource.data = officeTreeData;
@@ -118,7 +124,7 @@ export class OfficesComponent implements OnInit, AfterViewInit {
    * View selected office.
    * @param {OfficeNode} office Office to be viewed.
    */
-   viewOfficeNode(office: OfficeNode) {
+  viewOfficeNode(office: OfficeNode) {
     if (office.id) {
       this.office = office;
     } else {
@@ -150,7 +156,12 @@ export class OfficesComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -160,12 +171,12 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showOfficeList === true) {
       setTimeout(() => {
-          this.showPopover(this.templateButtonTreeView, this.buttonTreeView.nativeElement, 'bottom', true);
+        this.showPopover(this.templateButtonTreeView, this.buttonTreeView.nativeElement, 'bottom', true);
       });
     }
     if (this.configurationWizardService.showOfficeTable === true) {
       setTimeout(() => {
-          this.showPopover(this.templateTableOffices, this.tableOffices.nativeElement, 'top', true);
+        this.showPopover(this.templateTableOffices, this.tableOffices.nativeElement, 'top', true);
       });
     }
   }
@@ -196,5 +207,4 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   toggleExpandCollapse() {
     this.isTreeExpanded = this.treeControlService.toggleExpandCollapse(this.nestedTreeControl, this.isTreeExpanded);
   }
-
 }

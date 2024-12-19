@@ -35,7 +35,7 @@ import { CollectionsModule } from './collections/collections.module';
 import { ProfileModule } from './profile/profile.module';
 import { TasksModule } from './tasks/tasks.module';
 import { ConfigurationWizardModule } from './configuration-wizard/configuration-wizard.module';
-import {PortalModule} from '@angular/cdk/portal';
+import { PortalModule } from '@angular/cdk/portal';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
@@ -59,9 +59,16 @@ export function HttpLoaderFactory(http: HttpClient) {
       loader: {
         provide: TranslateLoader,
         useFactory: (http: HttpClient, locationStrategy: LocationStrategy) => {
-          return new TranslateHttpLoader(http, `${ window.location.protocol }//${ window.location.host }${locationStrategy.getBaseHref()}/assets/translations/`, '.json');
+          return new TranslateHttpLoader(
+            http,
+            `${window.location.protocol}//${window.location.host}${locationStrategy.getBaseHref()}/assets/translations/`,
+            '.json'
+          );
         },
-        deps: [HttpClient, LocationStrategy]
+        deps: [
+          HttpClient,
+          LocationStrategy
+        ]
       }
     }),
     BrowserModule,
@@ -91,9 +98,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     TasksModule,
     ConfigurationWizardModule,
     AppRoutingModule
+
   ],
-  declarations: [WebAppComponent, NotFoundComponent],
+  declarations: [
+    WebAppComponent,
+    NotFoundComponent
+  ],
   providers: [DatePipe],
   bootstrap: [WebAppComponent]
 })
-export class AppModule { }
+export class AppModule {}

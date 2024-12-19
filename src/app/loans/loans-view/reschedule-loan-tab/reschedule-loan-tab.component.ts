@@ -17,16 +17,24 @@ export class RescheduleLoanTabComponent {
   @Input() loanStatus: LoanStatus;
 
   loanRescheduleData: any;
-  loanRescheduleDataColumns: string[] = ['id', 'rescheduleFromDate', 'reason', 'status', 'actions'];
+  loanRescheduleDataColumns: string[] = [
+    'id',
+    'rescheduleFromDate',
+    'reason',
+    'status',
+    'actions'
+  ];
   clientId: any;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private loansServices: LoansService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private translateService: TranslateService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog
+  ) {
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
     this.route.parent.data.subscribe((data: { loanRescheduleData: any }) => {
       this.loanRescheduleData = data.loanRescheduleData;
@@ -35,7 +43,14 @@ export class RescheduleLoanTabComponent {
 
   manageRequest(request: any, command: string): void {
     const approveLoanRescheduleDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: `${command}` + this.translateService.instant('labels.heading.Loan Reschedule'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want') + `${command}` + this.translateService.instant('labels.dialogContext.the Loan Reschedule') + `${request.id}` }
+      data: {
+        heading: `${command}` + this.translateService.instant('labels.heading.Loan Reschedule'),
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want') +
+          `${command}` +
+          this.translateService.instant('labels.dialogContext.the Loan Reschedule') +
+          `${request.id}`
+      }
     });
     approveLoanRescheduleDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -50,9 +65,11 @@ export class RescheduleLoanTabComponent {
         } else {
           payload['rejectedOnDate'] = this.dateUtils.formatDate(this.settingsService.businessDate, dateFormat);
         }
-        this.loansServices.applyCommandLoanRescheduleRequests(request.id, command.toLowerCase(), payload).subscribe((result: any) => {
-          this.reload();
-        });
+        this.loansServices
+          .applyCommandLoanRescheduleRequests(request.id, command.toLowerCase(), payload)
+          .subscribe((result: any) => {
+            this.reload();
+          });
       }
     });
   }
@@ -62,7 +79,8 @@ export class RescheduleLoanTabComponent {
    */
   private reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${this.clientId}/loans-accounts`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/clients/${this.clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 }

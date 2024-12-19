@@ -17,6 +17,7 @@ const routes: Routes = [
       data: { title: 'Settings', breadcrumb: 'Settings' }
     }
   ])
+
 ];
 
 /**
@@ -29,4 +30,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class SettingsRoutingModule { }
+export class SettingsRoutingModule {}

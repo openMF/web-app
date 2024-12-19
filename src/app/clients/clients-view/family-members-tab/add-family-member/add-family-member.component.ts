@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./add-family-member.component.scss']
 })
 export class AddFamilyMemberComponent implements OnInit {
-
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Minimum age allowed is 0. */
@@ -37,17 +36,18 @@ export class AddFamilyMemberComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private dateUtils: Dates,
-              private router: Router,
-              private route: ActivatedRoute,
-              private clientsService: ClientsService,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private dateUtils: Dates,
+    private router: Router,
+    private route: ActivatedRoute,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { clientTemplate: any }) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
     });
     this.clientId = this.route.parent.parent.snapshot.params['clientId'];
-
   }
 
   ngOnInit() {
@@ -60,17 +60,35 @@ export class AddFamilyMemberComponent implements OnInit {
    */
   createAddFamilyMemberForm() {
     this.addFamilyMemberForm = this.formBuilder.group({
-      'firstName': ['', Validators.required],
-      'middleName': [''],
-      'lastName': ['', Validators.required],
-      'qualification': [''],
-      'age': ['', Validators.required],
-      'isDependent': [''],
-      'relationshipId': ['', Validators.required],
-      'genderId': ['', Validators.required],
-      'professionId': [''],
-      'maritalStatusId': [''],
-      'dateOfBirth': ['', Validators.required]
+      firstName: [
+        '',
+        Validators.required
+      ],
+      middleName: [''],
+      lastName: [
+        '',
+        Validators.required
+      ],
+      qualification: [''],
+      age: [
+        '',
+        Validators.required
+      ],
+      isDependent: [''],
+      relationshipId: [
+        '',
+        Validators.required
+      ],
+      genderId: [
+        '',
+        Validators.required
+      ],
+      professionId: [''],
+      maritalStatusId: [''],
+      dateOfBirth: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -90,9 +108,8 @@ export class AddFamilyMemberComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.clientsService.addFamilyMember(this.clientId, data).subscribe(res => {
+    this.clientsService.addFamilyMember(this.clientId, data).subscribe((res) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

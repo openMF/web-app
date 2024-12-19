@@ -8,9 +8,8 @@ describe('UnassignStaffDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UnassignStaffDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [UnassignStaffDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

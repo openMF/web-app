@@ -13,8 +13,6 @@ import { CollateralsService } from '../collaterals.service';
   styleUrls: ['./edit-collateral.component.scss']
 })
 export class EditCollateralComponent implements OnInit {
-
-
   /** Client Collateral Form */
   clientCollateralForm: UntypedFormGroup;
   /** Client Collateral Options */
@@ -38,12 +36,12 @@ export class EditCollateralComponent implements OnInit {
     private router: Router,
     private settingsService: SettingsService,
     private collateralService: CollateralsService
-    ) {
-      this.route.data.subscribe((data: { clientCollateralData: any }) => {
-        this.collateralDetails = data.clientCollateralData;
-      });
-      this.clientId = this.route.parent.snapshot.params['clientId'];
-    }
+  ) {
+    this.route.data.subscribe((data: { clientCollateralData: any }) => {
+      this.collateralDetails = data.clientCollateralData;
+    });
+    this.clientId = this.route.parent.snapshot.params['clientId'];
+  }
 
   ngOnInit(): void {
     this.createClientCollateralForm();
@@ -54,16 +52,19 @@ export class EditCollateralComponent implements OnInit {
    */
   createClientCollateralForm() {
     this.clientCollateralForm = this.formBuilder.group({
-      'quantity': [ '', Validators.required ],
-      'name': [{ value: '', disabled: true }],
-      'total': [{value: '', disabled: true}],
-      'totalCollateral': [{value: '', disabled: true}],
+      quantity: [
+        '',
+        Validators.required
+      ],
+      name: [{ value: '', disabled: true }],
+      total: [{ value: '', disabled: true }],
+      totalCollateral: [{ value: '', disabled: true }]
     });
     this.clientCollateralForm.patchValue({
-      'name': this.collateralDetails.name,
-      'quantity': this.collateralDetails.quantity,
-      'total': this.collateralDetails.total,
-      'totalCollateral': this.collateralDetails.totalCollateral,
+      name: this.collateralDetails.name,
+      quantity: this.collateralDetails.quantity,
+      total: this.collateralDetails.total,
+      totalCollateral: this.collateralDetails.totalCollateral
     });
   }
 
@@ -79,8 +80,7 @@ export class EditCollateralComponent implements OnInit {
       locale
     };
     this.collateralService.updateClientCollateral(this.clientId, collateralId, clientCollateralData).subscribe(() => {
-      this.router.navigate(['../'], {relativeTo: this.route});
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

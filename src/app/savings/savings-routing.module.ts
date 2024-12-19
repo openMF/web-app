@@ -165,7 +165,7 @@ const routes: Routes = [
                 path: 'general',
                 component: SavingsTransactionGeneralTabComponent,
                 resolve: {
-                  savingsAccountTransaction: SavingsAccountTransactionResolver,
+                  savingsAccountTransaction: SavingsAccountTransactionResolver
                 }
               },
               {
@@ -207,7 +207,8 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: '../charges', pathMatch: 'prefix'
+            redirectTo: '../charges',
+            pathMatch: 'prefix'
           },
           {
             path: ':id',
@@ -230,7 +231,8 @@ const routes: Routes = [
       },
       {
         path: ':savingAccountId/transfer-funds',
-        loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
+        loadChildren: () =>
+          import('../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
       },
       {
         path: 'gsim-account',
@@ -242,7 +244,7 @@ const routes: Routes = [
             resolve: {
               groupsData: GroupViewResolver,
               savingsAccountTemplate: SavingsAccountTemplateResolver
-            },
+            }
           },
           {
             path: ':savingAccountId',
@@ -255,20 +257,21 @@ const routes: Routes = [
                   gsimData: GSIMViewResolver,
                   savingAccountData: SavingsAccountViewResolver,
                   groupsData: GroupAccountsResolver
-                },
-              },
+                }
+              }
             ]
-          },
+          }
         ]
       }
     ]
-  },
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   declarations: [],
-  providers: [SavingsAccountViewResolver,
+  providers: [
+    SavingsAccountViewResolver,
     SavingsDatatablesResolver,
     SavingsDatatableResolver,
     TransactionDatatableResolver,
@@ -282,6 +285,7 @@ const routes: Routes = [
     SavingsAccountTransactionTemplateResolver,
     GSIMAccountsResolver,
     GroupAccountsResolver,
-    GSIMViewResolver]
+    GSIMViewResolver
+  ]
 })
-export class SavingsRoutingModule { }
+export class SavingsRoutingModule {}

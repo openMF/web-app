@@ -13,7 +13,6 @@ import { NavigationService } from './navigation.service';
  */
 @Injectable()
 export class OfficesResolver implements Resolve<Object> {
-
   /**
    * @param {NavigationService} navigationService Navigation service.
    */
@@ -26,5 +25,4 @@ export class OfficesResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.navigationService.getOffices();
   }
-
 }

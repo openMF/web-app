@@ -15,7 +15,6 @@ import { CentersService } from 'app/centers/centers.service';
   styleUrls: ['./center-assign-staff.component.scss']
 })
 export class CenterAssignStaffComponent implements OnInit {
-
   /** Center Assign Staff form. */
   centerAssignStaffForm: UntypedFormGroup;
   /** Field Officer Data */
@@ -30,10 +29,12 @@ export class CenterAssignStaffComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private centersService: CentersService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private centersService: CentersService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { centersActionData: any }) => {
       this.centerData = data.centersActionData;
     });
@@ -52,7 +53,7 @@ export class CenterAssignStaffComponent implements OnInit {
    */
   createCenterAssignStaffForm() {
     this.centerAssignStaffForm = this.formBuilder.group({
-      'staffId': ['']
+      staffId: ['']
     });
   }
 
@@ -60,10 +61,10 @@ export class CenterAssignStaffComponent implements OnInit {
    * Submits the form and assigns staff for the center.
    */
   submit() {
-    this.centersService.executeGroupActionCommand(this.centerData.id, 'assignStaff', this.centerAssignStaffForm.value)
+    this.centersService
+      .executeGroupActionCommand(this.centerData.id, 'assignStaff', this.centerAssignStaffForm.value)
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });
   }
-
 }

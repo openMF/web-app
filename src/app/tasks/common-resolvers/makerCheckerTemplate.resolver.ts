@@ -13,18 +13,16 @@ import { TasksService } from '../tasks.service';
  */
 @Injectable()
 export class MakerCheckerTemplate implements Resolve<Object> {
+  /**
+   * @param {TasksService} tasksService Tasks service.
+   */
+  constructor(private tasksService: TasksService) {}
 
-    /**
-     * @param {TasksService} tasksService Tasks service.
-     */
-    constructor(private tasksService: TasksService) { }
-
-    /**
-     * Returns the maker checker template data.
-     * @returns {Observable<any>}
-     */
-    resolve(): Observable<any> {
-        return this.tasksService.getMakerCheckerTemplate();
-    }
-
+  /**
+   * Returns the maker checker template data.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.tasksService.getMakerCheckerTemplate();
+  }
 }

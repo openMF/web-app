@@ -8,9 +8,8 @@ describe('WithdrawnByClientComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WithdrawnByClientComponent ]
-    })
-    .compileComponents();
+      declarations: [WithdrawnByClientComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

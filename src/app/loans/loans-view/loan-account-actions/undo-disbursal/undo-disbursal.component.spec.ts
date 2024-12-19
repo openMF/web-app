@@ -8,9 +8,8 @@ describe('UndoDisbursalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UndoDisbursalComponent ]
-    })
-    .compileComponents();
+      declarations: [UndoDisbursalComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -8,7 +8,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-standing-instructions.component.scss']
 })
 export class ViewStandingInstructionsComponent {
-
   /** Standing Instructions Data */
   standingInstructionsData: any;
   /** Allow Client Edit */
@@ -19,12 +18,11 @@ export class ViewStandingInstructionsComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { standingInstructionsData: any}) => {
+    this.route.data.subscribe((data: { standingInstructionsData: any }) => {
       this.standingInstructionsData = data.standingInstructionsData;
       if (this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id) {
         this.allowclientedit = false;
       }
     });
   }
-
 }

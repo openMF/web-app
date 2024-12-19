@@ -14,7 +14,6 @@ import { activities } from '../activities';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
   /** Array of all user activities */
   userActivity: string[];
   /** Array of most recent user activities */
@@ -52,10 +51,16 @@ export class DashboardComponent implements OnInit {
         uniqueActivities.push(activity);
       }
     });
-    const topEightRecentActivities =
-      uniqueActivities
-        .filter((activity: string) => !['/', '/login', '/home', '/dashboard'].includes(activity))
-        .slice(0, 8);
+    const topEightRecentActivities = uniqueActivities
+      .filter(
+        (activity: string) => ![
+            '/',
+            '/login',
+            '/home',
+            '/dashboard'
+          ].includes(activity)
+      )
+      .slice(0, 8);
     return topEightRecentActivities;
   }
 
@@ -63,18 +68,24 @@ export class DashboardComponent implements OnInit {
    * Returns top eight frequent activities.
    */
   getFrequentActivities() {
-    const frequencyCounts: any  = {};
-    let index  = this.userActivity.length;
+    const frequencyCounts: any = {};
+    let index = this.userActivity.length;
     while (index) {
       frequencyCounts[this.userActivity[--index]] = (frequencyCounts[this.userActivity[index]] || 0) + 1;
     }
     const frequencyCountsArray = Object.entries(frequencyCounts);
-    const topEigthFrequentActivities =
-      frequencyCountsArray
-        .sort((a: any, b: any) => b[1] - a[1])
-        .map((entry: any[]) => entry[0])
-        .filter((activity: string) => !['/', '/login', '/home', '/dashboard'].includes(activity))
-        .slice(0, 8);
+    const topEigthFrequentActivities = frequencyCountsArray
+      .sort((a: any, b: any) => b[1] - a[1])
+      .map((entry: any[]) => entry[0])
+      .filter(
+        (activity: string) => ![
+            '/',
+            '/login',
+            '/home',
+            '/dashboard'
+          ].includes(activity)
+      )
+      .slice(0, 8);
     return topEigthFrequentActivities;
   }
 
@@ -89,10 +100,10 @@ export class DashboardComponent implements OnInit {
    * Sets filtered activities for autocomplete.
    */
   setFilteredActivities() {
-    this.filteredActivities = this.searchText.valueChanges
-    .pipe(
-      map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
-      map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
+    this.filteredActivities = this.searchText.valueChanges.pipe(
+      map((activity: any) => (typeof activity === 'string' ? activity : activity.activity)),
+      map((activityName: string) => (activityName ? this.filterActivity(activityName) : this.allActivities))
+    );
   }
 
   /**
@@ -102,8 +113,6 @@ export class DashboardComponent implements OnInit {
    */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
-    return this.allActivities.filter(activity => activity.activity.toLowerCase().indexOf(filterValue) === 0);
+    return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
   }
-
 }
-

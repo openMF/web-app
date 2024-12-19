@@ -8,9 +8,8 @@ describe('CampaignMessageStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CampaignMessageStepComponent ]
-    })
-    .compileComponents();
+      declarations: [CampaignMessageStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

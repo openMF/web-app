@@ -1,5 +1,5 @@
 /** Angular Imports */
-import {Injectable, EventEmitter} from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 /** Custom Model */
 import { Theme } from './theme.model';
@@ -14,7 +14,6 @@ import { ThemeManagerService } from './theme-manager.service';
   providedIn: 'root'
 })
 export class ThemeStorageService {
-
   /** Key to store current theme of application in local storage. */
   private themeStorageKey = 'mifosXTheme';
   /** Theme update event. */
@@ -63,5 +62,4 @@ export class ThemeStorageService {
     }
     this.storeTheme(theme);
   }
-
 }

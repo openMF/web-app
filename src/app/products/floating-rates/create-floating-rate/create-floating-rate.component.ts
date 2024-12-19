@@ -26,7 +26,6 @@ import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialo
   styleUrls: ['./create-floating-rate.component.scss']
 })
 export class CreateFloatingRateComponent implements OnInit {
-
   /** Floating Rate Period Data. */
   floatingRatePeriodsData: any[] = [];
   /** Minimum floating rate period date allowed. */
@@ -34,7 +33,12 @@ export class CreateFloatingRateComponent implements OnInit {
   /** Floating Rate Form. */
   floatingRateForm: UntypedFormGroup;
   /** Columns to be displayed in floating rate periods table. */
-  displayedColumns: string[] = ['fromDate', 'interestRate', 'isDifferential', 'actions'];
+  displayedColumns: string[] = [
+    'fromDate',
+    'interestRate',
+    'isDifferential',
+    'actions'
+  ];
   /** Data source for floating rate periods table. */
   dataSource: MatTableDataSource<any>;
   /** Date Format. */
@@ -55,14 +59,16 @@ export class CreateFloatingRateComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private router: Router,
-              private formBuilder: UntypedFormBuilder,
-              private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private dialog: MatDialog,
-              private settingsService: SettingsService,
-              private translateService: TranslateService) { }
+  constructor(
+    private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private dialog: MatDialog,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {}
 
   /**
    * Sets the floating rate periods table.
@@ -77,9 +83,12 @@ export class CreateFloatingRateComponent implements OnInit {
    */
   createFloatingRateForm() {
     this.floatingRateForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'isBaseLendingRate': [false],
-      'isActive': [false]
+      name: [
+        '',
+        Validators.required
+      ],
+      isBaseLendingRate: [false],
+      isActive: [false]
     });
   }
 
@@ -98,9 +107,15 @@ export class CreateFloatingRateComponent implements OnInit {
    */
   createFloatingRatePeriodsForm(): UntypedFormGroup {
     return this.formBuilder.group({
-      'fromDate': ['', Validators.required],
-      'interestRate': ['', Validators.required],
-      'isDifferentialToBaseLendingRate': [false]
+      fromDate: [
+        '',
+        Validators.required
+      ],
+      interestRate: [
+        '',
+        Validators.required
+      ],
+      isDifferentialToBaseLendingRate: [false]
     });
   }
 
@@ -160,7 +175,12 @@ export class CreateFloatingRateComponent implements OnInit {
    */
   deleteFloatingRatePeriod(ratePeriod: any) {
     const deleteFloatingRatePeriodRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext:  this.translateService.instant('labels.inputs.floating rate period with from date as') + ' ' + ratePeriod.fromDate }
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.inputs.floating rate period with from date as') +
+          ' ' +
+          ratePeriod.fromDate
+      }
     });
     deleteFloatingRatePeriodRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -176,10 +196,14 @@ export class CreateFloatingRateComponent implements OnInit {
    */
   submit() {
     this.floatingRateForm.value.ratePeriods = this.floatingRatePeriodsData;
-    this.productsService.createFloatingRate(this.floatingRateForm.value)
-      .subscribe((response: any) => {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
-      });
+    this.productsService.createFloatingRate(this.floatingRateForm.value).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
-
 }

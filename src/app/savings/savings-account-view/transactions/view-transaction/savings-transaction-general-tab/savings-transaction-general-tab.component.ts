@@ -13,22 +13,23 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./savings-transaction-general-tab.component.scss']
 })
 export class SavingsTransactionGeneralTabComponent {
-
   accountId: string;
   transactionId: string;
   transactionData: any;
 
-  constructor(private savingsService: SavingsService,
+  constructor(
+    private savingsService: SavingsService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
     public dialog: MatDialog,
-    private settingsService: SettingsService) {
-      this.route.data.subscribe((data: { savingsAccountTransaction: any }) => {
-        this.accountId = this.route.parent.snapshot.params['savingAccountId'];
-        this.transactionData = data.savingsAccountTransaction;
-      });
-    }
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { savingsAccountTransaction: any }) => {
+      this.accountId = this.route.parent.snapshot.params['savingAccountId'];
+      this.transactionData = data.savingsAccountTransaction;
+    });
+  }
 
   allowUndo(): boolean {
     if (this.transactionData.reversed && this.transactionData.transactionType.amountHold) {
@@ -42,9 +43,11 @@ export class SavingsTransactionGeneralTabComponent {
     releaseAmountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         const data = {};
-        this.savingsService.executeSavingsAccountTransactionsCommand(this.accountId, 'releaseAmount', data, this.transactionData.id).subscribe(() => {
-          this.router.navigate(['../..'], { relativeTo: this.route });
-        });
+        this.savingsService
+          .executeSavingsAccountTransactionsCommand(this.accountId, 'releaseAmount', data, this.transactionData.id)
+          .subscribe(() => {
+            this.router.navigate(['../..'], { relativeTo: this.route });
+          });
       }
     });
   }
@@ -56,14 +59,19 @@ export class SavingsTransactionGeneralTabComponent {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
-          transactionDate: this.dateUtils.formatDate(this.transactionData.date && new Date(this.transactionData.date), dateFormat),
+          transactionDate: this.dateUtils.formatDate(
+            this.transactionData.date && new Date(this.transactionData.date),
+            dateFormat
+          ),
           transactionAmount: 0,
           dateFormat,
           locale
         };
-        this.savingsService.executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id).subscribe(() => {
-          this.router.navigate(['../..'], { relativeTo: this.route });
-        });
+        this.savingsService
+          .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id)
+          .subscribe(() => {
+            this.router.navigate(['../..'], { relativeTo: this.route });
+          });
       }
     });
   }

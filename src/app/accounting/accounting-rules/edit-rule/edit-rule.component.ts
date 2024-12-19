@@ -18,7 +18,6 @@ import { oneOfTheFieldsIsRequiredValidator } from '../one-of-the-fields-is-requi
   styleUrls: ['./edit-rule.component.scss']
 })
 export class EditRuleComponent implements OnInit {
-
   /** Accounting rule form. */
   accountingRuleForm: UntypedFormGroup;
   /** Accounting rule. */
@@ -39,20 +38,19 @@ export class EditRuleComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: {
-        accountingRulesTemplate: any,
-        accountingRule: any
-      }) => {
-        this.officeData = data.accountingRulesTemplate.allowedOffices;
-        this.glAccountData = data.accountingRulesTemplate.allowedAccounts;
-        this.debitTagData = data.accountingRulesTemplate.allowedDebitTagOptions;
-        this.creditTagData = data.accountingRulesTemplate.allowedCreditTagOptions;
-        this.accountingRule = data.accountingRule;
-      });
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { accountingRulesTemplate: any; accountingRule: any }) => {
+      this.officeData = data.accountingRulesTemplate.allowedOffices;
+      this.glAccountData = data.accountingRulesTemplate.allowedAccounts;
+      this.debitTagData = data.accountingRulesTemplate.allowedDebitTagOptions;
+      this.creditTagData = data.accountingRulesTemplate.allowedCreditTagOptions;
+      this.accountingRule = data.accountingRule;
+    });
   }
 
   /**
@@ -67,26 +65,35 @@ export class EditRuleComponent implements OnInit {
    * Creates accounting rule form.
    */
   createAccountingRuleForm() {
-    this.accountingRuleForm = this.formBuilder.group({
-      'name': [this.accountingRule.name, Validators.required],
-      'officeId': [this.accountingRule.officeId, Validators.required],
-      'debitRuleType': [''],
-      'accountToDebit': [''],
-      'debitTags': [''],
-      'allowMultipleDebitEntries': [''],
-      'creditRuleType': [''],
-      'accountToCredit': [''],
-      'creditTags': [''],
-      'allowMultipleCreditEntries': [''],
-      'description': [this.accountingRule.description]
-    }, { validator: oneOfTheFieldsIsRequiredValidator });
+    this.accountingRuleForm = this.formBuilder.group(
+      {
+        name: [
+          this.accountingRule.name,
+          Validators.required
+        ],
+        officeId: [
+          this.accountingRule.officeId,
+          Validators.required
+        ],
+        debitRuleType: [''],
+        accountToDebit: [''],
+        debitTags: [''],
+        allowMultipleDebitEntries: [''],
+        creditRuleType: [''],
+        accountToCredit: [''],
+        creditTags: [''],
+        allowMultipleCreditEntries: [''],
+        description: [this.accountingRule.description]
+      },
+      { validator: oneOfTheFieldsIsRequiredValidator }
+    );
   }
 
   /**
    * Sets accounting rule form for selected accounting rule type.
    */
   setAccountingRulesForm() {
-    this.accountingRuleForm.get('debitRuleType').valueChanges.subscribe(debitRuleType => {
+    this.accountingRuleForm.get('debitRuleType').valueChanges.subscribe((debitRuleType) => {
       if (debitRuleType === 'fixedAccount') {
         this.accountingRuleForm.get('debitTags').reset();
         this.accountingRuleForm.get('allowMultipleDebitEntries').reset();
@@ -95,7 +102,7 @@ export class EditRuleComponent implements OnInit {
         this.accountingRuleForm.get('allowMultipleDebitEntries').setValue(false);
       }
     });
-    this.accountingRuleForm.get('creditRuleType').valueChanges.subscribe(creditRuleType => {
+    this.accountingRuleForm.get('creditRuleType').valueChanges.subscribe((creditRuleType) => {
       if (creditRuleType === 'fixedAccount') {
         this.accountingRuleForm.get('creditTags').reset();
         this.accountingRuleForm.get('allowMultipleCreditEntries').reset();
@@ -110,7 +117,9 @@ export class EditRuleComponent implements OnInit {
       this.accountingRuleForm.get('accountToDebit').setValue(this.accountingRule.debitAccounts[0].id);
     } else {
       this.accountingRuleForm.get('debitRuleType').setValue('listOfAccounts');
-      this.accountingRuleForm.get('debitTags').setValue(this.accountingRule.debitTags.map((debitTag: any) => debitTag.tag.id));
+      this.accountingRuleForm
+        .get('debitTags')
+        .setValue(this.accountingRule.debitTags.map((debitTag: any) => debitTag.tag.id));
       this.accountingRuleForm.get('allowMultipleDebitEntries').setValue(this.accountingRule.allowMultipleDebitEntries);
     }
 
@@ -119,8 +128,12 @@ export class EditRuleComponent implements OnInit {
       this.accountingRuleForm.get('accountToCredit').setValue(this.accountingRule.creditAccounts[0].id);
     } else {
       this.accountingRuleForm.get('creditRuleType').setValue('listOfAccounts');
-      this.accountingRuleForm.get('creditTags').setValue(this.accountingRule.creditTags.map((creditTag: any) => creditTag.tag.id));
-      this.accountingRuleForm.get('allowMultipleCreditEntries').setValue(this.accountingRule.allowMultipleCreditEntries);
+      this.accountingRuleForm
+        .get('creditTags')
+        .setValue(this.accountingRule.creditTags.map((creditTag: any) => creditTag.tag.id));
+      this.accountingRuleForm
+        .get('allowMultipleCreditEntries')
+        .setValue(this.accountingRule.allowMultipleCreditEntries);
     }
   }
 
@@ -145,8 +158,13 @@ export class EditRuleComponent implements OnInit {
     delete accountingRule.debitRuleType;
     delete accountingRule.creditRuleType;
     this.accountingService.updateAccountingRule(this.accountingRule.id, accountingRule).subscribe((response: any) => {
-      this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

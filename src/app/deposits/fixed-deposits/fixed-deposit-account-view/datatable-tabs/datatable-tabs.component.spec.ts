@@ -8,9 +8,8 @@ describe('DatatableTabsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DatatableTabsComponent ]
-    })
-    .compileComponents();
+      declarations: [DatatableTabsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

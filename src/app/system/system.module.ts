@@ -154,6 +154,6 @@ import { RunSelectedJobsTableComponent } from './manage-jobs/scheduler-jobs/run-
     ErrorLogPopoverComponent,
     RunSelectedJobsPopoverComponent,
     RunSelectedJobsTableComponent
-  ],
+  ]
 })
-export class SystemModule { }
+export class SystemModule {}

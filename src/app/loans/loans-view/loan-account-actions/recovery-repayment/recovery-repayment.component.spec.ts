@@ -8,9 +8,8 @@ describe('RecoveryRepaymentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecoveryRepaymentComponent ]
-    })
-    .compileComponents();
+      declarations: [RecoveryRepaymentComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -7,7 +7,6 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
   styleUrls: ['./fixed-deposit-product-details-step.component.scss']
 })
 export class FixedDepositProductDetailsStepComponent implements OnInit {
-
   @Input() fixedDepositProductsTemplate: any;
 
   fixedDepositProductDetailsForm: UntypedFormGroup;
@@ -19,23 +18,31 @@ export class FixedDepositProductDetailsStepComponent implements OnInit {
   ngOnInit() {
     if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
       this.fixedDepositProductDetailsForm.patchValue({
-        'name': this.fixedDepositProductsTemplate.name,
-        'shortName': this.fixedDepositProductsTemplate.shortName,
-        'description': this.fixedDepositProductsTemplate.description,
+        name: this.fixedDepositProductsTemplate.name,
+        shortName: this.fixedDepositProductsTemplate.shortName,
+        description: this.fixedDepositProductsTemplate.description
       });
     }
   }
 
   createFixedDepositProductDetailsForm() {
     this.fixedDepositProductDetailsForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'shortName': ['', Validators.required],
-      'description': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ],
+      shortName: [
+        '',
+        Validators.required
+      ],
+      description: [
+        '',
+        Validators.required
+      ]
     });
   }
 
   get fixedDepositProductDetails() {
     return this.fixedDepositProductDetailsForm.value;
   }
-
 }

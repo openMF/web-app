@@ -16,7 +16,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./loan-documents-tab.component.scss']
 })
 export class LoanDocumentsTabComponent {
-
   /** Stores the resolved loan documents data */
   entityDocuments: any;
   /** Loan account Id */
@@ -27,21 +26,34 @@ export class LoanDocumentsTabComponent {
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private loansService: LoansService,
-    private settingsService: SettingsService) {
-      this.entityId = this.route.parent.snapshot.params['loanId'];
+    private settingsService: SettingsService
+  ) {
+    this.entityId = this.route.parent.snapshot.params['loanId'];
 
-      this.route.data.subscribe((data: { loanDocuments: any }) => {
-        this.getLoanDocumentsData(data.loanDocuments);
-      });
+    this.route.data.subscribe((data: { loanDocuments: any }) => {
+      this.getLoanDocumentsData(data.loanDocuments);
+    });
   }
 
   getLoanDocumentsData(data: any) {
     data.forEach((ele: any) => {
-      ele.docUrl = this.settingsService.serverUrl + '/loans/' + ele.parentEntityId + '/documents/' + ele.id + '/attachment?tenantIdentifier=' + environment.fineractPlatformTenantId;
+      ele.docUrl =
+        this.settingsService.serverUrl +
+        '/loans/' +
+        ele.parentEntityId +
+        '/documents/' +
+        ele.id +
+        '/attachment?tenantIdentifier=' +
+        environment.fineractPlatformTenantId;
       if (ele.fileName) {
-        if (ele.fileName.toLowerCase().indexOf('.jpg') !== -1 || ele.fileName.toLowerCase().indexOf('.jpeg') !== -1 || ele.fileName.toLowerCase().indexOf('.png') !== -1) {
+        if (
+          ele.fileName.toLowerCase().indexOf('.jpg') !== -1 ||
+          ele.fileName.toLowerCase().indexOf('.jpeg') !== -1 ||
+          ele.fileName.toLowerCase().indexOf('.png') !== -1
+        ) {
           ele.fileIsImage = true;
         }
       }
@@ -55,7 +67,7 @@ export class LoanDocumentsTabComponent {
   }
 
   downloadDocument(documentId: string) {
-    this.loansService.downloadLoanDocument(this.entityId, documentId).subscribe(res => {
+    this.loansService.downloadLoanDocument(this.entityId, documentId).subscribe((res) => {
       const url = window.URL.createObjectURL(res);
       window.open(url);
     });
@@ -68,5 +80,4 @@ export class LoanDocumentsTabComponent {
   deleteDocument(documentId: any) {
     this.loansService.deleteLoanDocument(this.entityId, documentId).subscribe((res: any) => {});
   }
-
 }

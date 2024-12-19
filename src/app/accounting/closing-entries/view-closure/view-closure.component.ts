@@ -18,7 +18,6 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   styleUrls: ['./view-closure.component.scss']
 })
 export class ViewClosureComponent {
-
   /** GL Account closure. */
   glAccountClosure: any;
 
@@ -29,10 +28,12 @@ export class ViewClosureComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public dialog: MatDialog) {
+  constructor(
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { glAccountClosure: any }) => {
       this.glAccountClosure = data.glAccountClosure;
     });
@@ -47,12 +48,10 @@ export class ViewClosureComponent {
     });
     deleteAccountingClosureDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteAccountingClosure(this.glAccountClosure.id)
-          .subscribe(() => {
-            this.router.navigate(['/accounting/closing-entries']);
-          });
+        this.accountingService.deleteAccountingClosure(this.glAccountClosure.id).subscribe(() => {
+          this.router.navigate(['/accounting/closing-entries']);
+        });
       }
     });
   }
-
 }

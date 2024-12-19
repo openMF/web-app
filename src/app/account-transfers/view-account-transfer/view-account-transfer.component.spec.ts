@@ -8,9 +8,8 @@ describe('ViewAccountTransferComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewAccountTransferComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewAccountTransferComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

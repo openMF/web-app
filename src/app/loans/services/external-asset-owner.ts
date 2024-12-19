@@ -8,7 +8,7 @@ export class ExternalAssetOwner {
 
   validateStatus(item: any, status: string): boolean {
     if (item != null) {
-      return (item.status === status);
+      return item.status === status;
     }
     return false;
   }
@@ -25,15 +25,15 @@ export class ExternalAssetOwner {
   }
 
   isPending(item: any): boolean {
-    return (item.status === 'PENDING');
+    return item.status === 'PENDING';
   }
 
   isPendingOrCanceled(item: any): boolean {
-    return ((item.status === 'PENDING') || (item.status === 'CANCELLED') || this.isBuyBackPending(item));
+    return item.status === 'PENDING' || item.status === 'CANCELLED' || this.isBuyBackPending(item);
   }
 
   isBuyBackPending(item: any): boolean {
-    return (item.status === 'BUYBACK' && item.effectiveTo === this.defaultDate);
+    return item.status === 'BUYBACK' && item.effectiveTo === this.defaultDate;
   }
 
   canBeCancelled(item: any): boolean {
@@ -44,12 +44,13 @@ export class ExternalAssetOwner {
     if (item == null) {
       return true;
     }
-    return ['', 'CANCELLED'].includes(item.status)
-      || (item.status === 'BUYBACK' && item.effectiveTo !== this.defaultDate);
+    return [
+        '',
+        'CANCELLED'
+      ].includes(item.status) || (item.status === 'BUYBACK' && item.effectiveTo !== this.defaultDate);
   }
 
   canBeBuyed(item: any): boolean {
     return this.validateStatus(item, 'ACTIVE');
   }
-
 }

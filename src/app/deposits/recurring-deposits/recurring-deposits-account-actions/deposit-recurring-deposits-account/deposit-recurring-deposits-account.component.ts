@@ -18,7 +18,6 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./deposit-recurring-deposits-account.component.scss']
 })
 export class DepositRecurringDepositsAccountComponent implements OnInit {
-
   @Input() currency: Currency;
 
   /** Transactions Amount */
@@ -41,7 +40,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
   action: string;
   actionName: string;
   transactionCommand: string;
-  transactionType: { deposit: boolean, withdrawal: boolean } = { deposit: false, withdrawal: false };
+  transactionType: { deposit: boolean; withdrawal: boolean } = { deposit: false, withdrawal: false };
 
   /**
    * Retrieves action details transactions template data from `resolve`
@@ -62,7 +61,10 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
     this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
       this.transactionAmount = data.recurringDepositsAccountActionData.amount;
       this.paymentTypes = data.recurringDepositsAccountActionData.paymentTypeOptions;
-      if (data.recurringDepositsAccountActionData.outstandingChargeAmount && data.recurringDepositsAccountActionData.outstandingChargeAmount > 0) {
+      if (
+        data.recurringDepositsAccountActionData.outstandingChargeAmount &&
+        data.recurringDepositsAccountActionData.outstandingChargeAmount > 0
+      ) {
         this.outstandingChargeAmount = data.recurringDepositsAccountActionData.outstandingChargeAmount;
         this.transactionAmount = this.transactionAmount + this.outstandingChargeAmount;
       }
@@ -84,10 +86,19 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
    */
   createdepositRecurringDepositForm() {
     this.depositRecurringDepositForm = this.formBuilder.group({
-      'transactionDate': [new Date(), Validators.required],
-      'transactionAmount': [0.0, Validators.required],
-      'paymentTypeId': ['', Validators.required],
-      'note': ''
+      transactionDate: [
+        new Date(),
+        Validators.required
+      ],
+      transactionAmount: [
+        0.0,
+        Validators.required
+      ],
+      paymentTypeId: [
+        '',
+        Validators.required
+      ],
+      note: ''
     });
   }
 
@@ -115,7 +126,7 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
    * Toggles the display of payment details
    */
   toggleDisplay() {
-    this.showPaymentDetails = !(this.showPaymentDetails);
+    this.showPaymentDetails = !this.showPaymentDetails;
   }
 
   /**
@@ -137,9 +148,10 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
 
     delete data['note'];
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, this.action, data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.recurringDepositsService
+      .executeRecurringDepositsAccountCommand(this.accountId, this.action, data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

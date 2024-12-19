@@ -13,11 +13,10 @@ import { GroupsService } from '../groups.service';
  */
 @Injectable()
 export class GroupDatatablesResolver implements Resolve<Object> {
-
   /**
    * @param {GroupsService} GroupsService Groups service.
    */
-  constructor(private groupsService: GroupsService) { }
+  constructor(private groupsService: GroupsService) {}
 
   /**
    * Returns the Group's Datatables data.
@@ -26,5 +25,4 @@ export class GroupDatatablesResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.groupsService.getGroupDatatables();
   }
-
 }

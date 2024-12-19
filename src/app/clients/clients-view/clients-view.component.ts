@@ -22,22 +22,19 @@ import { ClientsService } from '../clients.service';
   styleUrls: ['./clients-view.component.scss']
 })
 export class ClientsViewComponent implements OnInit {
-
   clientViewData: any;
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private clientsService: ClientsService,
-              private _sanitizer: DomSanitizer,
-              public dialog: MatDialog) {
-    this.route.data.subscribe((data: {
-      clientViewData: any,
-      clientTemplateData: any,
-      clientDatatables: any
-    }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientsService: ClientsService,
+    private _sanitizer: DomSanitizer,
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
       this.clientViewData = data.clientViewData;
       this.clientDatatables = data.clientDatatables;
       this.clientTemplateData = data.clientTemplateData;
@@ -48,12 +45,13 @@ export class ClientsViewComponent implements OnInit {
     this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe(
       (base64Image: any) => {
         this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
-      }, (error: any) => {}
+      },
+      (error: any) => {}
     );
   }
 
   isActive(): boolean {
-    return (this.clientViewData.status.value === 'Active');
+    return this.clientViewData.status.value === 'Active';
   }
 
   /**
@@ -81,7 +79,7 @@ export class ClientsViewComponent implements OnInit {
       case 'Client Screen Reports':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
         break;
-       case 'Unassign Staff':
+      case 'Unassign Staff':
         this.unassignStaff();
         break;
       case 'Delete':
@@ -106,12 +104,24 @@ export class ClientsViewComponent implements OnInit {
         this.deleteProfileImage();
         break;
       case 'Create Standing Instructions':
-        const createStandingInstructionsQueryParams: any = { officeId: this.clientViewData.officeId, accountType: 'fromsavings' };
-        this.router.navigate(['standing-instructions/create-standing-instructions'], { relativeTo: this.route, queryParams: createStandingInstructionsQueryParams });
+        const createStandingInstructionsQueryParams: any = {
+          officeId: this.clientViewData.officeId,
+          accountType: 'fromsavings'
+        };
+        this.router.navigate(['standing-instructions/create-standing-instructions'], {
+          relativeTo: this.route,
+          queryParams: createStandingInstructionsQueryParams
+        });
         break;
       case 'View Standing Instructions':
-        const viewStandingInstructionsQueryParams: any = { officeId: this.clientViewData.officeId, accountType: 'fromsavings' };
-        this.router.navigate(['standing-instructions/list-standing-instructions'], { relativeTo: this.route, queryParams: viewStandingInstructionsQueryParams });
+        const viewStandingInstructionsQueryParams: any = {
+          officeId: this.clientViewData.officeId,
+          accountType: 'fromsavings'
+        };
+        this.router.navigate(['standing-instructions/list-standing-instructions'], {
+          relativeTo: this.route,
+          queryParams: viewStandingInstructionsQueryParams
+        });
         break;
     }
   }
@@ -122,8 +132,7 @@ export class ClientsViewComponent implements OnInit {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients`, {skipLocationChange: true})
-      .then(() => this.router.navigate([url]));
+    this.router.navigateByUrl(`/clients`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 
   /**
@@ -149,7 +158,8 @@ export class ClientsViewComponent implements OnInit {
     const unAssignStaffDialogRef = this.dialog.open(UnassignStaffDialogComponent);
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.clientsService.executeClientCommand(this.clientViewData.id, 'unassignStaff', { staffId: this.clientViewData.staffId })
+        this.clientsService
+          .executeClientCommand(this.clientViewData.id, 'unassignStaff', { staffId: this.clientViewData.staffId })
           .subscribe(() => {
             this.reload();
           });
@@ -185,10 +195,9 @@ export class ClientsViewComponent implements OnInit {
     const uploadSignatureDialogRef = this.dialog.open(UploadSignatureDialogComponent);
     uploadSignatureDialogRef.afterClosed().subscribe((signature: File) => {
       if (signature) {
-        this.clientsService.uploadClientSignatureImage(this.clientViewData.id, signature)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.clientsService.uploadClientSignatureImage(this.clientViewData.id, signature).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -203,10 +212,9 @@ export class ClientsViewComponent implements OnInit {
       });
       deleteSignatureDialogRef.afterClosed().subscribe((response: any) => {
         if (response.delete) {
-          this.clientsService.deleteClientDocument(this.clientViewData.id, response.id)
-            .subscribe(() => {
-              this.reload();
-            });
+          this.clientsService.deleteClientDocument(this.clientViewData.id, response.id).subscribe(() => {
+            this.reload();
+          });
         } else if (response.upload) {
           this.uploadSignature();
         }
@@ -221,10 +229,9 @@ export class ClientsViewComponent implements OnInit {
     const captureImageDialogRef = this.dialog.open(CaptureImageDialogComponent);
     captureImageDialogRef.afterClosed().subscribe((imageURL: string) => {
       if (imageURL) {
-        this.clientsService.uploadCapturedClientProfileImage(this.clientViewData.id, imageURL)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.clientsService.uploadCapturedClientProfileImage(this.clientViewData.id, imageURL).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -236,10 +243,9 @@ export class ClientsViewComponent implements OnInit {
     const uploadImageDialogRef = this.dialog.open(UploadImageDialogComponent);
     uploadImageDialogRef.afterClosed().subscribe((image: File) => {
       if (image) {
-        this.clientsService.uploadClientProfileImage(this.clientViewData.id, image)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.clientsService.uploadClientProfileImage(this.clientViewData.id, image).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -253,12 +259,10 @@ export class ClientsViewComponent implements OnInit {
     });
     deleteClientImageDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.clientsService.deleteClientProfileImage(this.clientViewData.id)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.clientsService.deleteClientProfileImage(this.clientViewData.id).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
-
 }

@@ -15,11 +15,13 @@ export class LoanReamortizeComponent implements OnInit {
   /** ReAmortize Loan Form */
   reamortizeLoanForm: UntypedFormGroup;
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private loanService: LoansService) {
-      this.loanId = this.route.snapshot.params['loanId'];
+    private loanService: LoansService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit(): void {
@@ -28,19 +30,15 @@ export class LoanReamortizeComponent implements OnInit {
 
   createReAmortizeLoanForm() {
     this.reamortizeLoanForm = this.formBuilder.group({
-      'note': '',
-      'externalId': ''
+      note: '',
+      externalId: ''
     });
   }
 
   submit(): void {
     const data = this.reamortizeLoanForm.value;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'reAmortize')
-      .subscribe((response: any) => {
-        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+    this.loanService.submitLoanActionButton(this.loanId, data, 'reAmortize').subscribe((response: any) => {
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
-
-
-
 }

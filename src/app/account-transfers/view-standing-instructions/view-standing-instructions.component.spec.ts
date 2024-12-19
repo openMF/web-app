@@ -8,9 +8,8 @@ describe('ViewStandingInstructionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewStandingInstructionsComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewStandingInstructionsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

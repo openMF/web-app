@@ -13,7 +13,6 @@ import { UsersService } from './users.service';
  */
 @Injectable()
 export class UserResolver implements Resolve<Object> {
-
   /**
    * @param {UsersService} usersService Users service.
    */

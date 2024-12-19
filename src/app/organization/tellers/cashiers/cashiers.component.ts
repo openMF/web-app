@@ -14,11 +14,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./cashiers.component.scss']
 })
 export class CashiersComponent implements OnInit {
-
   /** Cashiers data. */
   cashiersData: any;
   /** Columns to be displayed in cashiers table. */
-  displayedColumns: string[] = ['period', 'staffName', 'isFullDay', 'vaultActions'];
+  displayedColumns: string[] = [
+    'period',
+    'staffName',
+    'isFullDay',
+    'vaultActions'
+  ];
   /** Data source for cashiers table. */
   dataSource: MatTableDataSource<any>;
 
@@ -32,7 +36,7 @@ export class CashiersComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { cashiersData: any }) => {
+    this.route.data.subscribe((data: { cashiersData: any }) => {
       this.cashiersData = data.cashiersData.cashiers;
     });
   }
@@ -68,5 +72,4 @@ export class CashiersComponent implements OnInit {
   routeEdit($event: MouseEvent) {
     $event.stopPropagation();
   }
-
 }

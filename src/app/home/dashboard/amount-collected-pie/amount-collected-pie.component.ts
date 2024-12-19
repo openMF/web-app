@@ -18,7 +18,6 @@ import Chart from 'chart.js';
   styleUrls: ['./amount-collected-pie.component.scss']
 })
 export class AmountCollectedPieComponent implements OnInit {
-
   /** Static Form control for office Id */
   officeId = new UntypedFormControl();
   /** Office Data */
@@ -35,9 +34,11 @@ export class AmountCollectedPieComponent implements OnInit {
    * @param {HomeService} homeService Home Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private homeService: HomeService,
-              private route: ActivatedRoute) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+  constructor(
+    private homeService: HomeService,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -57,7 +58,7 @@ export class AmountCollectedPieComponent implements OnInit {
   getChartData() {
     this.officeId.valueChanges.subscribe((value: number) => {
       this.homeService.getCollectedAmount(value).subscribe((response: any) => {
-        const data =  Object.entries(response[0]).map(entry => entry[1]);
+        const data = Object.entries(response[0]).map((entry) => entry[1]);
         if (!(data[0] === 0 && data[1] === 0)) {
           this.setChart(data);
           this.hideOutput = false;
@@ -80,11 +81,19 @@ export class AmountCollectedPieComponent implements OnInit {
       this.chart = new Chart('collection-pie', {
         type: 'doughnut',
         data: {
-          labels: ['Pending', 'Collected'],
-          datasets: [{
-            backgroundColor: ['dodgerblue', 'red'],
-            data: data
-          }]
+          labels: [
+            'Pending',
+            'Collected'
+          ],
+          datasets: [
+            {
+              backgroundColor: [
+                'dodgerblue',
+                'red'
+              ],
+              data: data
+            }
+          ]
         },
         options: {
           layout: {
@@ -100,5 +109,4 @@ export class AmountCollectedPieComponent implements OnInit {
       this.chart.update();
     }
   }
-
 }

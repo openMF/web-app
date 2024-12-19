@@ -12,7 +12,6 @@ import { Currency, PaymentType } from 'app/shared/models/general.model';
   styleUrls: ['./fixed-deposits-cash-transaction.component.scss']
 })
 export class FixedDepositsCashTransactionComponent implements OnInit {
-
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -24,7 +23,7 @@ export class FixedDepositsCashTransactionComponent implements OnInit {
   /** Flag to enable payment details fields. */
   addPaymentDetailsFlag: Boolean = false;
   /** transaction type flag to render required UI */
-  transactionType: { deposit: boolean, withdrawal: boolean } = { deposit: false, withdrawal: false };
+  transactionType: { deposit: boolean; withdrawal: boolean } = { deposit: false, withdrawal: false };
   /** transaction command for submit request */
   transactionCommand: string;
   actionName: string;
@@ -41,12 +40,14 @@ export class FixedDepositsCashTransactionComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private fixedDepositsService: FixedDepositsService,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private fixedDepositsService: FixedDepositsService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }) => {
       this.currency = data.fixedDepositsAccountActionData.currency;
       this.paymentTypeOptions = data.fixedDepositsAccountActionData.paymentTypeOptions;
@@ -70,10 +71,16 @@ export class FixedDepositsCashTransactionComponent implements OnInit {
    */
   createSavingAccountTransactionForm() {
     this.accountTransactionForm = this.formBuilder.group({
-      'transactionDate': [this.settingsService.businessDate, Validators.required],
-      'transactionAmount': [0, Validators.required],
-      'paymentTypeId': [''],
-      'note': ['']
+      transactionDate: [
+        this.settingsService.businessDate,
+        Validators.required
+      ],
+      transactionAmount: [
+        0,
+        Validators.required
+      ],
+      paymentTypeId: [''],
+      note: ['']
     });
   }
 
@@ -115,9 +122,10 @@ export class FixedDepositsCashTransactionComponent implements OnInit {
     };
     delete data.note;
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.fixedDepositsService.executeFixedDepositsAccountTransactionsCommand(this.accountId, this.transactionCommand, data).subscribe(res => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.fixedDepositsService
+      .executeFixedDepositsAccountTransactionsCommand(this.accountId, this.transactionCommand, data)
+      .subscribe((res) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
-
 }

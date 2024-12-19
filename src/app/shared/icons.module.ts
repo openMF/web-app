@@ -123,7 +123,6 @@ import {
   exports: [FontAwesomeModule]
 })
 export class IconsModule {
-
   constructor(library: FaIconLibrary) {
     library.addIcons(
       faAnchor,
@@ -239,5 +238,4 @@ export class IconsModule {
       faTableCells
     );
   }
-
 }

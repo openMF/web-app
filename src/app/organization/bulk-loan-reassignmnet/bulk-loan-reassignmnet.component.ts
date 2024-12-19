@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./bulk-loan-reassignmnet.component.scss']
 })
 export class BulkLoanReassignmnetComponent implements OnInit {
-
   /** Bulk Loan form. */
   bulkLoanForm: UntypedFormGroup;
   /** Office data. */
@@ -45,13 +44,15 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private organizationSevice: OrganizationService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private router: Router) {
-    this.route.data.subscribe((data: { offices: any} ) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private organizationSevice: OrganizationService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { offices: any }) => {
       this.offices = data.offices;
     });
   }
@@ -66,8 +67,14 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    */
   setBulkLoanForm() {
     this.bulkLoanForm = this.formBuilder.group({
-      'assignmentDate': [new Date(), Validators.required],
-      'toLoanOfficerId': ['', Validators.required]
+      assignmentDate: [
+        new Date(),
+        Validators.required
+      ],
+      toLoanOfficerId: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -88,7 +95,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param officerId Office Id.
    */
   getFromOfficers(officerId: any) {
-    this.toLoanOfficers = this.fromLoanOfficers.filter((officer: any) => officer.id !== officerId );
+    this.toLoanOfficers = this.fromLoanOfficers.filter((officer: any) => officer.id !== officerId);
     this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.id).subscribe((response: any) => {
       this.officerTemplate = response;
     });
@@ -130,5 +137,4 @@ export class BulkLoanReassignmnetComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

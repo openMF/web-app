@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./reject-client-transfer.component.scss']
 })
 export class RejectClientTransferComponent implements OnInit {
-
   /** Reject Client Transfer form. */
   rejectClientTransferForm: UntypedFormGroup;
   /** Client Id */
@@ -31,12 +30,14 @@ export class RejectClientTransferComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
     });
@@ -52,8 +53,8 @@ export class RejectClientTransferComponent implements OnInit {
    */
   createRejectClientTransferForm() {
     this.rejectClientTransferForm = this.formBuilder.group({
-      'transferDate': {value: new Date(this.transferDate), disabled: true},
-      'note': ['']
+      transferDate: { value: new Date(this.transferDate), disabled: true },
+      note: ['']
     });
   }
 
@@ -76,5 +77,4 @@ export class RejectClientTransferComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

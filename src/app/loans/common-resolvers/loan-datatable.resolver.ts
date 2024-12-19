@@ -13,20 +13,18 @@ import { LoansService } from '../loans.service';
  */
 @Injectable()
 export class LoanDatatableResolver implements Resolve<Object> {
+  /**
+   * @param {LoansService} LoansService Loans service.
+   */
+  constructor(private loansService: LoansService) {}
 
-    /**
-     * @param {LoansService} LoansService Loans service.
-     */
-    constructor(private loansService: LoansService) { }
-
-    /**
-     * Returns the Loans Notes Data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-      const loanId = route.paramMap.get('loanId') || route.parent.parent.paramMap.get('loanId');
-      const datatableName = route.paramMap.get('datatableName');
-      return this.loansService.getLoanDatatable(loanId, datatableName);
-    }
-
+  /**
+   * Returns the Loans Notes Data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const loanId = route.paramMap.get('loanId') || route.parent.parent.paramMap.get('loanId');
+    const datatableName = route.paramMap.get('datatableName');
+    return this.loansService.getLoanDatatable(loanId, datatableName);
+  }
 }

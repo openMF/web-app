@@ -13,7 +13,6 @@ import { SystemService } from '../../system.service';
  */
 @Injectable()
 export class AuditTrailResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService System service.
    */
@@ -27,5 +26,4 @@ export class AuditTrailResolver implements Resolve<Object> {
     const auditTrailId = route.paramMap.get('id');
     return this.systemService.getAuditTrail(auditTrailId);
   }
-
 }

@@ -8,9 +8,8 @@ describe('LoansAccountScheduleStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoansAccountScheduleStepComponent ]
-    })
-    .compileComponents();
+      declarations: [LoansAccountScheduleStepComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

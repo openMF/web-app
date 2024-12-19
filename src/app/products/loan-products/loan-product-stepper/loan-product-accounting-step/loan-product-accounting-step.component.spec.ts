@@ -8,9 +8,8 @@ describe('LoanProductAccountingStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoanProductAccountingStepComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanProductAccountingStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

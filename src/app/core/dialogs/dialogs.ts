@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class Dialogs {
-  constructor() { }
+  constructor() {}
 
   public setColor(dataType: string): string {
     let color = 'primary';
@@ -23,5 +23,4 @@ export class Dialogs {
     }
     return color;
   }
-
 }

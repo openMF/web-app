@@ -13,7 +13,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./floating-rate-period-dialog.component.scss']
 })
 export class FloatingRatePeriodDialogComponent implements OnInit {
-
   /** Floating Rate Period Form. */
   floatingRatePeriodForm: UntypedFormGroup;
   /** Minimum floating rate period date allowed. */
@@ -24,11 +23,12 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {any} data Provides values for the form (if available).
    */
-  constructor(public dialogRef: MatDialogRef<FloatingRatePeriodDialogComponent>,
-              public formBuilder: UntypedFormBuilder,
-              private settingsService: SettingsService,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
+  constructor(
+    public dialogRef: MatDialogRef<FloatingRatePeriodDialogComponent>,
+    public formBuilder: UntypedFormBuilder,
+    private settingsService: SettingsService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   /**
    * Creates the floating rate period form.
@@ -36,16 +36,23 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
   ngOnInit() {
     this.minDate = this.settingsService.businessDate;
     let rowDisabled = false;
-    if (this.data && (new Date(this.data.fromDate) < this.minDate)) {
+    if (this.data && new Date(this.data.fromDate) < this.minDate) {
       rowDisabled = true;
     }
     if (this.data.isNew) {
       rowDisabled = false;
     }
     this.floatingRatePeriodForm = this.formBuilder.group({
-      'fromDate': [{ value: this.data ? new Date(this.data.fromDate) : '', disabled: rowDisabled }, Validators.required],
-      'interestRate': [{ value: this.data ? this.data.interestRate : '', disabled: rowDisabled }, Validators.required],
-      'isDifferentialToBaseLendingRate': [{ value: this.data ? this.data.isDifferentialToBaseLendingRate : false, disabled: rowDisabled }]
+      fromDate: [
+        { value: this.data ? new Date(this.data.fromDate) : '', disabled: rowDisabled },
+        Validators.required
+      ],
+      interestRate: [
+        { value: this.data ? this.data.interestRate : '', disabled: rowDisabled },
+        Validators.required
+      ],
+      isDifferentialToBaseLendingRate: [
+        { value: this.data ? this.data.isDifferentialToBaseLendingRate : false, disabled: rowDisabled }]
     });
   }
 
@@ -55,5 +62,4 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
   submit() {
     this.dialogRef.close(this.floatingRatePeriodForm.value);
   }
-
 }

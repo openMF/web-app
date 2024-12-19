@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./general-tab.component.scss']
 })
 export class GeneralTabComponent {
-
   /** Office data */
   officeData: any;
 
@@ -24,5 +23,4 @@ export class GeneralTabComponent {
       this.officeData = data.office;
     });
   }
-
 }

@@ -11,18 +11,24 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./fixed-deposit-product-charges-step.component.scss']
 })
 export class FixedDepositProductChargesStepComponent implements OnInit {
-
   @Input() fixedDepositProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
 
   chargeData: any;
 
   chargesDataSource: {}[];
-  displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'action'
+  ];
 
-  constructor(public dialog: MatDialog,
-              private translateService: TranslateService) {
-  }
+  constructor(
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.chargeData = this.fixedDepositProductsTemplate.chargeOptions;
@@ -31,7 +37,7 @@ export class FixedDepositProductChargesStepComponent implements OnInit {
     } else {
       this.chargesDataSource = [];
     }
-    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
   }
 
   addCharge(charge: any) {
@@ -56,5 +62,4 @@ export class FixedDepositProductChargesStepComponent implements OnInit {
       charges: this.chargesDataSource
     };
   }
-
 }

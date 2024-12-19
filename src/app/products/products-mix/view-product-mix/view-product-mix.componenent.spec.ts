@@ -8,9 +8,8 @@ describe('ViewProductMixComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewProductMixComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewProductMixComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

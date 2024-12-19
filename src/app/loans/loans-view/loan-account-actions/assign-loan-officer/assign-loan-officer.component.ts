@@ -13,7 +13,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./assign-loan-officer.component.scss']
 })
 export class AssignLoanOfficerComponent implements OnInit {
-
   @Input() dataObject: any;
   /** Loan Id */
   loanId: string;
@@ -32,14 +31,16 @@ export class AssignLoanOfficerComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private settingsService: SettingsService) {
-      this.loanId = this.route.snapshot.params['loanId'];
-    }
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
+  }
 
   /**
    * Creates the assign officer form.
@@ -55,8 +56,14 @@ export class AssignLoanOfficerComponent implements OnInit {
    */
   createassignOfficerForm() {
     this.assignOfficerForm = this.formBuilder.group({
-      'toLoanOfficerId': ['', Validators.required],
-      'assignmentDate': [new Date(), Validators.required]
+      toLoanOfficerId: [
+        '',
+        Validators.required
+      ],
+      assignmentDate: [
+        new Date(),
+        Validators.required
+      ]
     });
   }
 
@@ -74,10 +81,8 @@ export class AssignLoanOfficerComponent implements OnInit {
       locale
     };
     data.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
-    this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', data)
-      .subscribe((response: any) => {
-        this.router.navigate([`../../general`], { relativeTo: this.route });
+    this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', data).subscribe((response: any) => {
+      this.router.navigate([`../../general`], { relativeTo: this.route });
     });
   }
-
 }

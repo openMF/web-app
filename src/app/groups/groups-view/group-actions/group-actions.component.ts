@@ -11,24 +11,23 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./group-actions.component.scss']
 })
 export class GroupActionsComponent {
-
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
-    'Assign Staff': boolean
-    'Close': boolean
-    'Activate': boolean
-    'Attach Meeting': boolean
-    'Attendance': boolean
-    'Manage Members': boolean
-    'Edit Meeting': boolean
-    'Edit Meeting Schedule': boolean
-    'Transfer Clients': boolean
+    'Assign Staff': boolean;
+    Close: boolean;
+    Activate: boolean;
+    'Attach Meeting': boolean;
+    Attendance: boolean;
+    'Manage Members': boolean;
+    'Edit Meeting': boolean;
+    'Edit Meeting Schedule': boolean;
+    'Transfer Clients': boolean;
   } = {
     'Assign Staff': false,
-    'Close': false,
-    'Activate': false,
+    Close: false,
+    Activate: false,
     'Attach Meeting': false,
-    'Attendance': false,
+    Attendance: false,
     'Manage Members': false,
     'Edit Meeting': false,
     'Edit Meeting Schedule': false,
@@ -39,11 +38,12 @@ export class GroupActionsComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     const action = this.route.snapshot.params['action'];
     this.actions[action] = true;
   }
-
 }

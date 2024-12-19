@@ -14,7 +14,7 @@ export class TransactionDatatableResolver implements Resolve<Object> {
    *
    * @param {SavingsService} savingsService
    */
-  constructor(private savingsService: SavingsService) { }
+  constructor(private savingsService: SavingsService) {}
   /**
    * Returns the Transactions Account's Datatable data.
    * @returns {Observable<any>}

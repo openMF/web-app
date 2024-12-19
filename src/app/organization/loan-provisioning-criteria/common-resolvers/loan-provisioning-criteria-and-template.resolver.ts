@@ -13,7 +13,6 @@ import { OrganizationService } from '../../organization.service';
  */
 @Injectable()
 export class LoanProvisioningCriteriaAndTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {OrganizationService} organizationService Products service.
    */
@@ -27,5 +26,4 @@ export class LoanProvisioningCriteriaAndTemplateResolver implements Resolve<Obje
     const provisioningId = route.paramMap.get('id');
     return this.organizationService.getProvisioningCriteria(provisioningId, true);
   }
-
 }

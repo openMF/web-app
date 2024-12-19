@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-share-product.component.scss']
 })
 export class ViewShareProductComponent {
-
   shareProductDatatables: any = [];
 
   constructor(private route: ActivatedRoute) {
@@ -18,5 +17,4 @@ export class ViewShareProductComponent {
       });
     });
   }
-
 }

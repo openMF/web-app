@@ -58,7 +58,6 @@ import { CreateSelfServiceUserComponent } from './clients-view/client-actions/cr
 import { AddClientCollateralComponent } from './clients-view/client-actions/add-client-collateral/add-client-collateral.component';
 import { ClientDatatableStepComponent } from './client-stepper/client-datatable-step/client-datatable-step.component';
 
-
 /**
  * Clients Module
  *
@@ -122,7 +121,6 @@ import { ClientDatatableStepComponent } from './client-stepper/client-datatable-
     AddClientCollateralComponent,
     ClientDatatableStepComponent
   ],
-  providers: [ ]
-
+  providers: []
 })
-export class ClientsModule { }
+export class ClientsModule {}

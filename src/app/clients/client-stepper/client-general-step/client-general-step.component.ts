@@ -16,7 +16,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./client-general-step.component.scss']
 })
 export class ClientGeneralStepComponent implements OnInit {
-
   @Output() legalFormChangeEvent = new EventEmitter<{ legalForm: number }>();
 
   /** Minimum date allowed. */
@@ -54,10 +53,12 @@ export class ClientGeneralStepComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    * @param {ClientsService} clientService Client service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private dateUtils: Dates,
-              private settingsService: SettingsService,
-              private clientService: ClientsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private clientService: ClientsService
+  ) {
     this.setClientForm();
   }
 
@@ -72,21 +73,33 @@ export class ClientGeneralStepComponent implements OnInit {
    */
   setClientForm() {
     this.createClientForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'staffId': [''],
-      'legalFormId': ['', Validators.required],
-      'isStaff': [false],
-      'active': [false],
-      'addSavings': [false],
-      'accountNo': [''],
-      'externalId': [''],
-      'genderId': [''],
-      'mobileNo': [''],
-      'emailAddress': ['', Validators.email],
-      'dateOfBirth': [''],
-      'clientTypeId': [''],
-      'clientClassificationId': [''],
-      'submittedOnDate': [this.settingsService.businessDate, Validators.required]
+      officeId: [
+        '',
+        Validators.required
+      ],
+      staffId: [''],
+      legalFormId: [
+        '',
+        Validators.required
+      ],
+      isStaff: [false],
+      active: [false],
+      addSavings: [false],
+      accountNo: [''],
+      externalId: [''],
+      genderId: [''],
+      mobileNo: [''],
+      emailAddress: [
+        '',
+        Validators.email
+      ],
+      dateOfBirth: [''],
+      clientTypeId: [''],
+      clientClassificationId: [''],
+      submittedOnDate: [
+        this.settingsService.businessDate,
+        Validators.required
+      ]
     });
   }
 
@@ -114,21 +127,42 @@ export class ClientGeneralStepComponent implements OnInit {
       if (legalFormId === 1) {
         this.createClientForm.removeControl('fullname');
         this.createClientForm.removeControl('clientNonPersonDetails');
-        this.createClientForm.addControl('firstname', new UntypedFormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
+        this.createClientForm.addControl(
+          'firstname',
+          new UntypedFormControl('', [
+            Validators.required,
+            Validators.pattern('(^[A-z]).*')])
+        );
         this.createClientForm.addControl('middlename', new UntypedFormControl('', Validators.pattern('(^[A-z]).*')));
-        this.createClientForm.addControl('lastname', new UntypedFormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
+        this.createClientForm.addControl(
+          'lastname',
+          new UntypedFormControl('', [
+            Validators.required,
+            Validators.pattern('(^[A-z]).*')])
+        );
       } else {
         this.createClientForm.removeControl('firstname');
         this.createClientForm.removeControl('middlename');
         this.createClientForm.removeControl('lastname');
-        this.createClientForm.addControl('fullname', new UntypedFormControl('', [Validators.required, Validators.pattern('(^[A-z]).*')]));
-        this.createClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
-          'constitutionId': ['', Validators.required],
-          'incorpValidityTillDate': [''],
-          'incorpNumber': [''],
-          'mainBusinessLineId': [''],
-          'remarks': ['']
-        }));
+        this.createClientForm.addControl(
+          'fullname',
+          new UntypedFormControl('', [
+            Validators.required,
+            Validators.pattern('(^[A-z]).*')])
+        );
+        this.createClientForm.addControl(
+          'clientNonPersonDetails',
+          this.formBuilder.group({
+            constitutionId: [
+              '',
+              Validators.required
+            ],
+            incorpValidityTillDate: [''],
+            incorpNumber: [''],
+            mainBusinessLineId: [''],
+            remarks: ['']
+          })
+        );
       }
     });
     this.createClientForm.get('legalFormId').patchValue(1);
@@ -189,5 +223,4 @@ export class ClientGeneralStepComponent implements OnInit {
     }
     return generalDetails;
   }
-
 }

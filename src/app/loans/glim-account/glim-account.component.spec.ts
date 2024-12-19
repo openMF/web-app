@@ -8,9 +8,8 @@ describe('GlimAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GlimAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [GlimAccountComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

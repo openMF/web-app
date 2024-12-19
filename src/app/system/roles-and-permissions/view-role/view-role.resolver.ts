@@ -13,19 +13,17 @@ import { SystemService } from '../../system.service';
  */
 @Injectable()
 export class ViewRoleResolver implements Resolve<Object> {
+  /**
+   * @param {SystemService} systemService System service.
+   */
+  constructor(private systemService: SystemService) {}
 
-    /**
-     * @param {SystemService} systemService System service.
-     */
-    constructor(private systemService: SystemService) { }
-
-    /**
-     * Returns the roles and permissions data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const id = route.paramMap.get('id');
-        return this.systemService.getRole(id);
-    }
-
+  /**
+   * Returns the roles and permissions data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const id = route.paramMap.get('id');
+    return this.systemService.getRole(id);
+  }
 }

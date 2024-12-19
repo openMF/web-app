@@ -47,7 +47,7 @@ const routes: Routes = [
           data: { title: 'Client Approval' },
           resolve: {
             groupedClientData: GetGroupedClientsData
-          },
+          }
         },
         {
           path: 'loan-approval',
@@ -56,7 +56,7 @@ const routes: Routes = [
           resolve: {
             officesData: GetOffices,
             loansData: GetLoansToBeApproved
-          },
+          }
         },
         {
           path: 'loan-disbursal',
@@ -88,8 +88,9 @@ const routes: Routes = [
           }
         }
       ]
-    },
+    }
   ])
+
 ];
 
 @NgModule({
@@ -106,4 +107,4 @@ const routes: Routes = [
     GetCheckerInboxDetailResolver
   ]
 })
-export class TasksRoutingModule { }
+export class TasksRoutingModule {}

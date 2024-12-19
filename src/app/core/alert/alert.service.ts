@@ -11,7 +11,6 @@ import { Alert } from './alert.model';
   providedIn: 'root'
 })
 export class AlertService {
-
   /** Alert event. */
   public alertEvent: EventEmitter<Alert>;
 
@@ -29,5 +28,4 @@ export class AlertService {
   alert(alertEvent: Alert) {
     this.alertEvent.emit(alertEvent);
   }
-
 }

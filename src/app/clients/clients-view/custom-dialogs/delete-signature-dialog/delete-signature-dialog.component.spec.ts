@@ -8,9 +8,8 @@ describe('DeleteSignatureDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeleteSignatureDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [DeleteSignatureDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

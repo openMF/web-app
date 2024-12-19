@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ProcessingStrategyService {
+  advancedTransactionProcessingStrategy = new BehaviorSubject<boolean>(false);
 
-    advancedTransactionProcessingStrategy = new BehaviorSubject<boolean>(false);
+  constructor() {}
 
-    constructor() { }
+  initialize(value: boolean) {
+    this.advancedTransactionProcessingStrategy.next(value);
+  }
 
-    initialize(value: boolean) {
-        this.advancedTransactionProcessingStrategy.next(value);
-    }
-
-    get isAdvancedTransactionProcessingStrategy(): boolean { return this.advancedTransactionProcessingStrategy.value; }
-
+  get isAdvancedTransactionProcessingStrategy(): boolean {
+    return this.advancedTransactionProcessingStrategy.value;
+  }
 }

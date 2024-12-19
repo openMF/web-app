@@ -25,7 +25,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./savings-account-view.component.scss']
 })
 export class SavingsAccountViewComponent implements OnInit {
-
   /** Savings Account Data */
   savingsAccountData: any;
   /** Savings Data Tables */
@@ -44,12 +43,14 @@ export class SavingsAccountViewComponent implements OnInit {
    * @param {Router} router Router
    * @param {SavingsService} savingsService Savings Service
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private savingsService: SavingsService,
     private translateService: TranslateService,
-    public dialog: MatDialog) {
-    this.route.data.subscribe((data: { savingsAccountData: any, savingsDatatables: any }) => {
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.currency = this.savingsAccountData.currency;
       this.savingsDatatables = data.savingsDatatables;
@@ -72,7 +73,7 @@ export class SavingsAccountViewComponent implements OnInit {
    */
   setConditionalButtons() {
     const status = this.savingsAccountData.status.value;
-    this.isActive = (status === 'Active');
+    this.isActive = status === 'Active';
     const subStatus = this.savingsAccountData.subStatus;
     this.buttonConfig = new SavingsButtonsConfiguration(status, subStatus);
     if (this.savingsAccountData.clientId) {
@@ -124,9 +125,11 @@ export class SavingsAccountViewComponent implements OnInit {
    */
   private reload() {
     const url: string = this.router.url;
-    const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length);
-    this.router.navigateByUrl(refreshUrl, { skipLocationChange: true })
-      .then(() => this.router.navigate([url]));
+    const refreshUrl: string = this.router.url.slice(
+      0,
+      this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length
+    );
+    this.router.navigateByUrl(refreshUrl, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 
   /**
@@ -176,7 +179,10 @@ export class SavingsAccountViewComponent implements OnInit {
         break;
       case 'Transfer Funds':
         const queryParams: any = { savingsId: this.savingsAccountData.id, accountType: 'fromsavings' };
-        this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+        this.router.navigate(['transfer-funds/make-account-transfer'], {
+          relativeTo: this.route,
+          queryParams: queryParams
+        });
         break;
       case 'Unblock Account':
       case 'Unblock Deposit':
@@ -209,9 +215,11 @@ export class SavingsAccountViewComponent implements OnInit {
     const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
     calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, 'calculateInterest', {}).subscribe(() => {
-          this.reload();
-        });
+        this.savingsService
+          .executeSavingsAccountCommand(this.savingsAccountData.id, 'calculateInterest', {})
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -223,9 +231,11 @@ export class SavingsAccountViewComponent implements OnInit {
     const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
     postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, 'postInterest', {}).subscribe(() => {
-          this.reload();
-        });
+        this.savingsService
+          .executeSavingsAccountCommand(this.savingsAccountData.id, 'postInterest', {})
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -239,7 +249,8 @@ export class SavingsAccountViewComponent implements OnInit {
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: true })
+        this.savingsService
+          .executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: true })
           .subscribe(() => {
             this.reload();
           });
@@ -256,7 +267,8 @@ export class SavingsAccountViewComponent implements OnInit {
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: false })
+        this.savingsService
+          .executeSavingsAccountUpdateCommand(this.savingsAccountData.id, 'updateWithHoldTax', { withHoldTax: false })
           .subscribe(() => {
             this.reload();
           });
@@ -269,7 +281,13 @@ export class SavingsAccountViewComponent implements OnInit {
    */
   private unblockSavingsAccount(action: string) {
     const unblockSavingsAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Savings Account'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want') + action + this.translateService.instant('this Savings Account') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Savings Account'),
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want') +
+          action +
+          this.translateService.instant('this Savings Account')
+      }
     });
     let command = 'unblock';
     if (action === 'Unblock Deposit') {
@@ -280,10 +298,9 @@ export class SavingsAccountViewComponent implements OnInit {
     }
     unblockSavingsAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, command, {})
-          .subscribe(() => {
-            this.reload();
-          });
+        this.savingsService.executeSavingsAccountCommand(this.savingsAccountData.id, command, {}).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }

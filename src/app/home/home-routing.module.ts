@@ -34,6 +34,7 @@ const routes: Routes = [
       }
     }
   ])
+
 ];
 
 /**
@@ -46,4 +47,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [OfficesResolver]
 })
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}

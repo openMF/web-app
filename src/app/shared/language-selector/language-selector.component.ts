@@ -18,7 +18,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./language-selector.component.scss']
 })
 export class LanguageSelectorComponent {
-
   /** Language selector form control. */
   languageSelector = new UntypedFormControl();
 
@@ -26,8 +25,10 @@ export class LanguageSelectorComponent {
    * Sets the language of the application in the selector on initial setup.
    * @param {TranslateService} translateService Translate Service.
    */
-   constructor(private translateService: TranslateService,
-    private settingsService: SettingsService) {
+  constructor(
+    private translateService: TranslateService,
+    private settingsService: SettingsService
+  ) {
     this.languageSelector.setValue(this.currentLanguage);
   }
 
@@ -35,7 +36,7 @@ export class LanguageSelectorComponent {
    * Sets a new language to be used by the application.
    * @param {string} language New language.
    */
-   setLanguage() {
+  setLanguage() {
     this.translateService.use(this.languageSelector.value);
     this.settingsService.setLanguage({ name: '', code: this.languageSelector.value.substring(0, 2) });
   }
@@ -55,5 +56,4 @@ export class LanguageSelectorComponent {
   get languages(): string[] {
     return this.translateService.getLangs();
   }
-
 }
