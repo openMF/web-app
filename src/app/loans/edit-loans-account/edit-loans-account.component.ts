@@ -145,7 +145,7 @@ export class EditLoansAccountComponent {
     }
 
     if (loansAccountData.interestCalculationPeriodType === 0) {
-      loansAccountData.allowPartialPeriodInterestCalcualtion = false;
+      loansAccountData.allowPartialPeriodInterestCalculation = false;
     }
     if (!loansAccountData.isLoanProductLinkedToFloatingRate || loansAccountData.isLoanProductLinkedToFloatingRate === false) {
       delete loansAccountData.isFloatingInterestRate;
