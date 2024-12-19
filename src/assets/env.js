@@ -35,4 +35,13 @@
   // Time in milliseconds for Session idle timeout, default 300000 seconds
   window['env']['sessionIdleTimeout'] = '0';
 
+  // OAuth Server Enabled  
+  window['env']['oauthServerEnabled'] = '';
+
+  // OAuth Server URL  
+  window['env']['oauthServerUrl'] = '';
+
+  // OAuth Client Id  
+  window['env']['oauthAppId'] = '';
+
 })(this);
