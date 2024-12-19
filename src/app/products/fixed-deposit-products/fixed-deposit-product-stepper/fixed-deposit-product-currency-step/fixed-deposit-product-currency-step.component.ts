@@ -7,7 +7,6 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
   styleUrls: ['./fixed-deposit-product-currency-step.component.scss']
 })
 export class FixedDepositProductCurrencyStepComponent implements OnInit {
-
   @Input() fixedDepositProductsTemplate: any;
 
   fixedDepositProductCurrencyForm: UntypedFormGroup;
@@ -23,28 +22,33 @@ export class FixedDepositProductCurrencyStepComponent implements OnInit {
 
     if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
       this.fixedDepositProductCurrencyForm.patchValue({
-        'currencyCode': this.fixedDepositProductsTemplate.currency.code,
-        'digitsAfterDecimal': this.fixedDepositProductsTemplate.currency.decimalPlaces,
-        'inMultiplesOf': this.fixedDepositProductsTemplate.currency.inMultiplesOf
+        currencyCode: this.fixedDepositProductsTemplate.currency.code,
+        digitsAfterDecimal: this.fixedDepositProductsTemplate.currency.decimalPlaces,
+        inMultiplesOf: this.fixedDepositProductsTemplate.currency.inMultiplesOf
       });
     } else {
       this.fixedDepositProductCurrencyForm.patchValue({
-        'currencyCode': this.currencyData[0].code,
-        'digitsAfterDecimal': 2
+        currencyCode: this.currencyData[0].code,
+        digitsAfterDecimal: 2
       });
     }
   }
 
   createFixedDepositProductCurrencyForm() {
     this.fixedDepositProductCurrencyForm = this.formBuilder.group({
-      'currencyCode': ['', Validators.required],
-      'digitsAfterDecimal': ['', Validators.required],
-      'inMultiplesOf': ['']
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      digitsAfterDecimal: [
+        '',
+        Validators.required
+      ],
+      inMultiplesOf: ['']
     });
   }
 
   get fixedDepositProductCurrency() {
     return this.fixedDepositProductCurrencyForm.value;
   }
-
 }

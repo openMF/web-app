@@ -17,7 +17,6 @@ import { GroupsService } from '../../groups.service';
   styleUrls: ['./notes-tab.component.scss']
 })
 export class NotesTabComponent {
-
   /** Group ID */
   entityId: string;
   /** Username */
@@ -31,9 +30,11 @@ export class NotesTabComponent {
    * @param {GroupsService} groupsService Groups Service
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(private route: ActivatedRoute,
-              private authenticationService: AuthenticationService,
-              private groupsService: GroupsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private authenticationService: AuthenticationService,
+    private groupsService: GroupsService
+  ) {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.entityId = this.route.parent.snapshot.params['groupId'];
@@ -72,10 +73,8 @@ export class NotesTabComponent {
    * @param {string} noteId Note Id.
    */
   deleteNote(noteId: string, index: number) {
-    this.groupsService.deleteGroupNote(this.entityId, noteId)
-    .subscribe(() => {
+    this.groupsService.deleteGroupNote(this.entityId, noteId).subscribe(() => {
       this.entityNotes.splice(index, 1);
     });
   }
-
 }

@@ -32,27 +32,35 @@ export class EditBucketComponent implements OnInit {
   dataWasChanged = false;
 
   /** Delinquency Range Displayed Columns */
-  displayedColumns: string[] = ['classification', 'minimumAgeDays', 'maximumAgeDays', 'actions'];
+  displayedColumns: string[] = [
+    'classification',
+    'minimumAgeDays',
+    'maximumAgeDays',
+    'actions'
+  ];
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private productsService: ProductsService,
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private translateService: TranslateService) {
-      this.route.data.subscribe((data: { delinquencyBucket: any, delinquencyRanges: any }) => {
-        this.delinquencyRangesData = data.delinquencyRanges;
-        this.rangesDataSource = [];
-        this.delinquencyRangesIds = [];
-        this.delinquencyRangesData = this.delinquencyRangesData.sort(
-          (objA: { minimumAgeDays: number; }, objB: { minimumAgeDays: number; }) => objA.minimumAgeDays - objB.minimumAgeDays,
-        );
-        this.delinquencyBucketData = data.delinquencyBucket;
-        this.delinquencyBucketId = data.delinquencyBucket.id;
-        this.rangesDataSource = this.delinquencyBucketData.ranges;
-        this.rangesDataSource.forEach((item: any) => {
-          this.delinquencyRangesIds.push(item.id);
-        });
+    private translateService: TranslateService
+  ) {
+    this.route.data.subscribe((data: { delinquencyBucket: any; delinquencyRanges: any }) => {
+      this.delinquencyRangesData = data.delinquencyRanges;
+      this.rangesDataSource = [];
+      this.delinquencyRangesIds = [];
+      this.delinquencyRangesData = this.delinquencyRangesData.sort(
+        (objA: { minimumAgeDays: number }, objB: { minimumAgeDays: number }) =>
+          objA.minimumAgeDays - objB.minimumAgeDays
+      );
+      this.delinquencyBucketData = data.delinquencyBucket;
+      this.delinquencyBucketId = data.delinquencyBucket.id;
+      this.rangesDataSource = this.delinquencyBucketData.ranges;
+      this.rangesDataSource.forEach((item: any) => {
+        this.delinquencyRangesIds.push(item.id);
+      });
     });
   }
 
@@ -65,18 +73,21 @@ export class EditBucketComponent implements OnInit {
    */
   setupForm(): void {
     this.bucketForm = this.formBuilder.group({
-      'name': [{value: this.delinquencyBucketData.name, disabled: true}, Validators.required]
+      name: [
+        { value: this.delinquencyBucketData.name, disabled: true },
+        Validators.required
+      ]
     });
   }
 
   /**
    * Add Delinquency Range for a Delinquency Bucket
    */
-   addDelinquencyRange() {
+  addDelinquencyRange() {
     let delinquencyRanges = this.delinquencyRangesData;
     if (this.delinquencyRangesIds.length > 0) {
       delinquencyRanges = this.delinquencyRangesData.filter((item: any) => {
-        return (this.delinquencyRangesIds.indexOf(item.id) < 0);
+        return this.delinquencyRangesIds.indexOf(item.id) < 0;
       });
     }
     const formfields: FormfieldBase[] = [
@@ -86,6 +97,7 @@ export class EditBucketComponent implements OnInit {
         options: { label: 'classification', value: 'id', data: delinquencyRanges },
         order: 1
       })
+
     ];
     const data = {
       title: 'Add Delinquency Range',
@@ -97,7 +109,7 @@ export class EditBucketComponent implements OnInit {
       if (response.data) {
         const itemSelected = response.data.value;
         const item = this.delinquencyRangesData.filter((range: any) => {
-          return (range.id === itemSelected.rangeId);
+          return range.id === itemSelected.rangeId;
         });
         this.rangesDataSource = this.rangesDataSource.concat(item);
         this.delinquencyRangesIds.push(item.id);
@@ -109,7 +121,7 @@ export class EditBucketComponent implements OnInit {
   /**
    * Delete particular Delinquency Range in Delinquency Bucket
    */
-   deleteDelinquencyRange(index: number) {
+  deleteDelinquencyRange(index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
@@ -129,7 +141,9 @@ export class EditBucketComponent implements OnInit {
    */
   submit() {
     const ranges: any = [];
-    this.rangesDataSource.forEach((item: any) => { ranges.push(item.id); });
+    this.rangesDataSource.forEach((item: any) => {
+      ranges.push(item.id);
+    });
     if (ranges.length > 0) {
       const data = {
         ...this.bucketForm.value,

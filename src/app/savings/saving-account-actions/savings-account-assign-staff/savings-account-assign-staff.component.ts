@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./savings-account-assign-staff.component.scss']
 })
 export class SavingsAccountAssignStaffComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -39,12 +38,14 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private savingsService: SavingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsService: SavingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.snapshot.params['savingAccountId'];
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.savingsAccountData = data.savingsAccountActionData;
@@ -65,8 +66,11 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
    */
   createSavingsAssignStaffForm() {
     this.savingsAssignStaffForm = this.formBuilder.group({
-      'toSavingsOfficerId': [''],
-      'assignmentDate': ['', Validators.required]
+      toSavingsOfficerId: [''],
+      assignmentDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -92,5 +96,4 @@ export class SavingsAccountAssignStaffComponent implements OnInit {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
-
 }

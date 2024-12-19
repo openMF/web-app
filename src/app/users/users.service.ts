@@ -12,11 +12,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsersService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @returns {Observable<any>} Users data
@@ -80,10 +79,7 @@ export class UsersService {
    * @returns {Observable<any>} Staff data.
    */
   getStaff(officeId: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('officeId', officeId.toString())
-      .set('status', 'all');
+    const httpParams = new HttpParams().set('officeId', officeId.toString()).set('status', 'all');
     return this.http.get('/staff', { params: httpParams });
   }
-
 }

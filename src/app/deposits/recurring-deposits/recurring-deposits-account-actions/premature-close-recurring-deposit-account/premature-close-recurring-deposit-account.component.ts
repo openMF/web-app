@@ -18,7 +18,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./premature-close-recurring-deposit-account.component.scss']
 })
 export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -36,12 +35,14 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService, ) {
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
@@ -58,7 +59,10 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
    */
   createprematureCloseRecurringDepositsAccountForm() {
     this.prematureCloseRecurringDepositsAccountForm = this.formBuilder.group({
-      'closedOnDate': ['', Validators.required]
+      closedOnDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -72,16 +76,20 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedOnDate: Date = this.prematureCloseRecurringDepositsAccountForm.value.closedOnDate;
     if (prematureCloseRecurringDepositsAccountFormData.closedOnDate instanceof Date) {
-      prematureCloseRecurringDepositsAccountFormData.closedOnDate = this.dateUtils.formatDate(prevClosedOnDate, dateFormat);
+      prematureCloseRecurringDepositsAccountFormData.closedOnDate = this.dateUtils.formatDate(
+        prevClosedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...prematureCloseRecurringDepositsAccountFormData,
       dateFormat,
       locale
     };
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'prematureClose', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.recurringDepositsService
+      .executeRecurringDepositsAccountCommand(this.accountId, 'prematureClose', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

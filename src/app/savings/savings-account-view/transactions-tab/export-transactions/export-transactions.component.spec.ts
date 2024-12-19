@@ -8,9 +8,8 @@ describe('ExportTransactionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExportTransactionsComponent ]
-    })
-    .compileComponents();
+      declarations: [ExportTransactionsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

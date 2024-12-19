@@ -13,11 +13,10 @@ import { GroupsService } from '../groups.service';
  */
 @Injectable()
 export class GroupDataAndTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {GroupsService} GroupsService Groups service.
    */
-  constructor(private groupsService: GroupsService) { }
+  constructor(private groupsService: GroupsService) {}
 
   /**
    * Returns the Groups data and template.
@@ -28,5 +27,4 @@ export class GroupDataAndTemplateResolver implements Resolve<Object> {
     const groupId = route.paramMap.get('groupId');
     return this.groupsService.getGroupData(groupId, 'true');
   }
-
 }

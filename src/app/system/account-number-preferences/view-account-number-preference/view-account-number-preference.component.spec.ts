@@ -8,9 +8,8 @@ describe('ViewAccountNumberPreferenceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewAccountNumberPreferenceComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewAccountNumberPreferenceComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

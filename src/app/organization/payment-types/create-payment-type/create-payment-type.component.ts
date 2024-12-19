@@ -15,7 +15,6 @@ import { OrganizationService } from '../../organization.service';
   styleUrls: ['./create-payment-type.component.scss']
 })
 export class CreatePaymentTypeComponent implements OnInit {
-
   /** Payment Type form. */
   paymentTypeForm: UntypedFormGroup;
 
@@ -25,10 +24,12 @@ export class CreatePaymentTypeComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private router: Router,
-              private route: ActivatedRoute) {}
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   /**
    * Creates and sets the payment type form.
@@ -42,10 +43,16 @@ export class CreatePaymentTypeComponent implements OnInit {
    */
   createpaymentTypeForm() {
     this.paymentTypeForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'description': [''],
-      'isCashPayment': [false],
-      'position': ['', Validators.required],
+      name: [
+        '',
+        Validators.required
+      ],
+      description: [''],
+      isCashPayment: [false],
+      position: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -55,9 +62,8 @@ export class CreatePaymentTypeComponent implements OnInit {
    */
   submit() {
     const paymentType = this.paymentTypeForm.value;
-    this.organizationService.createPaymentType(paymentType).subscribe(response => {
+    this.organizationService.createPaymentType(paymentType).subscribe((response) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

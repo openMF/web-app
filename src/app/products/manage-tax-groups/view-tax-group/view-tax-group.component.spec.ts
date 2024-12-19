@@ -8,9 +8,8 @@ describe('ViewTaxGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewTaxGroupComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewTaxGroupComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -11,6 +11,5 @@ export class SvgIconComponent {
   @Input() iconClass: string;
   @Input() iconWidth: string;
 
-  constructor() { }
-
+  constructor() {}
 }

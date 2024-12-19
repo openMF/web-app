@@ -16,7 +16,7 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService) {}
 
   /**
    * Intercepts a Http request and prefixes it with `serverUrl`.
@@ -40,5 +40,4 @@ export class ApiPrefixInterceptor implements HttpInterceptor {
     }
     return next.handle(request);
   }
-
 }

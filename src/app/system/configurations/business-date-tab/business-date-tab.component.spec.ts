@@ -8,9 +8,8 @@ describe('BusinessDateTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BusinessDateTabComponent ]
-    })
-    .compileComponents();
+      declarations: [BusinessDateTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

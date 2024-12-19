@@ -13,11 +13,10 @@ import { SavingsService } from '../savings.service';
  */
 @Injectable()
 export class SavingsAccountTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {savingsService} SavingsService Savings service.
    */
-  constructor(private savingsService: SavingsService) { }
+  constructor(private savingsService: SavingsService) {}
 
   /**
    * Returns the Shares Account Template.
@@ -26,8 +25,7 @@ export class SavingsAccountTemplateResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const entityId = route.paramMap.get('clientId') || route.paramMap.get('groupId') || route.paramMap.get('centerId');
-    const isGroup = (route.paramMap.get('groupId') || route.paramMap.get('centerId')) ? true : false;
+    const isGroup = route.paramMap.get('groupId') || route.paramMap.get('centerId') ? true : false;
     return this.savingsService.getSavingsAccountTemplate(entityId, undefined, isGroup);
   }
-
 }

@@ -8,9 +8,8 @@ describe('EntityDataTableChecksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EntityDataTableChecksComponent ]
-    })
-    .compileComponents();
+      declarations: [EntityDataTableChecksComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

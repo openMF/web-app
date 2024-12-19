@@ -21,7 +21,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit, OnDestroy {
-
   /** Mifos X version. */
   versions: any = {
     mifos: environment.version,
@@ -44,13 +43,15 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   displayBackEndInfo = true;
 
-  constructor(private systemService: SystemService,
+  constructor(
+    private systemService: SystemService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private alertService: AlertService,
     private dateUtils: Dates,
-    private versionService: VersionService) {
-      this.displayBackEndInfo = (environment.displayBackEndInfo === 'true');
+    private versionService: VersionService
+  ) {
+    this.displayBackEndInfo = environment.displayBackEndInfo === 'true';
   }
 
   ngOnInit() {
@@ -58,7 +59,7 @@ export class FooterComponent implements OnInit, OnDestroy {
       this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
         const alertType = alertEvent.type;
         if (alertType === SettingsService.businessDateType + ' Set Config') {
-          this.isBusinessDateEnabled = (alertEvent.message === 'enabled') ? true : false;
+          this.isBusinessDateEnabled = alertEvent.message === 'enabled' ? true : false;
           this.isBusinessDateDefined = false;
           if (this.isBusinessDateEnabled) {
             this.setBusinessDate();
@@ -68,7 +69,9 @@ export class FooterComponent implements OnInit, OnDestroy {
             this.setBusinessDate();
           }
         } else if (alertType === 'Authentication Start') {
-          this.timer = setTimeout(() => { this.getConfigurations(); }, 60000);
+          this.timer = setTimeout(() => {
+            this.getConfigurations();
+          }, 60000);
         }
       });
       this.getConfigurations();
@@ -94,15 +97,18 @@ export class FooterComponent implements OnInit, OnDestroy {
    */
   getConfigurations(): void {
     if (this.authenticationService.isAuthenticated()) {
-      this.systemService.getConfigurationByName(SettingsService.businessDateConfigName)
-      .subscribe((configurationData: any) => {
-        this.isBusinessDateEnabled = configurationData.enabled;
-        this.settingsService.setBusinessDateConfig(configurationData.enabled);
-        if (this.isBusinessDateEnabled) {
-          this.setBusinessDate();
-          this.timer = setTimeout(() => { this.getConfigurations(); }, 60000);
-        }
-      });
+      this.systemService
+        .getConfigurationByName(SettingsService.businessDateConfigName)
+        .subscribe((configurationData: any) => {
+          this.isBusinessDateEnabled = configurationData.enabled;
+          this.settingsService.setBusinessDateConfig(configurationData.enabled);
+          if (this.isBusinessDateEnabled) {
+            this.setBusinessDate();
+            this.timer = setTimeout(() => {
+              this.getConfigurations();
+            }, 60000);
+          }
+        });
     } else {
       clearTimeout(this.timer);
     }
@@ -112,10 +118,11 @@ export class FooterComponent implements OnInit, OnDestroy {
    * Get the Business Date data
    */
   setBusinessDate(): void {
-    this.systemService.getBusinessDate(SettingsService.businessDateType)
-    .subscribe((data: any) => {
+    this.systemService.getBusinessDate(SettingsService.businessDateType).subscribe((data: any) => {
       this.businessDate = new Date(data.date);
-      this.settingsService.setBusinessDate(this.dateUtils.formatDate(this.businessDate, SettingsService.businessDateFormat));
+      this.settingsService.setBusinessDate(
+        this.dateUtils.formatDate(this.businessDate, SettingsService.businessDateFormat)
+      );
       this.isBusinessDateDefined = true;
     });
   }

@@ -8,9 +8,8 @@ describe('BusinessRuleParametersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BusinessRuleParametersComponent ]
-    })
-    .compileComponents();
+      declarations: [BusinessRuleParametersComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

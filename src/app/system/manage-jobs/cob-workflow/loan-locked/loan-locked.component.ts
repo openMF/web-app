@@ -16,7 +16,6 @@ import { TasksService } from 'app/tasks/tasks.service';
   styleUrls: ['./loan-locked.component.scss']
 })
 export class LoanLockedComponent implements OnInit {
-
   /** Loans Data */
   loans: any[] = [];
   /** Batch Requests */
@@ -26,10 +25,17 @@ export class LoanLockedComponent implements OnInit {
   /** Row Selection */
   selection: SelectionModel<any>;
   /** Displayed Columns for loan disbursal data */
-  displayedColumns: string[] = ['select', 'loanId', 'lockPlacedOn', 'lockOwner', 'error', 'details'];
+  displayedColumns: string[] = [
+    'select',
+    'loanId',
+    'lockPlacedOn',
+    'lockOwner',
+    'error',
+    'details'
+  ];
 
   /** Paginator for the table */
-  @ViewChild(MatPaginator, {static: false})
+  @ViewChild(MatPaginator, { static: false })
   set paginator(value: MatPaginator) {
     if (this.dataSource != null) {
       this.dataSource.paginator = value;
@@ -52,14 +58,15 @@ export class LoanLockedComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private loansService: LoansService,
     private systemService: SystemService,
     private tasksService: TasksService,
     private dialog: MatDialog,
-    private translateService: TranslateService) {
-  }
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.allowRunInlineJob = false;
@@ -82,7 +89,7 @@ export class LoanLockedComponent implements OnInit {
       this.loans = data.content;
       this.dataSource = new MatTableDataSource(this.loans);
       this.dataSource.paginator = this.paginator;
-      this.showPaginator = (this.loans.length > this.pageSize);
+      this.showPaginator = this.loans.length > this.pageSize;
       this.allowRunInlineJob = false;
       this.selection = new SelectionModel(true, []);
     });
@@ -102,9 +109,9 @@ export class LoanLockedComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach((row: any) => this.selection.select(row));
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((row: any) => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -145,5 +152,4 @@ export class LoanLockedComponent implements OnInit {
       });
     }
   }
-
 }

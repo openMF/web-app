@@ -15,7 +15,6 @@ import { ClientsService } from 'app/clients/clients.service';
   styleUrls: ['./client-assign-staff.component.scss']
 })
 export class ClientAssignStaffComponent implements OnInit {
-
   /** Client Assign Staff form. */
   clientAssignStaffForm: UntypedFormGroup;
   /** Staff Data */
@@ -30,10 +29,12 @@ export class ClientAssignStaffComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private clientsService: ClientsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientData = data.clientActionData;
     });
@@ -52,7 +53,7 @@ export class ClientAssignStaffComponent implements OnInit {
    */
   createClientAssignStaffForm() {
     this.clientAssignStaffForm = this.formBuilder.group({
-      'staffId': ['']
+      staffId: ['']
     });
   }
 
@@ -60,10 +61,10 @@ export class ClientAssignStaffComponent implements OnInit {
    * Submits the form and assigns staff for the client.
    */
   submit() {
-    this.clientsService.executeClientCommand(this.clientData.id, 'assignStaff', this.clientAssignStaffForm.value)
+    this.clientsService
+      .executeClientCommand(this.clientData.id, 'assignStaff', this.clientAssignStaffForm.value)
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });
   }
-
 }

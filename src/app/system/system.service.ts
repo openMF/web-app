@@ -18,7 +18,7 @@ export class SystemService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @returns {Observable<any>} Data tables.
@@ -128,7 +128,7 @@ export class SystemService {
    */
   enableRole(roleId: string): Observable<any> {
     const httpParams = new HttpParams().set('command', 'enable');
-    return this.http.post(`/roles/${roleId}`, {} , { params: httpParams });
+    return this.http.post(`/roles/${roleId}`, {}, { params: httpParams });
   }
 
   /**
@@ -258,7 +258,6 @@ export class SystemService {
     return this.http.post(`/surveys/${surveyId}?command=deactivate`, null);
   }
 
-
   /**
    * @returns {Observable<any>} Fetches Jobs.
    */
@@ -330,7 +329,7 @@ export class SystemService {
    * @param {any} Job Job to be updated.
    * @returns {Observable<any>}
    */
-   updateScheduler(jobId: string, job: any): Observable<any> {
+  updateScheduler(jobId: string, job: any): Observable<any> {
     return this.http.put(`/jobs/${jobId}`, job);
   }
 
@@ -338,7 +337,7 @@ export class SystemService {
    * @param {string} jobId Job Id on which jobs to run
    * @returns {Observable<any>}
    */
-   runSelectedJob(jobId: string): Promise<any> {
+  runSelectedJob(jobId: string): Promise<any> {
     return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload, { observe: 'response' }).toPromise();
   }
 
@@ -409,7 +408,7 @@ export class SystemService {
   /**
    * @returns {Observable<any>} Business Date data using a type BUSINESS_DATE / COB_DATE.
    */
-   getBusinessDate(dateType: string): Observable<any> {
+  getBusinessDate(dateType: string): Observable<any> {
     return this.http.get(`/businessdate/${dateType}`);
   }
 
@@ -417,7 +416,7 @@ export class SystemService {
    * @param {any} dateData Business Date data to be updated.
    * @returns {Observable<any>}
    */
-   updateBusinessDate(dateData: any): Observable<any> {
+  updateBusinessDate(dateData: any): Observable<any> {
     return this.http.post(`/businessdate`, dateData);
   }
 
@@ -440,7 +439,7 @@ export class SystemService {
    * @param {string} configurationId Configuration ID of configuration.
    * @returns {Observable<any>} Configuration.
    */
-   getConfigurationByName(configurationName: string): Observable<any> {
+  getConfigurationByName(configurationName: string): Observable<any> {
     return this.http.get(`/configurations/name/${configurationName}`);
   }
 
@@ -513,7 +512,10 @@ export class SystemService {
    * @param {any} accountNumberPreferenceChanges Changes in Account Number Preference.
    * @returns {Observable<any>}
    */
-  updateAccountNumberPreference(accountNumberPreferenceId: string, accountNumberPreferenceChanges: any): Observable<any> {
+  updateAccountNumberPreference(
+    accountNumberPreferenceId: string,
+    accountNumberPreferenceChanges: any
+  ): Observable<any> {
     return this.http.put(`/accountnumberformats/${accountNumberPreferenceId}`, accountNumberPreferenceChanges);
   }
 
@@ -628,7 +630,6 @@ export class SystemService {
     return this.http.get(`/entitytoentitymapping/${mapId}`);
   }
 
-
   /**
    * Creates a new mapping
    * @param {any} mapType Map id to be created.
@@ -689,9 +690,8 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   getMakerCheckerPermissions(): Observable<any> {
-    const httpParams = new HttpParams()
-                      .set('makerCheckerable', 'true');
-    return this.http.get('/permissions', {params: httpParams});
+    const httpParams = new HttpParams().set('makerCheckerable', 'true');
+    return this.http.get('/permissions', { params: httpParams });
   }
 
   /**
@@ -699,8 +699,7 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   updateMakerCheckerPermission(data: any): Observable<any> {
-    const httpParams = new HttpParams()
-                      .set('makerCheckerable', 'true');
+    const httpParams = new HttpParams().set('makerCheckerable', 'true');
     return this.http.put('/permissions', data, { params: httpParams });
   }
 
@@ -714,7 +713,7 @@ export class SystemService {
   /**
    * @returns {Observable<any>}
    */
-   putExternalEventConfiguration(payload: any): Observable<any> {
+  putExternalEventConfiguration(payload: any): Observable<any> {
     return this.http.put('/externalevents/configuration', payload);
   }
 

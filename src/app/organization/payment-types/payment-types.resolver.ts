@@ -13,7 +13,6 @@ import { OrganizationService } from '../organization.service';
  */
 @Injectable()
 export class PaymentTypesResolver implements Resolve<Object> {
-
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
@@ -23,7 +22,7 @@ export class PaymentTypesResolver implements Resolve<Object> {
    * Returns the payment types data.
    * @returns {Observable<any>}
    */
-   resolve(route: ActivatedRouteSnapshot): Observable<any> {
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const paymentTypeId = route.paramMap.get('id');
     if (paymentTypeId) {
       return this.organizationService.getPaymentType(paymentTypeId);
@@ -31,5 +30,4 @@ export class PaymentTypesResolver implements Resolve<Object> {
       return this.organizationService.getPaymentTypes();
     }
   }
-
 }

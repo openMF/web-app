@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./write-off-page.component.scss']
 })
 export class WriteOffPageComponent implements OnInit {
-
   @Input() dataObject: any;
 
   /** Minimum Date allowed. */
@@ -37,12 +36,14 @@ export class WriteOffPageComponent implements OnInit {
    * @param {Router} router Router.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private loanService: LoansService,
-              private dateUtils: Dates,
-              private router: Router,
-              private settingsService: SettingsService) { }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private loanService: LoansService,
+    private dateUtils: Dates,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
@@ -54,9 +55,12 @@ export class WriteOffPageComponent implements OnInit {
    */
   setWriteOffForm() {
     this.writeOffForm = this.formBuilder.group({
-      'transactionDate': [this.dataObject.date && new Date(this.dataObject.date), Validators.required],
-      'amount': [{value: this.dataObject.amount, disabled: true}],
-      'note': ['']
+      transactionDate: [
+        this.dataObject.date && new Date(this.dataObject.date),
+        Validators.required
+      ],
+      amount: [{ value: this.dataObject.amount, disabled: true }],
+      note: ['']
     });
   }
 
@@ -79,8 +83,7 @@ export class WriteOffPageComponent implements OnInit {
     const loanId = this.route.snapshot.params['loanId'];
     delete data.amount;
     this.loanService.submitLoanActionButton(loanId, data, 'writeoff').subscribe((response: any) => {
-      this.router.navigate(['../../general'], {relativeTo: this.route});
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
-
 }

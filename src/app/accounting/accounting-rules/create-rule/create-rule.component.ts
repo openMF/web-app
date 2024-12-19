@@ -18,7 +18,6 @@ import { oneOfTheFieldsIsRequiredValidator } from '../one-of-the-fields-is-requi
   styleUrls: ['./create-rule.component.scss']
 })
 export class CreateRuleComponent implements OnInit {
-
   /** Accounting rule form. */
   accountingRuleForm: UntypedFormGroup;
   /** Office data. */
@@ -37,10 +36,12 @@ export class CreateRuleComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { accountingRulesTemplate: any }) => {
       this.officeData = data.accountingRulesTemplate.allowedOffices;
       this.glAccountData = data.accountingRulesTemplate.allowedAccounts;
@@ -61,19 +62,28 @@ export class CreateRuleComponent implements OnInit {
    * Creates accounting rule form.
    */
   createAccountingRuleForm() {
-    this.accountingRuleForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'officeId': ['', Validators.required],
-      'debitRuleType': ['fixedAccount'],
-      'accountToDebit': [''],
-      'debitTags': [''],
-      'allowMultipleDebitEntries': [''],
-      'creditRuleType': ['fixedAccount'],
-      'accountToCredit': [''],
-      'creditTags': [''],
-      'allowMultipleCreditEntries': [''],
-      'description': ['']
-    }, { validator: oneOfTheFieldsIsRequiredValidator });
+    this.accountingRuleForm = this.formBuilder.group(
+      {
+        name: [
+          '',
+          Validators.required
+        ],
+        officeId: [
+          '',
+          Validators.required
+        ],
+        debitRuleType: ['fixedAccount'],
+        accountToDebit: [''],
+        debitTags: [''],
+        allowMultipleDebitEntries: [''],
+        creditRuleType: ['fixedAccount'],
+        accountToCredit: [''],
+        creditTags: [''],
+        allowMultipleCreditEntries: [''],
+        description: ['']
+      },
+      { validator: oneOfTheFieldsIsRequiredValidator }
+    );
   }
 
   /**
@@ -121,8 +131,13 @@ export class CreateRuleComponent implements OnInit {
     delete accountingRule.debitRuleType;
     delete accountingRule.creditRuleType;
     this.accountingService.createAccountingRule(accountingRule).subscribe((response: any) => {
-      this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../view',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

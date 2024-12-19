@@ -8,9 +8,8 @@ describe('UploadImageDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UploadImageDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [UploadImageDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

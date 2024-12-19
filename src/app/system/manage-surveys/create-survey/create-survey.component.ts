@@ -20,7 +20,6 @@ import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dial
   styleUrls: ['./create-survey.component.scss']
 })
 export class CreateSurveyComponent implements OnInit {
-
   /** Survey form. */
   surveyForm: UntypedFormGroup;
 
@@ -31,11 +30,13 @@ export class CreateSurveyComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public dialog: MatDialog) { }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   /**
    * Creates the survey form.
@@ -49,11 +50,22 @@ export class CreateSurveyComponent implements OnInit {
    */
   createSurveyForm() {
     this.surveyForm = this.formBuilder.group({
-      'key': ['', Validators.required],
-      'name': ['', Validators.required],
-      'countryCode': ['', [Validators.required, Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')]],
-      'description': [''],
-      'questionDatas': this.formBuilder.array([])
+      key: [
+        '',
+        Validators.required
+      ],
+      name: [
+        '',
+        Validators.required
+      ],
+      countryCode: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')]
+      ],
+      description: [''],
+      questionDatas: this.formBuilder.array([])
     });
   }
 
@@ -71,7 +83,11 @@ export class CreateSurveyComponent implements OnInit {
    * @returns {FormArray} Responses form array.
    */
   getResponseDatas(questionIndex: number): UntypedFormArray {
-    return this.surveyForm.get(['questionDatas', questionIndex, 'responseDatas']) as UntypedFormArray;
+    return this.surveyForm.get([
+      'questionDatas',
+      questionIndex,
+      'responseDatas'
+    ]) as UntypedFormArray;
   }
 
   /**
@@ -80,11 +96,17 @@ export class CreateSurveyComponent implements OnInit {
    */
   createQuestionForm(): UntypedFormGroup {
     return this.formBuilder.group({
-      'key': ['', Validators.required],
-      'text': ['', Validators.required],
-      'description': [''],
-      'responseDatas': this.formBuilder.array([this.createResponseForm()]),
-      'sequenceNo': ['']
+      key: [
+        '',
+        Validators.required
+      ],
+      text: [
+        '',
+        Validators.required
+      ],
+      description: [''],
+      responseDatas: this.formBuilder.array([this.createResponseForm()]),
+      sequenceNo: ['']
     });
   }
 
@@ -111,9 +133,17 @@ export class CreateSurveyComponent implements OnInit {
    */
   createResponseForm(): UntypedFormGroup {
     return this.formBuilder.group({
-      'text': ['', Validators.required],
-      'value': ['', [Validators.required, Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')]],
-      'sequenceNo': ['']
+      text: [
+        '',
+        Validators.required
+      ],
+      value: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')]
+      ],
+      sequenceNo: ['']
     });
   }
 
@@ -141,9 +171,15 @@ export class CreateSurveyComponent implements OnInit {
    */
   updateSequenceNumber() {
     for (let questionIndex = 0; questionIndex < this.questionDatas.length; questionIndex++) {
-      this.questionDatas.at(questionIndex).get('sequenceNo').setValue(questionIndex + 1);
+      this.questionDatas
+        .at(questionIndex)
+        .get('sequenceNo')
+        .setValue(questionIndex + 1);
       for (let responseIndex = 0; responseIndex < this.getResponseDatas(questionIndex).length; responseIndex++) {
-        this.getResponseDatas(questionIndex).at(responseIndex).get('sequenceNo').setValue(responseIndex + 1);
+        this.getResponseDatas(questionIndex)
+          .at(responseIndex)
+          .get('sequenceNo')
+          .setValue(responseIndex + 1);
       }
     }
   }
@@ -188,5 +224,4 @@ export class CreateSurveyComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

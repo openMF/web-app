@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./datatable-tabs.component.scss']
 })
 export class DatatableTabsComponent {
-
   entityId: string;
   /** Group Datatable */
   entityDatatable: any;
@@ -30,5 +29,4 @@ export class DatatableTabsComponent {
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
-
 }

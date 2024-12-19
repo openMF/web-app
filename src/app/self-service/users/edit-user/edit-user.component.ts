@@ -13,7 +13,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
-
   /** Placeholder for office data. */
   officeData: any;
   /** Placeholder for staff data. */
@@ -28,10 +27,9 @@ export class EditUserComponent implements OnInit {
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-   constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService) {}
 
-   ngOnInit() {
-     this.maxDate = this.settingsService.businessDate;
-   }
-
+  ngOnInit() {
+    this.maxDate = this.settingsService.businessDate;
+  }
 }

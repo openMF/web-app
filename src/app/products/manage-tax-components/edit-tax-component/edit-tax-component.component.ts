@@ -18,7 +18,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./edit-tax-component.component.scss']
 })
 export class EditTaxComponentComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum start date allowed. */
@@ -37,13 +36,15 @@ export class EditTaxComponentComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private settingsService: SettingsService,
-              private translateService: TranslateService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { taxComponent: any }) => {
       this.taxComponentData = data.taxComponent;
     });
@@ -63,11 +64,27 @@ export class EditTaxComponentComponent implements OnInit {
    */
   editTaxComponent() {
     this.taxComponentForm = this.formBuilder.group({
-      'name': [this.taxComponentData.name, [Validators.required]],
-      'percentage': [this.taxComponentData.percentage, [Validators.required, Validators.pattern('^(0*[1-9][0-9]*(\\.[0-9]+)?|0+\\.[0-9]*[1-9][0-9]*)$'), Validators.max(100)]],
-      'startDate': [this.taxComponentData.startDate && new Date(this.taxComponentData.startDate)],
-      'creditAccountType': [{ value: this.translateService.instant('labels.inputs.accounting.' + this.taxComponentData.creditAccountType.value), disabled: true }],
-      'creditAccount': [{ value: this.taxComponentData.creditAccount.name, disabled: true }]
+      name: [
+        this.taxComponentData.name,
+        [Validators.required]
+      ],
+      percentage: [
+        this.taxComponentData.percentage,
+        [
+          Validators.required,
+          Validators.pattern('^(0*[1-9][0-9]*(\\.[0-9]+)?|0+\\.[0-9]*[1-9][0-9]*)$'),
+          Validators.max(100)]
+      ],
+      startDate: [this.taxComponentData.startDate && new Date(this.taxComponentData.startDate)],
+      creditAccountType: [
+        {
+          value: this.translateService.instant(
+            'labels.inputs.accounting.' + this.taxComponentData.creditAccountType.value
+          ),
+          disabled: true
+        }
+      ],
+      creditAccount: [{ value: this.taxComponentData.creditAccount.name, disabled: true }]
     });
   }
 
@@ -89,8 +106,13 @@ export class EditTaxComponentComponent implements OnInit {
       locale
     };
     this.productsService.updateTaxComponent(this.taxComponentData.id, data).subscribe((response: any) => {
-      this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

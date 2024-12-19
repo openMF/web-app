@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-charge.component.scss']
 })
 export class CreateChargeComponent implements OnInit {
-
   /** Charge form. */
   chargeForm: UntypedFormGroup;
   /** Charges template data. */
@@ -46,17 +45,21 @@ export class CreateChargeComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private productsService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
       if (data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions) {
-        this.incomeAndLiabilityAccountData = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions
-          .concat(data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions);
+        this.incomeAndLiabilityAccountData =
+          data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions.concat(
+            data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions
+          );
       } else {
         this.incomeAndLiabilityAccountData = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions;
       }
@@ -77,17 +80,37 @@ export class CreateChargeComponent implements OnInit {
    */
   createChargeForm() {
     this.chargeForm = this.formBuilder.group({
-      'chargeAppliesTo': ['', Validators.required],
-      'name': ['', Validators.required],
-      'currencyCode': ['', Validators.required],
-      'chargeTimeType': ['', Validators.required],
-      'chargeCalculationType': ['', Validators.required],
-      'amount': ['', [Validators.required, Validators.pattern('^\\s*(?=.*[1-9])\\d*(?:\\.\\d+)?\\s*$')]],
-      'active': [false],
-      'penalty': [false],
-      'taxGroupId': [''],
-      'minCap': [''],
-      'maxCap': ['']
+      chargeAppliesTo: [
+        '',
+        Validators.required
+      ],
+      name: [
+        '',
+        Validators.required
+      ],
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      chargeTimeType: [
+        '',
+        Validators.required
+      ],
+      chargeCalculationType: [
+        '',
+        Validators.required
+      ],
+      amount: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^\\s*(?=.*[1-9])\\d*(?:\\.\\d+)?\\s*$')]
+      ],
+      active: [false],
+      penalty: [false],
+      taxGroupId: [''],
+      minCap: [''],
+      maxCap: ['']
     });
   }
 
@@ -122,15 +145,24 @@ export class CreateChargeComponent implements OnInit {
    */
   filteredChargeCalculationType(): any {
     return this.chargeCalculationTypeData.filter((chargeCalculationType: any) => {
-      if (this.chargeForm.get('chargeTimeType').value === 12 && (chargeCalculationType.id === 3 || chargeCalculationType.id === 4)) {
+      if (
+        this.chargeForm.get('chargeTimeType').value === 12 &&
+        (chargeCalculationType.id === 3 || chargeCalculationType.id === 4)
+      ) {
         return false;
       }
       if (this.chargeForm.get('chargeTimeType').value !== 12 && chargeCalculationType.id === 5) {
         return false;
       }
       if (this.chargeForm.get('chargeAppliesTo').value === 2) {
-        if (!(this.chargeForm.get('chargeTimeType').value === 5 || this.chargeForm.get('chargeTimeType').value === 16
-          || this.chargeForm.get('chargeTimeType').value === 17) && chargeCalculationType.id === 2) {
+        if (
+          !(
+            this.chargeForm.get('chargeTimeType').value === 5 ||
+            this.chargeForm.get('chargeTimeType').value === 16 ||
+            this.chargeForm.get('chargeTimeType').value === 17
+          ) &&
+          chargeCalculationType.id === 2
+        ) {
           return false;
         }
       }
@@ -144,11 +176,16 @@ export class CreateChargeComponent implements OnInit {
     const chargeTimeType = this.chargeForm.controls.chargeTimeType.value;
 
     if (chargeAppliesTo === 1) {
-      return (chargeCalculationType === 2 || chargeCalculationType === 3 || chargeCalculationType === 4 || chargeCalculationType === 5);
+      return (
+        chargeCalculationType === 2 ||
+        chargeCalculationType === 3 ||
+        chargeCalculationType === 4 ||
+        chargeCalculationType === 5
+      );
     } else if (chargeAppliesTo === 2) {
-      return (chargeTimeType === 16 || chargeTimeType === 5) && (chargeCalculationType === 2);
+      return (chargeTimeType === 16 || chargeTimeType === 5) && chargeCalculationType === 2;
     } else if (chargeAppliesTo === 4) {
-      return ((chargeTimeType === 14 || chargeTimeType === 15) && chargeCalculationType === 2);
+      return (chargeTimeType === 14 || chargeTimeType === 15) && chargeCalculationType === 2;
     }
     return false;
   }
@@ -195,7 +232,14 @@ export class CreateChargeComponent implements OnInit {
           break;
         case 7: // Monthly Fee
           this.chargeForm.addControl('feeOnMonthDay', new UntypedFormControl(''));
-          this.chargeForm.addControl('feeInterval', new UntypedFormControl('', [Validators.required, Validators.min(1), Validators.max(12), Validators.pattern('^[1-9]\\d*$')]));
+          this.chargeForm.addControl(
+            'feeInterval',
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(1),
+              Validators.max(12),
+              Validators.pattern('^[1-9]\\d*$')])
+          );
           this.repeatEveryLabel = 'Months';
           break;
         case 9: // Overdue Fee
@@ -204,7 +248,12 @@ export class CreateChargeComponent implements OnInit {
           this.chargeForm.get('addFeeFrequency').valueChanges.subscribe((addFeeFrequency) => {
             if (addFeeFrequency) {
               this.chargeForm.addControl('feeFrequency', new UntypedFormControl('', Validators.required));
-              this.chargeForm.addControl('feeInterval', new UntypedFormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]));
+              this.chargeForm.addControl(
+                'feeInterval',
+                new UntypedFormControl('', [
+                  Validators.required,
+                  Validators.pattern('^[1-9]\\d*$')])
+              );
             } else {
               this.chargeForm.removeControl('feeFrequency');
               this.chargeForm.removeControl('feeInterval');
@@ -212,17 +261,28 @@ export class CreateChargeComponent implements OnInit {
           });
           break;
         case 11: // Weekly Fee
-          this.chargeForm.addControl('feeInterval', new UntypedFormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]));
+          this.chargeForm.addControl(
+            'feeInterval',
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.pattern('^[1-9]\\d*$')])
+          );
           this.repeatEveryLabel = 'Weeks';
           break;
       }
     });
     this.chargeForm.get('currencyCode').valueChanges.subscribe((currencyCode) => {
-      this.currencyDecimalPlaces = this.chargesTemplateData.currencyOptions.find((currency: any) => currency.code === currencyCode).decimalPlaces;
+      this.currencyDecimalPlaces = this.chargesTemplateData.currencyOptions.find(
+        (currency: any) => currency.code === currencyCode
+      ).decimalPlaces;
       if (this.currencyDecimalPlaces === 0) {
-        this.chargeForm.get('amount').setValidators([Validators.required, Validators.pattern('^[1-9]\\d*$')]);
+        this.chargeForm.get('amount').setValidators([
+          Validators.required,
+          Validators.pattern('^[1-9]\\d*$')]);
       } else {
-        this.chargeForm.get('amount').setValidators([Validators.required, Validators.pattern(`^\\s*(?=.*[1-9])\\d*(\\.\\d{1,${this.currencyDecimalPlaces}})?\\s*$`)]);
+        this.chargeForm.get('amount').setValidators([
+          Validators.required,
+          Validators.pattern(`^\\s*(?=.*[1-9])\\d*(\\.\\d{1,${this.currencyDecimalPlaces}})?\\s*$`)]);
       }
     });
   }
@@ -258,5 +318,4 @@ export class CreateChargeComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

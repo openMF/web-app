@@ -23,7 +23,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./approve-shares.component.scss']
 })
 export class ApproveSharesComponent implements OnInit {
-
   /** Shares account data. */
   sharesAccountData: any;
 
@@ -32,7 +31,13 @@ export class ApproveSharesComponent implements OnInit {
   /** Shares account data. */
   sharesData: any[];
   /** Columns to be displayed in shares table. */
-  displayedColumns: string[] = ['transactionDate', 'totalShares', 'redeemedPrice', 'status', 'approve'];
+  displayedColumns: string[] = [
+    'transactionDate',
+    'totalShares',
+    'redeemedPrice',
+    'status',
+    'approve'
+  ];
   /** Data source for shares table. */
   dataSource: MatTableDataSource<any>;
 
@@ -49,10 +54,12 @@ export class ApproveSharesComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private sharesService: SharesService,
-              private route: ActivatedRoute,
-              public dialog: MatDialog,
-              private settingsService: SettingsService) {
+  constructor(
+    private sharesService: SharesService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
     this.route.data.subscribe((data: { shareAccountActionData: any }) => {
       this.sharesAccountData = data.shareAccountActionData;
@@ -63,8 +70,9 @@ export class ApproveSharesComponent implements OnInit {
    * Sets the shares table.
    */
   ngOnInit() {
-    this.sharesData = this.sharesAccountData.purchasedShares
-    .filter((share: any) => share.status.value === 'Pending Approval');
+    this.sharesData = this.sharesAccountData.purchasedShares.filter(
+      (share: any) => share.status.value === 'Pending Approval'
+    );
     this.setShares();
   }
 
@@ -90,19 +98,20 @@ export class ApproveSharesComponent implements OnInit {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
-          requestedShares: [{id}],
+          requestedShares: [{ id }],
           dateFormat,
           locale
         };
-        this.sharesService.executeSharesAccountCommand(this.accountId, 'approveadditionalshares', data).subscribe(() => {
-          const share = this.sharesData.find(element => element.id === id);
-          const index = this.sharesData.indexOf(share);
-          this.sharesData.splice(index, 1);
-          this.dataSource.data = this.sharesData;
-          this.sharesTableRef.renderRows();
-        });
+        this.sharesService
+          .executeSharesAccountCommand(this.accountId, 'approveadditionalshares', data)
+          .subscribe(() => {
+            const share = this.sharesData.find((element) => element.id === id);
+            const index = this.sharesData.indexOf(share);
+            this.sharesData.splice(index, 1);
+            this.dataSource.data = this.sharesData;
+            this.sharesTableRef.renderRows();
+          });
       }
     });
   }
-
 }

@@ -16,7 +16,6 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./client-screen-reports.component.scss']
 })
 export class ClientScreenReportsComponent implements OnInit {
-
   /** Client Screen Reportform. */
   clientScreenReportForm: UntypedFormGroup;
   /** Templates Data */
@@ -37,11 +36,13 @@ export class ClientScreenReportsComponent implements OnInit {
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {Renderer2} renderer Renderer 2
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private route: ActivatedRoute,
-              private sanitizer: DomSanitizer,
-              private renderer: Renderer2) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private clientsService: ClientsService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.templatesData = data.clientActionData;
     });
@@ -60,7 +61,7 @@ export class ClientScreenReportsComponent implements OnInit {
    */
   createClientScreenReportForm() {
     this.clientScreenReportForm = this.formBuilder.group({
-      'templateId': ['']
+      templateId: ['']
     });
   }
 
@@ -87,5 +88,4 @@ export class ClientScreenReportsComponent implements OnInit {
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
     });
   }
-
 }

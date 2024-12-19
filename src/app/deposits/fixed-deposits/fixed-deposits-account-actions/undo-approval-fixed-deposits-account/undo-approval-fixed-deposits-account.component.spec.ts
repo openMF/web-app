@@ -8,9 +8,8 @@ describe('UndoApprovalFixedDepositsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UndoApprovalFixedDepositsAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [UndoApprovalFixedDepositsAccountComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

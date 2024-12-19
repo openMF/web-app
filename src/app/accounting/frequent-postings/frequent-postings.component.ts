@@ -16,7 +16,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./frequent-postings.component.scss']
 })
 export class FrequentPostingsComponent implements OnInit {
-
   /** Minimum transaction date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum transaction date allowed. */
@@ -48,23 +47,20 @@ export class FrequentPostingsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private accountingService: AccountingService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: {
-        offices: any,
-        accountingRules: any,
-        currencies: any,
-        paymentTypes: any
-      }) => {
-        this.officeData = data.offices;
-        this.accountingRuleData = data.accountingRules;
-        this.currencyData = data.currencies.selectedCurrencyOptions;
-        this.paymentTypeData = data.paymentTypes;
-      });
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private accountingService: AccountingService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { offices: any; accountingRules: any; currencies: any; paymentTypes: any }) => {
+      this.officeData = data.offices;
+      this.accountingRuleData = data.accountingRules;
+      this.currencyData = data.currencies.selectedCurrencyOptions;
+      this.paymentTypeData = data.paymentTypes;
+    });
   }
 
   /**
@@ -81,20 +77,32 @@ export class FrequentPostingsComponent implements OnInit {
    */
   createFrequentPostingsForm() {
     this.frequentPostingsForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'accountingRule': ['', Validators.required],
-      'currencyCode': ['', Validators.required],
-      'debits': this.formBuilder.array([]),
-      'credits': this.formBuilder.array([]),
-      'referenceNumber': [''],
-      'transactionDate': ['', Validators.required],
-      'paymentTypeId': [''],
-      'accountNumber': [''],
-      'checkNumber': [''],
-      'routingCode': [''],
-      'receiptNumber': [''],
-      'bankNumber': [''],
-      'comments': ['']
+      officeId: [
+        '',
+        Validators.required
+      ],
+      accountingRule: [
+        '',
+        Validators.required
+      ],
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      debits: this.formBuilder.array([]),
+      credits: this.formBuilder.array([]),
+      referenceNumber: [''],
+      transactionDate: [
+        '',
+        Validators.required
+      ],
+      paymentTypeId: [''],
+      accountNumber: [''],
+      checkNumber: [''],
+      routingCode: [''],
+      receiptNumber: [''],
+      bankNumber: [''],
+      comments: ['']
     });
   }
 
@@ -102,7 +110,7 @@ export class FrequentPostingsComponent implements OnInit {
    * Sets the affected gl entry form array.
    */
   setAffectedGLEntryForm() {
-    this.frequentPostingsForm.get('accountingRule').valueChanges.subscribe(accountingRule => {
+    this.frequentPostingsForm.get('accountingRule').valueChanges.subscribe((accountingRule) => {
       while (this.debits.length) {
         this.debits.removeAt(0);
       }
@@ -124,8 +132,14 @@ export class FrequentPostingsComponent implements OnInit {
    */
   createAffectedGLEntryForm(): UntypedFormGroup {
     return this.formBuilder.group({
-      'glAccountId': ['', Validators.required],
-      'amount': ['', Validators.required]
+      glAccountId: [
+        '',
+        Validators.required
+      ],
+      amount: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -173,11 +187,19 @@ export class FrequentPostingsComponent implements OnInit {
     journalEntry.locale = this.settingsService.language.code;
     journalEntry.dateFormat = this.settingsService.dateFormat;
     if (journalEntry.transactionDate instanceof Date) {
-      journalEntry.transactionDate = this.dateUtils.formatDate(journalEntry.transactionDate, this.settingsService.dateFormat);
+      journalEntry.transactionDate = this.dateUtils.formatDate(
+        journalEntry.transactionDate,
+        this.settingsService.dateFormat
+      );
     }
-    this.accountingService.createJournalEntry(journalEntry).subscribe(response => {
-      this.router.navigate(['../transactions/view', response.transactionId], { relativeTo: this.route });
+    this.accountingService.createJournalEntry(journalEntry).subscribe((response) => {
+      this.router.navigate(
+        [
+          '../transactions/view',
+          response.transactionId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

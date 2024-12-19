@@ -13,18 +13,16 @@ import { TasksService } from '../tasks.service';
  */
 @Injectable()
 export class GetLoansToBeDisbursed implements Resolve<Object> {
+  /**
+   * @param {TasksService} tasksService Tasks service.
+   */
+  constructor(private tasksService: TasksService) {}
 
-    /**
-     * @param {TasksService} tasksService Tasks service.
-     */
-    constructor(private tasksService: TasksService) { }
-
-    /**
-     * Returns all the loans data.
-     * @returns {Observable<any>}
-     */
-    resolve(): Observable<any> {
-        return this.tasksService.getAllLoansToBeDisbursed();
-    }
-
+  /**
+   * Returns all the loans data.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.tasksService.getAllLoansToBeDisbursed();
+  }
 }

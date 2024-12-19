@@ -6,7 +6,6 @@ import { Injectable, EventEmitter } from '@angular/core';
  */
 @Injectable()
 export class ProgressBarService {
-
   /** Progress bar update event. */
   public updateProgressBar: EventEmitter<any>;
   /** Denotes the number of requests currently running. */
@@ -50,5 +49,4 @@ export class ProgressBarService {
       }
     }
   }
-
 }

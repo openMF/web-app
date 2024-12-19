@@ -13,20 +13,18 @@ import { CollateralsService } from '../collaterals.service';
  */
 @Injectable()
 export class ClientCollateralResolver implements Resolve<Object> {
+  /**
+   * @param {CollateralsService} collateralsService Collaterals service.
+   */
+  constructor(private collateralsService: CollateralsService) {}
 
-    /**
-     * @param {CollateralsService} collateralsService Collaterals service.
-     */
-    constructor(private collateralsService: CollateralsService) { }
-
-    /**
-     * Returns the Client Collateral data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.paramMap.get('clientId');
-        const collateralId = route.parent.paramMap.get('collateralId');
-        return this.collateralsService.getClientCollateral(clientId, collateralId);
-    }
-
+  /**
+   * Returns the Client Collateral data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const clientId = route.parent.paramMap.get('clientId');
+    const collateralId = route.parent.paramMap.get('collateralId');
+    return this.collateralsService.getClientCollateral(clientId, collateralId);
+  }
 }

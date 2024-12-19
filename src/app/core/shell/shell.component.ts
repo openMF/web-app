@@ -18,12 +18,10 @@ import { ProgressBarService } from '../progress-bar/progress-bar.service';
   styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent implements OnInit, OnDestroy {
-
   /** Subscription to breakpoint observer for handset. */
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(map((result) => result.matches));
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
   /** Progress bar mode. */
@@ -36,9 +34,11 @@ export class ShellComponent implements OnInit, OnDestroy {
    * @param {ProgressBarService} progressBarService Progress Bar Service.
    * @param {ChangeDetectorRef} cdr Change Detector Ref.
    */
-  constructor(private breakpointObserver: BreakpointObserver,
-              private progressBarService: ProgressBarService,
-              private cdr: ChangeDetectorRef) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private progressBarService: ProgressBarService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   /**
    * Subscribes to progress bar to update its mode.
@@ -67,5 +67,4 @@ export class ShellComponent implements OnInit, OnDestroy {
       this.progressBar$.unsubscribe();
     }
   }
-
 }

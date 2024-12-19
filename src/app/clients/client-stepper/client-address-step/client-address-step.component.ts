@@ -21,7 +21,6 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
   styleUrls: ['./client-address-step.component.scss']
 })
 export class ClientAddressStepComponent {
-
   /** Client Address Field Config */
   @Input() clientAddressFieldConfig: any;
   /** Client Template */
@@ -34,8 +33,10 @@ export class ClientAddressStepComponent {
    * @param {MatDialog} dialog Mat Dialog
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private dialog: MatDialog,
-              private translateService: TranslateService) {
+  constructor(
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
     this.clientAddressData = [];
   }
 
@@ -44,7 +45,12 @@ export class ClientAddressStepComponent {
    */
   addAddress() {
     const data = {
-      title: this.translateService.instant('labels.buttons.Add') + ' ' + this.translateService.instant('labels.catalogs.Client') + ' ' + this.translateService.instant('labels.heading.Address'),
+      title:
+        this.translateService.instant('labels.buttons.Add') +
+        ' ' +
+        this.translateService.instant('labels.catalogs.Client') +
+        ' ' +
+        this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields()
     };
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
@@ -69,7 +75,12 @@ export class ClientAddressStepComponent {
    */
   editAddress(address: any, index: number) {
     const data = {
-      title: this.translateService.instant('labels.buttons.Edit') + ' ' + this.translateService.instant('labels.catalogs.Client') + ' ' + this.translateService.instant('labels.heading.Address'),
+      title:
+        this.translateService.instant('labels.buttons.Edit') +
+        ' ' +
+        this.translateService.instant('labels.catalogs.Client') +
+        ' ' +
+        this.translateService.instant('labels.heading.Address'),
       formfields: this.getAddressFormFields(address),
       layout: { addButtonText: 'Edit' }
     };
@@ -94,7 +105,9 @@ export class ClientAddressStepComponent {
    */
   deleteAddress(address: any, index: number) {
     const deleteAddressDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `${this.translateService.instant('labels.heading.Address')} ${this.translateService.instant('labels.inputs.Type')} : ${address.addressType} ${index}` }
+      data: {
+        deleteContext: `${this.translateService.instant('labels.heading.Address')} ${this.translateService.instant('labels.inputs.Type')} : ${address.addressType} ${index}`
+      }
     });
     deleteAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -116,7 +129,7 @@ export class ClientAddressStepComponent {
    * @param {any} address Address
    */
   isFieldEnabled(fieldName: any) {
-    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName))?.isEnabled;
+    return this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)?.isEnabled;
   }
 
   /**
@@ -125,7 +138,7 @@ export class ClientAddressStepComponent {
    * @param {any} address Address
    */
   getSelectedValue(fieldName: any, fieldId: any) {
-    return (this.clientTemplate.address[0][fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
+    return this.clientTemplate.address[0][fieldName].find((fieldObj: any) => fieldObj.id === fieldId);
   }
 
   /**
@@ -136,89 +149,135 @@ export class ClientAddressStepComponent {
     let formfields: FormfieldBase[] = [];
 
     for (let index = 0; index < this.clientTemplate.address[0].addressTypeIdOptions.length; index++) {
-      this.clientTemplate.address[0].addressTypeIdOptions[index].name = this.translateService.instant(`labels.catalogs.${this.clientTemplate.address[0].addressTypeIdOptions[index].name}`);
+      this.clientTemplate.address[0].addressTypeIdOptions[index].name = this.translateService.instant(
+        `labels.catalogs.${this.clientTemplate.address[0].addressTypeIdOptions[index].name}`
+      );
     }
 
-    formfields.push(this.isFieldEnabled('addressType') ? new SelectBase({
-      controlName: 'addressTypeId',
-      label: this.translateService.instant('labels.inputs.Address Type'),
-      value: address ? address.addressTypeId : '',
-      options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].addressTypeIdOptions },
-      order: 1,
-      required: true
-    }) : null);
-    formfields.push(this.isFieldEnabled('street') ? new InputBase({
-      controlName: 'street',
-      label: this.translateService.instant('labels.inputs.Street'),
-      value: address ? address.street : '',
-      type: 'text',
-      required: true,
-      order: 2
-    }) : null);
-    formfields.push(this.isFieldEnabled('addressLine1') ? new InputBase({
-      controlName: 'addressLine1',
-      label: this.translateService.instant('labels.inputs.Address Line') + ' 1',
-      value: address ? address.addressLine1 : '',
-      type: 'text',
-      order: 3
-    }) : null);
-    formfields.push(this.isFieldEnabled('addressLine2') ? new InputBase({
-      controlName: 'addressLine2',
-      label: this.translateService.instant('labels.inputs.Address Line') + ' 2',
-      value: address ? address.addressLine2 : '',
-      type: 'text',
-      order: 4
-    }) : null);
-    formfields.push(this.isFieldEnabled('addressLine3') ? new InputBase({
-      controlName: 'addressLine3',
-      label: this.translateService.instant('labels.inputs.Address Line') + ' 3',
-      value: address ? address.addressLine3 : '',
-      type: 'text',
-      order: 5
-    }) : null);
-    formfields.push(this.isFieldEnabled('townVillage') ? new InputBase({
-      controlName: 'townVillage',
-      label: this.translateService.instant('labels.inputs.Town / Village'),
-      value: address ? address.townVillage : '',
-      type: 'text',
-      order: 6
-    }) : null);
-    formfields.push(this.isFieldEnabled('city') ? new InputBase({
-      controlName: 'city',
-      label: this.translateService.instant('labels.inputs.City'),
-      value: address ? address.city : '',
-      type: 'text',
-      order: 7
-    }) : null);
-    formfields.push(this.isFieldEnabled('stateProvinceId') ? new SelectBase({
-      controlName: 'stateProvinceId',
-      label: this.translateService.instant('labels.inputs.State / Province'),
-      value: address ? address.stateProvinceId : '',
-      options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].stateProvinceIdOptions },
-      order: 8
-    }) : null);
-    formfields.push(this.isFieldEnabled('countyDistrict') ? new InputBase({
-      controlName: 'countryDistrict',
-      label: this.translateService.instant('labels.inputs.Country District'),
-      value: address ? address.countyDistrict : '',
-      type: 'text',
-      order: 11
-    }) : null);
-    formfields.push(this.isFieldEnabled('countryId') ? new SelectBase({
-      controlName: 'countryId',
-      label: this.translateService.instant('labels.inputs.Country'),
-      value: address ? address.countryId : '',
-      options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].countryIdOptions },
-      order: 10
-    }) : null);
-    formfields.push(this.isFieldEnabled('postalCode') ? new InputBase({
-      controlName: 'postalCode',
-      label: this.translateService.instant('labels.inputs.Postal Code'),
-      value: address ? address.postalCode : '',
-      type: 'text',
-      order: 11
-    }) : null);
-    formfields = formfields.filter(field => field !== null);
+    formfields.push(
+      this.isFieldEnabled('addressType')
+        ? new SelectBase({
+            controlName: 'addressTypeId',
+            label: this.translateService.instant('labels.inputs.Address Type'),
+            value: address ? address.addressTypeId : '',
+            options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].addressTypeIdOptions },
+            order: 1,
+            required: true
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('street')
+        ? new InputBase({
+            controlName: 'street',
+            label: this.translateService.instant('labels.inputs.Street'),
+            value: address ? address.street : '',
+            type: 'text',
+            required: true,
+            order: 2
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('addressLine1')
+        ? new InputBase({
+            controlName: 'addressLine1',
+            label: this.translateService.instant('labels.inputs.Address Line') + ' 1',
+            value: address ? address.addressLine1 : '',
+            type: 'text',
+            order: 3
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('addressLine2')
+        ? new InputBase({
+            controlName: 'addressLine2',
+            label: this.translateService.instant('labels.inputs.Address Line') + ' 2',
+            value: address ? address.addressLine2 : '',
+            type: 'text',
+            order: 4
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('addressLine3')
+        ? new InputBase({
+            controlName: 'addressLine3',
+            label: this.translateService.instant('labels.inputs.Address Line') + ' 3',
+            value: address ? address.addressLine3 : '',
+            type: 'text',
+            order: 5
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('townVillage')
+        ? new InputBase({
+            controlName: 'townVillage',
+            label: this.translateService.instant('labels.inputs.Town / Village'),
+            value: address ? address.townVillage : '',
+            type: 'text',
+            order: 6
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('city')
+        ? new InputBase({
+            controlName: 'city',
+            label: this.translateService.instant('labels.inputs.City'),
+            value: address ? address.city : '',
+            type: 'text',
+            order: 7
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('stateProvinceId')
+        ? new SelectBase({
+            controlName: 'stateProvinceId',
+            label: this.translateService.instant('labels.inputs.State / Province'),
+            value: address ? address.stateProvinceId : '',
+            options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].stateProvinceIdOptions },
+            order: 8
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('countyDistrict')
+        ? new InputBase({
+            controlName: 'countryDistrict',
+            label: this.translateService.instant('labels.inputs.Country District'),
+            value: address ? address.countyDistrict : '',
+            type: 'text',
+            order: 11
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('countryId')
+        ? new SelectBase({
+            controlName: 'countryId',
+            label: this.translateService.instant('labels.inputs.Country'),
+            value: address ? address.countryId : '',
+            options: { label: 'name', value: 'id', data: this.clientTemplate.address[0].countryIdOptions },
+            order: 10
+          })
+        : null
+    );
+    formfields.push(
+      this.isFieldEnabled('postalCode')
+        ? new InputBase({
+            controlName: 'postalCode',
+            label: this.translateService.instant('labels.inputs.Postal Code'),
+            value: address ? address.postalCode : '',
+            type: 'text',
+            order: 11
+          })
+        : null
+    );
+    formfields = formfields.filter((field) => field !== null);
     return formfields;
   }
 
@@ -228,5 +287,4 @@ export class ClientAddressStepComponent {
   get address() {
     return { address: this.clientAddressData ? this.clientAddressData : [] };
   }
-
 }

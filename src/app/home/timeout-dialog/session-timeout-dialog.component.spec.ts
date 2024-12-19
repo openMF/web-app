@@ -8,9 +8,8 @@ describe('SessionTimeoutDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SessionTimeoutDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [SessionTimeoutDialogComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SessionTimeoutDialogComponent);
     component = fixture.componentInstance;

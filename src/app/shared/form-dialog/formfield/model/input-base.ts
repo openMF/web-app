@@ -1,7 +1,6 @@
 import { FormfieldBase } from './formfield-base';
 
 export class InputBase extends FormfieldBase {
-
   controlType = 'input';
   type: string;
 
@@ -9,5 +8,4 @@ export class InputBase extends FormfieldBase {
     super(options);
     this.type = options['type'] || 'text';
   }
-
 }

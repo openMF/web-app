@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./create-cashier.component.scss']
 })
 export class CreateCashierComponent implements OnInit {
-
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -36,12 +35,14 @@ export class CreateCashierComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService ) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { cashierTemplate: any }) => {
       this.cashierTemplate = data.cashierTemplate;
     });
@@ -57,11 +58,20 @@ export class CreateCashierComponent implements OnInit {
    */
   setCreateCashierForm() {
     this.createCashierForm = this.formBuilder.group({
-      'staffId': ['', Validators.required],
-      'description': [''],
-      'startDate': ['', Validators.required],
-      'endDate': ['', Validators.required],
-      'isFullDay': [false]
+      staffId: [
+        '',
+        Validators.required
+      ],
+      description: [''],
+      startDate: [
+        '',
+        Validators.required
+      ],
+      endDate: [
+        '',
+        Validators.required
+      ],
+      isFullDay: [false]
     });
   }
 
@@ -86,8 +96,7 @@ export class CreateCashierComponent implements OnInit {
       locale
     };
     this.organizationService.createCashier(this.cashierTemplate.tellerId, data).subscribe((response: any) => {
-      this.router.navigate(['../'], {relativeTo: this.route});
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

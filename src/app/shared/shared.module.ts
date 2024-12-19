@@ -144,4 +144,4 @@ import { InputAmountComponent } from './input-amount/input-amount.component';
     InputAmountComponent
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

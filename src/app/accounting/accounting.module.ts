@@ -78,4 +78,4 @@ import { PipesModule } from 'app/pipes/pipes.module';
     ViewProvisioningJournalEntriesComponent
   ]
 })
-export class AccountingModule { }
+export class AccountingModule {}

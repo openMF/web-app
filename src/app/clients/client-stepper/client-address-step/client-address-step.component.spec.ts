@@ -8,9 +8,8 @@ describe('ClientAddressStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientAddressStepComponent ]
-    })
-    .compileComponents();
+      declarations: [ClientAddressStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

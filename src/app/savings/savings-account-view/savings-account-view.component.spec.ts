@@ -8,9 +8,8 @@ describe('SavingsAccountViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SavingsAccountViewComponent ]
-    })
-    .compileComponents();
+      declarations: [SavingsAccountViewComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

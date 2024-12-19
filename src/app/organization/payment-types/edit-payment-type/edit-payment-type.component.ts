@@ -15,7 +15,6 @@ import { OrganizationService } from 'app/organization/organization.service';
   styleUrls: ['./edit-payment-type.component.scss']
 })
 export class EditPaymentTypeComponent implements OnInit {
-
   /** Payment Type form. */
   paymentTypeForm: UntypedFormGroup;
   /** Payment Type Data. */
@@ -28,11 +27,13 @@ export class EditPaymentTypeComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private router: Router,
-              private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { paymentType: any }) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.subscribe((data: { paymentType: any }) => {
       this.paymentTypeData = data.paymentType;
     });
   }
@@ -49,10 +50,16 @@ export class EditPaymentTypeComponent implements OnInit {
    */
   createPaymentTypeForm() {
     this.paymentTypeForm = this.formBuilder.group({
-      'name': [this.paymentTypeData.name, Validators.required],
-      'description': [this.paymentTypeData.description],
-      'isCashPayment': [this.paymentTypeData.isCashPayment],
-      'position': [this.paymentTypeData.position, Validators.required],
+      name: [
+        this.paymentTypeData.name,
+        Validators.required
+      ],
+      description: [this.paymentTypeData.description],
+      isCashPayment: [this.paymentTypeData.isCashPayment],
+      position: [
+        this.paymentTypeData.position,
+        Validators.required
+      ]
     });
   }
 
@@ -62,9 +69,8 @@ export class EditPaymentTypeComponent implements OnInit {
    */
   submit() {
     const paymentType = this.paymentTypeForm.value;
-    this.organizationService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe(response => {
+    this.organizationService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe((response) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

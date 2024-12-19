@@ -8,9 +8,8 @@ describe('FixedDepositsAccountActionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FixedDepositsAccountActionsComponent ]
-    })
-    .compileComponents();
+      declarations: [FixedDepositsAccountActionsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

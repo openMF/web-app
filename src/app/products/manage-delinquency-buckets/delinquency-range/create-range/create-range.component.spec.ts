@@ -8,9 +8,8 @@ describe('CreateRangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateRangeComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateRangeComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('ContinueSetupDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContinueSetupDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ContinueSetupDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

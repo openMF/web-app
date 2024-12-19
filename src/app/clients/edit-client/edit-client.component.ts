@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./edit-client.component.scss']
 })
 export class EditClientComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -55,12 +54,14 @@ export class EditClientComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private clientsService: ClientsService,
-              private dateUtils: Dates,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientsService: ClientsService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { clientDataAndTemplate: any }) => {
       this.clientDataAndTemplate = data.clientDataAndTemplate;
     });
@@ -73,21 +74,26 @@ export class EditClientComponent implements OnInit {
     this.buildDependencies();
     this.legalFormId = 1;
     this.editClientForm.patchValue({
-      'officeId': this.clientDataAndTemplate.officeId,
-      'staffId': this.clientDataAndTemplate.staffId,
-      'legalFormId': this.clientDataAndTemplate.legalForm && this.clientDataAndTemplate.legalForm.id,
-      'accountNo': this.clientDataAndTemplate.accountNo,
-      'externalId': this.clientDataAndTemplate.externalId,
-      'genderId': this.clientDataAndTemplate.gender && this.clientDataAndTemplate.gender.id,
-      'isStaff': this.clientDataAndTemplate.isStaff,
-      'active': this.clientDataAndTemplate.active,
-      'mobileNo': this.clientDataAndTemplate.mobileNo,
-      'emailAddress': this.clientDataAndTemplate.emailAddress,
-      'dateOfBirth': this.clientDataAndTemplate.dateOfBirth && new Date(this.clientDataAndTemplate.dateOfBirth),
-      'clientTypeId': this.clientDataAndTemplate.clientType && this.clientDataAndTemplate.clientType.id,
-      'clientClassificationId': this.clientDataAndTemplate.clientClassification && this.clientDataAndTemplate.clientClassification.id,
-      'submittedOnDate': this.clientDataAndTemplate.timeline.submittedOnDate && new Date(this.clientDataAndTemplate.timeline.submittedOnDate),
-      'activationDate': this.clientDataAndTemplate.timeline.activatedOnDate && new Date(this.clientDataAndTemplate.timeline.activatedOnDate)
+      officeId: this.clientDataAndTemplate.officeId,
+      staffId: this.clientDataAndTemplate.staffId,
+      legalFormId: this.clientDataAndTemplate.legalForm && this.clientDataAndTemplate.legalForm.id,
+      accountNo: this.clientDataAndTemplate.accountNo,
+      externalId: this.clientDataAndTemplate.externalId,
+      genderId: this.clientDataAndTemplate.gender && this.clientDataAndTemplate.gender.id,
+      isStaff: this.clientDataAndTemplate.isStaff,
+      active: this.clientDataAndTemplate.active,
+      mobileNo: this.clientDataAndTemplate.mobileNo,
+      emailAddress: this.clientDataAndTemplate.emailAddress,
+      dateOfBirth: this.clientDataAndTemplate.dateOfBirth && new Date(this.clientDataAndTemplate.dateOfBirth),
+      clientTypeId: this.clientDataAndTemplate.clientType && this.clientDataAndTemplate.clientType.id,
+      clientClassificationId:
+        this.clientDataAndTemplate.clientClassification && this.clientDataAndTemplate.clientClassification.id,
+      submittedOnDate:
+        this.clientDataAndTemplate.timeline.submittedOnDate &&
+        new Date(this.clientDataAndTemplate.timeline.submittedOnDate),
+      activationDate:
+        this.clientDataAndTemplate.timeline.activatedOnDate &&
+        new Date(this.clientDataAndTemplate.timeline.activatedOnDate)
     });
     if (this.clientDataAndTemplate.legalForm) {
       this.legalFormId = this.clientDataAndTemplate.legalForm.id;
@@ -99,21 +105,27 @@ export class EditClientComponent implements OnInit {
    */
   createEditClientForm() {
     this.editClientForm = this.formBuilder.group({
-      'officeId': [{ value: '', disabled: true }],
-      'staffId': [''],
-      'legalFormId': [{ value: '', disabled: true }],
-      'isStaff': [false],
-      'active': [false],
-      'accountNo': [{ value: '', disabled: true }],
-      'externalId': [''],
-      'genderId': [''],
-      'mobileNo': [''],
-      'emailAddress': ['', Validators.email],
-      'dateOfBirth': [''],
-      'clientTypeId': [''],
-      'clientClassificationId': [''],
-      'submittedOnDate': ['', Validators.required],
-      'activationDate': ['']
+      officeId: [{ value: '', disabled: true }],
+      staffId: [''],
+      legalFormId: [{ value: '', disabled: true }],
+      isStaff: [false],
+      active: [false],
+      accountNo: [{ value: '', disabled: true }],
+      externalId: [''],
+      genderId: [''],
+      mobileNo: [''],
+      emailAddress: [
+        '',
+        Validators.email
+      ],
+      dateOfBirth: [''],
+      clientTypeId: [''],
+      clientClassificationId: [''],
+      submittedOnDate: [
+        '',
+        Validators.required
+      ],
+      activationDate: ['']
     });
   }
 
@@ -139,21 +151,42 @@ export class EditClientComponent implements OnInit {
       if (legalFormId === 1) {
         this.editClientForm.removeControl('fullname');
         this.editClientForm.removeControl('clientNonPersonDetails');
-        this.editClientForm.addControl('firstname', new UntypedFormControl(this.clientDataAndTemplate.firstname, Validators.required));
+        this.editClientForm.addControl(
+          'firstname',
+          new UntypedFormControl(this.clientDataAndTemplate.firstname, Validators.required)
+        );
         this.editClientForm.addControl('middlename', new UntypedFormControl(this.clientDataAndTemplate.middlename));
-        this.editClientForm.addControl('lastname', new UntypedFormControl(this.clientDataAndTemplate.lastname, Validators.required));
+        this.editClientForm.addControl(
+          'lastname',
+          new UntypedFormControl(this.clientDataAndTemplate.lastname, Validators.required)
+        );
       } else {
         this.editClientForm.removeControl('firstname');
         this.editClientForm.removeControl('middlename');
         this.editClientForm.removeControl('lastname');
-        this.editClientForm.addControl('fullname', new UntypedFormControl(this.clientDataAndTemplate.fullname, Validators.required));
-        this.editClientForm.addControl('clientNonPersonDetails', this.formBuilder.group({
-          'constitutionId': [this.clientDataAndTemplate.clientNonPersonDetails.constitution && this.clientDataAndTemplate.clientNonPersonDetails.constitution.id, Validators.required],
-          'incorpValidityTillDate': [this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate && new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)],
-          'incorpNumber': [this.clientDataAndTemplate.clientNonPersonDetails.incorpNumber],
-          'mainBusinessLineId': [this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine && this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine.id],
-          'remarks': [this.clientDataAndTemplate.clientNonPersonDetails.remarks]
-        }));
+        this.editClientForm.addControl(
+          'fullname',
+          new UntypedFormControl(this.clientDataAndTemplate.fullname, Validators.required)
+        );
+        this.editClientForm.addControl(
+          'clientNonPersonDetails',
+          this.formBuilder.group({
+            constitutionId: [
+              this.clientDataAndTemplate.clientNonPersonDetails.constitution &&
+                this.clientDataAndTemplate.clientNonPersonDetails.constitution.id,
+              Validators.required
+            ],
+            incorpValidityTillDate: [
+              this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate &&
+                new Date(this.clientDataAndTemplate.clientNonPersonDetails.incorpValidityTillDate)],
+            incorpNumber: [this.clientDataAndTemplate.clientNonPersonDetails.incorpNumber],
+            mainBusinessLineId: [
+              this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine &&
+                this.clientDataAndTemplate.clientNonPersonDetails.mainBusinessLine.id
+            ],
+            remarks: [this.clientDataAndTemplate.clientNonPersonDetails.remarks]
+          })
+        );
       }
     });
   }
@@ -171,8 +204,11 @@ export class EditClientComponent implements OnInit {
     const editClientFormValue: any = this.editClientForm.getRawValue();
     const clientData = {
       ...editClientFormValue,
-      dateOfBirth: editClientFormValue.dateOfBirth && this.dateUtils.formatDate(editClientFormValue.dateOfBirth, dateFormat),
-      submittedOnDate: editClientFormValue.submittedOnDate && this.dateUtils.formatDate(editClientFormValue.submittedOnDate, dateFormat),
+      dateOfBirth:
+        editClientFormValue.dateOfBirth && this.dateUtils.formatDate(editClientFormValue.dateOfBirth, dateFormat),
+      submittedOnDate:
+        editClientFormValue.submittedOnDate &&
+        this.dateUtils.formatDate(editClientFormValue.submittedOnDate, dateFormat),
       activationDate: this.dateUtils.formatDate(editClientFormValue.activationDate, dateFormat),
       dateFormat,
       locale
@@ -181,7 +217,9 @@ export class EditClientComponent implements OnInit {
     if (editClientFormValue.clientNonPersonDetails) {
       clientData.clientNonPersonDetails = {
         ...editClientFormValue.clientNonPersonDetails,
-        incorpValidityTillDate: editClientFormValue.clientNonPersonDetails.incorpValidityTillDate && this.dateUtils.formatDate(editClientFormValue.clientNonPersonDetails.incorpValidityTillDate, dateFormat),
+        incorpValidityTillDate:
+          editClientFormValue.clientNonPersonDetails.incorpValidityTillDate &&
+          this.dateUtils.formatDate(editClientFormValue.clientNonPersonDetails.incorpValidityTillDate, dateFormat),
         dateFormat,
         locale
       };
@@ -192,5 +230,4 @@ export class EditClientComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl} from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -18,7 +18,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./xbrl-report.component.scss']
 })
 export class XBRLReportComponent implements OnInit {
-
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -34,7 +33,11 @@ export class XBRLReportComponent implements OnInit {
   /** Trusted url resource for xml download */
   fileUrl: any;
   /** Columns to be displayed in XBRL reports table */
-  displayedColumns: string[] = ['name', 'dimension', 'value'];
+  displayedColumns: string[] = [
+    'name',
+    'dimension',
+    'value'
+  ];
   /** Data source for XBRL reports table */
   dataSource = new MatTableDataSource();
 
@@ -44,15 +47,17 @@ export class XBRLReportComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private reportService: ReportsService,
-              private formBuilder: UntypedFormBuilder,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private sanitizer: DomSanitizer) {}
+  constructor(
+    private reportService: ReportsService,
+    private formBuilder: UntypedFormBuilder,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private sanitizer: DomSanitizer
+  ) {}
 
- /**
-  * Creates the XBRL form.
-  */
+  /**
+   * Creates the XBRL form.
+   */
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createXbrlForm();
@@ -60,8 +65,14 @@ export class XBRLReportComponent implements OnInit {
 
   createXbrlForm() {
     this.xbrlForm = this.formBuilder.group({
-    'startDate': ['', Validators.required],
-    'endDate': ['', Validators.required],
+      startDate: [
+        '',
+        Validators.required
+      ],
+      endDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -72,7 +83,7 @@ export class XBRLReportComponent implements OnInit {
   buildXMLTable(response: any) {
     const parser = new DOMParser();
     const xml = parser.parseFromString(response, 'text/xml');
-    xml.querySelectorAll('[contextRef]').forEach( (element: HTMLElement) => {
+    xml.querySelectorAll('[contextRef]').forEach((element: HTMLElement) => {
       const contextId = element.getAttribute('contextRef');
       const scenario = xml.querySelector(`#${contextId}`).querySelector('scenario');
       const context = scenario ? scenario.textContent : undefined;
@@ -113,8 +124,8 @@ export class XBRLReportComponent implements OnInit {
   submit() {
     const parser = new DOMParser();
     const xmlDOM = parser.parseFromString(this.rawXml, 'text/xml');
-    xmlDOM.querySelectorAll('[contextRef]').forEach( (element: HTMLElement) => {
-      this.xmlData.forEach( (entry: any) => {
+    xmlDOM.querySelectorAll('[contextRef]').forEach((element: HTMLElement) => {
+      this.xmlData.forEach((entry: any) => {
         if (entry.name === element.tagName) {
           element.textContent = entry.value.value;
         }
@@ -126,6 +137,4 @@ export class XBRLReportComponent implements OnInit {
     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
     return this.fileUrl;
   }
-
 }
-

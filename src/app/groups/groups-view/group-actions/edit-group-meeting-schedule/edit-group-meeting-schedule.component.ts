@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./edit-group-meeting-schedule.component.scss']
 })
 export class EditGroupMeetingScheduleComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -42,12 +41,14 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private groupsService: GroupsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private groupsService: GroupsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.calendarTemplate = data.groupActionData;
       this.nextMeetingDates = this.calendarTemplate.nextTenRecurringDates;
@@ -66,8 +67,14 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
    */
   createEditMeetingScheduleForm() {
     this.groupEditMeetingScheduleForm = this.formBuilder.group({
-      'presentMeetingDate': ['', Validators.required],
-      'newMeetingDate': ['', Validators.required]
+      presentMeetingDate: [
+        '',
+        Validators.required
+      ],
+      newMeetingDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -97,5 +104,4 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

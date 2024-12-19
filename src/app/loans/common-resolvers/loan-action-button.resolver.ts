@@ -13,11 +13,10 @@ import { LoansService } from '../loans.service';
  */
 @Injectable()
 export class LoanActionButtonResolver implements Resolve<Object> {
-
   /**
    * @param {LoansService} LoansService Loans service.
    */
-  constructor(private loansService: LoansService) { }
+  constructor(private loansService: LoansService) {}
 
   /**
    * Returns the Loans Notes Data.
@@ -32,7 +31,8 @@ export class LoanActionButtonResolver implements Resolve<Object> {
       return this.loansService.getLoanActionTemplate(loanId, 'repayment');
     } else if (loanActionButton === 'Goodwill Credit') {
       return this.loansService.getLoanActionTemplate(loanId, 'goodwillCredit');
-    } if (loanActionButton === 'Interest Payment Waiver') {
+    }
+    if (loanActionButton === 'Interest Payment Waiver') {
       return this.loansService.getLoanActionTemplate(loanId, 'interestPaymentWaiver');
     } else if (loanActionButton === 'Payout Refund') {
       return this.loansService.getLoanActionTemplate(loanId, 'payoutRefund');
@@ -78,5 +78,4 @@ export class LoanActionButtonResolver implements Resolve<Object> {
       return undefined;
     }
   }
-
 }

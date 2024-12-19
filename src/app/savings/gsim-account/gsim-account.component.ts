@@ -13,9 +13,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./gsim-account.component.scss']
 })
 export class GsimAccountComponent implements OnInit {
-
   /** Columns to be displayed in charge overview table. */
-  displayedColumns: string[] = ['clientDetails', 'savingsAccount', 'products', 'balance', 'Actions'];
+  displayedColumns: string[] = [
+    'clientDetails',
+    'savingsAccount',
+    'products',
+    'balance',
+    'Actions'
+  ];
   /** Data source for charge overview table. */
   dataSource: MatTableDataSource<any>;
   /** Charge Overview data */
@@ -33,9 +38,11 @@ export class GsimAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-   constructor(private route: ActivatedRoute,
-               public dialog: MatDialog) {
-      this.route.data.subscribe((data: { gsimData: any, savingAccountData: any, groupsData: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { gsimData: any; savingAccountData: any; groupsData: any }) => {
       this.gsimOverviewData = data.gsimData[0].childGSIMAccounts;
       this.savingAccountData = data.savingAccountData;
       this.groupsData = data.groupsData;
@@ -49,7 +56,7 @@ export class GsimAccountComponent implements OnInit {
   /**
    * Set Client Charge Overview.
    */
-   setLoanClientChargeOverview() {
+  setLoanClientChargeOverview() {
     this.dataSource = new MatTableDataSource(this.gsimOverviewData);
     // this.dataSource.paginator = this.paginator;
   }
@@ -58,8 +65,7 @@ export class GsimAccountComponent implements OnInit {
    * Stops the propagation to view pages.
    * @param $event Mouse Event
    */
-   routeEdit($event: MouseEvent) {
+  routeEdit($event: MouseEvent) {
     $event.stopPropagation();
   }
-
 }

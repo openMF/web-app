@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -14,11 +14,10 @@ import { ProgressBarService } from './progress-bar.service';
  */
 @Injectable()
 export class ProgressInterceptor implements HttpInterceptor {
-
   /**
    * @param {ProgressBarService} progressBarService Progress Bar Service.
    */
-  constructor(private progressBarService: ProgressBarService) { }
+  constructor(private progressBarService: ProgressBarService) {}
 
   /**
    * Intercepts a Http request to start loading the progress bar for a pending request
@@ -26,12 +25,10 @@ export class ProgressInterceptor implements HttpInterceptor {
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.progressBarService.increase();
-    return next.handle(request)
-      .pipe(
-        finalize(
-          () => { this.progressBarService.decrease(); }
-        )
-      );
+    return next.handle(request).pipe(
+      finalize(() => {
+        this.progressBarService.decrease();
+      })
+    );
   }
-
 }

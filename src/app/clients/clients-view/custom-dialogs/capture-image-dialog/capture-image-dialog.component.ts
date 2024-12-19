@@ -11,7 +11,6 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./capture-image-dialog.component.scss']
 })
 export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
-
   /** Video element reference */
   @ViewChild('video', { static: true }) video: ElementRef;
   /** Canvas element reference */
@@ -30,8 +29,10 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
    * @param {MatDialogRef} dialogRef Mat Dialog Reference
    * @param {Renderer2} renderer Template Renderer
    */
-  constructor(public dialogRef: MatDialogRef<CaptureImageDialogComponent>,
-              private renderer: Renderer2) {}
+  constructor(
+    public dialogRef: MatDialogRef<CaptureImageDialogComponent>,
+    private renderer: Renderer2
+  ) {}
 
   ngAfterViewInit() {
     this.startCamera();
@@ -48,14 +49,15 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
    */
   startCamera() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-      .then((stream: MediaStream) => {
-        this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
-        this.video.nativeElement.play();
-      })
-      .catch((error: Error) => {
-        this.handleError(error);
-      });
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream: MediaStream) => {
+          this.renderer.setProperty(this.video.nativeElement, 'srcObject', stream);
+          this.video.nativeElement.play();
+        })
+        .catch((error: Error) => {
+          this.handleError(error);
+        });
     } else {
       throw new Error('Cannot connect to camera');
     }
@@ -104,5 +106,4 @@ export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
     this.isCaptured = false;
     this.video.nativeElement.play();
   }
-
 }

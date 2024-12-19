@@ -8,9 +8,8 @@ describe('DelinquencyBucketComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DelinquencyBucketComponent ]
-    })
-    .compileComponents();
+      declarations: [DelinquencyBucketComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

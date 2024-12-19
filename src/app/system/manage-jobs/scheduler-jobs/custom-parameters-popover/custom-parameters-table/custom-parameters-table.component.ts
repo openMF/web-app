@@ -7,7 +7,6 @@ import { JobIdAndParameterType, JobParameterType } from '../custom-parameters-po
   styleUrls: ['./custom-parameters-table.component.scss']
 })
 export class CustomParametersTableComponent implements OnInit {
-
   /* Job name for table title */
   @Input() displayName: string;
   /* Job id for table */
@@ -20,9 +19,13 @@ export class CustomParametersTableComponent implements OnInit {
   /* Job parameters copy updated by user input */
   updatedJobParameters: JobParameterType[];
   /* Columns for the table */
-  columnsToDisplay: string[] = ['parameterName', 'parameterValue', 'actions'];
+  columnsToDisplay: string[] = [
+    'parameterName',
+    'parameterValue',
+    'actions'
+  ];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.updatedJobParameters = this.jobParameters;
@@ -45,7 +48,7 @@ export class CustomParametersTableComponent implements OnInit {
   deleteParameter(index: number): void {
     let idx = 0;
     const jobParameters: JobParameterType[] = [];
-    for ( ; idx < this.updatedJobParameters.length; idx++ ) {
+    for (; idx < this.updatedJobParameters.length; idx++) {
       if (idx !== index) {
         jobParameters.push(this.updatedJobParameters[idx]);
       }
@@ -64,5 +67,4 @@ export class CustomParametersTableComponent implements OnInit {
       jobParameters: this.updatedJobParameters
     };
   }
-
 }

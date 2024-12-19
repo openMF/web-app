@@ -14,11 +14,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./accounting-rules.component.scss']
 })
 export class AccountingRulesComponent implements OnInit {
-
   /** Accounting rule data. */
   accountingRuleData: any;
   /** Columns to be displayed in accounting rules table. */
-  displayedColumns: string[] = ['name', 'officeName', 'debitTags', 'debitAccount', 'creditTags', 'creditAccount'];
+  displayedColumns: string[] = [
+    'name',
+    'officeName',
+    'debitTags',
+    'debitAccount',
+    'creditTags',
+    'creditAccount'
+  ];
   /** Data source for accounting rules table. */
   dataSource: MatTableDataSource<any>;
 
@@ -49,16 +55,23 @@ export class AccountingRulesComponent implements OnInit {
    */
   setAccountingRules() {
     this.accountingRuleData.forEach((accountingRule: any) => {
-      accountingRule.debitTags = accountingRule.debitTags ? accountingRule.debitTags.map((debitTag: any) => debitTag.tag.name).join(', ') : '';
-      accountingRule.creditTags = accountingRule.creditTags ? accountingRule.creditTags.map((creditTag: any) => creditTag.tag.name).join(', ') : '';
+      accountingRule.debitTags = accountingRule.debitTags
+        ? accountingRule.debitTags.map((debitTag: any) => debitTag.tag.name).join(', ')
+        : '';
+      accountingRule.creditTags = accountingRule.creditTags
+        ? accountingRule.creditTags.map((creditTag: any) => creditTag.tag.name).join(', ')
+        : '';
     });
     this.dataSource = new MatTableDataSource(this.accountingRuleData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sortingDataAccessor = (accountingRule: any, property: any) => {
       switch (property) {
-        case 'debitAccount': return accountingRule.debitAccounts[0].name;
-        case 'creditAccount': return accountingRule.creditAccounts[0].name;
-        default: return accountingRule[property];
+        case 'debitAccount':
+          return accountingRule.debitAccounts[0].name;
+        case 'creditAccount':
+          return accountingRule.creditAccounts[0].name;
+        default:
+          return accountingRule[property];
       }
     };
     this.dataSource.sort = this.sort;
@@ -71,5 +84,4 @@ export class AccountingRulesComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }

@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./attach-group-meeting.component.scss']
 })
 export class AttachGroupMeetingComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -44,12 +43,14 @@ export class AttachGroupMeetingComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private groupsService: GroupsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private groupsService: GroupsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.calendarTemplate = data.groupActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
@@ -69,8 +70,11 @@ export class AttachGroupMeetingComponent implements OnInit {
    */
   createGroupMeetingForm() {
     this.groupMeetingForm = this.formBuilder.group({
-      'startDate': ['', Validators.required],
-      'repeating': [false]
+      startDate: [
+        '',
+        Validators.required
+      ],
+      repeating: [false]
     });
   }
 
@@ -86,23 +90,49 @@ export class AttachGroupMeetingComponent implements OnInit {
           this.groupMeetingForm.removeControl('repeatsOnDay');
           switch (frequency) {
             case 1: // Daily
-              this.repetitionIntervals = ['1', '2', '3'];
-            break;
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3'
+              ];
+              break;
             case 2: // Weekly
-              this.repetitionIntervals = ['1', '2', '3'];
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3'
+              ];
               this.groupMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
-            break;
+              break;
             case 3: // Monthly
-              this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
-            break;
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11'
+              ];
+              break;
             case 4: // Yearly
-              this.repetitionIntervals = ['1', '2', '3', '4', '5'];
-            break;
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5'
+              ];
+              break;
           }
         });
         this.groupMeetingForm.patchValue({
-          'frequency': 1,
-          'interval': '1'
+          frequency: 1,
+          interval: '1'
         });
       } else {
         this.groupMeetingForm.removeControl('frequency');
@@ -119,7 +149,7 @@ export class AttachGroupMeetingComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const title = `groups_${this.groupId}_CollectionMeeting`;
-    const typeId = groupMeetingFormData.repeating ? '1' : '4' ;
+    const typeId = groupMeetingFormData.repeating ? '1' : '4';
     const prevStartDate: Date = this.groupMeetingForm.value.startDate;
     if (groupMeetingFormData.startDate instanceof Date) {
       groupMeetingFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
@@ -135,5 +165,4 @@ export class AttachGroupMeetingComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

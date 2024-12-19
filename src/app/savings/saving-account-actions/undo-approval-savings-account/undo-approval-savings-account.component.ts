@@ -15,7 +15,6 @@ import { SavingsService } from 'app/savings/savings.service';
   styleUrls: ['./undo-approval-savings-account.component.scss']
 })
 export class UndoApprovalSavingsAccountComponent implements OnInit {
-
   /** Undo Approval Savings Account form. */
   undoApprovalSavingsAccountForm: UntypedFormGroup;
   /** Savings Account Id */
@@ -27,10 +26,12 @@ export class UndoApprovalSavingsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private savingsService: SavingsService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsService: SavingsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.accountId = this.route.snapshot.params['savingAccountId'];
   }
 
@@ -46,7 +47,7 @@ export class UndoApprovalSavingsAccountComponent implements OnInit {
    */
   createUndoApprovalSavingsAccountForm() {
     this.undoApprovalSavingsAccountForm = this.formBuilder.group({
-      'note': ['']
+      note: ['']
     });
   }
 
@@ -56,11 +57,10 @@ export class UndoApprovalSavingsAccountComponent implements OnInit {
    */
   submit() {
     const data = {
-      ...this.undoApprovalSavingsAccountForm.value,
+      ...this.undoApprovalSavingsAccountForm.value
     };
     this.savingsService.executeSavingsAccountCommand(this.accountId, 'undoapproval', data).subscribe(() => {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
-
 }

@@ -8,9 +8,8 @@ describe('DisburseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DisburseComponent ]
-    })
-    .compileComponents();
+      declarations: [DisburseComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

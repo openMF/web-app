@@ -8,9 +8,8 @@ describe('ClientScreenReportsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientScreenReportsComponent ]
-    })
-    .compileComponents();
+      declarations: [ClientScreenReportsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

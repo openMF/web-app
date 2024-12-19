@@ -8,9 +8,8 @@ describe('AssignLoanOfficerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AssignLoanOfficerComponent ]
-    })
-    .compileComponents();
+      declarations: [AssignLoanOfficerComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

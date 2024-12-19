@@ -85,6 +85,6 @@ import { FixedDepositsCashTransactionComponent } from './fixed-deposits-account-
     DirectivesModule,
     FixedDepositsRoutingModule
   ],
-  providers: [ ]
+  providers: []
 })
-export class FixedDepositsModule { }
+export class FixedDepositsModule {}

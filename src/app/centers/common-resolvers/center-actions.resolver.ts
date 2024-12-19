@@ -13,11 +13,10 @@ import { CentersService } from '../centers.service';
  */
 @Injectable()
 export class CenterActionsResolver implements Resolve<Object> {
-
   /**
    * @param {CentersService} centersService Savings service.
    */
-  constructor(private centersService: CentersService) { }
+  constructor(private centersService: CentersService) {}
 
   /**
    * Returns the Centers account actions data.
@@ -46,5 +45,4 @@ export class CenterActionsResolver implements Resolve<Object> {
         return undefined;
     }
   }
-
 }

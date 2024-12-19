@@ -8,9 +8,8 @@ describe('CreateClosureComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateClosureComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateClosureComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('ClientFamilyMemberDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientFamilyMemberDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ClientFamilyMemberDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

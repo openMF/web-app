@@ -8,9 +8,8 @@ describe('ViewSavingsAccountingDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewSavingsAccountingDetailsComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewSavingsAccountingDetailsComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ViewSavingsAccountingDetailsComponent);
     component = fixture.componentInstance;

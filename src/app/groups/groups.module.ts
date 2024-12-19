@@ -65,6 +65,6 @@ import { GroupTransferClientsComponent } from './groups-view/group-actions/group
     EditGroupMeetingScheduleComponent,
     GroupTransferClientsComponent
   ],
-  providers: [ ]
+  providers: []
 })
-export class GroupsModule { }
+export class GroupsModule {}

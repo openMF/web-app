@@ -8,9 +8,8 @@ describe('LoanReagingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoanReagingComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanReagingComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoanReagingComponent);
     component = fixture.componentInstance;

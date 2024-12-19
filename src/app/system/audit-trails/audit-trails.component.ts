@@ -26,7 +26,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./audit-trails.component.scss']
 })
 export class AuditTrailsComponent implements OnInit, AfterViewInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -44,7 +43,18 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   /** Audit Trail Search Template Data. */
   auditTrailSearchTemplateData: any;
   /** Columns to be displayed in audit trails table. */
-  displayedColumns: string[] = ['id', 'resourceId', 'processingResult', 'maker', 'actionName', 'entityName', 'officeName', 'madeOnDate', 'checker', 'checkedOnDate'];
+  displayedColumns: string[] = [
+    'id',
+    'resourceId',
+    'processingResult',
+    'maker',
+    'actionName',
+    'entityName',
+    'officeName',
+    'madeOnDate',
+    'checker',
+    'checkedOnDate'
+  ];
   /** Data source for audit trails table. */
   dataSource: AuditTrailsDataSource;
   /** Audit Trails filter. */
@@ -131,10 +141,12 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {Dates} dateUtils Dates utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private dateUtils: Dates,
-              private settingsService: SettingsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { auditTrailSearchTemplate: any }) => {
       this.auditTrailSearchTemplateData = data.auditTrailSearchTemplate;
     });
@@ -160,13 +172,14 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.user.valueChanges
       .pipe(
-        map(value => value.id ? value.id : ''),
+        map((value) => (value.id ? value.id : '')),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'makerId');
         })
-      ).subscribe();
+      )
+      .subscribe();
 
     this.fromDate.valueChanges
       .pipe(
@@ -175,7 +188,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         tap((filterValue) => {
           this.applyFilter(this.getDate(filterValue), 'makerDateTimeFrom');
         })
-      ).subscribe();
+      )
+      .subscribe();
 
     this.toDate.valueChanges
       .pipe(
@@ -184,7 +198,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         tap((filterValue) => {
           this.applyFilter(this.getDate(filterValue), 'makerDateTimeTo');
         })
-      ).subscribe();
+      )
+      .subscribe();
 
     this.checkedFromDate.valueChanges
       .pipe(
@@ -193,7 +208,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         tap((filterValue) => {
           this.applyFilter(this.getDate(filterValue), 'checkerDateTimeFrom');
         })
-      ).subscribe();
+      )
+      .subscribe();
 
     this.checkedToDate.valueChanges
       .pipe(
@@ -202,7 +218,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         tap((filterValue) => {
           this.applyFilter(this.getDate(filterValue), 'checkerDateTimeTo');
         })
-      ).subscribe();
+      )
+      .subscribe();
 
     this.resourceId.valueChanges
       .pipe(
@@ -211,44 +228,47 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         tap((filterValue) => {
           this.applyFilter(filterValue, 'resourceId');
         })
-      ).subscribe();
+      )
+      .subscribe();
 
     this.actionName.valueChanges
       .pipe(
-        map(value => value ? value : ''),
+        map((value) => (value ? value : '')),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'actionName');
         })
-      ).subscribe();
+      )
+      .subscribe();
 
     this.entityName.valueChanges
       .pipe(
-        map(value => value ? value : ''),
+        map((value) => (value ? value : '')),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'entityName');
         })
-      ).subscribe();
+      )
+      .subscribe();
 
     this.checker.valueChanges
       .pipe(
-        map(value => value ? value : ''),
+        map((value) => (value ? value : '')),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
           this.applyFilter(filterValue, 'checkerId');
         })
-      ).subscribe();
+      )
+      .subscribe();
 
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadAuditTrailsPage())
-      ).subscribe();
+      .pipe(tap(() => this.loadAuditTrailsPage()))
+      .subscribe();
   }
 
   /**
@@ -256,7 +276,13 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   getAuditTrails() {
     this.dataSource = new AuditTrailsDataSource(this.systemService);
-    this.dataSource.getAuditTrails(this.filterAuditTrailsBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    this.dataSource.getAuditTrails(
+      this.filterAuditTrailsBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize
+    );
   }
 
   /**
@@ -266,7 +292,13 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-    this.dataSource.getAuditTrails(this.filterAuditTrailsBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    this.dataSource.getAuditTrails(
+      this.filterAuditTrailsBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize
+    );
   }
 
   /**
@@ -276,7 +308,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   applyFilter(filterValue: string, property: string) {
     this.paginator.pageIndex = 0;
-    const findIndex = this.filterAuditTrailsBy.findIndex(filter => filter.type === property);
+    const findIndex = this.filterAuditTrailsBy.findIndex((filter) => filter.type === property);
     this.filterAuditTrailsBy[findIndex].value = filterValue;
     this.loadAuditTrailsPage();
   }
@@ -312,48 +344,52 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * Sets filtered users for autocomplete.
    */
   setFilteredUsers() {
-    this.filteredUserData = this.user.valueChanges
-      .pipe(
-        startWith(''),
-        map((user: any) => typeof user === 'string' ? user : user.name),
-        map((userName: string) => userName ? this.filterUserAutocompleteData(userName) : this.auditTrailSearchTemplateData.appUsers)
-      );
+    this.filteredUserData = this.user.valueChanges.pipe(
+      startWith(''),
+      map((user: any) => (typeof user === 'string' ? user : user.name)),
+      map((userName: string) =>
+        userName ? this.filterUserAutocompleteData(userName) : this.auditTrailSearchTemplateData.appUsers
+      )
+    );
   }
 
   /**
    * Sets filtered checkers for autocomplete.
    */
   setFilteredCheckers() {
-    this.filteredCheckerData = this.checker.valueChanges
-      .pipe(
-        startWith(''),
-        map((user: any) => typeof user === 'string' ? user : user.name),
-        map((userName: string) => userName ? this.filterUserAutocompleteData(userName) : this.auditTrailSearchTemplateData.appUsers)
-      );
+    this.filteredCheckerData = this.checker.valueChanges.pipe(
+      startWith(''),
+      map((user: any) => (typeof user === 'string' ? user : user.name)),
+      map((userName: string) =>
+        userName ? this.filterUserAutocompleteData(userName) : this.auditTrailSearchTemplateData.appUsers
+      )
+    );
   }
 
   /**
    * Sets filtered actions for autocomplete.
    */
   setFilteredActions() {
-    this.filteredActionData = this.actionName.valueChanges
-      .pipe(
-        startWith(''),
-        map((action: any) => typeof action === 'string' ? action : ''),
-        map((actionName: string) => actionName ? this.filterActionAutocompleteData(actionName) : this.auditTrailSearchTemplateData.actionNames)
-      );
+    this.filteredActionData = this.actionName.valueChanges.pipe(
+      startWith(''),
+      map((action: any) => (typeof action === 'string' ? action : '')),
+      map((actionName: string) =>
+        actionName ? this.filterActionAutocompleteData(actionName) : this.auditTrailSearchTemplateData.actionNames
+      )
+    );
   }
 
   /**
    * Sets filtered entities for autocomplete.
    */
   setFilteredEntities() {
-    this.filteredEntityData = this.entityName.valueChanges
-      .pipe(
-        startWith(''),
-        map((entity: any) => typeof entity === 'string' ? entity : ''),
-        map((entityName: string) => entityName ? this.filterEntityAutocompleteData(entityName) : this.auditTrailSearchTemplateData.entityNames)
-      );
+    this.filteredEntityData = this.entityName.valueChanges.pipe(
+      startWith(''),
+      map((entity: any) => (typeof entity === 'string' ? entity : '')),
+      map((entityName: string) =>
+        entityName ? this.filterEntityAutocompleteData(entityName) : this.auditTrailSearchTemplateData.entityNames
+      )
+    );
   }
 
   /**
@@ -362,7 +398,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @returns {any} Filtered users.
    */
   private filterUserAutocompleteData(userName: string): any {
-    return this.auditTrailSearchTemplateData.appUsers.filter((user: any) => user.username.toLowerCase().includes(userName.toLowerCase()));
+    return this.auditTrailSearchTemplateData.appUsers.filter((user: any) =>
+      user.username.toLowerCase().includes(userName.toLowerCase())
+    );
   }
 
   /**
@@ -371,7 +409,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @returns {any} Filtered actions.
    */
   private filterActionAutocompleteData(actionName: string): any {
-    return this.auditTrailSearchTemplateData.actionNames.filter((action: any) => action.toLowerCase().includes(actionName.toLowerCase()));
+    return this.auditTrailSearchTemplateData.actionNames.filter((action: any) =>
+      action.toLowerCase().includes(actionName.toLowerCase())
+    );
   }
 
   /**
@@ -380,7 +420,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @returns {any} Filtered entities.
    */
   private filterEntityAutocompleteData(entityName: string): any {
-    return this.auditTrailSearchTemplateData.entityNames.filter((entity: any) => entity.toLowerCase().includes(entityName.toLowerCase()));
+    return this.auditTrailSearchTemplateData.entityNames.filter((entity: any) =>
+      entity.toLowerCase().includes(entityName.toLowerCase())
+    );
   }
 
   /**
@@ -388,24 +430,55 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    */
   downloadCSV() {
     const dateFormat = this.settingsService.dateFormat;
-    const replacer = (key: any, value: any) => value === undefined ? '' : value;
-    const header = ['ID', 'Resource ID', 'Status', 'Office', 'Made On', 'Maker', 'Checked On', 'Checker', 'Entity', 'Action', 'Client'];
-    const headerCode = ['id', 'resourceId', 'processingResult', 'officeName', 'madeOnDate', 'maker', 'checkedOnDate', 'checker', 'entityName', 'actionName', 'clientName'];
-    this.systemService.getAuditTrails(this.filterAuditTrailsBy, this.sort.active ? this.sort.active : '', this.sort.direction, 0, -1).subscribe((response: any) => {
-      if (response !== undefined) {
-        let csv = response.pageItems.map((row: any) => headerCode.map(fieldName => (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') && (JSON.stringify(row[fieldName], replacer) !== '""')
-          ? this.dateUtils.formatDate(JSON.stringify(row[fieldName], replacer), dateFormat)
-          : JSON.stringify(row[fieldName], replacer)));
-        csv.unshift(`data:text/csv;charset=utf-8,${header.join()}`);
-        csv = csv.join('\r\n');
-        const link = document.createElement('a');
-        link.setAttribute('href', encodeURI(csv));
-        link.setAttribute('download', 'Audit Trails.csv');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    });
+    const replacer = (key: any, value: any) => (value === undefined ? '' : value);
+    const header = [
+      'ID',
+      'Resource ID',
+      'Status',
+      'Office',
+      'Made On',
+      'Maker',
+      'Checked On',
+      'Checker',
+      'Entity',
+      'Action',
+      'Client'
+    ];
+    const headerCode = [
+      'id',
+      'resourceId',
+      'processingResult',
+      'officeName',
+      'madeOnDate',
+      'maker',
+      'checkedOnDate',
+      'checker',
+      'entityName',
+      'actionName',
+      'clientName'
+    ];
+    this.systemService
+      .getAuditTrails(this.filterAuditTrailsBy, this.sort.active ? this.sort.active : '', this.sort.direction, 0, -1)
+      .subscribe((response: any) => {
+        if (response !== undefined) {
+          let csv = response.pageItems.map((row: any) =>
+            headerCode.map((fieldName) =>
+              (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
+              JSON.stringify(row[fieldName], replacer) !== '""'
+                ? this.dateUtils.formatDate(JSON.stringify(row[fieldName], replacer), dateFormat)
+                : JSON.stringify(row[fieldName], replacer)
+            )
+          );
+          csv.unshift(`data:text/csv;charset=utf-8,${header.join()}`);
+          csv = csv.join('\r\n');
+          const link = document.createElement('a');
+          link.setAttribute('href', encodeURI(csv));
+          link.setAttribute('download', 'Audit Trails.csv');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      });
   }
 
   /**
@@ -419,5 +492,4 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     const dateFormat = this.settingsService.dateFormat;
     return this.dateUtils.formatDate(timestamp, dateFormat);
   }
-
 }

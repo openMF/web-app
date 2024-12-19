@@ -24,7 +24,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-
   public environment = environment;
 
   /** True if password requires a reset. */
@@ -38,9 +37,11 @@ export class LoginComponent implements OnInit, OnDestroy {
    * @param {AlertService} alertService Alert Service.
    * @param {Router} router Router for navigation.
    */
-  constructor(private alertService: AlertService,
-      private settingsService: SettingsService,
-      private router: Router) { }
+  constructor(
+    private alertService: AlertService,
+    private settingsService: SettingsService,
+    private router: Router
+  ) {}
 
   /**
    * Subscribes to alert event of alert service.
@@ -80,5 +81,4 @@ export class LoginComponent implements OnInit, OnDestroy {
   displayTenantSelector(): boolean {
     return environment.displayTenantSelector === 'false' ? false : true;
   }
-
 }

@@ -8,9 +8,8 @@ describe('ShareProductGeneralTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShareProductGeneralTabComponent ]
-    })
-    .compileComponents();
+      declarations: [ShareProductGeneralTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

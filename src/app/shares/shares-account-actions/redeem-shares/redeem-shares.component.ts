@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./redeem-shares.component.scss']
 })
 export class RedeemSharesComponent implements OnInit {
-
   /** Shares account data. */
   sharesAccountData: any;
 
@@ -38,12 +37,14 @@ export class RedeemSharesComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private sharesService: SharesService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private sharesService: SharesService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
     this.route.data.subscribe((data: { shareAccountActionData: any }) => {
       this.sharesAccountData = data.shareAccountActionData;
@@ -66,9 +67,15 @@ export class RedeemSharesComponent implements OnInit {
    */
   createRedeemSharesAccountForm() {
     this.redeemSharesForm = this.formBuilder.group({
-      'requestedDate': ['', Validators.required],
-      'requestedShares': ['', Validators.required],
-      'unitPrice': [{value: '', disabled: true}]
+      requestedDate: [
+        '',
+        Validators.required
+      ],
+      requestedShares: [
+        '',
+        Validators.required
+      ],
+      unitPrice: [{ value: '', disabled: true }]
     });
   }
 
@@ -94,5 +101,4 @@ export class RedeemSharesComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

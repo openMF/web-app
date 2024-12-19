@@ -8,9 +8,8 @@ describe('OfficeNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OfficeNavigationComponent ]
-    })
-    .compileComponents();
+      declarations: [OfficeNavigationComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-saving-product.component.scss']
 })
 export class ViewSavingProductComponent {
-
   savingProductDatatables: any = [];
 
   constructor(private route: ActivatedRoute) {
@@ -20,5 +19,4 @@ export class ViewSavingProductComponent {
       });
     });
   }
-
 }

@@ -8,9 +8,8 @@ describe('DatatableSingleRowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DatatableSingleRowComponent ]
-    })
-    .compileComponents();
+      declarations: [DatatableSingleRowComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

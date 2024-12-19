@@ -8,7 +8,6 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./warning-dialog.component.scss']
 })
 export class WarningDialogComponent {
-
   title: string;
   content: string;
   buttonText: string;
@@ -18,5 +17,4 @@ export class WarningDialogComponent {
     this.content = environment.warningDialog.content;
     this.buttonText = environment.warningDialog.buttonText;
   }
-
 }

@@ -21,18 +21,20 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-savings-account.component.scss']
 })
 export class CreateSavingsAccountComponent {
-
   /** Savings Account Template */
   savingsAccountTemplate: any;
   /** Savings Account Product Template */
   savingsAccountProductTemplate: any;
 
   /** Savings Account Details Step */
-  @ViewChild(SavingsAccountDetailsStepComponent, { static: true }) savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
+  @ViewChild(SavingsAccountDetailsStepComponent, { static: true })
+  savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
   /** Savings Account Terms Step */
-  @ViewChild(SavingsAccountTermsStepComponent, { static: true }) savingsAccountTermsStep: SavingsAccountTermsStepComponent;
+  @ViewChild(SavingsAccountTermsStepComponent, { static: true })
+  savingsAccountTermsStep: SavingsAccountTermsStepComponent;
   /** Savings Account Charges Step */
-  @ViewChild(SavingsAccountChargesStepComponent, { static: true }) savingsAccountChargesStep: SavingsAccountChargesStepComponent;
+  @ViewChild(SavingsAccountChargesStepComponent, { static: true })
+  savingsAccountChargesStep: SavingsAccountChargesStepComponent;
 
   /**
    * Fetches savings account template from `resolve`
@@ -42,12 +44,13 @@ export class CreateSavingsAccountComponent {
    * @param {SavingsService} savingsService Savings Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private savingsService: SavingsService,
-              private settingsService: SettingsService
-              ) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private savingsService: SavingsService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { savingsAccountTemplate: any }) => {
       this.savingsAccountTemplate = data.savingsAccountTemplate;
     });
@@ -79,10 +82,7 @@ export class CreateSavingsAccountComponent {
    * Checks validity of overall savings account form.
    */
   get savingsAccountFormValid() {
-    return (
-      this.savingsAccountDetailsForm.valid &&
-      this.savingsAccountTermsForm.valid
-    );
+    return this.savingsAccountDetailsForm.valid && this.savingsAccountTermsForm.valid;
   }
 
   /**
@@ -124,8 +124,13 @@ export class CreateSavingsAccountComponent {
       savingsAccount.groupId = this.savingsAccountTemplate.groupId;
     }
     this.savingsService.createSavingsAccount(savingsAccount).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

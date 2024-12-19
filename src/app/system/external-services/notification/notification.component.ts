@@ -13,11 +13,13 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent implements OnInit {
-
   /** Notification configuration data. */
   notificationConfigurationData: any;
   /** Columns to be displayed in Notification configuration table. */
-  displayedColumns: string[] = ['name', 'value'];
+  displayedColumns: string[] = [
+    'name',
+    'value'
+  ];
   /** Data source for Notification configuration table. */
   dataSource: MatTableDataSource<any>;
 
@@ -56,5 +58,4 @@ export class NotificationComponent implements OnInit {
     }
     return value;
   }
-
 }

@@ -10,9 +10,11 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./member-groups.component.scss']
 })
 export class MemberGroupsComponent {
-
   /** Columns to be displayed in the member groups table. */
-  displayedColumns: string[] = ['accountNo', 'name'];
+  displayedColumns: string[] = [
+    'accountNo',
+    'name'
+  ];
   /** Data source for member groups table. */
   dataSource: MatTableDataSource<any>;
 
@@ -28,7 +30,7 @@ export class MemberGroupsComponent {
     this.dataSource.sort = this.sort;
   }
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Filters data in member groups table based on passed value.
@@ -37,5 +39,4 @@ export class MemberGroupsComponent {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }

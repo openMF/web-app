@@ -8,12 +8,11 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
   styleUrls: ['./loans-account-add-collateral-dialog.component.scss']
 })
 export class LoansAccountAddCollateralDialogComponent implements OnInit {
-
   layout: {
-    addButtonText?: string
+    addButtonText?: string;
   } = {
-      addButtonText: 'Add'
-    };
+    addButtonText: 'Add'
+  };
 
   addCollateralForm: UntypedFormGroup;
   /** All Collateral Options */
@@ -23,9 +22,11 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
   /** Maximum ALlowed Quantity of selected collateral  */
   maxQuantity: any = 0;
 
-  constructor(public dialogRef: MatDialogRef<LoansAccountAddCollateralDialogComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<LoansAccountAddCollateralDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: UntypedFormBuilder) {
+    private formBuilder: UntypedFormBuilder
+  ) {
     this.createAddCollateralForm();
   }
 
@@ -37,17 +38,23 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
 
   createAddCollateralForm() {
     this.addCollateralForm = this.formBuilder.group({
-      'collateral': ['', Validators.required],
-      'quantity': ['', Validators.required],
-      'totalValue': [{value: '', disabled: true}],
-      'totalCollateralValue': [{value: '', disabled: true}],
+      collateral: [
+        '',
+        Validators.required
+      ],
+      quantity: [
+        '',
+        Validators.required
+      ],
+      totalValue: [{ value: '', disabled: true }],
+      totalCollateralValue: [{ value: '', disabled: true }]
     });
   }
 
   /**
    * Subscribe to Form controls value changes
    */
-   buildDependencies() {
+  buildDependencies() {
     this.addCollateralForm.controls.collateral.valueChanges.subscribe((collateral: any) => {
       this.collateralData = collateral;
       this.maxQuantity = collateral.quantity;
@@ -55,10 +62,9 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
 
     this.addCollateralForm.controls.quantity.valueChanges.subscribe((quantity: any) => {
       this.addCollateralForm.patchValue({
-        'totalValue': this.collateralData.basePrice * quantity,
-        'totalCollateralValue': this.collateralData.basePrice * this.collateralData.pctToBase * quantity / 100
+        totalValue: this.collateralData.basePrice * quantity,
+        totalCollateralValue: (this.collateralData.basePrice * this.collateralData.pctToBase * quantity) / 100
       });
     });
   }
-
 }

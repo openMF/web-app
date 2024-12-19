@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-office.component.scss']
 })
 export class ViewOfficeComponent {
-
   /** Office datatables data */
   officeDatatables: any;
 
@@ -24,5 +23,4 @@ export class ViewOfficeComponent {
       this.officeDatatables = data.officeDatatables;
     });
   }
-
 }

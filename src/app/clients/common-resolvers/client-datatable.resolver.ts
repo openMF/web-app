@@ -13,20 +13,18 @@ import { ClientsService } from '../clients.service';
  */
 @Injectable()
 export class ClientDatatableResolver implements Resolve<Object> {
+  /**
+   * @param {ClientsService} ClientsService Clients service.
+   */
+  constructor(private clientsService: ClientsService) {}
 
-    /**
-     * @param {ClientsService} ClientsService Clients service.
-     */
-    constructor(private clientsService: ClientsService) { }
-
-    /**
-     * Returns the Client datatables.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.parent.paramMap.get('clientId');
-        const datatableName = route.paramMap.get('datatableName');
-        return this.clientsService.getClientDatatable(clientId, datatableName);
-    }
-
+  /**
+   * Returns the Client datatables.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const clientId = route.parent.parent.paramMap.get('clientId');
+    const datatableName = route.paramMap.get('datatableName');
+    return this.clientsService.getClientDatatable(clientId, datatableName);
+  }
 }

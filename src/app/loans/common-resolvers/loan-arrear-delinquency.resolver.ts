@@ -7,17 +7,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoanArrearDelinquencyResolver implements Resolve<boolean> {
+  /**
+   * @param {SystemService} systemService System service.
+   */
+  constructor(private systemService: SystemService) {}
 
-    /**
-     * @param {SystemService} systemService System service.
-     */
-    constructor(private systemService: SystemService) { }
-
-    /**
-     * Returns the loan-arrears-delinquency-display-data configuration data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-      return this.systemService.getConfigurationByName('loan-arrears-delinquency-display-data');
-    }
+  /**
+   * Returns the loan-arrears-delinquency-display-data configuration data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    return this.systemService.getConfigurationByName('loan-arrears-delinquency-display-data');
+  }
 }

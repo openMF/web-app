@@ -8,9 +8,8 @@ describe('EditRangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditRangeComponent ]
-    })
-    .compileComponents();
+      declarations: [EditRangeComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

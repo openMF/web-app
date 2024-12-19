@@ -15,9 +15,11 @@ export class DocumentsTabComponent {
   entityId: string;
   entityType = 'clients';
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private clientsService: ClientsService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { clientDocuments: any }) => {
       this.entityDocuments = data.clientDocuments;
     });
@@ -25,18 +27,17 @@ export class DocumentsTabComponent {
   }
 
   downloadDocument(documentId: string) {
-    this.clientsService.downloadClientDocument(this.entityId, documentId).subscribe(res => {
+    this.clientsService.downloadClientDocument(this.entityId, documentId).subscribe((res) => {
       const url = window.URL.createObjectURL(res);
       window.open(url);
     });
   }
 
   deleteDocument(documentId: string) {
-    this.clientsService.deleteClientDocument(this.entityId, documentId).subscribe(res => {});
+    this.clientsService.deleteClientDocument(this.entityId, documentId).subscribe((res) => {});
   }
 
   uploadDocument(formData: FormData): any {
     return this.clientsService.uploadClientDocument(this.entityId, formData);
   }
-
 }

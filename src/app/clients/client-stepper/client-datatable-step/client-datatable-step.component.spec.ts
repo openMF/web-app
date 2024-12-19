@@ -8,9 +8,8 @@ describe('ClientDatatableStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ClientDatatableStepComponent ]
-    })
-    .compileComponents();
+      declarations: [ClientDatatableStepComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

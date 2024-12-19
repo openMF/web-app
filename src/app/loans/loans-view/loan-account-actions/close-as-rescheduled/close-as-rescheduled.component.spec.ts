@@ -8,9 +8,8 @@ describe('CloseAsRescheduledComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CloseAsRescheduledComponent ]
-    })
-    .compileComponents();
+      declarations: [CloseAsRescheduledComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

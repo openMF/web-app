@@ -10,18 +10,19 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./view-bucket.component.scss']
 })
 export class ViewBucketComponent {
-
   /** Delinquency Bucket Data. */
   delinquencyBucketData: any;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private productsService: ProductsService) {
+    private productsService: ProductsService
+  ) {
     this.route.data.subscribe((data: { delinquencyBucket: any }) => {
       this.delinquencyBucketData = data.delinquencyBucket;
       this.delinquencyBucketData.ranges = this.delinquencyBucketData.ranges.sort(
-        (objA: { minimumAge: number; }, objB: { minimumAge: number; }) => objA.minimumAge - objB.minimumAge,
+        (objA: { minimumAge: number }, objB: { minimumAge: number }) => objA.minimumAge - objB.minimumAge
       );
     });
   }
@@ -38,5 +39,4 @@ export class ViewBucketComponent {
       }
     });
   }
-
 }

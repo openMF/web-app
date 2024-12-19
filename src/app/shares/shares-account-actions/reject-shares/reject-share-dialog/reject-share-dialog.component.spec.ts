@@ -8,9 +8,8 @@ describe('RejectSharesDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RejectShareDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [RejectShareDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -11,10 +11,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./calculate-interest-dialog.component.scss']
 })
 export class CalculateInterestDialogComponent {
-
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<CalculateInterestDialogComponent>) { }
-
+  constructor(public dialogRef: MatDialogRef<CalculateInterestDialogComponent>) {}
 }

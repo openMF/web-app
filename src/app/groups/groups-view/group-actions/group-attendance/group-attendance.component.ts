@@ -25,7 +25,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./group-attendance.component.scss']
 })
 export class GroupAttendanceComponent implements OnInit {
-
   /** Members data. */
   membersData: any;
   /** Group Data */
@@ -33,7 +32,10 @@ export class GroupAttendanceComponent implements OnInit {
   /** Attendance Type Options */
   attendanceTypeOptions: any;
   /** Columns to be displayed in member's attendance table. */
-  displayedColumns: string[] = ['name', 'attendance'];
+  displayedColumns: string[] = [
+    'name',
+    'attendance'
+  ];
   /** Start Date Form Control */
   meetingDate = new UntypedFormControl();
   /** Meeting Dates Data */
@@ -50,13 +52,15 @@ export class GroupAttendanceComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private router: Router,
-              private groupsService: GroupsService,
-              public dialog: MatDialog,
-              private settingsService: SettingsService) {
-    this.route.data.subscribe(( data: { groupActionData: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    private groupsService: GroupsService,
+    public dialog: MatDialog,
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
       this.membersData = data.groupActionData.clientMembers;
     });
@@ -67,8 +71,9 @@ export class GroupAttendanceComponent implements OnInit {
    */
   ngOnInit() {
     this.dataSource = this.membersData.map((member: any) => ({ clientId: member.id, attendanceType: 1 }));
-    this.meetingDates = this.groupData.collectionMeetingCalendar.recurringDates
-      .filter((date: any) => new Date(date).getTime() < new Date().getTime());
+    this.meetingDates = this.groupData.collectionMeetingCalendar.recurringDates.filter(
+      (date: any) => new Date(date).getTime() < new Date().getTime()
+    );
     this.getAttendanceOptions();
   }
 
@@ -76,7 +81,8 @@ export class GroupAttendanceComponent implements OnInit {
    * Gets attendance type options based on calendar id.
    */
   getAttendanceOptions() {
-    this.groupsService.getMeetingsTemplate(this.groupData.id, this.groupData.collectionMeetingCalendar.id)
+    this.groupsService
+      .getMeetingsTemplate(this.groupData.id, this.groupData.collectionMeetingCalendar.id)
       .subscribe((response: any) => {
         this.attendanceTypeOptions = response.attendanceTypeOptions;
       });
@@ -94,7 +100,8 @@ export class GroupAttendanceComponent implements OnInit {
         value: member.attendanceType,
         options: { label: 'value', value: 'id', data: this.attendanceTypeOptions },
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Assign Member Attendance',
@@ -126,9 +133,10 @@ export class GroupAttendanceComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService.assignGroupAttendance(this.groupData.id, this.groupData.collectionMeetingCalendar.id, data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.groupsService
+      .assignGroupAttendance(this.groupData.id, this.groupData.collectionMeetingCalendar.id, data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

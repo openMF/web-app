@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./apply-annual-fees-savings-account.component.scss']
 })
 export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -39,12 +38,14 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private savingsService: SavingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsService: SavingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.snapshot.params['savingAccountId'];
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.savingsAccountData = data.savingsAccountActionData;
@@ -65,8 +66,11 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
    */
   createApplyAnnualFeesForm() {
     this.applyAnnualFeesForm = this.formBuilder.group({
-      'dueDate': ['', Validators.required],
-      'amount': ['']
+      dueDate: [
+        '',
+        Validators.required
+      ],
+      amount: ['']
     });
   }
 
@@ -75,12 +79,12 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
    */
   applyCharge() {
     const charges: any[] = this.savingsAccountData.charges;
-      charges.forEach((charge: any) => {
-        if (charge.name === 'Annual fee - INR') {
-          this.chargeId = charge.id;
-          this.applyAnnualFeesForm.get('amount').patchValue(charge.amount);
-        }
-      });
+    charges.forEach((charge: any) => {
+      if (charge.name === 'Annual fee - INR') {
+        this.chargeId = charge.id;
+        this.applyAnnualFeesForm.get('amount').patchValue(charge.amount);
+      }
+    });
   }
 
   /**
@@ -100,9 +104,10 @@ export class ApplyAnnualFeesSavingsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountChargesCommand(this.accountId, 'paycharge', data, this.chargeId).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountChargesCommand(this.accountId, 'paycharge', data, this.chargeId)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

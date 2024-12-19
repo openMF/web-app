@@ -10,16 +10,14 @@ import { ProductsService } from '../products.service';
 
 @Injectable()
 export class ChargesTemplateAndResolver implements Resolve<Object> {
+  constructor(private productsService: ProductsService) {}
 
-    constructor(private productsService: ProductsService) { }
-
-    /**
-     * Returns the changes template and data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const savingProductId = route.paramMap.get('id');
-        return this.productsService.getCharge(savingProductId, true);
-    }
-
+  /**
+   * Returns the changes template and data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const savingProductId = route.paramMap.get('id');
+    return this.productsService.getCharge(savingProductId, true);
+  }
 }

@@ -18,7 +18,6 @@ import { OrganizationService } from 'app/organization/organization.service';
   styleUrls: ['./transactions.component.scss']
 })
 export class TransactionsComponent implements OnInit {
-
   /** Currency selector. */
   currencySelector = new UntypedFormControl();
   /** Cashier Id */
@@ -30,7 +29,14 @@ export class TransactionsComponent implements OnInit {
   /** Currencys data. */
   currencyData: any;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['date', 'transactions', 'allocation', 'cashIn', 'cashOut', 'settlement'];
+  displayedColumns: string[] = [
+    'date',
+    'transactions',
+    'allocation',
+    'cashIn',
+    'cashOut',
+    'settlement'
+  ];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
 
@@ -44,9 +50,11 @@ export class TransactionsComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { currencies: any }) => {
+  constructor(
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.subscribe((data: { currencies: any }) => {
       this.currencyData = data.currencies.selectedCurrencyOptions;
     });
     this.tellerId = this.route.parent.parent.parent.snapshot.params['id'];
@@ -73,7 +81,8 @@ export class TransactionsComponent implements OnInit {
    */
   onChangeCurrency() {
     this.currencySelector.valueChanges.subscribe((currencyCode: any) => {
-      this.organizationService.getCashierSummaryAndTransactions(this.tellerId, this.cashierId, currencyCode)
+      this.organizationService
+        .getCashierSummaryAndTransactions(this.tellerId, this.cashierId, currencyCode)
         .subscribe((response: any) => {
           this.cashierData = response;
           this.setTransactions();
@@ -89,5 +98,4 @@ export class TransactionsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

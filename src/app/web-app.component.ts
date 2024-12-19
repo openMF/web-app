@@ -71,18 +71,17 @@ registerLocaleData(localeSW);
   animations: [
     trigger('opacityScale', [
       transition(':enter', [
-          style({ opacity: 0, transform: 'scale(.95)' }),
-          animate('100ms ease-out', style({  opacity: 1, transform: 'scale(1)' }))
-      ]),
+        style({ opacity: 0, transform: 'scale(.95)' }),
+        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))]),
       transition(':leave', [
-          style({ opacity: 1, transform: 'scale(1)' }),
-          animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))
-      ])
+        style({ opacity: 1, transform: 'scale(1)' }),
+        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))])
+
     ])
+
   ]
 })
 export class WebAppComponent implements OnInit {
-
   buttonConfig: KeyboardShortcutsConfiguration;
 
   i18nService: I18nService;
@@ -101,19 +100,21 @@ export class WebAppComponent implements OnInit {
    * @param {IdleTimeoutService} idle Idle timeout service.
    * @param {MatDialog} dialog Dialog component.
    */
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private titleService: Title,
-              private translateService: TranslateService,
-              private themeStorageService: ThemeStorageService,
-              public snackBar: MatSnackBar,
-              private alertService: AlertService,
-              private settingsService: SettingsService,
-              private authenticationService: AuthenticationService,
-              private themingService: ThemingService,
-              private dateUtils: Dates,
-              private idle: IdleTimeoutService,
-              private dialog: MatDialog) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title,
+    private translateService: TranslateService,
+    private themeStorageService: ThemeStorageService,
+    public snackBar: MatSnackBar,
+    private alertService: AlertService,
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService,
+    private themingService: ThemingService,
+    private dateUtils: Dates,
+    private idle: IdleTimeoutService,
+    private dialog: MatDialog
+  ) {}
 
   @HostBinding('class') public cssClass: string;
 
@@ -133,7 +134,7 @@ export class WebAppComponent implements OnInit {
       this.cssClass = value;
     });
     this.themingService.setInitialDarkMode();
-    this.themingService.setDarkMode((this.settingsService.themeDarkEnabled === 'true'));
+    this.themingService.setDarkMode(this.settingsService.themeDarkEnabled === 'true');
 
     // Setup logger
     if (environment.production) {
@@ -152,7 +153,7 @@ export class WebAppComponent implements OnInit {
     this.i18nService = new I18nService(this.translateService);
 
     // Change page title on navigation or language change, based on route data
-    const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
+    const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
     merge(this.translateService.onLangChange, onNavigationEnd)
       .pipe(
         map(() => {
@@ -162,10 +163,10 @@ export class WebAppComponent implements OnInit {
           }
           return route;
         }),
-        filter(route => route.outlet === 'primary'),
-        mergeMap(route => route.data)
+        filter((route) => route.outlet === 'primary'),
+        mergeMap((route) => route.data)
       )
-      .subscribe(event => {
+      .subscribe((event) => {
         let title = event['title'];
         if (!title) {
           title = 'APP_NAME';
@@ -219,7 +220,10 @@ export class WebAppComponent implements OnInit {
     if (environment.session.timeout.idleTimeout > 0) {
       this.idle.$onSessionTimeout.subscribe(() => {
         if (this.authenticationService.getUserLoggedIn()) {
-          this.alertService.alert({type: 'Session timeout', message: this.translateService.instant('labels.text.Session timed out')});
+          this.alertService.alert({
+            type: 'Session timeout',
+            message: this.translateService.instant('labels.text.Session timed out')
+          });
           this.dialog.open(SessionTimeoutDialogComponent);
           this.logout();
         }
@@ -228,8 +232,7 @@ export class WebAppComponent implements OnInit {
   }
 
   logout() {
-    this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   help() {
@@ -239,7 +242,10 @@ export class WebAppComponent implements OnInit {
   // Monitor all keyboard events and excute keyboard shortcuts
   @HostListener('window:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-    const routeD = this.buttonConfig.buttonCombinations.find(x => (x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key));
+    const routeD = this.buttonConfig.buttonCombinations.find(
+      (x) =>
+        x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key
+    );
     if (!(routeD === undefined)) {
       switch (routeD.id) {
         case 'logout':
@@ -274,5 +280,4 @@ export class WebAppComponent implements OnInit {
       }
     }
   }
-
 }

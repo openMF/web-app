@@ -8,9 +8,8 @@ describe('ForeclosureComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForeclosureComponent ]
-    })
-    .compileComponents();
+      declarations: [ForeclosureComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

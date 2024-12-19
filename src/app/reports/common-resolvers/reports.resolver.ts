@@ -13,7 +13,6 @@ import { ReportsService } from '../reports.service';
  */
 @Injectable()
 export class ReportsResolver implements Resolve<Object> {
-
   /**
    * @param {ReportsService} reportsService Reports service.
    */
@@ -26,5 +25,4 @@ export class ReportsResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.reportsService.getReports();
   }
-
 }

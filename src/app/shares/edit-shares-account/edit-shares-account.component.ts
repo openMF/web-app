@@ -21,18 +21,19 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./edit-shares-account.component.scss']
 })
 export class EditSharesAccountComponent {
-
   /** Shares Account and Template */
   sharesAccountAndTemplate: any;
   /** Shares Account Product Template */
   sharesAccountProductTemplate: any;
 
   /** Shares Account Details Step */
-  @ViewChild(SharesAccountDetailsStepComponent, { static: true }) sharesAccountDetailsStep: SharesAccountDetailsStepComponent;
+  @ViewChild(SharesAccountDetailsStepComponent, { static: true })
+  sharesAccountDetailsStep: SharesAccountDetailsStepComponent;
   /** Shares Account Terms Step */
   @ViewChild(SharesAccountTermsStepComponent, { static: true }) sharesAccountTermsStep: SharesAccountTermsStepComponent;
   /** Shares Account Charges Step */
-  @ViewChild(SharesAccountChargesStepComponent, { static: true }) sharesAccountChargesStep: SharesAccountChargesStepComponent;
+  @ViewChild(SharesAccountChargesStepComponent, { static: true })
+  sharesAccountChargesStep: SharesAccountChargesStepComponent;
 
   /**
    * Fetches shares account template from `resolve`
@@ -42,11 +43,13 @@ export class EditSharesAccountComponent {
    * @param {SharesService} sharesService Shares Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private sharesService: SharesService,
-              private settingsService: SettingsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private sharesService: SharesService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { sharesAccountAndTemplate: any }) => {
       this.sharesAccountAndTemplate = data.sharesAccountAndTemplate;
     });
@@ -81,11 +84,9 @@ export class EditSharesAccountComponent {
     return (
       this.sharesAccountDetailsForm.valid &&
       this.sharesAccountTermsForm.valid &&
-      (
-        !this.sharesAccountDetailsForm.pristine ||
+      (!this.sharesAccountDetailsForm.pristine ||
         !this.sharesAccountTermsForm.pristine ||
-        !this.sharesAccountChargesStep.pristine
-      )
+        !this.sharesAccountChargesStep.pristine)
     );
   }
 
@@ -117,9 +118,10 @@ export class EditSharesAccountComponent {
       dateFormat,
       locale
     };
-    this.sharesService.updateSharesAccount(this.sharesAccountAndTemplate.id , sharesAccount).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.sharesService
+      .updateSharesAccount(this.sharesAccountAndTemplate.id, sharesAccount)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
-
 }

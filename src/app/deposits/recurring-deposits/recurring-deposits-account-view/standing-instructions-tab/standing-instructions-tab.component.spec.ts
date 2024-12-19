@@ -8,9 +8,8 @@ describe('StandingInstructionsTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StandingInstructionsTabComponent ]
-    })
-    .compileComponents();
+      declarations: [StandingInstructionsTabComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

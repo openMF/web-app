@@ -20,12 +20,20 @@ import { LoansAccountViewGuarantorDetailsDialogComponent } from 'app/loans/custo
   styleUrls: ['./view-guarantors.component.scss']
 })
 export class ViewGuarantorsComponent implements OnInit {
-
   @Input() dataObject: any;
   guarantorDetails: any;
   showDeletedGuarantorsAccounts = false;
   loanId: any;
-  guarantorsDisplayedColumns: string[] = ['fullname', 'relationship', 'guarantortype', 'depositAccount', 'amount', 'remainingAmount', 'status', 'action'];
+  guarantorsDisplayedColumns: string[] = [
+    'fullname',
+    'relationship',
+    'guarantortype',
+    'depositAccount',
+    'amount',
+    'remainingAmount',
+    'status',
+    'action'
+  ];
 
   /** View and perform various action on existing list of guarantors
    * @param {MatDialog} dialog Dialog
@@ -33,10 +41,12 @@ export class ViewGuarantorsComponent implements OnInit {
    * @param {route} Route Route
    * @param {router} Router Router
    */
-  constructor(public dialog: MatDialog,
-              public loansService: LoansService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    public dialog: MatDialog,
+    public loansService: LoansService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
@@ -75,8 +85,8 @@ export class ViewGuarantorsComponent implements OnInit {
   private reload() {
     const clientId = this.dataObject.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

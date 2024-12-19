@@ -5,7 +5,6 @@ import { browser, element, by } from 'protractor';
  * Login Page e2e page object
  */
 export class LoginPage {
-
   /** username field */
   usernameField = element(by.css('input[formControlName="username"]'));
   /** password field */
@@ -37,5 +36,4 @@ export class LoginPage {
     this.passwordField.sendKeys('123');
     this.loginButton.click();
   }
-
 }

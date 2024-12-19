@@ -15,7 +15,6 @@ import { AuthenticationService } from '../../../../core/authentication/authentic
   styleUrls: ['./take-survey.component.scss']
 })
 export class TakeSurveyComponent {
-
   /** List of all Survey Data */
   allSurveyData: any;
   /** User Id */
@@ -28,13 +27,13 @@ export class TakeSurveyComponent {
   clientId: any;
   /** Stores the value to send to the API */
   formData: {
-    userId: Number,
-    clientId: Number,
-    surveyId: Number,
-    scorecardValues: { questionId: Number, responseId: Number, value: String }[],
-    surveyName: String,
-    username: String,
-    id: Number
+    userId: Number;
+    clientId: Number;
+    surveyId: Number;
+    scorecardValues: { questionId: Number; responseId: Number; value: String }[];
+    surveyName: String;
+    username: String;
+    id: Number;
   };
 
   /**
@@ -44,10 +43,12 @@ export class TakeSurveyComponent {
    * @param {Router} router Router
    * @param {AuthenticationService} authenticationService AuthenticationService
    */
-  constructor(private route: ActivatedRoute,
-              private clientsService: ClientsService,
-              private router: Router,
-              private authenticationService: AuthenticationService) {
+  constructor(
+    private route: ActivatedRoute,
+    private clientsService: ClientsService,
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.allSurveyData = data.clientActionData;
       this.clientId = this.route.parent.snapshot.params['clientId'];
@@ -81,7 +82,6 @@ export class TakeSurveyComponent {
       return groups[group];
     });
   }
-
 
   /**
    * Checks if there is any response or not from the user and enables the submit button accordingly
@@ -127,5 +127,4 @@ export class TakeSurveyComponent {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
-
 }

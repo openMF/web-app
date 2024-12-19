@@ -20,12 +20,14 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   templateUrl: './currencies.component.html',
   styleUrls: ['./currencies.component.scss']
 })
-export class CurrenciesComponent implements OnInit, AfterViewInit  {
-
+export class CurrenciesComponent implements OnInit, AfterViewInit {
   /** Currencies data. */
   currenciesData: any;
   /** Columns to be displayed in currencies table. */
-  displayedColumns: string[] = ['name', 'code'];
+  displayedColumns: string[] = [
+    'name',
+    'code'
+  ];
   /** Data source for currencies table. */
   dataSource: MatTableDataSource<any>;
 
@@ -50,11 +52,13 @@ export class CurrenciesComponent implements OnInit, AfterViewInit  {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { currencies: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { currencies: any }) => {
       this.currenciesData = data.currencies.selectedCurrencyOptions;
     });
   }
@@ -90,7 +94,12 @@ export class CurrenciesComponent implements OnInit, AfterViewInit  {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -100,13 +109,13 @@ export class CurrenciesComponent implements OnInit, AfterViewInit  {
   ngAfterViewInit() {
     if (this.configurationWizardService.showCurrencyPage === true) {
       setTimeout(() => {
-          this.showPopover(this.templateButtonAddEdit, this.buttonAddEdit.nativeElement, 'bottom', true);
+        this.showPopover(this.templateButtonAddEdit, this.buttonAddEdit.nativeElement, 'bottom', true);
       });
     }
 
     if (this.configurationWizardService.showCurrencyList === true) {
       setTimeout(() => {
-          this.showPopover(this.templateTableCurrencies, this.tableCurrencies.nativeElement, 'top', true);
+        this.showPopover(this.templateTableCurrencies, this.tableCurrencies.nativeElement, 'top', true);
       });
     }
   }
@@ -130,5 +139,4 @@ export class CurrenciesComponent implements OnInit, AfterViewInit  {
     this.configurationWizardService.showAddEditCurrency = true;
     this.router.navigate(['/organization']);
   }
-
 }

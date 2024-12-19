@@ -16,7 +16,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./periodic-accruals.component.scss']
 })
 export class PeriodicAccrualsComponent implements OnInit {
-
   /** Minimum accrue date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum accrue date allowed. */
@@ -31,12 +30,14 @@ export class PeriodicAccrualsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private accountingService: AccountingService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   /**
    * Creates periodic accruals form.
@@ -51,7 +52,10 @@ export class PeriodicAccrualsComponent implements OnInit {
    */
   createPeriodicAccrualsForm() {
     this.periodicAccrualsForm = this.formBuilder.group({
-      'tillDate': ['', Validators.required]
+      tillDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -71,5 +75,4 @@ export class PeriodicAccrualsComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

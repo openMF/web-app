@@ -20,9 +20,7 @@ import { Dates } from 'app/core/utils/dates';
   templateUrl: './create-gsim-account.component.html',
   styleUrls: ['./create-gsim-account.component.scss']
 })
-
 export class CreateGsimAccountComponent {
-
   /** Savings Account Template */
   savingsAccountTemplate: any;
   /** Savings Account Product Template */
@@ -33,11 +31,14 @@ export class CreateGsimAccountComponent {
   selectedMembers: any;
 
   /** Savings Account Details Step */
-  @ViewChild(SavingsAccountDetailsStepComponent, { static: true }) savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
+  @ViewChild(SavingsAccountDetailsStepComponent, { static: true })
+  savingsAccountDetailsStep: SavingsAccountDetailsStepComponent;
   /** Savings Account Terms Step */
-  @ViewChild(SavingsAccountTermsStepComponent, { static: true }) savingsAccountTermsStep: SavingsAccountTermsStepComponent;
+  @ViewChild(SavingsAccountTermsStepComponent, { static: true })
+  savingsAccountTermsStep: SavingsAccountTermsStepComponent;
   /** Savings Account Charges Step */
-  @ViewChild(SavingsAccountChargesStepComponent, { static: true }) savingsAccountChargesStep: SavingsAccountChargesStepComponent;
+  @ViewChild(SavingsAccountChargesStepComponent, { static: true })
+  savingsAccountChargesStep: SavingsAccountChargesStepComponent;
 
   /**
    * Fetches savings account template from `resolve`
@@ -47,13 +48,14 @@ export class CreateGsimAccountComponent {
    * @param {SavingsService} savingsService Savings Service
    * @param {SettingsService} settingsService Settings Service
    */
-   constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private savingsService: SavingsService,
-              private settingsService: SettingsService
-              ) {
-      this.route.data.subscribe((data: { savingsAccountTemplate: any, groupsData: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private savingsService: SavingsService,
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { savingsAccountTemplate: any; groupsData: any }) => {
       this.savingsAccountTemplate = data.savingsAccountTemplate;
       this.dataSource = data.groupsData.activeClientMembers;
     });
@@ -63,7 +65,7 @@ export class CreateGsimAccountComponent {
    * Sets savings account product template.
    * @param {any} $event API response
    */
-   setTemplate($event: any) {
+  setTemplate($event: any) {
     this.savingsAccountProductTemplate = $event;
   }
 
@@ -84,7 +86,7 @@ export class CreateGsimAccountComponent {
   /**
    * Retrieves savings account terms form.
    */
-   get activeClientMembers() {
+  get activeClientMembers() {
     return this.dataSource;
   }
 
@@ -92,10 +94,7 @@ export class CreateGsimAccountComponent {
    * Checks validity of overall savings account form.
    */
   get savingsAccountFormValid() {
-    return (
-      this.savingsAccountDetailsForm.valid &&
-      this.savingsAccountTermsForm.valid
-    );
+    return this.savingsAccountDetailsForm.valid && this.savingsAccountTermsForm.valid;
   }
 
   /**
@@ -119,7 +118,7 @@ export class CreateGsimAccountComponent {
       ...this.savingsAccount,
       charges: this.savingsAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
-        amount: charge.amount,
+        amount: charge.amount
       })),
       clientId: client.id,
       isGSIM: true,
@@ -132,7 +131,6 @@ export class CreateGsimAccountComponent {
     data.groupId = this.savingsAccountTemplate.groupId;
 
     return data;
-
   }
 
   /** Request Body Data */
@@ -140,9 +138,7 @@ export class CreateGsimAccountComponent {
     const requestData = [];
     const memberSelected = this.selectedMembers.selectedMembers;
     for (let index = 0; index < 1; index++) {
-      requestData.push(
-        this.setData( memberSelected[ index ] ),
-      );
+      requestData.push(this.setData(memberSelected[index]));
     }
     return requestData;
   }
@@ -153,11 +149,16 @@ export class CreateGsimAccountComponent {
   submit() {
     const data = this.buildRequestData();
     const gsimData = {
-      clientArray: data,
+      clientArray: data
     };
     this.savingsService.createGsimAcccount(gsimData).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }
