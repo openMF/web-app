@@ -36,12 +36,12 @@
   window['env']['sessionIdleTimeout'] = '$MIFOS_SESSION_IDLE_TIMEOUT';
 
   // OAuth Server Enabled  
-  window['env']['oauthServerEnabled'] = $MIFOS_OAUTH_SERVER_ENABLED;
+  window['env']['oauthServerEnabled'] = '$MIFOS_OAUTH_SERVER_ENABLED';
 
   // OAuth Server URL  
   window['env']['oauthServerUrl'] = '$MIFOS_OAUTH_SERVER_URL';
 
   // OAuth Client Id  
   window['env']['oauthAppId'] = '$MIFOS_OAUTH_CLIENT_ID';
-  
+
 })(this);
