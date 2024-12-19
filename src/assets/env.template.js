@@ -15,7 +15,7 @@
   window['env']['defaultLanguage'] = '$MIFOS_DEFAULT_LANGUAGE';
   window['env']['supportedLanguages'] = '$MIFOS_SUPPORTED_LANGUAGES';
 
-  window['env']['preloadClients'] = $MIFOS_PRELOAD_CLIENTS;
+  window['env']['preloadClients'] = '$MIFOS_PRELOAD_CLIENTS';
 
   // Char delimiter to Export CSV options: ',' ';' '|' ' '
   window['env']['defaultCharDelimiter'] = '$MIFOS_DEFAULT_CHAR_DELIMITER';
@@ -36,7 +36,7 @@
   window['env']['sessionIdleTimeout'] = '$MIFOS_SESSION_IDLE_TIMEOUT';
 
   // OAuth Server Enabled  
-  window['env']['oauthServerEnabled'] = $MIFOS_OAUTH_SERVER_ENABLED;
+  window['env']['oauthServerEnabled'] = '$MIFOS_OAUTH_SERVER_ENABLED';
 
   // OAuth Server URL  
   window['env']['oauthServerUrl'] = '$MIFOS_OAUTH_SERVER_URL';
