@@ -1,31 +1,31 @@
 <div *ngIf="!data.reverted; else reverted">
-
-  <h1 mat-dialog-title>{{"labels.heading.Revert Transaction" | translate}}</h1>
+  <h1 mat-dialog-title>{{ 'labels.heading.Revert Transaction' | translate }}</h1>
   <div mat-dialog-content>
-    <p>{{"labels.text.Revert this transaction?" | translate}}</p>
+    <p>{{ 'labels.text.Revert this transaction?' | translate }}</p>
     <mat-form-field fxFlexFill>
-      <mat-label>{{"labels.inputs.Comments" | translate}}</mat-label>
+      <mat-label>{{ 'labels.inputs.Comments' | translate }}</mat-label>
       <textarea matInput [formControl]="comments"></textarea>
     </mat-form-field>
   </div>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>{{"labels.buttons.No" | translate}}</button>
-    <button mat-button [mat-dialog-close]="{ revert: true, comments: comments.value }">{{"labels.buttons.Yes" | translate}}</button>
+    <button mat-button mat-dialog-close>{{ 'labels.buttons.No' | translate }}</button>
+    <button mat-button [mat-dialog-close]="{ revert: true, comments: comments.value }">
+      {{ 'labels.buttons.Yes' | translate }}
+    </button>
   </mat-dialog-actions>
-
 </div>
 
 <ng-template #reverted>
-
-    <h1 mat-dialog-title>{{"labels.heading.Transaction Reverted" | translate}}</h1>
-    <div mat-dialog-content>
-      <h4>{{"labels.heading.Success!" | translate}}</h4>
-      <p>{{"labels.text.Journal entry reverse transaction" | translate}}</p>
-      <p>{{"labels.text.Transaction ID" | translate}}: {{ data.transactionId }}</p>
-    </div>
-    <mat-dialog-actions align="end">
-      <button mat-button mat-dialog-close>{{"labels.buttons.Close" | translate}}</button>
-      <button mat-button [mat-dialog-close]="{ redirect: true }">{{"labels.buttons.Redirect to New Transaction" | translate}}</button>
-    </mat-dialog-actions>
-
+  <h1 mat-dialog-title>{{ 'labels.heading.Transaction Reverted' | translate }}</h1>
+  <div mat-dialog-content>
+    <h4>{{ 'labels.heading.Success!' | translate }}</h4>
+    <p>{{ 'labels.text.Journal entry reverse transaction' | translate }}</p>
+    <p>{{ 'labels.text.Transaction ID' | translate }}: {{ data.transactionId }}</p>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>{{ 'labels.buttons.Close' | translate }}</button>
+    <button mat-button [mat-dialog-close]="{ redirect: true }">
+      {{ 'labels.buttons.Redirect to New Transaction' | translate }}
+    </button>
+  </mat-dialog-actions>
 </ng-template>

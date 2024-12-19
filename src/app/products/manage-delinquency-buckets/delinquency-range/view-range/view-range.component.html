@@ -1,24 +1,25 @@
 <div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_DELINQUENCY_RANGE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Edit' | translate }}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
-  <button mat-raised-button color="warn" (click)="deleteDelinquencyRange()" *mifosxHasPermission="'DELETE_DELINQUENCY_RANGE'">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="deleteDelinquencyRange()"
+    *mifosxHasPermission="'DELETE_DELINQUENCY_RANGE'"
+  >
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Delete' | translate }}
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Classification" | translate}}
+          {{ 'labels.inputs.Classification' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +27,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Days From" | translate}}
+          {{ 'labels.inputs.Days From' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -34,17 +35,13 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Days Till" | translate}}
+          {{ 'labels.inputs.Days Till' | translate }}
         </div>
 
         <div fxFlex="50%">
           {{ delinquencyRangeData.maximumAgeDays }}
         </div>
-
       </div>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

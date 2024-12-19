@@ -1,46 +1,54 @@
 <div class="container mat-elevation-z8">
-
   <mat-card>
-
     <form [formGroup]="loanInterestForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field (click)="interestDatePicker.open()">
-            <mat-label>{{"labels.inputs.Interest waived on" | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="interestDatePicker" required
-              formControlName="transactionDate">
+            <mat-label>{{ 'labels.inputs.Interest waived on' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="interestDatePicker"
+              required
+              formControlName="transactionDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="interestDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #interestDatePicker></mat-datepicker>
             <mat-error *ngIf="loanInterestForm.controls.transactionDate.hasError('required')">
-              {{"labels.inputs.Interest Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Interest Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
-          <mifosx-input-amount [currency]="currency" [isRequired]="true"
+          <mifosx-input-amount
+            [currency]="currency"
+            [isRequired]="true"
             [inputFormControl]="loanInterestForm.controls.transactionAmount"
-            [inputLabel]="'Transaction Amount'">
+            [inputLabel]="'Transaction Amount'"
+          >
           </mifosx-input-amount>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Note" | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
-
         </div>
 
         <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-          <button type="button" mat-raised-button [routerLink]="['../../general']">{{"labels.buttons.Cancel" | translate}}</button>
-          <button mat-raised-button color="primary" [disabled]="!loanInterestForm.valid"
-            *mifosxHasPermission="'WAIVEINTERESTPORTION_LOAN'">{{"labels.buttons.Submit" | translate}}</button>
+          <button type="button" mat-raised-button [routerLink]="['../../general']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="!loanInterestForm.valid"
+            *mifosxHasPermission="'WAIVEINTERESTPORTION_LOAN'"
+          >
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
         </mat-card-actions>
-
       </mat-card-content>
-
     </form>
-
   </mat-card>
-
 </div>

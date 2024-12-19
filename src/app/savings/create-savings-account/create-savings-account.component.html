@@ -1,7 +1,5 @@
 <div class="container">
-
   <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #savingProductStepper>
-
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -23,30 +21,25 @@
     </ng-template>
 
     <mat-step [stepControl]="savingsAccountDetailsForm">
-
-      <ng-template matStepLabel>{{'labels.inputs.DETAILS' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.DETAILS' | translate }}</ng-template>
 
       <mifosx-savings-account-details-step
-        [savingsAccountTemplate]="savingsAccountTemplate" 
+        [savingsAccountTemplate]="savingsAccountTemplate"
         (savingsAccountProductTemplate)="setTemplate($event)"
       >
       </mifosx-savings-account-details-step>
-
     </mat-step>
 
     <mat-step [stepControl]="savingsAccountTermsForm">
+      <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
-      <ng-template matStepLabel>{{'labels.inputs.TERMS' | translate}}</ng-template>
-
-      <mifosx-savings-account-terms-step 
+      <mifosx-savings-account-terms-step
         [savingsAccountProductTemplate]="savingsAccountProductTemplate"
       ></mifosx-savings-account-terms-step>
-
     </mat-step>
 
     <mat-step>
-
-      <ng-template matStepLabel>{{'labels.inputs.CHARGES' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
       <mifosx-savings-account-charges-step
         [savingsAccountProductTemplate]="savingsAccountProductTemplate"
@@ -54,12 +47,10 @@
         [currencyCode]="savingsAccountTermsForm.get('currencyCode')"
       >
       </mifosx-savings-account-charges-step>
-
     </mat-step>
 
     <mat-step *ngIf="savingsAccountFormValid" completed>
-
-      <ng-template matStepLabel>{{'labels.inputs.PREVIEW' | translate}}</ng-template>
+      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 
       <mifosx-savings-account-preview-step
         [savingsAccountProductTemplate]="savingsAccountProductTemplate"
@@ -69,9 +60,6 @@
         (submitEvent)="submit()"
       >
       </mifosx-savings-account-preview-step>
-
     </mat-step>
-
   </mat-horizontal-stepper>
-
 </div>

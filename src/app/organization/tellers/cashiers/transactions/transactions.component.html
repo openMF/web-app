@@ -1,71 +1,70 @@
 <div fxLayout="row" fxLayoutGap="1%" fxLayoutAlign="end" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['../allocate']" *mifosxHasPermission="'ALLOCATECASHIER_TELLER'">
-      <fa-icon icon="arrow-up" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Allocate Cash' | translate }}
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['../allocate']"
+    *mifosxHasPermission="'ALLOCATECASHIER_TELLER'"
+  >
+    <fa-icon icon="arrow-up" class="m-r-10"></fa-icon>
+    {{ 'labels.buttons.Allocate Cash' | translate }}
   </button>
-  <button mat-raised-button color="warn" [routerLink]="['../settle']" *mifosxHasPermission="'SETTLECASHFROMCASHIER_TELLER'">
-      <fa-icon icon="arrow-down" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Settle Cash' | translate }}
+  <button
+    mat-raised-button
+    color="warn"
+    [routerLink]="['../settle']"
+    *mifosxHasPermission="'SETTLECASHFROMCASHIER_TELLER'"
+  >
+    <fa-icon icon="arrow-down" class="m-r-10"></fa-icon>
+    {{ 'labels.buttons.Settle Cash' | translate }}
   </button>
 </div>
 
 <div class="container m-b-20" *ngIf="cashierData">
-
-    <mat-card class="mat-elevation-z8">
-
-      <mat-card-content>
-
-        <div fxLayout="row wrap" class="content">
-
-          <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
-            {{ 'labels.inputs.Branch' | translate }}
-          </div>
-
-          <div fxFlex="25%" fxFlex.lt-md="50%">
-            {{ cashierData.officeName }}
-          </div>
-
-          <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
-            {{ 'labels.inputs.Teller' | translate }}
-          </div>
-
-          <div fxFlex="25%" fxFlex.lt-md="50%">
-            {{ cashierData.tellerName }}
-          </div>
-
-          <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
-            {{ 'labels.inputs.Cashier' | translate }}
-          </div>
-
-          <div fxFlex="25%" fxFlex.lt-md="50%">
-            {{ cashierData.cashierName }}
-          </div>
-
-          <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
-            {{ 'labels.inputs.Net Cash' | translate }}
-          </div>
-
-          <div fxFlex="25%" fxFlex.lt-md="50%">
-            {{ cashierData.netCash | formatNumber }} [{{currencySelector.value}}]
-          </div>
-
+  <mat-card class="mat-elevation-z8">
+    <mat-card-content>
+      <div fxLayout="row wrap" class="content">
+        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          {{ 'labels.inputs.Branch' | translate }}
         </div>
 
-      </mat-card-content>
+        <div fxFlex="25%" fxFlex.lt-md="50%">
+          {{ cashierData.officeName }}
+        </div>
 
-    </mat-card>
+        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          {{ 'labels.inputs.Teller' | translate }}
+        </div>
 
+        <div fxFlex="25%" fxFlex.lt-md="50%">
+          {{ cashierData.tellerName }}
+        </div>
+
+        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          {{ 'labels.inputs.Cashier' | translate }}
+        </div>
+
+        <div fxFlex="25%" fxFlex.lt-md="50%">
+          {{ cashierData.cashierName }}
+        </div>
+
+        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          {{ 'labels.inputs.Net Cash' | translate }}
+        </div>
+
+        <div fxFlex="25%" fxFlex.lt-md="50%">
+          {{ cashierData.netCash | formatNumber }} [{{ currencySelector.value }}]
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <div class="container">
-
   <mat-card fxLayout="column" fxLayoutGap="2%" class="mat-elevation-z8">
-
     <div fxLayout="row" fxLayoutGap="2%">
-
       <mat-form-field fxFlex>
-        <mat-label>{{'labels.inputs.Filter' | translate}}</mat-label>
-        <input matInput (keyup)="applyFilter($event.target.value)">
+        <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)" />
       </mat-form-field>
 
       <mat-form-field>
@@ -76,52 +75,61 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
     </div>
 
     <div *ngIf="cashierData">
-
       <table class="mat-elevation-z1" mat-table [dataSource]="dataSource" matSort>
-
         <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Date' | translate }} </th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnDate  | dateFormat }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Date' | translate }}</th>
+          <td mat-cell *matCellDef="let transaction">{{ transaction.txnDate | dateFormat }}</td>
         </ng-container>
 
         <ng-container matColumnDef="transactions">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Transactions' | translate }} </th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Transactions' | translate }}</th>
+          <td mat-cell *matCellDef="let transaction">{{ transaction.txnType.value }}</td>
         </ng-container>
 
         <ng-container matColumnDef="allocation">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Allocation' | translate }} ({{cashierData.sumCashAllocation | formatNumber}}) </th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Allocate Cash" ? (transaction.txnAmount | formatNumber) : '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Allocation' | translate }} ({{ cashierData.sumCashAllocation | formatNumber }})
+          </th>
+          <td mat-cell *matCellDef="let transaction">
+            {{ transaction.txnType.value === 'Allocate Cash' ? (transaction.txnAmount | formatNumber) : '-' }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="cashIn">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Cash In' | translate }} ({{cashierData.sumInwardCash | formatNumber}})  </th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Cash In" ? (transaction.txnAmount | formatNumber) : '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Cash In' | translate }} ({{ cashierData.sumInwardCash | formatNumber }})
+          </th>
+          <td mat-cell *matCellDef="let transaction">
+            {{ transaction.txnType.value === 'Cash In' ? (transaction.txnAmount | formatNumber) : '-' }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="cashOut">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Cash Out' | translate }} ({{cashierData.sumOutwardCash | formatNumber}}) </th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Cash Out" ? (transaction.txnAmount | formatNumber) : '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Cash Out' | translate }} ({{ cashierData.sumOutwardCash | formatNumber }})
+          </th>
+          <td mat-cell *matCellDef="let transaction">
+            {{ transaction.txnType.value === 'Cash Out' ? (transaction.txnAmount | formatNumber) : '-' }}
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="settlement">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ 'labels.inputs.Settlement' | translate }} ({{cashierData.sumCashSettlement | formatNumber}})</th>
-          <td mat-cell *matCellDef="let transaction"> {{ transaction.txnType.value === "Settle Cash" ? (transaction.txnAmount | formatNumber) : '-' }} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Settlement' | translate }} ({{ cashierData.sumCashSettlement | formatNumber }})
+          </th>
+          <td mat-cell *matCellDef="let transaction">
+            {{ transaction.txnType.value === 'Settle Cash' ? (transaction.txnAmount | formatNumber) : '-' }}
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
       <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
     </div>
-
   </mat-card>
-
 </div>

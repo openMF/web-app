@@ -2,15 +2,15 @@
   <div #buttonCreateClosure>
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GLCLOSURE'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
-      {{"labels.buttons.Create Closure" | translate}}
+      {{ 'labels.buttons.Create Closure' | translate }}
     </button>
   </div>
 </div>
 
 <div #filter class="container" fxLayout="row">
   <mat-form-field fxFlex>
-    <mat-label>{{"labels.inputs.Office Name" | translate}}</mat-label>
-    <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete">
+    <mat-label>{{ 'labels.inputs.Office Name' | translate }}</mat-label>
+    <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete" />
   </mat-form-field>
 </div>
 
@@ -22,66 +22,104 @@
 </mat-autocomplete>
 
 <div class="container">
-
   <div #closuresTable class="mat-elevation-z8">
-
     <table mat-table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="officeName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Office" | translate}} </th>
-        <td mat-cell *matCellDef="let glAccountClosure"> {{ glAccountClosure.officeName }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>
+        <td mat-cell *matCellDef="let glAccountClosure">{{ glAccountClosure.officeName }}</td>
       </ng-container>
 
       <ng-container matColumnDef="closingDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Closure Date" | translate}} </th>
-        <td mat-cell *matCellDef="let glAccountClosure"> {{ glAccountClosure.closingDate }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Closure Date' | translate }}</th>
+        <td mat-cell *matCellDef="let glAccountClosure">{{ glAccountClosure.closingDate }}</td>
       </ng-container>
 
       <ng-container matColumnDef="comments">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Comments" | translate}} </th>
-        <td mat-cell *matCellDef="let glAccountClosure"> {{ glAccountClosure.comments }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Comments' | translate }}</th>
+        <td mat-cell *matCellDef="let glAccountClosure">{{ glAccountClosure.comments }}</td>
       </ng-container>
 
       <ng-container matColumnDef="createdByUsername">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Created By" | translate}} </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Created By' | translate }}</th>
         <td mat-cell *matCellDef="let glAccountClosure">{{ glAccountClosure.createdByUsername }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['view', row.id]" class="select-row"></tr>
-
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [routerLink]="['view', row.id]"
+        class="select-row"
+      ></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
-
   </div>
-
 </div>
 
 <ng-template #templateButtonCreateClosure let-popover="popover">
-  <h2>{{"labels.heading.Create Closure" | translate}}</h2>
-  <p class="mw300">{{"labels.text.Create new closure" | translate}}</p>
+  <h2>{{ 'labels.heading.Create Closure' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Create new closure' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();previousStep();">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true);">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateFilter let-popover="popover">
-  <h4>{{"labels.heading.Search bar to filter closures by office."|translate}}</h4>
+  <h4>{{ 'labels.heading.Search bar to filter closures by office.' | translate }}</h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateButtonCreateClosure, buttonCreateClosure, 'bottom', true);">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateClosuresTable,closuresTable, 'top', true);">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonCreateClosure, buttonCreateClosure, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateClosuresTable, closuresTable, 'top', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateClosuresTable let-popover="popover">
-  <h4>{{"labels.heading.List of closures. To know more click" | translate}}: <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895316/Closing+Entries" target="_blank">{{"labels.inputs.Closing Entries" | translate}}</a></h4>
+  <h4>
+    {{ 'labels.heading.List of closures. To know more click' | translate }}:
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895316/Closing+Entries" target="_blank">{{
+      'labels.inputs.Closing Entries' | translate
+    }}</a>
+  </h4>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateFilter,filter, 'bottom', true);">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();nextStep()">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>

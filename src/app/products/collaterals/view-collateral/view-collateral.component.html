@@ -1,21 +1,20 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-    <button mat-raised-button color="primary" [routerLink]="['edit']" >
-        <fa-icon icon="edit" class="m-r-10"></fa-icon>
-        {{"labels.heading.Edit" | translate}}
-    </button>
-    <button mat-raised-button color="warn" (click)="deleteCollateral()" >
-        <fa-icon icon="trash" class="m-r-10"></fa-icon>
-        {{"labels.heading.Delete" | translate}}
-    </button>
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
+    {{ 'labels.heading.Edit' | translate }}
+  </button>
+  <button mat-raised-button color="warn" (click)="deleteCollateral()">
+    <fa-icon icon="trash" class="m-r-10"></fa-icon>
+    {{ 'labels.heading.Delete' | translate }}
+  </button>
 </div>
 
 <div class="container">
   <mat-card>
     <mat-card-content>
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Collateral Name" | translate}}
+          {{ 'labels.inputs.Collateral Name' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -23,7 +22,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Type/Quality" | translate}}
+          {{ 'labels.inputs.Type/Quality' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -31,7 +30,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Base Price" | translate}}
+          {{ 'labels.inputs.Base Price' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -39,7 +38,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Base Percentage" | translate}}
+          {{ 'labels.inputs.Base Percentage' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -47,7 +46,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.inputs.Unit Type" | translate}}
+          {{ 'labels.inputs.Unit Type' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -55,7 +54,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong">
-          {{"labels.heading.Currency" | translate}}
+          {{ 'labels.heading.Currency' | translate }}
         </div>
 
         <div fxFlex="50%">

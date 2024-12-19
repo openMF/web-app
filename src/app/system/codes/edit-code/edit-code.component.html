@@ -1,32 +1,32 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="codeForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
-          <div fxLayout="column">
-
-            <mat-form-field>
-              <mat-label>{{'labels.inputs.Code Name' | translate}}</mat-label>
-              <input matInput required formControlName="name">
-              <mat-error *ngIf="codeForm.controls.name.hasError('required')">
-                {{'labels.inputs.Code Name' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
-              </mat-error>
-            </mat-form-field>
-
-          </div>
-
+        <div fxLayout="column">
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Code Name' | translate }}</mat-label>
+            <input matInput required formControlName="name" />
+            <mat-error *ngIf="codeForm.controls.name.hasError('required')">
+              {{ 'labels.inputs.Code Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!codeForm.valid || codeForm.pristine" *mifosxHasPermission="'UPDATE_CODE'">{{'labels.buttons.Submit' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!codeForm.valid || codeForm.pristine"
+          *mifosxHasPermission="'UPDATE_CODE'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

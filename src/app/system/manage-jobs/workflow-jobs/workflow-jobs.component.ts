@@ -50,8 +50,7 @@ export class WorkflowJobsComponent implements OnInit {
    * @param {string} jobName Value to Workflow Job name.
    */
   getWorkflowJobSteps(jobName: string) {
-    this.systemService.getWorkflowJobSteps(jobName).toPromise()
-    .then(data => {
+    this.systemService.getWorkflowJobSteps(jobName).subscribe((data: any) => {
       this.jobStepName = jobName;
       this.jobStepsData = data.businessSteps.sort(function (a: JobStep, b: JobStep) {
         return a.order - b.order;

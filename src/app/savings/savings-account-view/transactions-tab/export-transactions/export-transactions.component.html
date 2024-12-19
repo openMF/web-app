@@ -1,35 +1,48 @@
 <form class="m-t-20" fxLayout="column" [formGroup]="transactionsReportForm" (ngSubmit)="generate()">
-
   <div fxLayout="row" fxLayoutGap="3%" fxLayoutAlign="center">
-
     <mat-form-field fxFlex="30%" (click)="fromDatePicker.open()">
       <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" required formControlName="fromDate">
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="fromDatePicker"
+        required
+        formControlName="fromDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #fromDatePicker></mat-datepicker>
       <mat-error>
-        {{ 'labels.inputs.From Date' | translate }} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+        {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="30%" (click)="toDatePicker.open()">
       <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" required formControlName="toDate">
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="toDatePicker"
+        required
+        formControlName="toDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #toDatePicker></mat-datepicker>
       <mat-error>
-        {{ 'labels.inputs.To Date' | translate }} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+        {{ 'labels.inputs.To Date' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
-
   </div>
 
   <div class="generate-button" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5%">
-    <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate}}</button>
+    <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
     <button mat-raised-button color="primary" [disabled]="!transactionsReportForm.valid">
-    <fa-icon icon="cogs" class="m-r-10"></fa-icon>{{ 'labels.buttons.Generate Report' | translate }} &nbsp;</button>
+      <fa-icon icon="cogs" class="m-r-10"></fa-icon>{{ 'labels.buttons.Generate Report' | translate }} &nbsp;
+    </button>
   </div>
-
 </form>
 
 <iframe *ngIf="!hideOutput" [src]="pentahoUrl" frameborder="0" width="100%" height="750px;"></iframe>

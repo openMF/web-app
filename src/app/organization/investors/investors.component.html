@@ -1,47 +1,65 @@
 <mat-card class="container">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
     <mat-form-field fxFlex="18%">
-      <mat-label>{{'labels.text.Search by Text' | translate}}</mat-label>
-      <input matInput [formControl]="searchText">
+      <mat-label>{{ 'labels.text.Search by Text' | translate }}</mat-label>
+      <input matInput [formControl]="searchText" />
     </mat-form-field>
 
     <mat-form-field fxFlex="18%" (click)="effectiveFromDatePicker.open()">
-      <mat-label>{{'labels.text.Effective Date From' | translate}}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="effectiveFromDatePicker"
-        [formControl]="effectiveFromDate">
+      <mat-label>{{ 'labels.text.Effective Date From' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="effectiveFromDatePicker"
+        [formControl]="effectiveFromDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="effectiveFromDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #effectiveFromDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="18%" (click)="effectiveToDatePicker.open()">
-      <mat-label>{{'labels.text.Effective Date To' | translate}}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="effectiveToDatePicker"
-        [formControl]="effectiveToDate">
+      <mat-label>{{ 'labels.text.Effective Date To' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="effectiveToDatePicker"
+        [formControl]="effectiveToDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="effectiveToDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #effectiveToDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="18%" (click)="settlementFromDatePicker.open()">
-      <mat-label>{{'labels.text.Settlement Date From' | translate}}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="settlementFromDatePicker"
-        [formControl]="settlementFromDate">
+      <mat-label>{{ 'labels.text.Settlement Date From' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="settlementFromDatePicker"
+        [formControl]="settlementFromDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="settlementFromDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #settlementFromDatePicker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field fxFlex="18%" (click)="settlementToDatePicker.open()">
-      <mat-label>{{'labels.text.Settlement Date To' | translate}}</mat-label>
-      <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="settlementToDatePicker"
-        [formControl]="settlementToDate">
+      <mat-label>{{ 'labels.text.Settlement Date To' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="settlementToDatePicker"
+        [formControl]="settlementToDate"
+      />
       <mat-datepicker-toggle matSuffix [for]="settlementToDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #settlementToDatePicker></mat-datepicker>
     </mat-form-field>
 
     <div fxFlex="98%" class="center m-t-15">
       <button mat-raised-button color="primary" (click)="searchEAO()">
-        <fa-icon icon="search" class="m-r-10"></fa-icon> {{'labels.buttons.Search' | translate}}
+        <fa-icon icon="search" class="m-r-10"></fa-icon> {{ 'labels.buttons.Search' | translate }}
       </button>
     </div>
   </div>
@@ -51,7 +69,7 @@
       <div class="loading"></div>
     </div>
     <mat-accordion *ngIf="existsDataToFilter">
-      <mat-expansion-panel *ngFor="let record of searchResults;index as i" class="record">
+      <mat-expansion-panel *ngFor="let record of searchResults; index as i" class="record">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <table>
@@ -59,23 +77,22 @@
                 <td>
                   <div [ngClass]="itemStatus(record.status)" class="m-r-20">
                     <fa-icon icon="stop"></fa-icon>
-                    <span class="m-l-10 status">{{record.status}}</span>
+                    <span class="m-l-10 status">{{ record.status }}</span>
                   </div>
                 </td>
-                <td class="field-name"> {{'labels.inputs.Owner External Id' | translate}} </td>
+                <td class="field-name">{{ 'labels.inputs.Owner External Id' | translate }}</td>
                 <td>
-                  <mifosx-external-identifier externalId="{{record.owner.externalId}}"></mifosx-external-identifier>
+                  <mifosx-external-identifier externalId="{{ record.owner.externalId }}"></mifosx-external-identifier>
                 </td>
-                <td class="field-name"> {{'labels.inputs.Transfer External Id' | translate}} </td>
+                <td class="field-name">{{ 'labels.inputs.Transfer External Id' | translate }}</td>
                 <td>
-                  <mifosx-external-identifier externalId="{{record.transferExternalId}}"></mifosx-external-identifier>
+                  <mifosx-external-identifier externalId="{{ record.transferExternalId }}"></mifosx-external-identifier>
                 </td>
-                <td class="field-name"> {{'labels.inputs.Effective From' | translate}} </td>
-                <td> {{ record.effectiveFrom | dateFormat }} </td>
+                <td class="field-name">{{ 'labels.inputs.Effective From' | translate }}</td>
+                <td>{{ record.effectiveFrom | dateFormat }}</td>
               </tr>
             </table>
           </mat-panel-title>
-
         </mat-expansion-panel-header>
 
         <div class="external-asset-transfer">
@@ -83,65 +100,88 @@
             <tbody>
               <tr>
                 <td fxFlex="25%" class="m-l-5">
-                  <b>{{'labels.inputs.Status' | translate}} :</b>
+                  <b>{{ 'labels.inputs.Status' | translate }} :</b>
                 </td>
                 <td fxFlex="25%" class="m-l-5 left">
                   <div [ngClass]="itemStatus(record.status)">
                     <fa-icon icon="stop"></fa-icon>
-                    <span class="m-l-5 status">{{record.status}}</span>
+                    <span class="m-l-5 status">{{ record.status }}</span>
                   </div>
                 </td>
                 <td fxFlex="25%" class="m-l-5">
-                  <b>{{'labels.inputs.Owner External Id' | translate}} :</b>
+                  <b>{{ 'labels.inputs.Owner External Id' | translate }} :</b>
                 </td>
                 <td fxFlex="25%" class="m-l-5 left">
-                  <mifosx-external-identifier externalId="{{record.owner.externalId}}" completed="true"></mifosx-external-identifier>
+                  <mifosx-external-identifier
+                    externalId="{{ record.owner.externalId }}"
+                    completed="true"
+                  ></mifosx-external-identifier>
                 </td>
               </tr>
               <tr>
                 <td fxFlex="25%" class="m-l-5">
-                  <b>{{'labels.inputs.Settlement Date' | translate}} :</b>
+                  <b>{{ 'labels.inputs.Settlement Date' | translate }} :</b>
                 </td>
                 <td fxFlex="25%" class="m-l-5">
-                  {{record.settlementDate | dateFormat}}
+                  {{ record.settlementDate | dateFormat }}
                 </td>
                 <td fxFlex="25%" class="m-l-5">
-                  <b>{{'labels.inputs.Effective Date' | translate}} :</b>
+                  <b>{{ 'labels.inputs.Effective Date' | translate }} :</b>
                 </td>
                 <td fxFlex="25%" class="m-l-5">
-                  {{record.effectiveFrom | dateFormat}}
+                  {{ record.effectiveFrom | dateFormat }}
                 </td>
               </tr>
               <tr *ngIf="record.details">
                 <td fxFlex="25%" class="m-l-5">
-                  <b>{{'labels.inputs.Details' | translate}} :</b>
+                  <b>{{ 'labels.inputs.Details' | translate }} :</b>
                 </td>
                 <td fxFlex="75%" class="left">
                   <table>
                     <tbody>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5"><b>{{'labels.inputs.Principal Outstanding' | translate}} :</b></td>
-                        <td fxFlex="50%" class="r-amount">{{record.details.totalPrincipalOutstanding | formatNumber}}</td>
+                        <td fxFlex="50%" class="m-l-5">
+                          <b>{{ 'labels.inputs.Principal Outstanding' | translate }} :</b>
+                        </td>
+                        <td fxFlex="50%" class="r-amount">
+                          {{ record.details.totalPrincipalOutstanding | formatNumber }}
+                        </td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5"><b>{{'labels.inputs.Interest Outstanding' | translate}} :</b></td>
-                        <td fxFlex="50%" class="r-amount">{{record.details.totalInterestOutstanding | formatNumber}}</td>
+                        <td fxFlex="50%" class="m-l-5">
+                          <b>{{ 'labels.inputs.Interest Outstanding' | translate }} :</b>
+                        </td>
+                        <td fxFlex="50%" class="r-amount">
+                          {{ record.details.totalInterestOutstanding | formatNumber }}
+                        </td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5"><b>{{'labels.inputs.Fees Outstanding' | translate}} :</b></td>
-                        <td fxFlex="50%" class="r-amount">{{record.details.totalFeeChargesOutstanding | formatNumber}}</td>
+                        <td fxFlex="50%" class="m-l-5">
+                          <b>{{ 'labels.inputs.Fees Outstanding' | translate }} :</b>
+                        </td>
+                        <td fxFlex="50%" class="r-amount">
+                          {{ record.details.totalFeeChargesOutstanding | formatNumber }}
+                        </td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5"><b>{{'labels.inputs.Penalties Outstanding' | translate}} :</b></td>
-                        <td fxFlex="50%" class="r-amount">{{record.details.totalPenaltyChargesOutstanding | formatNumber}}</td>
+                        <td fxFlex="50%" class="m-l-5">
+                          <b>{{ 'labels.inputs.Penalties Outstanding' | translate }} :</b>
+                        </td>
+                        <td fxFlex="50%" class="r-amount">
+                          {{ record.details.totalPenaltyChargesOutstanding | formatNumber }}
+                        </td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5"><b>{{'labels.inputs.Outstanding' | translate}} :</b></td>
-                        <td fxFlex="50%" class="r-amount">{{record.details.totalOutstanding | formatNumber}}</td>
+                        <td fxFlex="50%" class="m-l-5">
+                          <b>{{ 'labels.inputs.Outstanding' | translate }} :</b>
+                        </td>
+                        <td fxFlex="50%" class="r-amount">{{ record.details.totalOutstanding | formatNumber }}</td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5"><b>{{'labels.inputs.Overpaid' | translate}} :</b></td>
-                        <td fxFlex="50%" class="r-amount">{{record.details.totalOverpaid | formatNumber}}</td>
+                        <td fxFlex="50%" class="m-l-5">
+                          <b>{{ 'labels.inputs.Overpaid' | translate }} :</b>
+                        </td>
+                        <td fxFlex="50%" class="r-amount">{{ record.details.totalOverpaid | formatNumber }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -154,23 +194,32 @@
         <mat-divider [inset]="true"></mat-divider>
 
         <div class="record-actions" fxLayout="row" fxLayoutAlign="flex-end" *ngIf="canBeCancelled(record)">
-          <button mat-button color="warn" (click)="cancelPendingSale(record)" matTooltip="{{'labels.text.Cancel Pending Sale' | translate}}">
+          <button
+            mat-button
+            color="warn"
+            (click)="cancelPendingSale(record)"
+            matTooltip="{{ 'labels.text.Cancel Pending Sale' | translate }}"
+          >
             <fa-icon icon="trash"></fa-icon>
           </button>
         </div>
-
       </mat-expansion-panel>
     </mat-accordion>
 
-    <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[50, 100, 200]" [length]="totalRows" (page)="pageChanged($event)"
-      showFirstLastButtons *ngIf="existsDataToFilter"></mat-paginator>
+    <mat-paginator
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[50, 100, 200]"
+      [length]="totalRows"
+      (page)="pageChanged($event)"
+      showFirstLastButtons
+      *ngIf="existsDataToFilter"
+    ></mat-paginator>
   </div>
 
   <div class="alert" *ngIf="!existsDataToFilter">
     <div class="message">
       <i class="fa fa-exclamation-circle alert-check"></i>
-      {{'labels.text.No data found' | translate}}
+      {{ 'labels.text.No data found' | translate }}
     </div>
   </div>
-
 </mat-card>

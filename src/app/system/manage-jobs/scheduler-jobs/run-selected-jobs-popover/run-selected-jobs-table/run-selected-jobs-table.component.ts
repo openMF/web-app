@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { JobDataType } from '../run-selected-jobs-popover.component';
 
 /**
@@ -9,7 +9,7 @@ import { JobDataType } from '../run-selected-jobs-popover.component';
   templateUrl: './run-selected-jobs-table.component.html',
   styleUrls: ['./run-selected-jobs-table.component.scss']
 })
-export class RunSelectedJobsTableComponent implements OnInit {
+export class RunSelectedJobsTableComponent {
 
   /** Selected Jobs For Table */
   @Input() selectedJobs: JobDataType[];
@@ -22,9 +22,6 @@ export class RunSelectedJobsTableComponent implements OnInit {
   columnsToDisplay: string[] = ['displayName', 'actions'];
 
   constructor() {
-  }
-
-  ngOnInit(): void {
   }
 
   /**

@@ -1,13 +1,14 @@
 <mat-card class="account-card">
-
   <mat-card-header fxLayout="column" class="header">
-
     <mat-card-title-group class="header-title-group">
-
       <div class="profile-image-container">
         <div>
-          <img mat-card-md-image class="profile-image" matTooltip="{{ 'tooltips.Savings Account' | translate}}"
-            [src]="'assets/images/savings_account_placeholder.png'">
+          <img
+            mat-card-md-image
+            class="profile-image"
+            matTooltip="{{ 'tooltips.Savings Account' | translate }}"
+            [src]="'assets/images/savings_account_placeholder.png'"
+          />
         </div>
       </div>
 
@@ -15,34 +16,55 @@
         <mat-card-title fxLayout="row" fxLayout.lt-md="column">
           <div fxFlex="60%">
             <h3>
-              <i class="fa fa-stop" [ngClass]="savingsAccountData.status.code | statusLookup"
-                [matTooltip]="savingsAccountData.status.value" *ngIf="!savingsAccountData.subStatus.block"></i>
-              <i class="fa fa-stop" [ngClass]="savingsAccountData.subStatus.value | statusLookup"
-                [matTooltip]="savingsAccountData.subStatus.value" *ngIf="savingsAccountData.subStatus.block"></i>
-                <span class="m-r-5">{{'labels.inputs.Savings Product' | translate}} :</span> 
-                <span class="m-r-5"><mifosx-long-text textValue="{{savingsAccountData.savingsProductName}}"></mifosx-long-text></span>
-                <mifosx-account-number accountNo="{{savingsAccountData.accountNo}}" display="left"></mifosx-account-number>
+              <i
+                class="fa fa-stop"
+                [ngClass]="savingsAccountData.status.code | statusLookup"
+                [matTooltip]="savingsAccountData.status.value"
+                *ngIf="!savingsAccountData.subStatus.block"
+              ></i>
+              <i
+                class="fa fa-stop"
+                [ngClass]="savingsAccountData.subStatus.value | statusLookup"
+                [matTooltip]="savingsAccountData.subStatus.value"
+                *ngIf="savingsAccountData.subStatus.block"
+              ></i>
+              <span class="m-r-5">{{ 'labels.inputs.Savings Product' | translate }} :</span>
+              <span class="m-r-5"
+                ><mifosx-long-text textValue="{{ savingsAccountData.savingsProductName }}"></mifosx-long-text
+              ></span>
+              <mifosx-account-number
+                accountNo="{{ savingsAccountData.accountNo }}"
+                display="left"
+              ></mifosx-account-number>
             </h3>
             <span class="account-overview">
-              {{'labels.text.' + entityType | translate}} {{"labels.inputs.name" | translate}}: {{savingsAccountData.clientName ||
-              savingsAccountData.groupName}}
+              {{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }}:
+              {{ savingsAccountData.clientName || savingsAccountData.groupName }}
               <span class="m-l-10" *ngIf="savingsAccountData.clientAccountNo">
-                <mifosx-account-number accountNo="{{savingsAccountData.clientAccountNo}}"></mifosx-account-number>
+                <mifosx-account-number accountNo="{{ savingsAccountData.clientAccountNo }}"></mifosx-account-number>
               </span>
             </span>
           </div>
 
           <div *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
-            <h3> {{"labels.heading.Account Overview" | translate}} </h3>
+            <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
             <table class="account-overview">
               <tbody>
                 <tr>
-                  <td>{{"labels.inputs.Current Balance" | translate }}</td>
-                  <td class="r-amount">{{savingsAccountData.summary.accountBalance | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                  <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
+                  <td class="r-amount">
+                    {{
+                      savingsAccountData.summary.accountBalance | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                    }}
+                  </td>
                 </tr>
                 <tr>
-                  <td>{{"labels.inputs.Available Balance" | translate }}</td>
-                  <td class="r-amount">{{savingsAccountData.summary.availableBalance | currency:currency.code:'symbol-narrow':'1.2-2'}}</td>
+                  <td>{{ 'labels.inputs.Available Balance' | translate }}</td>
+                  <td class="r-amount">
+                    {{
+                      savingsAccountData.summary.availableBalance | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                    }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -51,8 +73,12 @@
           <span fxFlex="auto"></span>
 
           <div fxFlex="5%">
-            <button mat-icon-button [matMenuTriggerFor]="accountMenu" aria-label="Loan account actions"
-              yPosition="below">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="accountMenu"
+              aria-label="Loan account actions"
+              yPosition="below"
+            >
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
               </mat-icon>
@@ -65,68 +91,100 @@
         <ng-container *ngFor="let item of buttonConfig.singleButtons">
           <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
             <mat-icon matListIcon>
-              <fa-icon icon="{{item.icon}}" size="sm"></fa-icon>
+              <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
             </mat-icon>
-            <span> {{'labels.menus.' + item.name | translate}} </span>
+            <span> {{ 'labels.menus.' + item.name | translate }} </span>
           </button>
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.options && !savingsAccountData.subStatus.block">
-          <button mat-menu-item [matMenuTriggerFor]="More">{{'labels.menus.More' | translate}}</button>
+          <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
           <mat-menu #More="matMenu">
             <span *ngFor="let option of buttonConfig.options">
-              <button mat-menu-item *mifosxHasPermission="option.taskPermissionName"
-                (click)="doAction(option.name)">{{'labels.menus.' + option.name | translate}}</button>
+              <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">
+                {{ 'labels.menus.' + option.name | translate }}
+              </button>
             </span>
           </mat-menu>
         </ng-container>
       </mat-menu>
-
     </mat-card-title-group>
-
   </mat-card-header>
 
   <mat-card-content class="content">
-
     <nav mat-tab-nav-bar class="navigation-tabs" *ngIf="isActive">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-        [active]="general.isActive">
-        {{'labels.inputs.General' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+      >
+        {{ 'labels.inputs.General' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./transactions']" routerLinkActive #transactions="routerLinkActive"
-        [active]="transactions.isActive">
-        {{'labels.inputs.Transactions' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./transactions']"
+        routerLinkActive
+        #transactions="routerLinkActive"
+        [active]="transactions.isActive"
+      >
+        {{ 'labels.inputs.Transactions' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./charges']" routerLinkActive #charges="routerLinkActive"
-        [active]="charges.isActive">
-        {{'labels.inputs.Charges' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./charges']"
+        routerLinkActive
+        #charges="routerLinkActive"
+        [active]="charges.isActive"
+      >
+        {{ 'labels.inputs.Charges' | translate }}
       </a>
-      <a mat-tab-link [routerLink]="['./documents']" routerLinkActive #savingsDocuments="routerLinkActive"
-        [active]="savingsDocuments.isActive">
-        {{'labels.inputs.Documents' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./documents']"
+        routerLinkActive
+        #savingsDocuments="routerLinkActive"
+        [active]="savingsDocuments.isActive"
+      >
+        {{ 'labels.inputs.Documents' | translate }}
       </a>
-      <a mat-tab-link *mifosxHasPermission="'READ_SAVINGSNOTE'" [routerLink]="['./notes']" routerLinkActive #notes="routerLinkActive"
-        [active]="notes.isActive">
-        {{'labels.inputs.Notes' | translate}}
+      <a
+        mat-tab-link
+        *mifosxHasPermission="'READ_SAVINGSNOTE'"
+        [routerLink]="['./notes']"
+        routerLinkActive
+        #notes="routerLinkActive"
+        [active]="notes.isActive"
+      >
+        {{ 'labels.inputs.Notes' | translate }}
       </a>
       <ng-container *mifosxHasPermission="'READ_SAVINGSACCOUNTCHARGE'">
-        <a mat-tab-link [routerLink]="['./standing-instructions']" routerLinkActive
-          #standingInstructions="routerLinkActive" [active]="standingInstructions.isActive"
-          *ngIf="savingsAccountData.clientId">
-          {{'labels.inputs.Standing Instructions' | translate}}
+        <a
+          mat-tab-link
+          [routerLink]="['./standing-instructions']"
+          routerLinkActive
+          #standingInstructions="routerLinkActive"
+          [active]="standingInstructions.isActive"
+          *ngIf="savingsAccountData.clientId"
+        >
+          {{ 'labels.inputs.Standing Instructions' | translate }}
         </a>
       </ng-container>
       <ng-container *ngFor="let savingsDatatable of savingsDatatables">
-        <a mat-tab-link *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
-          [routerLink]="['./datatables',savingsDatatable.registeredTableName]" routerLinkActive
-          #datatable="routerLinkActive" [active]="datatable.isActive">
-          {{savingsDatatable.registeredTableName}}
+        <a
+          mat-tab-link
+          *mifosxHasPermission="'READ_' + savingsDatatable.registeredTableName"
+          [routerLink]="['./datatables', savingsDatatable.registeredTableName]"
+          routerLinkActive
+          #datatable="routerLinkActive"
+          [active]="datatable.isActive"
+        >
+          {{ savingsDatatable.registeredTableName }}
         </a>
       </ng-container>
     </nav>
 
     <router-outlet></router-outlet>
-
   </mat-card-content>
-
 </mat-card>

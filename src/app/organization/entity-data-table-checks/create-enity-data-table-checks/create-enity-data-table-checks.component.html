@@ -1,22 +1,18 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="createEntityForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
             <mat-select required formControlName="entity">
               <mat-option *ngFor="let entity of entityTypes" [value]="entity.value">
-                {{ entity.name }} 
+                {{ entity.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createEntityForm.controls.entity.hasError('required')">
-              {{ 'labels.inputs.Entity' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -24,11 +20,12 @@
             <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
             <mat-select required formControlName="status">
               <mat-option *ngFor="let status of statusList" [value]="status.code">
-                {{ status.name }} 
+                {{ status.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createEntityForm.controls.status.hasError('required')">
-              {{ 'labels.inputs.Status' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -36,11 +33,12 @@
             <mat-label>{{ 'labels.inputs.Data Table' | translate }}</mat-label>
             <mat-select required formControlName="datatableName">
               <mat-option *ngFor="let dataTable of dataTableList" [value]="dataTable.dataTableName">
-                {{ dataTable.dataTableName }} 
+                {{ dataTable.dataTableName }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createEntityForm.controls.datatableName.hasError('required')">
-              {{ 'labels.inputs.Data Table' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Data Table' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
@@ -48,37 +46,41 @@
             <mat-label>{{ 'labels.inputs.Products' | translate }}</mat-label>
             <mat-select required formControlName="productId">
               <mat-option *ngFor="let loanProducts of createEntityData.loanProductDatas" [value]="loanProducts.id">
-                {{ loanProducts.name }} 
+                {{ loanProducts.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createEntityForm.controls.productId.hasError('required')">
-              {{ 'labels.inputs.Loan Product' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Loan Product' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field *ngIf="entityType === 'm_savings_account'">
             <mat-label>{{ 'labels.inputs.Products' | translate }}</mat-label>
             <mat-select required formControlName="productId">
-              <mat-option *ngFor="let savingsProducts of createEntityData.savingsProductDatas" [value]="savingsProducts.id">
-                {{ savingsProducts.name }} 
+              <mat-option
+                *ngFor="let savingsProducts of createEntityData.savingsProductDatas"
+                [value]="savingsProducts.id"
+              >
+                {{ savingsProducts.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="createEntityForm.controls.productId.hasError('required')">
-              {{ 'labels.inputs.Loan Product' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Loan Product' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!createEntityForm.valid">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!createEntityForm.valid">
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

@@ -1,34 +1,32 @@
 <div class="tab-container">
-
   <table mat-table [dataSource]="dataSource" matSort>
-
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.name" | translate}} </th>
-      <td mat-cell *matCellDef="let charge"> {{ charge.name }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
+      <td mat-cell *matCellDef="let charge">{{ charge.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="feepenalty">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Fee/Penalty" | translate}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Fee/Penalty' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
-        <span *ngIf="charge.penalty">{{"labels.inputs.Penalty" | translate}}</span>
-        <span *ngIf="!charge.penalty">{{"labels.inputs.Fee" | translate}}</span>
+        <span *ngIf="charge.penalty">{{ 'labels.inputs.Penalty' | translate }}</span>
+        <span *ngIf="!charge.penalty">{{ 'labels.inputs.Fee' | translate }}</span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="paymentdueat">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Payment due at" | translate}} </th>
-      <td mat-cell *matCellDef="let charge"> {{ charge.chargeTimeType.value }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Payment due at' | translate }}</th>
+      <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value }}</td>
     </ng-container>
 
     <ng-container matColumnDef="submittedDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Submitted On" | translate}} </th>
-      <td mat-cell *matCellDef="let charge"> {{ charge.submittedOnDate | dateFormat }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Submitted On' | translate }}</th>
+      <td mat-cell *matCellDef="let charge">{{ charge.submittedOnDate | dateFormat }}</td>
     </ng-container>
 
     <ng-container matColumnDef="dueDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header [hide]="useDueDate">
-        <span *ngIf="useDueDate"> {{'labels.inputs.Due As Of' | translate}} </span>
-        <span *ngIf="!useDueDate"> {{"labels.inputs.Submitted On" | translate}} </span>
+        <span *ngIf="useDueDate"> {{ 'labels.inputs.Due As Of' | translate }} </span>
+        <span *ngIf="!useDueDate"> {{ 'labels.inputs.Submitted On' | translate }} </span>
       </th>
       <td mat-cell *matCellDef="let charge">
         <span *ngIf="useDueDate">{{ charge.dueDate | dateFormat }}</span>
@@ -37,68 +35,103 @@
     </ng-container>
 
     <ng-container matColumnDef="calculationtype">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{"labels.inputs.Calculation Type" | translate}} </th>
-      <td mat-cell *matCellDef="let charge"> {{ charge.chargeCalculationType.value }} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Calculation Type' | translate }}</th>
+      <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value }}</td>
     </ng-container>
 
     <ng-container matColumnDef="due">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> {{"labels.inputs.Due" | translate}} </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge">  {{ charge.amount |
-        currency:charge.currency.code:'symbol-narrow':'1.2-2' }} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Due' | translate }}</th>
+      <td mat-cell class="r-amount" *matCellDef="let charge">
+        {{ charge.amount | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="paid">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> {{"labels.inputs.Paid" | translate}} </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge"> {{ charge.amountPaid |
-        currency:charge.currency.code:'symbol-narrow':'1.2-2' }} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Paid' | translate }}</th>
+      <td mat-cell class="r-amount" *matCellDef="let charge">
+        {{ charge.amountPaid | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="waived">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> {{"labels.inputs.Waived" | translate}} </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge"> {{ charge.amountWaived |
-        currency:charge.currency.code:'symbol-narrow':'1.2-2' }} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Waived' | translate }}
+      </th>
+      <td mat-cell class="r-amount" *matCellDef="let charge">
+        {{ charge.amountWaived | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="outstanding">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> {{"labels.inputs.Outstanding" | translate}} </th>
-      <td mat-cell class="r-amount" *matCellDef="let charge"> {{charge.amountOutstanding |
-        currency:charge.currency.code:'symbol-narrow':'1.2-2' }} </td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Outstanding' | translate }}
+      </th>
+      <td mat-cell class="r-amount" *matCellDef="let charge">
+        {{ charge.amountOutstanding | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header> {{"labels.inputs.Actions" | translate}} </th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Actions' | translate }}
+      </th>
       <td mat-cell class="center" *matCellDef="let charge">
         <span *ngIf="status === 'Submitted and pending approval'">
-          <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Edit Charge' | translate}}"
-            (click)="routeEdit($event); editCharge(charge)">
+          <button
+            class="account-action-button"
+            mat-raised-button
+            color="primary"
+            matTooltip="{{ 'tooltips.Edit Charge' | translate }}"
+            (click)="routeEdit($event); editCharge(charge)"
+          >
             <i class="fa fa-pencil"></i>
           </button>
-          <button class="account-action-button" mat-raised-button color="warn" matTooltip="{{ 'tooltips.Delete Charge' | translate}}"
-            (click)="routeEdit($event); deleteCharge(charge.id)">
+          <button
+            class="account-action-button"
+            mat-raised-button
+            color="warn"
+            matTooltip="{{ 'tooltips.Delete Charge' | translate }}"
+            (click)="routeEdit($event); deleteCharge(charge.id)"
+          >
             <i class="fa fa-trash"></i>
           </button>
         </span>
-        <button class="account-action-button" mat-raised-button color="accent" matTooltip="{{ 'tooltips.Adjust Charge' | translate}}"
-          *ngIf="!charge.paid && status==='Active'"
-          (click)="routeEdit($event); adjustCharge(charge.id)">
+        <button
+          class="account-action-button"
+          mat-raised-button
+          color="accent"
+          matTooltip="{{ 'tooltips.Adjust Charge' | translate }}"
+          *ngIf="!charge.paid && status === 'Active'"
+          (click)="routeEdit($event); adjustCharge(charge.id)"
+        >
           <i class="fa fa-pencil"></i>
         </button>
-        <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Pay Charge' | translate}}"
-          *ngIf="charge.chargePayable && !charge.paid && status==='Active'"
-          (click)="routeEdit($event); payCharge(charge.id)">
+        <button
+          class="account-action-button"
+          mat-raised-button
+          color="primary"
+          matTooltip="{{ 'tooltips.Pay Charge' | translate }}"
+          *ngIf="charge.chargePayable && !charge.paid && status === 'Active'"
+          (click)="routeEdit($event); payCharge(charge.id)"
+        >
           <i class="fa fa-dollar"></i>
         </button>
-        <button class="account-action-button" mat-raised-button color="primary" matTooltip="{{ 'tooltips.Waive Charge' | translate}}"
-          *ngIf="!charge.actionFlag" (click)="routeEdit($event); waiveCharge(charge.id)">
+        <button
+          class="account-action-button"
+          mat-raised-button
+          color="primary"
+          matTooltip="{{ 'tooltips.Waive Charge' | translate }}"
+          *ngIf="!charge.actionFlag"
+          (click)="routeEdit($event); waiveCharge(charge.id)"
+        >
           <i class="fa fa-flag"></i>
         </button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="select-row" [routerLink]="[row.id]"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row" [routerLink]="[row.id]"></tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
-
 </div>

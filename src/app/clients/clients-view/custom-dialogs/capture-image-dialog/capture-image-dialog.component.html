@@ -1,27 +1,27 @@
 <div fxLayout="column" fxLayoutGap="2%">
-
-  <h1 mat-dialog-title align="center">{{"labels.heading.Capture Client Image" | translate}}</h1>
+  <h1 mat-dialog-title align="center">{{ 'labels.heading.Capture Client Image' | translate }}</h1>
 
   <video #video width="540" height="480" autoplay></video>
 
   <!-- Using a class will break renderer changes -->
-  <canvas #canvas [ngStyle]="{'display': 'none'}"></canvas>
+  <canvas #canvas [ngStyle]="{ display: 'none' }"></canvas>
 
   <!-- Using a class will break renderer changes -->
-  <p #fallback [ngStyle]="{'display': 'none'}" align="center"></p>
+  <p #fallback [ngStyle]="{ display: 'none' }" align="center"></p>
 
   <div fxFlex="20%" align="center">
     <button #captureButton *ngIf="!isCaptured" mat-stroked-button color="primary" (click)="capture()">
-      {{"labels.buttons.Capture" | translate}}
+      {{ 'labels.buttons.Capture' | translate }}
     </button>
     <button *ngIf="isCaptured" mat-stroked-button color="primary" (click)="recapture()">
-      <fa-icon icon="undo" size="sm" class="m-r-10"></fa-icon>{{"labels.buttons.Recapture" | translate}}
+      <fa-icon icon="undo" size="sm" class="m-r-10"></fa-icon>{{ 'labels.buttons.Recapture' | translate }}
     </button>
   </div>
 
   <mat-dialog-actions align="end">
-    <button mat-raised-button mat-dialog-close>{{"labels.buttons.Cancel" | translate}}</button>
-    <button [disabled]="!isCaptured" mat-raised-button color="primary" [mat-dialog-close]="clientImageDataURL">{{"labels.buttons.Upload" | translate}}</button>
+    <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+    <button [disabled]="!isCaptured" mat-raised-button color="primary" [mat-dialog-close]="clientImageDataURL">
+      {{ 'labels.buttons.Upload' | translate }}
+    </button>
   </mat-dialog-actions>
-
 </div>

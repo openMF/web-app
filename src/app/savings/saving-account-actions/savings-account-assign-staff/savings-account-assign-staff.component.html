@@ -1,15 +1,10 @@
 <div class="container mat-elevation-z8">
-
   <mat-card>
-
     <form [formGroup]="savingsAssignStaffForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field fxFlex="48%">
-            <mat-label>{{'labels.inputs.To Savings Officer' | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.To Savings Officer' | translate }}</mat-label>
             <mat-select formControlName="toSavingsOfficerId">
               <mat-option *ngFor="let officer of fieldOfficerData" [value]="officer.id">
                 {{ officer.displayName }}
@@ -18,26 +13,33 @@
           </mat-form-field>
 
           <mat-form-field (click)="assignmentDatePicker.open()">
-            <mat-label>{{'labels.inputs.Assignment Date' | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="assignmentDatePicker" required formControlName="assignmentDate">
+            <mat-label>{{ 'labels.inputs.Assignment Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="assignmentDatePicker"
+              required
+              formControlName="assignmentDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignmentDatePicker></mat-datepicker>
             <mat-error *ngIf="savingsAssignStaffForm.controls.assignmentDate.hasError('required')">
-              {{'labels.inputs.Assignment Date' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!savingsAssignStaffForm.valid">{{'labels.buttons.Confirm' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!savingsAssignStaffForm.valid">
+          {{ 'labels.buttons.Confirm' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

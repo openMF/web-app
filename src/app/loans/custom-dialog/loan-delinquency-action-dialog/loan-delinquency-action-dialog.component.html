@@ -1,34 +1,51 @@
-
-<h2 mat-dialog-title>{{"labels.heading.Loan Delinquency Actions" | translate}}</h2>
+<h2 mat-dialog-title>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h2>
 
 <div mat-dialog-content [formGroup]="delinquencyActionForm" fxLayout="column">
-
   <mat-form-field fxFlex="48%" (click)="validFromDatePicker.open()">
-    <mat-label>{{"labels.inputs.Start Date" | translate}}</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="validFromDatePicker" required
-      formControlName="startDate">
+    <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
+    <input
+      matInput
+      [min]="minDate"
+      [max]="maxDate"
+      [matDatepicker]="validFromDatePicker"
+      required
+      formControlName="startDate"
+    />
     <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #validFromDatePicker></mat-datepicker>
     <mat-error *ngIf="delinquencyActionForm.controls.startDate.hasError('required')">
-      {{"labels.inputs.Start Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+      {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
+      <strong>{{ 'labels.commons.required' | translate }}</strong>
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%"  (click)="validTillDatePicker.open()">
-    <mat-label>{{"labels.inputs.End Date" | translate}}</mat-label>
-    <input matInput [min]="delinquencyActionForm.value.startDate" [max]="maxDate" [matDatepicker]="validTillDatePicker" required
-      formControlName="endDate">
+  <mat-form-field fxFlex="48%" (click)="validTillDatePicker.open()">
+    <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
+    <input
+      matInput
+      [min]="delinquencyActionForm.value.startDate"
+      [max]="maxDate"
+      [matDatepicker]="validTillDatePicker"
+      required
+      formControlName="endDate"
+    />
     <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #validTillDatePicker></mat-datepicker>
     <mat-error *ngIf="delinquencyActionForm.controls.endDate.hasError('required')">
-      {{"labels.inputs.End Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+      {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
+      <strong>{{ 'labels.commons.required' | translate }}</strong>
     </mat-error>
   </mat-form-field>
-
 </div>
 
 <mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
-  <button mat-raised-button mat-dialog-close> {{"labels.buttons.Cancel" | translate}} </button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="{ data: delinquencyActionForm }"
-    [disabled]="!delinquencyActionForm.valid || delinquencyActionForm.pristine">{{"labels.buttons.Submit" | translate}}</button>
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="{ data: delinquencyActionForm }"
+    [disabled]="!delinquencyActionForm.valid || delinquencyActionForm.pristine"
+  >
+    {{ 'labels.buttons.Submit' | translate }}
+  </button>
 </mat-dialog-actions>

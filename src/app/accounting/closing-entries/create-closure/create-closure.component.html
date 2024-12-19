@@ -1,51 +1,59 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="accountingClosureForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Office" | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
               <mat-option *ngFor="let office of officeData" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="accountingClosureForm.controls.officeId.hasError('required')">
-              {{"labels.inputs.Office" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field (click)="closingDatePicker.open()">
-            <mat-label>{{"labels.inputs.Closing Date" | translate}}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="closingDatePicker" required formControlName="closingDate">
+            <mat-label>{{ 'labels.inputs.Closing Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="closingDatePicker"
+              required
+              formControlName="closingDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="closingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closingDatePicker></mat-datepicker>
             <mat-error *ngIf="accountingClosureForm.controls.closingDate.hasError('required')">
-              {{"labels.inputs.Closing Date" | translate}} {{"labels.commons.is" | translate}} <strong>{{"labels.commons.required" | translate}}</strong>
+              {{ 'labels.inputs.Closing Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{"labels.inputs.Comments" | translate}}</mat-label>
+            <mat-label>{{ 'labels.inputs.Comments' | translate }}</mat-label>
             <textarea matInput formControlName="comments" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{"labels.buttons.Cancel" | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!accountingClosureForm.valid" *mifosxHasPermission="'CREATE_GLCLOSURE'">{{"labels.buttons.Submit" | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!accountingClosureForm.valid"
+          *mifosxHasPermission="'CREATE_GLCLOSURE'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

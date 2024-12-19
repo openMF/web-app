@@ -1,12 +1,11 @@
 <mat-card class="card">
-
   <mat-card-header class="header">
     <h3 fxFlex="100%">
       <fa-icon icon="donate"></fa-icon>
-      &nbsp;&nbsp; {{"labels.inputs.Amount Collected" | translate}}
+      &nbsp;&nbsp; {{ 'labels.inputs.Amount Collected' | translate }}
       <div>
         <mat-form-field id="office" fxFlex="94%">
-          <mat-label>{{"labels.inputs.Office" | translate}}</mat-label>
+          <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
           <mat-select [formControl]="officeId">
             <mat-option *ngFor="let office of officeData" [value]="office.id">
               {{ office.name }}
@@ -19,12 +18,11 @@
 
   <mat-card-content>
     <!-- Structural directives like *ngIf break the canvas -->
-    <div [ngStyle]="{'display': (hideOutput) ? 'none' : 'block'}">
+    <div [ngStyle]="{ display: hideOutput ? 'none' : 'block' }">
       <canvas id="collection-pie" width="800" height="600"></canvas>
     </div>
     <div *ngIf="showFallback" class="fallback" fxLayoutAlign="center center">
-      <p>{{"labels.text.No Data" | translate}}</p>
+      <p>{{ 'labels.text.No Data' | translate }}</p>
     </div>
   </mat-card-content>
-
 </mat-card>

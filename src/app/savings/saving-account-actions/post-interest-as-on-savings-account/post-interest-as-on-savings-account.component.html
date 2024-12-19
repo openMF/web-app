@@ -1,30 +1,34 @@
 <div class="container mat-elevation-z8">
-
   <mat-card>
-
     <form [formGroup]="postInterestSavingsAccountForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <mat-form-field fxFlex (click)="transactionDatePicker.open()">
-          <mat-label>{{'labels.inputs.Transaction Date' | translate}}</mat-label>
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="transactionDatePicker" required formControlName="transactionDate">
+          <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="transactionDatePicker"
+            required
+            formControlName="transactionDate"
+          />
           <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDatePicker></mat-datepicker>
           <mat-error *ngIf="postInterestSavingsAccountForm.controls.transactionDate.hasError('required')">
-            {{'labels.inputs.Transaction Date' | translate}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+            {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../../']">{{'labels.buttons.Cancel' | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!postInterestSavingsAccountForm.valid">{{'labels.buttons.Confirm' | translate}}</button>
+        <button type="button" mat-raised-button [routerLink]="['../../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="!postInterestSavingsAccountForm.valid">
+          {{ 'labels.buttons.Confirm' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

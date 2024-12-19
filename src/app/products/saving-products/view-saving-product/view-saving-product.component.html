@@ -1,23 +1,29 @@
 <mat-card class="product-card">
-
   <mat-card-content>
-
     <nav mat-tab-nav-bar class="navigation-tabs">
-      <a mat-tab-link [routerLink]="['./general']" routerLinkActive #general="routerLinkActive"
-        [active]="general.isActive">
-        {{'labels.heading.General' | translate}}
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+      >
+        {{ 'labels.heading.General' | translate }}
       </a>
       <ng-container *ngFor="let savingProductDatatable of savingProductDatatables">
-        <a mat-tab-link [routerLink]="['./datatables',savingProductDatatable.registeredTableName]" routerLinkActive
-          #datatable="routerLinkActive" [active]="datatable.isActive"
-          *mifosxHasPermission="'READ_' + savingProductDatatable.registeredTableName">
-          {{savingProductDatatable.registeredTableName}}
+        <a
+          mat-tab-link
+          [routerLink]="['./datatables', savingProductDatatable.registeredTableName]"
+          routerLinkActive
+          #datatable="routerLinkActive"
+          [active]="datatable.isActive"
+          *mifosxHasPermission="'READ_' + savingProductDatatable.registeredTableName"
+        >
+          {{ savingProductDatatable.registeredTableName }}
         </a>
       </ng-container>
     </nav>
 
     <router-outlet></router-outlet>
-
   </mat-card-content>
-
 </mat-card>

@@ -1,13 +1,8 @@
 <div class="container">
-
   <mat-card>
-
     <form [formGroup]="editEmployeeForm" (ngSubmit)="submit()">
-
       <mat-card-content>
-
         <div fxLayout="column">
-
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
@@ -16,66 +11,83 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="editEmployeeForm.controls.officeId.hasError('required')">
-              {{'labels.inputs.Office' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.First Name' | translate }}</mat-label>
-            <input matInput required formControlName="firstname">
+            <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+            <input matInput required formControlName="firstname" />
             <mat-error *ngIf="editEmployeeForm.controls.firstname.hasError('required')">
-              {{'labels.inputs.First Name' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editEmployeeForm.controls.firstname.hasError('pattern')">
-              {{'labels.inputs.First Name' | translate }} <strong>{{'labels.inputs.cannot' | translate }}</strong> {{'labels.inputs.begin with a special character or number' | translate }}
+              {{ 'labels.inputs.First Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Last Name' | translate }}</mat-label>
-            <input matInput required formControlName="lastname">
+            <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+            <input matInput required formControlName="lastname" />
             <mat-error *ngIf="editEmployeeForm.controls.lastname.hasError('required')">
-              {{'labels.inputs.Last Name' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editEmployeeForm.controls.lastname.hasError('pattern')">
-              {{'labels.inputs.Last Name' | translate }} <strong>{{'labels.inputs.cannot' | translate }}</strong> {{'labels.inputs.begin with a special character or number' | translate }}
+              {{ 'labels.inputs.Last Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="isLoanOfficer" class="m-b-10">
-            {{'labels.inputs.Is Loan Officer' | translate }}
+            {{ 'labels.inputs.Is Loan Officer' | translate }}
           </mat-checkbox>
 
           <mat-form-field>
-            <mat-label>{{'labels.inputs.Mobile Number for SMS' | translate }}</mat-label>
-            <input matInput formControlName="mobileNo">
+            <mat-label>{{ 'labels.inputs.Mobile Number for SMS' | translate }}</mat-label>
+            <input matInput formControlName="mobileNo" />
           </mat-form-field>
 
           <mat-checkbox labelPosition="before" formControlName="isActive">
-            {{'labels.inputs.Active' | translate }}
+            {{ 'labels.inputs.Active' | translate }}
           </mat-checkbox>
 
           <mat-form-field (click)="joiningDatePicker.open()">
-            <mat-label>{{'labels.inputs.Joining Date' | translate }}</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="joiningDatePicker" required formControlName="joiningDate">
+            <mat-label>{{ 'labels.inputs.Joining Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="joiningDatePicker"
+              required
+              formControlName="joiningDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #joiningDatePicker></mat-datepicker>
             <mat-error *ngIf="editEmployeeForm.controls.joiningDate.hasError('required')">
-              {{'labels.inputs.Joining Date' | translate }} {{'labels.commons.is' | translate }} <strong>{{'labels.commons.required' | translate }}</strong>
+              {{ 'labels.inputs.Joining Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['../']">{{'labels.buttons.Cancel' | translate }}</button>
-        <button mat-raised-button color="primary" [disabled]="!editEmployeeForm.valid" *mifosxHasPermission="'UPDATE_STAFF'">{{'labels.buttons.Submit' | translate }}</button>
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!editEmployeeForm.valid"
+          *mifosxHasPermission="'UPDATE_STAFF'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>

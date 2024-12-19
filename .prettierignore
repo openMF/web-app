@@ -1,9 +1,4 @@
 /dist
 /node_modules
 **/.git
-*.html
-*.js
-*.json
-*.md
 *.ts
-*.yml

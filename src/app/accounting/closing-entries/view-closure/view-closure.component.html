@@ -1,24 +1,20 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Edit" | translate}}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
   <button mat-raised-button color="warn" (click)="deleteAccountingClosure()" *mifosxHasPermission="'DELETE_GLCLOSURE'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{"labels.buttons.Delete" | translate}}
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
 </div>
 
 <div class="container" *ngIf="glAccountClosure">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
         <div fxFlex="50%" class="header">
-         {{"labels.inputs.Office" | translate}}
+          {{ 'labels.inputs.Office' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -26,7 +22,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          {{"labels.inputs.Closure Date" | translate}}
+          {{ 'labels.inputs.Closure Date' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -34,7 +30,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          {{"labels.inputs.Closed By" | translate}}
+          {{ 'labels.inputs.Closed By' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -42,7 +38,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          {{"labels.inputs.Updated By" | translate}}
+          {{ 'labels.inputs.Updated By' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -50,7 +46,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          {{"labels.inputs.Updated On"|translate}}
+          {{ 'labels.inputs.Updated On' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -58,7 +54,7 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          {{"labels.inputs.Closure Creation Date"|translate}}
+          {{ 'labels.inputs.Closure Creation Date' | translate }}
         </div>
 
         <div fxFlex="50%">
@@ -66,17 +62,13 @@
         </div>
 
         <div fxFlex="50%" class="header">
-          {{"labels.inputs.Comments" | translate}}
+          {{ 'labels.inputs.Comments' | translate }}
         </div>
 
         <div fxFlex="50%">
           {{ glAccountClosure.comments }}
         </div>
-
       </div>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

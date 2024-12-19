@@ -1,47 +1,65 @@
 <mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar">
-
-  <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="{{ 'tooltips.Toggle Hide/Open' | translate}}">
+  <button
+    mat-icon-button
+    *ngIf="!sidenavCollapsed"
+    (click)="toggleSidenav()"
+    matTooltip="{{ 'tooltips.Toggle Hide/Open' | translate }}"
+  >
     <fa-icon icon="bars" size="lg"></fa-icon>
   </button>
 
-  <button mat-icon-button *ngIf="sidenav.opened" (click)="toggleSidenavCollapse()" matTooltip="{{ 'tooltips.Toggle Collapse' | translate}}" fxHide.lt-md="true">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.opened"
+    (click)="toggleSidenavCollapse()"
+    matTooltip="{{ 'tooltips.Toggle Collapse' | translate }}"
+    fxHide.lt-md="true"
+  >
     <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
   </button>
 
   <nav mat-tab-nav-bar backgroundColor="primary" class="ml-1">
-
-    <a #institution mat-tab-link class="tab-link" [matMenuTriggerFor]="institutionMenu" #institutionMenuTrigger="matMenuTrigger">
+    <a
+      #institution
+      mat-tab-link
+      class="tab-link"
+      [matMenuTriggerFor]="institutionMenu"
+      #institutionMenuTrigger="matMenuTrigger"
+    >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
-      {{'labels.menus.Institution' | translate}}
+      {{ 'labels.menus.Institution' | translate }}
     </a>
 
     <span fxHide.lt-lg="true">
-
       <a #accounting mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
-        {{'labels.menus.Accounting' | translate}}
+        {{ 'labels.menus.Accounting' | translate }}
       </a>
-      <a #reports mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" >
+      <a #reports mat-tab-link class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
-        {{'labels.menus.Reports' | translate}}
+        {{ 'labels.menus.Reports' | translate }}
       </a>
       <a #admin mat-tab-link class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger">
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
-        {{'labels.menus.Admin' | translate}}
+        {{ 'labels.menus.Admin' | translate }}
       </a>
-      <a #selfService mat-tab-link class="tab-link" [matMenuTriggerFor]="selfServiceMenu" #selfServiceMenuTrigger="matMenuTrigger">
+      <a
+        #selfService
+        mat-tab-link
+        class="tab-link"
+        [matMenuTriggerFor]="selfServiceMenu"
+        #selfServiceMenuTrigger="matMenuTrigger"
+      >
         <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
-        {{'labels.menus.Self Service' | translate}}
+        {{ 'labels.menus.Self Service' | translate }}
       </a>
 
       <a #configWizard mat-tab-link class="tab-link" (click)="openDialog()">
         <fa-icon class="mr-05" icon="info" size="lg"></fa-icon>
-        {{'labels.menus.Configuration Wizard' | translate}}
+        {{ 'labels.menus.Configuration Wizard' | translate }}
       </a>
-
     </span>
-
   </nav>
 
   <span fxFlex="auto"></span>
@@ -68,51 +86,55 @@
 
   <div #appMenu>
     <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
-      <img src="assets/images/user_placeholder.png">
+      <img src="assets/images/user_placeholder.png" />
     </button>
   </div>
 </mat-toolbar>
 
 <!-- Language selector menu for small screen view -->
 <mat-menu #languageMenu="matMenu">
-    <mifosx-language-selector class="ml-1 language"></mifosx-language-selector>
+  <mifosx-language-selector class="ml-1 language"></mifosx-language-selector>
 </mat-menu>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients">{{'labels.menus.Clients' | translate}}</button>
-  <button mat-menu-item routerLink="/groups">{{'labels.menus.Groups' | translate}}</button>
-  <button mat-menu-item routerLink="/centers">{{'labels.menus.Centers' | translate}}</button>
+  <button mat-menu-item routerLink="/clients">{{ 'labels.menus.Clients' | translate }}</button>
+  <button mat-menu-item routerLink="/groups">{{ 'labels.menus.Groups' | translate }}</button>
+  <button mat-menu-item routerLink="/centers">{{ 'labels.menus.Centers' | translate }}</button>
   <span fxHide.lt>
-    <button mat-menu-item [routerLink]="['/accounting']">{{'labels.menus.Accounting' | translate}}</button>
-    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{'labels.menus.Reports' | translate}}</button>
-    <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{'labels.menus.Admin' | translate}}</button>
-    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">{{'labels.menus.Self Service' | translate}}</button>
+    <button mat-menu-item [routerLink]="['/accounting']">{{ 'labels.menus.Accounting' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ 'labels.menus.Reports' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ 'labels.menus.Admin' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">{{ 'labels.menus.Self Service' | translate }}</button>
   </span>
 </mat-menu>
 
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/reports']">{{'labels.menus.All' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Client']">{{'labels.menus.Clients' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Loan']">{{'labels.menus.Loans' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Savings']">{{'labels.menus.Savings' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Fund']">{{'labels.menus.Funds' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">{{'labels.menus.Accounting' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/xbrl']">{{'labels.menus.XBRL' | translate}}</button>
+  <button mat-menu-item [routerLink]="['/reports']">{{ 'labels.menus.All' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Client']">{{ 'labels.menus.Clients' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Loan']">{{ 'labels.menus.Loans' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Savings']">{{ 'labels.menus.Savings' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Fund']">{{ 'labels.menus.Funds' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Accounting']">{{ 'labels.menus.Accounting' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/xbrl']">{{ 'labels.menus.XBRL' | translate }}</button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item (click)="navigateMenu('/appusers')">{{'labels.menus.Users' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/organization']">{{'labels.menus.Organization' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/system']">{{'labels.menus.System' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/products']">{{'labels.menus.Products' | translate}}</button>
-  <button mat-menu-item routerLink="/templates">{{'labels.menus.Templates' | translate}}</button>
+  <button mat-menu-item (click)="navigateMenu('/appusers')">{{ 'labels.menus.Users' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/organization']">{{ 'labels.menus.Organization' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/system']">{{ 'labels.menus.System' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/products']">{{ 'labels.menus.Products' | translate }}</button>
+  <button mat-menu-item routerLink="/templates">{{ 'labels.menus.Templates' | translate }}</button>
 </mat-menu>
 
 <mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/self-service/users']">{{'labels.menus.User Management' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">{{'labels.menus.App Configuration' | translate}}</button>
-  <button mat-menu-item [routerLink]="['/self-service/task-management']">{{'labels.menus.Task Management' | translate}}</button>
+  <button mat-menu-item [routerLink]="['/self-service/users']">{{ 'labels.menus.User Management' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">
+    {{ 'labels.menus.App Configuration' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/self-service/task-management']">
+    {{ 'labels.menus.Task Management' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->
@@ -121,134 +143,229 @@
     <mat-icon matListIcon>
       <fa-icon icon="question-circle" size="sm"></fa-icon>
     </mat-icon>
-    <span>{{'labels.menus.Help' | translate}}</span>
+    <span>{{ 'labels.menus.Help' | translate }}</span>
   </button>
   <button mat-menu-item [routerLink]="['/profile']">
     <mat-icon>
       <fa-icon icon="user" size="sm"></fa-icon>
     </mat-icon>
-    <span>{{'labels.menus.Profile' | translate}}</span>
+    <span>{{ 'labels.menus.Profile' | translate }}</span>
   </button>
   <button mat-menu-item [routerLink]="['/settings']">
     <mat-icon>
       <fa-icon icon="cog" size="sm"></fa-icon>
     </mat-icon>
-    <span>{{'labels.menus.Settings' | translate}}</span>
+    <span>{{ 'labels.menus.Settings' | translate }}</span>
   </button>
   <button mat-menu-item (click)="logout()" id="logout">
     <mat-icon>
       <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
     </mat-icon>
-    <span>{{'labels.menus.Sign Out' | translate}}</span>
+    <span>{{ 'labels.menus.Sign Out' | translate }}</span>
   </button>
 </mat-menu>
 
-
 <ng-template #templateInstitution let-popover="popover">
-  <h2>{{'labels.menus.Institution' | translate}}</h2>
-  <p class="mw300">{{"labels.text.Button for individual account" | translate}}</p>
+  <h2>{{ 'labels.menus.Institution' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Button for individual account' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccounting, accounting)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAccounting, accounting)">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateAccounting let-popover="popover">
-  <h2>{{'labels.menus.Accounting' | translate}}</h2>
-  <p class="mw300">{{"labels.text.Button for accounting department" | translate}}</p>
+  <h2>{{ 'labels.menus.Accounting' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Button for accounting department' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateInstitution, institution)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReports, reports)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateInstitution, institution)">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateReports, reports)">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateReports let-popover="popover">
-  <h2>{{'labels.menus.Reports' | translate}}</h2>
-  <p class="mw300">{{"labels.text.Dropdown system reports" | translate}}</p>
+  <h2>{{ 'labels.menus.Reports' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Dropdown system reports' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAccounting, accounting)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAdmin, admin)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAccounting, accounting)">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAdmin, admin)">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateAdmin let-popover="popover">
-  <h2>{{'labels.menus.Admin' | translate}}</h2>
-  <p class="mw300">{{"labels.text.Setup organization including users" | translate}}</p>
+  <h2>{{ 'labels.menus.Admin' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Setup organization including users' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateReports, reports)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSelfService, selfService)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateReports, reports)">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateSelfService, selfService)">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateSelfService let-popover="popover">
-  <h2>{{'labels.menus.Self Service' | translate}}</h2>
-  <p class="mw300">{{"labels.text.Dropdown self service user administrative portal" | translate}}</p>
+  <h2>{{ 'labels.menus.Self Service' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Dropdown self service user administrative portal' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAdmin, admin)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigWizard, configWizard)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAdmin, admin)">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateConfigWizard, configWizard)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateConfigWizard let-popover="popover">
-  <h2>{{'labels.menus.Configuration Wizard' | translate}}</h2>
-  <p class="mw300">{{"labels.text.Initial setup and application tour" | translate}}</p>
+  <h2>{{ 'labels.menus.Configuration Wizard' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Initial setup and application tour' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateSelfService, selfService)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateGlobalSearch, globalSearch)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateSelfService, selfService)">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateGlobalSearch, globalSearch)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateGlobalSearch let-popover="popover">
-  <h2>{{'labels.menus.Global Search' | translate}}</h2>
-  <p class="mw300">{{"labels.text.Navigate system selecting entity" | translate}}</p>
+  <h2>{{ 'labels.menus.Global Search' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Navigate system selecting entity' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateConfigWizard, configWizard)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateLanguageSelector, languageSelector)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateConfigWizard, configWizard)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateLanguageSelector let-popover="popover">
-  <h2>{{'labels.menus.Language Selector' | translate}}</h2>
-  <p class="mw300">{{"labels.text.Organization available languages" | translate}}</p>
+  <h2>{{ 'labels.menus.Language Selector' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Organization available languages' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateGlobalSearch, globalSearch)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateThemePicker, themePicker)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateGlobalSearch, globalSearch)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themePicker)">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateThemePicker let-popover="popover">
-  <h2>{{'labels.menus.Theme Picker' | translate}}</h2>
-  <p class="mw300">{{"labels.text.Choose a theme as per organization will" | translate}}</p>
+  <h2>{{ 'labels.menus.Theme Picker' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Choose a theme as per organization will' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover( templateLanguageSelector, languageSelector)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNotifications, notifications)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateNotifications, notifications)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateNotifications let-popover="popover">
-  <h2>{{'labels.menus.Notifications' | translate}}</h2>
-  <p class="mw300">{{"labels.text.This shows all the notifications." | translate}}</p>
+  <h2>{{ 'labels.menus.Notifications' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.This shows all the notifications.' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateThemePicker, themePicker)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateAppMenu, appMenu)">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themePicker)">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAppMenu, appMenu)">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>
 
 <ng-template #templateAppMenu let-popover="popover">
-  <h2>{{'labels.menus.Application Menu' | translate}}</h2>
-  <p class="mw300">{{"labels.text.User settings and sign out button" | translate}}</p>
+  <h2>{{ 'labels.menus.Application Menu' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.User settings and sign out button' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close();configurationWizardService.closeConfigWizard()">{{"labels.buttons.Close" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close();showPopover(templateNotifications, notifications)">{{"labels.buttons.Back" | translate}}</button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">{{"labels.buttons.Next" | translate}}</button>
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateNotifications, notifications)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
   </div>
 </ng-template>

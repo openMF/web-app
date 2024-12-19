@@ -1,50 +1,73 @@
 <form [formGroup]="shareProductTermsForm">
-
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Total Number of Shares' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="{{ 'tooltips.Total number of shares that a product is offering' | translate}}" formControlName="totalShares" required>
+      <mat-label>{{ 'labels.inputs.Total Number of Shares' | translate }}</mat-label>
+      <input
+        type="number"
+        matInput
+        matTooltip="{{ 'tooltips.Total number of shares that a product is offering' | translate }}"
+        formControlName="totalShares"
+        required
+      />
       <mat-error>
-        {{'labels.inputs.Total Number of Shares' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Total Number of Shares' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Shares to be Issued' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="{{ 'tooltips.Total number of shares that an orgranization' | translate}}" formControlName="sharesIssued" required>
+      <mat-label>{{ 'labels.inputs.Shares to be Issued' | translate }}</mat-label>
+      <input
+        type="number"
+        matInput
+        matTooltip="{{ 'tooltips.Total number of shares that an orgranization' | translate }}"
+        formControlName="sharesIssued"
+        required
+      />
       <mat-error>
-        {{'labels.inputs.Shares to be Issued' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Shares to be Issued' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Nominal/Unit Price' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="{{ 'tooltips.Unit/Nominal Price of each share' | translate}}" formControlName="unitPrice" required>
+      <mat-label>{{ 'labels.inputs.Nominal/Unit Price' | translate }}</mat-label>
+      <input
+        type="number"
+        matInput
+        matTooltip="{{ 'tooltips.Unit/Nominal Price of each share' | translate }}"
+        formControlName="unitPrice"
+        required
+      />
       <mat-error>
-        {{'labels.inputs.Nominal Price' | translate}} {{'labels.commons.is' | translate}} <strong>{{'labels.commons.required' | translate}}</strong>
+        {{ 'labels.inputs.Nominal Price' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field fxFlex="48%">
-      <mat-label>{{'labels.inputs.Capital Value' | translate}}</mat-label>
-      <input type="number" matInput matTooltip="{{ 'tooltips.Total Capital Value' | translate}}" formControlName="shareCapital" readonly>
+      <mat-label>{{ 'labels.inputs.Capital Value' | translate }}</mat-label>
+      <input
+        type="number"
+        matInput
+        matTooltip="{{ 'tooltips.Total Capital Value' | translate }}"
+        formControlName="shareCapital"
+        readonly
+      />
       <mat-hint>
-        {{'labels.inputs.Shares to be Issued * Nominal Price (Auto calculated)' | translate}}
+        {{ 'labels.inputs.Shares to be Issued * Nominal Price (Auto calculated)' | translate }}
       </mat-hint>
     </mat-form-field>
-
   </div>
 
   <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-      {{'labels.buttons.Previous' | translate}}
+      {{ 'labels.buttons.Previous' | translate }}
     </button>
     <button mat-raised-button matStepperNext>
-      {{'labels.buttons.Next' | translate}}
+      {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>
   </div>
-
 </form>

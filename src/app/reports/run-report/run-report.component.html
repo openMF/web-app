@@ -1,52 +1,53 @@
 <div class="container input">
-
   <mat-card *ngIf="!isCollapsed">
-
     <form [formGroup]="reportForm">
-
       <mat-card-content fxLayout="column">
-
         <ng-container *ngFor="let param of paramData" [ngSwitch]="param.displayType">
-
           <ng-container *ngIf="reportForm.contains(param.name)">
-
             <mat-form-field fxFlex *ngSwitchCase="'text'">
-              <mat-label>{{param.label}}</mat-label>
-              <input matInput required [formControlName]="param.name">
+              <mat-label>{{ param.label }}</mat-label>
+              <input matInput required [formControlName]="param.name" />
               <mat-error *ngIf="reportForm.controls[param.name].hasError('required')">
-                {{param.label}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+                {{ param.label }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
-              <mat-label>{{param.label}}</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="runReportDatePicker" required
-                [formControlName]="param.name">
+              <mat-label>{{ param.label }}</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="runReportDatePicker"
+                required
+                [formControlName]="param.name"
+              />
               <mat-datepicker-toggle matSuffix [for]="runReportDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #runReportDatePicker></mat-datepicker>
               <mat-error *ngIf="reportForm.controls[param.name].hasError('required')">
-                {{param.label}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+                {{ param.label }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field fxFlex *ngSwitchCase="'select'">
-              <mat-label>{{param.label}}</mat-label>
+              <mat-label>{{ param.label }}</mat-label>
               <mat-select required [formControlName]="param.name">
                 <mat-option *ngFor="let option of param.selectOptions" [value]="option">
-                  {{option.name}}
+                  {{ option.name }}
                 </mat-option>
               </mat-select>
               <mat-error *ngIf="reportForm.controls[param.name].hasError('required')">
-                {{param.label}} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+                {{ param.label }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
-
           </ng-container>
-
         </ng-container>
 
         <mat-form-field fxFlex>
-          <mat-label>{{"labels.inputs.Decimal Places" | translate}}</mat-label>
+          <mat-label>{{ 'labels.inputs.Decimal Places' | translate }}</mat-label>
           <mat-select [formControl]="decimalChoice">
             <mat-option value="0">0</mat-option>
             <mat-option value="1">1</mat-option>
@@ -57,50 +58,59 @@
         </mat-form-field>
 
         <mat-form-field fxFlex *ngIf="isPentahoReport()">
-          <mat-label>{{'labels.inputs.Output Type' | translate}}</mat-label>
+          <mat-label>{{ 'labels.inputs.Output Type' | translate }}</mat-label>
           <mat-select required formControlName="outputType">
             <mat-option *ngFor="let option of outputTypeOptions" [value]="option.value">
-              {{ "labels.inputs." + option.name | translate}}
+              {{ 'labels.inputs.' + option.name | translate }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="reportForm.controls['outputType'].hasError('required')">
-            {{ "labels.text.Report Output Type" | translate }} {{ "labels.commons.is" | translate}} <strong>{{ "labels.commons.required" | translate}}</strong>
+            {{ 'labels.text.Report Output Type' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
-        <div fxFlex="98%" *ngIf="exportToS3Allowed"  >
+        <div fxFlex="98%" *ngIf="exportToS3Allowed">
           <mat-checkbox labelPosition="after" formControlName="exportOutputToS3">
-            {{ "labels.text.Export output data to S3 repository" | translate }} [{{exportToS3Repository}}]
+            {{ 'labels.text.Export output data to S3 repository' | translate }} [{{ exportToS3Repository }}]
           </mat-checkbox>
         </div>
-
       </mat-card-content>
 
       <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-        <button type="button" mat-raised-button [routerLink]="['/reports']">{{"labels.buttons.Cancel" | translate}}</button>
-        <button mat-raised-button color="primary" [disabled]="!reportForm.valid || isProcessing" id="runreport" (click)="run()">
-          <fa-icon icon="file-export" class="m-r-10"></fa-icon>
-          {{"labels.buttons.Run Report" | translate}}
+        <button type="button" mat-raised-button [routerLink]="['/reports']">
+          {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button *ngIf="isTableReport()" mat-raised-button color="primary" [disabled]="!reportForm.valid || isProcessing" (click)="runReportAndExport($event)">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!reportForm.valid || isProcessing"
+          id="runreport"
+          (click)="run()"
+        >
+          <fa-icon icon="file-export" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Run Report' | translate }}
+        </button>
+        <button
+          *ngIf="isTableReport()"
+          mat-raised-button
+          color="primary"
+          [disabled]="!reportForm.valid || isProcessing"
+          (click)="runReportAndExport($event)"
+        >
           <fa-icon icon="download" class="m-r-10"></fa-icon>
-          {{"labels.buttons.Run and Download Report" | translate}}
+          {{ 'labels.buttons.Run and Download Report' | translate }}
         </button>
       </mat-card-actions>
-
     </form>
-
   </mat-card>
-
 </div>
 
 <div class="container output" *ngIf="isCollapsed">
-
   <mat-card>
-
     <div class="m-b-20">
       <button mat-raised-button color="primary" (click)="isCollapsed = false">
-        {{'labels.buttons.Parameters' | translate}}
+        {{ 'labels.buttons.Parameters' | translate }}
       </button>
     </div>
 
@@ -109,7 +119,5 @@
       <mifosx-chart *ngIf="!hideChart" [dataObject]="dataObject"></mifosx-chart>
       <mifosx-pentaho *ngIf="!hidePentaho" [dataObject]="dataObject"></mifosx-pentaho>
     </div>
-
   </mat-card>
-
 </div>

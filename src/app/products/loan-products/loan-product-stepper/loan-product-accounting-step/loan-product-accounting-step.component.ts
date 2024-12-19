@@ -8,7 +8,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { TranslateService } from '@ngx-translate/core';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { ChargeOffReasonsToGLAccountMapping } from 'app/shared/models/general.model';
+import { ChargeOffReasonToExpenseAccountMapping } from 'app/shared/models/general.model';
 
 @Component({
   selector: 'mifosx-loan-product-accounting-step',
@@ -36,7 +36,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
 
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId', 'actions'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
-  chargeOffReasonExpenseDisplayedColumns: string[] = ['chargeOffReasonCodeValueId', 'expenseGLAccountId', 'actions'];
+  chargeOffReasonExpenseDisplayedColumns: string[] = ['chargeOffReasonCodeValueId', 'expenseAccountId', 'actions'];
 
   constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog,
@@ -94,7 +94,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
           'incomeFromGoodwillCreditInterestAccountId': accountingMappings.incomeFromGoodwillCreditInterestAccount ? accountingMappings.incomeFromGoodwillCreditInterestAccount.id : '',
           'incomeFromGoodwillCreditFeesAccountId': accountingMappings.incomeFromGoodwillCreditFeesAccount ? accountingMappings.incomeFromGoodwillCreditFeesAccount.id : '',
           'incomeFromGoodwillCreditPenaltyAccountId': accountingMappings.incomeFromGoodwillCreditPenaltyAccount ? accountingMappings.incomeFromGoodwillCreditPenaltyAccount.id : '',
-          'advancedAccountingRules': (this.loanProductsTemplate.paymentChannelToFundSourceMappings || this.loanProductsTemplate.feeToIncomeAccountMappings || this.loanProductsTemplate.penaltyToIncomeAccountMappings || this.loanProductsTemplate.chargeOffReasonsToExpenseMappings) ? true : false
+          'advancedAccountingRules': (this.loanProductsTemplate.paymentChannelToFundSourceMappings || this.loanProductsTemplate.feeToIncomeAccountMappings || this.loanProductsTemplate.penaltyToIncomeAccountMappings || this.loanProductsTemplate.chargeOffReasonToExpenseAccountMappings) ? true : false
         });
 
         this.loanProductAccountingForm.setControl('paymentChannelToFundSourceMappings',
@@ -106,9 +106,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
         this.loanProductAccountingForm.setControl('penaltyToIncomeAccountMappings',
           this.formBuilder.array((this.loanProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) =>
           ({ chargeId: penaltyIncome.charge.id, incomeAccountId: penaltyIncome.incomeAccount.id }))));
-        this.loanProductAccountingForm.setControl('chargeOffReasonsToExpenseMappings',
-            this.formBuilder.array((this.loanProductsTemplate.chargeOffReasonToGLAccountMappings || []).map((m: ChargeOffReasonsToGLAccountMapping) =>
-                ({ chargeOffReasonCodeValueId: m.chargeOffReasonsCodeValue.id, expenseGLAccountId: m.chargeOffExpenseAccount.id }))));
+        this.loanProductAccountingForm.setControl('chargeOffReasonToExpenseAccountMappings',
+            this.formBuilder.array((this.loanProductsTemplate.chargeOffReasonToExpenseAccountMappings || []).map((m: ChargeOffReasonToExpenseAccountMapping) =>
+                ({ chargeOffReasonCodeValueId: m.chargeOffReasonCodeValue.id, expenseAccountId: m.expenseAccount.id }))));
     }
   }
 
@@ -134,7 +134,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.addControl('overpaymentLiabilityAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
           this.loanProductAccountingForm.addControl('chargeOffFraudExpenseAccountId', new UntypedFormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('chargeOffExpenseAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('expenseAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffPenaltyAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffFeesAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffInterestAccountId', new UntypedFormControl('', Validators.required));
@@ -148,12 +148,12 @@ export class LoanProductAccountingStepComponent implements OnInit {
                 this.loanProductAccountingForm.addControl('paymentChannelToFundSourceMappings', this.formBuilder.array([]));
                 this.loanProductAccountingForm.addControl('feeToIncomeAccountMappings', this.formBuilder.array([]));
                 this.loanProductAccountingForm.addControl('penaltyToIncomeAccountMappings', this.formBuilder.array([]));
-                this.loanProductAccountingForm.addControl('chargeOffReasonsToExpenseMappings', this.formBuilder.array([]));
+                this.loanProductAccountingForm.addControl('chargeOffReasonToExpenseAccountMappings', this.formBuilder.array([]));
               } else {
                 this.loanProductAccountingForm.removeControl('paymentChannelToFundSourceMappings');
                 this.loanProductAccountingForm.removeControl('feeToIncomeAccountMappings');
                 this.loanProductAccountingForm.removeControl('penaltyToIncomeAccountMappings');
-                this.loanProductAccountingForm.removeControl('chargeOffReasonsToExpenseMappings');
+                this.loanProductAccountingForm.removeControl('chargeOffReasonToExpenseAccountMappings');
               }
             });
         } else {
@@ -168,7 +168,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.removeControl('goodwillCreditAccountId');
           this.loanProductAccountingForm.removeControl('overpaymentLiabilityAccountId');
           this.loanProductAccountingForm.removeControl('advancedAccountingRules');
-          this.loanProductAccountingForm.removeControl('chargeOffExpenseAccountId');
+          this.loanProductAccountingForm.removeControl('expenseAccountId');
           this.loanProductAccountingForm.removeControl('chargeOffFraudExpenseAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffPenaltyAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffFeesAccountId');
@@ -204,8 +204,8 @@ export class LoanProductAccountingStepComponent implements OnInit {
     return this.loanProductAccountingForm.get('penaltyToIncomeAccountMappings') as UntypedFormArray;
   }
 
-  get chargeOffReasonsToExpenseMappings(): UntypedFormArray {
-    return this.loanProductAccountingForm.get('chargeOffReasonsToExpenseMappings') as UntypedFormArray;
+  get chargeOffReasonToExpenseAccountMappings(): UntypedFormArray {
+    return this.loanProductAccountingForm.get('chargeOffReasonToExpenseAccountMappings') as UntypedFormArray;
   }
 
   setLoanProductAccountingFormDirty() {
@@ -334,9 +334,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
         order: 1
       }),
       new SelectBase({
-        controlName: 'expenseGLAccountId',
+        controlName: 'expenseAccountId',
         label: 'Expense Account',
-        value: values ? values.expenseGLAccountId : this.expenseAccountData[0].id,
+        value: values ? values.expenseAccountId : this.expenseAccountData[0].id,
         options: { label: 'name', value: 'id', data: this.expenseAccountData },
         required: true,
         order: 2

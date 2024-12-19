@@ -4,9 +4,9 @@ name: build-run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -29,16 +29,16 @@ jobs:
           # lts/gallium node v19.7.0 (npm v9.5.0)
           node-version: '19.7.0'
       - name: Angular CLI install
-        run : npm install -g --silent @angular/cli@14.2.12
+        run: npm install -g --silent @angular/cli@14.2.12
 
       - name: Npm install
         run: npm install
 
       - name: Run eslint
-        run : npx ng lint
+        run: npx ng lint
 
       - name: Run build
-        run : npm run build:prod
+        run: npm run build:prod
 
       - name: Deploy to github pages
         if: ${{ github.event_name == 'push' }}

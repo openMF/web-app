@@ -1,46 +1,57 @@
 <div class="tab-container mat-typography" *ngIf="checkerData">
-
   <div fxLayout="row" fxLayoutAlign="start center">
     <div class="search-box" fxFlex="40%">
       <mat-form-field fxFlex="90%">
-        <input matInput placeholder="{{'labels.text.Search by user' | translate}}" (keyup)="applyFilter($event.target.value)">
+        <input
+          matInput
+          placeholder="{{ 'labels.text.Search by user' | translate }}"
+          (keyup)="applyFilter($event.target.value)"
+        />
       </mat-form-field>
     </div>
     <div fxFlex="60%" fxLayoutGap="0.5rem">
       <button mat-raised-button color="success" (click)="approveChecker()">
-        <fa-icon icon="check" class="m-r-10"></fa-icon>{{'labels.buttons.Approve' | translate}}
+        <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
       </button>
       <button mat-raised-button color="warn" (click)="deleteChecker()">
-        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{'labels.buttons.Delete' | translate}}
+        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
       </button>
       <button mat-raised-button color="reject" (click)="rejectChecker()">
-        <fa-icon icon="times" class="m-r-10"></fa-icon>{{'labels.buttons.Reject' | translate}}
+        <fa-icon icon="times" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reject' | translate }}
       </button>
     </div>
   </div>
 
   <form [formGroup]="makerCheckerSearchForm">
-
     <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-
       <mat-form-field fxFlex="31%" (click)="makerDateTimeFromPicker.open()">
-        <mat-label>{{'labels.inputs.From Date' | translate}}</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="makerDateTimeFromPicker"
-          formControlName="makerDateTimeFrom">
+        <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="makerDateTimeFromPicker"
+          formControlName="makerDateTimeFrom"
+        />
         <mat-datepicker-toggle matSuffix [for]="makerDateTimeFromPicker"></mat-datepicker-toggle>
         <mat-datepicker #makerDateTimeFromPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%" (click)="makerDateTimetoPicker.open()">
-        <mat-label>{{'labels.inputs.To Date' | translate}}</mat-label>
-        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="makerDateTimetoPicker"
-          formControlName="makerDateTimeto">
+        <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="makerDateTimetoPicker"
+          formControlName="makerDateTimeto"
+        />
         <mat-datepicker-toggle matSuffix [for]="makerDateTimetoPicker"></mat-datepicker-toggle>
         <mat-datepicker #makerDateTimetoPicker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>{{'labels.inputs.Action' | translate}}</mat-label>
+        <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
         <mat-select formControlName="actionName">
           <mat-option *ngFor="let action of makerCheckerTemplate.actionNames" [value]="action">
             {{ action }}
@@ -49,7 +60,7 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>{{'labels.inputs.Entity' | translate}}</mat-label>
+        <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
         <mat-select formControlName="entityName">
           <mat-option *ngFor="let entity of makerCheckerTemplate.entityNames" [value]="entity">
             {{ entity }}
@@ -58,82 +69,83 @@
       </mat-form-field>
 
       <mat-form-field fxFlex="31%">
-        <mat-label>{{'labels.inputs.Resource ID' | translate}}</mat-label>
-        <input matInput formControlName="resourceId">
+        <mat-label>{{ 'labels.inputs.Resource ID' | translate }}</mat-label>
+        <input matInput formControlName="resourceId" />
       </mat-form-field>
 
-      <button mat-raised-button color="primary" id="search-button" (click)="search()">{{'labels.buttons.Search' | translate}}</button>
-
+      <button mat-raised-button color="primary" id="search-button" (click)="search()">
+        {{ 'labels.buttons.Search' | translate }}
+      </button>
     </div>
-
   </form>
 
-  <table mat-table [dataSource]="dataSource" *ngIf="!(noSearchedData)">
-
+  <table mat-table [dataSource]="dataSource" *ngIf="!noSearchedData">
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
-          [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        <mat-checkbox
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+          [aria-label]="checkboxLabel()"
+        >
         </mat-checkbox>
       </th>
       <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-          [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+          [aria-label]="checkboxLabel(row)"
+        >
         </mat-checkbox>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.ID' | translate}} </th>
-      <td mat-cell *matCellDef="let makerChecker"> {{ makerChecker.id }} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.ID' | translate }}</th>
+      <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.id }}</td>
     </ng-container>
 
     <ng-container matColumnDef="madeOnDate">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Made on Date' | translate}} </th>
-      <td mat-cell *matCellDef="let makerChecker"> {{ makerChecker.madeOnDate  | dateFormat }} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Made on Date' | translate }}</th>
+      <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.madeOnDate | dateFormat }}</td>
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Status' | translate}} </th>
-      <td mat-cell *matCellDef="let makerChecker"> {{ makerChecker.processingResult }} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Status' | translate }}</th>
+      <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.processingResult }}</td>
     </ng-container>
 
     <ng-container matColumnDef="user">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.User' | translate}} </th>
-      <td mat-cell *matCellDef="let makerChecker"> {{ makerChecker.maker }} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.User' | translate }}</th>
+      <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.maker }}</td>
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Action' | translate}} </th>
-      <td mat-cell *matCellDef="let makerChecker"> {{ makerChecker.actionName }} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Action' | translate }}</th>
+      <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.actionName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="entity">
-      <th mat-header-cell *matHeaderCellDef> {{'labels.inputs.Entity' | translate}} </th>
-      <td mat-cell *matCellDef="let makerChecker"> {{ makerChecker.entityName }} </td>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Entity' | translate }}</th>
+      <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.entityName }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="[row.id,'view']" class="select-row">
-    </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id, 'view']" class="select-row"></tr>
   </table>
 
   <div class="alert" *ngIf="noSearchedData">
-
     <div class="message">
       <i class="fa fa-exclamation-circle alert-check fa-2x"></i>
-      {{'labels.text.No checker inbox data available for this search' | translate}}
+      {{ 'labels.text.No checker inbox data available for this search' | translate }}
     </div>
-
   </div>
-
 </div>
 
 <div class="alert" *ngIf="!checkerData">
-
   <div class="message">
     <i class="fa fa-exclamation-circle alert-check fa-2x"></i>
-    {{'labels.text.No checker inbox data available for this account' | translate}}
+    {{ 'labels.text.No checker inbox data available for this account' | translate }}
   </div>
-
 </div>

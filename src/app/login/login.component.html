@@ -1,6 +1,5 @@
 <!-- The viewport is divided into two parts having max-width 70% and 30% -->
 <div fxLayout="row">
-
   <!--
     Content in 70%: (TODO: Allow customization by organization)
       Cover Image
@@ -12,11 +11,20 @@
 
   <div fxFlex="70%" fxLayout="column" fxLayoutAlign="center center" fxHide.lt-sm class="cover">
     <div class="cover-content">
-      <h1 class="mat-display-1 cover-title">{{ 'APP_NAME' | translate}}</h1>
+      <h1 class="mat-display-1 cover-title">{{ 'APP_NAME' | translate }}</h1>
       <p class="mat-headline cover-description">
-        {{ 'APP_NAME' | translate}} {{'labels.text.is designed by the' | translate}} <a href="https://mifos.org/" target="_blank" class="cover-link">{{'labels.text.Mifos Initiative' | translate}}</a>. {{'labels.text.A' | translate}} <a href="https://mifos.org/resources/community/" target="_blank" class="cover-link">{{'labels.text.global community' | translate}}</a>
-        {{'labels.text.elimination of poverty' | translate}}
-        <a href="https://mifos.org/take-action/volunteer/" target="_blank" class="cover-link">{{'labels.text.Get involved' | translate}}!</a>
+        {{ 'APP_NAME' | translate }} {{ 'labels.text.is designed by the' | translate }}
+        <a href="https://mifos.org/" target="_blank" class="cover-link">{{
+          'labels.text.Mifos Initiative' | translate
+        }}</a
+        >. {{ 'labels.text.A' | translate }}
+        <a href="https://mifos.org/resources/community/" target="_blank" class="cover-link">{{
+          'labels.text.global community' | translate
+        }}</a>
+        {{ 'labels.text.elimination of poverty' | translate }}
+        <a href="https://mifos.org/take-action/volunteer/" target="_blank" class="cover-link"
+          >{{ 'labels.text.Get involved' | translate }}!</a
+        >
       </p>
     </div>
   </div>
@@ -31,18 +39,20 @@
   -->
 
   <div fxLayout="column" fxFlex.gt-sm="1 0 30%" class="login-container">
-
     <!-- Language Selector to the extreme right -->
     <div fxLayout="row-reverse" fxFlex="1 0 auto">
       <mifosx-language-selector class="p-r-10 p-t-10"></mifosx-language-selector>
       <mifosx-theme-toggle class="p-r-10 p-t-10"></mifosx-theme-toggle>
       <div fxFlex></div>
-      <mifosx-server-selector class="p-l-10 p-t-10" *ngIf="!environment.production && environment.allowServerSwitch"></mifosx-server-selector>
+      <mifosx-server-selector
+        class="p-l-10 p-t-10"
+        *ngIf="!environment.production && environment.allowServerSwitch"
+      ></mifosx-server-selector>
     </div>
 
     <!-- Logo with Organization Name -->
     <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 0 auto">
-      <img src="assets/images/mifos_lg-logo.png" alt="{{ 'APP_NAME' | translate}} Logo" class="img-container">
+      <img src="assets/images/mifos_lg-logo.png" alt="{{ 'APP_NAME' | translate }} Logo" class="img-container" />
     </div>
 
     <!-- Tenant Identifier Name -->
@@ -65,9 +75,21 @@
 
     <!-- Contact Information/Resources (hidden on smaller screens) -->
     <mat-list fxHide.lt-lg fxLayout="row" fxFlexAlign="center" fxFlex="3 0 auto" class="information-list">
-      <mat-list-item><button mat-button [matMenuTriggerFor]="resourcesMenu">{{'labels.links.Resources' | translate}}</button></mat-list-item>
-      <mat-list-item><button mat-button [matMenuTriggerFor]="communityMenu">{{'labels.links.Community' | translate}}</button></mat-list-item>
-      <mat-list-item><button mat-button [matMenuTriggerFor]="contributeMenu">{{'labels.links.Contribute' | translate}}</button></mat-list-item>
+      <mat-list-item
+        ><button mat-button [matMenuTriggerFor]="resourcesMenu">
+          {{ 'labels.links.Resources' | translate }}
+        </button></mat-list-item
+      >
+      <mat-list-item
+        ><button mat-button [matMenuTriggerFor]="communityMenu">
+          {{ 'labels.links.Community' | translate }}
+        </button></mat-list-item
+      >
+      <mat-list-item
+        ><button mat-button [matMenuTriggerFor]="contributeMenu">
+          {{ 'labels.links.Contribute' | translate }}
+        </button></mat-list-item
+      >
     </mat-list>
 
     <!-- Footer -->
@@ -77,24 +99,45 @@
       <a (click)="reloadSettings()"><fa-icon icon="refresh"></fa-icon></a>
     </div>
   </div>
-
 </div>
 
 <!-- Contact Information/Resources Menus -->
 <mat-menu #resourcesMenu="matMenu">
-  <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual" target="_blank" mat-menu-item>{{'labels.links.User Manual' | translate}}</a>
-  <a href="https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+1.0+Functional+Specifications" target="_blank" mat-menu-item>{{'labels.links.Functional Specifications' | translate}}</a>
-  <a href="https://cwiki.apache.org/confluence/display/FINERACT/Contributor%27s+Zone" target="_blank" mat-menu-item>{{'labels.links.Developer Zone' | translate}}</a>
+  <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual" target="_blank" mat-menu-item>{{
+    'labels.links.User Manual' | translate
+  }}</a>
+  <a
+    href="https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+1.0+Functional+Specifications"
+    target="_blank"
+    mat-menu-item
+    >{{ 'labels.links.Functional Specifications' | translate }}</a
+  >
+  <a href="https://cwiki.apache.org/confluence/display/FINERACT/Contributor%27s+Zone" target="_blank" mat-menu-item>{{
+    'labels.links.Developer Zone' | translate
+  }}</a>
 </mat-menu>
 
 <mat-menu #communityMenu="matMenu">
-  <a href="https://groups.google.com/forum/#!forum/mifosusers" target="_blank" mat-menu-item>{{'labels.links.User Group' | translate}}</a>
-  <a href="https://groups.google.com/forum/#!forum/mifosdeveloper" target="_blank" mat-menu-item>{{'labels.links.Developer Group' | translate}}</a>
-  <a href="https://mifos.org/resources/community/communications/#mifos-irc" target="_blank" mat-menu-item>{{'labels.links.IRC' | translate}}</a>
+  <a href="https://groups.google.com/forum/#!forum/mifosusers" target="_blank" mat-menu-item>{{
+    'labels.links.User Group' | translate
+  }}</a>
+  <a href="https://groups.google.com/forum/#!forum/mifosdeveloper" target="_blank" mat-menu-item>{{
+    'labels.links.Developer Group' | translate
+  }}</a>
+  <a href="https://mifos.org/resources/community/communications/#mifos-irc" target="_blank" mat-menu-item>{{
+    'labels.links.IRC' | translate
+  }}</a>
 </mat-menu>
 
 <mat-menu #contributeMenu="matMenu">
-  <a href="https://mifosforge.jira.com/wiki/spaces/MDZ/pages/92012624/Key+Design+Principles" target="_blank" mat-menu-item>{{'labels.links.Key Design Principles' | translate}}</a>
-  <a href="https://sourceforge.net/projects/mifos/" target="_blank" mat-menu-item>{{'labels.links.Working with Code' | translate}}</a>
-  <a href="https://mifos.org/donate/" target="_blank" mat-menu-item>{{'labels.links.Donate' | translate}}</a>
+  <a
+    href="https://mifosforge.jira.com/wiki/spaces/MDZ/pages/92012624/Key+Design+Principles"
+    target="_blank"
+    mat-menu-item
+    >{{ 'labels.links.Key Design Principles' | translate }}</a
+  >
+  <a href="https://sourceforge.net/projects/mifos/" target="_blank" mat-menu-item>{{
+    'labels.links.Working with Code' | translate
+  }}</a>
+  <a href="https://mifos.org/donate/" target="_blank" mat-menu-item>{{ 'labels.links.Donate' | translate }}</a>
 </mat-menu>

@@ -1,84 +1,62 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_HOOK'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Edit' | translate }}
+    {{ 'labels.buttons.Edit' | translate }}
   </button>
 
   <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_HOOK'">
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{'labels.buttons.Delete' | translate }}
+    {{ 'labels.buttons.Delete' | translate }}
   </button>
-
 </div>
 
 <div class="container">
-
   <mat-card>
-
     <mat-card-content>
-
       <div fxLayout="row wrap" class="content">
-
-        <div fxFlex="50%" class="mat-body-strong">
-          {{ 'labels.inputs.Hook Name' | translate}}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Hook Name' | translate }}:</div>
 
         <div fxFlex="50%">
           {{ hookData.displayName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{ 'labels.inputs.Status' | translate }}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Status' | translate }}:</div>
 
         <div fxFlex="50%">
-          {{ hookData.isActive ? ( 'labels.inputs.Active' | translate ) : ('labels.catalogs.Inactive' | translate) }}
+          {{ hookData.isActive ? ('labels.inputs.Active' | translate) : ('labels.catalogs.Inactive' | translate) }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Activation Date' | translate}}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Activation Date' | translate }}:</div>
 
         <div fxFlex="50%">
           {{ hookData.createdAt | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Updated on' | translate}}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Updated on' | translate }}:</div>
 
         <div fxFlex="50%">
           {{ hookData.updatedAt | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Events' | translate}}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Events' | translate }}:</div>
 
         <div fxFlex="50%">
-
           <mat-label *ngFor="let event of hookData.events">
-
             {{ event.actionName + '  -  ' + event.entityName }}
 
-            <br>
-
+            <br />
           </mat-label>
-
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="hookData.name === 'Web'">
-          {{'labels.inputs.Content Type' | translate}}:
+          {{ 'labels.inputs.Content Type' | translate }}:
         </div>
 
         <div fxFlex="50%" *ngIf="hookData.name === 'Web'">
           {{ hookData.config[0].fieldValue }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{'labels.inputs.Payload URL' | translate}}:
-        </div>
+        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Payload URL' | translate }}:</div>
 
         <div fxFlex="50%" *ngIf="hookData.name === 'Web'">
           {{ hookData.config[1].fieldValue }}
@@ -89,7 +67,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="hookData.name === 'SMS Bridge'">
-        {{'labels.inputs.Phone Number' | translate}}:
+          {{ 'labels.inputs.Phone Number' | translate }}:
         </div>
 
         <div fxFlex="50%" *ngIf="hookData.name === 'SMS Bridge'">
@@ -105,7 +83,7 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="hookData.name === 'SMS Bridge'">
-          {{'labels.inputs.SMS Provider Account ID' | translate}}:
+          {{ 'labels.inputs.SMS Provider Account ID' | translate }}:
         </div>
 
         <div fxFlex="50%" *ngIf="hookData.name === 'SMS Bridge'">
@@ -113,17 +91,13 @@
         </div>
 
         <div fxFlex="50%" class="mat-body-strong" *ngIf="hookData.name === 'SMS Bridge'">
-          {{'labels.inputs.SMS Provider Token' | translate}}:
+          {{ 'labels.inputs.SMS Provider Token' | translate }}:
         </div>
 
         <div fxFlex="50%" *ngIf="hookData.name === 'SMS Bridge'">
           {{ hookData.config[4].fieldValue }}
         </div>
-
       </div>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

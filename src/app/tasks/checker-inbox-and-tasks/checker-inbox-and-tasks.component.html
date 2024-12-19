@@ -1,36 +1,60 @@
 <div class="container">
-
   <mat-card class="tasks-card">
-
     <mat-card-content>
-
       <nav mat-tab-nav-bar class="navigation-tabs">
-        <a mat-tab-link [routerLink]="['./checker-inbox']" routerLinkActive #checkerInbox="routerLinkActive"
-        [active]="checkerInbox.isActive" *mifosxHasPermission="'ALL_FUNCTIONS_READ'">
-        {{'labels.inputs.Checker Inbox' | translate}}
+        <a
+          mat-tab-link
+          [routerLink]="['./checker-inbox']"
+          routerLinkActive
+          #checkerInbox="routerLinkActive"
+          [active]="checkerInbox.isActive"
+          *mifosxHasPermission="'ALL_FUNCTIONS_READ'"
+        >
+          {{ 'labels.inputs.Checker Inbox' | translate }}
         </a>
-        <a mat-tab-link [routerLink]="['./client-approval']" routerLinkActive #clientApproval="routerLinkActive"
-          [active]="clientApproval.isActive" *mifosxHasPermission="'READ_CLIENT'">
-          {{'labels.inputs.Client Approval' | translate}}
+        <a
+          mat-tab-link
+          [routerLink]="['./client-approval']"
+          routerLinkActive
+          #clientApproval="routerLinkActive"
+          [active]="clientApproval.isActive"
+          *mifosxHasPermission="'READ_CLIENT'"
+        >
+          {{ 'labels.inputs.Client Approval' | translate }}
         </a>
-        <a mat-tab-link [routerLink]="['./loan-approval']" routerLinkActive #loanApproval="routerLinkActive"
-          [active]="loanApproval.isActive" *mifosxHasPermission="'READ_LOAN'">
-          {{'labels.inputs.Loan Approval' | translate}}
+        <a
+          mat-tab-link
+          [routerLink]="['./loan-approval']"
+          routerLinkActive
+          #loanApproval="routerLinkActive"
+          [active]="loanApproval.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
+        >
+          {{ 'labels.inputs.Loan Approval' | translate }}
         </a>
-        <a mat-tab-link [routerLink]="['./loan-disbursal']" routerLinkActive #loanDisbursal="routerLinkActive"
-          [active]="loanDisbursal.isActive" *mifosxHasPermission="'READ_LOAN'">
-          {{'labels.inputs.Loan Disbursal' | translate}}
+        <a
+          mat-tab-link
+          [routerLink]="['./loan-disbursal']"
+          routerLinkActive
+          #loanDisbursal="routerLinkActive"
+          [active]="loanDisbursal.isActive"
+          *mifosxHasPermission="'READ_LOAN'"
+        >
+          {{ 'labels.inputs.Loan Disbursal' | translate }}
         </a>
-        <a mat-tab-link [routerLink]="['./reschedule-loan']" routerLinkActive #rescheduleLoan="routerLinkActive"
-          [active]="rescheduleLoan.isActive" *mifosxHasPermission="'RESCHEDULE_LOAN'">
-          {{'labels.inputs.Reschedule Loan' | translate}}
+        <a
+          mat-tab-link
+          [routerLink]="['./reschedule-loan']"
+          routerLinkActive
+          #rescheduleLoan="routerLinkActive"
+          [active]="rescheduleLoan.isActive"
+          *mifosxHasPermission="'RESCHEDULE_LOAN'"
+        >
+          {{ 'labels.inputs.Reschedule Loan' | translate }}
         </a>
       </nav>
 
       <router-outlet></router-outlet>
-
     </mat-card-content>
-
   </mat-card>
-
 </div>

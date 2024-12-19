@@ -1,9 +1,20 @@
 <mifosx-activate-recurring-deposits-account *ngIf="actions['Activate']"></mifosx-activate-recurring-deposits-account>
-<mifosx-undo-approval-recurring-deposits-account *ngIf="actions['Undo Approval'] || actions['Undo Activation']"></mifosx-undo-approval-recurring-deposits-account>
+<mifosx-undo-approval-recurring-deposits-account
+  *ngIf="actions['Undo Approval'] || actions['Undo Activation']"
+></mifosx-undo-approval-recurring-deposits-account>
 <mifosx-approve-recurring-deposits-account *ngIf="actions['Approve']"></mifosx-approve-recurring-deposits-account>
 <mifosx-reject-recurring-deposits-account *ngIf="actions['Reject']"></mifosx-reject-recurring-deposits-account>
-<mifosx-withdraw-by-client-recurring-deposits-account *ngIf="actions['Withdrawn by Client']"></mifosx-withdraw-by-client-recurring-deposits-account>
-<mifosx-add-charge-recurring-deposits-account *ngIf="actions['Add Charge']"></mifosx-add-charge-recurring-deposits-account>
-<mifosx-premature-close-recurring-deposit-account *ngIf="actions['Premature Close']"></mifosx-premature-close-recurring-deposit-account>
+<mifosx-withdraw-by-client-recurring-deposits-account
+  *ngIf="actions['Withdrawn by Client']"
+></mifosx-withdraw-by-client-recurring-deposits-account>
+<mifosx-add-charge-recurring-deposits-account
+  *ngIf="actions['Add Charge']"
+></mifosx-add-charge-recurring-deposits-account>
+<mifosx-premature-close-recurring-deposit-account
+  *ngIf="actions['Premature Close']"
+></mifosx-premature-close-recurring-deposit-account>
 <mifosx-close-recurring-deposits-account *ngIf="actions['Close']"></mifosx-close-recurring-deposits-account>
-<mifosx-deposit-recurring-deposits-account [currency]="currency" *ngIf="actions['Deposit'] || actions['Withdrawal']"></mifosx-deposit-recurring-deposits-account>
+<mifosx-deposit-recurring-deposits-account
+  [currency]="currency"
+  *ngIf="actions['Deposit'] || actions['Withdrawal']"
+></mifosx-deposit-recurring-deposits-account>
