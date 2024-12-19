@@ -36,7 +36,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
 
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId', 'actions'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
-  chargeOffReasonExpenseDisplayedColumns: string[] = ['chargeOffReasonCodeValueId', 'expenseGLAccountId', 'actions'];
+  chargeOffReasonExpenseDisplayedColumns: string[] = ['chargeOffReasonCodeValueId', 'expenseAccountId', 'actions'];
 
   constructor(private formBuilder: UntypedFormBuilder,
               public dialog: MatDialog,
@@ -108,7 +108,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
           ({ chargeId: penaltyIncome.charge.id, incomeAccountId: penaltyIncome.incomeAccount.id }))));
         this.loanProductAccountingForm.setControl('chargeOffReasonToExpenseAccountMappings',
             this.formBuilder.array((this.loanProductsTemplate.chargeOffReasonToExpenseAccountMappings || []).map((m: ChargeOffReasonToExpenseAccountMapping) =>
-                ({ chargeOffReasonCodeValueId: m.chargeOffReasonCodeValue.id, expenseGLAccountId: m.chargeOffExpenseAccount.id }))));
+                ({ chargeOffReasonCodeValueId: m.chargeOffReasonCodeValue.id, expenseAccountId: m.expenseAccount.id }))));
     }
   }
 
@@ -134,7 +134,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.addControl('overpaymentLiabilityAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
           this.loanProductAccountingForm.addControl('chargeOffFraudExpenseAccountId', new UntypedFormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('chargeOffExpenseAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('expenseAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffPenaltyAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffFeesAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffInterestAccountId', new UntypedFormControl('', Validators.required));
@@ -168,7 +168,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.removeControl('goodwillCreditAccountId');
           this.loanProductAccountingForm.removeControl('overpaymentLiabilityAccountId');
           this.loanProductAccountingForm.removeControl('advancedAccountingRules');
-          this.loanProductAccountingForm.removeControl('chargeOffExpenseAccountId');
+          this.loanProductAccountingForm.removeControl('expenseAccountId');
           this.loanProductAccountingForm.removeControl('chargeOffFraudExpenseAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffPenaltyAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffFeesAccountId');
@@ -334,9 +334,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
         order: 1
       }),
       new SelectBase({
-        controlName: 'expenseGLAccountId',
+        controlName: 'expenseAccountId',
         label: 'Expense Account',
-        value: values ? values.expenseGLAccountId : this.expenseAccountData[0].id,
+        value: values ? values.expenseAccountId : this.expenseAccountData[0].id,
         options: { label: 'name', value: 'id', data: this.expenseAccountData },
         required: true,
         order: 2
