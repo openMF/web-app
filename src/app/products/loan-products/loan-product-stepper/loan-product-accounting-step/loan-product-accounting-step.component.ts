@@ -134,7 +134,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.addControl('overpaymentLiabilityAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
           this.loanProductAccountingForm.addControl('chargeOffFraudExpenseAccountId', new UntypedFormControl('', Validators.required));
-          this.loanProductAccountingForm.addControl('expenseAccountId', new UntypedFormControl('', Validators.required));
+          this.loanProductAccountingForm.addControl('chargeOffExpenseAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffPenaltyAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffFeesAccountId', new UntypedFormControl('', Validators.required));
           this.loanProductAccountingForm.addControl('incomeFromChargeOffInterestAccountId', new UntypedFormControl('', Validators.required));
@@ -168,7 +168,7 @@ export class LoanProductAccountingStepComponent implements OnInit {
           this.loanProductAccountingForm.removeControl('goodwillCreditAccountId');
           this.loanProductAccountingForm.removeControl('overpaymentLiabilityAccountId');
           this.loanProductAccountingForm.removeControl('advancedAccountingRules');
-          this.loanProductAccountingForm.removeControl('expenseAccountId');
+          this.loanProductAccountingForm.removeControl('chargeOffExpenseAccountId');
           this.loanProductAccountingForm.removeControl('chargeOffFraudExpenseAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffPenaltyAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromChargeOffFeesAccountId');
