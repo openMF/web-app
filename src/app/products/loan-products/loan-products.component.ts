@@ -15,9 +15,13 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./loan-products.component.scss']
 })
 export class LoanProductsComponent implements OnInit, AfterViewInit {
-
   loanProductsData: any;
-  displayedColumns: string[] = ['name', 'shortName', 'closeDate', 'status'];
+  displayedColumns: string[] = [
+    'name',
+    'shortName',
+    'closeDate',
+    'status'
+  ];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -38,10 +42,12 @@ export class LoanProductsComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
     this.route.data.subscribe((data: { loanProducts: any }) => {
       this.loanProductsData = data.loanProducts;
     });
@@ -63,7 +69,12 @@ export class LoanProductsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showLoanProductsPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonCreateLoanProduct, this.buttonCreateLoanProduct.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonCreateLoanProduct,
+          this.buttonCreateLoanProduct.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
 
@@ -81,7 +92,12 @@ export class LoanProductsComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 

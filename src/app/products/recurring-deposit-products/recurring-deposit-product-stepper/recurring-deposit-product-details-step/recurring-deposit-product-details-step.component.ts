@@ -7,7 +7,6 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
   styleUrls: ['./recurring-deposit-product-details-step.component.scss']
 })
 export class RecurringDepositProductDetailsStepComponent implements OnInit {
-
   @Input() recurringDepositProductsTemplate: any;
 
   recurringDepositProductDetailsForm: UntypedFormGroup;
@@ -19,23 +18,31 @@ export class RecurringDepositProductDetailsStepComponent implements OnInit {
   ngOnInit() {
     if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
       this.recurringDepositProductDetailsForm.patchValue({
-        'name': this.recurringDepositProductsTemplate.name,
-        'shortName': this.recurringDepositProductsTemplate.shortName,
-        'description': this.recurringDepositProductsTemplate.description,
+        name: this.recurringDepositProductsTemplate.name,
+        shortName: this.recurringDepositProductsTemplate.shortName,
+        description: this.recurringDepositProductsTemplate.description
       });
     }
   }
 
   createrecurringDepositProductDetailsForm() {
     this.recurringDepositProductDetailsForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'shortName': ['', Validators.required],
-      'description': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ],
+      shortName: [
+        '',
+        Validators.required
+      ],
+      description: [
+        '',
+        Validators.required
+      ]
     });
   }
 
   get recurringDepositProductDetails() {
     return this.recurringDepositProductDetailsForm.value;
   }
-
 }

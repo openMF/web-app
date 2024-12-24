@@ -8,7 +8,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./share-product-currency-step.component.scss']
 })
 export class ShareProductCurrencyStepComponent implements OnInit {
-
   @Input() shareProductsTemplate: any;
 
   shareProductCurrencyForm: UntypedFormGroup;
@@ -24,28 +23,36 @@ export class ShareProductCurrencyStepComponent implements OnInit {
 
     if (this.shareProductsTemplate.currency) {
       this.shareProductCurrencyForm.patchValue({
-        'currencyCode': this.shareProductsTemplate.currency.code,
-        'digitsAfterDecimal': this.shareProductsTemplate.currency.decimalPlaces,
-        'inMultiplesOf': this.shareProductsTemplate.currency.inMultiplesOf
+        currencyCode: this.shareProductsTemplate.currency.code,
+        digitsAfterDecimal: this.shareProductsTemplate.currency.decimalPlaces,
+        inMultiplesOf: this.shareProductsTemplate.currency.inMultiplesOf
       });
     } else {
       this.shareProductCurrencyForm.patchValue({
-        'currencyCode': this.currencyData[0].code,
-        'digitsAfterDecimal': 2
+        currencyCode: this.currencyData[0].code,
+        digitsAfterDecimal: 2
       });
     }
   }
 
   createShareProductCurrencyForm() {
     this.shareProductCurrencyForm = this.formBuilder.group({
-      'currencyCode': ['', Validators.required],
-      'digitsAfterDecimal': ['', Validators.required],
-      'inMultiplesOf': ['', Validators.required]
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      digitsAfterDecimal: [
+        '',
+        Validators.required
+      ],
+      inMultiplesOf: [
+        '',
+        Validators.required
+      ]
     });
   }
 
   get shareProductCurrency() {
     return this.shareProductCurrencyForm.value;
   }
-
 }

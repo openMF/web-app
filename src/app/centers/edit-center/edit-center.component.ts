@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./edit-center.component.scss']
 })
 export class EditCenterComponent implements OnInit {
-
   /** Center Data */
   centerData: any;
   /** Staffs Data */
@@ -38,12 +37,14 @@ export class EditCenterComponent implements OnInit {
    * @param {GroupsService} groupService GroupsService.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private centersService: CentersService,
     private settingsService: SettingsService,
-    private dateUtils: Dates) {
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { centerData: any }) => {
       this.centerData = data.centerData;
       this.staffs = this.centerData.staffOptions;
@@ -64,12 +65,23 @@ export class EditCenterComponent implements OnInit {
   createEditCenterForm() {
     const dateFormat = this.settingsService.dateFormat;
     this.editCenterForm = this.formBuilder.group({
-      'name': [this.centerData.name, [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'staffId': [this.centerData.staffId],
-      'externalId': [this.centerData.externalId]
+      name: [
+        this.centerData.name,
+        [
+          Validators.required,
+          Validators.pattern('(^[A-z]).*')]
+      ],
+      staffId: [this.centerData.staffId],
+      externalId: [this.centerData.externalId]
     });
     if (this.centerData.status.value === 'Pending') {
-      this.editCenterForm.addControl('activationDate', new UntypedFormControl(this.centerData.activationDate ? this.centerData.activationDate : new Date(), Validators.required));
+      this.editCenterForm.addControl(
+        'activationDate',
+        new UntypedFormControl(
+          this.centerData.activationDate ? this.centerData.activationDate : new Date(),
+          Validators.required
+        )
+      );
     }
   }
 
@@ -97,5 +109,4 @@ export class EditCenterComponent implements OnInit {
       this.router.navigate(['../general'], { relativeTo: this.route });
     });
   }
-
 }

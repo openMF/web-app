@@ -14,27 +14,36 @@ export const environment = {
   fineractPlatformTenantId: window['env']['fineractPlatformTenantId'] || 'default',
   fineractPlatformTenantIds: window['env']['fineractPlatformTenantIds'] || 'default',
   // For connecting to others servers running elsewhere update the base API URL
-  baseApiUrls: window['env']['fineractApiUrls'] ||
-    'https://dev.mifos.io,https://demo.mifos.io,https://qa.mifos.io,https://staging.mifos.io,https://mobile.mifos.io,https://demo.fineract.dev,https://localhost:8443,'
-    + window.location.protocol + '//' + window.location.hostname + ':' + window.location.port,
+  baseApiUrls:
+    window['env']['fineractApiUrls'] ||
+    'https://dev.mifos.io,https://demo.mifos.io,https://qa.mifos.io,https://staging.mifos.io,https://mobile.mifos.io,https://demo.fineract.dev,https://localhost:8443,' +
+      window.location.protocol +
+      '//' +
+      window.location.hostname +
+      ':' +
+      window.location.port,
   // For connecting to server running elsewhere set the base API URL
-  baseApiUrl: window['env']['baseApiUrl'] || window.location.protocol + '//' + window.location.hostname + ':' + window.location.port,
+  baseApiUrl:
+    window['env']['baseApiUrl'] ||
+    window.location.protocol + '//' + window.location.hostname + ':' + window.location.port,
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: window['env']['apiProvider'] || '/fineract-provider/api',
   apiVersion: window['env']['apiVersion'] || '/v1',
   serverUrl: '',
   oauth: {
-    enabled: window['env']['oauthServerEnabled'] || false,  // For connecting to Mifos X using OAuth2 Authentication change the value to true
+    enabled: window['env']['oauthServerEnabled'] || false, // For connecting to Mifos X using OAuth2 Authentication change the value to true
     serverUrl: window['env']['oauthServerUrl'] || '',
     appId: window['env']['oauthAppId'] || ''
   },
   warningDialog: {
     title: 'Warning',
-    content: 'This system is for authorized use only. Unauthorized access will result in possible legal action. By accessing this system, you acknowledge that you are authorized to do so and that all data stored and processed here is confidential.',
+    content:
+      'This system is for authorized use only. Unauthorized access will result in possible legal action. By accessing this system, you acknowledge that you are authorized to do so and that all data stored and processed here is confidential.',
     buttonText: 'Close'
   },
   defaultLanguage: window['env']['defaultLanguage'] || 'en-US',
-  supportedLanguages: window['env']['supportedLanguages'] || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
+  supportedLanguages:
+    window['env']['supportedLanguages'] || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
   preloadClients: window['env']['preloadClients'] || true,
 
   defaultCharDelimiter: window['env']['defaultCharDelimiter'] || ',',
@@ -47,11 +56,10 @@ export const environment = {
   waitTimeForCOBCatchUp: window['env']['waitTimeForCOBCatchUp'] || 30,
   session: {
     timeout: {
-      idleTimeout: window['env']['sessionIdleTimeout'] || 300000, // 5 minutes
+      idleTimeout: window['env']['sessionIdleTimeout'] || 300000 // 5 minutes
     }
   }
 };
 
 // Server URL
 environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
-

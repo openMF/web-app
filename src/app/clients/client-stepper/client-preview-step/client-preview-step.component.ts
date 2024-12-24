@@ -10,7 +10,6 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./client-preview-step.component.scss']
 })
 export class ClientPreviewStepComponent {
-
   /** Client Address field configuration */
   @Input() clientAddressFieldConfig: any;
   /** Client Template */
@@ -21,7 +20,7 @@ export class ClientPreviewStepComponent {
   /** Form submission event */
   @Output() submitEvent = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Utilized in address preview.
@@ -30,7 +29,7 @@ export class ClientPreviewStepComponent {
    * @param {any} fieldId Field Id
    */
   getSelectedValue(fieldName: any, fieldId: any) {
-    return (this.clientTemplate.address[0][fieldName].find((fieldObj: any) => fieldObj.id === fieldId));
+    return this.clientTemplate.address[0][fieldName].find((fieldObj: any) => fieldObj.id === fieldId);
   }
 
   /**
@@ -38,7 +37,6 @@ export class ClientPreviewStepComponent {
    * @param {any} fieldName Field Name
    */
   isFieldEnabled(fieldName: any) {
-    return (this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName))?.isEnabled;
+    return this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)?.isEnabled;
   }
-
 }

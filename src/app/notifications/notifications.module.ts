@@ -22,4 +22,4 @@ import { NotificationsPageComponent } from './notifications-page/notifications-p
     NotificationsRoutingModule
   ]
 })
-export class NotificationsModule { }
+export class NotificationsModule {}

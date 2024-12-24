@@ -15,7 +15,6 @@ import { ClientsService } from 'app/clients/clients.service';
   styleUrls: ['./update-client-savings-account.component.scss']
 })
 export class UpdateClientSavingsAccountComponent implements OnInit {
-
   /** Client Update Savings Account form. */
   clientSavingsAccountForm: UntypedFormGroup;
   /** Savings Accounts Data */
@@ -30,10 +29,12 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private clientsService: ClientsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientData = data.clientActionData;
     });
@@ -49,7 +50,7 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
    */
   createClientSavingsAccountForm() {
     this.clientSavingsAccountForm = this.formBuilder.group({
-      'savingsAccountId': [this.clientData.savingsAccountId]
+      savingsAccountId: [this.clientData.savingsAccountId]
     });
   }
 
@@ -57,10 +58,10 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
    * Submits the form and update savings account for the client.
    */
   submit() {
-    this.clientsService.executeClientCommand(this.clientData.id, 'updateSavingsAccount', this.clientSavingsAccountForm.value)
+    this.clientsService
+      .executeClientCommand(this.clientData.id, 'updateSavingsAccount', this.clientSavingsAccountForm.value)
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });
   }
-
 }

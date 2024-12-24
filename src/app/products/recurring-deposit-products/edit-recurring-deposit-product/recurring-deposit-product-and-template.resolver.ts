@@ -13,20 +13,18 @@ import { ProductsService } from '../../products.service';
  */
 @Injectable()
 export class RecurringDepositProductAndTemplateResolver implements Resolve<Object> {
+  /**
+   * @param {ProductsService} productsService Products service.
+   */
+  constructor(private productsService: ProductsService) {}
 
-    /**
-     * @param {ProductsService} productsService Products service.
-     */
-    constructor(private productsService: ProductsService) { }
-
-    /**
-     * Returns the Recurring Deposits Product and Template.
-     * @param {ActivatedRouteSnapshot} route Route Snapshot
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-      const productId = route.parent.paramMap.get('productId');
-      return this.productsService.getRecurringDepositProductAndTemplate(productId);
-    }
-
+  /**
+   * Returns the Recurring Deposits Product and Template.
+   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const productId = route.parent.paramMap.get('productId');
+    return this.productsService.getRecurringDepositProductAndTemplate(productId);
+  }
 }

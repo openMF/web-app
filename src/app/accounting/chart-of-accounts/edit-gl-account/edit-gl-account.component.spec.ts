@@ -8,9 +8,8 @@ describe('EditGlAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditGlAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [EditGlAccountComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

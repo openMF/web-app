@@ -5,7 +5,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
   providedIn: 'root'
 })
 export class TreeControlService {
-  constructor() { }
+  constructor() {}
 
   toggleExpandCollapse(nestedTreeControl: NestedTreeControl<any>, isTreeExpanded: boolean) {
     if (isTreeExpanded) {

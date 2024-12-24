@@ -15,7 +15,6 @@ import { OrganizationService } from '../organization.service';
   styleUrls: ['./password-preferences.component.scss']
 })
 export class PasswordPreferencesComponent implements OnInit {
-
   /** Password preferences form. */
   passwordPreferencesForm: UntypedFormGroup;
   /** Password preferences data. */
@@ -28,11 +27,13 @@ export class PasswordPreferencesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: { passwordPreferencesTemplate: any}) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { passwordPreferencesTemplate: any }) => {
       this.passwordPreferencesData = data.passwordPreferencesTemplate;
     });
   }
@@ -50,7 +51,7 @@ export class PasswordPreferencesComponent implements OnInit {
    */
   createPasswordPreferencesForm() {
     this.passwordPreferencesForm = this.formBuilder.group({
-      'validationPolicyId': ['']
+      validationPolicyId: ['']
     });
   }
 
@@ -75,5 +76,4 @@ export class PasswordPreferencesComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

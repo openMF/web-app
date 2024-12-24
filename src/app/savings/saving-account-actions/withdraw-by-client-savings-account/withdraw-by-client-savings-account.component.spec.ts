@@ -8,9 +8,8 @@ describe('WithdrawByClientSavingsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WithdrawByClientSavingsAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [WithdrawByClientSavingsAccountComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -14,9 +14,7 @@ import { SettingsService } from 'app/settings/settings.service';
   templateUrl: './server-selector.component.html',
   styleUrls: ['./server-selector.component.scss']
 })
-
 export class ServerSelectorComponent implements OnInit {
-
   /** Input server. */
   form: any;
 
@@ -24,7 +22,7 @@ export class ServerSelectorComponent implements OnInit {
   servers: string[];
 
   /** Server Setting */
-  serverSelector =  new UntypedFormControl('');
+  serverSelector = new UntypedFormControl('');
 
   /** Server list to show */
   existMoreThanOneServer = false;
@@ -32,20 +30,25 @@ export class ServerSelectorComponent implements OnInit {
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private settingsService: SettingsService,
+  constructor(
+    private settingsService: SettingsService,
     public dialog: MatDialog,
-    private formBuilder: UntypedFormBuilder) { }
+    private formBuilder: UntypedFormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.servers = this.settingsService.servers;
-    this.existMoreThanOneServer = (this.servers && this.servers.length > 1);
+    this.existMoreThanOneServer = this.servers && this.servers.length > 1;
     if (!this.existMoreThanOneServer) {
       this.settingsService.setServer(this.servers[0]);
     } else {
       this.existMoreThanOneServer = true;
       this.serverSelector.patchValue(this.settingsService.server);
       this.form = this.formBuilder.group({
-        'url': ['', [Validators.required]],
+        url: [
+          '',
+          [Validators.required]
+        ]
       });
     }
   }
@@ -56,7 +59,6 @@ export class ServerSelectorComponent implements OnInit {
   setServer(): void {
     this.settingsService.setServer(this.serverSelector.value);
   }
-
 
   /**
    * Add new server to the list.
@@ -69,5 +71,4 @@ export class ServerSelectorComponent implements OnInit {
     this.settingsService.setServers(servers);
     window.location.reload();
   }
-
 }

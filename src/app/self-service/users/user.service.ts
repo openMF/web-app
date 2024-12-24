@@ -18,11 +18,10 @@ import { User } from './user.model';
   providedIn: 'root'
 })
 export class UserService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Gets all the self service users.
@@ -31,18 +30,17 @@ export class UserService {
    */
   getUsers(): Observable<User[]> {
     const httpParams = new HttpParams().set('fields', 'id,firstname,lastname,email,officeName,staff');
-    return this.http.get('/users', { params: httpParams })
-      .pipe(
-        map((users: any) => {
-          users.forEach((user: any) => {
-            user.name = `${user.firstname} ${user.lastname}`;
-            user.staff = user.staff ? `${user.staff.firstname} ${user.staff.lastname}` : '';
-            delete user.firstname;
-            delete user.lastname;
-          });
-          return users as User[];
-        })
-      );
+    return this.http.get('/users', { params: httpParams }).pipe(
+      map((users: any) => {
+        users.forEach((user: any) => {
+          user.name = `${user.firstname} ${user.lastname}`;
+          user.staff = user.staff ? `${user.staff.firstname} ${user.staff.lastname}` : '';
+          delete user.firstname;
+          delete user.lastname;
+        });
+        return users as User[];
+      })
+    );
   }
 
   /**
@@ -54,8 +52,6 @@ export class UserService {
    * TODO: update endpoint once API available
    */
   changePassword(userId: string, passwordObj: any) {
-
     return this.http.put(`/users/${userId}`, passwordObj);
   }
-
 }

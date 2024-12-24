@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +29,6 @@ import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialo
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-
   /** Username of authenticated user. */
   username: string;
   /** Activity Form. */
@@ -42,13 +41,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   allActivities: any[] = activities;
 
   /* Reference of dashboard button */
-  @ViewChild('buttonDashboard', {static: false}) buttonDashboard: ElementRef<any>;
+  @ViewChild('buttonDashboard', { static: false }) buttonDashboard: ElementRef<any>;
   /* Template for popover on dashboard button */
-  @ViewChild('templateButtonDashboard', {static: false}) templateButtonDashboard: TemplateRef<any>;
+  @ViewChild('templateButtonDashboard', { static: false }) templateButtonDashboard: TemplateRef<any>;
   /* Reference of search activity */
-  @ViewChild('searchActivity', {static: false}) searchActivity: ElementRef<any>;
+  @ViewChild('searchActivity', { static: false }) searchActivity: ElementRef<any>;
   /* Template for popover on search activity */
-  @ViewChild('templateSearchActivity', {static: false}) templateSearchActivity: TemplateRef<any>;
+  @ViewChild('templateSearchActivity', { static: false }) templateSearchActivity: TemplateRef<any>;
 
   /**
    * @param {AuthenticationService} authenticationService Authentication Service.
@@ -58,12 +57,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private authenticationService: AuthenticationService,
-              private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {}
 
   /**
    * Sets the username of the authenticated user.
@@ -83,10 +84,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * Sets filtered activities for autocomplete.
    */
   setFilteredActivities() {
-    this.filteredActivities = this.searchText.valueChanges
-    .pipe(
-      map((activity: any) => typeof activity === 'string' ? activity : activity.activity),
-      map((activityName: string) => activityName ? this.filterActivity(activityName) : this.allActivities));
+    this.filteredActivities = this.searchText.valueChanges.pipe(
+      map((activity: any) => (typeof activity === 'string' ? activity : activity.activity)),
+      map((activityName: string) => (activityName ? this.filterActivity(activityName) : this.allActivities))
+    );
   }
 
   /**
@@ -96,7 +97,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
-    return this.allActivities.filter(activity => activity.activity.toLowerCase().indexOf(filterValue) === 0);
+    return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
   }
 
   /**
@@ -106,7 +107,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -140,23 +146,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * Next Step (Organization) Dialog Configuration Wizard.
    */
   openNextStepDialog() {
-    const nextStepDialogRef = this.dialog.open( NextStepDialogComponent, {
+    const nextStepDialogRef = this.dialog.open(NextStepDialogComponent, {
       data: {
         nextStepName: 'Setup Organization',
         previousStepName: 'Home Tour',
         stepPercentage: 10
-      },
+      }
     });
     nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
-    if (response.nextStep) {
-      this.configurationWizardService.showHome = false;
-      this.configurationWizardService.showHomeSearchActivity = false;
-      this.configurationWizardService.showCreateOffice = true;
-      this.router.navigate(['/organization']);
+      if (response.nextStep) {
+        this.configurationWizardService.showHome = false;
+        this.configurationWizardService.showHomeSearchActivity = false;
+        this.configurationWizardService.showCreateOffice = true;
+        this.router.navigate(['/organization']);
       } else {
-      this.configurationWizardService.showHome = false;
-      this.configurationWizardService.showHomeSearchActivity = false;
-      this.router.navigate(['/home']);
+        this.configurationWizardService.showHome = false;
+        this.configurationWizardService.showHomeSearchActivity = false;
+        this.router.navigate(['/home']);
       }
     });
   }

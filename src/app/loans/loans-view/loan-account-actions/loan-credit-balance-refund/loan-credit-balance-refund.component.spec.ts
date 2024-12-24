@@ -8,9 +8,8 @@ describe('LoanCreditBalanceRefundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoanCreditBalanceRefundComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanCreditBalanceRefundComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

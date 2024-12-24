@@ -63,6 +63,7 @@ const routes: Routes = [
       ]
     }
   ])
+
 ];
 
 /**
@@ -80,4 +81,4 @@ const routes: Routes = [
     CreateTemplateResolver
   ]
 })
-export class TemplatesRoutingModule { }
+export class TemplatesRoutingModule {}

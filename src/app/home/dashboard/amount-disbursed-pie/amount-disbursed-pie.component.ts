@@ -18,26 +18,27 @@ import Chart from 'chart.js';
   styleUrls: ['./amount-disbursed-pie.component.scss']
 })
 export class AmountDisbursedPieComponent implements OnInit {
-
-   /** Static Form control for office Id */
-   officeId = new UntypedFormControl();
-   /** Office Data */
-   officeData: any;
-   /** Chart.js chart */
-   chart: any;
-   /** Substitute for resolver */
-   hideOutput = true;
-   /** Shows fallback element */
-   showFallback = true;
+  /** Static Form control for office Id */
+  officeId = new UntypedFormControl();
+  /** Office Data */
+  officeData: any;
+  /** Chart.js chart */
+  chart: any;
+  /** Substitute for resolver */
+  hideOutput = true;
+  /** Shows fallback element */
+  showFallback = true;
 
   /**
    * Fetches offices data from `resolve`.
    * @param {HomeService} homeService Home Service.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private homeService: HomeService,
-              private route: ActivatedRoute) {
-    this.route.data.subscribe( (data: { offices: any }) => {
+  constructor(
+    private homeService: HomeService,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -57,7 +58,7 @@ export class AmountDisbursedPieComponent implements OnInit {
   getChartData() {
     this.officeId.valueChanges.subscribe((value: number) => {
       this.homeService.getDisbursedAmount(value).subscribe((response: any) => {
-        const data =  Object.entries(response[0]).map(entry => entry[1]);
+        const data = Object.entries(response[0]).map((entry) => entry[1]);
         if (!(data[0] === 0 && data[1] === 0)) {
           this.setChart(data);
           this.showFallback = false;
@@ -80,11 +81,19 @@ export class AmountDisbursedPieComponent implements OnInit {
       this.chart = new Chart('disbursement-pie', {
         type: 'doughnut',
         data: {
-          labels: ['Pending', 'Disbursed'],
-          datasets: [{
-            backgroundColor: ['dodgerblue', 'red'],
-            data: data
-          }]
+          labels: [
+            'Pending',
+            'Disbursed'
+          ],
+          datasets: [
+            {
+              backgroundColor: [
+                'dodgerblue',
+                'red'
+              ],
+              data: data
+            }
+          ]
         },
         options: {
           layout: {
@@ -100,5 +109,4 @@ export class AmountDisbursedPieComponent implements OnInit {
       this.chart.update();
     }
   }
-
 }

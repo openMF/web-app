@@ -14,7 +14,11 @@ import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { LoanProducts } from '../loan-products';
-import { AdvancedPaymentAllocation, AdvancedPaymentStrategy, PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import {
+  AdvancedPaymentAllocation,
+  AdvancedPaymentStrategy,
+  PaymentAllocation
+} from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { Accounting } from 'app/core/utils/accounting';
 import { StringEnumOptionData } from '../../../shared/models/option-data.model';
 
@@ -24,14 +28,17 @@ import { StringEnumOptionData } from '../../../shared/models/option-data.model';
   styleUrls: ['./create-loan-product.component.scss']
 })
 export class CreateLoanProductComponent implements OnInit {
-
   @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
-  @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
-  @ViewChild(LoanProductInterestRefundStepComponent, {static: true}) loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
+  @ViewChild(LoanProductCurrencyStepComponent, { static: true })
+  loanProductCurrencyStep: LoanProductCurrencyStepComponent;
+  @ViewChild(LoanProductInterestRefundStepComponent, { static: true })
+  loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
-  @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
+  @ViewChild(LoanProductSettingsStepComponent, { static: true })
+  loanProductSettingsStep: LoanProductSettingsStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
-  @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
+  @ViewChild(LoanProductAccountingStepComponent, { static: true })
+  loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductsTemplate: any;
   accountingRuleData: string[] = [];
@@ -44,23 +51,26 @@ export class CreateLoanProductComponent implements OnInit {
   advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   advancedCreditAllocations: AdvancedPaymentAllocation[] = [];
 
-   /**
-    * @param {ActivatedRoute} route Activated Route.
-    * @param {ProductsService} productsService Product Service.
-    * @param {LoanProducts} loanProducts LoanProducts
-    * @param {Router} router Router for navigation.
-    */
-  constructor(private route: ActivatedRoute,
-              private productsService: ProductsService,
-              private loanProducts: LoanProducts,
-              private router: Router,
-              private accounting: Accounting,
-              private advancedPaymentStrategy: AdvancedPaymentStrategy) {
-    this.route.data.subscribe((data: { loanProductsTemplate: any, configurations: any }) => {
+  /**
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {ProductsService} productsService Product Service.
+   * @param {LoanProducts} loanProducts LoanProducts
+   * @param {Router} router Router for navigation.
+   */
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private loanProducts: LoanProducts,
+    private router: Router,
+    private accounting: Accounting,
+    private advancedPaymentStrategy: AdvancedPaymentStrategy
+  ) {
+    this.route.data.subscribe((data: { loanProductsTemplate: any; configurations: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
       const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
       const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
-      this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
+      this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions =
+        assetAccountData.concat(liabilityAccountData);
 
       this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
       this.loanProductsTemplate['itemsByDefault'] = this.itemsByDefault;
@@ -98,7 +108,9 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   buildAdvancedPaymentAllocation(): void {
-    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(this.loanProductsTemplate);
+    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(
+      this.loanProductsTemplate
+    );
   }
 
   setPaymentAllocation(paymentAllocation: PaymentAllocation[]): void {
@@ -155,22 +167,29 @@ export class CreateLoanProductComponent implements OnInit {
       loanProduct['overDueDaysForRepaymentEvent'] = null;
     }
     if (this.isAdvancedPaymentStrategy) {
-      loanProduct['supportedInterestRefundTypes'] = this.mapStringEnumOptionToIdList(loanProduct['supportedInterestRefundTypes']);
+      loanProduct['supportedInterestRefundTypes'] = this.mapStringEnumOptionToIdList(
+        loanProduct['supportedInterestRefundTypes']
+      );
     } else {
       delete loanProduct['supportedInterestRefundTypes'];
     }
     delete loanProduct['useDueForRepaymentsConfigurations'];
 
-    this.productsService.createLoanProduct(loanProduct)
-      .subscribe((response: any) => {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
-      });
+    this.productsService.createLoanProduct(loanProduct).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {
     if (!incomingValues) {
       return [];
     }
-    return incomingValues.map(v => v.id);
+    return incomingValues.map((v) => v.id);
   }
 }

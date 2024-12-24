@@ -9,14 +9,13 @@ import { Observable } from 'rxjs';
  * Groups service.
  */
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class GroupsService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @param {any} filterBy Properties by which entries should be filtered.
@@ -50,11 +49,14 @@ export class GroupsService {
    * @param {any} orphansOnly? Orphans Only.
    * @returns {Observable<any>} Groups.
    */
-  getFilteredGroups(orderBy: string, sortOrder: string, name: string, officeId?: any, orphansOnly?: any): Observable<any> {
-    let httpParams = new HttpParams()
-      .set('name', name)
-      .set('sortOrder', sortOrder)
-      .set('orderBy', orderBy);
+  getFilteredGroups(
+    orderBy: string,
+    sortOrder: string,
+    name: string,
+    officeId?: any,
+    orphansOnly?: any
+  ): Observable<any> {
+    let httpParams = new HttpParams().set('name', name).set('sortOrder', sortOrder).set('orderBy', orderBy);
     if (officeId) {
       httpParams = httpParams.set('officeId', officeId);
     }
@@ -68,7 +70,7 @@ export class GroupsService {
    */
   getGroupsByOfficeId(officeId: number): Observable<any> {
     const httpParams = new HttpParams().set('officeId', officeId.toString());
-    return this.http.get('/groups', { params: httpParams } );
+    return this.http.get('/groups', { params: httpParams });
   }
 
   /**
@@ -87,8 +89,7 @@ export class GroupsService {
    * @returns {Observable<any>} Group Summary data.
    */
   getGroupSummary(groupId: string): Observable<any> {
-    const httpParams = new HttpParams().set('R_groupId', groupId)
-      .set('genericResultSet', 'false');
+    const httpParams = new HttpParams().set('R_groupId', groupId).set('genericResultSet', 'false');
     return this.http.get(`/runreports/GroupSummaryCounts`, { params: httpParams });
   }
 
@@ -212,9 +213,7 @@ export class GroupsService {
    * @returns {Observable<any>}
    */
   unAssignRoleCommand(groupId: string, roleId: any): Observable<any> {
-    const httpParams = new HttpParams()
-        .set('command', 'unassignRole')
-        .set('roleId', roleId);
+    const httpParams = new HttpParams().set('command', 'unassignRole').set('roleId', roleId);
     return this.http.post(`/groups/${groupId}`, {}, { params: httpParams });
   }
 
@@ -306,9 +305,7 @@ export class GroupsService {
    * @returns {Observable<any>} Staff Data for group.
    */
   getStaff(id: number): Observable<any> {
-    const httpParams = new HttpParams()
-        .set('officeId', id.toString())
-        .set('staffInSelectedOfficeOnly', 'true');
+    const httpParams = new HttpParams().set('officeId', id.toString()).set('staffInSelectedOfficeOnly', 'true');
     return this.http.get('/groups/template', { params: httpParams });
   }
 
@@ -316,7 +313,7 @@ export class GroupsService {
    * @param groupId Group Id of group to get data for.
    * @returns {Observable<any>} Group GLIM Accounts data.
    */
-   getGLIMAccountsData(groupId: string): Observable<any> {
+  getGLIMAccountsData(groupId: string): Observable<any> {
     return this.http.get(`/groups/${groupId}/glimaccounts`);
   }
 
@@ -324,8 +321,7 @@ export class GroupsService {
    * @param groupId Group Id of group to get data for.
    * @returns {Observable<any>} Group GSIM Accounts data.
    */
-   getGSIMAccountsData(groupId: string): Observable<any> {
+  getGSIMAccountsData(groupId: string): Observable<any> {
     return this.http.get(`/groups/${groupId}/gsimaccounts`);
   }
-
 }

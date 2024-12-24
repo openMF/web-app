@@ -14,7 +14,6 @@ import { AccountingService } from '../accounting.service';
  */
 @Injectable()
 export class GlAccountAndChartOfAccountsTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {AccountingService} accountingService Accounting service.
    */
@@ -31,16 +30,21 @@ export class GlAccountAndChartOfAccountsTemplateResolver implements Resolve<Obje
       map((glAccountData: any) => {
         let accountOptions = [];
         switch (glAccountData.type.value) {
-          case 'ASSET': accountOptions = glAccountData.assetHeaderAccountOptions;
-          break;
-          case 'EQUITY': accountOptions = glAccountData.equityHeaderAccountOptions;
-          break;
-          case 'EXPENSE': accountOptions = glAccountData.expenseHeaderAccountOptions;
-          break;
-          case 'INCOME': accountOptions = glAccountData.incomeHeaderAccountOptions;
-          break;
-          case 'LIABILITY': accountOptions = glAccountData.liabilityHeaderAccountOptions;
-          break;
+          case 'ASSET':
+            accountOptions = glAccountData.assetHeaderAccountOptions;
+            break;
+          case 'EQUITY':
+            accountOptions = glAccountData.equityHeaderAccountOptions;
+            break;
+          case 'EXPENSE':
+            accountOptions = glAccountData.expenseHeaderAccountOptions;
+            break;
+          case 'INCOME':
+            accountOptions = glAccountData.incomeHeaderAccountOptions;
+            break;
+          case 'LIABILITY':
+            accountOptions = glAccountData.liabilityHeaderAccountOptions;
+            break;
         }
         if (glAccountData.parentId) {
           glAccountData.parent = accountOptions.find((accountOption: any) => {
@@ -51,5 +55,4 @@ export class GlAccountAndChartOfAccountsTemplateResolver implements Resolve<Obje
       })
     );
   }
-
 }

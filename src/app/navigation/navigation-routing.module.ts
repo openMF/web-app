@@ -23,6 +23,7 @@ const routes: Routes = [
       }
     }
   ])
+
 ];
 
 /**
@@ -37,4 +38,4 @@ const routes: Routes = [
     OfficesResolver
   ]
 })
-export class NavigationRoutingModule { }
+export class NavigationRoutingModule {}

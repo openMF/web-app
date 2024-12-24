@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./edit-office.component.scss']
 })
 export class EditOfficeComponent implements OnInit {
-
   /** Selected Data. */
   officeData: any;
   /** Office form. */
@@ -27,26 +26,28 @@ export class EditOfficeComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
 
-    /**
-     * Retrieves the charge data from `resolve`.
-     * @param {ProductsService} organizationService Organization Service.
-     * @param {SettingsService} settingsService Settings Service.
-     * @param {FormBuilder} formBuilder Form Builder.
-     * @param {ActivatedRoute} route Activated Route.
-     * @param {Router} router Router for navigation.
-     * @param {MatDialog} dialog Dialog reference.
-     * @param {Dates} dateUtils Date Utils
-     */
-    constructor(private organizationService: OrganizationService,
-                private settingsService: SettingsService,
-                private formBuilder: UntypedFormBuilder,
-                private route: ActivatedRoute,
-                private router: Router,
-                private dateUtils: Dates) {
-      this.route.data.subscribe((data: { officeTemplate: any }) => {
-        this.officeData = data.officeTemplate;
-      });
-    }
+  /**
+   * Retrieves the charge data from `resolve`.
+   * @param {ProductsService} organizationService Organization Service.
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {MatDialog} dialog Dialog reference.
+   * @param {Dates} dateUtils Date Utils
+   */
+  constructor(
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates
+  ) {
+    this.route.data.subscribe((data: { officeTemplate: any }) => {
+      this.officeData = data.officeTemplate;
+    });
+  }
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
@@ -58,9 +59,15 @@ export class EditOfficeComponent implements OnInit {
    */
   createOfficeForm() {
     this.officeForm = this.formBuilder.group({
-      'name': [this.officeData.name, Validators.required],
-      'openingDate': [this.officeData.openingDate && new Date(this.officeData.openingDate), Validators.required],
-      'externalId': [this.officeData.externalId],
+      name: [
+        this.officeData.name,
+        Validators.required
+      ],
+      openingDate: [
+        this.officeData.openingDate && new Date(this.officeData.openingDate),
+        Validators.required
+      ],
+      externalId: [this.officeData.externalId]
     });
     if (this.officeData.allowedParents.length) {
       this.officeForm.addControl('parentId', this.formBuilder.control(this.officeData.parentId, Validators.required));
@@ -87,5 +94,4 @@ export class EditOfficeComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

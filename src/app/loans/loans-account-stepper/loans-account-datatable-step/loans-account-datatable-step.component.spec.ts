@@ -8,9 +8,8 @@ describe('LoansAccountDatatableStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoansAccountDatatableStepComponent ]
-    })
-    .compileComponents();
+      declarations: [LoansAccountDatatableStepComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

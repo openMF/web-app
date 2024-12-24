@@ -16,9 +16,7 @@ export class PopoverCloseDirective<T = any> {
   /**
    * @param {PopoverRef<T>} popoverRef PopoverRef<T>.
    */
-  constructor(
-    @Optional() private popoverRef: PopoverRef<T>
-  ) {}
+  constructor(@Optional() private popoverRef: PopoverRef<T>) {}
 
   @HostListener('click') onClick(): void {
     if (!this.popoverRef) {

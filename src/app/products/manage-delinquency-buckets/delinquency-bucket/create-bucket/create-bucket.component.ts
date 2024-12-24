@@ -26,18 +26,26 @@ export class CreateBucketComponent implements OnInit {
   delinquencyRangesIds: any;
 
   /** Delinquency Range Displayed Columns */
-  displayedColumns: string[] = ['classification', 'minimumAgeDays', 'maximumAgeDays', 'actions'];
+  displayedColumns: string[] = [
+    'classification',
+    'minimumAgeDays',
+    'maximumAgeDays',
+    'actions'
+  ];
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private productsService: ProductsService,
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private translateService: TranslateService) {
-      this.route.data.subscribe((data: { delinquencyRanges: any }) => {
+    private translateService: TranslateService
+  ) {
+    this.route.data.subscribe((data: { delinquencyRanges: any }) => {
       this.delinquencyRangesData = data.delinquencyRanges;
       this.delinquencyRangesData = this.delinquencyRangesData.sort(
-        (objA: { minimumAgeDays: number; }, objB: { minimumAgeDays: number; }) => objA.minimumAgeDays - objB.minimumAgeDays,
+        (objA: { minimumAgeDays: number }, objB: { minimumAgeDays: number }) =>
+          objA.minimumAgeDays - objB.minimumAgeDays
       );
     });
   }
@@ -53,7 +61,10 @@ export class CreateBucketComponent implements OnInit {
    */
   setupForm(): void {
     this.bucketForm = this.formBuilder.group({
-      'name': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -64,7 +75,7 @@ export class CreateBucketComponent implements OnInit {
     let delinquencyRanges = this.delinquencyRangesData;
     if (this.delinquencyRangesIds.length > 0) {
       delinquencyRanges = this.delinquencyRangesData.filter((item: any) => {
-        return (this.delinquencyRangesIds.indexOf(item.id) < 0);
+        return this.delinquencyRangesIds.indexOf(item.id) < 0;
       });
     }
     const formfields: FormfieldBase[] = [
@@ -74,6 +85,7 @@ export class CreateBucketComponent implements OnInit {
         options: { label: 'classification', value: 'id', data: delinquencyRanges },
         order: 1
       })
+
     ];
     const data = {
       title: 'Add Delinquency Range',
@@ -92,9 +104,9 @@ export class CreateBucketComponent implements OnInit {
   /**
    * Delete particular Delinquency Range in Delinquency Bucket
    */
-   deleteDelinquencyRange(index: number) {
+  deleteDelinquencyRange(index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.text.this')}
+      data: { deleteContext: this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -111,7 +123,9 @@ export class CreateBucketComponent implements OnInit {
    */
   submit() {
     const ranges: any = [];
-    this.rangesDataSource.forEach((item: any) => { ranges.push(item.rangeId); });
+    this.rangesDataSource.forEach((item: any) => {
+      ranges.push(item.rangeId);
+    });
     if (ranges.length > 0) {
       const data = {
         ...this.bucketForm.value,
@@ -119,7 +133,13 @@ export class CreateBucketComponent implements OnInit {
       };
 
       this.productsService.createDelinquencyBucket(data).subscribe((response: any) => {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
       });
     }
   }

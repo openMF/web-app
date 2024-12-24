@@ -11,30 +11,29 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./fixed-deposits-account-actions.component.scss']
 })
 export class FixedDepositsAccountActionsComponent {
-
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
-    'Approve': boolean
-    'Reject': boolean
-    'Activate': boolean
-    'Close': boolean
-    'Undo Approval': boolean
-    'Undo Activation': boolean
-    'Add Charge': boolean
-    'Premature Close': boolean
-    'Withdrawn by Client': boolean
-    'Withdrawal': boolean
+    Approve: boolean;
+    Reject: boolean;
+    Activate: boolean;
+    Close: boolean;
+    'Undo Approval': boolean;
+    'Undo Activation': boolean;
+    'Add Charge': boolean;
+    'Premature Close': boolean;
+    'Withdrawn by Client': boolean;
+    Withdrawal: boolean;
   } = {
-    'Approve': false,
-    'Reject': false,
-    'Activate': false,
-    'Close': false,
+    Approve: false,
+    Reject: false,
+    Activate: false,
+    Close: false,
     'Undo Approval': false,
     'Undo Activation': false,
     'Add Charge': false,
     'Premature Close': false,
     'Withdrawn by Client': false,
-    'Withdrawal': false
+    Withdrawal: false
   };
 
   /**
@@ -44,5 +43,4 @@ export class FixedDepositsAccountActionsComponent {
     const name = this.route.snapshot.params['name'];
     this.actions[name] = true;
   }
-
 }

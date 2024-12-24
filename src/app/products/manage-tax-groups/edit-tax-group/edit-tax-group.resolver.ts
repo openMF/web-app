@@ -13,18 +13,17 @@ import { ProductsService } from '../../products.service';
  */
 @Injectable()
 export class EditTaxGroupResolver implements Resolve<Object> {
+  /**
+   * @param {ProductsService} productsService Products service.
+   */
+  constructor(private productsService: ProductsService) {}
 
-    /**
-     * @param {ProductsService} productsService Products service.
-     */
-    constructor(private productsService: ProductsService) { }
-
-    /**
-     * Returns the tax Group data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const taxGroupId = route.parent.paramMap.get('id');
-        return this.productsService.getTaxGroup(taxGroupId, 'true');
-    }
+  /**
+   * Returns the tax Group data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const taxGroupId = route.parent.paramMap.get('id');
+    return this.productsService.getTaxGroup(taxGroupId, 'true');
+  }
 }

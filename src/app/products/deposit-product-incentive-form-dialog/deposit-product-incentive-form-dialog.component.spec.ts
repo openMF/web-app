@@ -8,9 +8,8 @@ describe('DepositProductIncentiveFormDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DepositProductIncentiveFormDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [DepositProductIncentiveFormDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

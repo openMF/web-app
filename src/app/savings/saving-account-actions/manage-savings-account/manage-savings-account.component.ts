@@ -13,7 +13,6 @@ import { SystemService } from 'app/system/system.service';
   styleUrls: ['./manage-savings-account.component.scss']
 })
 export class ManageSavingsAccountComponent implements OnInit {
-
   @Input() currency: Currency;
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -28,16 +27,16 @@ export class ManageSavingsAccountComponent implements OnInit {
   reasonOptions: any = [];
 
   transactionType: {
-    holdamount: boolean,
-    blockaccount: boolean,
-    blockdeposit: boolean,
-    blockwithdrawal: boolean
+    holdamount: boolean;
+    blockaccount: boolean;
+    blockdeposit: boolean;
+    blockwithdrawal: boolean;
   } = {
-      holdamount: false,
-      blockaccount: false,
-      blockdeposit: false,
-      blockwithdrawal: false
-    };
+    holdamount: false,
+    blockaccount: false,
+    blockdeposit: false,
+    blockwithdrawal: false
+  };
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
@@ -47,13 +46,15 @@ export class ManageSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private savingsService: SavingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
     private systemService: SystemService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.transactionCommand = this.route.snapshot.params['name'].toLowerCase().replaceAll(' ', '');
     this.transactionType[this.transactionCommand] = true;
     this.savingAccountId = this.route.snapshot.params['savingAccountId'];
@@ -65,8 +66,12 @@ export class ManageSavingsAccountComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createManageSavingsAccountForm();
-    if (this.transactionType.holdamount || this.transactionType.blockaccount
-      || this.transactionType.blockdeposit || this.transactionType.blockwithdrawal) {
+    if (
+      this.transactionType.holdamount ||
+      this.transactionType.blockaccount ||
+      this.transactionType.blockdeposit ||
+      this.transactionType.blockwithdrawal
+    ) {
       this.getCodeValues();
     }
   }
@@ -100,13 +105,25 @@ export class ManageSavingsAccountComponent implements OnInit {
   createManageSavingsAccountForm() {
     if (this.transactionType.holdamount) {
       this.manageSavingsAccountForm = this.formBuilder.group({
-        'reasonForBlock': ['', Validators.required],
-        'transactionDate': ['', Validators.required],
-        'transactionAmount': [0.0, Validators.required]
+        reasonForBlock: [
+          '',
+          Validators.required
+        ],
+        transactionDate: [
+          '',
+          Validators.required
+        ],
+        transactionAmount: [
+          0.0,
+          Validators.required
+        ]
       });
     } else {
       this.manageSavingsAccountForm = this.formBuilder.group({
-        'reasonForBlock': ['', Validators.required]
+        reasonForBlock: [
+          '',
+          Validators.required
+        ]
       });
     }
   }
@@ -131,12 +148,14 @@ export class ManageSavingsAccountComponent implements OnInit {
       command = 'holdAmount';
       payload['transactionAmount'] = payload['transactionAmount'] * 1;
 
-      this.savingsService.executeSavingsAccountTransactionsCommand(this.savingAccountId, command, payload).subscribe((response: any) => {
-        this.router.navigate(['../../transactions'], { relativeTo: this.route });
-      });
+      this.savingsService
+        .executeSavingsAccountTransactionsCommand(this.savingAccountId, command, payload)
+        .subscribe((response: any) => {
+          this.router.navigate(['../../transactions'], { relativeTo: this.route });
+        });
     } else {
       payload = {
-        ... this.manageSavingsAccountForm.value
+        ...this.manageSavingsAccountForm.value
       };
       command = 'block';
       if (this.transactionType.blockdeposit) {
@@ -145,10 +164,11 @@ export class ManageSavingsAccountComponent implements OnInit {
         command = 'blockDebit';
       }
 
-      this.savingsService.executeSavingsAccountCommand(this.savingAccountId, command, payload).subscribe((response: any) => {
-        this.router.navigate(['../../transactions'], { relativeTo: this.route });
-      });
+      this.savingsService
+        .executeSavingsAccountCommand(this.savingAccountId, command, payload)
+        .subscribe((response: any) => {
+          this.router.navigate(['../../transactions'], { relativeTo: this.route });
+        });
     }
   }
-
 }

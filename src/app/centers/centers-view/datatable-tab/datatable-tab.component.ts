@@ -25,5 +25,4 @@ export class DatatableTabComponent {
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
-
 }

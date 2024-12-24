@@ -13,11 +13,10 @@ import { SharesService } from '../shares.service';
  */
 @Injectable()
 export class SharesAccountTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {SharesService} SharesService Shares service.
    */
-  constructor(private sharesService: SharesService) { }
+  constructor(private sharesService: SharesService) {}
 
   /**
    * Returns the Shares Account Template.
@@ -28,5 +27,4 @@ export class SharesAccountTemplateResolver implements Resolve<Object> {
     const clientId = route.parent.parent.paramMap.get('clientId');
     return this.sharesService.getSharesAccountTemplate(clientId);
   }
-
 }

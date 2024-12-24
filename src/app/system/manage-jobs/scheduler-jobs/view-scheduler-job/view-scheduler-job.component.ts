@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-scheduler-job.component.scss']
 })
 export class ViewSchedulerJobComponent {
-
   /** Job Data. */
   jobData: any;
 
@@ -24,5 +23,4 @@ export class ViewSchedulerJobComponent {
       this.jobData = data.selectedJob;
     });
   }
-
 }

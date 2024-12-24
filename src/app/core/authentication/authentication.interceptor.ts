@@ -27,7 +27,6 @@ const twoFactorAccessTokenHeader = 'Fineract-Platform-TFA-Token';
  */
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-
   constructor(private settingsService: SettingsService) {}
 
   /**
@@ -82,5 +81,4 @@ export class AuthenticationInterceptor implements HttpInterceptor {
   removeTwoFactorAuthorization() {
     delete httpOptions.headers[twoFactorAccessTokenHeader];
   }
-
 }

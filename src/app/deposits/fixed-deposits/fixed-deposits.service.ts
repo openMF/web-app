@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FixedDepositsService {
-
   /**
    * @param {HttpClient} http HttpClient
    */
@@ -62,9 +61,16 @@ export class FixedDepositsService {
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  executeFixedDepositsAccountTransactionsCommand(accountId: string, command: string, data: any, transactionId?: any): Observable<any> {
+  executeFixedDepositsAccountTransactionsCommand(
+    accountId: string,
+    command: string,
+    data: any,
+    transactionId?: any
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/fixeddepositaccounts/${accountId}/transactions/${transactionId}`, data, { params: httpParams });
+    return this.http.post(`/fixeddepositaccounts/${accountId}/transactions/${transactionId}`, data, {
+      params: httpParams
+    });
   }
 
   /**
@@ -99,8 +105,7 @@ export class FixedDepositsService {
    * @returns {Observable<any>}
    */
   getFixedDepositsAccountAndTemplate(accountId: any) {
-    const httpParams = new HttpParams().set('associations', 'charges,+linkedAccount')
-      .set('template', 'true');
+    const httpParams = new HttpParams().set('associations', 'charges,+linkedAccount').set('template', 'true');
     return this.http.get(`/fixeddepositaccounts/${accountId}`, { params: httpParams });
   }
 
@@ -130,8 +135,12 @@ export class FixedDepositsService {
    * @returns {Observable<any>} Standing Instructions
    */
   getStandingInstructions(
-    clientId: string, clientName: string, fromAccountId: string,
-    locale: string, dateFormat: string): Observable<any> {
+    clientId: string,
+    clientName: string,
+    fromAccountId: string,
+    locale: string,
+    dateFormat: string
+  ): Observable<any> {
     const httpParams = new HttpParams()
       .set('clientId', clientId)
       .set('clientName', clientName)
@@ -141,5 +150,4 @@ export class FixedDepositsService {
       .set('dateFormat', dateFormat);
     return this.http.get(`/standinginstructions`, { params: httpParams });
   }
-
 }

@@ -21,7 +21,6 @@ import { SharesButtonsConfiguration } from './shares-buttons.config';
   styleUrls: ['./shares-account-view.component.scss']
 })
 export class SharesAccountViewComponent implements OnInit {
-
   /** Shares Account Data */
   sharesAccountData: any;
   /** Button Configurations */
@@ -36,10 +35,12 @@ export class SharesAccountViewComponent implements OnInit {
    * @param {SharesService} sharesService Shares Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private sharesService: SharesService,
-              public dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private sharesService: SharesService,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { sharesAccountData: any }) => {
       this.sharesAccountData = data.sharesAccountData;
     });
@@ -77,7 +78,10 @@ export class SharesAccountViewComponent implements OnInit {
       const purchasedShares: any[] = this.sharesAccountData.purchasedShares;
       let sharesPendingForApproval = false;
       purchasedShares.forEach((share: any) => {
-        if (share.status.code === 'purchasedSharesStatusType.applied' && share.type.code === 'purchasedSharesType.purchased') {
+        if (
+          share.status.code === 'purchasedSharesStatusType.applied' &&
+          share.type.code === 'purchasedSharesType.purchased'
+        ) {
           sharesPendingForApproval = true;
         }
       });
@@ -129,5 +133,4 @@ export class SharesAccountViewComponent implements OnInit {
       }
     });
   }
-
 }

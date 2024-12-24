@@ -13,11 +13,10 @@ import { SavingsService } from '../savings.service';
  */
 @Injectable()
 export class SavingsAccountActionsResolver implements Resolve<Object> {
-
   /**
    * @param {SavingsService} SavingsService Savings service.
    */
-  constructor(private savingsService: SavingsService) { }
+  constructor(private savingsService: SavingsService) {}
 
   /**
    * Returns the Savings account actions data.
@@ -26,7 +25,8 @@ export class SavingsAccountActionsResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
-    const savingAccountId = route.paramMap.get('savingAccountId') || route.parent.parent.paramMap.get('savingAccountId');
+    const savingAccountId =
+      route.paramMap.get('savingAccountId') || route.parent.parent.paramMap.get('savingAccountId');
     switch (actionName) {
       case 'Assign Staff':
         return this.savingsService.getSavingsAccountAndTemplate(savingAccountId, true);
@@ -39,13 +39,11 @@ export class SavingsAccountActionsResolver implements Resolve<Object> {
       case 'Close':
         return forkJoin([
           this.savingsService.getSavingsTransactionTemplateResource(savingAccountId),
-          this.savingsService.getSavingsAccountData(savingAccountId)
-        ]);
+          this.savingsService.getSavingsAccountData(savingAccountId)]);
       case 'Apply Annual Fees':
         return this.savingsService.getSavingsAccountData(savingAccountId);
       default:
         return undefined;
     }
   }
-
 }

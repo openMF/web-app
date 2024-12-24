@@ -14,7 +14,6 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
-
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,12 +26,11 @@ import { TranslateService } from '@ngx-translate/core';
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-    ])
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
+
   ]
 })
 export class RecurringDepositProductInterestRateChartStepComponent implements OnInit {
-
   @Input() recurringDepositProductsTemplate: any;
 
   recurringDepositProductInterestRateChartForm: UntypedFormGroup;
@@ -48,7 +46,15 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   chartSlabsDisplayedColumns: any[] = [];
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
-  incentivesDisplayedColumns: string[] = ['entityType', 'attributeName', 'conditionType', 'attributeValue', 'incentiveType', 'amount', 'actions'];
+  incentivesDisplayedColumns: string[] = [
+    'entityType',
+    'attributeName',
+    'conditionType',
+    'attributeValue',
+    'incentiveType',
+    'amount',
+    'actions'
+  ];
 
   minDate = new Date(2000, 0, 1);
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
@@ -64,11 +70,13 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(private formBuilder: UntypedFormBuilder,
-              public dialog: MatDialog,
-              private dateUtils: Dates,
-              private settingsService: SettingsService,
-              private translateService: TranslateService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    public dialog: MatDialog,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {
     this.createrecurringDepositProductInterestRateChartForm();
   }
 
@@ -104,23 +112,33 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
     // Iterates for every chart in charts
     this.charts.controls.forEach((chartDetailControl: UntypedFormGroup, i: number) => {
-
       if (!this.chartsDetail[i]) {
         return;
       }
 
       // Iterate for every chartSlab in chart
       this.chartsDetail[i].chartSlabs.forEach((chartSlabDetail: any, j: number) => {
-
         const chartSlabInfo = this.formBuilder.group({
           id: [chartSlabDetail.id],
           amountRangeFrom: [chartSlabDetail.amountRangeFrom],
           amountRangeTo: [chartSlabDetail.amountRangeTo],
-          annualInterestRate: [chartSlabDetail.annualInterestRate, Validators.required],
-          description: [chartSlabDetail.description, Validators.required],
-          fromPeriod: [chartSlabDetail.fromPeriod, Validators.required],
+          annualInterestRate: [
+            chartSlabDetail.annualInterestRate,
+            Validators.required
+          ],
+          description: [
+            chartSlabDetail.description,
+            Validators.required
+          ],
+          fromPeriod: [
+            chartSlabDetail.fromPeriod,
+            Validators.required
+          ],
           toPeriod: [chartSlabDetail.toPeriod],
-          periodType: [chartSlabDetail.periodType, Validators.required],
+          periodType: [
+            chartSlabDetail.periodType,
+            Validators.required
+          ],
           incentives: this.formBuilder.array([])
         });
         const formArray = chartDetailControl.controls['chartSlabs'] as UntypedFormArray;
@@ -132,19 +150,35 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
         // Iterate to input all the incentive for particular chart slab
         this.chartsDetail[i].chartSlabs[j].incentives.forEach((chartIncentiveDetail: any) => {
           const incentiveInfo = this.formBuilder.group({
-            amount: [chartIncentiveDetail.amount, Validators.required],
-            attributeName: [chartIncentiveDetail.attributeName, Validators.required],
-            attribureValue: [chartIncentiveDetail.attribureValue, Validators.required],
-            conditionType: [chartIncentiveDetail.conditionType, Validators.required],
-            entityType: [chartIncentiveDetail.entityType, Validators.required],
-            incentiveType: [chartIncentiveDetail.incentiveType, Validators.required]
+            amount: [
+              chartIncentiveDetail.amount,
+              Validators.required
+            ],
+            attributeName: [
+              chartIncentiveDetail.attributeName,
+              Validators.required
+            ],
+            attribureValue: [
+              chartIncentiveDetail.attribureValue,
+              Validators.required
+            ],
+            conditionType: [
+              chartIncentiveDetail.conditionType,
+              Validators.required
+            ],
+            entityType: [
+              chartIncentiveDetail.entityType,
+              Validators.required
+            ],
+            incentiveType: [
+              chartIncentiveDetail.incentiveType,
+              Validators.required
+            ]
           });
           const newFormArray = chartIncentiveControl['controls']['incentives'] as UntypedFormArray;
           newFormArray.push(incentiveInfo);
         });
-
       });
-
     });
   }
 
@@ -163,7 +197,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
       this.chartsDetail.push(chart);
     });
     this.recurringDepositProductInterestRateChartForm.patchValue({
-      'charts': this.chartsDetail
+      charts: this.chartsDetail
     });
   }
 
@@ -213,7 +247,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
           attributeValue: incentiveData.attributeValue,
           conditionType: incentiveData.conditionType,
           entityType: incentiveData.entityType,
-          incentiveType: incentiveData.incentiveType,
+          incentiveType: incentiveData.incentiveType
         };
         incentives.push(incentive);
       });
@@ -223,7 +257,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   createrecurringDepositProductInterestRateChartForm() {
     this.recurringDepositProductInterestRateChartForm = this.formBuilder.group({
-      'charts': this.formBuilder.array([])
+      charts: this.formBuilder.array([])
     });
   }
 
@@ -233,13 +267,16 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   createChartForm(): UntypedFormGroup {
     return this.formBuilder.group({
-      'id': [null],
-      'name': [''],
-      'description': [''],
-      'fromDate': ['', Validators.required],
-      'endDate': [''],
-      'isPrimaryGroupingByAmount': [false],
-      'chartSlabs': this.formBuilder.array([], Validators.required)
+      id: [null],
+      name: [''],
+      description: [''],
+      fromDate: [
+        '',
+        Validators.required
+      ],
+      endDate: [''],
+      isPrimaryGroupingByAmount: [false],
+      chartSlabs: this.formBuilder.array([], Validators.required)
     });
   }
 
@@ -249,10 +286,24 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   }
 
   setConditionalControls(chartIndex: number) {
-    this.chartSlabsDisplayedColumns[chartIndex] = ['period', 'amountRange', 'annualInterestRate', 'description', 'actions'];
-    this.charts.at(chartIndex).get('isPrimaryGroupingByAmount').valueChanges
-      .subscribe((isPrimaryGroupingByAmount: boolean) => {
-        this.chartSlabsDisplayedColumns[chartIndex] = isPrimaryGroupingByAmount ? ['amountRange', 'period'] : ['period', 'amountRange'];
+    this.chartSlabsDisplayedColumns[chartIndex] = [
+      'period',
+      'amountRange',
+      'annualInterestRate',
+      'description',
+      'actions'
+    ];
+    this.charts
+      .at(chartIndex)
+      .get('isPrimaryGroupingByAmount')
+      .valueChanges.subscribe((isPrimaryGroupingByAmount: boolean) => {
+        this.chartSlabsDisplayedColumns[chartIndex] = isPrimaryGroupingByAmount ? [
+              'amountRange',
+              'period'
+            ] : [
+              'period',
+              'amountRange'
+            ];
         this.chartSlabsDisplayedColumns[chartIndex].push('annualInterestRate', 'description', 'actions');
       });
   }
@@ -293,7 +344,10 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   }
 
   editIncentive(incentives: UntypedFormArray, incentiveIndex: number) {
-    const data = { ...this.getData('Incentive', incentives.at(incentiveIndex).value), layout: { addButtonText: 'Edit' } };
+    const data = {
+      ...this.getData('Incentive', incentives.at(incentiveIndex).value),
+      layout: { addButtonText: 'Edit' }
+    };
     const dialogRef = this.dialog.open(DepositProductIncentiveFormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -315,8 +369,13 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
 
   getData(formType: string, values?: any) {
     switch (formType) {
-      case 'Slab': return { title: this.translateService.instant('labels.inputs.Slab'), formfields: this.getSlabFormfields(values) };
-      case 'Incentive': return { values, chartTemplate: this.recurringDepositProductsTemplate.chartTemplate };
+      case 'Slab':
+        return {
+          title: this.translateService.instant('labels.inputs.Slab'),
+          formfields: this.getSlabFormfields(values)
+        };
+      case 'Incentive':
+        return { values, chartTemplate: this.recurringDepositProductsTemplate.chartTemplate };
     }
   }
 
@@ -374,6 +433,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
         required: true,
         order: 7
       })
+
     ];
     return formfields;
   }
@@ -406,5 +466,4 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     }
     return recurringDepositProductInterestRateChart;
   }
-
 }

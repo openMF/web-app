@@ -18,7 +18,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./view-template.component.scss']
 })
 export class ViewTemplateComponent {
-
   /** Template Data */
   templateData: any;
 
@@ -29,10 +28,12 @@ export class ViewTemplateComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private route: ActivatedRoute,
-              private templatesService: TemplatesService,
-              private router: Router,
-              private dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private templatesService: TemplatesService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { template: any }) => {
       this.templateData = data.template;
     });
@@ -47,12 +48,10 @@ export class ViewTemplateComponent {
     });
     deleteTemplateDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.templatesService.deleteTemplate(this.templateData.id)
-          .subscribe(() => {
-            this.router.navigate(['/templates']);
-          });
+        this.templatesService.deleteTemplate(this.templateData.id).subscribe(() => {
+          this.router.navigate(['/templates']);
+        });
       }
     });
   }
-
 }

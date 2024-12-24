@@ -8,9 +8,8 @@ describe('ViewTellerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewTellerComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewTellerComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

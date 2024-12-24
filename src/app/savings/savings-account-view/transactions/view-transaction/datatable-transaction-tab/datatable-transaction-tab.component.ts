@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './datatable-transaction-tab.component.html',
   styleUrls: ['./datatable-transaction-tab.component.scss']
 })
-
 export class DatatableTransactionTabComponent {
   /** Transaction Id */
   entityId: string;

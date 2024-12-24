@@ -8,9 +8,8 @@ describe('ViewAdvancePaymenyAllocationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewAdvancePaymenyAllocationComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewAdvancePaymenyAllocationComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ViewAdvancePaymenyAllocationComponent);
     component = fixture.componentInstance;

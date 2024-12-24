@@ -21,7 +21,6 @@ import { TemplatesService } from '../templates.service';
   styleUrls: ['./create-template.component.scss']
 })
 export class CreateTemplateComponent implements OnInit {
-
   /** CKEditor5 */
   public Editor = ClassicEditor;
   /** CKEditor5 Template Reference */
@@ -50,10 +49,12 @@ export class CreateTemplateComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {TemplateService} templateService Templates Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private templateService: TemplatesService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private templateService: TemplatesService
+  ) {
     this.route.data.subscribe((data: { createTemplateData: any }) => {
       this.createTemplateData = data.createTemplateData;
     });
@@ -69,9 +70,18 @@ export class CreateTemplateComponent implements OnInit {
    */
   createTemplateForm() {
     this.templateForm = this.formBuilder.group({
-      'entity': ['', Validators.required],
-      'type': ['', Validators.required],
-      'name': ['', Validators.required]
+      entity: [
+        '',
+        Validators.required
+      ],
+      type: [
+        '',
+        Validators.required
+      ],
+      name: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -81,17 +91,19 @@ export class CreateTemplateComponent implements OnInit {
   buildDependencies() {
     const tenantIdentifier = 'default'; // update once global settings are setup.
     this.templateForm.get('entity').valueChanges.subscribe((value: any) => {
-      if (value === 0) { // client
+      if (value === 0) {
+        // client
         this.mappers.splice(0, 1, {
           mappersorder: 0,
           mapperskey: new UntypedFormControl('client'),
           mappersvalue: new UntypedFormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
         });
-      } else { // loan
+      } else {
+        // loan
         this.mappers.splice(0, 1, {
           mappersorder: 0,
           mapperskey: new UntypedFormControl('loan'),
-          mappersvalue: new UntypedFormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier )
+          mappersvalue: new UntypedFormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier)
         });
       }
       this.setEditorContent('');
@@ -127,7 +139,7 @@ export class CreateTemplateComponent implements OnInit {
       this.ckEditor.editorInstance.model.change((writer: any) => {
         const insertPosition = this.ckEditor.editorInstance.model.document.selection.getFirstPosition();
         writer.insertText(label, insertPosition);
-    } );
+      });
     }
   }
 
@@ -166,8 +178,13 @@ export class CreateTemplateComponent implements OnInit {
       text: this.getEditorContent()
     };
     this.templateService.createTemplate(template).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

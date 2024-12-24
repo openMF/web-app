@@ -8,9 +8,8 @@ describe('DelinquencyRangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DelinquencyRangeComponent ]
-    })
-    .compileComponents();
+      declarations: [DelinquencyRangeComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

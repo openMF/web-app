@@ -13,7 +13,6 @@ import { OrganizationService } from '../organization.service';
  */
 @Injectable()
 export class PasswordPreferencesTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
@@ -26,5 +25,4 @@ export class PasswordPreferencesTemplateResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.organizationService.getPasswordPreferencesTemplate();
   }
-
 }

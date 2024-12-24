@@ -8,9 +8,8 @@ describe('CreateRuleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateRuleComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateRuleComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

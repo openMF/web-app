@@ -11,7 +11,6 @@ import { CentersService } from './centers.service';
  * Centers custom data source to implement server side filtering, pagination and sorting.
  */
 export class CentersDataSource implements DataSource<any> {
-
   /** centers behavior subject to represent loaded centers page. */
   private centersSubject = new BehaviorSubject<any[]>([]);
   /** Records subject to represent total number of filtered centers records. */
@@ -22,7 +21,7 @@ export class CentersDataSource implements DataSource<any> {
   /**
    * @param {CentersService} centersService Centers Service
    */
-  constructor(private centersService: CentersService) { }
+  constructor(private centersService: CentersService) {}
 
   /**
    * Gets centers on the basis of provided parameters and emits the value.
@@ -33,14 +32,20 @@ export class CentersDataSource implements DataSource<any> {
    * @param {number} limit Number of entries within the page.
    * @param {boolean} centerActive Specify whether to only filter active centers.
    */
-  getCenters(filterBy: any, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10, centerActive: boolean = true) {
+  getCenters(
+    filterBy: any,
+    orderBy: string = '',
+    sortOrder: string = '',
+    pageIndex: number = 0,
+    limit: number = 10,
+    centerActive: boolean = true
+  ) {
     this.centersSubject.next([]);
-    this.centersService.getCenters(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
-      .subscribe((centers: any) => {
-        centers.pageItems = (centerActive) ? (centers.pageItems.filter((center: any) => center.active)) : centers.pageItems;
-        this.recordsSubject.next(centers.totalFilteredRecords);
-        this.centersSubject.next(centers.pageItems);
-      });
+    this.centersService.getCenters(filterBy, orderBy, sortOrder, pageIndex * limit, limit).subscribe((centers: any) => {
+      centers.pageItems = centerActive ? centers.pageItems.filter((center: any) => center.active) : centers.pageItems;
+      this.recordsSubject.next(centers.totalFilteredRecords);
+      this.centersSubject.next(centers.pageItems);
+    });
   }
 
   /**
@@ -57,5 +62,4 @@ export class CentersDataSource implements DataSource<any> {
     this.centersSubject.complete();
     this.recordsSubject.complete();
   }
-
 }

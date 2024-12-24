@@ -13,18 +13,16 @@ import { CentersService } from '../centers.service';
  */
 @Injectable()
 export class CenterDatatablesResolver implements Resolve<Object> {
+  /**
+   * @param {centersService} centersService centers service.
+   */
+  constructor(private centersService: CentersService) {}
 
-    /**
-     * @param {centersService} centersService centers service.
-     */
-    constructor(private centersService: CentersService) { }
-
-    /**
-     * Returns the center datatables.
-     * @returns {Observable<any>}
-     */
-    resolve(): Observable<any> {
-        return this.centersService.getcenterDatatables();
-    }
-
+  /**
+   * Returns the center datatables.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.centersService.getcenterDatatables();
+  }
 }

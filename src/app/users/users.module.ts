@@ -28,4 +28,4 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     EditUserComponent
   ]
 })
-export class UsersModule { }
+export class UsersModule {}

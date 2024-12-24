@@ -37,11 +37,13 @@ export class PopoverArrowDirective implements OnDestroy {
    * @param {PopoverRef} popoverRef PopoverRef.
    * @param {ChangeDetectorRef} cd ChangeDetectorRef
    */
-  constructor(private popoverRef: PopoverRef,
-              private cd: ChangeDetectorRef) {
+  constructor(
+    private popoverRef: PopoverRef,
+    private cd: ChangeDetectorRef
+  ) {
     this.arrowSize = popoverRef.config.arrowSize;
 
-    this.subscription = popoverRef.positionChanges().subscribe(p => {
+    this.subscription = popoverRef.positionChanges().subscribe((p) => {
       const { offsetX, offsetY } = p.connectionPair;
 
       this.offsetTop = offsetY >= 0 ? offsetY * -1 : null;

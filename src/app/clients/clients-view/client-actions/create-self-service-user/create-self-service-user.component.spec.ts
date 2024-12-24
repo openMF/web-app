@@ -8,9 +8,8 @@ describe('CreateSelfServiceUserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateSelfServiceUserComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateSelfServiceUserComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

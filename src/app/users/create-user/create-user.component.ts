@@ -1,6 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef , ViewChild,
-         AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,7 +23,6 @@ import { ContinueSetupDialogComponent } from 'app/configuration-wizard/continue-
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit, AfterViewInit {
-
   /** User form. */
   userForm: UntypedFormGroup;
   /** Offices data. */
@@ -48,20 +46,20 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private usersService: UsersService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private popoverService: PopoverService,
-              private configurationWizardService: ConfigurationWizardService,
-              private dialog: MatDialog,
-              private passwordsUtility: PasswordsUtility) {
-    this.route.data.subscribe((data: {
-        usersTemplate: any
-      }) => {
-        this.officesData = data.usersTemplate.allowedOffices;
-        this.rolesData = data.usersTemplate.availableRoles;
-      });
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private usersService: UsersService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private popoverService: PopoverService,
+    private configurationWizardService: ConfigurationWizardService,
+    private dialog: MatDialog,
+    private passwordsUtility: PasswordsUtility
+  ) {
+    this.route.data.subscribe((data: { usersTemplate: any }) => {
+      this.officesData = data.usersTemplate.allowedOffices;
+      this.rolesData = data.usersTemplate.availableRoles;
+    });
   }
 
   /**
@@ -77,17 +75,45 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * Creates the user form.
    */
   createUserForm() {
-    this.userForm = this.formBuilder.group({
-      'username': ['', Validators.required],
-      'email': ['', [Validators.required, Validators.email]],
-      'firstname': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'lastname': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'sendPasswordToEmail': [true],
-      'passwordNeverExpires': [false],
-      'officeId': ['', Validators.required],
-      'staffId': [''],
-      'roles': ['', Validators.required]
-    }, { validator: confirmPasswordValidator });
+    this.userForm = this.formBuilder.group(
+      {
+        username: [
+          '',
+          Validators.required
+        ],
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.email
+          ]
+        ],
+        firstname: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('(^[A-z]).*')]
+        ],
+        lastname: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('(^[A-z]).*')]
+        ],
+        sendPasswordToEmail: [true],
+        passwordNeverExpires: [false],
+        officeId: [
+          '',
+          Validators.required
+        ],
+        staffId: [''],
+        roles: [
+          '',
+          Validators.required
+        ]
+      },
+      { validator: confirmPasswordValidator }
+    );
   }
 
   /**
@@ -110,10 +136,18 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
       if (sendPasswordToEmail) {
         this.userForm.removeControl('password');
         this.userForm.removeControl('repeatPassword');
-        this.userForm.get('email').setValidators([Validators.required, Validators.email]);
+        this.userForm.get('email').setValidators([
+          Validators.required,
+          Validators.email
+        ]);
       } else {
         this.userForm.addControl('password', new UntypedFormControl('', this.passwordsUtility.getPasswordValidators()));
-        this.userForm.addControl('repeatPassword', new UntypedFormControl('', [Validators.required, this.passwordsUtility.confirmPassword('password')]));
+        this.userForm.addControl(
+          'repeatPassword',
+          new UntypedFormControl('', [
+            Validators.required,
+            this.passwordsUtility.confirmPassword('password')])
+        );
         this.userForm.get('email').setValidators([Validators.email]);
       }
       this.userForm.get('email').updateValueAndValidity();
@@ -134,7 +168,13 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
         this.configurationWizardService.showUsersForm = false;
         this.openDialog();
       } else {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
       }
     });
   }
@@ -146,7 +186,12 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -155,9 +200,9 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     if (this.configurationWizardService.showUsersForm === true) {
-    setTimeout(() => {
+      setTimeout(() => {
         this.showPopover(this.templateUserFormRef, this.userFormRef.nativeElement, 'top', true);
-    });
+      });
     }
   }
 
@@ -186,22 +231,22 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
       data: {
         stepName: 'user'
-      },
+      }
     });
     continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
       if (response.step === 1) {
-          this.configurationWizardService.showUsersForm = false;
-          this.router.navigate(['../'], { relativeTo: this.route });
-        } else if (response.step === 2) {
-          this.configurationWizardService.showUsersForm = true;
-          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-          this.router.onSameUrlNavigation = 'reload';
-          this.router.navigate(['/organization/users/create']);
-        } else if (response.step === 3) {
-          this.configurationWizardService.showUsersForm = false;
-          this.configurationWizardService.showMakerCheckerTable = true;
-          this.router.navigate(['/system']);
-        }
+        this.configurationWizardService.showUsersForm = false;
+        this.router.navigate(['../'], { relativeTo: this.route });
+      } else if (response.step === 2) {
+        this.configurationWizardService.showUsersForm = true;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+        this.router.navigate(['/organization/users/create']);
+      } else if (response.step === 3) {
+        this.configurationWizardService.showUsersForm = false;
+        this.configurationWizardService.showMakerCheckerTable = true;
+        this.router.navigate(['/system']);
+      }
     });
   }
 }

@@ -53,5 +53,5 @@ export const frequentActivities: any[] = [
     path: '/self-service',
     icon: 'laptop',
     toolTip: 'Self Service'
-  },
+  }
 ];

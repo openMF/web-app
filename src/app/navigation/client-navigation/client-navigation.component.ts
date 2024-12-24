@@ -13,7 +13,6 @@ import { MemberGroupsComponent } from '../member-groups/member-groups.component'
   styleUrls: ['./client-navigation.component.scss']
 })
 export class ClientNavigationComponent {
-
   @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
   @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
   @ViewChild(ShareAccountTableComponent) shareAccountTableComponent: ShareAccountTableComponent;
@@ -22,6 +21,5 @@ export class ClientNavigationComponent {
   @Input() clientData: any;
   @Input() clientAccountsData: any;
 
-  constructor() { }
-
+  constructor() {}
 }

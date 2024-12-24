@@ -10,7 +10,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./checker-inbox-and-tasks.component.scss']
 })
 export class CheckerInboxAndTasksComponent {
-
-  constructor() { }
-
+  constructor() {}
 }

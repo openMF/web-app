@@ -14,11 +14,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./notifications-page.component.scss']
 })
 export class NotificationsPageComponent implements OnInit {
-
   /** Notifications data. */
   notificationsData: any;
   /** Columns to be displayed in notifications table. */
-  displayedColumns: string[] = ['notification', 'createdAt'];
+  displayedColumns: string[] = [
+    'notification',
+    'createdAt'
+  ];
   /** Data source for notifications table. */
   dataSource: MatTableDataSource<any>;
 
@@ -27,16 +29,16 @@ export class NotificationsPageComponent implements OnInit {
    * Shares, Savings, Deposits, Loans routes inaccessible because of dependency on entity ID.
    */
   routeMap: any = {
-    'client' : '/clients/',
-    'group' : '/groups/',
-    'loan': '/loans-accounts/',
-    'center' : '/centers/',
-    'shareAccount' : '/shares-accounts/',
-    'fixedDeposit' : '/fixed-deposits-accounts/',
-    'recurringDepositAccount': '/recurring-deposits-accounts/',
-    'savingsAccount' : '/savings-accounts/',
-    'shareProduct': '/products/share-products/',
-    'loanProduct' : '/products/loan-products/'
+    client: '/clients/',
+    group: '/groups/',
+    loan: '/loans-accounts/',
+    center: '/centers/',
+    shareAccount: '/shares-accounts/',
+    fixedDeposit: '/fixed-deposits-accounts/',
+    recurringDepositAccount: '/recurring-deposits-accounts/',
+    savingsAccount: '/savings-accounts/',
+    shareProduct: '/products/share-products/',
+    loanProduct: '/products/loan-products/'
   };
 
   /** Paginator for notifications table. */
@@ -49,7 +51,7 @@ export class NotificationsPageComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { notifications: any }) => {
+    this.route.data.subscribe((data: { notifications: any }) => {
       this.notificationsData = data.notifications.pageItems;
     });
   }
@@ -69,5 +71,4 @@ export class NotificationsPageComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

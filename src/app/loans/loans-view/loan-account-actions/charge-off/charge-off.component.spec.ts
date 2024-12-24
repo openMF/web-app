@@ -8,9 +8,8 @@ describe('ChargeOffComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChargeOffComponent ]
-    })
-    .compileComponents();
+      declarations: [ChargeOffComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

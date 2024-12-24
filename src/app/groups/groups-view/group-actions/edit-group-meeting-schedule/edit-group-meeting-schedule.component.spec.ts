@@ -8,9 +8,8 @@ describe('EditGroupMeetingScheduleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditGroupMeetingScheduleComponent ]
-    })
-    .compileComponents();
+      declarations: [EditGroupMeetingScheduleComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

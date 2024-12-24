@@ -22,23 +22,29 @@ import { CompletionDialogComponent } from '../../configuration-wizard/completion
   styleUrls: ['./manage-reports.component.scss']
 })
 export class ManageReportsComponent implements OnInit, AfterViewInit {
-
   /** Reports Data. */
   reportsData: any;
   /** Columns to be displayed in reports table. */
-  displayedColumns: string[] = ['reportName', 'reportType', 'reportSubType', 'reportCategory', 'coreReport', 'userReport'];
+  displayedColumns: string[] = [
+    'reportName',
+    'reportType',
+    'reportSubType',
+    'reportCategory',
+    'coreReport',
+    'userReport'
+  ];
   /** Data source for reports table. */
   dataSource: MatTableDataSource<any>;
 
-   /** Paginator for reports table. */
-   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-   /** Sorter for reports table. */
-   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  /** Paginator for reports table. */
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  /** Sorter for reports table. */
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-   /* Reference of Create Report Button */
-   @ViewChild('buttonCreateReport') buttonCreateReport: ElementRef<any>;
-   /* Template for popover on Create Report Button */
-   @ViewChild('templateButtonCreateReport') templateButtonCreateReport: TemplateRef<any>;
+  /* Reference of Create Report Button */
+  @ViewChild('buttonCreateReport') buttonCreateReport: ElementRef<any>;
+  /* Template for popover on Create Report Button */
+  @ViewChild('templateButtonCreateReport') templateButtonCreateReport: TemplateRef<any>;
 
   /**
    * Retrieves the reports data from `resolve`.
@@ -48,11 +54,13 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    * @param {Matdialog} matdialog Matdialog.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService,
-              private dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService,
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { reports: any }) => {
       this.reportsData = data.reports;
     });
@@ -100,7 +108,12 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -123,7 +136,7 @@ export class ManageReportsComponent implements OnInit, AfterViewInit {
    * Completed Configuration Wizard Tour Dialog.
    */
   openNextStepDialog() {
-    const completionDialogRef = this.dialog.open( CompletionDialogComponent );
+    const completionDialogRef = this.dialog.open(CompletionDialogComponent);
     completionDialogRef.afterClosed().subscribe(() => {
       this.router.navigate(['/home']);
     });

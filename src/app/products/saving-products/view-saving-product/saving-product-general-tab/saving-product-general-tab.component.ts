@@ -10,12 +10,25 @@ import { Accounting } from 'app/core/utils/accounting';
 export class SavingProductGeneralTabComponent {
   savingProduct: any;
 
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType'];
-  paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId'];
-  feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId'];
+  chargesDisplayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType'
+  ];
+  paymentFundSourceDisplayedColumns: string[] = [
+    'paymentTypeId',
+    'fundSourceAccountId'
+  ];
+  feesPenaltyIncomeDisplayedColumns: string[] = [
+    'chargeId',
+    'incomeAccountId'
+  ];
 
-  constructor(private route: ActivatedRoute,
-    private accounting: Accounting) {
+  constructor(
+    private route: ActivatedRoute,
+    private accounting: Accounting
+  ) {
     this.route.data.subscribe((data: { savingProduct: any }) => {
       this.savingProduct = data.savingProduct;
     });
@@ -28,5 +41,4 @@ export class SavingProductGeneralTabComponent {
   isAccrualAccounting(): boolean {
     return this.accounting.isAccrualAccounting(this.savingProduct.accountingRule);
   }
-
 }

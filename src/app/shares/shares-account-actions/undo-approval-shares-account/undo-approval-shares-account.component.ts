@@ -14,7 +14,6 @@ import { SharesService } from 'app/shares/shares.service';
   styleUrls: ['./undo-approval-shares-account.component.scss']
 })
 export class UndoApprovalSharesAccountComponent {
-
   /** Shares Account Id */
   accountId: any;
 
@@ -23,9 +22,11 @@ export class UndoApprovalSharesAccountComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private sharesService: SharesService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private sharesService: SharesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
   }
 
@@ -38,5 +39,4 @@ export class UndoApprovalSharesAccountComponent {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

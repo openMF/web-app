@@ -8,9 +8,8 @@ describe('EntityDocumentsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EntityDocumentsTabComponent ]
-    })
-    .compileComponents();
+      declarations: [EntityDocumentsTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

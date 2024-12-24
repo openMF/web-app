@@ -13,14 +13,15 @@ import { AuthenticationService } from '../../../core/authentication/authenticati
   styleUrls: ['./notes-tab.component.scss']
 })
 export class NotesTabComponent {
-
   entityId: string;
   username: string;
   entityNotes: any;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private loansService: LoansService,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService
+  ) {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.entityId = this.route.parent.snapshot.params['loanId'];
@@ -47,10 +48,8 @@ export class NotesTabComponent {
   }
 
   deleteNote(noteId: string, index: number) {
-    this.loansService.deleteLoanNote(this.entityId, noteId)
-      .subscribe(() => {
-        this.entityNotes.splice(index, 1);
+    this.loansService.deleteLoanNote(this.entityId, noteId).subscribe(() => {
+      this.entityNotes.splice(index, 1);
     });
   }
-
 }

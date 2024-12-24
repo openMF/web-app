@@ -39,7 +39,7 @@ const routes: Routes = [
       children: [
         {
           path: '',
-          component: GroupsComponent,
+          component: GroupsComponent
         },
         {
           path: 'create',
@@ -122,7 +122,8 @@ const routes: Routes = [
               children: [
                 {
                   path: '',
-                  redirectTo: '../committee', pathMatch: 'prefix'
+                  redirectTo: '../committee',
+                  pathMatch: 'prefix'
                 },
                 {
                   path: 'add-role',
@@ -131,7 +132,7 @@ const routes: Routes = [
                   resolve: {
                     groupAndTemplateData: GroupDataAndTemplateResolver
                   }
-                },
+                }
               ]
             },
             {
@@ -144,17 +145,18 @@ const routes: Routes = [
             },
             {
               path: 'loans-accounts',
-              loadChildren: () => import('../loans/loans.module').then(m => m.LoansModule)
+              loadChildren: () => import('../loans/loans.module').then((m) => m.LoansModule)
             },
             {
               path: 'savings-accounts',
-              loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
+              loadChildren: () => import('../savings/savings.module').then((m) => m.SavingsModule)
             }
           ]
         }
       ]
     }
   ])
+
 ];
 
 /**
@@ -165,15 +167,17 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [GroupViewResolver,
-              GroupAccountsResolver,
-              GroupSummaryResolver,
-              GroupNotesResolver,
-              GroupDatatablesResolver,
-              GroupDatatableResolver,
-              GroupDataAndTemplateResolver,
-              GroupActionsResolver,
-              GSIMAccountsResolver,
-              GLIMAccountsResolver]
+  providers: [
+    GroupViewResolver,
+    GroupAccountsResolver,
+    GroupSummaryResolver,
+    GroupNotesResolver,
+    GroupDatatablesResolver,
+    GroupDatatableResolver,
+    GroupDataAndTemplateResolver,
+    GroupActionsResolver,
+    GSIMAccountsResolver,
+    GLIMAccountsResolver
+  ]
 })
-export class GroupsRoutingModule { }
+export class GroupsRoutingModule {}

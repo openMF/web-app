@@ -8,9 +8,8 @@ describe('CaptureImageDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CaptureImageDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [CaptureImageDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

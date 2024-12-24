@@ -8,9 +8,8 @@ describe('AssetTransferLoanComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AssetTransferLoanComponent ]
-    })
-    .compileComponents();
+      declarations: [AssetTransferLoanComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

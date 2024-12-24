@@ -13,18 +13,16 @@ import { LoansService } from '../loans.service';
  */
 @Injectable()
 export class LoanDatatablesResolver implements Resolve<Object> {
+  /**
+   * @param {loansService} loansService loans service.
+   */
+  constructor(private loansService: LoansService) {}
 
-    /**
-     * @param {loansService} loansService loans service.
-     */
-    constructor(private loansService: LoansService) { }
-
-    /**
-     * Returns the loan datatables.
-     * @returns {Observable<any>}
-     */
-    resolve(): Observable<any> {
-        return this.loansService.getLoanDataTables();
-    }
-
+  /**
+   * Returns the loan datatables.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.loansService.getLoanDataTables();
+  }
 }

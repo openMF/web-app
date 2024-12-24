@@ -17,8 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./edit-family-member.component.scss']
 })
 export class EditFamilyMemberComponent implements OnInit {
-
-
   /** Maximum Due Date allowed. */
   maxDate = new Date();
   /** Add family member form. */
@@ -36,13 +34,15 @@ export class EditFamilyMemberComponent implements OnInit {
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private dateUtils: Dates,
-              private router: Router,
-              private route: ActivatedRoute,
-              private clientsService: ClientsService,
-              private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientTemplate: any, editFamilyMember: any }) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private dateUtils: Dates,
+    private router: Router,
+    private route: ActivatedRoute,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { clientTemplate: any; editFamilyMember: any }) => {
       this.addFamilyMemberTemplate = data.clientTemplate.familyMemberOptions;
       this.familyMemberDetails = data.editFamilyMember;
     });
@@ -59,17 +59,35 @@ export class EditFamilyMemberComponent implements OnInit {
    */
   createEditFamilyMemberForm(familyMember: any) {
     this.editFamilyMemberForm = this.formBuilder.group({
-      'firstName': [familyMember.firstName, Validators.required],
-      'middleName': [familyMember.middleName],
-      'lastName': [familyMember.lastName, Validators.required],
-      'qualification': [familyMember.qualification],
-      'age': [familyMember.age, Validators.required],
-      'isDependent': [familyMember.isDependent],
-      'relationshipId': [familyMember.relationshipId, Validators.required],
-      'genderId': [familyMember.genderId, Validators.required],
-      'professionId': [familyMember.professionId],
-      'maritalStatusId': [familyMember.maritalStatusId],
-      'dateOfBirth': [this.dateUtils.formatDate(familyMember.dateOfBirth, 'yyyy-MM-dd'), Validators.required]
+      firstName: [
+        familyMember.firstName,
+        Validators.required
+      ],
+      middleName: [familyMember.middleName],
+      lastName: [
+        familyMember.lastName,
+        Validators.required
+      ],
+      qualification: [familyMember.qualification],
+      age: [
+        familyMember.age,
+        Validators.required
+      ],
+      isDependent: [familyMember.isDependent],
+      relationshipId: [
+        familyMember.relationshipId,
+        Validators.required
+      ],
+      genderId: [
+        familyMember.genderId,
+        Validators.required
+      ],
+      professionId: [familyMember.professionId],
+      maritalStatusId: [familyMember.maritalStatusId],
+      dateOfBirth: [
+        this.dateUtils.formatDate(familyMember.dateOfBirth, 'yyyy-MM-dd'),
+        Validators.required
+      ]
     });
   }
 
@@ -89,9 +107,10 @@ export class EditFamilyMemberComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.clientsService.editFamilyMember(this.familyMemberDetails.clientId, this.familyMemberDetails.id, data).subscribe(res => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.clientsService
+      .editFamilyMember(this.familyMemberDetails.clientId, this.familyMemberDetails.id, data)
+      .subscribe((res) => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

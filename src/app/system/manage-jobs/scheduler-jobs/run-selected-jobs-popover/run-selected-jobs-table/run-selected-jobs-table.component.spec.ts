@@ -8,9 +8,8 @@ describe('RunSelectedJobsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RunSelectedJobsTableComponent ]
-    })
-    .compileComponents();
+      declarations: [RunSelectedJobsTableComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RunSelectedJobsTableComponent);
     component = fixture.componentInstance;

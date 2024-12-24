@@ -14,11 +14,14 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./view-floating-rate.component.scss']
 })
 export class ViewFloatingRateComponent implements OnInit {
-
   /** Floating Rate Data. */
   floatingRateData: any;
   /** Columns to be displayed in floating rate periods table. */
-  displayedColumns: string[] = ['fromDate', 'interestRate', 'isDifferential'];
+  displayedColumns: string[] = [
+    'fromDate',
+    'interestRate',
+    'isDifferential'
+  ];
   /** Data source for floating rate periods table. */
   dataSource: MatTableDataSource<any>;
 
@@ -32,7 +35,7 @@ export class ViewFloatingRateComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { floatingRate: any } ) => {
+    this.route.data.subscribe((data: { floatingRate: any }) => {
       this.floatingRateData = data.floatingRate;
     });
   }
@@ -48,9 +51,8 @@ export class ViewFloatingRateComponent implements OnInit {
    * Initializes the data source, paginator and sorter for floating rate periods table.
    */
   setFloatingRates() {
-   this.dataSource = new MatTableDataSource(this.floatingRateData.ratePeriods);
-   this.dataSource.paginator = this.paginator;
-   this.dataSource.sort = this.sort;
+    this.dataSource = new MatTableDataSource(this.floatingRateData.ratePeriods);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
-
 }

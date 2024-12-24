@@ -12,8 +12,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AccountTransfersService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @params standingInstructionsId
@@ -33,10 +32,16 @@ export class AccountTransfersService {
     return this.http.put(`/standinginstructions/${standinginstructionsId}`, data, { params: httpParams });
   }
 
-  getStandingInstructionsTemplate(clientId: any, officeId: any, accountTypeId: string, formValue?: any): Observable<any> {
-    let httpParams = new HttpParams().set('fromAccountType', accountTypeId)
-                                       .set('fromClientId', clientId)
-                                       .set('fromOfficeId', officeId);
+  getStandingInstructionsTemplate(
+    clientId: any,
+    officeId: any,
+    accountTypeId: string,
+    formValue?: any
+  ): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('fromAccountType', accountTypeId)
+      .set('fromClientId', clientId)
+      .set('fromOfficeId', officeId);
     if (formValue) {
       const propNames = Object.getOwnPropertyNames(formValue);
       for (let i = 0; i < propNames.length; i++) {
@@ -52,8 +57,7 @@ export class AccountTransfersService {
   }
 
   newAccountTranferResource(id: any, accountTypeId: any, formValue?: any): Observable<any> {
-    let httpParams = new HttpParams().set('fromAccountId', id)
-      .set('fromAccountType', accountTypeId);
+    let httpParams = new HttpParams().set('fromAccountId', id).set('fromAccountType', accountTypeId);
     if (formValue) {
       const propNames = Object.getOwnPropertyNames(formValue);
       for (let i = 0; i < propNames.length; i++) {
@@ -62,7 +66,6 @@ export class AccountTransfersService {
       }
     }
     return this.http.get(`/accounttransfers/template`, { params: httpParams });
-
   }
 
   createAccountTransfer(data: any): Observable<any> {
@@ -94,18 +97,17 @@ export class AccountTransfersService {
     return this.http.delete(`/standinginstructions/${id}`, { params: httpParams });
   }
 
-
   getStandingInstructionsTransactions(standingInstructionsId: any, dateFormat: any, locale: any) {
-    const httpParams = new HttpParams().set('associations', 'transactions')
-                                        .set('dateFormat', dateFormat)
-                                        .set('limit', '14')
-                                        .set('locale', locale)
-                                        .set('offset', '0');
+    const httpParams = new HttpParams()
+      .set('associations', 'transactions')
+      .set('dateFormat', dateFormat)
+      .set('limit', '14')
+      .set('locale', locale)
+      .set('offset', '0');
     return this.http.get(`/standinginstructions/${standingInstructionsId}`, { params: httpParams });
   }
 
   getViewAccountTransferDetails(transferId: any): Observable<any> {
     return this.http.get(`/accounttransfers/${transferId}`);
   }
-
 }

@@ -6,8 +6,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./glim-preview-step.component.scss']
 })
 export class GlimPreviewStepComponent {
-
-
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
   /** Loans Account Product Template */
@@ -18,10 +16,20 @@ export class GlimPreviewStepComponent {
   @Output() submitEvent = new EventEmitter();
 
   /** Charges Displayed Columns */
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date'];
+  chargesDisplayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'date'
+  ];
   /** Overdue Charges Displayed Columns */
-  overdueChargesDisplayedColumns: string[] = ['name', 'type', 'amount', 'collectedon'];
+  overdueChargesDisplayedColumns: string[] = [
+    'name',
+    'type',
+    'amount',
+    'collectedon'
+  ];
 
-  constructor() { }
-
+  constructor() {}
 }

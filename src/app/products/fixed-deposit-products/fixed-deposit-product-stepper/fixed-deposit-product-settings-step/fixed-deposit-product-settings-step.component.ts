@@ -8,7 +8,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./fixed-deposit-product-settings-step.component.scss']
 })
 export class FixedDepositProductSettingsStepComponent implements OnInit {
-
   @Input() fixedDepositProductsTemplate: any;
 
   fixedDepositProductSettingsForm: UntypedFormGroup;
@@ -31,57 +30,72 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
 
     if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
       this.fixedDepositProductSettingsForm.patchValue({
-        'isMandatoryDeposit': this.fixedDepositProductsTemplate.isMandatoryDeposit,
-        'adjustAdvanceTowardsFuturePayments': this.fixedDepositProductsTemplate.adjustAdvanceTowardsFuturePayments,
-        'allowWithdrawal': this.fixedDepositProductsTemplate.allowWithdrawal,
-        'lockinPeriodFrequency': this.fixedDepositProductsTemplate.lockinPeriodFrequency,
-        'lockinPeriodFrequencyType': this.fixedDepositProductsTemplate.lockinPeriodFrequencyType ? this.fixedDepositProductsTemplate.lockinPeriodFrequencyType.id : '',
-        'minDepositTerm': this.fixedDepositProductsTemplate.minDepositTerm,
-        'minDepositTermTypeId': this.fixedDepositProductsTemplate.minDepositTermType ? this.fixedDepositProductsTemplate.minDepositTermType.id : '',
-        'inMultiplesOfDepositTerm': this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm,
-        'inMultiplesOfDepositTermTypeId': this.fixedDepositProductsTemplate.inMultiplesOfDepositTermType ? this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm.id : '',
-        'maxDepositTerm': this.fixedDepositProductsTemplate.maxDepositTerm,
-        'maxDepositTermTypeId': this.fixedDepositProductsTemplate.maxDepositTermType ? this.fixedDepositProductsTemplate.minDepositTermType.id : '',
-        'preClosurePenalApplicable': this.fixedDepositProductsTemplate.preClosurePenalApplicable,
-        'preClosurePenalInterest': this.fixedDepositProductsTemplate.preClosurePenalInterest,
-        'preClosurePenalInterestOnTypeId': this.fixedDepositProductsTemplate.preClosurePenalInterestOnType ? this.fixedDepositProductsTemplate.preClosurePenalInterestOnType.id : '',
-        'withHoldTax': this.fixedDepositProductsTemplate.withHoldTax
+        isMandatoryDeposit: this.fixedDepositProductsTemplate.isMandatoryDeposit,
+        adjustAdvanceTowardsFuturePayments: this.fixedDepositProductsTemplate.adjustAdvanceTowardsFuturePayments,
+        allowWithdrawal: this.fixedDepositProductsTemplate.allowWithdrawal,
+        lockinPeriodFrequency: this.fixedDepositProductsTemplate.lockinPeriodFrequency,
+        lockinPeriodFrequencyType: this.fixedDepositProductsTemplate.lockinPeriodFrequencyType
+          ? this.fixedDepositProductsTemplate.lockinPeriodFrequencyType.id
+          : '',
+        minDepositTerm: this.fixedDepositProductsTemplate.minDepositTerm,
+        minDepositTermTypeId: this.fixedDepositProductsTemplate.minDepositTermType
+          ? this.fixedDepositProductsTemplate.minDepositTermType.id
+          : '',
+        inMultiplesOfDepositTerm: this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm,
+        inMultiplesOfDepositTermTypeId: this.fixedDepositProductsTemplate.inMultiplesOfDepositTermType
+          ? this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm.id
+          : '',
+        maxDepositTerm: this.fixedDepositProductsTemplate.maxDepositTerm,
+        maxDepositTermTypeId: this.fixedDepositProductsTemplate.maxDepositTermType
+          ? this.fixedDepositProductsTemplate.minDepositTermType.id
+          : '',
+        preClosurePenalApplicable: this.fixedDepositProductsTemplate.preClosurePenalApplicable,
+        preClosurePenalInterest: this.fixedDepositProductsTemplate.preClosurePenalInterest,
+        preClosurePenalInterestOnTypeId: this.fixedDepositProductsTemplate.preClosurePenalInterestOnType
+          ? this.fixedDepositProductsTemplate.preClosurePenalInterestOnType.id
+          : '',
+        withHoldTax: this.fixedDepositProductsTemplate.withHoldTax
       });
     }
 
     if (this.fixedDepositProductsTemplate.withHoldTax) {
       this.fixedDepositProductSettingsForm.patchValue({
-        'taxGroupId': this.fixedDepositProductsTemplate.taxGroup ? this.fixedDepositProductsTemplate.taxGroup.id : ''
+        taxGroupId: this.fixedDepositProductsTemplate.taxGroup ? this.fixedDepositProductsTemplate.taxGroup.id : ''
       });
     }
   }
 
   createFixedDepositProductSettingsForm() {
     this.fixedDepositProductSettingsForm = this.formBuilder.group({
-      'lockinPeriodFrequency': [''],
-      'lockinPeriodFrequencyType': [''],
-      'minDepositTerm': ['', Validators.required],
-      'minDepositTermTypeId': ['', Validators.required],
-      'inMultiplesOfDepositTerm': [''],
-      'inMultiplesOfDepositTermTypeId': [''],
-      'maxDepositTerm': [''],
-      'maxDepositTermTypeId': [''],
-      'preClosurePenalApplicable': [false],
-      'preClosurePenalInterest': [''],
-      'preClosurePenalInterestOnTypeId': [''],
-      'withHoldTax': [false]
+      lockinPeriodFrequency: [''],
+      lockinPeriodFrequencyType: [''],
+      minDepositTerm: [
+        '',
+        Validators.required
+      ],
+      minDepositTermTypeId: [
+        '',
+        Validators.required
+      ],
+      inMultiplesOfDepositTerm: [''],
+      inMultiplesOfDepositTermTypeId: [''],
+      maxDepositTerm: [''],
+      maxDepositTermTypeId: [''],
+      preClosurePenalApplicable: [false],
+      preClosurePenalInterest: [''],
+      preClosurePenalInterestOnTypeId: [''],
+      withHoldTax: [false]
     });
   }
 
   setConditionalControls() {
-    this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges
-      .subscribe((withHoldTax: any) => {
-        if (withHoldTax) {
-          this.fixedDepositProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
-        } else {
-          this.fixedDepositProductSettingsForm.removeControl('taxGroupId');
-        }
-      });
+    this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
+      if (withHoldTax) {
+        this.fixedDepositProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
+      } else {
+        this.fixedDepositProductSettingsForm.removeControl('taxGroupId');
+      }
+    });
   }
 
   get fixedDepositProductSettings() {
@@ -93,5 +107,4 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
     }
     return fixedDepositProductSettings;
   }
-
 }

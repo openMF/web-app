@@ -21,18 +21,19 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-shares-account.component.scss']
 })
 export class CreateSharesAccountComponent {
-
   /** Shares Account Template */
   sharesAccountTemplate: any;
   /** Shares Account Product Template */
   sharesAccountProductTemplate: any;
 
   /** Shares Account Details Step */
-  @ViewChild(SharesAccountDetailsStepComponent, { static: true }) sharesAccountDetailsStep: SharesAccountDetailsStepComponent;
+  @ViewChild(SharesAccountDetailsStepComponent, { static: true })
+  sharesAccountDetailsStep: SharesAccountDetailsStepComponent;
   /** Shares Account Terms Step */
   @ViewChild(SharesAccountTermsStepComponent, { static: true }) sharesAccountTermsStep: SharesAccountTermsStepComponent;
   /** Shares Account Charges Step */
-  @ViewChild(SharesAccountChargesStepComponent, { static: true }) sharesAccountChargesStep: SharesAccountChargesStepComponent;
+  @ViewChild(SharesAccountChargesStepComponent, { static: true })
+  sharesAccountChargesStep: SharesAccountChargesStepComponent;
 
   /**
    * Fetches shares account template from `resolve`
@@ -42,11 +43,13 @@ export class CreateSharesAccountComponent {
    * @param {SharesService} sharesService Shares Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private sharesService: SharesService,
-              private settingsService: SettingsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private sharesService: SharesService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { sharesAccountTemplate: any }) => {
       this.sharesAccountTemplate = data.sharesAccountTemplate;
     });
@@ -78,10 +81,7 @@ export class CreateSharesAccountComponent {
    * Checks validity of overall shares account form.
    */
   get sharesAccountFormValid() {
-    return (
-      this.sharesAccountDetailsForm.valid &&
-      this.sharesAccountTermsForm.valid
-    );
+    return this.sharesAccountDetailsForm.valid && this.sharesAccountTermsForm.valid;
   }
 
   /**
@@ -113,8 +113,13 @@ export class CreateSharesAccountComponent {
       locale
     };
     this.sharesService.createSharesAccount(sharesAccount).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

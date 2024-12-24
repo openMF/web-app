@@ -8,9 +8,8 @@ describe('UndoTransactionDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UndoTransactionDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [UndoTransactionDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('ViewClosureComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewClosureComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewClosureComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

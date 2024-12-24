@@ -13,15 +13,23 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 @Component({
   selector: 'mifosx-loan-tranche-details',
   templateUrl: './loan-tranche-details.component.html',
-  styleUrls: ['./loan-tranche-details.component.scss'],
+  styleUrls: ['./loan-tranche-details.component.scss']
 })
 export class LoanTrancheDetailsComponent implements OnInit {
   loanDetails: any;
   return: any;
   status: any;
   count: number;
-  expectedDisbursementColumns: string[] = ['expected disbursement on', 'disbursed on', 'principal', 'action'];
-  emivariationColumns: string[] = ['emi amount variation from', 'fixed emi amount'];
+  expectedDisbursementColumns: string[] = [
+    'expected disbursement on',
+    'disbursed on',
+    'principal',
+    'action'
+  ];
+  emivariationColumns: string[] = [
+    'emi amount variation from',
+    'fixed emi amount'
+  ];
 
   loanId: number;
   currentPrincipalAmount: number;
@@ -36,11 +44,13 @@ export class LoanTrancheDetailsComponent implements OnInit {
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     public dialog: MatDialog,
     private loanServices: LoansService,
     private settingsService: SettingsService,
-    private dateUtils: Dates) {
+    private dateUtils: Dates
+  ) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanId = data.loanDetailsData.id;
       this.loanDetails = data.loanDetailsData;
@@ -99,7 +109,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
     this.totalMultiDisbursed = 0;
     this.count = 0;
     this.disbursementDataSource.forEach((item: any) => {
-      this.totalMultiDisbursed += (item.principal * 1);
+      this.totalMultiDisbursed += item.principal * 1;
       this.count += 1;
     });
   }
@@ -124,6 +134,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formBase;
   }
@@ -137,13 +148,13 @@ export class LoanTrancheDetailsComponent implements OnInit {
     const data = {
       title: 'Add Disbursement Details',
       layout: { addButtonText: 'Add' },
-      formfields: this.buildForm(new Date(), (this.currentPrincipalAmount - this.totalMultiDisbursed))
+      formfields: this.buildForm(new Date(), this.currentPrincipalAmount - this.totalMultiDisbursed)
     };
     const disbursementDialogRef = this.dialog.open(FormDialogComponent, { data });
     disbursementDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const principal = response.data.value.principal * 1;
-        if ((this.totalMultiDisbursed + principal) <= this.currentPrincipalAmount) {
+        if (this.totalMultiDisbursed + principal <= this.currentPrincipalAmount) {
           this.disbursementDataSource = this.disbursementDataSource.concat(response.data.value);
           this.pristine = false;
         }
@@ -156,7 +167,9 @@ export class LoanTrancheDetailsComponent implements OnInit {
    */
   editDisbursementDataEntry(index: number) {
     const principal: number = this.disbursementDataSource[index]['principal'] * 1;
-    const expectedDisbursementDate: Date = this.dateUtils.parseDate(this.disbursementDataSource[index]['expectedDisbursementDate']);
+    const expectedDisbursementDate: Date = this.dateUtils.parseDate(
+      this.disbursementDataSource[index]['expectedDisbursementDate']
+    );
 
     const data = {
       title: 'Edit Disbursement Details',
@@ -167,7 +180,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
     disbursementDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const newPrincipal = response.data.value.principal * 1;
-        if ((this.totalMultiDisbursed - principal + newPrincipal) <= this.currentPrincipalAmount) {
+        if (this.totalMultiDisbursed - principal + newPrincipal <= this.currentPrincipalAmount) {
           this.disbursementDataSource[index]['principal'] = newPrincipal;
           this.disbursementDataSource[index]['expectedDisbursementDate'] = response.data.value.expectedDisbursementDate;
           this.pristine = false;
@@ -195,7 +208,10 @@ export class LoanTrancheDetailsComponent implements OnInit {
     const disbursementData: any = [];
     this.disbursementDataSource.forEach((item: any) => {
       disbursementData.push({
-        expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, this.settingsService.dateFormat),
+        expectedDisbursementDate: this.dateUtils.formatDate(
+          item.expectedDisbursementDate,
+          this.settingsService.dateFormat
+        ),
         principal: item.principal
       });
     });
@@ -205,10 +221,11 @@ export class LoanTrancheDetailsComponent implements OnInit {
       dateFormat: this.settingsService.dateFormat,
       locale: this.settingsService.language.code
     };
-    this.loanServices.editDisbursements(this.loanId, payload).toPromise()
-    .then(result => {
-      this.pristine = true;
-    });
+    this.loanServices
+      .editDisbursements(this.loanId, payload)
+      .toPromise()
+      .then((result) => {
+        this.pristine = true;
+      });
   }
-
 }

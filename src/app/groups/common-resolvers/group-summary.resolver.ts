@@ -13,11 +13,10 @@ import { GroupsService } from '../groups.service';
  */
 @Injectable()
 export class GroupSummaryResolver implements Resolve<Object> {
-
   /**
    * @param {GroupsService} GroupsService Groups service.
    */
-  constructor(private groupsService: GroupsService) { }
+  constructor(private groupsService: GroupsService) {}
 
   /**
    * Returns the Group Summary data.
@@ -28,5 +27,4 @@ export class GroupSummaryResolver implements Resolve<Object> {
     const groupId = route.parent.paramMap.get('groupId');
     return this.groupsService.getGroupSummary(groupId);
   }
-
 }

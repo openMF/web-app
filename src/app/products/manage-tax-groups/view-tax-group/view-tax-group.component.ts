@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-tax-group.component.scss']
 })
 export class ViewTaxGroupComponent {
-
   /** tax Group Data. */
   taxGroupData: any;
 
@@ -24,5 +23,4 @@ export class ViewTaxGroupComponent {
       this.taxGroupData = data.taxGroup;
     });
   }
-
 }

@@ -16,7 +16,6 @@ import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog
   styleUrls: ['./client-family-members-step.component.scss']
 })
 export class ClientFamilyMembersStepComponent {
-
   /** Cient Template */
   @Input() clientTemplate: any;
   /** Client Family Members */
@@ -26,8 +25,10 @@ export class ClientFamilyMembersStepComponent {
    * @param {MatDialog} dialog Mat Dialog
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(public dialog: MatDialog,
-              private translateService: TranslateService) { }
+  constructor(
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {}
 
   /**
    * Adds a family member.
@@ -36,7 +37,7 @@ export class ClientFamilyMembersStepComponent {
     const addFamilyMemberDialogRef = this.dialog.open(ClientFamilyMemberDialogComponent, {
       data: {
         context: this.translateService.instant('labels.buttons.Add'),
-        options: this.clientTemplate.familyMemberOptions,
+        options: this.clientTemplate.familyMemberOptions
       },
       width: '50rem'
     });
@@ -57,7 +58,7 @@ export class ClientFamilyMembersStepComponent {
       data: {
         context: 'Edit',
         member: member,
-        options: this.clientTemplate.familyMemberOptions,
+        options: this.clientTemplate.familyMemberOptions
       },
       width: '50rem'
     });
@@ -88,5 +89,4 @@ export class ClientFamilyMembersStepComponent {
   get familyMembers() {
     return { familyMembers: this.clientFamilyMembers };
   }
-
 }

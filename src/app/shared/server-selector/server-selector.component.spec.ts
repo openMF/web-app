@@ -8,9 +8,8 @@ describe('ServerSelectorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServerSelectorComponent ]
-    })
-    .compileComponents();
+      declarations: [ServerSelectorComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

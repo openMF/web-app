@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-loan-product.component.scss']
 })
 export class ViewLoanProductComponent {
-
   loanProductDatatables: any = [];
 
   constructor(private route: ActivatedRoute) {
@@ -15,5 +14,4 @@ export class ViewLoanProductComponent {
       this.loanProductDatatables = data.loanProductDatatables;
     });
   }
-
 }

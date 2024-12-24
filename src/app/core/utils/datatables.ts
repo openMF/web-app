@@ -11,14 +11,29 @@ import { Dates } from './dates';
   providedIn: 'root'
 })
 export class Datatables {
+  systemFields: string[] = [
+    'id',
+    'created_at',
+    'updated_at'
+  ];
 
-  systemFields: string[] = ['id', 'created_at', 'updated_at'];
+  entitiesIdFields: string[] = [
+    'client_id',
+    'savings_account_id',
+    'savings_transaction_id',
+    'loan_id',
+    'group_id',
+    'center_id',
+    'office_id',
+    'product_loan_id',
+    'savings_product_id',
+    'share_product_id'
+  ];
 
-  entitiesIdFields: string[] = ['client_id', 'savings_account_id', 'savings_transaction_id',
-    'loan_id', 'group_id', 'center_id', 'office_id', 'product_loan_id', 'savings_product_id', 'share_product_id'];
-
-  constructor(private dateUtils: Dates,
-    private settingsService: SettingsService) { }
+  constructor(
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {}
 
   public getFormfields(columns: any, dateTransformColumns: string[], dataTableEntryObject: any) {
     return columns.map((column: any) => {
@@ -26,27 +41,30 @@ export class Datatables {
         case 'INTEGER':
         case 'STRING':
         case 'DECIMAL':
-        case 'TEXT': return new InputBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          type: (column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL') ? 'number' : 'text',
-          required: (column.isColumnNullable) ? false : true
-        });
-        case 'BOOLEAN': return new CheckboxBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          type: 'checkbox',
-          required: (column.isColumnNullable) ? false : true
-        });
-        case 'CODELOOKUP': return new SelectBase({
-          controlName: column.columnName,
-          label: column.columnName,
-          value: '',
-          options: { label: 'value', value: 'id', data: column.columnValues },
-          required: (column.isColumnNullable) ? false : true
-        });
+        case 'TEXT':
+          return new InputBase({
+            controlName: column.columnName,
+            label: column.columnName,
+            value: '',
+            type: column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL' ? 'number' : 'text',
+            required: column.isColumnNullable ? false : true
+          });
+        case 'BOOLEAN':
+          return new CheckboxBase({
+            controlName: column.columnName,
+            label: column.columnName,
+            value: '',
+            type: 'checkbox',
+            required: column.isColumnNullable ? false : true
+          });
+        case 'CODELOOKUP':
+          return new SelectBase({
+            controlName: column.columnName,
+            label: column.columnName,
+            value: '',
+            options: { label: 'value', value: 'id', data: column.columnValues },
+            required: column.isColumnNullable ? false : true
+          });
         case 'DATE': {
           dateTransformColumns.push(column.columnName);
           if (!dataTableEntryObject.dateFormat) {
@@ -57,7 +75,7 @@ export class Datatables {
             label: column.columnName,
             value: '',
             maxDate: this.settingsService.maxAllowedDate,
-            required: (column.isColumnNullable) ? false : true
+            required: column.isColumnNullable ? false : true
           });
         }
         case 'DATETIME': {
@@ -68,7 +86,7 @@ export class Datatables {
             label: column.columnName,
             value: '',
             maxDate: this.settingsService.maxAllowedDate,
-            required: (column.isColumnNullable) ? false : true
+            required: column.isColumnNullable ? false : true
           });
         }
       }
@@ -76,11 +94,11 @@ export class Datatables {
   }
 
   public isEntityId(columnName: string): boolean {
-    return (this.entitiesIdFields.includes(columnName));
+    return this.entitiesIdFields.includes(columnName);
   }
 
   public isSystemColumn(columnName: string): boolean {
-    return (this.systemFields.includes(columnName) || this.entitiesIdFields.includes(columnName));
+    return this.systemFields.includes(columnName) || this.entitiesIdFields.includes(columnName);
   }
 
   public filterSystemColumns(columnHeaders: any): any {
@@ -124,7 +142,7 @@ export class Datatables {
   }
 
   public isColumnType(columnType: string, expectedType: string): boolean {
-    return (columnType === expectedType);
+    return columnType === expectedType;
   }
 
   public buildPayload(datatableInputs: any, datatableDataValues: any, dateFormat: string, output: any): any {
@@ -159,12 +177,11 @@ export class Datatables {
   }
 
   public isValidUrl(urlString: string): boolean {
-      try {
-        const url = new URL(urlString);
-        return url.protocol.startsWith('http') || url.protocol.startsWith('https');
-      } catch (e) {
-        return false;
-      }
+    try {
+      const url = new URL(urlString);
+      return url.protocol.startsWith('http') || url.protocol.startsWith('https');
+    } catch (e) {
+      return false;
+    }
   }
-
 }

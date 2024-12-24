@@ -9,11 +9,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class VersionService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getBackendInfo(): Observable<any> {
     return this.http.get('/fineract-provider/actuator/info');
   }
-
 }

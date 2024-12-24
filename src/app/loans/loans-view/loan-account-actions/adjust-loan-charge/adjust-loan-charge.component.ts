@@ -36,19 +36,21 @@ export class AdjustLoanChargeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
-    private organizationService: OrganizationService) {
-      this.loanId = this.route.snapshot.params['loanId'];
-      this.chargeId = this.route.snapshot.params['id'];
-      this.route.data.subscribe((data: { loansAccountCharge: any, loanDetailsData: any }) => {
-        this.chargeData = data.loansAccountCharge;
-        this.loanDetailsData = data.loanDetailsData;
-      });
-    }
+    private organizationService: OrganizationService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
+    this.chargeId = this.route.snapshot.params['id'];
+    this.route.data.subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {
+      this.chargeData = data.loansAccountCharge;
+      this.loanDetailsData = data.loanDetailsData;
+    });
+  }
 
   /**
    * Creates the repayment loan form
@@ -65,10 +67,13 @@ export class AdjustLoanChargeComponent implements OnInit {
    */
   createAdjustLoanChargeForm() {
     this.adjustLoanChargeForm = this.formBuilder.group({
-      'amount': [this.chargeData.amount, Validators.required],
-      'externalId': '',
-      'paymentTypeId': '',
-      'note': ''
+      amount: [
+        this.chargeData.amount,
+        Validators.required
+      ],
+      externalId: '',
+      paymentTypeId: '',
+      note: ''
     });
   }
 
@@ -107,10 +112,10 @@ export class AdjustLoanChargeComponent implements OnInit {
       locale
     };
     const command = 'adjustment';
-    this.loanService.executeLoansAccountChargesCommand(this.loanId, command, data, this.chargeId)
+    this.loanService
+      .executeLoansAccountChargesCommand(this.loanId, command, data, this.chargeId)
       .subscribe((response: any) => {
         this.router.navigate(['../..'], { relativeTo: this.route });
-    });
+      });
   }
-
 }

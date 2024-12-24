@@ -21,7 +21,12 @@ import { ViewAccountTransferComponent } from './view-account-transfer/view-accou
  * All components related to Account Transfers functions should be declared here.
  */
 @NgModule({
-  imports: [SharedModule, PipesModule, DirectivesModule, AccountTransfersRoutingModule],
+  imports: [
+    SharedModule,
+    PipesModule,
+    DirectivesModule,
+    AccountTransfersRoutingModule
+  ],
   declarations: [
     ViewStandingInstructionsComponent,
     EditStandingInstructionsComponent,
@@ -31,6 +36,6 @@ import { ViewAccountTransferComponent } from './view-account-transfer/view-accou
     ListTransactionsComponent,
     ViewAccountTransferComponent
   ],
-  providers: [ ]
+  providers: []
 })
-export class AccountTransfersModule { }
+export class AccountTransfersModule {}

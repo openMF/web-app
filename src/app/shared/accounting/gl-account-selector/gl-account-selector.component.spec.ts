@@ -8,9 +8,8 @@ describe('GlAccountSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GlAccountSelectorComponent ]
-    })
-    .compileComponents();
+      declarations: [GlAccountSelectorComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GlAccountSelectorComponent);
     component = fixture.componentInstance;

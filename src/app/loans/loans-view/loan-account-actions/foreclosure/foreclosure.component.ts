@@ -30,14 +30,16 @@ export class ForeclosureComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private settingsService: SettingsService) {
-      this.loanId = this.route.snapshot.params['loanId'];
-    }
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
+  }
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
@@ -47,21 +49,26 @@ export class ForeclosureComponent implements OnInit {
 
   createforeclosureForm() {
     this.foreclosureForm = this.formBuilder.group({
-      'transactionDate': [this.dataObject.date && new Date(this.dataObject.date), Validators.required],
-      'outstandingPrincipalPortion': [{value: this.dataObject.principalPortion || 0, disabled: true}],
-      'outstandingInterestPortion': [{value: this.dataObject.interestPortion || 0, disabled: true}],
-      'outstandingFeeChargesPortion': [{value: this.dataObject.feeChargesPortion || 0, disabled: true}],
-      'outstandingPenaltyChargesPortion': [{value: this.dataObject.penaltyChargesPortion || 0, disabled: true}],
-      'transactionAmount': [{value: this.dataObject.amount, disabled: true}],
-      'note': ['', Validators.required]
+      transactionDate: [
+        this.dataObject.date && new Date(this.dataObject.date),
+        Validators.required
+      ],
+      outstandingPrincipalPortion: [{ value: this.dataObject.principalPortion || 0, disabled: true }],
+      outstandingInterestPortion: [{ value: this.dataObject.interestPortion || 0, disabled: true }],
+      outstandingFeeChargesPortion: [{ value: this.dataObject.feeChargesPortion || 0, disabled: true }],
+      outstandingPenaltyChargesPortion: [{ value: this.dataObject.penaltyChargesPortion || 0, disabled: true }],
+      transactionAmount: [{ value: this.dataObject.amount, disabled: true }],
+      note: [
+        '',
+        Validators.required
+      ]
     });
   }
 
   onChanges(): void {
-    this.foreclosureForm.get('transactionDate').valueChanges.subscribe(val => {
+    this.foreclosureForm.get('transactionDate').valueChanges.subscribe((val) => {
       this.retrieveLoanForeclosureTemplate(val);
     });
-
   }
 
   retrieveLoanForeclosureTemplate(val: any) {
@@ -73,15 +80,14 @@ export class ForeclosureComponent implements OnInit {
       locale: this.settingsService.language.code,
       transactionDate: transactionDateFormatted
     };
-    this.loanService.getForeclosureData(this.loanId, data)
-    .subscribe((response: any) => {
+    this.loanService.getForeclosureData(this.loanId, data).subscribe((response: any) => {
       this.foreclosuredata = response;
 
       this.foreclosureForm.patchValue({
         outstandingPrincipalPortion: this.foreclosuredata.principalPortion,
         outstandingInterestPortion: this.foreclosuredata.interestPortion,
         outstandingFeeChargesPortion: this.foreclosuredata.feeChargesPortion,
-        outstandingPenaltyChargesPortion: this.foreclosuredata.penaltyChargesPortion,
+        outstandingPenaltyChargesPortion: this.foreclosuredata.penaltyChargesPortion
       });
     });
   }
@@ -100,10 +106,8 @@ export class ForeclosureComponent implements OnInit {
       locale
     };
 
-    this.loanService.loanForclosureData(this.loanId, data)
-      .subscribe((response: any) => {
-        this.router.navigate([`../../general`], { relativeTo: this.route });
-      });
-    }
-
+    this.loanService.loanForclosureData(this.loanId, data).subscribe((response: any) => {
+      this.router.navigate([`../../general`], { relativeTo: this.route });
+    });
+  }
 }

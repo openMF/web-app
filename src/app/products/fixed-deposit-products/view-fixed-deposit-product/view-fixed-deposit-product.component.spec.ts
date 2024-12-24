@@ -8,9 +8,8 @@ describe('ViewFixedDepositProductComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewFixedDepositProductComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewFixedDepositProductComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

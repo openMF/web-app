@@ -18,11 +18,17 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
   styleUrls: ['./global-configurations-tab.component.scss']
 })
 export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
-
   /** Configuration data. */
   configurationData: any;
   /** Columns to be displayed in configurations table. */
-  displayedColumns: string[] = ['name', 'enabled', 'value', 'stringValue', 'dateValue', 'edit'];
+  displayedColumns: string[] = [
+    'name',
+    'enabled',
+    'value',
+    'stringValue',
+    'dateValue',
+    'edit'
+  ];
   /** Data source for configurations table. */
   dataSource: MatTableDataSource<any>;
 
@@ -48,12 +54,14 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private alertService: AlertService,
-              private systemService: SystemService,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+  constructor(
+    private route: ActivatedRoute,
+    private alertService: AlertService,
+    private systemService: SystemService,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
     this.route.data.subscribe((data: { configurations: any }) => {
       this.configurationData = data.configurations;
     });
@@ -69,9 +77,8 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
   /**
    * Initializes the data source, paginator and sorter for configurations table.
    */
-   setConfigurationData(): void {
-    this.systemService.getConfigurations()
-    .subscribe((configurationData: any) => {
+  setConfigurationData(): void {
+    this.systemService.getConfigurations().subscribe((configurationData: any) => {
       this.configurationData = configurationData.globalConfiguration;
       this.dataSource = new MatTableDataSource(this.configurationData);
       this.dataSource.paginator = this.paginator;
@@ -91,12 +98,13 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
    * Enables/Disables respective configuration
    */
   toggleStatus(configuration: any) {
-    this.systemService.updateConfiguration(configuration.id, { enabled: !configuration.enabled })
+    this.systemService
+      .updateConfiguration(configuration.id, { enabled: !configuration.enabled })
       .subscribe((response: any) => {
         configuration.enabled = response.changes.enabled;
         if (configuration.name === SettingsService.businessDateConfigName) {
           const msg = configuration.enabled ? 'enabled' : 'disabled';
-          this.alertService.alert({type: SettingsService.businessDateType + ' Set Config', message: msg});
+          this.alertService.alert({ type: SettingsService.businessDateType + ' Set Config', message: msg });
         }
       });
   }
@@ -108,7 +116,12 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-   showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -148,5 +161,4 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showConfigurations = true;
     this.router.navigate(['/system']);
   }
-
 }

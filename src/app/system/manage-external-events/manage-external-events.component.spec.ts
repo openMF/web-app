@@ -8,9 +8,8 @@ describe('ManageExternalEventsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManageExternalEventsComponent ]
-    })
-    .compileComponents();
+      declarations: [ManageExternalEventsComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

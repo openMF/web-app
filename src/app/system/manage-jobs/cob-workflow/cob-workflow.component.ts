@@ -15,7 +15,7 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   /** Timer to refetch COB Catch-Up status every 5 seconds */
   timer: any;
 
-  constructor(private systemService: SystemService) { }
+  constructor(private systemService: SystemService) {}
 
   ngOnInit(): void {
     this.getCOBCatchUpStatus();
@@ -29,7 +29,9 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
     this.systemService.getCOBCatchUpStatus().subscribe((response: any) => {
       this.isCatchUpRunning = response.isCatchUpRunning;
     });
-    this.timer = setTimeout(() => { this.getCOBCatchUpStatus(); }, this.waitTime * 1000);
+    this.timer = setTimeout(() => {
+      this.getCOBCatchUpStatus();
+    }, this.waitTime * 1000);
   }
 
   runCatchUp(): void {
@@ -38,5 +40,4 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
       this.waitTime = 5000;
     });
   }
-
 }

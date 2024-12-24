@@ -7,7 +7,6 @@ import { Clipboard } from '@angular/cdk/clipboard';
   styleUrls: ['./entity-name.component.scss']
 })
 export class EntityNameComponent implements OnInit {
-
   @Input() entityName: string;
   @Input() display = 'right';
 
@@ -15,11 +14,11 @@ export class EntityNameComponent implements OnInit {
   displayL = false;
   displayR = true;
 
-  constructor(private clipboard: Clipboard) { }
+  constructor(private clipboard: Clipboard) {}
 
   ngOnInit(): void {
-    this.displayL = (this.display === 'left');
-    this.displayR = (this.display === 'right');
+    this.displayL = this.display === 'left';
+    this.displayR = this.display === 'right';
   }
 
   copyValue(): void {

@@ -19,25 +19,28 @@ export class PopoverRef<T = any> {
    * @param {FlexibleConnectedPositionStrategy} positionStrategy FlexibleConnectedPositionStrategy.
    * @param {PopoverConfig} config PopoverConfig.
    */
-  constructor(private overlayRef: OverlayRef,
-              private positionStrategy: FlexibleConnectedPositionStrategy,
-              public config: PopoverConfig) {
+  constructor(
+    private overlayRef: OverlayRef,
+    private positionStrategy: FlexibleConnectedPositionStrategy,
+    public config: PopoverConfig
+  ) {
     if (!config.disableClose) {
       this.overlayRef.backdropClick().subscribe(() => {
         // this.close();
       });
 
-      this.overlayRef.keydownEvents().pipe(
-        filter(event => event.key === 'Escape')
-      ).subscribe(() => {
-        // this.close();
-      });
+      this.overlayRef
+        .keydownEvents()
+        .pipe(filter((event) => event.key === 'Escape'))
+        .subscribe(() => {
+          // this.close();
+        });
     }
   }
 
- /**
-  * Close popover
-  */
+  /**
+   * Close popover
+   */
   close(dialogResult?: T): void {
     this.afterClosedSubject.next(dialogResult);
     this.afterClosedSubject.complete();
@@ -45,9 +48,9 @@ export class PopoverRef<T = any> {
     this.overlayRef.dispose();
   }
 
- /**
-  * @returns {Observable<T>}
-  */
+  /**
+   * @returns {Observable<T>}
+   */
   afterClosed(): Observable<T> {
     return this.afterClosedSubject.asObservable();
   }

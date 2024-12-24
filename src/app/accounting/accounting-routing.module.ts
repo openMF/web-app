@@ -84,7 +84,7 @@ const routes: Routes = [
               resolve: {
                 offices: OfficesResolver,
                 glAccounts: GlAccountsResolver
-              },
+              }
             },
             {
               path: 'frequent-postings',
@@ -121,7 +121,7 @@ const routes: Routes = [
                   }
                 }
               ]
-            },
+            }
           ]
         },
         {
@@ -199,7 +199,10 @@ const routes: Routes = [
                 },
                 {
                   path: 'view/:id',
-                  data: { title: 'View GL Account', routeResolveBreadcrumb: ['glAccountAndChartOfAccountsTemplate', 'name'] },
+                  data: { title: 'View GL Account', routeResolveBreadcrumb: [
+                      'glAccountAndChartOfAccountsTemplate',
+                      'name'
+                    ] },
                   resolve: {
                     glAccountAndChartOfAccountsTemplate: GlAccountAndChartOfAccountsTemplateResolver
                   },
@@ -282,7 +285,10 @@ const routes: Routes = [
             },
             {
               path: 'view/:id',
-              data: { title: 'View Accounting Rule', routeResolveBreadcrumb: ['accountingRule', 'name'] },
+              data: { title: 'View Accounting Rule', routeResolveBreadcrumb: [
+                  'accountingRule',
+                  'name'
+                ] },
               resolve: {
                 accountingRule: AccountingRuleResolver
               },
@@ -357,7 +363,7 @@ const routes: Routes = [
     },
     {
       path: 'journal-entry',
-      data: {title: 'Journal Entries', breadcrumb: 'Journal Entries' },
+      data: { title: 'Journal Entries', breadcrumb: 'Journal Entries' },
       children: [
         {
           path: 'view/:id',
@@ -378,6 +384,7 @@ const routes: Routes = [
       ]
     }
   ])
+
 ];
 
 /**
@@ -415,4 +422,4 @@ const routes: Routes = [
     ProvisioningJournalEntriesResolver
   ]
 })
-export class AccountingRoutingModule { }
+export class AccountingRoutingModule {}

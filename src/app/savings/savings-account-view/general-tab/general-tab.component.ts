@@ -15,14 +15,16 @@ export class GeneralTabComponent {
   savingsAccountData: any;
   currency: Currency;
 
-  constructor(private route: ActivatedRoute,
-    private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.currency = this.savingsAccountData.currency;
       this.isLoading = false;
       const status = this.savingsAccountData.status.value;
-      this.isActive = (status === 'Active');
+      this.isActive = status === 'Active';
     });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
@@ -32,5 +34,4 @@ export class GeneralTabComponent {
       this.entityType = 'Center';
     }
   }
-
 }

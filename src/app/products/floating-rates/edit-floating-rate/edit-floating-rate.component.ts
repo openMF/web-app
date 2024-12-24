@@ -26,7 +26,6 @@ import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialo
   styleUrls: ['./edit-floating-rate.component.scss']
 })
 export class EditFloatingRateComponent implements OnInit {
-
   /** Floating Rate Form. */
   floatingRateForm: UntypedFormGroup;
   /** Floating Rate Data. */
@@ -36,7 +35,12 @@ export class EditFloatingRateComponent implements OnInit {
   /** Form Pristine Status. */
   isFloatingRateFormPristine = true;
   /** Columns to be displayed in floating rate periods table. */
-  displayedColumns: string[] = ['fromDate', 'interestRate', 'isDifferential', 'actions'];
+  displayedColumns: string[] = [
+    'fromDate',
+    'interestRate',
+    'isDifferential',
+    'actions'
+  ];
   /** Data source for floating rate periods table. */
   dataSource: MatTableDataSource<any>;
   /** Date Format. */
@@ -60,14 +64,16 @@ export class EditFloatingRateComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private router: Router,
-              private formBuilder: UntypedFormBuilder,
-              private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private dialog: MatDialog,
-              private settingsService: SettingsService,
-              private translateService: TranslateService) {
+  constructor(
+    private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private dialog: MatDialog,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { floatingRate: any }) => {
       this.floatingRateData = data.floatingRate;
       this.floatingRatePeriodsData = data.floatingRate.ratePeriods ? data.floatingRate.ratePeriods : [];
@@ -87,9 +93,12 @@ export class EditFloatingRateComponent implements OnInit {
    */
   createFloatingRateForm() {
     this.floatingRateForm = this.formBuilder.group({
-      'name': [this.floatingRateData.name, Validators.required],
-      'isBaseLendingRate': [this.floatingRateData.isBaseLendingRate],
-      'isActive': [this.floatingRateData.isActive]
+      name: [
+        this.floatingRateData.name,
+        Validators.required
+      ],
+      isBaseLendingRate: [this.floatingRateData.isBaseLendingRate],
+      isActive: [this.floatingRateData.isActive]
     });
   }
 
@@ -157,7 +166,12 @@ export class EditFloatingRateComponent implements OnInit {
    */
   deleteFloatingRatePeriod(ratePeriod: any) {
     const deleteFloatingRatePeriodRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext:  this.translateService.instant('labels.inputs.floating rate period with from date as') + ' ' + ratePeriod.fromDate }
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.inputs.floating rate period with from date as') +
+          ' ' +
+          ratePeriod.fromDate
+      }
     });
     deleteFloatingRatePeriodRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -173,7 +187,7 @@ export class EditFloatingRateComponent implements OnInit {
    * if successful redirects to view created floating rate.
    */
   submit() {
-    this.floatingRatePeriodsData.map(floatingRatePeriod => {
+    this.floatingRatePeriodsData.map((floatingRatePeriod) => {
       floatingRatePeriod.modifiedOn = undefined;
       floatingRatePeriod.createdOn = undefined;
       floatingRatePeriod.id = undefined;
@@ -184,11 +198,18 @@ export class EditFloatingRateComponent implements OnInit {
       floatingRatePeriod.dateFormat = this.dateFormat;
       floatingRatePeriod.fromDate = this.dateUtils.formatDate(floatingRatePeriod.fromDate, this.dateFormat);
     });
-    this.floatingRateForm.value.ratePeriods = this.floatingRatePeriodsData.length > 0 ? this.floatingRatePeriodsData : undefined;
-    this.productsService.updateFloatingRate(this.route.snapshot.paramMap.get('id'), this.floatingRateForm.value)
+    this.floatingRateForm.value.ratePeriods =
+      this.floatingRatePeriodsData.length > 0 ? this.floatingRatePeriodsData : undefined;
+    this.productsService
+      .updateFloatingRate(this.route.snapshot.paramMap.get('id'), this.floatingRateForm.value)
       .subscribe((response: any) => {
-        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
       });
   }
-
 }

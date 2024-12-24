@@ -16,7 +16,6 @@ import { SystemService } from '../../../system.service';
   styleUrls: ['./edit-configuration.component.scss']
 })
 export class EditConfigurationComponent implements OnInit {
-
   /** Minimum transaction date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum transaction date allowed. */
@@ -35,11 +34,13 @@ export class EditConfigurationComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private settingsService: SettingsService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private settingsService: SettingsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { configuration: any }) => {
       this.configuration = data.configuration;
     });
@@ -58,11 +59,14 @@ export class EditConfigurationComponent implements OnInit {
    */
   createConfigurationForm() {
     this.configurationForm = this.formBuilder.group({
-      'name': [{ value: this.configuration.name, disabled: true }, Validators.required],
-      'description': [{ value: this.configuration.description, disabled: true }],
-      'value': [this.configuration.value],
-      'stringValue': [this.configuration.stringValue],
-      'dateValue': [this.configuration.dateValue]
+      name: [
+        { value: this.configuration.name, disabled: true },
+        Validators.required
+      ],
+      description: [{ value: this.configuration.description, disabled: true }],
+      value: [this.configuration.value],
+      stringValue: [this.configuration.stringValue],
+      dateValue: [this.configuration.dateValue]
     });
   }
 
@@ -71,7 +75,11 @@ export class EditConfigurationComponent implements OnInit {
    * if successful redirects to view all global configurations.
    */
   submit() {
-    if (this.configurationForm.value.value != null || this.configurationForm.value.stringValue != null || this.configurationForm.value.dateValue != null) {
+    if (
+      this.configurationForm.value.value != null ||
+      this.configurationForm.value.stringValue != null ||
+      this.configurationForm.value.dateValue != null
+    ) {
       const payload = {
         ...this.configurationForm.value
       };
@@ -85,12 +93,9 @@ export class EditConfigurationComponent implements OnInit {
         delete payload.dateValue;
       }
 
-      this.systemService
-        .updateConfiguration(this.configuration.id, payload)
-        .subscribe((response: any) => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        });
+      this.systemService.updateConfiguration(this.configuration.id, payload).subscribe((response: any) => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
     }
   }
-
 }

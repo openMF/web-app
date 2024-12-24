@@ -8,9 +8,8 @@ describe('EditCollateralComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditCollateralComponent ]
-    })
-    .compileComponents();
+      declarations: [EditCollateralComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

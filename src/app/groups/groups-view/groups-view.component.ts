@@ -19,7 +19,6 @@ import { GroupsService } from '../groups.service';
   styleUrls: ['./groups-view.component.scss']
 })
 export class GroupsViewComponent {
-
   /** Group view data */
   groupViewData: any;
   /** Group datatables data */
@@ -32,11 +31,13 @@ export class GroupsViewComponent {
    * @param {Router} router Router
    * @param {MatDialog} dialog Dialog
    */
-  constructor(private route: ActivatedRoute,
-              private groupsService: GroupsService,
-              private router: Router,
-              public dialog: MatDialog) {
-    this.route.data.subscribe((data: { groupViewData: any, groupDatatables: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private groupsService: GroupsService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { groupViewData: any; groupDatatables: any }) => {
       this.groupViewData = data.groupViewData;
       this.groupDatatables = data.groupDatatables;
     });
@@ -79,7 +80,7 @@ export class GroupsViewComponent {
   get editMeeting() {
     if (this.groupViewData.collectionMeetingCalendar) {
       const entityType = this.groupViewData.collectionMeetingCalendar.entityType.value;
-      if (entityType === 'GROUPS' && this.groupViewData.hierarchy === '.' + this.groupViewData.id + '.' ) {
+      if (entityType === 'GROUPS' && this.groupViewData.hierarchy === '.' + this.groupViewData.id + '.') {
         return true;
       }
     }
@@ -92,8 +93,7 @@ export class GroupsViewComponent {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/groups`, {skipLocationChange: true})
-      .then(() => this.router.navigate([url]));
+    this.router.navigateByUrl(`/groups`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 
   /**
@@ -103,7 +103,8 @@ export class GroupsViewComponent {
     const unAssignStaffDialogRef = this.dialog.open(UnassignStaffDialogComponent);
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.groupsService.executeGroupCommand(this.groupViewData.id, 'unassignStaff', { staffId: this.groupViewData.staffId })
+        this.groupsService
+          .executeGroupCommand(this.groupViewData.id, 'unassignStaff', { staffId: this.groupViewData.staffId })
           .subscribe(() => {
             this.reload();
           });
@@ -126,5 +127,4 @@ export class GroupsViewComponent {
       }
     });
   }
-
 }

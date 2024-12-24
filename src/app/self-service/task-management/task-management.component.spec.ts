@@ -8,9 +8,8 @@ describe('TaskManagementComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskManagementComponent ]
-    })
-    .compileComponents();
+      declarations: [TaskManagementComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

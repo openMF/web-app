@@ -1,15 +1,14 @@
 /** Shares Account Buttons Configuration */
 export class SharesButtonsConfiguration {
-
   optionArray: {
-    name: string,
-    taskPermissionName: string,
+    name: string;
+    taskPermissionName: string;
   }[];
 
   buttonsArray: {
-    name: string,
-    icon: string,
-    taskPermissionName: string,
+    name: string;
+    icon: string;
+    taskPermissionName: string;
   }[];
 
   constructor(status: string) {
@@ -86,7 +85,7 @@ export class SharesButtonsConfiguration {
 
   setOptions(status: string) {
     switch (status) {
-        case 'Active':
+      case 'Active':
         this.optionArray = [
           {
             name: 'Close',
@@ -112,14 +111,13 @@ export class SharesButtonsConfiguration {
     }
   }
 
-  addOption(option: {name: string, taskPermissionName: string}) {
+  addOption(option: { name: string; taskPermissionName: string }) {
     this.optionArray.push(option);
   }
 
   removeButton(name: string) {
-    const buttonNames = this.buttonsArray.map(entry => entry.name);
+    const buttonNames = this.buttonsArray.map((entry) => entry.name);
     const index = buttonNames.indexOf(name);
     this.buttonsArray.splice(index, 1);
   }
-
 }

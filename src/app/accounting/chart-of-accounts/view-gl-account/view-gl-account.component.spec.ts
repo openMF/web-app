@@ -8,9 +8,8 @@ describe('ViewGlAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewGlAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewGlAccountComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

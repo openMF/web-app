@@ -8,9 +8,8 @@ describe('CreateGsimAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreateGsimAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateGsimAccountComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

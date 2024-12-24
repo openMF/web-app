@@ -11,7 +11,6 @@ import { environment } from 'environments/environment';
   styleUrls: ['./savings-documents-tab.component.scss']
 })
 export class SavingsDocumentsTabComponent {
-
   /** Stores the resolved savings documents data */
   entityDocuments: any;
   /** Stores the saving Account Id */
@@ -22,10 +21,12 @@ export class SavingsDocumentsTabComponent {
    * Retrieves the savings data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private savingsService: SavingsService,
     private settingsService: SettingsService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { savingsDocuments: any }) => {
       this.setSavingsDocumentsData(data.savingsDocuments);
     });
@@ -34,9 +35,20 @@ export class SavingsDocumentsTabComponent {
 
   setSavingsDocumentsData(data: any) {
     data.forEach((ele: any) => {
-      ele.docUrl = this.settingsService.serverUrl + '/savings/' + ele.parentEntityId + '/documents/' + ele.id + '/attachment?tenantIdentifier=' + environment.fineractPlatformTenantId;
+      ele.docUrl =
+        this.settingsService.serverUrl +
+        '/savings/' +
+        ele.parentEntityId +
+        '/documents/' +
+        ele.id +
+        '/attachment?tenantIdentifier=' +
+        environment.fineractPlatformTenantId;
       if (ele.fileName) {
-        if (ele.fileName.toLowerCase().indexOf('.jpg') !== -1 || ele.fileName.toLowerCase().indexOf('.jpeg') !== -1 || ele.fileName.toLowerCase().indexOf('.png') !== -1) {
+        if (
+          ele.fileName.toLowerCase().indexOf('.jpg') !== -1 ||
+          ele.fileName.toLowerCase().indexOf('.jpeg') !== -1 ||
+          ele.fileName.toLowerCase().indexOf('.png') !== -1
+        ) {
           ele.fileIsImage = true;
         }
       }
@@ -50,7 +62,7 @@ export class SavingsDocumentsTabComponent {
   }
 
   downloadDocument(documentId: string) {
-    this.savingsService.downloadSavingsDocument(this.entityId, documentId).subscribe(res => {
+    this.savingsService.downloadSavingsDocument(this.entityId, documentId).subscribe((res) => {
       const url = window.URL.createObjectURL(res);
       window.open(url);
     });
@@ -63,5 +75,4 @@ export class SavingsDocumentsTabComponent {
   deleteDocument(documentId: any) {
     this.savingsService.deleteSavingsDocument(this.entityId, documentId).subscribe((res: any) => {});
   }
-
 }

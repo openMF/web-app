@@ -13,7 +13,6 @@ import { SystemService } from '../../system.service';
  */
 @Injectable()
 export class EmailConfigurationResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService System service.
    */
@@ -26,5 +25,4 @@ export class EmailConfigurationResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.systemService.getExternalConfiguration('SMTP');
   }
-
 }

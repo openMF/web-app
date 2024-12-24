@@ -21,13 +21,17 @@ import { Accounting } from 'app/core/utils/accounting';
   styleUrls: ['./create-saving-product.component.scss']
 })
 export class CreateSavingProductComponent {
-
-  @ViewChild(SavingProductDetailsStepComponent, { static: true }) savingProductDetailsStep: SavingProductDetailsStepComponent;
-  @ViewChild(SavingProductCurrencyStepComponent, { static: true }) savingProductCurrencyStep: SavingProductCurrencyStepComponent;
+  @ViewChild(SavingProductDetailsStepComponent, { static: true })
+  savingProductDetailsStep: SavingProductDetailsStepComponent;
+  @ViewChild(SavingProductCurrencyStepComponent, { static: true })
+  savingProductCurrencyStep: SavingProductCurrencyStepComponent;
   @ViewChild(SavingProductTermsStepComponent, { static: true }) savingProductTermsStep: SavingProductTermsStepComponent;
-  @ViewChild(SavingProductSettingsStepComponent, { static: true }) savingProductSettingsStep: SavingProductSettingsStepComponent;
-  @ViewChild(SavingProductChargesStepComponent, { static: true }) savingProductChargesStep: SavingProductChargesStepComponent;
-  @ViewChild(SavingProductAccountingStepComponent, { static: true }) savingProductAccountingStep: SavingProductAccountingStepComponent;
+  @ViewChild(SavingProductSettingsStepComponent, { static: true })
+  savingProductSettingsStep: SavingProductSettingsStepComponent;
+  @ViewChild(SavingProductChargesStepComponent, { static: true })
+  savingProductChargesStep: SavingProductChargesStepComponent;
+  @ViewChild(SavingProductAccountingStepComponent, { static: true })
+  savingProductAccountingStep: SavingProductAccountingStepComponent;
 
   savingProductsTemplate: any;
   accountingRuleData: string[] = [];
@@ -39,11 +43,13 @@ export class CreateSavingProductComponent {
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(private route: ActivatedRoute,
-              private productsService: ProductsService,
-              private router: Router,
-              private settingsService: SettingsService,
-              private accounting: Accounting) {
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private router: Router,
+    private settingsService: SettingsService,
+    private accounting: Accounting
+  ) {
     this.route.data.subscribe((data: { savingProductsTemplate: any }) => {
       this.savingProductsTemplate = data.savingProductsTemplate;
     });
@@ -99,10 +105,14 @@ export class CreateSavingProductComponent {
       locale: this.settingsService.language.code // locale required for nominalAnnualInterestRate
     };
     delete savingProduct.advancedAccountingRules;
-    this.productsService.createSavingProduct(savingProduct)
-      .subscribe((response: any) => {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
-      });
+    this.productsService.createSavingProduct(savingProduct).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
-
 }

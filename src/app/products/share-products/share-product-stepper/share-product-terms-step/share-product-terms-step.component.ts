@@ -9,7 +9,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./share-product-terms-step.component.scss']
 })
 export class ShareProductTermsStepComponent implements OnInit {
-
   @Input() shareProductsTemplate: any;
 
   shareProductTermsForm: UntypedFormGroup;
@@ -22,31 +21,44 @@ export class ShareProductTermsStepComponent implements OnInit {
     combineLatest([
       this.shareProductTermsForm.get('sharesIssued').valueChanges,
       this.shareProductTermsForm.get('unitPrice').valueChanges
-    ]).subscribe(([sharesIssued, unitPrice]: number[]) => {
-      this.shareProductTermsForm.get('shareCapital').setValue(sharesIssued * unitPrice);
-    });
+    ]).subscribe(
+      ([
+        sharesIssued,
+        unitPrice
+      ]: number[]) => {
+        this.shareProductTermsForm.get('shareCapital').setValue(sharesIssued * unitPrice);
+      }
+    );
 
     if (this.shareProductsTemplate) {
       this.shareProductTermsForm.patchValue({
-        'totalShares': this.shareProductsTemplate.totalShares,
-        'sharesIssued': this.shareProductsTemplate.totalSharesIssued,
-        'unitPrice': this.shareProductsTemplate.unitPrice,
-        'shareCapital': this.shareProductsTemplate.shareCapital
+        totalShares: this.shareProductsTemplate.totalShares,
+        sharesIssued: this.shareProductsTemplate.totalSharesIssued,
+        unitPrice: this.shareProductsTemplate.unitPrice,
+        shareCapital: this.shareProductsTemplate.shareCapital
       });
     }
   }
 
   createShareProductTermsForm() {
     this.shareProductTermsForm = this.formBuilder.group({
-      'totalShares': ['', Validators.required],
-      'sharesIssued': ['', Validators.required],
-      'unitPrice': ['', Validators.required],
-      'shareCapital': ['']
+      totalShares: [
+        '',
+        Validators.required
+      ],
+      sharesIssued: [
+        '',
+        Validators.required
+      ],
+      unitPrice: [
+        '',
+        Validators.required
+      ],
+      shareCapital: ['']
     });
   }
 
   get shareProductTerms() {
     return this.shareProductTermsForm.value;
   }
-
 }

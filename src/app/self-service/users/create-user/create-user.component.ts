@@ -20,19 +20,25 @@ export class CreateUserComponent implements OnInit {
   createUserForm: UntypedFormGroup;
 
   /** Denotes type of user. */
-  userTypes = ['Existing User', 'New User'];
+  userTypes = [
+    'Existing User',
+    'New User'
+  ];
   /** Radio button group form control for type of user. */
   userType = new UntypedFormControl(this.userTypes[0]);
   /** Placeholder for office data. */
   offices: any[] = [];
   /** Placeholder for staff data. */
-  staffOptions: any [] = [];
+  staffOptions: any[] = [];
   /** Placeholder for staff data. */
-  genderOptions: any [] = [];
+  genderOptions: any[] = [];
   /** Placeholder for client data. */
-  clientData: any [] = [];
+  clientData: any[] = [];
   /** Placeholder for gender data. */
-  genderData = ['Male', 'Female'];
+  genderData = [
+    'Male',
+    'Female'
+  ];
   /** Minimum date of birth of user allowed. */
   minDate = new Date(1900, 0, 1);
   /** Maximum date of birth of user allowed. */
@@ -41,10 +47,12 @@ export class CreateUserComponent implements OnInit {
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private clientService: ClientsService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.offices = data.offices;
     });
@@ -62,8 +70,14 @@ export class CreateUserComponent implements OnInit {
    */
   setClientForm() {
     this.createUserForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'staffId': ['', Validators.required]
+      officeId: [
+        '',
+        Validators.required
+      ],
+      staffId: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -78,5 +92,4 @@ export class CreateUserComponent implements OnInit {
       });
     });
   }
-
 }

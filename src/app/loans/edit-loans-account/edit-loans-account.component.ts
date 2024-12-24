@@ -18,10 +18,11 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./edit-loans-account.component.scss']
 })
 export class EditLoansAccountComponent {
-
-  @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
+  @ViewChild(LoansAccountDetailsStepComponent, { static: true })
+  loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep: LoansAccountChargesStepComponent;
+  @ViewChild(LoansAccountChargesStepComponent, { static: true })
+  loansAccountChargesStep: LoansAccountChargesStepComponent;
 
   loansAccountAndTemplate: any;
   /** Loans Account Product Template */
@@ -41,7 +42,8 @@ export class EditLoansAccountComponent {
    * @param {loansService} LoansService Loans Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
     private loansService: LoansService,
@@ -61,9 +63,11 @@ export class EditLoansAccountComponent {
     this.loansAccountProductTemplate = $event;
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
     if (this.loansAccountProductTemplate.loanProductId) {
-      this.loansService.getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId).subscribe((response: any) => {
-        this.collateralOptions = response.loanCollateralOptions;
-      });
+      this.loansService
+        .getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId)
+        .subscribe((response: any) => {
+          this.collateralOptions = response.loanCollateralOptions;
+        });
     }
   }
 
@@ -80,14 +84,12 @@ export class EditLoansAccountComponent {
   /** Checks wheter all the forms in different steps are valid and not pristine */
   get loansAccountFormValidAndNotPristine() {
     return (
-      (this.loansAccountDetailsForm.valid &&
-      this.loansAccountTermsForm.valid) &&
-      (
-        !this.loansAccountDetailsForm.pristine ||
+      this.loansAccountDetailsForm.valid &&
+      this.loansAccountTermsForm.valid &&
+      (!this.loansAccountDetailsForm.pristine ||
         !this.loansAccountTermsForm.pristine ||
         !this.loansAccountTermsStep.pristine ||
-        !this.loansAccountChargesStep.pristine
-      )
+        !this.loansAccountChargesStep.pristine)
     );
   }
 
@@ -115,7 +117,7 @@ export class EditLoansAccountComponent {
       charges: this.loansAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
-        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
+        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat)
       })),
       collateral: this.loansAccount.collateral.map((collateralEle: any) => ({
         type: collateralEle.type,
@@ -141,13 +143,19 @@ export class EditLoansAccountComponent {
     }
 
     if (loansAccountData.recalculationRestFrequencyDate) {
-      loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(this.loansAccount.recalculationRestFrequencyDate, dateFormat);
+      loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(
+        this.loansAccount.recalculationRestFrequencyDate,
+        dateFormat
+      );
     }
 
     if (loansAccountData.interestCalculationPeriodType === 0) {
       loansAccountData.allowPartialPeriodInterestCalcualtion = false;
     }
-    if (!loansAccountData.isLoanProductLinkedToFloatingRate || loansAccountData.isLoanProductLinkedToFloatingRate === false) {
+    if (
+      !loansAccountData.isLoanProductLinkedToFloatingRate ||
+      loansAccountData.isLoanProductLinkedToFloatingRate === false
+    ) {
       delete loansAccountData.isFloatingInterestRate;
     }
     loansAccountData.principal = loansAccountData.principalAmount;
@@ -157,5 +165,4 @@ export class EditLoansAccountComponent {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

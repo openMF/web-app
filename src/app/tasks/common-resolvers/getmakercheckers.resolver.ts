@@ -13,7 +13,6 @@ import { TasksService } from '../tasks.service';
  */
 @Injectable()
 export class GetMakerCheckers implements Resolve<Object> {
-
   /**
    * @param {TasksService} tasksService Tasks service.
    */
@@ -26,5 +25,4 @@ export class GetMakerCheckers implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.tasksService.getMakerCheckerData();
   }
-
 }

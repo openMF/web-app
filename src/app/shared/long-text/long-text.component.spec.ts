@@ -8,9 +8,8 @@ describe('LongTextComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LongTextComponent ]
-    })
-    .compileComponents();
+      declarations: [LongTextComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LongTextComponent);
     component = fixture.componentInstance;

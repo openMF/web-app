@@ -8,9 +8,8 @@ describe('LoansAccountAddCollateralDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoansAccountAddCollateralDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [LoansAccountAddCollateralDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -14,14 +14,20 @@ import { SystemService } from '../system.service';
 @Component({
   selector: 'mifosx-manage-surveys',
   templateUrl: './manage-surveys.component.html',
-  styleUrls: ['./manage-surveys.component.scss'],
+  styleUrls: ['./manage-surveys.component.scss']
 })
 export class ManageSurveysComponent implements OnInit {
-
   /* Surveys data */
   surveysData: any;
   /* Columns to be displayed in manage surveys data table */
-  displayedColumns: string[] = ['key', 'name', 'description', 'countryCode', 'status', 'action'];
+  displayedColumns: string[] = [
+    'key',
+    'name',
+    'description',
+    'countryCode',
+    'status',
+    'action'
+  ];
   /* Data source for manage surveys data table */
   dataSource: MatTableDataSource<any>;
 
@@ -36,9 +42,9 @@ export class ManageSurveysComponent implements OnInit {
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private systemService: SystemService
   ) {
-    this.route.data.subscribe(( data: { surveys: any }) => {
+    this.route.data.subscribe((data: { surveys: any }) => {
       this.surveysData = data.surveys;
     });
   }
@@ -50,7 +56,7 @@ export class ManageSurveysComponent implements OnInit {
    */
   isActive(validFrom: string, validTo: string) {
     const curdate = new Date().toISOString().split('T')[0];
-    return (curdate >= validFrom && curdate <= validTo);
+    return curdate >= validFrom && curdate <= validTo;
   }
 
   /**
@@ -60,9 +66,12 @@ export class ManageSurveysComponent implements OnInit {
     this.setSurveys();
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'status': return this.isActive(item.validFrom, item.validTo);
-        case 'action': return this.isActive(item.validFrom, item.validTo);
-        default: return item[property];
+        case 'status':
+          return this.isActive(item.validFrom, item.validTo);
+        case 'action':
+          return this.isActive(item.validFrom, item.validTo);
+        default:
+          return item[property];
       }
     };
   }
@@ -110,5 +119,4 @@ export class ManageSurveysComponent implements OnInit {
       survey.validTo = yesterday;
     });
   }
-
 }

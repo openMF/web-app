@@ -13,7 +13,6 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class RecurringDepositProductsResolver implements Resolve<Object> {
-
   /**
    * @param {ProductsService} productsService Products service.
    */
@@ -26,5 +25,4 @@ export class RecurringDepositProductsResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.productsService.getRecurringDepositProducts();
   }
-
 }
