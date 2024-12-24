@@ -1,8 +1,8 @@
 ###############
 ### STAGE 1: Build app
 ###############
-ARG BUILDER_IMAGE=node:19-alpine
-ARG NGINX_IMAGE=nginx:1.19.3
+ARG BUILDER_IMAGE=node:22.9.0-alpine
+ARG NGINX_IMAGE=nginx:1.27.3
 
 FROM $BUILDER_IMAGE as builder
 ARG NPM_REGISTRY_URL=https://registry.npmjs.org/
@@ -33,7 +33,7 @@ RUN npm cache clear --force
 RUN npm config set fetch-retry-maxtimeout 120000
 RUN npm config set registry $NPM_REGISTRY_URL --location=global
 
-RUN npm install --location=global @angular/cli@14.2.12
+RUN npm install --location=global @angular/cli@16.0.2
 
 RUN npm install
 
