@@ -42,7 +42,6 @@ export class LoanAccountActionsComponent {
             'Credit Balance Refund': boolean,
             'Edit Repayment Schedule': boolean,
             'Charge-Off': boolean,
-            'Undo Charge-Off': boolean,
             'Sell Loan': boolean,
             'Buy Back Loan': boolean,
             'Re-Age': boolean
@@ -76,7 +75,6 @@ export class LoanAccountActionsComponent {
               'Credit Balance Refund': false,
               'Edit Repayment Schedule': false,
               'Charge-Off': false,
-              'Undo Charge-Off': false,
               'Sell Loan': false,
               'Buy Back Loan': false,
               'Re-Age': false
