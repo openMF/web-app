@@ -176,6 +176,12 @@ export class LoansViewComponent implements OnInit {
           icon: 'coins',
           taskPermissionName: 'CHARGEOFF_LOAN'
         });
+      } else {
+        this.buttonConfig.addButton({
+          name: 'Undo Charge-Off',
+          icon: 'undo',
+          taskPermissionName: 'UNDOCHARGEOFF_LOAN'
+        });
       }
 
       // Allow Re-Ageing only when there is not any Re-Age transaction
@@ -226,7 +232,8 @@ export class LoansViewComponent implements OnInit {
         break;
       case 'Undo Re-Age':
       case 'Undo Re-Amortize':
-        this.undoReAgeOrReAmortize(actionName);
+      case 'Undo Charge-Off':
+        this.undoLoanAction(actionName);
         break;
       default:
         this.router.navigate(['actions', actionName], { relativeTo: this.route });
@@ -261,7 +268,7 @@ export class LoansViewComponent implements OnInit {
     }
   }
 
-  undoReAgeOrReAmortize(actionName: string): void {
+  undoLoanAction(actionName: string): void {
     actionName = actionName.replace('Undo ', '');
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
@@ -271,7 +278,18 @@ export class LoansViewComponent implements OnInit {
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
+        let undoCommand: string = '';
+        switch (actionName) {
+          case 'Re-Age':
+            undoCommand = 'undoReAge';
+            break;
+          case 'Re-Amortize':
+            undoCommand = 'undoReAmortize';
+            break;
+          case 'Charge-Off':
+            undoCommand = 'undo-charge-off';
+            break;
+        }
         this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
           this.reload();
         });
