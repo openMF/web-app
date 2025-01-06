@@ -1,0 +1,44 @@
+<div class="container mat-elevation-z8">
+    <mat-card>
+        <form [formGroup]="interestPauseLoanForm" (ngSubmit)="submit()">
+            <mat-card-content>
+                <div fxLayout="column">
+                    <mat-form-field (click)="startDatePicker.open()">
+                        <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
+                        <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="startDatePicker"
+                            required formControlName="startDate" />
+                        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startDatePicker></mat-datepicker>
+                        <mat-error *ngIf="interestPauseLoanForm.controls.startDate.hasError('required')">
+                            {{ 'labels.inputs.Start Date' | translate
+                            }}<strong>{{ 'labels.commons.required' | translate }}</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field (click)="endDatePicker.open()">
+                        <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
+                        <input matInput [min]="interestPauseLoanForm.value.startDate" [max]="maxDate" [matDatepicker]="endDatePicker"
+                            required formControlName="endDate" />
+                        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endDatePicker></mat-datepicker>
+                        <mat-error *ngIf="interestPauseLoanForm.controls.endDate.hasError('required')">
+                            {{ 'labels.inputs.End Date' | translate
+                            }}<strong>{{ 'labels.commons.required' | translate }}</strong>
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+
+                <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+                    <button type="button" mat-raised-button [routerLink]="['../../general']">
+                        {{ 'labels.buttons.Cancel' | translate }}
+                    </button>
+                    <button mat-raised-button color="primary" [disabled]="!interestPauseLoanForm.valid"
+                        *mifosxHasPermission="'DISBURSE_LOAN'">
+                        {{ 'labels.buttons.Submit' | translate }}
+                    </button>
+                </mat-card-actions>
+            </mat-card-content>
+        </form>
+    </mat-card>
+</div>

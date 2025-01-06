@@ -1,27 +1,34 @@
 <div class="container">
   <h3>{{ 'labels.heading.Term Variations' | translate }}</h3>
-  <table mat-table [dataSource]="loanTermVariationsData" *ngIf="loanTermVariationsData.length > 0">
-    <ng-container matColumnDef="termType">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.termType.value | translate }}</td>
+  <table mat-table [dataSource]="loanTermVariationsData" *ngIf="loanTermVariationsData?.length > 0">
+    <ng-container matColumnDef="row">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let item; let idx = index">{{ idx + 1 }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="applicableFrom">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Added On' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.termVariationApplicableFrom | dateFormat }}</td>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Id' | translate }}</th>
+      <td mat-cell *matCellDef="let item">{{ item.id }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Value' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.decimalValue | formatNumber }}</td>
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Start Date' | translate }}</th>
+      <td mat-cell *matCellDef="let item">{{ item.startDate | dateFormat }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="specificToInstallment">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Specific to Installment' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.isSpecificToInstallment | yesNo }}</td>
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.End Date' | translate }}</th>
+      <td mat-cell *matCellDef="let item">{{ item.endDate | dateFormat }}</td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="loanDTermVariationsColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: loanDTermVariationsColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="loanTermVariationsColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: loanTermVariationsColumns"></tr>
   </table>
+
+  <div class="alert" [hidden]="loanTermVariationsData?.length > 0">
+    <div class="message">
+      <i class="fa fa-exclamation-circle alert-check"></i>
+      {{ 'labels.text.No data found' | translate }}
+    </div>
+  </div>
 </div>

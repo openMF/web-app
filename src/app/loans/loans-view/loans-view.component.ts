@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -236,7 +236,13 @@ export class LoansViewComponent implements OnInit {
         this.undoLoanAction(actionName);
         break;
       default:
-        this.router.navigate(['actions', actionName], { relativeTo: this.route });
+        const navigationExtras: NavigationExtras = {
+          relativeTo: this.route,
+          state: {
+            data: this.loanDetailsData
+          }
+        };
+        this.router.navigate(['actions', actionName], navigationExtras);
         break;
     }
   }

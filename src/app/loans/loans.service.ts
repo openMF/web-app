@@ -277,6 +277,14 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}`, data, { params: httpParams });
   }
 
+  addInterestPauseToLoan(loanId: any, data?: any): Observable<any> {
+    return this.http.post(`/loans/${loanId}/interest-pauses`, data);
+  }
+
+  getInterestPausesOfLoan(loanId: any): Observable<any> {
+    return this.http.get(`/loans/${loanId}/interest-pauses`);
+  }
+
   /**
    * @param {string|number} loanId Loan Id.
    * @param {any} foreclosuredata ForeClosure Data

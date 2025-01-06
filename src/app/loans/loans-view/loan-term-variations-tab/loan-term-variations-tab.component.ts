@@ -8,17 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoanTermVariationsTabComponent {
 
-  /** Loan Details Data */
+  /** Loan Term Variation Data */
   loanTermVariationsData: any[] = [];
-
-  loanId: number;
-
-  loanDTermVariationsColumns: string[] = ['termType', 'applicableFrom', 'value', 'specificToInstallment'];
+  loanTermVariationsColumns: string[] = ['row', 'id', 'startDate', 'endDate'];
 
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe((data: { loanDetailsData: any, }) => {
-      this.loanTermVariationsData = data.loanDetailsData.loanTermVariations;
+    this.loanTermVariationsData = [];
+    this.route.data.subscribe((data: { loanTermVariationsData: any, }) => {
+      this.loanTermVariationsData = data.loanTermVariationsData;
     });
-    this.loanId = this.route.parent.parent.snapshot.params['loanId'];
   }
 }

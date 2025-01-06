@@ -21,8 +21,8 @@ export class NotificationsService {
   /**
    * @returns {Observable<any>} Notifications.
    */
-  getNotifications(isRead: boolean): Observable<any> {
-    const httpParams = new HttpParams().set('isRead', isRead.toString());
+  getNotifications(isRead: boolean, limit: number): Observable<any> {
+    const httpParams = new HttpParams().set('isRead', isRead.toString()).set('limit', limit);
     return this.http.get('/notifications', { params: httpParams });
   }
 
