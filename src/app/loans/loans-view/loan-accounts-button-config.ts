@@ -160,6 +160,10 @@ export class LoansAccountButtonConfiguration {
       case 'Active':
         this.optionArray = [
           {
+            name: 'Add Interest Pause',
+            taskPermissionName: 'CREATE_INTEREST_PAUSE',
+          },
+          {
             name: 'Waive Interest',
             taskPermissionName: 'WAIVEINTERESTPORTION_LOAN',
           },

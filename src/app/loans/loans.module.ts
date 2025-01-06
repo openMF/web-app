@@ -83,6 +83,7 @@ import { LoanDelinquencyActionDialogComponent } from './custom-dialog/loan-delin
 import { LoanReagingComponent } from './loans-view/loan-account-actions/loan-reaging/loan-reaging.component';
 import { LoanReamortizeComponent } from './loans-view/loan-account-actions/loan-reamortize/loan-reamortize.component';
 import { LoanTermVariationsTabComponent } from './loans-view/loan-term-variations-tab/loan-term-variations-tab.component';
+import { AddInterestPauseComponent } from './loans-view/loan-account-actions/add-interest-pause/add-interest-pause.component';
 
 /**
  * Loans Module
@@ -169,7 +170,8 @@ import { LoanTermVariationsTabComponent } from './loans-view/loan-term-variation
     LoanDelinquencyActionDialogComponent,
     LoanReagingComponent,
     LoanReamortizeComponent,
-    LoanTermVariationsTabComponent
+    LoanTermVariationsTabComponent,
+    AddInterestPauseComponent
   ],
   providers: [ ],
 })

@@ -33,6 +33,10 @@ export class ExternalIdentifierComponent implements OnInit {
     return (this.externalId.length > 15);
   }
 
+  showValue() {
+    this.completed = !this.completed;
+  }
+
   copyValue(): void {
     this.clipboard.copy(this.externalId);
     this.alertService.alert({ type: 'Clipboard', message: 'Copied: ' + this.externalId });

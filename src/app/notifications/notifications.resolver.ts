@@ -24,7 +24,7 @@ export class NotificationsResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.notificationsService.getNotifications(true);
+    return this.notificationsService.getNotifications(true, 50);
   }
 
 }

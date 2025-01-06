@@ -50,7 +50,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * @param {NotificationsService} notificationsService Notifications Service
    */
   constructor(public notificationsService: NotificationsService) {
-    forkJoin([this.notificationsService.getNotifications(true), this.notificationsService.getNotifications(false)])
+    forkJoin([this.notificationsService.getNotifications(true, 9), this.notificationsService.getNotifications(false, 9)])
     .subscribe((response: any[]) => {
       this.readNotifications = response[0].pageItems;
       this.unreadNotifications = response[1].pageItems;
@@ -78,7 +78,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * Recursively fetch unread notifications.
    */
   fetchUnreadNotifications() {
-    this.notificationsService.getNotifications(false).subscribe((response: any) => {
+    this.notificationsService.getNotifications(false, 9).subscribe((response: any) => {
       this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
       this.setNotifications();
     });
