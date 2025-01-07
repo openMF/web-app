@@ -12,7 +12,7 @@ import { JobDataType } from '../run-selected-jobs-popover.component';
 export class RunSelectedJobsTableComponent {
 
   /** Selected Jobs For Table */
-  @Input() selectedJobs: JobDataType[];
+  @Input() selectedJobs: JobDataType[] = [];
 
   /** Confirmed Jobs */
   @Output() confirmedJobs: EventEmitter<JobDataType[]> = new
@@ -31,7 +31,7 @@ export class RunSelectedJobsTableComponent {
   removeJobFromSelection(index: number): void {
     let idx = 0;
     const finalSelectedJobs: JobDataType[] = [];
-    for (; idx < this.selectedJobs.length; idx) {
+    for (; idx < this.selectedJobs.length; idx++) {
       if (idx !== index) {
         finalSelectedJobs.push(this.selectedJobs[idx]);
       }
