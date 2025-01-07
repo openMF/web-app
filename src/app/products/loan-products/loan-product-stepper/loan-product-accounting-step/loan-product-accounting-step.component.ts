@@ -34,6 +34,9 @@ export class LoanProductAccountingStepComponent implements OnInit {
   assetAndLiabilityAccountData: any;
   chargeOffReasonOptions: any;
 
+  currentFormValues: any[] = [];
+  allowAddChargeOffReasonExpense = true;
+
   paymentFundSourceDisplayedColumns: string[] = ['paymentTypeId', 'fundSourceAccountId', 'actions'];
   feesPenaltyIncomeDisplayedColumns: string[] = ['chargeId', 'incomeAccountId', 'actions'];
   chargeOffReasonExpenseDisplayedColumns: string[] = ['chargeOffReasonCodeValueId', 'expenseAccountId', 'actions'];
@@ -215,11 +218,24 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   add(formType: string, formArray: UntypedFormArray) {
+    this.currentFormValues = [];
+    if (formType == 'ChargeOffReasonExpense') {
+      this.allowAddChargeOffReasonExpense = true;
+      formArray.value.forEach((item: any) => this.currentFormValues.push(item.chargeOffReasonCodeValueId));
+      if (this.chargeOffReasonOptions.length == this.currentFormValues.length) {
+        this.allowAddChargeOffReasonExpense = false;
+        return;
+      }
+    }
     const data = { ...this.getData(formType), pristine: false };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         formArray.push(response.data);
+        if (formType == 'ChargeOffReasonExpense') {
+          this.allowAddChargeOffReasonExpense = (formArray.value.length < this.chargeOffReasonOptions.length);
+        }
+
         this.setLoanProductAccountingFormDirty();
       }
     });
@@ -236,13 +252,16 @@ export class LoanProductAccountingStepComponent implements OnInit {
     });
   }
 
-  delete(formArray: UntypedFormArray, index: number) {
+  delete(formType: string, formArray: UntypedFormArray, index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext:  this.translateService.instant('labels.text.this') }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         formArray.removeAt(index);
+        if (formType == 'ChargeOffReasonExpense') {
+          this.allowAddChargeOffReasonExpense = (formArray.value.length < this.chargeOffReasonOptions.length);
+        }
         this.setLoanProductAccountingFormDirty();
       }
     });
@@ -324,12 +343,13 @@ export class LoanProductAccountingStepComponent implements OnInit {
   }
 
   getChargeOffReasonExpenseFormfields(values?: any) {
+    const reasonOptions = this.chargeOffReasonOptions.filter((item: any) => !this.currentFormValues.includes(item.id));
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'chargeOffReasonCodeValueId',
         label: 'Charge-off reason',
-        value: values ? values.chargeOffReasonCodeValueId : this.chargeOffReasonOptions[0].id,
-        options: { label: 'name', value: 'id', data: this.chargeOffReasonOptions },
+        value: values ? values.chargeOffReasonCodeValueId : reasonOptions[0].id,
+        options: { label: 'name', value: 'id', data: reasonOptions },
         required: true,
         order: 1
       }),

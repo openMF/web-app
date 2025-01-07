@@ -256,7 +256,7 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         optionData = {
           id: o.id,
           code: o.code,
-          value: o.value
+          value: o.value || o.name
         };
       }
     });
