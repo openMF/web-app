@@ -302,7 +302,7 @@
               >
                 <fa-icon icon="edit"></fa-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="delete(paymentChannelToFundSourceMappings, i)">
+              <button mat-icon-button color="warn" (click)="delete('PaymentFundSource', paymentChannelToFundSourceMappings, i)">
                 <fa-icon icon="trash"></fa-icon>
               </button>
             </td>
@@ -353,7 +353,7 @@
               <button mat-icon-button color="primary" (click)="edit('FeesIncome', feeToIncomeAccountMappings, i)">
                 <fa-icon icon="edit"></fa-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="delete(feeToIncomeAccountMappings, i)">
+              <button mat-icon-button color="warn" (click)="delete('FeesIncome', feeToIncomeAccountMappings, i)">
                 <fa-icon icon="trash"></fa-icon>
               </button>
             </td>
@@ -410,7 +410,7 @@
               >
                 <fa-icon icon="edit"></fa-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="delete(penaltyToIncomeAccountMappings, i)">
+              <button mat-icon-button color="warn" (click)="delete('PenaltyIncome', penaltyToIncomeAccountMappings, i)">
                 <fa-icon icon="trash"></fa-icon>
               </button>
             </td>
@@ -429,6 +429,7 @@
             type="button"
             mat-raised-button
             color="primary"
+            [disabled]="!allowAddChargeOffReasonExpense"
             (click)="add('ChargeOffReasonExpense', chargeOffReasonToExpenseAccountMappings)"
           >
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
@@ -466,7 +467,7 @@
               >
                 <fa-icon icon="edit"></fa-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="delete(chargeOffReasonToExpenseAccountMappings, i)">
+              <button mat-icon-button color="warn" (click)="delete('ChargeOffReasonExpense', chargeOffReasonToExpenseAccountMappings, i)">
                 <fa-icon icon="trash"></fa-icon>
               </button>
             </td>
