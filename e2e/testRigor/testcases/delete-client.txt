@@ -1,0 +1,13 @@
+log-in-and-validate
+navigate-to-clients
+create-client
+click "Submit"
+//delete client
+click "Client actions"
+click "Actions"
+click "Delete"
+click "Confirm"
+navigate-to-clients
+//validate client does NOT exist
+enter saved value "firstName" into "Search"
+check that page doesn't contain saved value "firstName" below saved value "firstName"
