@@ -172,7 +172,8 @@ const routes: Routes = [
             component: LoanTermVariationsTabComponent,
             data: { title: 'Loan Term Variations', breadcrumb: 'Loan Term Variations', routeParamBreadcrumb: false },
             resolve: {
-              loanTermVariationsData: LoanTermVariationsResolver
+              loanDetailsData: LoanDetailsResolver,
+              interestPausesData: LoanTermVariationsResolver
             },
           },
           {
