@@ -57,4 +57,7 @@
 <mifosx-asset-transfer-loan *ngIf="actions['Sell Loan'] || actions['Buy Back Loan']"></mifosx-asset-transfer-loan>
 <mifosx-loan-reaging [dataObject]="actionButtonData" *ngIf="actions['Re-Age']"></mifosx-loan-reaging>
 <mifosx-loan-reamortize [dataObject]="actionButtonData" *ngIf="actions['Re-Amortize']"></mifosx-loan-reamortize>
-<mifosx-add-interest-pause [dataObject]="navigationData" *ngIf="actions['Add Interest Pause']"></mifosx-add-interest-pause>
+<mifosx-add-interest-pause
+  [dataObject]="navigationData"
+  *ngIf="actions['Add Interest Pause']"
+></mifosx-add-interest-pause>
