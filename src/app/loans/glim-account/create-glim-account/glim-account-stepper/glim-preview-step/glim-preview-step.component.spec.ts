@@ -8,9 +8,8 @@ describe('GlimPreviewStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GlimPreviewStepComponent ]
-    })
-    .compileComponents();
+      declarations: [GlimPreviewStepComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

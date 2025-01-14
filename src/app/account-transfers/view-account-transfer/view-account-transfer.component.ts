@@ -9,15 +9,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-account-transfer.component.scss']
 })
 export class ViewAccountTransferComponent {
-
   viewAccountTransferData: any;
   /**
    * Retrieves the view account transfer data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Location} location Location.
    */
-  constructor(private route: ActivatedRoute,
-    private location: Location) {
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location
+  ) {
     this.route.data.subscribe((data: { viewAccountTransferData: any }) => {
       this.viewAccountTransferData = data.viewAccountTransferData;
     });
@@ -38,5 +39,4 @@ export class ViewAccountTransferComponent {
   transactionColor(): string {
     return this.viewAccountTransferData.reversed ? 'undo' : 'active';
   }
-
 }

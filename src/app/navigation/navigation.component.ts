@@ -22,7 +22,6 @@ import { ClientNavigationComponent } from './client-navigation/client-navigation
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-
   /** Navigation Components */
   @ViewChild(OfficeNavigationComponent) officeNavigationComponent: OfficeNavigationComponent;
   @ViewChild(StaffNavigationComponent) staffNavigationComponent: StaffNavigationComponent;
@@ -66,9 +65,11 @@ export class NavigationComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private navigationService: NavigationService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private navigationService: NavigationService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -89,7 +90,7 @@ export class NavigationComponent implements OnInit {
    * Sets the office selector
    */
   setOfficeSelector() {
-    this.officeSelector.valueChanges.subscribe(officeId => {
+    this.officeSelector.valueChanges.subscribe((officeId) => {
       this.employeeSelector.reset(null, { emitEvent: false });
       this.centerSelector.reset(null, { emitEvent: false });
       this.groupSelector.reset(null, { emitEvent: false });
@@ -115,7 +116,7 @@ export class NavigationComponent implements OnInit {
    * Sets the employee selector
    */
   setEmployeeSelector() {
-    this.employeeSelector.valueChanges.subscribe(employeeId => {
+    this.employeeSelector.valueChanges.subscribe((employeeId) => {
       if (employeeId) {
         this.centerSelector.reset(null, { emitEvent: false });
         this.groupSelector.reset(null, { emitEvent: false });
@@ -141,7 +142,7 @@ export class NavigationComponent implements OnInit {
    * Sets the center selector
    */
   setCenterSelector() {
-    this.centerSelector.valueChanges.subscribe(centerId => {
+    this.centerSelector.valueChanges.subscribe((centerId) => {
       if (centerId) {
         this.groupSelector.reset(null, { emitEvent: false });
         this.clientSelector.reset(null, { emitEvent: false });
@@ -173,7 +174,7 @@ export class NavigationComponent implements OnInit {
    * Sets the group selector
    */
   setGroupSelector() {
-    this.groupSelector.valueChanges.subscribe(groupId => {
+    this.groupSelector.valueChanges.subscribe((groupId) => {
       if (groupId) {
         this.clientSelector.reset(null, { emitEvent: false });
         this.clientData = null;
@@ -199,7 +200,7 @@ export class NavigationComponent implements OnInit {
    * Sets the client selector
    */
   setClientSelector() {
-    this.clientSelector.valueChanges.subscribe(clientId => {
+    this.clientSelector.valueChanges.subscribe((clientId) => {
       if (clientId) {
         this.selectedItemAccounts = null;
         this.navigationService.getClient(clientId).subscribe((client: any) => {
@@ -212,5 +213,4 @@ export class NavigationComponent implements OnInit {
       }
     });
   }
-
 }

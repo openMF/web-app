@@ -8,9 +8,8 @@ describe('FixedDepositAccountInterestRateChartStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FixedDepositAccountInterestRateChartStepComponent ]
-    })
-    .compileComponents();
+      declarations: [FixedDepositAccountInterestRateChartStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

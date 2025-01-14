@@ -16,7 +16,6 @@ import { GLAccount } from 'app/shared/models/general.model';
   styleUrls: ['./create-financial-activity-mapping.component.scss']
 })
 export class CreateFinancialActivityMappingComponent implements OnInit {
-
   /** Financial activity mapping form. */
   financialActivityMappingForm: UntypedFormGroup;
   /** GL Account options. */
@@ -33,10 +32,12 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { financialActivityAccountsTemplate: any }) => {
       this.glAccountOptions = data.financialActivityAccountsTemplate.glAccountOptions;
       this.financialActivityData = data.financialActivityAccountsTemplate.financialActivityOptions;
@@ -56,8 +57,14 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
    */
   createFinancialActivityMappingForm() {
     this.financialActivityMappingForm = this.formBuilder.group({
-      'financialActivityId': ['', Validators.required],
-      'glAccountId': ['', Validators.required]
+      financialActivityId: [
+        '',
+        Validators.required
+      ],
+      glAccountId: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -65,21 +72,23 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
    * Sets the gl account data on the basis of selected financial activity.
    */
   setGlAccountData() {
-    this.financialActivityMappingForm.get('financialActivityId').valueChanges
-      .subscribe(financialActivityId => {
-        switch (financialActivityId) {
-          case 100:
-          case 101:
-          case 102:
-          case 103: this.glAccountData = this.glAccountOptions.assetAccountOptions;
+    this.financialActivityMappingForm.get('financialActivityId').valueChanges.subscribe((financialActivityId) => {
+      switch (financialActivityId) {
+        case 100:
+        case 101:
+        case 102:
+        case 103:
+          this.glAccountData = this.glAccountOptions.assetAccountOptions;
           break;
-          case 200:
-          case 201: this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
+        case 200:
+        case 201:
+          this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
           break;
-          case 300: this.glAccountData = this.glAccountOptions.equityAccountOptions;
+        case 300:
+          this.glAccountData = this.glAccountOptions.equityAccountOptions;
           break;
-        }
-      });
+      }
+    });
   }
 
   /**
@@ -87,10 +96,16 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
    * if successful redirects to view created account.
    */
   submit() {
-    this.accountingService.createFinancialActivityAccount(this.financialActivityMappingForm.value)
+    this.accountingService
+      .createFinancialActivityAccount(this.financialActivityMappingForm.value)
       .subscribe((response: any) => {
-        this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
-    });
+        this.router.navigate(
+          [
+            '../view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
-
 }

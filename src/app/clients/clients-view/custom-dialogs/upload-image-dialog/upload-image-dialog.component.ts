@@ -11,14 +11,13 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./upload-image-dialog.component.scss']
 })
 export class UploadImageDialogComponent {
-
   /** Client Image */
   image: File;
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<UploadImageDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<UploadImageDialogComponent>) {}
 
   /**
    * Sets file form control value.
@@ -29,5 +28,4 @@ export class UploadImageDialogComponent {
       this.image = $event.target.files[0];
     }
   }
-
 }

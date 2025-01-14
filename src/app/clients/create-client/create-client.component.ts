@@ -23,7 +23,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./create-client.component.scss']
 })
 export class CreateClientComponent {
-
   /** Client General Step */
   @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
   /** Client Family Members Step */
@@ -48,11 +47,13 @@ export class CreateClientComponent {
    * @param {ClientsService} clientsService Clients Service
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private clientsService: ClientsService,
-    private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { clientTemplate: any, clientAddressFieldConfig: any }) => {
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { clientTemplate: any; clientAddressFieldConfig: any }) => {
       this.clientTemplate = data.clientTemplate;
       this.clientAddressFieldConfig = data.clientAddressFieldConfig;
       this.setDatatables();
@@ -87,7 +88,7 @@ export class CreateClientComponent {
   areFormvalids(): boolean {
     let areValids = this.clientGeneralForm.valid;
     if (this.clientTemplate.isAddressEnabled) {
-      areValids = areValids && (this.clientAddressStep.address.address.length > 0);
+      areValids = areValids && this.clientAddressStep.address.address.length > 0;
     }
     if (this.clientTemplate.datatables && this.clientTemplate.datatables.length > 0 && this.clientDatatables) {
       this.clientDatatables.forEach((clientDatatable: ClientDatatableStepComponent) => {
@@ -139,8 +140,13 @@ export class CreateClientComponent {
     }
 
     this.clientsService.createClient(clientData).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

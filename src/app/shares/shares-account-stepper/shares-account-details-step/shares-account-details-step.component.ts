@@ -15,7 +15,6 @@ import { SharesService } from 'app/shares/shares.service';
   styleUrls: ['./shares-account-details-step.component.scss']
 })
 export class SharesAccountDetailsStepComponent implements OnInit {
-
   /** Shares Account Template */
   @Input() sharesAccountTemplate: any;
 
@@ -37,9 +36,11 @@ export class SharesAccountDetailsStepComponent implements OnInit {
    * @param {SharesService} sharesService Shares Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private sharesService: SharesService,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private sharesService: SharesService,
+    private settingsService: SettingsService
+  ) {
     this.createSharesAccountDetailsForm();
   }
 
@@ -50,9 +51,11 @@ export class SharesAccountDetailsStepComponent implements OnInit {
       this.productData = this.sharesAccountTemplate.productOptions;
       if (this.sharesAccountTemplate.productId) {
         this.sharesAccountDetailsForm.patchValue({
-          'productId': this.sharesAccountTemplate.productId,
-          'submittedDate': this.sharesAccountTemplate.timeline.submittedOnDate && new Date(this.sharesAccountTemplate.timeline.submittedOnDate),
-          'externalId': this.sharesAccountTemplate.externalId
+          productId: this.sharesAccountTemplate.productId,
+          submittedDate:
+            this.sharesAccountTemplate.timeline.submittedOnDate &&
+            new Date(this.sharesAccountTemplate.timeline.submittedOnDate),
+          externalId: this.sharesAccountTemplate.externalId
         });
       }
     }
@@ -63,9 +66,15 @@ export class SharesAccountDetailsStepComponent implements OnInit {
    */
   createSharesAccountDetailsForm() {
     this.sharesAccountDetailsForm = this.formBuilder.group({
-      'productId': ['', Validators.required],
-      'submittedDate': ['', Validators.required],
-      'externalId': ['']
+      productId: [
+        '',
+        Validators.required
+      ],
+      submittedDate: [
+        '',
+        Validators.required
+      ],
+      externalId: ['']
     });
   }
 
@@ -87,5 +96,4 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   get sharesAccountDetails() {
     return this.sharesAccountDetailsForm.value;
   }
-
 }

@@ -13,11 +13,10 @@ import { GroupsService } from '../groups.service';
  */
 @Injectable()
 export class GroupActionsResolver implements Resolve<Object> {
-
   /**
    * @param {GroupsService} groupsService Groups service.
    */
-  constructor(private groupsService: GroupsService) { }
+  constructor(private groupsService: GroupsService) {}
 
   /**
    * Returns the group actions data.
@@ -46,5 +45,4 @@ export class GroupActionsResolver implements Resolve<Object> {
         return undefined;
     }
   }
-
 }

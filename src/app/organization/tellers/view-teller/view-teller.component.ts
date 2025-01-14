@@ -18,7 +18,6 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   styleUrls: ['./view-teller.component.scss']
 })
 export class ViewTellerComponent {
-
   /** Teller data. */
   tellerData: any;
 
@@ -29,10 +28,12 @@ export class ViewTellerComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public dialog: MatDialog) {
+  constructor(
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { teller: any }) => {
       this.tellerData = data.teller;
     });
@@ -47,12 +48,10 @@ export class ViewTellerComponent {
     });
     deleteTellerDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteTeller(this.tellerData.id)
-          .subscribe(() => {
-            this.router.navigate(['/organization/tellers']);
-          });
+        this.organizationService.deleteTeller(this.tellerData.id).subscribe(() => {
+          this.router.navigate(['/organization/tellers']);
+        });
       }
     });
   }
-
 }

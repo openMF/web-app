@@ -9,7 +9,6 @@ import { OrganizationService } from 'app/organization/organization.service';
   styleUrls: ['./create-fund.component.scss']
 })
 export class CreateFundComponent implements OnInit {
-
   /** Charge form. */
   fundForm: UntypedFormGroup;
 
@@ -20,11 +19,12 @@ export class CreateFundComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private organizationService: OrganizationService,
-              private formBuilder: UntypedFormBuilder,
-              private router: Router,
-              private route: ActivatedRoute) {
-  }
+  constructor(
+    private organizationService: OrganizationService,
+    private formBuilder: UntypedFormBuilder,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.createFundForm();
@@ -35,19 +35,18 @@ export class CreateFundComponent implements OnInit {
    */
   createFundForm() {
     this.fundForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'externalId': ['']
+      name: [
+        '',
+        Validators.required
+      ],
+      externalId: ['']
     });
   }
 
-
   submit() {
     const payload = this.fundForm.getRawValue();
-    this.organizationService.createFund(payload)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    this.organizationService.createFund(payload).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
-
-
 }

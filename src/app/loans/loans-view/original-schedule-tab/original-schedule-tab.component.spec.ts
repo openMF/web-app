@@ -8,9 +8,8 @@ describe('OriginalScheduleTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OriginalScheduleTabComponent ]
-    })
-    .compileComponents();
+      declarations: [OriginalScheduleTabComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

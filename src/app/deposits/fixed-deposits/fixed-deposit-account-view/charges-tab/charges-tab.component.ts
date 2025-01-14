@@ -30,7 +30,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./charges-tab.component.scss']
 })
 export class ChargesTabComponent implements OnInit {
-
   /** Fixed Deposits Account Data */
   fixedDepositsAccountData: any;
   /** Charges Data */
@@ -66,12 +65,14 @@ export class ChargesTabComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private savingsService: SavingsService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private router: Router,
-              public dialog: MatDialog,
-              private settingsService: SettingsService) {
+  constructor(
+    private savingsService: SavingsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    public dialog: MatDialog,
+    private settingsService: SettingsService
+  ) {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.chargesData = this.fixedDepositsAccountData.charges;
@@ -79,7 +80,7 @@ export class ChargesTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    const activeCharges = this.chargesData ? this.chargesData.filter(charge => charge.isActive) : [];
+    const activeCharges = this.chargesData ? this.chargesData.filter((charge) => charge.isActive) : [];
     this.dataSource = new MatTableDataSource(activeCharges);
   }
 
@@ -89,10 +90,10 @@ export class ChargesTabComponent implements OnInit {
   toggleCharges() {
     this.showInactiveCharges = !this.showInactiveCharges;
     if (!this.showInactiveCharges) {
-      const activeCharges = this.chargesData.filter(charge => charge.isActive);
+      const activeCharges = this.chargesData.filter((charge) => charge.isActive);
       this.dataSource.data = activeCharges;
     } else {
-      const inActiveCharges = this.chargesData.filter(charge => !charge.isActive);
+      const inActiveCharges = this.chargesData.filter((charge) => !charge.isActive);
       this.dataSource.data = inActiveCharges;
     }
     this.chargesTableRef.renderRows();
@@ -118,6 +119,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -135,7 +137,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService.executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'paycharge', dataObject, chargeId)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'paycharge', dataObject, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -151,7 +154,8 @@ export class ChargesTabComponent implements OnInit {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'waive', {}, chargeId)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'waive', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -167,7 +171,8 @@ export class ChargesTabComponent implements OnInit {
     const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'inactivate', {}, chargeId)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.fixedDepositsAccountData.id, 'inactivate', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -188,6 +193,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
+
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
@@ -204,7 +210,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService.editSavingsAccountCharge(this.fixedDepositsAccountData.id, dataObject, charge.id)
+        this.savingsService
+          .editSavingsAccountCharge(this.fixedDepositsAccountData.id, dataObject, charge.id)
           .subscribe(() => {
             this.reload();
           });
@@ -222,10 +229,9 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.fixedDepositsAccountData.id, chargeId)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.savingsService.deleteSavingsAccountCharge(this.fixedDepositsAccountData.id, chargeId).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -235,7 +241,11 @@ export class ChargesTabComponent implements OnInit {
    * @param {any} charge Charge
    */
   isRecurringCharge(charge: any) {
-    return charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee' || charge.chargeTimeType.value === 'Weekly Fee';
+    return (
+      charge.chargeTimeType.value === 'Monthly Fee' ||
+      charge.chargeTimeType.value === 'Annual Fee' ||
+      charge.chargeTimeType.value === 'Weekly Fee'
+    );
   }
 
   /**
@@ -253,8 +263,8 @@ export class ChargesTabComponent implements OnInit {
   private reload() {
     const clientId = this.fixedDepositsAccountData.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/fixed-deposits-accounts`, {skipLocationChange: true})
+    this.router
+      .navigateByUrl(`/clients/${clientId}/fixed-deposits-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

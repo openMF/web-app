@@ -35,7 +35,6 @@ import { ToolbarComponent } from './shell/toolbar/toolbar.component';
 import { BreadcrumbComponent } from './shell/breadcrumb/breadcrumb.component';
 import { ContentComponent } from './shell/content/content.component';
 
-
 /**
  * Core Module
  *
@@ -57,6 +56,7 @@ import { ContentComponent } from './shell/content/content.component';
   ],
   exports: [
     SharedModule // TO BE REMOVED: Once all components have replaced the core module import by shared module.
+
   ],
   providers: [
     AuthenticationService,
@@ -88,12 +88,10 @@ import { ContentComponent } from './shell/content/content.component';
   ]
 })
 export class CoreModule {
-
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     // Import guard
     if (parentModule) {
       throw new Error(`${parentModule} has already been loaded. Import Core module in the AppModule only.`);
     }
   }
-
 }

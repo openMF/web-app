@@ -13,9 +13,13 @@ import { AccountsFilterPipe } from '../../pipes/accounts-filter.pipe';
   styleUrls: ['./share-account-table.component.scss']
 })
 export class ShareAccountTableComponent {
-
   /** Columns to be displayed in the share accounts table. */
-  displayedColumns: string[] = ['accountNo', 'productName', 'totalApprovedShares', 'Status'];
+  displayedColumns: string[] = [
+    'accountNo',
+    'productName',
+    'totalApprovedShares',
+    'Status'
+  ];
   /** Show closed share accounts */
   showClosed = false;
   /** Data source for share account table. */
@@ -31,7 +35,12 @@ export class ShareAccountTableComponent {
   /** Share Account Setter */
   @Input() set shareAccountData(data: any) {
     this.accountData = data;
-    const filteredAccountData = this.accountsFilterPipe.transform(data, 'share', this.showClosed ? 'closed' : 'open', 'isShare');
+    const filteredAccountData = this.accountsFilterPipe.transform(
+      data,
+      'share',
+      this.showClosed ? 'closed' : 'open',
+      'isShare'
+    );
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -40,7 +49,7 @@ export class ShareAccountTableComponent {
   /**
    * @param {AccountsFilterPipe} accountsFilterPipe Accounts Filter Pipe.
    */
-  constructor(private accountsFilterPipe: AccountsFilterPipe) { }
+  constructor(private accountsFilterPipe: AccountsFilterPipe) {}
 
   /**
    * Filters data in users table based on passed value.
@@ -55,10 +64,14 @@ export class ShareAccountTableComponent {
    */
   toggleClosed() {
     this.showClosed = !this.showClosed;
-    const filteredAccountData = this.accountsFilterPipe.transform(this.accountData, 'share', this.showClosed ? 'closed' : 'open', 'isShare');
+    const filteredAccountData = this.accountsFilterPipe.transform(
+      this.accountData,
+      'share',
+      this.showClosed ? 'closed' : 'open',
+      'isShare'
+    );
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

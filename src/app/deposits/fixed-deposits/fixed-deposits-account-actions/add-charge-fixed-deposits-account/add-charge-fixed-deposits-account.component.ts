@@ -18,7 +18,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./add-charge-fixed-deposits-account.component.scss']
 })
 export class AddChargeFixedDepositsAccountComponent implements OnInit {
-
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -65,7 +64,7 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
   }
 
   buildDependencies() {
-    this.fixedDepositsChargeForm.controls.chargeId.valueChanges.subscribe(chargeId => {
+    this.fixedDepositsChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
       this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
@@ -86,14 +85,17 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
           this.fixedDepositsChargeForm.removeControl('feeOnMonthDay');
         }
         if (chargeTimeType.value === 'Monthly Fee') {
-          this.fixedDepositsChargeForm.addControl('feeInterval', new UntypedFormControl(data.feeInterval, Validators.required));
+          this.fixedDepositsChargeForm.addControl(
+            'feeInterval',
+            new UntypedFormControl(data.feeInterval, Validators.required)
+          );
         } else {
           this.fixedDepositsChargeForm.removeControl('feeInterval');
         }
         this.fixedDepositsChargeForm.patchValue({
-          'amount': data.amount,
-          'chargeCalculationType': data.chargeCalculationType.id,
-          'chargeTimeType': data.chargeTimeType.id
+          amount: data.amount,
+          chargeCalculationType: data.chargeCalculationType.id,
+          chargeTimeType: data.chargeTimeType.id
         });
       });
     });
@@ -104,10 +106,16 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
    */
   createFixedDepositsChargeForm() {
     this.fixedDepositsChargeForm = this.formBuilder.group({
-      'chargeId': ['', Validators.required],
-      'amount': ['', Validators.required],
-      'chargeCalculationType': [{ value: '', disabled: true }],
-      'chargeTimeType': [{ value: '', disabled: true }]
+      chargeId: [
+        '',
+        Validators.required
+      ],
+      amount: [
+        '',
+        Validators.required
+      ],
+      chargeCalculationType: [{ value: '', disabled: true }],
+      chargeTimeType: [{ value: '', disabled: true }]
     });
   }
 
@@ -137,9 +145,8 @@ export class AddChargeFixedDepositsAccountComponent implements OnInit {
         }
       }
     }
-    this.savingsService.createSavingsCharge(this.fixedDepositAccountId, 'charges', savingsCharge).subscribe( () => {
+    this.savingsService.createSavingsCharge(this.fixedDepositAccountId, 'charges', savingsCharge).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

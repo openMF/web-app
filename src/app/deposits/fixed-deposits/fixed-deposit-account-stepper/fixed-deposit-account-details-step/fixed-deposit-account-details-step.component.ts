@@ -15,7 +15,6 @@ import { FixedDepositsService } from '../../fixed-deposits.service';
   styleUrls: ['./fixed-deposit-account-details-step.component.scss']
 })
 export class FixedDepositAccountDetailsStepComponent implements OnInit {
-
   /** Fixed Deposits Account Template */
   @Input() fixedDepositsAccountTemplate: any;
 
@@ -43,9 +42,11 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private fixedDepositsService: FixedDepositsService,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private fixedDepositsService: FixedDepositsService,
+    private settingsService: SettingsService
+  ) {
     this.createFixedDepositsAccountDetailsForm();
   }
 
@@ -56,10 +57,11 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
       this.productData = this.fixedDepositsAccountTemplate.productOptions;
       if (this.fixedDepositsAccountTemplate.depositProductId) {
         this.fixedDepositAccountDetailsForm.patchValue({
-          'productId': this.fixedDepositsAccountTemplate.depositProductId,
-          'submittedOnDate': this.fixedDepositsAccountTemplate.timeline.submittedOnDate
-            && new Date(this.fixedDepositsAccountTemplate.timeline.submittedOnDate),
-          'externalId': this.fixedDepositsAccountTemplate.externalId || '',
+          productId: this.fixedDepositsAccountTemplate.depositProductId,
+          submittedOnDate:
+            this.fixedDepositsAccountTemplate.timeline.submittedOnDate &&
+            new Date(this.fixedDepositsAccountTemplate.timeline.submittedOnDate),
+          externalId: this.fixedDepositsAccountTemplate.externalId || ''
         });
       }
     }
@@ -70,10 +72,16 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    */
   createFixedDepositsAccountDetailsForm() {
     this.fixedDepositAccountDetailsForm = this.formBuilder.group({
-      'productId': ['', Validators.required],
-      'submittedOnDate': ['', Validators.required],
-      'fieldOfficerId': [''],
-      'externalId': ['']
+      productId: [
+        '',
+        Validators.required
+      ],
+      submittedOnDate: [
+        '',
+        Validators.required
+      ],
+      fieldOfficerId: [''],
+      externalId: ['']
     });
   }
 
@@ -88,7 +96,9 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
         this.isProductSelected = true;
         this.fieldOfficerData = response.fieldOfficerOptions;
         if (!this.isFieldOfficerPatched && this.fixedDepositsAccountTemplate.fieldOfficerId) {
-          this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
+          this.fixedDepositAccountDetailsForm
+            .get('fieldOfficerId')
+            .patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
           this.isFieldOfficerPatched = true;
         } else {
           this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
@@ -109,5 +119,4 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
     }
     return fixedDepositAccountDetails;
   }
-
 }

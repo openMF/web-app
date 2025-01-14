@@ -8,9 +8,8 @@ describe('RevertTransactionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RevertTransactionComponent ]
-    })
-    .compileComponents();
+      declarations: [RevertTransactionComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

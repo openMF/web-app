@@ -8,7 +8,6 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@
   styleUrls: ['./upload-document-dialog.component.scss']
 })
 export class UploadDocumentDialogComponent implements OnInit {
-
   /** Upload Document form. */
   uploadDocumentForm: UntypedFormGroup;
   /** Upload Document Data */
@@ -23,9 +22,11 @@ export class UploadDocumentDialogComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {any} data Dialog Data
    */
-  constructor(public dialogRef: MatDialogRef<UploadDocumentDialogComponent>,
-              private formBuilder: UntypedFormBuilder,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(
+    public dialogRef: MatDialogRef<UploadDocumentDialogComponent>,
+    private formBuilder: UntypedFormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this.documentIdentifier = data.documentIdentifier;
     this.entityType = data.entityType;
   }
@@ -39,9 +40,12 @@ export class UploadDocumentDialogComponent implements OnInit {
    */
   createUploadDocumentForm() {
     this.uploadDocumentForm = this.formBuilder.group({
-      'fileName': ['', Validators.required],
-      'description': [''],
-      'file': ['']
+      fileName: [
+        '',
+        Validators.required
+      ],
+      description: [''],
+      file: ['']
     });
   }
 
@@ -55,7 +59,4 @@ export class UploadDocumentDialogComponent implements OnInit {
       this.uploadDocumentForm.get('file').setValue(file);
     }
   }
-
 }
-
-

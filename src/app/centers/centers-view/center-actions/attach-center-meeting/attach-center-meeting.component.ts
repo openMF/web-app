@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./attach-center-meeting.component.scss']
 })
 export class AttachCenterMeetingComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -44,12 +43,14 @@ export class AttachCenterMeetingComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private centersService: CentersService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private centersService: CentersService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { centersActionData: any }) => {
       this.calendarTemplate = data.centersActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
@@ -69,8 +70,11 @@ export class AttachCenterMeetingComponent implements OnInit {
    */
   createCenterMeetingForm() {
     this.centerMeetingForm = this.formBuilder.group({
-      'startDate': ['', Validators.required],
-      'repeating': [false]
+      startDate: [
+        '',
+        Validators.required
+      ],
+      repeating: [false]
     });
   }
 
@@ -86,23 +90,49 @@ export class AttachCenterMeetingComponent implements OnInit {
           this.centerMeetingForm.removeControl('repeatsOnDay');
           switch (frequency) {
             case 1: // Daily
-              this.repetitionIntervals = ['1', '2', '3'];
-            break;
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3'
+              ];
+              break;
             case 2: // Weekly
-              this.repetitionIntervals = ['1', '2', '3'];
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3'
+              ];
               this.centerMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
-            break;
+              break;
             case 3: // Monthly
-              this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
-            break;
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '10',
+                '11'
+              ];
+              break;
             case 4: // Yearly
-              this.repetitionIntervals = ['1', '2', '3', '4', '5'];
-            break;
+              this.repetitionIntervals = [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5'
+              ];
+              break;
           }
         });
         this.centerMeetingForm.patchValue({
-          'frequency': 1,
-          'interval': '1'
+          frequency: 1,
+          interval: '1'
         });
       } else {
         this.centerMeetingForm.removeControl('frequency');
@@ -135,5 +165,4 @@ export class AttachCenterMeetingComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

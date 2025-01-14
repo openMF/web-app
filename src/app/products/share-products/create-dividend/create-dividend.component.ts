@@ -8,7 +8,6 @@ import { Dates } from 'app/core/utils/dates';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 
-
 /**
  * Create Dividend component.
  */
@@ -18,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./create-dividend.component.scss']
 })
 export class CreateDividendComponent implements OnInit {
-
   /** Create Dividend Form. */
   createDividendForm: UntypedFormGroup;
   /** Share Product data. */
@@ -37,12 +35,14 @@ export class CreateDividendComponent implements OnInit {
    * @param {Router} router Router.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private productService: ProductsService,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private productService: ProductsService,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { shareProduct: any }) => {
       this.shareProductData = data.shareProduct;
     });
@@ -58,9 +58,18 @@ export class CreateDividendComponent implements OnInit {
    */
   setDividendForm() {
     this.createDividendForm = this.formBuilder.group({
-      'dividendPeriodStartDate': ['', Validators.required],
-      'dividendPeriodEndDate': ['', Validators.required],
-      'dividendAmount': ['', Validators.required]
+      dividendPeriodStartDate: [
+        '',
+        Validators.required
+      ],
+      dividendPeriodEndDate: [
+        '',
+        Validators.required
+      ],
+      dividendAmount: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -88,5 +97,4 @@ export class CreateDividendComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

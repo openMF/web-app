@@ -15,7 +15,6 @@ import { AccountingService } from '../../accounting.service';
   styleUrls: ['./edit-closure.component.scss']
 })
 export class EditClosureComponent implements OnInit {
-
   /** Accounting closure form. */
   accountingClosureForm: UntypedFormGroup;
   /** GL Account closure. */
@@ -30,10 +29,12 @@ export class EditClosureComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { glAccountClosure: any }) => {
       this.glAccountClosure = data.glAccountClosure;
     });
@@ -52,9 +53,15 @@ export class EditClosureComponent implements OnInit {
    */
   createAccountingClosureForm() {
     this.accountingClosureForm = this.formBuilder.group({
-      'officeId': [{ value: '', disabled: true }, Validators.required],
-      'closingDate': [{ value: '', disabled: true }, Validators.required],
-      'comments': ['']
+      officeId: [
+        { value: '', disabled: true },
+        Validators.required
+      ],
+      closingDate: [
+        { value: '', disabled: true },
+        Validators.required
+      ],
+      comments: ['']
     });
   }
 
@@ -68,17 +75,21 @@ export class EditClosureComponent implements OnInit {
     this.accountingClosureForm.get('comments').setValue(this.glAccountClosure.comments);
   }
 
-
   /**
    * Submits the accounting closure form and updates accounting closure,
    * if successful redirects to view updated closure.
    */
   submit() {
-    this.accountingService.updateAccountingClosure(this.glAccountClosure.id,
-      { comments: this.accountingClosureForm.value.comments })
+    this.accountingService
+      .updateAccountingClosure(this.glAccountClosure.id, { comments: this.accountingClosureForm.value.comments })
       .subscribe((response: any) => {
-        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
       });
   }
-
 }

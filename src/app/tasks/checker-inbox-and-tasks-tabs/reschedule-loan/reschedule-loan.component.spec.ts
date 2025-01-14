@@ -8,9 +8,8 @@ describe('RescheduleLoanComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RescheduleLoanComponent ]
-    })
-    .compileComponents();
+      declarations: [RescheduleLoanComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

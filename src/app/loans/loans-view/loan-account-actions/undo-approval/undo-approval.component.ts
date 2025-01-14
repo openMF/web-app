@@ -14,7 +14,6 @@ import { LoansService } from 'app/loans/loans.service';
   styleUrls: ['./undo-approval.component.scss']
 })
 export class UndoApprovalComponent implements OnInit {
-
   /** Form Controller. */
   note: UntypedFormControl;
 
@@ -23,10 +22,12 @@ export class UndoApprovalComponent implements OnInit {
    * @param route Activated Route.
    * @param router Router.
    */
-  constructor(private loanService: LoansService,
-              private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private loanService: LoansService,
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.note = this.formBuilder.control('');
@@ -37,9 +38,8 @@ export class UndoApprovalComponent implements OnInit {
    */
   submit() {
     const loanId = this.route.snapshot.params['loanId'];
-    this.loanService.loanActionButtons(loanId, 'undoapproval', { 'note': this.note.value }).subscribe((response: any) => {
-      this.router.navigate(['../../general'], {relativeTo: this.route});
+    this.loanService.loanActionButtons(loanId, 'undoapproval', { note: this.note.value }).subscribe((response: any) => {
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
-
 }

@@ -16,7 +16,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./group-transfer-clients.component.scss']
 })
 export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
-
   /** Transfer Clients form. */
   transferClientsForm: UntypedFormGroup;
   /** Group Data */
@@ -36,11 +35,13 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * @param {GroupsService} groupsService GroupsService.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private groupsService: GroupsService,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private groupsService: GroupsService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
       this.clientMembers = this.groupData.clientMembers;
@@ -55,12 +56,11 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    * Subscribes to Groups search filter:
    */
   ngAfterViewInit() {
-    this.transferClientsForm.get('destinationGroupId').valueChanges.subscribe( (value: string) => {
+    this.transferClientsForm.get('destinationGroupId').valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
-        this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId)
-          .subscribe( (data: any) => {
-            this.groupsData = data;
-          });
+        this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId).subscribe((data: any) => {
+          this.groupsData = data;
+        });
       }
     });
   }
@@ -70,9 +70,15 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
    */
   createTransferClientsForm() {
     this.transferClientsForm = this.formBuilder.group({
-      'clients': ['', Validators.required],
-      'inheritDestinationGroupLoanOfficer': [false],
-      'destinationGroupId': ['', Validators.required]
+      clients: [
+        '',
+        Validators.required
+      ],
+      inheritDestinationGroupLoanOfficer: [false],
+      destinationGroupId: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -100,5 +106,4 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

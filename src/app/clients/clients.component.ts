@@ -12,12 +12,18 @@ import { ClientsService } from './clients.service';
 @Component({
   selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.scss'],
+  styleUrls: ['./clients.component.scss']
 })
 export class ClientsComponent implements OnInit {
   @ViewChild('showClosedAccounts') showClosedAccounts: MatCheckbox;
 
-  displayedColumns = ['displayName', 'accountNumber', 'externalId', 'status', 'officeName'];
+  displayedColumns = [
+    'displayName',
+    'accountNumber',
+    'externalId',
+    'status',
+    'officeName'
+  ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   existsClientsToFilter = false;
@@ -36,7 +42,7 @@ export class ClientsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private clientService: ClientsService) { }
+  constructor(private clientService: ClientsService) {}
 
   ngOnInit() {
     if (environment.preloadClients) {
@@ -55,18 +61,22 @@ export class ClientsComponent implements OnInit {
 
   private getClients() {
     this.isLoading = true;
-    this.clientService.searchByText(this.filterText, this.currentPage, this.pageSize, this.sortAttribute, this.sortDirection)
-    .subscribe((data: any) => {
-      this.dataSource.data = data.content;
+    this.clientService
+      .searchByText(this.filterText, this.currentPage, this.pageSize, this.sortAttribute, this.sortDirection)
+      .subscribe(
+        (data: any) => {
+          this.dataSource.data = data.content;
 
-      this.totalRows = data.totalElements;
+          this.totalRows = data.totalElements;
 
-      this.existsClientsToFilter = (data.numberOfElements > 0);
-      this.notExistsClientsToFilter = !this.existsClientsToFilter;
-      this.isLoading = false;
-    }, (error: any) => {
-      this.isLoading = false;
-    });
+          this.existsClientsToFilter = data.numberOfElements > 0;
+          this.notExistsClientsToFilter = !this.existsClientsToFilter;
+          this.isLoading = false;
+        },
+        (error: any) => {
+          this.isLoading = false;
+        }
+      );
   }
 
   pageChanged(event: PageEvent) {

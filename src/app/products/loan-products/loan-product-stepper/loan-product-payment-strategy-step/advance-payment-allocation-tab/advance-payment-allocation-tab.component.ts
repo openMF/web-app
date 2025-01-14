@@ -5,7 +5,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { AdvancedCreditAllocation, AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocationOrder, FutureInstallmentAllocationRule, PaymentAllocationOrder, PaymentAllocationTransactionType } from '../payment-allocation-model';
+import {
+  AdvancedCreditAllocation,
+  AdvancedPaymentAllocation,
+  AdvancedPaymentStrategy,
+  CreditAllocationOrder,
+  FutureInstallmentAllocationRule,
+  PaymentAllocationOrder,
+  PaymentAllocationTransactionType
+} from '../payment-allocation-model';
 
 @Component({
   selector: 'mifosx-advance-payment-allocation-tab',
@@ -13,7 +21,6 @@ import { AdvancedCreditAllocation, AdvancedPaymentAllocation, AdvancedPaymentStr
   styleUrls: ['./advance-payment-allocation-tab.component.scss']
 })
 export class AdvancePaymentAllocationTabComponent implements OnInit {
-
   @Input() advancedPaymentAllocation: AdvancedPaymentAllocation;
   @Input() advancedCreditAllocation: AdvancedCreditAllocation;
 
@@ -24,15 +31,21 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
   creditAllocationsData: CreditAllocationOrder[] | null = null;
 
   /** Columns to be displayed in the table. */
-  displayedColumns: string[] = ['actions', 'order', 'allocationRule'];
+  displayedColumns: string[] = [
+    'actions',
+    'order',
+    'allocationRule'
+  ];
 
   futureInstallmentAllocationRule = new UntypedFormControl('', Validators.required);
 
   @ViewChild('table') table: MatTable<any>;
 
-  constructor(private dialog: MatDialog,
+  constructor(
+    private dialog: MatDialog,
     private advancedPaymentStrategy: AdvancedPaymentStrategy,
-    private translateService: TranslateService) { }
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     if (this.advancedCreditAllocation) {
@@ -43,15 +56,19 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
       this.paymentAllocationsData = this.advancedPaymentAllocation?.paymentAllocationOrder;
 
       if (this.advancedPaymentAllocation.futureInstallmentAllocationRule) {
-        this.futureInstallmentAllocationRule.patchValue(this.advancedPaymentAllocation.futureInstallmentAllocationRule.code);
+        this.futureInstallmentAllocationRule.patchValue(
+          this.advancedPaymentAllocation.futureInstallmentAllocationRule.code
+        );
       }
       this.futureInstallmentAllocationRule.valueChanges.subscribe((value: any) => {
-        this.advancedPaymentAllocation.futureInstallmentAllocationRules.forEach((item: FutureInstallmentAllocationRule) => {
-          if (value === item.code) {
-            this.advancedPaymentAllocation.futureInstallmentAllocationRule = item;
-            this.allocationChanged.emit(true);
+        this.advancedPaymentAllocation.futureInstallmentAllocationRules.forEach(
+          (item: FutureInstallmentAllocationRule) => {
+            if (value === item.code) {
+              this.advancedPaymentAllocation.futureInstallmentAllocationRule = item;
+              this.allocationChanged.emit(true);
+            }
           }
-        });
+        );
       });
     }
   }
@@ -90,7 +107,10 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
       transaction.credit = true;
     }
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext:  this.translateService.instant('labels.dialogContext.the Transaction Type') + ' ' + transaction.value }
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.dialogContext.the Transaction Type') + ' ' + transaction.value
+      }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -98,5 +118,4 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
       }
     });
   }
-
 }

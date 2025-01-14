@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
-import { tap, startWith, map, distinctUntilChanged, debounceTime} from 'rxjs/operators';
+import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /** Custom Services */
 import { AccountingService } from '../accounting.service';
@@ -25,7 +25,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./search-journal-entry.component.scss']
 })
 export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
-
   /** Minimum transaction date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum transaction date allowed. */
@@ -56,7 +55,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     },
     {
       option: 'System Entries',
-      value: false  // Bug: unable to implement from server side
+      value: false // Bug: unable to implement from server side
     }
   ];
   /** Transaction date from form control. */
@@ -70,7 +69,20 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   /** Submitted on date to form control. */
   submittedOnDateTo = new UntypedFormControl();
   /** Columns to be displayed in journal entries table. */
-  displayedColumns: string[] = ['id', 'officeName', 'transactionId', 'transactionDate', 'glAccountType', 'createdByUserName', 'submittedOnDate', 'glAccountCode', 'glAccountName', 'currency', 'debit', 'credit'];
+  displayedColumns: string[] = [
+    'id',
+    'officeName',
+    'transactionId',
+    'transactionDate',
+    'glAccountType',
+    'createdByUserName',
+    'submittedOnDate',
+    'glAccountCode',
+    'glAccountName',
+    'currency',
+    'debit',
+    'credit'
+  ];
   /** Data source for journal entries table. */
   dataSource: JournalEntriesDataSource;
   /** Journal entries filter. */
@@ -93,7 +105,10 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     },
     {
       type: 'fromDate',
-      value: this.dateUtils.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), this.settingsService.dateFormat)
+      value: this.dateUtils.formatDate(
+        new Date(new Date().setMonth(new Date().getMonth() - 1)),
+        this.settingsService.dateFormat
+      )
     },
     {
       type: 'toDate',
@@ -128,17 +143,16 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private accountingService: AccountingService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute) {
-    this.route.data.subscribe((data: {
-        offices: any,
-        glAccounts: any
-      }) => {
-        this.officeData = data.offices;
-        this.glAccountData = data.glAccounts;
-      });
+  constructor(
+    private accountingService: AccountingService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.subscribe((data: { offices: any; glAccounts: any }) => {
+      this.officeData = data.offices;
+      this.glAccountData = data.glAccounts;
+    });
   }
 
   /**
@@ -159,7 +173,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.officeName.valueChanges
       .pipe(
-        map(value => value.id ? value.id : ''),
+        map((value) => (value.id ? value.id : '')),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
@@ -170,7 +184,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
 
     this.glAccount.valueChanges
       .pipe(
-        map(value => value ? value : ''),
+        map((value) => (value ? value : '')),
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
@@ -209,12 +223,15 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       )
       .subscribe();
 
-      this.submittedOnDateFrom.valueChanges
+    this.submittedOnDateFrom.valueChanges
       .pipe(
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'submittedOnDateFrom');
+          this.applyFilter(
+            this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat),
+            'submittedOnDateFrom'
+          );
         })
       )
       .subscribe();
@@ -224,17 +241,18 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'submittedOnDateTo');
+          this.applyFilter(
+            this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat),
+            'submittedOnDateTo'
+          );
         })
       )
       .subscribe();
 
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadJournalEntriesPage())
-      )
+      .pipe(tap(() => this.loadJournalEntriesPage()))
       .subscribe();
   }
 
@@ -245,7 +263,13 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-    this.dataSource.getJournalEntries(this.filterJournalEntriesBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    this.dataSource.getJournalEntries(
+      this.filterJournalEntriesBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize
+    );
   }
 
   /**
@@ -255,7 +279,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    */
   applyFilter(filterValue: string, property: string) {
     this.paginator.pageIndex = 0;
-    const findIndex = this.filterJournalEntriesBy.findIndex(filter => filter.type === property);
+    const findIndex = this.filterJournalEntriesBy.findIndex((filter) => filter.type === property);
     this.filterJournalEntriesBy[findIndex].value = filterValue;
     this.loadJournalEntriesPage();
   }
@@ -273,24 +297,24 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * Sets filtered offices for autocomplete.
    */
   setFilteredOffices() {
-    this.filteredOfficeData = this.officeName.valueChanges
-      .pipe(
-        startWith(''),
-        map((office: any) => typeof office === 'string' ? office : office.name),
-        map((officeName: string) => officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData)
-      );
+    this.filteredOfficeData = this.officeName.valueChanges.pipe(
+      startWith(''),
+      map((office: any) => (typeof office === 'string' ? office : office.name)),
+      map((officeName: string) => (officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData))
+    );
   }
 
   /**
    * Sets filtered gl accounts for autocomplete.
    */
   setFilteredGlAccounts() {
-    this.filteredGLAccountData = this.glAccount.valueChanges
-      .pipe(
-        startWith(''),
-        map((glAccount: any) => typeof glAccount === 'string' ? glAccount : glAccount.name + ' (' + glAccount.glCode + ')'),
-        map((glAccount: string) => glAccount ? this.filterGLAccountAutocompleteData(glAccount) : this.glAccountData)
-      );
+    this.filteredGLAccountData = this.glAccount.valueChanges.pipe(
+      startWith(''),
+      map((glAccount: any) =>
+        typeof glAccount === 'string' ? glAccount : glAccount.name + ' (' + glAccount.glCode + ')'
+      ),
+      map((glAccount: string) => (glAccount ? this.filterGLAccountAutocompleteData(glAccount) : this.glAccountData))
+    );
   }
 
   /**
@@ -308,7 +332,9 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @returns {any} Filtered gl accounts.
    */
   private filterGLAccountAutocompleteData(glAccount: string): any {
-    return this.glAccountData.filter((option: any) => (option.name + ' (' + option.glCode + ')').toLowerCase().includes(glAccount.toLowerCase()));
+    return this.glAccountData.filter((option: any) =>
+      (option.name + ' (' + option.glCode + ')').toLowerCase().includes(glAccount.toLowerCase())
+    );
   }
 
   /**
@@ -316,6 +342,12 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    */
   getJournalEntries() {
     this.dataSource = new JournalEntriesDataSource(this.accountingService);
-    this.dataSource.getJournalEntries(this.filterJournalEntriesBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    this.dataSource.getJournalEntries(
+      this.filterJournalEntriesBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize
+    );
   }
 }

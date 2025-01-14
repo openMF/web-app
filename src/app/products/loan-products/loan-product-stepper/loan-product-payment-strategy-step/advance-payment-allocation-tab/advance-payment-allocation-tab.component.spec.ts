@@ -8,9 +8,8 @@ describe('AdvancePaymentAllocationTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdvancePaymentAllocationTabComponent ]
-    })
-    .compileComponents();
+      declarations: [AdvancePaymentAllocationTabComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AdvancePaymentAllocationTabComponent);
     component = fixture.componentInstance;

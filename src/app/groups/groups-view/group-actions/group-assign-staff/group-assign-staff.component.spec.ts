@@ -8,9 +8,8 @@ describe('GroupAssignStaffComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupAssignStaffComponent ]
-    })
-    .compileComponents();
+      declarations: [GroupAssignStaffComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

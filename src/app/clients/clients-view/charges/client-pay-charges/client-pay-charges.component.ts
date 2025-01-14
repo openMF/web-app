@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./client-pay-charges.component.scss']
 })
 export class ClientPayChargesComponent implements OnInit {
-
   /** Transaction Form. */
   transactionForm: any;
   /** Transaction Data. */
@@ -25,14 +24,14 @@ export class ClientPayChargesComponent implements OnInit {
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
 
-    /**
-     * Retrieves the charge data from `resolve`.
-     * @param {ClientService} clientService Products Service.
-     * @param {FormBuilder} formBuilder Form Builder.
-     * @param {ActivatedRoute} route Activated Route.
-     * @param {Router} router Router for navigation.
-     * @param {SettingsService} settingsService Setting service
-     */
+  /**
+   * Retrieves the charge data from `resolve`.
+   * @param {ClientService} clientService Products Service.
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {ActivatedRoute} route Activated Route.
+   * @param {Router} router Router for navigation.
+   * @param {SettingsService} settingsService Setting service
+   */
   constructor(
     private clientsService: ClientsService,
     private formBuilder: UntypedFormBuilder,
@@ -55,8 +54,14 @@ export class ClientPayChargesComponent implements OnInit {
    */
   setTransactionForm() {
     this.transactionForm = this.formBuilder.group({
-      'amount': [this.transactionData.amount, Validators.required],
-      'transactionDate': [new Date(), Validators.required]
+      amount: [
+        this.transactionData.amount,
+        Validators.required
+      ],
+      transactionDate: [
+        new Date(),
+        Validators.required
+      ]
     });
   }
 
@@ -77,8 +82,13 @@ export class ClientPayChargesComponent implements OnInit {
       locale
     };
     this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, data).subscribe(() => {
-      this.router.navigate(['../../..', 'general'], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../../..',
+          'general'
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

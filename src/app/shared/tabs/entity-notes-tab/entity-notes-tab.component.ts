@@ -14,7 +14,6 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
   styleUrls: ['./entity-notes-tab.component.scss']
 })
 export class EntityNotesTabComponent implements OnInit {
-
   @ViewChild('formRef', { static: true }) formRef: any;
 
   @Input() entityId: string;
@@ -26,12 +25,14 @@ export class EntityNotesTabComponent implements OnInit {
 
   noteForm: UntypedFormGroup;
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private savingsService: SavingsService,
     private loansService: LoansService,
     private clientsService: ClientsService,
     private groupsService: GroupsService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.createNoteForm();
@@ -39,7 +40,10 @@ export class EntityNotesTabComponent implements OnInit {
 
   createNoteForm() {
     this.noteForm = this.formBuilder.group({
-      'note': ['', Validators.required]
+      note: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -50,19 +54,22 @@ export class EntityNotesTabComponent implements OnInit {
 
   editNote(noteId: string, noteContent: string, index: number) {
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, {
-      data: { formfields: [{
-                controlName: 'note',
-                required: true,
-                value: noteContent,
-                controlType: 'input',
-                label: 'Note'
-              }],
-              layout: {
-                columns: 1,
-                addButtonText: 'Confirm'
-              },
-              title: 'Edit Note'
-            }
+      data: {
+        formfields: [
+          {
+            controlName: 'note',
+            required: true,
+            value: noteContent,
+            controlType: 'input',
+            label: 'Note'
+          }
+        ],
+        layout: {
+          columns: 1,
+          addButtonText: 'Confirm'
+        },
+        title: 'Edit Note'
+      }
     });
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data && response.data.value.note !== noteContent) {
@@ -81,5 +88,4 @@ export class EntityNotesTabComponent implements OnInit {
       }
     });
   }
-
 }

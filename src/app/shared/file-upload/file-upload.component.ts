@@ -10,7 +10,6 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent implements OnInit {
-
   /** Form field flex dimension */
   @Input() flex: any;
   @Input() acceptFilter: string;
@@ -18,7 +17,7 @@ export class FileUploadComponent implements OnInit {
   /** Selected file name */
   fileName: File;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     if (!this.acceptFilter) {
@@ -33,5 +32,4 @@ export class FileUploadComponent implements OnInit {
   onFileSelect($event: any) {
     this.fileName = $event.target.files[0].name;
   }
-
 }

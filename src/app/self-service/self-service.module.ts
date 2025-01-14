@@ -34,4 +34,4 @@ import { TaskManagementComponent } from './task-management/task-management.compo
     TaskManagementComponent
   ]
 })
-export class SelfServiceModule { }
+export class SelfServiceModule {}

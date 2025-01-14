@@ -39,9 +39,11 @@ export class GlimDetailsStepComponent implements OnInit {
    * @param {LoansService} loansService Loans Service.
    * @param {SettingsService} settingsService SettingsService
    */
-   constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private loansService: LoansService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.createLoansAccountDetailsForm();
   }
 
@@ -52,13 +54,17 @@ export class GlimDetailsStepComponent implements OnInit {
       this.productData = this.loansAccountTemplate.productOptions;
       if (this.loansAccountTemplate.loanProductId) {
         this.loansAccountDetailsForm.patchValue({
-          'productId': this.loansAccountTemplate.loanProductId,
-          'submittedOnDate': this.loansAccountTemplate.timeline.submittedOnDate && new Date(this.loansAccountTemplate.timeline.submittedOnDate),
-          'loanOfficerId': this.loansAccountTemplate.loanOfficerId,
-          'loanPurposeId': this.loansAccountTemplate.loanPurposeId,
-          'fundId': this.loansAccountTemplate.fundId,
-          'expectedDisbursementDate': this.loansAccountTemplate.timeline.expectedDisbursementDate && new Date(this.loansAccountTemplate.timeline.expectedDisbursementDate),
-          'externalId': this.loansAccountTemplate.externalId
+          productId: this.loansAccountTemplate.loanProductId,
+          submittedOnDate:
+            this.loansAccountTemplate.timeline.submittedOnDate &&
+            new Date(this.loansAccountTemplate.timeline.submittedOnDate),
+          loanOfficerId: this.loansAccountTemplate.loanOfficerId,
+          loanPurposeId: this.loansAccountTemplate.loanPurposeId,
+          fundId: this.loansAccountTemplate.fundId,
+          expectedDisbursementDate:
+            this.loansAccountTemplate.timeline.expectedDisbursementDate &&
+            new Date(this.loansAccountTemplate.timeline.expectedDisbursementDate),
+          externalId: this.loansAccountTemplate.externalId
         });
       }
     }
@@ -67,21 +73,30 @@ export class GlimDetailsStepComponent implements OnInit {
   /**
    * Creates glim account details form.
    */
-   createLoansAccountDetailsForm() {
+  createLoansAccountDetailsForm() {
     this.loansAccountDetailsForm = this.formBuilder.group({
-      'productId': ['', Validators.required],
-      'loanOfficerId': [''],
-      'fundId': [''],
-      'submittedOnDate': [new Date(), Validators.required],
-      'expectedDisbursementDate': ['', Validators.required],
-      'linkAccountId': [''],
+      productId: [
+        '',
+        Validators.required
+      ],
+      loanOfficerId: [''],
+      fundId: [''],
+      submittedOnDate: [
+        new Date(),
+        Validators.required
+      ],
+      expectedDisbursementDate: [
+        '',
+        Validators.required
+      ],
+      linkAccountId: ['']
     });
   }
 
   /**
    * Fetches loans account product template on productId value changes
    */
-   buildDependencies() {
+  buildDependencies() {
     const groupId = this.loansAccountTemplate.group.id;
     this.loansAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
       this.loansService.getLoansAccountTemplateResource(groupId, true, productId).subscribe((response: any) => {
@@ -100,5 +115,4 @@ export class GlimDetailsStepComponent implements OnInit {
   get loansAccountDetails() {
     return this.loansAccountDetailsForm.value;
   }
-
 }

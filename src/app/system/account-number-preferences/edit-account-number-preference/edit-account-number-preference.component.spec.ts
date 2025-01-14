@@ -8,9 +8,8 @@ describe('EditAccountNumberPreferenceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditAccountNumberPreferenceComponent ]
-    })
-    .compileComponents();
+      declarations: [EditAccountNumberPreferenceComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

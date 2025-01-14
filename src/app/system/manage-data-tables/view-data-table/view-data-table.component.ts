@@ -22,13 +22,20 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./view-data-table.component.scss']
 })
 export class ViewDataTableComponent implements OnInit {
-
   /** Data Table Data */
   dataTableData: any;
   /** Column Data */
   columnsData: any;
   /** Columns to be displayed in columns table. */
-  displayedColumns: string[] = ['columnName', 'columnDisplayType', 'columnLength', 'columnCode', 'isColumnNullable', 'isColumnUnique', 'isColumnIndexed'];
+  displayedColumns: string[] = [
+    'columnName',
+    'columnDisplayType',
+    'columnLength',
+    'columnCode',
+    'isColumnNullable',
+    'isColumnUnique',
+    'isColumnIndexed'
+  ];
   /** Data source for columns table. */
   dataSource: MatTableDataSource<any>;
 
@@ -45,11 +52,13 @@ export class ViewDataTableComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    *  @param {TranslateService} translateService Translate Service.
    */
-  constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private router: Router,
-              private dialog: MatDialog,
-              private translateService: TranslateService) {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService,
+    private router: Router,
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { dataTable: any }) => {
       this.dataTableData = data.dataTable;
       this.columnsData = this.dataTableData.columnHeaderData;
@@ -79,16 +88,17 @@ export class ViewDataTableComponent implements OnInit {
    */
   delete() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext:  this.translateService.instant('labels.inputs.Data Table') + ' ' + this.dataTableData.registeredTableName}
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.inputs.Data Table') + ' ' + this.dataTableData.registeredTableName
+      }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteDataTable(this.dataTableData.registeredTableName)
-          .subscribe(() => {
-            this.router.navigate(['/system/data-tables'], { relativeTo: this.route });
-          });
+        this.systemService.deleteDataTable(this.dataTableData.registeredTableName).subscribe(() => {
+          this.router.navigate(['/system/data-tables'], { relativeTo: this.route });
+        });
       }
     });
-
   }
 }

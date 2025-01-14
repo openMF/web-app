@@ -7,7 +7,6 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
   styleUrls: ['./recurring-deposit-product-currency-step.component.scss']
 })
 export class RecurringDepositProductCurrencyStepComponent implements OnInit {
-
   @Input() recurringDepositProductsTemplate: any;
 
   recurringDepositProductCurrencyForm: UntypedFormGroup;
@@ -22,29 +21,33 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
     this.currencyData = this.recurringDepositProductsTemplate.currencyOptions;
     if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
       this.recurringDepositProductCurrencyForm.patchValue({
-        'currencyCode': this.recurringDepositProductsTemplate.currency.code,
-        'digitsAfterDecimal': this.recurringDepositProductsTemplate.currency.decimalPlaces,
-        'inMultiplesOf': this.recurringDepositProductsTemplate.currency.inMultiplesOf
+        currencyCode: this.recurringDepositProductsTemplate.currency.code,
+        digitsAfterDecimal: this.recurringDepositProductsTemplate.currency.decimalPlaces,
+        inMultiplesOf: this.recurringDepositProductsTemplate.currency.inMultiplesOf
       });
     } else {
       this.recurringDepositProductCurrencyForm.patchValue({
-        'currencyCode': this.currencyData[0].code,
-        'digitsAfterDecimal': 2
+        currencyCode: this.currencyData[0].code,
+        digitsAfterDecimal: 2
       });
     }
-
   }
 
   createrecurringDepositProductCurrencyForm() {
     this.recurringDepositProductCurrencyForm = this.formBuilder.group({
-      'currencyCode': ['', Validators.required],
-      'digitsAfterDecimal': ['', Validators.required],
-      'inMultiplesOf': ['']
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      digitsAfterDecimal: [
+        '',
+        Validators.required
+      ],
+      inMultiplesOf: ['']
     });
   }
 
   get recurringDepositProductCurrency() {
     return this.recurringDepositProductCurrencyForm.value;
   }
-
 }

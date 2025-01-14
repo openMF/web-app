@@ -8,9 +8,8 @@ describe('LoanCollateralTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoanCollateralTabComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanCollateralTabComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

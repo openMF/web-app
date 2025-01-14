@@ -11,19 +11,25 @@ import { ProductsService } from 'app/products/products.service';
   styleUrls: ['./view-dividend.component.scss']
 })
 export class ViewDividendComponent implements OnInit {
-
   dividendData: any;
   status: any;
   isdividendPosted = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['clientName', 'shareAccount', 'dividendAmount', 'status'];
+  displayedColumns: string[] = [
+    'clientName',
+    'shareAccount',
+    'dividendAmount',
+    'status'
+  ];
   dataSource: MatTableDataSource<any>;
 
-  constructor(private route: ActivatedRoute,
-              private productsService: ProductsService,
-              private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { dividendData: any }) => {
       this.dividendData = data.dividendData;
     });
@@ -42,13 +48,14 @@ export class ViewDividendComponent implements OnInit {
   postDividends() {
     const shareProductId = this.route.parent.parent.snapshot.paramMap.get('productId');
     const dividendId = this.route.snapshot.paramMap.get('dividendId');
-    this.productsService.approveDividend(shareProductId, dividendId, { productId: shareProductId, dividendId: dividendId}).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.productsService
+      .approveDividend(shareProductId, dividendId, { productId: shareProductId, dividendId: dividendId })
+      .subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }

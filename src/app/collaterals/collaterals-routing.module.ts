@@ -21,7 +21,7 @@ const routes: Routes = [
             path: '',
             component: ViewCollateralComponent,
             resolve: {
-              clientCollateralData: ClientCollateralResolver,
+              clientCollateralData: ClientCollateralResolver
             }
           },
           {
@@ -29,7 +29,7 @@ const routes: Routes = [
             data: { title: 'edit', routeParamBreadcrumb: 'edit' },
             component: EditCollateralComponent,
             resolve: {
-              clientCollateralData: ClientCollateralResolver,
+              clientCollateralData: ClientCollateralResolver
             }
           }
         ]
@@ -43,7 +43,7 @@ const routes: Routes = [
   exports: [RouterModule],
   declarations: [],
   providers: [
-    ClientCollateralResolver,
+    ClientCollateralResolver
   ]
 })
-export class CollateralsRoutingModule { }
+export class CollateralsRoutingModule {}

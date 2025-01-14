@@ -8,9 +8,8 @@ describe('PentahoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PentahoComponent ]
-    })
-    .compileComponents();
+      declarations: [PentahoComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

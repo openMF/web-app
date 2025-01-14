@@ -8,11 +8,19 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./original-schedule-tab.component.scss']
 })
 export class OriginalScheduleTabComponent {
-
   /** Loan Details Data */
   originalScheduleDetails: any;
   /** Columns to be displayed in original schedule table. */
-  displayedColumns: string[] = ['number', 'date', 'balanceOfLoan', 'principalDue', 'interest', 'fees', 'penalties', 'outstanding'];
+  displayedColumns: string[] = [
+    'number',
+    'date',
+    'balanceOfLoan',
+    'principalDue',
+    'interest',
+    'fees',
+    'penalties',
+    'outstanding'
+  ];
 
   currency: Currency | null = null;
 
@@ -26,5 +34,4 @@ export class OriginalScheduleTabComponent {
       this.originalScheduleDetails = data.loanDetailsData.originalSchedule;
     });
   }
-
 }

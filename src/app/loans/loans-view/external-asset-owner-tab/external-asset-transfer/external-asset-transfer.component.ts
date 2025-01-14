@@ -10,10 +10,9 @@ export class ExternalAssetTransferComponent {
   /** Input Fields Data */
   @Input() transferData: any;
 
-  constructor(private externalAssetOwner: ExternalAssetOwner) { }
+  constructor(private externalAssetOwner: ExternalAssetOwner) {}
 
   itemStatus(status: string): string {
     return this.externalAssetOwner.itemStatus(status);
   }
-
 }

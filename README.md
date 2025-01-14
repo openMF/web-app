@@ -1,4 +1,4 @@
-# Mifos X Web App ![build](https://github.com/openMF/web-app/actions/workflows/build.yml/badge.svg) [Slack](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10) 
+# Mifos X Web App ![build](https://github.com/openMF/web-app/actions/workflows/build.yml/badge.svg) [Slack](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
 
 Mifos X Web App is the revamped version of the Mifos X Community App, an effective financial inclusion solution and the default web application built on top of the Mifos X platform for the Mifos User Community.
 
@@ -16,7 +16,7 @@ The latest code is continuously deployed at https://openmf.github.io/web-app/ wh
 
    [`nodeJs`](https://nodejs.org/en/download/)
 
-3. Install [angular-cli](https://github.com/angular/angular-cli) globally.
+2. Install [angular-cli](https://github.com/angular/angular-cli) globally.
 
 ```
 npm install -g @angular/cli@16.0.2

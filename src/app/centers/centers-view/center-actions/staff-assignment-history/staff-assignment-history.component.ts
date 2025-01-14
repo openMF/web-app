@@ -15,7 +15,6 @@ import { CentersService } from '../../../centers.service';
   styleUrls: ['./staff-assignment-history.component.scss']
 })
 export class StaffAssignmentHistoryComponent implements OnInit {
-
   /** Staff Assignment History Data */
   staffAssignmentHistoryData: any;
   /** trusted resource url for pentaho output */
@@ -24,8 +23,10 @@ export class StaffAssignmentHistoryComponent implements OnInit {
   /**
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    */
-  constructor(private sanitizer: DomSanitizer,
-    private route: ActivatedRoute) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute
+  ) {
     this.route.data.subscribe((data: { centersActionData: any }) => {
       this.staffAssignmentHistoryData = data.centersActionData;
     });
@@ -37,5 +38,4 @@ export class StaffAssignmentHistoryComponent implements OnInit {
     const filecontent = URL.createObjectURL(file);
     this.pentahoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(filecontent);
   }
-
 }

@@ -26,7 +26,6 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
   styleUrls: ['./edit-tax-group.component.scss']
 })
 export class EditTaxGroupComponent implements OnInit {
-
   /** Minimum start date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum start date allowed. */
@@ -41,7 +40,11 @@ export class EditTaxGroupComponent implements OnInit {
   taxComponentOptions: any;
 
   /** Tax Component Displayed Columns */
-  displayedColumns: string[] = ['name', 'startDate', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'startDate',
+    'actions'
+  ];
 
   /**
    * Retrieves the tax Group template data from `resolve`.
@@ -54,14 +57,16 @@ export class EditTaxGroupComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TranslateService} translateService translate Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              public dialog: MatDialog,
-              private settingsService: SettingsService,
-              private translateService: TranslateService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    public dialog: MatDialog,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { taxGroup: any }) => {
       this.taxGroupData = data.taxGroup;
       this.taxComponentOptions = this.taxGroupData.taxComponents;
@@ -79,7 +84,10 @@ export class EditTaxGroupComponent implements OnInit {
    */
   createTaxGroupForm() {
     this.taxGroupForm = this.formBuilder.group({
-      'name': [this.taxGroupData.name, Validators.required]
+      name: [
+        this.taxGroupData.name,
+        Validators.required
+      ]
     });
   }
 
@@ -101,6 +109,7 @@ export class EditTaxGroupComponent implements OnInit {
         maxDate: this.maxDate,
         order: 2
       })
+
     ];
     const data = {
       title: 'Add Tax Component',
@@ -139,15 +148,18 @@ export class EditTaxGroupComponent implements OnInit {
         maxDate: this.maxDate,
         order: 2
       })
+
     ];
     if (!taxComponent.isNew) {
-      formfields.push(new DatepickerBase({
-        controlName: 'endDate',
-        label: 'End Date',
-        minDate: this.minDate,
-        maxDate: this.maxDate,
-        order: 3
-      }));
+      formfields.push(
+        new DatepickerBase({
+          controlName: 'endDate',
+          label: 'End Date',
+          minDate: this.minDate,
+          maxDate: this.maxDate,
+          order: 3
+        })
+      );
     }
     const data = {
       title: 'Edit Tax Component',
@@ -220,5 +232,4 @@ export class EditTaxGroupComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

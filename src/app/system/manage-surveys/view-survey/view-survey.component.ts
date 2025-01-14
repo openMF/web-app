@@ -15,12 +15,14 @@ import { SystemService } from 'app/system/system.service';
   styleUrls: ['./view-survey.component.scss']
 })
 export class ViewSurveyComponent {
-
   /** Survey Data */
   surveyData: any;
 
   /** Columns shown in individual survey table */
-  displayedColumns: string[] = [ 'text', 'value'];
+  displayedColumns: string[] = [
+    'text',
+    'value'
+  ];
 
   /**
    * Retrieves the survey data from `resolve`.
@@ -29,10 +31,12 @@ export class ViewSurveyComponent {
    * @param {MatDialog} dialog Dialog Reference.
    * @param {Router} router Router for navigation.
    */
-  constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private dialog: MatDialog,
-              private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { survey: any }) => {
       this.surveyData = data.survey;
     });

@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
+import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { SystemService } from 'app/system/system.service';
 import { Observable, of } from 'rxjs';
 
@@ -11,11 +7,10 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class ShareProductDatatableResolver implements Resolve<boolean> {
-
   /**
    * @param {SystemService} systemService Products service.
    */
-  constructor(private systemService: SystemService) { }
+  constructor(private systemService: SystemService) {}
 
   /**
    * Returns the loan product data.
@@ -26,5 +21,4 @@ export class ShareProductDatatableResolver implements Resolve<boolean> {
     const datatableName = route.paramMap.get('datatableName');
     return this.systemService.getEntityDatatable(productId, datatableName);
   }
-
 }

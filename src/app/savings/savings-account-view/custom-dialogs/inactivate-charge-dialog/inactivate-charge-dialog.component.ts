@@ -11,12 +11,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./inactivate-charge-dialog.component.scss']
 })
 export class InactivateChargeDialogComponent {
-
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data.
    */
-  constructor(public dialogRef: MatDialogRef<InactivateChargeDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
+  constructor(
+    public dialogRef: MatDialogRef<InactivateChargeDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 }

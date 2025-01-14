@@ -28,7 +28,6 @@ import { CenterDataAndTemplateResolver } from './common-resolvers/center-data-an
 
 const routes: Routes = [
   Route.withShell([
-
     {
       path: 'centers',
       data: { title: 'Centers', breadcrumb: 'Centers' },
@@ -42,14 +41,14 @@ const routes: Routes = [
           component: CreateCenterComponent,
           data: { title: 'Create Center', breadcrumb: 'Create' },
           resolve: {
-            offices: OfficesResolver,
+            offices: OfficesResolver
           }
         },
         {
           path: ':centerId',
           data: { title: 'Centers View', routeParamBreadcrumb: 'centerId' },
           resolve: {
-            centerViewData: CenterViewResolver,
+            centerViewData: CenterViewResolver
           },
           children: [
             {
@@ -80,14 +79,16 @@ const routes: Routes = [
                 },
                 {
                   path: 'datatables',
-                  children: [{
-                    path: ':datatableName',
-                    component: DatatableTabComponent,
-                    data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
-                    resolve: {
-                      centerDatatable: CenterDatatableResolver
+                  children: [
+                    {
+                      path: ':datatableName',
+                      component: DatatableTabComponent,
+                      data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+                      resolve: {
+                        centerDatatable: CenterDatatableResolver
+                      }
                     }
-                  }]
+                  ]
                 }
               ]
             },
@@ -96,7 +97,7 @@ const routes: Routes = [
               component: EditCenterComponent,
               data: { title: 'Edit Center', breadcrumb: 'Edit', routeParamBreadcrumb: 'Edit' },
               resolve: {
-                centerData: CenterDataAndTemplateResolver,
+                centerData: CenterDataAndTemplateResolver
               }
             },
             {
@@ -109,13 +110,14 @@ const routes: Routes = [
             },
             {
               path: 'savings-accounts',
-              loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
+              loadChildren: () => import('../savings/savings.module').then((m) => m.SavingsModule)
             }
           ]
         }
       ]
     }
   ])
+
 ];
 
 @NgModule({
@@ -134,4 +136,4 @@ const routes: Routes = [
     CenterDataAndTemplateResolver
   ]
 })
-export class CentersRoutingModule { }
+export class CentersRoutingModule {}

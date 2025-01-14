@@ -81,6 +81,6 @@ import { GeneralTabComponent } from './recurring-deposits-account-view/general-t
     EditTransactionComponent,
     GeneralTabComponent
   ],
-  providers: [ ]
+  providers: []
 })
 export class RecurringDepositsModule {}

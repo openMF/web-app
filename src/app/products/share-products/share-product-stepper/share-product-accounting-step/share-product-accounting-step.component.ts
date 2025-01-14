@@ -8,7 +8,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./share-product-accounting-step.component.scss']
 })
 export class ShareProductAccountingStepComponent implements OnInit {
-
   @Input() shareProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() shareProductFormValid: boolean;
@@ -33,15 +32,15 @@ export class ShareProductAccountingStepComponent implements OnInit {
 
     if (this.shareProductsTemplate.accountingRule) {
       this.shareProductAccountingForm.patchValue({
-        'accountingRule': this.shareProductsTemplate.accountingRule.id
+        accountingRule: this.shareProductsTemplate.accountingRule.id
       });
 
       if (this.shareProductsTemplate.accountingRule.id === 2) {
         this.shareProductAccountingForm.patchValue({
-          'shareReferenceId': this.shareProductsTemplate.accountingMappings.shareReferenceId.id,
-          'shareSuspenseId': this.shareProductsTemplate.accountingMappings.shareSuspenseId.id,
-          'shareEquityId': this.shareProductsTemplate.accountingMappings.shareEquityId.id,
-          'incomeFromFeeAccountId': this.shareProductsTemplate.accountingMappings.incomeFromFeeAccountId.id
+          shareReferenceId: this.shareProductsTemplate.accountingMappings.shareReferenceId.id,
+          shareSuspenseId: this.shareProductsTemplate.accountingMappings.shareSuspenseId.id,
+          shareEquityId: this.shareProductsTemplate.accountingMappings.shareEquityId.id,
+          incomeFromFeeAccountId: this.shareProductsTemplate.accountingMappings.incomeFromFeeAccountId.id
         });
       }
     }
@@ -49,29 +48,30 @@ export class ShareProductAccountingStepComponent implements OnInit {
 
   createShareProductAccountingForm() {
     this.shareProductAccountingForm = this.formBuilder.group({
-      'accountingRule': [1]
+      accountingRule: [1]
     });
   }
 
   setConditionalControls() {
-    this.shareProductAccountingForm.get('accountingRule').valueChanges
-      .subscribe((accountingRule: any) => {
-        if (accountingRule === 2) {
-          this.shareProductAccountingForm.addControl('shareReferenceId', new UntypedFormControl('', Validators.required));
-          this.shareProductAccountingForm.addControl('shareSuspenseId', new UntypedFormControl('', Validators.required));
-          this.shareProductAccountingForm.addControl('shareEquityId', new UntypedFormControl('', Validators.required));
-          this.shareProductAccountingForm.addControl('incomeFromFeeAccountId', new UntypedFormControl('', Validators.required));
-        } else {
-          this.shareProductAccountingForm.removeControl('shareReferenceId');
-          this.shareProductAccountingForm.removeControl('shareSuspenseId');
-          this.shareProductAccountingForm.removeControl('shareEquityId');
-          this.shareProductAccountingForm.removeControl('incomeFromFeeAccountId');
-        }
-      });
+    this.shareProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
+      if (accountingRule === 2) {
+        this.shareProductAccountingForm.addControl('shareReferenceId', new UntypedFormControl('', Validators.required));
+        this.shareProductAccountingForm.addControl('shareSuspenseId', new UntypedFormControl('', Validators.required));
+        this.shareProductAccountingForm.addControl('shareEquityId', new UntypedFormControl('', Validators.required));
+        this.shareProductAccountingForm.addControl(
+          'incomeFromFeeAccountId',
+          new UntypedFormControl('', Validators.required)
+        );
+      } else {
+        this.shareProductAccountingForm.removeControl('shareReferenceId');
+        this.shareProductAccountingForm.removeControl('shareSuspenseId');
+        this.shareProductAccountingForm.removeControl('shareEquityId');
+        this.shareProductAccountingForm.removeControl('incomeFromFeeAccountId');
+      }
+    });
   }
 
   get shareProductAccounting() {
     return this.shareProductAccountingForm.value;
   }
-
 }

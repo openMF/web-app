@@ -13,19 +13,17 @@ import { CentersService } from '../centers.service';
  */
 @Injectable()
 export class SavingsAccountResolver implements Resolve<Object> {
+  /**
+   * @param {CentersService} CentersService Centers service.
+   */
+  constructor(private centersService: CentersService) {}
 
-    /**
-     * @param {CentersService} CentersService Centers service.
-     */
-    constructor(private centersService: CentersService) { }
-
-    /**
-     * Returns the Center Savings Account data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const centerId = route.parent.paramMap.get('centerId');
-        return this.centersService.getSavingsAccountDetails(centerId);
-    }
-
+  /**
+   * Returns the Center Savings Account data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const centerId = route.parent.paramMap.get('centerId');
+    return this.centersService.getSavingsAccountDetails(centerId);
+  }
 }

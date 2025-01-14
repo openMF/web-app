@@ -30,19 +30,27 @@ export class WorkflowJobsComponent implements OnInit {
   @ViewChild('table') table: MatTable<JobStep>;
 
   /** Columns to be displayed in the table. */
-  displayedColumns: string[] = ['stepName', 'stepOrder', 'actions'];
+  displayedColumns: string[] = [
+    'stepName',
+    'stepOrder',
+    'actions'
+  ];
 
-  constructor(private systemService: SystemService,
-              public dialog: MatDialog,
-              private translateService: TranslateService) {}
+  constructor(
+    private systemService: SystemService,
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
-    this.systemService.getWorkflowJobNames().toPromise()
-    .then(jobNames => {
-      this.jobNameOptions = jobNames.businessJobs.sort(function (a: any, b: any) {
-        return a.stepName - b.stepName;
+    this.systemService
+      .getWorkflowJobNames()
+      .toPromise()
+      .then((jobNames) => {
+        this.jobNameOptions = jobNames.businessJobs.sort(function (a: any, b: any) {
+          return a.stepName - b.stepName;
+        });
       });
-    });
   }
 
   /**
@@ -91,49 +99,54 @@ export class WorkflowJobsComponent implements OnInit {
     if (this.jobStepName != null) {
       const jobDatas = this.jobStepName.split('_');
       this.jobAvailableStepsData = [];
-      this.systemService.getAvailablesJobSteps(jobDatas[0]).toPromise()
-      .then(jobData => {
-        this.jobAvailableStepsData = jobData.availableBusinessSteps.sort(function (a: any, b: any) {
-          return a.stepName - b.stepName;
-        });
-
-        const tmpStepsNames: any = [];
-        this.jobStepsData.forEach((step: any) => {
-          return tmpStepsNames.push(step.stepName);
-        });
-
-        if (this.jobAvailableStepsData.length > 0) {
-          this.jobAvailableStepsData = this.jobAvailableStepsData.filter((item: any) => {
-            return (tmpStepsNames.indexOf(item.stepName) < 0);
+      this.systemService
+        .getAvailablesJobSteps(jobDatas[0])
+        .toPromise()
+        .then((jobData) => {
+          this.jobAvailableStepsData = jobData.availableBusinessSteps.sort(function (a: any, b: any) {
+            return a.stepName - b.stepName;
           });
-        }
 
-        if (this.jobAvailableStepsData.length > 0) {
-          for (let index = 0; index < this.jobAvailableStepsData.length; index++) {
-            this.jobAvailableStepsData[index].stepDescription = this.translateService.instant(`labels.catalogs.${this.jobAvailableStepsData[index].stepDescription}`);
+          const tmpStepsNames: any = [];
+          this.jobStepsData.forEach((step: any) => {
+            return tmpStepsNames.push(step.stepName);
+          });
+
+          if (this.jobAvailableStepsData.length > 0) {
+            this.jobAvailableStepsData = this.jobAvailableStepsData.filter((item: any) => {
+              return tmpStepsNames.indexOf(item.stepName) < 0;
+            });
           }
-          const frmFields: FormfieldBase[] = [
-            new SelectBase({
-              controlName: 'stepName',
-              label: this.translateService.instant('labels.text.Step'),
-              options: { label: 'stepDescription', value: 'stepName', data: this.jobAvailableStepsData },
-              order: 1
-            })
-          ];
-          const data = {
-            title: this.translateService.instant('labels.text.Add Job Step to Workflow'),
-            layout: { addButtonText: 'Add' },
-            formfields: frmFields
-          };
-          const stepDialogRef = this.dialog.open(FormDialogComponent, { data });
-          stepDialogRef.afterClosed().subscribe((response: any) => {
-            if (response.data) {
-              this.jobStepsData = this.jobStepsData.concat(response.data.value);
-              this.stepOrderHasChanged = true;
+
+          if (this.jobAvailableStepsData.length > 0) {
+            for (let index = 0; index < this.jobAvailableStepsData.length; index++) {
+              this.jobAvailableStepsData[index].stepDescription = this.translateService.instant(
+                `labels.catalogs.${this.jobAvailableStepsData[index].stepDescription}`
+              );
             }
-          });
-        }
-      });
+            const frmFields: FormfieldBase[] = [
+              new SelectBase({
+                controlName: 'stepName',
+                label: this.translateService.instant('labels.text.Step'),
+                options: { label: 'stepDescription', value: 'stepName', data: this.jobAvailableStepsData },
+                order: 1
+              })
+
+            ];
+            const data = {
+              title: this.translateService.instant('labels.text.Add Job Step to Workflow'),
+              layout: { addButtonText: 'Add' },
+              formfields: frmFields
+            };
+            const stepDialogRef = this.dialog.open(FormDialogComponent, { data });
+            stepDialogRef.afterClosed().subscribe((response: any) => {
+              if (response.data) {
+                this.jobStepsData = this.jobStepsData.concat(response.data.value);
+                this.stepOrderHasChanged = true;
+              }
+            });
+          }
+        });
     }
   }
 
@@ -145,13 +158,14 @@ export class WorkflowJobsComponent implements OnInit {
     });
 
     const payload = {
-      'businessSteps': this.jobStepsData
+      businessSteps: this.jobStepsData
     };
 
-    this.systemService.putWorkflowJobSteps(this.jobStepName, payload).toPromise()
-    .then(data => {
-      this.stepOrderHasChanged = false;
-    });
+    this.systemService
+      .putWorkflowJobSteps(this.jobStepName, payload)
+      .toPromise()
+      .then((data) => {
+        this.stepOrderHasChanged = false;
+      });
   }
-
 }

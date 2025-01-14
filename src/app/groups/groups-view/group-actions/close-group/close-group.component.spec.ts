@@ -8,9 +8,8 @@ describe('CloseGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CloseGroupComponent ]
-    })
-    .compileComponents();
+      declarations: [CloseGroupComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

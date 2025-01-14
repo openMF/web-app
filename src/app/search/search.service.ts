@@ -12,11 +12,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SearchService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @param {string} query Query String
@@ -24,11 +23,7 @@ export class SearchService {
    * @returns {Observable<any>} Search Results.
    */
   getSearchResults(query: string, resource: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('exactMatch', 'false')
-      .set('query', query)
-      .set('resource', resource);
+    const httpParams = new HttpParams().set('exactMatch', 'false').set('query', query).set('resource', resource);
     return this.http.get('/search', { params: httpParams });
   }
-
 }

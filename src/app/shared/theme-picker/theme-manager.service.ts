@@ -8,11 +8,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ThemeManagerService {
-
   /** Stylesheet class for the theme of the application. */
   private themeManagerClass = 'theme-manager';
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Sets a new theme for the application.
@@ -56,5 +55,4 @@ export class ThemeManagerService {
     document.head.appendChild(linkElement);
     return linkElement;
   }
-
 }

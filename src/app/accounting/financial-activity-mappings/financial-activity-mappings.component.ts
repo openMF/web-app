@@ -18,11 +18,15 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./financial-activity-mappings.component.scss']
 })
 export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit {
-
   /** Financial activity account data. */
   financialActivityAccountData: any;
   /** Columns to be displayed in financial activity mappings table. */
-  displayedColumns: string[] = ['financialActivity', 'glAccountType', 'glAccountCode', 'glAccountName'];
+  displayedColumns: string[] = [
+    'financialActivity',
+    'glAccountType',
+    'glAccountCode',
+    'glAccountName'
+  ];
   /** Data source for financial activity mappings table. */
   dataSource: MatTableDataSource<any>;
 
@@ -47,11 +51,13 @@ export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { financialActivityAccounts: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { financialActivityAccounts: any }) => {
       this.financialActivityAccountData = data.financialActivityAccounts;
     });
   }
@@ -71,10 +77,14 @@ export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit
     this.dataSource.paginator = this.paginator;
     this.dataSource.sortingDataAccessor = (financialActivityAccount: any, property: any) => {
       switch (property) {
-        case 'financialActivity': return financialActivityAccount.financialActivityData.name;
-        case 'glAccountName': return financialActivityAccount.glAccountData.name;
-        case 'glAccountCode': return financialActivityAccount.glAccountData.glCode;
-        default: return financialActivityAccount[property];
+        case 'financialActivity':
+          return financialActivityAccount.financialActivityData.name;
+        case 'glAccountName':
+          return financialActivityAccount.glAccountData.name;
+        case 'glAccountCode':
+          return financialActivityAccount.glAccountData.glCode;
+        default:
+          return financialActivityAccount[property];
       }
     };
     this.dataSource.sort = this.sort;
@@ -87,7 +97,12 @@ export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -127,5 +142,4 @@ export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit
     this.configurationWizardService.showAccountsLinked = true;
     this.router.navigate(['/accounting']);
   }
-
 }

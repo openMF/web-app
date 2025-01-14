@@ -16,18 +16,29 @@ import { AnyKindOfDictionary } from 'cypress/types/lodash';
   styleUrls: ['./loan-term-variations-tab.component.scss']
 })
 export class LoanTermVariationsTabComponent {
-
   /** Loan Term Variation Data */
   loanTermVariationsData: any[] = [];
-  loanDTermVariationsColumns: string[] = ['termType', 'applicableFrom', 'value', 'specificToInstallment'];
+  loanDTermVariationsColumns: string[] = [
+    'termType',
+    'applicableFrom',
+    'value',
+    'specificToInstallment'
+  ];
   /** Interest Pauses Data */
   interestPausesData: any[] = [];
-  interestPausesColumns: string[] = ['row', 'startDate', 'endDate', 'days', 'actions'];
+  interestPausesColumns: string[] = [
+    'row',
+    'startDate',
+    'endDate',
+    'days',
+    'actions'
+  ];
 
   loanId: number;
   clientId: AnyKindOfDictionary;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private dates: Dates,
     private settingsService: SettingsService,
@@ -36,7 +47,7 @@ export class LoanTermVariationsTabComponent {
   ) {
     this.interestPausesData = [];
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
-    this.route.data.subscribe((data: { loanDetailsData: any, interestPausesData: any }) => {
+    this.route.data.subscribe((data: { loanDetailsData: any; interestPausesData: any }) => {
       this.loanId = data.loanDetailsData.id;
       this.loanTermVariationsData = data.loanDetailsData.loanTermVariations;
       this.interestPausesData = [];
@@ -85,7 +96,8 @@ export class LoanTermVariationsTabComponent {
         value: endDate,
         maxDate: this.settingsService.maxFutureDate,
         required: true
-      }),
+      })
+
     ];
 
     const data = {
@@ -104,7 +116,7 @@ export class LoanTermVariationsTabComponent {
             endDate: this.dates.formatDate(response.data.value.endDate, dateFormat),
             locale,
             dateFormat
-          }
+          };
           this.loansService.updateInterestPause(this.loanId, variation.id, payload).subscribe((response: any) => {
             this.reload();
           });
@@ -115,7 +127,8 @@ export class LoanTermVariationsTabComponent {
 
   private reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${this.clientId}/loans-accounts`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/clients/${this.clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 }

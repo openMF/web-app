@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, TemplateRef, ElementRef , ViewChild, AfterViewInit} from '@angular/core';
+import { Component, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, Data } from '@angular/router';
 
 /** rxjs Imports */
@@ -51,7 +51,6 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
   styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent implements AfterViewInit {
-
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
   /* Reference of breadcrumb */
@@ -66,11 +65,13 @@ export class BreadcrumbComponent implements AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private activatedRoute: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService,
-              private translateService: TranslateService) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService,
+    private translateService: TranslateService
+  ) {
     this.generateBreadcrumbs();
   }
 
@@ -78,7 +79,7 @@ export class BreadcrumbComponent implements AfterViewInit {
    * Generates the array of breadcrumbs for the visited route.
    */
   generateBreadcrumbs() {
-    const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
+    const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
 
     onNavigationEnd.subscribe(() => {
       this.breadcrumbs = [];
@@ -90,7 +91,7 @@ export class BreadcrumbComponent implements AfterViewInit {
         let breadcrumbLabel: any;
         let url: any;
 
-        childrenRoutes.forEach(route => {
+        childrenRoutes.forEach((route) => {
           currentRoute = route;
           breadcrumbLabel = false;
 
@@ -98,22 +99,28 @@ export class BreadcrumbComponent implements AfterViewInit {
             return;
           }
 
-          const routeURL = route.snapshot.url.map(segment => segment.path).join('/');
+          const routeURL = route.snapshot.url.map((segment) => segment.path).join('/');
           currentUrl += `/${routeURL}`;
 
           if (currentUrl === '/') {
             breadcrumbLabel = 'Home';
           }
 
-          const hasData = (route.routeConfig && route.routeConfig.data);
+          const hasData = route.routeConfig && route.routeConfig.data;
 
           if (hasData) {
-            if (route.snapshot.data.hasOwnProperty(routeResolveBreadcrumb) && route.snapshot.data[routeResolveBreadcrumb]) {
+            if (
+              route.snapshot.data.hasOwnProperty(routeResolveBreadcrumb) &&
+              route.snapshot.data[routeResolveBreadcrumb]
+            ) {
               breadcrumbLabel = route.snapshot.data;
               route.snapshot.data[routeResolveBreadcrumb].forEach((property: any) => {
                 breadcrumbLabel = breadcrumbLabel[property];
               });
-            } else if (route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) && route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])) {
+            } else if (
+              route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) &&
+              route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])
+            ) {
               breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]);
               const routeData: Data = route.snapshot.data;
               if (routeData.breadcrumb === 'Clients') {
@@ -124,11 +131,23 @@ export class BreadcrumbComponent implements AfterViewInit {
               } else if (routeData.breadcrumb === 'Centers') {
                 breadcrumbLabel = routeData.centerViewData.name;
               } else if (routeData.breadcrumb === 'Loans') {
-                breadcrumbLabel = this.printableValue(routeData.loanDetailsData.loanProductName) + ' (' + routeData.loanDetailsData.accountNo + ')';
+                breadcrumbLabel =
+                  this.printableValue(routeData.loanDetailsData.loanProductName) +
+                  ' (' +
+                  routeData.loanDetailsData.accountNo +
+                  ')';
               } else if (routeData.breadcrumb === 'Savings') {
-                breadcrumbLabel = this.printableValue(routeData.savingsAccountData.savingsProductName) + ' (' + routeData.savingsAccountData.accountNo + ')';
+                breadcrumbLabel =
+                  this.printableValue(routeData.savingsAccountData.savingsProductName) +
+                  ' (' +
+                  routeData.savingsAccountData.accountNo +
+                  ')';
               } else if (routeData.breadcrumb === 'Fixed Deposits') {
-                breadcrumbLabel = this.printableValue(routeData.fixedDepositsAccountData.depositProductName) + ' (' + routeData.fixedDepositsAccountData.accountNo + ')';
+                breadcrumbLabel =
+                  this.printableValue(routeData.fixedDepositsAccountData.depositProductName) +
+                  ' (' +
+                  routeData.fixedDepositsAccountData.accountNo +
+                  ')';
               } else if (routeData.breadcrumb === 'Loan Products') {
                 breadcrumbLabel = this.printableValue(routeData.loanProduct.name);
               } else if (routeData.breadcrumb === 'Charges') {
@@ -159,7 +178,7 @@ export class BreadcrumbComponent implements AfterViewInit {
             }
           }
           if (url !== undefined) {
-            if (url.length > 8 && url.search(`/clients/`) > 0 ) {
+            if (url.length > 8 && url.search(`/clients/`) > 0) {
               const replaceGeneral = `/general/`;
               let currentUrlTemp = url.replace(replaceGeneral, `/`);
               currentUrlTemp = currentUrlTemp.replace(`//`, `/`);
@@ -197,7 +216,12 @@ export class BreadcrumbComponent implements AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -206,7 +230,7 @@ export class BreadcrumbComponent implements AfterViewInit {
    */
   ngAfterViewInit() {
     if (this.configurationWizardService.showBreadcrumbs === true) {
-    setTimeout(() => {
+      setTimeout(() => {
         this.showPopover(this.templateBreadcrumb, this.breadcrumb.nativeElement, 'bottom', true);
       });
     }
@@ -237,8 +261,7 @@ export class BreadcrumbComponent implements AfterViewInit {
   getTranslate(text: string): any {
     const key: string = 'labels.text.' + text;
     const translation = this.translateService.instant(key);
-    const result = (translation !== key) ? translation : text;
+    const result = translation !== key ? translation : text;
     return result;
   }
-
 }

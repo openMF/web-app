@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit  } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -21,11 +21,15 @@ import { ConfigurationWizardService } from '../configuration-wizard/configuratio
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit, AfterViewInit {
-
   /** Users data. */
   usersData: any;
   /** Columns to be displayed in users table. */
-  displayedColumns: string[] = ['firstname', 'lastname', 'email', 'officeName'];
+  displayedColumns: string[] = [
+    'firstname',
+    'lastname',
+    'email',
+    'officeName'
+  ];
   /** Data source for users table. */
   dataSource: MatTableDataSource<any>;
 
@@ -50,11 +54,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { users: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { users: any }) => {
       this.usersData = data.users;
     });
   }
@@ -90,7 +96,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -130,5 +141,4 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showRolesandPermissionList = true;
     this.router.navigate(['/system/roles-and-permissions']);
   }
-
 }

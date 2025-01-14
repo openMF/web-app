@@ -13,9 +13,13 @@ import { AccountsFilterPipe } from '../../pipes/accounts-filter.pipe';
   styleUrls: ['./savings-account-table.component.scss']
 })
 export class SavingsAccountTableComponent {
-
   /** Columns to be displayed in the savings accounts table. */
-  displayedColumns: string[] = ['accountNo', 'productName', 'accountBalance', 'Status'];
+  displayedColumns: string[] = [
+    'accountNo',
+    'productName',
+    'accountBalance',
+    'Status'
+  ];
   /** Show closed saving accounts */
   showClosed = false;
   /** Data source for savings account table. */
@@ -31,7 +35,12 @@ export class SavingsAccountTableComponent {
   /** Savings Account Setter */
   @Input() set savingsAccountData(data: any) {
     this.accountData = data;
-    const filteredAccountData = this.accountsFilterPipe.transform(data, 'saving', this.showClosed ? 'closed' : 'open', 'isSavings');
+    const filteredAccountData = this.accountsFilterPipe.transform(
+      data,
+      'saving',
+      this.showClosed ? 'closed' : 'open',
+      'isSavings'
+    );
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -40,7 +49,7 @@ export class SavingsAccountTableComponent {
   /**
    * @param {AccountsFilterPipe} accountsFilterPipe Accounts Filter Pipe.
    */
-  constructor(private accountsFilterPipe: AccountsFilterPipe) { }
+  constructor(private accountsFilterPipe: AccountsFilterPipe) {}
 
   /**
    * Filters data in users table based on passed value.
@@ -55,10 +64,14 @@ export class SavingsAccountTableComponent {
    */
   toggleClosed() {
     this.showClosed = !this.showClosed;
-    const filteredAccountData = this.accountsFilterPipe.transform(this.accountData, 'saving', this.showClosed ? 'closed' : 'open', 'isSavings');
+    const filteredAccountData = this.accountsFilterPipe.transform(
+      this.accountData,
+      'saving',
+      this.showClosed ? 'closed' : 'open',
+      'isSavings'
+    );
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

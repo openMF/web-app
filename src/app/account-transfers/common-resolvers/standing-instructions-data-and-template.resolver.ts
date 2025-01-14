@@ -13,20 +13,18 @@ import { AccountTransfersService } from '../account-transfers.service';
  */
 @Injectable()
 export class StandingInstructionsDataAndTemplateResolver implements Resolve<Object> {
+  /**
+   * @param {accountTransfersService} AccountTransfersService Account Transfers service.
+   */
+  constructor(private accountTransfersService: AccountTransfersService) {}
 
-    /**
-     * @param {accountTransfersService} AccountTransfersService Account Transfers service.
-     */
-    constructor(private accountTransfersService: AccountTransfersService) { }
-
-    /**
-     * Returns the Standing Instructions Data.
-     * @param {ActivatedRouteSnapshot} route Route Snapshot
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const standingInstructionsId = route.parent.paramMap.get('standingInstructionsId');
-        return this.accountTransfersService.getStandingInstructionsDataAndTemplate(standingInstructionsId);
-    }
-
+  /**
+   * Returns the Standing Instructions Data.
+   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const standingInstructionsId = route.parent.paramMap.get('standingInstructionsId');
+    return this.accountTransfersService.getStandingInstructionsDataAndTemplate(standingInstructionsId);
+  }
 }

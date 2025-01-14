@@ -8,9 +8,8 @@ describe('EditRecurringDepositProductComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditRecurringDepositProductComponent ]
-    })
-    .compileComponents();
+      declarations: [EditRecurringDepositProductComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

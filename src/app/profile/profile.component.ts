@@ -19,7 +19,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-
   /** Profile Data */
   profileData: any;
   /** Language, TODO: Update when df, locale settings are setup */
@@ -28,7 +27,10 @@ export class ProfileComponent implements OnInit {
   /** Roles Table Datasource */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in user roles table. */
-  displayedColumns: string[] = ['role', 'description'];
+  displayedColumns: string[] = [
+    'role',
+    'description'
+  ];
 
   /**
    * @param {AuthenticationService} authenticationService Authentication Service
@@ -36,11 +38,13 @@ export class ProfileComponent implements OnInit {
    * @param {Router} router Router
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private authenticationService: AuthenticationService,
-      private settingsService: SettingsService,
-      private userService: UserService,
-      private router: Router,
-      public dialog: MatDialog) {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private settingsService: SettingsService,
+    private userService: UserService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
     this.profileData = authenticationService.getCredentials();
   }
 
@@ -60,7 +64,7 @@ export class ProfileComponent implements OnInit {
       if (response.password && response.repeatPassword) {
         const password = response.password;
         const repeatPassword = response.repeatPassword;
-        const data = {password: password, repeatPassword: repeatPassword};
+        const data = { password: password, repeatPassword: repeatPassword };
         this.userService.changePassword(this.profileData.userId, data).subscribe(() => {
           this.router.navigate(['/home']);
         });
@@ -71,5 +75,4 @@ export class ProfileComponent implements OnInit {
   get tenantIdentifier(): string {
     return this.settingsService.tenantIdentifier || 'default';
   }
-
 }

@@ -8,9 +8,8 @@ describe('EditFinancialActivityMappingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditFinancialActivityMappingComponent ]
-    })
-    .compileComponents();
+      declarations: [EditFinancialActivityMappingComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

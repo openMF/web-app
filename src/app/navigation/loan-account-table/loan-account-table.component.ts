@@ -13,9 +13,13 @@ import { AccountsFilterPipe } from '../../pipes/accounts-filter.pipe';
   styleUrls: ['./loan-account-table.component.scss']
 })
 export class LoanAccountTableComponent {
-
   /** Columns to be displayed in the loan accounts table. */
-  displayedColumns: string[] = ['accountNo', 'productName', 'Type', 'Status'];
+  displayedColumns: string[] = [
+    'accountNo',
+    'productName',
+    'Type',
+    'Status'
+  ];
   /** Show closed loan accounts */
   showClosed = false;
   /** Data source for loan account table. */
@@ -31,7 +35,12 @@ export class LoanAccountTableComponent {
   /** Loan Account Setter */
   @Input() set loanAccountData(data: any) {
     this.accountData = data;
-    const filteredAccountData = this.accountsFilterPipe.transform(data, 'loan', this.showClosed ? 'closed' : 'open', 'isLoan');
+    const filteredAccountData = this.accountsFilterPipe.transform(
+      data,
+      'loan',
+      this.showClosed ? 'closed' : 'open',
+      'isLoan'
+    );
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -40,7 +49,7 @@ export class LoanAccountTableComponent {
   /**
    * @param {AccountsFilterPipe} accountsFilterPipe Accounts Filter Pipe.
    */
-  constructor(private accountsFilterPipe: AccountsFilterPipe) { }
+  constructor(private accountsFilterPipe: AccountsFilterPipe) {}
 
   /**
    * Filters data in users table based on passed value.
@@ -55,10 +64,14 @@ export class LoanAccountTableComponent {
    */
   toggleClosed() {
     this.showClosed = !this.showClosed;
-    const filteredAccountData = this.accountsFilterPipe.transform(this.accountData, 'loan', this.showClosed ? 'closed' : 'open', 'isLoan');
+    const filteredAccountData = this.accountsFilterPipe.transform(
+      this.accountData,
+      'loan',
+      this.showClosed ? 'closed' : 'open',
+      'isLoan'
+    );
     this.dataSource = new MatTableDataSource(filteredAccountData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

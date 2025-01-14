@@ -6,12 +6,10 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./entity-datatable-tab.component.scss']
 })
 export class EntityDatatableTabComponent {
-
   @Input() multiRowDatatableFlag = false;
   @Input() entityDatatable: any;
   @Input() entityType: string;
   @Input() entityId: string;
 
-  constructor() { }
-
+  constructor() {}
 }

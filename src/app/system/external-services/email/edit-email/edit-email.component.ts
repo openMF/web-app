@@ -15,7 +15,6 @@ import { SystemService } from 'app/system/system.service';
   styleUrls: ['./edit-email.component.scss']
 })
 export class EditEmailComponent implements OnInit {
-
   /** Password input field type. */
   passwordInputType: string;
   /** Email Configuration data */
@@ -30,10 +29,12 @@ export class EditEmailComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { emailConfiguration: any }) => {
       this.emailConfigurationData = data.emailConfiguration;
     });
@@ -52,13 +53,34 @@ export class EditEmailComponent implements OnInit {
    */
   setEmailConfigurationForm() {
     this.emailConfigurationForm = this.formBuilder.group({
-      'username': [this.emailConfigurationData[0].value, Validators.required],
-      'password': [this.emailConfigurationData[1].value, Validators.required],
-      'host': [this.emailConfigurationData[2].value, Validators.required],
-      'port': [this.emailConfigurationData[3].value, Validators.required],
-      'useTLS': [this.emailConfigurationData[4].value, Validators.required],
-      'fromEmail': [this.emailConfigurationData[5].value, Validators.required],
-      'fromName': [this.emailConfigurationData[6].value, Validators.required]
+      username: [
+        this.emailConfigurationData[0].value,
+        Validators.required
+      ],
+      password: [
+        this.emailConfigurationData[1].value,
+        Validators.required
+      ],
+      host: [
+        this.emailConfigurationData[2].value,
+        Validators.required
+      ],
+      port: [
+        this.emailConfigurationData[3].value,
+        Validators.required
+      ],
+      useTLS: [
+        this.emailConfigurationData[4].value,
+        Validators.required
+      ],
+      fromEmail: [
+        this.emailConfigurationData[5].value,
+        Validators.required
+      ],
+      fromName: [
+        this.emailConfigurationData[6].value,
+        Validators.required
+      ]
     });
   }
 
@@ -73,5 +95,4 @@ export class EditEmailComponent implements OnInit {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
-
 }

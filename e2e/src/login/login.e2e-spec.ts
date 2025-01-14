@@ -20,5 +20,4 @@ describe('app', () => {
   it('should login into the app', () => {
     page.validLogin();
   });
-
 });

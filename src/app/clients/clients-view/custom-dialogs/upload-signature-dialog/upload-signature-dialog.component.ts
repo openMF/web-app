@@ -11,14 +11,13 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./upload-signature-dialog.component.scss']
 })
 export class UploadSignatureDialogComponent {
-
   /** Client Signature */
   signature: File;
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<UploadSignatureDialogComponent>) { }
+  constructor(public dialogRef: MatDialogRef<UploadSignatureDialogComponent>) {}
 
   /**
    * Sets file form control value.
@@ -29,5 +28,4 @@ export class UploadSignatureDialogComponent {
       this.signature = $event.target.files[0];
     }
   }
-
 }

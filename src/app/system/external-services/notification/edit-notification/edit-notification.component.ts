@@ -15,7 +15,6 @@ import { SystemService } from 'app/system/system.service';
   styleUrls: ['./edit-notification.component.scss']
 })
 export class EditNotificationComponent implements OnInit {
-
   /** Notification Configuration data */
   notificationConfigurationData: any;
   /** Notification Configuration Form */
@@ -28,10 +27,12 @@ export class EditNotificationComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { notificationConfiguration: any }) => {
       this.notificationConfigurationData = data.notificationConfiguration;
     });
@@ -49,9 +50,18 @@ export class EditNotificationComponent implements OnInit {
    */
   setNotificationConfigurationForm() {
     this.notificationConfigurationForm = this.formBuilder.group({
-      'server_key': [this.notificationConfigurationData[0].value, Validators.required],
-      'gcm_end_point': [this.notificationConfigurationData[1].value, Validators.required],
-      'fcm_end_point': [this.notificationConfigurationData[2].value, Validators.required]
+      server_key: [
+        this.notificationConfigurationData[0].value,
+        Validators.required
+      ],
+      gcm_end_point: [
+        this.notificationConfigurationData[1].value,
+        Validators.required
+      ],
+      fcm_end_point: [
+        this.notificationConfigurationData[2].value,
+        Validators.required
+      ]
     });
   }
 
@@ -66,5 +76,4 @@ export class EditNotificationComponent implements OnInit {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
-
 }

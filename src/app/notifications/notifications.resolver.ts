@@ -13,7 +13,6 @@ import { NotificationsService } from './notifications.service';
  */
 @Injectable()
 export class NotificationsResolver implements Resolve<Object> {
-
   /**
    * @param {NotificationsService} notificationsService Notifications service.
    */
@@ -26,5 +25,4 @@ export class NotificationsResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.notificationsService.getNotifications(true, 50);
   }
-
 }

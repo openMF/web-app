@@ -8,9 +8,8 @@ describe('ViewRangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewRangeComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewRangeComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

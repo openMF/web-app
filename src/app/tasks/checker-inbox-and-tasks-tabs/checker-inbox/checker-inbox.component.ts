@@ -21,7 +21,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./checker-inbox.component.scss']
 })
 export class CheckerInboxComponent implements OnInit {
-
   /** Data to be displayed */
   searchData: any;
   /** Maker Checker Template */
@@ -41,7 +40,15 @@ export class CheckerInboxComponent implements OnInit {
   /** Selecting rows from table */
   selection: SelectionModel<any>;
   /** Displayed Column in table */
-  displayedColumns: string[] = ['select', 'id', 'madeOnDate', 'status', 'user', 'action', 'entity'];
+  displayedColumns: string[] = [
+    'select',
+    'id',
+    'madeOnDate',
+    'status',
+    'user',
+    'action',
+    'entity'
+  ];
 
   /**
    * Retrieves the maker checker data from `resolve`.
@@ -53,15 +60,17 @@ export class CheckerInboxComponent implements OnInit {
    * @param {TasksService} tasksService Tasks Service.
    * @param {FormBuilder} formBuilder Form Builder.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private dateUtils: Dates,
     private router: Router,
     private translateService: TranslateService,
     private tasksService: TasksService,
     private settingsService: SettingsService,
-    private formBuilder: UntypedFormBuilder) {
-    this.route.data.subscribe((data: { makerCheckerResource: any, makerCheckerTemplate: any }) => {
+    private formBuilder: UntypedFormBuilder
+  ) {
+    this.route.data.subscribe((data: { makerCheckerResource: any; makerCheckerTemplate: any }) => {
       this.searchData = data.makerCheckerResource;
       if (this.searchData.length > 0) {
         this.checkerData = true;
@@ -81,11 +90,11 @@ export class CheckerInboxComponent implements OnInit {
    */
   createMakerCheckerSearchForm() {
     this.makerCheckerSearchForm = this.formBuilder.group({
-      'makerDateTimeFrom': [''],
-      'makerDateTimeto': [''],
-      'actionName': [''],
-      'entityName': [''],
-      'resourceId': ['']
+      makerDateTimeFrom: [''],
+      makerDateTimeto: [''],
+      actionName: [''],
+      entityName: [''],
+      resourceId: ['']
     });
   }
 
@@ -117,9 +126,9 @@ export class CheckerInboxComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach((row: any) => this.selection.select(row));
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((row: any) => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -132,7 +141,10 @@ export class CheckerInboxComponent implements OnInit {
 
   approveChecker() {
     const approveCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Approve Checker'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to approve checker') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Approve Checker'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to approve checker')
+      }
     });
     approveCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -143,7 +155,10 @@ export class CheckerInboxComponent implements OnInit {
 
   rejectChecker() {
     const rejectCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Reject Checker'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to reject checker') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Reject Checker'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to reject checker')
+      }
     });
     rejectCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -154,7 +169,10 @@ export class CheckerInboxComponent implements OnInit {
 
   deleteChecker() {
     const deleteCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Delete Checker'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to delete checker') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Delete Checker'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to delete checker')
+      }
     });
     deleteCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -201,8 +219,8 @@ export class CheckerInboxComponent implements OnInit {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/checker-inbox-and-tasks`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/checker-inbox-and-tasks`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

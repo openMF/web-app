@@ -13,7 +13,6 @@ import { SystemService } from '../system.service';
  */
 @Injectable()
 export class ReportResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService System service.
    */
@@ -27,5 +26,4 @@ export class ReportResolver implements Resolve<Object> {
     const reportId = route.paramMap.get('id');
     return this.systemService.getReport(reportId);
   }
-
 }

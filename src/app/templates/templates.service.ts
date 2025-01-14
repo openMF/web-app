@@ -12,11 +12,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TemplatesService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @returns {Observable<any>} Templates data
@@ -53,7 +52,7 @@ export class TemplatesService {
    * @param templateId Template Id.
    * @returns {Observable<any>}.
    */
-  createTemplate(templateData: any): Observable<any>  {
+  createTemplate(templateData: any): Observable<any> {
     return this.http.post(`/templates`, templateData);
   }
 
@@ -62,7 +61,7 @@ export class TemplatesService {
    * @param templateId Template Id.
    * @returns {Observable<any>}.
    */
-  updateTemplate(templateData: any, templateId: any): Observable<any>  {
+  updateTemplate(templateData: any, templateId: any): Observable<any> {
     return this.http.put(`/templates/${templateId}`, templateData);
   }
 
@@ -73,5 +72,4 @@ export class TemplatesService {
   deleteTemplate(templateId: string): Observable<any> {
     return this.http.delete(`/templates/${templateId}`);
   }
-
 }

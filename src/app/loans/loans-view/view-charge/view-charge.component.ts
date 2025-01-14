@@ -28,7 +28,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./view-charge.component.scss']
 })
 export class ViewChargeComponent {
-
   /** Charge data. */
   chargeData: any;
   /** Loans Account Data */
@@ -45,16 +44,18 @@ export class ViewChargeComponent {
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private loansService: LoansService,
+  constructor(
+    private loansService: LoansService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
     private translateService: TranslateService,
     public dialog: MatDialog,
-    private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { loansAccountCharge: any, loanDetailsData: any }) => {
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { loansAccountCharge: any; loanDetailsData: any }) => {
       this.chargeData = data.loansAccountCharge;
-      this.allowPayCharge = (this.chargeData.chargePayable && !this.chargeData.paid);
+      this.allowPayCharge = this.chargeData.chargePayable && !this.chargeData.paid;
       this.allowWaive = !this.chargeData.chargeTimeType.waived;
       this.loansAccountData = data.loanDetailsData;
     });
@@ -72,6 +73,7 @@ export class ViewChargeComponent {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: `Pay Charge ${this.chargeData.id}`,
@@ -89,7 +91,8 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.loansService.executeLoansAccountChargesCommand(this.chargeData.loanId, 'pay', dataObject, this.chargeData.id)
+        this.loansService
+          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'pay', dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -101,10 +104,19 @@ export class ViewChargeComponent {
    * Waive's the charge
    */
   waiveCharge() {
-    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { heading: this.translateService.instant('labels.heading.Waive Charge'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id:')` ${this.chargeData.id}`, type: 'Basic' } });
+    const waiveChargeDialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Waive Charge'),
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to waive charge with id:'
+        )` ${this.chargeData.id}`,
+        type: 'Basic'
+      }
+    });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loansService.executeLoansAccountChargesCommand(this.chargeData.loanId, 'waive', {}, this.chargeData.id)
+        this.loansService
+          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'waive', {}, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -132,6 +144,7 @@ export class ViewChargeComponent {
         maxDate: this.settingsService.maxAllowedDate,
         required: true
       })
+
     ];
     const data = {
       title: 'Edit Charge',
@@ -151,7 +164,8 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.loansService.editLoansAccountCharge(this.loansAccountData.id, dataObject, this.chargeData.id)
+        this.loansService
+          .editLoansAccountCharge(this.loansAccountData.id, dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -168,10 +182,9 @@ export class ViewChargeComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoansAccountCharge(this.loansAccountData.id, this.chargeData.id)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.loansService.deleteLoansAccountCharge(this.loansAccountData.id, this.chargeData.id).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -191,8 +204,8 @@ export class ViewChargeComponent {
   private reload() {
     const clientId = this.loansAccountData.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

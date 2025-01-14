@@ -14,13 +14,14 @@ import { ProductsService } from 'app/products/products.service';
  */
 @Injectable()
 export class ClientActionsResolver implements Resolve<Object> {
-
   /**
    * @param {ClientsService} clientsService Clients service.
    * @param {ProductsService} productsService Products Service
    */
-  constructor(private clientsService: ClientsService,
-    private productsService: ProductsService) { }
+  constructor(
+    private clientsService: ClientsService,
+    private productsService: ProductsService
+  ) {}
 
   /**
    * Returns the clients actions data.
@@ -62,5 +63,4 @@ export class ClientActionsResolver implements Resolve<Object> {
         return undefined;
     }
   }
-
 }

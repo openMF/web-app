@@ -14,11 +14,21 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./view-provisioning-journal-entries.component.scss']
 })
 export class ViewProvisioningJournalEntriesComponent implements OnInit {
-
   /** Provisioning journal entry data. */
   provisioningJournalEntryData: any;
   /** Columns to be displayed in provisioning journal entries table. */
-  displayedColumns: string[] = ['id', 'officeName', 'transactionDate', 'transactionId', 'glAccountType', 'createdByUserName', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
+  displayedColumns: string[] = [
+    'id',
+    'officeName',
+    'transactionDate',
+    'transactionId',
+    'glAccountType',
+    'createdByUserName',
+    'glAccountCode',
+    'glAccountName',
+    'debit',
+    'credit'
+  ];
   /** Data source for provisioning journal entries table. */
   dataSource: MatTableDataSource<any>;
 
@@ -52,10 +62,14 @@ export class ViewProvisioningJournalEntriesComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sortingDataAccessor = (transaction: any, property: any) => {
       switch (property) {
-        case 'glAccountType': return transaction.glAccountType.value;
-        case 'debit': return transaction.amount;
-        case 'credit': return transaction.amount;
-        default: return transaction[property];
+        case 'glAccountType':
+          return transaction.glAccountType.value;
+        case 'debit':
+          return transaction.amount;
+        case 'credit':
+          return transaction.amount;
+        default:
+          return transaction[property];
       }
     };
     this.dataSource.sort = this.sort;
@@ -68,5 +82,4 @@ export class ViewProvisioningJournalEntriesComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }

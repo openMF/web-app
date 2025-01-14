@@ -8,9 +8,8 @@ describe('ManageTaxConfigurationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageTaxConfigurationsComponent ]
-    })
-    .compileComponents();
+      declarations: [ManageTaxConfigurationsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

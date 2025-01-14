@@ -1,6 +1,4 @@
-
 export interface DatatableColumn {
-
   columnName: string;
   columnDisplayType: string;
   isColumnNullable: boolean;
@@ -10,5 +8,4 @@ export interface DatatableColumn {
   type: string;
   isColumnUnique: boolean;
   isColumnIndexed: boolean;
-
 }

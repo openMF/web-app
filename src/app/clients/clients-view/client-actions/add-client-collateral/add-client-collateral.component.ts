@@ -16,7 +16,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./add-client-collateral.component.scss']
 })
 export class AddClientCollateralComponent implements OnInit {
-
   /** Client Collateral Form */
   clientCollateralForm: UntypedFormGroup;
   /** Client Collateral Options */
@@ -39,13 +38,13 @@ export class AddClientCollateralComponent implements OnInit {
     private router: Router,
     private productsService: ProductsService,
     private clientsService: ClientsService,
-    private settingsService: SettingsService,
-    ) {
-      this.route.data.subscribe((data: { clientActionData: any }) => {
-        this.clientCollateralOptions = data.clientActionData;
-      });
-      this.clientId = this.route.parent.snapshot.params['clientId'];
-    }
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { clientActionData: any }) => {
+      this.clientCollateralOptions = data.clientActionData;
+    });
+    this.clientId = this.route.parent.snapshot.params['clientId'];
+  }
 
   ngOnInit(): void {
     this.createClientCollateralForm();
@@ -56,22 +55,22 @@ export class AddClientCollateralComponent implements OnInit {
    * Subscribe to Form controls value changes
    */
   buildDependencies() {
-    this.clientCollateralForm.controls.collateralId.valueChanges.subscribe(collateralId => {
+    this.clientCollateralForm.controls.collateralId.valueChanges.subscribe((collateralId) => {
       this.productsService.getCollateral(collateralId).subscribe((data: any) => {
         this.collateralDetails = data;
         this.clientCollateralForm.patchValue({
-          'name': data.name,
-          'quality': data.quality,
-          'unitType': data.unitType,
-          'basePrice': this.collateralDetails.basePrice,
-          'pctToBase': this.collateralDetails.pctToBase,
+          name: data.name,
+          quality: data.quality,
+          unitType: data.unitType,
+          basePrice: this.collateralDetails.basePrice,
+          pctToBase: this.collateralDetails.pctToBase
         });
       });
     });
     this.clientCollateralForm.controls.quantity.valueChanges.subscribe((quantity: any) => {
       this.clientCollateralForm.patchValue({
-        'totalValue': this.collateralDetails.basePrice * quantity,
-        'totalCollateralValue': this.collateralDetails.basePrice * this.collateralDetails.pctToBase * quantity / 100
+        totalValue: this.collateralDetails.basePrice * quantity,
+        totalCollateralValue: (this.collateralDetails.basePrice * this.collateralDetails.pctToBase * quantity) / 100
       });
     });
   }
@@ -81,15 +80,21 @@ export class AddClientCollateralComponent implements OnInit {
    */
   createClientCollateralForm() {
     this.clientCollateralForm = this.formBuilder.group({
-      'collateralId': [ '', Validators.required ],
-      'quantity': [ '', Validators.required ],
-      'name': [{ value: '', disabled: true }],
-      'quality': [{value: '', disabled: true}],
-      'unitType': [{value: '', disabled: true}],
-      'basePrice': [{value: '', disabled: true}],
-      'pctToBase': [{value: '', disabled: true}],
-      'totalValue': [{value: '', disabled: true}],
-      'totalCollateralValue': [{value: '', disabled: true}],
+      collateralId: [
+        '',
+        Validators.required
+      ],
+      quantity: [
+        '',
+        Validators.required
+      ],
+      name: [{ value: '', disabled: true }],
+      quality: [{ value: '', disabled: true }],
+      unitType: [{ value: '', disabled: true }],
+      basePrice: [{ value: '', disabled: true }],
+      pctToBase: [{ value: '', disabled: true }],
+      totalValue: [{ value: '', disabled: true }],
+      totalCollateralValue: [{ value: '', disabled: true }]
     });
   }
 
@@ -106,8 +111,7 @@ export class AddClientCollateralComponent implements OnInit {
       locale
     };
     this.clientsService.createClientCollateral(this.clientId, clientCollateral).subscribe(() => {
-      this.router.navigate(['../../'], {relativeTo: this.route});
+      this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

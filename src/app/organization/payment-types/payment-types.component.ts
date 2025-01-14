@@ -21,11 +21,18 @@ import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.
   styleUrls: ['./payment-types.component.scss']
 })
 export class PaymentTypesComponent implements OnInit {
-
   /** Payment Types data. */
   paymentTypesData: any;
   /** Columns to be displayed in payment types table. */
-  displayedColumns: string[] = ['name', 'description', 'codeName', 'isSystemDefined', 'isCashPayment', 'position', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'description',
+    'codeName',
+    'isSystemDefined',
+    'isCashPayment',
+    'position',
+    'actions'
+  ];
   /** Data source for payment types table. */
   dataSource: MatTableDataSource<any>;
 
@@ -40,10 +47,12 @@ export class PaymentTypesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute,
-              private dialog: MatDialog) {
-    this.route.data.subscribe(( data: { paymentTypes: any }) => {
+  constructor(
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { paymentTypes: any }) => {
       this.paymentTypesData = data.paymentTypes;
     });
   }
@@ -82,13 +91,11 @@ export class PaymentTypesComponent implements OnInit {
     });
     deletePaymentTypeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deletePaymentType(paymentTypeId)
-          .subscribe(() => {
-            this.paymentTypesData = this.paymentTypesData.filter((paymentType: any) => paymentType.id !== paymentTypeId);
-            this.setPaymentTypes();
-          });
+        this.organizationService.deletePaymentType(paymentTypeId).subscribe(() => {
+          this.paymentTypesData = this.paymentTypesData.filter((paymentType: any) => paymentType.id !== paymentTypeId);
+          this.setPaymentTypes();
+        });
       }
     });
   }
-
 }

@@ -11,10 +11,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./undo-transaction-dialog.component.scss']
 })
 export class UndoTransactionDialogComponent {
-
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<UndoTransactionDialogComponent>) { }
-
+  constructor(public dialogRef: MatDialogRef<UndoTransactionDialogComponent>) {}
 }

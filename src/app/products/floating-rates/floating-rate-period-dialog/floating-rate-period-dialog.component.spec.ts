@@ -8,9 +8,8 @@ describe('FloatingRatePeriodDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FloatingRatePeriodDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [FloatingRatePeriodDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

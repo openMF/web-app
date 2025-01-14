@@ -8,9 +8,8 @@ describe('DisburseToSavingsAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DisburseToSavingsAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [DisburseToSavingsAccountComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

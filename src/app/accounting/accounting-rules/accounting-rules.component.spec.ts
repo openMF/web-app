@@ -8,9 +8,8 @@ describe('AccountingRulesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccountingRulesComponent ]
-    })
-    .compileComponents();
+      declarations: [AccountingRulesComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

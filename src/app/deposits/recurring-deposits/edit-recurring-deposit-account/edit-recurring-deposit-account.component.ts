@@ -22,23 +22,27 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./edit-recurring-deposit-account.component.scss']
 })
 export class EditRecurringDepositAccountComponent {
-
   /** Imports all the step component */
-  @ViewChild(RecurringDepositsAccountDetailsStepComponent, { static: true }) recurringDepositsAccountDetailsStep: RecurringDepositsAccountDetailsStepComponent;
-  @ViewChild(RecurringDepositsAccountTermsStepComponent, { static: true }) recurringDepositAccountTermsStep: RecurringDepositsAccountTermsStepComponent;
-  @ViewChild(RecurringDepositsAccountSettingsStepComponent, { static: true }) recurringDepositAccountSettingsStep: RecurringDepositsAccountSettingsStepComponent;
-  @ViewChild(RecurringDepositsAccountChargesStepComponent, { static: true }) recurringDepositAccountChargesStep: RecurringDepositsAccountChargesStepComponent;
+  @ViewChild(RecurringDepositsAccountDetailsStepComponent, { static: true })
+  recurringDepositsAccountDetailsStep: RecurringDepositsAccountDetailsStepComponent;
+  @ViewChild(RecurringDepositsAccountTermsStepComponent, { static: true })
+  recurringDepositAccountTermsStep: RecurringDepositsAccountTermsStepComponent;
+  @ViewChild(RecurringDepositsAccountSettingsStepComponent, { static: true })
+  recurringDepositAccountSettingsStep: RecurringDepositsAccountSettingsStepComponent;
+  @ViewChild(RecurringDepositsAccountChargesStepComponent, { static: true })
+  recurringDepositAccountChargesStep: RecurringDepositsAccountChargesStepComponent;
 
   /** Recurring Deposits Account And Template */
   recurringDepositsAccountAndTemplate: any;
   /** Recurring Deposit Account Product Template */
   recurringDepositsAccountProductTemplate: any;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
     private recurringDepositsService: RecurringDepositsService,
-    private settingsService: SettingsService,
+    private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { recurringDepositsAccountAndTemplate: any }) => {
       this.recurringDepositsAccountAndTemplate = data.recurringDepositsAccountAndTemplate;
@@ -74,12 +78,10 @@ export class EditRecurringDepositAccountComponent {
       this.recurringDepositAccountDetailsForm.valid &&
       this.recurringDepositAccountTermsForm.valid &&
       this.recurringDepositAccountSettingsForm.valid &&
-      (
-        !this.recurringDepositAccountDetailsForm.pristine ||
+      (!this.recurringDepositAccountDetailsForm.pristine ||
         !this.recurringDepositAccountTermsForm.pristine ||
         !this.recurringDepositAccountSettingsForm.pristine ||
-        !this.recurringDepositAccountChargesStep.pristine
-      )
+        !this.recurringDepositAccountChargesStep.pristine)
     );
   }
 
@@ -89,10 +91,9 @@ export class EditRecurringDepositAccountComponent {
       ...this.recurringDepositsAccountDetailsStep.recurringDepositAccountDetails,
       ...this.recurringDepositAccountTermsStep.recurringDepositAccountTerms,
       ...this.recurringDepositAccountSettingsStep.recurringDepositAccountSettings,
-      ...this.recurringDepositAccountChargesStep.recurringDepositAccountCharges,
+      ...this.recurringDepositAccountChargesStep.recurringDepositAccountCharges
     };
   }
-
 
   /** Retrieves Data of all forms except Currency to submit the data */
   get recurringDepositAccount() {
@@ -100,7 +101,7 @@ export class EditRecurringDepositAccountComponent {
       ...this.recurringDepositsAccountDetailsStep.recurringDepositAccountDetails,
       ...this.recurringDepositAccountTermsStep.recurringDepositAccountTerms,
       ...this.recurringDepositAccountSettingsStep.recurringDepositAccountSettings,
-      ...this.recurringDepositAccountChargesStep.recurringDepositAccountCharges,
+      ...this.recurringDepositAccountChargesStep.recurringDepositAccountCharges
     };
   }
 
@@ -121,17 +122,23 @@ export class EditRecurringDepositAccountComponent {
         feeOnMonthDay: charge.feeOnMonthDay,
         feeInterval: charge.feeInterval
       })),
-      isCalendarInherited: this.recurringDepositAccount.recurringDepositAccount ? this.recurringDepositAccount.recurringDepositAccount : false,
+      isCalendarInherited: this.recurringDepositAccount.recurringDepositAccount
+        ? this.recurringDepositAccount.recurringDepositAccount
+        : false,
       submittedOnDate: this.dateUtils.formatDate(this.recurringDepositAccount.submittedOnDate, dateFormat),
-      expectedFirstDepositOnDate: this.dateUtils.formatDate(this.recurringDepositAccount.expectedFirstDepositOnDate, dateFormat),
+      expectedFirstDepositOnDate: this.dateUtils.formatDate(
+        this.recurringDepositAccount.expectedFirstDepositOnDate,
+        dateFormat
+      ),
       dateFormat,
       monthDayFormat,
       locale
     };
 
-    this.recurringDepositsService.updateRecurringDepositAccount(this.recurringDepositsAccountAndTemplate.id, recurringDepositAccount).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.recurringDepositsService
+      .updateRecurringDepositAccount(this.recurringDepositsAccountAndTemplate.id, recurringDepositAccount)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
-
 }

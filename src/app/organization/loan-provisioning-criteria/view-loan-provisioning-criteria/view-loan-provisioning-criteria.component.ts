@@ -19,13 +19,19 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./view-loan-provisioning-criteria.component.scss']
 })
 export class ViewLoanProvisioningCriteriaComponent implements OnInit {
-
   /** Loan Provisioning data. */
   provisioningData: any;
   /** Loan Product String. */
   loanProducts = '';
   /** Column Headers for Mat Table. */
-  displayedColumns: string[] = ['category', 'minAge', 'maxAge', 'percentage', 'liabilityAccount', 'expenseAccount'];
+  displayedColumns: string[] = [
+    'category',
+    'minAge',
+    'maxAge',
+    'percentage',
+    'liabilityAccount',
+    'expenseAccount'
+  ];
   /** Data source for loan provisioning criteria table. */
   dataSource: MatTableDataSource<any>;
 
@@ -36,12 +42,14 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public dialog: MatDialog) {
-      this.route.data.subscribe((data: { loanProvisioningCriteria: any }) => {
-        this.provisioningData = data.loanProvisioningCriteria;
+  constructor(
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { loanProvisioningCriteria: any }) => {
+      this.provisioningData = data.loanProvisioningCriteria;
     });
   }
 
@@ -55,7 +63,7 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
   setLoanProvisioningSelectedCriteria() {
     this.dataSource = new MatTableDataSource(this.provisioningData.definitions);
 
-     /** Get load products as a string. */
+    /** Get load products as a string. */
     for (let _id = 0; _id < this.provisioningData.loanProducts.length; _id++) {
       this.loanProducts += this.provisioningData.loanProducts[_id].name + ',';
     }
@@ -70,12 +78,10 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
     });
     deleteCriteriaDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteProvisioningCriteria(this.provisioningData.criteriaId)
-          .subscribe(() => {
-            this.router.navigate(['/organization/provisioningcriteria']);
-          });
+        this.organizationService.deleteProvisioningCriteria(this.provisioningData.criteriaId).subscribe(() => {
+          this.router.navigate(['/organization/provisioningcriteria']);
+        });
       }
     });
   }
-
 }

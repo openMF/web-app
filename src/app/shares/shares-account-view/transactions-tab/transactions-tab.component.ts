@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./transactions-tab.component.scss']
 })
 export class TransactionsTabComponent implements OnInit {
-
   /** Shares Account Data */
   shareAccountData: any;
   /** Transactions Data */
@@ -43,5 +42,4 @@ export class TransactionsTabComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.transactionsData);
   }
-
 }

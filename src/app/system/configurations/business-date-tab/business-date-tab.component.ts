@@ -50,13 +50,14 @@ export class BusinessDateTabComponent implements OnInit {
     private settingsService: SettingsService,
     private formBuilder: UntypedFormBuilder,
     private dateUtils: Dates,
-    private alertService: AlertService) {}
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
       if (alertType === SettingsService.businessDateType + ' Set Config') {
-        this.isBusinessDateEnabled = (alertEvent.message === 'enabled') ? true : false;
+        this.isBusinessDateEnabled = alertEvent.message === 'enabled' ? true : false;
         if (this.isBusinessDateEnabled) {
           this.setBusinessDates();
           this.createBusinessDateForm();
@@ -71,19 +72,19 @@ export class BusinessDateTabComponent implements OnInit {
   /**
    * Get the Configuration and the Business Date data
    */
-   getConfigurations(): void {
-    this.systemService.getConfigurationByName(SettingsService.businessDateConfigName)
-    .subscribe((configurationData: any) => {
-      this.isBusinessDateEnabled = configurationData.enabled;
-      if (this.isBusinessDateEnabled) {
-        this.setBusinessDates();
-      }
-    });
+  getConfigurations(): void {
+    this.systemService
+      .getConfigurationByName(SettingsService.businessDateConfigName)
+      .subscribe((configurationData: any) => {
+        this.isBusinessDateEnabled = configurationData.enabled;
+        if (this.isBusinessDateEnabled) {
+          this.setBusinessDates();
+        }
+      });
   }
 
   setBusinessDates(): void {
-    this.systemService.getBusinessDates()
-    .subscribe((businessDateData: any) => {
+    this.systemService.getBusinessDates().subscribe((businessDateData: any) => {
       businessDateData.forEach((data: any) => {
         if (data.type === SettingsService.businessDateType) {
           this.businessDate = new Date(data.date);
@@ -105,15 +106,21 @@ export class BusinessDateTabComponent implements OnInit {
    */
   createBusinessDateForm(): void {
     this.businessDateForm = this.formBuilder.group({
-      'businessDate': [new Date(), Validators.required],
-      'cobDate': [new Date(), Validators.required],
+      businessDate: [
+        new Date(),
+        Validators.required
+      ],
+      cobDate: [
+        new Date(),
+        Validators.required
+      ]
     });
   }
 
   /**
    * Flag to display or not the datepicker control to set the Business Date value
    */
-   editInProgressToggle(index: any): void {
+  editInProgressToggle(index: any): void {
     this.dateIndex = index;
     this.isEditInProgress = !this.isEditInProgress;
   }

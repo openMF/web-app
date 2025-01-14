@@ -13,11 +13,10 @@ import { ClientsService } from '../clients.service';
  */
 @Injectable()
 export class ClientDataAndTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {ClientsService} ClientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) { }
+  constructor(private clientsService: ClientsService) {}
 
   /**
    * Returns the Clients data and template.
@@ -27,5 +26,4 @@ export class ClientDataAndTemplateResolver implements Resolve<Object> {
     const clientId = route.paramMap.get('clientId');
     return this.clientsService.getClientDataAndTemplate(clientId);
   }
-
 }

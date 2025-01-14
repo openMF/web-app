@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
@@ -13,7 +13,6 @@ import { SystemService } from '../../system.service';
  */
 @Injectable()
 export class ManageSchedulerJobResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService System service.
    */
@@ -27,5 +26,4 @@ export class ManageSchedulerJobResolver implements Resolve<Object> {
     const jobId = route.paramMap.get('id');
     return this.systemService.getSelectedJob(jobId);
   }
-
 }

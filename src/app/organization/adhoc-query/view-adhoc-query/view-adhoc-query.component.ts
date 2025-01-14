@@ -18,7 +18,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./view-adhoc-query.component.scss']
 })
 export class ViewAdhocQueryComponent {
-
   /** Adhoc query data. */
   adhocQueryData: any;
 
@@ -29,10 +28,12 @@ export class ViewAdhocQueryComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog) {
+  constructor(
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { adhocQuery: any }) => {
       this.adhocQueryData = data.adhocQuery;
     });
@@ -59,12 +60,10 @@ export class ViewAdhocQueryComponent {
     });
     deleteAdhocQueryDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteAdhocQuery(this.adhocQueryData.id)
-        .subscribe(() => {
+        this.organizationService.deleteAdhocQuery(this.adhocQueryData.id).subscribe(() => {
           this.router.navigate(['/organization/adhoc-query']);
         });
       }
     });
   }
-
 }

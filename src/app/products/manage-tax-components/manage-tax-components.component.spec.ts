@@ -8,9 +8,8 @@ describe('FixedDepositProductsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageTaxComponentsComponent ]
-    })
-    .compileComponents();
+      declarations: [ManageTaxComponentsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

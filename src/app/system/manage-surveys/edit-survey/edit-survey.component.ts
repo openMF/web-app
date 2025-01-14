@@ -23,7 +23,6 @@ import { Survey, QuestionData, ResponseData } from './../survey.model';
   styleUrls: ['./edit-survey.component.scss']
 })
 export class EditSurveyComponent {
-
   /** Survey form. */
   surveyForm: UntypedFormGroup;
 
@@ -34,27 +33,29 @@ export class EditSurveyComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public dialog: MatDialog) {
-                this.createSurveyForm();
-                this.route.data.subscribe((data: { survey: any }) => {
-                  this.prepareSurveyForm(data.survey);
-                });
-              }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
+    this.createSurveyForm();
+    this.route.data.subscribe((data: { survey: any }) => {
+      this.prepareSurveyForm(data.survey);
+    });
+  }
 
   /**
    * Takes an object of type Survey
    * and prepares the survey form.
    */
   prepareSurveyForm(survey: Survey) {
-      this.surveyForm.get('key').setValue(survey.key);
-      this.surveyForm.get('name').setValue(survey.name);
-      this.surveyForm.get('countryCode').setValue(survey.countryCode);
-      this.surveyForm.get('description').setValue(survey.description);
-      this.prepareQuestionDatas(this.questionDatas, survey.questionDatas);
+    this.surveyForm.get('key').setValue(survey.key);
+    this.surveyForm.get('name').setValue(survey.name);
+    this.surveyForm.get('countryCode').setValue(survey.countryCode);
+    this.surveyForm.get('description').setValue(survey.description);
+    this.prepareQuestionDatas(this.questionDatas, survey.questionDatas);
   }
 
   /**
@@ -68,7 +69,7 @@ export class EditSurveyComponent {
       questionForm.get('text').setValue(questionData.text);
       questionForm.get('description').setValue(questionData.description);
       // questionForm.get('responseDatas').setValue([]);
-      this.prepareResponseDatas((<UntypedFormArray>questionForm.get('responseDatas')), questionData.responseDatas, idx);
+      this.prepareResponseDatas(<UntypedFormArray>questionForm.get('responseDatas'), questionData.responseDatas, idx);
     });
   }
 
@@ -92,11 +93,22 @@ export class EditSurveyComponent {
    */
   createSurveyForm() {
     this.surveyForm = this.formBuilder.group({
-      'key': ['', Validators.required],
-      'name': ['', Validators.required],
-      'countryCode': ['', [Validators.required, Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')]],
-      'description': [''],
-      'questionDatas': this.formBuilder.array([])
+      key: [
+        '',
+        Validators.required
+      ],
+      name: [
+        '',
+        Validators.required
+      ],
+      countryCode: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^\\s*([A-Za-z]{2})?\\s*$')]
+      ],
+      description: [''],
+      questionDatas: this.formBuilder.array([])
     });
   }
 
@@ -114,7 +126,11 @@ export class EditSurveyComponent {
    * @returns {FormArray} Responses form array.
    */
   getResponseDatas(questionIndex: number): UntypedFormArray {
-    return this.surveyForm.get(['questionDatas', questionIndex, 'responseDatas']) as UntypedFormArray;
+    return this.surveyForm.get([
+      'questionDatas',
+      questionIndex,
+      'responseDatas'
+    ]) as UntypedFormArray;
   }
 
   /**
@@ -123,11 +139,17 @@ export class EditSurveyComponent {
    */
   createQuestionForm(): UntypedFormGroup {
     return this.formBuilder.group({
-      'key': ['', Validators.required],
-      'text': ['', Validators.required],
-      'description': [''],
-      'responseDatas': this.formBuilder.array([this.createResponseForm()]),
-      'sequenceNo': ['']
+      key: [
+        '',
+        Validators.required
+      ],
+      text: [
+        '',
+        Validators.required
+      ],
+      description: [''],
+      responseDatas: this.formBuilder.array([this.createResponseForm()]),
+      sequenceNo: ['']
     });
   }
 
@@ -154,9 +176,17 @@ export class EditSurveyComponent {
    */
   createResponseForm(): UntypedFormGroup {
     return this.formBuilder.group({
-      'text': ['', Validators.required],
-      'value': ['', [Validators.required, Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')]],
-      'sequenceNo': ['']
+      text: [
+        '',
+        Validators.required
+      ],
+      value: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^\\s*[-]?\\d{0,4}\\s*$')]
+      ],
+      sequenceNo: ['']
     });
   }
 
@@ -184,9 +214,15 @@ export class EditSurveyComponent {
    */
   updateSequenceNumber() {
     for (let questionIndex = 0; questionIndex < this.questionDatas.length; questionIndex++) {
-      this.questionDatas.at(questionIndex).get('sequenceNo').setValue(questionIndex + 1);
+      this.questionDatas
+        .at(questionIndex)
+        .get('sequenceNo')
+        .setValue(questionIndex + 1);
       for (let responseIndex = 0; responseIndex < this.getResponseDatas(questionIndex).length; responseIndex++) {
-        this.getResponseDatas(questionIndex).at(responseIndex).get('sequenceNo').setValue(responseIndex + 1);
+        this.getResponseDatas(questionIndex)
+          .at(responseIndex)
+          .get('sequenceNo')
+          .setValue(responseIndex + 1);
       }
     }
   }
@@ -227,9 +263,10 @@ export class EditSurveyComponent {
     this.surveyForm.patchValue({
       countryCode: this.surveyForm.value.countryCode.toUpperCase()
     });
-    this.systemService.editSurvey(this.route.snapshot.paramMap.get('id'), this.surveyForm.value).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.systemService
+      .editSurvey(this.route.snapshot.paramMap.get('id'), this.surveyForm.value)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
-
 }

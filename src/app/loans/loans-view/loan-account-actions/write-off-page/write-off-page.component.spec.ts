@@ -8,9 +8,8 @@ describe('WriteOffPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WriteOffPageComponent ]
-    })
-    .compileComponents();
+      declarations: [WriteOffPageComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

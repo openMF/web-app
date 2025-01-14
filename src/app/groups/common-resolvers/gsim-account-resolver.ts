@@ -13,11 +13,10 @@ import { GroupsService } from '../groups.service';
  */
 @Injectable()
 export class GSIMAccountsResolver implements Resolve<Object> {
-
   /**
    * @param {GroupsService} groupsService Groups service.
    */
-  constructor(private groupsService: GroupsService) { }
+  constructor(private groupsService: GroupsService) {}
 
   /**
    * Returns the Group's GSIM Acccounts data.
@@ -28,5 +27,4 @@ export class GSIMAccountsResolver implements Resolve<Object> {
     const groupId = route.parent.paramMap.get('groupId');
     return this.groupsService.getGSIMAccountsData(groupId);
   }
-
 }

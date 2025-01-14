@@ -8,9 +8,8 @@ describe('WaiveInterestComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WaiveInterestComponent ]
-    })
-    .compileComponents();
+      declarations: [WaiveInterestComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

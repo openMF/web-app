@@ -16,7 +16,6 @@ import { ReportsService } from '../reports.service';
   styleUrls: ['./xbrl.component.scss']
 })
 export class XBRLComponent implements OnInit, AfterViewInit {
-
   /** Mix Taxonomy Array */
   mixtaxonomyArray: any = [];
   /** Mix Mappings */
@@ -26,7 +25,12 @@ export class XBRLComponent implements OnInit, AfterViewInit {
   /** Filtered GL Accounts */
   filteredGlAccounts: any;
   /** Columns to be displayed in reports table. */
-  displayedColumns: string[] = ['info', 'name', 'dimension', 'mapping'];
+  displayedColumns: string[] = [
+    'info',
+    'name',
+    'dimension',
+    'mapping'
+  ];
   /** Data source for reports table. */
   dataSource = new MatTableDataSource();
   /** XBRL save status */
@@ -39,10 +43,12 @@ export class XBRLComponent implements OnInit, AfterViewInit {
    * @param {Router} router: Route.
    * @param {ReportService} reportService ReportService
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private reportService: ReportsService) {
-    this.route.data.subscribe(( data: { mixtaxonomy: any, mixmapping: any, glAccounts: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private reportService: ReportsService
+  ) {
+    this.route.data.subscribe((data: { mixtaxonomy: any; mixmapping: any; glAccounts: any }) => {
       this.mixtaxonomyArray = data.mixtaxonomy;
       this.mixMappingJson = data.mixmapping.config || JSON.stringify({});
       this.glAccounts = data.glAccounts;
@@ -56,19 +62,21 @@ export class XBRLComponent implements OnInit, AfterViewInit {
     if (localStorage.getItem('XbrlReportSaveSuccess')) {
       localStorage.removeItem('XbrlReportSaveSuccess');
       this.XBRLSuccess = true;
-      setTimeout(() => { this.XBRLSuccess = false; }, 3000);
+      setTimeout(() => {
+        this.XBRLSuccess = false;
+      }, 3000);
     }
     this.createMappings();
     this.dataSource = new MatTableDataSource(this.mixtaxonomyArray);
     this.setDatasourceFilter();
   }
 
- /**
-  * Subscribe to taxonomy's value changes and filters options accordingly.
-  */
+  /**
+   * Subscribe to taxonomy's value changes and filters options accordingly.
+   */
   ngAfterViewInit() {
     this.mixtaxonomyArray.forEach((taxonomy: any) => {
-      taxonomy.mapping?.valueChanges.subscribe( (value: string) => {
+      taxonomy.mapping?.valueChanges.subscribe((value: string) => {
         this.filteredGlAccounts = this.applyFilter(value);
       });
     });
@@ -80,8 +88,8 @@ export class XBRLComponent implements OnInit, AfterViewInit {
   createMappings() {
     this.mixtaxonomyArray.forEach((taxonomy: any) => {
       const mapping = JSON.parse(this.mixMappingJson)[taxonomy.id];
-        taxonomy.mapping = new UntypedFormControl('');
-        taxonomy.mapping.value = mapping || '';
+      taxonomy.mapping = new UntypedFormControl('');
+      taxonomy.mapping.value = mapping || '';
     });
   }
 
@@ -120,8 +128,8 @@ export class XBRLComponent implements OnInit, AfterViewInit {
    * @returns {string} Gl Account name if valid otherwise undefined.
    */
   displayGLAccount(glAccount?: any): string | undefined {
-    if (typeof(glAccount) === 'object') {
-     return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : undefined;
+    if (typeof glAccount === 'object') {
+      return glAccount ? glAccount.name + ' (' + glAccount.glCode + ')' : undefined;
     } else {
       return glAccount;
     }
@@ -142,7 +150,7 @@ export class XBRLComponent implements OnInit, AfterViewInit {
   submit() {
     const config: any = {};
     const serialObject: any = {};
-    this.mixtaxonomyArray.forEach( (taxonomy: any) => {
+    this.mixtaxonomyArray.forEach((taxonomy: any) => {
       config[taxonomy.id] = taxonomy.mapping.value;
     });
     serialObject['config'] = JSON.stringify(config);
@@ -152,5 +160,4 @@ export class XBRLComponent implements OnInit, AfterViewInit {
       this.reloadComponent();
     });
   }
-
 }

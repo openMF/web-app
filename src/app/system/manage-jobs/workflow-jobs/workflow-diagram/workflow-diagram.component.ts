@@ -3,7 +3,6 @@ import { DagreNodesOnlyLayout, Edge, Layout, Node } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
 
-
 export class JobStep {
   id: number;
   stepName: string;
@@ -18,7 +17,10 @@ export class JobStep {
 export class WorkflowDiagramComponent implements OnInit {
   @Input() jobStepsData: JobStep[] = [];
 
-  diagramSize: [number, number] = [1024, 300];
+  diagramSize: [number, number] = [
+    1024,
+    300
+  ];
   public nodes: Node[] = [];
   public links: Edge[] = [];
   public layoutSettings = {
@@ -27,11 +29,15 @@ export class WorkflowDiagramComponent implements OnInit {
   public curve: any = shape.curveLinear;
   public layout: Layout = new DagreNodesOnlyLayout();
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C']
+    domain: [
+      '#5AA454',
+      '#A10A28',
+      '#C7B42C'
+    ]
   };
   center$ = new Subject<any>();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     let nodeCounter = 0;
@@ -49,8 +55,8 @@ export class WorkflowDiagramComponent implements OnInit {
 
       if (nodeCounter > 0) {
         const edge: Edge = {
-          id: `link_${(jobStep.id)}`,
-          source: `node_${(jobStep.order - 1)}`,
+          id: `link_${jobStep.id}`,
+          source: `node_${jobStep.order - 1}`,
           target: currentNode,
           label: '',
           data: {
@@ -68,7 +74,6 @@ export class WorkflowDiagramComponent implements OnInit {
   }
 
   public getStyles(node: Node): any {
-      return 'node_odd';
+    return 'node_odd';
   }
-
 }

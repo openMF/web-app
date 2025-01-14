@@ -7,7 +7,6 @@ import { LoanProducts } from '../../loan-products';
   styleUrls: ['./loan-product-preview-step.component.scss']
 })
 export class LoanProductPreviewStepComponent implements OnInit, OnChanges {
-
   @Input() loanProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() loanProduct: any;
@@ -15,7 +14,7 @@ export class LoanProductPreviewStepComponent implements OnInit, OnChanges {
 
   isAdvancedPaymentAllocation = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.advancedPaymentAllocation();
@@ -26,7 +25,8 @@ export class LoanProductPreviewStepComponent implements OnInit, OnChanges {
   }
 
   advancedPaymentAllocation() {
-    this.isAdvancedPaymentAllocation = LoanProducts.isAdvancedPaymentAllocationStrategy(this.loanProduct.transactionProcessingStrategyCode);
+    this.isAdvancedPaymentAllocation = LoanProducts.isAdvancedPaymentAllocationStrategy(
+      this.loanProduct.transactionProcessingStrategyCode
+    );
   }
-
 }

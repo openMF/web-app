@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./close-savings-account.component.scss']
 })
 export class CloseSavingsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -41,12 +40,14 @@ export class CloseSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private savingsService: SavingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsService: SavingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.paymentTypeOptions = data.savingsAccountActionData[0].paymentTypeOptions;
       this.transactionAmount = data.savingsAccountActionData[1].summary.accountBalance;
@@ -68,10 +69,13 @@ export class CloseSavingsAccountComponent implements OnInit {
    */
   createCloseSavingsAccountForm() {
     this.closeSavingsAccountForm = this.formBuilder.group({
-      'closedOnDate': ['', Validators.required],
-      'withdrawBalance': [false],
-      'postInterestValidationOnClosure': [false],
-      'note': ['']
+      closedOnDate: [
+        '',
+        Validators.required
+      ],
+      withdrawBalance: [false],
+      postInterestValidationOnClosure: [false],
+      note: ['']
     });
   }
 
@@ -81,7 +85,10 @@ export class CloseSavingsAccountComponent implements OnInit {
   buildDependencies() {
     this.closeSavingsAccountForm.get('withdrawBalance').valueChanges.subscribe((value: boolean) => {
       if (value) {
-        this.closeSavingsAccountForm.addControl('amount', new UntypedFormControl({value: this.transactionAmount, disabled: true}));
+        this.closeSavingsAccountForm.addControl(
+          'amount',
+          new UntypedFormControl({ value: this.transactionAmount, disabled: true })
+        );
         this.closeSavingsAccountForm.addControl('paymentTypeId', new UntypedFormControl(''));
       } else {
         this.closeSavingsAccountForm.removeControl('amount');
@@ -131,5 +138,4 @@ export class CloseSavingsAccountComponent implements OnInit {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
-
 }

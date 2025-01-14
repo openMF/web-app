@@ -15,20 +15,23 @@ import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
 
-
 @Component({
   selector: 'mifosx-edit-saving-product',
   templateUrl: './edit-saving-product.component.html',
   styleUrls: ['./edit-saving-product.component.scss']
 })
 export class EditSavingProductComponent {
-
-  @ViewChild(SavingProductDetailsStepComponent, { static: true }) savingProductDetailsStep: SavingProductDetailsStepComponent;
-  @ViewChild(SavingProductCurrencyStepComponent, { static: true }) savingProductCurrencyStep: SavingProductCurrencyStepComponent;
+  @ViewChild(SavingProductDetailsStepComponent, { static: true })
+  savingProductDetailsStep: SavingProductDetailsStepComponent;
+  @ViewChild(SavingProductCurrencyStepComponent, { static: true })
+  savingProductCurrencyStep: SavingProductCurrencyStepComponent;
   @ViewChild(SavingProductTermsStepComponent, { static: true }) savingProductTermsStep: SavingProductTermsStepComponent;
-  @ViewChild(SavingProductSettingsStepComponent, { static: true }) savingProductSettingsStep: SavingProductSettingsStepComponent;
-  @ViewChild(SavingProductChargesStepComponent, { static: true }) savingProductChargesStep: SavingProductChargesStepComponent;
-  @ViewChild(SavingProductAccountingStepComponent, { static: true }) savingProductAccountingStep: SavingProductAccountingStepComponent;
+  @ViewChild(SavingProductSettingsStepComponent, { static: true })
+  savingProductSettingsStep: SavingProductSettingsStepComponent;
+  @ViewChild(SavingProductChargesStepComponent, { static: true })
+  savingProductChargesStep: SavingProductChargesStepComponent;
+  @ViewChild(SavingProductAccountingStepComponent, { static: true })
+  savingProductAccountingStep: SavingProductAccountingStepComponent;
 
   savingProductAndTemplate: any;
   accountingRuleData: string[] = [];
@@ -40,11 +43,13 @@ export class EditSavingProductComponent {
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(private route: ActivatedRoute,
-              private productsService: ProductsService,
-              private router: Router,
-              private settingsService: SettingsService,
-              private accounting: Accounting) {
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private router: Router,
+    private settingsService: SettingsService,
+    private accounting: Accounting
+  ) {
     this.route.data.subscribe((data: { savingProductAndTemplate: any }) => {
       this.savingProductAndTemplate = data.savingProductAndTemplate;
     });
@@ -78,14 +83,12 @@ export class EditSavingProductComponent {
       this.savingProductTermsForm.valid &&
       this.savingProductSettingsForm.valid &&
       this.savingProductAccountingForm.valid &&
-      (
-        !this.savingProductDetailsForm.pristine ||
+      (!this.savingProductDetailsForm.pristine ||
         !this.savingProductCurrencyForm.pristine ||
         !this.savingProductTermsForm.pristine ||
         !this.savingProductSettingsForm.pristine ||
         !this.savingProductChargesStep.pristine ||
-        !this.savingProductAccountingForm.pristine
-      )
+        !this.savingProductAccountingForm.pristine)
     );
   }
 
@@ -108,10 +111,16 @@ export class EditSavingProductComponent {
       locale: this.settingsService.language.code // locale required for nominalAnnualInterestRate
     };
     delete savingProduct.advancedAccountingRules;
-    this.productsService.updateSavingProduct(this.savingProductAndTemplate.id, savingProduct)
+    this.productsService
+      .updateSavingProduct(this.savingProductAndTemplate.id, savingProduct)
       .subscribe((response: any) => {
-        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
       });
   }
-
 }

@@ -22,11 +22,12 @@ import { LoansAccountDatatableStepComponent } from '../loans-account-stepper/loa
   styleUrls: ['./create-loans-account.component.scss']
 })
 export class CreateLoansAccountComponent {
-
   /** Imports all the step component */
-  @ViewChild(LoansAccountDetailsStepComponent, { static: true }) loansAccountDetailsStep: LoansAccountDetailsStepComponent;
+  @ViewChild(LoansAccountDetailsStepComponent, { static: true })
+  loansAccountDetailsStep: LoansAccountDetailsStepComponent;
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
-  @ViewChild(LoansAccountChargesStepComponent, { static: true }) loansAccountChargesStep: LoansAccountChargesStepComponent;
+  @ViewChild(LoansAccountChargesStepComponent, { static: true })
+  loansAccountChargesStep: LoansAccountChargesStepComponent;
   /** Get handle on dtloan tags in the template */
   @ViewChildren('dtloan') loanDatatables: QueryList<LoansAccountDatatableStepComponent>;
 
@@ -52,7 +53,8 @@ export class CreateLoansAccountComponent {
    * @param {SettingsService} settingsService Settings Service
    * @param {ClientsService} clientService Client Service
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private loansService: LoansService,
     private settingsService: SettingsService,
@@ -74,8 +76,10 @@ export class CreateLoansAccountComponent {
     this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
       this.collateralOptions = response;
     });
-    const entityId = (this.loansAccountTemplate.clientId) ? this.loansAccountTemplate.clientId : this.loansAccountTemplate.group.id;
-    const isGroup = (this.loansAccountTemplate.clientId) ? false : true;
+    const entityId = this.loansAccountTemplate.clientId
+      ? this.loansAccountTemplate.clientId
+      : this.loansAccountTemplate.group.id;
+    const isGroup = this.loansAccountTemplate.clientId ? false : true;
     const productId = this.loansAccountProductTemplate.loanProductId;
     this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
       this.multiDisburseLoan = response.multiDisburseLoan;
@@ -105,10 +109,7 @@ export class CreateLoansAccountComponent {
 
   /** Checks wheter all the forms in different steps are valid or not */
   get loansAccountFormValid() {
-    return (
-      this.loansAccountDetailsForm.valid &&
-      this.loansAccountTermsForm.valid
-    );
+    return this.loansAccountDetailsForm.valid && this.loansAccountTermsForm.valid;
   }
 
   /** Gets principal Amount */
@@ -133,8 +134,13 @@ export class CreateLoansAccountComponent {
   submit() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const payload = this.loansService.buildLoanRequestPayload(this.loansAccount, this.loansAccountTemplate,
-      this.loansAccountProductTemplate.calendarOptions, locale, dateFormat);
+    const payload = this.loansService.buildLoanRequestPayload(
+      this.loansAccount,
+      this.loansAccountTemplate,
+      this.loansAccountProductTemplate.calendarOptions,
+      locale,
+      dateFormat
+    );
 
     if (this.loansAccountProductTemplate.datatables && this.loansAccountProductTemplate.datatables.length > 0) {
       const datatables: any[] = [];
@@ -145,8 +151,14 @@ export class CreateLoansAccountComponent {
     }
 
     this.loansService.createLoansAccount(payload).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId, 'general'], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId,
+          'general'
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

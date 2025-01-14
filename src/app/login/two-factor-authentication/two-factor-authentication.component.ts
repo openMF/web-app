@@ -17,7 +17,6 @@ import { AuthenticationService } from '../../core/authentication/authentication.
   styleUrls: ['./two-factor-authentication.component.scss']
 })
 export class TwoFactorAuthenticationComponent implements OnInit {
-
   /** Available delivery methods to receive OTP. */
   twoFactorAuthenticationDeliveryMethods: any;
   /** Delivery method selected to receive OTP. */
@@ -39,8 +38,10 @@ export class TwoFactorAuthenticationComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private authenticationService: AuthenticationService) {  }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private authenticationService: AuthenticationService
+  ) {}
 
   /**
    * Creates two factor authentication delivery method form.
@@ -49,10 +50,9 @@ export class TwoFactorAuthenticationComponent implements OnInit {
    */
   ngOnInit() {
     this.createTwoFactorAuthenticationDeliveryMethodForm();
-    this.authenticationService.getDeliveryMethods()
-      .subscribe((deliveryMethods: any) => {
-        this.twoFactorAuthenticationDeliveryMethods = deliveryMethods;
-      });
+    this.authenticationService.getDeliveryMethods().subscribe((deliveryMethods: any) => {
+      this.twoFactorAuthenticationDeliveryMethods = deliveryMethods;
+    });
   }
 
   /**
@@ -64,14 +64,17 @@ export class TwoFactorAuthenticationComponent implements OnInit {
     this.selectedTwoFactorAuthenticationDeliveryMethod =
       this.twoFactorAuthenticationDeliveryMethodForm.value.twoFactorAuthenticationDeliveryMethod;
 
-    this.authenticationService.requestOTP(this.selectedTwoFactorAuthenticationDeliveryMethod)
-      .pipe(finalize(() => {
-        this.twoFactorAuthenticationDeliveryMethodForm.reset();
-        this.twoFactorAuthenticationDeliveryMethodForm.markAsPristine();
-        // Angular Material Bug: Validation errors won't get removed on reset.
-        this.twoFactorAuthenticationDeliveryMethodForm.enable();
-        this.loading = false;
-      }))
+    this.authenticationService
+      .requestOTP(this.selectedTwoFactorAuthenticationDeliveryMethod)
+      .pipe(
+        finalize(() => {
+          this.twoFactorAuthenticationDeliveryMethodForm.reset();
+          this.twoFactorAuthenticationDeliveryMethodForm.markAsPristine();
+          // Angular Material Bug: Validation errors won't get removed on reset.
+          this.twoFactorAuthenticationDeliveryMethodForm.enable();
+          this.loading = false;
+        })
+      )
       .subscribe((response: any) => {
         this.createTwoFactorAuthenticationForm();
         this.otpRequested = true;
@@ -85,14 +88,18 @@ export class TwoFactorAuthenticationComponent implements OnInit {
   validateOTP() {
     this.loading = true;
     this.twoFactorAuthenticationForm.disable();
-    this.authenticationService.validateOTP(this.twoFactorAuthenticationForm.value.otp)
-      .pipe(finalize(() => {
-        this.twoFactorAuthenticationForm.reset();
-        this.twoFactorAuthenticationForm.markAsPristine();
-        // Angular Material Bug: Validation errors won't get removed on reset.
-        this.twoFactorAuthenticationForm.enable();
-        this.loading = false;
-      })).subscribe();
+    this.authenticationService
+      .validateOTP(this.twoFactorAuthenticationForm.value.otp)
+      .pipe(
+        finalize(() => {
+          this.twoFactorAuthenticationForm.reset();
+          this.twoFactorAuthenticationForm.markAsPristine();
+          // Angular Material Bug: Validation errors won't get removed on reset.
+          this.twoFactorAuthenticationForm.enable();
+          this.loading = false;
+        })
+      )
+      .subscribe();
   }
 
   /**
@@ -101,14 +108,18 @@ export class TwoFactorAuthenticationComponent implements OnInit {
   resendOTP() {
     this.resendOTPLoading = true;
     this.twoFactorAuthenticationForm.disable();
-    this.authenticationService.requestOTP(this.selectedTwoFactorAuthenticationDeliveryMethod)
-      .pipe(finalize(() => {
-        this.twoFactorAuthenticationForm.reset();
-        this.twoFactorAuthenticationForm.markAsPristine();
-        // Angular Material Bug: Validation errors won't get removed on reset.
-        this.twoFactorAuthenticationForm.enable();
-        this.resendOTPLoading = false;
-      })).subscribe();
+    this.authenticationService
+      .requestOTP(this.selectedTwoFactorAuthenticationDeliveryMethod)
+      .pipe(
+        finalize(() => {
+          this.twoFactorAuthenticationForm.reset();
+          this.twoFactorAuthenticationForm.markAsPristine();
+          // Angular Material Bug: Validation errors won't get removed on reset.
+          this.twoFactorAuthenticationForm.enable();
+          this.resendOTPLoading = false;
+        })
+      )
+      .subscribe();
   }
 
   /**
@@ -116,7 +127,10 @@ export class TwoFactorAuthenticationComponent implements OnInit {
    */
   private createTwoFactorAuthenticationDeliveryMethodForm() {
     this.twoFactorAuthenticationDeliveryMethodForm = this.formBuilder.group({
-      'twoFactorAuthenticationDeliveryMethod': ['', Validators.required]
+      twoFactorAuthenticationDeliveryMethod: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -125,8 +139,10 @@ export class TwoFactorAuthenticationComponent implements OnInit {
    */
   private createTwoFactorAuthenticationForm() {
     this.twoFactorAuthenticationForm = this.formBuilder.group({
-      'otp': ['', Validators.required]
+      otp: [
+        '',
+        Validators.required
+      ]
     });
   }
-
 }

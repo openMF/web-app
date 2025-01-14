@@ -7,10 +7,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./staff-navigation.component.scss']
 })
 export class StaffNavigationComponent {
-
   @Input() employeeData: any;
   @Input() centerData: any;
 
-  constructor() { }
-
+  constructor() {}
 }

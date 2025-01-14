@@ -21,11 +21,15 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./roles-and-permissions.component.scss']
 })
 export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
-
   /** Role data. */
   roleData: any;
   /** Columns to be displayed in roles and permissions table. */
-  displayedColumns: string[] = ['name', 'description', 'disabled', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'description',
+    'disabled',
+    'actions'
+  ];
   /** Data source for roles and permissions table. */
   dataSource: MatTableDataSource<any>;
 
@@ -49,11 +53,13 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { roles: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { roles: any }) => {
       this.roleData = data.roles;
     });
   }
@@ -97,7 +103,12 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -112,7 +123,12 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
     }
     if (this.configurationWizardService.showRolesandPermissionList === true) {
       setTimeout(() => {
-        this.showPopover(this.templateTableRolesandPermissions, this.tableRolesandPermissions.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateTableRolesandPermissions,
+          this.tableRolesandPermissions.nativeElement,
+          'top',
+          true
+        );
       });
     }
   }
@@ -136,5 +152,4 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showRolesandPermission = true;
     this.router.navigate(['/system']);
   }
-
 }

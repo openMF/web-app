@@ -22,7 +22,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./client-approval.component.scss']
 })
 export class ClientApprovalComponent {
-
   /** Grouped Clients Data */
   groupedClients: any;
   /** Checks to show the data */
@@ -34,7 +33,12 @@ export class ClientApprovalComponent {
   /** Row Selection Data */
   selection: SelectionModel<any>;
   /** Displayed Columns */
-  displayedColumns: string[] = ['select', 'name', 'accountNumber', 'staff'];
+  displayedColumns: string[] = [
+    'select',
+    'name',
+    'accountNumber',
+    'staff'
+  ];
 
   /**
    * Retrieves the grouped client data from `resolve`.
@@ -45,12 +49,14 @@ export class ClientApprovalComponent {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private dateUtils: Dates,
     private router: Router,
     private settingsService: SettingsService,
-    private tasksService: TasksService) {
+    private tasksService: TasksService
+  ) {
     this.route.data.subscribe((data: { groupedClientData: any }) => {
       this.groupedClients = _.groupBy(data.groupedClientData.pageItems, 'officeName');
       if (Object.keys(this.groupedClients).length) {
@@ -72,9 +78,9 @@ export class ClientApprovalComponent {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(dataSource3: any) {
     if (dataSource3) {
-      this.isAllSelected(dataSource3) ?
-        dataSource3.forEach((row: any) => this.selection.deselect(row)) :
-        dataSource3.forEach((row: any) => this.selection.select(row));
+      this.isAllSelected(dataSource3)
+        ? dataSource3.forEach((row: any) => this.selection.deselect(row))
+        : dataSource3.forEach((row: any) => this.selection.select(row));
     }
   }
 
@@ -94,7 +100,8 @@ export class ClientApprovalComponent {
         value: new Date(),
         type: 'datetime-local',
         required: true
-      }),
+      })
+
     ];
     const data = {
       title: 'Enter Clients Activation Date',
@@ -131,7 +138,7 @@ export class ClientApprovalComponent {
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
-        if (responseEle.statusCode = '200') {
+        if ((responseEle.statusCode = '200')) {
           activatedAccounts++;
           responseEle.body = JSON.parse(responseEle.body);
           if (selectedAccounts === activatedAccounts) {
@@ -152,8 +159,8 @@ export class ClientApprovalComponent {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/checker-inbox-and-tasks`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/checker-inbox-and-tasks`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

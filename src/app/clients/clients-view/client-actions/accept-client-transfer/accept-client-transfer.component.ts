@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./accept-client-transfer.component.scss']
 })
 export class AcceptClientTransferComponent implements OnInit {
-
   /** Accept Client Transfer form. */
   acceptClientTransferForm: UntypedFormGroup;
   /** Client Id */
@@ -33,12 +32,14 @@ export class AcceptClientTransferComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private clientsService: ClientsService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.transferDate = data.clientActionData;
     });
@@ -57,8 +58,8 @@ export class AcceptClientTransferComponent implements OnInit {
    */
   createAcceptClientTransferForm() {
     this.acceptClientTransferForm = this.formBuilder.group({
-      'transferDate': {value: new Date(this.transferDate), disabled: true},
-      'note': ['']
+      transferDate: { value: new Date(this.transferDate), disabled: true },
+      note: ['']
     });
   }
 
@@ -74,11 +75,10 @@ export class AcceptClientTransferComponent implements OnInit {
       acceptClientTransferFormData.transferDate = this.dateUtils.formatDate(prevTransferDate, dateFormat);
     }
     const data = {
-      ...acceptClientTransferFormData,
+      ...acceptClientTransferFormData
     };
     this.clientsService.executeClientCommand(this.clientId, 'acceptTransfer', data).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

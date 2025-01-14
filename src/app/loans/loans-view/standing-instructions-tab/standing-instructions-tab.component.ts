@@ -21,7 +21,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./standing-instructions-tab.component.scss']
 })
 export class StandingInstructionsTabComponent implements OnInit {
-
   /** Loans Data */
   loanDetailsData: any;
   /** Instructions Data */
@@ -29,7 +28,15 @@ export class StandingInstructionsTabComponent implements OnInit {
   /** Data source for instructions table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in instructions table. */
-  displayedColumns: string[] = ['client', 'fromAccount', 'beneficiary', 'toAccount', 'amount', 'validity', 'actions'];
+  displayedColumns: string[] = [
+    'client',
+    'fromAccount',
+    'beneficiary',
+    'toAccount',
+    'amount',
+    'validity',
+    'actions'
+  ];
 
   /** Instruction Table Reference */
   @ViewChild('instructionsTable', { static: true }) instructionTableRef: MatTable<Element>;
@@ -39,11 +46,13 @@ export class StandingInstructionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private loansService: LoansService,
     private dialog: MatDialog,
     private accountTransfersService: AccountTransfersService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetailsData = data.loanDetailsData;
     });
@@ -62,11 +71,13 @@ export class StandingInstructionsTabComponent implements OnInit {
     const accountId = this.loanDetailsData.id;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.loansService.getStandingInstructions(clientId, clientName, accountId, locale, dateFormat).subscribe((response: any) => {
-      this.instructionsData = response.pageItems;
-      this.dataSource.data = this.instructionsData;
-      this.instructionTableRef.renderRows();
-    });
+    this.loansService
+      .getStandingInstructions(clientId, clientName, accountId, locale, dateFormat)
+      .subscribe((response: any) => {
+        this.instructionsData = response.pageItems;
+        this.dataSource.data = this.instructionsData;
+        this.instructionTableRef.renderRows();
+      });
   }
 
   deleteStandingInstruction(instructionId: any) {
@@ -75,10 +86,8 @@ export class StandingInstructionsTabComponent implements OnInit {
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountTransfersService.deleteStandingInstrucions(instructionId)
-          .subscribe(() => { });
+        this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {});
       }
     });
   }
-
 }

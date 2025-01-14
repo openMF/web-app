@@ -13,7 +13,6 @@ import { SystemService } from '../system.service';
  */
 @Injectable()
 export class SurveyResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService System service.
    */
@@ -27,5 +26,4 @@ export class SurveyResolver implements Resolve<Object> {
     const surveyId = route.paramMap.get('id');
     return this.systemService.getSurvey(surveyId);
   }
-
 }

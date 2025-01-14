@@ -14,19 +14,22 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./view-survey.component.scss']
 })
 export class ViewSurveyComponent implements OnInit {
-
   /** Survey Data */
   surveyData: any;
   /** Data source for view surveys table. */
   dataSource: MatTableDataSource<any>;
   /** Columns to be displayed in list of surveys table. */
-  displayedColumns: string[] = ['surveyName', 'createdBy', 'date', 'score'];
+  displayedColumns: string[] = [
+    'surveyName',
+    'createdBy',
+    'date',
+    'score'
+  ];
 
   /** Paginator for list of surveys table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   /** Sorter for list of surveys table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
 
   /**
    * Retrieves the survey data from `resolve`.
@@ -71,5 +74,4 @@ export class ViewSurveyComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }

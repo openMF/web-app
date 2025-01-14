@@ -17,7 +17,6 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
   styleUrls: ['./edit-repayment-schedule.component.scss']
 })
 export class EditRepaymentScheduleComponent implements OnInit {
-
   /** Loan ID. */
   loanId: string;
   /** Indicates If the Schedule has been changed */
@@ -37,13 +36,15 @@ export class EditRepaymentScheduleComponent implements OnInit {
    * @param {Dates} dateUtils Dates Utils.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private loansService: LoansService,
+  constructor(
+    private loansService: LoansService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private dateUtils: Dates,
     private translateService: TranslateService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.loanId = this.route.snapshot.params['loanId'];
     this.getRepaymentSchedule();
   }
@@ -62,7 +63,10 @@ export class EditRepaymentScheduleComponent implements OnInit {
     const periods: any = [];
     this.repaymentScheduleDetails['periods'].forEach((period: any) => {
       if (period.period) {
-        periods.push({ idx: period.period, dueDate: this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat) });
+        periods.push({
+          idx: period.period,
+          dueDate: this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat)
+        });
       }
     });
     const formfields: FormfieldBase[] = [
@@ -86,7 +90,8 @@ export class EditRepaymentScheduleComponent implements OnInit {
         value: '',
         type: 'number',
         required: true
-      }),
+      })
+
     ];
     const data = {
       title: 'Pattern Update',
@@ -118,34 +123,45 @@ export class EditRepaymentScheduleComponent implements OnInit {
 
   reset(): void {
     const recoverScheduleDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Recover Original Schedule'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want recover the Original Schedule') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Recover Original Schedule'),
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want recover the Original Schedule'
+        )
+      }
     });
     recoverScheduleDialogRef.afterClosed().subscribe((responseConfirmation: any) => {
       if (responseConfirmation.confirm) {
-        this.loansService.applyCommandLoanScheduleVariations(this.loanId, 'deleteVariations', {}).subscribe((response: any) => {
-          this.getRepaymentSchedule();
-          this.wasChanged = false;
-          this.wasValidated = false;
-        });
+        this.loansService
+          .applyCommandLoanScheduleVariations(this.loanId, 'deleteVariations', {})
+          .subscribe((response: any) => {
+            this.getRepaymentSchedule();
+            this.wasChanged = false;
+            this.wasValidated = false;
+          });
       }
     });
   }
 
   validate(): void {
-    this.loansService.applyCommandLoanScheduleVariations(this.loanId, 'calculateLoanSchedule', this.getPayload()).subscribe((response: any) => {
-      this.repaymentScheduleDetails['periods'] = [];
-      response['periods'].forEach((period: any) => {
-        period['changed'] = true;
-        this.repaymentScheduleDetails['periods'].push(period);
-        this.wasValidated = true;
+    this.loansService
+      .applyCommandLoanScheduleVariations(this.loanId, 'calculateLoanSchedule', this.getPayload())
+      .subscribe((response: any) => {
+        this.repaymentScheduleDetails['periods'] = [];
+        response['periods'].forEach((period: any) => {
+          period['changed'] = true;
+          this.repaymentScheduleDetails['periods'].push(period);
+          this.wasValidated = true;
+        });
       });
-    });
   }
 
   submit(): void {
-    this.loansService.applyCommandLoanScheduleVariations(this.loanId, 'addVariations', this.getPayload()).subscribe((response: any) => {
-      this.router.navigate(['../../repayment-schedule'], { relativeTo: this.route });
-    });
+    this.loansService
+      .applyCommandLoanScheduleVariations(this.loanId, 'addVariations', this.getPayload())
+      .subscribe((response: any) => {
+        this.router.navigate(['../../repayment-schedule'], { relativeTo: this.route });
+      });
   }
 
   private getPayload(): any {
@@ -163,5 +179,4 @@ export class EditRepaymentScheduleComponent implements OnInit {
       locale
     };
   }
-
 }

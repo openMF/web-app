@@ -16,10 +16,9 @@ import Chart from 'chart.js';
 @Component({
   selector: 'mifosx-chart',
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss' ]
+  styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnChanges {
-
   /** Run Report Data */
   @Input() dataObject: any;
 
@@ -33,7 +32,7 @@ export class ChartComponent implements OnChanges {
   /**
    * @param {ReportsService} reportsService Reports Service
    */
-  constructor(private reportsService: ReportsService) { }
+  constructor(private reportsService: ReportsService) {}
 
   /**
    * Fetches run report data post changes in run report form.
@@ -43,12 +42,13 @@ export class ChartComponent implements OnChanges {
   }
 
   getRunReportData() {
-    this.reportsService.getChartRunReportData(this.dataObject.report.name, this.dataObject.formData)
-    .subscribe((response: ChartData) => {
-      this.inputData = response;
-      this.setPieChart(this.inputData);
-      this.hideOutput = false;
-    });
+    this.reportsService
+      .getChartRunReportData(this.dataObject.report.name, this.dataObject.formData)
+      .subscribe((response: ChartData) => {
+        this.inputData = response;
+        this.setPieChart(this.inputData);
+        this.hideOutput = false;
+      });
   }
 
   /**
@@ -62,12 +62,14 @@ export class ChartComponent implements OnChanges {
     this.chart = new Chart('output', {
       type: 'pie',
       data: {
-          labels: inputData.keys,
-          datasets: [{
-              label: inputData.valuesLabel,
-              data: inputData.values,
-              backgroundColor: this.randomColorArray(inputData.values.length)
-          }]
+        labels: inputData.keys,
+        datasets: [
+          {
+            label: inputData.valuesLabel,
+            data: inputData.values,
+            backgroundColor: this.randomColorArray(inputData.values.length)
+          }
+        ]
       },
       options: {
         title: {
@@ -90,24 +92,28 @@ export class ChartComponent implements OnChanges {
       type: 'bar',
       data: {
         labels: inputData.keys,
-        datasets: [{
+        datasets: [
+          {
             label: inputData.valuesLabel,
             data: inputData.values,
             backgroundColor: this.randomColorArray(inputData.values.length)
-        }]
+          }
+        ]
       },
       options: {
         legend: { display: false },
         scales: {
-          xAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: inputData.keysLabel
-            },
-            ticks: {
-              beginAtZero: true
+          xAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                labelString: inputData.keysLabel
+              },
+              ticks: {
+                beginAtZero: true
+              }
             }
-          }]
+          ]
         }
       }
     });
@@ -135,5 +141,4 @@ export class ChartComponent implements OnChanges {
     const b = Math.floor(Math.random() * 255);
     return `rgb(${r},${g},${b},0.6)`;
   }
-
 }

@@ -18,7 +18,6 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   styleUrls: ['./view-collateral.component.scss']
 })
 export class ViewCollateralComponent {
-
   /** Collateral Data */
   collateralData: any;
 
@@ -30,31 +29,31 @@ export class ViewCollateralComponent {
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog,
-              private translateService: TranslateService) {
-                this.route.data.subscribe((data: { collateral: any }) => {
-                    this.collateralData = data.collateral;
-                });
-              }
+  constructor(
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
+    this.route.data.subscribe((data: { collateral: any }) => {
+      this.collateralData = data.collateral;
+    });
+  }
 
   /**
    * Deletes the collateral and redirects to collaterals
    */
   deleteCollateral() {
     const deleteCollateralDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.text.Collateral') + ' ' + this.collateralData.id}
+      data: { deleteContext: this.translateService.instant('labels.text.Collateral') + ' ' + this.collateralData.id }
     });
     deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteCollateral(this.collateralData.id)
-          .subscribe(() => {
-            this.router.navigate(['/products/collaterals']);
-          });
+        this.productsService.deleteCollateral(this.collateralData.id).subscribe(() => {
+          this.router.navigate(['/products/collaterals']);
+        });
       }
     });
   }
-
 }

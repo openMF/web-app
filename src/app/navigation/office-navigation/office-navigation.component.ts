@@ -1,4 +1,3 @@
-
 /** Angular Imports */
 import { Component, Input } from '@angular/core';
 
@@ -8,10 +7,8 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./office-navigation.component.scss']
 })
 export class OfficeNavigationComponent {
-
   @Input() officeData: any;
   @Input() employeeData: any;
 
-  constructor() { }
-
+  constructor() {}
 }

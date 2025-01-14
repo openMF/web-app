@@ -20,7 +20,6 @@ import { ProductsService } from 'app/products/products.service';
   styleUrls: ['./view-product-mix.component.scss']
 })
 export class ViewProductMixComponent implements OnInit {
-
   /** Product mix data. */
   productMixData: any;
   /** Allowed products datasource. */
@@ -46,11 +45,13 @@ export class ViewProductMixComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private route: ActivatedRoute,
-              private dialog: MatDialog,
-              private productsService: ProductsService,
-              private router: Router,
-              private translateService: TranslateService ) {
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private productsService: ProductsService,
+    private router: Router,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { productMix: any }) => {
       this.productMixData = data.productMix;
     });
@@ -87,14 +88,18 @@ export class ViewProductMixComponent implements OnInit {
    */
   delete() {
     const deleteProductMixDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.dialogContext.the productmix component with id') + ' ' + this.productMixData.productId}
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.dialogContext.the productmix component with id') +
+          ' ' +
+          this.productMixData.productId
+      }
     });
     deleteProductMixDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteProductMix(this.productMixData.productId)
-          .subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
-          });
+        this.productsService.deleteProductMix(this.productMixData.productId).subscribe(() => {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        });
       }
     });
   }

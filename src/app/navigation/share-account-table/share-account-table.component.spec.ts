@@ -8,9 +8,8 @@ describe('ShareAccountTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShareAccountTableComponent ]
-    })
-    .compileComponents();
+      declarations: [ShareAccountTableComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

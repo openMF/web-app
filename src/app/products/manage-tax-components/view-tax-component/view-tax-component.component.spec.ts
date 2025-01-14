@@ -8,9 +8,8 @@ describe('ViewTaxComponentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewTaxComponentComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewTaxComponentComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

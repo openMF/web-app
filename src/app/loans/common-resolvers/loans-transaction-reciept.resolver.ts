@@ -13,11 +13,10 @@ import { ReportsService } from 'app/reports/reports.service';
  */
 @Injectable()
 export class LoansTransactionRecieptResolver implements Resolve<Object> {
-
   /**
    * @param {ReportsService} reportsService Reports service.
    */
-  constructor(private reportsService: ReportsService) { }
+  constructor(private reportsService: ReportsService) {}
 
   /**
    * Returns the Loans Transaction Reciept
@@ -27,10 +26,15 @@ export class LoansTransactionRecieptResolver implements Resolve<Object> {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const transactionId = route.paramMap.get('id');
     const data = {
-      'output-type':	'PDF',
-      R_transactionId:	transactionId
+      'output-type': 'PDF',
+      R_transactionId: transactionId
     };
-    return this.reportsService.getPentahoRunReportData('Loan Transaction Receipt', data, 'default', 'en', 'dd MMMM yyyy');
+    return this.reportsService.getPentahoRunReportData(
+      'Loan Transaction Receipt',
+      data,
+      'default',
+      'en',
+      'dd MMMM yyyy'
+    );
   }
-
 }

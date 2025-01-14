@@ -8,9 +8,8 @@ describe('RecurringDepositDatatableTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecurringDepositDatatableTabComponent ]
-    })
-    .compileComponents();
+      declarations: [RecurringDepositDatatableTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

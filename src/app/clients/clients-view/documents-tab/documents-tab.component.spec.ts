@@ -8,9 +8,8 @@ describe('DocumentsTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DocumentsTabComponent ]
-    })
-    .compileComponents();
+      declarations: [DocumentsTabComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

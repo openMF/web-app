@@ -22,13 +22,16 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./share-product-market-price-step.component.scss']
 })
 export class ShareProductMarketPriceStepComponent implements OnInit {
-
   @Input() shareProductsTemplate: any;
 
   shareProductMarketPriceForm: UntypedFormGroup;
 
   /** For displaying required columns */
-  displayedColumns: string[] = ['fromDate', 'shareValue', 'actions'];
+  displayedColumns: string[] = [
+    'fromDate',
+    'shareValue',
+    'actions'
+  ];
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -36,23 +39,28 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
 
-  constructor(private formBuilder: UntypedFormBuilder,
-              public dialog: MatDialog,
-              private dateUtils: Dates,
-              private settingsService: SettingsService,
-              private translateService: TranslateService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    public dialog: MatDialog,
+    private dateUtils: Dates,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {
     this.createShareProductMarketPriceForm();
   }
 
   ngOnInit() {
     if (this.shareProductsTemplate) {
-      this.shareProductMarketPriceForm.setControl('marketPricePeriods', this.formBuilder.array((this.shareProductsTemplate.marketPrice)));
+      this.shareProductMarketPriceForm.setControl(
+        'marketPricePeriods',
+        this.formBuilder.array(this.shareProductsTemplate.marketPrice)
+      );
     }
   }
 
   createShareProductMarketPriceForm() {
     this.shareProductMarketPriceForm = this.formBuilder.group({
-      'marketPricePeriods': this.formBuilder.array([])
+      marketPricePeriods: this.formBuilder.array([])
     });
   }
 
@@ -101,7 +109,10 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   }
 
   getData(values?: any) {
-    return { title: this.translateService.instant('labels.inputs.Market Price Period'), formfields: this.getFormfields(values) };
+    return {
+      title: this.translateService.instant('labels.inputs.Market Price Period'),
+      formfields: this.getFormfields(values)
+    };
   }
 
   getFormfields(values?: any) {
@@ -122,6 +133,7 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
         required: true,
         order: 2
       })
+
     ];
     return formfields;
   }
@@ -141,5 +153,4 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
     }
     return { marketPricePeriods };
   }
-
 }

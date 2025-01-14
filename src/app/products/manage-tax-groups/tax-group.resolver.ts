@@ -13,7 +13,6 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class TaxGroupResolver implements Resolve<Object> {
-
   /**
    * @param {ProductsService} productsService Products service.
    */

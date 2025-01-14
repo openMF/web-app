@@ -13,7 +13,6 @@ import { AccountingService } from '../../accounting.service';
  */
 @Injectable()
 export class FinancialActivityMappingResolver implements Resolve<Object> {
-
   /**
    * @param {AccountingService} accountingService Accounting service.
    */
@@ -27,5 +26,4 @@ export class FinancialActivityMappingResolver implements Resolve<Object> {
     const financialActivityAccountId = route.paramMap.get('id');
     return this.accountingService.getFinancialActivityAccount(financialActivityAccountId, false);
   }
-
 }

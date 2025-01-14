@@ -25,7 +25,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./loans-account-charges-step.component.scss']
 })
 export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
-
   // @Input loansAccountProductTemplate: LoansAccountProductTemplate
   @Input() loansAccountProductTemplate: any;
   // @Imput loansAccountTemplate: LoansAccountTemplate
@@ -42,9 +41,21 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   /** Collateral Data Source */
   collateralDataSource: {}[] = [];
   /** Charges table columns */
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date', 'action'];
+  chargesDisplayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'date',
+    'action'
+  ];
   /** Columns to be displayed in overdue charges table. */
-  overdueChargesDisplayedColumns: string[] = ['name', 'type', 'amount', 'collectedon'];
+  overdueChargesDisplayedColumns: string[] = [
+    'name',
+    'type',
+    'amount',
+    'collectedon'
+  ];
   /** Component is pristine if there has been no changes by user interaction */
   pristine = true;
   /** Check if value of collateral added  is more than principal amount */
@@ -59,16 +70,19 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private dateUtils: Dates,
     private route: ActivatedRoute,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit() {
     if (this.loansAccountTemplate && this.loansAccountTemplate.charges) {
-      this.chargesDataSource = this.loansAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+      this.chargesDataSource =
+        this.loansAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
     }
   }
 
@@ -81,8 +95,13 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
       if (this.loansAccountProductTemplate.overdueCharges) {
         this.overDueChargesDataSource = this.loansAccountProductTemplate.overdueCharges;
       }
-      if (this.loansAccountProductTemplate.charges && this.loansAccountProductTemplate.charges.length > 0 && this.chargesDataSource.length === 0) {
-        this.chargesDataSource = this.loansAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+      if (
+        this.loansAccountProductTemplate.charges &&
+        this.loansAccountProductTemplate.charges.length > 0 &&
+        this.chargesDataSource.length === 0
+      ) {
+        this.chargesDataSource =
+          this.loansAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
       }
     }
   }
@@ -108,7 +127,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         value: charge.amount,
         type: 'number',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Charge Amount',
@@ -138,7 +158,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Charge Date',
@@ -179,7 +200,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         value: charge.feeInterval,
         type: 'text',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Charge Fee Interval',
@@ -214,14 +236,12 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     });
   }
 
-
   /**
    * Returns Loans Account Charges and Collateral Form
    */
   get loansAccountCharges() {
     return {
-      charges: this.chargesDataSource,
+      charges: this.chargesDataSource
     };
   }
-
 }

@@ -6,7 +6,6 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
   providedIn: 'root'
 })
 export class LoanProducts {
-
   public static LOAN_SCHEDULE_TYPE_CUMULATIVE = 'CUMULATIVE';
   public static LOAN_SCHEDULE_TYPE_PROGRESSIVE = 'PROGRESSIVE';
 
@@ -18,20 +17,26 @@ export class LoanProducts {
   public static DAYS_BEFORE_REPAYMENT_IS_DUE = 'days-before-repayment-is-due';
   public static DAYS_AFTER_REPAYMENT_IS_OVERDUE = 'days-after-repayment-is-overdue';
 
-  globalConfigurations: string[] = [LoanProducts.DAYS_BEFORE_REPAYMENT_IS_DUE, LoanProducts.DAYS_AFTER_REPAYMENT_IS_OVERDUE];
-  propertyNames: string[] = ['dueDaysForRepaymentEvent', 'overDueDaysForRepaymentEvent'];
+  globalConfigurations: string[] = [
+    LoanProducts.DAYS_BEFORE_REPAYMENT_IS_DUE,
+    LoanProducts.DAYS_AFTER_REPAYMENT_IS_OVERDUE
+  ];
+  propertyNames: string[] = [
+    'dueDaysForRepaymentEvent',
+    'overDueDaysForRepaymentEvent'
+  ];
 
   public static isAdvancedPaymentAllocationStrategy(code: string): boolean {
-    return (code === this.ADVANCED_PAYMENT_ALLOCATION_STRATEGY);
+    return code === this.ADVANCED_PAYMENT_ALLOCATION_STRATEGY;
   }
 
-  constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService) {}
 
   public setItemsByDefault(configurations: any) {
     const itemsByDefault: GlobalConfiguration[] = [];
     configurations.globalConfiguration.forEach((config: GlobalConfiguration) => {
       if (this.globalConfigurations.includes(config.name)) {
-          itemsByDefault.push(config);
+        itemsByDefault.push(config);
       }
     });
     return itemsByDefault;
@@ -82,11 +87,11 @@ export class LoanProducts {
   }
 
   public isItemByDefault(propertyName: string): boolean {
-    return (this.propertyNames.includes(propertyName));
+    return this.propertyNames.includes(propertyName);
   }
 
   public isGlobalConfigurations(propertyName: string): boolean {
-    return (this.globalConfigurations.includes(propertyName));
+    return this.globalConfigurations.includes(propertyName);
   }
 
   private resolvePropertyName(configName: string): string {
@@ -98,5 +103,4 @@ export class LoanProducts {
     }
     return '';
   }
-
 }

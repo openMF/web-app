@@ -17,11 +17,15 @@ import { of } from 'rxjs';
   styleUrls: ['./manage-tax-components.component.scss']
 })
 export class ManageTaxComponentsComponent implements OnInit {
-
   /** Tax Components data. */
   taxComponentData: any;
   /** Columns to be displayed in tax component table. */
-  displayedColumns: string[] = ['name', 'percentage', 'startDate', 'glAccount'];
+  displayedColumns: string[] = [
+    'name',
+    'percentage',
+    'startDate',
+    'glAccount'
+  ];
   /** Data source for tax component table. */
   dataSource: MatTableDataSource<any>;
 
@@ -35,7 +39,7 @@ export class ManageTaxComponentsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { taxComponents: any }) => {
+    this.route.data.subscribe((data: { taxComponents: any }) => {
       this.taxComponentData = data.taxComponents;
     });
   }
@@ -63,5 +67,4 @@ export class ManageTaxComponentsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

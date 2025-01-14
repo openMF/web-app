@@ -19,7 +19,6 @@ import { GroupsService } from 'app/groups/groups.service';
   styleUrls: ['./committee-tab.component.scss']
 })
 export class CommitteeTabComponent {
-
   /** Group Status */
   groupStatus: any;
   /** Group Roles Data */
@@ -27,7 +26,12 @@ export class CommitteeTabComponent {
   /** Groups View Data */
   groupViewData: any;
   /** Columns to be Displayed for client members table */
-  groupRolesColumns: string[] = ['Name', 'Role', 'Client Id', 'Actions'];
+  groupRolesColumns: string[] = [
+    'Name',
+    'Role',
+    'Client Id',
+    'Actions'
+  ];
 
   /** Roles Table */
   @ViewChild('rolesTable') rolesTableRef: MatTable<Element>;
@@ -38,9 +42,11 @@ export class CommitteeTabComponent {
    * @param {GroupsService} groupsService Groups Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private route: ActivatedRoute,
-              private groupsService: GroupsService,
-              public dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private groupsService: GroupsService,
+    public dialog: MatDialog
+  ) {
     this.route.parent.data.subscribe((data: { groupViewData: any }) => {
       this.groupViewData = data.groupViewData;
       this.groupRolesData = this.groupViewData.groupRoles;
@@ -65,5 +71,4 @@ export class CommitteeTabComponent {
       }
     });
   }
-
 }

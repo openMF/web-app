@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./close-fixed-deposits-account.component.scss']
 })
 export class CloseFixedDepositsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -42,12 +41,14 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private fixedDepositsService: FixedDepositsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private fixedDepositsService: FixedDepositsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { fixedDepositsAccountActionData: any }) => {
       this.savingsAccountsData = data.fixedDepositsAccountActionData.savingsAccounts;
       this.onAccountClosureOptions = data.fixedDepositsAccountActionData.onAccountClosureOptions;
@@ -70,10 +71,16 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
    */
   createCloseOnMaturityAccountForm() {
     this.closeOnMaturityAccountForm = this.formBuilder.group({
-      'closedOnDate': ['', Validators.required],
-      'maturityAmount': [{value: this.maturityAmount, disabled: true}],
-      'onAccountClosureId': ['', Validators.required],
-      'note': ['']
+      closedOnDate: [
+        '',
+        Validators.required
+      ],
+      maturityAmount: [{ value: this.maturityAmount, disabled: true }],
+      onAccountClosureId: [
+        '',
+        Validators.required
+      ],
+      note: ['']
     });
   }
 
@@ -83,7 +90,10 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
   addTransferDetails() {
     this.closeOnMaturityAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
       if (id === 200) {
-        this.closeOnMaturityAccountForm.addControl('toSavingsAccountId', new UntypedFormControl('', Validators.required));
+        this.closeOnMaturityAccountForm.addControl(
+          'toSavingsAccountId',
+          new UntypedFormControl('', Validators.required)
+        );
         this.closeOnMaturityAccountForm.addControl('transferDescription', new UntypedFormControl(''));
       } else {
         this.closeOnMaturityAccountForm.removeControl('toSavingsAccountId');
@@ -113,5 +123,4 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

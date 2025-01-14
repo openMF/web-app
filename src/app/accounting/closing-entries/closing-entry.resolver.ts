@@ -13,7 +13,6 @@ import { AccountingService } from '../accounting.service';
  */
 @Injectable()
 export class ClosingEntryResolver implements Resolve<Object> {
-
   /**
    * @param {AccountingService} accountingService Accounting service.
    */
@@ -27,5 +26,4 @@ export class ClosingEntryResolver implements Resolve<Object> {
     const glAccountClosureId = route.paramMap.get('id');
     return this.accountingService.getAccountingClosure(glAccountClosureId);
   }
-
 }

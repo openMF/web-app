@@ -8,9 +8,8 @@ describe('ViewHookComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewHookComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewHookComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

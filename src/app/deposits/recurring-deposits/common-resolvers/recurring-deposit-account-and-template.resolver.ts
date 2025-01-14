@@ -13,20 +13,18 @@ import { RecurringDepositsService } from '../recurring-deposits.service';
  */
 @Injectable()
 export class RecurringDepositsAccountAndTemplateResolver implements Resolve<Object> {
+  /**
+   * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits service.
+   */
+  constructor(private recurringDepositsService: RecurringDepositsService) {}
 
-    /**
-     * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits service.
-     */
-    constructor(private recurringDepositsService: RecurringDepositsService) { }
-
-    /**
-     * Returns the Recurring Deposits Account Template.
-     * @param {ActivatedRouteSnapshot} route Route Snapshot
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId');
-        return this.recurringDepositsService.getRecurringDepositsAccountAndTemplate(recurringDepositAccountId);
-    }
-
+  /**
+   * Returns the Recurring Deposits Account Template.
+   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId');
+    return this.recurringDepositsService.getRecurringDepositsAccountAndTemplate(recurringDepositAccountId);
+  }
 }

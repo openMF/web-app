@@ -1,4 +1,4 @@
-export const clientParameterLabels =  [
+export const clientParameterLabels = [
   '{{client.accountNo}}',
   '{{client.status.value}}',
   '{{client.fullname}}',
@@ -8,7 +8,7 @@ export const clientParameterLabels =  [
   '{{/client.groups}}'
 ];
 
-export const loanParameterLabels =  [
+export const loanParameterLabels = [
   '{{loan.accountNo}}',
   '{{loan.status.value}}',
   '{{loan.loanProductId}}',
@@ -16,7 +16,7 @@ export const loanParameterLabels =  [
   '{{loan.loanProductDescription}}'
 ];
 
-export const repaymentParameterLabels =  [
+export const repaymentParameterLabels = [
   '{{loan.repaymentSchedule.loanTermInDays}}',
   '{{loan.repaymentSchedule.totalPrincipalDisbursed}}',
   '{{loan.repaymentSchedule.totalPrincipalExpected}}',

@@ -13,7 +13,6 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class CollateralResolver implements Resolve<Object> {
-
   /**
    * @param {ProductsService} productsService Products service.
    */
@@ -27,5 +26,4 @@ export class CollateralResolver implements Resolve<Object> {
     const collateralId = route.paramMap.get('id');
     return this.productsService.getCollateral(collateralId);
   }
-
 }

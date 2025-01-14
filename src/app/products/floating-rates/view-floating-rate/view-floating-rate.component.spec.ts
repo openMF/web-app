@@ -8,9 +8,8 @@ describe('ViewFloatingRateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewFloatingRateComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewFloatingRateComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

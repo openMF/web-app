@@ -54,7 +54,6 @@ import { SavingsTransactionGeneralTabComponent } from './savings-account-view/tr
 import { SavingsTransactionDatatableTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-datatable-tab/savings-transaction-datatable-tab.component';
 import { GeneralTabComponent } from './savings-account-view/general-tab/general-tab.component';
 
-
 /**
  * Savings Module
  *
@@ -114,6 +113,6 @@ import { GeneralTabComponent } from './savings-account-view/general-tab/general-
     SavingsTransactionDatatableTabComponent,
     GeneralTabComponent
   ],
-  providers: [ ]
+  providers: []
 })
 export class SavingsModule {}

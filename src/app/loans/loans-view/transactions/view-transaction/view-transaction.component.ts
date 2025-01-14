@@ -30,7 +30,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./view-transaction.component.scss']
 })
 export class ViewTransactionComponent implements OnInit {
-
   /** Transaction data. */
   transactionData: any;
   transactionType: LoanTransactionType;
@@ -45,7 +44,11 @@ export class ViewTransactionComponent implements OnInit {
   paymentTypeOptions: {}[] = [];
   transactionRelations = new MatTableDataSource();
   /** Columns to be displayed in Transaction Relations table. */
-  displayedColumns: string[] = ['relationType', 'toTransaction', 'amount'];
+  displayedColumns: string[] = [
+    'relationType',
+    'toTransaction',
+    'amount'
+  ];
   isFullRelated = false;
   amountRelationsAllowed = 0;
 
@@ -62,7 +65,8 @@ export class ViewTransactionComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {AlertService} alertService Alert Service
    */
-  constructor(private loansService: LoansService,
+  constructor(
+    private loansService: LoansService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
@@ -70,17 +74,20 @@ export class ViewTransactionComponent implements OnInit {
     private translateService: TranslateService,
     private settingsService: SettingsService,
     private organizationService: OrganizationService,
-    private alertService: AlertService) {
+    private alertService: AlertService
+  ) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
       this.transactionType = this.transactionData.type;
-      this.allowEdition = !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
+      this.allowEdition =
+        !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
       this.allowUndo = this.allowUndoTransaction(this.transactionData.manuallyReversed, this.transactionType);
-      this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
+      this.allowChargeback =
+        this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
       if (this.transactionData.transactionRelations) {
         this.transactionRelations.data = this.transactionData.transactionRelations;
-        this.existTransactionRelations = (this.transactionData.transactionRelations.length > 0);
+        this.existTransactionRelations = this.transactionData.transactionRelations.length > 0;
         let amountRelations = 0;
         this.transactionData.transactionRelations.forEach((relation: any) => {
           if (relation.relationType === 'CHARGEBACK') {
@@ -89,13 +96,17 @@ export class ViewTransactionComponent implements OnInit {
           }
         });
         this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
-        this.isFullRelated = (this.amountRelationsAllowed === 0);
+        this.isFullRelated = this.amountRelationsAllowed === 0;
         this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.isFullRelated;
       }
       if (!this.allowChargeback) {
         this.allowEdition = false;
       }
-      if ((this.existTransactionRelations && transactionsChargebackRelated) || this.transactionType.reAge || this.transactionType.reAmortize) {
+      if (
+        (this.existTransactionRelations && transactionsChargebackRelated) ||
+        this.transactionType.reAge ||
+        this.transactionType.reAmortize
+      ) {
         this.allowUndo = false;
       }
     });
@@ -106,8 +117,10 @@ export class ViewTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.allowChargeback) {
-      this.organizationService.getPaymentTypesWithCode().toPromise()
-        .then(data => {
+      this.organizationService
+        .getPaymentTypesWithCode()
+        .toPromise()
+        .then((data) => {
           this.paymentTypeOptions = data;
         });
     }
@@ -117,15 +130,24 @@ export class ViewTransactionComponent implements OnInit {
    * Allow edit, undo and chargeback actions
    */
   allowTransactionEdition(transactionType: number): boolean {
-    return (transactionType === 20
-      || transactionType === 21 || transactionType === 22
-      || transactionType === 23 || transactionType === 28);
+    return (
+      transactionType === 20 ||
+      transactionType === 21 ||
+      transactionType === 22 ||
+      transactionType === 23 ||
+      transactionType === 28
+    );
   }
 
   allowChargebackTransaction(transactionType: LoanTransactionType): boolean {
-    return (transactionType.repayment || transactionType.interestPaymentWaiver
-      || transactionType.goodwillCredit || transactionType.payoutRefund
-      || transactionType.merchantIssuedRefund || transactionType.downPayment);
+    return (
+      transactionType.repayment ||
+      transactionType.interestPaymentWaiver ||
+      transactionType.goodwillCredit ||
+      transactionType.payoutRefund ||
+      transactionType.merchantIssuedRefund ||
+      transactionType.downPayment
+    );
   }
 
   allowUndoTransaction(manuallyReversed: boolean, transactionType: LoanTransactionType): boolean {
@@ -144,21 +166,31 @@ export class ViewTransactionComponent implements OnInit {
   undoTransaction() {
     const accountId = this.route.snapshot.params['loanId'];
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Undo Transaction'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction') + `${this.transactionData.id}` }
+      data: {
+        heading: this.translateService.instant('labels.heading.Undo Transaction'),
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction') +
+          `${this.transactionData.id}`
+      }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
-          transactionDate: this.dateUtils.formatDate(this.transactionData.date && new Date(this.transactionData.date), dateFormat),
+          transactionDate: this.dateUtils.formatDate(
+            this.transactionData.date && new Date(this.transactionData.date),
+            dateFormat
+          ),
           transactionAmount: 0,
           dateFormat,
           locale
         };
-        this.loansService.executeLoansAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.loansService
+          .executeLoansAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id)
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }
@@ -183,6 +215,7 @@ export class ViewTransactionComponent implements OnInit {
         max: this.amountRelationsAllowed,
         order: 2
       })
+
     ];
     const data = {
       title: `Chargeback ${this.transactionType.value} Transaction`,
@@ -199,9 +232,11 @@ export class ViewTransactionComponent implements OnInit {
             paymentTypeId: response.data.value.paymentTypeId,
             locale
           };
-          this.loansService.executeLoansAccountTransactionsCommand(accountId, 'chargeback', payload, this.transactionData.id).subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
-          });
+          this.loansService
+            .executeLoansAccountTransactionsCommand(accountId, 'chargeback', payload, this.transactionData.id)
+            .subscribe(() => {
+              this.router.navigate(['../'], { relativeTo: this.route });
+            });
         } else {
           this.alertService.alert({
             type: 'BusinessRule',
@@ -225,5 +260,4 @@ export class ViewTransactionComponent implements OnInit {
     }
     return 'active';
   }
-
 }

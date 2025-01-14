@@ -7,9 +7,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-
 export class ConfigurationWizardService {
-
   /**
    * Home Tour
    */
@@ -196,13 +194,12 @@ export class ConfigurationWizardService {
   /*To show popover on manage reports*/
   showManageReports = false;
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Set all variables to false.
    */
   closeConfigWizard(): void {
-
     this.showToolbar = false;
     this.showToolbarAdmin = false;
     this.showSideNav = false;

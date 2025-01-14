@@ -16,10 +16,10 @@ export class LongTextComponent implements OnInit {
 
   printChars = 30;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    this.emptyValue = (!this.textValue || this.textValue === '');
+    this.emptyValue = !this.textValue || this.textValue === '';
     this.printChars = this.chars;
   }
 
@@ -27,7 +27,7 @@ export class LongTextComponent implements OnInit {
     if (this.textValue == null) {
       return false;
     }
-    return (this.textValue.length > 25);
+    return this.textValue.length > 25;
   }
 
   showValue() {

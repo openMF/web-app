@@ -8,9 +8,8 @@ describe('AddInterestPauseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddInterestPauseComponent ]
-    })
-    .compileComponents();
+      declarations: [AddInterestPauseComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddInterestPauseComponent);
     component = fixture.componentInstance;

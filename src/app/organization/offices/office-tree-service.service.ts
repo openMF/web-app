@@ -14,7 +14,6 @@ import { OfficeNode } from './office-node.model';
   providedIn: 'root'
 })
 export class OfficeTreeService {
-
   /** Office data. */
   officesData: any;
   /** Offices tree data behavior subject to represent offices tree nodes. */
@@ -23,9 +22,11 @@ export class OfficeTreeService {
   /**
    * Gets the offices tree nodes.
    */
-  get treeData(): OfficeNode[] { return this.treeDataChange.value; }
+  get treeData(): OfficeNode[] {
+    return this.treeDataChange.value;
+  }
 
-  constructor() {  }
+  constructor() {}
 
   /**
    * Builds the offices tree and emits the value.
@@ -60,8 +61,15 @@ export class OfficeTreeService {
 
     // Add offices to any array where index for each is denoted by its id
     for (const office of officesData) {
-      offices[office.id] =
-        new OfficeNode(office.name, office.id, office.parentId, office.hierarchy, office.externalId, office.parentName, office.openingDate);
+      offices[office.id] = new OfficeNode(
+        office.name,
+        office.id,
+        office.parentId,
+        office.hierarchy,
+        office.externalId,
+        office.parentName,
+        office.openingDate
+      );
     }
 
     // Construct offices tree by adding all nodes belonging to headers (with parent id = 0),
@@ -77,5 +85,4 @@ export class OfficeTreeService {
     }
     return officeTree;
   }
-
 }

@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./post-interest-as-on-savings-account.component.scss']
 })
 export class PostInterestAsOnSavingsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -35,12 +34,14 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private savingsService: SavingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsService: SavingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.snapshot.params['savingAccountId'];
   }
 
@@ -57,7 +58,10 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
    */
   createPostInterestSavingsAccountForm() {
     this.postInterestSavingsAccountForm = this.formBuilder.group({
-      'transactionDate': ['', Validators.required]
+      transactionDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -79,9 +83,10 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountTransactionsCommand(this.accountId, 'postInterestAsOn', data).subscribe(() => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountTransactionsCommand(this.accountId, 'postInterestAsOn', data)
+      .subscribe(() => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
-
 }

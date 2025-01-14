@@ -15,7 +15,6 @@ import { OrganizationService } from 'app/organization/organization.service';
   styleUrls: ['./create-enity-data-table-checks.component.scss']
 })
 export class CreateEnityDataTableChecksComponent implements OnInit {
-
   /** Create Entity Datatable Checks form. */
   createEntityForm: UntypedFormGroup;
   /** Entity Datatable Checks data. */
@@ -36,11 +35,13 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private organizationService: OrganizationService,
-              private router: Router) {
-    this.route.data.subscribe((data: {dataTableEntity: any}) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private organizationService: OrganizationService,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { dataTableEntity: any }) => {
       this.createEntityData = data.dataTableEntity;
       this.entityTypes = [
         { name: 'Client', value: this.createEntityData.entities[0] },
@@ -61,9 +62,18 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
    */
   setCreateEntityDataTableForm() {
     this.createEntityForm = this.formBuilder.group({
-      'entity': ['', Validators.required],
-      'status': ['', Validators.required],
-      'datatableName': ['', Validators.required]
+      entity: [
+        '',
+        Validators.required
+      ],
+      status: [
+        '',
+        Validators.required
+      ],
+      datatableName: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -95,9 +105,11 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
           this.createEntityForm.removeControl('productId');
           break;
         }
-        default : {
+        default: {
           this.entityType = 'm_savings_account';
-          this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_savings_account');
+          this.dataTableList = this.createEntityData.datatables.filter(
+            (data: any) => data.entity === 'm_savings_account'
+          );
           this.statusList = this.createEntityData.statusSavings;
           this.createEntityForm.addControl('productId', new UntypedFormControl('', Validators.required));
           break;
@@ -114,5 +126,4 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

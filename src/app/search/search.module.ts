@@ -20,4 +20,4 @@ import { PipesModule } from 'app/pipes/pipes.module';
     SearchRoutingModule
   ]
 })
-export class SearchModule { }
+export class SearchModule {}

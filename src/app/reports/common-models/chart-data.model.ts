@@ -1,6 +1,5 @@
 /** Chart Data Model */
 export class ChartData {
-
   keysLabel: string;
   valuesLabel: string;
   keys: string[];
@@ -12,5 +11,4 @@ export class ChartData {
     this.keys = response.data.map((object: any) => object.row[0]);
     this.values = response.data.map((object: any) => object.row[1]);
   }
-
 }

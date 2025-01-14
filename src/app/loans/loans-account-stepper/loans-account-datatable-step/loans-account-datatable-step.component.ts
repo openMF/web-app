@@ -16,13 +16,20 @@ export class LoansAccountDatatableStepComponent implements OnInit {
 
   datatableInputs: any = [];
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private settingsService: SettingsService,
-    private dateUtils: Dates) { }
+    private dateUtils: Dates
+  ) {}
 
   ngOnInit(): void {
     this.datatableInputs = this.datatableData.columnHeaderData.filter((column: any) => {
-      return ((column.columnName !== 'id') && (column.columnName !== 'loan_id') && (column.columnName !== 'created_at') && (column.columnName !== 'updated_at'));
+      return (
+        column.columnName !== 'id' &&
+        column.columnName !== 'loan_id' &&
+        column.columnName !== 'created_at' &&
+        column.columnName !== 'updated_at'
+      );
     });
     const inputItems: any = {};
     this.datatableInputs.forEach((input: any) => {
@@ -72,7 +79,7 @@ export class LoansAccountDatatableStepComponent implements OnInit {
   }
 
   isColumnType(columnType: string, expectedType: string) {
-    return (columnType === expectedType);
+    return columnType === expectedType;
   }
 
   get payload(): any {
@@ -104,5 +111,4 @@ export class LoansAccountDatatableStepComponent implements OnInit {
     };
     return payload;
   }
-
 }

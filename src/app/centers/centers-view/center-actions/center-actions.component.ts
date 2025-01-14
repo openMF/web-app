@@ -11,23 +11,22 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./center-actions.component.scss']
 })
 export class CenterActionsComponent {
-
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
-    'Activate': boolean,
-    'Assign Staff': boolean,
-    'Close': boolean,
-    'Attendance': boolean,
-    'Attach Meeting': boolean,
-    'Edit Meeting': boolean,
-    'Edit Meeting Schedule': boolean,
-    'Manage Groups': boolean,
-    'Staff Assignment History': boolean
+    Activate: boolean;
+    'Assign Staff': boolean;
+    Close: boolean;
+    Attendance: boolean;
+    'Attach Meeting': boolean;
+    'Edit Meeting': boolean;
+    'Edit Meeting Schedule': boolean;
+    'Manage Groups': boolean;
+    'Staff Assignment History': boolean;
   } = {
-    'Activate': false,
+    Activate: false,
     'Assign Staff': false,
-    'Close': false,
-    'Attendance': false,
+    Close: false,
+    Attendance: false,
     'Attach Meeting': false,
     'Edit Meeting': false,
     'Edit Meeting Schedule': false,
@@ -38,11 +37,12 @@ export class CenterActionsComponent {
   /**
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     const name = this.route.snapshot.params['name'];
     this.actions[name] = true;
   }
-
 }

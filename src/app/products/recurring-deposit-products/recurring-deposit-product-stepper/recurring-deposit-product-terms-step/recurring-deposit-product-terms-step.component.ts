@@ -7,7 +7,6 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
   styleUrls: ['./recurring-deposit-product-terms-step.component.scss']
 })
 export class RecurringDepositProductTermsStepComponent implements OnInit {
-
   @Input() recurringDepositProductsTemplate: any;
 
   recurringDepositProductTermsForm: UntypedFormGroup;
@@ -25,31 +24,47 @@ export class RecurringDepositProductTermsStepComponent implements OnInit {
     this.interestCompoundingPeriodTypeData = this.recurringDepositProductsTemplate.interestCompoundingPeriodTypeOptions;
     this.interestPostingPeriodTypeData = this.recurringDepositProductsTemplate.interestPostingPeriodTypeOptions;
     this.interestCalculationTypeData = this.recurringDepositProductsTemplate.interestCalculationTypeOptions;
-    this.interestCalculationDaysInYearTypeData = this.recurringDepositProductsTemplate.interestCalculationDaysInYearTypeOptions;
+    this.interestCalculationDaysInYearTypeData =
+      this.recurringDepositProductsTemplate.interestCalculationDaysInYearTypeOptions;
     if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
       this.recurringDepositProductTermsForm.patchValue({
-        'minDepositAmount': this.recurringDepositProductsTemplate.minDepositAmount,
-        'depositAmount': this.recurringDepositProductsTemplate.depositAmount,
-        'maxDepositAmount': this.recurringDepositProductsTemplate.maxDepositAmount,
+        minDepositAmount: this.recurringDepositProductsTemplate.minDepositAmount,
+        depositAmount: this.recurringDepositProductsTemplate.depositAmount,
+        maxDepositAmount: this.recurringDepositProductsTemplate.maxDepositAmount
       });
     }
     this.recurringDepositProductTermsForm.patchValue({
-      'interestCompoundingPeriodType': this.recurringDepositProductsTemplate.interestCompoundingPeriodType.id,
-      'interestPostingPeriodType': this.recurringDepositProductsTemplate.interestPostingPeriodType.id,
-      'interestCalculationType': this.recurringDepositProductsTemplate.interestCalculationType.id,
-      'interestCalculationDaysInYearType': this.recurringDepositProductsTemplate.interestCalculationDaysInYearType.id
+      interestCompoundingPeriodType: this.recurringDepositProductsTemplate.interestCompoundingPeriodType.id,
+      interestPostingPeriodType: this.recurringDepositProductsTemplate.interestPostingPeriodType.id,
+      interestCalculationType: this.recurringDepositProductsTemplate.interestCalculationType.id,
+      interestCalculationDaysInYearType: this.recurringDepositProductsTemplate.interestCalculationDaysInYearType.id
     });
   }
 
   createrecurringDepositProductTermsForm() {
     this.recurringDepositProductTermsForm = this.formBuilder.group({
-      'minDepositAmount': [''],
-      'depositAmount': ['', Validators.required],
-      'maxDepositAmount': [''],
-      'interestCompoundingPeriodType': ['', Validators.required],
-      'interestPostingPeriodType': ['', Validators.required],
-      'interestCalculationType': ['', Validators.required],
-      'interestCalculationDaysInYearType': ['', Validators.required]
+      minDepositAmount: [''],
+      depositAmount: [
+        '',
+        Validators.required
+      ],
+      maxDepositAmount: [''],
+      interestCompoundingPeriodType: [
+        '',
+        Validators.required
+      ],
+      interestPostingPeriodType: [
+        '',
+        Validators.required
+      ],
+      interestCalculationType: [
+        '',
+        Validators.required
+      ],
+      interestCalculationDaysInYearType: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -62,5 +77,4 @@ export class RecurringDepositProductTermsStepComponent implements OnInit {
     }
     return recurringDepositProductTerms;
   }
-
 }

@@ -14,11 +14,13 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./view-audit.component.scss']
 })
 export class ViewAuditComponent implements OnInit {
-
   /** Audit Trail Data. */
   auditTrailData: any;
   /** Columns to be displayed in audit trail table. */
-  displayedColumns: string[] = ['command', 'commandValue'];
+  displayedColumns: string[] = [
+    'command',
+    'commandValue'
+  ];
   /** Data source for audit trail table. */
   dataSource: MatTableDataSource<any>;
 
@@ -48,10 +50,12 @@ export class ViewAuditComponent implements OnInit {
    * Initalizes Audit Trail Commands Data.
    */
   get auditTrailCommandsData() {
-    return Object.entries(JSON.parse(this.auditTrailData.commandAsJson))
-      .map(
-        ([key, value]) => ({ command: key, commandValue: value })
-      );
+    return Object.entries(JSON.parse(this.auditTrailData.commandAsJson)).map(
+      ([
+        key,
+        value
+      ]) => ({ command: key, commandValue: value })
+    );
   }
 
   /**
@@ -62,5 +66,4 @@ export class ViewAuditComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

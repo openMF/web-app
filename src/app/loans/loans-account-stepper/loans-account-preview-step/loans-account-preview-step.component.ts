@@ -10,7 +10,6 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
   styleUrls: ['./loans-account-preview-step.component.scss']
 })
 export class LoansAccountPreviewStepComponent implements OnChanges {
-
   /** Loans Account Template */
   @Input() loansAccountTemplate: any = [];
   /** Loans Account Product Template */
@@ -21,16 +20,26 @@ export class LoansAccountPreviewStepComponent implements OnChanges {
   @Output() submitEvent = new EventEmitter();
 
   /** Charges Displayed Columns */
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date'];
+  chargesDisplayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'date'
+  ];
   /** Overdue Charges Displayed Columns */
-  overdueChargesDisplayedColumns: string[] = ['name', 'type', 'amount', 'collectedon'];
+  overdueChargesDisplayedColumns: string[] = [
+    'name',
+    'type',
+    'amount',
+    'collectedon'
+  ];
 
   productEnableDownPayment = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.productEnableDownPayment = this.loansAccountProductTemplate.product.enableDownPayment;
   }
-
 }

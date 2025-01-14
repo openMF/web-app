@@ -8,9 +8,8 @@ describe('ViewBucketComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewBucketComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewBucketComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

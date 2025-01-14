@@ -13,19 +13,17 @@ import { AccountTransfersService } from '../account-transfers.service';
  */
 @Injectable()
 export class ViewAccountTransferResolver implements Resolve<Object> {
+  /**
+   * @param {AccountTransfersService} AccountTransfersService Savings service.
+   */
+  constructor(private accountTransfersService: AccountTransfersService) {}
 
-    /**
-     * @param {AccountTransfersService} AccountTransfersService Savings service.
-     */
-    constructor(private accountTransfersService: AccountTransfersService) { }
-
-    /**
-     * Returns the View Account Transfer data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const transferId = route.paramMap.get('transferid');
-        return this.accountTransfersService.getViewAccountTransferDetails(transferId);
-    }
-
+  /**
+   * Returns the View Account Transfer data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const transferId = route.paramMap.get('transferid');
+    return this.accountTransfersService.getViewAccountTransferDetails(transferId);
+  }
 }

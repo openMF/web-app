@@ -14,7 +14,6 @@ import { UntypedFormControl } from '@angular/forms';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-
   /** Placeholder for languages. update once translations are set up */
   languages: any[] = [
     {
@@ -34,32 +33,32 @@ export class SettingsComponent implements OnInit {
     'MM-dd-yy',
     'yyyy-MM-dd'
   ];
-    /** Decimals. */
-    decimals: string[] = [
-      '0',
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-   ];
+  /** Decimals. */
+  decimals: string[] = [
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8'
+  ];
   /** Placeholder for fonts. */
   fonts: any;
 
   /** Language Setting */
   language = new UntypedFormControl('');
   /** Date Format Setting */
-  dateFormat =  new UntypedFormControl('');
+  dateFormat = new UntypedFormControl('');
   /** Decimals to Display Setting */
-  decimalsToDisplay =  new UntypedFormControl('');
+  decimalsToDisplay = new UntypedFormControl('');
 
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService) {}
 
   ngOnInit() {
     this.language.patchValue(this.settingsService.language);
@@ -92,5 +91,4 @@ export class SettingsComponent implements OnInit {
   compareOptions(option1: any, option2: any) {
     return option1 && option2 && option1.code === option2.code;
   }
-
 }

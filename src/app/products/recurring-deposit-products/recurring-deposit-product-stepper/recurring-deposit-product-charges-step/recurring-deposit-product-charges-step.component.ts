@@ -11,18 +11,24 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./recurring-deposit-product-charges-step.component.scss']
 })
 export class RecurringDepositProductChargesStepComponent implements OnInit {
-
   @Input() recurringDepositProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
 
   chargeData: any;
 
   chargesDataSource: {}[];
-  displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'action'
+  ];
 
-  constructor(public dialog: MatDialog,
-              private translateService: TranslateService) {
-  }
+  constructor(
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.chargeData = this.recurringDepositProductsTemplate.chargeOptions;
@@ -31,7 +37,7 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
     } else {
       this.chargesDataSource = [];
     }
-    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
   }
 
   addCharge(charge: any) {
@@ -41,7 +47,7 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
 
   deleteCharge(charge: any) {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name  }
+      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -56,5 +62,4 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
       charges: this.chargesDataSource
     };
   }
-
 }

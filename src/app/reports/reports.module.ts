@@ -34,6 +34,6 @@ import { XBRLReportComponent } from './xbrl-report/xbrl-report.component';
     XBRLComponent,
     XBRLReportComponent
   ],
-  providers: [ DecimalPipe ]
+  providers: [DecimalPipe]
 })
-export class ReportsModule { }
+export class ReportsModule {}

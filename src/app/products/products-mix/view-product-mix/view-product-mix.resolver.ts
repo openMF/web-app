@@ -13,7 +13,6 @@ import { ProductsService } from '../../products.service';
  */
 @Injectable()
 export class ViewProductMixResolver implements Resolve<Object> {
-
   /**
    * @param {ProductsService} productsService Products service.
    */

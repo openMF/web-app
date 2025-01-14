@@ -22,14 +22,20 @@ import { Accounting } from 'app/core/utils/accounting';
   styleUrls: ['./edit-recurring-deposit-product.component.scss']
 })
 export class EditRecurringDepositProductComponent {
-
-  @ViewChild(RecurringDepositProductDetailsStepComponent, { static: true }) recurringDepositProductDetailsStep: RecurringDepositProductDetailsStepComponent;
-  @ViewChild(RecurringDepositProductCurrencyStepComponent, { static: true }) recurringDepositProductCurrencyStep: RecurringDepositProductCurrencyStepComponent;
-  @ViewChild(RecurringDepositProductTermsStepComponent, { static: true }) recurringDepositProductTermsStep: RecurringDepositProductTermsStepComponent;
-  @ViewChild(RecurringDepositProductSettingsStepComponent, { static: true }) recurringDepositProductSettingsStep: RecurringDepositProductSettingsStepComponent;
-  @ViewChild(RecurringDepositProductInterestRateChartStepComponent, { static: true }) recurringDepositProductInterestRateChartStep: RecurringDepositProductInterestRateChartStepComponent;
-  @ViewChild(RecurringDepositProductChargesStepComponent, { static: true }) recurringDepositProductChargesStep: RecurringDepositProductChargesStepComponent;
-  @ViewChild(RecurringDepositProductAccountingStepComponent, { static: true }) recurringDepositProductAccountingStep: RecurringDepositProductAccountingStepComponent;
+  @ViewChild(RecurringDepositProductDetailsStepComponent, { static: true })
+  recurringDepositProductDetailsStep: RecurringDepositProductDetailsStepComponent;
+  @ViewChild(RecurringDepositProductCurrencyStepComponent, { static: true })
+  recurringDepositProductCurrencyStep: RecurringDepositProductCurrencyStepComponent;
+  @ViewChild(RecurringDepositProductTermsStepComponent, { static: true })
+  recurringDepositProductTermsStep: RecurringDepositProductTermsStepComponent;
+  @ViewChild(RecurringDepositProductSettingsStepComponent, { static: true })
+  recurringDepositProductSettingsStep: RecurringDepositProductSettingsStepComponent;
+  @ViewChild(RecurringDepositProductInterestRateChartStepComponent, { static: true })
+  recurringDepositProductInterestRateChartStep: RecurringDepositProductInterestRateChartStepComponent;
+  @ViewChild(RecurringDepositProductChargesStepComponent, { static: true })
+  recurringDepositProductChargesStep: RecurringDepositProductChargesStepComponent;
+  @ViewChild(RecurringDepositProductAccountingStepComponent, { static: true })
+  recurringDepositProductAccountingStep: RecurringDepositProductAccountingStepComponent;
 
   recurringDepositProductsTemplate: any;
   accountingRuleData: string[] = [];
@@ -41,11 +47,13 @@ export class EditRecurringDepositProductComponent {
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(private route: ActivatedRoute,
-              private productsService: ProductsService,
-              private router: Router,
-              private settingsService: SettingsService,
-              private accounting: Accounting) {
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private router: Router,
+    private settingsService: SettingsService,
+    private accounting: Accounting
+  ) {
     this.route.data.subscribe((data: { recurringDepositProductAndTemplate: any }) => {
       this.recurringDepositProductsTemplate = data.recurringDepositProductAndTemplate;
     });
@@ -84,14 +92,12 @@ export class EditRecurringDepositProductComponent {
       this.recurringDepositProductSettingsForm.valid &&
       this.recurringDepositProductInterestRateChartForm.valid &&
       this.recurringDepositProductAccountingForm.valid &&
-      (
-        this.recurringDepositProductDetailsForm.pristine ||
+      (this.recurringDepositProductDetailsForm.pristine ||
         this.recurringDepositProductCurrencyForm.pristine ||
         this.recurringDepositProductTermsForm.pristine ||
         this.recurringDepositProductSettingsForm.pristine ||
         this.recurringDepositProductInterestRateChartForm.pristine ||
-        this.recurringDepositProductAccountingForm.pristine
-      )
+        this.recurringDepositProductAccountingForm.pristine)
     );
   }
 
@@ -118,10 +124,10 @@ export class EditRecurringDepositProductComponent {
       recurringDepositProduct.description = '';
     }
     delete recurringDepositProduct.advancedAccountingRules;
-    this.productsService.updateRecurringDepositProduct(this.recurringDepositProductsTemplate.id, recurringDepositProduct)
+    this.productsService
+      .updateRecurringDepositProduct(this.recurringDepositProductsTemplate.id, recurringDepositProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
-
 }

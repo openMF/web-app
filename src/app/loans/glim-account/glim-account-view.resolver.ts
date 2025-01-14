@@ -13,11 +13,10 @@ import { LoansService } from '../loans.service';
  */
 @Injectable()
 export class GLIMViewResolver implements Resolve<Object> {
-
   /**
    * @param {LoansService} loansService Loans service.
    */
-  constructor(private loansService: LoansService) { }
+  constructor(private loansService: LoansService) {}
 
   /**
    * Returns the Savings Account data.
@@ -29,5 +28,4 @@ export class GLIMViewResolver implements Resolve<Object> {
     const glimId = route.paramMap.get('glimId');
     return this.loansService.getGLIMAccountData(glimId, groupId);
   }
-
 }

@@ -27,7 +27,6 @@ import { ClientsService } from '../../clients.service';
   styleUrls: ['./identities-tab.component.scss']
 })
 export class IdentitiesTabComponent {
-
   /** Client Identities */
   clientIdentities: any;
   /** Client Identifier Template */
@@ -35,7 +34,15 @@ export class IdentitiesTabComponent {
   /** Client Id */
   clientId: string;
   /** Identities Columns */
-  identitiesColumns: string[] = ['id', 'description', 'type', 'documentKey', 'documents', 'status', 'actions'];
+  identitiesColumns: string[] = [
+    'id',
+    'description',
+    'type',
+    'documentKey',
+    'documents',
+    'status',
+    'actions'
+  ];
 
   /** Identifiers Table */
   @ViewChild('identifiersTable', { static: true }) identifiersTable: MatTable<Element>;
@@ -45,12 +52,14 @@ export class IdentitiesTabComponent {
    * @param {MatDialog} dialog Mat Dialog
    * @param {ClientsService} clientService Clients Service
    */
-  constructor(private route: ActivatedRoute,
-              private dialog: MatDialog,
-              private clientService: ClientsService,
-              private translateService: TranslateService) {
+  constructor(
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private clientService: ClientsService,
+    private translateService: TranslateService
+  ) {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
-    this.route.data.subscribe((data: { clientIdentities: any, clientIdentifierTemplate: any }) => {
+    this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
       this.clientIdentities = data.clientIdentities;
       this.clientIdentifierTemplate = data.clientIdentifierTemplate;
     });
@@ -62,7 +71,7 @@ export class IdentitiesTabComponent {
    * @param {string} documentId Document ID
    */
   download(parentEntityId: string, documentId: string) {
-    this.clientService.downloadClientIdentificationDocument(parentEntityId, documentId).subscribe(res => {
+    this.clientService.downloadClientIdentificationDocument(parentEntityId, documentId).subscribe((res) => {
       const url = window.URL.createObjectURL(res);
       window.open(url);
     });
@@ -73,7 +82,9 @@ export class IdentitiesTabComponent {
    */
   addIdentifier() {
     for (let index = 0; index < this.clientIdentifierTemplate.allowedDocumentTypes.length; index++) {
-      this.clientIdentifierTemplate.allowedDocumentTypes[index].name = this.translateService.instant(`labels.catalogs.${this.clientIdentifierTemplate.allowedDocumentTypes[index].name}`);
+      this.clientIdentifierTemplate.allowedDocumentTypes[index].name = this.translateService.instant(
+        `labels.catalogs.${this.clientIdentifierTemplate.allowedDocumentTypes[index].name}`
+      );
     }
     const formfields: FormfieldBase[] = [
       new SelectBase({
@@ -88,10 +99,14 @@ export class IdentitiesTabComponent {
         controlName: 'status',
         label: this.translateService.instant('labels.inputs.Status'),
         value: '2',
-        options: { label: 'label', value: 'value', data: [
-          { label: this.translateService.instant('labels.catalogs.Active'), value: 'Active' },
-          { label: this.translateService.instant('labels.catalogs.Inactive'), value: 'Inactive' }
-        ] },
+        options: {
+          label: 'label',
+          value: 'value',
+          data: [
+            { label: this.translateService.instant('labels.catalogs.Active'), value: 'Active' },
+            { label: this.translateService.instant('labels.catalogs.Inactive'), value: 'Inactive' }
+          ]
+        },
         required: true,
         order: 2
       }),
@@ -110,6 +125,7 @@ export class IdentitiesTabComponent {
         type: 'text',
         order: 4
       })
+
     ];
     const data = {
       title: this.translateService.instant('labels.heading.Add Client Identifier'),
@@ -122,11 +138,16 @@ export class IdentitiesTabComponent {
           this.clientIdentities.push({
             id: res.resourceId,
             description: response.data.value.description,
-            documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter((doc: any) => (doc.id === response.data.value.documentTypeId))[0],
+            documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter(
+              (doc: any) => doc.id === response.data.value.documentTypeId
+            )[0],
             documentKey: response.data.value.documentKey,
             documents: [],
             clientId: this.clientId,
-            status: (response.data.value.status === 'Active' ? 'clientIdentifierStatusType.active' : 'clientIdentifierStatusType.inactive')
+            status:
+              response.data.value.status === 'Active'
+                ? 'clientIdentifierStatusType.active'
+                : 'clientIdentifierStatusType.inactive'
           });
           this.identifiersTable.renderRows();
         });
@@ -146,7 +167,7 @@ export class IdentitiesTabComponent {
     });
     deleteIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.clientService.deleteClientIdentifier(clientId, identifierId).subscribe(res => {
+        this.clientService.deleteClientIdentifier(clientId, identifierId).subscribe((res) => {
           this.clientIdentities.splice(index, 1);
           this.identifiersTable.renderRows();
         });
@@ -165,7 +186,7 @@ export class IdentitiesTabComponent {
     });
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       if (dialogResponse) {
-        const formData: FormData = new FormData;
+        const formData: FormData = new FormData();
         formData.append('name', dialogResponse.fileName);
         formData.append('file', dialogResponse.file);
         this.clientService.uploadClientIdentifierDocument(identifierId, formData).subscribe((res: any) => {
@@ -181,5 +202,4 @@ export class IdentitiesTabComponent {
       }
     });
   }
-
 }

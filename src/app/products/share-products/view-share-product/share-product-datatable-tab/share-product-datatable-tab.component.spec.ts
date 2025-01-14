@@ -8,9 +8,8 @@ describe('ShareProductDatatableTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShareProductDatatableTabComponent ]
-    })
-    .compileComponents();
+      declarations: [ShareProductDatatableTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

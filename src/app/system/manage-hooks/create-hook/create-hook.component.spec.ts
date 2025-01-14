@@ -8,9 +8,8 @@ describe('CreateHookComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateHookComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateHookComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -17,7 +17,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./view-checker-inbox.component.scss']
 })
 export class ViewCheckerInboxComponent {
-
   /** Checker Inbox Details Data */
   checkerInboxDetail: any;
   /** JsonData */
@@ -32,25 +31,29 @@ export class ViewCheckerInboxComponent {
    * @param {router} router Router.
    * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router,
     private translateService: TranslateService,
-    private tasksService: TasksService) {
+    private tasksService: TasksService
+  ) {
     this.route.data.subscribe((data: { checkerInboxDetail: any }) => {
       this.checkerInboxDetail = data.checkerInboxDetail;
       this.jsondata = JSON.parse(this.checkerInboxDetail.commandAsJson);
-      this.displayJSONData = !(_.isEmpty(this.jsondata));
+      this.displayJSONData = !_.isEmpty(this.jsondata);
     });
   }
-
 
   /**
    * Approve Checker
    */
   approveChecker() {
     const approveCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Approve Checker'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to approve checker') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Approve Checker'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to approve checker')
+      }
     });
     approveCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -66,7 +69,10 @@ export class ViewCheckerInboxComponent {
    */
   rejectChecker() {
     const rejectCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Reject Checker'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to reject checker') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Reject Checker'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to reject checker')
+      }
     });
     rejectCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -82,7 +88,10 @@ export class ViewCheckerInboxComponent {
    */
   deleteChecker() {
     const deleteCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Delete Checker'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to delete checker') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Delete Checker'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to delete checker')
+      }
     });
     deleteCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -92,5 +101,4 @@ export class ViewCheckerInboxComponent {
       }
     });
   }
-
 }

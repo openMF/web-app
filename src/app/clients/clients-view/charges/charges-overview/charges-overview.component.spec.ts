@@ -8,9 +8,8 @@ describe('ChargesOverviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChargesOverviewComponent ]
-    })
-    .compileComponents();
+      declarations: [ChargesOverviewComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

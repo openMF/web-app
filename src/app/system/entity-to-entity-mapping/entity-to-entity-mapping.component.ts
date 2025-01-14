@@ -29,7 +29,6 @@ import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.
   styleUrls: ['./entity-to-entity-mapping.component.scss']
 })
 export class EntityToEntityMappingComponent implements OnInit {
-
   /** Stores entity to entity mapping data */
   entityMappings: string[] = [];
   /** Stores Id of selected mapping type */
@@ -68,26 +67,34 @@ export class EntityToEntityMappingComponent implements OnInit {
   /** List of Entity to Entity Mapping */
   displayedColumns: string[] = ['entitymapping'];
   /** Columns for details of a chosen mapping */
-  entityMappingListColumns: string[] = ['fromentity', 'toentity', 'startdate', 'enddate', 'edit', 'delete'];
+  entityMappingListColumns: string[] = [
+    'fromentity',
+    'toentity',
+    'startdate',
+    'enddate',
+    'edit',
+    'delete'
+  ];
 
   /** Paginator for entity table. */
   @ViewChild(MatPaginator) paginator: MatPaginator;
   /** Sorter for entity table. */
   @ViewChild(MatSort) sort: MatSort;
 
-
   /**
    * Retrieves the codes data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private route: ActivatedRoute,
-              private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private dateUtils: Dates,
-              private dialog: MatDialog,
-              private settingsService: SettingsService,
-              private translateService: TranslateService) {
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private dateUtils: Dates,
+    private dialog: MatDialog,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { entityMappings: any }) => {
       this.entityMappings = data.entityMappings;
     });
@@ -98,8 +105,14 @@ export class EntityToEntityMappingComponent implements OnInit {
    */
   createFilterPreferenceForm() {
     this.filterPreferenceForm = this.formBuilder.group({
-      'mappingFirstParamId': ['', Validators.required],
-      'mappingSecondParamId': ['', Validators.required]
+      mappingFirstParamId: [
+        '',
+        Validators.required
+      ],
+      mappingSecondParamId: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -131,7 +144,6 @@ export class EntityToEntityMappingComponent implements OnInit {
     this.retrieveById = id;
     this.createFilterPreferenceForm();
     switch (this.retrieveById) {
-
       case 1:
         this.systemService.getOffices().subscribe((response: any) => {
           this.firstEntityData = response;
@@ -183,7 +195,6 @@ export class EntityToEntityMappingComponent implements OnInit {
         });
         break;
     }
-
   }
 
   /**
@@ -201,11 +212,13 @@ export class EntityToEntityMappingComponent implements OnInit {
 
     this.selectedFromId = this.filterPreference.mappingFirstParamId;
     this.selectedToId = this.filterPreference.mappingSecondParamId;
-    this.systemService.getEntitytoEntityData(this.retrieveById, this.selectedFromId, this.selectedToId).subscribe((response: any) => {
-      this.entityMappingsListData = new MatTableDataSource(response);
-      this.entityMappingsListData.paginator = this.paginator;
-      this.entityMappingsListData.sort = this.sort;
-    });
+    this.systemService
+      .getEntitytoEntityData(this.retrieveById, this.selectedFromId, this.selectedToId)
+      .subscribe((response: any) => {
+        this.entityMappingsListData = new MatTableDataSource(response);
+        this.entityMappingsListData.paginator = this.paginator;
+        this.entityMappingsListData.sort = this.sort;
+      });
   }
 
   /**
@@ -218,7 +231,7 @@ export class EntityToEntityMappingComponent implements OnInit {
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'fromId',
-        label:  this.translateService.instant(`labels.inputs.${this.firstMappingEntity}`),
+        label: this.translateService.instant(`labels.inputs.${this.firstMappingEntity}`),
         options: { label: 'name', value: 'id', data: this.firstEntityData },
         required: true
       }),
@@ -240,9 +253,13 @@ export class EntityToEntityMappingComponent implements OnInit {
         type: 'date',
         required: false
       })
+
     ];
     const data = {
-      title: this.translateService.instant('labels.buttons.Add') + ' ' + this.translateService.instant('labels.heading.Entity to Entity Mapping'),
+      title:
+        this.translateService.instant('labels.buttons.Add') +
+        ' ' +
+        this.translateService.instant('labels.heading.Entity to Entity Mapping'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -291,9 +308,13 @@ export class EntityToEntityMappingComponent implements OnInit {
         type: 'date',
         required: false
       })
+
     ];
     const data = {
-      title: this.translateService.instant('labels.buttons.Edit') + ' ' + this.translateService.instant('labels.heading.Entity to Entity Mapping'),
+      title:
+        this.translateService.instant('labels.buttons.Edit') +
+        ' ' +
+        this.translateService.instant('labels.heading.Entity to Entity Mapping'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -305,13 +326,11 @@ export class EntityToEntityMappingComponent implements OnInit {
     });
   }
 
-
   /**
    * Submits the new mapping
    * @param addMappingForm Add Mapping Form Data
    */
   submitNew(addMappingForm: any) {
-
     if (addMappingForm.value.fromId === '') {
       addMappingForm.value.fromId = undefined;
     }
@@ -365,12 +384,10 @@ export class EntityToEntityMappingComponent implements OnInit {
     });
     deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteMapping(id)
-          .subscribe(() => {
-            this.showFilteredData();
-          });
+        this.systemService.deleteMapping(id).subscribe(() => {
+          this.showFilteredData();
+        });
       }
     });
   }
-
 }

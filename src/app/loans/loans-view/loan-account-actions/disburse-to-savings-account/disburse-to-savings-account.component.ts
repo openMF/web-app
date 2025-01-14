@@ -12,7 +12,6 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./disburse-to-savings-account.component.scss']
 })
 export class DisburseToSavingsAccountComponent implements OnInit {
-
   @Input() dataObject: any;
 
   /** Minimum Date allowed. */
@@ -31,13 +30,14 @@ export class DisburseToSavingsAccountComponent implements OnInit {
    * @param {LoansService} loanService Loan Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
     private loanService: LoansService,
-    private settingsService: SettingsService) {
-  }
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
@@ -52,12 +52,21 @@ export class DisburseToSavingsAccountComponent implements OnInit {
    */
   setDisbursementToSavingsForm() {
     this.disbursementForm = this.formBuilder.group({
-      'actualDisbursementDate': [new Date(), Validators.required],
-      'transactionAmount': [this.dataObject.amount, Validators.required],
-      'note': ['']
+      actualDisbursementDate: [
+        new Date(),
+        Validators.required
+      ],
+      transactionAmount: [
+        this.dataObject.amount,
+        Validators.required
+      ],
+      note: ['']
     });
     if (this.dataObject.fixedEmiAmount) {
-      this.disbursementForm.addControl('fixedEmiAmount', new UntypedFormControl(this.dataObject.fixedEmiAmount, [Validators.required]));
+      this.disbursementForm.addControl(
+        'fixedEmiAmount',
+        new UntypedFormControl(this.dataObject.fixedEmiAmount, [Validators.required])
+      );
     }
   }
 
@@ -70,7 +79,10 @@ export class DisburseToSavingsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevActualDisbursementDate: Date = this.disbursementForm.value.actualDisbursementDate;
     if (disbursementLoanFormData.actualDisbursementDate instanceof Date) {
-      disbursementLoanFormData.actualDisbursementDate = this.dateUtils.formatDate(prevActualDisbursementDate, dateFormat);
+      disbursementLoanFormData.actualDisbursementDate = this.dateUtils.formatDate(
+        prevActualDisbursementDate,
+        dateFormat
+      );
     }
     const data = {
       ...disbursementLoanFormData,
@@ -83,5 +95,4 @@ export class DisburseToSavingsAccountComponent implements OnInit {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
-
 }

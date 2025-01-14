@@ -20,7 +20,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./fund-mapping.component.scss']
 })
 export class FundMappingComponent implements OnInit {
-
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -33,7 +32,13 @@ export class FundMappingComponent implements OnInit {
   isCollapsed = false;
 
   /** Columns to be displayed in loans table. */
-  displayedColumns: string[] = ['officeName', 'productName', 'count', 'outstanding', 'percentage'];
+  displayedColumns: string[] = [
+    'officeName',
+    'productName',
+    'count',
+    'outstanding',
+    'percentage'
+  ];
   /** Data source for loans table. */
   dataSource: MatTableDataSource<any>;
 
@@ -50,11 +55,13 @@ export class FundMappingComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates
+  ) {
     this.route.data.subscribe((data: { advanceSearchTemplate: any }) => {
       this.advanceSearchTemplate = data.advanceSearchTemplate;
     });
@@ -71,14 +78,23 @@ export class FundMappingComponent implements OnInit {
    */
   createFundMappingForm() {
     this.fundMappingForm = this.formBuilder.group({
-      'loanStatus': [''],
-      'loanProducts': [''],
-      'offices': [''],
-      'loanDateOption': ['', Validators.required],
-      'loanFromDate': ['', Validators.required],
-      'loanToDate': ['', Validators.required],
-      'includeOutStandingAmountPercentage': [false],
-      'includeOutstandingAmount': [false]
+      loanStatus: [''],
+      loanProducts: [''],
+      offices: [''],
+      loanDateOption: [
+        '',
+        Validators.required
+      ],
+      loanFromDate: [
+        '',
+        Validators.required
+      ],
+      loanToDate: [
+        '',
+        Validators.required
+      ],
+      includeOutStandingAmountPercentage: [false],
+      includeOutstandingAmount: [false]
     });
   }
 
@@ -88,14 +104,26 @@ export class FundMappingComponent implements OnInit {
   buildDependencies() {
     this.fundMappingForm.get('includeOutStandingAmountPercentage').valueChanges.subscribe((value: boolean) => {
       if (value) {
-        this.fundMappingForm.addControl('outStandingAmountPercentageCondition', new UntypedFormControl('', Validators.required));
+        this.fundMappingForm.addControl(
+          'outStandingAmountPercentageCondition',
+          new UntypedFormControl('', Validators.required)
+        );
         this.fundMappingForm.get('outStandingAmountPercentageCondition').valueChanges.subscribe((_value: string) => {
           if (_value === 'between') {
-            this.fundMappingForm.addControl('minOutStandingAmountPercentage', new UntypedFormControl('', Validators.required));
-            this.fundMappingForm.addControl('maxOutStandingAmountPercentage', new UntypedFormControl('', Validators.required));
+            this.fundMappingForm.addControl(
+              'minOutStandingAmountPercentage',
+              new UntypedFormControl('', Validators.required)
+            );
+            this.fundMappingForm.addControl(
+              'maxOutStandingAmountPercentage',
+              new UntypedFormControl('', Validators.required)
+            );
             this.fundMappingForm.removeControl('outStandingAmountPercentage');
           } else {
-            this.fundMappingForm.addControl('outStandingAmountPercentage', new UntypedFormControl('', Validators.required));
+            this.fundMappingForm.addControl(
+              'outStandingAmountPercentage',
+              new UntypedFormControl('', Validators.required)
+            );
             this.fundMappingForm.removeControl('minOutStandingAmountPercentage');
             this.fundMappingForm.removeControl('maxOutStandingAmountPercentage');
           }
@@ -170,5 +198,4 @@ export class FundMappingComponent implements OnInit {
       this.setLoans(response);
     });
   }
-
 }

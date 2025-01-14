@@ -48,225 +48,236 @@ import { ClientDataAndTemplateResolver } from './common-resolvers/client-and-tem
 import { ClientCollateralResolver } from './common-resolvers/client-collateral.resolver';
 
 const routes: Routes = [
-  Route.withShell([{
-    path: 'clients',
-    data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
-    children: [
-      {
-        path: '',
-        component: ClientsComponent
-      },
-      {
-        path: 'create',
-        data: { title: 'Create Client', breadcrumb: 'Create Client', routeParamBreadcrumb: false },
-        component: CreateClientComponent,
-        resolve: {
-          clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
-          clientTemplate: ClientTemplateResolver
-        }
-      },
-      {
-        path: ':clientId',
-        component: ClientsViewComponent,
-        data: { title: 'Clients View', routeParamBreadcrumb: 'clientId' },
-        resolve: {
-          clientViewData: ClientViewResolver,
-          clientTemplateData: ClientTemplateResolver,
-          clientDatatables: ClientDatatablesResolver
+  Route.withShell([
+    {
+      path: 'clients',
+      data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
+      children: [
+        {
+          path: '',
+          component: ClientsComponent
         },
-        children: [
-          {
-            path: '',
-            redirectTo: 'general',
-            pathMatch: 'full'
+        {
+          path: 'create',
+          data: { title: 'Create Client', breadcrumb: 'Create Client', routeParamBreadcrumb: false },
+          component: CreateClientComponent,
+          resolve: {
+            clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
+            clientTemplate: ClientTemplateResolver
+          }
+        },
+        {
+          path: ':clientId',
+          component: ClientsViewComponent,
+          data: { title: 'Clients View', routeParamBreadcrumb: 'clientId' },
+          resolve: {
+            clientViewData: ClientViewResolver,
+            clientTemplateData: ClientTemplateResolver,
+            clientDatatables: ClientDatatablesResolver
           },
-          {
-            path: 'general',
-            component: GeneralTabComponent,
-            data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
-            resolve: {
-              clientAccountsData: ClientAccountsResolver,
-              clientChargesData: ClientChargesResolver,
-              clientCollateralData: ClientCollateralResolver
-            }
-          },
-          {
-            path: 'address',
-            component: AddressTabComponent,
-            data: { title: 'Address', breadcrumb: 'Address', routeParamBreadcrumb: false },
-            resolve: {
-              clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
-              clientAddressTemplateData: ClientAddressTemplateResolver,
-              clientAddressData: ClientAddressResolver
-            }
-          },
-          {
-            path: 'family-members',
-            data: { title: 'Family Members', breadcrumb: 'Family Members', routeParamBreadcrumb: false },
-            children: [
-              {
-                path: '',
-                component: FamilyMembersTabComponent,
-                resolve: {
-                  clientFamilyMembers: ClientFamilyMembersResolver
-                }
-              },
-              {
-                path: 'add',
-                component: AddFamilyMemberComponent,
-                data: { title: 'Add', breadcrumb: 'Add', routeParamBreadcrumb: false },
-                resolve: {
-                  clientTemplate: ClientTemplateResolver
-                }
-              },
-              {
-                path: ':familyMemberId',
-                children: [{
-                  path: 'edit',
-                  component: EditFamilyMemberComponent,
-                  data: { title: 'Family Member View', routeParamBreadcrumb: 'familyMemberId' },
-                  resolve: {
-                    clientTemplate: ClientTemplateResolver,
-                    editFamilyMember: ClientFamilyMemberResolver
-                  }
-                }]
-              }
-            ]
-          },
-          {
-            path: 'identities',
-            component: IdentitiesTabComponent,
-            data: { title: 'Identities', breadcrumb: 'Identities', routeParamBreadcrumb: false },
-            resolve: {
-              clientIdentities: ClientIdentitiesResolver,
-              clientIdentifierTemplate: ClientIdentifierTemplateResolver
-            }
-          },
-          {
-            path: 'documents',
-            component: DocumentsTabComponent,
-            data: { title: 'Documents', breadcrumb: 'Documents', routeParamBreadcrumb: false },
-            resolve: {
-              clientDocuments: ClientDocumentsResolver
-            }
-          },
-          {
-            path: 'notes',
-            component: NotesTabComponent,
-            data: { title: 'Notes', breadcrumb: 'Notes', routeParamBreadcrumb: false },
-            resolve: {
-              clientNotes: ClientNotesResolver
-            }
-          },
-          {
-            path: 'datatables',
-            children: [{
-              path: ':datatableName',
-              component: DatatableTabComponent,
-              data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+          children: [
+            {
+              path: '',
+              redirectTo: 'general',
+              pathMatch: 'full'
+            },
+            {
+              path: 'general',
+              component: GeneralTabComponent,
+              data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
               resolve: {
-                clientDatatable: ClientDatatableResolver
+                clientAccountsData: ClientAccountsResolver,
+                clientChargesData: ClientChargesResolver,
+                clientCollateralData: ClientCollateralResolver
               }
-            }]
-          }
-        ]
-      },
-    ]
-  },
-  {
-    path: 'clients',
-    data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
-    children: [
-      {
-        path: ':clientId',
-        data: { title: 'Clients View', routeParamBreadcrumb: 'clientId' },
-        resolve: {
-          clientViewData: ClientViewResolver
-        },
-        children: [
-          {
-            path: 'edit',
-            data: { title: 'Edit Client', breadcrumb: 'Edit', routeParamBreadcrumb: false },
-            component: EditClientComponent,
-            resolve: {
-              clientDataAndTemplate: ClientDataAndTemplateResolver
-            }
-          },
-          {
-            path: 'actions/:name',
-            data: { title: 'Client Actions', routeParamBreadcrumb: 'name' },
-            component: ClientActionsComponent,
-            resolve: {
-              clientActionData: ClientActionsResolver
-            }
-          },
-          {
-            path: 'charges',
-            children: [
-              {
-                path: 'overview',
-                data: { title: 'Charges Overview', breadcrumb: 'Charges Overview' },
-                component: ChargesOverviewComponent,
-                resolve: {
-                  clientChargesData: ClientChargeOverviewResolver
-                }
-              },
-              {
-                path: ':chargeId',
-                data: { title: 'Charges', routeParamBreadcrumb: 'chargeId' },
-                children: [
-                  {
-                    path: '',
-                    component: ViewChargeComponent,
-                    resolve: {
-                      clientChargeData: ClientChargeViewResolver
-                    }
-                  },
-                  {
-                    path: 'pay',
-                    data: { title: 'Pay Charge', routeParamBreadcrumb: false },
-                    component: ClientPayChargesComponent,
-                    resolve: {
-                      transactionData: ClientTransactionPayResolver
-                    }
+            },
+            {
+              path: 'address',
+              component: AddressTabComponent,
+              data: { title: 'Address', breadcrumb: 'Address', routeParamBreadcrumb: false },
+              resolve: {
+                clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
+                clientAddressTemplateData: ClientAddressTemplateResolver,
+                clientAddressData: ClientAddressResolver
+              }
+            },
+            {
+              path: 'family-members',
+              data: { title: 'Family Members', breadcrumb: 'Family Members', routeParamBreadcrumb: false },
+              children: [
+                {
+                  path: '',
+                  component: FamilyMembersTabComponent,
+                  resolve: {
+                    clientFamilyMembers: ClientFamilyMembersResolver
                   }
-                ]
+                },
+                {
+                  path: 'add',
+                  component: AddFamilyMemberComponent,
+                  data: { title: 'Add', breadcrumb: 'Add', routeParamBreadcrumb: false },
+                  resolve: {
+                    clientTemplate: ClientTemplateResolver
+                  }
+                },
+                {
+                  path: ':familyMemberId',
+                  children: [
+                    {
+                      path: 'edit',
+                      component: EditFamilyMemberComponent,
+                      data: { title: 'Family Member View', routeParamBreadcrumb: 'familyMemberId' },
+                      resolve: {
+                        clientTemplate: ClientTemplateResolver,
+                        editFamilyMember: ClientFamilyMemberResolver
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              path: 'identities',
+              component: IdentitiesTabComponent,
+              data: { title: 'Identities', breadcrumb: 'Identities', routeParamBreadcrumb: false },
+              resolve: {
+                clientIdentities: ClientIdentitiesResolver,
+                clientIdentifierTemplate: ClientIdentifierTemplateResolver
               }
-            ]
+            },
+            {
+              path: 'documents',
+              component: DocumentsTabComponent,
+              data: { title: 'Documents', breadcrumb: 'Documents', routeParamBreadcrumb: false },
+              resolve: {
+                clientDocuments: ClientDocumentsResolver
+              }
+            },
+            {
+              path: 'notes',
+              component: NotesTabComponent,
+              data: { title: 'Notes', breadcrumb: 'Notes', routeParamBreadcrumb: false },
+              resolve: {
+                clientNotes: ClientNotesResolver
+              }
+            },
+            {
+              path: 'datatables',
+              children: [
+                {
+                  path: ':datatableName',
+                  component: DatatableTabComponent,
+                  data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+                  resolve: {
+                    clientDatatable: ClientDatatableResolver
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: 'clients',
+      data: { title: 'Clients', breadcrumb: 'Clients', routeParamBreadcrumb: false },
+      children: [
+        {
+          path: ':clientId',
+          data: { title: 'Clients View', routeParamBreadcrumb: 'clientId' },
+          resolve: {
+            clientViewData: ClientViewResolver
           },
-          {
-            path: 'loans-accounts',
-            loadChildren: () => import('../loans/loans.module').then(m => m.LoansModule)
-          },
-          {
-            path: 'client-collateral',
-            loadChildren: () => import('../collaterals/collaterals.module').then(m => m.CollateralsModule)
-          },
-          {
-            path: 'fixed-deposits-accounts',
-            loadChildren: () => import('../deposits/fixed-deposits/fixed-deposits.module').then(m => m.FixedDepositsModule)
-          },
-          {
-            path: 'savings-accounts',
-            loadChildren: () => import('../savings/savings.module').then(m => m.SavingsModule)
-          },
-          {
-            path: 'recurring-deposits-accounts',
-            loadChildren: () => import('../deposits/recurring-deposits/recurring-deposits.module').then(m => m.RecurringDepositsModule)
-          },
-          {
-            path: 'shares-accounts',
-            loadChildren: () => import('../shares/shares.module').then(m => m.SharesModule)
-          },
-          {
-            path: 'standing-instructions',
-            loadChildren: () => import('../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
-          }
-        ]
-      }
-    ]
-  }
+          children: [
+            {
+              path: 'edit',
+              data: { title: 'Edit Client', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+              component: EditClientComponent,
+              resolve: {
+                clientDataAndTemplate: ClientDataAndTemplateResolver
+              }
+            },
+            {
+              path: 'actions/:name',
+              data: { title: 'Client Actions', routeParamBreadcrumb: 'name' },
+              component: ClientActionsComponent,
+              resolve: {
+                clientActionData: ClientActionsResolver
+              }
+            },
+            {
+              path: 'charges',
+              children: [
+                {
+                  path: 'overview',
+                  data: { title: 'Charges Overview', breadcrumb: 'Charges Overview' },
+                  component: ChargesOverviewComponent,
+                  resolve: {
+                    clientChargesData: ClientChargeOverviewResolver
+                  }
+                },
+                {
+                  path: ':chargeId',
+                  data: { title: 'Charges', routeParamBreadcrumb: 'chargeId' },
+                  children: [
+                    {
+                      path: '',
+                      component: ViewChargeComponent,
+                      resolve: {
+                        clientChargeData: ClientChargeViewResolver
+                      }
+                    },
+                    {
+                      path: 'pay',
+                      data: { title: 'Pay Charge', routeParamBreadcrumb: false },
+                      component: ClientPayChargesComponent,
+                      resolve: {
+                        transactionData: ClientTransactionPayResolver
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              path: 'loans-accounts',
+              loadChildren: () => import('../loans/loans.module').then((m) => m.LoansModule)
+            },
+            {
+              path: 'client-collateral',
+              loadChildren: () => import('../collaterals/collaterals.module').then((m) => m.CollateralsModule)
+            },
+            {
+              path: 'fixed-deposits-accounts',
+              loadChildren: () =>
+                import('../deposits/fixed-deposits/fixed-deposits.module').then((m) => m.FixedDepositsModule)
+            },
+            {
+              path: 'savings-accounts',
+              loadChildren: () => import('../savings/savings.module').then((m) => m.SavingsModule)
+            },
+            {
+              path: 'recurring-deposits-accounts',
+              loadChildren: () =>
+                import('../deposits/recurring-deposits/recurring-deposits.module').then(
+                  (m) => m.RecurringDepositsModule
+                )
+            },
+            {
+              path: 'shares-accounts',
+              loadChildren: () => import('../shares/shares.module').then((m) => m.SharesModule)
+            },
+            {
+              path: 'standing-instructions',
+              loadChildren: () =>
+                import('../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
+            }
+          ]
+        }
+      ]
+    }
   ])
+
 ];
 
 @NgModule({
@@ -297,4 +308,4 @@ const routes: Routes = [
     ClientCollateralResolver
   ]
 })
-export class ClientsRoutingModule { }
+export class ClientsRoutingModule {}

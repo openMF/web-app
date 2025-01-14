@@ -6,7 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./savings-transaction-datatable-tab.component.scss']
 })
 export class SavingsTransactionDatatableTabComponent {
-
-  constructor() { }
-
+  constructor() {}
 }

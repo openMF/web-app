@@ -17,7 +17,6 @@ import { AuthenticationService } from '../../core/authentication/authentication.
   styleUrls: ['./login-form.component.scss']
 })
 export class LoginFormComponent implements OnInit {
-
   /** Login form group. */
   loginForm: UntypedFormGroup;
   /** Password input field type. */
@@ -29,8 +28,10 @@ export class LoginFormComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private authenticationService: AuthenticationService) {  }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private authenticationService: AuthenticationService
+  ) {}
 
   /**
    * Creates login form.
@@ -48,14 +49,18 @@ export class LoginFormComponent implements OnInit {
   login() {
     this.loading = true;
     this.loginForm.disable();
-    this.authenticationService.login(this.loginForm.value)
-      .pipe(finalize(() => {
-        this.loginForm.reset();
-        this.loginForm.markAsPristine();
-        // Angular Material Bug: Validation errors won't get removed on reset.
-        this.loginForm.enable();
-        this.loading = false;
-      })).subscribe();
+    this.authenticationService
+      .login(this.loginForm.value)
+      .pipe(
+        finalize(() => {
+          this.loginForm.reset();
+          this.loginForm.markAsPristine();
+          // Angular Material Bug: Validation errors won't get removed on reset.
+          this.loginForm.enable();
+          this.loading = false;
+        })
+      )
+      .subscribe();
   }
 
   /**
@@ -70,10 +75,15 @@ export class LoginFormComponent implements OnInit {
    */
   private createLoginForm() {
     this.loginForm = this.formBuilder.group({
-      'username': ['', Validators.required],
-      'password': ['', Validators.required],
-      'remember': false
+      username: [
+        '',
+        Validators.required
+      ],
+      password: [
+        '',
+        Validators.required
+      ],
+      remember: false
     });
   }
-
 }

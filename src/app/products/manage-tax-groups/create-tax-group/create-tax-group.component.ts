@@ -26,7 +26,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./create-tax-group.component.scss']
 })
 export class CreateTaxGroupComponent implements OnInit {
-
   /** Minimum start date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum start date allowed. */
@@ -41,7 +40,11 @@ export class CreateTaxGroupComponent implements OnInit {
   taxComponentOptions: any;
 
   /** Tax Component Displayed Columns */
-  displayedColumns: string[] = ['name', 'startDate', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'startDate',
+    'actions'
+  ];
 
   /**
    * Retrieves the tax Group template data from `resolve`.
@@ -53,14 +56,16 @@ export class CreateTaxGroupComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private dialog: MatDialog,
-              private settingsService: SettingsService,
-              private translateService: TranslateService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private dialog: MatDialog,
+    private settingsService: SettingsService,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { taxGroupTemplate: any }) => {
       this.taxGroupTemplateData = data.taxGroupTemplate;
       this.taxComponentOptions = this.taxGroupTemplateData.taxComponents;
@@ -77,7 +82,10 @@ export class CreateTaxGroupComponent implements OnInit {
    */
   createTaxGroupForm() {
     this.taxGroupForm = this.formBuilder.group({
-      'name': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -99,9 +107,13 @@ export class CreateTaxGroupComponent implements OnInit {
         maxDate: this.maxDate,
         order: 2
       })
+
     ];
     const data = {
-      title: this.translateService.instant('labels.buttons.Add') + ' ' + this.translateService.instant('labels.inputs.Tax Component'),
+      title:
+        this.translateService.instant('labels.buttons.Add') +
+        ' ' +
+        this.translateService.instant('labels.inputs.Tax Component'),
       layout: { addButtonText: 'Add' },
       formfields: formfields
     };
@@ -133,6 +145,7 @@ export class CreateTaxGroupComponent implements OnInit {
         maxDate: this.maxDate,
         order: 2
       })
+
     ];
     const data = {
       title: 'Edit Tax Component',
@@ -181,8 +194,13 @@ export class CreateTaxGroupComponent implements OnInit {
       taxComponent.startDate = this.dateUtils.formatDate(taxComponent.startDate, dateFormat) || '';
     }
     this.productsService.createTaxGroup(taxGroup).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

@@ -8,9 +8,8 @@ describe('ExternalAssetOwnerTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExternalAssetOwnerTabComponent ]
-    })
-    .compileComponents();
+      declarations: [ExternalAssetOwnerTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

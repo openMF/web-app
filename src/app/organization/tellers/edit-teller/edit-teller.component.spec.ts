@@ -8,9 +8,8 @@ describe('EditTellerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditTellerComponent ]
-    })
-    .compileComponents();
+      declarations: [EditTellerComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

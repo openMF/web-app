@@ -24,13 +24,14 @@ export class NotesTabComponent implements OnInit {
   noteForm: UntypedFormGroup;
   @ViewChild('formRef', { static: true }) formRef: any;
 
-
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
     private centersService: CentersService,
     private authenticationService: AuthenticationService,
     private dialog: MatDialog,
-    private translateService: TranslateService) {
+    private translateService: TranslateService
+  ) {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
     this.centerId = this.route.parent.snapshot.params['centerId'];
@@ -45,7 +46,10 @@ export class NotesTabComponent implements OnInit {
 
   createNoteForm() {
     this.noteForm = this.formBuilder.group({
-      'note': ['', Validators.required]
+      note: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -63,19 +67,22 @@ export class NotesTabComponent implements OnInit {
 
   editNote(noteId: string, noteContent: string, index: number) {
     const editNoteDialogRef = this.dialog.open(FormDialogComponent, {
-      data: { formfields: [{
-                controlName: 'note',
-                required: true,
-                value: noteContent,
-                controlType: 'input',
-                label: this.translateService.instant('labels.inputs.Note')
-              }],
-              layout: {
-                columns: 1,
-                addButtonText: 'Confirm'
-              },
-              title: this.translateService.instant('labels.heading.Edit Note')
-            }
+      data: {
+        formfields: [
+          {
+            controlName: 'note',
+            required: true,
+            value: noteContent,
+            controlType: 'input',
+            label: this.translateService.instant('labels.inputs.Note')
+          }
+        ],
+        layout: {
+          columns: 1,
+          addButtonText: 'Confirm'
+        },
+        title: this.translateService.instant('labels.heading.Edit Note')
+      }
     });
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -88,14 +95,15 @@ export class NotesTabComponent implements OnInit {
 
   deleteNote(noteId: string, index: number) {
     const deleteNoteDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `${this.translateService.instant('labels.inputs.Note')} ${this.translateService.instant('labels.inputs.Id')}:${noteId}` }
+      data: {
+        deleteContext: `${this.translateService.instant('labels.inputs.Note')} ${this.translateService.instant('labels.inputs.Id')}:${noteId}`
+      }
     });
     deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.centersService.deleteCenterNote(this.centerId, noteId)
-          .subscribe(() => {
-            this.centerNotes.splice(index, 1);
-          });
+        this.centersService.deleteCenterNote(this.centerId, noteId).subscribe(() => {
+          this.centerNotes.splice(index, 1);
+        });
       }
     });
   }

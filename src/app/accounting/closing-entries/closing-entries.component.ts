@@ -22,9 +22,13 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./closing-entries.component.scss']
 })
 export class ClosingEntriesComponent implements OnInit, AfterViewInit {
-
   /** Columns to be displayed in closing entries table. */
-  displayedColumns: string[] = ['officeName', 'closingDate', 'comments', 'createdByUsername'];
+  displayedColumns: string[] = [
+    'officeName',
+    'closingDate',
+    'comments',
+    'createdByUsername'
+  ];
   /** Data source for closing entries table. */
   dataSource: MatTableDataSource<any>;
   /** Office name filter form control. */
@@ -57,14 +61,13 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe((data: {
-      offices: any,
-      glAccountClosures: any
-    }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { offices: any; glAccountClosures: any }) => {
       this.officeData = data.offices;
       this.glAccountClosureData = data.glAccountClosures;
     });
@@ -101,11 +104,10 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
    * Sets filtered offices for autocomplete.
    */
   setFilteredOffices() {
-    this.filteredOfficeData = this.officeName.valueChanges
-    .pipe(
+    this.filteredOfficeData = this.officeName.valueChanges.pipe(
       startWith(''),
-      map((office: any) => typeof office === 'string' ? office : office.name),
-      map((officeName: string) => officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData)
+      map((office: any) => (typeof office === 'string' ? office : office.name)),
+      map((officeName: string) => (officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData))
     );
   }
 
@@ -125,7 +127,12 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 

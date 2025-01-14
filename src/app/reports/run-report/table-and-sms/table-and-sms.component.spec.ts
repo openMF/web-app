@@ -8,9 +8,8 @@ describe('TableAndSmsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableAndSmsComponent ]
-    })
-    .compileComponents();
+      declarations: [TableAndSmsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

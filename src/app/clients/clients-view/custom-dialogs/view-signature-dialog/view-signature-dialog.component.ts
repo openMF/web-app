@@ -18,7 +18,6 @@ import { Buffer } from 'buffer';
   styleUrls: ['./view-signature-dialog.component.scss']
 })
 export class ViewSignatureDialogComponent implements OnInit {
-
   /** Id of client signature in documents */
   signatureId: any;
   /** Signature Image */
@@ -30,10 +29,12 @@ export class ViewSignatureDialogComponent implements OnInit {
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Documents data
    */
-  constructor(public dialogRef: MatDialogRef<ViewSignatureDialogComponent>,
-              private clientsService: ClientsService,
-              private sanitizer: DomSanitizer,
-              @Inject(MAT_DIALOG_DATA) public data: { documents: any[], id: string }) {
+  constructor(
+    public dialogRef: MatDialogRef<ViewSignatureDialogComponent>,
+    private clientsService: ClientsService,
+    private sanitizer: DomSanitizer,
+    @Inject(MAT_DIALOG_DATA) public data: { documents: any[]; id: string }
+  ) {
     const signature = this.data.documents.find((document: any) => document.name === 'clientSignature') || {};
     this.signatureId = signature.id;
     this.clientId = this.data.id;
@@ -43,11 +44,11 @@ export class ViewSignatureDialogComponent implements OnInit {
     if (this.signatureId) {
       this.clientsService.getClientSignatureImage(this.clientId, this.signatureId).subscribe(
         async (blob: any) => {
-          const buffer = Buffer.from(await blob.arrayBuffer())
+          const buffer = Buffer.from(await blob.arrayBuffer());
           this.signatureImage = 'data:' + blob.type + ';base64,' + buffer.toString('base64');
-        }, (error: any) => {}
+        },
+        (error: any) => {}
       );
     }
   }
-
 }

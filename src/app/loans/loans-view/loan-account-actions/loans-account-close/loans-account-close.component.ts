@@ -14,7 +14,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./loans-account-close.component.scss']
 })
 export class LoansAccountCloseComponent implements OnInit {
-
   @Input() dataObject: any;
 
   /** Close form. */
@@ -33,14 +32,16 @@ export class LoansAccountCloseComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private settingsService: SettingsService) {
-      this.loanId = this.route.snapshot.params['loanId'];
-    }
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
+  }
 
   /**
    * Creates the close form.
@@ -55,8 +56,11 @@ export class LoansAccountCloseComponent implements OnInit {
    */
   createCloseForm() {
     this.closeLoanForm = this.formBuilder.group({
-      'transactionDate': [new Date(this.dataObject.date) || new Date(), Validators.required],
-      'note': []
+      transactionDate: [
+        new Date(this.dataObject.date) || new Date(),
+        Validators.required
+      ],
+      note: []
     });
   }
 
@@ -77,10 +81,8 @@ export class LoansAccountCloseComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.submitLoanActionButton(this.loanId, data, 'close')
-      .subscribe((response: any) => {
-        this.router.navigate(['../../general'], { relativeTo: this.route });
+    this.loanService.submitLoanActionButton(this.loanId, data, 'close').subscribe((response: any) => {
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
-
 }

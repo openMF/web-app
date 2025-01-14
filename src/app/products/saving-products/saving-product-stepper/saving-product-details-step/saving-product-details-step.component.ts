@@ -8,7 +8,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./saving-product-details-step.component.scss']
 })
 export class SavingProductDetailsStepComponent implements OnInit {
-
   @Input() savingProductsTemplate: any;
 
   savingProductDetailsForm: UntypedFormGroup;
@@ -20,23 +19,28 @@ export class SavingProductDetailsStepComponent implements OnInit {
   ngOnInit() {
     if (this.savingProductsTemplate) {
       this.savingProductDetailsForm.patchValue({
-        'name': this.savingProductsTemplate.name,
-        'shortName': this.savingProductsTemplate.shortName,
-        'description': this.savingProductsTemplate.description
+        name: this.savingProductsTemplate.name,
+        shortName: this.savingProductsTemplate.shortName,
+        description: this.savingProductsTemplate.description
       });
     }
   }
 
   createSavingProductDetailsForm() {
     this.savingProductDetailsForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'shortName': ['', Validators.required],
-      'description': ['']
+      name: [
+        '',
+        Validators.required
+      ],
+      shortName: [
+        '',
+        Validators.required
+      ],
+      description: ['']
     });
   }
 
   get savingProductDetails() {
     return this.savingProductDetailsForm.value;
   }
-
 }

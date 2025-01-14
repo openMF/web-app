@@ -15,7 +15,6 @@ import { PopoverService } from '../configuration-wizard/popover/popover.service'
   styleUrls: ['./accounting.component.scss']
 })
 export class AccountingComponent implements AfterViewInit {
-
   /* Reference of Chart of Accounts */
   @ViewChild('chartofAccounts') chartofAccounts: ElementRef<any>;
   /* Template for popover on Chart of Accounts */
@@ -44,9 +43,11 @@ export class AccountingComponent implements AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) { }
+  constructor(
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {}
 
   /**
    * Popover function
@@ -56,7 +57,12 @@ export class AccountingComponent implements AfterViewInit {
    * @param backdrop Boolean.
    * @param arrowNumber - The index of the boolean value to toggle.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -76,7 +82,12 @@ export class AccountingComponent implements AfterViewInit {
     }
     if (this.configurationWizardService.showMigrateOpeningBalances === true) {
       setTimeout(() => {
-        this.showPopover(this.templateMigrateOpeningBalances, this.migrateOpeningBalances.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateMigrateOpeningBalances,
+          this.migrateOpeningBalances.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showClosingEntries === true) {
@@ -181,5 +192,4 @@ export class AccountingComponent implements AfterViewInit {
     // Toggle the boolean value at the given index
     this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }
-
 }

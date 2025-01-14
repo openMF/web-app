@@ -8,9 +8,8 @@ describe('EditProductMixComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditProductMixComponent ]
-    })
-    .compileComponents();
+      declarations: [EditProductMixComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

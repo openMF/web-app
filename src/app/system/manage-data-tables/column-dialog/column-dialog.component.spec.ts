@@ -8,9 +8,8 @@ describe('ColumnDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ColumnDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ColumnDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

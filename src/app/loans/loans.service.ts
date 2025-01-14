@@ -14,9 +14,11 @@ import { SettingsService } from 'app/settings/settings.service';
   providedIn: 'root'
 })
 export class LoansService {
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private settingsService: SettingsService,
-    private dateUtils: Dates) { }
+    private dateUtils: Dates
+  ) {}
   /**
    * @param {string} loanId loanId of the loan.
    * @returns {Observable<any>}
@@ -34,7 +36,8 @@ export class LoansService {
     if (!transactionDate) {
       transactionDate = this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
     }
-    const httpParams = new HttpParams().set('command', 'prepayLoan')
+    const httpParams = new HttpParams()
+      .set('command', 'prepayLoan')
       .set('transactionDate', transactionDate)
       .set('locale', this.settingsService.language.code)
       .set('dateFormat', this.settingsService.dateFormat);
@@ -46,7 +49,10 @@ export class LoansService {
       .set('command', 'foreclosure')
       .set('locale', this.settingsService.language.code)
       .set('dateFormat', this.settingsService.dateFormat)
-      .set('transactionDate', this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat));
+      .set(
+        'transactionDate',
+        this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat)
+      );
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
 
@@ -76,9 +82,7 @@ export class LoansService {
   }
 
   getDelinquencyData(loanId: string) {
-    const httpParams = new HttpParams()
-      .set('associations', 'collection')
-      .set('exclude', 'guarantors,futureSchedule');
+    const httpParams = new HttpParams().set('associations', 'collection').set('exclude', 'guarantors,futureSchedule');
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
@@ -151,15 +155,12 @@ export class LoansService {
    * @param loanId Loan ID
    */
   getLoanAccountAssociationDetails(loanId: string) {
-    const httpParams = new HttpParams()
-      .set('associations', 'all')
-      .set('exclude', 'guarantors,futureSchedule');
+    const httpParams = new HttpParams().set('associations', 'all').set('exclude', 'guarantors,futureSchedule');
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
 
   getApproveAssociationsDetails(loanId: any) {
-    const httpParams = new HttpParams()
-      .set('associations', 'multiDisburseDetails');
+    const httpParams = new HttpParams().set('associations', 'multiDisburseDetails');
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
   }
   /**
@@ -212,8 +213,7 @@ export class LoansService {
   }
 
   getLoanScreenReportsData(): Observable<any> {
-    const httpParams = new HttpParams().set('entityId', '1')
-      .set('typeId', '0');
+    const httpParams = new HttpParams().set('entityId', '1').set('typeId', '0');
     return this.http.get(`/templates`, { params: httpParams });
   }
 
@@ -298,7 +298,8 @@ export class LoansService {
    * @param {any} foreclosuredata ForeClosure Data
    */
   getForeclosureData(loanId: string | number, foreclosuredata: any) {
-    const httpParams = new HttpParams().set('command', foreclosuredata.command)
+    const httpParams = new HttpParams()
+      .set('command', foreclosuredata.command)
       .set('dateFormat', foreclosuredata.dateFormat)
       .set('locale', foreclosuredata.locale)
       .set('transactionDate', foreclosuredata.transactionDate);
@@ -360,18 +361,17 @@ export class LoansService {
    * @param {any} productId Product ID
    */
   getLoansAccountTemplateResource(entityId: any, isGroup: boolean, productId?: any): Observable<any> {
-    let httpParams = new HttpParams().set('activeOnly', 'true')
-      .set('staffInSelectedOfficeOnly', 'true');
+    let httpParams = new HttpParams().set('activeOnly', 'true').set('staffInSelectedOfficeOnly', 'true');
     httpParams = productId ? httpParams.set('productId', productId) : httpParams;
-    httpParams = isGroup ? httpParams.set('groupId', entityId)
-      .set('templateType', 'group') :
-      httpParams.set('clientId', entityId)
-        .set('templateType', 'individual');
+    httpParams = isGroup
+      ? httpParams.set('groupId', entityId).set('templateType', 'group')
+      : httpParams.set('clientId', entityId).set('templateType', 'individual');
     return this.http.get('/loans/template', { params: httpParams });
   }
 
   getLoansAccountAndTemplateResource(loanId: any): Observable<any> {
-    const httpParams = new HttpParams().set('associations', 'charges,collateral,meeting,multiDisburseDetails')
+    const httpParams = new HttpParams()
+      .set('associations', 'charges,collateral,meeting,multiDisburseDetails')
       .set('staffInSelectedOfficeOnly', 'true')
       .set('template', 'true');
     return this.http.get(`/loans/${loanId}`, { params: httpParams });
@@ -382,7 +382,8 @@ export class LoansService {
    * @param {any} productId Product ID
    */
   getLoansCollateralTemplateResource(productId: any): Observable<any> {
-    const httpParams = new HttpParams().set('fields', 'id, loanCollateralOptions')
+    const httpParams = new HttpParams()
+      .set('fields', 'id, loanCollateralOptions')
       .set('productId', productId)
       .set('templateType', 'collateral');
     return this.http.get('/loans/template', { params: httpParams });
@@ -421,8 +422,12 @@ export class LoansService {
    * @returns {Observable<any>} Standing Instructions
    */
   getStandingInstructions(
-    clientId: string, clientName: string, fromAccountId: string,
-    locale: string, dateFormat: string): Observable<any> {
+    clientId: string,
+    clientName: string,
+    fromAccountId: string,
+    locale: string,
+    dateFormat: string
+  ): Observable<any> {
     const httpParams = new HttpParams()
       .set('clientId', clientId)
       .set('clientName', clientName)
@@ -450,14 +455,12 @@ export class LoansService {
    * @returns {Observable<any>}
    */
   getLoanApprovalTemplate(loanId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('templateType', 'approval');
+    const httpParams = new HttpParams().set('templateType', 'approval');
     return this.http.get(`/loans/${loanId}/template`, { params: httpParams });
   }
 
   guarantorAccountResource(loanId: string, clientId: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('clientId', clientId);
+    const httpParams = new HttpParams().set('clientId', clientId);
     return this.http.get(`/loans/${loanId}/guarantors/accounts/template`, { params: httpParams });
   }
 
@@ -536,7 +539,12 @@ export class LoansService {
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  executeLoansAccountTransactionsCommand(accountId: string, command: string, data: any, transactionId?: any): Observable<any> {
+  executeLoansAccountTransactionsCommand(
+    accountId: string,
+    command: string,
+    data: any,
+    transactionId?: any
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     if (transactionId) {
       return this.http.post(`/loans/${accountId}/transactions/${transactionId}`, data, { params: httpParams });
@@ -553,7 +561,8 @@ export class LoansService {
   }
 
   getGLIMLoanAccountTemplate(groupId: any): Observable<any> {
-    const httpParams = new HttpParams().set('groupId', groupId)
+    const httpParams = new HttpParams()
+      .set('groupId', groupId)
       .set('lendingStrategy', '300')
       .set('templateType', 'jlgbulk');
     return this.http.get('/loans/template', { params: httpParams });
@@ -575,17 +584,23 @@ export class LoansService {
    * @param dateFormat String with date format to manage dates
    * @returns Object with Loan Account payload data.
    */
-  buildLoanRequestPayload(loansAccount: any, loansAccountTemplate: any, calendarOptions: any, locale: string, dateFormat: string): any {
+  buildLoanRequestPayload(
+    loansAccount: any,
+    loansAccountTemplate: any,
+    calendarOptions: any,
+    locale: string,
+    dateFormat: string
+  ): any {
     const loansAccountData = {
       ...loansAccount,
       charges: loansAccount.charges.map((charge: any) => ({
         chargeId: charge.id,
         amount: charge.amount,
-        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
+        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat)
       })),
       collateral: loansAccount.collateral.map((collateralEle: any) => ({
         clientCollateralId: collateralEle.type.collateralId,
-        quantity: collateralEle.value,
+        quantity: collateralEle.value
       })),
       disbursementData: loansAccount.disbursementData.map((item: any) => ({
         expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
@@ -596,7 +611,7 @@ export class LoansService {
       submittedOnDate: this.dateUtils.formatDate(loansAccount.submittedOnDate, dateFormat),
       expectedDisbursementDate: this.dateUtils.formatDate(loansAccount.expectedDisbursementDate, dateFormat),
       dateFormat,
-      locale,
+      locale
     };
     if (loansAccountTemplate.clientId) {
       loansAccountData.clientId = loansAccountTemplate.clientId;
@@ -612,7 +627,10 @@ export class LoansService {
     }
 
     if (loansAccountData.recalculationRestFrequencyDate) {
-      loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(loansAccount.recalculationRestFrequencyDate, dateFormat);
+      loansAccountData.recalculationRestFrequencyDate = this.dateUtils.formatDate(
+        loansAccount.recalculationRestFrequencyDate,
+        dateFormat
+      );
     }
 
     if (loansAccountData.interestCalculationPeriodType === 0) {
@@ -621,7 +639,7 @@ export class LoansService {
     if (!(loansAccountData.isFloatingInterestRate === false)) {
       delete loansAccountData.isFloatingInterestRate;
     }
-    if (!(loansAccountData.multiDisburseLoan)) {
+    if (!loansAccountData.multiDisburseLoan) {
       delete loansAccountData.disbursementData;
     }
     delete loansAccountData.isValid;
@@ -630,5 +648,4 @@ export class LoansService {
     delete loansAccountData.multiDisburseLoan; // this was just added so that disbursement data can be send in the backend
     return loansAccountData;
   }
-
 }

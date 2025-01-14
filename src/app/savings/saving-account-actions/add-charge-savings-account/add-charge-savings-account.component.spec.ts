@@ -8,9 +8,8 @@ describe('AddChargeSavingsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddChargeSavingsAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [AddChargeSavingsAccountComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

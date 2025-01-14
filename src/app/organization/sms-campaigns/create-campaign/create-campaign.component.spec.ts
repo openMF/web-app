@@ -8,9 +8,8 @@ describe('CreateCampaignComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateCampaignComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateCampaignComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -15,7 +15,6 @@ import { ProductsService } from '../../products.service';
   styleUrls: ['./edit-product-mix.component.scss']
 })
 export class EditProductMixComponent implements OnInit {
-
   /** Product mix form. */
   productMixForm: UntypedFormGroup;
   /** Products mix template data. */
@@ -32,10 +31,12 @@ export class EditProductMixComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private productsService: ProductsService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { productMix: any }) => {
       this.productMixData = data.productMix;
     });
@@ -54,8 +55,11 @@ export class EditProductMixComponent implements OnInit {
    */
   createProductMixForm() {
     this.productMixForm = this.formBuilder.group({
-      'productId': [{ value: this.productMixData.productName, disabled: true}],
-      'restrictedProducts': ['', Validators.required]
+      productId: [{ value: this.productMixData.productName, disabled: true }],
+      restrictedProducts: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -64,8 +68,13 @@ export class EditProductMixComponent implements OnInit {
    */
   setFormData() {
     const restrictedProductsData: {}[] = this.productMixData.restrictedProducts;
-    this.productData = [...restrictedProductsData, ...this.productMixData.allowedProducts];
-    this.productMixForm.get('restrictedProducts').setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
+    this.productData = [
+      ...restrictedProductsData,
+      ...this.productMixData.allowedProducts
+    ];
+    this.productMixForm
+      .get('restrictedProducts')
+      .setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
   }
 
   /**

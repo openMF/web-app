@@ -63,6 +63,7 @@ const routes: Routes = [
       ]
     }
   ])
+
 ];
 
 /**
@@ -79,4 +80,4 @@ const routes: Routes = [
     UserResolver
   ]
 })
-export class UsersRoutingModule { }
+export class UsersRoutingModule {}

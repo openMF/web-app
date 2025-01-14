@@ -11,9 +11,11 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
 export class EditNotesDialogComponent implements OnInit {
   noteForm: UntypedFormGroup;
 
-  constructor(public dialogRef: MatDialogRef<EditNotesDialogComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<EditNotesDialogComponent>,
     private formBuilder: UntypedFormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit() {
     this.createNoteForm();
@@ -21,7 +23,10 @@ export class EditNotesDialogComponent implements OnInit {
 
   createNoteForm() {
     this.noteForm = this.formBuilder.group({
-      'note': [this.data.noteContent, Validators.required]
+      note: [
+        this.data.noteContent,
+        Validators.required
+      ]
     });
   }
 }

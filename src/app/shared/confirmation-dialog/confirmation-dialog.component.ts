@@ -13,15 +13,16 @@ import { Dialogs } from 'app/core/dialogs/dialogs';
   styleUrls: ['./confirmation-dialog.component.scss']
 })
 export class ConfirmationDialogComponent implements OnInit {
-
   color: string;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides a deleteContext.
    */
-  constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-        private dialogs: Dialogs,
-        @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
+    private dialogs: Dialogs,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
 
   ngOnInit() {
     this.setColor();
@@ -30,5 +31,4 @@ export class ConfirmationDialogComponent implements OnInit {
   setColor() {
     this.color = this.dialogs.setColor(this.data.type);
   }
-
 }

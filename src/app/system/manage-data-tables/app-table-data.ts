@@ -1,4 +1,4 @@
-export const appTableData: { displayValue: string, value: string }[] = [
+export const appTableData: { displayValue: string; value: string }[] = [
   { displayValue: 'Client', value: 'm_client' },
   { displayValue: 'Group', value: 'm_group' },
   { displayValue: 'Center', value: 'm_center' },
@@ -11,13 +11,13 @@ export const appTableData: { displayValue: string, value: string }[] = [
   { displayValue: 'Share Product', value: 'm_share_product' }
 ];
 
-export const entitySubTypeData: { displayValue: string, value: string }[] = [
+export const entitySubTypeData: { displayValue: string; value: string }[] = [
   { displayValue: 'Person', value: 'Person' },
-  { displayValue: 'Entity', value: 'Entity' },
+  { displayValue: 'Entity', value: 'Entity' }
 ];
 
-export const savingsSubTypeData: { displayValue: string, value: string }[] = [
+export const savingsSubTypeData: { displayValue: string; value: string }[] = [
   { displayValue: 'Savings Product', value: 'Savings Product' },
   { displayValue: 'Fixed Deposit', value: 'Fixed Deposit' },
-  { displayValue: 'Recurring Deposit', value: 'Recurring Deposit' },
+  { displayValue: 'Recurring Deposit', value: 'Recurring Deposit' }
 ];

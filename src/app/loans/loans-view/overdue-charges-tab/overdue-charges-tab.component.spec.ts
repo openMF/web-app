@@ -8,9 +8,8 @@ describe('OverdueChargesTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OverdueChargesTabComponent ]
-    })
-    .compileComponents();
+      declarations: [OverdueChargesTabComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

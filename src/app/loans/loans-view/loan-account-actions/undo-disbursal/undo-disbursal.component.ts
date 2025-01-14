@@ -15,7 +15,6 @@ import { LoansService } from '../../../loans.service';
   styleUrls: ['./undo-disbursal.component.scss']
 })
 export class UndoDisbursalComponent implements OnInit {
-
   @Input() actionName: string;
 
   /** Loan ID. */
@@ -29,10 +28,12 @@ export class UndoDisbursalComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private loansService: LoansService,
-              private router: Router,
-              private route: ActivatedRoute) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private loansService: LoansService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 
@@ -51,9 +52,8 @@ export class UndoDisbursalComponent implements OnInit {
     if (this.actionName === 'Undo Last Disbursal') {
       command = 'undolastdisbursal';
     }
-    this.loansService.loanActionButtons(this.loanId, command, {'note': this.note.value}).subscribe((response: any) => {
+    this.loansService.loanActionButtons(this.loanId, command, { note: this.note.value }).subscribe((response: any) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
-
 }

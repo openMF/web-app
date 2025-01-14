@@ -12,11 +12,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TasksService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Get Maker Checker Data
@@ -47,9 +46,8 @@ export class TasksService {
    * Get Grouped Clients Data
    */
   getGroupedClientsData(): Observable<any> {
-    const httpParams = new HttpParams().set('limit', '1000')
-                                       .set('status', 'PENDING');
-    return this.http.get('/clients', { params: httpParams});
+    const httpParams = new HttpParams().set('limit', '1000').set('status', 'PENDING');
+    return this.http.get('/clients', { params: httpParams });
   }
 
   /**
@@ -63,8 +61,7 @@ export class TasksService {
    * Get all loans to be approved
    */
   getAllLoansToBeApproved(): Observable<any> {
-    const httpParams = new HttpParams().set('limit', '1000')
-                                       .set('status', '100');
+    const httpParams = new HttpParams().set('limit', '1000').set('status', '100');
     return this.http.get('/loans', { params: httpParams });
   }
 
@@ -72,8 +69,7 @@ export class TasksService {
    * Get all loans to be created
    */
   getAllLoansToBeDisbursed(): Observable<any> {
-    const httpParams = new HttpParams().set('limit', '1000')
-                                       .set('status', '200');
+    const httpParams = new HttpParams().set('limit', '1000').set('status', '200');
     return this.http.get('/loans', { params: httpParams });
   }
 
@@ -126,5 +122,4 @@ export class TasksService {
   getCheckerInboxDetail(makerCheckerId: any): Observable<any> {
     return this.http.get(`/audits/${makerCheckerId}`);
   }
-
 }

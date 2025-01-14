@@ -8,9 +8,8 @@ describe('RecurringDepositConfirmationDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecurringDepositConfirmationDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [RecurringDepositConfirmationDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

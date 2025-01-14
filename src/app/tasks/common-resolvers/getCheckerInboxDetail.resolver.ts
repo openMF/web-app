@@ -13,19 +13,17 @@ import { TasksService } from '../tasks.service';
  */
 @Injectable()
 export class GetCheckerInboxDetailResolver implements Resolve<Object> {
+  /**
+   * @param {TasksService} tasksService Tasks service.
+   */
+  constructor(private tasksService: TasksService) {}
 
-    /**
-     * @param {TasksService} tasksService Tasks service.
-     */
-    constructor(private tasksService: TasksService) { }
-
-    /**
-     * Returns the detail data of the checker inbox.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const checkerId = route.paramMap.get('id');
-        return this.tasksService.getCheckerInboxDetail(checkerId);
-    }
-
+  /**
+   * Returns the detail data of the checker inbox.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const checkerId = route.paramMap.get('id');
+    return this.tasksService.getCheckerInboxDetail(checkerId);
+  }
 }

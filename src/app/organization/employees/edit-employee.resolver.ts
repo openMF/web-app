@@ -13,7 +13,6 @@ import { OrganizationService } from '../organization.service';
  */
 @Injectable()
 export class EditEmployeeResolver implements Resolve<Object> {
-
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
@@ -24,8 +23,7 @@ export class EditEmployeeResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const employeeId  = route.paramMap.get('id');
+    const employeeId = route.paramMap.get('id');
     return this.organizationService.getEmployee(employeeId);
   }
-
 }

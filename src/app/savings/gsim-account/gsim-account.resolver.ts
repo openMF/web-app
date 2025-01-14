@@ -13,11 +13,10 @@ import { SavingsService } from '../savings.service';
  */
 @Injectable()
 export class GSIMViewResolver implements Resolve<Object> {
-
   /**
    * @param {SavingsService} savingsService Savings service.
    */
-  constructor(private savingsService: SavingsService) { }
+  constructor(private savingsService: SavingsService) {}
 
   /**
    * Returns the Savings Account data.
@@ -29,5 +28,4 @@ export class GSIMViewResolver implements Resolve<Object> {
     const savingAccountId = route.paramMap.get('savingAccountId');
     return this.savingsService.getGSIMAccountData(savingAccountId, groupId);
   }
-
 }

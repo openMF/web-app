@@ -23,11 +23,18 @@ import { User } from './user.model';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-
   /** Self service users. */
   userData: User[];
   /** Columns to be displayed in users table. */
-  displayedColumns: string[] = ['select', 'name', 'id', 'email', 'status', 'officeName', 'staff'];
+  displayedColumns: string[] = [
+    'select',
+    'name',
+    'id',
+    'email',
+    'status',
+    'officeName',
+    'staff'
+  ];
   /** Data source for users table. */
   dataSource: MatTableDataSource<User>;
   /** Selection model for users table. */
@@ -84,9 +91,8 @@ export class UsersComponent implements OnInit {
    * Toggles selection for all rows of users table.
    */
   masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach((row: User) => this.selection.select(row));
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((row: User) => this.selection.select(row));
   }
-
 }

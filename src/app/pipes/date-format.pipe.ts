@@ -6,9 +6,7 @@ import * as moment from 'moment';
   name: 'dateFormat'
 })
 export class DateFormatPipe implements PipeTransform {
-
-  constructor(private settingsService: SettingsService) {
-  }
+  constructor(private settingsService: SettingsService) {}
 
   transform(value: any, dateFormat?: string): any {
     const defaultDateFormat = this.settingsService.dateFormat.replace('dd', 'DD');
@@ -27,5 +25,4 @@ export class DateFormatPipe implements PipeTransform {
     }
     return dateVal.format(dateFormat);
   }
-
 }

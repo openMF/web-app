@@ -8,9 +8,8 @@ describe('ViewProvisioningEntryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewProvisioningEntryComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewProvisioningEntryComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

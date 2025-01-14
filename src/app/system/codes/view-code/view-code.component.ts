@@ -20,7 +20,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./view-code.component.scss']
 })
 export class ViewCodeComponent implements OnInit {
-
   /** Code Data */
   codeData: any;
   /** Code Values Data */
@@ -39,13 +38,15 @@ export class ViewCodeComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private router: Router,
-              private formBuilder: UntypedFormBuilder,
-              private dialog: MatDialog,
-              private translateService: TranslateService) {
-    this.route.data.subscribe((data: { code: any, codeValues: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService,
+    private router: Router,
+    private formBuilder: UntypedFormBuilder,
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
+    this.route.data.subscribe((data: { code: any; codeValues: any }) => {
       this.codeData = data.code;
       this.codeValuesData = data.codeValues;
     });
@@ -82,7 +83,7 @@ export class ViewCodeComponent implements OnInit {
    */
   createCodeValuesForm() {
     this.codeValuesForm = this.formBuilder.group({
-      'codeValues': this.formBuilder.array([])
+      codeValues: this.formBuilder.array([])
     });
   }
 
@@ -101,10 +102,16 @@ export class ViewCodeComponent implements OnInit {
    */
   createCodeValuesRow(codeValue?: any): UntypedFormGroup {
     return this.formBuilder.group({
-      'name': [{ value: codeValue ? codeValue.name : '', disabled: true }, Validators.required],
-      'description': [{ value: codeValue ? codeValue.description : '', disabled: true }],
-      'position': [{ value: codeValue ? codeValue.position : 0, disabled: true }, Validators.required],
-      'isActive': [{ value: codeValue ? codeValue.active : false, disabled: true }]
+      name: [
+        { value: codeValue ? codeValue.name : '', disabled: true },
+        Validators.required
+      ],
+      description: [{ value: codeValue ? codeValue.description : '', disabled: true }],
+      position: [
+        { value: codeValue ? codeValue.position : 0, disabled: true },
+        Validators.required
+      ],
+      isActive: [{ value: codeValue ? codeValue.active : false, disabled: true }]
     });
   }
 
@@ -114,12 +121,11 @@ export class ViewCodeComponent implements OnInit {
    */
   deleteCodeValue(index: number) {
     const codeValueId = this.codeValuesData[index].id;
-    this.systemService.deleteCodeValue(this.codeData.id, codeValueId)
-      .subscribe((response: any) => {
-        this.codeValuesData.splice(index, 1);
-        this.codeValues.removeAt(index);
-        this.codeValueRowStatus.splice(index, 1);
-      });
+    this.systemService.deleteCodeValue(this.codeData.id, codeValueId).subscribe((response: any) => {
+      this.codeValuesData.splice(index, 1);
+      this.codeValues.removeAt(index);
+      this.codeValueRowStatus.splice(index, 1);
+    });
   }
 
   /**
@@ -136,8 +142,10 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   updateCodeValue(index: number) {
-    const updatedCodeValue: { name: string, description: string, position: number, isActive: boolean } = this.codeValues.at(index).value;
-    this.systemService.updateCodeValue(this.codeData.id, this.codeValuesData[index].id, updatedCodeValue)
+    const updatedCodeValue: { name: string; description: string; position: number; isActive: boolean } =
+      this.codeValues.at(index).value;
+    this.systemService
+      .updateCodeValue(this.codeData.id, this.codeValuesData[index].id, updatedCodeValue)
       .subscribe((response: any) => {
         this.codeValues.at(index).disable();
         this.codeValueRowStatus[index] = 'disabled';
@@ -150,14 +158,13 @@ export class ViewCodeComponent implements OnInit {
    */
   delete() {
     const deleteCodeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Code') + ' ' + this.codeData.name}
+      data: { deleteContext: this.translateService.instant('labels.inputs.Code') + ' ' + this.codeData.name }
     });
     deleteCodeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteCode(this.codeData.id)
-          .subscribe(() => {
-            this.router.navigate(['/system/codes']);
-          });
+        this.systemService.deleteCode(this.codeData.id).subscribe(() => {
+          this.router.navigate(['/system/codes']);
+        });
       }
     });
   }
@@ -181,20 +188,20 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   addCodeValue(index: number) {
-    const newCodeValue: { name: string, description: string, position: string, isActive: boolean } = this.codeValues.at(index).value;
-    this.systemService.createCodeValue(this.codeData.id, newCodeValue)
-      .subscribe((response: any) => {
-        this.codeValues.at(index).disable();
-        this.codeValueRowStatus[index] = 'disabled';
-        this.codeValuesData.push({
-          id: response.subResourceId,
-          name: this.codeValues.at(index).get('name').value,
-          description: this.codeValues.at(index).get('description').value,
-          position: this.codeValues.at(index).get('position').value,
-          isActive: this.codeValues.at(index).get('isActive').value
-        });
-        this.codeValues.at(index).markAsPristine();
+    const newCodeValue: { name: string; description: string; position: string; isActive: boolean } =
+      this.codeValues.at(index).value;
+    this.systemService.createCodeValue(this.codeData.id, newCodeValue).subscribe((response: any) => {
+      this.codeValues.at(index).disable();
+      this.codeValueRowStatus[index] = 'disabled';
+      this.codeValuesData.push({
+        id: response.subResourceId,
+        name: this.codeValues.at(index).get('name').value,
+        description: this.codeValues.at(index).get('description').value,
+        position: this.codeValues.at(index).get('position').value,
+        isActive: this.codeValues.at(index).get('isActive').value
       });
+      this.codeValues.at(index).markAsPristine();
+    });
   }
 
   /**
@@ -205,5 +212,4 @@ export class ViewCodeComponent implements OnInit {
     this.codeValues.at(index).enable();
     this.codeValueRowStatus[index] = 'edit';
   }
-
 }

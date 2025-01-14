@@ -8,9 +8,8 @@ describe('ViewChargeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewChargeComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewChargeComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-tax-component.component.scss']
 })
 export class CreateTaxComponentComponent implements OnInit {
-
   /** Minimum start date allowed. */
   minDate = new Date();
   /** Maximum start date allowed. */
@@ -44,12 +43,14 @@ export class CreateTaxComponentComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private productsService: ProductsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { taxComponentTemplate: any }) => {
       this.taxComponentTemplateData = data.taxComponentTemplate;
     });
@@ -71,11 +72,23 @@ export class CreateTaxComponentComponent implements OnInit {
   createTaxComponentForm() {
     this.creditAccountTypeData = this.debitAccountTypeData = this.taxComponentTemplateData.glAccountTypeOptions;
     this.taxComponentForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'percentage': ['', [Validators.required, Validators.pattern('^(0*[1-9][0-9]*(\\.[0-9]+)?|0+\\.[0-9]*[1-9][0-9]*)$'), Validators.max(100)]],
-      'creditAccountType': [''],
-      'debitAccountType': [''],
-      'startDate': ['', Validators.required],
+      name: [
+        '',
+        Validators.required
+      ],
+      percentage: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^(0*[1-9][0-9]*(\\.[0-9]+)?|0+\\.[0-9]*[1-9][0-9]*)$'),
+          Validators.max(100)]
+      ],
+      creditAccountType: [''],
+      debitAccountType: [''],
+      startDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -83,11 +96,11 @@ export class CreateTaxComponentComponent implements OnInit {
    * Sets the conditional controls of the tax Component form
    */
   setConditionalControls() {
-    this.taxComponentForm.get('debitAccountType').valueChanges.subscribe(debitAccountTypeId => {
+    this.taxComponentForm.get('debitAccountType').valueChanges.subscribe((debitAccountTypeId) => {
       this.debitAccountData = this.getAccountsData(debitAccountTypeId);
       this.taxComponentForm.addControl('debitAcountId', new UntypedFormControl('', Validators.required));
     });
-    this.taxComponentForm.get('creditAccountType').valueChanges.subscribe(creditAccountTypeId => {
+    this.taxComponentForm.get('creditAccountType').valueChanges.subscribe((creditAccountTypeId) => {
       this.creditAccountData = this.getAccountsData(creditAccountTypeId);
       this.taxComponentForm.addControl('creditAcountId', new UntypedFormControl('', Validators.required));
     });
@@ -130,7 +143,13 @@ export class CreateTaxComponentComponent implements OnInit {
       locale
     };
     this.productsService.createTaxComponent(data).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
 }

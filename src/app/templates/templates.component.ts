@@ -14,11 +14,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./templates.component.scss']
 })
 export class TemplatesComponent implements OnInit {
-
   /** Templates data. */
   templatesData: any;
   /** Columns to be displayed in templates table. */
-  displayedColumns: string[] = ['entity', 'type', 'name'];
+  displayedColumns: string[] = [
+    'entity',
+    'type',
+    'name'
+  ];
   /** Data source for templates table. */
   dataSource: MatTableDataSource<any>;
 
@@ -32,7 +35,7 @@ export class TemplatesComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { templates: any }) => {
+    this.route.data.subscribe((data: { templates: any }) => {
       this.templatesData = data.templates;
     });
   }
@@ -60,5 +63,4 @@ export class TemplatesComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

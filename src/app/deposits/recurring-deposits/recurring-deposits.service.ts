@@ -12,16 +12,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RecurringDepositsService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @params recurringDepositAccountId
    * Returns the details of a particular Recurring Deposit Account
    */
   getRecurringDepositsAccountData(recurringDepositAccountId: any): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('associations', 'all');
+    const httpParams = new HttpParams().set('associations', 'all');
     return this.http.get(`/recurringdepositaccounts/${recurringDepositAccountId}`, { params: httpParams });
   }
 
@@ -34,8 +32,12 @@ export class RecurringDepositsService {
    * @returns {Observable<any>} Standing Instructions
    */
   getStandingInstructions(
-    clientId: string, clientName: string, fromAccountId: string,
-    locale: string, dateFormat: string): Observable<any> {
+    clientId: string,
+    clientName: string,
+    fromAccountId: string,
+    locale: string,
+    dateFormat: string
+  ): Observable<any> {
     const httpParams = new HttpParams()
       .set('clientId', clientId)
       .set('clientName', clientName)
@@ -92,8 +94,7 @@ export class RecurringDepositsService {
    * @param accountId Account ID
    */
   getRecurringDepositsAccountAndTemplate(accountId: any) {
-    const httpParams = new HttpParams().set('associations', 'charges')
-      .set('template', 'true');
+    const httpParams = new HttpParams().set('associations', 'charges').set('template', 'true');
     return this.http.get(`/recurringdepositaccounts/${accountId}`, { params: httpParams });
   }
 
@@ -141,7 +142,9 @@ export class RecurringDepositsService {
    */
   getRecurringDepositsAccountTransactionTemplate(accountId: string, transactionId: string): Observable<any> {
     const httpParams = new HttpParams().set('template', 'true');
-    return this.http.get(`/recurringdepositaccounts/${accountId}/transactions/${transactionId}`, { params: httpParams });
+    return this.http.get(`/recurringdepositaccounts/${accountId}/transactions/${transactionId}`, {
+      params: httpParams
+    });
   }
 
   /**
@@ -151,9 +154,15 @@ export class RecurringDepositsService {
    * @param {string} transactionId Transaction Id
    * @returns {Observable<any>}
    */
-  executeRecurringDepositsAccountTransactionsCommand(accountId: string, command: string, data: any, transactionId?: any): Observable<any> {
+  executeRecurringDepositsAccountTransactionsCommand(
+    accountId: string,
+    command: string,
+    data: any,
+    transactionId?: any
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/recurringdepositaccounts/${accountId}/transactions/${transactionId}`, data, { params: httpParams });
+    return this.http.post(`/recurringdepositaccounts/${accountId}/transactions/${transactionId}`, data, {
+      params: httpParams
+    });
   }
-
 }

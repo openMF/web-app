@@ -22,7 +22,6 @@ import { GLAccount } from 'app/shared/models/general.model';
   styleUrls: ['./create-gl-account.component.scss']
 })
 export class CreateGlAccountComponent implements OnInit, AfterViewInit {
-
   /** GL account form. */
   glAccountForm: UntypedFormGroup;
   /** Chart of accounts data. */
@@ -57,14 +56,16 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    * @param {Matdialog} dialog Matdialog.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private accountingService: AccountingService,
     private route: ActivatedRoute,
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService,
-    public dialog: MatDialog) {
-    this.route.queryParamMap.subscribe(params => {
+    public dialog: MatDialog
+  ) {
+    this.route.queryParamMap.subscribe((params) => {
       this.accountTypeId = Number(params.get('accountType'));
       this.parentId = Number(params.get('parent'));
       if (this.parentId) {
@@ -92,14 +93,26 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    */
   createGlAccountForm() {
     this.glAccountForm = this.formBuilder.group({
-      'type': ['', Validators.required],
-      'name': ['', Validators.required],
-      'usage': ['', Validators.required],
-      'glCode': ['', Validators.required],
-      'parentId': [this.parentId || undefined],
-      'tagId': [''],
-      'manualEntriesAllowed': [true],
-      'description': ['']
+      type: [
+        '',
+        Validators.required
+      ],
+      name: [
+        '',
+        Validators.required
+      ],
+      usage: [
+        '',
+        Validators.required
+      ],
+      glCode: [
+        '',
+        Validators.required
+      ],
+      parentId: [this.parentId || undefined],
+      tagId: [''],
+      manualEntriesAllowed: [true],
+      description: ['']
     });
   }
 
@@ -107,21 +120,26 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * Sets gl account form for selected account type.
    */
   setGLAccountForm() {
-    this.glAccountForm.get('type').valueChanges.subscribe(accountTypeId => {
+    this.glAccountForm.get('type').valueChanges.subscribe((accountTypeId) => {
       switch (accountTypeId) {
-        case 1: this.parentData = this.chartOfAccountsData.assetHeaderAccountOptions;
+        case 1:
+          this.parentData = this.chartOfAccountsData.assetHeaderAccountOptions;
           this.tagData = this.chartOfAccountsData.allowedAssetsTagOptions;
           break;
-        case 2: this.parentData = this.chartOfAccountsData.liabilityHeaderAccountOptions;
+        case 2:
+          this.parentData = this.chartOfAccountsData.liabilityHeaderAccountOptions;
           this.tagData = this.chartOfAccountsData.allowedLiabilitiesTagOptions;
           break;
-        case 3: this.parentData = this.chartOfAccountsData.equityHeaderAccountOptions;
+        case 3:
+          this.parentData = this.chartOfAccountsData.equityHeaderAccountOptions;
           this.tagData = this.chartOfAccountsData.allowedEquityTagOptions;
           break;
-        case 4: this.parentData = this.chartOfAccountsData.incomeHeaderAccountOptions;
+        case 4:
+          this.parentData = this.chartOfAccountsData.incomeHeaderAccountOptions;
           this.tagData = this.chartOfAccountsData.allowedIncomeTagOptions;
           break;
-        case 5: this.parentData = this.chartOfAccountsData.expenseHeaderAccountOptions;
+        case 5:
+          this.parentData = this.chartOfAccountsData.expenseHeaderAccountOptions;
           this.tagData = this.chartOfAccountsData.allowedExpensesTagOptions;
           break;
       }
@@ -140,7 +158,13 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
         this.configurationWizardService.showChartofAccounts = false;
         this.openDialog();
       } else {
-        this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
       }
     });
   }
@@ -152,7 +176,12 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -192,7 +221,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
     const continueSetupDialogRef = this.dialog.open(ContinueSetupDialogComponent, {
       data: {
         stepName: 'GL account'
-      },
+      }
     });
     continueSetupDialogRef.afterClosed().subscribe((response: { step: number }) => {
       if (response.step === 1) {

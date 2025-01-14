@@ -12,30 +12,38 @@ import { ClientsService } from 'app/clients/clients.service';
   styleUrls: ['./view-charge.component.scss']
 })
 export class ViewChargeComponent {
-
   /** Charge Data. */
   chargeData: any;
   /** Mat Table Column defs. */
-  viewChargeTableColumns: string[] = ['id', 'officeName', 'type', 'transactionDate', 'amount', 'actions'];
+  viewChargeTableColumns: string[] = [
+    'id',
+    'officeName',
+    'type',
+    'transactionDate',
+    'amount',
+    'actions'
+  ];
 
   /**
    * Retrieves the selected job data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private clientService: ClientsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientService: ClientsService
+  ) {
     this.route.data.subscribe((data: { clientChargeData: any }) => {
       this.chargeData = data.clientChargeData;
     });
-   }
+  }
 
   /**
    * Waive Charge.
    */
   waiveCharge() {
-    const waiveChargeObj = { clientId: this.chargeData.clientId, resourceType: this.chargeData.id};
+    const waiveChargeObj = { clientId: this.chargeData.clientId, resourceType: this.chargeData.id };
     this.clientService.waiveClientCharge(waiveChargeObj).subscribe(() => {
       this.getChargeData();
     });
@@ -45,7 +53,7 @@ export class ViewChargeComponent {
    * Undo Transaction.
    */
   undoTransaction(transactionId: any) {
-    const transactionData = { clientId: this.chargeData.clientId.toString(), transactionId: transactionId};
+    const transactionData = { clientId: this.chargeData.clientId.toString(), transactionId: transactionId };
     this.clientService.undoTransaction(transactionData).subscribe(() => {
       this.getChargeData();
     });
@@ -65,8 +73,11 @@ export class ViewChargeComponent {
    */
   deleteCharge() {
     this.clientService.deleteCharge(this.chargeData.clientId, this.chargeData.id).subscribe(() => {
-      this.router.navigate(['../../clients', this.chargeData.clientId, 'general']);
+      this.router.navigate([
+        '../../clients',
+        this.chargeData.clientId,
+        'general'
+      ]);
     });
   }
-
 }

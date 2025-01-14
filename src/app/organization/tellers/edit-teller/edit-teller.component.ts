@@ -18,8 +18,7 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./edit-teller.component.scss']
 })
 export class EditTellerComponent implements OnInit {
-
-/** Minimum date allowed. */
+  /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
@@ -41,26 +40,30 @@ export class EditTellerComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates) {
-    this.route.data.subscribe((data: { teller: any, offices: any }) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates
+  ) {
+    this.route.data.subscribe((data: { teller: any; offices: any }) => {
       this.tellerData = data.teller;
       this.officeData = data.offices;
     });
 
     if (this.tellerData.status) {
       if (this.tellerData.status === 'ACTIVE') {
-          this.tellerData.status = 300;
+        this.tellerData.status = 300;
       } else {
-          this.tellerData.status = 400;
+        this.tellerData.status = 400;
       }
     }
-    this.tellerStatusesData = [ {'id': 300, 'code': '300', 'value': 'Active'},
-     {'id': 400, 'code': '400', 'value': 'Inactive'}];
+    this.tellerStatusesData = [
+      { id: 300, code: '300', value: 'Active' },
+      { id: 400, code: '400', value: 'Inactive' }
+    ];
   }
 
   /**
@@ -76,12 +79,23 @@ export class EditTellerComponent implements OnInit {
    */
   createEditTellerForm() {
     this.tellerForm = this.formBuilder.group({
-      'officeId': [{value: this.tellerData.officeId, disabled: true}],
-      'name': [this.tellerData.name, [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'description': [this.tellerData.description],
-      'startDate': [this.tellerData.startDate && new Date(this.tellerData.startDate), Validators.required],
-      'endDate': [this.tellerData.endDate && new Date(this.tellerData.endDate)],
-      'status': [this.tellerData.status, Validators.required]
+      officeId: [{ value: this.tellerData.officeId, disabled: true }],
+      name: [
+        this.tellerData.name,
+        [
+          Validators.required,
+          Validators.pattern('(^[A-z]).*')]
+      ],
+      description: [this.tellerData.description],
+      startDate: [
+        this.tellerData.startDate && new Date(this.tellerData.startDate),
+        Validators.required
+      ],
+      endDate: [this.tellerData.endDate && new Date(this.tellerData.endDate)],
+      status: [
+        this.tellerData.status,
+        Validators.required
+      ]
     });
   }
 
@@ -108,8 +122,13 @@ export class EditTellerComponent implements OnInit {
       locale
     };
     this.organizationService.updateTeller(this.tellerData.id, data).subscribe((response: any) => {
-      this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

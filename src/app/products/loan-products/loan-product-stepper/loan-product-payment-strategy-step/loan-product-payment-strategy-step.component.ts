@@ -1,5 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AdvancedCreditAllocation, AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocation, CreditAllocationOrder, PaymentAllocation, PaymentAllocationOrder, PaymentAllocationTransactionType } from './payment-allocation-model';
+import {
+  AdvancedCreditAllocation,
+  AdvancedPaymentAllocation,
+  AdvancedPaymentStrategy,
+  CreditAllocation,
+  CreditAllocationOrder,
+  PaymentAllocation,
+  PaymentAllocationOrder,
+  PaymentAllocationTransactionType
+} from './payment-allocation-model';
 import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
@@ -13,7 +22,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./loan-product-payment-strategy-step.component.scss']
 })
 export class LoanProductPaymentStrategyStepComponent implements OnInit {
-
   @Input() advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   @Input() advancedCreditAllocations: AdvancedCreditAllocation[] = [];
   @Input() advancedPaymentAllocationTransactionTypes: PaymentAllocationTransactionType[] = [];
@@ -27,16 +35,20 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
 
   @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
 
-  constructor(private dialog: MatDialog,
+  constructor(
+    private dialog: MatDialog,
     private advancedPaymentStrategy: AdvancedPaymentStrategy,
-    private translateService: TranslateService) { }
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.sendAllocations();
   }
 
   sendAllocations(): void {
-    this.setPaymentAllocation.emit(this.advancedPaymentStrategy.buildPaymentAllocations(this.advancedPaymentAllocations));
+    this.setPaymentAllocation.emit(
+      this.advancedPaymentStrategy.buildPaymentAllocations(this.advancedPaymentAllocations)
+    );
     this.setCreditAllocation.emit(this.advancedPaymentStrategy.buildCreditAllocations(this.advancedCreditAllocations));
   }
 
@@ -77,6 +89,7 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
         options: { label: 'value', value: 'code', data: transactionTypesOptions },
         order: 1
       })
+
     ];
     const data = {
       title: this.translateService.instant('labels.inputs.Advanced Payment Allocation Transaction Type'),
@@ -94,12 +107,19 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
           if (transactionType.code === response.data.value.code) {
             if (!transactionType.credit) {
               this.advancedPaymentAllocations.push(
-                this.advancedPaymentStrategy.buildAdvancedPaymentAllocation(true, transactionType, this.paymentAllocationOrderDefault,
-                  defaultPaymentAllocation.futureInstallmentAllocationRules)
+                this.advancedPaymentStrategy.buildAdvancedPaymentAllocation(
+                  true,
+                  transactionType,
+                  this.paymentAllocationOrderDefault,
+                  defaultPaymentAllocation.futureInstallmentAllocationRules
+                )
               );
             } else {
               this.advancedCreditAllocations.push(
-                this.advancedPaymentStrategy.buildAdvancedCreditAllocation(transactionType, this.creditAllocationOrderDefault)
+                this.advancedPaymentStrategy.buildAdvancedCreditAllocation(
+                  transactionType,
+                  this.creditAllocationOrderDefault
+                )
               );
             }
             this.paymentAllocationChange.emit(true);
@@ -116,7 +136,7 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
         if (item.transaction.code === transaction.code) {
           this.advancedPaymentAllocations.splice(index, 1);
           this.paymentAllocationChange.emit(true);
-          this.tabGroup.selectedIndex = (index - 1);
+          this.tabGroup.selectedIndex = index - 1;
           this.sendAllocations();
         }
       });
@@ -125,11 +145,10 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
         if (item.transaction.code === transaction.code) {
           this.advancedCreditAllocations.splice(index, 1);
           this.paymentAllocationChange.emit(true);
-          this.tabGroup.selectedIndex = (index - 1);
+          this.tabGroup.selectedIndex = index - 1;
           this.sendAllocations();
         }
       });
     }
   }
-
 }

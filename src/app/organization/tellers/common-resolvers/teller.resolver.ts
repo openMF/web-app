@@ -13,7 +13,6 @@ import { OrganizationService } from 'app/organization/organization.service';
  */
 @Injectable()
 export class TellerResolver implements Resolve<Object> {
-
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
@@ -27,5 +26,4 @@ export class TellerResolver implements Resolve<Object> {
     const tellerId = route.paramMap.get('id');
     return this.organizationService.getTeller(tellerId);
   }
-
 }

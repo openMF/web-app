@@ -9,7 +9,6 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./view-transaction.component.scss']
 })
 export class ViewTransactionComponent {
-
   /** Transaction data. */
   transactionData: any;
 
@@ -21,11 +20,13 @@ export class ViewTransactionComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private route: ActivatedRoute,
-              public dialog: MatDialog) {
-            this.route.data.subscribe((data: { transactionDatatables: any}) => {
-                  this.accountId = this.route.snapshot.params['savingAccountId'];
-                  this.entityDatatables = data.transactionDatatables;
-                });
+  constructor(
+    private route: ActivatedRoute,
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { transactionDatatables: any }) => {
+      this.accountId = this.route.snapshot.params['savingAccountId'];
+      this.entityDatatables = data.transactionDatatables;
+    });
   }
 }

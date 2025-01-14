@@ -20,7 +20,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./view-holidays.component.scss']
 })
 export class ViewHolidaysComponent {
-
   /** Holiday data. */
   holidayData: any;
 
@@ -28,11 +27,13 @@ export class ViewHolidaysComponent {
    * Retrieves hioliday data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
     private translateService: TranslateService,
-    private organizationService: OrganizationService) {
+    private organizationService: OrganizationService
+  ) {
     this.route.data.subscribe((data: { holidays: any }) => {
       this.holidayData = data.holidays;
     });
@@ -47,10 +48,9 @@ export class ViewHolidaysComponent {
     });
     deleteHolidayDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteHoliday(this.holidayData.id)
-          .subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
-          });
+        this.organizationService.deleteHoliday(this.holidayData.id).subscribe(() => {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        });
       }
     });
   }
@@ -60,16 +60,20 @@ export class ViewHolidaysComponent {
    */
   activateHoliday() {
     const unAssignStaffDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Holiday'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to activate') + ` ${this.holidayData.name} ` + this.translateService.instant('labels.dialogContext.holiday') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Holiday'),
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want to activate') +
+          ` ${this.holidayData.name} ` +
+          this.translateService.instant('labels.dialogContext.holiday')
+      }
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.organizationService.activateHoliday(this.holidayData.id)
-          .subscribe(() => {
-            this.router.navigate(['/organization/holidays']);
-          });
+        this.organizationService.activateHoliday(this.holidayData.id).subscribe(() => {
+          this.router.navigate(['/organization/holidays']);
+        });
       }
     });
   }
-
 }

@@ -13,11 +13,10 @@ import { RecurringDepositsService } from '../recurring-deposits.service';
  */
 @Injectable()
 export class RecurringDepositsAccountDataResolver implements Resolve<Object> {
-
   /**
    * @param {RecurringDepositsService} RecurringDepositsService RecurringDeposits service.
    */
-  constructor(private recurringDepositsService: RecurringDepositsService) { }
+  constructor(private recurringDepositsService: RecurringDepositsService) {}
 
   /**
    * Returns the RecurringDeposits Account data.
@@ -28,5 +27,4 @@ export class RecurringDepositsAccountDataResolver implements Resolve<Object> {
     const recurringDepositAccountId = route.parent.paramMap.get('recurringDepositAccountId');
     return this.recurringDepositsService.getRecurringDepositsAccountData(recurringDepositAccountId);
   }
-
 }

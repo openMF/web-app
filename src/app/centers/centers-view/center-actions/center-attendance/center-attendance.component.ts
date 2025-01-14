@@ -26,7 +26,6 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
   styleUrls: ['./center-attendance.component.scss']
 })
 export class CenterAttendanceComponent implements OnInit {
-
   /** Members data. */
   membersData: any;
   /** Center Data */
@@ -34,7 +33,10 @@ export class CenterAttendanceComponent implements OnInit {
   /** Attendance Type Options */
   attendanceTypeOptions: any;
   /** Columns to be displayed in member's attendance table. */
-  displayedColumns: string[] = ['name', 'attendance'];
+  displayedColumns: string[] = [
+    'name',
+    'attendance'
+  ];
   /** Start Date Form Control */
   meetingDate = new UntypedFormControl();
   /** Meeting Dates Data */
@@ -55,14 +57,16 @@ export class CenterAttendanceComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private router: Router,
-              private centersService: CentersService,
-              private settingsService: SettingsService,
-              public dialog: MatDialog,
-              private translateService: TranslateService) {
-    this.route.data.subscribe(( data: { centersActionData: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    private centersService: CentersService,
+    private settingsService: SettingsService,
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
+    this.route.data.subscribe((data: { centersActionData: any }) => {
       this.centerData = data.centersActionData;
       this.membersData = data.centersActionData.clients;
     });
@@ -76,8 +80,9 @@ export class CenterAttendanceComponent implements OnInit {
     if (this.membersData !== undefined && this.membersData !== null) {
       this.dataSource = this.membersData.map((member: any) => ({ clientId: member.id, attendanceType: 1 }));
     }
-    this.meetingDates = this.centerData.collectionMeetingCalendar.recurringDates
-      .filter((date: any) => new Date(date).getTime() < new Date().getTime());
+    this.meetingDates = this.centerData.collectionMeetingCalendar.recurringDates.filter(
+      (date: any) => new Date(date).getTime() < new Date().getTime()
+    );
     this.getAttendanceOptions();
   }
 
@@ -85,7 +90,8 @@ export class CenterAttendanceComponent implements OnInit {
    * Gets attendance type options based on calendar id.
    */
   getAttendanceOptions() {
-    this.centersService.getMeetingsTemplate(this.centerData.id, this.centerData.collectionMeetingCalendar.id)
+    this.centersService
+      .getMeetingsTemplate(this.centerData.id, this.centerData.collectionMeetingCalendar.id)
       .subscribe((response: any) => {
         this.attendanceTypeOptions = response.attendanceTypeOptions;
       });
@@ -103,10 +109,14 @@ export class CenterAttendanceComponent implements OnInit {
         value: member.attendanceType,
         options: { label: 'value', value: 'id', data: this.attendanceTypeOptions },
         required: false
-      }),
+      })
+
     ];
     const data = {
-      title: this.translateService.instant('labels.buttons.Assign Member') + ' ' + this.translateService.instant('labels.buttons.Attendance'),
+      title:
+        this.translateService.instant('labels.buttons.Assign Member') +
+        ' ' +
+        this.translateService.instant('labels.buttons.Attendance'),
       layout: { addButtonText: 'Confirm' },
       formfields: formfields
     };
@@ -135,9 +145,10 @@ export class CenterAttendanceComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.assignCenterAttendance(this.centerData.id, this.centerData.collectionMeetingCalendar.id, data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.centersService
+      .assignCenterAttendance(this.centerData.id, this.centerData.collectionMeetingCalendar.id, data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

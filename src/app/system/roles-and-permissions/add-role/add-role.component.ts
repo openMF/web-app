@@ -15,7 +15,6 @@ import { SystemService } from '../../system.service';
   styleUrls: ['./add-role.component.scss']
 })
 export class AddRoleComponent implements OnInit {
-
   /** Role form. */
   roleForm: UntypedFormGroup;
 
@@ -25,10 +24,12 @@ export class AddRoleComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   /**
    * Creates the role form.
@@ -42,8 +43,14 @@ export class AddRoleComponent implements OnInit {
    */
   createRoleForm() {
     this.roleForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'description': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ],
+      description: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -52,10 +59,8 @@ export class AddRoleComponent implements OnInit {
    * if successful redirects back to roles and permission.
    */
   submit() {
-    this.systemService.createRole(this.roleForm.value)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
+    this.systemService.createRole(this.roleForm.value).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

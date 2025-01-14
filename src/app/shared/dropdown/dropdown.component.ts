@@ -8,14 +8,13 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./dropdown.component.scss']
 })
 export class DropdownComponent {
-
   @Input() placeHolderText: string;
   @Input() labelText: string;
   @Input() selectOptions: any[] = [];
   @Input() controlSelect: UntypedFormControl;
   @Input() required: boolean;
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService) {}
 
   getPlaceHolderText(): string {
     return this.placeHolderText ? this.translateService.instant('labels.inputs.' + this.placeHolderText) : '';
@@ -28,5 +27,4 @@ export class DropdownComponent {
   clearProperty() {
     this.controlSelect.patchValue('');
   }
-
 }

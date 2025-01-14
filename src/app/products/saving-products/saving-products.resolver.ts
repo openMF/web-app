@@ -13,7 +13,6 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class SavingProductsResolver implements Resolve<Object> {
-
   /**
    *
    * @param {ProductsService} productsService Products service.
@@ -27,5 +26,4 @@ export class SavingProductsResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.productsService.getSavingProducts();
   }
-
 }

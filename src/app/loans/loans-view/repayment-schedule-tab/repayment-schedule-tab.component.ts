@@ -4,7 +4,7 @@ import { Dates } from 'app/core/utils/dates';
 import { RepaymentSchedulePeriod } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
 
-import {jsPDF, jsPDFOptions} from 'jspdf';
+import { jsPDF, jsPDFOptions } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 @Component({
@@ -13,7 +13,6 @@ import autoTable from 'jspdf-autotable';
   styleUrls: ['./repayment-schedule-tab.component.scss']
 })
 export class RepaymentScheduleTabComponent implements OnInit {
-
   /** Currency Code */
   @Input() currencyCode: string;
   /** Loan Repayment Schedule to be Edited */
@@ -25,9 +24,34 @@ export class RepaymentScheduleTabComponent implements OnInit {
   /** Stores if there is any waived amount */
   isWaived: boolean;
   /** Columns to be displayed in original schedule table. */
-  displayedColumns: string[] = ['number', 'days', 'date', 'paiddate', 'check', 'balanceOfLoan', 'principalDue', 'interest', 'fees', 'penalties', 'due', 'paid', 'inadvance', 'late', 'waived', 'outstanding'];
+  displayedColumns: string[] = [
+    'number',
+    'days',
+    'date',
+    'paiddate',
+    'check',
+    'balanceOfLoan',
+    'principalDue',
+    'interest',
+    'fees',
+    'penalties',
+    'due',
+    'paid',
+    'inadvance',
+    'late',
+    'waived',
+    'outstanding'
+  ];
   /** Columns to be displayed in editable schedule table. */
-  displayedColumnsEdit: string[] = ['number', 'date', 'balanceOfLoan', 'principalDue', 'interest', 'fees', 'due'];
+  displayedColumnsEdit: string[] = [
+    'number',
+    'date',
+    'balanceOfLoan',
+    'principalDue',
+    'interest',
+    'fees',
+    'due'
+  ];
 
   /** Form functions event */
   @Output() editPeriod = new EventEmitter();
@@ -38,7 +62,8 @@ export class RepaymentScheduleTabComponent implements OnInit {
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private settingsService: SettingsService,
     private dates: Dates
   ) {
@@ -106,13 +131,17 @@ export class RepaymentScheduleTabComponent implements OnInit {
 
     autoTable(pdf, {
       html: '#repaymentSchedule',
-      bodyStyles: {lineColor: [0, 0, 0]},
+      bodyStyles: { lineColor: [
+          0,
+          0,
+          0
+        ] },
       styles: {
-         fontSize: 8,
-         cellWidth: 'auto',
-         halign: 'center'
-      }});
+        fontSize: 8,
+        cellWidth: 'auto',
+        halign: 'center'
+      }
+    });
     pdf.save(fileName);
   }
-
 }

@@ -27,7 +27,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./view-campaign.component.scss']
 })
 export class ViewCampaignComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -39,7 +38,12 @@ export class ViewCampaignComponent implements OnInit {
   /** Message Status */
   status: any;
   /** Data Table Columns */
-  displayedColumns: string[] = ['Message', 'Status', 'Mobile No.', 'Campaign Name'];
+  displayedColumns: string[] = [
+    'Message',
+    'Status',
+    'Mobile No.',
+    'Campaign Name'
+  ];
   /** Data source for SMS campaigns table. */
   dataSource = new MatTableDataSource();
 
@@ -80,13 +84,15 @@ export class ViewCampaignComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service
    * @param {SettingsService} settingsService Setting Service
    */
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              public dialog: MatDialog,
-              private formBuilder: UntypedFormBuilder,
-              private dateUtils: Dates,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private formBuilder: UntypedFormBuilder,
+    private dateUtils: Dates,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { smsCampaign: any }) => {
       this.smsCampaignData = data.smsCampaign;
     });
@@ -102,8 +108,8 @@ export class ViewCampaignComponent implements OnInit {
    */
   createSMSForm() {
     this.smsForm = this.formBuilder.group({
-      'fromDate': [''],
-      'toDate': [''],
+      fromDate: [''],
+      toDate: ['']
     });
   }
 
@@ -134,6 +140,7 @@ export class ViewCampaignComponent implements OnInit {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: 'Close SMS Campaign',
@@ -150,9 +157,11 @@ export class ViewCampaignComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.organizationService.executeSmsCampaignCommand(this.smsCampaignData.id, dataObject,  'close').subscribe(() => {
-          this.reload();
-        });
+        this.organizationService
+          .executeSmsCampaignCommand(this.smsCampaignData.id, dataObject, 'close')
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -169,6 +178,7 @@ export class ViewCampaignComponent implements OnInit {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: 'Activate SMS Campaign',
@@ -185,9 +195,11 @@ export class ViewCampaignComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.organizationService.executeSmsCampaignCommand(this.smsCampaignData.id, dataObject,  'activate').subscribe(() => {
-          this.reload();
-        });
+        this.organizationService
+          .executeSmsCampaignCommand(this.smsCampaignData.id, dataObject, 'activate')
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -204,6 +216,7 @@ export class ViewCampaignComponent implements OnInit {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: 'Reactivate SMS Campaign',
@@ -220,9 +233,11 @@ export class ViewCampaignComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.organizationService.executeSmsCampaignCommand(this.smsCampaignData.id, dataObject,  'reactivate').subscribe(() => {
-          this.reload();
-        });
+        this.organizationService
+          .executeSmsCampaignCommand(this.smsCampaignData.id, dataObject, 'reactivate')
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -249,7 +264,8 @@ export class ViewCampaignComponent implements OnInit {
    */
   private reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/organization/sms-campaigns`, {skipLocationChange: true})
+    this.router
+      .navigateByUrl(`/organization/sms-campaigns`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 
@@ -280,5 +296,4 @@ export class ViewCampaignComponent implements OnInit {
       this.messageTableRef.renderRows();
     });
   }
-
 }

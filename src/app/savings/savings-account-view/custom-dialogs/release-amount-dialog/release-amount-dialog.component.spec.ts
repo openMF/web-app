@@ -8,9 +8,8 @@ describe('ReleaseAmountDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReleaseAmountDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ReleaseAmountDialogComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -14,9 +14,15 @@ export class CollateralsService {
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getFilteredClients(orderBy: string, sortOrder: string, orphansOnly: boolean, displayName: string, officeId?: any): Observable<any> {
+  getFilteredClients(
+    orderBy: string,
+    sortOrder: string,
+    orphansOnly: boolean,
+    displayName: string,
+    officeId?: any
+  ): Observable<any> {
     let httpParams = new HttpParams()
       .set('displayName', displayName)
       .set('orphansOnly', orphansOnly.toString())
@@ -31,21 +37,21 @@ export class CollateralsService {
   /**
    * @returns {Observable<any>} Collaterals data
    */
-   getClientCollateral(clientId: any, clientCollateralId: any): Observable<any> {
+  getClientCollateral(clientId: any, clientCollateralId: any): Observable<any> {
     return this.http.get(`/clients/${clientId}/collaterals/${clientCollateralId}`);
   }
 
   /**
    * @returns {Observable<any>} Collaterals data
    */
-   updateClientCollateral(clientId: any, clientCollateralId: any, clientCollateralData: any): Observable<any> {
+  updateClientCollateral(clientId: any, clientCollateralId: any, clientCollateralData: any): Observable<any> {
     return this.http.put(`/clients/${clientId}/collaterals/${clientCollateralId}`, clientCollateralData);
   }
 
   /**
    * @returns {Observable<any>} Delete Collaterals data
    */
-   deleteCollateral(clientId: any, clientCollateralId: any): Observable<any> {
+  deleteCollateral(clientId: any, clientCollateralId: any): Observable<any> {
     return this.http.delete(`/clients/${clientId}/collaterals/${clientCollateralId}`);
   }
 }

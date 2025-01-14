@@ -25,11 +25,13 @@ import { NextStepDialogComponent } from '../../configuration-wizard/next-step-di
   styleUrls: ['./recurring-deposit-products.component.scss']
 })
 export class RecurringDepositProductsComponent implements OnInit, AfterViewInit {
-
   /** Data table data. */
   recurringDepositProductData: any;
   /** Columns to be displayed in recurring deposit products table. */
-  displayedColumns: string[] = ['name', 'shortName'];
+  displayedColumns: string[] = [
+    'name',
+    'shortName'
+  ];
   /** Data source for recurring deposit products table. */
   dataSource: MatTableDataSource<any>;
 
@@ -54,12 +56,14 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { recurringDepositProducts: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { recurringDepositProducts: any }) => {
       this.recurringDepositProductData = data.recurringDepositProducts;
     });
   }
@@ -94,7 +98,12 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
   ngAfterViewInit() {
     if (this.configurationWizardService.showRecurringDepositProductsPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonCreateRecurringProduct, this.buttonCreateRecurringProduct.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonCreateRecurringProduct,
+          this.buttonCreateRecurringProduct.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
 
@@ -112,7 +121,12 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -139,23 +153,23 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
    * Next Step (Setup Funds and Manage Reports) Dialog Configuration Wizard.
    */
   openNextStepDialog() {
-    const nextStepDialogRef = this.dialog.open( NextStepDialogComponent, {
+    const nextStepDialogRef = this.dialog.open(NextStepDialogComponent, {
       data: {
         nextStepName: 'Setup Funds and Manage Reports',
         previousStepName: 'Products',
         stepPercentage: 94
-      },
+      }
     });
     nextStepDialogRef.afterClosed().subscribe((response: { nextStep: boolean }) => {
-    if (response.nextStep) {
-      this.configurationWizardService.showRecurringDepositProductsPage = false;
-      this.configurationWizardService.showRecurringDepositProductsList = false;
-      this.configurationWizardService.showManageFunds = true;
-      this.router.navigate(['/organization']);
+      if (response.nextStep) {
+        this.configurationWizardService.showRecurringDepositProductsPage = false;
+        this.configurationWizardService.showRecurringDepositProductsList = false;
+        this.configurationWizardService.showManageFunds = true;
+        this.router.navigate(['/organization']);
       } else {
-      this.configurationWizardService.showRecurringDepositProductsPage = false;
-      this.configurationWizardService.showRecurringDepositProductsList = false;
-      this.router.navigate(['/home']);
+        this.configurationWizardService.showRecurringDepositProductsPage = false;
+        this.configurationWizardService.showRecurringDepositProductsList = false;
+        this.router.navigate(['/home']);
       }
     });
   }

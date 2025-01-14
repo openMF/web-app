@@ -8,9 +8,8 @@ describe('FixedDepositDatatableTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FixedDepositDatatableTabComponent ]
-    })
-    .compileComponents();
+      declarations: [FixedDepositDatatableTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

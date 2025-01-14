@@ -8,9 +8,8 @@ describe('ViewAdhocQueryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewAdhocQueryComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewAdhocQueryComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

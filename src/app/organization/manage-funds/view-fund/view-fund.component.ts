@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-fund.component.scss']
 })
 export class ViewFundComponent {
-
   /** Fund data. */
   fundData: any;
 
@@ -20,5 +19,4 @@ export class ViewFundComponent {
       this.fundData = data.fundData;
     });
   }
-
 }

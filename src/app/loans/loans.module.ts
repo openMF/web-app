@@ -173,6 +173,6 @@ import { AddInterestPauseComponent } from './loans-view/loan-account-actions/add
     LoanTermVariationsTabComponent,
     AddInterestPauseComponent
   ],
-  providers: [ ],
+  providers: []
 })
 export class LoansModule {}

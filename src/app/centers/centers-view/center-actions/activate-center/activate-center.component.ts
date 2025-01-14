@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./activate-center.component.scss']
 })
 export class ActivateCenterComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -35,12 +34,14 @@ export class ActivateCenterComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private centersService: CentersService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private centersService: CentersService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.centerId = this.route.parent.snapshot.params['centerId'];
   }
 
@@ -57,7 +58,10 @@ export class ActivateCenterComponent implements OnInit {
    */
   createActivateCenterForm() {
     this.activateCenterForm = this.formBuilder.group({
-      'activationDate': [new Date(), Validators.required]
+      activationDate: [
+        new Date(),
+        Validators.required
+      ]
     });
   }
 
@@ -82,5 +86,4 @@ export class ActivateCenterComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

@@ -67,6 +67,6 @@ import { GeneralTabComponent } from './shares-account-view/general-tab/general-t
     RejectShareDialogComponent,
     GeneralTabComponent
   ],
-  providers: [ ]
+  providers: []
 })
-export class SharesModule { }
+export class SharesModule {}

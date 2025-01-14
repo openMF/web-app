@@ -19,7 +19,6 @@ import { SystemService } from '../../system.service';
   styleUrls: ['./view-hook.component.scss']
 })
 export class ViewHookComponent {
-
   /** Hook Data. */
   hookData: any;
 
@@ -31,11 +30,13 @@ export class ViewHookComponent {
    * @param {Router} router Router for navigation.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private systemService: SystemService,
     private router: Router,
-    private translateService: TranslateService) {
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { hook: any }) => {
       this.hookData = data.hook;
     });
@@ -50,12 +51,10 @@ export class ViewHookComponent {
     });
     deleteHookDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteHook(this.hookData.id)
-          .subscribe(() => {
-            this.router.navigate(['/system/hooks']);
-          });
+        this.systemService.deleteHook(this.hookData.id).subscribe(() => {
+          this.router.navigate(['/system/hooks']);
+        });
       }
     });
   }
-
 }
