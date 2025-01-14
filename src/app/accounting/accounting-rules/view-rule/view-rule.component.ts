@@ -18,7 +18,6 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   styleUrls: ['./view-rule.component.scss']
 })
 export class ViewRuleComponent {
-
   /** Accounting rule. */
   accountingRule: any;
 
@@ -29,10 +28,12 @@ export class ViewRuleComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public dialog: MatDialog) {
+  constructor(
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { accountingRule: any }) => {
       this.accountingRule = data.accountingRule;
     });
@@ -47,12 +48,10 @@ export class ViewRuleComponent {
     });
     deleteAccountingRuleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteAccountingRule(this.accountingRule.id)
-          .subscribe(() => {
-            this.router.navigate(['/accounting/accounting-rules']);
-          });
+        this.accountingService.deleteAccountingRule(this.accountingRule.id).subscribe(() => {
+          this.router.navigate(['/accounting/accounting-rules']);
+        });
       }
     });
   }
-
 }

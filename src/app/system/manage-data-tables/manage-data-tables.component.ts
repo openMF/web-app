@@ -21,11 +21,14 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./manage-data-tables.component.scss']
 })
 export class ManageDataTablesComponent implements OnInit, AfterViewInit {
-
   /** Data table data. */
   dataTableData: any;
   /** Columns to be displayed in manage data tables table. */
-  displayedColumns: string[] = ['registeredTableName', 'applicationTableName', 'entitySubType'];
+  displayedColumns: string[] = [
+    'registeredTableName',
+    'applicationTableName',
+    'entitySubType'
+  ];
   /** Data source for manage data tables table. */
   dataSource: MatTableDataSource<any>;
 
@@ -50,11 +53,13 @@ export class ManageDataTablesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { dataTables: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { dataTables: any }) => {
       this.dataTableData = data.dataTables;
     });
   }
@@ -90,7 +95,12 @@ export class ManageDataTablesComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -100,12 +110,12 @@ export class ManageDataTablesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showDatatablesPage === true) {
       setTimeout(() => {
-          this.showPopover(this.templateCreateDatatableRef, this.createDatatableRef.nativeElement, 'bottom', true);
+        this.showPopover(this.templateCreateDatatableRef, this.createDatatableRef.nativeElement, 'bottom', true);
       });
     }
     if (this.configurationWizardService.showDatatablesList === true) {
       setTimeout(() => {
-          this.showPopover(this.templateDatatablesList, this.datatablesList.nativeElement, 'top', true);
+        this.showPopover(this.templateDatatablesList, this.datatablesList.nativeElement, 'top', true);
       });
     }
   }

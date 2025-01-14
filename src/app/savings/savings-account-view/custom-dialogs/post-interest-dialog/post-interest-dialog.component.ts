@@ -11,10 +11,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./post-interest-dialog.component.scss']
 })
 export class PostInterestDialogComponent {
-
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<PostInterestDialogComponent>) { }
-
+  constructor(public dialogRef: MatDialogRef<PostInterestDialogComponent>) {}
 }

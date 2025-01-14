@@ -16,7 +16,6 @@ import { GLAccount } from 'app/shared/models/general.model';
   providedIn: 'root'
 })
 export class GlAccountTreeService {
-
   /** GL Account data. */
   glAccountData: any;
   /** Chart of accounts tree data behavior subject to represent chart of accounts tree nodes. */
@@ -25,10 +24,11 @@ export class GlAccountTreeService {
   /**
    * Gets the chart of accounts tree nodes.
    */
-  get treeData(): GLAccountNode[] { return this.treeDataChange.value; }
+  get treeData(): GLAccountNode[] {
+    return this.treeDataChange.value;
+  }
 
-  constructor(
-    private translateService: TranslateService) {  }
+  constructor(private translateService: TranslateService) {}
 
   /**
    * Builds the chart of accounts tree and emits the value.
@@ -51,9 +51,13 @@ export class GlAccountTreeService {
     glAccountTree.push(new GLAccountNode('ACCOUNTS'));
     glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.ASSET')));
     glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.EQUITY')));
-    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.EXPENSE')));
+    glAccountTree[0].children.push(
+      new GLAccountNode(this.translateService.instant('labels.inputs.accounting.EXPENSE'))
+    );
     glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.INCOME')));
-    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.LIABILITY')));
+    glAccountTree[0].children.push(
+      new GLAccountNode(this.translateService.instant('labels.inputs.accounting.LIABILITY'))
+    );
 
     // Sort by parent id (so that child nodes can be added properly)
     if (!glAccountData[0].parentId) {
@@ -70,8 +74,14 @@ export class GlAccountTreeService {
 
     // Add gl accounts to any array where index for each is denoted by its id
     for (const glAccount of glAccountData) {
-      glAccounts[glAccount.id] =
-        new GLAccountNode(glAccount.name, glAccount.glCode, glAccount.type.value, glAccount.usage.value, glAccount.manualEntriesAllowed, glAccount.description);
+      glAccounts[glAccount.id] = new GLAccountNode(
+        glAccount.name,
+        glAccount.glCode,
+        glAccount.type.value,
+        glAccount.usage.value,
+        glAccount.manualEntriesAllowed,
+        glAccount.description
+      );
     }
 
     // Construct gl account tree by adding all nodes belonging to headers (with parent id = 0) by their type,
@@ -99,5 +109,4 @@ export class GlAccountTreeService {
 
     return glAccountTree;
   }
-
 }

@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./close-recurring-deposits-account.component.scss']
 })
 export class CloseRecurringDepositsAccountComponent implements OnInit {
-
   /** Maturity Amount */
   maturityAmount: any;
   /** On Account Closure Options */
@@ -76,16 +75,25 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
    */
   createcloseRecurringDepositForm() {
     this.closeRecurringDepositForm = this.formBuilder.group({
-      'closedOnDate': [new Date(), Validators.required],
-      'maturityAmount': [{ value: this.maturityAmount, disabled: true}],
-      'onAccountClosureId': ['', Validators.required],
-      'paymentTypeId': ['', Validators.required],
-      'accountNumber': '',
-      'chequeNumber': '',
-      'routingCode': '',
-      'receiptNumber': '',
-      'bankNumber': '',
-      'note': ''
+      closedOnDate: [
+        new Date(),
+        Validators.required
+      ],
+      maturityAmount: [{ value: this.maturityAmount, disabled: true }],
+      onAccountClosureId: [
+        '',
+        Validators.required
+      ],
+      paymentTypeId: [
+        '',
+        Validators.required
+      ],
+      accountNumber: '',
+      chequeNumber: '',
+      routingCode: '',
+      receiptNumber: '',
+      bankNumber: '',
+      note: ''
     });
   }
 
@@ -93,7 +101,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
    * Toggles the display of payment details
    */
   toggleDisplay() {
-    this.showPaymentDetails = !(this.showPaymentDetails);
+    this.showPaymentDetails = !this.showPaymentDetails;
   }
 
   /**
@@ -112,9 +120,10 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'close', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.recurringDepositsService
+      .executeRecurringDepositsAccountCommand(this.accountId, 'close', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

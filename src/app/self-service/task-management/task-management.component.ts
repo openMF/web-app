@@ -6,7 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./task-management.component.scss']
 })
 export class TaskManagementComponent {
-
-  constructor() { }
-
+  constructor() {}
 }

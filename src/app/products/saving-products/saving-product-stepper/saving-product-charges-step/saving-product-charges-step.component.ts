@@ -11,19 +11,26 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./saving-product-charges-step.component.scss']
 })
 export class SavingProductChargesStepComponent implements OnInit {
-
   @Input() savingProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
 
   chargeData: any;
 
   chargesDataSource: {}[];
-  displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'action'
+  ];
 
   pristine = true;
 
-  constructor(public dialog: MatDialog, private translateService: TranslateService) {
-  }
+  constructor(
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.chargeData = this.savingProductsTemplate.chargeOptions;
@@ -31,7 +38,7 @@ export class SavingProductChargesStepComponent implements OnInit {
     this.chargesDataSource = this.savingProductsTemplate.charges || [];
     this.pristine = true;
 
-    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
   }
 
   addCharge(charge: any) {
@@ -58,5 +65,4 @@ export class SavingProductChargesStepComponent implements OnInit {
       charges: this.chargesDataSource
     };
   }
-
 }

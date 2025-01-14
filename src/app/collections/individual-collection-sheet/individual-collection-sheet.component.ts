@@ -31,7 +31,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./individual-collection-sheet.component.scss']
 })
 export class IndividualCollectionSheetComponent implements OnInit {
-
   /** Offices Data */
   officesData: any;
   /** Loan Officer Data */
@@ -62,15 +61,28 @@ export class IndividualCollectionSheetComponent implements OnInit {
   noData = false;
 
   /** Columns to be displayed in loans table. */
-  loansDisplayedColumns: string[] = ['loanAccount', 'productName', 'clientName', 'totalDue', 'charges', 'actions'];
+  loansDisplayedColumns: string[] = [
+    'loanAccount',
+    'productName',
+    'clientName',
+    'totalDue',
+    'charges',
+    'actions'
+  ];
   /** Columns to be displayed in savings table. */
-  savingsDisplayedColumns: string[] = ['depositAccount', 'savingsAccountNo', 'productName', 'clientName', 'totalDue', 'actions'];
+  savingsDisplayedColumns: string[] = [
+    'depositAccount',
+    'savingsAccountNo',
+    'productName',
+    'clientName',
+    'totalDue',
+    'actions'
+  ];
 
   /** Data source for loans table. */
   loansDataSource: MatTableDataSource<any>;
   /** Data source for savings table. */
   savingsDataSource: MatTableDataSource<any>;
-
 
   /** Paginator for table. */
   @ViewChild(MatPaginator, { read: true }) paginator: MatPaginator;
@@ -87,13 +99,15 @@ export class IndividualCollectionSheetComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private collectionsService: CollectionsService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              public dialog: MatDialog,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private collectionsService: CollectionsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    public dialog: MatDialog,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { officesData: any }) => {
       this.officesData = data.officesData;
     });
@@ -104,7 +118,9 @@ export class IndividualCollectionSheetComponent implements OnInit {
     if (localStorage.getItem('Success')) {
       localStorage.removeItem('Success');
       this.Success = true;
-      setTimeout(() => { this.Success = false; }, 3000);
+      setTimeout(() => {
+        this.Success = false;
+      }, 3000);
     }
     this.createCollectionSheetForm();
     this.buildDependencies();
@@ -115,9 +131,15 @@ export class IndividualCollectionSheetComponent implements OnInit {
    */
   createCollectionSheetForm() {
     this.collectionSheetForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'transactionDate': [new Date(), Validators.required],
-      'staffId': ['']
+      officeId: [
+        '',
+        Validators.required
+      ],
+      transactionDate: [
+        new Date(),
+        Validators.required
+      ],
+      staffId: ['']
     });
   }
 
@@ -174,7 +196,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
   /**
    * Gets Loan Total Due Amount
    */
-  getLoanTotalDueAmount (loan: any) {
+  getLoanTotalDueAmount(loan: any) {
     let principalInterestDue = loan.totalDue;
     let chargesDue = loan.chargesDue;
     if (isNaN(principalInterestDue)) {
@@ -226,7 +248,8 @@ export class IndividualCollectionSheetComponent implements OnInit {
         label: 'Bank #',
         type: 'number',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: `Payment for ${type === 'loans' ? 'Loan' : 'Saving'} Id ${type === 'loans' ? selectedData.loanId : selectedData.savingsId}`,
@@ -259,7 +282,12 @@ export class IndividualCollectionSheetComponent implements OnInit {
           const savingsTransaction = {
             savingsId: selectedData.savingsId,
             transactionAmount: dueAmount,
-            depositAccountType: selectedData.depositAccountType === 'Saving Deposit' ? 100 : (selectedData.depositAccountType === 'Recurring Deposit' ? 300 : 400)
+            depositAccountType:
+              selectedData.depositAccountType === 'Saving Deposit'
+                ? 100
+                : selectedData.depositAccountType === 'Recurring Deposit'
+                  ? 300
+                  : 400
           };
           if (response.data.paymentTypeId !== '') {
             savingsTransaction['paymentTypeId'] = response.data.paymentTypeId;
@@ -299,7 +327,9 @@ export class IndividualCollectionSheetComponent implements OnInit {
         this.isCollapsed = true;
       } else {
         this.noData = true;
-        setTimeout(() => { this.noData = false; }, 3000);
+        setTimeout(() => {
+          this.noData = false;
+        }, 3000);
       }
     });
   }
@@ -331,8 +361,6 @@ export class IndividualCollectionSheetComponent implements OnInit {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/collections`, { skipLocationChange: true })
-      .then(() => this.router.navigate([url]));
+    this.router.navigateByUrl(`/collections`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
-
 }

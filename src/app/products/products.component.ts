@@ -15,7 +15,6 @@ import { PopoverService } from '../configuration-wizard/popover/popover.service'
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements AfterViewInit {
-
   /* Reference of charges */
   @ViewChild('charges') charges: ElementRef<any>;
   /* Template for popover on charges */
@@ -48,9 +47,11 @@ export class ProductsComponent implements AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) { }
+  constructor(
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {}
 
   /**
    * To show popover.
@@ -83,7 +84,12 @@ export class ProductsComponent implements AfterViewInit {
     }
     if (this.configurationWizardService.showRecurringDepositProducts === true) {
       setTimeout(() => {
-        this.showPopover(this.templateRecurringDepositProducts, this.recurringDepositProducts.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateRecurringDepositProducts,
+          this.recurringDepositProducts.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
   }
@@ -96,7 +102,12 @@ export class ProductsComponent implements AfterViewInit {
    * @param backdrop Boolean.
    * @param arrowNumber - The index of the boolean value to toggle.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -208,7 +219,7 @@ export class ProductsComponent implements AfterViewInit {
     this.router.navigate(['/products/fixed-deposit-products']);
   }
 
-  arrowBooleansToggle(arrowNumber:  number) {
+  arrowBooleansToggle(arrowNumber: number) {
     // Toggle the boolean value at the given index
     this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }

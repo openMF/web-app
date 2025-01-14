@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./approve-recurring-deposits-account.component.scss']
 })
 export class ApproveRecurringDepositsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -35,12 +34,14 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
@@ -57,8 +58,11 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
    */
   createApproveRecurringDepositsAccountForm() {
     this.approveRecurringDepositsAccountForm = this.formBuilder.group({
-      'approvedOnDate': ['', Validators.required],
-      'note': ['']
+      approvedOnDate: [
+        '',
+        Validators.required
+      ],
+      note: ['']
     });
   }
 
@@ -72,16 +76,20 @@ export class ApproveRecurringDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.approveRecurringDepositsAccountForm.value.approvedOnDate;
     if (approveRecurringDepositsAccountFormData.approvedOnDate instanceof Date) {
-      approveRecurringDepositsAccountFormData.approvedOnDate = this.dateUtils.formatDate(prevApprovedOnDate, dateFormat);
+      approveRecurringDepositsAccountFormData.approvedOnDate = this.dateUtils.formatDate(
+        prevApprovedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...approveRecurringDepositsAccountFormData,
       dateFormat,
       locale
     };
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'approve', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.recurringDepositsService
+      .executeRecurringDepositsAccountCommand(this.accountId, 'approve', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

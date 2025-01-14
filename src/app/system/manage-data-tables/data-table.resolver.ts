@@ -13,7 +13,6 @@ import { SystemService } from '../system.service';
  */
 @Injectable()
 export class DataTableResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService System service.
    */
@@ -28,6 +27,4 @@ export class DataTableResolver implements Resolve<Object> {
     const dataTableName = route.paramMap.get('datatableName');
     return this.systemService.getDataTable(dataTableName);
   }
-
 }
-

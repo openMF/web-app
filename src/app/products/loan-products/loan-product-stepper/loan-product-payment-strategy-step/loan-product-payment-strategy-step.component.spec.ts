@@ -8,9 +8,8 @@ describe('LoanProductPaymentStrategyStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoanProductPaymentStrategyStepComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanProductPaymentStrategyStepComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

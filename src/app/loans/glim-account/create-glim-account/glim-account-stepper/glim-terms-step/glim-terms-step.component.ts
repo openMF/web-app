@@ -8,7 +8,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./glim-terms-step.component.scss']
 })
 export class GlimTermsStepComponent implements OnInit, OnChanges {
-
   /** Loans Account Product Template */
   @Input() loansAccountProductTemplate: any;
   /** Loans Account Template */
@@ -42,8 +41,10 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
    * @param formBuilder FormBuilder
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-      private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private settingsService: SettingsService
+  ) {
     this.createloansAccountTermsForm();
   }
   /**
@@ -52,16 +53,16 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.loansAccountProductTemplate) {
       this.loansAccountTermsForm.patchValue({
-        'principal': this.loansAccountProductTemplate.principal,
-        'loanTermFrequency': this.loansAccountProductTemplate.termFrequency,
-        'loanTermFrequencyType': this.loansAccountProductTemplate.termPeriodFrequencyType.id,
-        'numberOfRepayments': this.loansAccountProductTemplate.numberOfRepayments,
-        'repaymentEvery': this.loansAccountProductTemplate.repaymentEvery,
-        'repaymentFrequencyType': this.loansAccountProductTemplate.repaymentFrequencyType.id,
-        'interestRatePerPeriod': this.loansAccountProductTemplate.interestRatePerPeriod,
-        'interestType': this.loansAccountProductTemplate.interestType.id,
-        'interestCalculationPeriodType': this.loansAccountProductTemplate.interestCalculationPeriodType.id,
-        'transactionProcessingStrategyCode': this.loansAccountProductTemplate.transactionProcessingStrategyCode,
+        principal: this.loansAccountProductTemplate.principal,
+        loanTermFrequency: this.loansAccountProductTemplate.termFrequency,
+        loanTermFrequencyType: this.loansAccountProductTemplate.termPeriodFrequencyType.id,
+        numberOfRepayments: this.loansAccountProductTemplate.numberOfRepayments,
+        repaymentEvery: this.loansAccountProductTemplate.repaymentEvery,
+        repaymentFrequencyType: this.loansAccountProductTemplate.repaymentFrequencyType.id,
+        interestRatePerPeriod: this.loansAccountProductTemplate.interestRatePerPeriod,
+        interestType: this.loansAccountProductTemplate.interestType.id,
+        interestCalculationPeriodType: this.loansAccountProductTemplate.interestCalculationPeriodType.id,
+        transactionProcessingStrategyCode: this.loansAccountProductTemplate.transactionProcessingStrategyCode
       });
       this.setOptions();
     }
@@ -72,7 +73,9 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
     if (this.loansAccountTemplate) {
       if (this.loansAccountTemplate.loanProductId) {
         this.loansAccountTermsForm.patchValue({
-          'repaymentsStartingFromDate': this.loansAccountTemplate.expectedFirstRepaymentOnDate && new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate)
+          repaymentsStartingFromDate:
+            this.loansAccountTemplate.expectedFirstRepaymentOnDate &&
+            new Date(this.loansAccountTemplate.expectedFirstRepaymentOnDate)
         });
       }
     }
@@ -85,39 +88,55 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
     const repaymentFrequencyNthDayType = this.loansAccountTermsForm.get('repaymentFrequencyNthDayType');
     const repaymentFrequencyDayOfWeekType = this.loansAccountTermsForm.get('repaymentFrequencyDayOfWeekType');
 
-    this.loansAccountTermsForm.get('repaymentFrequencyType').valueChanges
-      .subscribe(repaymentFrequencyType => {
+    this.loansAccountTermsForm.get('repaymentFrequencyType').valueChanges.subscribe((repaymentFrequencyType) => {
+      if (repaymentFrequencyType === 2) {
+        repaymentFrequencyNthDayType.setValidators([Validators.required]);
+        repaymentFrequencyDayOfWeekType.setValidators([Validators.required]);
+      } else {
+        repaymentFrequencyNthDayType.setValidators(null);
+        repaymentFrequencyDayOfWeekType.setValidators(null);
+      }
 
-        if (repaymentFrequencyType === 2) {
-          repaymentFrequencyNthDayType.setValidators([Validators.required]);
-          repaymentFrequencyDayOfWeekType.setValidators([Validators.required]);
-        } else {
-          repaymentFrequencyNthDayType.setValidators(null);
-          repaymentFrequencyDayOfWeekType.setValidators(null);
-        }
-
-        repaymentFrequencyNthDayType.updateValueAndValidity();
-        repaymentFrequencyDayOfWeekType.updateValueAndValidity();
-      });
+      repaymentFrequencyNthDayType.updateValueAndValidity();
+      repaymentFrequencyDayOfWeekType.updateValueAndValidity();
+    });
   }
 
   /** Create Loans Account Terms Form */
   createloansAccountTermsForm() {
     this.loansAccountTermsForm = this.formBuilder.group({
-      'principal': ['', Validators.required],
-      'loanTermFrequency': ['', Validators.required],
-      'loanTermFrequencyType': ['', Validators.required],
-      'numberOfRepayments': ['', Validators.required],
-      'repaymentEvery': ['', Validators.required],
-      'repaymentFrequencyType': ['', Validators.required],
-      'repaymentFrequencyNthDayType': [''],
-      'repaymentFrequencyDayOfWeekType': [''],
-      'repaymentsStartingFromDate': [''],
-      'interestChargedFromDate': [''],
-      'interestRatePerPeriod': [''],
-      'interestType': [''],
-      'interestCalculationPeriodType': [''],
-      'transactionProcessingStrategyCode': ['']
+      principal: [
+        '',
+        Validators.required
+      ],
+      loanTermFrequency: [
+        '',
+        Validators.required
+      ],
+      loanTermFrequencyType: [
+        '',
+        Validators.required
+      ],
+      numberOfRepayments: [
+        '',
+        Validators.required
+      ],
+      repaymentEvery: [
+        '',
+        Validators.required
+      ],
+      repaymentFrequencyType: [
+        '',
+        Validators.required
+      ],
+      repaymentFrequencyNthDayType: [''],
+      repaymentFrequencyDayOfWeekType: [''],
+      repaymentsStartingFromDate: [''],
+      interestChargedFromDate: [''],
+      interestRatePerPeriod: [''],
+      interestType: [''],
+      interestCalculationPeriodType: [''],
+      transactionProcessingStrategyCode: ['']
     });
   }
 
@@ -127,7 +146,8 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
   setOptions() {
     this.termFrequencyTypeData = this.loansAccountProductTemplate.termFrequencyTypeOptions;
     this.repaymentFrequencyNthDayTypeData = this.loansAccountProductTemplate.repaymentFrequencyNthDayTypeOptions;
-    this.repaymentFrequencyDaysOfWeekTypeData = this.loansAccountProductTemplate.repaymentFrequencyDaysOfWeekTypeOptions;
+    this.repaymentFrequencyDaysOfWeekTypeData =
+      this.loansAccountProductTemplate.repaymentFrequencyDaysOfWeekTypeOptions;
     this.interestTypeData = this.loansAccountProductTemplate.interestTypeOptions;
     this.amortizationTypeData = this.loansAccountProductTemplate.amortizationTypeOptions;
     this.interestCalculationPeriodTypeData = this.loansAccountProductTemplate.interestCalculationPeriodTypeOptions;
@@ -141,5 +161,4 @@ export class GlimTermsStepComponent implements OnInit, OnChanges {
   get loansAccountTerms() {
     return this.loansAccountTermsForm.value;
   }
-
 }

@@ -17,11 +17,13 @@ import { of } from 'rxjs';
   styleUrls: ['./loan-provisioning-criteria.component.scss']
 })
 export class LoanProvisioningCriteriaComponent implements OnInit {
-
   /** Loan Provisioning Criteria data. */
   loanProvisioningCriteriaData: any;
   /** Columns to be displayed in loan provisioning criteria table. */
-  displayedColumns: string[] = ['criteriaName', 'createdBy'];
+  displayedColumns: string[] = [
+    'criteriaName',
+    'createdBy'
+  ];
   /** Data source for loan provisioning criteria table. */
   dataSource: MatTableDataSource<any>;
 
@@ -35,7 +37,7 @@ export class LoanProvisioningCriteriaComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { loanProvisioningCriterias: any }) => {
+    this.route.data.subscribe((data: { loanProvisioningCriterias: any }) => {
       this.loanProvisioningCriteriaData = data.loanProvisioningCriterias;
     });
   }
@@ -63,5 +65,4 @@ export class LoanProvisioningCriteriaComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

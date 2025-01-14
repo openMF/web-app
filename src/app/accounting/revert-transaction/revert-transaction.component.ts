@@ -12,7 +12,6 @@ import { UntypedFormControl } from '@angular/forms';
   styleUrls: ['./revert-transaction.component.scss']
 })
 export class RevertTransactionComponent {
-
   /** Comments input form control. */
   comments = new UntypedFormControl('');
 
@@ -20,7 +19,8 @@ export class RevertTransactionComponent {
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides comments or reverted transaction ID.
    */
-  constructor(public dialogRef: MatDialogRef<RevertTransactionComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
-
+  constructor(
+    public dialogRef: MatDialogRef<RevertTransactionComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 }

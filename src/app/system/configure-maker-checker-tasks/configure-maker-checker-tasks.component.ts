@@ -14,7 +14,6 @@ import { SystemService } from '../system.service';
   styleUrls: ['./configure-maker-checker-tasks.component.scss']
 })
 export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewInit {
-
   permissionsData: any;
   groupings: string[] = [];
   formData = {};
@@ -28,10 +27,10 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
   backupform: UntypedFormGroup;
 
   permissions: {
-    permissions: { code: string, id: number }[]
+    permissions: { code: string; id: number }[];
   };
   tempPermissionUIData: {
-    permissions: { code: string }[]
+    permissions: { code: string }[];
   }[];
 
   /* Reference of edit button */
@@ -51,12 +50,14 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private systemService: SystemService,
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService ) {
+    private popoverService: PopoverService
+  ) {
     this.route.data.subscribe((data: { permissions: any }) => {
       this.permissionsData = data.permissions;
     });
@@ -82,16 +83,24 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
     return this.formBuilder.group({
       ...permission,
       ...{
-        code: [permission.code, Validators.required],
-        selected: [{ value: permission.selected, disabled: true }, Validators.required]
+        code: [
+          permission.code,
+          Validators.required
+        ],
+        selected: [
+          { value: permission.selected, disabled: true },
+          Validators.required
+        ]
       }
     });
   }
 
   setMakerCheckerTask() {
-    this.tempPermissionUIData = [{
-      permissions: []
-    }];
+    this.tempPermissionUIData = [
+      {
+        permissions: []
+      }
+    ];
     for (const i in this.permissionsData) {
       if (this.permissionsData[i]) {
         if (this.permissionsData[i].grouping !== this.currentGrouping) {
@@ -110,7 +119,6 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
     this.selectedItem = grouping;
     this.previousGrouping = grouping;
   }
-
 
   permissionName = function (name: any) {
     name = name || '';
@@ -173,15 +181,14 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
     const permissionData = {
       permissions: {}
     };
-    for (let i = 0; i < value.length; i++ ) {
+    for (let i = 0; i < value.length; i++) {
       data[value[i].code] = value[i].selected;
     }
     permissionData.permissions = data;
     this.formGroup.controls.roster.disable();
     this.checkboxesChanged = false;
     this.isDisabled = true;
-    this.systemService.updateMakerCheckerPermission(permissionData).subscribe((response: any) => {
-    });
+    this.systemService.updateMakerCheckerPermission(permissionData).subscribe((response: any) => {});
   }
 
   /**
@@ -191,7 +198,12 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -201,12 +213,12 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
   ngAfterViewInit() {
     if (this.configurationWizardService.showMakerCheckerTablePage === true) {
       setTimeout(() => {
-          this.showPopover(this.templateButtonEdit, this.buttonEdit.nativeElement, 'bottom', true);
+        this.showPopover(this.templateButtonEdit, this.buttonEdit.nativeElement, 'bottom', true);
       });
     }
     if (this.configurationWizardService.showMakerCheckerTableList === true) {
       setTimeout(() => {
-          this.showPopover(this.templateMcTable, this.mcTable.nativeElement, 'top', true);
+        this.showPopover(this.templateMcTable, this.mcTable.nativeElement, 'top', true);
       });
     }
   }

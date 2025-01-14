@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./premature-close-fixed-deposits-account.component.scss']
 })
 export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -33,7 +32,6 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
   /** Form submission event */
   isSubmitted = false;
 
-
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
@@ -42,12 +40,14 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private fixedDepositsService: FixedDepositsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];
   }
 
@@ -65,7 +65,10 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
    */
   createPrematureCloseAccountForm() {
     this.prematureCloseAccountForm = this.formBuilder.group({
-      'closedOnDate': ['', Validators.required]
+      closedOnDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -92,17 +95,23 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.fixedDepositsService.executeFixedDepositsAccountCommand(this.accountId, 'calculatePrematureAmount', data)
+    this.fixedDepositsService
+      .executeFixedDepositsAccountCommand(this.accountId, 'calculatePrematureAmount', data)
       .subscribe((response: any) => {
         this.savingsAccountsData = response.savingsAccounts;
         this.onAccountClosureOptions = response.onAccountClosureOptions;
-        this.prematureCloseAccountForm.addControl('maturityAmount', new UntypedFormControl({ value: '', disabled: true }));
-        this.prematureCloseAccountForm.addControl('onAccountClosureId', new UntypedFormControl('', Validators.required));
+        this.prematureCloseAccountForm.addControl(
+          'maturityAmount',
+          new UntypedFormControl({ value: '', disabled: true })
+        );
+        this.prematureCloseAccountForm.addControl(
+          'onAccountClosureId',
+          new UntypedFormControl('', Validators.required)
+        );
         this.prematureCloseAccountForm.addControl('note', new UntypedFormControl(''));
         this.prematureCloseAccountForm.get('maturityAmount').patchValue(response.maturityAmount);
         this.addTransferDetails();
       });
-
   }
 
   /**
@@ -111,7 +120,10 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
   addTransferDetails() {
     this.prematureCloseAccountForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
       if (id === 200) {
-        this.prematureCloseAccountForm.addControl('toSavingsAccountId', new UntypedFormControl('', Validators.required));
+        this.prematureCloseAccountForm.addControl(
+          'toSavingsAccountId',
+          new UntypedFormControl('', Validators.required)
+        );
         this.prematureCloseAccountForm.addControl('transferDescription', new UntypedFormControl(''));
       } else {
         this.prematureCloseAccountForm.removeControl('toSavingsAccountId');
@@ -138,9 +150,10 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.fixedDepositsService.executeFixedDepositsAccountCommand(this.accountId, 'prematureClose', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.fixedDepositsService
+      .executeFixedDepositsAccountCommand(this.accountId, 'prematureClose', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

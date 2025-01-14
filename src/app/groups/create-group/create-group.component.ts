@@ -18,7 +18,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-group.component.scss']
 })
 export class CreateGroupComponent implements OnInit, AfterViewInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -46,14 +45,16 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private clientsService: ClientsService,
-              private groupService: GroupsService,
-              private dateUtils: Dates,
-              private settingsService: SettingsService) {
-    this.route.data.subscribe( (data: {offices: any} ) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private clientsService: ClientsService,
+    private groupService: GroupsService,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
   }
@@ -70,12 +71,13 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    * Subscribes to Clients search filter:
    */
   ngAfterViewInit() {
-    this.clientChoice.valueChanges.subscribe( (value: string) => {
+    this.clientChoice.valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
-        this.clientsService.getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
-        .subscribe( (data: any) => {
-          this.clientsData = data.pageItems;
-        });
+        this.clientsService
+          .getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
+          .subscribe((data: any) => {
+            this.clientsData = data.pageItems;
+          });
       }
     });
   }
@@ -85,12 +87,23 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    */
   createGroupForm() {
     this.groupForm = this.formBuilder.group({
-      'name': ['', [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'officeId': ['', Validators.required],
-      'submittedOnDate': [this.settingsService.businessDate, Validators.required],
-      'staffId': [''],
-      'externalId': [''],
-      'active': [false],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('(^[A-z]).*')]
+      ],
+      officeId: [
+        '',
+        Validators.required
+      ],
+      submittedOnDate: [
+        this.settingsService.businessDate,
+        Validators.required
+      ],
+      staffId: [''],
+      externalId: [''],
+      active: [false]
     });
     this.buildDependencies();
   }
@@ -101,7 +114,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
    */
   buildDependencies() {
     this.groupForm.get('officeId').valueChanges.subscribe((option: any) => {
-      this.groupService.getStaff(option).subscribe(data => {
+      this.groupService.getStaff(option).subscribe((data) => {
         this.staffData = data['staffOptions'];
         if (this.staffData === undefined) {
           this.groupForm.controls['staffId'].disable();
@@ -169,8 +182,11 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     data.clientMembers = [];
     this.clientMembers.forEach((client: any) => data.clientMembers.push(client.id));
     this.groupService.createGroup(data).subscribe((response: any) => {
-      this.router.navigate(['../groups', response.resourceId, 'general']);
+      this.router.navigate([
+        '../groups',
+        response.resourceId,
+        'general'
+      ]);
     });
   }
-
 }

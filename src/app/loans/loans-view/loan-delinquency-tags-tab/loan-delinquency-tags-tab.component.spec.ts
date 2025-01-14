@@ -8,9 +8,8 @@ describe('LoanDelinquencyTagsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoanDelinquencyTagsTabComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanDelinquencyTagsTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

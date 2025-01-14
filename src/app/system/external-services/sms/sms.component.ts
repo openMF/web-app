@@ -13,11 +13,13 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./sms.component.scss']
 })
 export class SMSComponent implements OnInit {
-
   /** SMS configuration data. */
   smsConfigurationData: any;
   /** Columns to be displayed in SMS configuration table. */
-  displayedColumns: string[] = ['name', 'value'];
+  displayedColumns: string[] = [
+    'name',
+    'value'
+  ];
   /** Data source for SMS configuration table. */
   dataSource: MatTableDataSource<any>;
 
@@ -29,10 +31,10 @@ export class SMSComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: {smsConfiguration: any}) => {
+    this.route.data.subscribe((data: { smsConfiguration: any }) => {
       this.smsConfigurationData = data.smsConfiguration;
     });
-   }
+  }
 
   /**
    * Sets the SMS Configuration table.
@@ -48,5 +50,4 @@ export class SMSComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.smsConfigurationData);
     this.dataSource.sort = this.sort;
   }
-
 }

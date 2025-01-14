@@ -8,9 +8,8 @@ describe('AddCollateralComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddCollateralComponent ]
-    })
-    .compileComponents();
+      declarations: [AddCollateralComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

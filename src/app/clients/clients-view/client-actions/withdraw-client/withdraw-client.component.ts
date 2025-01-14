@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./withdraw-client.component.scss']
 })
 export class WithdrawClientComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -37,12 +36,14 @@ export class WithdrawClientComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private clientsService: ClientsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.withdrawalData = data.clientActionData.narrations;
     });
@@ -59,8 +60,14 @@ export class WithdrawClientComponent implements OnInit {
    */
   createWithdrawClientForm() {
     this.withdrawClientForm = this.formBuilder.group({
-      'withdrawalDate': ['', Validators.required],
-      'withdrawalReasonId': ['', Validators.required]
+      withdrawalDate: [
+        '',
+        Validators.required
+      ],
+      withdrawalReasonId: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -84,5 +91,4 @@ export class WithdrawClientComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

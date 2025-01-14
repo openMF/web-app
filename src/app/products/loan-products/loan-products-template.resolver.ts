@@ -10,7 +10,6 @@ import { ProductsService } from '../products.service';
 
 @Injectable()
 export class LoanProductsTemplateResolver implements Resolve<Object> {
-
   constructor(private productsService: ProductsService) {}
 
   /**
@@ -20,5 +19,4 @@ export class LoanProductsTemplateResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.productsService.getLoanProductsTemplate();
   }
-
 }

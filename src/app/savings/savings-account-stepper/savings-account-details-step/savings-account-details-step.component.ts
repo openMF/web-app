@@ -15,7 +15,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./savings-account-details-step.component.scss']
 })
 export class SavingsAccountDetailsStepComponent implements OnInit {
-
   /** Savings Account Template */
   @Input() savingsAccountTemplate: any;
 
@@ -43,9 +42,11 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private savingsService: SavingsService,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsService: SavingsService,
+    private settingsService: SettingsService
+  ) {
     this.createSavingsAccountDetailsForm();
   }
 
@@ -56,13 +57,15 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
       this.productData = this.savingsAccountTemplate.productOptions;
       if (this.savingsAccountTemplate.savingsProductId) {
         this.savingsAccountDetailsForm.patchValue({
-          'productId': this.savingsAccountTemplate.savingsProductId,
-          'submittedOnDate': this.savingsAccountTemplate.timeline.submittedOnDate && new Date(this.savingsAccountTemplate.timeline.submittedOnDate),
-          'externalId': this.savingsAccountTemplate.externalId
+          productId: this.savingsAccountTemplate.savingsProductId,
+          submittedOnDate:
+            this.savingsAccountTemplate.timeline.submittedOnDate &&
+            new Date(this.savingsAccountTemplate.timeline.submittedOnDate),
+          externalId: this.savingsAccountTemplate.externalId
         });
       } else {
         this.savingsAccountDetailsForm.patchValue({
-          'submittedOnDate': new Date()
+          submittedOnDate: new Date()
         });
       }
     }
@@ -73,10 +76,16 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
    */
   createSavingsAccountDetailsForm() {
     this.savingsAccountDetailsForm = this.formBuilder.group({
-      'productId': ['', Validators.required],
-      'submittedOnDate': ['', Validators.required],
-      'fieldOfficerId': [''],
-      'externalId': ['']
+      productId: [
+        '',
+        Validators.required
+      ],
+      submittedOnDate: [
+        '',
+        Validators.required
+      ],
+      fieldOfficerId: [''],
+      externalId: ['']
     });
   }
 
@@ -86,18 +95,19 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   buildDependencies() {
     const entityId = this.savingsAccountTemplate.clientId || this.savingsAccountTemplate.groupId;
     this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.savingsService.getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
-      .subscribe((response: any) => {
-        this.savingsAccountProductTemplate.emit(response);
-        this.fieldOfficerData = response.fieldOfficerOptions;
-        this.savingsProductSelected = true;
-        if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {
-          this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue(this.savingsAccountTemplate.fieldOfficerId);
-          this.isFieldOfficerPatched = true;
-        } else {
-          this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');
-        }
-      });
+      this.savingsService
+        .getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
+        .subscribe((response: any) => {
+          this.savingsAccountProductTemplate.emit(response);
+          this.fieldOfficerData = response.fieldOfficerOptions;
+          this.savingsProductSelected = true;
+          if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {
+            this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue(this.savingsAccountTemplate.fieldOfficerId);
+            this.isFieldOfficerPatched = true;
+          } else {
+            this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');
+          }
+        });
     });
   }
 
@@ -107,5 +117,4 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
   get savingsAccountDetails() {
     return this.savingsAccountDetailsForm.getRawValue();
   }
-
 }

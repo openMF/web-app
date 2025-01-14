@@ -14,18 +14,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AccountingService {
-
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @returns {Observable<any>} Offices data ordered by id.
    */
   getOffices(): Observable<any> {
     const httpParams = new HttpParams().set('orderBy', 'id');
-    return  this.http.get('/offices', { params: httpParams });
+    return this.http.get('/offices', { params: httpParams });
   }
 
   /**
@@ -66,10 +65,7 @@ export class AccountingService {
    * @returns {Observable<any>} GL Accounts.
    */
   getGlAccounts(): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('manualEntriesAllowed', 'true')
-      .set('usage', '1')
-      .set('disabled', 'false');
+    const httpParams = new HttpParams().set('manualEntriesAllowed', 'true').set('usage', '1').set('disabled', 'false');
     return this.http.get(`/glaccounts`, { params: httpParams });
   }
 
@@ -78,9 +74,7 @@ export class AccountingService {
    * @returns {Observable<any>} Journal Entries.
    */
   getJournalEntry(transactionId: string): Observable<any> {
-    const httpParams = new HttpParams()
-      .set('transactionId', transactionId)
-      .set('transactionDetails', 'true');
+    const httpParams = new HttpParams().set('transactionId', transactionId).set('transactionDetails', 'true');
     return this.http.get(`/journalentries`, { params: httpParams });
   }
 
@@ -397,5 +391,4 @@ export class AccountingService {
     const httpParams = new HttpParams().set('command', 'recreateprovisioningentry');
     return this.http.post(`/provisioningentries/${provisioningEntryId}`, {}, { params: httpParams });
   }
-
 }

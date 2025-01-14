@@ -13,7 +13,6 @@ import { TemplatesService } from '../templates.service';
  */
 @Injectable()
 export class TemplateResolver implements Resolve<Object> {
-
   /**
    * @param {TemplatesService} templatesService Templates service.
    */
@@ -27,5 +26,4 @@ export class TemplateResolver implements Resolve<Object> {
     const templateId = route.paramMap.get('id');
     return this.templatesService.getTemplate(templateId);
   }
-
 }

@@ -13,7 +13,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./edit-collateral.component.scss']
 })
 export class EditCollateralComponent implements OnInit {
-
   /** Colalteral Data */
   collateralData: any;
   /** Collateral Template */
@@ -29,16 +28,18 @@ export class EditCollateralComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private productsService: ProductsService,
-              private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
-                this.route.data.subscribe((data: { collateral: any, collateralTemplate: any }) => {
-                  this.collateralData = data.collateral;
-                  this.collateralTemplateData = data.collateralTemplate;
-                });
-               }
+  constructor(
+    private productsService: ProductsService,
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { collateral: any; collateralTemplate: any }) => {
+      this.collateralData = data.collateral;
+      this.collateralTemplateData = data.collateralTemplate;
+    });
+  }
 
   ngOnInit(): void {
     this.editCollateralForm();
@@ -49,12 +50,30 @@ export class EditCollateralComponent implements OnInit {
    */
   editCollateralForm() {
     this.collateralForm = this.formBuilder.group({
-      'name': [this.collateralData.name, Validators.required],
-      'quality': [this.collateralData.quality, Validators.required],
-      'unitType': [this.collateralData.unitType, Validators.required],
-      'basePrice': [this.collateralData.basePrice, Validators.required],
-      'pctToBase': [this.collateralData.pctToBase, Validators.required],
-      'currency': [this.collateralData.currency, Validators.required],
+      name: [
+        this.collateralData.name,
+        Validators.required
+      ],
+      quality: [
+        this.collateralData.quality,
+        Validators.required
+      ],
+      unitType: [
+        this.collateralData.unitType,
+        Validators.required
+      ],
+      basePrice: [
+        this.collateralData.basePrice,
+        Validators.required
+      ],
+      pctToBase: [
+        this.collateralData.pctToBase,
+        Validators.required
+      ],
+      currency: [
+        this.collateralData.currency,
+        Validators.required
+      ]
     });
   }
 
@@ -64,10 +83,8 @@ export class EditCollateralComponent implements OnInit {
   submit() {
     const collateral = this.collateralForm.value;
     collateral.locale = this.settingsService.language.code;
-    this.productsService.updateCollateral(this.collateralData.id.toString(), collateral)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    this.productsService.updateCollateral(this.collateralData.id.toString(), collateral).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
-
 }

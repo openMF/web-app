@@ -14,9 +14,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./charges-overview.component.scss']
 })
 export class ChargesOverviewComponent implements OnInit {
-
   /** Columns to be displayed in charge overview table. */
-  displayedColumns: string[] = ['name', 'dueAsOf', 'due', 'paid', 'waived', 'outstanding'];
+  displayedColumns: string[] = [
+    'name',
+    'dueAsOf',
+    'due',
+    'paid',
+    'waived',
+    'outstanding'
+  ];
   /** Data source for charge overview table. */
   dataSource: MatTableDataSource<any>;
   /** Charge Overview data */
@@ -30,10 +36,12 @@ export class ChargesOverviewComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private route: ActivatedRoute,
-              public dialog: MatDialog) {
-      this.route.data.subscribe((data: { clientChargesData: any }) => {
-        this.chargeOverviewData = data.clientChargesData;
+  constructor(
+    private route: ActivatedRoute,
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { clientChargesData: any }) => {
+      this.chargeOverviewData = data.clientChargesData;
     });
   }
 
@@ -48,5 +56,4 @@ export class ChargesOverviewComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.chargeOverviewData.pageItems);
     this.dataSource.paginator = this.paginator;
   }
-
 }

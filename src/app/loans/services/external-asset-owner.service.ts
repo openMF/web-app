@@ -6,10 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ExternalAssetOwnerService {
-
   basePath = '/external-asset-owners';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * @param {string} loanId Loan Id
@@ -66,5 +65,4 @@ export class ExternalAssetOwnerService {
   searchExternalAssetOwnerTransfer(request: any): Observable<any> {
     return this.http.post(`${this.basePath}/search`, request);
   }
-
 }

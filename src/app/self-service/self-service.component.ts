@@ -12,7 +12,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./self-service.component.scss']
 })
 export class SelfServiceComponent {
-
-  constructor() { }
-
+  constructor() {}
 }

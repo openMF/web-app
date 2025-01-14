@@ -8,9 +8,8 @@ describe('EditAmazonS3Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditAmazonS3Component ]
-    })
-    .compileComponents();
+      declarations: [EditAmazonS3Component]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -18,7 +18,5 @@ export class DatatableTabComponent {
       this.entityDatatable = data.loanProductDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
-
   }
-
 }

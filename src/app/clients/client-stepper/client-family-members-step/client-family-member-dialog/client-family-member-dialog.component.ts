@@ -16,7 +16,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./client-family-member-dialog.component.scss']
 })
 export class ClientFamilyMemberDialogComponent implements OnInit {
-
   /** Maximum Due Date allowed. */
   maxDate = new Date();
 
@@ -30,28 +29,30 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
    * @param {any} data Dialog Data
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(public dialogRef: MatDialogRef<ClientFamilyMemberDialogComponent>,
-              private formBuilder: UntypedFormBuilder,
-              private dateUtils: Dates,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              private settingsService: SettingsService) { }
+  constructor(
+    public dialogRef: MatDialogRef<ClientFamilyMemberDialogComponent>,
+    private formBuilder: UntypedFormBuilder,
+    private dateUtils: Dates,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createFamilyMemberForm();
     if (this.data.context === 'Edit') {
       this.familyMemberForm.patchValue({
-        'firstName': this.data.member.firstName,
-        'middleName': this.data.member.middleName,
-        'lastName': this.data.member.lastName,
-        'qualification': this.data.member.qualification,
-        'age': this.data.member.age,
-        'isDependent': this.data.member.isDependent,
-        'relationshipId': this.data.member.relationshipId,
-        'genderId': this.data.member.genderId,
-        'professionId': this.data.member.professionId,
-        'maritalStatusId': this.data.member.maritalStatusId,
-        'dateOfBirth': this.data.member.dateOfBirth && new Date(this.data.member.dateOfBirth)
+        firstName: this.data.member.firstName,
+        middleName: this.data.member.middleName,
+        lastName: this.data.member.lastName,
+        qualification: this.data.member.qualification,
+        age: this.data.member.age,
+        isDependent: this.data.member.isDependent,
+        relationshipId: this.data.member.relationshipId,
+        genderId: this.data.member.genderId,
+        professionId: this.data.member.professionId,
+        maritalStatusId: this.data.member.maritalStatusId,
+        dateOfBirth: this.data.member.dateOfBirth && new Date(this.data.member.dateOfBirth)
       });
     }
   }
@@ -61,17 +62,35 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
    */
   createFamilyMemberForm() {
     this.familyMemberForm = this.formBuilder.group({
-      'firstName': ['', Validators.required],
-      'middleName': [''],
-      'lastName': ['', Validators.required],
-      'qualification': [''],
-      'age': ['', Validators.required],
-      'isDependent': [''],
-      'relationshipId': ['', Validators.required],
-      'genderId': ['', Validators.required],
-      'professionId': [''],
-      'maritalStatusId': [''],
-      'dateOfBirth': ['', Validators.required]
+      firstName: [
+        '',
+        Validators.required
+      ],
+      middleName: [''],
+      lastName: [
+        '',
+        Validators.required
+      ],
+      qualification: [''],
+      age: [
+        '',
+        Validators.required
+      ],
+      isDependent: [''],
+      relationshipId: [
+        '',
+        Validators.required
+      ],
+      genderId: [
+        '',
+        Validators.required
+      ],
+      professionId: [''],
+      maritalStatusId: [''],
+      dateOfBirth: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -97,5 +116,4 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
     }
     return familyMember;
   }
-
 }

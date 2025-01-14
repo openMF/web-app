@@ -15,7 +15,13 @@ import { FormatAmountDirective } from './format-amount.directive';
   imports: [
     CommonModule
   ],
-  declarations: [HasPermissionDirective, FormatAmountDirective],
-  exports: [HasPermissionDirective, FormatAmountDirective]
+  declarations: [
+    HasPermissionDirective,
+    FormatAmountDirective
+  ],
+  exports: [
+    HasPermissionDirective,
+    FormatAmountDirective
+  ]
 })
-export class DirectivesModule { }
+export class DirectivesModule {}

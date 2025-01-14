@@ -11,10 +11,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./unassign-staff-dialog.component.scss']
 })
 export class UnassignStaffDialogComponent {
-
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<UnassignStaffDialogComponent>) { }
-
+  constructor(public dialogRef: MatDialogRef<UnassignStaffDialogComponent>) {}
 }

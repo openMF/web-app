@@ -14,20 +14,32 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-    ])
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
+
   ]
 })
 export class InterestRateChartTabComponent {
-
   /** Fixed Deposits Account Status */
   status: any;
   /** Interest Rate Chart Data */
   interestRateChartData: any = [];
   /** Columns to be displayed in interest rate chart table. */
-  chartSlabsDisplayedColumns: any[] = ['period', 'amountRange', 'interest', 'description', 'actions'];
+  chartSlabsDisplayedColumns: any[] = [
+    'period',
+    'amountRange',
+    'interest',
+    'description',
+    'actions'
+  ];
   /** Columns to be displayed in incentives sub-table. */
-  incentivesDisplayedColumns: string[] = ['entityType', 'attributeName', 'conditionType', 'attributeValue', 'incentiveType', 'amount'];
+  incentivesDisplayedColumns: string[] = [
+    'entityType',
+    'attributeName',
+    'conditionType',
+    'attributeValue',
+    'incentiveType',
+    'amount'
+  ];
   /** Additional Column to display in incentives table  */
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
   /** Expand Chart Slab Index used in the view */
@@ -42,5 +54,4 @@ export class InterestRateChartTabComponent {
       this.interestRateChartData = data.fixedDepositsAccountData.accountChart.chartSlabs;
     });
   }
-
 }

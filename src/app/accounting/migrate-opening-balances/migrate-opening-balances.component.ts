@@ -23,7 +23,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./migrate-opening-balances.component.scss']
 })
 export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
-
   /** Minimum opening balances date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum opening balances date allowed. */
@@ -57,7 +56,8 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private accountingService: AccountingService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
@@ -65,11 +65,9 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService,
-    private translateService: TranslateService) {
-    this.route.data.subscribe((data: {
-      offices: any,
-      currencies: any
-    }) => {
+    private translateService: TranslateService
+  ) {
+    this.route.data.subscribe((data: { offices: any; currencies: any }) => {
       this.officeData = data.offices;
       this.currencyData = data.currencies.selectedCurrencyOptions;
     });
@@ -88,10 +86,19 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    */
   createOpeningBalancesForm() {
     this.openingBalancesForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'currencyCode': ['', Validators.required],
-      'transactionDate': ['', Validators.required],
-      'glAccountEntries': this.formBuilder.array([])
+      officeId: [
+        '',
+        Validators.required
+      ],
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      transactionDate: [
+        '',
+        Validators.required
+      ],
+      glAccountEntries: this.formBuilder.array([])
     });
 
     this.openingBalancesForm.controls.currencyCode.valueChanges.subscribe((value: string) => {
@@ -105,11 +112,14 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * @returns {FormGroup} GL Account entry form.
    */
   createGLAccountEntryForm(glAccount: any): UntypedFormGroup {
-    return this.formBuilder.group({
-      'glAccountId': [glAccount.glAccountId],
-      'debit': [null],
-      'credit': [null]
-    }, { validator: onlyOneOfTheFieldsIsRequiredValidator });
+    return this.formBuilder.group(
+      {
+        glAccountId: [glAccount.glAccountId],
+        debit: [null],
+        credit: [null]
+      },
+      { validator: onlyOneOfTheFieldsIsRequiredValidator }
+    );
   }
 
   /**
@@ -124,15 +134,17 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * Retrieves gl accounts on the basis of specified office.
    */
   retrieveOpeningBalances() {
-    this.accountingService.retrieveOpeningBalances(this.openingBalancesForm.value.officeId)
+    this.accountingService
+      .retrieveOpeningBalances(this.openingBalancesForm.value.officeId)
       .subscribe((openingBalancesData: any) => {
         const entry = this.openingBalancesForm.get('glAccountEntries') as UntypedFormArray;
 
-        openingBalancesData.glAccounts = openingBalancesData.assetAccountOpeningBalances
-          .concat(openingBalancesData.liabityAccountOpeningBalances,
-            openingBalancesData.equityAccountOpeningBalances,
-            openingBalancesData.incomeAccountOpeningBalances,
-            openingBalancesData.expenseAccountOpeningBalances);
+        openingBalancesData.glAccounts = openingBalancesData.assetAccountOpeningBalances.concat(
+          openingBalancesData.liabityAccountOpeningBalances,
+          openingBalancesData.equityAccountOpeningBalances,
+          openingBalancesData.incomeAccountOpeningBalances,
+          openingBalancesData.expenseAccountOpeningBalances
+        );
 
         openingBalancesData.glAccounts.forEach((glAccount: any) => {
           entry.push(this.createGLAccountEntryForm(glAccount));
@@ -143,7 +155,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
         entry.valueChanges.subscribe(() => {
           this.debitsSum = 0;
           this.creditsSum = 0;
-          entry.controls.forEach(value => {
+          entry.controls.forEach((value) => {
             this.debitsSum += value.value.debit;
             this.creditsSum += value.value.credit;
           });
@@ -161,7 +173,10 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
       openingBalances.locale = this.settingsService.language.code;
       openingBalances.dateFormat = this.settingsService.dateFormat;
       if (openingBalances.transactionDate instanceof Date) {
-        openingBalances.transactionDate = this.dateUtils.formatDate(openingBalances.transactionDate, this.settingsService.dateFormat);
+        openingBalances.transactionDate = this.dateUtils.formatDate(
+          openingBalances.transactionDate,
+          this.settingsService.dateFormat
+        );
       }
       openingBalances.debits = [];
       openingBalances.credits = [];
@@ -175,7 +190,10 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
       });
       delete openingBalances.glAccountEntries;
       this.accountingService.defineOpeningBalances(openingBalances).subscribe((response: any) => {
-        this.router.navigate(['/accounting/journal-entries/transactions/view', response.transactionId]);
+        this.router.navigate([
+          '/accounting/journal-entries/transactions/view',
+          response.transactionId
+        ]);
       });
     }
   }
@@ -187,7 +205,12 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -229,11 +252,10 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
         creditsSum = creditsSum + entry.credit;
       }
     });
-    return (debitsSum > 0 && debitsSum === creditsSum);
+    return debitsSum > 0 && debitsSum === creditsSum;
   }
 
   glAccountTypeLabel(accountType: string): string {
     return this.translateService.instant('labels.inputs.accounting.' + accountType);
   }
-
 }

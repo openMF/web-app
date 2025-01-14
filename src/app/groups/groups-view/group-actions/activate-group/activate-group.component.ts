@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./activate-group.component.scss']
 })
 export class ActivateGroupComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -35,12 +34,14 @@ export class ActivateGroupComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private groupsService: GroupsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private groupsService: GroupsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.groupId = this.route.parent.snapshot.params['groupId'];
   }
 
@@ -54,7 +55,10 @@ export class ActivateGroupComponent implements OnInit {
    */
   createActivateGroupForm() {
     this.activateGroupForm = this.formBuilder.group({
-      'activationDate': ['', Validators.required]
+      activationDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -79,5 +83,4 @@ export class ActivateGroupComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

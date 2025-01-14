@@ -7,11 +7,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SavingProductDatatableResolver implements Resolve<boolean> {
-
   /**
    * @param {SystemService} systemService Products service.
    */
-  constructor(private systemService: SystemService) { }
+  constructor(private systemService: SystemService) {}
 
   /**
    * Returns the loan product data.
@@ -22,5 +21,4 @@ export class SavingProductDatatableResolver implements Resolve<boolean> {
     const datatableName = route.paramMap.get('datatableName');
     return this.systemService.getEntityDatatable(productId, datatableName);
   }
-
 }

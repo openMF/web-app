@@ -8,7 +8,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./tenant-selector.component.scss']
 })
 export class TenantSelectorComponent implements OnInit {
-
   /** Tenant selector form control. */
   tenantSelector = new UntypedFormControl();
 
@@ -16,7 +15,7 @@ export class TenantSelectorComponent implements OnInit {
    * Sets the Tenant Identifier of the application in the selector on initial setup.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private settingsService: SettingsService) { }
+  constructor(private settingsService: SettingsService) {}
 
   ngOnInit(): void {
     this.tenantSelector.setValue(this.settingsService.tenantIdentifier);
@@ -35,7 +34,6 @@ export class TenantSelectorComponent implements OnInit {
   }
 
   allowSelection(): boolean {
-    return (this.tenants.length > 1);
+    return this.tenants.length > 1;
   }
-
 }

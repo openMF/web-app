@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-employee.component.scss']
 })
 export class ViewEmployeeComponent {
-
   /** Employee data. */
   employeeData: any;
 
@@ -24,5 +23,4 @@ export class ViewEmployeeComponent {
       this.employeeData = data.employee;
     });
   }
-
 }

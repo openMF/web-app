@@ -13,7 +13,6 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class ShareProductsResolver implements Resolve<Object> {
-
   /**
    *
    * @param {ProductsService} productsService Products service.
@@ -27,5 +26,4 @@ export class ShareProductsResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.productsService.getShareProducts();
   }
-
 }

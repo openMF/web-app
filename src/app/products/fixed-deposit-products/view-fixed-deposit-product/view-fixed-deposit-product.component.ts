@@ -10,9 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './view-fixed-deposit-product.component.html',
   styleUrls: ['./view-fixed-deposit-product.component.scss']
 })
-
 export class ViewFixedDepositProductComponent {
-
   fixedDepositDatatables: any = [];
 
   constructor(private route: ActivatedRoute) {
@@ -25,5 +23,4 @@ export class ViewFixedDepositProductComponent {
       });
     });
   }
-
 }

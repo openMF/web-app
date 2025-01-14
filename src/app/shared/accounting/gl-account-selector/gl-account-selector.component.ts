@@ -11,7 +11,6 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./gl-account-selector.component.scss']
 })
 export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy {
-
   @Input() inputFormControl: UntypedFormControl;
   @Input() glAccountList: GLAccount[] = [];
   @Input() required = false;
@@ -29,15 +28,13 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
   placeHolderLabel = '';
   noEntriesFoundLabel = '';
 
-  constructor(private translateService: TranslateService) { }
+  constructor(private translateService: TranslateService) {}
 
   ngOnInit(): void {
     // listen for search field value changes
-    this.filterFormCtrl.valueChanges
-      .pipe(takeUntil(this._onDestroy))
-      .subscribe(() => {
-        this.searchGLAccount();
-      });
+    this.filterFormCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+      this.searchGLAccount();
+    });
 
     this.placeHolderLabel = this.translateService.instant('labels.inputs.Filter');
     this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
@@ -59,13 +56,14 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
       const search: string = this.filterFormCtrl.value.toLowerCase();
 
       if (!search) {
-          this.glAccountData.next(this.glAccountList.slice());
+        this.glAccountData.next(this.glAccountList.slice());
       } else {
-        this.glAccountData.next(this.glAccountList.filter((option: GLAccount) => {
-          return option.name.toLowerCase().indexOf(search) >= 0 || option.glCode.toLowerCase().indexOf(search) >= 0;
-        }));
+        this.glAccountData.next(
+          this.glAccountList.filter((option: GLAccount) => {
+            return option.name.toLowerCase().indexOf(search) >= 0 || option.glCode.toLowerCase().indexOf(search) >= 0;
+          })
+        );
       }
     }
   }
-
 }

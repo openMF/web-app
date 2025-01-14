@@ -10,7 +10,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./delinquency-bucket.component.scss']
 })
 export class DelinquencyBucketComponent implements OnInit {
-
   delinquencyBucketData: any;
   /** Columns to be displayed in delinquency bucket table. */
   displayedColumns: string[] = ['name'];
@@ -23,7 +22,7 @@ export class DelinquencyBucketComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { delinquencyBuckets: any }) => {
+    this.route.data.subscribe((data: { delinquencyBuckets: any }) => {
       this.delinquencyBucketData = data.delinquencyBuckets;
     });
   }
@@ -36,7 +35,7 @@ export class DelinquencyBucketComponent implements OnInit {
    * Filters data in delinquency bucket table based on passed value.
    * @param {string} filterValue Value to filter data.
    */
-   applyFilter(filterValue: string) {
+  applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 

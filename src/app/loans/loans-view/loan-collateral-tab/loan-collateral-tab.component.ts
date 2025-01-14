@@ -7,11 +7,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./loan-collateral-tab.component.scss']
 })
 export class LoanCollateralTabComponent implements OnInit {
-
   /** Loan Collateral Details */
   loanCollaterals: any[] = [];
   /** Columns to be displayed in collateral table. */
-  displayedColumns: string[] = ['id', 'currency', 'description', 'total'];
+  displayedColumns: string[] = [
+    'id',
+    'currency',
+    'description',
+    'total'
+  ];
 
   totalAmount: number;
 
@@ -31,5 +35,4 @@ export class LoanCollateralTabComponent implements OnInit {
       this.totalAmount = this.totalAmount + collateral.value;
     });
   }
-
 }

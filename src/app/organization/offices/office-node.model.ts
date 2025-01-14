@@ -1,8 +1,7 @@
 /**
  * Office Node model.
  */
- export class OfficeNode {
-
+export class OfficeNode {
   /** Office Node children. */
   children: OfficeNode[];
 
@@ -14,13 +13,15 @@
   parentName: string;
   openingDate: string;
 
-  constructor(name: string,
-              id: string = '',
-              parentId: string = '',
-              hierarchy: string = '',
-              externalId: string = '',
-              parentName: string = '',
-              openingDate: string = '') {
+  constructor(
+    name: string,
+    id: string = '',
+    parentId: string = '',
+    hierarchy: string = '',
+    externalId: string = '',
+    parentName: string = '',
+    openingDate: string = ''
+  ) {
     this.name = name;
     this.id = id;
     this.parentId = parentId;
@@ -30,5 +31,4 @@
     this.openingDate = openingDate;
     this.children = [];
   }
-
 }

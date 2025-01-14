@@ -1,20 +1,19 @@
 /** Recurring Deposits Account Buttons Configuration */
 export class LoansAccountButtonConfiguration {
-
   optionArray: {
-    name: string,
-    taskPermissionName?: string,
+    name: string;
+    taskPermissionName?: string;
   }[];
 
   optionPaymentArray: {
-    name: string,
-    taskPermissionName?: string,
+    name: string;
+    taskPermissionName?: string;
   }[];
 
   buttonsArray: {
-    name: string,
-    icon: string,
-    taskPermissionName?: string,
+    name: string;
+    icon: string;
+    taskPermissionName?: string;
   }[];
 
   constructor(status: string) {
@@ -41,22 +40,22 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Add Loan Charge',
             icon: 'plus',
-            taskPermissionName: 'CREATE_LOANCHARGE',
+            taskPermissionName: 'CREATE_LOANCHARGE'
           },
           {
             name: 'Foreclosure',
             icon: 'heart-broken',
-            taskPermissionName: 'FORECLOSURE_LOAN',
+            taskPermissionName: 'FORECLOSURE_LOAN'
           },
           {
             name: 'Make Repayment',
             icon: 'coins',
-            taskPermissionName: 'REPAYMENT_LOAN',
+            taskPermissionName: 'REPAYMENT_LOAN'
           },
           {
             name: 'Undo Disbursal',
             icon: 'undo',
-            taskPermissionName: 'DISBURSALUNDO_LOAN',
+            taskPermissionName: 'DISBURSALUNDO_LOAN'
           }
         ];
         break;
@@ -65,23 +64,23 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Add Loan Charge',
             icon: 'plus',
-            taskPermissionName: 'CREATE_LOANCHARGE',
+            taskPermissionName: 'CREATE_LOANCHARGE'
           },
           {
             name: 'Approve',
             icon: 'check',
-            taskPermissionName: 'APPROVE_LOAN',
+            taskPermissionName: 'APPROVE_LOAN'
           },
           {
             name: 'Modify Application',
             icon: 'edit',
-            taskPermissionName: 'UPDATE_LOAN',
+            taskPermissionName: 'UPDATE_LOAN'
           },
           {
             name: 'Reject',
             icon: 'times',
-            taskPermissionName: 'REJECT_LOAN',
-          },
+            taskPermissionName: 'REJECT_LOAN'
+          }
         ];
         break;
       case 'Approved':
@@ -89,18 +88,18 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Disburse',
             icon: 'hand-holding-usd',
-            taskPermissionName: 'DISBURSE_LOAN',
+            taskPermissionName: 'DISBURSE_LOAN'
           },
           {
             name: 'Disburse to Savings',
             icon: 'piggy-bank',
-            taskPermissionName: 'DISBURSETOSAVINGS_LOAN',
+            taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
           },
           {
             name: 'Undo Approval',
             icon: 'undo',
-            taskPermissionName: 'APPROVALUNDO_LOAN',
-          },
+            taskPermissionName: 'APPROVALUNDO_LOAN'
+          }
         ];
         break;
       case 'Overpaid':
@@ -108,12 +107,12 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Transfer Funds',
             icon: 'exchange',
-            taskPermissionName: 'CREATE_ACCOUNTTRANSFER',
+            taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
           },
           {
             name: 'Credit Balance Refund',
             icon: 'coins',
-            taskPermissionName: 'CREATE_CREDIT_BALANCE_REFUND',
+            taskPermissionName: 'CREATE_CREDIT_BALANCE_REFUND'
           }
         ];
         break;
@@ -122,8 +121,8 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Recovery Payment',
             icon: 'briefcase',
-            taskPermissionName: 'RECOVERYPAYMENT_LOAN',
-          },
+            taskPermissionName: 'RECOVERYPAYMENT_LOAN'
+          }
         ];
         break;
       case 'Closed (obligations met)':
@@ -131,22 +130,22 @@ export class LoansAccountButtonConfiguration {
           {
             name: 'Goodwill Credit',
             icon: 'coins',
-            taskPermissionName: 'CREATE_GOODWILL_TRANSACTION',
+            taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
           },
           {
             name: 'Interest Payment Waiver',
             icon: 'coins',
-            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION',
+            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION'
           },
           {
             name: 'Payout Refund',
             icon: 'coins',
-            taskPermissionName: 'CREATE_PAYOUT_REFUND',
+            taskPermissionName: 'CREATE_PAYOUT_REFUND'
           },
           {
             name: 'Merchant Issued Refund',
             icon: 'coins',
-            taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND',
+            taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND'
           }
         ];
         break;
@@ -161,61 +160,61 @@ export class LoansAccountButtonConfiguration {
         this.optionArray = [
           {
             name: 'Waive Interest',
-            taskPermissionName: 'WAIVEINTERESTPORTION_LOAN',
+            taskPermissionName: 'WAIVEINTERESTPORTION_LOAN'
           },
           {
             name: 'Reschedule',
-            taskPermissionName: 'CREATE_RESCHEDULELOAN',
+            taskPermissionName: 'CREATE_RESCHEDULELOAN'
           },
           {
             name: 'Write Off',
-            taskPermissionName: 'WRITEOFF_LOAN',
+            taskPermissionName: 'WRITEOFF_LOAN'
           },
           {
             name: 'Close (as Rescheduled)',
-            taskPermissionName: 'CLOSEASRESCHEDULED_LOAN',
+            taskPermissionName: 'CLOSEASRESCHEDULED_LOAN'
           },
           {
             name: 'Close',
-            taskPermissionName: 'CLOSE_LOAN',
+            taskPermissionName: 'CLOSE_LOAN'
           },
           {
             name: 'Loan Screen Report',
-            taskPermissionName: 'READ_LOAN',
+            taskPermissionName: 'READ_LOAN'
           },
           {
             name: 'View Guarantors',
-            taskPermissionName: 'READ_GUARANTOR',
+            taskPermissionName: 'READ_GUARANTOR'
           },
           {
             name: 'Create Guarantor',
-            taskPermissionName: 'CREATE_GUARANTOR',
+            taskPermissionName: 'CREATE_GUARANTOR'
           },
           {
             name: 'Recover From Guarantor',
-            taskPermissionName: 'RECOVERGUARANTEES_LOAN',
+            taskPermissionName: 'RECOVERGUARANTEES_LOAN'
           },
           {
             name: 'Sell Loan',
-            taskPermissionName: 'SALE_LOAN',
+            taskPermissionName: 'SALE_LOAN'
           }
         ];
         this.optionPaymentArray = [
           {
             name: 'Goodwill Credit',
-            taskPermissionName: 'CREATE_GOODWILL_TRANSACTION',
+            taskPermissionName: 'CREATE_GOODWILL_TRANSACTION'
           },
           {
             name: 'Interest Payment Waiver',
-            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION',
+            taskPermissionName: 'CREATE_INTERESTPAYMENTWAIVER_TRANSACTION'
           },
           {
             name: 'Payout Refund',
-            taskPermissionName: 'CREATE_PAYOUT_REFUND',
+            taskPermissionName: 'CREATE_PAYOUT_REFUND'
           },
           {
             name: 'Merchant Issued Refund',
-            taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND',
+            taskPermissionName: 'CREATE_MERCHANT_ISSUED_REFUND'
           }
         ];
         break;
@@ -223,28 +222,28 @@ export class LoansAccountButtonConfiguration {
         this.optionArray = [
           {
             name: 'Withdrawn by Client',
-            taskPermissionName: 'WITHDRAW_LOAN',
+            taskPermissionName: 'WITHDRAW_LOAN'
           },
           {
             name: 'Delete',
-            taskPermissionName: 'DELETE_LOAN',
+            taskPermissionName: 'DELETE_LOAN'
           },
           {
             name: 'Add Collateral',
-            taskPermissionName: 'CREATE_COLLATERAL',
+            taskPermissionName: 'CREATE_COLLATERAL'
           },
           {
             name: 'View Guarantors',
-            taskPermissionName: 'READ_GUARANTOR',
+            taskPermissionName: 'READ_GUARANTOR'
           },
           {
             name: 'Create Guarantor',
-            taskPermissionName: 'CREATE_GUARANTOR',
+            taskPermissionName: 'CREATE_GUARANTOR'
           },
           {
             name: 'Loan Screen Reports',
-            taskPermissionName: 'READ_LOAN',
-          },
+            taskPermissionName: 'READ_LOAN'
+          }
         ];
         this.optionPaymentArray = [];
         break;
@@ -252,20 +251,20 @@ export class LoansAccountButtonConfiguration {
         this.optionArray = [
           {
             name: 'Add Loan Charge',
-            taskPermissionName: 'CREATE_LOANCHARGE',
+            taskPermissionName: 'CREATE_LOANCHARGE'
           },
           {
             name: 'View Guarantors',
-            taskPermissionName: 'READ_GUARANTOR',
+            taskPermissionName: 'READ_GUARANTOR'
           },
           {
             name: 'Create Guarantor',
-            taskPermissionName: 'CREATE_GUARANTOR',
+            taskPermissionName: 'CREATE_GUARANTOR'
           },
           {
             name: 'Loan Screen Report',
-            taskPermissionName: 'READ_LOAN',
-          },
+            taskPermissionName: 'READ_LOAN'
+          }
         ];
         this.optionPaymentArray = [];
         break;
@@ -275,12 +274,11 @@ export class LoansAccountButtonConfiguration {
     }
   }
 
-  addOption(option: { name: string, icon?: string, taskPermissionName?: string }) {
+  addOption(option: { name: string; icon?: string; taskPermissionName?: string }) {
     this.optionArray.push(option);
   }
 
-  addButton(option: { name: string, icon: string, taskPermissionName?: string }) {
+  addButton(option: { name: string; icon: string; taskPermissionName?: string }) {
     this.buttonsArray.push(option);
   }
-
 }

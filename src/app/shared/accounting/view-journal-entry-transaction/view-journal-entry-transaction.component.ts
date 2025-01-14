@@ -15,7 +15,6 @@ import { Location } from '@angular/common';
   styleUrls: ['./view-journal-entry-transaction.component.scss']
 })
 export class ViewJournalEntryTransactionComponent implements OnInit {
-
   title: string;
   journalEntriesData: any[];
   /** Transaction data.  */
@@ -23,7 +22,14 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
   /** Transaction ID. */
   transactionId: string;
   /** Columns to be displayed in transaction table. */
-  displayedColumns: string[] = ['id', 'glAccountType', 'glAccountCode', 'glAccountName', 'debit', 'credit'];
+  displayedColumns: string[] = [
+    'id',
+    'glAccountType',
+    'glAccountCode',
+    'glAccountName',
+    'debit',
+    'credit'
+  ];
   /** Data source for transaction table. */
   dataSource: MatTableDataSource<any>;
 
@@ -40,17 +46,19 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router,
-              public dialog: MatDialog,
-              private location: Location) {  }
+  constructor(
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog,
+    private location: Location
+  ) {}
 
   /**
    * Retrieves the transaction data from `resolve` and sets the transaction table.
    */
   ngOnInit() {
-    this.route.data.subscribe((data: { title: string, transaction: any, transferJournalEntryData: any }) => {
+    this.route.data.subscribe((data: { title: string; transaction: any; transferJournalEntryData: any }) => {
       this.title = data.title;
       this.isJournalEntryLoaded = false;
       if (this.isViewTransaction()) {
@@ -68,11 +76,11 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
   }
 
   isViewTransaction(): boolean {
-    return (this.title === 'View Transaction');
+    return this.title === 'View Transaction';
   }
 
   isViewTransfer(): boolean {
-    return (this.title === 'View Transfer');
+    return this.title === 'View Transfer';
   }
 
   /**
@@ -85,10 +93,14 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.transaction.pageItems);
       this.dataSource.sortingDataAccessor = (transaction: any, property: any) => {
         switch (property) {
-          case 'glAccountType': return transaction.glAccountType.value;
-          case 'debit': return transaction.amount;
-          case 'credit': return transaction.amount;
-          default: return transaction[property];
+          case 'glAccountType':
+            return transaction.glAccountType.value;
+          case 'debit':
+            return transaction.amount;
+          case 'credit':
+            return transaction.amount;
+          default:
+            return transaction[property];
         }
       };
     }
@@ -116,12 +128,20 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
     });
     revertTransactionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.revert) {
-        this.accountingService.revertTransaction(this.transactionId, response.comments).subscribe((reversedTransaction: any) => {
-          this.dataSource.data[0].reversed = true;
-          this.revertTransaction(reversedTransaction.transactionId);
-        });
+        this.accountingService
+          .revertTransaction(this.transactionId, response.comments)
+          .subscribe((reversedTransaction: any) => {
+            this.dataSource.data[0].reversed = true;
+            this.revertTransaction(reversedTransaction.transactionId);
+          });
       } else if (response.redirect) {
-        this.router.navigate(['../', transactionId], { relativeTo: this.route });
+        this.router.navigate(
+          [
+            '../',
+            transactionId
+          ],
+          { relativeTo: this.route }
+        );
       }
     });
   }

@@ -26,7 +26,11 @@ const routes: Routes = [
     children: [
       {
         path: 'create-standing-instructions',
-        data: { title: 'Create Standing Instructions', breadcrumb: 'Create Standing Instructions', routeParamBreadcrumb: 'Create Standing Instructions' },
+        data: {
+          title: 'Create Standing Instructions',
+          breadcrumb: 'Create Standing Instructions',
+          routeParamBreadcrumb: 'Create Standing Instructions'
+        },
         component: CreateStandingInstructionsComponent,
         resolve: {
           standingIntructionsTemplate: StandingInstructionsTemplateResolver
@@ -42,7 +46,11 @@ const routes: Routes = [
       },
       {
         path: 'list-standing-instructions',
-        data: { title: 'List Standing Instructions', breadcrumb: 'List Standing Instructions', routeParamBreadcrumb: 'List Standing Instructions' },
+        data: {
+          title: 'List Standing Instructions',
+          breadcrumb: 'List Standing Instructions',
+          routeParamBreadcrumb: 'List Standing Instructions'
+        },
         component: ListStandingInstructionsComponent,
         resolve: {
           standingIntructionsTemplate: StandingInstructionsTemplateResolver
@@ -71,29 +79,33 @@ const routes: Routes = [
             data: { title: 'View Standing Instructions', breadcrumb: 'view', routeParamBreadcrumb: false },
             component: ViewStandingInstructionsComponent,
             resolve: {
-              standingInstructionsData: ViewStandingInstructionsResolver,
-            },
+              standingInstructionsData: ViewStandingInstructionsResolver
+            }
           },
           {
             path: 'edit',
             data: { title: 'Edit Standing Instructions', breadcrumb: 'edit', routeParamBreadcrumb: false },
             component: EditStandingInstructionsComponent,
             resolve: {
-              standingInstructionsDataAndTemplate: StandingInstructionsDataAndTemplateResolver,
-            },
+              standingInstructionsDataAndTemplate: StandingInstructionsDataAndTemplateResolver
+            }
           },
           {
             path: 'list-account-transactions',
-            data: { title: 'List Account Transactions', breadcrumb: 'List Account Transactions', routeParamBreadcrumb: 'List Account Transactions' },
+            data: {
+              title: 'List Account Transactions',
+              breadcrumb: 'List Account Transactions',
+              routeParamBreadcrumb: 'List Account Transactions'
+            },
             component: ListTransactionsComponent,
             resolve: {
               listTransactionData: ListTransactionsResolver
             }
-          },
+          }
         ]
-      },
+      }
     ]
-  },
+  }
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
@@ -108,5 +120,4 @@ const routes: Routes = [
     ViewAccountTransferResolver
   ]
 })
-
-export class AccountTransfersRoutingModule { }
+export class AccountTransfersRoutingModule {}

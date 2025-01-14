@@ -8,9 +8,8 @@ describe('BulkImportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BulkImportComponent ]
-    })
-    .compileComponents();
+      declarations: [BulkImportComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

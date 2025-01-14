@@ -13,7 +13,6 @@ import { SearchService } from './search.service';
  */
 @Injectable()
 export class SearchResolver implements Resolve<Object> {
-
   /**
    * @param {SearchService} searchService Notifications service.
    */
@@ -29,5 +28,4 @@ export class SearchResolver implements Resolve<Object> {
     const resource = route.queryParams['resource'];
     return this.searchService.getSearchResults(query, resource);
   }
-
 }

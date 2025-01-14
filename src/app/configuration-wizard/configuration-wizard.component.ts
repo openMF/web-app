@@ -11,12 +11,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./configuration-wizard.component.scss']
 })
 export class ConfigurationWizardComponent {
-
   show: number;
   /**
    * @param {MatDialogRef<ConfigurationWizardComponent>} dialogRef MatDialogRef<ConfigurationWizardComponent>.
    */
-  constructor(public dialogRef: MatDialogRef<ConfigurationWizardComponent>,
-  @Inject(MAT_DIALOG_DATA) public data: any) { }
-
+  constructor(
+    public dialogRef: MatDialogRef<ConfigurationWizardComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 }

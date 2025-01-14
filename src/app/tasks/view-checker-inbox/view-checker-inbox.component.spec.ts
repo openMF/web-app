@@ -8,9 +8,8 @@ describe('ViewCheckerInboxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewCheckerInboxComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewCheckerInboxComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

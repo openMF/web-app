@@ -13,7 +13,6 @@ import { OrganizationService } from 'app/organization/organization.service';
  */
 @Injectable()
 export class HolidayTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
@@ -26,5 +25,4 @@ export class HolidayTemplateResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.organizationService.getHolidayTemplate();
   }
-
 }

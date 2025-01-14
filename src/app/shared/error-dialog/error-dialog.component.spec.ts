@@ -8,9 +8,8 @@ describe('ErrorDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErrorDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ErrorDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

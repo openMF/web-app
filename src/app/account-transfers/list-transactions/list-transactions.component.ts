@@ -13,14 +13,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./list-transactions.component.scss']
 })
 export class ListTransactionsComponent {
-
-
   /** List Transactions Data */
   listTransactionData: any;
   /** Data source for instructions table. */
   dataSource = new MatTableDataSource();
   /** Columns to be displayed in instructions table. */
-  displayedColumns: string[] = ['transactionDate', 'amount', 'notes', 'reversed'];
+  displayedColumns: string[] = [
+    'transactionDate',
+    'amount',
+    'notes',
+    'reversed'
+  ];
 
   /** Paginator for centers table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -36,5 +39,4 @@ export class ListTransactionsComponent {
       this.dataSource.paginator = this.paginator;
     });
   }
-
 }

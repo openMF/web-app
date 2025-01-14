@@ -10,16 +10,16 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./create-range.component.scss']
 })
 export class CreateRangeComponent implements OnInit {
-
   /** Delinquency Range form. */
   delinquencyRangeForm: UntypedFormGroup;
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private productsService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService) {
-  }
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit(): void {
     this.setInputForm();
@@ -30,9 +30,23 @@ export class CreateRangeComponent implements OnInit {
    */
   setInputForm(): void {
     this.delinquencyRangeForm = this.formBuilder.group({
-      'classification': ['', [Validators.required]],
-      'minimumAgeDays': [0, [Validators.required, Validators.pattern('^(0*[1-9][0-9]*?)$'), Validators.max(1000)]],
-      'maximumAgeDays': ['', [Validators.pattern('^(0*[1-9][0-9]*?)$'), Validators.max(10000)]],
+      classification: [
+        '',
+        [Validators.required]
+      ],
+      minimumAgeDays: [
+        0,
+        [
+          Validators.required,
+          Validators.pattern('^(0*[1-9][0-9]*?)$'),
+          Validators.max(1000)]
+      ],
+      maximumAgeDays: [
+        '',
+        [
+          Validators.pattern('^(0*[1-9][0-9]*?)$'),
+          Validators.max(10000)]
+      ]
     });
   }
 
@@ -44,8 +58,13 @@ export class CreateRangeComponent implements OnInit {
       locale
     };
     this.productsService.createDelinquencyRange(data).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

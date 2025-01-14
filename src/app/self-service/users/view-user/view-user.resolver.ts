@@ -16,7 +16,6 @@ import { UsersService } from 'app/users/users.service';
  */
 @Injectable()
 export class ViewUserResolver implements Resolve<Object> {
-
   /**
    * @param {UserService} userService Self service user service.
    */
@@ -29,5 +28,4 @@ export class ViewUserResolver implements Resolve<Object> {
   resolve(): Observable<User> {
     return this.userService.getUser('1');
   }
-
 }

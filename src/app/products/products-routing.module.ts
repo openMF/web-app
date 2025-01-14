@@ -177,18 +177,20 @@ const routes: Routes = [
                   component: GeneralTabComponent,
                   resolve: {
                     loanProduct: LoanProductResolver
-                  },
+                  }
                 },
                 {
                   path: 'datatables',
-                  children: [{
-                    path: ':datatableName',
-                    component: DatatableTabComponent,
-                    data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
-                    resolve: {
-                      loanProductDatatable: LoanProductDatatableResolver
+                  children: [
+                    {
+                      path: ':datatableName',
+                      component: DatatableTabComponent,
+                      data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+                      resolve: {
+                        loanProductDatatable: LoanProductDatatableResolver
+                      }
                     }
-                  }]
+                  ]
                 },
                 {
                   path: 'edit',
@@ -244,18 +246,20 @@ const routes: Routes = [
                       component: SavingProductGeneralTabComponent,
                       resolve: {
                         savingProduct: SavingProductResolver
-                      },
+                      }
                     },
                     {
                       path: 'datatables',
-                      children: [{
-                        path: ':datatableName',
-                        component: SavingProductDatatableTabComponent,
-                        data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
-                        resolve: {
-                          savingProductDatatable: SavingProductDatatableResolver
+                      children: [
+                        {
+                          path: ':datatableName',
+                          component: SavingProductDatatableTabComponent,
+                          data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+                          resolve: {
+                            savingProductDatatable: SavingProductDatatableResolver
+                          }
                         }
-                      }]
+                      ]
                     }
                   ]
                 },
@@ -268,7 +272,7 @@ const routes: Routes = [
                   }
                 }
               ]
-            },
+            }
           ]
         },
         {
@@ -312,18 +316,20 @@ const routes: Routes = [
                       component: ShareProductGeneralTabComponent,
                       resolve: {
                         shareProduct: ShareProductResolver
-                      },
+                      }
                     },
                     {
                       path: 'datatables',
-                      children: [{
-                        path: ':datatableName',
-                        component: ShareProductDatatableTabComponent,
-                        data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
-                        resolve: {
-                          shareProductDatatable: ShareProductDatatableResolver
+                      children: [
+                        {
+                          path: ':datatableName',
+                          component: ShareProductDatatableTabComponent,
+                          data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+                          resolve: {
+                            shareProductDatatable: ShareProductDatatableResolver
+                          }
                         }
-                      }]
+                      ]
                     }
                   ]
                 },
@@ -374,7 +380,7 @@ const routes: Routes = [
           children: [
             {
               path: '',
-              component: ManageTaxConfigurationsComponent,
+              component: ManageTaxConfigurationsComponent
             },
             {
               path: 'tax-components',
@@ -407,7 +413,7 @@ const routes: Routes = [
                       component: ViewTaxComponentComponent,
                       resolve: {
                         taxComponent: TaxComponentResolver
-                      },
+                      }
                     },
                     {
                       path: 'edit',
@@ -416,7 +422,7 @@ const routes: Routes = [
                       resolve: {
                         taxComponent: TaxComponentResolver
                       }
-                    },
+                    }
                   ]
                 }
               ]
@@ -452,7 +458,7 @@ const routes: Routes = [
                       component: ViewTaxGroupComponent,
                       resolve: {
                         taxGroup: TaxGroupResolver
-                      },
+                      }
                     },
                     {
                       path: 'edit',
@@ -461,20 +467,23 @@ const routes: Routes = [
                       resolve: {
                         taxGroup: EditTaxGroupResolver
                       }
-                    },
+                    }
                   ]
                 }
               ]
-            },
+            }
           ]
         },
         {
           path: 'delinquency-bucket-configurations',
-          data: { title: 'Manage Delinquency Bucket Configurations', breadcrumb: 'Manage Delinquency Bucket Configurations' },
+          data: {
+            title: 'Manage Delinquency Bucket Configurations',
+            breadcrumb: 'Manage Delinquency Bucket Configurations'
+          },
           children: [
             {
               path: '',
-              component: ManageDelinquencyBucketsComponent,
+              component: ManageDelinquencyBucketsComponent
             },
             {
               path: 'ranges',
@@ -504,7 +513,7 @@ const routes: Routes = [
                       component: ViewRangeComponent,
                       resolve: {
                         delinquencyRange: DelinquencyRangeComponentsResolver
-                      },
+                      }
                     },
                     {
                       path: 'edit',
@@ -513,7 +522,7 @@ const routes: Routes = [
                       resolve: {
                         delinquencyRange: DelinquencyRangeComponentsResolver
                       }
-                    },
+                    }
                   ]
                 }
               ]
@@ -549,7 +558,7 @@ const routes: Routes = [
                       component: ViewBucketComponent,
                       resolve: {
                         delinquencyBucket: DelinquencyBucketComponentsResolver
-                      },
+                      }
                     },
                     {
                       path: 'edit',
@@ -559,11 +568,11 @@ const routes: Routes = [
                         delinquencyBucket: DelinquencyBucketComponentsResolver,
                         delinquencyRanges: DelinquencyRangeComponentsResolver
                       }
-                    },
+                    }
                   ]
                 }
               ]
-            },
+            }
           ]
         },
         {
@@ -587,7 +596,11 @@ const routes: Routes = [
             },
             {
               path: ':productId',
-              data: { title: 'View Recurring Deposit Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: {
+                title: 'View Recurring Deposit Product',
+                breadcrumb: 'productId',
+                routeParamBreadcrumb: 'productId'
+              },
               component: ViewRecurringDepositProductComponent,
               resolve: {
                 recurringDepositDatatables: SavingProductDatatablesResolver
@@ -607,14 +620,16 @@ const routes: Routes = [
                 },
                 {
                   path: 'datatables',
-                  children: [{
-                    path: ':datatableName',
-                    component: RecurringDepositDatatableTabComponent,
-                    data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
-                    resolve: {
-                      recurringDepositDatatable: SavingProductDatatableResolver
+                  children: [
+                    {
+                      path: ':datatableName',
+                      component: RecurringDepositDatatableTabComponent,
+                      data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+                      resolve: {
+                        recurringDepositDatatable: SavingProductDatatableResolver
+                      }
                     }
-                  }]
+                  ]
                 },
                 {
                   path: 'edit',
@@ -645,7 +660,7 @@ const routes: Routes = [
               component: FixedDepositProductsComponent,
               resolve: {
                 fixedDepositProducts: FixedDepositProductsResolver
-              },
+              }
             },
             {
               path: ':productId',
@@ -669,14 +684,16 @@ const routes: Routes = [
                 },
                 {
                   path: 'datatables',
-                  children: [{
-                    path: ':datatableName',
-                    component: FixedDepositDatatableTabComponent,
-                    data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
-                    resolve: {
-                      fixedDepositDatatable: SavingProductDatatableResolver
+                  children: [
+                    {
+                      path: ':datatableName',
+                      component: FixedDepositDatatableTabComponent,
+                      data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+                      resolve: {
+                        fixedDepositDatatable: SavingProductDatatableResolver
+                      }
                     }
-                  }]
+                  ]
                 },
                 {
                   path: 'edit',
@@ -707,7 +724,7 @@ const routes: Routes = [
               component: ProductsMixComponent,
               resolve: {
                 products: ProductsMixResolver
-              },
+              }
             },
             {
               path: ':id',
@@ -721,7 +738,7 @@ const routes: Routes = [
                   component: ViewProductMixComponent,
                   resolve: {
                     productMix: ViewProductMixResolver
-                  },
+                  }
                 },
                 {
                   path: 'edit',
@@ -730,9 +747,9 @@ const routes: Routes = [
                   resolve: {
                     productMix: ViewProductMixResolver
                   }
-                },
+                }
               ]
-            },
+            }
           ]
         },
         {
@@ -763,7 +780,7 @@ const routes: Routes = [
                   component: ViewFloatingRateComponent,
                   resolve: {
                     floatingRate: FloatingRateResolver
-                  },
+                  }
                 },
                 {
                   path: 'edit',
@@ -808,7 +825,7 @@ const routes: Routes = [
                   component: ViewChargeComponent,
                   resolve: {
                     charge: ChargeResolver
-                  },
+                  }
                 },
                 {
                   path: 'edit',
@@ -817,9 +834,9 @@ const routes: Routes = [
                   resolve: {
                     chargesTemplate: ChargesTemplateAndResolver
                   }
-                },
+                }
               ]
-            },
+            }
           ]
         },
         {
@@ -853,7 +870,7 @@ const routes: Routes = [
                   component: ViewCollateralComponent,
                   resolve: {
                     collateral: CollateralResolver
-                  },
+                  }
                 },
                 {
                   path: 'edit',
@@ -863,15 +880,15 @@ const routes: Routes = [
                     collateralTemplate: CollateralTemplateResolver,
                     collateral: CollateralResolver
                   }
-                },
+                }
               ]
-            },
+            }
           ]
         }
       ]
     }
-  ]
-  )
+  ])
+
 ];
 
 /**
@@ -930,4 +947,4 @@ const routes: Routes = [
     DelinquencyBucketComponentsResolver
   ]
 })
-export class ProductsRoutingModule { }
+export class ProductsRoutingModule {}

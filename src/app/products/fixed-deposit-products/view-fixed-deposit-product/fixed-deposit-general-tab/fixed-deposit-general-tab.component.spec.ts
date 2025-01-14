@@ -8,9 +8,8 @@ describe('FixedDepositGeneralTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FixedDepositGeneralTabComponent ]
-    })
-    .compileComponents();
+      declarations: [FixedDepositGeneralTabComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('DatatableMultiRowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DatatableMultiRowComponent ]
-    })
-    .compileComponents();
+      declarations: [DatatableMultiRowComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

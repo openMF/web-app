@@ -8,9 +8,8 @@ describe('LoanTermVariationsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoanTermVariationsTabComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanTermVariationsTabComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoanTermVariationsTabComponent);
     component = fixture.componentInstance;

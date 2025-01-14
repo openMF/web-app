@@ -14,23 +14,24 @@ import { SettingsService } from 'app/settings/settings.service';
  */
 @Injectable()
 export class ListTransactionsResolver implements Resolve<Object> {
+  /**
+   * @param {AccountTransfersService} accountTransfersService Account Transfers service.
+   * @param {SettingsService} settingsService Settings Service.
+   */
+  constructor(
+    private accountTransfersService: AccountTransfersService,
+    private settingsService: SettingsService
+  ) {}
 
-    /**
-     * @param {AccountTransfersService} accountTransfersService Account Transfers service.
-     * @param {SettingsService} settingsService Settings Service.
-     */
-    constructor(private accountTransfersService: AccountTransfersService,
-        private settingsService: SettingsService) { }
-
-    /**
-     * Returns the Standing Instructions Data.
-     * @param {ActivatedRouteSnapshot} route Route Snapshot
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const id = route.parent.paramMap.get('standingInstructionsId');
-        const dateFormat = this.settingsService.dateFormat;
-        const locale = this.settingsService.language.code;
-        return this.accountTransfersService.getStandingInstructionsTransactions(id, dateFormat, locale);
-    }
+  /**
+   * Returns the Standing Instructions Data.
+   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const id = route.parent.paramMap.get('standingInstructionsId');
+    const dateFormat = this.settingsService.dateFormat;
+    const locale = this.settingsService.language.code;
+    return this.accountTransfersService.getStandingInstructionsTransactions(id, dateFormat, locale);
+  }
 }

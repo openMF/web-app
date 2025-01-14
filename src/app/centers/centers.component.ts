@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
-import { tap, startWith, map, distinctUntilChanged, debounceTime} from 'rxjs/operators';
+import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /** Custom Services */
 import { CentersService } from './centers.service';
@@ -22,7 +22,7 @@ import { CentersDataSource } from './centers.datasource';
 @Component({
   selector: 'mifosx-app-centers',
   templateUrl: './centers.component.html',
-  styleUrls: ['./centers.component.scss'],
+  styleUrls: ['./centers.component.scss']
 })
 export class CentersComponent implements OnInit, AfterViewInit {
   @ViewChild('showClosedCenters', { static: true }) showClosedCenters: MatCheckbox;
@@ -32,7 +32,13 @@ export class CentersComponent implements OnInit, AfterViewInit {
   /** ExternalId form control. */
   externalId = new UntypedFormControl();
   /** Columns to be displayed in centers table. */
-  displayedColumns =  ['name', 'accountNo', 'externalId', 'status', 'officeName'];
+  displayedColumns = [
+    'name',
+    'accountNo',
+    'externalId',
+    'status',
+    'officeName'
+  ];
   /** Data source for centers table. */
   dataSource: CentersDataSource;
   /** Centers filter. */
@@ -52,7 +58,7 @@ export class CentersComponent implements OnInit, AfterViewInit {
   /** Sorter for centers table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private centersService: CentersService) { }
+  constructor(private centersService: CentersService) {}
 
   ngOnInit() {
     this.getCenters();
@@ -64,7 +70,6 @@ export class CentersComponent implements OnInit, AfterViewInit {
    * sort change and page change.
    */
   ngAfterViewInit() {
-
     this.name.valueChanges
       .pipe(
         debounceTime(500),
@@ -76,21 +81,19 @@ export class CentersComponent implements OnInit, AfterViewInit {
       .subscribe();
 
     this.externalId.valueChanges
-    .pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-      tap((filterValue) => {
-        this.applyFilter(filterValue, 'externalId');
-      })
-    )
-    .subscribe();
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((filterValue) => {
+          this.applyFilter(filterValue, 'externalId');
+        })
+      )
+      .subscribe();
 
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadCentersPage())
-      )
+      .pipe(tap(() => this.loadCentersPage()))
       .subscribe();
   }
 
@@ -108,7 +111,14 @@ export class CentersComponent implements OnInit, AfterViewInit {
     if (!this.sort.direction) {
       delete this.sort.active;
     }
-    this.dataSource.getCenters(this.filterCentersBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, !this.showClosedCenters.checked);
+    this.dataSource.getCenters(
+      this.filterCentersBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize,
+      !this.showClosedCenters.checked
+    );
   }
 
   /**
@@ -118,7 +128,7 @@ export class CentersComponent implements OnInit, AfterViewInit {
    */
   applyFilter(filterValue: string, property: string) {
     this.paginator.pageIndex = 0;
-    const findIndex = this.filterCentersBy.findIndex(filter => filter.type === property);
+    const findIndex = this.filterCentersBy.findIndex((filter) => filter.type === property);
     this.filterCentersBy[findIndex].value = filterValue;
     this.loadCentersPage();
   }
@@ -128,7 +138,12 @@ export class CentersComponent implements OnInit, AfterViewInit {
    */
   getCenters() {
     this.dataSource = new CentersDataSource(this.centersService);
-    this.dataSource.getCenters(this.filterCentersBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    this.dataSource.getCenters(
+      this.filterCentersBy,
+      this.sort.active,
+      this.sort.direction,
+      this.paginator.pageIndex,
+      this.paginator.pageSize
+    );
   }
-
 }

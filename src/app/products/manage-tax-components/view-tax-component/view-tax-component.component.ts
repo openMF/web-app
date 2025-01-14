@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-tax-component.component.scss']
 })
 export class ViewTaxComponentComponent {
-
   /** tax Component Data. */
   taxComponentData: any;
 
@@ -24,5 +23,4 @@ export class ViewTaxComponentComponent {
       this.taxComponentData = data.taxComponent;
     });
   }
-
 }

@@ -11,12 +11,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./enable-dialog.component.scss']
 })
 export class EnableDialogComponent {
-
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides a enableContext.
    */
-  constructor(public dialogRef: MatDialogRef<EnableDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
+  constructor(
+    public dialogRef: MatDialogRef<EnableDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 }

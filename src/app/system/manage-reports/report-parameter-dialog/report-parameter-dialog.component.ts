@@ -12,7 +12,6 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
   styleUrls: ['./report-parameter-dialog.component.scss']
 })
 export class ReportParameterDialogComponent implements OnInit {
-
   /** Report Parameter Form. */
   reportParameterForm: UntypedFormGroup;
 
@@ -21,18 +20,22 @@ export class ReportParameterDialogComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {any} data Provides the allowed parameters and values for the form (if available).
    */
-  constructor(public dialogRef: MatDialogRef<ReportParameterDialogComponent>,
-              public formBuilder: UntypedFormBuilder,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
+  constructor(
+    public dialogRef: MatDialogRef<ReportParameterDialogComponent>,
+    public formBuilder: UntypedFormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   /**
    * Creates the add report parameter form.
    */
   ngOnInit() {
     this.reportParameterForm = this.formBuilder.group({
-      'parameterName': [this.data.parameterName, Validators.required],
-      'reportParameterName': [this.data.reportParameterName]
+      parameterName: [
+        this.data.parameterName,
+        Validators.required
+      ],
+      reportParameterName: [this.data.reportParameterName]
     });
   }
 
@@ -42,5 +45,4 @@ export class ReportParameterDialogComponent implements OnInit {
   submit() {
     this.dialogRef.close(this.reportParameterForm.value);
   }
-
 }

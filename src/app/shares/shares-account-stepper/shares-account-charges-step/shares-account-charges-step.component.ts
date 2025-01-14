@@ -21,7 +21,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./shares-account-charges-step.component.scss']
 })
 export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
-
   /** Shares Account Product Template */
   @Input() sharesAccountProductTemplate: any;
   /** Shares Account Template */
@@ -38,13 +37,21 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   /** For Edit Shares Account Form */
   isChargesPatched = false;
   /** Display columns for charges table */
-  displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'action'
+  ];
 
   /**
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private dialog: MatDialog,
-      private translateService: TranslateService) { }
+  constructor(
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.currencyCode.valueChanges.subscribe(() => {
@@ -85,8 +92,9 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
         label: this.translateService.instant('labels.inputs.Amount'),
         value: charge.amount || charge.amountOrPercentage,
         type: 'number',
-        required: false,
-      }),
+        required: false
+      })
+
     ];
     const data = {
       title: this.translateService.instant('labels.heading.Edit Charge'),
@@ -127,5 +135,4 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   get sharesAccountCharges() {
     return { charges: this.chargesDataSource };
   }
-
 }

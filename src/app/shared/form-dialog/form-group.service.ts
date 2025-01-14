@@ -7,17 +7,17 @@ import { FormfieldBase } from './formfield/model/formfield-base';
   providedIn: 'root'
 })
 export class FormGroupService {
-
-  constructor() { }
+  constructor() {}
 
   createFormGroup(formfields: FormfieldBase[]) {
     const group: any = {};
 
-    formfields.forEach(formfield => {
-      group[formfield.controlName] = formfield.required ? new UntypedFormControl(formfield.value, Validators.required) : new UntypedFormControl(formfield.value);
+    formfields.forEach((formfield) => {
+      group[formfield.controlName] = formfield.required
+        ? new UntypedFormControl(formfield.value, Validators.required)
+        : new UntypedFormControl(formfield.value);
     });
 
     return new UntypedFormGroup(group);
   }
-
 }

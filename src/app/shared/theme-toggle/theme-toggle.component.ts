@@ -8,18 +8,19 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./theme-toggle.component.scss']
 })
 export class ThemeToggleComponent implements OnInit, OnChanges {
-
   darkModeOn: boolean;
 
-  constructor(private themingService: ThemingService,
-    private settingsService: SettingsService) { }
+  constructor(
+    private themingService: ThemingService,
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit(): void {
-    this.darkModeOn = (this.settingsService.themeDarkEnabled === 'true');
+    this.darkModeOn = this.settingsService.themeDarkEnabled === 'true';
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.darkModeOn = (this.settingsService.themeDarkEnabled === 'true');
+    this.darkModeOn = this.settingsService.themeDarkEnabled === 'true';
   }
 
   toggleTheme() {
@@ -27,5 +28,4 @@ export class ThemeToggleComponent implements OnInit, OnChanges {
     this.settingsService.setThemeDarkEnabled(this.darkModeOn ? 'true' : 'false');
     this.themingService.setDarkMode(this.darkModeOn);
   }
-
 }

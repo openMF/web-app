@@ -21,11 +21,17 @@ import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.
   styleUrls: ['./entity-data-table-checks.component.scss']
 })
 export class EntityDataTableChecksComponent implements OnInit {
-
   /** Entity Data Table Checks data. */
   entityDataTableChecksData: any;
   /** Columns to be displayed in entity data table checks table. */
-  displayedColumns: string[] = ['entity', 'productName', 'datatableName', 'status', 'systemDefined', 'actions'];
+  displayedColumns: string[] = [
+    'entity',
+    'productName',
+    'datatableName',
+    'status',
+    'systemDefined',
+    'actions'
+  ];
   /** Data source for entity data table checks table. */
   dataSource: MatTableDataSource<any>;
   /** Corresponding values for Entity */
@@ -59,10 +65,12 @@ export class EntityDataTableChecksComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private organizationService: OrganizationService,
-              private route: ActivatedRoute,
-              private dialog: MatDialog) {
-    this.route.data.subscribe(( data: { entityDataTableChecks: any }) => {
+  constructor(
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { entityDataTableChecks: any }) => {
       this.entityDataTableChecksData = data.entityDataTableChecks.pageItems;
     });
   }
@@ -105,8 +113,10 @@ export class EntityDataTableChecksComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'status': return item.status.value;
-        default: return item[property];
+        case 'status':
+          return item.status.value;
+        default:
+          return item[property];
       }
     };
   }
@@ -121,13 +131,13 @@ export class EntityDataTableChecksComponent implements OnInit {
     });
     deleteEntityDataTableCheckDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteEntityDataTableCheck(entityDataTableCheckId)
-          .subscribe(() => {
-            this.entityDataTableChecksData = this.entityDataTableChecksData.filter((entityDataTableChecks: any) => entityDataTableChecks.id !== entityDataTableCheckId);
-            this.dataSource.data = this.entityDataTableChecksData;
-          });
+        this.organizationService.deleteEntityDataTableCheck(entityDataTableCheckId).subscribe(() => {
+          this.entityDataTableChecksData = this.entityDataTableChecksData.filter(
+            (entityDataTableChecks: any) => entityDataTableChecks.id !== entityDataTableCheckId
+          );
+          this.dataSource.data = this.entityDataTableChecksData;
+        });
       }
     });
   }
-
 }

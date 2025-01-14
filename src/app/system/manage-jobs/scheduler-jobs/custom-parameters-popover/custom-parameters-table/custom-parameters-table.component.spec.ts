@@ -8,9 +8,8 @@ describe('CustomParametersTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CustomParametersTableComponent ]
-    })
-    .compileComponents();
+      declarations: [CustomParametersTableComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -15,7 +15,6 @@ import { GroupsService } from '../../groups.service';
   styleUrls: ['./add-role.component.scss']
 })
 export class AddRoleComponent implements OnInit {
-
   /** Groups Add Role Form */
   groupsAddRoleForm: UntypedFormGroup;
   /** Client Member Data */
@@ -31,10 +30,12 @@ export class AddRoleComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private groupsService: GroupsService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private groupsService: GroupsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { groupAndTemplateData: any }) => {
       this.groupAndTemplateData = data.groupAndTemplateData;
     });
@@ -51,8 +52,14 @@ export class AddRoleComponent implements OnInit {
    */
   createGroupsAddRoleForm() {
     this.groupsAddRoleForm = this.formBuilder.group({
-      'clientId': ['', Validators.required],
-      'role': ['', Validators.required]
+      clientId: [
+        '',
+        Validators.required
+      ],
+      role: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -60,9 +67,10 @@ export class AddRoleComponent implements OnInit {
    * Submits the form and assigns the group role.
    */
   submit() {
-    this.groupsService.executeGroupCommand(this.groupAndTemplateData.id, 'assignRole', this.groupsAddRoleForm.value).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.groupsService
+      .executeGroupCommand(this.groupAndTemplateData.id, 'assignRole', this.groupsAddRoleForm.value)
+      .subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
-
 }

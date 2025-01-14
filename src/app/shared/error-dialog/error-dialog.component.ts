@@ -8,15 +8,15 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./error-dialog.component.scss']
 })
 export class ErrorDialogComponent {
-
   showAsCode = false;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides any data.
    */
-  constructor(public dialogRef: MatDialogRef<ErrorDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string) {
-    this.showAsCode = (data.startsWith('<pre><code>'));
+  constructor(
+    public dialogRef: MatDialogRef<ErrorDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: string
+  ) {
+    this.showAsCode = data.startsWith('<pre><code>');
   }
-
 }

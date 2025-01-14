@@ -14,13 +14,14 @@ import { FixedDepositsService } from '../fixed-deposits.service';
  */
 @Injectable()
 export class FixedDepositsAccountActionsResolver implements Resolve<Object> {
-
   /**
    * @param {SavingsService} SavingsService Savings service.
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service.
    */
-  constructor(private savingsService: SavingsService,
-              private fixedDepositsService: FixedDepositsService) { }
+  constructor(
+    private savingsService: SavingsService,
+    private fixedDepositsService: FixedDepositsService
+  ) {}
 
   /**
    * Returns the Fixed deposits account actions data.
@@ -29,7 +30,8 @@ export class FixedDepositsAccountActionsResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
-    const fixedDepositAccountId = route.paramMap.get('fixedDepositAccountId') || route.parent.parent.paramMap.get('fixedDepositAccountId');
+    const fixedDepositAccountId =
+      route.paramMap.get('fixedDepositAccountId') || route.parent.parent.paramMap.get('fixedDepositAccountId');
     switch (actionName) {
       case 'Add Charge':
         return this.savingsService.getSavingsChargeTemplateResource(fixedDepositAccountId);
@@ -41,5 +43,4 @@ export class FixedDepositsAccountActionsResolver implements Resolve<Object> {
         return undefined;
     }
   }
-
 }

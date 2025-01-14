@@ -19,4 +19,4 @@ import { IndividualCollectionSheetComponent } from './individual-collection-shee
     IndividualCollectionSheetComponent
   ]
 })
-export class CollectionsModule { }
+export class CollectionsModule {}

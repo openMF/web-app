@@ -8,7 +8,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./share-product-details-step.component.scss']
 })
 export class ShareProductDetailsStepComponent implements OnInit {
-
   @Input() shareProductsTemplate: any;
 
   shareProductDetailsForm: UntypedFormGroup;
@@ -20,23 +19,31 @@ export class ShareProductDetailsStepComponent implements OnInit {
   ngOnInit() {
     if (this.shareProductsTemplate) {
       this.shareProductDetailsForm.patchValue({
-        'name': this.shareProductsTemplate.name,
-        'shortName': this.shareProductsTemplate.shortName,
-        'description': this.shareProductsTemplate.description
+        name: this.shareProductsTemplate.name,
+        shortName: this.shareProductsTemplate.shortName,
+        description: this.shareProductsTemplate.description
       });
     }
   }
 
   createShareProductDetailsForm() {
     this.shareProductDetailsForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'shortName': ['', Validators.required],
-      'description': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ],
+      shortName: [
+        '',
+        Validators.required
+      ],
+      description: [
+        '',
+        Validators.required
+      ]
     });
   }
 
   get shareProductDetails() {
     return this.shareProductDetailsForm.value;
   }
-
 }

@@ -15,9 +15,12 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./share-products.component.scss']
 })
 export class ShareProductsComponent implements OnInit, AfterViewInit {
-
   shareProductsData: any;
-  displayedColumns: string[] = ['name', 'shortName', 'totalShares'];
+  displayedColumns: string[] = [
+    'name',
+    'shortName',
+    'totalShares'
+  ];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -38,10 +41,12 @@ export class ShareProductsComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
     this.route.data.subscribe((data: { shareProducts: any }) => {
       this.shareProductsData = data.shareProducts.pageItems;
     });
@@ -63,7 +68,12 @@ export class ShareProductsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showShareProductsPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonCreateShareProduct, this.buttonCreateShareProduct.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonCreateShareProduct,
+          this.buttonCreateShareProduct.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
 
@@ -81,7 +91,12 @@ export class ShareProductsComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -104,5 +119,4 @@ export class ShareProductsComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showShareProducts = true;
     this.router.navigate(['/products']);
   }
-
 }

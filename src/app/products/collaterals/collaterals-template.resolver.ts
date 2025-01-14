@@ -13,16 +13,16 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class CollateralTemplateResolver implements Resolve<Object> {
-    /**
-     * @param {ProductsService} productsService products Service
-     */
-    constructor(private productsService: ProductsService) {}
+  /**
+   * @param {ProductsService} productsService products Service
+   */
+  constructor(private productsService: ProductsService) {}
 
-    /**
-     * Returns the product Data.
-     * @returns {Observable<any>}
-     */
-    resolve(): Observable<any> {
-        return this.productsService.getCollateralTemplate();
-    }
+  /**
+   * Returns the product Data.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.productsService.getCollateralTemplate();
+  }
 }

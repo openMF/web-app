@@ -8,9 +8,8 @@ describe('ViewGuarantorsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewGuarantorsComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewGuarantorsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-collateral.component.scss']
 })
 export class CreateCollateralComponent implements OnInit {
-
   /** Collateral form */
   collateralForm: UntypedFormGroup;
   /** Charges Template data */
@@ -31,15 +30,17 @@ export class CreateCollateralComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private productsService: ProductsService,
-              private route:  ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
-                this.route.data.subscribe((data: { collateralTemplate: any }) => {
-                  this.collateralTemplateData = data.collateralTemplate;
-                });
-               }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private productsService: ProductsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { collateralTemplate: any }) => {
+      this.collateralTemplateData = data.collateralTemplate;
+    });
+  }
 
   /**
    * Create and sets Collateral Form
@@ -53,12 +54,30 @@ export class CreateCollateralComponent implements OnInit {
    */
   createCollateralForm() {
     this.collateralForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'unitType': ['', Validators.required],
-      'basePrice': ['', Validators.required],
-      'pctToBase': ['', Validators.required],
-      'currency': ['', Validators.required],
-      'quality': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ],
+      unitType: [
+        '',
+        Validators.required
+      ],
+      basePrice: [
+        '',
+        Validators.required
+      ],
+      pctToBase: [
+        '',
+        Validators.required
+      ],
+      currency: [
+        '',
+        Validators.required
+      ],
+      quality: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -76,7 +95,4 @@ export class CreateCollateralComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
-
-
 }

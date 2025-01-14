@@ -60,17 +60,25 @@ const routes: Routes = [
               {
                 path: 'general',
                 component: GeneralTabComponent,
-                data: { title: 'Recurring Deposit Account Details', breadcrumb: 'General', routeParamBreadcrumb: false },
+                data: { title: 'Recurring Deposit Account Details', breadcrumb: 'General', routeParamBreadcrumb: false }
               },
               {
                 path: 'interest-rate-chart',
                 component: InterestRateChartTabComponent,
-                data: { title: 'Recurring Deposit Account Interest Rate Chart', breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },
+                data: {
+                  title: 'Recurring Deposit Account Interest Rate Chart',
+                  breadcrumb: 'Interest Rate Chart',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'transactions',
                 component: TransactionsTabComponent,
-                data: { title: 'Recurring Deposit Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+                data: {
+                  title: 'Recurring Deposit Account Transactions',
+                  breadcrumb: 'Transactions',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'charges',
@@ -80,7 +88,11 @@ const routes: Routes = [
               {
                 path: 'standing-instructions-tab',
                 component: StandingInstructionsTabComponent,
-                data: { title: 'Recurring Deposit Account Standing Instructions', breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false },
+                data: {
+                  title: 'Recurring Deposit Account Standing Instructions',
+                  breadcrumb: 'Standing Instructions',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'datatables',
@@ -94,7 +106,7 @@ const routes: Routes = [
                     }
                   }
                 ]
-              },
+              }
             ]
           },
           {
@@ -107,11 +119,16 @@ const routes: Routes = [
           },
           {
             path: 'transactions',
-            data: { title: 'Recurring Deposits Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            data: {
+              title: 'Recurring Deposits Account Transactions',
+              breadcrumb: 'Transactions',
+              routeParamBreadcrumb: false
+            },
             children: [
               {
                 path: '',
-                redirectTo: '../transactions', pathMatch: 'prefix'
+                redirectTo: '../transactions',
+                pathMatch: 'prefix'
               },
               {
                 path: ':id',
@@ -147,7 +164,8 @@ const routes: Routes = [
       },
       {
         path: ':recurringDepositAccountId/transfer-funds',
-        loadChildren: () => import('../../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
+        loadChildren: () =>
+          import('../../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
       }
     ]
   },
@@ -161,8 +179,9 @@ const routes: Routes = [
         children: [
           {
             path: 'standing-instructions',
-            loadChildren: () => import('../../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
-          },
+            loadChildren: () =>
+              import('../../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
+          }
         ]
       }
     ]

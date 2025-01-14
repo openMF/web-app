@@ -1,5 +1,7 @@
 <span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()" *ngIf="!emptyValue">
-  <span class="m-l-3" *ngIf="isLongValue()" (click)="showValue()"><fa-icon icon="eye" size="sm" [title]="textValue"></fa-icon></span>
+  <span class="m-l-3" *ngIf="isLongValue()" (click)="showValue()"
+    ><fa-icon icon="eye" size="sm" [title]="textValue"></fa-icon
+  ></span>
   <span class="m-l-5" *ngIf="isLongValue()" (click)="showValue()">{{ textValue | truncateText: printChars }}...</span>
   <span class="m-l-5" *ngIf="!isLongValue()" (click)="showValue()">{{ textValue }}</span>
 </span>

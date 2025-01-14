@@ -8,9 +8,8 @@ describe('NotificationsTrayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationsTrayComponent ]
-    })
-    .compileComponents();
+      declarations: [NotificationsTrayComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

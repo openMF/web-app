@@ -13,7 +13,6 @@ import { ProductsService } from '../../products.service';
  */
 @Injectable()
 export class DelinquencyRangeComponentsResolver implements Resolve<Object> {
-
   /**
    * @param {ProductsService} productsService Products service.
    */
@@ -31,5 +30,4 @@ export class DelinquencyRangeComponentsResolver implements Resolve<Object> {
       return this.productsService.getDelinquencyRange(delinquentcyRangeId);
     }
   }
-
 }

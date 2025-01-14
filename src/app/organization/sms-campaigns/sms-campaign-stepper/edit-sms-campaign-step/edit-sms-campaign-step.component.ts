@@ -18,7 +18,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./edit-sms-campaign-step.component.scss']
 })
 export class EditSmsCampaignStepComponent implements OnInit {
-
   /** SMS Campaign Template */
   @Input() smsCampaignTemplate: any;
   /** SMS Campaign */
@@ -49,9 +48,11 @@ export class EditSmsCampaignStepComponent implements OnInit {
    * @param {ReportsService} reportService Reports Service
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private reportService: ReportsService,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private reportService: ReportsService,
+    private settingsService: SettingsService
+  ) {
     this.createSMSCampaignDetailsForm();
   }
 
@@ -60,11 +61,20 @@ export class EditSmsCampaignStepComponent implements OnInit {
    */
   createSMSCampaignDetailsForm() {
     this.smsCampaignDetailsForm = this.formBuilder.group({
-      'campaignName': ['', Validators.required],
-      'providerId': [null],
-      'triggerType': ['', Validators.required],
-      'runReportId': ['', Validators.required],
-      'isNotification': [false]
+      campaignName: [
+        '',
+        Validators.required
+      ],
+      providerId: [null],
+      triggerType: [
+        '',
+        Validators.required
+      ],
+      runReportId: [
+        '',
+        Validators.required
+      ],
+      isNotification: [false]
     });
   }
 
@@ -100,15 +110,17 @@ export class EditSmsCampaignStepComponent implements OnInit {
    */
   setControlValues() {
     this.smsCampaignDetailsForm.patchValue({
-      'campaignName': this.smsCampaign.campaignName,
-      'providerId': this.smsCampaign.providerId,
-      'triggerType': this.smsCampaign.triggerType.id,
-      'runReportId': this.smsCampaign.runReportId,
-      'isNotification': this.smsCampaign.isNotification
+      campaignName: this.smsCampaign.campaignName,
+      providerId: this.smsCampaign.providerId,
+      triggerType: this.smsCampaign.triggerType.id,
+      runReportId: this.smsCampaign.runReportId,
+      isNotification: this.smsCampaign.isNotification
     });
     if (this.smsCampaign.triggerType.value === 'Schedule') {
-      this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new UntypedFormControl(new Date(this.smsCampaign.recurrenceStartDate)));
+      this.smsCampaignDetailsForm.addControl(
+        'recurrenceStartDate',
+        new UntypedFormControl(new Date(this.smsCampaign.recurrenceStartDate))
+      );
     }
   }
-
 }

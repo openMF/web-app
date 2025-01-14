@@ -13,18 +13,16 @@ import { ProductsService } from '../../products.service';
  */
 @Injectable()
 export class ManageTaxGroupTemplateResolver implements Resolve<Object> {
+  /**
+   * @param {ProductsService} productsService Products service.
+   */
+  constructor(private productsService: ProductsService) {}
 
-    /**
-     * @param {ProductsService} productsService Products service.
-     */
-    constructor(private productsService: ProductsService) { }
-
-    /**
-     * Returns the tax groups template data.
-     * @returns {Observable<any>}
-     */
-    resolve(): Observable<any> {
-        return this.productsService.getTaxGroupTemplate();
-    }
-
+  /**
+   * Returns the tax groups template data.
+   * @returns {Observable<any>}
+   */
+  resolve(): Observable<any> {
+    return this.productsService.getTaxGroupTemplate();
+  }
 }

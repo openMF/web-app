@@ -8,9 +8,8 @@ describe('ExternalServicesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExternalServicesComponent ]
-    })
-    .compileComponents();
+      declarations: [ExternalServicesComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

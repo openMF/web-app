@@ -8,9 +8,8 @@ describe('RecurringDepositsAccountPreviewStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecurringDepositsAccountPreviewStepComponent ]
-    })
-    .compileComponents();
+      declarations: [RecurringDepositsAccountPreviewStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

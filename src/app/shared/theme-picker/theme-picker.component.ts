@@ -19,7 +19,6 @@ import { ThemeStorageService } from './theme-storage.service';
   encapsulation: ViewEncapsulation.None
 })
 export class ThemePickerComponent implements OnInit {
-
   /** Default theme for the application. */
   currentTheme: Theme = {
     href: 'denim-yellowgreen.css',
@@ -41,7 +40,7 @@ export class ThemePickerComponent implements OnInit {
       href: 'indigo-pink.css',
       primary: '#3F51B5',
       accent: '#E91E63',
-      isDark: false,
+      isDark: false
     },
     {
       href: 'deeppurple-amber.css',
@@ -66,7 +65,7 @@ export class ThemePickerComponent implements OnInit {
   /**
    * @param {ThemeStorageService} themeStorageService Theme Storage Service.
    */
-  constructor(public themeStorageService: ThemeStorageService) {  }
+  constructor(public themeStorageService: ThemeStorageService) {}
 
   /**
    * Initializes the theme for the application.
@@ -86,5 +85,4 @@ export class ThemePickerComponent implements OnInit {
     this.currentTheme = theme;
     this.themeStorageService.installTheme(theme);
   }
-
 }

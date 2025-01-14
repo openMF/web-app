@@ -12,5 +12,3 @@ export interface PaymentDetail {
   receiptNumber: string;
   bankNumber: string;
 }
-
-

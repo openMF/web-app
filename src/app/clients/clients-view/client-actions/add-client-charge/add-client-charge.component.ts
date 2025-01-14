@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./add-client-charge.component.scss']
 })
 export class AddClientChargeComponent implements OnInit {
-
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -64,7 +63,7 @@ export class AddClientChargeComponent implements OnInit {
    * Subscribe to form controls value changes
    */
   buildDependencies() {
-    this.clientChargeForm.controls.chargeId.valueChanges.subscribe(chargeId => {
+    this.clientChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
       this.clientsService.getChargeAndTemplate(chargeId).subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
@@ -85,14 +84,17 @@ export class AddClientChargeComponent implements OnInit {
           this.clientChargeForm.removeControl('feeOnMonthDay');
         }
         if (chargeTimeType.value === 'Monthly Fee') {
-          this.clientChargeForm.addControl('feeInterval', new UntypedFormControl(data.feeInterval, Validators.required));
+          this.clientChargeForm.addControl(
+            'feeInterval',
+            new UntypedFormControl(data.feeInterval, Validators.required)
+          );
         } else {
           this.clientChargeForm.removeControl('feeInterval');
         }
         this.clientChargeForm.patchValue({
-          'amount': data.amount,
-          'chargeCalculationType': data.chargeCalculationType.id,
-          'chargeTimeType': data.chargeTimeType.id
+          amount: data.amount,
+          chargeCalculationType: data.chargeCalculationType.id,
+          chargeTimeType: data.chargeTimeType.id
         });
       });
     });
@@ -103,10 +105,16 @@ export class AddClientChargeComponent implements OnInit {
    */
   createClientsChargeForm() {
     this.clientChargeForm = this.formBuilder.group({
-      'chargeId': ['', Validators.required],
-      'amount': ['', Validators.required],
-      'chargeCalculationType': [{ value: '', disabled: true }],
-      'chargeTimeType': [{ value: '', disabled: true }]
+      chargeId: [
+        '',
+        Validators.required
+      ],
+      amount: [
+        '',
+        Validators.required
+      ],
+      chargeCalculationType: [{ value: '', disabled: true }],
+      chargeTimeType: [{ value: '', disabled: true }]
     });
   }
 
@@ -136,9 +144,8 @@ export class AddClientChargeComponent implements OnInit {
         }
       }
     }
-    this.clientsService.createClientCharge(this.clientId, clientCharge).subscribe( () => {
+    this.clientsService.createClientCharge(this.clientId, clientCharge).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

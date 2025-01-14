@@ -8,9 +8,8 @@ describe('CenterAssignStaffComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CenterAssignStaffComponent ]
-    })
-    .compileComponents();
+      declarations: [CenterAssignStaffComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

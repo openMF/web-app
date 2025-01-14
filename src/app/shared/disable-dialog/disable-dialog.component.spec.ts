@@ -8,9 +8,8 @@ describe('DisableDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DisableDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [DisableDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

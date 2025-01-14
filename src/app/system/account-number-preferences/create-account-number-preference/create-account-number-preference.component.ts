@@ -15,7 +15,6 @@ import { SystemService } from '../../system.service';
   styleUrls: ['./create-account-number-preference.component.scss']
 })
 export class CreateAccountNumberPreferenceComponent implements OnInit {
-
   /** Account Number Preferences Form */
   accountNumberPreferenceForm: UntypedFormGroup;
   /** Account Number Preferences Template Data */
@@ -30,10 +29,12 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { accountNumberPreferencesTemplate: any }) => {
       this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;
     });
@@ -52,10 +53,12 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
    * Subscribes on Form Controls to change Prefix Type data.
    */
   getPrefixTypeValue() {
-    this.accountNumberPreferenceForm.get('accountType').valueChanges
-      .subscribe(accountId => {
-        this.prefixTypeData = this.accountNumberPreferencesTemplateData.prefixTypeOptions[`accountType.${this.accountNumberPreferencesTemplateData.accountTypeOptions.find((accountType: any) => accountType.id === accountId).value.toLowerCase()}`];
-      });
+    this.accountNumberPreferenceForm.get('accountType').valueChanges.subscribe((accountId) => {
+      this.prefixTypeData =
+        this.accountNumberPreferencesTemplateData.prefixTypeOptions[
+          `accountType.${this.accountNumberPreferencesTemplateData.accountTypeOptions.find((accountType: any) => accountType.id === accountId).value.toLowerCase()}`
+        ];
+    });
   }
 
   /**
@@ -63,8 +66,11 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
    */
   createAccountNumberPreferenceForm() {
     this.accountNumberPreferenceForm = this.formBuilder.group({
-      'accountType': ['', Validators.required],
-      'prefixType': ['']
+      accountType: [
+        '',
+        Validators.required
+      ],
+      prefixType: ['']
     });
   }
 
@@ -77,10 +83,14 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
     if (accountNumberPreference.prefixType === '') {
       accountNumberPreference.prefixType = undefined;
     }
-    this.systemService.createAccountNumberPreference(accountNumberPreference)
-      .subscribe((response: any) => {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
-      });
+    this.systemService.createAccountNumberPreference(accountNumberPreference).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
-
 }

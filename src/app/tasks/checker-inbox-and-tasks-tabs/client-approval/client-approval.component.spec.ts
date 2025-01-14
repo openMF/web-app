@@ -8,9 +8,8 @@ describe('ClientApprovalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientApprovalComponent ]
-    })
-    .compileComponents();
+      declarations: [ClientApprovalComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

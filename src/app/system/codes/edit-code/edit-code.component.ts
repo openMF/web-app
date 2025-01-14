@@ -15,7 +15,6 @@ import { SystemService } from '../../system.service';
   styleUrls: ['./edit-code.component.scss']
 })
 export class EditCodeComponent implements OnInit {
-
   /** Code Form */
   codeForm: UntypedFormGroup;
   /** Code Data */
@@ -28,10 +27,12 @@ export class EditCodeComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { code: any }) => {
       this.codeData = data.code;
     });
@@ -49,7 +50,10 @@ export class EditCodeComponent implements OnInit {
    */
   createCodeForm() {
     this.codeForm = this.formBuilder.group({
-      'name': [this.codeData.name, Validators.required]
+      name: [
+        this.codeData.name,
+        Validators.required
+      ]
     });
   }
 
@@ -58,10 +62,14 @@ export class EditCodeComponent implements OnInit {
    * if successful redirects to view updated code.
    */
   submit() {
-    this.systemService.updateCode(this.codeForm.value, this.codeData.id)
-      .subscribe((response: any) => {
-        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
-      });
+    this.systemService.updateCode(this.codeForm.value, this.codeData.id).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
-
 }

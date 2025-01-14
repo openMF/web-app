@@ -7,18 +7,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class WorkflowJobResolver implements Resolve<boolean> {
-
   /**
    * @param {SystemService} systemService System service.
    */
-   constructor(private systemService: SystemService) {}
+  constructor(private systemService: SystemService) {}
 
-   /**
-    * Returns the Configuration data.
-    * @returns {Observable<any>}
-    */
-   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-     return this.systemService.getWorkflowJobNames();
-   }
-
+  /**
+   * Returns the Configuration data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    return this.systemService.getWorkflowJobNames();
+  }
 }

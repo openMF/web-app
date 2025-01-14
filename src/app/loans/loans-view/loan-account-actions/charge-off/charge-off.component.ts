@@ -35,14 +35,16 @@ export class ChargeOffComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private settingsService: SettingsService) {
-      this.loanId = this.route.snapshot.params['loanId'];
-    }
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
+  }
 
   /**
    * Creates the repayment loan form
@@ -59,10 +61,13 @@ export class ChargeOffComponent implements OnInit {
    */
   createChargeoffLoanForm() {
     this.chargeoffLoanForm = this.formBuilder.group({
-      'transactionDate': [this.settingsService.businessDate, Validators.required],
-      'externalId': '',
-      'chargeOffReasonId': '',
-      'note': ''
+      transactionDate: [
+        this.settingsService.businessDate,
+        Validators.required
+      ],
+      externalId: '',
+      chargeOffReasonId: '',
+      note: ''
     });
   }
 
@@ -80,10 +85,8 @@ export class ChargeOffComponent implements OnInit {
       locale
     };
     const command = 'charge-off';
-    this.loanService.submitLoanActionButton(this.loanId, data, command)
-      .subscribe((response: any) => {
-        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
-
 }

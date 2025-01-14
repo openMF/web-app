@@ -24,6 +24,7 @@ const routes: Routes = [
       }
     }
   ])
+
 ];
 
 @NgModule({
@@ -31,4 +32,4 @@ const routes: Routes = [
   providers: [SearchResolver],
   exports: [RouterModule]
 })
-export class SearchRoutingModule { }
+export class SearchRoutingModule {}

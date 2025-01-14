@@ -8,9 +8,8 @@ describe('SavingsTransactionDatatableTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SavingsTransactionDatatableTabComponent ]
-    })
-    .compileComponents();
+      declarations: [SavingsTransactionDatatableTabComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SavingsTransactionDatatableTabComponent);
     component = fixture.componentInstance;

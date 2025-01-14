@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./approve-savings-account.component.scss']
 })
 export class ApproveSavingsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -35,12 +34,14 @@ export class ApproveSavingsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private savingsService: SavingsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private savingsService: SavingsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.snapshot.params['savingAccountId'];
   }
 
@@ -57,8 +58,11 @@ export class ApproveSavingsAccountComponent implements OnInit {
    */
   createApproveSavingsAccountForm() {
     this.approveSavingsAccountForm = this.formBuilder.group({
-      'approvedOnDate': ['', Validators.required],
-      'note': ['']
+      approvedOnDate: [
+        '',
+        Validators.required
+      ],
+      note: ['']
     });
   }
 
@@ -83,5 +87,4 @@ export class ApproveSavingsAccountComponent implements OnInit {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
-
 }

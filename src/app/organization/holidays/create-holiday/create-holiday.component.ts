@@ -24,7 +24,6 @@ import { CreateHoliday } from './create-holiday.service';
   styleUrls: ['./create-holiday.component.scss']
 })
 export class CreateHolidayComponent implements OnInit {
-
   /** Create Holiday form. */
   holidayForm: UntypedFormGroup;
   /** Repayment Scheduling data. */
@@ -73,15 +72,17 @@ export class CreateHolidayComponent implements OnInit {
    * @param {OrganizationService} organizationService Organization Service.
    * @param {Router} router Router.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private organizationService: OrganizationService,
-              private settings: SettingsService,
-              private router: Router,
-              private _database: ChecklistDatabase,
-              private createHoliday: CreateHoliday  ) {
-    this.route.data.subscribe((data: { offices: any, holidayTemplate: any }) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private organizationService: OrganizationService,
+    private settings: SettingsService,
+    private router: Router,
+    private _database: ChecklistDatabase,
+    private createHoliday: CreateHoliday
+  ) {
+    this.route.data.subscribe((data: { offices: any; holidayTemplate: any }) => {
       this.officesData = data.offices;
       this.repaymentSchedulingTypes = data.holidayTemplate;
       // Constructs trie everytime data changes
@@ -121,7 +122,7 @@ export class CreateHolidayComponent implements OnInit {
         // Sets root as the first object
         root = trie[Object.keys(trie)[0]];
         // Construction of hierarchy via Depth First Search
-          hierarchy.forEach((stage: string) => {
+        hierarchy.forEach((stage: string) => {
           if (!(stage in root)) {
             root[stage] = {};
           }
@@ -160,7 +161,7 @@ export class CreateHolidayComponent implements OnInit {
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
     return flatNode;
-  }
+  };
 
   /** Whether all the descendants of the node are selected. */
   descendantsAllSelected(node: OfficeItemFlatNode): boolean {
@@ -176,7 +177,7 @@ export class CreateHolidayComponent implements OnInit {
 
   setSelectedOffices() {
     this.holidayForm.patchValue({
-      offices: this.checklistSelection.selected.map((item) => item.item),
+      offices: this.checklistSelection.selected.map((item) => item.item)
     });
   }
 
@@ -256,12 +257,27 @@ export class CreateHolidayComponent implements OnInit {
    */
   setHolidayForm() {
     this.holidayForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'fromDate': ['', Validators.required],
-      'toDate': ['', Validators.required],
-      'reschedulingType': ['', Validators.required],
-      'description': [''],
-      'offices': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ],
+      fromDate: [
+        '',
+        Validators.required
+      ],
+      toDate: [
+        '',
+        Validators.required
+      ],
+      reschedulingType: [
+        '',
+        Validators.required
+      ],
+      description: [''],
+      offices: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -294,7 +310,7 @@ export class CreateHolidayComponent implements OnInit {
       holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(prevRepaymentsRescheduledTo, dateFormat);
     }
     const offices = this.holidayForm.value.offices.map((office: string) => {
-      return {'officeId': Number.parseInt(office, 10)};
+      return { officeId: Number.parseInt(office, 10) };
     });
     const data = {
       ...holidayFormData,
@@ -303,8 +319,13 @@ export class CreateHolidayComponent implements OnInit {
       offices
     };
     this.organizationService.createHoliday(data).subscribe((response: any) => {
-      this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

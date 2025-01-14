@@ -8,9 +8,8 @@ describe('NextStepDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NextStepDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [NextStepDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -11,12 +11,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./delete-dialog.component.scss']
 })
 export class DeleteDialogComponent {
-
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides a deleteContext.
    */
-  constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
-
+  constructor(
+    public dialogRef: MatDialogRef<DeleteDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 }

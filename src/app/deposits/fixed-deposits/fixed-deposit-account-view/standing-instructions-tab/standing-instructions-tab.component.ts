@@ -21,7 +21,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./standing-instructions-tab.component.scss']
 })
 export class StandingInstructionsTabComponent implements OnInit {
-
   /** Fixed Deposits Data */
   fixedDepositsData: any;
   /** Instructions Data */
@@ -50,11 +49,13 @@ export class StandingInstructionsTabComponent implements OnInit {
    * @param {AccountTransfersService} accountTransfersService Accounts Transfer Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private route: ActivatedRoute,
-              private fixedDepositsService: FixedDepositsService,
-              private dialog: MatDialog,
-              private accountTransfersService: AccountTransfersService,
-              private settingsService: SettingsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private fixedDepositsService: FixedDepositsService,
+    private dialog: MatDialog,
+    private accountTransfersService: AccountTransfersService,
+    private settingsService: SettingsService
+  ) {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.fixedDepositsData = data.fixedDepositsAccountData;
     });
@@ -73,11 +74,13 @@ export class StandingInstructionsTabComponent implements OnInit {
     const accountId = this.fixedDepositsData.id;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.fixedDepositsService.getStandingInstructions(clientId, clientName, accountId, locale, dateFormat).subscribe((response: any) => {
-      this.instructionsData = response.pageItems;
-      this.dataSource.data = this.instructionsData;
-      this.instructionTableRef.renderRows();
-    });
+    this.fixedDepositsService
+      .getStandingInstructions(clientId, clientName, accountId, locale, dateFormat)
+      .subscribe((response: any) => {
+        this.instructionsData = response.pageItems;
+        this.dataSource.data = this.instructionsData;
+        this.instructionTableRef.renderRows();
+      });
   }
 
   /**
@@ -90,10 +93,8 @@ export class StandingInstructionsTabComponent implements OnInit {
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountTransfersService.deleteStandingInstrucions(instructionId)
-          .subscribe(() => { });
+        this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {});
       }
     });
   }
-
 }

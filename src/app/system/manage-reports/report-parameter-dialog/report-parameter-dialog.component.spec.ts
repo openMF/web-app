@@ -8,9 +8,8 @@ describe('AddReportParameterDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReportParameterDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ReportParameterDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

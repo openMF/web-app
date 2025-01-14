@@ -13,7 +13,6 @@ import { OrganizationService } from 'app/organization/organization.service';
  */
 @Injectable()
 export class CashierTransactionTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
@@ -28,5 +27,4 @@ export class CashierTransactionTemplateResolver implements Resolve<Object> {
     const tellerId = route.parent.parent.paramMap.get('id');
     return this.organizationService.getCashierTransactionTemplate(tellerId, cashierId);
   }
-
 }

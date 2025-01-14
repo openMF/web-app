@@ -14,13 +14,14 @@ import { RecurringDepositsService } from '../recurring-deposits.service';
  */
 @Injectable()
 export class RecurringDepositsAccountActionsResolver implements Resolve<Object> {
-
   /**
    * @param {SavingsService} SavingsService Savings service.
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service.
    */
-  constructor(private savingsService: SavingsService,
-    private recurringDepositsService: RecurringDepositsService) { }
+  constructor(
+    private savingsService: SavingsService,
+    private recurringDepositsService: RecurringDepositsService
+  ) {}
 
   /**
    * Returns the Recurring deposits account actions data.
@@ -29,18 +30,24 @@ export class RecurringDepositsAccountActionsResolver implements Resolve<Object> 
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName: string = route.paramMap.get('name');
-    const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId') || route.parent.parent.paramMap.get('recurringDepositAccountId');
+    const recurringDepositAccountId =
+      route.paramMap.get('recurringDepositAccountId') || route.parent.parent.paramMap.get('recurringDepositAccountId');
     switch (actionName) {
       case 'Add Charge':
         return this.savingsService.getSavingsChargeTemplateResource(recurringDepositAccountId);
       case 'Close':
-        return this.recurringDepositsService.getRecurringDepositAccountActionResource(recurringDepositAccountId, 'close');
+        return this.recurringDepositsService.getRecurringDepositAccountActionResource(
+          recurringDepositAccountId,
+          'close'
+        );
       case 'Deposit':
       case 'Withdrawal':
-        return this.recurringDepositsService.getRecurringDepositAccountTransactionTemplateResource(recurringDepositAccountId, actionName.toLocaleLowerCase());
+        return this.recurringDepositsService.getRecurringDepositAccountTransactionTemplateResource(
+          recurringDepositAccountId,
+          actionName.toLocaleLowerCase()
+        );
       default:
         return undefined;
     }
   }
-
 }

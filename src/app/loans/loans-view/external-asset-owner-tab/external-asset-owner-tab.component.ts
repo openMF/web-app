@@ -11,32 +11,40 @@ import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.co
   styleUrls: ['./external-asset-owner-tab.component.scss']
 })
 export class ExternalAssetOwnerTabComponent implements OnInit {
-
   defaultDate = '9999-12-31';
   loanTransfersData: any[] = [];
   activeTransferData: any;
-  loanTransferColumns: string[] = ['status', 'effectiveFrom', 'ownerExternalId', 'transferExternalId', 'settlementDate', 'purchasePriceRatio', 'actions'];
+  loanTransferColumns: string[] = [
+    'status',
+    'effectiveFrom',
+    'ownerExternalId',
+    'transferExternalId',
+    'settlementDate',
+    'purchasePriceRatio',
+    'actions'
+  ];
 
   currentItem: any;
   existActiveTransfer = false;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
     private externalAssetOwner: ExternalAssetOwner,
     private externalAssetOwnerService: ExternalAssetOwnerService
-    ) {
-    this.route.data.subscribe((data: { loanTransfersData: any, activeTransferData: any }) => {
-      this.loanTransfersData =  data.loanTransfersData.empty ? [] : data.loanTransfersData.content;
+  ) {
+    this.route.data.subscribe((data: { loanTransfersData: any; activeTransferData: any }) => {
+      this.loanTransfersData = data.loanTransfersData.empty ? [] : data.loanTransfersData.content;
       this.activeTransferData = data.activeTransferData || null;
-      this.existActiveTransfer = (data.activeTransferData && data.activeTransferData.transferId != null);
+      this.existActiveTransfer = data.activeTransferData && data.activeTransferData.transferId != null;
     });
   }
 
   ngOnInit(): void {
     this.currentItem = null;
     if (this.loanTransfersData.length > 0) {
-      this.currentItem = this.loanTransfersData[(this.loanTransfersData.length - 1)];
+      this.currentItem = this.loanTransfersData[this.loanTransfersData.length - 1];
     }
   }
 
@@ -85,10 +93,11 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
         const payload: any = {
           transferExternalId: this.currentItem.transferExternalId
         };
-        this.externalAssetOwnerService.executeExternalAssetOwnerTransferCommand(this.currentItem.transferId, payload, 'cancel')
+        this.externalAssetOwnerService
+          .executeExternalAssetOwnerTransferCommand(this.currentItem.transferId, payload, 'cancel')
           .subscribe((result: any) => {
             this.reload();
-        });
+          });
       }
     });
   }
@@ -103,7 +112,6 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
 
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/`, {skipLocationChange: true})
-      .then(() => this.router.navigate([url]));
+    this.router.navigateByUrl(`/`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
 }

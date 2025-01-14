@@ -11,11 +11,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./collaterals.component.scss']
 })
 export class CollateralsComponent implements OnInit {
-
   /** Collateral Data */
   collateralData: any;
   /** Columns to be displayed in the Collaterals Table */
-  displayedColumns: string[] = ['name', 'quality', 'basePrice', 'basePercentage', 'unitType'];
+  displayedColumns: string[] = [
+    'name',
+    'quality',
+    'basePrice',
+    'basePercentage',
+    'unitType'
+  ];
   /** DataSource for the Collateral Table */
   dataSource: MatTableDataSource<any>;
 
@@ -28,8 +33,8 @@ export class CollateralsComponent implements OnInit {
    * Retrieves the Collaterals data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { collaterals: any }) => {
+  constructor(private route: ActivatedRoute) {
+    this.route.data.subscribe((data: { collaterals: any }) => {
       this.collateralData = data.collaterals;
     });
   }
@@ -52,10 +57,9 @@ export class CollateralsComponent implements OnInit {
   /**
    * Initializes the data source, paginator and sorter for collateral table.
    */
-   setCollaterals() {
+  setCollaterals() {
     this.dataSource = new MatTableDataSource(this.collateralData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

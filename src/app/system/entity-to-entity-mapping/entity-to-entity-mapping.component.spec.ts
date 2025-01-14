@@ -8,9 +8,8 @@ describe('EntityToEntityMappingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EntityToEntityMappingComponent ]
-    })
-    .compileComponents();
+      declarations: [EntityToEntityMappingComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

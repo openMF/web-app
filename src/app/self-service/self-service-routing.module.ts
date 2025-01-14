@@ -48,7 +48,10 @@ const routes: Routes = [
             },
             {
               path: 'view/:id',
-              data: { title: 'View Self Service User', routeResolveBreadcrumb: ['user', 'username'] },
+              data: { title: 'View Self Service User', routeResolveBreadcrumb: [
+                  'user',
+                  'username'
+                ] },
               resolve: {
                 user: ViewUserResolver
               },
@@ -79,6 +82,7 @@ const routes: Routes = [
       ]
     }
   ])
+
 ];
 
 /**
@@ -93,4 +97,4 @@ const routes: Routes = [
     ViewUserResolver
   ]
 })
-export class SelfServiceRoutingModule { }
+export class SelfServiceRoutingModule {}

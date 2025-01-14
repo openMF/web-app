@@ -11,7 +11,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./asset-transfer-loan.component.scss']
 })
 export class AssetTransferLoanComponent implements OnInit {
-
   BUYBACK_COMMAND = 'buyback';
   SALE_COMMAND = 'sale';
 
@@ -25,16 +24,18 @@ export class AssetTransferLoanComponent implements OnInit {
   /** Sell Loan Form */
   saleLoanForm: UntypedFormGroup;
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private externalAssetOwnerService: ExternalAssetOwnerService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private settingsService: SettingsService) {
-      this.loanId = this.route.snapshot.params['loanId'];
-      const actionName = this.route.snapshot.params['action'];
-      this.command = (actionName === 'Sell Loan') ? this.SALE_COMMAND : this.BUYBACK_COMMAND;
-    }
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
+    const actionName = this.route.snapshot.params['action'];
+    this.command = actionName === 'Sell Loan' ? this.SALE_COMMAND : this.BUYBACK_COMMAND;
+  }
 
   /**
    * Creates the Sell Loan form
@@ -47,7 +48,7 @@ export class AssetTransferLoanComponent implements OnInit {
   }
 
   isBuyBack(): boolean {
-    return (this.command === this.BUYBACK_COMMAND);
+    return this.command === this.BUYBACK_COMMAND;
   }
 
   /**
@@ -55,10 +56,19 @@ export class AssetTransferLoanComponent implements OnInit {
    */
   createSaleLoanForm() {
     this.saleLoanForm = this.formBuilder.group({
-      'settlementDate': [this.settingsService.businessDate, Validators.required],
-      'purchasePriceRatio': ['', Validators.required],
-      'transferExternalId': '',
-      'ownerExternalId': ['', Validators.required]
+      settlementDate: [
+        this.settingsService.businessDate,
+        Validators.required
+      ],
+      purchasePriceRatio: [
+        '',
+        Validators.required
+      ],
+      transferExternalId: '',
+      ownerExternalId: [
+        '',
+        Validators.required
+      ]
     });
 
     if (this.isBuyBack()) {
@@ -80,11 +90,10 @@ export class AssetTransferLoanComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.externalAssetOwnerService.executeExternalAssetOwnerLoanCommand(this.loanId, data, this.command)
+    this.externalAssetOwnerService
+      .executeExternalAssetOwnerLoanCommand(this.loanId, data, this.command)
       .subscribe((response: any) => {
         this.router.navigate(['../../external-asset-owner'], { relativeTo: this.route });
-    });
-
+      });
   }
-
 }

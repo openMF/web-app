@@ -1,10 +1,9 @@
 import { FormfieldBase } from './formfield-base';
 
 export class CheckboxBase extends FormfieldBase {
-    controlType = 'checkbox';
+  controlType = 'checkbox';
 
-    constructor(options: any) {
-        super(options);
-    }
-
+  constructor(options: any) {
+    super(options);
+  }
 }

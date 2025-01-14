@@ -28,7 +28,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./view-charge.component.scss']
 })
 export class ViewChargeComponent {
-
   /** Charge data. */
   chargeData: any;
   /** Savings Account Data */
@@ -43,12 +42,14 @@ export class ViewChargeComponent {
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(private savingsService: SavingsService,
-              private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private router: Router,
-              public dialog: MatDialog,
-              private settingsService: SettingsService) {
+  constructor(
+    private savingsService: SavingsService,
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private router: Router,
+    public dialog: MatDialog,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { savingsAccountCharge: any }) => {
       this.chargeData = data.savingsAccountCharge;
     });
@@ -76,6 +77,7 @@ export class ViewChargeComponent {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: 'Pay Charge',
@@ -93,7 +95,8 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'pay', dataObject, this.chargeData.id)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'pay', dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -108,7 +111,8 @@ export class ViewChargeComponent {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: this.chargeData.id } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -120,10 +124,13 @@ export class ViewChargeComponent {
    * Inactivate's the charge
    */
   inactivateCharge() {
-    const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: this.chargeData.id } });
+    const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, {
+      data: { id: this.chargeData.id }
+    });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountChargesCommand(this.chargeData.accountId, 'inactivate', {}, this.chargeData.id)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'inactivate', {}, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -143,6 +150,7 @@ export class ViewChargeComponent {
         type: 'number',
         required: true
       })
+
     ];
     const data = {
       title: 'Edit Charge',
@@ -159,7 +167,8 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.savingsService.editSavingsAccountCharge(this.chargeData.accountId, dataObject, this.chargeData.id)
+        this.savingsService
+          .editSavingsAccountCharge(this.chargeData.accountId, dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -176,10 +185,9 @@ export class ViewChargeComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.savingsService.deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -198,9 +206,10 @@ export class ViewChargeComponent {
    */
   private reload() {
     const url: string = this.router.url.replace(`/${this.chargeData.id}`, '');
-    const refreshUrl: string = this.router.url.slice(0, this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length);
-    this.router.navigateByUrl(refreshUrl, {skipLocationChange: true})
-      .then(() => this.router.navigate([url]));
+    const refreshUrl: string = this.router.url.slice(
+      0,
+      this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length
+    );
+    this.router.navigateByUrl(refreshUrl, { skipLocationChange: true }).then(() => this.router.navigate([url]));
   }
-
 }

@@ -137,7 +137,7 @@ const routes: Routes = [
                 }
               ]
             }
-          ],
+          ]
         },
         {
           path: 'external-events',
@@ -149,7 +149,7 @@ const routes: Routes = [
               resolve: {
                 events: ManageExternalEventsResolver
               }
-            },
+            }
           ]
         },
         {
@@ -263,7 +263,7 @@ const routes: Routes = [
               component: ManageDataTablesComponent,
               resolve: {
                 dataTables: ManageDataTablesResolver
-              },
+              }
             },
             {
               path: 'create',
@@ -295,7 +295,7 @@ const routes: Routes = [
                 }
               ]
             }
-          ],
+          ]
         },
         {
           path: 'hooks',
@@ -365,7 +365,7 @@ const routes: Routes = [
                   path: '',
                   component: ViewRoleComponent,
                   resolve: {
-                    roledetails: ViewRoleResolver,
+                    roledetails: ViewRoleResolver
                   }
                 },
                 {
@@ -373,7 +373,7 @@ const routes: Routes = [
                   component: EditRoleComponent,
                   data: { title: 'Edit Role', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
-                    role: ViewRoleResolver,
+                    role: ViewRoleResolver
                   }
                 }
               ]
@@ -402,7 +402,7 @@ const routes: Routes = [
             {
               path: 'create',
               component: CreateSurveyComponent,
-              data: { title: 'Create Survey', breadcrumb: 'Create' },
+              data: { title: 'Create Survey', breadcrumb: 'Create' }
             },
             {
               path: ':id',
@@ -434,7 +434,7 @@ const routes: Routes = [
             {
               path: '',
               component: ManageJobsComponent,
-              resolve: {},
+              resolve: {}
             },
             {
               path: ':id',
@@ -461,11 +461,11 @@ const routes: Routes = [
                   data: { title: 'Scheduler Job History', breadcrumb: 'View History' },
                   resolve: {
                     jobsSchedulerHistory: ViewHistorySchedulerJobsResolver
-                  },
+                  }
                 }
               ]
             }
-          ],
+          ]
         },
         {
           path: 'configurations',
@@ -598,6 +598,7 @@ const routes: Routes = [
       ]
     }
   ])
+
 ];
 
 @NgModule({
@@ -637,4 +638,4 @@ const routes: Routes = [
     ViewHistorySchedulerJobsResolver
   ]
 })
-export class SystemRoutingModule { }
+export class SystemRoutingModule {}

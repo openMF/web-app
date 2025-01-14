@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./dividends-tab.component.scss']
 })
 export class DividendsTabComponent implements OnInit {
-
   /** Shares Account Data */
   shareAccountData: any;
   /** Dividends Data */
@@ -41,5 +40,4 @@ export class DividendsTabComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.dividendsData);
   }
-
 }

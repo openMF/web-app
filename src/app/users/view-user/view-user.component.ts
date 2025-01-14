@@ -19,7 +19,6 @@ import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog
   styleUrls: ['./view-user.component.scss']
 })
 export class ViewUserComponent {
-
   /** User Data. */
   userData: any;
 
@@ -30,10 +29,12 @@ export class ViewUserComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private usersService: UsersService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog) {
+  constructor(
+    private usersService: UsersService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { user: any }) => {
       this.userData = data.user;
     });
@@ -48,10 +49,9 @@ export class ViewUserComponent {
     });
     deleteUserDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.usersService.deleteUser(this.userData.id)
-          .subscribe(() => {
-            this.router.navigate(['/appusers']);
-          });
+        this.usersService.deleteUser(this.userData.id).subscribe(() => {
+          this.router.navigate(['/appusers']);
+        });
       }
     });
   }
@@ -69,12 +69,11 @@ export class ViewUserComponent {
         const password = response.password;
         const repeatPassword = response.repeatPassword;
         const firstname = this.userData.firstname;
-        const data = {password: password, repeatPassword: repeatPassword, firstname: firstname};
+        const data = { password: password, repeatPassword: repeatPassword, firstname: firstname };
         this.usersService.changePassword(this.userData.id, data).subscribe(() => {
           this.router.navigate(['/appusers']);
         });
       }
     });
   }
-
 }

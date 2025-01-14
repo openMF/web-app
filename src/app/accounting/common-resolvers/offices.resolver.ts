@@ -13,7 +13,6 @@ import { AccountingService } from '../accounting.service';
  */
 @Injectable()
 export class OfficesResolver implements Resolve<Object> {
-
   /**
    * @param {AccountingService} accountingService Accounting service.
    */
@@ -26,5 +25,4 @@ export class OfficesResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.accountingService.getOffices();
   }
-
 }

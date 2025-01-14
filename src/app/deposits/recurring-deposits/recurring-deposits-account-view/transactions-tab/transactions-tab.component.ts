@@ -16,7 +16,6 @@ import { SavingsAccountTransaction } from 'app/savings/models/savings-account-tr
   styleUrls: ['./transactions-tab.component.scss']
 })
 export class TransactionsTabComponent implements OnInit {
-
   /** Recurring Deposits Account Status */
   status: any;
   /** Transactions Data */
@@ -25,7 +24,16 @@ export class TransactionsTabComponent implements OnInit {
   hideAccrualsParam: UntypedFormControl;
   hideReversedParam: UntypedFormControl;
   /** Columns to be displayed in transactions table. */
-  displayedColumns: string[] = ['row', 'id', 'transactionDate', 'transactionType', 'debit', 'credit', 'balance', 'actions'];
+  displayedColumns: string[] = [
+    'row',
+    'id',
+    'transactionDate',
+    'transactionType',
+    'debit',
+    'credit',
+    'balance',
+    'actions'
+  ];
   /** Data source for transactions table. */
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -35,8 +43,10 @@ export class TransactionsTabComponent implements OnInit {
    * Retrieves recurring deposits account data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.transactionsData = data.recurringDepositsAccountData.transactions;
       this.status = data.recurringDepositsAccountData.status.value;
@@ -54,8 +64,12 @@ export class TransactionsTabComponent implements OnInit {
    * @param {any} transactionType Transaction Type
    */
   isDebit(transactionType: any) {
-    return transactionType.withdrawal === true || transactionType.feeDeduction === true
-      || transactionType.overdraftInterest === true || transactionType.withholdTax === true;
+    return (
+      transactionType.withdrawal === true ||
+      transactionType.feeDeduction === true ||
+      transactionType.overdraftInterest === true ||
+      transactionType.withholdTax === true
+    );
   }
 
   hideAccruals() {
@@ -71,7 +85,7 @@ export class TransactionsTabComponent implements OnInit {
 
     if (hideAccrual || hideReversed) {
       transactions = this.transactionsData.filter((t: SavingsAccountTransaction) => {
-        return (!(hideReversed && t.reversed) && !(hideAccrual && t.transactionType.accrual));
+        return !(hideReversed && t.reversed) && !(hideAccrual && t.transactionType.accrual);
       });
     }
     this.dataSource = new MatTableDataSource(transactions);
@@ -95,8 +109,14 @@ export class TransactionsTabComponent implements OnInit {
    * Checks transaction status.
    */
   checkStatus() {
-    if (this.status === 'Active' || this.status === 'Closed' || this.status === 'Transfer in progress' ||
-       this.status === 'Transfer on hold' || this.status === 'Premature Closed' || this.status === 'Matured') {
+    if (
+      this.status === 'Active' ||
+      this.status === 'Closed' ||
+      this.status === 'Transfer in progress' ||
+      this.status === 'Transfer on hold' ||
+      this.status === 'Premature Closed' ||
+      this.status === 'Matured'
+    ) {
       return true;
     }
     return false;
@@ -108,10 +128,11 @@ export class TransactionsTabComponent implements OnInit {
    */
   showTransactions(transactionsData: SavingsAccountTransaction) {
     if (transactionsData.transfer) {
-      this.router.navigate([`../transfer-funds/account-transfers/${transactionsData.transfer.id}`], { relativeTo: this.route });
+      this.router.navigate([`../transfer-funds/account-transfers/${transactionsData.transfer.id}`], {
+        relativeTo: this.route
+      });
     } else {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }
   }
-
 }

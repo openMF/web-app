@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-reciept.component.scss']
 })
 export class ViewRecieptComponent implements OnInit {
-
   /** trusted resource url for pentaho output */
   pentahoUrl: any;
   /** Transaction Reciept Data */
@@ -23,8 +22,10 @@ export class ViewRecieptComponent implements OnInit {
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {ActivatedRoute} route Activated Route
    */
-  constructor(private sanitizer: DomSanitizer,
-              private route: ActivatedRoute) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute
+  ) {
     this.route.data.subscribe((data: { loansTransactionReciept: any }) => {
       this.transactionRecieptData = data.loansTransactionReciept;
     });
@@ -32,9 +33,8 @@ export class ViewRecieptComponent implements OnInit {
 
   ngOnInit() {
     const contentType = this.transactionRecieptData.headers.get('Content-Type');
-    const file = new Blob([this.transactionRecieptData.body], {type: contentType});
+    const file = new Blob([this.transactionRecieptData.body], { type: contentType });
     const filecontent = URL.createObjectURL(file);
     this.pentahoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(filecontent);
   }
-
 }

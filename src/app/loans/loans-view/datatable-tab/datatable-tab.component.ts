@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./datatable-tab.component.scss']
 })
 export class DatatableTabComponent {
-
   entityId: string;
   /** Loan Datatable */
   entityDatatable: any = null;
@@ -26,5 +25,4 @@ export class DatatableTabComponent {
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
-
 }

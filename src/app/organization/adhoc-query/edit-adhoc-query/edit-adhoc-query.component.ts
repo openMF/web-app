@@ -15,7 +15,6 @@ import { OrganizationService } from '../../organization.service';
   styleUrls: ['./edit-adhoc-query.component.scss']
 })
 export class EditAdhocQueryComponent implements OnInit {
-
   /** Edit Adhoc Query form. */
   editAdhocQueryForm: UntypedFormGroup;
   /** Adhoc Query template data. */
@@ -30,10 +29,12 @@ export class EditAdhocQueryComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { adhocQueryAndTemplate: any }) => {
       this.adhocQueryTemplateData = data.adhocQueryAndTemplate;
     });
@@ -53,13 +54,28 @@ export class EditAdhocQueryComponent implements OnInit {
   createEditAdhocQueryForm() {
     this.reportRunFrequencyData = this.adhocQueryTemplateData.reportRunFrequencies;
     this.editAdhocQueryForm = this.formBuilder.group({
-      'name': [this.adhocQueryTemplateData.name, Validators.required],
-      'query': [this.adhocQueryTemplateData.query, Validators.required],
-      'tableName': [this.adhocQueryTemplateData.tableName, Validators.required],
-      'tableFields': [this.adhocQueryTemplateData.tableFields, Validators.required],
-      'email': [this.adhocQueryTemplateData.email, Validators.email],
-      'reportRunFrequency': [''],
-      'isActive': [this.adhocQueryTemplateData.isActive]
+      name: [
+        this.adhocQueryTemplateData.name,
+        Validators.required
+      ],
+      query: [
+        this.adhocQueryTemplateData.query,
+        Validators.required
+      ],
+      tableName: [
+        this.adhocQueryTemplateData.tableName,
+        Validators.required
+      ],
+      tableFields: [
+        this.adhocQueryTemplateData.tableFields,
+        Validators.required
+      ],
+      email: [
+        this.adhocQueryTemplateData.email,
+        Validators.email
+      ],
+      reportRunFrequency: [''],
+      isActive: [this.adhocQueryTemplateData.isActive]
     });
   }
 
@@ -67,9 +83,14 @@ export class EditAdhocQueryComponent implements OnInit {
    * Sets the conditional controls of the adhoc query form
    */
   setConditionalControls() {
-    this.editAdhocQueryForm.get('reportRunFrequency').valueChanges.subscribe(reportRunFrequencyId => {
+    this.editAdhocQueryForm.get('reportRunFrequency').valueChanges.subscribe((reportRunFrequencyId) => {
       if (reportRunFrequencyId === 5) {
-        this.editAdhocQueryForm.addControl('reportRunEvery', new UntypedFormControl('', [Validators.required, Validators.min(1)]));
+        this.editAdhocQueryForm.addControl(
+          'reportRunEvery',
+          new UntypedFormControl('', [
+            Validators.required,
+            Validators.min(1)])
+        );
         this.editAdhocQueryForm.get('reportRunEvery').patchValue(this.adhocQueryTemplateData.reportRunEvery);
       } else {
         this.editAdhocQueryForm.removeControl('reportRunEvery');
@@ -83,9 +104,10 @@ export class EditAdhocQueryComponent implements OnInit {
    * if successful redirects to view adhoc query.
    */
   submit() {
-    this.organizationService.updateAdhocQuery(this.adhocQueryTemplateData.id, this.editAdhocQueryForm.value).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .updateAdhocQuery(this.adhocQueryTemplateData.id, this.editAdhocQueryForm.value)
+      .subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
-
 }

@@ -16,7 +16,6 @@ import { GLAccount } from 'app/shared/models/general.model';
   styleUrls: ['./edit-financial-activity-mapping.component.scss']
 })
 export class EditFinancialActivityMappingComponent implements OnInit {
-
   /** Financial activity mapping form. */
   financialActivityMappingForm: UntypedFormGroup;
   /** GL Account options. */
@@ -39,10 +38,12 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuider: UntypedFormBuilder,
-              private accountingService: AccountingService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuider: UntypedFormBuilder,
+    private accountingService: AccountingService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { financialActivityAccountAndTemplate: any }) => {
       this.financialActivityAccountId = data.financialActivityAccountAndTemplate.id;
       console.log(data.financialActivityAccountAndTemplate.financialActivityData);
@@ -68,8 +69,14 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    */
   createFinancialActivityMappingForm() {
     this.financialActivityMappingForm = this.formBuider.group({
-      'financialActivityId': ['', Validators.required],
-      'glAccountId': ['', Validators.required]
+      financialActivityId: [
+        '',
+        Validators.required
+      ],
+      glAccountId: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -77,21 +84,23 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * Sets the gl account data on the basis of selected financial activity.
    */
   setGLAccountData() {
-    this.financialActivityMappingForm.get('financialActivityId').valueChanges
-      .subscribe(financialActivityId => {
-        switch (financialActivityId) {
-          case 100:
-          case 101:
-          case 102:
-          case 103: this.glAccountData = this.glAccountOptions.assetAccountOptions;
+    this.financialActivityMappingForm.get('financialActivityId').valueChanges.subscribe((financialActivityId) => {
+      switch (financialActivityId) {
+        case 100:
+        case 101:
+        case 102:
+        case 103:
+          this.glAccountData = this.glAccountOptions.assetAccountOptions;
           break;
-          case 200:
-          case 201: this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
+        case 200:
+        case 201:
+          this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
           break;
-          case 300: this.glAccountData = this.glAccountOptions.equityAccountOptions;
+        case 300:
+          this.glAccountData = this.glAccountOptions.equityAccountOptions;
           break;
-        }
-      });
+      }
+    });
   }
 
   /**
@@ -99,10 +108,16 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * if successful redirects to view updated account.
    */
   submit() {
-    this.accountingService.updateFinancialActivityAccount(this.financialActivityAccountId, this.financialActivityMappingForm.value)
+    this.accountingService
+      .updateFinancialActivityAccount(this.financialActivityAccountId, this.financialActivityMappingForm.value)
       .subscribe((response: any) => {
-        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
-    });
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
-
 }

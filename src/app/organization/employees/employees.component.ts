@@ -21,11 +21,15 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
   styleUrls: ['./employees.component.scss']
 })
 export class EmployeesComponent implements OnInit, AfterViewInit {
-
   /** Employees data. */
   employeesData: any;
   /** Columns to be displayed in employees table. */
-  displayedColumns: string[] = ['displayName', 'isLoanOfficer', 'officeName', 'isActive'];
+  displayedColumns: string[] = [
+    'displayName',
+    'isLoanOfficer',
+    'officeName',
+    'isActive'
+  ];
   /** Data source for employees table. */
   dataSource: MatTableDataSource<any>;
 
@@ -50,11 +54,13 @@ export class EmployeesComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) {
-    this.route.data.subscribe(( data: { employees: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {
+    this.route.data.subscribe((data: { employees: any }) => {
       this.employeesData = data.employees;
     });
   }
@@ -90,7 +96,12 @@ export class EmployeesComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -100,12 +111,12 @@ export class EmployeesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showEmployeeList === true) {
       setTimeout(() => {
-          this.showPopover(this.templateButtonImportEmployees, this.buttonImportEmployees.nativeElement, 'bottom', true);
+        this.showPopover(this.templateButtonImportEmployees, this.buttonImportEmployees.nativeElement, 'bottom', true);
       });
     }
     if (this.configurationWizardService.showEmployeeTable === true) {
       setTimeout(() => {
-          this.showPopover(this.templateTableEmployees, this.tableEmployees.nativeElement, 'top', true);
+        this.showPopover(this.templateTableEmployees, this.tableEmployees.nativeElement, 'top', true);
       });
     }
   }
@@ -129,5 +140,4 @@ export class EmployeesComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showCreateEmployee = true;
     this.router.navigate(['/organization']);
   }
-
 }

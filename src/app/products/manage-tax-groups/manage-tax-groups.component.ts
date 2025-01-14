@@ -17,7 +17,6 @@ import { of } from 'rxjs';
   styleUrls: ['./manage-tax-groups.component.scss']
 })
 export class ManageTaxGroupsComponent implements OnInit {
-
   /** Tax Groups data. */
   taxGroupsData: any;
   /** Columns to be displayed in tax groups table. */
@@ -35,7 +34,7 @@ export class ManageTaxGroupsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { taxGroups: any }) => {
+    this.route.data.subscribe((data: { taxGroups: any }) => {
       this.taxGroupsData = data.taxGroups;
     });
   }
@@ -63,5 +62,4 @@ export class ManageTaxGroupsComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

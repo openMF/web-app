@@ -12,8 +12,10 @@ export class ManageJobsComponent {
   /** Process running flag */
   isCatchUpRunning = true;
 
-  constructor(private systemService: SystemService,
-    private translateService: TranslateService) { }
+  constructor(
+    private systemService: SystemService,
+    private translateService: TranslateService
+  ) {}
 
   onJobTabChange(event: MatTabChangeEvent) {
     if (event.index === 2) {
@@ -26,5 +28,4 @@ export class ManageJobsComponent {
   title(label: string) {
     return this.translateService.instant('labels.inputs.' + label);
   }
-
 }

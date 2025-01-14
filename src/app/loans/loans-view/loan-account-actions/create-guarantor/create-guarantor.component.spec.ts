@@ -8,9 +8,8 @@ describe('CreateGuarantorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateGuarantorComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateGuarantorComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -19,5 +19,4 @@ export class GeneralTabComponent {
       this.sharesAccountData = data.sharesAccountData;
     });
   }
-
 }

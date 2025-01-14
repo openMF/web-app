@@ -15,7 +15,6 @@ import { GroupsService } from 'app/groups/groups.service';
   styleUrls: ['./group-assign-staff.component.scss']
 })
 export class GroupAssignStaffComponent implements OnInit {
-
   /** Group Assign Staff form. */
   groupAssignStaffForm: UntypedFormGroup;
   /** Staff Data */
@@ -30,10 +29,12 @@ export class GroupAssignStaffComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private groupsService: GroupsService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private groupsService: GroupsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
     });
@@ -49,7 +50,7 @@ export class GroupAssignStaffComponent implements OnInit {
    */
   createGroupAssignStaffForm() {
     this.groupAssignStaffForm = this.formBuilder.group({
-      'staffId': ['']
+      staffId: ['']
     });
   }
 
@@ -57,10 +58,10 @@ export class GroupAssignStaffComponent implements OnInit {
    * Submits the form and assigns staff for the group.
    */
   submit() {
-    this.groupsService.executeGroupCommand(this.groupData.id, 'assignStaff', this.groupAssignStaffForm.value)
+    this.groupsService
+      .executeGroupCommand(this.groupData.id, 'assignStaff', this.groupAssignStaffForm.value)
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });
   }
-
 }

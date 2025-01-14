@@ -8,9 +8,8 @@ describe('StaffAssignmentHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StaffAssignmentHistoryComponent ]
-    })
-    .compileComponents();
+      declarations: [StaffAssignmentHistoryComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

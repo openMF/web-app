@@ -1,4 +1,4 @@
- /** Angular Imports */
+/** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -14,11 +14,16 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./dividends.component.scss']
 })
 export class ShareProductsDividendsComponent implements OnInit {
-
   /** Dividends data. */
   dividendData: any;
   /** Columns to be displayed in dividends table. */
-  displayedColumns: string[] = ['name', 'dividendPeriodStartDate', 'dividendPeriodEndDate', 'amount', 'status'];
+  displayedColumns: string[] = [
+    'name',
+    'dividendPeriodStartDate',
+    'dividendPeriodEndDate',
+    'amount',
+    'status'
+  ];
   /** Data source for accounting rules table. */
   dataSource: MatTableDataSource<any>;
 
@@ -31,12 +36,14 @@ export class ShareProductsDividendsComponent implements OnInit {
    * Retrieves the dividends data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
-    this.route.data.subscribe((data: {dividends: any}) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.route.data.subscribe((data: { dividends: any }) => {
       this.dividendData = data.dividends.pageItems;
     });
-   }
+  }
 
   /**
    * Sets the dividends table.
@@ -66,5 +73,4 @@ export class ShareProductsDividendsComponent implements OnInit {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }

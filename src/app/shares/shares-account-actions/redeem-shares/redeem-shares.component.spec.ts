@@ -8,9 +8,8 @@ describe('RedeemSharesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RedeemSharesComponent ]
-    })
-    .compileComponents();
+      declarations: [RedeemSharesComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

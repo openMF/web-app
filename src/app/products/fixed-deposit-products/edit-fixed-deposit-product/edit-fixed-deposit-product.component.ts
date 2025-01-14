@@ -22,14 +22,20 @@ import { Accounting } from 'app/core/utils/accounting';
   styleUrls: ['./edit-fixed-deposit-product.component.scss']
 })
 export class EditFixedDepositProductComponent {
-
-  @ViewChild(FixedDepositProductDetailsStepComponent, { static: true }) fixedDepositProductDetailsStep: FixedDepositProductDetailsStepComponent;
-  @ViewChild(FixedDepositProductCurrencyStepComponent, { static: true }) fixedDepositProductCurrencyStep: FixedDepositProductCurrencyStepComponent;
-  @ViewChild(FixedDepositProductTermsStepComponent, { static: true }) fixedDepositProductTermsStep: FixedDepositProductTermsStepComponent;
-  @ViewChild(FixedDepositProductSettingsStepComponent, { static: true }) fixedDepositProductSettingsStep: FixedDepositProductSettingsStepComponent;
-  @ViewChild(FixedDepositProductInterestRateChartStepComponent, { static: true }) fixedDepositProductInterestRateChartStep: FixedDepositProductInterestRateChartStepComponent;
-  @ViewChild(FixedDepositProductChargesStepComponent, { static: true }) fixedDepositProductChargesStep: FixedDepositProductChargesStepComponent;
-  @ViewChild(FixedDepositProductAccountingStepComponent, { static: true }) fixedDepositProductAccountingStep: FixedDepositProductAccountingStepComponent;
+  @ViewChild(FixedDepositProductDetailsStepComponent, { static: true })
+  fixedDepositProductDetailsStep: FixedDepositProductDetailsStepComponent;
+  @ViewChild(FixedDepositProductCurrencyStepComponent, { static: true })
+  fixedDepositProductCurrencyStep: FixedDepositProductCurrencyStepComponent;
+  @ViewChild(FixedDepositProductTermsStepComponent, { static: true })
+  fixedDepositProductTermsStep: FixedDepositProductTermsStepComponent;
+  @ViewChild(FixedDepositProductSettingsStepComponent, { static: true })
+  fixedDepositProductSettingsStep: FixedDepositProductSettingsStepComponent;
+  @ViewChild(FixedDepositProductInterestRateChartStepComponent, { static: true })
+  fixedDepositProductInterestRateChartStep: FixedDepositProductInterestRateChartStepComponent;
+  @ViewChild(FixedDepositProductChargesStepComponent, { static: true })
+  fixedDepositProductChargesStep: FixedDepositProductChargesStepComponent;
+  @ViewChild(FixedDepositProductAccountingStepComponent, { static: true })
+  fixedDepositProductAccountingStep: FixedDepositProductAccountingStepComponent;
 
   fixedDepositProductsTemplate: any;
   accountingRuleData: string[] = [];
@@ -41,11 +47,13 @@ export class EditFixedDepositProductComponent {
    * @param {SettingsService} settingsService Settings Service
    */
 
-  constructor(private route: ActivatedRoute,
-              private productsService: ProductsService,
-              private router: Router,
-              private settingsService: SettingsService,
-              private accounting: Accounting) {
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private router: Router,
+    private settingsService: SettingsService,
+    private accounting: Accounting
+  ) {
     this.route.data.subscribe((data: { fixedDepositProductAndTemplate: any }) => {
       this.fixedDepositProductsTemplate = data.fixedDepositProductAndTemplate;
     });
@@ -84,14 +92,12 @@ export class EditFixedDepositProductComponent {
       this.fixedDepositProductSettingsForm.valid &&
       this.fixedDepositProductInterestRateChartForm.valid &&
       this.fixedDepositProductAccountingForm.valid &&
-      (
-        this.fixedDepositProductDetailsForm.pristine ||
+      (this.fixedDepositProductDetailsForm.pristine ||
         this.fixedDepositProductCurrencyForm.pristine ||
         this.fixedDepositProductTermsForm.pristine ||
         this.fixedDepositProductSettingsForm.pristine ||
         this.fixedDepositProductInterestRateChartForm.pristine ||
-        this.fixedDepositProductAccountingForm.pristine
-      )
+        this.fixedDepositProductAccountingForm.pristine)
     );
   }
 
@@ -129,10 +135,10 @@ export class EditFixedDepositProductComponent {
     fixedDepositProduct.charts = charts;
 
     delete fixedDepositProduct.advancedAccountingRules;
-    this.productsService.updateFixedDepositProduct(this.fixedDepositProductsTemplate.id, fixedDepositProduct)
+    this.productsService
+      .updateFixedDepositProduct(this.fixedDepositProductsTemplate.id, fixedDepositProduct)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
-
 }

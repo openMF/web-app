@@ -29,7 +29,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./charges-tab.component.scss']
 })
 export class ChargesTabComponent implements OnInit {
-
   /** Recurring Deposits Account Data */
   recurringDepositsAccountData: any;
   /** Charges Data */
@@ -60,13 +59,15 @@ export class ChargesTabComponent implements OnInit {
    * Retrieves Recurring Deposits Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private savingsService: SavingsService,
     private dateUtils: Dates,
     private router: Router,
     public dialog: MatDialog,
     private translateService: TranslateService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.chargesData = this.recurringDepositsAccountData.charges;
@@ -74,7 +75,7 @@ export class ChargesTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    const activeCharges = this.chargesData ? this.chargesData.filter(charge => charge.isActive) : [];
+    const activeCharges = this.chargesData ? this.chargesData.filter((charge) => charge.isActive) : [];
     this.dataSource = new MatTableDataSource(activeCharges);
   }
 
@@ -98,6 +99,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'date',
         required: true
       })
+
     ];
     const data = {
       title: `Pay Charge ${chargeId}`,
@@ -115,7 +117,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService.executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'paycharge', dataObject, chargeId)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'paycharge', dataObject, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -128,12 +131,18 @@ export class ChargesTabComponent implements OnInit {
    * @param {any} chargeId Charge Id
    */
   waiveCharge(chargeId: any) {
-    const waiveChargeDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent,
-      { data: { heading: this.translateService.instant('labels.heading.Waive Charge'),
-      dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id: ') + `${chargeId} ?` } });
+    const waiveChargeDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
+      data: {
+        heading: this.translateService.instant('labels.heading.Waive Charge'),
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id: ') +
+          `${chargeId} ?`
+      }
+    });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'waive', {}, chargeId)
+        this.savingsService
+          .executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'waive', {}, chargeId)
           .subscribe(() => {
             this.reload();
           });
@@ -154,6 +163,7 @@ export class ChargesTabComponent implements OnInit {
         type: 'number',
         required: true
       })
+
     ];
     const data = {
       title: `Edit Charge ${charge.id}`,
@@ -170,7 +180,8 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.savingsService.editSavingsAccountCharge(this.recurringDepositsAccountData.id, dataObject, charge.id)
+        this.savingsService
+          .editSavingsAccountCharge(this.recurringDepositsAccountData.id, dataObject, charge.id)
           .subscribe(() => {
             this.reload();
           });
@@ -188,10 +199,9 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.recurringDepositsAccountData.id, chargeId)
-          .subscribe(() => {
-            this.reload();
-          });
+        this.savingsService.deleteSavingsAccountCharge(this.recurringDepositsAccountData.id, chargeId).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -211,8 +221,8 @@ export class ChargesTabComponent implements OnInit {
   private reload() {
     const clientId = this.recurringDepositsAccountData.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/recurring-deposits-accounts`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/clients/${clientId}/recurring-deposits-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

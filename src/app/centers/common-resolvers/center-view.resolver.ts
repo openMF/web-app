@@ -13,19 +13,17 @@ import { CentersService } from '../centers.service';
  */
 @Injectable()
 export class CenterViewResolver implements Resolve<Object> {
+  /**
+   * @param {CentersService} CentersService Centers service.
+   */
+  constructor(private centersService: CentersService) {}
 
-    /**
-     * @param {CentersService} CentersService Centers service.
-     */
-    constructor(private centersService: CentersService) { }
-
-    /**
-     * Returns the Centers data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const centerId = route.paramMap.get('centerId');
-        return this.centersService.getCenterData(centerId);
-    }
-
+  /**
+   * Returns the Centers data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const centerId = route.paramMap.get('centerId');
+    return this.centersService.getCenterData(centerId);
+  }
 }

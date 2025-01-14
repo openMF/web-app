@@ -7,8 +7,5 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./session-timeout-dialog.component.scss']
 })
 export class SessionTimeoutDialogComponent {
-
-  constructor(public dialogRef: MatDialogRef<SessionTimeoutDialogComponent>) {
-  }
-
+  constructor(public dialogRef: MatDialogRef<SessionTimeoutDialogComponent>) {}
 }

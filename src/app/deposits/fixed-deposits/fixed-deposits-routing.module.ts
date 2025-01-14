@@ -41,7 +41,7 @@ const routes: Routes = [
         path: ':fixedDepositAccountId',
         data: { title: 'Fixed Deposit Account View', routeParamBreadcrumb: 'fixedDepositAccountId' },
         resolve: {
-          fixedDepositsAccountData: FixedDepositsAccountViewResolver,
+          fixedDepositsAccountData: FixedDepositsAccountViewResolver
         },
         children: [
           {
@@ -60,17 +60,25 @@ const routes: Routes = [
               {
                 path: 'general',
                 component: GeneralTabComponent,
-                data: { title: 'Fixed Deposit Account Details', breadcrumb: 'General', routeParamBreadcrumb: false },
+                data: { title: 'Fixed Deposit Account Details', breadcrumb: 'General', routeParamBreadcrumb: false }
               },
               {
                 path: 'interest-rate-chart',
                 component: InterestRateChartTabComponent,
-                data: { title: 'Fixed Deposit Account Interest Rate Chart', breadcrumb: 'Interest Rate Chart', routeParamBreadcrumb: false },
+                data: {
+                  title: 'Fixed Deposit Account Interest Rate Chart',
+                  breadcrumb: 'Interest Rate Chart',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'transactions',
                 component: TransactionsTabComponent,
-                data: { title: 'Fixed Deposit Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+                data: {
+                  title: 'Fixed Deposit Account Transactions',
+                  breadcrumb: 'Transactions',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'charges',
@@ -80,7 +88,11 @@ const routes: Routes = [
               {
                 path: 'standing-instructions',
                 component: StandingInstructionsTabComponent,
-                data: { title: 'Fixed Deposit Account Standing Instructions', breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
+                data: {
+                  title: 'Fixed Deposit Account Standing Instructions',
+                  breadcrumb: 'Standing Instructions',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'datatables',
@@ -107,15 +119,21 @@ const routes: Routes = [
           },
           {
             path: 'transactions',
-            data: { title: 'Fixed Deposits Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            data: {
+              title: 'Fixed Deposits Account Transactions',
+              breadcrumb: 'Transactions',
+              routeParamBreadcrumb: false
+            },
             children: [
               {
                 path: '',
-                redirectTo: '../transactions', pathMatch: 'prefix'
+                redirectTo: '../transactions',
+                pathMatch: 'prefix'
               },
               {
                 path: 'account-transfers',
-                loadChildren: () => import('../../account-transfers/account-transfers.module').then(m => m.AccountTransfersModule)
+                loadChildren: () =>
+                  import('../../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
               },
               {
                 path: ':id',
@@ -159,4 +177,4 @@ const routes: Routes = [
     FixedDepositsAccountAndTemplateResolver
   ]
 })
-export class FixedDepositsRoutingModule { }
+export class FixedDepositsRoutingModule {}

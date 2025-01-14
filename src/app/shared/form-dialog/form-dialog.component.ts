@@ -14,14 +14,13 @@ const layoutGap = 2;
   styleUrls: ['./form-dialog.component.scss']
 })
 export class FormDialogComponent implements OnInit {
-
   layout: {
-    columns: number,
-    columnWidth?: number,
-    flex?: number,
-    gap?: number,
-    cancelButtonText?: string,
-    addButtonText?: string
+    columns: number;
+    columnWidth?: number;
+    flex?: number;
+    gap?: number;
+    cancelButtonText?: string;
+    addButtonText?: string;
   } = {
     columns: 1,
     columnWidth: 400,
@@ -34,15 +33,19 @@ export class FormDialogComponent implements OnInit {
   formfields: FormfieldBase[];
   pristine: boolean;
 
-  constructor(public dialogRef: MatDialogRef<FormDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
-              private formGroupService: FormGroupService) {
+  constructor(
+    public dialogRef: MatDialogRef<FormDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private formGroupService: FormGroupService
+  ) {
     this.dialogRef.disableClose = data.disableClose !== undefined ? data.disableClose : true;
-    this.formfields = data.formfields.sort((formfieldA: FormfieldBase, formfieldB: FormfieldBase) => formfieldA.order - formfieldB.order);
+    this.formfields = data.formfields.sort(
+      (formfieldA: FormfieldBase, formfieldB: FormfieldBase) => formfieldA.order - formfieldB.order
+    );
     this.pristine = data.pristine !== undefined ? data.pristine : true;
     this.layout = { ...this.layout, ...data.layout };
     this.layout.gap = this.layout.columns > 1 ? layoutGap : 0;
-    this.layout.flex = (this.layout.flex / this.layout.columns) - this.layout.gap;
+    this.layout.flex = this.layout.flex / this.layout.columns - this.layout.gap;
   }
 
   ngOnInit() {
@@ -52,5 +55,4 @@ export class FormDialogComponent implements OnInit {
       this.form.markAsDirty();
     }
   }
-
 }

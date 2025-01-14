@@ -25,7 +25,6 @@ import { AlertService } from 'app/core/alert/alert.service';
   styleUrls: ['./run-report.component.scss']
 })
 export class RunReportComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -51,9 +50,9 @@ export class RunReportComponent implements OnInit {
   isCollapsed = false;
   /** Toggles  Table output. */
   hideTable = true;
-   /** Toggles Chart output */
+  /** Toggles Chart output */
   hideChart = true;
-   /** Toggles Pentaho output */
+  /** Toggles Pentaho output */
   hidePentaho = true;
   /** Report uses dates */
   reportUsesDates = false;
@@ -71,17 +70,19 @@ export class RunReportComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(private route: ActivatedRoute,
-              private reportsService: ReportsService,
-              private settingsService: SettingsService,
-              private alertService: AlertService,
-              private dateUtils: Dates) {
+  constructor(
+    private route: ActivatedRoute,
+    private reportsService: ReportsService,
+    private settingsService: SettingsService,
+    private alertService: AlertService,
+    private dateUtils: Dates
+  ) {
     this.report.name = this.route.snapshot.params['name'];
-    this.route.queryParams.subscribe((queryParams: { type: any, id: any }) => {
+    this.route.queryParams.subscribe((queryParams: { type: any; id: any }) => {
       this.report.type = queryParams.type;
       this.report.id = queryParams.id;
     });
-    this.route.data.subscribe((data: { reportParameters: ReportParameter[], configurations: any }) => {
+    this.route.data.subscribe((data: { reportParameters: ReportParameter[]; configurations: any }) => {
       this.paramData = data.reportParameters;
       if (this.isTableReport()) {
         data.configurations.globalConfiguration.forEach((config: GlobalConfiguration) => {
@@ -95,11 +96,11 @@ export class RunReportComponent implements OnInit {
   }
 
   isTableReport(): boolean {
-    return (this.report.type === 'Table');
+    return this.report.type === 'Table';
   }
 
   isPentahoReport(): boolean {
-    return (this.report.type === 'Pentaho');
+    return this.report.type === 'Pentaho';
   }
 
   /**
@@ -115,30 +116,30 @@ export class RunReportComponent implements OnInit {
    * Fetches dropdown options and builds child dependencies.
    */
   createRunReportForm() {
-    this.paramData.forEach(
-      (param: ReportParameter) => {
-        if (!param.parentParameterName) { // Non Child Parameter
-          this.reportForm.addControl(param.name, new UntypedFormControl('', Validators.required));
-          if (param.displayType === 'select') {
-            this.fetchSelectOptions(param, param.name);
-          }
-        } else { // Child Parameter
-          const parent: ReportParameter = this.paramData
-            .find((entry: any) => entry.name === param.parentParameterName);
-          if (parent != null) {
-            parent.childParameters.push(param);
-            this.updateParentParameters(parent);
-          }
+    this.paramData.forEach((param: ReportParameter) => {
+      if (!param.parentParameterName) {
+        // Non Child Parameter
+        this.reportForm.addControl(param.name, new UntypedFormControl('', Validators.required));
+        if (param.displayType === 'select') {
+          this.fetchSelectOptions(param, param.name);
         }
-      });
+      } else {
+        // Child Parameter
+        const parent: ReportParameter = this.paramData.find((entry: any) => entry.name === param.parentParameterName);
+        if (parent != null) {
+          parent.childParameters.push(param);
+          this.updateParentParameters(parent);
+        }
+      }
+    });
     if (this.isPentahoReport()) {
       this.reportForm.addControl('outputType', new UntypedFormControl('', Validators.required));
       this.outputTypeOptions = [
-        { 'name': 'PDF format', 'value': 'PDF' },
-        { 'name': 'Normal format', 'value': 'HTML' },
-        { 'name': 'Excel format', 'value': 'XLS' },
-        { 'name': 'Excel 2007 format', 'value': 'XLSX' },
-        { 'name': 'CSV format', 'value': 'CSV' }
+        { name: 'PDF format', value: 'PDF' },
+        { name: 'Normal format', value: 'HTML' },
+        { name: 'Excel format', value: 'XLS' },
+        { name: 'Excel 2007 format', value: 'XLSX' },
+        { name: 'CSV format', value: 'CSV' }
       ];
       this.mapPentahoParams();
     }
@@ -154,10 +155,12 @@ export class RunReportComponent implements OnInit {
    * @param {ReportParameter} parent Parent report parameter
    */
   updateParentParameters(parent: ReportParameter) {
-    const parentNames = this.parentParameters.map(parameter => parameter.name);
-    if (!parentNames.includes(parent.name)) { // Parent's first child.
+    const parentNames = this.parentParameters.map((parameter) => parameter.name);
+    if (!parentNames.includes(parent.name)) {
+      // Parent's first child.
       this.parentParameters.push(parent);
-    } else { // Parent already has a child
+    } else {
+      // Parent already has a child
       const index = parentNames.indexOf(parent.name);
       this.parentParameters[index] = parent;
     }
@@ -169,8 +172,7 @@ export class RunReportComponent implements OnInit {
   mapPentahoParams() {
     this.reportsService.getPentahoParams(this.report.id).subscribe((data: any) => {
       data.forEach((entry: any) => {
-        const param: ReportParameter = this.paramData
-         .find((_entry: any) => _entry.name === entry.parameterName);
+        const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
         param.pentahoName = `R_${entry.reportParameterName}`;
       });
     });
@@ -206,7 +208,7 @@ export class RunReportComponent implements OnInit {
     this.reportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
       param.selectOptions = options;
       if (param.selectAll === 'Y') {
-        param.selectOptions.push({id: '-1', name: 'All'});
+        param.selectOptions.push({ id: '-1', name: 'All' });
       }
     });
   }
@@ -219,7 +221,10 @@ export class RunReportComponent implements OnInit {
     const formattedResponse: any = {};
     let newKey: string;
     this.reportToBeExportedInRepository = false;
-    for (const [key, value] of Object.entries(response)) {
+    for (const [
+      key,
+      value
+    ] of Object.entries(response)) {
       if (key === 'outputType') {
         formattedResponse['output-type'] = value;
         continue;
@@ -228,8 +233,7 @@ export class RunReportComponent implements OnInit {
         continue;
       }
 
-      const param: ReportParameter = this.paramData
-        .find((_entry: any) => _entry.name === key);
+      const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === key);
       newKey = this.isPentahoReport() ? param.pentahoName : param.inputName;
       switch (param.displayType) {
         case 'text':
@@ -261,7 +265,7 @@ export class RunReportComponent implements OnInit {
     this.isCollapsed = true;
     const userResponseValues = this.formatUserResponse(this.reportForm.value);
     let formData = {
-      ...userResponseValues,
+      ...userResponseValues
     };
     if (this.reportUsesDates) {
       let dateFormat = this.settingsService.dateFormat;
@@ -286,13 +290,13 @@ export class RunReportComponent implements OnInit {
       case 'SMS':
       case 'Table':
         this.hideTable = false;
-       break;
+        break;
       case 'Chart':
         this.hideChart = false;
-       break;
+        break;
       case 'Pentaho':
         this.hidePentaho = false;
-       break;
+        break;
     }
   }
 
@@ -304,13 +308,12 @@ export class RunReportComponent implements OnInit {
     const reportName = this.report.name;
     const payload = {
       ...userResponseValues,
-      decimalChoice: this.decimalChoice.value,
+      decimalChoice: this.decimalChoice.value
       // exportCSV: true
     };
-    this.reportsService.getRunReportData(reportName, payload)
-    .subscribe( (res: any) => {
+    this.reportsService.getRunReportData(reportName, payload).subscribe((res: any) => {
       if (res.data.length > 0) {
-        this.alertService.alert({type: 'Report generation', message: `Report: ${reportName} data generated`});
+        this.alertService.alert({ type: 'Report generation', message: `Report: ${reportName} data generated` });
 
         const displayedColumns: string[] = [];
         res.columnHeaders.forEach((header: any) => {
@@ -319,7 +322,7 @@ export class RunReportComponent implements OnInit {
 
         this.exportToXLS(reportName, res.data, displayedColumns);
       } else {
-        this.alertService.alert({type: 'Report generation', message: `Report: ${reportName} without data generated`});
+        this.alertService.alert({ type: 'Report generation', message: `Report: ${reportName} without data generated` });
       }
       this.isProcessing = false;
     });
@@ -334,10 +337,9 @@ export class RunReportComponent implements OnInit {
       }
       return row;
     });
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, {header: displayedColumns});
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data, { header: displayedColumns });
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'report');
     XLSX.writeFile(wb, fileName);
   }
-
 }

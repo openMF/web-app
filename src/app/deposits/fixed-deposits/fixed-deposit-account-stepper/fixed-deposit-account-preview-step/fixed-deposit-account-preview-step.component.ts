@@ -13,12 +13,11 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     trigger('expandChartSlab', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-    ])
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
+
   ]
 })
 export class FixedDepositAccountPreviewStepComponent implements OnChanges {
-
   /** Fixed Deposits Account Template */
   @Input() fixedDepositsAccountTemplate: any;
   /** Fixed Deposits Account Product Template */
@@ -27,13 +26,33 @@ export class FixedDepositAccountPreviewStepComponent implements OnChanges {
   @Input() fixedDepositAccountData: any;
 
   /** Charges Displayed Columns */
-  chargesDisplayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date', 'repaymentsEvery'];
+  chargesDisplayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'date',
+    'repaymentsEvery'
+  ];
   /** Interest Rate Chart Data */
   interestRateChartData: any = [];
   /** Columns to be displayed in interest rate chart table. */
-  chartSlabsDisplayedColumns: any[] = ['period', 'amountRange', 'interest', 'description', 'actions'];
+  chartSlabsDisplayedColumns: any[] = [
+    'period',
+    'amountRange',
+    'interest',
+    'description',
+    'actions'
+  ];
   /** Columns to be displayed in incentives sub-table. */
-  incentivesDisplayedColumns: string[] = ['entityType', 'attributeName', 'conditionType', 'attributeValue', 'incentiveType', 'amount'];
+  incentivesDisplayedColumns: string[] = [
+    'entityType',
+    'attributeName',
+    'conditionType',
+    'attributeValue',
+    'incentiveType',
+    'amount'
+  ];
   /** Additional Column to disblac incentives table  */
   chartSlabsIncentivesDisplayedColumns: string[] = ['incentives'];
   /** Expand Chart Slab Index used in the view */
@@ -42,12 +61,11 @@ export class FixedDepositAccountPreviewStepComponent implements OnChanges {
   /** Form submission event */
   @Output() submitEvent = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges() {
     if (this.fixedDepositsAccountProductTemplate) {
       this.interestRateChartData = this.fixedDepositsAccountProductTemplate.accountChart.chartSlabs;
     }
   }
-
 }

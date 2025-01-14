@@ -13,7 +13,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./loan-product-details-step.component.scss']
 })
 export class LoanProductDetailsStepComponent implements OnInit {
-
   @Input() loanProductsTemplate: any;
 
   loanProductDetailsForm: UntypedFormGroup;
@@ -29,9 +28,11 @@ export class LoanProductDetailsStepComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(private formBuilder: UntypedFormBuilder,
-              private dateUtils: Dates,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private dateUtils: Dates,
+    private settingsService: SettingsService
+  ) {
     this.createLoanProductDetailsForm();
   }
 
@@ -39,27 +40,33 @@ export class LoanProductDetailsStepComponent implements OnInit {
     this.fundData = this.loanProductsTemplate.fundOptions;
 
     this.loanProductDetailsForm.patchValue({
-      'name': this.loanProductsTemplate.name,
-      'shortName': this.loanProductsTemplate.shortName,
-      'description': this.loanProductsTemplate.description,
-      'externalId': this.loanProductsTemplate.externalId,
-      'fundId': this.loanProductsTemplate.fundId,
-      'startDate': this.loanProductsTemplate.startDate && new Date(this.loanProductsTemplate.startDate),
-      'closeDate': this.loanProductsTemplate.closeDate && new Date(this.loanProductsTemplate.closeDate),
-      'includeInBorrowerCycle': this.loanProductsTemplate.includeInBorrowerCycle
+      name: this.loanProductsTemplate.name,
+      shortName: this.loanProductsTemplate.shortName,
+      description: this.loanProductsTemplate.description,
+      externalId: this.loanProductsTemplate.externalId,
+      fundId: this.loanProductsTemplate.fundId,
+      startDate: this.loanProductsTemplate.startDate && new Date(this.loanProductsTemplate.startDate),
+      closeDate: this.loanProductsTemplate.closeDate && new Date(this.loanProductsTemplate.closeDate),
+      includeInBorrowerCycle: this.loanProductsTemplate.includeInBorrowerCycle
     });
   }
 
   createLoanProductDetailsForm() {
     this.loanProductDetailsForm = this.formBuilder.group({
-      'name': ['', Validators.required],
-      'shortName': ['', Validators.required],
-      'description': [''],
-      'externalId': [''],
-      'fundId': [''],
-      'startDate': [''],
-      'closeDate': [''],
-      'includeInBorrowerCycle': [false]
+      name: [
+        '',
+        Validators.required
+      ],
+      shortName: [
+        '',
+        Validators.required
+      ],
+      description: [''],
+      externalId: [''],
+      fundId: [''],
+      startDate: [''],
+      closeDate: [''],
+      includeInBorrowerCycle: [false]
     });
   }
 
@@ -76,5 +83,4 @@ export class LoanProductDetailsStepComponent implements OnInit {
     }
     return loanProductDetailsFormData;
   }
-
 }

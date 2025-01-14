@@ -8,7 +8,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./saving-product-terms-step.component.scss']
 })
 export class SavingProductTermsStepComponent implements OnInit {
-
   @Input() savingProductsTemplate: any;
 
   savingProductTermsForm: UntypedFormGroup;
@@ -29,26 +28,40 @@ export class SavingProductTermsStepComponent implements OnInit {
     this.interestCalculationDaysInYearTypeData = this.savingProductsTemplate.interestCalculationDaysInYearTypeOptions;
 
     this.savingProductTermsForm.patchValue({
-      'nominalAnnualInterestRate': this.savingProductsTemplate.nominalAnnualInterestRate,
-      'interestCompoundingPeriodType': this.savingProductsTemplate.interestCompoundingPeriodType.id,
-      'interestPostingPeriodType': this.savingProductsTemplate.interestPostingPeriodType.id,
-      'interestCalculationType': this.savingProductsTemplate.interestCalculationType.id,
-      'interestCalculationDaysInYearType': this.savingProductsTemplate.interestCalculationDaysInYearType.id
+      nominalAnnualInterestRate: this.savingProductsTemplate.nominalAnnualInterestRate,
+      interestCompoundingPeriodType: this.savingProductsTemplate.interestCompoundingPeriodType.id,
+      interestPostingPeriodType: this.savingProductsTemplate.interestPostingPeriodType.id,
+      interestCalculationType: this.savingProductsTemplate.interestCalculationType.id,
+      interestCalculationDaysInYearType: this.savingProductsTemplate.interestCalculationDaysInYearType.id
     });
   }
 
   createSavingProductTermsForm() {
     this.savingProductTermsForm = this.formBuilder.group({
-      'nominalAnnualInterestRate': ['', Validators.required],
-      'interestCompoundingPeriodType': ['', Validators.required],
-      'interestPostingPeriodType': ['', Validators.required],
-      'interestCalculationType': ['', Validators.required],
-      'interestCalculationDaysInYearType': ['', Validators.required]
+      nominalAnnualInterestRate: [
+        '',
+        Validators.required
+      ],
+      interestCompoundingPeriodType: [
+        '',
+        Validators.required
+      ],
+      interestPostingPeriodType: [
+        '',
+        Validators.required
+      ],
+      interestCalculationType: [
+        '',
+        Validators.required
+      ],
+      interestCalculationDaysInYearType: [
+        '',
+        Validators.required
+      ]
     });
   }
 
   get savingProductTerms() {
     return this.savingProductTermsForm.value;
   }
-
 }

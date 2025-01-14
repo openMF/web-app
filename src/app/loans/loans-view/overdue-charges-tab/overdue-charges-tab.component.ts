@@ -14,14 +14,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./overdue-charges-tab.component.scss']
 })
 export class OverdueChargesTabComponent implements OnInit {
-
   /** Stores the resolved loan data */
   loanDetails: any;
   /** Stores the overdue data */
   overdueCharges: any;
 
   /** Columns to be displayed in overdue charges table. */
-  displayedColumns: string[] = ['name', 'type', 'amount', 'collectedon'];
+  displayedColumns: string[] = [
+    'name',
+    'type',
+    'amount',
+    'collectedon'
+  ];
   /** Data source for codes table. */
   dataSource: MatTableDataSource<any>;
 
@@ -35,7 +39,7 @@ export class OverdueChargesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.parent.data.subscribe(( data: { loanDetailsData: any }) => {
+    this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });
   }
@@ -46,5 +50,4 @@ export class OverdueChargesTabComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

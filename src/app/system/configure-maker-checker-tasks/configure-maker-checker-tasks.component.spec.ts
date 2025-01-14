@@ -8,9 +8,8 @@ describe('ConfigureMakerCheckerTasksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfigureMakerCheckerTasksComponent ]
-    })
-    .compileComponents();
+      declarations: [ConfigureMakerCheckerTasksComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

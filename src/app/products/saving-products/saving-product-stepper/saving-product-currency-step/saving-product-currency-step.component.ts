@@ -8,7 +8,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./saving-product-currency-step.component.scss']
 })
 export class SavingProductCurrencyStepComponent implements OnInit {
-
   @Input() savingProductsTemplate: any;
 
   savingProductCurrencyForm: UntypedFormGroup;
@@ -23,22 +22,29 @@ export class SavingProductCurrencyStepComponent implements OnInit {
     this.currencyData = this.savingProductsTemplate.currencyOptions;
 
     this.savingProductCurrencyForm.patchValue({
-      'currencyCode': this.savingProductsTemplate.currency.code || this.currencyData[0].code,
-      'digitsAfterDecimal': this.savingProductsTemplate.currency.code ? this.savingProductsTemplate.currency.decimalPlaces : 2,
-      'inMultiplesOf': this.savingProductsTemplate.currency.inMultiplesOf || ''
+      currencyCode: this.savingProductsTemplate.currency.code || this.currencyData[0].code,
+      digitsAfterDecimal: this.savingProductsTemplate.currency.code
+        ? this.savingProductsTemplate.currency.decimalPlaces
+        : 2,
+      inMultiplesOf: this.savingProductsTemplate.currency.inMultiplesOf || ''
     });
   }
 
   createSavingProductCurrencyForm() {
     this.savingProductCurrencyForm = this.formBuilder.group({
-      'currencyCode': ['', Validators.required],
-      'digitsAfterDecimal': ['', Validators.required],
-      'inMultiplesOf': ['']
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      digitsAfterDecimal: [
+        '',
+        Validators.required
+      ],
+      inMultiplesOf: ['']
     });
   }
 
   get savingProductCurrency() {
     return this.savingProductCurrencyForm.value;
   }
-
 }

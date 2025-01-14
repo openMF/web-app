@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./charges-tab.component.scss']
 })
 export class ChargesTabComponent implements OnInit {
-
   /** Shares Account Data */
   sharesAccountData: any;
   /** Charges Data */
@@ -20,7 +19,17 @@ export class ChargesTabComponent implements OnInit {
   /** Data source for charges table. */
   dataSource: MatTableDataSource<any>;
   /** Columns to be displayed in charges table. */
-  displayedColumns: string[] = ['name', 'feeOrPenalty', 'paymentDueAt', 'calculationType', 'due', 'paid', 'waived', 'outstanding', 'actions' ];
+  displayedColumns: string[] = [
+    'name',
+    'feeOrPenalty',
+    'paymentDueAt',
+    'calculationType',
+    'due',
+    'paid',
+    'waived',
+    'outstanding',
+    'actions'
+  ];
 
   /**
    * Retrieves shares account aata from `resolve`.
@@ -35,8 +44,7 @@ export class ChargesTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    const activeCharges = this.chargesData ? this.chargesData.filter(charge => charge.isActive) : [];
+    const activeCharges = this.chargesData ? this.chargesData.filter((charge) => charge.isActive) : [];
     this.dataSource = new MatTableDataSource(activeCharges);
   }
-
 }

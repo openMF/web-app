@@ -32,7 +32,12 @@ export class EntityDocumentsTabComponent implements OnInit {
   choice: boolean;
 
   /** Columns to be displayed in loan documents table. */
-  displayedColumns: string[] = ['name', 'description', 'filename', 'actions'];
+  displayedColumns: string[] = [
+    'name',
+    'description',
+    'filename',
+    'actions'
+  ];
   /** Data source for loan documents table. */
   dataSource: MatTableDataSource<any>;
 
@@ -48,10 +53,12 @@ export class EntityDocumentsTabComponent implements OnInit {
    * @param {LoansService} loansService Loan Account services.
    * @param {ClientsService} clientsService Client services.
    */
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private savingsService: SavingsService,
     private loansService: LoansService,
-    private clientsService: ClientsService) { }
+    private clientsService: ClientsService
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.entityDocuments);
@@ -69,7 +76,7 @@ export class EntityDocumentsTabComponent implements OnInit {
     });
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       if (dialogResponse) {
-        const formData: FormData = new FormData;
+        const formData: FormData = new FormData();
         formData.append('name', dialogResponse.fileName);
         formData.append('file', dialogResponse.file);
         formData.append('description', dialogResponse.description);
@@ -104,5 +111,4 @@ export class EntityDocumentsTabComponent implements OnInit {
       }
     });
   }
-
 }

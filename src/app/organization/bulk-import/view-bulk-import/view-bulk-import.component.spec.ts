@@ -8,9 +8,8 @@ describe('ViewBulkImportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewBulkImportComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewBulkImportComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

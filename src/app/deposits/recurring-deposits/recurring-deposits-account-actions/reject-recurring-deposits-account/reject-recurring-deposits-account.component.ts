@@ -8,7 +8,6 @@ import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 
-
 /**
  * Reject Recurring Deposits Account Component
  */
@@ -18,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./reject-recurring-deposits-account.component.scss']
 })
 export class RejectRecurringDepositsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -36,12 +34,14 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
@@ -58,8 +58,11 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
    */
   createRejectRecurringDepositsAccountForm() {
     this.rejectRecurringDepositsAccountForm = this.formBuilder.group({
-      'rejectedOnDate': ['', Validators.required],
-      'note': ['']
+      rejectedOnDate: [
+        '',
+        Validators.required
+      ],
+      note: ['']
     });
   }
 
@@ -80,9 +83,10 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'reject', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.recurringDepositsService
+      .executeRecurringDepositsAccountCommand(this.accountId, 'reject', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

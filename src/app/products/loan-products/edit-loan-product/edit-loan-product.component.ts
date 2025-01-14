@@ -14,7 +14,13 @@ import { LoanProductAccountingStepComponent } from '../loan-product-stepper/loan
 import { ProductsService } from 'app/products/products.service';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { LoanProducts } from '../loan-products';
-import { AdvancedCreditAllocation, AdvancedPaymentAllocation, AdvancedPaymentStrategy, CreditAllocation, PaymentAllocation } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import {
+  AdvancedCreditAllocation,
+  AdvancedPaymentAllocation,
+  AdvancedPaymentStrategy,
+  CreditAllocation,
+  PaymentAllocation
+} from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { Accounting } from 'app/core/utils/accounting';
 import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
 import { StringEnumOptionData } from '../../../shared/models/option-data.model';
@@ -25,14 +31,17 @@ import { StringEnumOptionData } from '../../../shared/models/option-data.model';
   styleUrls: ['./edit-loan-product.component.scss']
 })
 export class EditLoanProductComponent implements OnInit {
-
   @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
-  @ViewChild(LoanProductCurrencyStepComponent, { static: true }) loanProductCurrencyStep: LoanProductCurrencyStepComponent;
-  @ViewChild(LoanProductInterestRefundStepComponent, { static: true }) loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
+  @ViewChild(LoanProductCurrencyStepComponent, { static: true })
+  loanProductCurrencyStep: LoanProductCurrencyStepComponent;
+  @ViewChild(LoanProductInterestRefundStepComponent, { static: true })
+  loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
-  @ViewChild(LoanProductSettingsStepComponent, { static: true }) loanProductSettingsStep: LoanProductSettingsStepComponent;
+  @ViewChild(LoanProductSettingsStepComponent, { static: true })
+  loanProductSettingsStep: LoanProductSettingsStepComponent;
   @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
-  @ViewChild(LoanProductAccountingStepComponent, { static: true }) loanProductAccountingStep: LoanProductAccountingStepComponent;
+  @ViewChild(LoanProductAccountingStepComponent, { static: true })
+  loanProductAccountingStep: LoanProductAccountingStepComponent;
 
   loanProductAndTemplate: any;
   accountingRuleData: string[] = [];
@@ -53,17 +62,20 @@ export class EditLoanProductComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
 
-  constructor(private route: ActivatedRoute,
-              private productsService: ProductsService,
-              private loanProducts: LoanProducts,
-              private router: Router,
-              private accounting: Accounting,
-              private advancedPaymentStrategy: AdvancedPaymentStrategy) {
-    this.route.data.subscribe((data: { loanProductAndTemplate: any, configurations: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private loanProducts: LoanProducts,
+    private router: Router,
+    private accounting: Accounting,
+    private advancedPaymentStrategy: AdvancedPaymentStrategy
+  ) {
+    this.route.data.subscribe((data: { loanProductAndTemplate: any; configurations: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
       const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
       const liabilityAccountData = this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
-      this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions = assetAccountData.concat(liabilityAccountData);
+      this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions =
+        assetAccountData.concat(liabilityAccountData);
 
       this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
       this.loanProductAndTemplate['itemsByDefault'] = this.itemsByDefault;
@@ -108,8 +120,12 @@ export class EditLoanProductComponent implements OnInit {
   }
 
   buildAdvancedPaymentAllocation(): void {
-    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(this.loanProductAndTemplate);
-    this.advancedCreditAllocations = this.advancedPaymentStrategy.buildAdvancedCreditAllocationList(this.loanProductAndTemplate);
+    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(
+      this.loanProductAndTemplate
+    );
+    this.advancedCreditAllocations = this.advancedPaymentStrategy.buildAdvancedCreditAllocationList(
+      this.loanProductAndTemplate
+    );
   }
 
   setPaymentAllocation(paymentAllocation: PaymentAllocation[]): void {
@@ -141,15 +157,13 @@ export class EditLoanProductComponent implements OnInit {
       this.loanProductTermsForm.valid &&
       this.loanProductSettingsForm.valid &&
       this.loanProductAccountingForm.valid &&
-      (
-        !this.loanProductDetailsForm.pristine ||
+      (!this.loanProductDetailsForm.pristine ||
         !this.loanProductCurrencyForm.pristine ||
         !this.loanProductTermsForm.pristine ||
         !this.loanProductSettingsForm.pristine ||
         !this.loanProductChargesStep.pristine ||
         !this.loanProductAccountingForm.pristine ||
-        this.wasPaymentAllocationChanged
-      )
+        this.wasPaymentAllocationChanged)
     );
   }
 
@@ -181,20 +195,26 @@ export class EditLoanProductComponent implements OnInit {
       loanProduct['overDueDaysForRepaymentEvent'] = null;
     }
     if (this.isAdvancedPaymentStrategy) {
-      loanProduct['supportedInterestRefundTypes'] = this.mapStringEnumOptionToIdList(loanProduct['supportedInterestRefundTypes']);
+      loanProduct['supportedInterestRefundTypes'] = this.mapStringEnumOptionToIdList(
+        loanProduct['supportedInterestRefundTypes']
+      );
     } else {
       delete loanProduct['supportedInterestRefundTypes'];
     }
     delete loanProduct['useDueForRepaymentsConfigurations'];
 
-    this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
-      .subscribe((response: any) => {
-        this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
-      });
+    this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {
-    return incomingValues.map(v => v.id);
+    return incomingValues.map((v) => v.id);
   }
-
 }

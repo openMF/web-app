@@ -10,12 +10,11 @@ import { SavingsService } from '../savings.service';
 
 @Injectable()
 export class TransactionDatatablesResolver implements Resolve<Object> {
-
   /**
    *
    * @param savingsService Savings Service
    */
-  constructor(private savingsService: SavingsService) { }
+  constructor(private savingsService: SavingsService) {}
   /**
    *
    * @param route

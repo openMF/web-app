@@ -8,9 +8,8 @@ describe('BulkLoanReassignmnetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BulkLoanReassignmnetComponent ]
-    })
-    .compileComponents();
+      declarations: [BulkLoanReassignmnetComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

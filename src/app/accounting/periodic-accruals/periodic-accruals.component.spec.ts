@@ -8,9 +8,8 @@ describe('PeriodicAccrualsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PeriodicAccrualsComponent ]
-    })
-    .compileComponents();
+      declarations: [PeriodicAccrualsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('LoanTrancheDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoanTrancheDetailsComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanTrancheDetailsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

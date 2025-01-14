@@ -13,20 +13,18 @@ import { ClientsService } from '../clients.service';
  */
 @Injectable()
 export class ClientTransactionPayResolver implements Resolve<Object> {
+  /**
+   * @param {ClientsService} ClientsService Clients service.
+   */
+  constructor(private clientsService: ClientsService) {}
 
-    /**
-     * @param {ClientsService} ClientsService Clients service.
-     */
-    constructor(private clientsService: ClientsService) { }
-
-    /**
-     * Returns the Client Transaction data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const clientId = route.parent.parent.parent.paramMap.get('clientId');
-        const chargeId = route.paramMap.get('chargeId');
-      return this.clientsService.getClientTransactionPay(clientId, chargeId);
-    }
-
+  /**
+   * Returns the Client Transaction data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const clientId = route.parent.parent.parent.paramMap.get('clientId');
+    const chargeId = route.paramMap.get('chargeId');
+    return this.clientsService.getClientTransactionPay(clientId, chargeId);
+  }
 }

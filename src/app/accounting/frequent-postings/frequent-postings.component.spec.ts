@@ -8,9 +8,8 @@ describe('FrequentPostingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FrequentPostingsComponent ]
-    })
-    .compileComponents();
+      declarations: [FrequentPostingsComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

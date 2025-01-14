@@ -24,20 +24,22 @@ import { ReportParameterDialogComponent } from '../report-parameter-dialog/repor
   styleUrls: ['./create-report.component.scss']
 })
 export class CreateReportComponent implements OnInit {
-
   /** Report Form. */
   reportForm: UntypedFormGroup;
   /** Report Template Data. */
   reportTemplateData: any;
   /** Data passed to dialog. */
-  dataForDialog: { allowedParameters: any[], parameterName: string, reportParameterName: string } =
-    {
-      allowedParameters: undefined,
-      parameterName: undefined,
-      reportParameterName: undefined
-    };
+  dataForDialog: { allowedParameters: any[]; parameterName: string; reportParameterName: string } = {
+    allowedParameters: undefined,
+    parameterName: undefined,
+    reportParameterName: undefined
+  };
   /** Columns to be displayed in report parameters table. */
-  displayedColumns: string[] = ['parameterName', 'parameterNamePassed', 'actions'];
+  displayedColumns: string[] = [
+    'parameterName',
+    'parameterNamePassed',
+    'actions'
+  ];
   /** Data source for report parameters table. */
   dataSource: MatTableDataSource<any>;
   /** Report Parameters Data. */
@@ -47,7 +49,13 @@ export class CreateReportComponent implements OnInit {
   /** Sorter for report parameters table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  reportCategoryTypeOptions: string[] = ['Client', 'Loan', 'Savings', 'Fund', 'Accounting'];
+  reportCategoryTypeOptions: string[] = [
+    'Client',
+    'Loan',
+    'Savings',
+    'Fund',
+    'Accounting'
+  ];
 
   /**
    * Retrieves the report template data from `resolve`.
@@ -58,12 +66,14 @@ export class CreateReportComponent implements OnInit {
    * @param {MatDialog} dialog Dialog Reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dialog: MatDialog,
-              private translateServices: TranslateService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog,
+    private translateServices: TranslateService
+  ) {
     this.route.data.subscribe((data: { reportTemplate: any }) => {
       this.reportTemplateData = data.reportTemplate;
       this.dataForDialog.allowedParameters = this.reportTemplateData.allowedParameters;
@@ -93,13 +103,22 @@ export class CreateReportComponent implements OnInit {
    */
   createReportForm() {
     this.reportForm = this.formBuilder.group({
-      'reportName': ['', Validators.required],
-      'reportCategory': [''],
-      'description': [''],
-      'reportType': ['', Validators.required],
-      'reportSubType': [{ value: '', disabled: true }],
-      'useReport': [false],
-      'reportSql': ['', Validators.required]
+      reportName: [
+        '',
+        Validators.required
+      ],
+      reportCategory: [''],
+      description: [''],
+      reportType: [
+        '',
+        Validators.required
+      ],
+      reportSubType: [{ value: '', disabled: true }],
+      useReport: [false],
+      reportSql: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -114,10 +133,14 @@ export class CreateReportComponent implements OnInit {
     });
     addReportParameterDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
-        this.reportParametersData.push({ id: '',
-                                         parameterName: this.reportTemplateData.allowedParameters.find((allowedParameter: any) => allowedParameter.id === response.parameterName).parameterName,
-                                         parameterId: response.parameterName,
-                                         reportParameterName: response.reportParameterName });
+        this.reportParametersData.push({
+          id: '',
+          parameterName: this.reportTemplateData.allowedParameters.find(
+            (allowedParameter: any) => allowedParameter.id === response.parameterName
+          ).parameterName,
+          parameterId: response.parameterName,
+          reportParameterName: response.reportParameterName
+        });
         this.dataSource.connect().next(this.reportParametersData);
       }
     });
@@ -135,10 +158,14 @@ export class CreateReportComponent implements OnInit {
     });
     editReportParameterDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
-        this.reportParametersData[this.reportParametersData.indexOf(reportParameter)] = { id: '',
-          parameterName: this.reportTemplateData.allowedParameters.find((allowedParameter: any) => allowedParameter.id === response.parameterName).parameterName,
+        this.reportParametersData[this.reportParametersData.indexOf(reportParameter)] = {
+          id: '',
+          parameterName: this.reportTemplateData.allowedParameters.find(
+            (allowedParameter: any) => allowedParameter.id === response.parameterName
+          ).parameterName,
           parameterId: response.parameterName,
-          reportParameterName: response.reportParameterName };
+          reportParameterName: response.reportParameterName
+        };
         this.dataSource.connect().next(this.reportParametersData);
       }
     });
@@ -150,7 +177,10 @@ export class CreateReportComponent implements OnInit {
    */
   deleteReportParameter(reportParameter: any) {
     const deleteReportDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateServices.instant('labels.heading.Report Parameter') + ' ' + reportParameter.parameterName }
+      data: {
+        deleteContext:
+          this.translateServices.instant('labels.heading.Report Parameter') + ' ' + reportParameter.parameterName
+      }
     });
     deleteReportDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -164,22 +194,21 @@ export class CreateReportComponent implements OnInit {
    * Toggles the visibility status of Report Sub Type dropdown.
    */
   toggleVisibility() {
-    this.reportForm.get('reportType').valueChanges
-      .subscribe(type => {
-        switch (type) {
-          case 'Chart':
-            this.reportForm.get('reportSubType').enable();
-            this.reportForm.get('reportSql').enable();
-            break;
-          case 'Pentaho':
-            this.reportForm.get('reportSql').disable();
-            this.reportForm.get('reportSubType').disable();
-            break;
-          default:
-            this.reportForm.get('reportSql').enable();
-            this.reportForm.get('reportSubType').disable();
-        }
-      });
+    this.reportForm.get('reportType').valueChanges.subscribe((type) => {
+      switch (type) {
+        case 'Chart':
+          this.reportForm.get('reportSubType').enable();
+          this.reportForm.get('reportSql').enable();
+          break;
+        case 'Pentaho':
+          this.reportForm.get('reportSql').disable();
+          this.reportForm.get('reportSubType').disable();
+          break;
+        default:
+          this.reportForm.get('reportSql').enable();
+          this.reportForm.get('reportSubType').disable();
+      }
+    });
   }
 
   /**
@@ -187,15 +216,19 @@ export class CreateReportComponent implements OnInit {
    * if successful redirects to view created report.
    */
   submit() {
-    this.reportForm.value.reportParameters = this.reportParametersData.map( function(reportParameter: any) {
+    this.reportForm.value.reportParameters = this.reportParametersData.map(function (reportParameter: any) {
       reportParameter.parameterName = undefined;
       return reportParameter;
     });
-    this.systemService.createReport(this.reportForm.value)
-      .subscribe((response: any) => {
-        // TODO: Implement Maker Checker Component.
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
-      });
+    this.systemService.createReport(this.reportForm.value).subscribe((response: any) => {
+      // TODO: Implement Maker Checker Component.
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
-
 }

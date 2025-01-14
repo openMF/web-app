@@ -11,7 +11,6 @@ import { AccountingService } from '../accounting.service';
  * Journal entries custom data source to implement server side filtering, pagination and sorting.
  */
 export class JournalEntriesDataSource implements DataSource<any> {
-
   /** Journal entries behavior subject to represent loaded journal entries page. */
   private journalEntriesSubject = new BehaviorSubject<any[]>([]);
   /** Records subject to represent total number of filtered journal entry records. */
@@ -22,7 +21,7 @@ export class JournalEntriesDataSource implements DataSource<any> {
   /**
    * @param {AccountingService} accountingService Accounting Service
    */
-  constructor(private accountingService: AccountingService) {  }
+  constructor(private accountingService: AccountingService) {}
 
   /**
    * Gets journal entries on the basis of provided parameters and emits the value.
@@ -32,10 +31,17 @@ export class JournalEntriesDataSource implements DataSource<any> {
    * @param {number} pageIndex Page number.
    * @param {number} limit Number of entries within the page.
    */
-  getJournalEntries(filterBy: any, orderBy: string = '', sortOrder: string = '', pageIndex: number = 0, limit: number = 10) {
+  getJournalEntries(
+    filterBy: any,
+    orderBy: string = '',
+    sortOrder: string = '',
+    pageIndex: number = 0,
+    limit: number = 10
+  ) {
     this.journalEntriesSubject.next([]);
-    orderBy = (orderBy === 'debit' || orderBy === 'credit') ? 'amount' : orderBy;
-    this.accountingService.getJournalEntries(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
+    orderBy = orderBy === 'debit' || orderBy === 'credit' ? 'amount' : orderBy;
+    this.accountingService
+      .getJournalEntries(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
       .subscribe((journalEntries: any) => {
         this.recordsSubject.next(journalEntries.totalFilteredRecords);
         this.journalEntriesSubject.next(journalEntries.pageItems);
@@ -56,5 +62,4 @@ export class JournalEntriesDataSource implements DataSource<any> {
     this.journalEntriesSubject.complete();
     this.recordsSubject.complete();
   }
-
 }

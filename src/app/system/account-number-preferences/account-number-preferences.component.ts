@@ -14,7 +14,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./account-number-preferences.component.scss']
 })
 export class AccountNumberPreferencesComponent implements OnInit {
-
   /** Account Number Preferences data. */
   accountNumberPreferencesData: any;
   /** Columns to be displayed in account number preferences table. */
@@ -54,7 +53,8 @@ export class AccountNumberPreferencesComponent implements OnInit {
       return accountNumberPreference.accountType.value;
     };
     this.dataSource.sort = this.sort;
-    this.dataSource.filterPredicate = (data: any, filter: string) => data.accountType.value.toLowerCase().indexOf(filter) !== -1;
+    this.dataSource.filterPredicate = (data: any, filter: string) =>
+      data.accountType.value.toLowerCase().indexOf(filter) !== -1;
   }
 
   /**

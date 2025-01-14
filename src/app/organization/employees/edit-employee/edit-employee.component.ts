@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./edit-employee.component.scss']
 })
 export class EditEmployeeComponent implements OnInit {
-
   /** Employee data. */
   employeeData: any;
   /** Minimum joining date allowed. */
@@ -38,13 +37,15 @@ export class EditEmployeeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates) {
-    this.route.data.subscribe((data: { employee: any, offices: any  }) => {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates
+  ) {
+    this.route.data.subscribe((data: { employee: any; offices: any }) => {
       this.employeeData = data.employee;
       this.officeData = data.employee.allowedOffices;
     });
@@ -63,13 +64,29 @@ export class EditEmployeeComponent implements OnInit {
    */
   createEditEmployeeForm() {
     this.editEmployeeForm = this.formBuilder.group({
-      'officeId': [this.employeeData.officeId, Validators.required],
-      'firstname': [this.employeeData.firstname, [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'lastname': [this.employeeData.lastname, [Validators.required, Validators.pattern('(^[A-z]).*')]],
-      'isLoanOfficer': [this.employeeData.isLoanOfficer],
-      'mobileNo': [this.employeeData.mobileNo],
-      'isActive': [this.employeeData.isActive],
-      'joiningDate': [this.employeeData.joiningDate  && new Date(this.employeeData.joiningDate), Validators.required]
+      officeId: [
+        this.employeeData.officeId,
+        Validators.required
+      ],
+      firstname: [
+        this.employeeData.firstname,
+        [
+          Validators.required,
+          Validators.pattern('(^[A-z]).*')]
+      ],
+      lastname: [
+        this.employeeData.lastname,
+        [
+          Validators.required,
+          Validators.pattern('(^[A-z]).*')]
+      ],
+      isLoanOfficer: [this.employeeData.isLoanOfficer],
+      mobileNo: [this.employeeData.mobileNo],
+      isActive: [this.employeeData.isActive],
+      joiningDate: [
+        this.employeeData.joiningDate && new Date(this.employeeData.joiningDate),
+        Validators.required
+      ]
     });
   }
 
@@ -91,8 +108,13 @@ export class EditEmployeeComponent implements OnInit {
       locale
     };
     this.organizationService.updateEmployee(this.employeeData.id, data).subscribe((response: any) => {
-      this.router.navigate(['../../', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

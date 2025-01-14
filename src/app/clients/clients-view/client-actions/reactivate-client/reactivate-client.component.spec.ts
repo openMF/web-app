@@ -8,9 +8,8 @@ describe('ReactivateClientComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReactivateClientComponent ]
-    })
-    .compileComponents();
+      declarations: [ReactivateClientComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

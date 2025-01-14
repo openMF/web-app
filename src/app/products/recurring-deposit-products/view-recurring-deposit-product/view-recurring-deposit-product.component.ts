@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./view-recurring-deposit-product.component.scss']
 })
 export class ViewRecurringDepositProductComponent {
-
   recurringDepositDatatables: any = [];
 
   constructor(private route: ActivatedRoute) {
@@ -20,5 +19,4 @@ export class ViewRecurringDepositProductComponent {
       });
     });
   }
-
 }

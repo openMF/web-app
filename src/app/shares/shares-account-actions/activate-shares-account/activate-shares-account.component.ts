@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./activate-shares-account.component.scss']
 })
 export class ActivateSharesAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -35,12 +34,14 @@ export class ActivateSharesAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private sharesService: SharesService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private sharesService: SharesService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
   }
 
@@ -57,7 +58,10 @@ export class ActivateSharesAccountComponent implements OnInit {
    */
   createActivateSharesAccountForm() {
     this.activateSharesAccountForm = this.formBuilder.group({
-      'activatedDate': ['', Validators.required]
+      activatedDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -82,5 +86,4 @@ export class ActivateSharesAccountComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

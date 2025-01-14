@@ -14,11 +14,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./manage-hooks.component.scss']
 })
 export class ManageHooksComponent implements OnInit {
-
   /** Hook data. */
   hookData: any;
   /** Columns to be displayed in manage hooks table. */
-  displayedColumns: string[] = ['name', 'displayName', 'isActive'];
+  displayedColumns: string[] = [
+    'name',
+    'displayName',
+    'isActive'
+  ];
   /** Data source for manage hooks table. */
   dataSource: MatTableDataSource<any>;
 
@@ -32,7 +35,7 @@ export class ManageHooksComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { hooks: any }) => {
+    this.route.data.subscribe((data: { hooks: any }) => {
       this.hookData = data.hooks;
     });
   }
@@ -60,5 +63,4 @@ export class ManageHooksComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

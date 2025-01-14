@@ -15,7 +15,6 @@ import { SystemService } from 'app/system/system.service';
   styleUrls: ['./edit-scheduler-job.component.scss']
 })
 export class EditSchedulerJobComponent implements OnInit {
-
   /** Job Data. */
   jobData: any;
   /** Job Form. */
@@ -28,10 +27,12 @@ export class EditSchedulerJobComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private router: Router,
-              private formBuilder: UntypedFormBuilder ) {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService,
+    private router: Router,
+    private formBuilder: UntypedFormBuilder
+  ) {
     this.route.data.subscribe((data: { jobSelected: any }) => {
       this.jobData = data.jobSelected;
     });
@@ -49,9 +50,15 @@ export class EditSchedulerJobComponent implements OnInit {
    */
   createJobForm() {
     this.jobForm = this.formBuilder.group({
-      'displayName': [this.jobData.displayName, Validators.required],
-      'cronExpression': [this.jobData.cronExpression, Validators.required],
-      'active': [this.jobData.active]
+      displayName: [
+        this.jobData.displayName,
+        Validators.required
+      ],
+      cronExpression: [
+        this.jobData.cronExpression,
+        Validators.required
+      ],
+      active: [this.jobData.active]
     });
   }
 
@@ -59,10 +66,8 @@ export class EditSchedulerJobComponent implements OnInit {
    * Submits the edit job form.
    */
   submit() {
-    this.systemService.updateScheduler(this.jobData.jobId, this.jobForm.value)
-      .subscribe(() => {
-        this.router.navigate(['../'], { relativeTo: this.route });
+    this.systemService.updateScheduler(this.jobData.jobId, this.jobForm.value).subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

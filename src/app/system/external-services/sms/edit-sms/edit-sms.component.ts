@@ -15,7 +15,6 @@ import { SystemService } from 'app/system/system.service';
   styleUrls: ['./edit-sms.component.scss']
 })
 export class EditSMSComponent implements OnInit {
-
   /** SMS Configuration data */
   smsConfigurationData: any;
   /** SMS Configuration Form */
@@ -28,10 +27,12 @@ export class EditSMSComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { smsConfiguration: any }) => {
       this.smsConfigurationData = data.smsConfiguration;
     });
@@ -49,10 +50,22 @@ export class EditSMSComponent implements OnInit {
    */
   setSMSConfigurationForm() {
     this.smsConfigurationForm = this.formBuilder.group({
-      'host_name': [this.smsConfigurationData[0].value, Validators.required],
-      'port_number': [this.smsConfigurationData[1].value, Validators.required],
-      'end_point': [this.smsConfigurationData[2].value, Validators.required],
-      'tenant_app_key': [this.smsConfigurationData[3].value, Validators.required]
+      host_name: [
+        this.smsConfigurationData[0].value,
+        Validators.required
+      ],
+      port_number: [
+        this.smsConfigurationData[1].value,
+        Validators.required
+      ],
+      end_point: [
+        this.smsConfigurationData[2].value,
+        Validators.required
+      ],
+      tenant_app_key: [
+        this.smsConfigurationData[3].value,
+        Validators.required
+      ]
     });
   }
 
@@ -67,5 +80,4 @@ export class EditSMSComponent implements OnInit {
         this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
-
 }

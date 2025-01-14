@@ -84,7 +84,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    MatBadgeModule,
+    MatBadgeModule
   ],
   providers: [
     {
@@ -100,4 +100,4 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     }
   ]
 })
-export class MaterialModule { }
+export class MaterialModule {}

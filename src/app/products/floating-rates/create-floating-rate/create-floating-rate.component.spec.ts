@@ -8,9 +8,8 @@ describe('CreateFloatingRateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateFloatingRateComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateFloatingRateComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

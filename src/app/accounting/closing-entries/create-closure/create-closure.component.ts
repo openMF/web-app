@@ -16,7 +16,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./create-closure.component.scss']
 })
 export class CreateClosureComponent implements OnInit {
-
   /** Minimum closing date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum closing date allowed. */
@@ -34,12 +33,14 @@ export class CreateClosureComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private accountingService: AccountingService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router
+  ) {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });
@@ -58,9 +59,15 @@ export class CreateClosureComponent implements OnInit {
    */
   createAccountingClosureForm() {
     this.accountingClosureForm = this.formBuilder.group({
-      'officeId': ['', Validators.required],
-      'closingDate': ['', Validators.required],
-      'comments': ['']
+      officeId: [
+        '',
+        Validators.required
+      ],
+      closingDate: [
+        '',
+        Validators.required
+      ],
+      comments: ['']
     });
   }
 
@@ -74,11 +81,19 @@ export class CreateClosureComponent implements OnInit {
     accountingClosure.locale = this.settingsService.language.code;
     accountingClosure.dateFormat = this.settingsService.dateFormat;
     if (accountingClosure.closingDate) {
-      accountingClosure.closingDate = this.dateUtils.formatDate(accountingClosure.closingDate, this.settingsService.dateFormat);
+      accountingClosure.closingDate = this.dateUtils.formatDate(
+        accountingClosure.closingDate,
+        this.settingsService.dateFormat
+      );
     }
     this.accountingService.createAccountingClosure(accountingClosure).subscribe((response: any) => {
-      this.router.navigate(['../view', response.resourceId], { relativeTo: this.route });
+      this.router.navigate(
+        [
+          '../view',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
     });
   }
-
 }

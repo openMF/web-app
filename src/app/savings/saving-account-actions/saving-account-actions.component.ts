@@ -12,36 +12,35 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./saving-account-actions.component.scss']
 })
 export class SavingAccountActionsComponent {
-
   /** Flag object to store possible actions and render appropriate UI to the user */
   actions: {
-    'Approve': boolean
-    'Reject': boolean
-    'Withdrawal': boolean
-    'Deposit': boolean
-    'Activate': boolean
-    'Close': boolean
-    'Undo Approval': boolean
-    'Post Interest As On': boolean
-    'Assign Staff': boolean
-    'Add Charge': boolean
-    'Unassign Staff': boolean
-    'Withdrawn by Client': boolean
-    'Apply Annual Fees': boolean
-    'Hold Amount': boolean
-    'Block Account': boolean
-    'Unblock Account': boolean
-    'Block Deposit': boolean
-    'Unblock Deposit': boolean
-    'Block Withdrawal': boolean
-    'Unblock Withdrawal': boolean
+    Approve: boolean;
+    Reject: boolean;
+    Withdrawal: boolean;
+    Deposit: boolean;
+    Activate: boolean;
+    Close: boolean;
+    'Undo Approval': boolean;
+    'Post Interest As On': boolean;
+    'Assign Staff': boolean;
+    'Add Charge': boolean;
+    'Unassign Staff': boolean;
+    'Withdrawn by Client': boolean;
+    'Apply Annual Fees': boolean;
+    'Hold Amount': boolean;
+    'Block Account': boolean;
+    'Unblock Account': boolean;
+    'Block Deposit': boolean;
+    'Unblock Deposit': boolean;
+    'Block Withdrawal': boolean;
+    'Unblock Withdrawal': boolean;
   } = {
-    'Approve': false,
-    'Reject': false,
-    'Withdrawal': false,
-    'Deposit': false,
-    'Activate': false,
-    'Close': false,
+    Approve: false,
+    Reject: false,
+    Withdrawal: false,
+    Deposit: false,
+    Activate: false,
+    Close: false,
     'Undo Approval': false,
     'Post Interest As On': false,
     'Assign Staff': false,
@@ -72,5 +71,4 @@ export class SavingAccountActionsComponent {
     const name = this.route.snapshot.params['name'];
     this.actions[name] = true;
   }
-
 }

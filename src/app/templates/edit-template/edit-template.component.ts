@@ -21,7 +21,6 @@ import { TemplatesService } from '../templates.service';
   styleUrls: ['./edit-template.component.scss']
 })
 export class EditTemplateComponent implements OnInit {
-
   /** CKEditor5 */
   public Editor = ClassicEditor;
   /** CKEditor5 Template Reference */
@@ -50,18 +49,19 @@ export class EditTemplateComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {TemplateService} templateService Templates Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private templateService: TemplatesService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private templateService: TemplatesService
+  ) {
     this.route.data.subscribe((data: { editTemplateData: any }) => {
       this.editTemplateData = data.editTemplateData;
-      this.mappers = this.editTemplateData.template.mappers
-        .map((mapper: any) => ({
-          mappersorder: mapper.mapperorder,
-          mapperskey: new UntypedFormControl(mapper.mapperkey),
-          mappersvalue: new UntypedFormControl(mapper.mappervalue)
-        }));
+      this.mappers = this.editTemplateData.template.mappers.map((mapper: any) => ({
+        mappersorder: mapper.mapperorder,
+        mapperskey: new UntypedFormControl(mapper.mapperkey),
+        mappersvalue: new UntypedFormControl(mapper.mappervalue)
+      }));
     });
   }
 
@@ -75,9 +75,11 @@ export class EditTemplateComponent implements OnInit {
    */
   createTemplateForm() {
     this.templateForm = this.formBuilder.group({
-      'entity': [this.editTemplateData.entities.find((entity: any) => entity.name === this.editTemplateData.template.entity).id],
-      'type': [this.editTemplateData.types.find((type: any) => type.name === this.editTemplateData.template.type).id],
-      'name': [this.editTemplateData.template.name]
+      entity: [
+        this.editTemplateData.entities.find((entity: any) => entity.name === this.editTemplateData.template.entity).id
+      ],
+      type: [this.editTemplateData.types.find((type: any) => type.name === this.editTemplateData.template.type).id],
+      name: [this.editTemplateData.template.name]
     });
   }
 
@@ -87,17 +89,19 @@ export class EditTemplateComponent implements OnInit {
   buildDependencies() {
     const tenantIdentifier = 'default'; // update once global settings are setup.
     this.templateForm.get('entity').valueChanges.subscribe((value: any) => {
-      if (value === 0) { // client
+      if (value === 0) {
+        // client
         this.mappers.splice(0, 1, {
           mappersorder: 0,
           mapperskey: new UntypedFormControl('client'),
           mappersvalue: new UntypedFormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
         });
-      } else { // loan
+      } else {
+        // loan
         this.mappers.splice(0, 1, {
           mappersorder: 0,
           mapperskey: new UntypedFormControl('loan'),
-          mappersvalue: new UntypedFormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier )
+          mappersvalue: new UntypedFormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier)
         });
       }
       this.setEditorContent('');
@@ -132,7 +136,7 @@ export class EditTemplateComponent implements OnInit {
       this.ckEditor.editorInstance.model.change((writer: any) => {
         const insertPosition = this.ckEditor.editorInstance.model.document.selection.getFirstPosition();
         writer.insertText(label, insertPosition);
-    } );
+      });
     }
   }
 
@@ -174,5 +178,4 @@ export class EditTemplateComponent implements OnInit {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

@@ -13,17 +13,17 @@ import { LoansService } from '../loans.service';
  */
 @Injectable()
 export class GLIMLoanTemplateResolver implements Resolve<Object> {
-    /**
-     * @param {ProductsService} loansService Loan service.
-     */
-    constructor(private loansService: LoansService) { }
+  /**
+   * @param {ProductsService} loansService Loan service.
+   */
+  constructor(private loansService: LoansService) {}
 
-    /**
-     * Returns the loan account template data.
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const groupId = route.paramMap.get('groupId');
-        return this.loansService.getGLIMLoanAccountTemplate(groupId);
-    }
+  /**
+   * Returns the loan account template data.
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const groupId = route.paramMap.get('groupId');
+    return this.loansService.getGLIMLoanAccountTemplate(groupId);
+  }
 }

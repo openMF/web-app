@@ -1,13 +1,12 @@
 /** Fixed Deposits Account Buttons Configuration */
 export class FixedDepositsButtonsConfiguration {
-
   optionArray: {
-    name: string
+    name: string;
   }[];
 
   buttonsArray: {
-    name: string,
-    icon: string,
+    name: string;
+    icon: string;
   }[];
 
   constructor(status: string) {
@@ -52,7 +51,7 @@ export class FixedDepositsButtonsConfiguration {
             icon: 'fa fa-table'
           }
         ];
-      break;
+        break;
       case 'Submitted and pending approval':
         this.buttonsArray = [
           {
@@ -76,7 +75,7 @@ export class FixedDepositsButtonsConfiguration {
             icon: 'fa fa-check'
           }
         ];
-      break;
+        break;
       default:
         this.buttonsArray = [];
     }
@@ -117,8 +116,7 @@ export class FixedDepositsButtonsConfiguration {
     }
   }
 
-  addOption(option: {name: string}) {
+  addOption(option: { name: string }) {
     this.optionArray.push(option);
   }
-
 }

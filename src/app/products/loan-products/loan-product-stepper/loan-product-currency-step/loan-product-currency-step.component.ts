@@ -8,7 +8,6 @@ import { TooltipPosition } from '@angular/material/tooltip';
   styleUrls: ['./loan-product-currency-step.component.scss']
 })
 export class LoanProductCurrencyStepComponent implements OnInit {
-
   @Input() loanProductsTemplate: any;
 
   loanProductCurrencyForm: UntypedFormGroup;
@@ -22,24 +21,31 @@ export class LoanProductCurrencyStepComponent implements OnInit {
   ngOnInit() {
     this.currencyData = this.loanProductsTemplate.currencyOptions;
     this.loanProductCurrencyForm.patchValue({
-      'currencyCode': this.loanProductsTemplate.currency.code || this.currencyData[0].code,
-      'digitsAfterDecimal': this.loanProductsTemplate.currency.decimalPlaces ? this.loanProductsTemplate.currency.decimalPlaces : 2,
-      'inMultiplesOf': this.loanProductsTemplate.currency.inMultiplesOf,
-      'installmentAmountInMultiplesOf': this.loanProductsTemplate.installmentAmountInMultiplesOf
+      currencyCode: this.loanProductsTemplate.currency.code || this.currencyData[0].code,
+      digitsAfterDecimal: this.loanProductsTemplate.currency.decimalPlaces
+        ? this.loanProductsTemplate.currency.decimalPlaces
+        : 2,
+      inMultiplesOf: this.loanProductsTemplate.currency.inMultiplesOf,
+      installmentAmountInMultiplesOf: this.loanProductsTemplate.installmentAmountInMultiplesOf
     });
   }
 
   createLoanProductCurrencyForm() {
     this.loanProductCurrencyForm = this.formBuilder.group({
-      'currencyCode': ['', Validators.required],
-      'digitsAfterDecimal': [2, Validators.required],
-      'inMultiplesOf': '',
-      'installmentAmountInMultiplesOf': ''
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      digitsAfterDecimal: [
+        2,
+        Validators.required
+      ],
+      inMultiplesOf: '',
+      installmentAmountInMultiplesOf: ''
     });
   }
 
   get loanProductCurrency() {
     return this.loanProductCurrencyForm.value;
   }
-
 }

@@ -8,9 +8,8 @@ describe('InactivateChargeDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InactivateChargeDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [InactivateChargeDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

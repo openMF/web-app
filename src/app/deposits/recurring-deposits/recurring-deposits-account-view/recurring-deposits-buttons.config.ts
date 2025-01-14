@@ -1,16 +1,15 @@
 /** Recurring Deposits Account Buttons Configuration */
 export class RecurringDepositsButtonsConfiguration {
-
   optionArray: {
-    name: string,
-    icon?: string,
-    taskPermissionName: string,
+    name: string;
+    icon?: string;
+    taskPermissionName: string;
   }[];
 
   buttonsArray: {
-    name: string,
-    icon: string,
-    taskPermissionName: string,
+    name: string;
+    icon: string;
+    taskPermissionName: string;
   }[];
 
   constructor(status: string) {
@@ -84,7 +83,7 @@ export class RecurringDepositsButtonsConfiguration {
             taskPermissionName: 'ACTIVATE_RECURRINGDEPOSITACCOUNT'
           }
         ];
-      break;
+        break;
       case 'Matured':
         this.buttonsArray = [
           {
@@ -103,7 +102,7 @@ export class RecurringDepositsButtonsConfiguration {
             taskPermissionName: 'POSTINTEREST_RECURRINGDEPOSITACCOUNT'
           }
         ];
-      break;
+        break;
       default:
         this.buttonsArray = [];
     }
@@ -164,12 +163,11 @@ export class RecurringDepositsButtonsConfiguration {
     }
   }
 
-  addOption(option: {name: string, icon?: string, taskPermissionName: string}) {
+  addOption(option: { name: string; icon?: string; taskPermissionName: string }) {
     this.optionArray.push(option);
   }
 
-  addButton(option: { name: string, icon: string, taskPermissionName: string }) {
+  addButton(option: { name: string; icon: string; taskPermissionName: string }) {
     this.buttonsArray.push(option);
   }
-
 }

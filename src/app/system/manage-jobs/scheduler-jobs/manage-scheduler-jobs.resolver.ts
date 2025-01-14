@@ -13,7 +13,6 @@ import { SystemService } from '../system.service';
  */
 @Injectable()
 export class ManageSchedulerJobsResolver implements Resolve<Object> {
-
   /**
    * @param {SystemService} systemService System service.
    */
@@ -29,5 +28,4 @@ export class ManageSchedulerJobsResolver implements Resolve<Object> {
       this.systemService.getScheduler()
     ]);
   }
-
 }

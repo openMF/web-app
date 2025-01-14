@@ -26,13 +26,15 @@ export class LoanReagingComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
 
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
     private dropdownOptions: DropdownOptions,
     private loanService: LoansService,
-    private dateUtils: Dates) {
+    private dateUtils: Dates
+  ) {
     this.loanId = this.route.snapshot.params['loanId'];
     this.frequencyOptions = this.dropdownOptions.retrievePeriodFrequencyTypeOptions(false);
   }
@@ -44,12 +46,24 @@ export class LoanReagingComponent implements OnInit {
 
   createReagingLoanForm() {
     this.reagingLoanForm = this.formBuilder.group({
-      'numberOfInstallments': [1, Validators.required],
-      'startDate': [this.settingsService.businessDate, Validators.required],
-      'frequencyNumber': [1, Validators.required],
-      'frequencyType': [, Validators.required],
-      'note': '',
-      'externalId': ''
+      numberOfInstallments: [
+        1,
+        Validators.required
+      ],
+      startDate: [
+        this.settingsService.businessDate,
+        Validators.required
+      ],
+      frequencyNumber: [
+        1,
+        Validators.required
+      ],
+      frequencyType: [
+        ,
+        Validators.required
+      ],
+      note: '',
+      externalId: ''
     });
   }
 
@@ -66,10 +80,8 @@ export class LoanReagingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.submitLoanActionButton(this.loanId, data, 'reAge')
-      .subscribe((response: any) => {
-        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+    this.loanService.submitLoanActionButton(this.loanId, data, 'reAge').subscribe((response: any) => {
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
-
 }

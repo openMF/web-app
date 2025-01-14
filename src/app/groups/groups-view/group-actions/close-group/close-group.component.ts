@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./close-group.component.scss']
 })
 export class CloseGroupComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -37,12 +36,14 @@ export class CloseGroupComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private groupsService: GroupsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private groupsService: GroupsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.closureData = data.groupActionData.closureReasons;
     });
@@ -59,8 +60,14 @@ export class CloseGroupComponent implements OnInit {
    */
   createCloseGroupForm() {
     this.closeGroupForm = this.formBuilder.group({
-      'closureDate': ['', Validators.required],
-      'closureReasonId': ['', Validators.required]
+      closureDate: [
+        '',
+        Validators.required
+      ],
+      closureReasonId: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -84,5 +91,4 @@ export class CloseGroupComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

@@ -18,7 +18,6 @@ import { UserService } from '../user.service';
   styleUrls: ['./view-user.component.scss']
 })
 export class ViewUserComponent {
-
   /** Self service user. */
   user: any;
 
@@ -30,10 +29,12 @@ export class ViewUserComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(private route: ActivatedRoute,
-              private userService: UserService,
-              private router: Router,
-              private dialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {
     this.route.data.subscribe((data: { user: any }) => {
       this.user = data.user;
     });
@@ -51,12 +52,11 @@ export class ViewUserComponent {
       if (response.password && response.repeatPassword) {
         const password = response.password;
         const repeatPassword = response.repeatPassword;
-        const data =  {password: password, repeatPassword: repeatPassword };
+        const data = { password: password, repeatPassword: repeatPassword };
         this.userService.changePassword(this.user.id, data).subscribe(() => {
           this.router.navigate(['/..']);
         });
       }
     });
   }
-
 }

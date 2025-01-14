@@ -13,7 +13,6 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./shares-account-terms-step.component.scss']
 })
 export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
-
   /** Shares Account and Product Template */
   @Input() sharesAccountProductTemplate: any;
   /** [Optional] Shares Account Template */
@@ -40,8 +39,10 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-    private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private settingsService: SettingsService
+  ) {
     this.createSharesAccountTermsForm();
   }
 
@@ -49,11 +50,11 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
     if (this.sharesAccountProductTemplate) {
       this.currency = this.sharesAccountProductTemplate.currency;
       this.sharesAccountTermsForm.patchValue({
-        'currencyCode': this.sharesAccountProductTemplate.currency.code,
-        'decimal': this.sharesAccountProductTemplate.currency.decimalPlaces,
-        'currencyMultiple': this.sharesAccountProductTemplate.currency.inMultiplesOf,
-        'unitPrice': this.sharesAccountProductTemplate.currentMarketPrice,
-        'savingsAccountId': ''
+        currencyCode: this.sharesAccountProductTemplate.currency.code,
+        decimal: this.sharesAccountProductTemplate.currency.decimalPlaces,
+        currencyMultiple: this.sharesAccountProductTemplate.currency.inMultiplesOf,
+        unitPrice: this.sharesAccountProductTemplate.currentMarketPrice,
+        savingsAccountId: ''
       });
       this.setOptions();
       if (this.sharesAccountTemplate) {
@@ -69,13 +70,18 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
     this.maxDate = this.settingsService.businessDate;
     if (this.sharesAccountTemplate) {
       this.sharesAccountTermsForm.patchValue({
-        'requestedShares': this.sharesAccountTemplate.summary.totalPendingForApprovalShares,
-        'minimumActivePeriod': this.sharesAccountTemplate.minimumActivePeriod,
-        'minimumActivePeriodFrequencyType': this.sharesAccountTemplate.minimumActivePeriod && this.sharesAccountTemplate.minimumActivePeriodTypeEnum.id,
-        'lockinPeriodFrequency': this.sharesAccountTemplate.lockinPeriod,
-        'lockinPeriodFrequencyType': this.sharesAccountTemplate.lockinPeriod && this.sharesAccountTemplate.lockPeriodTypeEnum.id,
-        'applicationDate': this.sharesAccountTemplate.purchasedShares[0].purchasedDate && new Date(this.sharesAccountTemplate.purchasedShares[0].purchasedDate),
-        'allowDividendCalculationForInactiveClients': this.sharesAccountTemplate.allowDividendCalculationForInactiveClients
+        requestedShares: this.sharesAccountTemplate.summary.totalPendingForApprovalShares,
+        minimumActivePeriod: this.sharesAccountTemplate.minimumActivePeriod,
+        minimumActivePeriodFrequencyType:
+          this.sharesAccountTemplate.minimumActivePeriod && this.sharesAccountTemplate.minimumActivePeriodTypeEnum.id,
+        lockinPeriodFrequency: this.sharesAccountTemplate.lockinPeriod,
+        lockinPeriodFrequencyType:
+          this.sharesAccountTemplate.lockinPeriod && this.sharesAccountTemplate.lockPeriodTypeEnum.id,
+        applicationDate:
+          this.sharesAccountTemplate.purchasedShares[0].purchasedDate &&
+          new Date(this.sharesAccountTemplate.purchasedShares[0].purchasedDate),
+        allowDividendCalculationForInactiveClients:
+          this.sharesAccountTemplate.allowDividendCalculationForInactiveClients
       });
     }
   }
@@ -85,18 +91,27 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
    */
   createSharesAccountTermsForm() {
     this.sharesAccountTermsForm = this.formBuilder.group({
-      'currencyCode': [{value: '', disabled: true}],
-      'decimal': [{value: '',  disabled: true}],
-      'requestedShares': ['', Validators.required],
-      'unitPrice': [{value: '',  disabled: true}],
-      'currencyMultiple': [{value: '', disabled: true}],
-      'savingsAccountId': ['', Validators.required],
-      'minimumActivePeriod': [''],
-      'minimumActivePeriodFrequencyType': [''],
-      'lockinPeriodFrequency': [''],
-      'lockinPeriodFrequencyType': [''],
-      'applicationDate': ['', Validators.required],
-      'allowDividendCalculationForInactiveClients': [false]
+      currencyCode: [{ value: '', disabled: true }],
+      decimal: [{ value: '', disabled: true }],
+      requestedShares: [
+        '',
+        Validators.required
+      ],
+      unitPrice: [{ value: '', disabled: true }],
+      currencyMultiple: [{ value: '', disabled: true }],
+      savingsAccountId: [
+        '',
+        Validators.required
+      ],
+      minimumActivePeriod: [''],
+      minimumActivePeriodFrequencyType: [''],
+      lockinPeriodFrequency: [''],
+      lockinPeriodFrequencyType: [''],
+      applicationDate: [
+        '',
+        Validators.required
+      ],
+      allowDividendCalculationForInactiveClients: [false]
     });
   }
 
@@ -104,7 +119,8 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
    * Sets all select dropdown options.
    */
   setOptions() {
-    this.minimumActivePeriodFrequencyTypeData = this.sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions;
+    this.minimumActivePeriodFrequencyTypeData =
+      this.sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions;
     this.lockinPeriodFrequencyTypeData = this.sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions;
     this.savingsAccountsData = this.sharesAccountProductTemplate.clientSavingsAccounts;
   }
@@ -122,5 +138,4 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
     }
     return 0;
   }
-
 }

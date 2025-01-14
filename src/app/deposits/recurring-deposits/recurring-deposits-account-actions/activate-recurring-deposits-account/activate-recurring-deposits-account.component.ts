@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./activate-recurring-deposits-account.component.scss']
 })
 export class ActivateRecurringDepositsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -35,12 +34,14 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
    * @param {Router} router Router
    * @param {SavingsService} savingsService Savings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
@@ -57,7 +58,10 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
    */
   createActivateRecurringDepositsAccountForm() {
     this.activateRecurringDepositsAccountForm = this.formBuilder.group({
-      'activatedOnDate': ['', Validators.required]
+      activatedOnDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -71,15 +75,20 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevActivatedOnDate: Date = this.activateRecurringDepositsAccountForm.value.activatedOnDate;
     if (activateRecurringDepositsAccountFormData.activatedOnDate instanceof Date) {
-      activateRecurringDepositsAccountFormData.activatedOnDate = this.dateUtils.formatDate(prevActivatedOnDate, dateFormat);
+      activateRecurringDepositsAccountFormData.activatedOnDate = this.dateUtils.formatDate(
+        prevActivatedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...activateRecurringDepositsAccountFormData,
       dateFormat,
       locale
     };
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'activate', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.recurringDepositsService
+      .executeRecurringDepositsAccountCommand(this.accountId, 'activate', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

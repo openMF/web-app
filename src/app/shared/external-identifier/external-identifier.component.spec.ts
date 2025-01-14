@@ -8,9 +8,8 @@ describe('ExternalIdentifierComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExternalIdentifierComponent ]
-    })
-    .compileComponents();
+      declarations: [ExternalIdentifierComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

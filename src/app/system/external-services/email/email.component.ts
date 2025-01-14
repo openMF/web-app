@@ -13,11 +13,13 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./email.component.scss']
 })
 export class EmailComponent implements OnInit {
-
   /** Email configuration data. */
   emailConfigurationData: any;
   /** Columns to be displayed in Email configuration table. */
-  displayedColumns: string[] = ['name', 'value'];
+  displayedColumns: string[] = [
+    'name',
+    'value'
+  ];
   /** Data source for Email configuration table. */
   dataSource: MatTableDataSource<any>;
 
@@ -48,5 +50,4 @@ export class EmailComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.emailConfigurationData);
     this.dataSource.sort = this.sort;
   }
-
 }

@@ -19,7 +19,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./view-account-number-preference.component.scss']
 })
 export class ViewAccountNumberPreferenceComponent {
-
   /** Account Number Preference Data */
   accountNumberPreferenceData: any;
 
@@ -31,11 +30,13 @@ export class ViewAccountNumberPreferenceComponent {
    * @param {MatDialog} dialog Dialog reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(private route: ActivatedRoute,
-              private systemService: SystemService,
-              private router: Router,
-              private dialog: MatDialog,
-              private translateService: TranslateService) {
+  constructor(
+    private route: ActivatedRoute,
+    private systemService: SystemService,
+    private router: Router,
+    private dialog: MatDialog,
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { accountNumberPreference: any }) => {
       this.accountNumberPreferenceData = data.accountNumberPreference;
     });
@@ -46,16 +47,19 @@ export class ViewAccountNumberPreferenceComponent {
    */
   delete() {
     const deleteAccountNumberPreferenceDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.heading.Account Number Preferences') + ' ' + this.accountNumberPreferenceData.id}
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.heading.Account Number Preferences') +
+          ' ' +
+          this.accountNumberPreferenceData.id
+      }
     });
     deleteAccountNumberPreferenceDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteAccountNumberPreference(this.accountNumberPreferenceData.id)
-          .subscribe(() => {
-            this.router.navigate(['/system/account-number-preferences']);
-          });
+        this.systemService.deleteAccountNumberPreference(this.accountNumberPreferenceData.id).subscribe(() => {
+          this.router.navigate(['/system/account-number-preferences']);
+        });
       }
     });
   }
-
 }

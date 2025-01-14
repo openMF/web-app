@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./activate-client.component.scss']
 })
 export class ActivateClientComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -35,12 +34,14 @@ export class ActivateClientComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private clientsService: ClientsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private clientsService: ClientsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.clientId = this.route.parent.snapshot.params['clientId'];
   }
 
@@ -57,7 +58,10 @@ export class ActivateClientComponent implements OnInit {
    */
   createActivateClientForm() {
     this.activateClientForm = this.formBuilder.group({
-      'activationDate': ['', Validators.required]
+      activationDate: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -82,5 +86,4 @@ export class ActivateClientComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

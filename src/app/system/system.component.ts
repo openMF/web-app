@@ -12,7 +12,6 @@ import { PopoverService } from '../configuration-wizard/popover/popover.service'
   styleUrls: ['./system.component.scss']
 })
 export class SystemComponent implements AfterViewInit {
-
   /* Reference of manage datatables */
   @ViewChild('datatables') datatables: ElementRef<any>;
   /* Template for popover on manage datables */
@@ -49,9 +48,11 @@ export class SystemComponent implements AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) { }
+  constructor(
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {}
 
   /**
    * Popover function
@@ -61,7 +62,12 @@ export class SystemComponent implements AfterViewInit {
    * @param backdrop Boolean.
    * @param arrowNumber - The index of the boolean value to toggle.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 
@@ -129,7 +135,7 @@ export class SystemComponent implements AfterViewInit {
    */
   nextStepCodes() {
     this.configurationWizardService.showSystemCodes = false;
-    this.configurationWizardService.showSystemCodesPage  = true;
+    this.configurationWizardService.showSystemCodesPage = true;
     this.router.navigate(['/system/codes']);
   }
 
@@ -230,7 +236,7 @@ export class SystemComponent implements AfterViewInit {
     this.router.navigate(['/organization/manage-funds']);
   }
 
-  arrowBooleansToggle(arrowNumber:  number) {
+  arrowBooleansToggle(arrowNumber: number) {
     // Toggle the boolean value at the given index
     this.arrowBooleans[arrowNumber] = !this.arrowBooleans[arrowNumber];
   }

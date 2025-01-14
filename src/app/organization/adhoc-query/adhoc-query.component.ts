@@ -17,11 +17,18 @@ import { of } from 'rxjs';
   styleUrls: ['./adhoc-query.component.scss']
 })
 export class AdhocQueryComponent implements OnInit {
-
   /** Adhoc Queries data. */
   adhocQueriesData: any;
   /** Columns to be displayed in adhoc queries table. */
-  displayedColumns: string[] = ['name', 'query', 'tableName', 'email', 'reportRunFrequency', 'isActive', 'createdBy'];
+  displayedColumns: string[] = [
+    'name',
+    'query',
+    'tableName',
+    'email',
+    'reportRunFrequency',
+    'isActive',
+    'createdBy'
+  ];
   /** Data source for adhoc queries table. */
   dataSource: MatTableDataSource<any>;
 
@@ -35,7 +42,7 @@ export class AdhocQueryComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { adhocQueries: any }) => {
+    this.route.data.subscribe((data: { adhocQueries: any }) => {
       this.adhocQueriesData = data.adhocQueries;
     });
   }
@@ -77,5 +84,4 @@ export class AdhocQueryComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

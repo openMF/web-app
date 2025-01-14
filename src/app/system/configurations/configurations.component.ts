@@ -16,14 +16,16 @@ export class ConfigurationsComponent implements OnInit {
 
   isBusinessDateEnabled = false;
 
-  constructor(private alertService: AlertService,
-    private systemService: SystemService) { }
+  constructor(
+    private alertService: AlertService,
+    private systemService: SystemService
+  ) {}
 
   ngOnInit(): void {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
       if (alertType === SettingsService.businessDateType + ' Set Config') {
-        this.isBusinessDateEnabled = (alertEvent.message === 'enabled') ? true : false;
+        this.isBusinessDateEnabled = alertEvent.message === 'enabled' ? true : false;
       }
     });
     this.getConfigurations();
@@ -32,10 +34,11 @@ export class ConfigurationsComponent implements OnInit {
   /**
    * Get the Configuration and the Business Date data
    */
-   getConfigurations(): void {
-    this.systemService.getConfigurationByName(SettingsService.businessDateConfigName)
-    .subscribe((configurationData: any) => {
-      this.isBusinessDateEnabled = configurationData.enabled;
-    });
+  getConfigurations(): void {
+    this.systemService
+      .getConfigurationByName(SettingsService.businessDateConfigName)
+      .subscribe((configurationData: any) => {
+        this.isBusinessDateEnabled = configurationData.enabled;
+      });
   }
 }

@@ -7,7 +7,6 @@ import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } 
   styleUrls: ['./recurring-deposit-product-settings-step.component.scss']
 })
 export class RecurringDepositProductSettingsStepComponent implements OnInit {
-
   @Input() recurringDepositProductsTemplate: any;
 
   recurringDepositProductSettingsForm: UntypedFormGroup;
@@ -30,60 +29,80 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
 
     if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
       this.recurringDepositProductSettingsForm.patchValue({
-        'isMandatoryDeposit': this.recurringDepositProductsTemplate.isMandatoryDeposit,
-        'adjustAdvanceTowardsFuturePayments': this.recurringDepositProductsTemplate.adjustAdvanceTowardsFuturePayments,
-        'allowWithdrawal': this.recurringDepositProductsTemplate.allowWithdrawal,
-        'lockinPeriodFrequency': this.recurringDepositProductsTemplate.lockinPeriodFrequency,
-        'lockinPeriodFrequencyType': this.recurringDepositProductsTemplate.lockinPeriodFrequencyType ? this.recurringDepositProductsTemplate.lockinPeriodFrequencyType.id : '',
-        'minDepositTerm': this.recurringDepositProductsTemplate.minDepositTerm,
-        'minDepositTermTypeId': this.recurringDepositProductsTemplate.minDepositTermType ? this.recurringDepositProductsTemplate.minDepositTermType.id : '',
-        'inMultiplesOfDepositTerm': this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm,
-        'inMultiplesOfDepositTermTypeId': this.recurringDepositProductsTemplate.inMultiplesOfDepositTermType ? this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm.id : '',
-        'maxDepositTerm': this.recurringDepositProductsTemplate.maxDepositTerm,
-        'maxDepositTermTypeId': this.recurringDepositProductsTemplate.maxDepositTermType ? this.recurringDepositProductsTemplate.minDepositTermType.id : '',
-        'preClosurePenalApplicable': this.recurringDepositProductsTemplate.preClosurePenalApplicable,
-        'preClosurePenalInterest': this.recurringDepositProductsTemplate.preClosurePenalInterest,
-        'preClosurePenalInterestOnTypeId': this.recurringDepositProductsTemplate.preClosurePenalInterestOnType ? this.recurringDepositProductsTemplate.preClosurePenalInterestOnType.id : '',
-        'withHoldTax': this.recurringDepositProductsTemplate.withHoldTax
+        isMandatoryDeposit: this.recurringDepositProductsTemplate.isMandatoryDeposit,
+        adjustAdvanceTowardsFuturePayments: this.recurringDepositProductsTemplate.adjustAdvanceTowardsFuturePayments,
+        allowWithdrawal: this.recurringDepositProductsTemplate.allowWithdrawal,
+        lockinPeriodFrequency: this.recurringDepositProductsTemplate.lockinPeriodFrequency,
+        lockinPeriodFrequencyType: this.recurringDepositProductsTemplate.lockinPeriodFrequencyType
+          ? this.recurringDepositProductsTemplate.lockinPeriodFrequencyType.id
+          : '',
+        minDepositTerm: this.recurringDepositProductsTemplate.minDepositTerm,
+        minDepositTermTypeId: this.recurringDepositProductsTemplate.minDepositTermType
+          ? this.recurringDepositProductsTemplate.minDepositTermType.id
+          : '',
+        inMultiplesOfDepositTerm: this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm,
+        inMultiplesOfDepositTermTypeId: this.recurringDepositProductsTemplate.inMultiplesOfDepositTermType
+          ? this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm.id
+          : '',
+        maxDepositTerm: this.recurringDepositProductsTemplate.maxDepositTerm,
+        maxDepositTermTypeId: this.recurringDepositProductsTemplate.maxDepositTermType
+          ? this.recurringDepositProductsTemplate.minDepositTermType.id
+          : '',
+        preClosurePenalApplicable: this.recurringDepositProductsTemplate.preClosurePenalApplicable,
+        preClosurePenalInterest: this.recurringDepositProductsTemplate.preClosurePenalInterest,
+        preClosurePenalInterestOnTypeId: this.recurringDepositProductsTemplate.preClosurePenalInterestOnType
+          ? this.recurringDepositProductsTemplate.preClosurePenalInterestOnType.id
+          : '',
+        withHoldTax: this.recurringDepositProductsTemplate.withHoldTax
       });
     }
 
     if (this.recurringDepositProductsTemplate.withHoldTax) {
       this.recurringDepositProductSettingsForm.patchValue({
-        'taxGroupId': this.recurringDepositProductsTemplate.taxGroup ? this.recurringDepositProductsTemplate.taxGroup.id : ''
+        taxGroupId: this.recurringDepositProductsTemplate.taxGroup
+          ? this.recurringDepositProductsTemplate.taxGroup.id
+          : ''
       });
     }
   }
 
   createrecurringDepositProductSettingsForm() {
     this.recurringDepositProductSettingsForm = this.formBuilder.group({
-      'isMandatoryDeposit': [false],
-      'adjustAdvanceTowardsFuturePayments': [false],
-      'allowWithdrawal': [false],
-      'lockinPeriodFrequency': [''],
-      'lockinPeriodFrequencyType': [''],
-      'minDepositTerm': ['', Validators.required],
-      'minDepositTermTypeId': ['', Validators.required],
-      'inMultiplesOfDepositTerm': [''],
-      'inMultiplesOfDepositTermTypeId': [''],
-      'maxDepositTerm': [''],
-      'maxDepositTermTypeId': [''],
-      'preClosurePenalApplicable': [false],
-      'preClosurePenalInterest': [''],
-      'preClosurePenalInterestOnTypeId': [''],
-      'withHoldTax': [false]
+      isMandatoryDeposit: [false],
+      adjustAdvanceTowardsFuturePayments: [false],
+      allowWithdrawal: [false],
+      lockinPeriodFrequency: [''],
+      lockinPeriodFrequencyType: [''],
+      minDepositTerm: [
+        '',
+        Validators.required
+      ],
+      minDepositTermTypeId: [
+        '',
+        Validators.required
+      ],
+      inMultiplesOfDepositTerm: [''],
+      inMultiplesOfDepositTermTypeId: [''],
+      maxDepositTerm: [''],
+      maxDepositTermTypeId: [''],
+      preClosurePenalApplicable: [false],
+      preClosurePenalInterest: [''],
+      preClosurePenalInterestOnTypeId: [''],
+      withHoldTax: [false]
     });
   }
 
   setConditionalControls() {
-    this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges
-      .subscribe((withHoldTax: any) => {
-        if (withHoldTax) {
-          this.recurringDepositProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
-        } else {
-          this.recurringDepositProductSettingsForm.removeControl('taxGroupId');
-        }
-      });
+    this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
+      if (withHoldTax) {
+        this.recurringDepositProductSettingsForm.addControl(
+          'taxGroupId',
+          new UntypedFormControl('', Validators.required)
+        );
+      } else {
+        this.recurringDepositProductSettingsForm.removeControl('taxGroupId');
+      }
+    });
   }
 
   get recurringDepositProductSettings() {
@@ -95,5 +114,4 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
     }
     return recurringDepositProductSettings;
   }
-
 }

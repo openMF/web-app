@@ -13,7 +13,6 @@ import { OrganizationService } from '../../organization.service';
  */
 @Injectable()
 export class EditOfficeResolver implements Resolve<Object> {
-
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
@@ -27,5 +26,4 @@ export class EditOfficeResolver implements Resolve<Object> {
     const officeId = route.paramMap.get('officeId');
     return this.organizationService.getOffice(officeId, true);
   }
-
 }

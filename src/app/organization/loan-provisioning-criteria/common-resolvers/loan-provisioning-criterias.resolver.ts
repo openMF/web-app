@@ -13,7 +13,6 @@ import { OrganizationService } from '../../organization.service';
  */
 @Injectable()
 export class LoanProvisioningCriteriasResolver implements Resolve<Object> {
-
   /**
    * @param {OrganizationService} organizationService Products service.
    */
@@ -26,5 +25,4 @@ export class LoanProvisioningCriteriasResolver implements Resolve<Object> {
   resolve(): Observable<any> {
     return this.organizationService.getProvisioningCriterias();
   }
-
 }

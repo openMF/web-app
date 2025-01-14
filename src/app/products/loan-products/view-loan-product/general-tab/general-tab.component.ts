@@ -15,24 +15,28 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./general-tab.component.scss']
 })
 export class GeneralTabComponent implements OnInit {
-
   loanProduct: LoanProduct;
   useDueForRepaymentsConfigurations = false;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
     private productsService: ProductsService,
     private settingsService: SettingsService,
-    private translateService: TranslateService) {
+    private translateService: TranslateService
+  ) {
     this.route.data.subscribe((data: { loanProduct: any }) => {
       this.loanProduct = data.loanProduct;
-      this.useDueForRepaymentsConfigurations = (!this.loanProduct.dueDaysForRepaymentEvent && !this.loanProduct.overDueDaysForRepaymentEvent);
+      this.useDueForRepaymentsConfigurations =
+        !this.loanProduct.dueDaysForRepaymentEvent && !this.loanProduct.overDueDaysForRepaymentEvent;
     });
   }
 
   ngOnInit() {
-    this.loanProduct.allowAttributeConfiguration = Object.values(this.loanProduct.allowAttributeOverrides).some((attribute: boolean) => attribute);
+    this.loanProduct.allowAttributeConfiguration = Object.values(this.loanProduct.allowAttributeOverrides).some(
+      (attribute: boolean) => attribute
+    );
   }
 
   exportDefinition(): void {
@@ -67,7 +71,8 @@ export class GeneralTabComponent implements OnInit {
         type: 'text',
         required: true,
         order: 2
-      }),
+      })
+
     ];
     const data = {
       title: `${this.translateService.instant('labels.buttons.Create')} ${this.translateService.instant('labels.inputs.Loan Product')}`,
@@ -77,10 +82,11 @@ export class GeneralTabComponent implements OnInit {
     const createProductDialogRef = this.dialog.open(FormDialogComponent, { data });
     createProductDialogRef.afterClosed().subscribe((productResponse: any) => {
       if (productResponse.data) {
-
         productCopy['name'] = productResponse.data.value['name'];
         productCopy['shortName'] = productResponse.data.value['shortName'];
-        productCopy['delinquencyBucketId'] = productCopy['delinquencyBucket'] ? productCopy['delinquencyBucket']['id'] : null;
+        productCopy['delinquencyBucketId'] = productCopy['delinquencyBucket']
+          ? productCopy['delinquencyBucket']['id']
+          : null;
         productCopy['currencyCode'] = productCopy['currency'] ? productCopy['currency']['code'] : null;
         productCopy['interestRatePerPeriod'] = productCopy['annualInterestRate'];
         productCopy['transactionProcessingStrategyCode'] = productCopy['transactionProcessingStrategyName'];
@@ -110,13 +116,16 @@ export class GeneralTabComponent implements OnInit {
         delete productCopy['allowPartialPeriodInterestCalculation'];
         delete productCopy['advancedPaymentAllocationFutureInstallmentAllocationRules'];
 
-        this.productsService.createLoanProduct(productCopy)
-        .subscribe((response: any) => {
-          this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
+        this.productsService.createLoanProduct(productCopy).subscribe((response: any) => {
+          this.router.navigate(
+            [
+              '../',
+              response.resourceId
+            ],
+            { relativeTo: this.route }
+          );
         });
-
       }
     });
   }
-
 }

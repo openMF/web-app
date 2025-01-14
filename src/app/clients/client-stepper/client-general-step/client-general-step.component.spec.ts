@@ -8,9 +8,8 @@ describe('ClientGeneralStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientGeneralStepComponent ]
-    })
-    .compileComponents();
+      declarations: [ClientGeneralStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

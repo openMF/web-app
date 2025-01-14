@@ -6,10 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./stepper-buttons.component.scss']
 })
 export class StepperButtonsComponent {
-
   @Input() disablePrevious = false;
   @Input() disableNext = false;
 
-  constructor() { }
-
+  constructor() {}
 }

@@ -13,7 +13,6 @@ import { ProductsService } from '../../products.service';
  */
 @Injectable()
 export class LoanProductAndTemplateResolver implements Resolve<Object> {
-
   /**
    * @param {ProductsService} productsService Products service.
    */
@@ -27,5 +26,4 @@ export class LoanProductAndTemplateResolver implements Resolve<Object> {
     const loanProductId = route.parent.paramMap.get('productId');
     return this.productsService.getLoanProduct(loanProductId, true);
   }
-
 }

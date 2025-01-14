@@ -6,7 +6,6 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class Dates {
-
   public static DEFAULT_DATEFORMAT = 'yyyy-MM-dd';
   public static DEFAULT_DATETIMEFORMAT = 'yyyy-MM-dd HH:mm';
 
@@ -48,8 +47,11 @@ export class Dates {
     return JSON.parse(localStorage.getItem('mifosXLanguage'));
   }
 
-  calculateDiff(date1: Date, date2: Date){
-    return Math.floor((Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate()) - Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate()) ) /(1000 * 60 * 60 * 24));
+  calculateDiff(date1: Date, date2: Date) {
+    return Math.floor(
+      (Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate()) -
+        Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate())) /
+        (1000 * 60 * 60 * 24)
+    );
   }
-
 }

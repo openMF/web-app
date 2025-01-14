@@ -8,9 +8,8 @@ describe('InterestRateChartTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InterestRateChartTabComponent ]
-    })
-    .compileComponents();
+      declarations: [InterestRateChartTabComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('WaiveChargeDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WaiveChargeDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [WaiveChargeDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -16,14 +16,12 @@ import { BulkImports } from './view-bulk-import/bulk-imports';
  */
 @Injectable()
 export class BulkImportResolver implements Resolve<Object> {
-
-   bulkImportsArray = BulkImports;
+  bulkImportsArray = BulkImports;
 
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
-  constructor(private organizationService: OrganizationService) {
-  }
+  constructor(private organizationService: OrganizationService) {}
 
   /**
    * Gets bulk-import's entity name
@@ -42,5 +40,4 @@ export class BulkImportResolver implements Resolve<Object> {
     const entity = this.getEntityName(route.params['import-name']);
     return this.organizationService.getImports(entity);
   }
-
 }

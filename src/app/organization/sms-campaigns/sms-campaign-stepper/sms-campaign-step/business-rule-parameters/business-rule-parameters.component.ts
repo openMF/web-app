@@ -20,7 +20,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./business-rule-parameters.component.scss']
 })
 export class BusinessRuleParametersComponent implements OnInit, OnChanges {
-
   /** Run Report Parameters Data */
   @Input() paramData: any;
 
@@ -43,9 +42,11 @@ export class BusinessRuleParametersComponent implements OnInit, OnChanges {
    * @param {SettingsService} settingsService Settings Service.
    * @param {Dates} dateUtils Date Utils.
    */
-  constructor(private reportsService: ReportsService,
-              private settingsService: SettingsService,
-              private dateUtils: Dates) { }
+  constructor(
+    private reportsService: ReportsService,
+    private settingsService: SettingsService,
+    private dateUtils: Dates
+  ) {}
 
   ngOnInit(): void {
     this.maxDate = this.settingsService.businessDate;
@@ -74,20 +75,20 @@ export class BusinessRuleParametersComponent implements OnInit, OnChanges {
    * Fetches dropdown options and builds child dependencies.
    */
   createRunReportForm() {
-    this.paramData.forEach(
-      (param: any) => {
-        if (!param.parentParameterName) { // Non-Child Parameter
-          this.ReportForm.addControl(param.name, new UntypedFormControl('', Validators.required));
-          if (param.displayType === 'select') {
-            this.fetchSelectOptions(param, param.name);
-          }
-        } else { // Child Parameter
-          const parent: ReportParameter = this.paramData
-            .find((entry: any) => entry.name === param.parentParameterName);
-          parent.childParameters.push(param);
-          this.updateParentParameters(parent);
+    this.paramData.forEach((param: any) => {
+      if (!param.parentParameterName) {
+        // Non-Child Parameter
+        this.ReportForm.addControl(param.name, new UntypedFormControl('', Validators.required));
+        if (param.displayType === 'select') {
+          this.fetchSelectOptions(param, param.name);
         }
-      });
+      } else {
+        // Child Parameter
+        const parent: ReportParameter = this.paramData.find((entry: any) => entry.name === param.parentParameterName);
+        parent.childParameters.push(param);
+        this.updateParentParameters(parent);
+      }
+    });
     this.setChildControls();
   }
 
@@ -96,18 +97,20 @@ export class BusinessRuleParametersComponent implements OnInit, OnChanges {
    * @param {ReportParameter} parent Parent report parameter
    */
   updateParentParameters(parent: ReportParameter) {
-    const parentNames = this.parentParameters.map(parameter => parameter.name);
-    if (!parentNames.includes(parent.name)) { // Parent's first child.
+    const parentNames = this.parentParameters.map((parameter) => parameter.name);
+    if (!parentNames.includes(parent.name)) {
+      // Parent's first child.
       this.parentParameters.push(parent);
-    } else { // Parent already has a child
+    } else {
+      // Parent already has a child
       const index = parentNames.indexOf(parent.name);
       this.parentParameters[index] = parent;
     }
   }
 
-   /**
-    * Subscribes to changes in parent parameters value, builds child parameter vis-a-vis parent's value.
-    */
+  /**
+   * Subscribes to changes in parent parameters value, builds child parameter vis-a-vis parent's value.
+   */
   setChildControls() {
     this.parentParameters.forEach((param: ReportParameter) => {
       this.ReportForm.get(param.name).valueChanges.subscribe((option: any) => {
@@ -126,16 +129,16 @@ export class BusinessRuleParametersComponent implements OnInit, OnChanges {
     });
   }
 
- /**
-  * Fetches Select Dropdown options for param type "Select".
-  * @param {ReportParameter} param Parameter for which dropdown options are required.
-  * @param {string} inputstring url substring for API call.
-  */
+  /**
+   * Fetches Select Dropdown options for param type "Select".
+   * @param {ReportParameter} param Parameter for which dropdown options are required.
+   * @param {string} inputstring url substring for API call.
+   */
   fetchSelectOptions(param: ReportParameter, inputstring: string) {
     this.reportsService.getSelectOptions(inputstring).subscribe((options: SelectOption[]) => {
       param.selectOptions = options;
       if (param.selectAll === 'Y') {
-        param.selectOptions.push({id: '-1', name: 'All'});
+        param.selectOptions.push({ id: '-1', name: 'All' });
       }
     });
   }
@@ -147,9 +150,11 @@ export class BusinessRuleParametersComponent implements OnInit, OnChanges {
   formatUserResponse(response: any, forHeaders: boolean) {
     const formattedResponse: any = {};
     let newKey: string;
-    for (const [key, value] of Object.entries(response)) {
-      const param: ReportParameter = this.paramData
-        .find((_entry: any) => _entry.name === key);
+    for (const [
+      key,
+      value
+    ] of Object.entries(response)) {
+      const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === key);
       newKey = forHeaders ? param.inputName : param.variable;
       switch (param.displayType) {
         case 'text':
@@ -186,5 +191,4 @@ export class BusinessRuleParametersComponent implements OnInit, OnChanges {
       }
     );
   }
-
 }

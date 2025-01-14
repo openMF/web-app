@@ -8,9 +8,8 @@ describe('IndividualCollectionSheetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IndividualCollectionSheetComponent ]
-    })
-    .compileComponents();
+      declarations: [IndividualCollectionSheetComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

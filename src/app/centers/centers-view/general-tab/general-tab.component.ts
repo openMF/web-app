@@ -11,11 +11,20 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./general-tab.component.scss']
 })
 export class GeneralTabComponent {
-
   /** Savings Account Table Columns */
-  savingsAccountColumns: string[] = ['Account No', 'Products', 'Balance', 'Actions'];
+  savingsAccountColumns: string[] = [
+    'Account No',
+    'Products',
+    'Balance',
+    'Actions'
+  ];
   /** Groups Table Columns */
-  groupsColumns: string[] = ['Account No', 'Group Name', 'Office Name', 'Submitted On'];
+  groupsColumns: string[] = [
+    'Account No',
+    'Group Name',
+    'Office Name',
+    'Submitted On'
+  ];
   /** Stores the summary of center */
   centerSummaryData: any;
   /** Stores Center Data for particular center */
@@ -30,11 +39,7 @@ export class GeneralTabComponent {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: {
-      centerSummaryData: any,
-      centerViewData: any,
-      savingsAccountData: any
-    }) => {
+    this.route.data.subscribe((data: { centerSummaryData: any; centerViewData: any; savingsAccountData: any }) => {
       this.centerSummaryData = data.centerSummaryData[0];
       this.centerViewData = data.centerViewData;
       this.savingsAccountData = data.savingsAccountData.savingsAccounts;
@@ -49,5 +54,4 @@ export class GeneralTabComponent {
   routeEdit($event: MouseEvent) {
     $event.stopPropagation();
   }
-
 }

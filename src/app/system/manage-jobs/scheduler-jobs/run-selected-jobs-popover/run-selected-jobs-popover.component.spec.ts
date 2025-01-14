@@ -8,9 +8,8 @@ describe('RunSelectedJobsPopoverComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RunSelectedJobsPopoverComponent ]
-    })
-    .compileComponents();
+      declarations: [RunSelectedJobsPopoverComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RunSelectedJobsPopoverComponent);
     component = fixture.componentInstance;

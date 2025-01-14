@@ -8,9 +8,8 @@ describe('XBRLReportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ XBRLReportComponent ]
-    })
-    .compileComponents();
+      declarations: [XBRLReportComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

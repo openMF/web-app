@@ -15,7 +15,6 @@ import { RecurringDepositsService } from '../../recurring-deposits.service';
   styleUrls: ['./recurring-deposits-account-details-step.component.scss']
 })
 export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
-
   /** Recurring Deposits Account Template */
   @Input() recurringDepositsAccountTemplate: any;
 
@@ -43,9 +42,11 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
    * @param {RecurringDepositsService} recurringDepositsService Recurring Deposits Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private recurringDepositsService: RecurringDepositsService,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.createRecurringDepositsAccountDetailsForm();
   }
 
@@ -56,9 +57,11 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
       this.productData = this.recurringDepositsAccountTemplate.productOptions;
       if (this.recurringDepositsAccountTemplate.depositProductId) {
         this.recurringDepositAccountDetailsForm.patchValue({
-          'productId': this.recurringDepositsAccountTemplate.depositProductId,
-          'submittedOnDate': this.recurringDepositsAccountTemplate.timeline.submittedOnDate && new Date(this.recurringDepositsAccountTemplate.timeline.submittedOnDate),
-          'externalId': this.recurringDepositsAccountTemplate.externalId
+          productId: this.recurringDepositsAccountTemplate.depositProductId,
+          submittedOnDate:
+            this.recurringDepositsAccountTemplate.timeline.submittedOnDate &&
+            new Date(this.recurringDepositsAccountTemplate.timeline.submittedOnDate),
+          externalId: this.recurringDepositsAccountTemplate.externalId
         });
       }
     }
@@ -69,10 +72,16 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
    */
   createRecurringDepositsAccountDetailsForm() {
     this.recurringDepositAccountDetailsForm = this.formBuilder.group({
-      'productId': ['', Validators.required],
-      'submittedOnDate': ['', Validators.required],
-      'fieldOfficerId': [''],
-      'externalId': ['']
+      productId: [
+        '',
+        Validators.required
+      ],
+      submittedOnDate: [
+        '',
+        Validators.required
+      ],
+      fieldOfficerId: [''],
+      externalId: ['']
     });
   }
 
@@ -82,17 +91,21 @@ export class RecurringDepositsAccountDetailsStepComponent implements OnInit {
   buildDependencies() {
     const clientId = this.recurringDepositsAccountTemplate.clientId;
     this.recurringDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.recurringDepositsService.getRecurringDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
-        this.recurringDepositsAccountProductTemplate.emit(response);
-        this.fieldOfficerData = response.fieldOfficerOptions;
-        this.isProductSelected = true;
-        if (!this.isFieldOfficerPatched && this.recurringDepositsAccountTemplate.fieldOfficerId) {
-          this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
-          this.isFieldOfficerPatched = true;
-        } else {
-          this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
-        }
-      });
+      this.recurringDepositsService
+        .getRecurringDepositsAccountTemplate(clientId, productId)
+        .subscribe((response: any) => {
+          this.recurringDepositsAccountProductTemplate.emit(response);
+          this.fieldOfficerData = response.fieldOfficerOptions;
+          this.isProductSelected = true;
+          if (!this.isFieldOfficerPatched && this.recurringDepositsAccountTemplate.fieldOfficerId) {
+            this.recurringDepositAccountDetailsForm
+              .get('fieldOfficerId')
+              .patchValue(this.recurringDepositsAccountTemplate.fieldOfficerId);
+            this.isFieldOfficerPatched = true;
+          } else {
+            this.recurringDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+          }
+        });
     });
   }
 

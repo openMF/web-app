@@ -17,7 +17,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./edit-group-meeting.component.scss']
 })
 export class EditGroupMeetingComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -46,12 +45,14 @@ export class EditGroupMeetingComponent implements OnInit {
    * @param {Router} router Router
    * @param {SettingsService} settingsService SettingsService
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private groupsService: GroupsService,
-              private dateUtils: Dates,
-              private route: ActivatedRoute,
-              private router: Router,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private groupsService: GroupsService,
+    private dateUtils: Dates,
+    private route: ActivatedRoute,
+    private router: Router,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.calendarTemplate = data.groupActionData;
       this.frequencyOptions = this.calendarTemplate.frequencyOptions;
@@ -72,9 +73,18 @@ export class EditGroupMeetingComponent implements OnInit {
    */
   createEditGroupMeetingForm() {
     this.groupEditMeetingForm = this.formBuilder.group({
-      'startDate': ['', Validators.required],
-      'frequency': ['', Validators.required],
-      'interval': ['', Validators.required]
+      startDate: [
+        '',
+        Validators.required
+      ],
+      frequency: [
+        '',
+        Validators.required
+      ],
+      interval: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -86,25 +96,51 @@ export class EditGroupMeetingComponent implements OnInit {
       this.groupEditMeetingForm.removeControl('repeatsOnDay');
       switch (frequency) {
         case 1: // Daily
-          this.repetitionIntervals = ['1', '2', '3'];
-        break;
+          this.repetitionIntervals = [
+            '1',
+            '2',
+            '3'
+          ];
+          break;
         case 2: // Weekly
-          this.repetitionIntervals = ['1', '2', '3'];
+          this.repetitionIntervals = [
+            '1',
+            '2',
+            '3'
+          ];
           this.groupEditMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
           this.groupEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
-        break;
+          break;
         case 3: // Monthly
-          this.repetitionIntervals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
-        break;
+          this.repetitionIntervals = [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '10',
+            '11'
+          ];
+          break;
         case 4: // Yearly
-          this.repetitionIntervals = ['1', '2', '3', '4', '5'];
-        break;
+          this.repetitionIntervals = [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5'
+          ];
+          break;
       }
     });
     this.groupEditMeetingForm.patchValue({
-      'startDate': this.calendarTemplate.startDate && new Date(this.calendarTemplate.startDate),
-      'frequency': this.calendarTemplate.frequency.id,
-      'interval': `${this.calendarTemplate.interval}`
+      startDate: this.calendarTemplate.startDate && new Date(this.calendarTemplate.startDate),
+      frequency: this.calendarTemplate.frequency.id,
+      interval: `${this.calendarTemplate.interval}`
     });
   }
 
@@ -141,5 +177,4 @@ export class EditGroupMeetingComponent implements OnInit {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
-
 }

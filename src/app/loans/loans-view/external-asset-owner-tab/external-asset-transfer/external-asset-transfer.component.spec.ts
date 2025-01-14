@@ -8,9 +8,8 @@ describe('ExternalAssetTransferComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExternalAssetTransferComponent ]
-    })
-    .compileComponents();
+      declarations: [ExternalAssetTransferComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

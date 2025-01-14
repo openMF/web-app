@@ -24,7 +24,6 @@ import { LoanTransaction } from 'app/products/loan-products/models/loan-account.
   styleUrls: ['./loans-view.component.scss']
 })
 export class LoansViewComponent implements OnInit {
-
   /** Loan Details Data */
   loanDetailsData: any;
   /** Loan Datatables */
@@ -51,29 +50,33 @@ export class LoansViewComponent implements OnInit {
   loanReAged = false;
   loanReAmortized = false;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private router: Router,
     public loansService: LoansService,
     private translateService: TranslateService,
-    public dialog: MatDialog) {
-    this.route.data.subscribe((data: { loanDetailsData: any, loanDatatables: any, loanArrearsDelinquencyConfig: any }) => {
-      this.loanDetailsData = data.loanDetailsData;
-      this.loanDatatables = data.loanDatatables;
-      this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
-      this.loanStatus = this.loanDetailsData.status;
-      this.currency = this.loanDetailsData.currency;
-      if (this.loanStatus.active) {
-        this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
-          if (!lt.manuallyReversed) {
-            if (lt.type.reAge) {
-              this.loanReAged = true;
-            } else if (lt.type.reAmortize) {
-              this.loanReAmortized = true;
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe(
+      (data: { loanDetailsData: any; loanDatatables: any; loanArrearsDelinquencyConfig: any }) => {
+        this.loanDetailsData = data.loanDetailsData;
+        this.loanDatatables = data.loanDatatables;
+        this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
+        this.loanStatus = this.loanDetailsData.status;
+        this.currency = this.loanDetailsData.currency;
+        if (this.loanStatus.active) {
+          this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
+            if (!lt.manuallyReversed) {
+              if (lt.type.reAge) {
+                this.loanReAged = true;
+              } else if (lt.type.reAmortize) {
+                this.loanReAmortized = true;
+              }
             }
-          }
-        });
+          });
+        }
       }
-    });
+    );
     this.loanId = this.route.snapshot.params['loanId'];
     this.clientId = this.loanDetailsData.clientId;
   }
@@ -106,9 +109,8 @@ export class LoansViewComponent implements OnInit {
     this.buttonConfig = new LoansAccountButtonConfiguration(this.status);
 
     if (this.status === 'Submitted and pending approval') {
-
       this.buttonConfig.addOption({
-        name: (this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer'),
+        name: this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer',
         icon: 'user-tie',
         taskPermissionName: 'DISBURSE_LOAN'
       });
@@ -120,15 +122,12 @@ export class LoansViewComponent implements OnInit {
           taskPermissionName: 'ADJUST_REPAYMENT_SCHEDULE'
         });
       }
-
     } else if (this.status === 'Approved') {
-
       this.buttonConfig.addButton({
-        name: (this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer'),
+        name: this.loanDetailsData.loanOfficerName ? 'Change Loan Officer' : 'Assign Loan Officer',
         icon: 'user-tie',
         taskPermissionName: 'DISBURSE_LOAN'
       });
-
     } else if (this.status === 'Active') {
       if (this.loanDetailsData.canDisburse || this.loanDetailsData.multiDisburseLoan) {
         this.buttonConfig.addButton({
@@ -196,13 +195,13 @@ export class LoansViewComponent implements OnInit {
         this.buttonConfig.addButton({
           name: 'Re-Age',
           icon: 'calendar',
-          taskPermissionName: 'REAGE_LOAN',
+          taskPermissionName: 'REAGE_LOAN'
         });
       } else {
         this.buttonConfig.addButton({
           name: 'Undo Re-Age',
           icon: 'undo',
-          taskPermissionName: 'UNDO_REAGE_LOAN',
+          taskPermissionName: 'UNDO_REAGE_LOAN'
         });
       }
 
@@ -210,13 +209,13 @@ export class LoansViewComponent implements OnInit {
         this.buttonConfig.addButton({
           name: 'Re-Amortize',
           icon: 'calendar-alt',
-          taskPermissionName: 'REAMORTIZE_LOAN',
+          taskPermissionName: 'REAMORTIZE_LOAN'
         });
       } else {
         this.buttonConfig.addButton({
           name: 'Undo Re-Amortize',
           icon: 'undo',
-          taskPermissionName: 'UNDO_REAMORTIZE_LOAN',
+          taskPermissionName: 'UNDO_REAMORTIZE_LOAN'
         });
       }
     }
@@ -235,7 +234,10 @@ export class LoansViewComponent implements OnInit {
         break;
       case 'Transfer Funds':
         const queryParams: any = { loanId: this.loanId, accountType: 'fromloans' };
-        this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+        this.router.navigate(['transfer-funds/make-account-transfer'], {
+          relativeTo: this.route,
+          queryParams: queryParams
+        });
         break;
       case 'Undo Re-Age':
       case 'Undo Re-Amortize':
@@ -249,7 +251,13 @@ export class LoansViewComponent implements OnInit {
             data: this.loanDetailsData
           }
         };
-        this.router.navigate(['actions', actionName], navigationExtras);
+        this.router.navigate(
+          [
+            'actions',
+            actionName
+          ],
+          navigationExtras
+        );
         break;
     }
   }
@@ -259,7 +267,13 @@ export class LoansViewComponent implements OnInit {
    */
   private recoverFromGuarantor() {
     const recoverFromGuarantorDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Recover from Guarantor'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want recover from Guarantor'), type: 'Mild' }
+      data: {
+        heading: this.translateService.instant('labels.heading.Recover from Guarantor'),
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want recover from Guarantor'
+        ),
+        type: 'Mild'
+      }
     });
     recoverFromGuarantorDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
@@ -286,7 +300,10 @@ export class LoansViewComponent implements OnInit {
     const undoTransactionAccountDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Undo Transaction'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') + ' ' + this.translateService.instant('labels.menus.' + actionName)
+        dialogContext:
+          this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') +
+          ' ' +
+          this.translateService.instant('labels.menus.' + actionName)
       }
     });
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
@@ -340,8 +357,8 @@ export class LoansViewComponent implements OnInit {
   private reload() {
     const clientId = this.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/clients/${clientId}/loans-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

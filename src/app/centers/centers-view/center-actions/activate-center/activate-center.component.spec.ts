@@ -8,9 +8,8 @@ describe('ActivateCenterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActivateCenterComponent ]
-    })
-    .compileComponents();
+      declarations: [ActivateCenterComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

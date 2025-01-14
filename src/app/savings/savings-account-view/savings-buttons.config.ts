@@ -1,15 +1,14 @@
 /** Savings Account Buttons Configuration */
 export class SavingsButtonsConfiguration {
-
   optionArray: {
-    name: string,
-    taskPermissionName: string,
+    name: string;
+    taskPermissionName: string;
   }[];
 
   buttonsArray: {
-    name: string,
-    icon: string,
-    taskPermissionName: string,
+    name: string;
+    icon: string;
+    taskPermissionName: string;
   }[];
 
   constructor(status: string, substatus: any) {
@@ -44,13 +43,11 @@ export class SavingsButtonsConfiguration {
               }
             );
           } else {
-            this.buttonsArray.push(
-              {
-                name: 'Unblock Deposit',
-                icon: 'lock-open',
-                taskPermissionName: 'UNBLOCKDEPOSIT_SAVINGSACCOUNT'
-              }
-            );
+            this.buttonsArray.push({
+              name: 'Unblock Deposit',
+              icon: 'lock-open',
+              taskPermissionName: 'UNBLOCKDEPOSIT_SAVINGSACCOUNT'
+            });
           }
           if (!substatus.blockDebit) {
             this.buttonsArray.push(
@@ -66,13 +63,11 @@ export class SavingsButtonsConfiguration {
               }
             );
           } else {
-            this.buttonsArray.push(
-              {
-                name: 'Unblock Withdrawal',
-                icon: 'lock-open',
-                taskPermissionName: 'UNBLOCKWITHDRAWAL_SAVINGSACCOUNT'
-              }
-            );
+            this.buttonsArray.push({
+              name: 'Unblock Withdrawal',
+              icon: 'lock-open',
+              taskPermissionName: 'UNBLOCKWITHDRAWAL_SAVINGSACCOUNT'
+            });
           }
           this.buttonsArray = this.buttonsArray.concat([
             {
@@ -93,16 +88,16 @@ export class SavingsButtonsConfiguration {
             {
               name: 'Post Interest As On',
               icon: 'arrow-right',
-              taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT',
-            },
+              taskPermissionName: 'POSTINTEREST_SAVINGSACCOUNT'
+            }
           ]);
         } else {
           this.buttonsArray = [
-          {
-            name: 'Unblock Account',
-            icon: 'lock-open',
-            taskPermissionName: 'UNBLOCK_SAVINGSACCOUNT'
-          }
+            {
+              name: 'Unblock Account',
+              icon: 'lock-open',
+              taskPermissionName: 'UNBLOCK_SAVINGSACCOUNT'
+            }
           ];
         }
         break;
@@ -138,7 +133,7 @@ export class SavingsButtonsConfiguration {
             taskPermissionName: 'CREATE_SAVINGSACCOUNTCHARGE'
           }
         ];
-      break;
+        break;
       default:
         this.buttonsArray = [];
     }
@@ -188,8 +183,7 @@ export class SavingsButtonsConfiguration {
     }
   }
 
-  addOption(option: {name: string, taskPermissionName: string}) {
+  addOption(option: { name: string; taskPermissionName: string }) {
     this.optionArray.push(option);
   }
-
 }

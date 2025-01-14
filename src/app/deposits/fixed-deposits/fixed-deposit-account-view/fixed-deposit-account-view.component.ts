@@ -26,7 +26,6 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./fixed-deposit-account-view.component.scss']
 })
 export class FixedDepositAccountViewComponent implements OnInit {
-
   /** Fixed Deposits Account Data */
   fixedDepositsAccountData: any;
   /** Savings Data Tables */
@@ -46,17 +45,19 @@ export class FixedDepositAccountViewComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private fixedDepositsService: FixedDepositsService,
-              private savingsService: SavingsService,
-              public dialog: MatDialog) {
-    this.route.data.subscribe((data: { fixedDepositsAccountData: any, savingsDatatables: any  }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private fixedDepositsService: FixedDepositsService,
+    private savingsService: SavingsService,
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { fixedDepositsAccountData: any; savingsDatatables: any }) => {
       this.fixedDepositsAccountData = data.fixedDepositsAccountData;
       this.savingsDatatables = data.savingsDatatables;
       this.currency = this.fixedDepositsAccountData.currency;
       const status: any = data.fixedDepositsAccountData.status;
-      this.showTransactions = (status.id >= 300);
+      this.showTransactions = status.id >= 300;
     });
     if (this.router.url.includes('clients')) {
       this.entityType = 'Client';
@@ -97,7 +98,8 @@ export class FixedDepositAccountViewComponent implements OnInit {
   reload() {
     const clientId = this.fixedDepositsAccountData.clientId;
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients/${clientId}/fixed-deposits-accounts`, {skipLocationChange: true})
+    this.router
+      .navigateByUrl(`/clients/${clientId}/fixed-deposits-accounts`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
 
@@ -162,9 +164,11 @@ export class FixedDepositAccountViewComponent implements OnInit {
     const calculateInterestAccountDialogRef = this.dialog.open(CalculateInterestDialogComponent);
     calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.fixedDepositsService.executeFixedDepositsAccountCommand(this.fixedDepositsAccountData.id, 'calculateInterest', {}).subscribe(() => {
-          this.reload();
-        });
+        this.fixedDepositsService
+          .executeFixedDepositsAccountCommand(this.fixedDepositsAccountData.id, 'calculateInterest', {})
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -176,13 +180,14 @@ export class FixedDepositAccountViewComponent implements OnInit {
     const postInterestAccountDialogRef = this.dialog.open(PostInterestDialogComponent);
     postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.fixedDepositsService.executeFixedDepositsAccountCommand(this.fixedDepositsAccountData.id, 'postInterest', {}).subscribe(() => {
-          this.reload();
-        });
+        this.fixedDepositsService
+          .executeFixedDepositsAccountCommand(this.fixedDepositsAccountData.id, 'postInterest', {})
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
-
 
   /**
    * Enables withhold tax for fixed deposits account.
@@ -194,7 +199,10 @@ export class FixedDepositAccountViewComponent implements OnInit {
     });
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', { withHoldTax: true})
+        this.savingsService
+          .executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', {
+            withHoldTax: true
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -212,12 +220,14 @@ export class FixedDepositAccountViewComponent implements OnInit {
     });
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService.executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', { withHoldTax: false})
+        this.savingsService
+          .executeSavingsAccountUpdateCommand(this.fixedDepositsAccountData.id, 'updateWithHoldTax', {
+            withHoldTax: false
+          })
           .subscribe(() => {
             this.reload();
           });
       }
     });
   }
-
 }

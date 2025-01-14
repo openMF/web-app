@@ -8,9 +8,8 @@ describe('AddClientChargeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddClientChargeComponent ]
-    })
-    .compileComponents();
+      declarations: [AddClientChargeComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

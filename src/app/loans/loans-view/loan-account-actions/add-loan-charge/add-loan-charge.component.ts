@@ -17,7 +17,6 @@ import { Dates } from 'app/core/utils/dates';
   styleUrls: ['./add-loan-charge.component.scss']
 })
 export class AddLoanChargeComponent implements OnInit {
-
   /** Minimum Due Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Due Date allowed. */
@@ -51,12 +50,14 @@ export class AddLoanChargeComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private loansService: LoansService,
-              private settingsService: SettingsService) {
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private loansService: LoansService,
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.loanChargeOptions = data.actionButtonData.chargeOptions;
     });
@@ -69,8 +70,8 @@ export class AddLoanChargeComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.maxFutureDate;
     this.createLoanChargeForm();
-    this.loanChargeForm.controls.chargeId.valueChanges.subscribe(chargeId => {
-      const chargeDetails = this.loanChargeOptions.find(option => {
+    this.loanChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
+      const chargeDetails = this.loanChargeOptions.find((option) => {
         return option.id === chargeId;
       });
       if (chargeDetails.chargeTimeType.id === 2) {
@@ -79,9 +80,9 @@ export class AddLoanChargeComponent implements OnInit {
         this.loanChargeForm.removeControl('dueDate');
       }
       this.loanChargeForm.patchValue({
-        'amount': chargeDetails.amount,
-        'chargeCalculation': chargeDetails.chargeCalculationType.value,
-        'chargeTime': chargeDetails.chargeTimeType.value
+        amount: chargeDetails.amount,
+        chargeCalculation: chargeDetails.chargeCalculationType.value,
+        chargeTime: chargeDetails.chargeTimeType.value
       });
     });
   }
@@ -91,10 +92,16 @@ export class AddLoanChargeComponent implements OnInit {
    */
   createLoanChargeForm() {
     this.loanChargeForm = this.formBuilder.group({
-      'chargeId': ['', Validators.required],
-      'amount': ['', Validators.required],
-      'chargeCalculation': [{ value: '', disabled: true }],
-      'chargeTime': [{ value: '', disabled: true }]
+      chargeId: [
+        '',
+        Validators.required
+      ],
+      amount: [
+        '',
+        Validators.required
+      ],
+      chargeCalculation: [{ value: '', disabled: true }],
+      chargeTime: [{ value: '', disabled: true }]
     });
   }
 
@@ -111,7 +118,7 @@ export class AddLoanChargeComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loansService.createLoanCharge(this.loanId, 'charges', data).subscribe(res => {
+    this.loansService.createLoanCharge(this.loanId, 'charges', data).subscribe((res) => {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }

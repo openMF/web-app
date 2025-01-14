@@ -11,7 +11,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   styleUrls: ['./loan-product-charges-step.component.scss']
 })
 export class LoanProductChargesStepComponent implements OnInit {
-
   @Input() loanProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
   @Input() multiDisburseLoan: UntypedFormControl;
@@ -20,25 +19,34 @@ export class LoanProductChargesStepComponent implements OnInit {
   overdueChargeData: any;
 
   chargesDataSource: {}[];
-  displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'action'
+  ];
 
   pristine = true;
 
-  constructor(public dialog: MatDialog,
-              private translateService: TranslateService) {
-  }
+  constructor(
+    public dialog: MatDialog,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.chargeData = this.loanProductsTemplate.chargeOptions;
-    this.overdueChargeData = this.loanProductsTemplate.penaltyOptions ?
-      this.loanProductsTemplate.penaltyOptions.filter((penalty: any) => penalty.chargeTimeType.code === 'chargeTimeType.overdueInstallment') :
-      [];
+    this.overdueChargeData = this.loanProductsTemplate.penaltyOptions
+      ? this.loanProductsTemplate.penaltyOptions.filter(
+          (penalty: any) => penalty.chargeTimeType.code === 'chargeTimeType.overdueInstallment'
+        )
+      : [];
 
     this.chargesDataSource = this.loanProductsTemplate.charges || [];
     this.pristine = true;
 
-    this.currencyCode.valueChanges.subscribe(() => this.chargesDataSource = []);
-    this.multiDisburseLoan.valueChanges.subscribe(() => this.chargesDataSource = []);
+    this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
+    this.multiDisburseLoan.valueChanges.subscribe(() => (this.chargesDataSource = []));
   }
 
   addCharge(charge: any) {
@@ -49,7 +57,7 @@ export class LoanProductChargesStepComponent implements OnInit {
 
   deleteCharge(charge: any) {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext:  this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name }
+      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -65,5 +73,4 @@ export class LoanProductChargesStepComponent implements OnInit {
       charges: this.chargesDataSource
     };
   }
-
 }

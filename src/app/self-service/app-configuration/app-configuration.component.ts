@@ -12,7 +12,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app-configuration.component.scss']
 })
 export class AppConfigurationComponent {
-
   /** Placeholder for languages. */
   languages: any;
   /** Placeholder for date formats. */
@@ -26,6 +25,5 @@ export class AppConfigurationComponent {
   /** Placeholder for online banking app fonts. */
   onlineBankingAppFonts: any;
 
-  constructor() { }
-
+  constructor() {}
 }

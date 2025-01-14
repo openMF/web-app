@@ -22,14 +22,19 @@ import { Accounting } from 'app/core/utils/accounting';
   styleUrls: ['./create-share-product.component.scss']
 })
 export class CreateShareProductComponent {
-
-  @ViewChild(ShareProductDetailsStepComponent, { static: true }) shareProductDetailsStep: ShareProductDetailsStepComponent;
-  @ViewChild(ShareProductCurrencyStepComponent, { static: true }) shareProductCurrencyStep: ShareProductCurrencyStepComponent;
+  @ViewChild(ShareProductDetailsStepComponent, { static: true })
+  shareProductDetailsStep: ShareProductDetailsStepComponent;
+  @ViewChild(ShareProductCurrencyStepComponent, { static: true })
+  shareProductCurrencyStep: ShareProductCurrencyStepComponent;
   @ViewChild(ShareProductTermsStepComponent, { static: true }) shareProductTermsStep: ShareProductTermsStepComponent;
-  @ViewChild(ShareProductSettingsStepComponent, { static: true }) shareProductSettingsStep: ShareProductSettingsStepComponent;
-  @ViewChild(ShareProductMarketPriceStepComponent, { static: true }) shareProductMarketPriceStep: ShareProductMarketPriceStepComponent;
-  @ViewChild(ShareProductChargesStepComponent, { static: true }) shareProductChargesStep: ShareProductChargesStepComponent;
-  @ViewChild(ShareProductAccountingStepComponent, { static: true }) shareProductAccountingStep: ShareProductAccountingStepComponent;
+  @ViewChild(ShareProductSettingsStepComponent, { static: true })
+  shareProductSettingsStep: ShareProductSettingsStepComponent;
+  @ViewChild(ShareProductMarketPriceStepComponent, { static: true })
+  shareProductMarketPriceStep: ShareProductMarketPriceStepComponent;
+  @ViewChild(ShareProductChargesStepComponent, { static: true })
+  shareProductChargesStep: ShareProductChargesStepComponent;
+  @ViewChild(ShareProductAccountingStepComponent, { static: true })
+  shareProductAccountingStep: ShareProductAccountingStepComponent;
 
   shareProductsTemplate: any;
   accountingRuleData: string[] = [];
@@ -41,11 +46,13 @@ export class CreateShareProductComponent {
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(private route: ActivatedRoute,
-              private productsService: ProductsService,
-              private router: Router,
-              private settingsService: SettingsService,
-              private accounting: Accounting) {
+  constructor(
+    private route: ActivatedRoute,
+    private productsService: ProductsService,
+    private router: Router,
+    private settingsService: SettingsService,
+    private accounting: Accounting
+  ) {
     this.route.data.subscribe((data: { shareProductsTemplate: any }) => {
       this.shareProductsTemplate = data.shareProductsTemplate;
     });
@@ -106,10 +113,14 @@ export class CreateShareProductComponent {
       chargesSelected: this.shareProduct.chargesSelected.map((charge: any) => ({ id: charge.id })),
       locale: this.settingsService.language.code // locale required for digitsAfterDecimal
     };
-    this.productsService.createShareProduct(shareProduct)
-      .subscribe((response: any) => {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
-      });
+    this.productsService.createShareProduct(shareProduct).subscribe((response: any) => {
+      this.router.navigate(
+        [
+          '../',
+          response.resourceId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
-
 }

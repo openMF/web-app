@@ -13,9 +13,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./glim-account.component.scss']
 })
 export class GlimAccountComponent implements OnInit {
-
   /** Columns to be displayed in GLIM overview table. */
-  displayedColumns: string[] = ['loanId', 'clientId', 'clientName', 'loanAccountNumber', 'clientPrincipalLoan', 'groupPrincipalLoan'];
+  displayedColumns: string[] = [
+    'loanId',
+    'clientId',
+    'clientName',
+    'loanAccountNumber',
+    'clientPrincipalLoan',
+    'groupPrincipalLoan'
+  ];
   /** Data source for charge overview table. */
   dataSource: MatTableDataSource<any>;
   /** Charge Overview data */
@@ -29,9 +35,11 @@ export class GlimAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-   constructor(private route: ActivatedRoute,
-               public dialog: MatDialog) {
-      this.route.data.subscribe((data: { glimData: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    public dialog: MatDialog
+  ) {
+    this.route.data.subscribe((data: { glimData: any }) => {
       this.glimOverviewData = data.glimData;
     });
   }
@@ -43,7 +51,7 @@ export class GlimAccountComponent implements OnInit {
   /**
    * Set GLIM Overview.
    */
-   setLoanClientChargeOverview() {
+  setLoanClientChargeOverview() {
     this.dataSource = new MatTableDataSource(this.glimOverviewData);
   }
 }

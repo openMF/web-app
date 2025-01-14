@@ -21,7 +21,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./loan-approval.component.scss']
 })
 export class LoanApprovalComponent {
-
   /** Offices Data */
   offices: any;
   /** Loans Data */
@@ -39,7 +38,13 @@ export class LoanApprovalComponent {
   /** List of Requests */
   batchRequests: any[];
   /** Displayed Columns */
-  displayedColumns: string[] = ['select', 'clientName', 'loan', 'amount', 'loanPurpose'];
+  displayedColumns: string[] = [
+    'select',
+    'clientName',
+    'loan',
+    'amount',
+    'loanPurpose'
+  ];
 
   /**
    * Retrieves the offices and loans data from `resolve`.
@@ -50,14 +55,16 @@ export class LoanApprovalComponent {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private dateUtils: Dates,
     private router: Router,
     private translateService: TranslateService,
     private settingsService: SettingsService,
-    private tasksService: TasksService) {
-    this.route.data.subscribe((data: { officesData: any, loansData: any }) => {
+    private tasksService: TasksService
+  ) {
+    this.route.data.subscribe((data: { officesData: any; loansData: any }) => {
       this.offices = data.officesData;
       this.loans = data.loansData.pageItems;
       this.setOfficeData();
@@ -107,9 +114,9 @@ export class LoanApprovalComponent {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(dataSource3: any) {
     if (dataSource3) {
-      this.isAllSelected(dataSource3) ?
-        dataSource3.forEach((row: any) => this.selection.deselect(row)) :
-        dataSource3.forEach((row: any) => this.selection.select(row));
+      this.isAllSelected(dataSource3)
+        ? dataSource3.forEach((row: any) => this.selection.deselect(row))
+        : dataSource3.forEach((row: any) => this.selection.select(row));
     }
   }
 
@@ -123,7 +130,10 @@ export class LoanApprovalComponent {
 
   approveLoan() {
     const approveLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { heading: this.translateService.instant('labels.heading.Approve Loan'), dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to Approve Loan') }
+      data: {
+        heading: this.translateService.instant('labels.heading.Approve Loan'),
+        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to Approve Loan')
+      }
     });
     approveLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
@@ -154,7 +164,7 @@ export class LoanApprovalComponent {
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
-        if (responseEle.statusCode = '200') {
+        if ((responseEle.statusCode = '200')) {
           approvedAccounts++;
           responseEle.body = JSON.parse(responseEle.body);
           if (selectedAccounts === approvedAccounts) {
@@ -174,7 +184,7 @@ export class LoanApprovalComponent {
     this.tasksService.getAllLoansToBeApproved().subscribe((response: any) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
-        return (account.status.waitingForDisbursal === true);
+        return account.status.waitingForDisbursal === true;
       });
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel(true, []);
@@ -187,8 +197,8 @@ export class LoanApprovalComponent {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/checker-inbox-and-tasks`, { skipLocationChange: true })
+    this.router
+      .navigateByUrl(`/checker-inbox-and-tasks`, { skipLocationChange: true })
       .then(() => this.router.navigate([url]));
   }
-
 }

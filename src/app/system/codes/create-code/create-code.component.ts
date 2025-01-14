@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit  } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -15,7 +15,6 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
   styleUrls: ['./create-code.component.scss']
 })
 export class CreateCodeComponent implements OnInit, AfterViewInit {
-
   /** Code form. */
   codeForm: UntypedFormGroup;
 
@@ -32,12 +31,14 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private formBuilder: UntypedFormBuilder,
-              private systemService: SystemService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private configurationWizardService: ConfigurationWizardService,
-              private popoverService: PopoverService) { }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private systemService: SystemService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private configurationWizardService: ConfigurationWizardService,
+    private popoverService: PopoverService
+  ) {}
 
   /**
    * Creates the code form.
@@ -51,7 +52,10 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    */
   createCodeForm() {
     this.codeForm = this.formBuilder.group({
-      'name': ['', Validators.required]
+      name: [
+        '',
+        Validators.required
+      ]
     });
   }
 
@@ -60,15 +64,20 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created code.
    */
   submit() {
-    this.systemService.createCode(this.codeForm.value)
-      .subscribe((response: any) => {
-        if (this.configurationWizardService.showSystemCodesForm === true) {
-          this.configurationWizardService.showSystemCodesForm = false;
-          this.configurationWizardService.showRolesandPermission = true;
-          this.router.navigate(['/system']);
-        } else {
-        this.router.navigate(['../', response.resourceId], { relativeTo: this.route });
-        }
+    this.systemService.createCode(this.codeForm.value).subscribe((response: any) => {
+      if (this.configurationWizardService.showSystemCodesForm === true) {
+        this.configurationWizardService.showSystemCodesForm = false;
+        this.configurationWizardService.showRolesandPermission = true;
+        this.router.navigate(['/system']);
+      } else {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      }
     });
   }
 
@@ -79,7 +88,12 @@ export class CreateCodeComponent implements OnInit, AfterViewInit {
    * @param position String.
    * @param backdrop Boolean.
    */
-  showPopover(template: TemplateRef<any>, target: HTMLElement | ElementRef<any>, position: string, backdrop: boolean): void {
+  showPopover(
+    template: TemplateRef<any>,
+    target: HTMLElement | ElementRef<any>,
+    position: string,
+    backdrop: boolean
+  ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
   }
 

@@ -15,7 +15,6 @@ import { RecurringDepositsService } from '../../recurring-deposits.service';
   styleUrls: ['./undo-approval-recurring-deposits-account.component.scss']
 })
 export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
-
   /** Undo Approval Recurring Deposits Account form. */
   undoApprovalRecurringDepositsAccountForm: UntypedFormGroup;
   /** Recurring Deposits Account Id */
@@ -30,10 +29,12 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router
+  ) {
     this.undoCommand = 'undoapproval'; // Default command
     this.undoAction = this.route.snapshot.params['name'];
     if (this.undoAction === 'Undo Activation') {
@@ -54,7 +55,7 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
    */
   createUndoApprovalRecurringDepositsAccountForm() {
     this.undoApprovalRecurringDepositsAccountForm = this.formBuilder.group({
-      'note': ['']
+      note: ['']
     });
   }
 
@@ -64,17 +65,20 @@ export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
    */
   submit() {
     const data = {
-      ...this.undoApprovalRecurringDepositsAccountForm.value,
+      ...this.undoApprovalRecurringDepositsAccountForm.value
     };
     if (this.undoAction === 'Undo Activation') {
-      this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, this.undoCommand, data).subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+      this.recurringDepositsService
+        .executeRecurringDepositsAccountCommand(this.accountId, this.undoCommand, data)
+        .subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
     } else {
-      this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'undoapproval', data).subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+      this.recurringDepositsService
+        .executeRecurringDepositsAccountCommand(this.accountId, 'undoapproval', data)
+        .subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
     }
   }
-
 }

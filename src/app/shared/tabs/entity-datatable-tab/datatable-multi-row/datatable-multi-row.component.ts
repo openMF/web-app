@@ -22,7 +22,6 @@ import * as _ from 'lodash';
   styleUrls: ['./datatable-multi-row.component.scss']
 })
 export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges {
-
   SELECT_NAME_FIELD = 'select';
   /** Data Object */
   @Input() dataObject: any;
@@ -55,15 +54,17 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
    * @param {MatDialog} dialog Mat Dialog.
    * @param {Datatables} datatables Datatable utils
    */
-  constructor(private route: ActivatedRoute,
-              private dateUtils: Dates,
-              private systemService: SystemService,
-              private settingsService: SettingsService,
-              private dialog: MatDialog,
-              private datatables: Datatables,
-              private dateFormat: DateFormatPipe,
-              private dateTimeFormat: DatetimeFormatPipe,
-              private numberFormat: DecimalPipe) { }
+  constructor(
+    private route: ActivatedRoute,
+    private dateUtils: Dates,
+    private systemService: SystemService,
+    private settingsService: SettingsService,
+    private dialog: MatDialog,
+    private datatables: Datatables,
+    private dateFormat: DateFormatPipe,
+    private dateTimeFormat: DatetimeFormatPipe,
+    private numberFormat: DecimalPipe
+  ) {}
 
   /**
    * Fetches data table name from route params.
@@ -117,7 +118,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
       }
       this.isSelected = false;
       this.isLoading = false;
-     });
+    });
   }
 
   /**
@@ -127,7 +128,11 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     let dataTableEntryObject: any = { locale: this.settingsService.language.code };
     const dateTransformColumns: string[] = [];
     const columns = this.datatables.filterSystemColumns(this.dataObject.columnHeaders);
-    const formfields: FormfieldBase[] = this.datatables.getFormfields(columns, dateTransformColumns, dataTableEntryObject);
+    const formfields: FormfieldBase[] = this.datatables.getFormfields(
+      columns,
+      dateTransformColumns,
+      dataTableEntryObject
+    );
     const data = {
       title: 'Add ' + this.datatableName + ' for ' + this.entityType,
       formfields: formfields
@@ -136,12 +141,17 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     addDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         dateTransformColumns.forEach((column) => {
-          response.data.value[column] = this.dateUtils.formatDate(response.data.value[column], dataTableEntryObject.dateFormat);
+          response.data.value[column] = this.dateUtils.formatDate(
+            response.data.value[column],
+            dataTableEntryObject.dateFormat
+          );
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
-        this.systemService.addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject).subscribe((result: any) => {
-          this.getData();
-        });
+        this.systemService
+          .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
+          .subscribe((result: any) => {
+            this.getData();
+          });
       }
     });
   }
@@ -179,14 +189,14 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
                 this.datatableData.splice(index, 1);
                 this.dataTableRef.renderRows();
                 this.selection = new SelectionModel(true, []);
-                this.isSelected = (this.selection.selected.length > 0);
+                this.isSelected = this.selection.selected.length > 0;
               }
             });
           });
         });
       } else {
         this.selection = new SelectionModel(true, []);
-        this.isSelected = (this.selection.selected.length > 0);
+        this.isSelected = this.selection.selected.length > 0;
       }
     });
   }
@@ -219,11 +229,11 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected;
-    return (this.datatableData.length === numSelected);
+    return this.datatableData.length === numSelected;
   }
 
   isAnySelected() {
-    return (this.selection.selected && this.selection.selected.length > 0);
+    return this.selection.selected && this.selection.selected.length > 0;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -233,12 +243,12 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     } else {
       this.selection = new SelectionModel(true, []);
     }
-    this.isSelected = (this.selection.selected.length > 0);
+    this.isSelected = this.selection.selected.length > 0;
   }
 
   itemToggle(data: any): void {
     this.selection.toggle(data);
-    this.isSelected = (this.selection.selected.length > 0);
+    this.isSelected = this.selection.selected.length > 0;
   }
 
   /** The label for the checkbox on the passed row */
@@ -259,5 +269,4 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   getInputName(attr: string): string {
     return this.datatables.getName(attr);
   }
-
 }

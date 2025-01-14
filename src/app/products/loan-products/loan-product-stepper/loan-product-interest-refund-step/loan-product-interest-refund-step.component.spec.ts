@@ -8,9 +8,8 @@ describe('LoanProductInterestRefundStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoanProductInterestRefundStepComponent ]
-    })
-    .compileComponents();
+      declarations: [LoanProductInterestRefundStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

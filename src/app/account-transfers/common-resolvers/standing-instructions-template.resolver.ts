@@ -13,34 +13,32 @@ import { AccountTransfersService } from '../account-transfers.service';
  */
 @Injectable()
 export class StandingInstructionsTemplateResolver implements Resolve<Object> {
+  accountTypeId: string;
 
-    accountTypeId: string;
+  /**
+   * @param {accountTransfersService} AccountTransfersService Account Transfers service.
+   */
+  constructor(private accountTransfersService: AccountTransfersService) {}
 
-    /**
-     * @param {accountTransfersService} AccountTransfersService Account Transfers service.
-     */
-    constructor(private accountTransfersService: AccountTransfersService) { }
-
-    /**
-     * Returns the Standing Instructions Data.
-     * @param {ActivatedRouteSnapshot} route Route Snapshot
-     * @returns {Observable<any>}
-     */
-    resolve(route: ActivatedRouteSnapshot): Observable<any> {
-        const officeId = route.queryParamMap.get('officeId');
-        const accountType = route.queryParamMap.get('accountType');
-        const clientId = route.parent.paramMap.get('clientId');
-        switch (accountType) {
-            case 'fromloans':
-                this.accountTypeId = '1';
-                break;
-            case 'fromsavings':
-                this.accountTypeId = '2';
-                break;
-            default:
-                this.accountTypeId = '0';
-        }
-        return this.accountTransfersService.getStandingInstructionsTemplate(clientId, officeId, this.accountTypeId);
+  /**
+   * Returns the Standing Instructions Data.
+   * @param {ActivatedRouteSnapshot} route Route Snapshot
+   * @returns {Observable<any>}
+   */
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
+    const officeId = route.queryParamMap.get('officeId');
+    const accountType = route.queryParamMap.get('accountType');
+    const clientId = route.parent.paramMap.get('clientId');
+    switch (accountType) {
+      case 'fromloans':
+        this.accountTypeId = '1';
+        break;
+      case 'fromsavings':
+        this.accountTypeId = '2';
+        break;
+      default:
+        this.accountTypeId = '0';
     }
-
+    return this.accountTransfersService.getStandingInstructionsTemplate(clientId, officeId, this.accountTypeId);
+  }
 }

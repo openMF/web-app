@@ -13,11 +13,10 @@ import { FixedDepositsService } from '../fixed-deposits.service';
  */
 @Injectable()
 export class FixedDepositsAccountTransactionResolver implements Resolve<Object> {
-
   /**
    * @param {FixedDepositsService} fixedDepositsService Savings service.
    */
-  constructor(private fixedDepositsService: FixedDepositsService) { }
+  constructor(private fixedDepositsService: FixedDepositsService) {}
 
   /**
    * Returns the Fixed Deposits Account Transaction data.
@@ -29,5 +28,4 @@ export class FixedDepositsAccountTransactionResolver implements Resolve<Object> 
     const transactionId = route.paramMap.get('id');
     return this.fixedDepositsService.getFixedDepositsAccountTransaction(fixedDepositAccountId, transactionId);
   }
-
 }

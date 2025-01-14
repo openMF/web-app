@@ -17,11 +17,16 @@ import { of } from 'rxjs';
   styleUrls: ['./tellers.component.scss']
 })
 export class TellersComponent implements OnInit {
-
   /** Tellers data. */
   tellersData: any;
   /** Columns to be displayed in tellers table. */
-  displayedColumns: string[] = ['officeName', 'name', 'status', 'startDate', 'actions'];
+  displayedColumns: string[] = [
+    'officeName',
+    'name',
+    'status',
+    'startDate',
+    'actions'
+  ];
   /** Data source for tellers table. */
   dataSource: MatTableDataSource<any>;
 
@@ -35,7 +40,7 @@ export class TellersComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe(( data: { tellers: any }) => {
+    this.route.data.subscribe((data: { tellers: any }) => {
       this.tellersData = data.tellers;
     });
   }
@@ -63,5 +68,4 @@ export class TellersComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
 }

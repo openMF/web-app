@@ -8,9 +8,8 @@ describe('ClientPreviewStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClientPreviewStepComponent ]
-    })
-    .compileComponents();
+      declarations: [ClientPreviewStepComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

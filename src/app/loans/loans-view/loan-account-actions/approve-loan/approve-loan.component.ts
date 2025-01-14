@@ -18,7 +18,6 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./approve-loan.component.scss']
 })
 export class ApproveLoanComponent implements OnInit {
-
   /** Approve Loan form. */
   approveLoanForm: UntypedFormGroup;
   /** Loan data. */
@@ -40,12 +39,14 @@ export class ApproveLoanComponent implements OnInit {
    * @param router Router.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private loanService: LoansService,
     private router: Router,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.loanData = data.actionButtonData;
       this.currency = data.actionButtonData.currency;
@@ -58,7 +59,7 @@ export class ApproveLoanComponent implements OnInit {
     this.loanService.getApproveAssociationsDetails(this.loanId).subscribe((response: any) => {
       this.associationData = response;
       this.approveLoanForm.patchValue({
-        'expectedDisbursementDate': new Date(response.timeline.expectedDisbursementDate)
+        expectedDisbursementDate: new Date(response.timeline.expectedDisbursementDate)
       });
     });
   }
@@ -68,10 +69,16 @@ export class ApproveLoanComponent implements OnInit {
    */
   setApproveLoanForm() {
     this.approveLoanForm = this.formBuilder.group({
-      'approvedOnDate': [this.settingsService.businessDate, Validators.required],
-      'expectedDisbursementDate': [''],
-      'approvedLoanAmount': [this.loanData.approvalAmount, Validators.required],
-      'note': ['']
+      approvedOnDate: [
+        this.settingsService.businessDate,
+        Validators.required
+      ],
+      expectedDisbursementDate: [''],
+      approvedLoanAmount: [
+        this.loanData.approvalAmount,
+        Validators.required
+      ],
+      note: ['']
     });
   }
 
@@ -99,5 +106,4 @@ export class ApproveLoanComponent implements OnInit {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
-
 }

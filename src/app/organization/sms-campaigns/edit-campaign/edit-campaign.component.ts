@@ -19,7 +19,6 @@ import { CampaignMessageStepComponent } from '../sms-campaign-stepper/campaign-m
   styleUrls: ['./edit-campaign.component.scss']
 })
 export class EditCampaignComponent {
-
   /** smsCampaign */
   smsCampaign: any;
   /** SMS Campaign Template */
@@ -38,12 +37,14 @@ export class EditCampaignComponent {
    * @param {OrganizationService} organizationService Organiztion Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private dateUtils: Dates,
-              private organizationService: OrganizationService,
-              private settingsService: SettingsService) {
-    this.route.data.subscribe((data: { smsCampaign: any, smsCampaignTemplate: any }) => {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private dateUtils: Dates,
+    private organizationService: OrganizationService,
+    private settingsService: SettingsService
+  ) {
+    this.route.data.subscribe((data: { smsCampaign: any; smsCampaignTemplate: any }) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
       this.smsCampaign = data.smsCampaign;
       this.smsCampaign.editFlag = true;
@@ -87,11 +88,13 @@ export class EditCampaignComponent {
       locale
     };
     if (this.smsCampaign.triggerType.id === 2) {
-      smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(new Date(this.smsCampaign.recurrenceStartDate), dateTimeFormat);
+      smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(
+        new Date(this.smsCampaign.recurrenceStartDate),
+        dateTimeFormat
+      );
     }
     this.organizationService.updateSmsCampaign(smsCampaign, this.smsCampaign.id).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
-
 }

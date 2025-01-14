@@ -18,7 +18,6 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./make-repayment.component.scss']
 })
 export class MakeRepaymentComponent implements OnInit {
-
   @Input() dataObject: any;
   /** Loan Id */
   loanId: string;
@@ -41,14 +40,16 @@ export class MakeRepaymentComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private settingsService: SettingsService) {
-      this.loanId = this.route.snapshot.params['loanId'];
-    }
+    private settingsService: SettingsService
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
+  }
 
   /**
    * Creates the repayment loan form
@@ -68,11 +69,17 @@ export class MakeRepaymentComponent implements OnInit {
    */
   createRepaymentLoanForm() {
     this.repaymentLoanForm = this.formBuilder.group({
-      'transactionDate': [this.settingsService.businessDate, Validators.required],
-      'transactionAmount': ['', Validators.required],
-      'externalId': '',
-      'paymentTypeId': '',
-      'note': ''
+      transactionDate: [
+        this.settingsService.businessDate,
+        Validators.required
+      ],
+      transactionAmount: [
+        '',
+        Validators.required
+      ],
+      externalId: '',
+      paymentTypeId: '',
+      note: ''
     });
   }
 
@@ -119,10 +126,8 @@ export class MakeRepaymentComponent implements OnInit {
     };
     const command = this.dataObject.type.code.split('.')[1];
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, command)
-      .subscribe((response: any) => {
-        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
+      this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }
-
 }

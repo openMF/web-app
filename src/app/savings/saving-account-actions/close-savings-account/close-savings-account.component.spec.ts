@@ -8,9 +8,8 @@ describe('CloseSavingsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CloseSavingsAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [CloseSavingsAccountComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

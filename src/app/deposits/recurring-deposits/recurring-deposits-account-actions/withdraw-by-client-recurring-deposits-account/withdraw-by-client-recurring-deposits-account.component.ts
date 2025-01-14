@@ -16,7 +16,6 @@ import { SettingsService } from 'app/settings/settings.service';
   styleUrls: ['./withdraw-by-client-recurring-deposits-account.component.scss']
 })
 export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit {
-
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -34,12 +33,14 @@ export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit
    * @param {Router} router Router
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private formBuilder: UntypedFormBuilder,
+  constructor(
+    private formBuilder: UntypedFormBuilder,
     private recurringDepositsService: RecurringDepositsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService) {
+    private settingsService: SettingsService
+  ) {
     this.accountId = this.route.parent.snapshot.params['recurringDepositAccountId'];
   }
 
@@ -56,8 +57,11 @@ export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit
    */
   createWithdrawRecurringDepositsAccountForm() {
     this.withdrawRecurringDepositsAccountForm = this.formBuilder.group({
-      'withdrawnOnDate': ['', Validators.required],
-      'note': ['']
+      withdrawnOnDate: [
+        '',
+        Validators.required
+      ],
+      note: ['']
     });
   }
 
@@ -71,16 +75,20 @@ export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit
     const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawnOnDate: Date = this.withdrawRecurringDepositsAccountForm.value.withdrawnOnDate;
     if (withdrawRecurringDepositsAccountFormData.withdrawnOnDate instanceof Date) {
-      withdrawRecurringDepositsAccountFormData.withdrawnOnDate = this.dateUtils.formatDate(prevWithdrawnOnDate, dateFormat);
+      withdrawRecurringDepositsAccountFormData.withdrawnOnDate = this.dateUtils.formatDate(
+        prevWithdrawnOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...withdrawRecurringDepositsAccountFormData,
       dateFormat,
       locale
     };
-    this.recurringDepositsService.executeRecurringDepositsAccountCommand(this.accountId, 'withdrawnByApplicant', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.recurringDepositsService
+      .executeRecurringDepositsAccountCommand(this.accountId, 'withdrawnByApplicant', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
-
 }

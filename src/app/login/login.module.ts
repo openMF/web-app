@@ -30,4 +30,4 @@ import { TranslateModule } from '@ngx-translate/core';
     TwoFactorAuthenticationComponent
   ]
 })
-export class LoginModule { }
+export class LoginModule {}

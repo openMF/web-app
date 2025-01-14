@@ -24,7 +24,6 @@ import { Charge, Currency } from 'app/shared/models/general.model';
   styleUrls: ['./recurring-deposits-account-charges-step.component.scss']
 })
 export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnChanges {
-
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
   @Input() currencyCode: UntypedFormControl;
@@ -35,7 +34,15 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
   /** Charges Data Source */
   chargesDataSource: {}[] = [];
   /** Charges table columns */
-  displayedColumns: string[] = ['name', 'chargeCalculationType', 'amount', 'chargeTimeType', 'date', 'repaymentsEvery', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'chargeCalculationType',
+    'amount',
+    'chargeTimeType',
+    'date',
+    'repaymentsEvery',
+    'action'
+  ];
   /** Component is pristine if there has been no changes by user interaction */
   pristine = true;
   /** For Edit Recurring Deposits Account Form */
@@ -43,15 +50,17 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
   /** Currency Code */
   currency: Currency | null = null;
 
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private dateUtils: Dates,
-    private settingsService: SettingsService, ) {
-  }
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit() {
     this.chargesDataSource = [];
     if (this.recurringDepositsAccountTemplate.id && this.recurringDepositsAccountTemplate.charges) {
-      this.chargesDataSource = this.recurringDepositsAccountTemplate.charges.map((charge: any) => ({...charge, id: charge.chargeId})) || [];
+      this.chargesDataSource =
+        this.recurringDepositsAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
     }
   }
 
@@ -59,16 +68,19 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
     if (this.currency == null) {
       if (this.recurringDepositsAccountTemplate.currency) {
         this.currency = this.recurringDepositsAccountTemplate.currency;
-      } else if (this.recurringDepositsAccountProductTemplate && this.recurringDepositsAccountProductTemplate.currency) {
+      } else if (
+        this.recurringDepositsAccountProductTemplate &&
+        this.recurringDepositsAccountProductTemplate.currency
+      ) {
         this.currency = this.recurringDepositsAccountProductTemplate.currency;
       }
     }
     if (this.recurringDepositsAccountProductTemplate) {
-      this.chargeData = this.recurringDepositsAccountProductTemplate.chargeOptions
-        .filter((c: Charge) => c.currency.code === this.currency.code);
+      this.chargeData = this.recurringDepositsAccountProductTemplate.chargeOptions.filter(
+        (c: Charge) => c.currency.code === this.currency.code
+      );
     }
   }
-
 
   /**
    * Add a charge
@@ -91,7 +103,8 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
         value: charge.amount,
         type: 'number',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Charge Amount',
@@ -121,7 +134,8 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
         value: charge.dueDate || charge.feeOnMonthDay || '',
         type: 'datetime-local',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Charge Date',
@@ -162,7 +176,8 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
         value: charge.feeInterval,
         type: 'text',
         required: false
-      }),
+      })
+
     ];
     const data = {
       title: 'Edit Charge Fee Interval',
@@ -205,5 +220,4 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
       charges: this.chargesDataSource
     };
   }
-
 }

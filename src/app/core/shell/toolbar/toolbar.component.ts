@@ -1,5 +1,17 @@
 /** Angular Imports */
-import { Component, OnInit, Input, EventEmitter, Output, ViewChild, AfterViewInit, ElementRef, TemplateRef, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  ViewChild,
+  AfterViewInit,
+  ElementRef,
+  TemplateRef,
+  AfterContentChecked,
+  ChangeDetectorRef
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -26,7 +38,6 @@ import { ConfigurationWizardComponent } from '../../../configuration-wizard/conf
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChecked {
-
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
   /* Template for popover on institution */
@@ -36,12 +47,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   /* Template for popover on appMenu */
   @ViewChild('templateAppMenu') templateAppMenu: TemplateRef<any>;
 
-
   /** Subscription to breakpoint observer for handset. */
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );
+  isHandset$: Observable<boolean> = this.breakpointObserver
+    .observe(Breakpoints.Handset)
+    .pipe(map((result) => result.matches));
 
   /** Sets the initial state of sidenav as collapsed. Not collapsed if false. */
   sidenavCollapsed = true;
@@ -59,19 +68,21 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(private breakpointObserver: BreakpointObserver,
-              private router: Router,
-              private authenticationService: AuthenticationService,
-              private popoverService: PopoverService,
-              private configurationWizardService: ConfigurationWizardService,
-              private dialog: MatDialog,
-              private changeDetector: ChangeDetectorRef) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private popoverService: PopoverService,
+    private configurationWizardService: ConfigurationWizardService,
+    private dialog: MatDialog,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   /**
    * Subscribes to breakpoint for handset.
    */
   ngOnInit() {
-    this.isHandset$.subscribe(isHandset => {
+    this.isHandset$.subscribe((isHandset) => {
       if (isHandset && this.sidenavCollapsed) {
         this.toggleSidenavCollapse(false);
       }
@@ -101,8 +112,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    * Logs out the authenticated user and redirects to login page.
    */
   logout() {
-    this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   /**
@@ -167,7 +177,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
         this.router.navigate(['/organization']);
       }
       if (response.show === 0) {
-
       }
     });
   }
@@ -182,8 +191,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
       });
     }
 
-    if (this.configurationWizardService.showSideNav === true || this.configurationWizardService.showSideNavChartofAccounts === true) {
-        this.toggleSidenavCollapse();
+    if (
+      this.configurationWizardService.showSideNav === true ||
+      this.configurationWizardService.showSideNavChartofAccounts === true
+    ) {
+      this.toggleSidenavCollapse();
     }
 
     if (this.configurationWizardService.showToolbarAdmin === true) {
@@ -196,5 +208,4 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   navigateMenu(routePath: string): void {
     this.router.navigate([routePath]);
   }
-
 }

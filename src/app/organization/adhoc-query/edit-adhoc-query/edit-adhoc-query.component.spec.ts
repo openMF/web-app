@@ -8,9 +8,8 @@ describe('EditAdhocQueryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditAdhocQueryComponent ]
-    })
-    .compileComponents();
+      declarations: [EditAdhocQueryComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
