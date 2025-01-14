@@ -151,6 +151,13 @@ export class LoansViewComponent implements OnInit {
           taskPermissionName: 'DISBURSALLASTUNDO_LOAN'
         });
       }
+      if (this.recalculateInterest) {
+        this.buttonConfig.addButton({
+          name: 'Add Interest Pause',
+          icon: 'calendar',
+          taskPermissionName: 'CREATE_INTEREST_PAUSE'
+        });
+      }
       // loan officer not assigned to loan, below logic
       // helps to display otherwise not
       if (!this.loanDetailsData.loanOfficerName) {

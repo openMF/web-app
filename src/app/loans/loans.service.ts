@@ -285,6 +285,14 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/interest-pauses`);
   }
 
+  updateInterestPause(loanId: number, variationId: number, data?: any): Observable<any> {
+    return this.http.put(`/loans/${loanId}/interest-pauses/${variationId}`, data);
+  }
+
+  deleteInterestPause(loanId: number, variationId: number): Observable<any> {
+    return this.http.delete(`/loans/${loanId}/interest-pauses/${variationId}`);
+  }
+
   /**
    * @param {string|number} loanId Loan Id.
    * @param {any} foreclosuredata ForeClosure Data

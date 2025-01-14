@@ -24,6 +24,7 @@ export class AddInterestPauseComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
   startDate = new Date();
+  maturityDate: Date | null = null;
   /** Interest Pause Loan Form */
   interestPauseLoanForm: UntypedFormGroup;
 
@@ -49,11 +50,10 @@ export class AddInterestPauseComponent implements OnInit {
    * and initialize with the required values
    */
   ngOnInit() {
+    this.maturityDate = new Date(this.dataObject.timeline.expectedMaturityDate);
     this.maxDate = new Date(this.dataObject.timeline.expectedMaturityDate);
     this.startDate = new Date(this.settingsService.businessDate);
-    if (this.startDate < this.maxDate) {
-      this.maxDate = this.startDate;
-    } else {
+    if (this.startDate > this.maxDate) {
       this.startDate = this.maxDate;
     }
     this.createInterestPauseLoanForm();

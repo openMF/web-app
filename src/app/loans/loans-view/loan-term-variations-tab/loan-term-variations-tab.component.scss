@@ -1,5 +1,12 @@
 table {
   width: 100%;
+
+  .action-button {
+    min-width: 26px;
+    padding: 0 0 3px;
+    margin: 0 2%;
+    line-height: 25px;
+  }
 }
 
 .container {
