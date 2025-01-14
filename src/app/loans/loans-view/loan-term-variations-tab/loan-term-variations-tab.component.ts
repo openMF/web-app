@@ -52,115 +52,115 @@ export class LoanTermVariationsTabComponent {
   ) {
     this.interestPausesData = [];
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
-    this.route.data.subscribe((data: { loanDetailsData: any; }) => {
+    this.route.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanId = data.loanDetailsData.id;
       this.loanTermVariationsData = [];
       data.loanDetailsData.loanTermVariations?.forEach((item: any) => {
         item.days = dates.calculateDiff(new Date(item.termVariationApplicableFrom), new Date(item.dateValue)) + 1;
         switch (item.termType.value) {
           case 'emiAmount':
-            this.emiAmountData.push(item); 
+            this.emiAmountData.push(item);
             break;
           case 'interestRate':
-            this.interestRateData.push(item); 
+            this.interestRateData.push(item);
             break;
           case 'deleteInstallment':
-            this.deleteInstallmentData.push(item); 
+            this.deleteInstallmentData.push(item);
             break;
           case 'dueDate':
-            this.dueDateData.push(item); 
+            this.dueDateData.push(item);
             break;
           case 'insertInstallment':
-            this.insertInstallmentData.push(item); 
+            this.insertInstallmentData.push(item);
             break;
           case 'principalAmount':
-            this.principalAmountData.push(item); 
+            this.principalAmountData.push(item);
             break;
           case 'graceOnInterest':
-            this.graceOnInterestData.push(item); 
+            this.graceOnInterestData.push(item);
             break;
           case 'graceOnPrincipal':
-            this.graceOnPrincipalData.push(item); 
+            this.graceOnPrincipalData.push(item);
             break;
           case 'extendRepaymentPeriod':
-            this.extendRepaymentPeriodData.push(item); 
+            this.extendRepaymentPeriodData.push(item);
             break;
           case 'interestRateForInstallment':
-            this.interestRateFromInstallmentData.push(item); 
+            this.interestRateFromInstallmentData.push(item);
             break;
           case 'interestPause':
-            this.interestPausesData.push(item); 
+            this.interestPausesData.push(item);
             break;
           default:
-            this.invalidData.push(item); 
+            this.invalidData.push(item);
             break;
         }
       });
 
       if (this.deleteInstallmentData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Delete Installment",
-          "data": this.deleteInstallmentData
+          label: 'Delete Installment',
+          data: this.deleteInstallmentData
         });
       }
       if (this.dueDateData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Due Date",
-          "data": this.dueDateData
+          label: 'Due Date',
+          data: this.dueDateData
         });
       }
       if (this.emiAmountData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "EMI Amount",
-          "data": this.emiAmountData
+          label: 'EMI Amount',
+          data: this.emiAmountData
         });
       }
       if (this.extendRepaymentPeriodData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Extend Repayment Period",
-          "data": this.extendRepaymentPeriodData
+          label: 'Extend Repayment Period',
+          data: this.extendRepaymentPeriodData
         });
       }
       if (this.graceOnInterestData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Grace On Interest",
-          "data": this.graceOnInterestData
+          label: 'Grace On Interest',
+          data: this.graceOnInterestData
         });
       }
       if (this.graceOnPrincipalData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Grace On Principal",
-          "data": this.graceOnPrincipalData
+          label: 'Grace On Principal',
+          data: this.graceOnPrincipalData
         });
       }
       if (this.insertInstallmentData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Insert Installment",
-          "data": this.insertInstallmentData
+          label: 'Insert Installment',
+          data: this.insertInstallmentData
         });
       }
       if (this.interestPausesData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Interest Pauses",
-          "data": this.interestPausesData
+          label: 'Interest Pauses',
+          data: this.interestPausesData
         });
       }
       if (this.interestRateData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Interest Rate",
-          "data": this.interestRateData
+          label: 'Interest Rate',
+          data: this.interestRateData
         });
       }
       if (this.interestRateFromInstallmentData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Interest Rate From Installment",
-          "data": this.interestRateFromInstallmentData
+          label: 'Interest Rate From Installment',
+          data: this.interestRateFromInstallmentData
         });
       }
       if (this.principalAmountData.length > 0) {
         this.loanTermVariationsData.push({
-          "label": "Principal Amount",
-          "data": this.principalAmountData
+          label: 'Principal Amount',
+          data: this.principalAmountData
         });
       }
     });
@@ -241,6 +241,6 @@ export class LoanTermVariationsTabComponent {
   }
 
   allowActions(termType: string): boolean {
-    return (termType === 'interestPause')
+    return termType === 'interestPause';
   }
 }
