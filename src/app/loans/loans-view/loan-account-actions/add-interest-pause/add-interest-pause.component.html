@@ -1,5 +1,8 @@
 <div class="container mat-elevation-z8">
     <mat-card>
+        <div class="m-b-20" fxLayout="column" *ngIf="maturityDate">
+            <span class="m-r-10">{{'Maturity Date' | translateKey:'inputs'}} : {{ maturityDate | dateFormat}}</span>
+        </div>
         <form [formGroup]="interestPauseLoanForm" (ngSubmit)="submit()">
             <mat-card-content>
                 <div fxLayout="column">
