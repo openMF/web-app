@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OfficeTreeServiceService } from './office-tree-service.service';
+import { OfficeTreeService } from './office-tree-service.service';
 
 describe('OfficeTreeServiceService', () => {
-  let service: OfficeTreeServiceService;
+  let service: OfficeTreeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(OfficeTreeServiceService);
+    service = TestBed.inject(OfficeTreeService);
   });
 
   it('should be created', () => {

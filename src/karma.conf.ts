@@ -14,8 +14,8 @@ module.exports = (config: any) => {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/**/*spec.ts',
-      'src/**/*.ts'
+      { pattern: 'src/**/*spec.ts', type: 'js' },
+      { pattern: 'src/**/*.ts', type: 'js' }
     ],
 
     // list of files / patterns to exclude
