@@ -54,7 +54,7 @@
         <td mat-cell *matCellDef="let row">
           <mat-checkbox
             class="m-r-10"
-            *ngIf="!row.currentlyRunning && row.active"
+            *ngIf="!row.currentlyRunning"
             (click)="$event.stopPropagation()"
             (change)="$event ? selection.toggle(row) : null"
             [checked]="selection.isSelected(row)"
