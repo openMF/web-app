@@ -1139,7 +1139,17 @@
       "You have created": "Jūs esat izveidojis",
       "You can drag and drop the rows to set a Payment Allocations order": "Varat vilkt un nomest rindas, lai iestatītu maksājumu piešķiršanas pasūtījumu",
       "successfully select option": "veiksmīgi. Lūdzu, atlasiet kādu no tālāk norādītajām opcijām, lai turpinātu.",
-      "Map Charge-off reasons to Expense accounts": "Izmaksas iemeslu kartēšana izdevumu kontiem"
+      "Map Charge-off reasons to Expense accounts": "Izmaksas iemeslu kartēšana izdevumu kontiem",
+      "Interest Rate From Installment": "Procentu likme no nomaksas",
+      "Due Date": "Izpildes datums",
+      "Delete Installment": "Dzēst iemaksu",
+      "EMI Amount": "EMI summa",
+      "Extend Repayment Period": "Pagarināt atmaksas periodu",
+      "Grace On Interest": "Grace On Interest",
+      "Grace On Principal": "Grace On Principal",
+      "Insert Installment": "Ievietojiet iemaksu",
+      "Interest Rate": "Procentu likme",
+      "Principal Amount": "Pamatsumma"
     },
     "inputs": {
       "accounting": {

@@ -1138,7 +1138,17 @@
       "You have created": "Vytvořili jste",
       "You can drag and drop the rows to set a Payment Allocations order": "Řádky můžete přetáhnout a nastavit tak příkaz přidělení plateb",
       "successfully select option": "úspěšně. Chcete-li pokračovat dále, vyberte si z níže uvedených možností.",
-      "Map Charge-off reasons to Expense accounts": "Mapujte důvody pro zúčtování na výdajové účty"
+      "Map Charge-off reasons to Expense accounts": "Mapujte důvody pro zúčtování na výdajové účty",
+      "Interest Rate From Installment": "Úroková sazba ze splátky",	
+      "Due Date": "Datum splatnosti",	
+      "Delete Installment": "Smazat splátku",	
+      "EMI Amount": "Částka EMI",	
+      "Extend Repayment Period": "Prodloužit dobu splácení",
+      "Grace On Interest": "Grace On Interest",
+      "Grace On Principal": "Grace na ředitelce",
+      "Insert Installment": "Vložit splátku",
+      "Interest Rate": "Úroková sazba",	
+      "Principal Amount": "Částka jistiny"
     },
     "inputs": {
       "accounting": {

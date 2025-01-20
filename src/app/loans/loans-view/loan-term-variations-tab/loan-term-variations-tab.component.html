@@ -1,84 +1,52 @@
 <div class="container">
-  <h3>{{ 'labels.heading.Term Variations' | translate }}</h3>
-  <table mat-table [dataSource]="loanTermVariationsData" *ngIf="loanTermVariationsData.length > 0">
-    <ng-container matColumnDef="termType">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Type' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.termType.value | translate }}</td>
-    </ng-container>
+  <div *ngFor="let loanTermVariation of loanTermVariationsData">
 
-    <ng-container matColumnDef="applicableFrom">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Added On' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.termVariationApplicableFrom | dateFormat }}</td>
-    </ng-container>
-    <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Value' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.decimalValue | formatNumber }}</td>
-    </ng-container>
+    <h3 class="m-t-20">{{ 'labels.heading.' + loanTermVariation.label | translate }}</h3>
+    <table mat-table [dataSource]="loanTermVariation.data">
+      <ng-container matColumnDef="row">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let item; let idx = index">{{ idx + 1 }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="specificToInstallment">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Specific to Installment' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.isSpecificToInstallment | yesNo }}</td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="loanDTermVariationsColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: loanDTermVariationsColumns"></tr>
-  </table>
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Start Date' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.termVariationApplicableFrom | dateFormat }}</td>
+      </ng-container>
 
-  <h3 class="m-t-20" *ngIf="interestPausesData?.length > 0">{{ 'labels.heading.Interest Pauses' | translate }}</h3>
-  <table mat-table class="m-t-20" [dataSource]="interestPausesData" *ngIf="interestPausesData?.length > 0">
-    <ng-container matColumnDef="row">
-      <th mat-header-cell *matHeaderCellDef>#</th>
-      <td mat-cell *matCellDef="let item; let idx = index">{{ idx + 1 }}</td>
-    </ng-container>
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.End Date' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.dateValue | dateFormat }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="startDate">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Start Date' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.startDate | dateFormat }}</td>
-    </ng-container>
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Value' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.decimalValue | formatNumber }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="endDate">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.End Date' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.endDate | dateFormat }}</td>
-    </ng-container>
+      <ng-container matColumnDef="days">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Days' | translate }}</th>
+        <td mat-cell *matCellDef="let item">{{ item.days | formatNumber }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="days">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Days' | translate }}</th>
-      <td mat-cell *matCellDef="let item">{{ item.days | formatNumber }}</td>
-    </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+        <td mat-cell *matCellDef="let item">
+          <span *ngIf="allowActions(item.termType.value)">
+            <button class="button" mat-icon-button color="primary" matTooltip="{{ 'tooltips.Edit' | translate }}"
+              matTooltipPosition="right" (click)="manageRequest(item, 'Edit')">
+              <fa-icon icon="edit" size="lg"></fa-icon>
+            </button>
+            <button class="button" mat-icon-button color="warn" matTooltip="{{ 'tooltips.Delete' | translate }}"
+              matTooltipPosition="left" (click)="manageRequest(item, 'Delete')">
+              <fa-icon icon="trash" size="lg"></fa-icon>
+            </button>
+          </span>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-      <td mat-cell *matCellDef="let item">
-        <button
-          class="button"
-          mat-icon-button
-          color="primary"
-          matTooltip="{{ 'tooltips.Edit' | translate }}"
-          matTooltipPosition="right"
-          (click)="manageRequest(item, 'Edit')"
-        >
-          <fa-icon icon="edit" size="lg"></fa-icon>
-        </button>
-        <button
-          class="button"
-          mat-icon-button
-          color="warn"
-          matTooltip="{{ 'tooltips.Delete' | translate }}"
-          matTooltipPosition="left"
-          (click)="manageRequest(item, 'Delete')"
-        >
-          <fa-icon icon="trash" size="lg"></fa-icon>
-        </button>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="interestPausesColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: interestPausesColumns"></tr>
-  </table>
-
-  <div class="alert" [hidden]="interestPausesData?.length > 0">
-    <div class="message">
-      <i class="fa fa-exclamation-circle alert-check"></i>
-      {{ 'labels.text.No data found' | translate }}
-    </div>
+      <tr mat-header-row *matHeaderRowDef="loanDTermVariationsColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: loanDTermVariationsColumns"></tr>
+    </table>
   </div>
+
 </div>

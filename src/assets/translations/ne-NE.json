@@ -1139,7 +1139,17 @@
       "You have created": "तपाईंले सिर्जना गर्नुभयो",
       "You can drag and drop the rows to set a Payment Allocations order": "तपाईंले भुक्तानी आवंटन आदेश सेट गर्न पङ्क्तिहरू तान्नुहोस् र छोड्न सक्नुहुन्छ",
       "successfully select option": "सफलतापूर्वक। अगाडि बढ्नको लागि कृपया तलका विकल्पहरूबाट चयन गर्नुहोस्।",
-      "Map Charge-off reasons to Expense accounts": "खर्च खाताहरूमा चार्ज-अफ कारणहरू नक्सा गर्नुहोस्"
+      "Map Charge-off reasons to Expense accounts": "खर्च खाताहरूमा चार्ज-अफ कारणहरू नक्सा गर्नुहोस्",
+      "Interest Rate From Installment": "किस्ताबाट ब्याज दर",
+      "Due Date": "अन्तिम मिति",
+      "Delete Installment": "किस्ता मेटाउनुहोस्",
+      "EMI Amount": "EMI रकम",
+      "Extend Repayment Period": "पुन: भुक्तानी अवधि विस्तार गर्नुहोस्",
+      "Grace On Interest": "ब्याज मा अनुग्रह",
+      "Grace On Principal": "प्रिन्सिपलमा अनुग्रह",
+      "Insert Installment": "किस्ता घुसाउनुहोस्",
+      "Interest Rate": "ब्याज दर",
+      "Principal Amount": "मूल रकम"
     },
     "inputs": {
       "accounting": {

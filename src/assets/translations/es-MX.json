@@ -1138,7 +1138,17 @@
       "You have created": "tu has creado",
       "You can drag and drop the rows to set a Payment Allocations order": "Puede arrastrar y soltar las filas para establecer un orden de asignaciones de pago",
       "successfully select option": "exitosamente. Seleccione una de las opciones siguientes para continuar.",
-      "Map Charge-off reasons to Expense accounts": "Asignar motivos de cancelación a cuentas de gastos"
+      "Map Charge-off reasons to Expense accounts": "Asignar motivos de cancelación a cuentas de gastos",
+      "Interest Rate From Installment": "Tasa de interés a plazos",
+      "Due Date": "Fecha de vencimiento",
+      "Delete Installment": "Eliminar cuota",
+      "EMI Amount": "Monto de Cuota",
+      "Extend Repayment Period": "Ampliar el período de pago",
+      "Grace On Interest": "Gracia por interés",
+      "Grace On Principal": "Gracia al director",
+      "Insert Installment": "Insertar cuota",
+      "Interest Rate": "Tasa de interés",
+      "Principal Amount": "Monto principal"
     },
     "inputs": {
       "accounting": {

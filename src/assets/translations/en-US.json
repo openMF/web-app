@@ -1140,7 +1140,17 @@
       "You have created": "You have created",
       "You can drag and drop the rows to set a Payment Allocations order": "You can drag and drop the rows to set a Payment Allocations order",
       "successfully select option": "successfully. Please select from the options below to proceed further.",
-      "Map Charge-off reasons to Expense accounts": "Map Charge-off reasons to Expense accounts"
+      "Map Charge-off reasons to Expense accounts": "Map Charge-off reasons to Expense accounts",
+      "Interest Rate From Installment": "Interest Rate From Installment",
+      "Due Date": "Due Date",
+      "Delete Installment": "Delete Installment",
+      "EMI Amount": "EMI Amount",
+      "Extend Repayment Period": "Extend Repayment Period",
+      "Grace On Interest": "Grace On Interest",
+      "Grace On Principal": "Grace On Principal",
+      "Insert Installment": "Insert Installment",
+      "Interest Rate": "Interest Rate",	
+      "Principal Amount": "Principal Amount"
     },
     "inputs": {
       "accounting": {

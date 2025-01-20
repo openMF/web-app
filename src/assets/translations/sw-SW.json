@@ -1139,7 +1139,17 @@
       "You have created": "Umeunda",
       "You can drag and drop the rows to set a Payment Allocations order": "Unaweza kuburuta na kudondosha safu mlalo ili kuweka agizo la Ugawaji wa Malipo",
       "successfully select option": "kwa mafanikio. Tafadhali chagua kutoka kwa chaguo zilizo hapa chini ili kuendelea zaidi.",
-      "Map Charge-off reasons to Expense accounts": "Sababu za Kutozwa kwa Ramani kwa akaunti za Gharama"
+      "Map Charge-off reasons to Expense accounts": "Sababu za Kutozwa kwa Ramani kwa akaunti za Gharama",
+      "Interest Rate From Installment": "Kiwango cha Riba Kutoka kwa Awamu",
+      "Due Date": "Tarehe ya Mwisho",
+      "Delete Installment": "Futa Ufungaji",
+      "EMI Amount": "Kiasi cha EMI",
+      "Extend Repayment Period": "Kuongeza Muda wa Kulipa",
+      "Grace On Interest": "Neema Juu ya Maslahi",
+      "Grace On Principal": "Grace On Principal",
+      "Insert Installment": "Weka Ufungaji",
+      "Interest Rate": "Kiwango cha Riba",
+      "Principal Amount": "Kiasi cha Mkuu"
     },
     "inputs": {
       "accounting": {
