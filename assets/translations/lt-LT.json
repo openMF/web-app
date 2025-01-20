@@ -1139,7 +1139,17 @@
       "You have created": "Jūs sukūrėte",
       "You can drag and drop the rows to set a Payment Allocations order": "Galite nuvilkti eilutes, kad nustatytumėte mokėjimo paskirstymo tvarką",
       "successfully select option": "sėkmingai. Jei norite tęsti, pasirinkite iš toliau pateiktų parinkčių.",
-      "Map Charge-off reasons to Expense accounts": "Nurodykite nurašymo priežastis išlaidų sąskaitoms"
+      "Map Charge-off reasons to Expense accounts": "Nurodykite nurašymo priežastis išlaidų sąskaitoms",
+      "Interest Rate From Installment": "Palūkanų norma nuo įmokos",
+      "Due Date": "Terminas",
+      "Delete Installment": "Ištrinti įmoką",
+      "EMI Amount": "EMI suma",
+      "Extend Repayment Period": "Prailginti grąžinimo laikotarpį",
+      "Grace On Interest": "Malonė dėl palūkanų",
+      "Grace On Principal": "Grace On Principal",
+      "Insert Installment": "Įdėkite įmoką",
+      "Interest Rate": "Palūkanų norma",
+      "Principal Amount": "Pagrindinė suma"
     },
     "inputs": {
       "accounting": {

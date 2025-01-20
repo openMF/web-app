@@ -1139,7 +1139,16 @@
       "You have created": "Hai creato",
       "You can drag and drop the rows to set a Payment Allocations order": "Vous pouvez faire glisser et déposer les lignes pour définir un ordre de répartition des paiements",
       "successfully select option": "con successo. Seleziona una delle opzioni seguenti per procedere ulteriormente.",
-      "Map Charge-off reasons to Expense accounts": "Associa i motivi di addebito ai conti spese"
+      "Map Charge-off reasons to Expense accounts": "Associa i motivi di addebito ai conti spese",
+      "Interest Rate From Installment": "Tasso di interesse dalla rata",
+      "Due Date": "Scadenza",	"Delete Installment": "Elimina rata",
+      "EMI Amount": "Importo EMI",
+      "Extend Repayment Period": "Estendere il periodo di rimborso",
+      "Grace On Interest": "Grazia sugli interessi",
+      "Grace On Principal": "Grace sul preside",
+      "Insert Installment": "Inserisci rata",
+      "Interest Rate": "Tasso di interesse",
+      "Principal Amount": "Importo principale"
     },
     "inputs": {
       "accounting": {
