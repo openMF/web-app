@@ -272,10 +272,16 @@ export class LoanProductAccountingStepComponent implements OnInit {
                 this.formBuilder.array([])
               );
             } else {
-              this.loanProductAccountingForm.removeControl('paymentChannelToFundSourceMappings');
-              this.loanProductAccountingForm.removeControl('feeToIncomeAccountMappings');
-              this.loanProductAccountingForm.removeControl('penaltyToIncomeAccountMappings');
-              this.loanProductAccountingForm.removeControl('chargeOffReasonToExpenseAccountMappings');
+              this.loanProductAccountingForm.setControl(
+                'paymentChannelToFundSourceMappings',
+                this.formBuilder.array([])
+              );
+              this.loanProductAccountingForm.setControl('feeToIncomeAccountMappings', this.formBuilder.array([]));
+              this.loanProductAccountingForm.setControl('penaltyToIncomeAccountMappings', this.formBuilder.array([]));
+              this.loanProductAccountingForm.setControl(
+                'chargeOffReasonToExpenseAccountMappings',
+                this.formBuilder.array([])
+              );
             }
           });
       } else {
