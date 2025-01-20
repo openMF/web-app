@@ -1140,7 +1140,17 @@
       "You have created": "당신이 창조했습니다",
       "You can drag and drop the rows to set a Payment Allocations order": "행을 끌어서 놓아 지불 할당 순서를 설정할 수 있습니다.",
       "successfully select option": "성공적으로. 계속 진행하려면 아래 옵션 중에서 선택하세요.",
-      "Map Charge-off reasons to Expense accounts": "비용 계정에 대한 청구 취소 사유 매핑"
+      "Map Charge-off reasons to Expense accounts": "비용 계정에 대한 청구 취소 사유 매핑",
+      "Interest Rate From Installment": "할부이자율",
+      "Due Date": "만기일",
+      "Delete Installment": "할부 삭제",
+      "EMI Amount": "EMI 금액",
+      "Extend Repayment Period": "상환기간 연장",
+      "Grace On Interest": "은혜에 대한 관심",
+      "Grace On Principal": "그레이스 온 교장",
+      "Insert Installment": "할부 삽입",
+      "Interest Rate": "이자율",
+      "Principal Amount": "원금"
     },
     "inputs": {
       "accounting": {

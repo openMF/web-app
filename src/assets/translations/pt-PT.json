@@ -1139,7 +1139,17 @@
       "You have created": "Você criou",
       "You can drag and drop the rows to set a Payment Allocations order": "Você pode arrastar e soltar as linhas para definir um pedido de alocações de pagamento",
       "successfully select option": "com sucesso. Selecione uma das opções abaixo para prosseguir.",
-      "Map Charge-off reasons to Expense accounts": "Mapear os motivos de baixa para as contas de despesas"
+      "Map Charge-off reasons to Expense accounts": "Mapear os motivos de baixa para as contas de despesas",
+      "Interest Rate From Installment": "Taxa de juros da parcela",	
+      "Due Date": "Data de vencimento",
+      "Delete Installment": "Excluir parcela",
+      "EMI Amount": "Valor EMI",
+      "Extend Repayment Period": "Estender o período de reembolso",
+      "Grace On Interest": "Graça em juros",
+      "Grace On Principal": "Graça no diretor",	
+      "Insert Installment": "Inserir parcela",
+      "Interest Rate": "Taxa de juro",	
+      "Principal Amount": "Valor principal"
     },
     "inputs": {
       "accounting": {

@@ -1139,7 +1139,17 @@
       "You have created": "Vous avez créé",
       "You can drag and drop the rows to set a Payment Allocations order": "Vous pouvez faire glisser et déposer les lignes pour définir un ordre de répartition des paiements",
       "successfully select option": "avec succès. Veuillez sélectionner parmi les options ci-dessous pour continuer.",
-      "Map Charge-off reasons to Expense accounts": "Cartographier les motifs de radiation sur les comptes de dépenses"
+      "Map Charge-off reasons to Expense accounts": "Cartographier les motifs de radiation sur les comptes de dépenses",
+      "Interest Rate From Installment": "Taux d'intérêt à partir du versement",
+      "Due Date": "Date d'échéance",
+      "Delete Installment": "Supprimer le versement",
+      "EMI Amount": "Montant EMI",
+      "Extend Repayment Period": "Prolonger la période de remboursement",
+      "Grace On Interest": "Grâce sur les intérêts",
+      "Grace On Principal": "Grace sur le principal",
+      "Insert Installment": "Insérer un versement",
+      "Interest Rate": "Taux d'intérêt",
+      "Principal Amount": "Montant principal"
     },
     "inputs": {
       "accounting": {

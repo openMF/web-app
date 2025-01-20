@@ -1139,7 +1139,17 @@
       "You have created": "Du hast erstellt",
       "You can drag and drop the rows to set a Payment Allocations order": "Sie können die Zeilen per Drag-and-Drop verschieben, um eine Zahlungszuordnungsreihenfolge festzulegen",
       "successfully select option": "erfolgreich. Bitte wählen Sie eine der folgenden Optionen aus, um fortzufahren.",
-      "Map Charge-off reasons to Expense accounts": "Abschreibungsgründe Aufwandskonten zuordnen"
+      "Map Charge-off reasons to Expense accounts": "Abschreibungsgründe Aufwandskonten zuordnen",
+      "Interest Rate From Installment": "Zinssatz ab Ratenzahlung",
+      "Due Date": "Fälligkeitsdatum",
+      "Delete Installment": "Rate löschen",
+      "EMI Amount": "EMI-Betrag",
+      "Extend Repayment Period": "Verlängern Sie die Rückzahlungsfrist",
+      "Grace On Interest": "Gnade auf Zinsen",
+      "Grace On Principal": "Grace On Principal",
+      "Insert Installment": "Ratenzahlung einfügen",
+      "Interest Rate": "Zinssatz",
+      "Principal Amount": "Hauptbetrag"
     },
     "inputs": {
       "accounting": {
