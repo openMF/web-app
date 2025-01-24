@@ -226,6 +226,16 @@ MIFOS_DISPLAY_BACKEND_INFO=false
 
 For more information look the env.sample file in the root directory of the project
 
+
+# Jira Links
+
+Jira Board Link:  [Kanban Board]
+https://mifosforge.jira.com/jira/your-work  
+
+Jira Web App Project Link:  
+https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62
+
+
 ## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
 
 Want to file a bug, request a feature, contribute some code, or improve documentation? Excellent! Read up on our guidelines for [contributing](.github/CONTRIBUTING.md) and then check out one of our [issues](https://github.com/openMF/web-app/issues). Make sure you follow the guidelines before sending a contribution!
