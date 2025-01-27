@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
 
 /** Environment Configuration */
 
@@ -58,15 +58,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (http: HttpClient, locationStrategy: LocationStrategy) => {
-          return new TranslateHttpLoader(
-            http,
-            `${window.location.protocol}//${window.location.host}${locationStrategy.getBaseHref()}/assets/translations/`,
-            '.json'
-          );
+        useFactory: (httpBackend: HttpBackend, locationStrategy: LocationStrategy) => {
+          const http = new HttpClient(httpBackend);
+          return new TranslateHttpLoader(http, `/assets/translations/`, '.json');
         },
         deps: [
-          HttpClient,
+          HttpBackend,
           LocationStrategy
         ]
       }
