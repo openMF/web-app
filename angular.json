@@ -113,6 +113,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+            "browsers": "ChromeHeadless",
             "main": "src/test.ts",
             "karmaConfig": "src/karma.conf.ts",
             "polyfills": "src/polyfills.ts",
