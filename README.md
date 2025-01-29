@@ -226,15 +226,13 @@ MIFOS_DISPLAY_BACKEND_INFO=false
 
 For more information look the env.sample file in the root directory of the project
 
-
 # Jira Links
 
-Jira Board Link:  [Kanban Board]
-https://mifosforge.jira.com/jira/your-work  
+Jira Board Link: [Kanban Board]
+https://mifosforge.jira.com/jira/your-work
 
 Jira Web App Project Link:  
 https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62
-
 
 ## Want to help? [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/openMF/web-app/issues)
 

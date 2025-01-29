@@ -37,6 +37,12 @@ jobs:
       - name: Run eslint
         run: npx ng lint
 
+      - name: Run stylelint
+        run: npx stylelint "src/**/*.scss"
+
+      - name: Run prettier
+        run: npx prettier . --check
+
       - name: Run build
         run: npm run build:prod
 
