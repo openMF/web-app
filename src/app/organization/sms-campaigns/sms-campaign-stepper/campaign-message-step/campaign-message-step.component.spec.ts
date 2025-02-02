@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CampaignMessageStepComponent } from './campaign-message-step.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('CampaignMessageStepComponent', () => {
   let component: CampaignMessageStepComponent;
@@ -8,7 +10,12 @@ describe('CampaignMessageStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CampaignMessageStepComponent]
+      declarations: [CampaignMessageStepComponent],
+      imports: [TranslateModule],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

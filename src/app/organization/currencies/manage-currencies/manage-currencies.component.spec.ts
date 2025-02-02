@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageCurrenciesComponent } from './manage-currencies.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ManageCurrenciesComponent', () => {
   let component: ManageCurrenciesComponent;
@@ -8,7 +9,8 @@ describe('ManageCurrenciesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ManageCurrenciesComponent]
+      declarations: [ManageCurrenciesComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

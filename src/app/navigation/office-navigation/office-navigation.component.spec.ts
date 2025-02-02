@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OfficeNavigationComponent } from './office-navigation.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('OfficeNavigationComponent', () => {
   let component: OfficeNavigationComponent;
@@ -10,7 +11,11 @@ describe('OfficeNavigationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [OfficeNavigationComponent],
-      imports: [TranslateModule]
+      imports: [TranslateModule],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

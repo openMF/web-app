@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GsimAccountComponent } from './gsim-account.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GsimAccountComponent', () => {
   let component: GsimAccountComponent;
@@ -8,7 +9,8 @@ describe('GsimAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GsimAccountComponent]
+      declarations: [GsimAccountComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   });
 

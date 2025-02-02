@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewFixedDepositProductComponent } from './view-fixed-deposit-product.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewFixedDepositProductComponent', () => {
   let component: ViewFixedDepositProductComponent;
@@ -8,7 +9,8 @@ describe('ViewFixedDepositProductComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewFixedDepositProductComponent]
+      declarations: [ViewFixedDepositProductComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

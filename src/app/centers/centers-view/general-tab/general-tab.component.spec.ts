@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { GeneralTabComponent } from './general-tab.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GeneralTabComponent', () => {
   let component: GeneralTabComponent;
@@ -11,6 +12,7 @@ describe('GeneralTabComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GeneralTabComponent],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

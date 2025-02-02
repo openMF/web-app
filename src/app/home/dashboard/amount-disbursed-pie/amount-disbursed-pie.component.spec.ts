@@ -4,6 +4,7 @@ import { AmountDisbursedPieComponent } from './amount-disbursed-pie.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AmountDisbursedPieComponent', () => {
   let component: AmountDisbursedPieComponent;
@@ -12,7 +13,10 @@ describe('AmountDisbursedPieComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AmountDisbursedPieComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

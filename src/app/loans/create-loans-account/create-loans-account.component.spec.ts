@@ -4,6 +4,7 @@ import { CreateLoansAccountComponent } from './create-loans-account.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('CreateLoansAccountComponent', () => {
   let component: CreateLoansAccountComponent;
@@ -12,7 +13,10 @@ describe('CreateLoansAccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CreateLoansAccountComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        CommonModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositProductAccountingStepComponent } from './fixed-deposit-product-accounting-step.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('FixedDepositProductAccountingStepComponent', () => {
   let component: FixedDepositProductAccountingStepComponent;
@@ -8,7 +9,8 @@ describe('FixedDepositProductAccountingStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FixedDepositProductAccountingStepComponent]
+      declarations: [FixedDepositProductAccountingStepComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

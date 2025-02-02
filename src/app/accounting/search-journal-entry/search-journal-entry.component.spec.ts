@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchJournalEntryComponent } from './search-journal-entry.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SearchJournalEntryComponent', () => {
@@ -14,7 +14,8 @@ describe('SearchJournalEntryComponent', () => {
       declarations: [SearchJournalEntryComponent],
       imports: [
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ],
       providers: [DatePipe]
     }).compileComponents();

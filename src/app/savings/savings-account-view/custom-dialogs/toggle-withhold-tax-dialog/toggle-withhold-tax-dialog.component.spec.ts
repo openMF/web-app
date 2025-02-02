@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToggleWithholdTaxDialogComponent } from './toggle-withhold-tax-dialog.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ToggleWithholdTaxDialogComponent', () => {
   let component: ToggleWithholdTaxDialogComponent;
@@ -8,7 +9,8 @@ describe('ToggleWithholdTaxDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ToggleWithholdTaxDialogComponent]
+      declarations: [ToggleWithholdTaxDialogComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

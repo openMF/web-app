@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GlimDetailsStepComponent } from './glim-details-step.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('GlimDetailsStepComponent', () => {
   let component: GlimDetailsStepComponent;
@@ -8,7 +9,8 @@ describe('GlimDetailsStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GlimDetailsStepComponent]
+      declarations: [GlimDetailsStepComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   });
 

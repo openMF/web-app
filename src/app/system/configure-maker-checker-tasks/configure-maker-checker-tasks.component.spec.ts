@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-tasks.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ConfigureMakerCheckerTasksComponent', () => {
   let component: ConfigureMakerCheckerTasksComponent;
@@ -11,6 +12,7 @@ describe('ConfigureMakerCheckerTasksComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ConfigureMakerCheckerTasksComponent],
+      imports: [HttpClientModule],
       providers: [
         {
           provide: ActivatedRoute,

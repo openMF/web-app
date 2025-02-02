@@ -4,6 +4,7 @@ import { UndoDisbursalComponent } from './undo-disbursal.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('UndoDisbursalComponent', () => {
   let component: UndoDisbursalComponent;
@@ -12,7 +13,10 @@ describe('UndoDisbursalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UndoDisbursalComponent],
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

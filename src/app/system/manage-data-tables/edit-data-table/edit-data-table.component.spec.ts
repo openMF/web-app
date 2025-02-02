@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditDataTableComponent } from './edit-data-table.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EditDataTableComponent', () => {
   let component: EditDataTableComponent;
@@ -10,7 +11,10 @@ describe('EditDataTableComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditDataTableComponent],
-      imports: [HttpClientModule]
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule
+      ]
     }).compileComponents();
   }));
 

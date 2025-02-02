@@ -4,6 +4,7 @@ import { CreateStandingInstructionsComponent } from './create-standing-instructi
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreateStandingInstructionsComponent', () => {
   let component: CreateStandingInstructionsComponent;
@@ -12,7 +13,10 @@ describe('CreateStandingInstructionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CreateStandingInstructionsComponent],
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

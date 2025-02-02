@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DatatableSingleRowComponent } from './datatable-single-row.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 describe('DatatableSingleRowComponent', () => {
   let component: DatatableSingleRowComponent;
@@ -11,6 +12,7 @@ describe('DatatableSingleRowComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [DatatableSingleRowComponent],
+      imports: [CommonModule],
       providers: [
         {
           provide: ActivatedRoute,

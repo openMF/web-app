@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecurringDepositProductPreviewStepComponent } from './recurring-deposit-product-preview-step.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RecurringDepositProductPreviewStepComponent', () => {
   let component: RecurringDepositProductPreviewStepComponent;
@@ -8,7 +9,11 @@ describe('RecurringDepositProductPreviewStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecurringDepositProductPreviewStepComponent]
+      declarations: [RecurringDepositProductPreviewStepComponent],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

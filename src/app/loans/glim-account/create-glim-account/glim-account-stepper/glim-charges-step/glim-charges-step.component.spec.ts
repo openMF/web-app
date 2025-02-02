@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GlimChargesStepComponent } from './glim-charges-step.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GlimChargesStepComponent', () => {
   let component: GlimChargesStepComponent;
@@ -11,7 +12,10 @@ describe('GlimChargesStepComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GlimChargesStepComponent],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        TranslateModule
+      ],
       providers: [DatePipe]
     }).compileComponents();
   });

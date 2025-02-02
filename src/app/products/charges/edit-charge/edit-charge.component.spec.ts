@@ -4,6 +4,7 @@ import { EditChargeComponent } from './edit-charge.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditChargeComponent', () => {
   let component: EditChargeComponent;
@@ -14,6 +15,7 @@ describe('EditChargeComponent', () => {
       declarations: [EditChargeComponent],
       imports: [
         HttpClientModule,
+        RouterTestingModule,
         ReactiveFormsModule
       ],
       providers: [DatePipe]

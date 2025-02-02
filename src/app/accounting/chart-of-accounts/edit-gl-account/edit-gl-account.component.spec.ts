@@ -4,6 +4,7 @@ import { EditGlAccountComponent } from './edit-gl-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('EditGlAccountComponent', () => {
   let component: EditGlAccountComponent;
@@ -16,6 +17,10 @@ describe('EditGlAccountComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         RouterTestingModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
       ]
     }).compileComponents();
   }));

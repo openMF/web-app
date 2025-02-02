@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskManagementComponent } from './task-management.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('TaskManagementComponent', () => {
   let component: TaskManagementComponent;
@@ -10,7 +10,8 @@ describe('TaskManagementComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TaskManagementComponent],
-      imports: [TranslateModule]
+      imports: [TranslateModule],
+      providers: [TranslateService]
     }).compileComponents();
   }));
 

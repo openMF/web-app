@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WriteOffPageComponent } from './write-off-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('WriteOffPageComponent', () => {
   let component: WriteOffPageComponent;
@@ -13,7 +14,8 @@ describe('WriteOffPageComponent', () => {
       declarations: [WriteOffPageComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule
       ]
     }).compileComponents();
   }));

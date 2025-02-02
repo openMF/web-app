@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RecurringDepositProductInterestRateChartStepComponent } from './recurring-deposit-product-interest-rate-chart-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
 
 describe('RecurringDepositProductInterestRateChartStepComponent', () => {
   let component: RecurringDepositProductInterestRateChartStepComponent;
@@ -13,6 +14,7 @@ describe('RecurringDepositProductInterestRateChartStepComponent', () => {
       declarations: [RecurringDepositProductInterestRateChartStepComponent],
       imports: [
         ReactiveFormsModule,
+        CommonModule,
         MatDialogModule
       ],
       providers: [

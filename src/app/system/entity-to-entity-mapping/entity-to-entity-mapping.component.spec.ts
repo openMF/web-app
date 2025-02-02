@@ -4,6 +4,7 @@ import { EntityToEntityMappingComponent } from './entity-to-entity-mapping.compo
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EntityToEntityMappingComponent', () => {
   let component: EntityToEntityMappingComponent;
@@ -12,7 +13,10 @@ describe('EntityToEntityMappingComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EntityToEntityMappingComponent],
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

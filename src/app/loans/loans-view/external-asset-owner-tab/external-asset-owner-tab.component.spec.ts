@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExternalAssetOwnerTabComponent } from './external-asset-owner-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ExternalAssetOwnerTabComponent', () => {
   let component: ExternalAssetOwnerTabComponent;
@@ -8,7 +9,8 @@ describe('ExternalAssetOwnerTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExternalAssetOwnerTabComponent]
+      declarations: [ExternalAssetOwnerTabComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   });
 

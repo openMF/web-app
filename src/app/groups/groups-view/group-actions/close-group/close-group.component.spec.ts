@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CloseGroupComponent } from './close-group.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CloseGroupComponent', () => {
   let component: CloseGroupComponent;
@@ -8,7 +9,10 @@ describe('CloseGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CloseGroupComponent]
+      declarations: [CloseGroupComponent],
+      imports: [
+        ReactiveFormsModule
+      ]
     }).compileComponents();
   }));
 

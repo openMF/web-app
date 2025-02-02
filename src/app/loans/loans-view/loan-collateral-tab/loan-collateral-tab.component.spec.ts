@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanCollateralTabComponent } from './loan-collateral-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoanCollateralTabComponent', () => {
   let component: LoanCollateralTabComponent;
@@ -8,7 +9,8 @@ describe('LoanCollateralTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoanCollateralTabComponent]
+      declarations: [LoanCollateralTabComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

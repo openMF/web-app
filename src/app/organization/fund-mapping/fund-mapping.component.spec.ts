@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FundMappingComponent } from './fund-mapping.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('FundMappingComponent', () => {
   let component: FundMappingComponent;
@@ -10,7 +12,11 @@ describe('FundMappingComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FundMappingComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 
