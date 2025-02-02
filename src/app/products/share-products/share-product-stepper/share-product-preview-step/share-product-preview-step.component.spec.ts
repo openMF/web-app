@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareProductPreviewStepComponent } from './share-product-preview-step.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ShareProductPreviewStepComponent', () => {
   let component: ShareProductPreviewStepComponent;
@@ -8,7 +9,8 @@ describe('ShareProductPreviewStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ShareProductPreviewStepComponent]
+      declarations: [ShareProductPreviewStepComponent],
+      imports: [TranslateModule]
     }).compileComponents();
   }));
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InactivateChargeDialogComponent } from './inactivate-charge-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('InactivateChargeDialogComponent', () => {
   let component: InactivateChargeDialogComponent;
@@ -8,7 +9,8 @@ describe('InactivateChargeDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InactivateChargeDialogComponent]
+      declarations: [InactivateChargeDialogComponent],
+      imports: [MatDialogModule]
     }).compileComponents();
   }));
 

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageTaxGroupsComponent } from './manage-tax-groups.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ManageTaxGroupsComponent', () => {
   let component: ManageTaxGroupsComponent;
@@ -8,7 +10,15 @@ describe('ManageTaxGroupsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ManageTaxGroupsComponent]
+      declarations: [ManageTaxGroupsComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

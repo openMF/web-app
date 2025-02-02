@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
 /** Module Imports */
 import { SharedModule } from '../shared/shared.module';
@@ -154,6 +154,10 @@ import { RunSelectedJobsTableComponent } from './manage-jobs/scheduler-jobs/run-
     ErrorLogPopoverComponent,
     RunSelectedJobsPopoverComponent,
     RunSelectedJobsTableComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ]
 })
 export class SystemModule {}

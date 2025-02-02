@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditOfficeComponent } from './edit-office.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('EditOfficeComponent', () => {
   let component: EditOfficeComponent;
@@ -8,7 +10,9 @@ describe('EditOfficeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditOfficeComponent]
+      declarations: [EditOfficeComponent],
+      imports: [HttpClientModule],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

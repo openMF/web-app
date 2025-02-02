@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositsCashTransactionComponent } from './fixed-deposits-cash-transaction.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('FixedDepositsCashTransactionComponent', () => {
   let component: FixedDepositsCashTransactionComponent;
@@ -8,7 +9,8 @@ describe('FixedDepositsCashTransactionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FixedDepositsCashTransactionComponent]
+      declarations: [FixedDepositsCashTransactionComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FixedDepositsCashTransactionComponent);

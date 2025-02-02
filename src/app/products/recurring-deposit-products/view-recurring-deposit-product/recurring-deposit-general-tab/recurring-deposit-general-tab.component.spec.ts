@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecurringDepositGeneralTabComponent } from './recurring-deposit-general-tab.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('RecurringDepositGeneralTabComponent', () => {
   let component: RecurringDepositGeneralTabComponent;
@@ -8,7 +10,15 @@ describe('RecurringDepositGeneralTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecurringDepositGeneralTabComponent]
+      declarations: [RecurringDepositGeneralTabComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   });
 

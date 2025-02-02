@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositProductPreviewStepComponent } from './fixed-deposit-product-preview-step.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FixedDepositProductPreviewStepComponent', () => {
   let component: FixedDepositProductPreviewStepComponent;
@@ -8,7 +9,8 @@ describe('FixedDepositProductPreviewStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FixedDepositProductPreviewStepComponent]
+      declarations: [FixedDepositProductPreviewStepComponent],
+      imports: [TranslateModule]
     }).compileComponents();
   }));
 

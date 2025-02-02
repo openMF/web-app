@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanAccountActionsComponent } from './loan-account-actions.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('LoanAccountActionsComponent', () => {
   let component: LoanAccountActionsComponent;
@@ -8,7 +10,15 @@ describe('LoanAccountActionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoanAccountActionsComponent]
+      declarations: [LoanAccountActionsComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ action: 'Change Loan Officer' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

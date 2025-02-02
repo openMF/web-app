@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditFloatingRateComponent } from './edit-floating-rate.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EditFloatingRateComponent', () => {
   let component: EditFloatingRateComponent;
@@ -8,7 +9,8 @@ describe('EditFloatingRateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditFloatingRateComponent]
+      declarations: [EditFloatingRateComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

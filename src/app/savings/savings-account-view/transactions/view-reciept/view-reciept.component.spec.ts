@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewRecieptComponent } from './view-reciept.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ViewRecieptComponent', () => {
   let component: ViewRecieptComponent;
@@ -8,7 +10,15 @@ describe('ViewRecieptComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewRecieptComponent]
+      declarations: [ViewRecieptComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

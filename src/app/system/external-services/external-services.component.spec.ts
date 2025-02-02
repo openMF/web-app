@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExternalServicesComponent } from './external-services.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ExternalServicesComponent', () => {
   let component: ExternalServicesComponent;
@@ -8,7 +9,8 @@ describe('ExternalServicesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ExternalServicesComponent]
+      declarations: [ExternalServicesComponent],
+      imports: [TranslateModule]
     }).compileComponents();
   }));
 

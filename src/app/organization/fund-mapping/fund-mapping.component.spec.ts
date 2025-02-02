@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FundMappingComponent } from './fund-mapping.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('FundMappingComponent', () => {
   let component: FundMappingComponent;
@@ -8,7 +9,8 @@ describe('FundMappingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FundMappingComponent]
+      declarations: [FundMappingComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

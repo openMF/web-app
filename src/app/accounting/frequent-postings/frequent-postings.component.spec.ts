@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FrequentPostingsComponent } from './frequent-postings.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('FrequentPostingsComponent', () => {
   let component: FrequentPostingsComponent;
@@ -8,7 +9,8 @@ describe('FrequentPostingsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FrequentPostingsComponent]
+      declarations: [FrequentPostingsComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

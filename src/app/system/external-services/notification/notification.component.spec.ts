@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotificationComponent } from './notification.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('NotificationComponent', () => {
   let component: NotificationComponent;
@@ -8,7 +10,15 @@ describe('NotificationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NotificationComponent]
+      declarations: [NotificationComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

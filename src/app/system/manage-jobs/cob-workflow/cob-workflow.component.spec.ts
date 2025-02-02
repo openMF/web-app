@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CobWorkflowComponent } from './cob-workflow.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CobWorkflowComponent', () => {
   let component: CobWorkflowComponent;
@@ -8,7 +9,8 @@ describe('CobWorkflowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CobWorkflowComponent]
+      declarations: [CobWorkflowComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   });
 

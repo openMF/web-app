@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApproveSharesComponent } from './approve-shares.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ApproveSharesComponent', () => {
   let component: ApproveSharesComponent;
@@ -8,7 +9,8 @@ describe('ApproveSharesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ApproveSharesComponent]
+      declarations: [ApproveSharesComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

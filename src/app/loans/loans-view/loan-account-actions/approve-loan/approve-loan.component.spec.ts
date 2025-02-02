@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApproveLoanComponent } from './approve-loan.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ApproveLoanComponent', () => {
   let component: ApproveLoanComponent;
@@ -8,7 +9,8 @@ describe('ApproveLoanComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ApproveLoanComponent]
+      declarations: [ApproveLoanComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

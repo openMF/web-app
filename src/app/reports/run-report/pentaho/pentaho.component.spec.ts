@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PentahoComponent } from './pentaho.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('PentahoComponent', () => {
   let component: PentahoComponent;
@@ -8,7 +9,8 @@ describe('PentahoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PentahoComponent]
+      declarations: [PentahoComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

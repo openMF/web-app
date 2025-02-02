@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoansAccountCloseComponent } from './loans-account-close.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('LoansAccountCloseComponent', () => {
   let component: LoansAccountCloseComponent;
@@ -8,7 +10,11 @@ describe('LoansAccountCloseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoansAccountCloseComponent]
+      declarations: [LoansAccountCloseComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateDataTableComponent } from './create-data-table.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateDataTableComponent', () => {
   let component: CreateDataTableComponent;
@@ -8,7 +9,8 @@ describe('CreateDataTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateDataTableComponent]
+      declarations: [CreateDataTableComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

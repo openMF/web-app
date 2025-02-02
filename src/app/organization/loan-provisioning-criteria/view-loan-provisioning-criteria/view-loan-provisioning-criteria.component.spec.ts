@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewLoanProvisioningCriteriaComponent } from './view-loan-provisioning-criteria.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewLoanProvisioningCriteriaComponent', () => {
   let component: ViewLoanProvisioningCriteriaComponent;
@@ -8,7 +9,8 @@ describe('ViewLoanProvisioningCriteriaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewLoanProvisioningCriteriaComponent]
+      declarations: [ViewLoanProvisioningCriteriaComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

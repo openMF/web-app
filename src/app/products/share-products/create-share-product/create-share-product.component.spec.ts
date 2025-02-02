@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateShareProductComponent } from './create-share-product.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('CreateShareProductComponent', () => {
   let component: CreateShareProductComponent;
@@ -8,7 +12,17 @@ describe('CreateShareProductComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateShareProductComponent]
+      declarations: [CreateShareProductComponent],
+      imports: [HttpClientModule],
+      providers: [
+        DatePipe,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

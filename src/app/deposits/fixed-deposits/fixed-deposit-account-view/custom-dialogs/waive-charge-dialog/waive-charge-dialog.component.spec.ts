@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WaiveChargeDialogComponent } from './waive-charge-dialog.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('WaiveChargeDialogComponent', () => {
   let component: WaiveChargeDialogComponent;
@@ -8,7 +9,10 @@ describe('WaiveChargeDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WaiveChargeDialogComponent]
+      declarations: [WaiveChargeDialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }]
     }).compileComponents();
   }));
 

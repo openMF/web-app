@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProvisioningEntriesComponent } from './provisioning-entries.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ProvisioningEntriesComponent', () => {
   let component: ProvisioningEntriesComponent;
@@ -8,7 +11,16 @@ describe('ProvisioningEntriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ProvisioningEntriesComponent]
+      declarations: [ProvisioningEntriesComponent],
+      imports: [HttpClientModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

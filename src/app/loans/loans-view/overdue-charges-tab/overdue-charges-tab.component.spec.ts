@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OverdueChargesTabComponent } from './overdue-charges-tab.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('OverdueChargesTabComponent', () => {
   let component: OverdueChargesTabComponent;
@@ -8,7 +10,15 @@ describe('OverdueChargesTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OverdueChargesTabComponent]
+      declarations: [OverdueChargesTabComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

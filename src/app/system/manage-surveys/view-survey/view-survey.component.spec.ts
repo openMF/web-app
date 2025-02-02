@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewSurveyComponent } from './view-survey.component';
+import { of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 describe('ViewSurveyComponent', () => {
   let component: ViewSurveyComponent;
@@ -8,7 +10,15 @@ describe('ViewSurveyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewSurveyComponent]
+      declarations: [ViewSurveyComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

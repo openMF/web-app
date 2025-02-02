@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewRecurringDepositProductComponent } from './view-recurring-deposit-product.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ViewRecurringDepositProductComponent', () => {
   let component: ViewRecurringDepositProductComponent;
@@ -8,7 +10,15 @@ describe('ViewRecurringDepositProductComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewRecurringDepositProductComponent]
+      declarations: [ViewRecurringDepositProductComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

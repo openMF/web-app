@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditBusinessRuleParametersComponent } from './edit-business-rule-parameters.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditBusinessRuleParametersComponent', () => {
   let component: EditBusinessRuleParametersComponent;
@@ -8,7 +9,8 @@ describe('EditBusinessRuleParametersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditBusinessRuleParametersComponent]
+      declarations: [EditBusinessRuleParametersComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

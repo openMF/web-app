@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupAssignStaffComponent } from './group-assign-staff.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('GroupAssignStaffComponent', () => {
   let component: GroupAssignStaffComponent;
@@ -8,7 +9,8 @@ describe('GroupAssignStaffComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GroupAssignStaffComponent]
+      declarations: [GroupAssignStaffComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

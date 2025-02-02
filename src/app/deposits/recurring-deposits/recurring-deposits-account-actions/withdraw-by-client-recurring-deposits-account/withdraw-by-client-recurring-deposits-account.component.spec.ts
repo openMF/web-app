@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WithdrawByClientRecurringDepositsAccountComponent } from './withdraw-by-client-recurring-deposits-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('WithdrawByClientRecurringDepositsAccountComponent', () => {
   let component: WithdrawByClientRecurringDepositsAccountComponent;
@@ -8,7 +9,8 @@ describe('WithdrawByClientRecurringDepositsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WithdrawByClientRecurringDepositsAccountComponent]
+      declarations: [WithdrawByClientRecurringDepositsAccountComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

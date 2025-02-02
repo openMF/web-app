@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditFinancialActivityMappingComponent } from './edit-financial-activity-mapping.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AccountingService } from 'app/accounting/accounting.service';
 
 describe('EditFinancialActivityMappingComponent', () => {
   let component: EditFinancialActivityMappingComponent;
@@ -8,7 +11,12 @@ describe('EditFinancialActivityMappingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditFinancialActivityMappingComponent]
+      declarations: [EditFinancialActivityMappingComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
+      providers: [AccountingService]
     }).compileComponents();
   }));
 

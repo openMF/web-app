@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ClientFamilyMemberDialogComponent', () => {
   let component: ClientFamilyMemberDialogComponent;
@@ -8,7 +9,10 @@ describe('ClientFamilyMemberDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ClientFamilyMemberDialogComponent]
+      declarations: [ClientFamilyMemberDialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }]
     }).compileComponents();
   }));
 

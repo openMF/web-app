@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewSignatureDialogComponent } from './view-signature-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ViewSignatureDialogComponent', () => {
   let component: ViewSignatureDialogComponent;
@@ -8,7 +9,8 @@ describe('ViewSignatureDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewSignatureDialogComponent]
+      declarations: [ViewSignatureDialogComponent],
+      imports: [MatDialogModule]
     }).compileComponents();
   }));
 

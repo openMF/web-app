@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoansAccountChargesStepComponent } from './loans-account-charges-step.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('LoansAccountChargesStepComponent', () => {
   let component: LoansAccountChargesStepComponent;
@@ -8,7 +9,8 @@ describe('LoansAccountChargesStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoansAccountChargesStepComponent]
+      declarations: [LoansAccountChargesStepComponent],
+      imports: [MatDialogModule]
     }).compileComponents();
   }));
 

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoDisbursalComponent } from './undo-disbursal.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('UndoDisbursalComponent', () => {
   let component: UndoDisbursalComponent;
@@ -8,7 +11,16 @@ describe('UndoDisbursalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UndoDisbursalComponent]
+      declarations: [UndoDisbursalComponent],
+      imports: [ReactiveFormsModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SavingsDocumentsTabComponent } from './savings-documents-tab.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('SavingsDocumentsTabComponent', () => {
   let component: SavingsDocumentsTabComponent;
@@ -8,7 +10,15 @@ describe('SavingsDocumentsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SavingsDocumentsTabComponent]
+      declarations: [SavingsDocumentsTabComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   });
 

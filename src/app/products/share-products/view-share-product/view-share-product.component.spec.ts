@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewShareProductComponent } from './view-share-product.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ViewShareProductComponent', () => {
   let component: ViewShareProductComponent;
@@ -8,7 +10,15 @@ describe('ViewShareProductComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewShareProductComponent]
+      declarations: [ViewShareProductComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ shareProductDatatables: 'Lorem lipsum in de lorem' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

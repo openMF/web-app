@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DisburseComponent } from './disburse.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 describe('DisburseComponent', () => {
   let component: DisburseComponent;
@@ -8,7 +10,11 @@ describe('DisburseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DisburseComponent]
+      declarations: [DisburseComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClient
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareAccountTableComponent } from './share-account-table.component';
+import { AccountsFilterPipe } from 'app/pipes/accounts-filter.pipe';
 
 describe('ShareAccountTableComponent', () => {
   let component: ShareAccountTableComponent;
@@ -8,7 +9,8 @@ describe('ShareAccountTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ShareAccountTableComponent]
+      declarations: [ShareAccountTableComponent],
+      providers: [AccountsFilterPipe]
     }).compileComponents();
   }));
 

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditChargeComponent } from './edit-charge.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EditChargeComponent', () => {
   let component: EditChargeComponent;
@@ -8,7 +11,12 @@ describe('EditChargeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditChargeComponent]
+      declarations: [EditChargeComponent],
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

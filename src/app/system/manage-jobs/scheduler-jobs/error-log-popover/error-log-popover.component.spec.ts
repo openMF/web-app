@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ErrorLogPopoverComponent } from './error-log-popover.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ErrorLogPopoverComponent', () => {
   let component: ErrorLogPopoverComponent;
@@ -8,7 +9,8 @@ describe('ErrorLogPopoverComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ErrorLogPopoverComponent]
+      declarations: [ErrorLogPopoverComponent],
+      imports: [MatDialogModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ErrorLogPopoverComponent);

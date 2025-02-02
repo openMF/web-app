@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddRoleComponent } from './add-role.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('AddRoleComponent', () => {
   let component: AddRoleComponent;
@@ -8,7 +9,8 @@ describe('AddRoleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AddRoleComponent]
+      declarations: [AddRoleComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

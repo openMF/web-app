@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageJobsComponent } from './manage-jobs.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ManageJobsComponent', () => {
   let component: ManageJobsComponent;
@@ -8,7 +10,11 @@ describe('ManageJobsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ManageJobsComponent]
+      declarations: [ManageJobsComponent],
+      imports: [
+        HttpClientModule,
+        TranslateModule
+      ]
     }).compileComponents();
   });
 

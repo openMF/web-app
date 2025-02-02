@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditGroupMeetingComponent } from './edit-group-meeting.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditGroupMeetingComponent', () => {
   let component: EditGroupMeetingComponent;
@@ -8,7 +10,11 @@ describe('EditGroupMeetingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditGroupMeetingComponent]
+      declarations: [EditGroupMeetingComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateClosureComponent } from './create-closure.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('CreateClosureComponent', () => {
   let component: CreateClosureComponent;
@@ -8,7 +11,12 @@ describe('CreateClosureComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateClosureComponent]
+      declarations: [CreateClosureComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule
+      ]
     }).compileComponents();
   }));
 

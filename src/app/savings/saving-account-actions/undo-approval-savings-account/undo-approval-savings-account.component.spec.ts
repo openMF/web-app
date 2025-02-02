@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoApprovalSavingsAccountComponent } from './undo-approval-savings-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('UndoApprovalSavingsAccountComponent', () => {
   let component: UndoApprovalSavingsAccountComponent;
@@ -8,7 +10,11 @@ describe('UndoApprovalSavingsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UndoApprovalSavingsAccountComponent]
+      declarations: [UndoApprovalSavingsAccountComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

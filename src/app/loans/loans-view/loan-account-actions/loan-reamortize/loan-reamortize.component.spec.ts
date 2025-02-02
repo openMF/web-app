@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanReamortizeComponent } from './loan-reamortize.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('LoanReamortizeComponent', () => {
   let component: LoanReamortizeComponent;
@@ -8,7 +9,8 @@ describe('LoanReamortizeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoanReamortizeComponent]
+      declarations: [LoanReamortizeComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoanReamortizeComponent);

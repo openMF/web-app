@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EntityDataTableChecksComponent } from './entity-data-table-checks.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EntityDataTableChecksComponent', () => {
   let component: EntityDataTableChecksComponent;
@@ -8,7 +9,8 @@ describe('EntityDataTableChecksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EntityDataTableChecksComponent]
+      declarations: [EntityDataTableChecksComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

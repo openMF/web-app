@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositGeneralTabComponent } from './fixed-deposit-general-tab.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('FixedDepositGeneralTabComponent', () => {
   let component: FixedDepositGeneralTabComponent;
@@ -8,7 +10,15 @@ describe('FixedDepositGeneralTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FixedDepositGeneralTabComponent]
+      declarations: [FixedDepositGeneralTabComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   });
 

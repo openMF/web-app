@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdhocQueryComponent } from './adhoc-query.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AdhocQueryComponent', () => {
   let component: AdhocQueryComponent;
@@ -8,7 +9,8 @@ describe('AdhocQueryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AdhocQueryComponent]
+      declarations: [AdhocQueryComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

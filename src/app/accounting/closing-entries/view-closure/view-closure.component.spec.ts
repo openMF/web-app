@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewClosureComponent } from './view-closure.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ViewClosureComponent', () => {
   let component: ViewClosureComponent;
@@ -8,7 +12,19 @@ describe('ViewClosureComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewClosureComponent]
+      declarations: [ViewClosureComponent],
+      imports: [
+        HttpClientModule,
+        MatDialogModule
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

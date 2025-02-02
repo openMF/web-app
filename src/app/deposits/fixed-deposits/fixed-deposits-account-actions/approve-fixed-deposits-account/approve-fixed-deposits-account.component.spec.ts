@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApproveFixedDepositsAccountComponent } from './approve-fixed-deposits-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ApproveFixedDepositsAccountComponent', () => {
   let component: ApproveFixedDepositsAccountComponent;
@@ -8,7 +9,8 @@ describe('ApproveFixedDepositsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ApproveFixedDepositsAccountComponent]
+      declarations: [ApproveFixedDepositsAccountComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

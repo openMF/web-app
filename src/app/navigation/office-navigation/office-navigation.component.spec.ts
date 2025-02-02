@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OfficeNavigationComponent } from './office-navigation.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('OfficeNavigationComponent', () => {
   let component: OfficeNavigationComponent;
@@ -8,7 +9,8 @@ describe('OfficeNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OfficeNavigationComponent]
+      declarations: [OfficeNavigationComponent],
+      imports: [TranslateModule]
     }).compileComponents();
   }));
 

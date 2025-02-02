@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SavingProductGeneralTabComponent } from './saving-product-general-tab.component';
+import { of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 describe('SavingProductGeneralTabComponent', () => {
   let component: SavingProductGeneralTabComponent;
@@ -8,7 +10,15 @@ describe('SavingProductGeneralTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SavingProductGeneralTabComponent]
+      declarations: [SavingProductGeneralTabComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   });
 

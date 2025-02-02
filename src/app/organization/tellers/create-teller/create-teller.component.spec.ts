@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateTellerComponent } from './create-teller.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateTellerComponent', () => {
   let component: CreateTellerComponent;
@@ -8,7 +10,11 @@ describe('CreateTellerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateTellerComponent]
+      declarations: [CreateTellerComponent],
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule
+      ]
     }).compileComponents();
   }));
 

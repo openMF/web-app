@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditRepaymentScheduleComponent } from './edit-repayment-schedule.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('EditRepaymentScheduleComponent', () => {
   let component: EditRepaymentScheduleComponent;
@@ -8,7 +10,9 @@ describe('EditRepaymentScheduleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditRepaymentScheduleComponent]
+      declarations: [EditRepaymentScheduleComponent],
+      imports: [HttpClientModule],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

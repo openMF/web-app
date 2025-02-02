@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditTransactionComponent } from './edit-transaction.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EditTransactionComponent', () => {
   let component: EditTransactionComponent;
@@ -8,7 +11,16 @@ describe('EditTransactionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditTransactionComponent]
+      declarations: [EditTransactionComponent],
+      imports: [ReactiveFormsModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

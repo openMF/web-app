@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('EditFixedDepositAccountComponent', () => {
   let component: EditFixedDepositAccountComponent;
@@ -8,7 +10,15 @@ describe('EditFixedDepositAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditFixedDepositAccountComponent]
+      declarations: [EditFixedDepositAccountComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

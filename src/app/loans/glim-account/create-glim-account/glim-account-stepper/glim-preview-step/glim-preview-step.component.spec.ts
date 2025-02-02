@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GlimPreviewStepComponent } from './glim-preview-step.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GlimPreviewStepComponent', () => {
   let component: GlimPreviewStepComponent;
@@ -8,7 +9,8 @@ describe('GlimPreviewStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GlimPreviewStepComponent]
+      declarations: [GlimPreviewStepComponent],
+      imports: [TranslateModule]
     }).compileComponents();
   });
 

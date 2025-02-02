@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReactivateClientComponent } from './reactivate-client.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ReactivateClientComponent', () => {
   let component: ReactivateClientComponent;
@@ -8,7 +10,11 @@ describe('ReactivateClientComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ReactivateClientComponent]
+      declarations: [ReactivateClientComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewGuarantorsComponent } from './view-guarantors.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewGuarantorsComponent', () => {
   let component: ViewGuarantorsComponent;
@@ -8,7 +10,11 @@ describe('ViewGuarantorsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewGuarantorsComponent]
+      declarations: [ViewGuarantorsComponent],
+      imports: [
+        MatDialogModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

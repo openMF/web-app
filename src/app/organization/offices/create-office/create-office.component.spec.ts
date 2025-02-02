@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateOfficeComponent } from './create-office.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateOfficeComponent', () => {
   let component: CreateOfficeComponent;
@@ -8,7 +9,8 @@ describe('CreateOfficeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateOfficeComponent]
+      declarations: [CreateOfficeComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

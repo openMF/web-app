@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditTaxComponentComponent } from './edit-tax-component.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EditTaxComponentComponent', () => {
   let component: EditTaxComponentComponent;
@@ -8,7 +10,11 @@ describe('EditTaxComponentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditTaxComponentComponent]
+      declarations: [EditTaxComponentComponent],
+      imports: [
+        ReactiveFormsModule,
+        TranslateModule
+      ]
     }).compileComponents();
   }));
 

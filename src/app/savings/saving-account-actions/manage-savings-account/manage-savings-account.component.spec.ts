@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageSavingsAccountComponent } from './manage-savings-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ManageSavingsAccountComponent', () => {
   let component: ManageSavingsAccountComponent;
@@ -8,7 +9,8 @@ describe('ManageSavingsAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ManageSavingsAccountComponent]
+      declarations: [ManageSavingsAccountComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   });
 

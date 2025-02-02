@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StaffNavigationComponent } from './staff-navigation.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('StaffNavigationComponent', () => {
   let component: StaffNavigationComponent;
@@ -8,7 +9,8 @@ describe('StaffNavigationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [StaffNavigationComponent]
+      declarations: [StaffNavigationComponent],
+      imports: [TranslateModule]
     }).compileComponents();
   }));
 

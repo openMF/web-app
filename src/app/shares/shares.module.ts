@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
 /** Custom Modules */
 import { SharesRoutingModule } from './shares-routing.module';
@@ -67,6 +67,10 @@ import { GeneralTabComponent } from './shares-account-view/general-tab/general-t
     RejectShareDialogComponent,
     GeneralTabComponent
   ],
-  providers: []
+  providers: [],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ]
 })
 export class SharesModule {}

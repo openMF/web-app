@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewChargeComponent } from './view-charge.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewChargeComponent', () => {
   let component: ViewChargeComponent;
@@ -8,7 +9,8 @@ describe('ViewChargeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewChargeComponent]
+      declarations: [ViewChargeComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewProvisioningEntryComponent } from './view-provisioning-entry.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewProvisioningEntryComponent', () => {
   let component: ViewProvisioningEntryComponent;
@@ -8,7 +9,8 @@ describe('ViewProvisioningEntryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewProvisioningEntryComponent]
+      declarations: [ViewProvisioningEntryComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

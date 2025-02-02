@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewTellerComponent } from './view-teller.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewTellerComponent', () => {
   let component: ViewTellerComponent;
@@ -8,7 +9,8 @@ describe('ViewTellerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewTellerComponent]
+      declarations: [ViewTellerComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

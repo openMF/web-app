@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditNotesDialogComponent } from './edit-notes-dialog.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('EditNotesDialogComponent', () => {
   let component: EditNotesDialogComponent;
@@ -8,7 +9,10 @@ describe('EditNotesDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditNotesDialogComponent]
+      declarations: [EditNotesDialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }]
     }).compileComponents();
   }));
 

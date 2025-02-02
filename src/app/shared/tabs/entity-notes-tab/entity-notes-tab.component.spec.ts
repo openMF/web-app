@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EntityNotesTabComponent } from './entity-notes-tab.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EntityNotesTabComponent', () => {
   let component: EntityNotesTabComponent;
@@ -8,7 +9,8 @@ describe('EntityNotesTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EntityNotesTabComponent]
+      declarations: [EntityNotesTabComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   });
 

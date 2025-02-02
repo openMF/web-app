@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecurringDepositConfirmationDialogComponent } from './recurring-deposit-confirmation-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('RecurringDepositConfirmationDialogComponent', () => {
   let component: RecurringDepositConfirmationDialogComponent;
@@ -8,7 +9,8 @@ describe('RecurringDepositConfirmationDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecurringDepositConfirmationDialogComponent]
+      declarations: [RecurringDepositConfirmationDialogComponent],
+      imports: [MatDialogModule]
     }).compileComponents();
   }));
 

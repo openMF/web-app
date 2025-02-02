@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SavingsAccountUnassignStaffComponent } from './savings-account-unassign-staff.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SavingsAccountUnassignStaffComponent', () => {
   let component: SavingsAccountUnassignStaffComponent;
@@ -8,7 +10,11 @@ describe('SavingsAccountUnassignStaffComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SavingsAccountUnassignStaffComponent]
+      declarations: [SavingsAccountUnassignStaffComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RejectShareDialogComponent } from './reject-share-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('RejectSharesDialogComponent', () => {
   let component: RejectShareDialogComponent;
@@ -8,7 +9,8 @@ describe('RejectSharesDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RejectShareDialogComponent]
+      declarations: [RejectShareDialogComponent],
+      imports: [MatDialogModule]
     }).compileComponents();
   }));
 

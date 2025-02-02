@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SavingProductSettingsStepComponent } from './saving-product-settings-step.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('SavingProductSettingsStepComponent', () => {
   let component: SavingProductSettingsStepComponent;
@@ -8,7 +9,8 @@ describe('SavingProductSettingsStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SavingProductSettingsStepComponent]
+      declarations: [SavingProductSettingsStepComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

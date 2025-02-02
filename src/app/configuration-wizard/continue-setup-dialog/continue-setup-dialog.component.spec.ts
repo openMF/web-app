@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContinueSetupDialogComponent } from './continue-setup-dialog.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ContinueSetupDialogComponent', () => {
   let component: ContinueSetupDialogComponent;
@@ -8,7 +9,10 @@ describe('ContinueSetupDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ContinueSetupDialogComponent]
+      declarations: [ContinueSetupDialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }]
     }).compileComponents();
   }));
 

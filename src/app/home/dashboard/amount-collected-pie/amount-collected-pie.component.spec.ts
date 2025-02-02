@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AmountCollectedPieComponent } from './amount-collected-pie.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AmountCollectedPieComponent', () => {
   let component: AmountCollectedPieComponent;
@@ -8,7 +9,8 @@ describe('AmountCollectedPieComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AmountCollectedPieComponent]
+      declarations: [AmountCollectedPieComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

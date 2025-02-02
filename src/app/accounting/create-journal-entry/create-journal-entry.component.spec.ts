@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateJournalEntryComponent } from './create-journal-entry.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateJournalEntryComponent', () => {
   let component: CreateJournalEntryComponent;
@@ -8,7 +9,8 @@ describe('CreateJournalEntryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateJournalEntryComponent]
+      declarations: [CreateJournalEntryComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

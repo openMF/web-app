@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditDataTableComponent } from './edit-data-table.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditDataTableComponent', () => {
   let component: EditDataTableComponent;
@@ -8,7 +9,8 @@ describe('EditDataTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditDataTableComponent]
+      declarations: [EditDataTableComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupTransferClientsComponent } from './group-transfer-clients.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 describe('GroupTransferClientsComponent', () => {
   let component: GroupTransferClientsComponent;
@@ -8,7 +11,16 @@ describe('GroupTransferClientsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GroupTransferClientsComponent]
+      declarations: [GroupTransferClientsComponent],
+      imports: [ReactiveFormsModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

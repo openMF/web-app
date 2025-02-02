@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SmsCampaignStepComponent } from './sms-campaign-step.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('SmsCampaignStepComponent', () => {
   let component: SmsCampaignStepComponent;
@@ -8,7 +9,8 @@ describe('SmsCampaignStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SmsCampaignStepComponent]
+      declarations: [SmsCampaignStepComponent],
+      providers: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

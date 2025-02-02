@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientTrendsBarComponent } from './client-trends-bar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ClientTrendsBarComponent', () => {
   let component: ClientTrendsBarComponent;
@@ -8,7 +9,8 @@ describe('ClientTrendsBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ClientTrendsBarComponent]
+      declarations: [ClientTrendsBarComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

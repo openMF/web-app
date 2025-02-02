@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddClientChargeComponent } from './add-client-charge.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('AddClientChargeComponent', () => {
   let component: AddClientChargeComponent;
@@ -8,7 +11,16 @@ describe('AddClientChargeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AddClientChargeComponent]
+      declarations: [AddClientChargeComponent],
+      imports: [ReactiveFormsModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

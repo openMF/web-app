@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanDelinquencyActionDialogComponent } from './loan-delinquency-action-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('LoanDelinquencyActionDialogComponent', () => {
   let component: LoanDelinquencyActionDialogComponent;
@@ -8,7 +9,8 @@ describe('LoanDelinquencyActionDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoanDelinquencyActionDialogComponent]
+      declarations: [LoanDelinquencyActionDialogComponent],
+      imports: [MatDialogModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoanDelinquencyActionDialogComponent);

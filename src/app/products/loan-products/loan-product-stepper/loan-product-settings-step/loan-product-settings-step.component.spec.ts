@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanProductSettingsStepComponent } from './loan-product-settings-step.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('LoanProductSettingsStepComponent', () => {
   let component: LoanProductSettingsStepComponent;
@@ -8,7 +10,12 @@ describe('LoanProductSettingsStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoanProductSettingsStepComponent]
+      declarations: [LoanProductSettingsStepComponent],
+      imports: [
+        ReactiveFormsModule,
+        TranslateModule
+      ],
+      providers: [TranslateService]
     }).compileComponents();
   }));
 

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA, Optional, SkipSelf } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
@@ -57,6 +57,10 @@ import { ContentComponent } from './shell/content/content.component';
   exports: [
     SharedModule // TO BE REMOVED: Once all components have replaced the core module import by shared module.
 
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ],
   providers: [
     AuthenticationService,

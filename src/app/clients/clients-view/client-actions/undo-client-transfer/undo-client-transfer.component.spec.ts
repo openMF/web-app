@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoClientTransferComponent } from './undo-client-transfer.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('UndoClientTransferComponent', () => {
   let component: UndoClientTransferComponent;
@@ -8,7 +10,11 @@ describe('UndoClientTransferComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UndoClientTransferComponent]
+      declarations: [UndoClientTransferComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

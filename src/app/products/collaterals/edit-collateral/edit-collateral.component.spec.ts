@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditCollateralComponent } from './edit-collateral.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditCollateralComponent', () => {
   let component: EditCollateralComponent;
@@ -8,7 +9,8 @@ describe('EditCollateralComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditCollateralComponent]
+      declarations: [EditCollateralComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   });
 

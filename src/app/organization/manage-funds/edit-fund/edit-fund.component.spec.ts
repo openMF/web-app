@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditFundComponent } from './edit-fund.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('EditFundComponent', () => {
   let component: EditFundComponent;
@@ -8,7 +10,9 @@ describe('EditFundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EditFundComponent]
+      declarations: [EditFundComponent],
+      imports: [HttpClientModule],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

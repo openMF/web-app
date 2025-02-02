@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditAdhocQueryComponent } from './edit-adhoc-query.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EditAdhocQueryComponent', () => {
   let component: EditAdhocQueryComponent;
@@ -8,7 +9,8 @@ describe('EditAdhocQueryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditAdhocQueryComponent]
+      declarations: [EditAdhocQueryComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

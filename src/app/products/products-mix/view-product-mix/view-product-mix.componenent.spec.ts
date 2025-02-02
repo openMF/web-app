@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewProductMixComponent } from './view-product-mix.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ViewProductMixComponent', () => {
   let component: ViewProductMixComponent;
@@ -8,7 +11,16 @@ describe('ViewProductMixComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewProductMixComponent]
+      declarations: [ViewProductMixComponent],
+      imports: [MatDialogModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

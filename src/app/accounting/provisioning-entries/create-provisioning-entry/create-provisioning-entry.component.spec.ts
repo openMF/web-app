@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateProvisioningEntryComponent } from './create-provisioning-entry.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreateProvisioningEntryComponent', () => {
   let component: CreateProvisioningEntryComponent;
@@ -8,7 +10,11 @@ describe('CreateProvisioningEntryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateProvisioningEntryComponent]
+      declarations: [CreateProvisioningEntryComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

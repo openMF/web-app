@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientPayChargesComponent } from './client-pay-charges.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ClientPayChargesComponent', () => {
   let component: ClientPayChargesComponent;
@@ -8,7 +11,12 @@ describe('ClientPayChargesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ClientPayChargesComponent]
+      declarations: [ClientPayChargesComponent],
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 

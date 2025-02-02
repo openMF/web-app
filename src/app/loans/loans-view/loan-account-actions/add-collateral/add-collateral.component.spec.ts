@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddCollateralComponent } from './add-collateral.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('AddCollateralComponent', () => {
   let component: AddCollateralComponent;
@@ -8,7 +9,8 @@ describe('AddCollateralComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AddCollateralComponent]
+      declarations: [AddCollateralComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateRangeComponent } from './create-range.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateRangeComponent', () => {
   let component: CreateRangeComponent;
@@ -8,7 +9,8 @@ describe('CreateRangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateRangeComponent]
+      declarations: [CreateRangeComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   });
 

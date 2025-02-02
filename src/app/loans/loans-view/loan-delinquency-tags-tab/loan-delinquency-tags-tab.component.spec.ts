@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanDelinquencyTagsTabComponent } from './loan-delinquency-tags-tab.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('LoanDelinquencyTagsTabComponent', () => {
   let component: LoanDelinquencyTagsTabComponent;
@@ -8,7 +10,15 @@ describe('LoanDelinquencyTagsTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoanDelinquencyTagsTabComponent]
+      declarations: [LoanDelinquencyTagsTabComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   });
 

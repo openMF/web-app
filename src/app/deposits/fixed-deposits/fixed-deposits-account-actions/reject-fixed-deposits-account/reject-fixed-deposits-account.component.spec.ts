@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RejectFixedDepositsAccountComponent } from './reject-fixed-deposits-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RejectFixedDepositsAccountComponent', () => {
   let component: RejectFixedDepositsAccountComponent;
@@ -8,7 +10,11 @@ describe('RejectFixedDepositsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RejectFixedDepositsAccountComponent]
+      declarations: [RejectFixedDepositsAccountComponent],
+      imports: [
+        ReactiveFormsModule,
+        TranslateModule
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditCodeComponent } from './edit-code.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EditCodeComponent', () => {
   let component: EditCodeComponent;
@@ -8,7 +9,8 @@ describe('EditCodeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditCodeComponent]
+      declarations: [EditCodeComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

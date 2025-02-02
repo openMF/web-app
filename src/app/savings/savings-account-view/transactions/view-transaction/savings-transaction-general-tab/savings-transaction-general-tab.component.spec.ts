@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SavingsTransactionGeneralTabComponent } from './savings-transaction-general-tab.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SavingsTransactionGeneralTabComponent', () => {
   let component: SavingsTransactionGeneralTabComponent;
@@ -8,7 +9,8 @@ describe('SavingsTransactionGeneralTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SavingsTransactionGeneralTabComponent]
+      declarations: [SavingsTransactionGeneralTabComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SavingsTransactionGeneralTabComponent);

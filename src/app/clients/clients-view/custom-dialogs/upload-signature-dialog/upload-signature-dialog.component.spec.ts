@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UploadSignatureDialogComponent } from './upload-signature-dialog.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('UploadSignatureDialogComponent', () => {
   let component: UploadSignatureDialogComponent;
@@ -8,7 +9,14 @@ describe('UploadSignatureDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UploadSignatureDialogComponent]
+      declarations: [UploadSignatureDialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        }
+      ]
     }).compileComponents();
   }));
 

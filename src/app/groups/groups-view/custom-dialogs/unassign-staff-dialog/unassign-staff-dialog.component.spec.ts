@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UnassignStaffDialogComponent } from './unassign-staff-dialog.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('UnassignStaffDialogComponent', () => {
   let component: UnassignStaffDialogComponent;
@@ -8,7 +9,10 @@ describe('UnassignStaffDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UnassignStaffDialogComponent]
+      declarations: [UnassignStaffDialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }]
     }).compileComponents();
   }));
 

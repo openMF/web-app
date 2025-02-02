@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecurringDepositDatatableTabComponent } from './recurring-deposit-datatable-tab.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('RecurringDepositDatatableTabComponent', () => {
   let component: RecurringDepositDatatableTabComponent;
@@ -8,7 +10,15 @@ describe('RecurringDepositDatatableTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecurringDepositDatatableTabComponent]
+      declarations: [RecurringDepositDatatableTabComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   });
 

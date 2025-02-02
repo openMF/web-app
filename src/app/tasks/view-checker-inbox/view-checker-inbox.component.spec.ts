@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewCheckerInboxComponent } from './view-checker-inbox.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ViewCheckerInboxComponent', () => {
   let component: ViewCheckerInboxComponent;
@@ -8,7 +10,15 @@ describe('ViewCheckerInboxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewCheckerInboxComponent]
+      declarations: [ViewCheckerInboxComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

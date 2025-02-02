@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareProductAccountingStepComponent } from './share-product-accounting-step.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ShareProductAccountingStepComponent', () => {
   let component: ShareProductAccountingStepComponent;
@@ -8,7 +10,11 @@ describe('ShareProductAccountingStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ShareProductAccountingStepComponent]
+      declarations: [ShareProductAccountingStepComponent],
+      imports: [
+        ReactiveFormsModule,
+        TranslateModule
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StandingInstructionsTabComponent } from './standing-instructions-tab.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('StandingInstructionsTabComponent', () => {
   let component: StandingInstructionsTabComponent;
@@ -8,7 +9,8 @@ describe('StandingInstructionsTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [StandingInstructionsTabComponent]
+      declarations: [StandingInstructionsTabComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

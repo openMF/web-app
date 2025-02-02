@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateHolidayComponent } from './create-holiday.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateHolidayComponent', () => {
   let component: CreateHolidayComponent;
@@ -8,7 +9,8 @@ describe('CreateHolidayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateHolidayComponent]
+      declarations: [CreateHolidayComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

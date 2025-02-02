@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ServerSelectorComponent } from './server-selector.component';
+import { DatePipe } from '@angular/common';
 
 describe('ServerSelectorComponent', () => {
   let component: ServerSelectorComponent;
@@ -8,7 +9,8 @@ describe('ServerSelectorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ServerSelectorComponent]
+      declarations: [ServerSelectorComponent],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

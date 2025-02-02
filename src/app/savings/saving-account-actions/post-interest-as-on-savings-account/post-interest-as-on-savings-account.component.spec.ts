@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostInterestAsOnSavingsAccountComponent } from './post-interest-as-on-savings-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('PostInterestAsOnSavingsAccountComponent', () => {
   let component: PostInterestAsOnSavingsAccountComponent;
@@ -8,7 +11,12 @@ describe('PostInterestAsOnSavingsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PostInterestAsOnSavingsAccountComponent]
+      declarations: [PostInterestAsOnSavingsAccountComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

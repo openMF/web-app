@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoApprovalRecurringDepositsAccountComponent } from './undo-approval-recurring-deposits-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('UndoApprovalRecurringDepositsAccountComponent', () => {
   let component: UndoApprovalRecurringDepositsAccountComponent;
@@ -8,7 +9,8 @@ describe('UndoApprovalRecurringDepositsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UndoApprovalRecurringDepositsAccountComponent]
+      declarations: [UndoApprovalRecurringDepositsAccountComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

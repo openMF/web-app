@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedeemSharesComponent } from './redeem-shares.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('RedeemSharesComponent', () => {
   let component: RedeemSharesComponent;
@@ -8,7 +10,11 @@ describe('RedeemSharesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RedeemSharesComponent]
+      declarations: [RedeemSharesComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

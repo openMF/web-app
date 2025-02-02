@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewProvisioningJournalEntriesComponent } from './view-provisioning-journal-entries.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ViewProvisioningJournalEntriesComponent', () => {
   let component: ViewProvisioningJournalEntriesComponent;
@@ -8,7 +10,15 @@ describe('ViewProvisioningJournalEntriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewProvisioningJournalEntriesComponent]
+      declarations: [ViewProvisioningJournalEntriesComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

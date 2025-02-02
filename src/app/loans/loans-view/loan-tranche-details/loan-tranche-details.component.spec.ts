@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanTrancheDetailsComponent } from './loan-tranche-details.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('LoanTrancheDetailsComponent', () => {
   let component: LoanTrancheDetailsComponent;
@@ -8,7 +10,15 @@ describe('LoanTrancheDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoanTrancheDetailsComponent]
+      declarations: [LoanTrancheDetailsComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

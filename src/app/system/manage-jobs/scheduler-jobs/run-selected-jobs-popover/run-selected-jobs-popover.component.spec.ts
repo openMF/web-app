@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RunSelectedJobsPopoverComponent } from './run-selected-jobs-popover.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('RunSelectedJobsPopoverComponent', () => {
   let component: RunSelectedJobsPopoverComponent;
@@ -8,7 +10,11 @@ describe('RunSelectedJobsPopoverComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RunSelectedJobsPopoverComponent]
+      declarations: [RunSelectedJobsPopoverComponent],
+      imports: [
+        HttpClientModule,
+        MatDialogModule
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(RunSelectedJobsPopoverComponent);

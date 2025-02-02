@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditProductMixComponent } from './edit-product-mix.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('EditProductMixComponent', () => {
   let component: EditProductMixComponent;
@@ -8,7 +11,12 @@ describe('EditProductMixComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditProductMixComponent]
+      declarations: [EditProductMixComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditFamilyMemberComponent } from './edit-family-member.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditFamilyMemberComponent', () => {
   let component: EditFamilyMemberComponent;
@@ -8,7 +11,12 @@ describe('EditFamilyMemberComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditFamilyMemberComponent]
+      declarations: [EditFamilyMemberComponent],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

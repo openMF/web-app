@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AttachCenterMeetingComponent } from './attach-center-meeting.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AttachCenterMeetingComponent', () => {
   let component: AttachCenterMeetingComponent;
@@ -8,7 +10,11 @@ describe('AttachCenterMeetingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AttachCenterMeetingComponent]
+      declarations: [AttachCenterMeetingComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

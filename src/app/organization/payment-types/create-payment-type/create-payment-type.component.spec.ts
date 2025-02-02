@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreatePaymentTypeComponent } from './create-payment-type.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreatePaymentTypeComponent', () => {
   let component: CreatePaymentTypeComponent;
@@ -8,7 +10,11 @@ describe('CreatePaymentTypeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreatePaymentTypeComponent]
+      declarations: [CreatePaymentTypeComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

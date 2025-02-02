@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditLoanProvisioningCriteriaComponent } from './edit-loan-provisioning-criteria.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EditLoanProvisioningCriteriaComponent', () => {
   let component: EditLoanProvisioningCriteriaComponent;
@@ -8,7 +9,8 @@ describe('EditLoanProvisioningCriteriaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditLoanProvisioningCriteriaComponent]
+      declarations: [EditLoanProvisioningCriteriaComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

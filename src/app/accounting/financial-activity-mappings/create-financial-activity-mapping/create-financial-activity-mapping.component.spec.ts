@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateFinancialActivityMappingComponent } from './create-financial-activity-mapping.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateFinancialActivityMappingComponent', () => {
   let component: CreateFinancialActivityMappingComponent;
@@ -8,7 +9,8 @@ describe('CreateFinancialActivityMappingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateFinancialActivityMappingComponent]
+      declarations: [CreateFinancialActivityMappingComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

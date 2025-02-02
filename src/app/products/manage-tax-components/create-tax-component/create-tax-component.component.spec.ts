@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateTaxComponentComponent } from './create-tax-component.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreateTaxComponentComponent', () => {
   let component: CreateTaxComponentComponent;
@@ -8,7 +10,11 @@ describe('CreateTaxComponentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateTaxComponentComponent]
+      declarations: [CreateTaxComponentComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

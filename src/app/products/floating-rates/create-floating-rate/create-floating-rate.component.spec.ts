@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateFloatingRateComponent } from './create-floating-rate.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreateFloatingRateComponent', () => {
   let component: CreateFloatingRateComponent;
@@ -8,7 +10,11 @@ describe('CreateFloatingRateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateFloatingRateComponent]
+      declarations: [CreateFloatingRateComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 
