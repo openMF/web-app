@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CreateAccountNumberPreferenceComponent', () => {
   let component: CreateAccountNumberPreferenceComponent;
@@ -15,7 +16,8 @@ describe('CreateAccountNumberPreferenceComponent', () => {
       declarations: [CreateAccountNumberPreferenceComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [
         {

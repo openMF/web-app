@@ -4,6 +4,7 @@ import { EditTransactionComponent } from './edit-transaction.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 describe('EditTransactionComponent', () => {
   let component: EditTransactionComponent;
@@ -12,7 +13,10 @@ describe('EditTransactionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditTransactionComponent],
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        CommonModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

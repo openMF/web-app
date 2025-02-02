@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApproveRecurringDepositsAccountComponent } from './approve-recurring-deposits-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ApproveRecurringDepositsAccountComponent', () => {
   let component: ApproveRecurringDepositsAccountComponent;
@@ -8,7 +10,11 @@ describe('ApproveRecurringDepositsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ApproveRecurringDepositsAccountComponent]
+      declarations: [ApproveRecurringDepositsAccountComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

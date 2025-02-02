@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditTaxGroupComponent } from './edit-tax-group.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('EditTaxGroupComponent', () => {
   let component: EditTaxGroupComponent;
@@ -13,7 +14,8 @@ describe('EditTaxGroupComponent', () => {
       declarations: [EditTaxGroupComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

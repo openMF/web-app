@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SMSComponent } from './sms.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SmsComponent', () => {
   let component: SMSComponent;
@@ -8,7 +9,8 @@ describe('SmsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SMSComponent]
+      declarations: [SMSComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

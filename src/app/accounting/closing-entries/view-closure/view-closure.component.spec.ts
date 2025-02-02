@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewClosureComponent', () => {
   let component: ViewClosureComponent;
@@ -15,7 +16,8 @@ describe('ViewClosureComponent', () => {
       declarations: [ViewClosureComponent],
       imports: [
         HttpClientModule,
-        MatDialogModule
+        MatDialogModule,
+        RouterTestingModule
       ],
       providers: [
         {

@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PeriodicAccrualsComponent', () => {
   let component: PeriodicAccrualsComponent;
@@ -16,7 +17,8 @@ describe('PeriodicAccrualsComponent', () => {
       declarations: [PeriodicAccrualsComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [
         DatePipe,

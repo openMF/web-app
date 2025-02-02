@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditTransactionComponent } from './edit-transaction.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
 
 describe('EditTransactionComponent', () => {
   let component: EditTransactionComponent;
@@ -13,7 +14,8 @@ describe('EditTransactionComponent', () => {
       declarations: [EditTransactionComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

@@ -4,6 +4,7 @@ import { ViewProductMixComponent } from './view-product-mix.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewProductMixComponent', () => {
   let component: ViewProductMixComponent;
@@ -12,7 +13,10 @@ describe('ViewProductMixComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewProductMixComponent],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        HttpClientModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

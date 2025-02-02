@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GeneralTabComponent } from './general-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GeneralTabComponent', () => {
   let component: GeneralTabComponent;
@@ -8,7 +9,8 @@ describe('GeneralTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GeneralTabComponent]
+      declarations: [GeneralTabComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(GeneralTabComponent);

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DividendsTabComponent } from './dividends-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DividendsTabComponent', () => {
   let component: DividendsTabComponent;
@@ -8,7 +9,8 @@ describe('DividendsTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DividendsTabComponent]
+      declarations: [DividendsTabComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

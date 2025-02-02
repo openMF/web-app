@@ -4,6 +4,7 @@ import { GroupTransferClientsComponent } from './group-transfer-clients.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('GroupTransferClientsComponent', () => {
   let component: GroupTransferClientsComponent;
@@ -12,7 +13,10 @@ describe('GroupTransferClientsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GroupTransferClientsComponent],
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewProvisioningJournalEntriesComponent } from './view-provisioning-journal-entries.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewProvisioningJournalEntriesComponent', () => {
   let component: ViewProvisioningJournalEntriesComponent;
@@ -11,6 +12,7 @@ describe('ViewProvisioningJournalEntriesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewProvisioningJournalEntriesComponent],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

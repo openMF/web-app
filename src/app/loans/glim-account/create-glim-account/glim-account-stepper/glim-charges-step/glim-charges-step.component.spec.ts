@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GlimChargesStepComponent } from './glim-charges-step.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('GlimChargesStepComponent', () => {
   let component: GlimChargesStepComponent;
@@ -14,9 +15,13 @@ describe('GlimChargesStepComponent', () => {
       declarations: [GlimChargesStepComponent],
       imports: [
         MatDialogModule,
-        TranslateModule
+        TranslateModule,
+        CommonModule
       ],
-      providers: [DatePipe]
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   });
 

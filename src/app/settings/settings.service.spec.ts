@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SettingsService } from './settings.service';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('SettingsService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      providers: [DatePipe]
+      imports: [CommonModule]
     })
   );
 

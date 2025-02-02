@@ -4,6 +4,7 @@ import { CreateRecurringDepositsAccountComponent } from './create-recurring-depo
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreateRecurringDepositsAccountComponent', () => {
   let component: CreateRecurringDepositsAccountComponent;
@@ -12,6 +13,7 @@ describe('CreateRecurringDepositsAccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CreateRecurringDepositsAccountComponent],
+      imports: [HttpClientModule],
       providers: [
         DatePipe,
         {

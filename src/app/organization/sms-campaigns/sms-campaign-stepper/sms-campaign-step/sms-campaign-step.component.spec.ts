@@ -10,7 +10,7 @@ describe('SmsCampaignStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SmsCampaignStepComponent],
-      providers: [ReactiveFormsModule]
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

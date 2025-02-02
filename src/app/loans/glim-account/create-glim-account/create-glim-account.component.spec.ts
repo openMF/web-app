@@ -4,6 +4,7 @@ import { CreateGlimAccountComponent } from './create-glim-account.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('CreateGlimAccountComponent', () => {
   let component: CreateGlimAccountComponent;
@@ -12,7 +13,10 @@ describe('CreateGlimAccountComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CreateGlimAccountComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        CommonModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

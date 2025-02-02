@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ManageFundsComponent } from './manage-funds.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ManageFundsComponent', () => {
   let component: ManageFundsComponent;
@@ -11,6 +13,10 @@ describe('ManageFundsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ManageFundsComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

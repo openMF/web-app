@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecurringDepositsAccountPreviewStepComponent } from './recurring-deposits-account-preview-step.component';
-import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 
 describe('RecurringDepositsAccountPreviewStepComponent', () => {
   let component: RecurringDepositsAccountPreviewStepComponent;
@@ -13,7 +13,8 @@ describe('RecurringDepositsAccountPreviewStepComponent', () => {
       imports: [TranslateModule],
       providers: [
         TranslateService,
-        TranslateStore
+        TranslateStore,
+        TranslateLoader
       ]
     }).compileComponents();
   }));

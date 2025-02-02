@@ -4,6 +4,7 @@ import { ViewCodeComponent } from './view-code.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ViewCodeComponent', () => {
   let component: ViewCodeComponent;
@@ -12,7 +13,10 @@ describe('ViewCodeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewCodeComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

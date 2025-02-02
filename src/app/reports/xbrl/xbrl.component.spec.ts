@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { XBRLComponent } from './xbrl.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('XBRLComponent', () => {
   let component: XBRLComponent;
@@ -11,6 +12,7 @@ describe('XBRLComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [XBRLComponent],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

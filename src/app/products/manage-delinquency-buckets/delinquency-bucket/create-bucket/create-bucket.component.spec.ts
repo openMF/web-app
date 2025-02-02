@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateBucketComponent } from './create-bucket.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('CreateBucketComponent', () => {
   let component: CreateBucketComponent;
@@ -13,7 +14,8 @@ describe('CreateBucketComponent', () => {
       declarations: [CreateBucketComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   });

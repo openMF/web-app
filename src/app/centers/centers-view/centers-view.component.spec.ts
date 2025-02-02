@@ -4,6 +4,7 @@ import { CentersViewComponent } from './centers-view.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CentersViewComponent', () => {
   let component: CentersViewComponent;
@@ -12,7 +13,10 @@ describe('CentersViewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CentersViewComponent],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

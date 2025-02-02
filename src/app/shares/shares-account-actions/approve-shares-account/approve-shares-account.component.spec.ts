@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApproveSharesAccountComponent } from './approve-shares-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('ApproveSharesAccountComponent', () => {
   let component: ApproveSharesAccountComponent;
@@ -13,7 +14,8 @@ describe('ApproveSharesAccountComponent', () => {
       declarations: [ApproveSharesAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

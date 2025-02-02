@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExternalServicesComponent } from './external-services.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ExternalServicesComponent', () => {
   let component: ExternalServicesComponent;
@@ -10,7 +11,11 @@ describe('ExternalServicesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ExternalServicesComponent],
-      imports: [TranslateModule]
+      imports: [TranslateModule],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

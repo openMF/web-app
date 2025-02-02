@@ -4,6 +4,7 @@ import { RecurringDepositProductsComponent } from './recurring-deposit-products.
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RecurringDepositProductsComponent', () => {
   let component: RecurringDepositProductsComponent;
@@ -12,7 +13,10 @@ describe('RecurringDepositProductsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RecurringDepositProductsComponent],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

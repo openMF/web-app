@@ -4,6 +4,7 @@ import { ProvisioningEntriesComponent } from './provisioning-entries.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ProvisioningEntriesComponent', () => {
   let component: ProvisioningEntriesComponent;
@@ -12,7 +13,10 @@ describe('ProvisioningEntriesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ProvisioningEntriesComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

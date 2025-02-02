@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SavingProductsComponent } from './saving-products.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SavingProductsComponent', () => {
   let component: SavingProductsComponent;
@@ -11,6 +12,7 @@ describe('SavingProductsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SavingProductsComponent],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

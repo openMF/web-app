@@ -4,6 +4,7 @@ import { StandingInstructionsTabComponent } from './standing-instructions-tab.co
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('StandingInstructionsTabComponent', () => {
   let component: StandingInstructionsTabComponent;
@@ -12,7 +13,10 @@ describe('StandingInstructionsTabComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StandingInstructionsTabComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

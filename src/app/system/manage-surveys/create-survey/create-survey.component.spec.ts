@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateSurveyComponent } from './create-survey.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CreateSurveyComponent', () => {
   let component: CreateSurveyComponent;
@@ -13,7 +14,8 @@ describe('CreateSurveyComponent', () => {
       declarations: [CreateSurveyComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ]
     }).compileComponents();
   }));

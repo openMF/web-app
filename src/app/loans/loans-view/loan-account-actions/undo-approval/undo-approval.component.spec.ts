@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoApprovalComponent } from './undo-approval.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('UndoApprovalComponent', () => {
   let component: UndoApprovalComponent;
@@ -10,7 +11,10 @@ describe('UndoApprovalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UndoApprovalComponent],
-      imports: [HttpClientModule]
+      imports: [
+        HttpClientModule,
+        CommonModule
+      ]
     }).compileComponents();
   }));
 

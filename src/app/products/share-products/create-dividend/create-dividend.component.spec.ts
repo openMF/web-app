@@ -4,6 +4,7 @@ import { CreateDividendComponent } from './create-dividend.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 describe('CreateDividendComponent', () => {
   let component: CreateDividendComponent;
@@ -12,7 +13,10 @@ describe('CreateDividendComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CreateDividendComponent],
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        CommonModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

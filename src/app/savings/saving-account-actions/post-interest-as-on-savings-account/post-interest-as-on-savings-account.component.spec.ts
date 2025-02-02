@@ -4,6 +4,7 @@ import { PostInterestAsOnSavingsAccountComponent } from './post-interest-as-on-s
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PostInterestAsOnSavingsAccountComponent', () => {
   let component: PostInterestAsOnSavingsAccountComponent;
@@ -14,7 +15,8 @@ describe('PostInterestAsOnSavingsAccountComponent', () => {
       declarations: [PostInterestAsOnSavingsAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [DatePipe]
     }).compileComponents();

@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CenterAssignStaffComponent } from './center-assign-staff.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CenterAssignStaffComponent', () => {
   let component: CenterAssignStaffComponent;
@@ -10,7 +11,10 @@ describe('CenterAssignStaffComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CenterAssignStaffComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

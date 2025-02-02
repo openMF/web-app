@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BusinessRuleParametersComponent } from './business-rule-parameters.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('BusinessRuleParametersComponent', () => {
   let component: BusinessRuleParametersComponent;
@@ -13,7 +14,8 @@ describe('BusinessRuleParametersComponent', () => {
       declarations: [BusinessRuleParametersComponent],
       imports: [
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

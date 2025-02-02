@@ -4,6 +4,7 @@ import { ApproveSavingsAccountComponent } from './approve-savings-account.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ApproveSavingsAccountComponent', () => {
   let component: ApproveSavingsAccountComponent;
@@ -14,7 +15,8 @@ describe('ApproveSavingsAccountComponent', () => {
       declarations: [ApproveSavingsAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [DatePipe]
     }).compileComponents();

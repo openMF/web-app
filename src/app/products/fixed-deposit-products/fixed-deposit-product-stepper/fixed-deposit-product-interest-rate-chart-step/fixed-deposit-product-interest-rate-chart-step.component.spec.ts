@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositProductInterestRateChartStepComponent } from './fixed-deposit-product-interest-rate-chart-step.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('FixedDepositProductInterestRateChartStepComponent', () => {
   let component: FixedDepositProductInterestRateChartStepComponent;
@@ -8,7 +9,8 @@ describe('FixedDepositProductInterestRateChartStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FixedDepositProductInterestRateChartStepComponent]
+      declarations: [FixedDepositProductInterestRateChartStepComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

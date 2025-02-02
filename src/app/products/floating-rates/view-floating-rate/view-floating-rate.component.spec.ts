@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewFloatingRateComponent } from './view-floating-rate.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ViewFloatingRateComponent', () => {
   let component: ViewFloatingRateComponent;
@@ -11,6 +12,7 @@ describe('ViewFloatingRateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewFloatingRateComponent],
+      imports: [TranslateModule],
       providers: [
         {
           provide: ActivatedRoute,

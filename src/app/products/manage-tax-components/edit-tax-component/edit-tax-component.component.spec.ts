@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditTaxComponentComponent } from './edit-tax-component.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditTaxComponentComponent', () => {
   let component: EditTaxComponentComponent;
@@ -13,7 +14,8 @@ describe('EditTaxComponentComponent', () => {
       declarations: [EditTaxComponentComponent],
       imports: [
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule,
+        HttpClientModule
       ]
     }).compileComponents();
   }));

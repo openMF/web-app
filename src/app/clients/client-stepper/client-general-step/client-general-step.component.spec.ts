@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ClientGeneralStepComponent', () => {
   let component: ClientGeneralStepComponent;
@@ -17,6 +18,10 @@ describe('ClientGeneralStepComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         TranslateModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
       ],
       providers: [DatePipe]
     }).compileComponents();

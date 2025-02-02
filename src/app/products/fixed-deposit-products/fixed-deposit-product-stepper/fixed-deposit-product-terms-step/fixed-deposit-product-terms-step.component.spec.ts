@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositProductTermsStepComponent } from './fixed-deposit-product-terms-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FixedDepositProductTermsStepComponent', () => {
   let component: FixedDepositProductTermsStepComponent;
@@ -10,7 +11,10 @@ describe('FixedDepositProductTermsStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FixedDepositProductTermsStepComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        TranslateModule
+      ]
     }).compileComponents();
   }));
 

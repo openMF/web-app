@@ -4,6 +4,7 @@ import { CreateClientComponent } from './create-client.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('CreateClientComponent', () => {
   let component: CreateClientComponent;
@@ -12,7 +13,10 @@ describe('CreateClientComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CreateClientComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        CommonModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

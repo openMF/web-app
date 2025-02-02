@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('AddressTabComponent', () => {
   let component: AddressTabComponent;
@@ -15,7 +16,8 @@ describe('AddressTabComponent', () => {
       declarations: [AddressTabComponent],
       imports: [
         HttpClientModule,
-        MatDialogModule
+        MatDialogModule,
+        TranslateModule
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

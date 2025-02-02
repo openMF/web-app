@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewSurveyComponent } from './view-survey.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewSurveyComponent', () => {
   let component: ViewSurveyComponent;
@@ -11,6 +12,7 @@ describe('ViewSurveyComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewSurveyComponent],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

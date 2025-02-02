@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CampaignPreviewStepComponent } from './campaign-preview-step.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('CampaignPreviewStepComponent', () => {
   let component: CampaignPreviewStepComponent;
@@ -8,7 +10,12 @@ describe('CampaignPreviewStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CampaignPreviewStepComponent]
+      declarations: [CampaignPreviewStepComponent],
+      imports: [TranslateModule],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

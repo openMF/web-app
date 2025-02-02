@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SmsCampaignsComponent } from './sms-campaigns.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SmsCampaignsComponent', () => {
   let component: SmsCampaignsComponent;
@@ -8,7 +10,11 @@ describe('SmsCampaignsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SmsCampaignsComponent]
+      declarations: [SmsCampaignsComponent],
+      imports: [
+        RouterTestingModule,
+        TranslateModule
+      ]
     }).compileComponents();
   }));
 

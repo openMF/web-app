@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ManageSurveysComponent } from './manage-surveys.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SurveysComponent', () => {
   let component: ManageSurveysComponent;
@@ -11,6 +12,7 @@ describe('SurveysComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ManageSurveysComponent],
+      imports: [HttpClientModule],
       providers: [
         {
           provide: ActivatedRoute,

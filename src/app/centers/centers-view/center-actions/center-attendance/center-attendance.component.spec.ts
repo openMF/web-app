@@ -4,6 +4,7 @@ import { CenterAttendanceComponent } from './center-attendance.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CenterAttendanceComponent', () => {
   let component: CenterAttendanceComponent;
@@ -12,7 +13,10 @@ describe('CenterAttendanceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CenterAttendanceComponent],
-      imports: [CommonModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

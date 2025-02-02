@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SharesAccountActionsComponent } from './shares-account-actions.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SharesAccountActionsComponent', () => {
   let component: SharesAccountActionsComponent;
@@ -11,6 +12,7 @@ describe('SharesAccountActionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SharesAccountActionsComponent],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

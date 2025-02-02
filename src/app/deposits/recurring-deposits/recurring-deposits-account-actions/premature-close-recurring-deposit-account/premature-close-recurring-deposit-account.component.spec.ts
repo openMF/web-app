@@ -4,6 +4,7 @@ import { PrematureCloseRecurringDepositAccountComponent } from './premature-clos
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PrematureCloseRecurringDepositAccountComponent', () => {
   let component: PrematureCloseRecurringDepositAccountComponent;
@@ -14,7 +15,8 @@ describe('PrematureCloseRecurringDepositAccountComponent', () => {
       declarations: [PrematureCloseRecurringDepositAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [DatePipe]
     }).compileComponents();

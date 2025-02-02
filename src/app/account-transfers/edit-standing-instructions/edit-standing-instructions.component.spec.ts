@@ -4,6 +4,7 @@ import { EditStandingInstructionsComponent } from './edit-standing-instructions.
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditStandingInstructionsComponent', () => {
   let component: EditStandingInstructionsComponent;
@@ -12,7 +13,10 @@ describe('EditStandingInstructionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditStandingInstructionsComponent],
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

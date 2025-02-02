@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewShareProductComponent } from './view-share-product.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ViewShareProductComponent', () => {
   let component: ViewShareProductComponent;
@@ -11,6 +13,10 @@ describe('ViewShareProductComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewShareProductComponent],
+      imports: [
+        RouterTestingModule,
+        TranslateModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

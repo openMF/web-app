@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { ProductsService } from 'app/products/products.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditBucketComponent', () => {
   let component: EditBucketComponent;
@@ -15,7 +16,8 @@ describe('EditBucketComponent', () => {
       declarations: [EditBucketComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [
         DatePipe,

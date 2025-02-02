@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CloseClientComponent', () => {
   let component: CloseClientComponent;
@@ -16,7 +17,8 @@ describe('CloseClientComponent', () => {
       declarations: [CloseClientComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [
         DatePipe,

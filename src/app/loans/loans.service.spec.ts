@@ -2,13 +2,15 @@ import { TestBed } from '@angular/core/testing';
 
 import { LoansService } from './loans.service';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('LoansService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-      providers: [DatePipe]
+      imports: [
+        HttpClientModule,
+        CommonModule
+      ]
     })
   );
 

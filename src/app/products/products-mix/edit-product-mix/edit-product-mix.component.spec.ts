@@ -4,6 +4,7 @@ import { EditProductMixComponent } from './edit-product-mix.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditProductMixComponent', () => {
   let component: EditProductMixComponent;
@@ -14,7 +15,8 @@ describe('EditProductMixComponent', () => {
       declarations: [EditProductMixComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [DatePipe]
     }).compileComponents();

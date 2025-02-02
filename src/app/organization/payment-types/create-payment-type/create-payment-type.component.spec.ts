@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreatePaymentTypeComponent } from './create-payment-type.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('CreatePaymentTypeComponent', () => {
   let component: CreatePaymentTypeComponent;
@@ -13,7 +14,8 @@ describe('CreatePaymentTypeComponent', () => {
       declarations: [CreatePaymentTypeComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

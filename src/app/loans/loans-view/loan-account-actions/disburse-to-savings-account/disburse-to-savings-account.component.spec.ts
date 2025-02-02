@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DisburseToSavingsAccountComponent } from './disburse-to-savings-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('DisburseToSavingsAccountComponent', () => {
   let component: DisburseToSavingsAccountComponent;
@@ -8,7 +9,8 @@ describe('DisburseToSavingsAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DisburseToSavingsAccountComponent]
+      declarations: [DisburseToSavingsAccountComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   });
 

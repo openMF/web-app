@@ -4,6 +4,7 @@ import { EditSavingProductComponent } from './edit-saving-product.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditSavingProductComponent', () => {
   let component: EditSavingProductComponent;
@@ -12,7 +13,10 @@ describe('EditSavingProductComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditSavingProductComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

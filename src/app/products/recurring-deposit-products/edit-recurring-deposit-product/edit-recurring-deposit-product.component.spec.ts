@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditRecurringDepositProductComponent } from './edit-recurring-deposit-product.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditRecurringDepositProductComponent', () => {
   let component: EditRecurringDepositProductComponent;
@@ -11,6 +12,7 @@ describe('EditRecurringDepositProductComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditRecurringDepositProductComponent],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CloseGroupComponent } from './close-group.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CloseGroupComponent', () => {
   let component: CloseGroupComponent;
@@ -11,7 +12,8 @@ describe('CloseGroupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CloseGroupComponent],
       imports: [
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule
       ]
     }).compileComponents();
   }));

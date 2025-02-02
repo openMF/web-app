@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareProductCurrencyStepComponent } from './share-product-currency-step.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ShareProductCurrencyStepComponent', () => {
   let component: ShareProductCurrencyStepComponent;
@@ -8,7 +9,8 @@ describe('ShareProductCurrencyStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ShareProductCurrencyStepComponent]
+      declarations: [ShareProductCurrencyStepComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditRangeComponent } from './edit-range.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('EditRangeComponent', () => {
   let component: EditRangeComponent;
@@ -13,7 +14,8 @@ describe('EditRangeComponent', () => {
       declarations: [EditRangeComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   });

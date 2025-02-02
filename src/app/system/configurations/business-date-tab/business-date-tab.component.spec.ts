@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BusinessDateTabComponent } from './business-date-tab.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('BusinessDateTabComponent', () => {
   let component: BusinessDateTabComponent;
@@ -11,8 +13,12 @@ describe('BusinessDateTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [BusinessDateTabComponent],
-      imports: [HttpClientModule],
-      providers: [DatePipe]
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule
+      ]
     }).compileComponents();
   });
 

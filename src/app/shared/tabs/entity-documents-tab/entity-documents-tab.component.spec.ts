@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EntityDocumentsTabComponent } from './entity-documents-tab.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('EntityDocumentsTabComponent', () => {
   let component: EntityDocumentsTabComponent;
@@ -13,7 +14,8 @@ describe('EntityDocumentsTabComponent', () => {
       declarations: [EntityDocumentsTabComponent],
       imports: [
         MatDialogModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   });

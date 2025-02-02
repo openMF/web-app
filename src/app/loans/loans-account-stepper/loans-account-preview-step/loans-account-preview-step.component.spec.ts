@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoansAccountPreviewStepComponent } from './loans-account-preview-step.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoansAccountPreviewStepComponent', () => {
   let component: LoansAccountPreviewStepComponent;
@@ -8,7 +9,8 @@ describe('LoansAccountPreviewStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoansAccountPreviewStepComponent]
+      declarations: [LoansAccountPreviewStepComponent],
+      imports: [TranslateModule]
     }).compileComponents();
   }));
 

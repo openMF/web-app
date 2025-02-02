@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommitteeTabComponent } from './committee-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CommitteeTabComponent', () => {
   let component: CommitteeTabComponent;
@@ -8,7 +10,11 @@ describe('CommitteeTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CommitteeTabComponent]
+      declarations: [CommitteeTabComponent],
+      imports: [
+        RouterTestingModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

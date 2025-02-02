@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateGroupComponent } from './create-group.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateGroupComponent', () => {
   let component: CreateGroupComponent;
@@ -8,7 +9,8 @@ describe('CreateGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateGroupComponent]
+      declarations: [CreateGroupComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

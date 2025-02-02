@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateGuarantorComponent } from './create-guarantor.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('CreateGuarantorComponent', () => {
   let component: CreateGuarantorComponent;
@@ -13,7 +14,8 @@ describe('CreateGuarantorComponent', () => {
       declarations: [CreateGuarantorComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

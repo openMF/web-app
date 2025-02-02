@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InvestorsComponent } from './investors.component';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('InvestorsComponent', () => {
   let component: InvestorsComponent;
@@ -11,8 +12,11 @@ describe('InvestorsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [InvestorsComponent],
-      imports: [MatDialogModule],
-      providers: [DatePipe]
+      imports: [
+        MatDialogModule,
+        HttpClientModule,
+        CommonModule
+      ]
     }).compileComponents();
   });
 

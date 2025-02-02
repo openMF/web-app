@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TenantSelectorComponent } from './tenant-selector.component';
+import { CommonModule } from '@angular/common';
 
 describe('TenantSelectorComponent', () => {
   let component: TenantSelectorComponent;
@@ -8,7 +9,8 @@ describe('TenantSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TenantSelectorComponent]
+      declarations: [TenantSelectorComponent],
+      imports: [CommonModule]
     }).compileComponents();
   });
 

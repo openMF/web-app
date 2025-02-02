@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SavingsDocumentsTabComponent } from './savings-documents-tab.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SavingsDocumentsTabComponent', () => {
   let component: SavingsDocumentsTabComponent;
@@ -11,6 +12,7 @@ describe('SavingsDocumentsTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SavingsDocumentsTabComponent],
+      imports: [HttpClientModule],
       providers: [
         {
           provide: ActivatedRoute,

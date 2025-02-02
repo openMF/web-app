@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareProductGeneralTabComponent } from './share-product-general-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ShareProductGeneralTabComponent', () => {
   let component: ShareProductGeneralTabComponent;
@@ -8,7 +9,8 @@ describe('ShareProductGeneralTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ShareProductGeneralTabComponent]
+      declarations: [ShareProductGeneralTabComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   });
 

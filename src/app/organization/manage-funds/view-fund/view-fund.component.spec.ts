@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewFundComponent } from './view-fund.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewFundComponent', () => {
   let component: ViewFundComponent;
@@ -8,7 +9,8 @@ describe('ViewFundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ViewFundComponent]
+      declarations: [ViewFundComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   });
 

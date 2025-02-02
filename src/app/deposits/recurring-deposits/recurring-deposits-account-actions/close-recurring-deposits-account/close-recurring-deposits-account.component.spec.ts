@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CloseRecurringDepositsAccountComponent } from './close-recurring-deposits-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CloseRecurringDepositsAccountComponent', () => {
   let component: CloseRecurringDepositsAccountComponent;
@@ -10,7 +11,10 @@ describe('CloseRecurringDepositsAccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CloseRecurringDepositsAccountComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 
