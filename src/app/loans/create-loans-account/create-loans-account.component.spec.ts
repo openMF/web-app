@@ -4,7 +4,7 @@ import { CreateLoansAccountComponent } from './create-loans-account.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('CreateLoansAccountComponent', () => {
   let component: CreateLoansAccountComponent;
@@ -18,6 +18,7 @@ describe('CreateLoansAccountComponent', () => {
         CommonModule
       ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

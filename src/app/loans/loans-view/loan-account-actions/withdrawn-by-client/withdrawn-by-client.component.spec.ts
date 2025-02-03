@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WithdrawnByClientComponent } from './withdrawn-by-client.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('WithdrawnByClientComponent', () => {
   let component: WithdrawnByClientComponent;
@@ -13,8 +14,10 @@ describe('WithdrawnByClientComponent', () => {
       declarations: [WithdrawnByClientComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
-      ]
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

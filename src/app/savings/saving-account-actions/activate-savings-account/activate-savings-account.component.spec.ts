@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivateSavingsAccountComponent } from './activate-savings-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('ActivateSavingsAccountComponent', () => {
   let component: ActivateSavingsAccountComponent;
@@ -13,7 +15,15 @@ describe('ActivateSavingsAccountComponent', () => {
       declarations: [ActivateSavingsAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [
+        DatePipe,
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        }
       ]
     }).compileComponents();
   }));

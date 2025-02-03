@@ -4,6 +4,7 @@ import { ViewCashierComponent } from './view-cashier.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('ViewCashierComponent', () => {
   let component: ViewCashierComponent;
@@ -14,6 +15,7 @@ describe('ViewCashierComponent', () => {
       declarations: [ViewCashierComponent],
       imports: [HttpClientModule],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

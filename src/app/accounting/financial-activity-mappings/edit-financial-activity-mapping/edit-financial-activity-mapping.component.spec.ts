@@ -4,6 +4,7 @@ import { EditFinancialActivityMappingComponent } from './edit-financial-activity
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AccountingService } from 'app/accounting/accounting.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditFinancialActivityMappingComponent', () => {
   let component: EditFinancialActivityMappingComponent;
@@ -14,7 +15,8 @@ describe('EditFinancialActivityMappingComponent', () => {
       declarations: [EditFinancialActivityMappingComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [AccountingService]
     }).compileComponents();

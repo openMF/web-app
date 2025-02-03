@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateCenterComponent } from './create-center.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CreateCenterComponent', () => {
   let component: CreateCenterComponent;
@@ -13,7 +14,8 @@ describe('CreateCenterComponent', () => {
       declarations: [CreateCenterComponent],
       imports: [
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterTestingModule
       ]
     }).compileComponents();
   }));

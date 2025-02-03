@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SavingsAccountAssignStaffComponent } from './savings-account-assign-staff.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SavingsAccountAssignStaffComponent', () => {
   let component: SavingsAccountAssignStaffComponent;
@@ -10,7 +11,10 @@ describe('SavingsAccountAssignStaffComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SavingsAccountAssignStaffComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

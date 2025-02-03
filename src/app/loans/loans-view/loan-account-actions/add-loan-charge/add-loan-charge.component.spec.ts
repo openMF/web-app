@@ -4,6 +4,7 @@ import { AddLoanChargeComponent } from './add-loan-charge.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('AddloanchargeComponent', () => {
   let component: AddLoanChargeComponent;
@@ -16,6 +17,14 @@ describe('AddloanchargeComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         CommonModule
+      ],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {}
+          }
+        }
       ]
     }).compileComponents();
   }));

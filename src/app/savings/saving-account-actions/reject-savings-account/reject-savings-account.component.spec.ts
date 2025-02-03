@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RejectSavingsAccountComponent } from './reject-savings-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('RejectSavingsAccountComponent', () => {
   let component: RejectSavingsAccountComponent;
@@ -13,8 +14,10 @@ describe('RejectSavingsAccountComponent', () => {
       declarations: [RejectSavingsAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
-      ]
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

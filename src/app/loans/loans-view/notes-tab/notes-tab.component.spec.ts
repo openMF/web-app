@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NotesTabComponent } from './notes-tab.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('NotesTabComponent', () => {
   let component: NotesTabComponent;
@@ -11,6 +12,7 @@ describe('NotesTabComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NotesTabComponent],
+      imports: [HttpClientModule],
       providers: [
         {
           provide: ActivatedRoute,

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EntityNotesTabComponent } from './entity-notes-tab.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('EntityNotesTabComponent', () => {
   let component: EntityNotesTabComponent;
@@ -16,6 +16,9 @@ describe('EntityNotesTabComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   });

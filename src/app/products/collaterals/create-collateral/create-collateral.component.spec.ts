@@ -3,7 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateCollateralComponent } from './create-collateral.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CreateCollateralComponent', () => {
   let component: CreateCollateralComponent;
@@ -15,8 +16,10 @@ describe('CreateCollateralComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
+        RouterTestingModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoTransactionDialogComponent } from './undo-transaction-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('UndoTransactionDialogComponent', () => {
   let component: UndoTransactionDialogComponent;
@@ -10,7 +11,18 @@ describe('UndoTransactionDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UndoTransactionDialogComponent],
-      imports: [MatDialogModule]
+      imports: [
+        MatDialogModule,
+        TranslateModule
+      ],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {}
+          } as MatDialogRef<UndoTransactionDialogComponent>
+        }
+      ]
     }).compileComponents();
   }));
 

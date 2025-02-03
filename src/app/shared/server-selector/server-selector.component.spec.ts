@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ServerSelectorComponent } from './server-selector.component';
 import { DatePipe } from '@angular/common';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ServerSelectorComponent', () => {
   let component: ServerSelectorComponent;
@@ -10,7 +11,14 @@ describe('ServerSelectorComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ServerSelectorComponent],
-      providers: [DatePipe]
+      imports: [MatDialogModule],
+      providers: [
+        DatePipe,
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        }
+      ]
     }).compileComponents();
   }));
 

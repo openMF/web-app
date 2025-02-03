@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputAmountComponent } from './input-amount.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('InputAmountComponent', () => {
   let component: InputAmountComponent;
@@ -8,7 +10,16 @@ describe('InputAmountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InputAmountComponent]
+      declarations: [InputAmountComponent],
+      imports: [TranslateModule],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {}
+          }
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(InputAmountComponent);

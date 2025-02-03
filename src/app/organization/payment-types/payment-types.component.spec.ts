@@ -20,7 +20,10 @@ describe('PaymentTypesComponent', () => {
       ],
       providers: [
         DatePipe,
-        MatDialogRef
+        {
+          provide: MatDialogRef,
+          useValue: { close: () => {} }
+        }
       ]
     }).compileComponents();
   }));

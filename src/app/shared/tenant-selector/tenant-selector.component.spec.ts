@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TenantSelectorComponent } from './tenant-selector.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('TenantSelectorComponent', () => {
   let component: TenantSelectorComponent;
@@ -11,9 +11,9 @@ describe('TenantSelectorComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [TenantSelectorComponent],
       imports: [
-        CommonModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

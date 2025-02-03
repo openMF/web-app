@@ -4,6 +4,7 @@ import { CloseSharesAccountComponent } from './close-shares-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CloseSharesAccountComponent', () => {
   let component: CloseSharesAccountComponent;
@@ -14,7 +15,8 @@ describe('CloseSharesAccountComponent', () => {
       declarations: [CloseSharesAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [DatePipe]
     }).compileComponents();

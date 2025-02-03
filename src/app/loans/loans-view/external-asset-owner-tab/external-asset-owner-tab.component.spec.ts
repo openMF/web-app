@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExternalAssetOwnerTabComponent } from './external-asset-owner-tab.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ExternalAssetOwnerTabComponent', () => {
   let component: ExternalAssetOwnerTabComponent;
@@ -13,9 +14,17 @@ describe('ExternalAssetOwnerTabComponent', () => {
       declarations: [ExternalAssetOwnerTabComponent],
       imports: [
         RouterTestingModule,
-        MatDialogModule
+        MatDialogModule,
+        HttpClientModule
       ],
-      providers: [MatDialogRef]
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {}
+          }
+        }
+      ]
     }).compileComponents();
   });
 

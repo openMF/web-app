@@ -4,6 +4,7 @@ import { CreateTaxComponentComponent } from './create-tax-component.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CreateTaxComponentComponent', () => {
   let component: CreateTaxComponentComponent;
@@ -15,7 +16,8 @@ describe('CreateTaxComponentComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot()
       ],
       providers: [DatePipe]
     }).compileComponents();

@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewTemplateComponent } from './view-template.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewTemplateComponent', () => {
   let component: ViewTemplateComponent;
@@ -10,7 +11,10 @@ describe('ViewTemplateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewTemplateComponent],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

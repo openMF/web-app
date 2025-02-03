@@ -6,6 +6,10 @@ import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ManageReportsComponent', () => {
   let component: ManageReportsComponent;
@@ -17,10 +21,19 @@ describe('ManageReportsComponent', () => {
       imports: [
         RouterTestingModule,
         OverlayModule,
-        MatDialogModule
+        MatDialogModule,
+        HttpClientModule,
+        CommonModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
-        MatDialogRef,
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {}
+          }
+        },
         {
           provide: ActivatedRoute,
           useValue: {

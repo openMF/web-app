@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('EditProductMixComponent', () => {
   let component: EditProductMixComponent;
@@ -16,9 +17,13 @@ describe('EditProductMixComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule
       ],
-      providers: [DatePipe]
+      providers: [
+        DatePipe,
+        TranslateService
+      ]
     }).compileComponents();
   }));
 

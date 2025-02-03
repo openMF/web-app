@@ -4,7 +4,7 @@ import { EditSavingsAccountComponent } from './edit-savings-account.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('EditSavingsAccountComponent', () => {
   let component: EditSavingsAccountComponent;
@@ -18,6 +18,7 @@ describe('EditSavingsAccountComponent', () => {
         CommonModule
       ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

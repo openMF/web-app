@@ -1,5 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { RolesAndPermissionsComponent } from './roles-and-permissions.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -13,7 +17,11 @@ describe('RolesAndPermissionsComponent', () => {
       declarations: [RolesAndPermissionsComponent],
       imports: [
         RouterTestingModule,
-        OverlayModule
+        OverlayModule,
+        HttpClientModule,
+        CommonModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot()
       ]
     }).compileComponents();
   }));

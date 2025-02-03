@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewGlAccountComponent } from './view-gl-account.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewGlAccountComponent', () => {
   let component: ViewGlAccountComponent;
@@ -10,7 +11,10 @@ describe('ViewGlAccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewGlAccountComponent],
-      imports: [HttpClientModule]
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 

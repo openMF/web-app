@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageExternalEventsComponent } from './manage-external-events.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClient } from '@angular/common/http';
 
 describe('ManageExternalEventsComponent', () => {
   let component: ManageExternalEventsComponent;
@@ -10,7 +11,10 @@ describe('ManageExternalEventsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ManageExternalEventsComponent],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        HttpClient
+      ]
     }).compileComponents();
   });
 

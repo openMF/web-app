@@ -4,6 +4,7 @@ import { InvestorsComponent } from './investors.component';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('InvestorsComponent', () => {
   let component: InvestorsComponent;
@@ -15,9 +16,13 @@ describe('InvestorsComponent', () => {
       imports: [
         MatDialogModule,
         HttpClientModule,
+        TranslateModule,
         CommonModule
       ],
-      providers: [DatePipe]
+      providers: [
+        DatePipe,
+        TranslateService
+      ]
     }).compileComponents();
   });
 

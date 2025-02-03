@@ -3,6 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateFundComponent } from './create-fund.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CreateFundComponent', () => {
   let component: CreateFundComponent;
@@ -13,8 +16,12 @@ describe('CreateFundComponent', () => {
       declarations: [CreateFundComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
-      ]
+        HttpClientModule,
+        RouterTestingModule,
+        TranslateModule,
+        CommonModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

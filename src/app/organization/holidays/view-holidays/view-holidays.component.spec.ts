@@ -4,6 +4,7 @@ import { ViewHolidaysComponent } from './view-holidays.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ViewHolidaysComponent', () => {
   let component: ViewHolidaysComponent;
@@ -12,9 +13,18 @@ describe('ViewHolidaysComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewHolidaysComponent],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        TranslateModule
+      ],
       providers: [
-        MatDialogRef,
+        TranslateService,
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {}
+          }
+        },
         {
           provide: ActivatedRoute,
           useValue: {

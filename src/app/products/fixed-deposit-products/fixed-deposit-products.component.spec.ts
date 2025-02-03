@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FixedDepositProductsComponent } from './fixed-deposit-products.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('FixedDepositProductsComponent', () => {
   let component: FixedDepositProductsComponent;
@@ -11,6 +12,7 @@ describe('FixedDepositProductsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FixedDepositProductsComponent],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

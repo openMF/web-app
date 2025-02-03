@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('UndoDisbursalComponent', () => {
   let component: UndoDisbursalComponent;
@@ -18,6 +19,7 @@ describe('UndoDisbursalComponent', () => {
         HttpClientModule
       ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('LoanTermVariationsTabComponent', () => {
   let component: LoanTermVariationsTabComponent;
@@ -13,9 +14,18 @@ describe('LoanTermVariationsTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoanTermVariationsTabComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        MatDialogModule
+      ],
       providers: [
         DatePipe,
+        {
+          provide: MatDialogRef,
+          useValue: {
+            close: () => {}
+          }
+        },
         {
           provide: ActivatedRoute,
           useValue: {

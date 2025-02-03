@@ -18,7 +18,10 @@ describe('ApproveSharesComponent', () => {
         MatDialogModule
       ],
       providers: [
-        MatDialogRef
+        {
+          provide: MatDialogRef,
+          useValue: { close: () => {} }
+        }
       ]
     }).compileComponents();
   }));

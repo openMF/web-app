@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('WaiveInterestComponent', () => {
   let component: WaiveInterestComponent;
@@ -16,9 +17,13 @@ describe('WaiveInterestComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule
       ],
-      providers: [DatePipe]
+      providers: [
+        DatePipe,
+        TranslateService
+      ]
     }).compileComponents();
   }));
 

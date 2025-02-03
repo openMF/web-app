@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientApprovalComponent } from './client-approval.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ClientApprovalComponent', () => {
   let component: ClientApprovalComponent;
@@ -8,7 +9,8 @@ describe('ClientApprovalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ClientApprovalComponent]
+      declarations: [ClientApprovalComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

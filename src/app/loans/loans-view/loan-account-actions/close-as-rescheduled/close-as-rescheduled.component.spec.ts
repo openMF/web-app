@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CloseAsRescheduledComponent } from './close-as-rescheduled.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('CloseAsRescheduledComponent', () => {
   let component: CloseAsRescheduledComponent;
@@ -14,6 +15,9 @@ describe('CloseAsRescheduledComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

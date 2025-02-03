@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoanProvisioningCriteriaComponent', () => {
   let component: LoanProvisioningCriteriaComponent;
@@ -8,7 +10,11 @@ describe('LoanProvisioningCriteriaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoanProvisioningCriteriaComponent]
+      declarations: [LoanProvisioningCriteriaComponent],
+      imports: [
+        RouterTestingModule,
+        TranslateModule
+      ]
     }).compileComponents();
   }));
 

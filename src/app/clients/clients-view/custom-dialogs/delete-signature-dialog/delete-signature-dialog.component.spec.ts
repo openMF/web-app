@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DeleteSignatureDialogComponent } from './delete-signature-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('DeleteSignatureDialogComponent', () => {
   let component: DeleteSignatureDialogComponent;
@@ -10,7 +10,13 @@ describe('DeleteSignatureDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DeleteSignatureDialogComponent],
-      imports: [MatDialogModule]
+      imports: [MatDialogModule],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: { close: () => {} }
+        }
+      ]
     }).compileComponents();
   }));
 

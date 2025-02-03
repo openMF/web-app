@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MakeRepaymentComponent } from './make-repayment.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('MakeRepaymentComponent', () => {
   let component: MakeRepaymentComponent;
@@ -13,8 +14,10 @@ describe('MakeRepaymentComponent', () => {
       declarations: [MakeRepaymentComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
-      ]
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

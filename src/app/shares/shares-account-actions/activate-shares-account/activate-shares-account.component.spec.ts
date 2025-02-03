@@ -4,6 +4,7 @@ import { ActivateSharesAccountComponent } from './activate-shares-account.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ActivateSharesAccountComponent', () => {
   let component: ActivateSharesAccountComponent;
@@ -14,7 +15,8 @@ describe('ActivateSharesAccountComponent', () => {
       declarations: [ActivateSharesAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [DatePipe]
     }).compileComponents();

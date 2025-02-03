@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApplySharesComponent } from './apply-shares.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ApplySharesComponent', () => {
   let component: ApplySharesComponent;
@@ -10,7 +11,10 @@ describe('ApplySharesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ApplySharesComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

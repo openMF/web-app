@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoanProductsComponent } from './loan-products.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';

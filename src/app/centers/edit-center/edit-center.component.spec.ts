@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditCenterComponent } from './edit-center.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditCenterComponent', () => {
   let component: EditCenterComponent;
@@ -13,7 +14,8 @@ describe('EditCenterComponent', () => {
       declarations: [EditCenterComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule
       ]
     }).compileComponents();
   }));

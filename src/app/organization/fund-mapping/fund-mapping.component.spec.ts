@@ -4,6 +4,8 @@ import { FundMappingComponent } from './fund-mapping.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('FundMappingComponent', () => {
   let component: FundMappingComponent;
@@ -15,7 +17,13 @@ describe('FundMappingComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientModule
+        HttpClientModule,
+        TranslateModule,
+        CommonModule
+      ],
+      providers: [
+        DatePipe,
+        TranslateService
       ]
     }).compileComponents();
   }));

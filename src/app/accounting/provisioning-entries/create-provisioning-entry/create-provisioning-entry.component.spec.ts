@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateProvisioningEntryComponent } from './create-provisioning-entry.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('CreateProvisioningEntryComponent', () => {
   let component: CreateProvisioningEntryComponent;
@@ -14,7 +15,8 @@ describe('CreateProvisioningEntryComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

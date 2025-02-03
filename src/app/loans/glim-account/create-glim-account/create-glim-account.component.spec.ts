@@ -4,7 +4,7 @@ import { CreateGlimAccountComponent } from './create-glim-account.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('CreateGlimAccountComponent', () => {
   let component: CreateGlimAccountComponent;
@@ -18,6 +18,7 @@ describe('CreateGlimAccountComponent', () => {
         CommonModule
       ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

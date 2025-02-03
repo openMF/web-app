@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReleaseAmountDialogComponent } from './release-amount-dialog.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ReleaseAmountDialogComponent', () => {
   let component: ReleaseAmountDialogComponent;
@@ -8,7 +10,18 @@ describe('ReleaseAmountDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ReleaseAmountDialogComponent]
+      declarations: [ReleaseAmountDialogComponent],
+      imports: [
+        MatDialogModule,
+        TranslateModule
+      ],
+      providers: [
+        TranslateService,
+        {
+          provide: MatDialogRef,
+          useValue: { close: () => {} }
+        }
+      ]
     }).compileComponents();
   });
 

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('RescheduleLoanTabComponent', () => {
   let component: RescheduleLoanTabComponent;
@@ -15,10 +16,12 @@ describe('RescheduleLoanTabComponent', () => {
       declarations: [RescheduleLoanTabComponent],
       imports: [
         HttpClientModule,
+        TranslateModule,
         CommonModule
       ],
       providers: [
         DatePipe,
+        TranslateService,
         {
           provide: ActivatedRoute,
           useValue: {

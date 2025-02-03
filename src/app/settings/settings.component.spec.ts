@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Overlay } from '@angular/cdk/overlay';
 
 import { SettingsComponent } from './settings.component';
 import { DatePipe } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -12,7 +13,11 @@ describe('SettingsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SettingsComponent],
       imports: [TranslateModule],
-      providers: [DatePipe]
+      providers: [
+        DatePipe,
+        TranslateService,
+        Overlay
+      ]
     }).compileComponents();
   }));
 

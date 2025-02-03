@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewTaxGroupComponent } from './view-tax-group.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewTaxGroupComponent', () => {
   let component: ViewTaxGroupComponent;
@@ -8,7 +9,8 @@ describe('ViewTaxGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewTaxGroupComponent]
+      declarations: [ViewTaxGroupComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 
