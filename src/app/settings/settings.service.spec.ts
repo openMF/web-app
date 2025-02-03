@@ -6,7 +6,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 describe('SettingsService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [CommonModule]
+      imports: [CommonModule],
+      providers: [DatePipe]
     })
   );
 

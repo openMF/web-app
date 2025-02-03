@@ -15,7 +15,7 @@ describe('AccountDetailsComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ loanDetailsData: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ loanDetailsData: '123' })
           }
         }
       ]

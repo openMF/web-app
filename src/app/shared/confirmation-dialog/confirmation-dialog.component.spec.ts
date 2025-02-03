@@ -4,6 +4,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
@@ -12,12 +13,15 @@ describe('ConfirmationDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ConfirmationDialogComponent],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

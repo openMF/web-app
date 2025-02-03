@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ColumnDialogComponent } from './column-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ColumnDialogComponent', () => {
   let component: ColumnDialogComponent;
@@ -8,7 +9,8 @@ describe('ColumnDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ColumnDialogComponent]
+      declarations: [ColumnDialogComponent],
+      imports: [MatDialogModule]
     }).compileComponents();
   }));
 

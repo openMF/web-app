@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddInterestPauseComponent } from './add-interest-pause.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('AddInterestPauseComponent', () => {
   let component: AddInterestPauseComponent;
@@ -13,7 +14,8 @@ describe('AddInterestPauseComponent', () => {
       declarations: [AddInterestPauseComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
 

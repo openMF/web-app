@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MakeAccountTransfersComponent } from './make-account-transfers.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MakeAccountTransfersComponent', () => {
   let component: MakeAccountTransfersComponent;
@@ -10,7 +11,10 @@ describe('MakeAccountTransfersComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MakeAccountTransfersComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 

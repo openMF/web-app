@@ -2,11 +2,16 @@ import { TestBed } from '@angular/core/testing';
 
 import { OrganizationService } from './organization.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('OrganizationService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [HttpClientModule]
+      imports: [
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [DatePipe]
     })
   );
 

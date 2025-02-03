@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditGroupMeetingComponent } from './edit-group-meeting.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('EditGroupMeetingComponent', () => {
   let component: EditGroupMeetingComponent;
@@ -13,8 +14,10 @@ describe('EditGroupMeetingComponent', () => {
       declarations: [EditGroupMeetingComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
-      ]
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

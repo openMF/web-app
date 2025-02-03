@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositsAccountActionsComponent } from './fixed-deposits-account-actions.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('FixedDepositsAccountActionsComponent', () => {
   let component: FixedDepositsAccountActionsComponent;
@@ -8,7 +9,8 @@ describe('FixedDepositsAccountActionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FixedDepositsAccountActionsComponent]
+      declarations: [FixedDepositsAccountActionsComponent],
+      providers: [RouterTestingModule]
     }).compileComponents();
   }));
 

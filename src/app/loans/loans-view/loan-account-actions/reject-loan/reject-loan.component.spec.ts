@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RejectLoanComponent } from './reject-loan.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('RejectLoanComponent', () => {
   let component: RejectLoanComponent;
@@ -13,7 +14,8 @@ describe('RejectLoanComponent', () => {
       declarations: [RejectLoanComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule
       ]
     }).compileComponents();
   }));

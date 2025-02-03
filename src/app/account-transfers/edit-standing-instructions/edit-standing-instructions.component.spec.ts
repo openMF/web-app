@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditStandingInstructionsComponent', () => {
   let component: EditStandingInstructionsComponent;
@@ -15,7 +16,8 @@ describe('EditStandingInstructionsComponent', () => {
       declarations: [EditStandingInstructionsComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule
       ],
       providers: [
         {

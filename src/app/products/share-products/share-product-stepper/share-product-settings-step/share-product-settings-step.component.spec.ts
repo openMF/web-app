@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ShareProductSettingsStepComponent', () => {
   let component: ShareProductSettingsStepComponent;
@@ -15,13 +16,14 @@ describe('ShareProductSettingsStepComponent', () => {
       declarations: [ShareProductSettingsStepComponent],
       imports: [
         ReactiveFormsModule,
+        RouterTestingModule,
         TranslateModule
       ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

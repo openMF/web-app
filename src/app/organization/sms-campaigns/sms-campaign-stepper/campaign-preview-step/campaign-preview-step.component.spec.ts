@@ -12,6 +12,7 @@ describe('CampaignPreviewStepComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CampaignPreviewStepComponent],
       imports: [TranslateModule],
+      providers: [TranslateModule],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA

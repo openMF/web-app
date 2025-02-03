@@ -4,6 +4,8 @@ import { ConfigureMakerCheckerTasksComponent } from './configure-maker-checker-t
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ConfigureMakerCheckerTasksComponent', () => {
   let component: ConfigureMakerCheckerTasksComponent;
@@ -12,12 +14,16 @@ describe('ConfigureMakerCheckerTasksComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ConfigureMakerCheckerTasksComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule,
+        ReactiveFormsModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

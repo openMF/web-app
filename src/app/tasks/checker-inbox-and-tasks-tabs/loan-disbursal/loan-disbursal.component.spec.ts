@@ -4,6 +4,7 @@ import { LoanDisbursalComponent } from './loan-disbursal.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoanDisbursalComponent', () => {
   let component: LoanDisbursalComponent;
@@ -12,13 +13,16 @@ describe('LoanDisbursalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoanDisbursalComponent],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        RouterTestingModule
+      ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

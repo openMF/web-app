@@ -10,6 +10,9 @@ describe('LoansService', () => {
       imports: [
         HttpClientModule,
         CommonModule
+      ],
+      providers: [
+        DatePipe
       ]
     })
   );

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditRecurringDepositAccountComponent } from './edit-recurring-deposit-account.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditRecurringDepositAccountComponent', () => {
   let component: EditRecurringDepositAccountComponent;
@@ -8,7 +9,8 @@ describe('EditRecurringDepositAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditRecurringDepositAccountComponent]
+      declarations: [EditRecurringDepositAccountComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

@@ -4,6 +4,7 @@ import { ViewRecurringDepositProductComponent } from './view-recurring-deposit-p
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ViewRecurringDepositProductComponent', () => {
   let component: ViewRecurringDepositProductComponent;
@@ -12,12 +13,16 @@ describe('ViewRecurringDepositProductComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewRecurringDepositProductComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        TranslateModule
+      ],
       providers: [
+        TranslateService,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

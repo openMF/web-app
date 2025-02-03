@@ -4,6 +4,7 @@ import { RescheduleLoanTabComponent } from './reschedule-loan-tab.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('RescheduleLoanTabComponent', () => {
   let component: RescheduleLoanTabComponent;
@@ -12,12 +13,16 @@ describe('RescheduleLoanTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RescheduleLoanTabComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        CommonModule
+      ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

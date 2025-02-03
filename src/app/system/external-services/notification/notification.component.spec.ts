@@ -4,6 +4,7 @@ import { NotificationComponent } from './notification.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NotificationComponent', () => {
   let component: NotificationComponent;
@@ -12,12 +13,15 @@ describe('NotificationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NotificationComponent],
-      imports: [TranslateModule],
+      imports: [
+        TranslateModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

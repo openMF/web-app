@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RescheduleLoanComponent } from './reschedule-loan.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('RescheduleLoanComponent', () => {
   let component: RescheduleLoanComponent;
@@ -11,11 +13,15 @@ describe('RescheduleLoanComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RescheduleLoanComponent],
+      imports: [
+        RouterTestingModule,
+        MatDialogModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

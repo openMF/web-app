@@ -10,7 +10,7 @@ describe('LoanProductTermsStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoanProductTermsStepComponent],
-      providers: [ReactiveFormsModule]
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

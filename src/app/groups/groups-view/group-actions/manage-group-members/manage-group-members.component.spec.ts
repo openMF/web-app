@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageGroupMembersComponent } from './manage-group-members.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ManageGroupMembersComponent', () => {
   let component: ManageGroupMembersComponent;
@@ -10,7 +11,10 @@ describe('ManageGroupMembersComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ManageGroupMembersComponent],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

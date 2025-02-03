@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('BulkLoanReassignmnetComponent', () => {
   let component: BulkLoanReassignmnetComponent;
@@ -13,8 +15,11 @@ describe('BulkLoanReassignmnetComponent', () => {
       declarations: [BulkLoanReassignmnetComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
-      ]
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('ManageFundsComponent', () => {
   let component: ManageFundsComponent;
@@ -15,7 +16,8 @@ describe('ManageFundsComponent', () => {
       declarations: [ManageFundsComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ],
       providers: [
         {

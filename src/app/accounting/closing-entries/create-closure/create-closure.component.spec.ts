@@ -4,6 +4,7 @@ import { CreateClosureComponent } from './create-closure.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('CreateClosureComponent', () => {
   let component: CreateClosureComponent;
@@ -15,7 +16,11 @@ describe('CreateClosureComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
+        TranslateModule,
         CommonModule
+      ],
+      providers: [
+        TranslateService
       ]
     }).compileComponents();
   }));

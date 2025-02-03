@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditAdhocQueryComponent } from './edit-adhoc-query.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('EditAdhocQueryComponent', () => {
   let component: EditAdhocQueryComponent;
@@ -13,7 +14,8 @@ describe('EditAdhocQueryComponent', () => {
       declarations: [EditAdhocQueryComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

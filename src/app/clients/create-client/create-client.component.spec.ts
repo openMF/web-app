@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CreateClientComponent', () => {
   let component: CreateClientComponent;
@@ -15,6 +16,7 @@ describe('CreateClientComponent', () => {
       declarations: [CreateClientComponent],
       imports: [
         HttpClientModule,
+        RouterTestingModule,
         CommonModule
       ],
       providers: [

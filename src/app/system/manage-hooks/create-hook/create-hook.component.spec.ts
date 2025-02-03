@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CreateHookComponent', () => {
   let component: CreateHookComponent;
@@ -15,13 +16,14 @@ describe('CreateHookComponent', () => {
       declarations: [CreateHookComponent],
       imports: [
         HttpClientModule,
+        RouterTestingModule,
         ReactiveFormsModule
       ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

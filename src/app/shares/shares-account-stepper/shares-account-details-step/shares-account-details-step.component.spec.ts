@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SharesAccountDetailsStepComponent } from './shares-account-details-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('SharesAccountDetailsStepComponent', () => {
   let component: SharesAccountDetailsStepComponent;
@@ -13,7 +14,8 @@ describe('SharesAccountDetailsStepComponent', () => {
       declarations: [SharesAccountDetailsStepComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

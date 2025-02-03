@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditHookComponent } from './edit-hook.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditHookComponent', () => {
   let component: EditHookComponent;
@@ -11,11 +13,15 @@ describe('EditHookComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditHookComponent],
+      imports: [
+        RouterTestingModule,
+        HttpClientModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

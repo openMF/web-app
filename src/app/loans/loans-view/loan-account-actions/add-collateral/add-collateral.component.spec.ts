@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddCollateralComponent } from './add-collateral.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AddCollateralComponent', () => {
   let component: AddCollateralComponent;
@@ -13,7 +14,8 @@ describe('AddCollateralComponent', () => {
       declarations: [AddCollateralComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule
       ]
     }).compileComponents();
   }));

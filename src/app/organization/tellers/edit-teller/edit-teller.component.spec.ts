@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditTellerComponent } from './edit-teller.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('EditTellerComponent', () => {
   let component: EditTellerComponent;
@@ -13,8 +14,10 @@ describe('EditTellerComponent', () => {
       declarations: [EditTellerComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
-      ]
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

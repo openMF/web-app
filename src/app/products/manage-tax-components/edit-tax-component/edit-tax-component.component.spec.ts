@@ -4,6 +4,7 @@ import { EditTaxComponentComponent } from './edit-tax-component.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('EditTaxComponentComponent', () => {
   let component: EditTaxComponentComponent;
@@ -15,8 +16,10 @@ describe('EditTaxComponentComponent', () => {
       imports: [
         ReactiveFormsModule,
         TranslateModule,
-        HttpClientModule
-      ]
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

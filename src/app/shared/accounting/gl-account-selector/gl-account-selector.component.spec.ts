@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GlAccountSelectorComponent } from './gl-account-selector.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('GlAccountSelectorComponent', () => {
   let component: GlAccountSelectorComponent;
@@ -10,7 +10,8 @@ describe('GlAccountSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GlAccountSelectorComponent],
-      imports: [TranslateModule]
+      imports: [TranslateModule],
+      providers: [TranslateService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(GlAccountSelectorComponent);

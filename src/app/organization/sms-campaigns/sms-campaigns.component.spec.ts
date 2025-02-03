@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SmsCampaignsComponent } from './sms-campaigns.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('SmsCampaignsComponent', () => {
   let component: SmsCampaignsComponent;
@@ -14,6 +14,9 @@ describe('SmsCampaignsComponent', () => {
       imports: [
         RouterTestingModule,
         TranslateModule
+      ],
+      providers: [
+        TranslateService
       ]
     }).compileComponents();
   }));

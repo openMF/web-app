@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('CreateCampaignComponent', () => {
   let component: CreateCampaignComponent;
@@ -15,9 +16,11 @@ describe('CreateCampaignComponent', () => {
       declarations: [CreateCampaignComponent],
       imports: [
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

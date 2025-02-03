@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditDataTableComponent } from './edit-data-table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditDataTableComponent', () => {
   let component: EditDataTableComponent;
@@ -13,6 +14,7 @@ describe('EditDataTableComponent', () => {
       declarations: [EditDataTableComponent],
       imports: [
         HttpClientModule,
+        RouterTestingModule,
         ReactiveFormsModule
       ]
     }).compileComponents();

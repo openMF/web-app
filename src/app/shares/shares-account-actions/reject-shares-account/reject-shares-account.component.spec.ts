@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RejectSharesAccountComponent } from './reject-shares-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('RejectSharesAccountComponent', () => {
   let component: RejectSharesAccountComponent;
@@ -8,7 +9,8 @@ describe('RejectSharesAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RejectSharesAccountComponent]
+      declarations: [RejectSharesAccountComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

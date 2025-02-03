@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateHolidayComponent } from './create-holiday.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
 
 describe('CreateHolidayComponent', () => {
   let component: CreateHolidayComponent;
@@ -13,7 +14,8 @@ describe('CreateHolidayComponent', () => {
       declarations: [CreateHolidayComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

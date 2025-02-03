@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('PeriodicAccrualsComponent', () => {
   let component: PeriodicAccrualsComponent;
@@ -18,14 +19,16 @@ describe('PeriodicAccrualsComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
+        TranslateModule,
         RouterTestingModule
       ],
       providers: [
+        TranslateService,
         DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

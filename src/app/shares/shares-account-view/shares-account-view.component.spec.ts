@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SharesAccountViewComponent } from './shares-account-view.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SharesAccountViewComponent', () => {
   let component: SharesAccountViewComponent;
@@ -8,7 +9,8 @@ describe('SharesAccountViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SharesAccountViewComponent]
+      declarations: [SharesAccountViewComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

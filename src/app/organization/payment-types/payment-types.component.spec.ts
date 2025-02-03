@@ -4,6 +4,7 @@ import { PaymentTypesComponent } from './payment-types.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('PaymentTypesComponent', () => {
   let component: PaymentTypesComponent;
@@ -14,9 +15,13 @@ describe('PaymentTypesComponent', () => {
       declarations: [PaymentTypesComponent],
       imports: [
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatDialogModule
       ],
-      providers: [DatePipe]
+      providers: [
+        DatePipe,
+        MatDialogRef
+      ]
     }).compileComponents();
   }));
 

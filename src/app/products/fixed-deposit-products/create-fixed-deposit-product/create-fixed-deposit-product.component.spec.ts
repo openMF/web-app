@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateFixedDepositProductComponent } from './create-fixed-deposit-product.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreateFixedDepositProductComponent', () => {
   let component: CreateFixedDepositProductComponent;
@@ -10,7 +11,10 @@ describe('CreateFixedDepositProductComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CreateFixedDepositProductComponent],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

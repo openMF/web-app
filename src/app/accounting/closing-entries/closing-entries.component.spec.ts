@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClosingEntriesComponent } from './closing-entries.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ClosingEntriesComponent', () => {
   let component: ClosingEntriesComponent;
@@ -8,7 +9,8 @@ describe('ClosingEntriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ClosingEntriesComponent]
+      declarations: [ClosingEntriesComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

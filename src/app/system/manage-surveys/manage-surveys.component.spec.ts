@@ -4,6 +4,7 @@ import { ManageSurveysComponent } from './manage-surveys.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SurveysComponent', () => {
   let component: ManageSurveysComponent;
@@ -12,12 +13,15 @@ describe('SurveysComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ManageSurveysComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

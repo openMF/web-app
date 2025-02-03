@@ -16,7 +16,8 @@ describe('InvestorsComponent', () => {
         MatDialogModule,
         HttpClientModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

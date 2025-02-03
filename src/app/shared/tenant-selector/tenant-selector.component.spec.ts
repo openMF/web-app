@@ -10,7 +10,10 @@ describe('TenantSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [TenantSelectorComponent],
-      imports: [CommonModule]
+      imports: [
+        CommonModule,
+        CommonModule
+      ]
     }).compileComponents();
   });
 

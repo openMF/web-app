@@ -4,6 +4,7 @@ import { WaiveInterestComponent } from './waive-interest.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('WaiveInterestComponent', () => {
   let component: WaiveInterestComponent;
@@ -14,7 +15,8 @@ describe('WaiveInterestComponent', () => {
       declarations: [WaiveInterestComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [DatePipe]
     }).compileComponents();

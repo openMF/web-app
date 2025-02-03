@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FileUploadComponent } from './file-upload.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FileUploadComponent', () => {
@@ -12,6 +12,7 @@ describe('FileUploadComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FileUploadComponent],
       imports: [TranslateModule],
+      providers: [TranslateService],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA

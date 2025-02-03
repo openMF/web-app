@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PasswordPreferencesComponent } from './password-preferences.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('PasswordPreferencesComponent', () => {
   let component: PasswordPreferencesComponent;
@@ -10,7 +11,10 @@ describe('PasswordPreferencesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PasswordPreferencesComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

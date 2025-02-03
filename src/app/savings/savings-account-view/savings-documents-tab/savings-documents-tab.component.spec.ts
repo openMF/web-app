@@ -4,6 +4,7 @@ import { SavingsDocumentsTabComponent } from './savings-documents-tab.component'
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SavingsDocumentsTabComponent', () => {
   let component: SavingsDocumentsTabComponent;
@@ -12,12 +13,15 @@ describe('SavingsDocumentsTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SavingsDocumentsTabComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

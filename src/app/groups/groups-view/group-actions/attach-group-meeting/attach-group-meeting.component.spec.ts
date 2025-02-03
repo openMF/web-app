@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AttachGroupMeetingComponent } from './attach-group-meeting.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AttachGroupMeetingComponent', () => {
   let component: AttachGroupMeetingComponent;
@@ -10,7 +11,10 @@ describe('AttachGroupMeetingComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AttachGroupMeetingComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GeneralTabComponent } from './general-tab.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('GeneralTabComponent', () => {
   let component: GeneralTabComponent;
@@ -11,11 +13,15 @@ describe('GeneralTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GeneralTabComponent],
+      imports: [
+        RouterTestingModule,
+        TranslateModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

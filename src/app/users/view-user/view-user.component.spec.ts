@@ -4,6 +4,8 @@ import { ViewUserComponent } from './view-user.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ViewUserComponent', () => {
   let component: ViewUserComponent;
@@ -12,12 +14,16 @@ describe('ViewUserComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewUserComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule,
+        MatDialogModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ user: 'Lipsum in de lorem' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ user: 'Lipsum in de lorem' })
           }
         }
       ]

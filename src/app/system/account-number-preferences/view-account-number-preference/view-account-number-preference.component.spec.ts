@@ -4,6 +4,7 @@ import { ViewAccountNumberPreferenceComponent } from './view-account-number-pref
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewAccountNumberPreferenceComponent', () => {
   let component: ViewAccountNumberPreferenceComponent;
@@ -12,12 +13,15 @@ describe('ViewAccountNumberPreferenceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewAccountNumberPreferenceComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

@@ -4,6 +4,7 @@ import { LoanTermVariationsTabComponent } from './loan-term-variations-tab.compo
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('LoanTermVariationsTabComponent', () => {
   let component: LoanTermVariationsTabComponent;
@@ -12,12 +13,13 @@ describe('LoanTermVariationsTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoanTermVariationsTabComponent],
+      imports: [HttpClientModule],
       providers: [
         DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

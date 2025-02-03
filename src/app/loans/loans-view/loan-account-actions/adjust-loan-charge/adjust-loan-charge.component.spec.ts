@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdjustLoanChargeComponent } from './adjust-loan-charge.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AdjustLoanChargeComponent', () => {
   let component: AdjustLoanChargeComponent;
@@ -10,7 +11,10 @@ describe('AdjustLoanChargeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AdjustLoanChargeComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   });
 

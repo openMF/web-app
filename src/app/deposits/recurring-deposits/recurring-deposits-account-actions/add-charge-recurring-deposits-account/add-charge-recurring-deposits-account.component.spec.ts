@@ -4,6 +4,7 @@ import { AddChargeRecurringDepositsAccountComponent } from './add-charge-recurri
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('AddChargeRecurringDepositsAccountComponent', () => {
   let component: AddChargeRecurringDepositsAccountComponent;
@@ -12,12 +13,16 @@ describe('AddChargeRecurringDepositsAccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AddChargeRecurringDepositsAccountComponent],
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        CommonModule
+      ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

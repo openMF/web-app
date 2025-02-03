@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MigrateOpeningBalancesComponent } from './migrate-opening-balances.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('MigrateOpeningBalancesComponent', () => {
   let component: MigrateOpeningBalancesComponent;
@@ -8,7 +9,8 @@ describe('MigrateOpeningBalancesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MigrateOpeningBalancesComponent]
+      declarations: [MigrateOpeningBalancesComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

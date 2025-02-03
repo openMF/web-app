@@ -4,6 +4,8 @@ import { CreateLoanProductComponent } from './create-loan-product.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('CreateLoanProductComponent', () => {
   let component: CreateLoanProductComponent;
@@ -12,12 +14,17 @@ describe('CreateLoanProductComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CreateLoanProductComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule
+      ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

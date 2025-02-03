@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SmsCampaignStepComponent } from './sms-campaign-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SmsCampaignStepComponent', () => {
   let component: SmsCampaignStepComponent;
@@ -10,7 +11,10 @@ describe('SmsCampaignStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SmsCampaignStepComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

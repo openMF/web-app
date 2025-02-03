@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CollateralsComponent } from './collaterals.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('CollateralsComponent', () => {
   let component: CollateralsComponent;
@@ -13,8 +15,11 @@ describe('CollateralsComponent', () => {
       declarations: [CollateralsComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
-      ]
+        HttpClientModule,
+        RouterTestingModule,
+        TranslateModule
+      ],
+      providers: [TranslateService]
     }).compileComponents();
   });
 

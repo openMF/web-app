@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddChargeFixedDepositsAccountComponent } from './add-charge-fixed-deposits-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
 
 describe('AddChargeFixedDepositsAccountComponent', () => {
   let component: AddChargeFixedDepositsAccountComponent;
@@ -13,7 +14,8 @@ describe('AddChargeFixedDepositsAccountComponent', () => {
       declarations: [AddChargeFixedDepositsAccountComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

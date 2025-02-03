@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddLoanChargeComponent } from './add-loan-charge.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
 
 describe('AddloanchargeComponent', () => {
   let component: AddLoanChargeComponent;
@@ -13,7 +14,8 @@ describe('AddloanchargeComponent', () => {
       declarations: [AddLoanChargeComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

@@ -4,6 +4,7 @@ import { CreateFixedDepositAccountComponent } from './create-fixed-deposit-accou
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreateFixedDepositAccountComponent', () => {
   let component: CreateFixedDepositAccountComponent;
@@ -12,12 +13,13 @@ describe('CreateFixedDepositAccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CreateFixedDepositAccountComponent],
+      imports: [HttpClientModule],
       providers: [
         DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]

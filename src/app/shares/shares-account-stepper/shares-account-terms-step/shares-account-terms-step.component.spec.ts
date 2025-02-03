@@ -2,7 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SharesAccountTermsStepComponent } from './shares-account-terms-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SharesAccountTermsStepComponent', () => {
   let component: SharesAccountTermsStepComponent;
@@ -11,8 +12,11 @@ describe('SharesAccountTermsStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SharesAccountTermsStepComponent],
-      imports: [ReactiveFormsModule],
-      providers: [DatePipe]
+      imports: [
+        ReactiveFormsModule,
+        TranslateModule,
+        CommonModule
+      ]
     }).compileComponents();
   }));
 

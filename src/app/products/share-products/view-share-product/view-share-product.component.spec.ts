@@ -21,7 +21,7 @@ describe('ViewShareProductComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ shareProductDatatables: 'Lorem lipsum in de lorem' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ shareProductDatatables: 'Lorem lipsum in de lorem' })
           }
         }
       ]

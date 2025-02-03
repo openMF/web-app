@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewAccountTransferComponent } from './view-account-transfer.component';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ViewAccountTransferComponent', () => {
   let component: ViewAccountTransferComponent;
@@ -11,7 +12,11 @@ describe('ViewAccountTransferComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewAccountTransferComponent],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        TranslateModule
+      ],
+      providers: [TranslateService]
     }).compileComponents();
   }));
 

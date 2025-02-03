@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EntityNotesTabComponent } from './entity-notes-tab.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('EntityNotesTabComponent', () => {
   let component: EntityNotesTabComponent;
@@ -13,7 +14,8 @@ describe('EntityNotesTabComponent', () => {
       declarations: [EntityNotesTabComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ]
     }).compileComponents();
   });

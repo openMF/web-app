@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditGroupComponent } from './edit-group.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EditGroupComponent', () => {
   let component: EditGroupComponent;
@@ -8,7 +9,8 @@ describe('EditGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditGroupComponent]
+      declarations: [EditGroupComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

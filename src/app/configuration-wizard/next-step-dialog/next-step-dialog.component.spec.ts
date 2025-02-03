@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NextStepDialogComponent } from './next-step-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('NextStepDialogComponent', () => {
   let component: NextStepDialogComponent;
@@ -10,7 +10,9 @@ describe('NextStepDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NextStepDialogComponent],
-      imports: [MatDialogModule]
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }]
     }).compileComponents();
   }));
 

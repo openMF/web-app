@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditSharesAccountComponent } from './edit-shares-account.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditSharesAccountComponent', () => {
   let component: EditSharesAccountComponent;
@@ -11,11 +12,12 @@ describe('EditSharesAccountComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditSharesAccountComponent],
+      imports: [RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+            params: of({ id: '123' })
           }
         }
       ]
