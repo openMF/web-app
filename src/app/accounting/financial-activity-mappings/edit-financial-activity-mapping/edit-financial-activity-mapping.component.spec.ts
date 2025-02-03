@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AccountingService } from 'app/accounting/accounting.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 describe('EditFinancialActivityMappingComponent', () => {
   let component: EditFinancialActivityMappingComponent;
@@ -17,7 +18,8 @@ describe('EditFinancialActivityMappingComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ],
       providers: [AccountingService],
       schemas: [

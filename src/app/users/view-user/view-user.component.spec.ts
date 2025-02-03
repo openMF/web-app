@@ -6,6 +6,8 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ViewUserComponent', () => {
   let component: ViewUserComponent;
@@ -17,7 +19,9 @@ describe('ViewUserComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
-        MatDialogModule
+        MatDialogModule,
+        CommonModule,
+        ReactiveFormsModule
       ],
       providers: [
         {

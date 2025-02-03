@@ -5,6 +5,8 @@ import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CenterAttendanceComponent', () => {
   let component: CenterAttendanceComponent;
@@ -15,7 +17,9 @@ describe('CenterAttendanceComponent', () => {
       declarations: [CenterAttendanceComponent],
       imports: [
         CommonModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule
       ],
       providers: [
         {

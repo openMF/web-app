@@ -1,15 +1,13 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { GlAccountTreeService } from './gl-account-tree.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('GlAccountTreeService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule],
+      imports: [],
       providers: [
-        GlAccountTreeService,
-        TranslateService
+        GlAccountTreeService
       ]
     });
   });

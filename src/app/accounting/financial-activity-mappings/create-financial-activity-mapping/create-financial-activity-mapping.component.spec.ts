@@ -4,7 +4,6 @@ import { CreateFinancialActivityMappingComponent } from './create-financial-acti
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 
 describe('CreateFinancialActivityMappingComponent', () => {
@@ -18,7 +17,6 @@ describe('CreateFinancialActivityMappingComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         RouterTestingModule,
-        TranslateModule,
         CommonModule
       ]
     }).compileComponents();

@@ -4,6 +4,7 @@ import { SearchJournalEntryComponent } from './search-journal-entry.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('SearchJournalEntryComponent', () => {
   let component: SearchJournalEntryComponent;
@@ -15,7 +16,8 @@ describe('SearchJournalEntryComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
-        CommonModule
+        CommonModule,
+        ReactiveFormsModule
       ],
       providers: [DatePipe]
     }).compileComponents();

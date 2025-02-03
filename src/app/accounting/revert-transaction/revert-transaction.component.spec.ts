@@ -2,6 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RevertTransactionComponent } from './revert-transaction.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
 
 describe('RevertTransactionComponent', () => {
   let component: RevertTransactionComponent;
@@ -10,7 +14,13 @@ describe('RevertTransactionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RevertTransactionComponent],
-      imports: [MatDialogModule]
+      imports: [
+        MatDialogModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule
+      ]
     }).compileComponents();
   }));
 

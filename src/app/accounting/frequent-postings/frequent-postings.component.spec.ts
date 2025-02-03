@@ -1,7 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
 
 import { FrequentPostingsComponent } from './frequent-postings.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('FrequentPostingsComponent', () => {
   let component: FrequentPostingsComponent;
@@ -10,7 +13,12 @@ describe('FrequentPostingsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FrequentPostingsComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule
+      ]
     }).compileComponents();
   }));
 

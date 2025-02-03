@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
 
 describe('ActivateCenterComponent', () => {
   let component: ActivateCenterComponent;
@@ -16,7 +17,8 @@ describe('ActivateCenterComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule
       ],
       providers: [DatePipe]
     }).compileComponents();

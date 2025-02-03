@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 describe('CreateStandingInstructionsComponent', () => {
   let component: CreateStandingInstructionsComponent;
@@ -18,14 +19,16 @@ describe('CreateStandingInstructionsComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ],
       providers: [
         DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '123' })
+            params: of({ id: '123' }),
+            queryParams: of({})
           }
         }
       ]

@@ -2,7 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientFamilyMembersStepComponent } from './client-family-members-step.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('ClientFamilyMembersStepComponent', () => {
   let component: ClientFamilyMembersStepComponent;
@@ -13,7 +16,10 @@ describe('ClientFamilyMembersStepComponent', () => {
       declarations: [ClientFamilyMembersStepComponent],
       imports: [
         MatDialogModule,
-        TranslateModule
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientModule,
+        CommonModule
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} }]

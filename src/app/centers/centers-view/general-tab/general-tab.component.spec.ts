@@ -4,6 +4,9 @@ import { GeneralTabComponent } from './general-tab.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('GeneralTabComponent', () => {
   let component: GeneralTabComponent;
@@ -12,7 +15,12 @@ describe('GeneralTabComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GeneralTabComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

@@ -4,6 +4,9 @@ import { CenterActionsComponent } from './center-actions.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('CenterActionsComponent', () => {
   let component: CenterActionsComponent;
@@ -12,7 +15,12 @@ describe('CenterActionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CenterActionsComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

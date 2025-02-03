@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListTransactionsComponent } from './list-transactions.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('ListTransactionsComponent', () => {
   let component: ListTransactionsComponent;
@@ -13,9 +15,11 @@ describe('ListTransactionsComponent', () => {
       declarations: [ListTransactionsComponent],
       imports: [
         RouterTestingModule,
-        TranslateModule
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule
       ],
-      providers: [TranslateService]
+      providers: []
     }).compileComponents();
   }));
 

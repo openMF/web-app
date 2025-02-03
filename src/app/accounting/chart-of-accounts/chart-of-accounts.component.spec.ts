@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChartOfAccountsComponent } from './chart-of-accounts.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ChartOfAccountsComponent', () => {
   let component: ChartOfAccountsComponent;
@@ -10,8 +9,8 @@ describe('ChartOfAccountsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ChartOfAccountsComponent],
-      imports: [TranslateModule],
-      providers: [TranslateService]
+      imports: [],
+      providers: []
     }).compileComponents();
   }));
 

@@ -7,8 +7,9 @@ import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 describe('PeriodicAccrualsComponent', () => {
   let component: PeriodicAccrualsComponent;
@@ -20,8 +21,8 @@ describe('PeriodicAccrualsComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        TranslateModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ],
       providers: [
         TranslateService,

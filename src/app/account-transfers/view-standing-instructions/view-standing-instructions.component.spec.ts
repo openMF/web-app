@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewStandingInstructionsComponent } from './view-standing-instructions.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('ViewStandingInstructionsComponent', () => {
   let component: ViewStandingInstructionsComponent;
@@ -13,9 +15,11 @@ describe('ViewStandingInstructionsComponent', () => {
       declarations: [ViewStandingInstructionsComponent],
       imports: [
         RouterTestingModule,
-        TranslateModule
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule
       ],
-      providers: [TranslateService]
+      providers: []
     }).compileComponents();
   }));
 

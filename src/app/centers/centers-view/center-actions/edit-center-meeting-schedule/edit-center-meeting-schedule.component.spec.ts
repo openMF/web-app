@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
 
 describe('EditCenterMeetingScheduleComponent', () => {
   let component: EditCenterMeetingScheduleComponent;
@@ -16,7 +17,8 @@ describe('EditCenterMeetingScheduleComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule
       ],
       providers: [DatePipe]
     }).compileComponents();

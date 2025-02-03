@@ -3,7 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewAccountTransferComponent } from './view-account-transfer.component';
 import { RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 describe('ViewAccountTransferComponent', () => {
   let component: ViewAccountTransferComponent;
@@ -14,9 +16,11 @@ describe('ViewAccountTransferComponent', () => {
       declarations: [ViewAccountTransferComponent],
       imports: [
         RouterTestingModule,
-        TranslateModule
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule
       ],
-      providers: [TranslateService]
+      providers: []
     }).compileComponents();
   }));
 

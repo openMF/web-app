@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditClosureComponent } from './edit-closure.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditClosureComponent', () => {
   let component: EditClosureComponent;
@@ -13,7 +15,9 @@ describe('EditClosureComponent', () => {
       declarations: [EditClosureComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

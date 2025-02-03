@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MigrateOpeningBalancesComponent } from './migrate-opening-balances.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MigrateOpeningBalancesComponent', () => {
   let component: MigrateOpeningBalancesComponent;
@@ -13,7 +15,9 @@ describe('MigrateOpeningBalancesComponent', () => {
       declarations: [MigrateOpeningBalancesComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

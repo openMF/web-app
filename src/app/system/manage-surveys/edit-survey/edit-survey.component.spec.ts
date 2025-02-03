@@ -3,6 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditSurveyComponent } from './edit-survey.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
 
 describe('EditSurveyComponent', () => {
   let component: EditSurveyComponent;
@@ -13,7 +15,9 @@ describe('EditSurveyComponent', () => {
       declarations: [EditSurveyComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule
       ]
     }).compileComponents();
   });

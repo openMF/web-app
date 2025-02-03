@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ViewClosureComponent', () => {
   let component: ViewClosureComponent;
@@ -15,9 +17,11 @@ describe('ViewClosureComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ViewClosureComponent],
       imports: [
+        ReactiveFormsModule,
         HttpClientModule,
-        MatDialogModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule,
+        MatDialogModule
       ],
       providers: [
         {
