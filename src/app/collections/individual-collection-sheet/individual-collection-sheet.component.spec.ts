@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IndividualCollectionSheetComponent } from './individual-collection-sheet.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('IndividualCollectionSheetComponent', () => {
   let component: IndividualCollectionSheetComponent;
@@ -10,7 +11,10 @@ describe('IndividualCollectionSheetComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [IndividualCollectionSheetComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

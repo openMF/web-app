@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupAssignStaffComponent } from './group-assign-staff.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('GroupAssignStaffComponent', () => {
   let component: GroupAssignStaffComponent;
@@ -10,7 +11,10 @@ describe('GroupAssignStaffComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GroupAssignStaffComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

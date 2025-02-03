@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateEnityDataTableChecksComponent } from './create-enity-data-table-checks.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CreateEnityDataTableChecksComponent', () => {
   let component: CreateEnityDataTableChecksComponent;
@@ -8,7 +9,8 @@ describe('CreateEnityDataTableChecksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateEnityDataTableChecksComponent]
+      declarations: [CreateEnityDataTableChecksComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
 

@@ -4,6 +4,7 @@ import { CreateTemplateComponent } from './create-template.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('CreateTemplateComponent', () => {
   let component: CreateTemplateComponent;
@@ -16,6 +17,10 @@ describe('CreateTemplateComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
       ]
     }).compileComponents();
   }));

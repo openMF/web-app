@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateGroupComponent } from './create-group.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('CreateGroupComponent', () => {
   let component: CreateGroupComponent;
@@ -13,7 +14,8 @@ describe('CreateGroupComponent', () => {
       declarations: [CreateGroupComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule
       ]
     }).compileComponents();
   }));

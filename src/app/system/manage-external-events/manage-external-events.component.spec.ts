@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ManageExternalEventsComponent } from './manage-external-events.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ManageExternalEventsComponent', () => {
   let component: ManageExternalEventsComponent;
@@ -13,7 +14,7 @@ describe('ManageExternalEventsComponent', () => {
       declarations: [ManageExternalEventsComponent],
       imports: [
         RouterTestingModule,
-        HttpClient
+        HttpClientModule
       ]
     }).compileComponents();
   });

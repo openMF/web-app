@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('PeriodicAccrualsComponent', () => {
   let component: PeriodicAccrualsComponent;
@@ -31,6 +32,10 @@ describe('PeriodicAccrualsComponent', () => {
             params: of({ id: '123' })
           }
         }
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
       ]
     }).compileComponents();
   }));

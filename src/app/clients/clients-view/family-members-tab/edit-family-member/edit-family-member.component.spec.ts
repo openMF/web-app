@@ -2,8 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditFamilyMemberComponent } from './edit-family-member.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('EditFamilyMemberComponent', () => {
   let component: EditFamilyMemberComponent;
@@ -14,9 +16,15 @@ describe('EditFamilyMemberComponent', () => {
       declarations: [EditFamilyMemberComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule,
+        TranslateModule,
+        CommonModule
       ],
-      providers: [DatePipe]
+      providers: [
+        DatePipe,
+        TranslateService
+      ]
     }).compileComponents();
   }));
 

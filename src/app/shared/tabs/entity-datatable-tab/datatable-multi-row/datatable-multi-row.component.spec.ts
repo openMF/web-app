@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatatableMultiRowComponent } from './datatable-multi-row.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DatatableMultiRowComponent', () => {
   let component: DatatableMultiRowComponent;
@@ -8,7 +9,8 @@ describe('DatatableMultiRowComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DatatableMultiRowComponent]
+      declarations: [DatatableMultiRowComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   });
 

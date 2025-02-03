@@ -4,6 +4,7 @@ import { EditTellerComponent } from './edit-teller.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditTellerComponent', () => {
   let component: EditTellerComponent;
@@ -15,6 +16,7 @@ describe('EditTellerComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
+        RouterTestingModule,
         CommonModule
       ],
       providers: [DatePipe]

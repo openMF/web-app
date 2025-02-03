@@ -4,6 +4,7 @@ import { CloseAsRescheduledComponent } from './close-as-rescheduled.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CloseAsRescheduledComponent', () => {
   let component: CloseAsRescheduledComponent;
@@ -14,7 +15,8 @@ describe('CloseAsRescheduledComponent', () => {
       declarations: [CloseAsRescheduledComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [
         DatePipe

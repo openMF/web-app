@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditSurveyComponent } from './edit-survey.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditSurveyComponent', () => {
   let component: EditSurveyComponent;
@@ -10,7 +11,10 @@ describe('EditSurveyComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EditSurveyComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   });
 

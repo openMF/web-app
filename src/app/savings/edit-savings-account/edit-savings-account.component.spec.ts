@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule, DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditSavingsAccountComponent', () => {
   let component: EditSavingsAccountComponent;
@@ -15,6 +16,7 @@ describe('EditSavingsAccountComponent', () => {
       declarations: [EditSavingsAccountComponent],
       imports: [
         RouterTestingModule,
+        HttpClientModule,
         CommonModule
       ],
       providers: [

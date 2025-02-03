@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DelinquencyRangeComponent } from './delinquency-range.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DelinquencyRangeComponent', () => {
   let component: DelinquencyRangeComponent;
@@ -8,7 +9,8 @@ describe('DelinquencyRangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DelinquencyRangeComponent]
+      declarations: [DelinquencyRangeComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   });
 

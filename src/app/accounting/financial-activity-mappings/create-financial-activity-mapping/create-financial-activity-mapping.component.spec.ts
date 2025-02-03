@@ -3,6 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateFinancialActivityMappingComponent } from './create-financial-activity-mapping.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 describe('CreateFinancialActivityMappingComponent', () => {
   let component: CreateFinancialActivityMappingComponent;
@@ -13,7 +16,10 @@ describe('CreateFinancialActivityMappingComponent', () => {
       declarations: [CreateFinancialActivityMappingComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule,
+        TranslateModule,
+        CommonModule
       ]
     }).compileComponents();
   }));

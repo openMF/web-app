@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('EditHookComponent', () => {
   let component: EditHookComponent;
@@ -15,7 +16,8 @@ describe('EditHookComponent', () => {
       declarations: [EditHookComponent],
       imports: [
         RouterTestingModule,
-        HttpClientModule
+        HttpClientModule,
+        ReactiveFormsModule
       ],
       providers: [
         {

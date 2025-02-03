@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecurringDepositsAccountSettingsStepComponent } from './recurring-deposits-account-settings-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('RecurringDepositsAccountSettingsStepComponent', () => {
   let component: RecurringDepositsAccountSettingsStepComponent;
@@ -14,7 +14,8 @@ describe('RecurringDepositsAccountSettingsStepComponent', () => {
       imports: [
         ReactiveFormsModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

@@ -4,6 +4,7 @@ import { LoansAccountDetailsStepComponent } from './loans-account-details-step.c
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoansAccountDetailsStepComponent', () => {
   let component: LoansAccountDetailsStepComponent;
@@ -14,6 +15,7 @@ describe('LoansAccountDetailsStepComponent', () => {
       declarations: [LoansAccountDetailsStepComponent],
       imports: [
         ReactiveFormsModule,
+        RouterTestingModule,
         HttpClientModule
       ],
       providers: [DatePipe]

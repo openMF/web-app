@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChargeOffComponent } from './charge-off.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ChargeOffComponent', () => {
   let component: ChargeOffComponent;
@@ -8,7 +9,8 @@ describe('ChargeOffComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ChargeOffComponent]
+      declarations: [ChargeOffComponent],
+      imports: [ReactiveFormsModule]
     }).compileComponents();
   });
 

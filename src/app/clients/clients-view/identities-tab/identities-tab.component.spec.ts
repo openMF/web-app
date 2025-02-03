@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('IdentitiesTabComponent', () => {
   let component: IdentitiesTabComponent;
@@ -13,7 +14,10 @@ describe('IdentitiesTabComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [IdentitiesTabComponent],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        HttpClientModule
+      ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         {

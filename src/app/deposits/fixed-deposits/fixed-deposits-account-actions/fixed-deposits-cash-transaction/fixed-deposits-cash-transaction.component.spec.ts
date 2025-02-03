@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FixedDepositsCashTransactionComponent } from './fixed-deposits-cash-transaction.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 describe('FixedDepositsCashTransactionComponent', () => {
   let component: FixedDepositsCashTransactionComponent;
@@ -14,6 +15,9 @@ describe('FixedDepositsCashTransactionComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
 

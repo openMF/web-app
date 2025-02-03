@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewDataTableComponent } from './view-data-table.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewDataTableComponent', () => {
   let component: ViewDataTableComponent;
@@ -10,7 +11,10 @@ describe('ViewDataTableComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewDataTableComponent],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

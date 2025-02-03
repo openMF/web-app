@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('PasswordPreferencesComponent', () => {
   let component: PasswordPreferencesComponent;
@@ -16,9 +18,14 @@ describe('PasswordPreferencesComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
+        TranslateModule,
         RouterTestingModule
       ],
-      providers: [DatePipe]
+      providers: [DatePipe],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

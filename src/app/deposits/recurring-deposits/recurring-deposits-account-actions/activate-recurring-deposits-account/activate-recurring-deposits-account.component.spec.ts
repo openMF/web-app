@@ -4,6 +4,7 @@ import { ActivateRecurringDepositsAccountComponent } from './activate-recurring-
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ActivateRecurringDepositsAccountComponent', () => {
   let component: ActivateRecurringDepositsAccountComponent;
@@ -15,7 +16,8 @@ describe('ActivateRecurringDepositsAccountComponent', () => {
       imports: [
         ReactiveFormsModule,
         CommonModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ],
       providers: [DatePipe]
     }).compileComponents();

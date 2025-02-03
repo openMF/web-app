@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SavingProductTermsStepComponent } from './saving-product-terms-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 describe('SavingProductTermsStepComponent', () => {
   let component: SavingProductTermsStepComponent;
@@ -10,7 +13,18 @@ describe('SavingProductTermsStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SavingProductTermsStepComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        TranslateModule
+      ],
+      providers: [
+        TranslateService,
+        DatePipe
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

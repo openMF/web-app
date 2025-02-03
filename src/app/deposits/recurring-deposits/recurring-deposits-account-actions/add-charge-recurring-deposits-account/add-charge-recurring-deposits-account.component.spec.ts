@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AddChargeRecurringDepositsAccountComponent', () => {
   let component: AddChargeRecurringDepositsAccountComponent;
@@ -15,6 +16,7 @@ describe('AddChargeRecurringDepositsAccountComponent', () => {
       declarations: [AddChargeRecurringDepositsAccountComponent],
       imports: [
         ReactiveFormsModule,
+        HttpClientModule,
         CommonModule
       ],
       providers: [

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditRangeComponent } from './edit-range.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('EditRangeComponent', () => {
   let component: EditRangeComponent;
@@ -16,7 +16,8 @@ describe('EditRangeComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

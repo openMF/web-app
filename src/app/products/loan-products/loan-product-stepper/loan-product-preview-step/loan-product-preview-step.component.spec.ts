@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanProductPreviewStepComponent } from './loan-product-preview-step.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('LoanProductPreviewStepComponent', () => {
   let component: LoanProductPreviewStepComponent;
@@ -10,7 +11,11 @@ describe('LoanProductPreviewStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoanProductPreviewStepComponent],
-      imports: [TranslateModule]
+      imports: [TranslateModule],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   }));
 
