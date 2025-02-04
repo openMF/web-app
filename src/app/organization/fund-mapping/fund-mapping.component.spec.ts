@@ -12,6 +12,7 @@ import {
   TranslateService,
   TranslateStore
 } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('FundMappingComponent', () => {
   let component: FundMappingComponent;
@@ -34,6 +35,9 @@ describe('FundMappingComponent', () => {
         DatePipe,
         TranslateService,
         TranslateStore
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

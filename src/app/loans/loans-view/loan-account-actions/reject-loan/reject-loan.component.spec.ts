@@ -4,6 +4,7 @@ import { RejectLoanComponent } from './reject-loan.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('RejectLoanComponent', () => {
   let component: RejectLoanComponent;
@@ -16,6 +17,9 @@ describe('RejectLoanComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

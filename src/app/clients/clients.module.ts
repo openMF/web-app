@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { ClientsRoutingModule } from './clients-routing.module';
@@ -122,8 +122,7 @@ import { ClientDatatableStepComponent } from './client-stepper/client-datatable-
     ClientDatatableStepComponent
   ],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: []
 })

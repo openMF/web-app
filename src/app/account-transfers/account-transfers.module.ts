@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { AccountTransfersRoutingModule } from './account-transfers-routing.module';
@@ -37,8 +37,7 @@ import { ViewAccountTransferComponent } from './view-account-transfer/view-accou
     ViewAccountTransferComponent
   ],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class AccountTransfersModule {}

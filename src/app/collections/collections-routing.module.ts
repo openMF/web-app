@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 /** Routing Imports */
@@ -35,8 +35,7 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   providers: [],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   exports: [RouterModule]
 })

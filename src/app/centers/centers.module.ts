@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { CentersRoutingModule } from './centers-routing.module';
@@ -39,8 +39,7 @@ import { EditCenterComponent } from './edit-center/edit-center.component';
     DirectivesModule
   ],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   declarations: [
     CentersComponent,

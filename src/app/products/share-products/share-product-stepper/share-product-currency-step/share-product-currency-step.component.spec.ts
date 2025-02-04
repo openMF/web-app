@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareProductCurrencyStepComponent } from './share-product-currency-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ShareProductCurrencyStepComponent', () => {
@@ -20,8 +20,7 @@ describe('ShareProductCurrencyStepComponent', () => {
 
       ],
       schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { GroupsRoutingModule } from './groups-routing.module';
@@ -66,8 +66,7 @@ import { GroupTransferClientsComponent } from './groups-view/group-actions/group
     GroupTransferClientsComponent
   ],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: []
 })

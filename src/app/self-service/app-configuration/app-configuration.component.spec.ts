@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AppConfigurationComponent } from './app-configuration.component';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AppConfigurationComponent', () => {
   let component: AppConfigurationComponent;
@@ -19,8 +19,7 @@ describe('AppConfigurationComponent', () => {
       ],
       providers: [],
       schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

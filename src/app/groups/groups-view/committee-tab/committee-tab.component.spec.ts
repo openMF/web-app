@@ -3,7 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommitteeTabComponent } from './committee-tab.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 describe('CommitteeTabComponent', () => {
   let component: CommitteeTabComponent;
@@ -13,14 +16,18 @@ describe('CommitteeTabComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CommitteeTabComponent],
       imports: [
+        ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: { close: () => {} }
-        }
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

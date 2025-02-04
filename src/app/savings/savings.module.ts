@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { SavingsRoutingModule } from './savings-routing.module';
@@ -115,8 +115,7 @@ import { GeneralTabComponent } from './savings-account-view/general-tab/general-
   ],
   providers: [],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-    NO_ERRORS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class SavingsModule {}

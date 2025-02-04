@@ -4,6 +4,9 @@ import { PrematureCloseFixedDepositsAccountComponent } from './premature-close-f
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('PrematureCloseFixedDepositsAccountComponent', () => {
   let component: PrematureCloseFixedDepositsAccountComponent;
@@ -15,7 +18,12 @@ describe('PrematureCloseFixedDepositsAccountComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

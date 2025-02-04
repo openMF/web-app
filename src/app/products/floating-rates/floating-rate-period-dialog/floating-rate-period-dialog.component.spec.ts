@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FloatingRatePeriodDialogComponent } from './floating-rate-period-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('FloatingRatePeriodDialogComponent', () => {
   let component: FloatingRatePeriodDialogComponent;
@@ -10,7 +10,9 @@ describe('FloatingRatePeriodDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FloatingRatePeriodDialogComponent],
-      imports: [MatDialogModule]
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }]
     }).compileComponents();
   }));
 

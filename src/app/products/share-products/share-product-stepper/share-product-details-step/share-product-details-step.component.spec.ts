@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShareProductDetailsStepComponent } from './share-product-details-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ShareProductDetailsStepComponent', () => {
   let component: ShareProductDetailsStepComponent;
@@ -21,8 +21,7 @@ describe('ShareProductDetailsStepComponent', () => {
       ],
       providers: [TranslateService],
       schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

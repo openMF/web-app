@@ -7,8 +7,8 @@ import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateService } from '@ngx-translate/core';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateService, TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 describe('PeriodicAccrualsComponent', () => {
@@ -22,10 +22,13 @@ describe('PeriodicAccrualsComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         RouterTestingModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
-        TranslateService,
         DatePipe,
         {
           provide: ActivatedRoute,
@@ -35,8 +38,7 @@ describe('PeriodicAccrualsComponent', () => {
         }
       ],
       schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

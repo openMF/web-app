@@ -7,6 +7,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('GeneralTabComponent', () => {
   let component: GeneralTabComponent;
@@ -19,7 +21,11 @@ describe('GeneralTabComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         {

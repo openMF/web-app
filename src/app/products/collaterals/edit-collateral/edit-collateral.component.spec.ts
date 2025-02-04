@@ -4,6 +4,10 @@ import { EditCollateralComponent } from './edit-collateral.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('EditCollateralComponent', () => {
   let component: EditCollateralComponent;
@@ -15,9 +19,17 @@ describe('EditCollateralComponent', () => {
       imports: [
         HttpClientModule,
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
-      providers: [DatePipe]
+      providers: [DatePipe],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   });
 

@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { NavigationComponent } from './navigation.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,6 +15,9 @@ describe('NavigationComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

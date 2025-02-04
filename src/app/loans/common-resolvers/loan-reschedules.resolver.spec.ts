@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { LoanReschedulesResolver } from './loan-reschedules.resolver';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('LoanReschedulesResolver', () => {
   let resolver: LoanReschedulesResolver;
@@ -12,7 +12,8 @@ describe('LoanReschedulesResolver', () => {
       imports: [
         HttpClientModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     });
     resolver = TestBed.inject(LoanReschedulesResolver);
   });

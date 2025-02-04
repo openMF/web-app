@@ -24,8 +24,7 @@ describe('ViewAccountTransferComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ],
-      providers: []
+      ]
     }).compileComponents();
   }));
 

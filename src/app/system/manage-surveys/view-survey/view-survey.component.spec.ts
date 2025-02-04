@@ -4,6 +4,11 @@ import { ViewSurveyComponent } from './view-survey.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('ViewSurveyComponent', () => {
   let component: ViewSurveyComponent;
@@ -12,7 +17,16 @@ describe('ViewSurveyComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewSurveyComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
       providers: [
         {
           provide: ActivatedRoute,

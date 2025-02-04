@@ -23,8 +23,7 @@ describe('ListTransactionsComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ],
-      providers: []
+      ]
     }).compileComponents();
   }));
 

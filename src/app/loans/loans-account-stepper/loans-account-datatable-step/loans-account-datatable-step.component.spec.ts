@@ -4,7 +4,7 @@ import { LoansAccountDatatableStepComponent } from './loans-account-datatable-st
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('LoansAccountDatatableStepComponent', () => {
   let component: LoansAccountDatatableStepComponent;
@@ -25,8 +25,7 @@ describe('LoansAccountDatatableStepComponent', () => {
         TranslateService
       ],
       schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   });

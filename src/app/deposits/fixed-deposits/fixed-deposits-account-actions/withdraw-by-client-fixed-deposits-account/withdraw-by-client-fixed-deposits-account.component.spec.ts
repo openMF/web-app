@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WithdrawByClientFixedDepositsAccountComponent } from './withdraw-by-client-fixed-deposits-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('WithdrawByClientFixedDepositsAccountComponent', () => {
   let component: WithdrawByClientFixedDepositsAccountComponent;
@@ -14,6 +15,9 @@ describe('WithdrawByClientFixedDepositsAccountComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

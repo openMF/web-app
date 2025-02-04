@@ -4,7 +4,7 @@ import { GlimChargesStepComponent } from './glim-charges-step.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('GlimChargesStepComponent', () => {
   let component: GlimChargesStepComponent;
@@ -22,8 +22,7 @@ describe('GlimChargesStepComponent', () => {
 
       ],
       schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   });

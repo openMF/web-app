@@ -3,6 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShareProductChargesStepComponent } from './share-product-charges-step.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ShareProductChargesStepComponent', () => {
   let component: ShareProductChargesStepComponent;
@@ -13,7 +17,14 @@ describe('ShareProductChargesStepComponent', () => {
       declarations: [ShareProductChargesStepComponent],
       imports: [
         ReactiveFormsModule,
-        MatDialogModule
+        MatDialogModule,
+        RouterTestingModule,
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { RolesAndPermissionsComponent } from './roles-and-permissions.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -22,6 +23,9 @@ describe('RolesAndPermissionsComponent', () => {
         CommonModule,
         ReactiveFormsModule,
         TranslateModule.forRoot()
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

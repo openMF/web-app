@@ -4,6 +4,11 @@ import { FixedDepositGeneralTabComponent } from './fixed-deposit-general-tab.com
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('FixedDepositGeneralTabComponent', () => {
   let component: FixedDepositGeneralTabComponent;
@@ -12,7 +17,16 @@ describe('FixedDepositGeneralTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [FixedDepositGeneralTabComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
       providers: [
         {
           provide: ActivatedRoute,

@@ -4,6 +4,10 @@ import { EditRepaymentScheduleComponent } from './edit-repayment-schedule.compon
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('EditRepaymentScheduleComponent', () => {
   let component: EditRepaymentScheduleComponent;
@@ -14,7 +18,13 @@ describe('EditRepaymentScheduleComponent', () => {
       declarations: [EditRepaymentScheduleComponent],
       imports: [
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

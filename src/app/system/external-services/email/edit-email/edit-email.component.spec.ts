@@ -11,7 +11,7 @@ import {
   TranslateService,
   TranslateStore
 } from '@ngx-translate/core';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('EditEmailComponent', () => {
   let component: EditEmailComponent;
@@ -34,8 +34,7 @@ describe('EditEmailComponent', () => {
         TranslateStore
       ],
       schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

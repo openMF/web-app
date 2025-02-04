@@ -2,6 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanProductPaymentStrategyStepComponent } from './loan-product-payment-strategy-step.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('LoanProductPaymentStrategyStepComponent', () => {
   let component: LoanProductPaymentStrategyStepComponent;
@@ -10,7 +16,17 @@ describe('LoanProductPaymentStrategyStepComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoanProductPaymentStrategyStepComponent],
-      imports: [MatDialogModule]
+      imports: [
+        MatDialogModule,
+        HttpClientModule,
+        CommonModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ]
     }).compileComponents();
   });
 

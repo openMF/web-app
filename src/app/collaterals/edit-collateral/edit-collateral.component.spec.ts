@@ -3,6 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditCollateralComponent } from './edit-collateral.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('EditCollateralComponent', () => {
   let component: EditCollateralComponent;
@@ -13,7 +17,13 @@ describe('EditCollateralComponent', () => {
       declarations: [EditCollateralComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   });

@@ -23,8 +23,7 @@ describe('ViewStandingInstructionsComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ],
-      providers: []
+      ]
     }).compileComponents();
   }));
 

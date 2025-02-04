@@ -4,6 +4,7 @@ import { RecurringDepositProductAccountingStepComponent } from './recurring-depo
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('RecurringDepositProductAccountingStepComponent', () => {
   let component: RecurringDepositProductAccountingStepComponent;
@@ -20,7 +21,10 @@ describe('RecurringDepositProductAccountingStepComponent', () => {
         })
 
       ],
-      providers: [TranslateService]
+      providers: [TranslateService],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

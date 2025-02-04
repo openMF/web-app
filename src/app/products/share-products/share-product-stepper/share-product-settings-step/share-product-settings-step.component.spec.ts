@@ -6,6 +6,7 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-tran
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ShareProductSettingsStepComponent', () => {
   let component: ShareProductSettingsStepComponent;
@@ -29,6 +30,9 @@ describe('ShareProductSettingsStepComponent', () => {
             params: of({ id: '123' })
           }
         }
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

@@ -4,6 +4,10 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ViewCheckerInboxComponent', () => {
   let component: ViewCheckerInboxComponent;
@@ -12,7 +16,16 @@ describe('ViewCheckerInboxComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewCheckerInboxComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
       providers: [
         {
           provide: ActivatedRoute,

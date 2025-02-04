@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { CreateRuleComponent } from './create-rule.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CreateRuleComponent', () => {
   let component: CreateRuleComponent;
@@ -23,6 +24,10 @@ describe('CreateRuleComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      providers: [],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

@@ -4,6 +4,9 @@ import { SavingsAccountUnassignStaffComponent } from './savings-account-unassign
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('SavingsAccountUnassignStaffComponent', () => {
   let component: SavingsAccountUnassignStaffComponent;
@@ -14,7 +17,13 @@ describe('SavingsAccountUnassignStaffComponent', () => {
       declarations: [SavingsAccountUnassignStaffComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

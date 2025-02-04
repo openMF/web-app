@@ -4,6 +4,8 @@ import { WithdrawnByClientComponent } from './withdrawn-by-client.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('WithdrawnByClientComponent', () => {
   let component: WithdrawnByClientComponent;
@@ -15,7 +17,11 @@ describe('WithdrawnByClientComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

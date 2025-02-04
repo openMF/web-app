@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { RecurringDepositProductChargesStepComponent } from './recurring-deposit-product-charges-step.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -20,7 +21,10 @@ describe('RecurringDepositProductChargesStepComponent', () => {
       ],
       providers: [
         TranslateService,
-        { provide: MatDialogRef, useValue: {} }]
+        { provide: MatDialogRef, useValue: {} }],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

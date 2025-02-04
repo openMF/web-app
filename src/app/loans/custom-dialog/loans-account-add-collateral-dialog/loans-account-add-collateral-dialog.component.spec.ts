@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoansAccountAddCollateralDialogComponent } from './loans-account-add-collateral-dialog.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('LoansAccountAddCollateralDialogComponent', () => {
   let component: LoansAccountAddCollateralDialogComponent;
@@ -17,7 +17,8 @@ describe('LoansAccountAddCollateralDialogComponent', () => {
           useValue: {
             close: () => {}
           }
-        }
+        },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

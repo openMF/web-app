@@ -4,6 +4,9 @@ import { CreateSurveyComponent } from './create-survey.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('CreateSurveyComponent', () => {
   let component: CreateSurveyComponent;
@@ -15,7 +18,12 @@ describe('CreateSurveyComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

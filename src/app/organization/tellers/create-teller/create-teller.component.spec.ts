@@ -4,6 +4,8 @@ import { CreateTellerComponent } from './create-teller.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('CreateTellerComponent', () => {
   let component: CreateTellerComponent;
@@ -15,7 +17,12 @@ describe('CreateTellerComponent', () => {
       imports: [
         HttpClientModule,
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();
