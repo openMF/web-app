@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GlimChargesStepComponent } from './glim-charges-step.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('GlimChargesStepComponent', () => {
@@ -15,8 +15,11 @@ describe('GlimChargesStepComponent', () => {
       declarations: [GlimChargesStepComponent],
       imports: [
         MatDialogModule,
-        TranslateModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

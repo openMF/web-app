@@ -4,7 +4,7 @@ import { InvestorsComponent } from './investors.component';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('InvestorsComponent', () => {
   let component: InvestorsComponent;
@@ -16,8 +16,11 @@ describe('InvestorsComponent', () => {
       imports: [
         MatDialogModule,
         HttpClientModule,
-        TranslateModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe,

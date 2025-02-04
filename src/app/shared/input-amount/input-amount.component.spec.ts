@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputAmountComponent } from './input-amount.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 describe('InputAmountComponent', () => {
@@ -11,7 +11,12 @@ describe('InputAmountComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [InputAmountComponent],
-      imports: [TranslateModule],
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
       providers: [
         {
           provide: MatDialogRef,

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostInterestDialogComponent } from './post-interest-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('PostInterestDialogComponent', () => {
   let component: PostInterestDialogComponent;
@@ -13,7 +13,10 @@ describe('PostInterestDialogComponent', () => {
       declarations: [PostInterestDialogComponent],
       imports: [
         MatDialogModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} }]

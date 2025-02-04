@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExternalAssetTransferComponent } from './external-asset-transfer.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ExternalAssetTransferComponent', () => {
   let component: ExternalAssetTransferComponent;
@@ -10,8 +10,13 @@ describe('ExternalAssetTransferComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ExternalAssetTransferComponent],
-      imports: [TranslateModule],
-      providers: [TranslateService]
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: []
     }).compileComponents();
   });
 

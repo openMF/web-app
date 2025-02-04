@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CaptureImageDialogComponent } from './capture-image-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('CaptureImageDialogComponent', () => {
   let component: CaptureImageDialogComponent;
@@ -15,7 +15,10 @@ describe('CaptureImageDialogComponent', () => {
       imports: [
         ReactiveFormsModule,
         MatDialogModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} }]

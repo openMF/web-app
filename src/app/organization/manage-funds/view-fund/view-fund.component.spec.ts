@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewFundComponent } from './view-fund.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ViewFundComponent', () => {
   let component: ViewFundComponent;
@@ -13,7 +13,10 @@ describe('ViewFundComponent', () => {
       declarations: [ViewFundComponent],
       imports: [
         RouterTestingModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [TranslateService]
     }).compileComponents();

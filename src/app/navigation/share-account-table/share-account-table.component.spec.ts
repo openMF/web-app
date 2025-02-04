@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareAccountTableComponent } from './share-account-table.component';
 import { AccountsFilterPipe } from 'app/pipes/accounts-filter.pipe';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ShareAccountTableComponent', () => {
   let component: ShareAccountTableComponent;
@@ -11,7 +11,12 @@ describe('ShareAccountTableComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ShareAccountTableComponent],
-      imports: [TranslateModule],
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
       providers: [AccountsFilterPipe]
     }).compileComponents();
   }));

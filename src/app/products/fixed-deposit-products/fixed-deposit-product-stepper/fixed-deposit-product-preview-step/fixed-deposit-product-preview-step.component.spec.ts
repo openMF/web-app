@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositProductPreviewStepComponent } from './fixed-deposit-product-preview-step.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FixedDepositProductPreviewStepComponent', () => {
@@ -11,8 +11,13 @@ describe('FixedDepositProductPreviewStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FixedDepositProductPreviewStepComponent],
-      imports: [TranslateModule],
-      providers: [TranslateService],
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA

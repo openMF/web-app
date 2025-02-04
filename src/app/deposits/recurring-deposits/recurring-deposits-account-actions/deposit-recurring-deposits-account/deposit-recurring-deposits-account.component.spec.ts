@@ -4,6 +4,7 @@ import { DepositRecurringDepositsAccountComponent } from './deposit-recurring-de
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('DepositRecurringDepositsAccountComponent', () => {
   let component: DepositRecurringDepositsAccountComponent;
@@ -14,7 +15,8 @@ describe('DepositRecurringDepositsAccountComponent', () => {
       declarations: [DepositRecurringDepositsAccountComponent],
       imports: [
         ReactiveFormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule
       ],
       providers: [
         DatePipe

@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 import { ProductsService } from 'app/products/products.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('EditBucketComponent', () => {
   let component: EditBucketComponent;
@@ -21,7 +21,10 @@ describe('EditBucketComponent', () => {
         HttpClientModule,
         RouterTestingModule,
         MatDialogModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         TranslateService,

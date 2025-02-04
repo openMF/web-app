@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanProductSettingsStepComponent } from './loan-product-settings-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('LoanProductSettingsStepComponent', () => {
@@ -14,7 +14,10 @@ describe('LoanProductSettingsStepComponent', () => {
       declarations: [LoanProductSettingsStepComponent],
       imports: [
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [TranslateService],
       schemas: [

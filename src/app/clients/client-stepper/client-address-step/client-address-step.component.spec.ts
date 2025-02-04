@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientAddressStepComponent } from './client-address-step.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ClientAddressStepComponent', () => {
   let component: ClientAddressStepComponent;
@@ -13,7 +13,10 @@ describe('ClientAddressStepComponent', () => {
       declarations: [ClientAddressStepComponent],
       imports: [
         MatDialogModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

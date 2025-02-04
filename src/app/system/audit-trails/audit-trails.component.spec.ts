@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuditTrailsComponent } from './audit-trails.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AuditTrailsComponent', () => {
   let component: AuditTrailsComponent;
@@ -10,7 +11,10 @@ describe('AuditTrailsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AuditTrailsComponent],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

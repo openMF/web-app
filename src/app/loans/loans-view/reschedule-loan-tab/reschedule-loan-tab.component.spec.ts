@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('RescheduleLoanTabComponent', () => {
   let component: RescheduleLoanTabComponent;
@@ -16,8 +16,11 @@ describe('RescheduleLoanTabComponent', () => {
       declarations: [RescheduleLoanTabComponent],
       imports: [
         HttpClientModule,
-        TranslateModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe,

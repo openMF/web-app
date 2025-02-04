@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewRangeComponent } from './view-range.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewRangeComponent', () => {
   let component: ViewRangeComponent;
@@ -8,7 +9,8 @@ describe('ViewRangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ViewRangeComponent]
+      declarations: [ViewRangeComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   });
 

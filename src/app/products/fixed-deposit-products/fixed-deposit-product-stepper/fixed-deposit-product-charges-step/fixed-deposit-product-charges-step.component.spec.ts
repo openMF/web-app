@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositProductChargesStepComponent } from './fixed-deposit-product-charges-step.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('FixedDepositProductChargesStepComponent', () => {
   let component: FixedDepositProductChargesStepComponent;
@@ -13,7 +13,10 @@ describe('FixedDepositProductChargesStepComponent', () => {
       declarations: [FixedDepositProductChargesStepComponent],
       imports: [
         MatDialogModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

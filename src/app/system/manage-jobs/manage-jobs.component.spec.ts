@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageJobsComponent } from './manage-jobs.component';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ManageJobsComponent', () => {
   let component: ManageJobsComponent;
@@ -13,7 +13,10 @@ describe('ManageJobsComponent', () => {
       declarations: [ManageJobsComponent],
       imports: [
         HttpClientModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   });

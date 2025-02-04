@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UploadSignatureDialogComponent } from './upload-signature-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('UploadSignatureDialogComponent', () => {
   let component: UploadSignatureDialogComponent;
@@ -13,7 +13,10 @@ describe('UploadSignatureDialogComponent', () => {
       declarations: [UploadSignatureDialogComponent],
       imports: [
         MatDialogModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         {

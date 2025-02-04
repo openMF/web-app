@@ -5,7 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
+import {
+  TranslateFakeLoader,
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+  TranslateStore
+} from '@ngx-translate/core';
 
 describe('FundMappingComponent', () => {
   let component: FundMappingComponent;
@@ -18,8 +24,11 @@ describe('FundMappingComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientModule,
-        TranslateModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe,

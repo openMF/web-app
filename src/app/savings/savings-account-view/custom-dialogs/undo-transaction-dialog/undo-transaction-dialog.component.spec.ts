@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoTransactionDialogComponent } from './undo-transaction-dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('UndoTransactionDialogComponent', () => {
   let component: UndoTransactionDialogComponent;
@@ -13,7 +13,10 @@ describe('UndoTransactionDialogComponent', () => {
       declarations: [UndoTransactionDialogComponent],
       imports: [
         MatDialogModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         {

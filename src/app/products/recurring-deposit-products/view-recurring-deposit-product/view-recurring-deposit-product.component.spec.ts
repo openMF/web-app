@@ -4,7 +4,7 @@ import { ViewRecurringDepositProductComponent } from './view-recurring-deposit-p
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ViewRecurringDepositProductComponent', () => {
   let component: ViewRecurringDepositProductComponent;
@@ -15,7 +15,10 @@ describe('ViewRecurringDepositProductComponent', () => {
       declarations: [ViewRecurringDepositProductComponent],
       imports: [
         RouterTestingModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         TranslateService,

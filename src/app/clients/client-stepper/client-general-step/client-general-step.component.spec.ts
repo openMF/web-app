@@ -4,7 +4,7 @@ import { ClientGeneralStepComponent } from './client-general-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ClientGeneralStepComponent', () => {
@@ -17,8 +17,11 @@ describe('ClientGeneralStepComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        TranslateModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NotificationComponent } from './notification.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NotificationComponent', () => {
@@ -14,8 +14,11 @@ describe('NotificationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [NotificationComponent],
       imports: [
-        TranslateModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         {

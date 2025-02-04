@@ -4,7 +4,7 @@ import { CreateTaxComponentComponent } from './create-tax-component.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('CreateTaxComponentComponent', () => {
   let component: CreateTaxComponentComponent;
@@ -17,7 +17,10 @@ describe('CreateTaxComponentComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ClientDatatableStepComponent } from './client-datatable-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ClientDatatableStepComponent', () => {
   let component: ClientDatatableStepComponent;
@@ -14,7 +14,10 @@ describe('ClientDatatableStepComponent', () => {
       declarations: [ClientDatatableStepComponent],
       imports: [
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

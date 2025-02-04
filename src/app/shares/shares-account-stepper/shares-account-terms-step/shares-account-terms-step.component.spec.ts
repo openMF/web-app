@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SharesAccountTermsStepComponent } from './shares-account-terms-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('SharesAccountTermsStepComponent', () => {
   let component: SharesAccountTermsStepComponent;
@@ -14,8 +14,11 @@ describe('SharesAccountTermsStepComponent', () => {
       declarations: [SharesAccountTermsStepComponent],
       imports: [
         ReactiveFormsModule,
-        TranslateModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

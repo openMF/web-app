@@ -4,7 +4,7 @@ import { BusinessDateTabComponent } from './business-date-tab.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('BusinessDateTabComponent', () => {
   let component: BusinessDateTabComponent;
@@ -17,7 +17,10 @@ describe('BusinessDateTabComponent', () => {
         HttpClientModule,
         ReactiveFormsModule,
         CommonModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   });

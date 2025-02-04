@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecurringDepositProductDetailsStepComponent } from './recurring-deposit-product-details-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('RecurringDepositProductDetailsStepComponent', () => {
   let component: RecurringDepositProductDetailsStepComponent;
@@ -13,7 +13,10 @@ describe('RecurringDepositProductDetailsStepComponent', () => {
       declarations: [RecurringDepositProductDetailsStepComponent],
       imports: [
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [TranslateService]
     }).compileComponents();

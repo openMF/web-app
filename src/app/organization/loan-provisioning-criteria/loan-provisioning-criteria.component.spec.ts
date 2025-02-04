@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('LoanProvisioningCriteriaComponent', () => {
   let component: LoanProvisioningCriteriaComponent;
@@ -13,7 +13,10 @@ describe('LoanProvisioningCriteriaComponent', () => {
       declarations: [LoanProvisioningCriteriaComponent],
       imports: [
         RouterTestingModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

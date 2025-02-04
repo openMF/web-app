@@ -3,7 +3,7 @@ import { Overlay } from '@angular/cdk/overlay';
 
 import { SettingsComponent } from './settings.component';
 import { DatePipe } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -12,10 +12,14 @@ describe('SettingsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SettingsComponent],
-      imports: [TranslateModule],
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
       providers: [
         DatePipe,
-        TranslateService,
         Overlay
       ]
     }).compileComponents();

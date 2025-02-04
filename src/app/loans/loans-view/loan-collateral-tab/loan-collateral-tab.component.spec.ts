@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanCollateralTabComponent } from './loan-collateral-tab.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('LoanCollateralTabComponent', () => {
   let component: LoanCollateralTabComponent;
@@ -13,7 +13,10 @@ describe('LoanCollateralTabComponent', () => {
       declarations: [LoanCollateralTabComponent],
       imports: [
         RouterTestingModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [TranslateService]
     }).compileComponents();

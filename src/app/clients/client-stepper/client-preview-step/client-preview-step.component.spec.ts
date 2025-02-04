@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientPreviewStepComponent } from './client-preview-step.component';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ClientPreviewStepComponent', () => {
   let component: ClientPreviewStepComponent;
@@ -10,7 +10,12 @@ describe('ClientPreviewStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ClientPreviewStepComponent],
-      imports: [TranslateModule],
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
       providers: [TranslateService]
     }).compileComponents();
   }));

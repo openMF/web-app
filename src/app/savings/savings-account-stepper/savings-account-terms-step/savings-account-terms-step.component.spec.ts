@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SavingsAccountTermsStepComponent } from './savings-account-terms-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('SavingsAccountTermsStepComponent', () => {
   let component: SavingsAccountTermsStepComponent;
@@ -14,11 +14,13 @@ describe('SavingsAccountTermsStepComponent', () => {
       declarations: [SavingsAccountTermsStepComponent],
       imports: [
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
-        DatePipe,
-        TranslateModule
+        DatePipe
       ]
     }).compileComponents();
   }));

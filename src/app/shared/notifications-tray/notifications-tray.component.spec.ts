@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotificationsTrayComponent } from './notifications-tray.component';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('NotificationsTrayComponent', () => {
   let component: NotificationsTrayComponent;
@@ -13,7 +13,10 @@ describe('NotificationsTrayComponent', () => {
       declarations: [NotificationsTrayComponent],
       imports: [
         HttpClientModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

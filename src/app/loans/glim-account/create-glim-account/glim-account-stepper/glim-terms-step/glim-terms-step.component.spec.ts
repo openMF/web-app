@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GlimTermsStepComponent } from './glim-terms-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('GlimTermsStepComponent', () => {
   let component: GlimTermsStepComponent;
@@ -14,11 +14,13 @@ describe('GlimTermsStepComponent', () => {
       declarations: [GlimTermsStepComponent],
       imports: [
         ReactiveFormsModule,
-        TranslateModule
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
-        DatePipe,
-        TranslateService
+        DatePipe
       ]
     }).compileComponents();
   });
