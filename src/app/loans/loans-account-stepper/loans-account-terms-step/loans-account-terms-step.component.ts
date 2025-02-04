@@ -158,7 +158,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         interestRateDifferential: this.loansAccountTermsData.interestRateDifferential,
         multiDisburseLoan: this.loansAccountTermsData.multiDisburseLoan,
         interestRateFrequencyType: this.loansAccountTermsData.interestRateFrequencyType.id,
-        balloonRepaymentAmount: this.loansAccountTermsData.balloonRepaymentAmount
+        balloonRepaymentAmount: this.loansAccountTermsData.balloonRepaymentAmount,
+        interestRecognitionOnDisbursementDate: this.loansAccountTermsData.interestRecognitionOnDisbursementDate || false
       });
 
       this.setAdvancedPaymentStrategyControls();
@@ -263,7 +264,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         interestRateDifferential: this.loansAccountTermsData.interestRateDifferential,
         multiDisburseLoan: this.loansAccountTermsData.multiDisburseLoan,
         interestRateFrequencyType: this.loansAccountTermsData.interestRateFrequencyType.id,
-        balloonRepaymentAmount: this.loansAccountTermsData.balloonRepaymentAmount
+        balloonRepaymentAmount: this.loansAccountTermsData.balloonRepaymentAmount,
+        interestRecognitionOnDisbursementDate: this.loansAccountTermsData.interestRecognitionOnDisbursementDate || false
       });
     }
     this.createloansAccountTermsForm();
@@ -413,7 +415,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       ],
       multiDisburseLoan: [false],
       interestRateFrequencyType: [''],
-      balloonRepaymentAmount: ['']
+      balloonRepaymentAmount: [''],
+      interestRecognitionOnDisbursementDate: [false]
     });
   }
 

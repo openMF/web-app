@@ -355,13 +355,20 @@
     <span fxFlex="53%">{{ loanProduct.interestCalculationPeriodType?.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="loanProduct.allowPartialPeriodInterestCalculation">
+  <div fxFlexFill>
     <span fxFlex="47%"
       >{{ 'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate }}:</span
     >
     <span fxFlex="53%">{{ loanProduct.allowPartialPeriodInterestCalculation | yesNo }}</span>
   </div>
 
+  <div fxFlexFill>
+    <span fxFlex="47%"
+      >{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span
+    >
+    <span fxFlex="53%">{{ loanProduct.interestRecognitionOnDisbursementDate | yesNo }}</span>
+  </div>
+  
   <h3 class="mat-h3" fxFlexFill>{{ 'labels.inputs.Loan Schedule' | translate }}</h3>
 
   <mat-divider [inset]="true"></mat-divider>

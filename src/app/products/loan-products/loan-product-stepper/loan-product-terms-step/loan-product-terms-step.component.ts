@@ -86,7 +86,8 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       repaymentFrequencyType: this.loanProductsTemplate.repaymentFrequencyType.id,
       minimumDaysBetweenDisbursalAndFirstRepayment:
         this.loanProductsTemplate.minimumDaysBetweenDisbursalAndFirstRepayment,
-      repaymentStartDateType: this.loanProductsTemplate.repaymentStartDateType.id || 1
+      repaymentStartDateType: this.loanProductsTemplate.repaymentStartDateType.id || 1,
+      interestRecognitionOnDisbursementDate: this.loanProductsTemplate.interestRecognitionOnDisbursementDate || false
     });
 
     if (this.loanProductsTemplate.allowApprovedDisbursedAmountsOverApplied) {
@@ -173,7 +174,8 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       ],
       minimumDaysBetweenDisbursalAndFirstRepayment: [''],
       repaymentStartDateType: [1],
-      fixedLength: [null]
+      fixedLength: [null],
+      interestRecognitionOnDisbursementDate: [false]
     });
   }
 

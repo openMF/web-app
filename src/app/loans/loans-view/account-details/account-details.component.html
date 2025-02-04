@@ -123,6 +123,13 @@
     </div>
 
     <div fxFlexFill>
+      <span fxFlex="50%"
+        >{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span
+      >
+      <span fxFlex="50%">{{ loanDetails.interestRecognitionOnDisbursementDate | yesNo }}</span>
+    </div>
+
+    <div fxFlexFill>
       <span fxFlex="50%"> {{ 'labels.inputs.Submitted on' | translate }}</span>
       <span fxFlex="50%"> {{ loanDetails.timeline.submittedOnDate | dateFormat }} </span>
     </div>
