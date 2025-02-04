@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupAssignStaffComponent } from './group-assign-staff.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GroupAssignStaffComponent', () => {
   let component: GroupAssignStaffComponent;
@@ -13,7 +14,8 @@ describe('GroupAssignStaffComponent', () => {
       declarations: [GroupAssignStaffComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        RouterTestingModule
       ]
     }).compileComponents();
   }));

@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditSmsCampaignStepComponent } from './edit-sms-campaign-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditSmsCampaignStepComponent', () => {
   let component: EditSmsCampaignStepComponent;
@@ -10,7 +11,10 @@ describe('EditSmsCampaignStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditSmsCampaignStepComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 

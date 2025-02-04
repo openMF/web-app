@@ -4,6 +4,7 @@ import { ApproveSharesAccountComponent } from './approve-shares-account.componen
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ApproveSharesAccountComponent', () => {
   let component: ApproveSharesAccountComponent;
@@ -15,6 +16,7 @@ describe('ApproveSharesAccountComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
+        RouterTestingModule,
         CommonModule
       ],
       providers: [

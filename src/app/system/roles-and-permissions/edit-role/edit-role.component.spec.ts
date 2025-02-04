@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditRoleComponent } from './edit-role.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EditRoleComponent', () => {
   let component: EditRoleComponent;
@@ -10,7 +11,10 @@ describe('EditRoleComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditRoleComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

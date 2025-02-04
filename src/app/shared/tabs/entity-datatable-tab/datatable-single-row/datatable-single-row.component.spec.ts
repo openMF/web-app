@@ -5,6 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('DatatableSingleRowComponent', () => {
   let component: DatatableSingleRowComponent;
@@ -15,7 +19,13 @@ describe('DatatableSingleRowComponent', () => {
       declarations: [DatatableSingleRowComponent],
       imports: [
         CommonModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         {

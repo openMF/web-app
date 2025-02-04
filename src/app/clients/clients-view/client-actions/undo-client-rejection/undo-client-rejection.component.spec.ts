@@ -4,6 +4,7 @@ import { UndoClientRejectionComponent } from './undo-client-rejection.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('UndoClientRejectionComponent', () => {
   let component: UndoClientRejectionComponent;
@@ -14,6 +15,7 @@ describe('UndoClientRejectionComponent', () => {
       declarations: [UndoClientRejectionComponent],
       imports: [
         ReactiveFormsModule,
+        RouterTestingModule,
         HttpClientModule
       ],
       providers: [DatePipe]

@@ -6,6 +6,9 @@ import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('EditHookComponent', () => {
   let component: EditHookComponent;
@@ -17,7 +20,12 @@ describe('EditHookComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         {

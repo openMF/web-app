@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotificationsPageComponent } from './notifications-page.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NotificationsPageComponent', () => {
   let component: NotificationsPageComponent;
@@ -8,7 +9,10 @@ describe('NotificationsPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NotificationsPageComponent]
+      declarations: [NotificationsPageComponent],
+      imports: [
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 

@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ViewStandingInstructionsComponent', () => {
   let component: ViewStandingInstructionsComponent;
@@ -17,7 +18,11 @@ describe('ViewStandingInstructionsComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: []
     }).compileComponents();

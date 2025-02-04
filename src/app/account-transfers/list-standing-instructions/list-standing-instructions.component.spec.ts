@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('ListStandingInstructionsComponent', () => {
   let component: ListStandingInstructionsComponent;
@@ -19,7 +20,11 @@ describe('ListStandingInstructionsComponent', () => {
         HttpClientModule,
         RouterTestingModule,
         CommonModule,
-        MatDialogModule
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe,

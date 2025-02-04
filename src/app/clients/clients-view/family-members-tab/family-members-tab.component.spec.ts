@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FamilyMembersTabComponent } from './family-members-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('FamilyMembersTabComponent', () => {
   let component: FamilyMembersTabComponent;
@@ -8,7 +10,14 @@ describe('FamilyMembersTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FamilyMembersTabComponent]
+      declarations: [FamilyMembersTabComponent],
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ]
     }).compileComponents();
   }));
 

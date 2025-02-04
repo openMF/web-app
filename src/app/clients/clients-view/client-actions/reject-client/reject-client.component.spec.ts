@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RejectClientComponent } from './reject-client.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('RejectClientComponent', () => {
   let component: RejectClientComponent;
@@ -10,7 +11,10 @@ describe('RejectClientComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RejectClientComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     }).compileComponents();
   }));
 

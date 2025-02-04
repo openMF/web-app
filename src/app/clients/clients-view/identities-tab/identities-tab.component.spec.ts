@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('IdentitiesTabComponent', () => {
   let component: IdentitiesTabComponent;
@@ -16,7 +17,11 @@ describe('IdentitiesTabComponent', () => {
       declarations: [IdentitiesTabComponent],
       imports: [
         MatDialogModule,
-        HttpClientModule
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

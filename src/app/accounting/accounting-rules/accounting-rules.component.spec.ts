@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('AccountingRulesComponent', () => {
   let component: AccountingRulesComponent;
@@ -15,9 +16,13 @@ describe('AccountingRulesComponent', () => {
       declarations: [AccountingRulesComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule,
         RouterTestingModule,
-        CommonModule
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanProductInterestRefundStepComponent } from './loan-product-interest-refund-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('LoanProductInterestRefundStepComponent', () => {
   let component: LoanProductInterestRefundStepComponent;
@@ -10,7 +11,13 @@ describe('LoanProductInterestRefundStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoanProductInterestRefundStepComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ]
     }).compileComponents();
   }));
 

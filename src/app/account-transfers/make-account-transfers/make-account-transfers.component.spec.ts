@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('MakeAccountTransfersComponent', () => {
   let component: MakeAccountTransfersComponent;
@@ -17,7 +18,11 @@ describe('MakeAccountTransfersComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

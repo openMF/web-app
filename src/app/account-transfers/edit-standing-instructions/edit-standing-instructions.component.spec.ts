@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('EditStandingInstructionsComponent', () => {
   let component: EditStandingInstructionsComponent;
@@ -19,7 +20,11 @@ describe('EditStandingInstructionsComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe,

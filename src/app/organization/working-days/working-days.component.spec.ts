@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkingDaysComponent } from './working-days.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('WorkingDaysComponent', () => {
   let component: WorkingDaysComponent;
@@ -10,7 +11,10 @@ describe('WorkingDaysComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [WorkingDaysComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule
+      ]
     }).compileComponents();
   }));
 

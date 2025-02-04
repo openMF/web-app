@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('EditRuleComponent', () => {
   let component: EditRuleComponent;
@@ -17,7 +19,11 @@ describe('EditRuleComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         RouterTestingModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

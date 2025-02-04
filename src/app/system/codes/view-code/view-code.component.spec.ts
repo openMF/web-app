@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ViewCodeComponent', () => {
   let component: ViewCodeComponent;
@@ -17,9 +18,11 @@ describe('ViewCodeComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDialogModule
       ],
       providers: [
+        { provide: MatDialogRef, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {

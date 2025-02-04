@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoanProvisioningCriteriaComponent } from './loan-provisioning-criteria.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('LoanProvisioningCriteriaComponent', () => {
   let component: LoanProvisioningCriteriaComponent;
@@ -17,6 +18,10 @@ describe('LoanProvisioningCriteriaComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
       ]
     }).compileComponents();
   }));
