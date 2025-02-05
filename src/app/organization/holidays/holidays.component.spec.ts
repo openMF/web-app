@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('HolidaysComponent', () => {
   let component: HolidaysComponent;
@@ -17,7 +19,12 @@ describe('HolidaysComponent', () => {
         HttpClientModule,
         RouterTestingModule,
         CommonModule,
-        OverlayModule
+        OverlayModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

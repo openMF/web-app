@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('CreateDividendComponent', () => {
   let component: CreateDividendComponent;
@@ -17,7 +19,12 @@ describe('CreateDividendComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
-        CommonModule
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         {

@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { RecurringDepositProductDetailsStepComponent } from './recurring-deposit-product-details-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +19,10 @@ describe('RecurringDepositProductDetailsStepComponent', () => {
         })
 
       ],
-      providers: [TranslateService]
+      providers: [TranslateService],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

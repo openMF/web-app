@@ -4,6 +4,7 @@ import { SharesAccountTermsStepComponent } from './shares-account-terms-step.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('SharesAccountTermsStepComponent', () => {
   let component: SharesAccountTermsStepComponent;
@@ -20,7 +21,10 @@ describe('SharesAccountTermsStepComponent', () => {
         })
 
       ],
-      providers: [DatePipe]
+      providers: [DatePipe],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

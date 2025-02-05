@@ -6,6 +6,7 @@ import { CommonModule, DatePipe } from '@angular/common'; // Importar DatePipe
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('FixedDepositAccountSettingsStepComponent', () => {
   let component: FixedDepositAccountSettingsStepComponent;
@@ -26,6 +27,9 @@ describe('FixedDepositAccountSettingsStepComponent', () => {
       ],
       providers: [
         DatePipe
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ClientFamilyMemberDialogComponent', () => {
   let component: ClientFamilyMemberDialogComponent;
@@ -29,7 +30,10 @@ describe('ClientFamilyMemberDialogComponent', () => {
       providers: [
         DatePipe,
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }]
+        { provide: MAT_DIALOG_DATA, useValue: {} }],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { EntityNotesTabComponent } from './entity-notes-tab.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -30,7 +31,10 @@ describe('EntityNotesTabComponent', () => {
       providers: [
         DatePipe,
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }]
+        { provide: MAT_DIALOG_DATA, useValue: {} }],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   });
 
