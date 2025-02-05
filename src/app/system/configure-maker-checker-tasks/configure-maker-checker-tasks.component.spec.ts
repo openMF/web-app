@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('ConfigureMakerCheckerTasksComponent', () => {
   let component: ConfigureMakerCheckerTasksComponent;
@@ -17,7 +18,8 @@ describe('ConfigureMakerCheckerTasksComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        OverlayModule
       ],
       providers: [
         {

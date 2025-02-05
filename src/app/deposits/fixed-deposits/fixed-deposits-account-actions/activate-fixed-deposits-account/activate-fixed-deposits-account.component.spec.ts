@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivateFixedDepositsAccountComponent } from './activate-fixed-deposits-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('ActivateFixedDepositsAccountComponent', () => {
   let component: ActivateFixedDepositsAccountComponent;
@@ -16,7 +16,8 @@ describe('ActivateFixedDepositsAccountComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('FixedDepositProductsComponent', () => {
   let component: FixedDepositProductsComponent;
@@ -22,6 +23,7 @@ describe('FixedDepositProductsComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule,
+        OverlayModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })

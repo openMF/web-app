@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CreateProductMixComponent', () => {
   let component: CreateProductMixComponent;
@@ -25,7 +26,10 @@ describe('CreateProductMixComponent', () => {
         })
 
       ],
-      providers: [DatePipe]
+      providers: [DatePipe],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

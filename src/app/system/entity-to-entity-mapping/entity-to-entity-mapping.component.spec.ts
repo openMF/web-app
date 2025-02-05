@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('EntityToEntityMappingComponent', () => {
   let component: EntityToEntityMappingComponent;
@@ -19,7 +20,11 @@ describe('EntityToEntityMappingComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule,
-        MatDialogModule
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe,

@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RecurringDepositProductSettingsStepComponent } from './recurring-deposit-product-settings-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('RecurringDepositProductSettingsStepComponent', () => {
   let component: RecurringDepositProductSettingsStepComponent;
@@ -17,6 +18,9 @@ describe('RecurringDepositProductSettingsStepComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

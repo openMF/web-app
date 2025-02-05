@@ -4,6 +4,7 @@ import { UsersComponent } from './users.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -12,7 +13,10 @@ describe('UsersComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UsersComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        OverlayModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

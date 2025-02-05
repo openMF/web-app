@@ -8,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('WithdrawByClientSavingsAccountComponent', () => {
   let component: WithdrawByClientSavingsAccountComponent;
@@ -26,7 +27,8 @@ describe('WithdrawByClientSavingsAccountComponent', () => {
         })
 
       ],
-      providers: [DatePipe]
+      providers: [DatePipe],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

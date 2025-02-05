@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 describe('ApproveSharesComponent', () => {
   let component: ApproveSharesComponent;
@@ -20,7 +21,8 @@ describe('ApproveSharesComponent', () => {
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        DatePipe
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA

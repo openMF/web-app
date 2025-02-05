@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ViewAccountTransferComponent', () => {
   let component: ViewAccountTransferComponent;
@@ -24,6 +25,9 @@ describe('ViewAccountTransferComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

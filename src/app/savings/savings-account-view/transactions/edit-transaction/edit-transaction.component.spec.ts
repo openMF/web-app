@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 describe('EditTransactionComponent', () => {
   let component: EditTransactionComponent;
@@ -24,7 +25,8 @@ describe('EditTransactionComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

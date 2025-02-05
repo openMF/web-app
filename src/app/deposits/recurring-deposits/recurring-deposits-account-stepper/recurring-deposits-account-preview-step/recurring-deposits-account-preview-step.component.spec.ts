@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { RecurringDepositsAccountPreviewStepComponent } from './recurring-deposits-account-preview-step.component';
 import {
@@ -22,7 +23,8 @@ describe('RecurringDepositsAccountPreviewStepComponent', () => {
         })
 
       ],
-      providers: []
+      providers: [],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

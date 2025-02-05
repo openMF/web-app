@@ -26,7 +26,7 @@ describe('ClientGeneralStepComponent', () => {
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ],
-      providers: [TranslateService]
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

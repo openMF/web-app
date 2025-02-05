@@ -4,6 +4,7 @@ import { ReactivateClientComponent } from './reactivate-client.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 describe('ReactivateClientComponent', () => {
   let component: ReactivateClientComponent;
@@ -16,7 +17,8 @@ describe('ReactivateClientComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 describe('SavingsDocumentsTabComponent', () => {
   let component: SavingsDocumentsTabComponent;
@@ -23,7 +24,9 @@ describe('SavingsDocumentsTabComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        DatePipe
+
       ]
     }).compileComponents();
   });

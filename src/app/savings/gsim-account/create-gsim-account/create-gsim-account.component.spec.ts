@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateGsimAccountComponent } from './create-gsim-account.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('CreateGsimAccountComponent', () => {
   let component: CreateGsimAccountComponent;
@@ -19,7 +19,9 @@ describe('CreateGsimAccountComponent', () => {
           useValue: {
             params: of({ savingsAccountTemplate: 'any', groupsData: 'any' })
           }
-        }
+        },
+        DatePipe
+
       ]
     }).compileComponents();
   });

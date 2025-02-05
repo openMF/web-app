@@ -8,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('EditDataTableComponent', () => {
   let component: EditDataTableComponent;
@@ -30,6 +31,9 @@ describe('EditDataTableComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} }
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   }));

@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CurrenciesComponent } from './currencies.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('CurrenciesComponent', () => {
   let component: CurrenciesComponent;
@@ -11,6 +12,9 @@ describe('CurrenciesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CurrenciesComponent],
+      imports: [
+        OverlayModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,

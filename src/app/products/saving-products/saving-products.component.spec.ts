@@ -4,6 +4,7 @@ import { SavingProductsComponent } from './saving-products.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('SavingProductsComponent', () => {
   let component: SavingProductsComponent;
@@ -12,7 +13,10 @@ describe('SavingProductsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SavingProductsComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        OverlayModule
+      ],
       providers: [
         {
           provide: ActivatedRoute,
