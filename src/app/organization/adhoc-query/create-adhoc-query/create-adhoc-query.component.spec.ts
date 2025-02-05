@@ -4,7 +4,7 @@ import { CreateAdhocQueryComponent } from './create-adhoc-query.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('CreateAdhocQueryComponent', () => {
@@ -23,6 +23,9 @@ describe('CreateAdhocQueryComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

@@ -2,6 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CobWorkflowComponent } from './cob-workflow.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('CobWorkflowComponent', () => {
   let component: CobWorkflowComponent;
@@ -10,7 +15,16 @@ describe('CobWorkflowComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CobWorkflowComponent],
-      imports: [HttpClientModule]
+      imports: [
+        HttpClientModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ]
     }).compileComponents();
   });
 

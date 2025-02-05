@@ -4,6 +4,7 @@ import { SavingsAccountTermsStepComponent } from './savings-account-terms-step.c
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('SavingsAccountTermsStepComponent', () => {
   let component: SavingsAccountTermsStepComponent;
@@ -21,7 +22,8 @@ describe('SavingsAccountTermsStepComponent', () => {
       ],
       providers: [
         DatePipe
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

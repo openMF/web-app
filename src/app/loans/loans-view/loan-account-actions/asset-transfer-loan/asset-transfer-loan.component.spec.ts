@@ -4,7 +4,7 @@ import { AssetTransferLoanComponent } from './asset-transfer-loan.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('AssetTransferLoanComponent', () => {
@@ -23,7 +23,8 @@ describe('AssetTransferLoanComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

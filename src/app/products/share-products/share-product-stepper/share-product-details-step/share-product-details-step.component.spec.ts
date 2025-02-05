@@ -19,7 +19,7 @@ describe('ShareProductDetailsStepComponent', () => {
         })
 
       ],
-      providers: [TranslateService],
+      providers: [],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ]

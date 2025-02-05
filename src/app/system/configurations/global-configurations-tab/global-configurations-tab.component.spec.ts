@@ -4,6 +4,10 @@ import { GlobalConfigurationsTabComponent } from './global-configurations-tab.co
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('GlobalConfigurationsTabComponent', () => {
   let component: GlobalConfigurationsTabComponent;
@@ -12,7 +16,15 @@ describe('GlobalConfigurationsTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GlobalConfigurationsTabComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
       providers: [
         {
           provide: ActivatedRoute,

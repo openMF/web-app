@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 import { UnassignRoleDialogComponent } from './unassign-role-dialog.component';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('UnassignRoleDialogComponent', () => {
   let component: UnassignRoleDialogComponent;
@@ -19,10 +20,15 @@ describe('UnassignRoleDialogComponent', () => {
         RouterTestingModule,
         HttpClientModule,
         CommonModule,
+        MatDialogModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

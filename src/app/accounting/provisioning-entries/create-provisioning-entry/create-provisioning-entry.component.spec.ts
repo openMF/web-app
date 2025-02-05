@@ -4,6 +4,9 @@ import { CreateProvisioningEntryComponent } from './create-provisioning-entry.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('CreateProvisioningEntryComponent', () => {
   let component: CreateProvisioningEntryComponent;
@@ -14,7 +17,13 @@ describe('CreateProvisioningEntryComponent', () => {
       declarations: [CreateProvisioningEntryComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

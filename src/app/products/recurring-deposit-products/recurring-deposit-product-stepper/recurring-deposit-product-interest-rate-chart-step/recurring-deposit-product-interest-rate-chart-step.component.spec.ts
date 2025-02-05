@@ -4,6 +4,11 @@ import { RecurringDepositProductInterestRateChartStepComponent } from './recurri
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule, DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('RecurringDepositProductInterestRateChartStepComponent', () => {
   let component: RecurringDepositProductInterestRateChartStepComponent;
@@ -15,12 +20,19 @@ describe('RecurringDepositProductInterestRateChartStepComponent', () => {
       imports: [
         ReactiveFormsModule,
         CommonModule,
-        MatDialogModule
+        MatDialogModule,
+        RouterTestingModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe,
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }]
+        { provide: MAT_DIALOG_DATA, useValue: {} }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

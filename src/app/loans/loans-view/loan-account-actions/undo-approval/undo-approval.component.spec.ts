@@ -4,6 +4,9 @@ import { UndoApprovalComponent } from './undo-approval.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('UndoApprovalComponent', () => {
   let component: UndoApprovalComponent;
@@ -15,7 +18,12 @@ describe('UndoApprovalComponent', () => {
       imports: [
         HttpClientModule,
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

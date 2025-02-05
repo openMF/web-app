@@ -21,7 +21,8 @@ describe('BusinessDateTabComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

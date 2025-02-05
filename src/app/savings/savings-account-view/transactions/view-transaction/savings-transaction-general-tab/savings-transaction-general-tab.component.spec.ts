@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('SavingsTransactionGeneralTabComponent', () => {
   let component: SavingsTransactionGeneralTabComponent;
@@ -29,7 +30,8 @@ describe('SavingsTransactionGeneralTabComponent', () => {
       ],
       providers: [
         DatePipe
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SavingsTransactionGeneralTabComponent);

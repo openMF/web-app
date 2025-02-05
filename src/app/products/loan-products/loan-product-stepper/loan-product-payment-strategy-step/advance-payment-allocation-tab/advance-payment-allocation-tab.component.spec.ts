@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdvancePaymentAllocationTabComponent } from './advance-payment-allocation-tab.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AdvancePaymentAllocationTabComponent', () => {
   let component: AdvancePaymentAllocationTabComponent;
@@ -18,7 +19,8 @@ describe('AdvancePaymentAllocationTabComponent', () => {
         })
 
       ],
-      providers: []
+      providers: [],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AdvancePaymentAllocationTabComponent);

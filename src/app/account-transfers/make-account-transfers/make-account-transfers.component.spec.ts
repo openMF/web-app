@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 describe('MakeAccountTransfersComponent', () => {
   let component: MakeAccountTransfersComponent;
@@ -23,7 +24,8 @@ describe('MakeAccountTransfersComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

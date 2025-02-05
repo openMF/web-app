@@ -4,6 +4,10 @@ import { StandingInstructionsTabComponent } from './standing-instructions-tab.co
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('StandingInstructionsTabComponent', () => {
   let component: StandingInstructionsTabComponent;
@@ -13,9 +17,15 @@ describe('StandingInstructionsTabComponent', () => {
     TestBed.configureTestingModule({
       declarations: [StandingInstructionsTabComponent],
       imports: [
-        HttpClientModule,
+        ReactiveFormsModule,
         RouterTestingModule,
-        MatDialogModule
+        HttpClientModule,
+        CommonModule,
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

@@ -4,6 +4,10 @@ import { EditDataTableComponent } from './edit-data-table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('EditDataTableComponent', () => {
   let component: EditDataTableComponent;
@@ -15,7 +19,17 @@ describe('EditDataTableComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDialogModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

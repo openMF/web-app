@@ -4,6 +4,9 @@ import { EditGroupMeetingComponent } from './edit-group-meeting.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditGroupMeetingComponent', () => {
   let component: EditGroupMeetingComponent;
@@ -15,7 +18,12 @@ describe('EditGroupMeetingComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        }),
+        RouterTestingModule
+
       ],
       providers: [DatePipe]
     }).compileComponents();

@@ -4,6 +4,9 @@ import { EditTransactionComponent } from './edit-transaction.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('EditTransactionComponent', () => {
   let component: EditTransactionComponent;
@@ -15,7 +18,12 @@ describe('EditTransactionComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
-        CommonModule
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ]
     }).compileComponents();
   }));

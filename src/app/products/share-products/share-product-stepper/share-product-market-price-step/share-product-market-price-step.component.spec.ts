@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShareProductMarketPriceStepComponent } from './share-product-market-price-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 describe('ShareProductMarketPriceStepComponent', () => {
   let component: ShareProductMarketPriceStepComponent;
@@ -16,9 +17,9 @@ describe('ShareProductMarketPriceStepComponent', () => {
         MatDialogModule
       ],
       providers: [
+        DatePipe,
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
-      ]
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

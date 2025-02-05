@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common'; // Importar DatePipe
 
 describe('GeneralTabComponent', () => {
   let component: GeneralTabComponent;
@@ -23,6 +24,10 @@ describe('GeneralTabComponent', () => {
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
+
+      ],
+      providers: [
+        DatePipe // Agregar DatePipe a los proveedores
 
       ]
     }).compileComponents();

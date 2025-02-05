@@ -4,6 +4,7 @@ import { ViewTransactionComponent } from './view-transaction.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 describe('ViewTransactionComponent', () => {
   let component: ViewTransactionComponent;
@@ -18,7 +19,8 @@ describe('ViewTransactionComponent', () => {
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        DatePipe
       ]
     }).compileComponents();
   }));

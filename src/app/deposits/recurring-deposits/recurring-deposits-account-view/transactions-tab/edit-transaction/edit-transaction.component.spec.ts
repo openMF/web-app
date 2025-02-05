@@ -5,6 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('EditTransactionComponent', () => {
   let component: EditTransactionComponent;
@@ -15,7 +19,13 @@ describe('EditTransactionComponent', () => {
       declarations: [EditTransactionComponent],
       imports: [
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        RouterTestingModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe,
