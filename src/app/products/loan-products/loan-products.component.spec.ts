@@ -3,6 +3,8 @@ import { LoanProductsComponent } from './loan-products.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { DatePipe } from '@angular/common';
 
 describe('LoanProductsComponent', () => {
   let component: LoanProductsComponent;
@@ -11,8 +13,12 @@ describe('LoanProductsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoanProductsComponent],
-      imports: [RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        OverlayModule
+      ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

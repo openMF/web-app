@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AcceptClientTransferComponent } from './accept-client-transfer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('AcceptClientTransferComponent', () => {
   let component: AcceptClientTransferComponent;
@@ -14,6 +15,9 @@ describe('AcceptClientTransferComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

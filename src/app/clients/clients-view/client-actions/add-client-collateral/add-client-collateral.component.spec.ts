@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('AddClientCollateralComponent', () => {
   let component: AddClientCollateralComponent;
@@ -23,7 +24,9 @@ describe('AddClientCollateralComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        DatePipe
+
       ]
     }).compileComponents();
   });

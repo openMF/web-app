@@ -5,8 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { SystemComponent } from './system.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('SystemComponent', () => {
   let component: SystemComponent;
@@ -20,11 +22,13 @@ describe('SystemComponent', () => {
         RouterTestingModule,
         HttpClientModule,
         CommonModule,
+        OverlayModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

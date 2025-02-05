@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('DatatableSingleRowComponent', () => {
   let component: DatatableSingleRowComponent;
@@ -39,6 +40,9 @@ describe('DatatableSingleRowComponent', () => {
             params: of({ id: '123' })
           }
         }
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   });

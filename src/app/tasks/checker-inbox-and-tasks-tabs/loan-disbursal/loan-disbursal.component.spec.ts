@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 describe('LoanDisbursalComponent', () => {
   let component: LoanDisbursalComponent;
@@ -25,7 +26,9 @@ describe('LoanDisbursalComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        DatePipe
+
       ]
     }).compileComponents();
   }));

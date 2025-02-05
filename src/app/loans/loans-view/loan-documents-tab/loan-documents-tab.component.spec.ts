@@ -4,6 +4,7 @@ import { LoanDocumentsTabComponent } from './loan-documents-tab.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('LoanDocumentsTabComponent', () => {
   let component: LoanDocumentsTabComponent;
@@ -19,7 +20,9 @@ describe('LoanDocumentsTabComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        DatePipe
+
       ]
     }).compileComponents();
   }));

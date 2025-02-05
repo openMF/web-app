@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { OrganizationComponent } from './organization.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('OrganizationComponent', () => {
   let component: OrganizationComponent;
@@ -10,7 +12,13 @@ describe('OrganizationComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [OrganizationComponent],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        OverlayModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

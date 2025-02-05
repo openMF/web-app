@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('MigrateOpeningBalancesComponent', () => {
   let component: MigrateOpeningBalancesComponent;
@@ -17,7 +19,11 @@ describe('MigrateOpeningBalancesComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         RouterTestingModule,
-        CommonModule
+        CommonModule,
+        OverlayModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

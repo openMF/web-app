@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 import { ChartOfAccountsComponent } from './chart-of-accounts.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ChartOfAccountsComponent', () => {
   let component: ChartOfAccountsComponent;
@@ -19,12 +21,14 @@ describe('ChartOfAccountsComponent', () => {
         RouterTestingModule,
         HttpClientModule,
         CommonModule,
+        OverlayModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
       ],
-      providers: []
+      providers: [],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

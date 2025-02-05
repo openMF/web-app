@@ -5,6 +5,7 @@ import { FrequentPostingsComponent } from './frequent-postings.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('FrequentPostingsComponent', () => {
   let component: FrequentPostingsComponent;
@@ -17,7 +18,11 @@ describe('FrequentPostingsComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         RouterTestingModule,
-        CommonModule
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe

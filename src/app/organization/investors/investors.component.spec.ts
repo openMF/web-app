@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { InvestorsComponent } from './investors.component';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -25,7 +26,8 @@ describe('InvestorsComponent', () => {
       providers: [
         DatePipe,
         TranslateService
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   });
 

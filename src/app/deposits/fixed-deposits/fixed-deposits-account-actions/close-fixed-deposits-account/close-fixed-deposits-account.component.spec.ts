@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 describe('CloseFixedDepositsAccountComponent', () => {
   let component: CloseFixedDepositsAccountComponent;
@@ -24,7 +25,8 @@ describe('CloseFixedDepositsAccountComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

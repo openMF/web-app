@@ -5,6 +5,11 @@ import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('CentersViewComponent', () => {
   let component: CentersViewComponent;
@@ -15,7 +20,14 @@ describe('CentersViewComponent', () => {
       declarations: [CentersViewComponent],
       imports: [
         MatDialogModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         {

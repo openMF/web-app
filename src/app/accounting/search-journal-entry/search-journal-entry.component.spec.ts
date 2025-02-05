@@ -5,6 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('SearchJournalEntryComponent', () => {
   let component: SearchJournalEntryComponent;
@@ -17,7 +19,11 @@ describe('SearchJournalEntryComponent', () => {
         HttpClientModule,
         RouterTestingModule,
         CommonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [DatePipe]
     }).compileComponents();

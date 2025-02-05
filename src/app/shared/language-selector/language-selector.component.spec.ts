@@ -18,8 +18,7 @@ describe('LanguageSelectorComponent', () => {
 
       ],
       providers: [
-        DatePipe // Agregar DatePipe a los proveedores
-
+        DatePipe
       ]
     }).compileComponents();
   }));

@@ -4,6 +4,10 @@ import { FixedDepositAccountViewComponent } from './fixed-deposit-account-view.c
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('FixedDepositAccountViewComponent', () => {
   let component: FixedDepositAccountViewComponent;
@@ -15,7 +19,13 @@ describe('FixedDepositAccountViewComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientModule,
-        MatDialogModule
+        MatDialogModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

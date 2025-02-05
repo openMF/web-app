@@ -25,6 +25,9 @@ describe('EditChargeComponent', () => {
         })
 
       ],
+      providers: [
+        DatePipe
+      ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ]

@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { DatePipe } from '@angular/common';
 
 import { RepaymentScheduleTabComponent } from './repayment-schedule-tab.component';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +18,9 @@ describe('RepaymentScheduleTabComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        DatePipe
+
       ]
     }).compileComponents();
   }));

@@ -3,6 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FixedDepositAccountSettingsStepComponent } from './fixed-deposit-account-settings-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common'; // Importar DatePipe
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('FixedDepositAccountSettingsStepComponent', () => {
   let component: FixedDepositAccountSettingsStepComponent;
@@ -13,11 +16,16 @@ describe('FixedDepositAccountSettingsStepComponent', () => {
       declarations: [FixedDepositAccountSettingsStepComponent],
       imports: [
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        RouterTestingModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
-        DatePipe // Agregar DatePipe a los proveedores
-
+        DatePipe
       ]
     }).compileComponents();
   }));

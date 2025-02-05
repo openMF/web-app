@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DatePipe } from '@angular/common';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('CreateUserComponent', () => {
   let component: CreateUserComponent;
@@ -18,7 +19,8 @@ describe('CreateUserComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientModule
+        HttpClientModule,
+        OverlayModule
       ],
       providers: [
         DatePipe,

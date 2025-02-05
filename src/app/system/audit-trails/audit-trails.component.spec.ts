@@ -1,8 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AuditTrailsComponent } from './audit-trails.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
+
+import { AuditTrailsComponent } from './audit-trails.component';
 import { DatePipe } from '@angular/common';
 
 describe('AuditTrailsComponent', () => {
@@ -14,7 +18,13 @@ describe('AuditTrailsComponent', () => {
       declarations: [AuditTrailsComponent],
       imports: [
         RouterTestingModule,
-        HttpClientModule
+        HttpClientModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe

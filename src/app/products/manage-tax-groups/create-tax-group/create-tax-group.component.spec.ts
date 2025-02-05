@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('CreateTaxGroupComponent', () => {
   let component: CreateTaxGroupComponent;
@@ -17,9 +18,13 @@ describe('CreateTaxGroupComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         RouterTestingModule,
-        CommonModule
+        CommonModule,
+        MatDialogModule
       ],
-      providers: [DatePipe]
+      providers: [
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

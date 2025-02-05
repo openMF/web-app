@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DatePipe } from '@angular/common';
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('SavingsDocumentsTabComponent', () => {
   let component: SavingsDocumentsTabComponent;
@@ -16,7 +17,8 @@ describe('SavingsDocumentsTabComponent', () => {
       declarations: [SavingsDocumentsTabComponent],
       imports: [
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatDialogModule
       ],
       providers: [
         {
@@ -25,8 +27,9 @@ describe('SavingsDocumentsTabComponent', () => {
             params: of({ id: '123' })
           }
         },
-        DatePipe
-
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   });

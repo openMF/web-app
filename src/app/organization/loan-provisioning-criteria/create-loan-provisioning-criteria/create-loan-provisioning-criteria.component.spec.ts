@@ -4,6 +4,7 @@ import { CreateLoanProvisioningCriteriaComponent } from './create-loan-provision
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('CreateLoanProvisioningCriteriaComponent', () => {
   let component: CreateLoanProvisioningCriteriaComponent;
@@ -15,11 +16,13 @@ describe('CreateLoanProvisioningCriteriaComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        MatDialogModule
       ],
       providers: [
-        DatePipe
-      ]
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

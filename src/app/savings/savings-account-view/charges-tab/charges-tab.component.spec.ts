@@ -4,6 +4,8 @@ import { ChargesTabComponent } from './charges-tab.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DatePipe } from '@angular/common'; // Importar DatePipe
+import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('ChargesTabComponent', () => {
   let component: ChargesTabComponent;
@@ -14,12 +16,13 @@ describe('ChargesTabComponent', () => {
       declarations: [ChargesTabComponent],
       imports: [
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatDialogModule
       ],
       providers: [
-        DatePipe // Agregar DatePipe a los proveedores
-
-      ]
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

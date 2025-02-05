@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('FinancialActivityMappingsComponent', () => {
   let component: FinancialActivityMappingsComponent;
@@ -19,6 +20,7 @@ describe('FinancialActivityMappingsComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         RouterTestingModule,
+        OverlayModule,
         CommonModule
       ],
       providers: [

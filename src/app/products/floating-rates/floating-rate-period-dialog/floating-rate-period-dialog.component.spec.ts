@@ -7,6 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 describe('FloatingRatePeriodDialogComponent', () => {
   let component: FloatingRatePeriodDialogComponent;
@@ -28,7 +29,8 @@ describe('FloatingRatePeriodDialogComponent', () => {
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        DatePipe
       ]
     }).compileComponents();
   }));

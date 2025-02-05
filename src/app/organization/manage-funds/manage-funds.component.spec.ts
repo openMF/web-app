@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 describe('ManageFundsComponent', () => {
   let component: ManageFundsComponent;
@@ -18,7 +18,8 @@ describe('ManageFundsComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        CommonModule
+        CommonModule,
+        MatDialogModule
       ],
       providers: [
         DatePipe,

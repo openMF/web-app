@@ -1,12 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ViewFinancialActivityMappingComponent } from './view-financial-activity-mapping.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
+
+import { ViewFinancialActivityMappingComponent } from './view-financial-activity-mapping.component';
 
 describe('ViewFinancialActivityMappingComponent', () => {
   let component: ViewFinancialActivityMappingComponent;
@@ -20,7 +22,11 @@ describe('ViewFinancialActivityMappingComponent', () => {
         HttpClientModule,
         RouterTestingModule,
         CommonModule,
-        MatDialogModule
+        MatDialogModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },

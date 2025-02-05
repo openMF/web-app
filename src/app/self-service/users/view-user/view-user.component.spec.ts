@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('ViewUserComponent', () => {
   let component: ViewUserComponent;
@@ -15,7 +17,8 @@ describe('ViewUserComponent', () => {
       declarations: [ViewUserComponent],
       imports: [
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatDialogModule
       ],
       providers: [
         {
@@ -23,7 +26,9 @@ describe('ViewUserComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

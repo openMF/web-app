@@ -4,6 +4,10 @@ import { WithdrawByClientRecurringDepositsAccountComponent } from './withdraw-by
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('WithdrawByClientRecurringDepositsAccountComponent', () => {
   let component: WithdrawByClientRecurringDepositsAccountComponent;
@@ -14,7 +18,13 @@ describe('WithdrawByClientRecurringDepositsAccountComponent', () => {
       declarations: [WithdrawByClientRecurringDepositsAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe

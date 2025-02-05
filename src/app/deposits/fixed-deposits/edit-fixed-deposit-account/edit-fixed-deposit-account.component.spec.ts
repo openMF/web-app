@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditFixedDepositAccountComponent } from './edit-fixed-deposit-account.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 describe('EditFixedDepositAccountComponent', () => {
   let component: EditFixedDepositAccountComponent;
@@ -17,7 +18,9 @@ describe('EditFixedDepositAccountComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        DatePipe
+
       ]
     }).compileComponents();
   }));

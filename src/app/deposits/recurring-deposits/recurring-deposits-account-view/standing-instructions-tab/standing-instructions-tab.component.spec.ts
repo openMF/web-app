@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 describe('StandingInstructionsTabComponent', () => {
   let component: StandingInstructionsTabComponent;
@@ -29,7 +30,8 @@ describe('StandingInstructionsTabComponent', () => {
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
-        { provide: MAT_DIALOG_DATA, useValue: {} }
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        DatePipe
       ]
     }).compileComponents();
   }));

@@ -4,6 +4,7 @@ import { AddChargeFixedDepositsAccountComponent } from './add-charge-fixed-depos
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 describe('AddChargeFixedDepositsAccountComponent', () => {
   let component: AddChargeFixedDepositsAccountComponent;
@@ -16,6 +17,9 @@ describe('AddChargeFixedDepositsAccountComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         CommonModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

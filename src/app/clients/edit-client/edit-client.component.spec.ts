@@ -4,6 +4,9 @@ import { EditClientComponent } from './edit-client.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('EditClientComponent', () => {
   let component: EditClientComponent;
@@ -15,7 +18,15 @@ describe('EditClientComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientModule
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

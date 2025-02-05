@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { NotificationsPageComponent } from './notifications-page.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -12,7 +13,8 @@ describe('NotificationsPageComponent', () => {
       declarations: [NotificationsPageComponent],
       imports: [
         RouterTestingModule
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

@@ -3,6 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ManageSavingsAccountComponent } from './manage-savings-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('ManageSavingsAccountComponent', () => {
   let component: ManageSavingsAccountComponent;
@@ -13,8 +17,15 @@ describe('ManageSavingsAccountComponent', () => {
       declarations: [ManageSavingsAccountComponent],
       imports: [
         ReactiveFormsModule,
-        HttpClientModule
-      ]
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

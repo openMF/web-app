@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ManageGroupsComponent } from './manage-groups.component';
 import { ActivatedRoute } from '@angular/router';
@@ -24,7 +25,8 @@ describe('ManageGroupsComponent', () => {
         CommonModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
-        })
+        }),
+        MatDialogModule
 
       ],
       providers: [
@@ -33,7 +35,9 @@ describe('ManageGroupsComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

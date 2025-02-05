@@ -8,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('ViewUserComponent', () => {
   let component: ViewUserComponent;
@@ -29,7 +30,9 @@ describe('ViewUserComponent', () => {
           useValue: {
             params: of({ user: 'Lipsum in de lorem' })
           }
-        }
+        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

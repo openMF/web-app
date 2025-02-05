@@ -8,6 +8,7 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-tran
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('GeneralTabComponent', () => {
   let component: GeneralTabComponent;
@@ -23,7 +24,8 @@ describe('GeneralTabComponent', () => {
         CommonModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
-        })
+        }),
+        MatDialogModule
 
       ],
       providers: [
@@ -32,7 +34,9 @@ describe('GeneralTabComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
 

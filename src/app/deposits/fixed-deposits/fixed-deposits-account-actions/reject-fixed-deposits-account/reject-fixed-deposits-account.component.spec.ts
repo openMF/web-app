@@ -6,6 +6,7 @@ import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-tran
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 describe('RejectFixedDepositsAccountComponent', () => {
   let component: RejectFixedDepositsAccountComponent;
@@ -23,6 +24,9 @@ describe('RejectFixedDepositsAccountComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

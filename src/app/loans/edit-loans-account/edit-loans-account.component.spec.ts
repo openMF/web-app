@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { EditLoansAccountComponent } from './edit-loans-account.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,7 +29,8 @@ describe('EditLoansAccountComponent', () => {
       ],
       providers: [
         DatePipe
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

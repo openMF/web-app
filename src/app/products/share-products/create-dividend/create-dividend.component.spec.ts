@@ -4,7 +4,7 @@ import { CreateDividendComponent } from './create-dividend.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CreateDividendComponent', () => {
@@ -25,7 +25,9 @@ describe('CreateDividendComponent', () => {
           useValue: {
             params: of({ id: '123' })
           }
-        }
+        },
+        DatePipe
+
       ]
     }).compileComponents();
   }));

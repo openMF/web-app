@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('ViewCashierComponent', () => {
   let component: ViewCashierComponent;
@@ -14,7 +14,10 @@ describe('ViewCashierComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ViewCashierComponent],
-      imports: [HttpClientModule],
+      imports: [
+        HttpClientModule,
+        MatDialogModule
+      ],
       providers: [
         DatePipe,
         { provide: MatDialogRef, useValue: {} },

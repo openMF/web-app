@@ -4,6 +4,7 @@ import { HolidaysComponent } from './holidays.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('HolidaysComponent', () => {
   let component: HolidaysComponent;
@@ -15,7 +16,8 @@ describe('HolidaysComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
-        CommonModule
+        CommonModule,
+        OverlayModule
       ],
       providers: [DatePipe]
     }).compileComponents();

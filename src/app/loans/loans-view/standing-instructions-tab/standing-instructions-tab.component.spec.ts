@@ -5,10 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 describe('StandingInstructionsTabComponent', () => {
   let component: StandingInstructionsTabComponent;
@@ -23,7 +24,8 @@ describe('StandingInstructionsTabComponent', () => {
         CommonModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
-        })
+        }),
+        MatDialogModule
 
       ],
       providers: [
@@ -34,7 +36,9 @@ describe('StandingInstructionsTabComponent', () => {
           useValue: {
             params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
           }
-        }
+        },
+        DatePipe
+
       ]
     }).compileComponents();
   }));

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditPaymentTypeComponent } from './edit-payment-type.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('EditPaymentTypeComponent', () => {
   let component: EditPaymentTypeComponent;
@@ -16,7 +16,8 @@ describe('EditPaymentTypeComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

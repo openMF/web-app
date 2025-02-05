@@ -4,6 +4,7 @@ import { CreatePaymentTypeComponent } from './create-payment-type.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 describe('CreatePaymentTypeComponent', () => {
   let component: CreatePaymentTypeComponent;
@@ -16,6 +17,9 @@ describe('CreatePaymentTypeComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

@@ -7,6 +7,8 @@ import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 describe('CreateEmployeeComponent', () => {
   let component: CreateEmployeeComponent;
@@ -20,14 +22,17 @@ describe('CreateEmployeeComponent', () => {
         HttpClientModule,
         RouterTestingModule,
         CommonModule,
+        OverlayModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
-        })
+        }),
+        MatDialogModule
 
       ],
       providers: [
-        DatePipe
-      ]
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

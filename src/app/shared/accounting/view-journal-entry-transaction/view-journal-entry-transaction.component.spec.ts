@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewJournalEntryTransactionComponent } from './view-journal-entry-transaction.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 describe('ViewJournalEntryTransactionComponent', () => {
   let component: ViewJournalEntryTransactionComponent;
@@ -14,7 +14,8 @@ describe('ViewJournalEntryTransactionComponent', () => {
       declarations: [ViewJournalEntryTransactionComponent],
       imports: [
         RouterTestingModule,
-        HttpClientModule
+        HttpClientModule,
+        MatDialogModule
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
