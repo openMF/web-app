@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,12 +28,8 @@ describe('ManageReportsComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {
-            close: () => {}
-          }
-        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {

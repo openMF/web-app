@@ -4,7 +4,7 @@ import { ManageCurrenciesComponent } from './manage-currencies.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('ManageCurrenciesComponent', () => {
   let component: ManageCurrenciesComponent;
@@ -18,7 +18,8 @@ describe('ManageCurrenciesComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

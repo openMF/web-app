@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostInterestDialogComponent } from './post-interest-dialog.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('PostInterestDialogComponent', () => {
@@ -19,7 +19,9 @@ describe('PostInterestDialogComponent', () => {
 
       ],
       providers: [
-        { provide: MatDialogRef, useValue: {} }]
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   }));
 

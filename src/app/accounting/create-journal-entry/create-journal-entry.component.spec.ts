@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateJournalEntryComponent } from './create-journal-entry.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CreateJournalEntryComponent', () => {
@@ -18,7 +18,8 @@ describe('CreateJournalEntryComponent', () => {
         HttpClientModule,
         RouterTestingModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

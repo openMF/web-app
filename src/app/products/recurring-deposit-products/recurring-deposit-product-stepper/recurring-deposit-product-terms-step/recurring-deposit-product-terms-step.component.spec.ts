@@ -7,6 +7,7 @@ import { TranslateFakeLoader } from '@ngx-translate/core';
 
 import { RecurringDepositProductTermsStepComponent } from './recurring-deposit-product-terms-step.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('RecurringDepositProductTermsStepComponent', () => {
   let component: RecurringDepositProductTermsStepComponent;
@@ -24,7 +25,8 @@ describe('RecurringDepositProductTermsStepComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

@@ -4,6 +4,7 @@ import { CreateDataTableComponent } from './create-data-table.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('CreateDataTableComponent', () => {
   let component: CreateDataTableComponent;
@@ -16,6 +17,10 @@ describe('CreateDataTableComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

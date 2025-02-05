@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SavingProductChargesStepComponent } from './saving-product-charges-step.component';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('SavingProductChargesStepComponent', () => {
   let component: SavingProductChargesStepComponent;
@@ -8,7 +9,9 @@ describe('SavingProductChargesStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SavingProductChargesStepComponent]
+      declarations: [SavingProductChargesStepComponent],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }]
     }).compileComponents();
   }));
 

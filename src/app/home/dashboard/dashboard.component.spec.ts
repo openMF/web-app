@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -16,7 +17,8 @@ describe('DashboardComponent', () => {
         })
 
       ],
-      providers: []
+      providers: [],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

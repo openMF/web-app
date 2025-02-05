@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GsimAccountComponent } from './gsim-account.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('GsimAccountComponent', () => {
   let component: GsimAccountComponent;
@@ -16,12 +16,8 @@ describe('GsimAccountComponent', () => {
         MatDialogModule
       ],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {
-            close: () => {}
-          }
-        }
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   });

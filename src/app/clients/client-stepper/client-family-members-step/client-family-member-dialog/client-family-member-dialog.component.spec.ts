@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('ClientFamilyMemberDialogComponent', () => {
   let component: ClientFamilyMemberDialogComponent;
@@ -22,7 +22,9 @@ describe('ClientFamilyMemberDialogComponent', () => {
         CommonModule
       ],
       providers: [
-        { provide: MatDialogRef, useValue: {} }]
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

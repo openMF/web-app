@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReleaseAmountDialogComponent } from './release-amount-dialog.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ReleaseAmountDialogComponent', () => {
@@ -20,11 +20,8 @@ describe('ReleaseAmountDialogComponent', () => {
       ],
       providers: [
         TranslateService,
-        {
-          provide: MatDialogRef,
-          useValue: { close: () => {} }
-        }
-      ]
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   });
 

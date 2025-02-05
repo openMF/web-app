@@ -3,6 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionsComponent } from './transactions.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('TransactionsComponent', () => {
   let component: TransactionsComponent;
@@ -13,8 +17,15 @@ describe('TransactionsComponent', () => {
       declarations: [TransactionsComponent],
       imports: [
         HttpClientModule,
-        ReactiveFormsModule
-      ]
+        ReactiveFormsModule,
+        RouterTestingModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

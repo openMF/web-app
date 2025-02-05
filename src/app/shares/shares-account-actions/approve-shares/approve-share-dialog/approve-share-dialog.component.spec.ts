@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApproveShareDialogComponent } from './approve-share-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ApproveShareDialogComponent', () => {
   let component: ApproveShareDialogComponent;
@@ -10,7 +10,11 @@ describe('ApproveShareDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ApproveShareDialogComponent],
-      imports: [MatDialogModule]
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   }));
 

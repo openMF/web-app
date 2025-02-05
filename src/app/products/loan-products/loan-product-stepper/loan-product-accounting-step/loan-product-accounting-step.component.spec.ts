@@ -4,6 +4,7 @@ import { LoanProductAccountingStepComponent } from './loan-product-accounting-st
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('LoanProductAccountingStepComponent', () => {
   let component: LoanProductAccountingStepComponent;
@@ -20,7 +21,8 @@ describe('LoanProductAccountingStepComponent', () => {
         })
 
       ],
-      providers: [TranslateService]
+      providers: [],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

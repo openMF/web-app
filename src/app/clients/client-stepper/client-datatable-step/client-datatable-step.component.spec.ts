@@ -4,6 +4,7 @@ import { ClientDatatableStepComponent } from './client-datatable-step.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ClientDatatableStepComponent', () => {
   let component: ClientDatatableStepComponent;
@@ -19,7 +20,8 @@ describe('ClientDatatableStepComponent', () => {
         })
 
       ],
-      providers: [DatePipe]
+      providers: [DatePipe],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   });
 

@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('GroupsViewComponent', () => {
@@ -29,7 +29,9 @@ describe('GroupsViewComponent', () => {
 
       ],
       providers: [
-        { provide: MatDialogRef, useValue: {} }],
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));

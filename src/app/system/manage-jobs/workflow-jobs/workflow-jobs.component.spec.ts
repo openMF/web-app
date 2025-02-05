@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkflowJobsComponent } from './workflow-jobs.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('WorkflowJobsComponent', () => {
   let component: WorkflowJobsComponent;
@@ -10,7 +11,14 @@ describe('WorkflowJobsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [WorkflowJobsComponent],
-      imports: [HttpClientModule]
+      imports: [
+        HttpClientModule,
+        MatDialogModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   });
 

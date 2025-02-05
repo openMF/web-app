@@ -5,7 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('ManageFundsComponent', () => {
   let component: ManageFundsComponent;
@@ -20,6 +21,9 @@ describe('ManageFundsComponent', () => {
         CommonModule
       ],
       providers: [
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {

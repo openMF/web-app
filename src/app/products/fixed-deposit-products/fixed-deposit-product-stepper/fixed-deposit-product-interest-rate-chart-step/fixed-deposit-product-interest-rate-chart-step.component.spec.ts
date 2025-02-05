@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositProductInterestRateChartStepComponent } from './fixed-deposit-product-interest-rate-chart-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 describe('FixedDepositProductInterestRateChartStepComponent', () => {
   let component: FixedDepositProductInterestRateChartStepComponent;
@@ -10,7 +12,14 @@ describe('FixedDepositProductInterestRateChartStepComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [FixedDepositProductInterestRateChartStepComponent],
-      imports: [ReactiveFormsModule]
+      imports: [
+        ReactiveFormsModule,
+        MatDialogModule
+      ],
+      providers: [
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoanDisbursalComponent } from './loan-disbursal.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoanDisbursalComponent', () => {
@@ -19,6 +19,7 @@ describe('LoanDisbursalComponent', () => {
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {

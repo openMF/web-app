@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormDialogComponent } from './form-dialog.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('FormDialogComponent', () => {
   let component: FormDialogComponent;
@@ -12,12 +12,8 @@ describe('FormDialogComponent', () => {
       declarations: [FormDialogComponent],
       imports: [MatDialogModule],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {
-            close: () => {}
-          }
-        }
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

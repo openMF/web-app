@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StandingInstructionsTabComponent } from './standing-instructions-tab.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('StandingInstructionsTabComponent', () => {
   let component: StandingInstructionsTabComponent;
@@ -10,7 +11,14 @@ describe('StandingInstructionsTabComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StandingInstructionsTabComponent],
-      imports: [RouterTestingModule]
+      imports: [
+        RouterTestingModule,
+        MatDialogModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   }));
 

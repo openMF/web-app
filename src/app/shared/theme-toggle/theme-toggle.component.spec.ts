@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ThemeToggleComponent } from './theme-toggle.component';
 import { DatePipe } from '@angular/common';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ThemeToggleComponent', () => {
   let component: ThemeToggleComponent;
@@ -14,7 +14,8 @@ describe('ThemeToggleComponent', () => {
       imports: [MatDialogModule],
       providers: [
         DatePipe,
-        { provide: MatDialogRef, useValue: {} }]
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ThemeToggleComponent);

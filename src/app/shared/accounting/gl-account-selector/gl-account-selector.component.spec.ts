@@ -8,6 +8,7 @@ import {
   TranslateService,
   TranslateStore
 } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('GlAccountSelectorComponent', () => {
   let component: GlAccountSelectorComponent;
@@ -22,7 +23,8 @@ describe('GlAccountSelectorComponent', () => {
         })
 
       ],
-      providers: []
+      providers: [],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(GlAccountSelectorComponent);

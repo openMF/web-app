@@ -4,7 +4,7 @@ import { WriteOffPageComponent } from './write-off-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('WriteOffPageComponent', () => {
   let component: WriteOffPageComponent;
@@ -18,7 +18,8 @@ describe('WriteOffPageComponent', () => {
         RouterTestingModule,
         HttpClientModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

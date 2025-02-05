@@ -4,7 +4,7 @@ import { AddressTabComponent } from './address-tab.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('AddressTabComponent', () => {
@@ -24,6 +24,7 @@ describe('AddressTabComponent', () => {
       ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {

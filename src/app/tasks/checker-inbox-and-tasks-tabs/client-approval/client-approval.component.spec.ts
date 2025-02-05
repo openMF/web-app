@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ClientApprovalComponent', () => {
   let component: ClientApprovalComponent;
@@ -20,10 +21,15 @@ describe('ClientApprovalComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         CommonModule,
+        MatDialogModule,
         TranslateModule.forRoot({
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

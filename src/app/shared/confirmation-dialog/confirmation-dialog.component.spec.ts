@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -18,10 +18,8 @@ describe('ConfirmationDialogComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: { close: () => {} }
-        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {

@@ -4,6 +4,7 @@ import { EditGroupComponent } from './edit-group.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('EditGroupComponent', () => {
   let component: EditGroupComponent;
@@ -16,6 +17,9 @@ describe('EditGroupComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

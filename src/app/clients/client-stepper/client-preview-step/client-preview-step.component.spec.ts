@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientPreviewStepComponent } from './client-preview-step.component';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ClientPreviewStepComponent', () => {
   let component: ClientPreviewStepComponent;
@@ -16,7 +17,8 @@ describe('ClientPreviewStepComponent', () => {
         })
 
       ],
-      providers: [TranslateService]
+      providers: [TranslateService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

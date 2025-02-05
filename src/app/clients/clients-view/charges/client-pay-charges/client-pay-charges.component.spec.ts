@@ -4,6 +4,7 @@ import { ClientPayChargesComponent } from './client-pay-charges.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 describe('ClientPayChargesComponent', () => {
   let component: ClientPayChargesComponent;
@@ -16,6 +17,9 @@ describe('ClientPayChargesComponent', () => {
         HttpClientModule,
         ReactiveFormsModule,
         RouterTestingModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

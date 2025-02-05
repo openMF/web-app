@@ -4,6 +4,7 @@ import { AddCollateralComponent } from './add-collateral.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('AddCollateralComponent', () => {
   let component: AddCollateralComponent;
@@ -16,7 +17,8 @@ describe('AddCollateralComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

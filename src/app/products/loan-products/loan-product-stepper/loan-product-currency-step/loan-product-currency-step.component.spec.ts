@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoanProductCurrencyStepComponent } from './loan-product-currency-step.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('LoanProductCurrencyStepComponent', () => {
   let component: LoanProductCurrencyStepComponent;
@@ -18,7 +19,8 @@ describe('LoanProductCurrencyStepComponent', () => {
         })
 
       ],
-      providers: [TranslateService]
+      providers: [TranslateService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

@@ -3,8 +3,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddLoanChargeComponent } from './add-loan-charge.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AddloanchargeComponent', () => {
   let component: AddLoanChargeComponent;
@@ -16,16 +20,23 @@ describe('AddloanchargeComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
-        CommonModule
+        CommonModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
+        DatePipe,
         {
           provide: MatDialogRef,
           useValue: {
             close: () => {}
           }
         }
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

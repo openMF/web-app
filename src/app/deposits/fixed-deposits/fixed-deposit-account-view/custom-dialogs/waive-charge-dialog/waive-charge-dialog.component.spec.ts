@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WaiveChargeDialogComponent } from './waive-charge-dialog.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('WaiveChargeDialogComponent', () => {
   let component: WaiveChargeDialogComponent;
@@ -12,7 +12,9 @@ describe('WaiveChargeDialogComponent', () => {
       declarations: [WaiveChargeDialogComponent],
       imports: [MatDialogModule],
       providers: [
-        { provide: MatDialogRef, useValue: {} }]
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   }));
 

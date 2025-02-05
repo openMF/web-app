@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditLoanProvisioningCriteriaComponent } from './edit-loan-provisioning-criteria.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('EditLoanProvisioningCriteriaComponent', () => {
   let component: EditLoanProvisioningCriteriaComponent;
@@ -14,7 +15,8 @@ describe('EditLoanProvisioningCriteriaComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

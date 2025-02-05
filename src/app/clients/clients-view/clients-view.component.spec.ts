@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('ClientsViewComponent', () => {
   let component: ClientsViewComponent;
@@ -24,6 +25,10 @@ describe('ClientsViewComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

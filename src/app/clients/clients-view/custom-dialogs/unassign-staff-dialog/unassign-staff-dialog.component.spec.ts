@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UnassignStaffDialogComponent } from './unassign-staff-dialog.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('UnassignStaffDialogComponent', () => {
@@ -17,6 +17,10 @@ describe('UnassignStaffDialogComponent', () => {
           loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
         })
 
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

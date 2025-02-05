@@ -8,6 +8,7 @@ import { ProductsService } from 'app/products/products.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('EditBucketComponent', () => {
   let component: EditBucketComponent;
@@ -30,6 +31,9 @@ describe('EditBucketComponent', () => {
         TranslateService,
         DatePipe,
         ProductsService
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
   });

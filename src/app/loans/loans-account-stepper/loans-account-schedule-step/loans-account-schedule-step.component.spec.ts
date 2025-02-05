@@ -2,7 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoansAccountScheduleStepComponent } from './loans-account-schedule-step.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('LoansAccountScheduleStepComponent', () => {
   let component: LoansAccountScheduleStepComponent;
@@ -13,8 +17,15 @@ describe('LoansAccountScheduleStepComponent', () => {
       declarations: [LoansAccountScheduleStepComponent],
       imports: [
         HttpClientModule,
-        CommonModule
-      ]
+        CommonModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   });
 

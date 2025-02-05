@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 describe('RescheduleLoanComponent', () => {
   let component: RescheduleLoanComponent;
@@ -18,6 +19,7 @@ describe('RescheduleLoanComponent', () => {
         MatDialogModule
       ],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('LoanTermVariationsTabComponent', () => {
   let component: LoanTermVariationsTabComponent;
@@ -20,12 +20,8 @@ describe('LoanTermVariationsTabComponent', () => {
       ],
       providers: [
         DatePipe,
-        {
-          provide: MatDialogRef,
-          useValue: {
-            close: () => {}
-          }
-        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {

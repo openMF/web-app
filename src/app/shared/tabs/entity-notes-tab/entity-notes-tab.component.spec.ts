@@ -4,6 +4,7 @@ import { EntityNotesTabComponent } from './entity-notes-tab.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('EntityNotesTabComponent', () => {
   let component: EntityNotesTabComponent;
@@ -18,8 +19,9 @@ describe('EntityNotesTabComponent', () => {
         CommonModule
       ],
       providers: [
-        DatePipe
-      ]
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   });
 

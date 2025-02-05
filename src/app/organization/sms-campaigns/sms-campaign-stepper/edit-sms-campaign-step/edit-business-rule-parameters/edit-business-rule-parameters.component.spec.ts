@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditBusinessRuleParametersComponent } from './edit-business-rule-parameters.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('EditBusinessRuleParametersComponent', () => {
   let component: EditBusinessRuleParametersComponent;
@@ -14,7 +14,8 @@ describe('EditBusinessRuleParametersComponent', () => {
       imports: [
         HttpClientModule,
         CommonModule
-      ]
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

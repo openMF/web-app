@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FixedDepositAccountViewComponent } from './fixed-deposit-account-view.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('FixedDepositAccountViewComponent', () => {
   let component: FixedDepositAccountViewComponent;
@@ -18,12 +18,8 @@ describe('FixedDepositAccountViewComponent', () => {
         MatDialogModule
       ],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {
-            close: () => {}
-          }
-        }
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

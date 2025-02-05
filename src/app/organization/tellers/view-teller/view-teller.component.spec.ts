@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('ViewTellerComponent', () => {
   let component: ViewTellerComponent;
@@ -25,7 +26,10 @@ describe('ViewTellerComponent', () => {
         })
 
       ],
-      providers: [DatePipe]
+      providers: [
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

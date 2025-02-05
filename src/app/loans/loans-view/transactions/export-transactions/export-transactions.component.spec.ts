@@ -4,6 +4,7 @@ import { ExportTransactionsComponent } from './export-transactions.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 describe('ExportTransactionsComponent', () => {
   let component: ExportTransactionsComponent;
@@ -16,6 +17,9 @@ describe('ExportTransactionsComponent', () => {
         HttpClientModule,
         RouterTestingModule,
         ReactiveFormsModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

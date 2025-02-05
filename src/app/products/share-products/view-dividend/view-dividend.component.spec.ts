@@ -7,6 +7,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateFakeLoader } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ViewDividendComponent', () => {
   let component: ViewDividendComponent;
@@ -25,7 +26,8 @@ describe('ViewDividendComponent', () => {
         })
 
       ],
-      providers: [DatePipe]
+      providers: [DatePipe],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

@@ -4,6 +4,7 @@ import { EditSharesAccountComponent } from './edit-shares-account.component';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 describe('EditSharesAccountComponent', () => {
   let component: EditSharesAccountComponent;
@@ -14,6 +15,7 @@ describe('EditSharesAccountComponent', () => {
       declarations: [EditSharesAccountComponent],
       imports: [RouterTestingModule],
       providers: [
+        DatePipe,
         {
           provide: ActivatedRoute,
           useValue: {

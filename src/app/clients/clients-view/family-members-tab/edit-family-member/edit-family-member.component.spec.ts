@@ -6,6 +6,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('EditFamilyMemberComponent', () => {
   let component: EditFamilyMemberComponent;
@@ -25,9 +26,9 @@ describe('EditFamilyMemberComponent', () => {
 
       ],
       providers: [
-        DatePipe,
-        TranslateService
-      ]
+        DatePipe
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

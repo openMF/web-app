@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoanTrancheDetailsComponent } from './loan-tranche-details.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,10 +30,8 @@ describe('LoanTrancheDetailsComponent', () => {
 
       ],
       providers: [
-        {
-          provide: MatDialogRef,
-          useValue: {}
-        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: ActivatedRoute,
           useValue: {

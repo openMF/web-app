@@ -4,7 +4,11 @@ import { PaymentTypesComponent } from './payment-types.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('PaymentTypesComponent', () => {
   let component: PaymentTypesComponent;
@@ -16,15 +20,18 @@ describe('PaymentTypesComponent', () => {
       imports: [
         HttpClientModule,
         RouterTestingModule,
-        MatDialogModule
+        MatDialogModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
       ],
       providers: [
         DatePipe,
-        {
-          provide: MatDialogRef,
-          useValue: { close: () => {} }
-        }
-      ]
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

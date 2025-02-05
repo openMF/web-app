@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RunSelectedJobsPopoverComponent } from './run-selected-jobs-popover.component';
 import { HttpClientModule } from '@angular/common/http';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
@@ -20,6 +20,10 @@ describe('RunSelectedJobsPopoverComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         CommonModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
 

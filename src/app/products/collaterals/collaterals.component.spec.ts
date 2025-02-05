@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CollateralsComponent', () => {
   let component: CollateralsComponent;
@@ -22,7 +23,8 @@ describe('CollateralsComponent', () => {
         })
 
       ],
-      providers: [TranslateService]
+      providers: [],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   });
 

@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('CreateTellerComponent', () => {
   let component: CreateTellerComponent;
@@ -24,7 +25,8 @@ describe('CreateTellerComponent', () => {
         })
 
       ],
-      providers: [DatePipe]
+      providers: [DatePipe],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

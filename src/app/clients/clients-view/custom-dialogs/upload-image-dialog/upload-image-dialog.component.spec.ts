@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import { UploadImageDialogComponent } from './upload-image-dialog.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('UploadImageDialogComponent', () => {
   let component: UploadImageDialogComponent;
@@ -18,6 +19,10 @@ describe('UploadImageDialogComponent', () => {
         RouterTestingModule,
         HttpClientModule,
         CommonModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ]
     }).compileComponents();
   }));

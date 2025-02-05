@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ExportTransactionsComponent } from './export-transactions.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 describe('ExportTransactionsComponent', () => {
   let component: ExportTransactionsComponent;
@@ -14,6 +15,9 @@ describe('ExportTransactionsComponent', () => {
       imports: [
         HttpClientModule,
         ReactiveFormsModule
+      ],
+      providers: [
+        DatePipe
       ]
     }).compileComponents();
   }));

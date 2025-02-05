@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SharesAccountChargesStepComponent } from './shares-account-charges-step.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('SharesAccountChargesStepComponent', () => {
@@ -20,7 +20,8 @@ describe('SharesAccountChargesStepComponent', () => {
       ],
       providers: [
         TranslateService,
-        { provide: MatDialogRef, useValue: {} }]
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

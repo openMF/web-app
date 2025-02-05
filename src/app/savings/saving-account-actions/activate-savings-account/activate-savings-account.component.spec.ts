@@ -4,7 +4,7 @@ import { ActivateSavingsAccountComponent } from './activate-savings-account.comp
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('ActivateSavingsAccountComponent', () => {
   let component: ActivateSavingsAccountComponent;
@@ -20,11 +20,8 @@ describe('ActivateSavingsAccountComponent', () => {
       ],
       providers: [
         DatePipe,
-        {
-          provide: MatDialogRef,
-          useValue: {}
-        }
-      ]
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }]
     }).compileComponents();
   }));
 

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChangePasswordDialogComponent } from './change-password-dialog.component';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 describe('ChangePasswordDialogComponent', () => {
   let component: ChangePasswordDialogComponent;
@@ -12,7 +12,9 @@ describe('ChangePasswordDialogComponent', () => {
       declarations: [ChangePasswordDialogComponent],
       imports: [MatDialogModule],
       providers: [
-        { provide: MatDialogRef, useValue: { close: () => {} } }]
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   }));
 
