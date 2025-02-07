@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -20,6 +20,9 @@ import { NotificationsPageComponent } from './notifications-page/notifications-p
     SharedModule,
     PipesModule,
     NotificationsRoutingModule
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class NotificationsModule {}

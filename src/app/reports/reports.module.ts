@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
 /** Custom Modules */
@@ -34,6 +34,9 @@ import { XBRLReportComponent } from './xbrl-report/xbrl-report.component';
     XBRLComponent,
     XBRLReportComponent
   ],
-  providers: [DecimalPipe]
+  providers: [DecimalPipe],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class ReportsModule {}

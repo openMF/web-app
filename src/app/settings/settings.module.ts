@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -18,6 +18,9 @@ import { SettingsComponent } from './settings.component';
     SharedModule,
     SettingsRoutingModule
   ],
-  declarations: [SettingsComponent]
+  declarations: [SettingsComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class SettingsModule {}

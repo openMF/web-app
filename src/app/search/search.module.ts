@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -18,6 +18,9 @@ import { PipesModule } from 'app/pipes/pipes.module';
     SharedModule,
     PipesModule,
     SearchRoutingModule
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class SearchModule {}

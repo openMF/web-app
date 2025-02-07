@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BulkImportComponent } from './bulk-import.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('BulkImportComponent', () => {
   let component: BulkImportComponent;
@@ -8,7 +9,10 @@ describe('BulkImportComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BulkImportComponent]
+      declarations: [BulkImportComponent],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

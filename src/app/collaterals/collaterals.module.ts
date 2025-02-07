@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DirectivesModule } from '../directives/directives.module';
@@ -17,6 +17,9 @@ import { EditCollateralComponent } from './edit-collateral/edit-collateral.compo
   declarations: [
     ViewCollateralComponent,
     EditCollateralComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   imports: [
     CommonModule,

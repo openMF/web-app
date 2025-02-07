@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /** Custom Directives */
@@ -14,6 +14,9 @@ import { FormatAmountDirective } from './format-amount.directive';
 @NgModule({
   imports: [
     CommonModule
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   declarations: [
     HasPermissionDirective,

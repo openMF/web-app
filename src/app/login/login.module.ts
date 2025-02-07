@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { SharedModule } from '../shared/shared.module';
@@ -28,6 +28,9 @@ import { TranslateModule } from '@ngx-translate/core';
     LoginFormComponent,
     ResetPasswordComponent,
     TwoFactorAuthenticationComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class LoginModule {}

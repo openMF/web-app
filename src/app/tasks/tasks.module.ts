@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { SharedModule } from 'app/shared/shared.module';
@@ -34,6 +34,9 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inb
     RescheduleLoanComponent,
     ViewCheckerInboxComponent
   ],
-  providers: []
+  providers: [],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class TasksModule {}

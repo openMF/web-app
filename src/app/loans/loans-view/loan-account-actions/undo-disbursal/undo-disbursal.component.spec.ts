@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UndoDisbursalComponent } from './undo-disbursal.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 describe('UndoDisbursalComponent', () => {
   let component: UndoDisbursalComponent;
@@ -8,7 +13,20 @@ describe('UndoDisbursalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UndoDisbursalComponent]
+      declarations: [UndoDisbursalComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
+      providers: [
+        DatePipe,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

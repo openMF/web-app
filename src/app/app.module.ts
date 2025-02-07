@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
@@ -100,6 +100,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     WebAppComponent,
     NotFoundComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: [DatePipe],
   bootstrap: [WebAppComponent]

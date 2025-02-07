@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { RecurringDepositsRoutingModule } from './recurring-deposits-routing.module';
@@ -80,6 +80,9 @@ import { GeneralTabComponent } from './recurring-deposits-account-view/general-t
     ViewTransactionComponent,
     EditTransactionComponent,
     GeneralTabComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: []
 })

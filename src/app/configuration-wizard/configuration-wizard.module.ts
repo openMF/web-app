@@ -2,7 +2,7 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
 /*Custom Directives*/
@@ -38,6 +38,9 @@ import { SharedModule } from '../shared/shared.module';
     OverlayModule,
     PortalModule,
     MatDialogModule
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   exports: [
     PopoverCloseDirective

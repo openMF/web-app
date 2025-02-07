@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 /** Custom Components */
@@ -42,6 +42,9 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   declarations: [],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
   providers: [
     ClientCollateralResolver
   ]

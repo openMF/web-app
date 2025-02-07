@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 /** Custom Components */
@@ -286,6 +286,9 @@ const routes: Routes = [
     GSIMAccountsResolver,
     GroupAccountsResolver,
     GSIMViewResolver
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class SavingsRoutingModule {}

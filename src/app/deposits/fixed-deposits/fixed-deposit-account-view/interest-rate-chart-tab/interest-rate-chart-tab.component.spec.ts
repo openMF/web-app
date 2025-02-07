@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InterestRateChartTabComponent } from './interest-rate-chart-tab.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('InterestRateChartTabComponent', () => {
   let component: InterestRateChartTabComponent;
@@ -8,7 +10,15 @@ describe('InterestRateChartTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [InterestRateChartTabComponent]
+      declarations: [InterestRateChartTabComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

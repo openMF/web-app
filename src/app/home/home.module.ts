@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
 /** Custom Modules */
@@ -38,6 +38,9 @@ import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-
     ClientTrendsBarComponent,
     WarningDialogComponent,
     SessionTimeoutDialogComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   providers: []
 })

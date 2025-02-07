@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GroupActionsComponent } from './group-actions.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('GroupActionsComponent', () => {
   let component: GroupActionsComponent;
@@ -8,7 +9,8 @@ describe('GroupActionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GroupActionsComponent]
+      declarations: [GroupActionsComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

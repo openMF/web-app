@@ -1,4 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { EditSchedulerJobComponent } from './edit-scheduler-job.component';
 
@@ -8,7 +14,17 @@ describe('EditSchedulerJobComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditSchedulerJobComponent]
+      declarations: [EditSchedulerJobComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule,
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ]
     }).compileComponents();
   }));
 

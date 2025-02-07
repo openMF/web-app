@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { CentersRoutingModule } from './centers-routing.module';
@@ -37,6 +37,9 @@ import { EditCenterComponent } from './edit-center/edit-center.component';
     CentersRoutingModule,
     PipesModule,
     DirectivesModule
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   declarations: [
     CentersComponent,
