@@ -1761,6 +1761,7 @@
       "Is Floating Rate": "È il tasso variabile",
       "Is Floating calculation allowed?": "È consentito il calcolo flottante?",
       "Is Interest Posting required on closure date": "È richiesta la registrazione degli interessi alla data di chiusura",
+      "Is interest recognition on disbursement date?": "Il riconoscimento degli interessi avviene alla data di erogazione?",
       "Is Linked to floating interest rates?": "È legato a tassi di interesse variabili?",
       "Is Loan Officer": "È l'ufficiale di prestito",
       "Is Mandatory Deposit": "È un deposito obbligatorio",

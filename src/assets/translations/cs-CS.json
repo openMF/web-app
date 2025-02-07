@@ -1761,6 +1761,7 @@
       "Is Floating Rate": "Je pohyblivá sazba",
       "Is Floating calculation allowed?": "Je povolen plovoucí výpočet?",
       "Is Interest Posting required on closure date": "Je požadováno zveřejnění zájmu v den uzávěrky",
+      "Is interest recognition on disbursement date?": "Je úrok uznán k datu výplaty?",
       "Is Linked to floating interest rates?": "Je spojeno s pohyblivými úrokovými sazbami?",
       "Is Loan Officer": "Je úvěrový úředník",
       "Is Mandatory Deposit": "Je povinná záloha",

@@ -119,6 +119,10 @@
 
     <mat-divider fxFlex="98%"></mat-divider>
 
+    <mat-checkbox fxFlex="96%" labelPosition="before" formControlName="interestRecognitionOnDisbursementDate">
+      {{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}
+    </mat-checkbox>
+
     <h3 fxFlex="23%" class="mat-h3">{{ 'labels.inputs.Interest Rates' | translate }}</h3>
 
     <mat-checkbox
@@ -129,7 +133,7 @@
     >
       {{ 'labels.inputs.Is Zero Interest Rate?' | translate }}
     </mat-checkbox>
-
+    
     <mat-checkbox
       fxFlex="32%"
       labelPosition="before"
