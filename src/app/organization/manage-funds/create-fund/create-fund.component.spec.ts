@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { CreateFundComponent } from './create-fund.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('CreateFundComponent', () => {
   let component: CreateFundComponent;
@@ -8,7 +14,21 @@ describe('CreateFundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateFundComponent]
+      declarations: [CreateFundComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        RouterTestingModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [DatePipe],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   });
 

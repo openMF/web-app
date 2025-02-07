@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateRangeComponent } from './create-range.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 describe('CreateRangeComponent', () => {
   let component: CreateRangeComponent;
@@ -8,7 +15,20 @@ describe('CreateRangeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateRangeComponent]
+      declarations: [CreateRangeComponent],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [
+        DatePipe
+      ]
     }).compileComponents();
   });
 

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BreadcrumbComponent } from './breadcrumb.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('BreadcrumbComponent', () => {
   let component: BreadcrumbComponent;
@@ -8,7 +11,18 @@ describe('BreadcrumbComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BreadcrumbComponent]
+      declarations: [BreadcrumbComponent],
+      imports: [
+        OverlayModule
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

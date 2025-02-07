@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EntityDatatableTabComponent } from './entity-datatable-tab.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('EntityDatatableTabComponent', () => {
   let component: EntityDatatableTabComponent;
@@ -8,7 +9,10 @@ describe('EntityDatatableTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EntityDatatableTabComponent]
+      declarations: [EntityDatatableTabComponent],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   });
 

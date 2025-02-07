@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ExternalAssetOwnerTabComponent } from './external-asset-owner-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('ExternalAssetOwnerTabComponent', () => {
   let component: ExternalAssetOwnerTabComponent;
@@ -8,7 +14,22 @@ describe('ExternalAssetOwnerTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ExternalAssetOwnerTabComponent]
+      declarations: [ExternalAssetOwnerTabComponent],
+      imports: [
+        RouterTestingModule,
+        MatDialogModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   });
 

@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ApproveSharesComponent } from './approve-shares.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 describe('ApproveSharesComponent', () => {
   let component: ApproveSharesComponent;
@@ -8,7 +13,20 @@ describe('ApproveSharesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ApproveSharesComponent]
+      declarations: [ApproveSharesComponent],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule,
+        MatDialogModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        DatePipe
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

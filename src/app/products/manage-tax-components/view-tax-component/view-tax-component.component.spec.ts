@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewTaxComponentComponent } from './view-tax-component.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewTaxComponentComponent', () => {
   let component: ViewTaxComponentComponent;
@@ -8,7 +11,16 @@ describe('ViewTaxComponentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewTaxComponentComponent]
+      declarations: [ViewTaxComponentComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

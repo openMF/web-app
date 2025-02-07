@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatatableTabsComponent } from './datatable-tabs.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 describe('DatatableTabsComponent', () => {
   let component: DatatableTabsComponent;
@@ -8,7 +14,17 @@ describe('DatatableTabsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DatatableTabsComponent]
+      declarations: [DatatableTabsComponent],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ]
     }).compileComponents();
   }));
 

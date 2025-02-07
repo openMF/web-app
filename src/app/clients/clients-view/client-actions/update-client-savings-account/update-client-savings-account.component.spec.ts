@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UpdateClientSavingsAccountComponent } from './update-client-savings-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('UpdateClientSavingsAccountComponent', () => {
   let component: UpdateClientSavingsAccountComponent;
@@ -8,7 +12,19 @@ describe('UpdateClientSavingsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UpdateClientSavingsAccountComponent]
+      declarations: [UpdateClientSavingsAccountComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

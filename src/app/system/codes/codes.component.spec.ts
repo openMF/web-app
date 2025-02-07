@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { CodesComponent } from './codes.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 describe('CodesComponent', () => {
   let component: CodesComponent;
@@ -8,7 +12,13 @@ describe('CodesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CodesComponent]
+      declarations: [CodesComponent],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        OverlayModule
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

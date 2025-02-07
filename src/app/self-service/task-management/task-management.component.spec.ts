@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskManagementComponent } from './task-management.component';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('TaskManagementComponent', () => {
   let component: TaskManagementComponent;
@@ -8,7 +9,14 @@ describe('TaskManagementComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TaskManagementComponent]
+      declarations: [TaskManagementComponent],
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: []
     }).compileComponents();
   }));
 
