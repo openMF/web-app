@@ -1761,6 +1761,7 @@
       "Is Floating Rate": "Ist ein variabler Zinssatz",
       "Is Floating calculation allowed?": "Ist eine gleitende Berechnung zulässig?",
       "Is Interest Posting required on closure date": "Ist eine Zinsbuchung am Abschlussdatum erforderlich?",
+      "Is interest recognition on disbursement date?": "Erfolgt die Anerkennung der Zinsen am Auszahlungstag?",
       "Is Linked to floating interest rates?": "Ist es mit variablen Zinssätzen verbunden?",
       "Is Loan Officer": "Ist Kreditsachbearbeiter",
       "Is Mandatory Deposit": "Ist eine obligatorische Anzahlung",

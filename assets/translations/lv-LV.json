@@ -1761,6 +1761,7 @@
       "Is Floating Rate": "Ir mainīgā likme",
       "Is Floating calculation allowed?": "Vai ir atļauts peldošs aprēķins?",
       "Is Interest Posting required on closure date": "Vai slēgšanas datumā ir nepieciešams publicēt procentus",
+      "Is interest recognition on disbursement date?": "Vai procentu atzīšana izmaksas datumā?",
       "Is Linked to floating interest rates?": "Vai ir saistīts ar mainīgajām procentu likmēm?",
       "Is Loan Officer": "Ir aizdevuma amatpersona",
       "Is Mandatory Deposit": "Ir obligāts depozīts",

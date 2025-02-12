@@ -1762,6 +1762,7 @@
       "Is Floating Rate": "변동금리인가",
       "Is Floating calculation allowed?": "부동 계산이 허용됩니까?",
       "Is Interest Posting required on closure date": "마감일에 관심 게시가 필요합니까?",
+      "Is interest recognition on disbursement date?": "지급일에 이자가 인식되나요?",
       "Is Linked to floating interest rates?": "변동금리와 연동되나요?",
       "Is Loan Officer": "대출담당자인가",
       "Is Mandatory Deposit": "필수 예금인가요?",

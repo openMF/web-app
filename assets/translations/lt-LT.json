@@ -1761,6 +1761,7 @@
       "Is Floating Rate": "Ar kintama norma",
       "Is Floating calculation allowed?": "Ar leidžiamas plaukiojantis skaičiavimas?",
       "Is Interest Posting required on closure date": "Ar uždarymo dieną būtina paskelbti palūkanas",
+      "Is interest recognition on disbursement date?": "Ar palūkanų pripažinimas išmokėjimo dieną?",
       "Is Linked to floating interest rates?": "Ar susieta su kintamomis palūkanų normomis?",
       "Is Loan Officer": "Yra paskolos pareigūnas",
       "Is Mandatory Deposit": "Yra privalomas depozitas",
