@@ -100,6 +100,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   currency: Currency;
 
   productEnableDownPayment = false;
+  isProgressive = false;
 
   /**
    * Create Loans Account Terms Form
@@ -127,7 +128,8 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         this.loansAccountTermsData = this.loansAccountTemplate;
       }
       this.productEnableDownPayment = this.loansAccountTermsData.product.enableDownPayment;
-
+      this.isProgressive =
+        this.loansAccountTermsData.loanScheduleType.code == LoanProducts.LOAN_SCHEDULE_TYPE_PROGRESSIVE;
       if (this.loansAccountTermsData.product) {
         this.loanProduct = this.loansAccountTermsData.product;
       }
@@ -163,6 +165,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       });
 
       this.setAdvancedPaymentStrategyControls();
+
+      if (this.loansAccountTermsData.loanScheduleType.code == LoanProducts.LOAN_SCHEDULE_TYPE_CUMULATIVE) {
+        this.loansAccountTermsForm.removeControl('interestRecognitionOnDisbursementDate');
+      }
 
       if (this.loansAccountTermsData.isLoanProductLinkedToFloatingRate) {
         this.loansAccountTermsForm.removeControl('interestRatePerPeriod');
