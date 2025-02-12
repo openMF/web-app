@@ -1,0 +1,13 @@
+log-in-and-validate
+navigate-to-admin-users-management
+create-admin-user
+//delete admin profile
+check that page doesn't contain "Create User"
+click "Users"
+enter saved value "firstName" into "Filter"
+click second saved value "firstName"
+click "Delete"
+click "Confirm"
+//validate admin profile does NOT exist
+enter saved value "firstName" into "Filter"
+check that page doesn't contain saved value "firstName" below saved value "firstName"
