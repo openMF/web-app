@@ -14,8 +14,8 @@ export const environment = {
   version: env.mifos_x.version,
   hash: env.mifos_x.hash,
   // For connecting to server running elsewhere update the tenant identifier
-  fineractPlatformTenantId: loadedEnv['fineractPlatformTenantId'] || 'default',
-  fineractPlatformTenantIds: loadedEnv['fineractPlatformTenantIds'] || 'default',
+  fineractPlatformTenantId: loadedEnv['fineractPlatformTenantId'] || 'defaul',
+  fineractPlatformTenantIds: loadedEnv['fineractPlatformTenantIds'] || 'defaul',
   // For connecting to others servers running elsewhere update the base API URL
   baseApiUrls:
     loadedEnv['fineractApiUrls'] ||
@@ -29,7 +29,7 @@ export const environment = {
   baseApiUrl:
     loadedEnv['baseApiUrl'] || window.location.protocol + '//' + window.location.hostname + ':' + window.location.port,
   allowServerSwitch: env.allow_switching_backend_instance,
-  apiProvider: loadedEnv['apiProvider'] || '/fineract-provider/api',
+  apiProvider: loadedEnv['apiProvider'] || '/fineract-provider/ap',
   apiVersion: loadedEnv['apiVersion'] || '/v1',
   serverUrl: '',
   oauth: {
@@ -50,8 +50,8 @@ export const environment = {
 
   defaultCharDelimiter: loadedEnv['defaultCharDelimiter'] || ',',
 
-  displayBackEndInfo: loadedEnv['displayBackEndInfo'] || 'true',
-  displayTenantSelector: loadedEnv['displayTenantSelector'] || 'true',
+  displayBackEndInfo: loadedEnv['displayBackEndInfo'] || 'false',
+  displayTenantSelector: loadedEnv['displayTenantSelector'] || 'false',
   // Time in seconds, default 60 seconds
   waitTimeForNotifications: loadedEnv['waitTimeForNotifications'] || 60,
   // Time in seconds, default 30 seconds
