@@ -1,6 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { RolesAndPermissionsComponent } from './roles-and-permissions.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RolesAndPermissionsComponent', () => {
   let component: RolesAndPermissionsComponent;
@@ -8,7 +15,18 @@ describe('RolesAndPermissionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RolesAndPermissionsComponent]
+      declarations: [RolesAndPermissionsComponent],
+      imports: [
+        RouterTestingModule,
+        OverlayModule,
+        HttpClientModule,
+        CommonModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot()
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

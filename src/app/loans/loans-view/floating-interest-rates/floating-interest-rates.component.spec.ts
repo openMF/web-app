@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FloatingInterestRatesComponent } from './floating-interest-rates.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('FloatingInterestRatesComponent', () => {
   let component: FloatingInterestRatesComponent;
@@ -8,7 +9,8 @@ describe('FloatingInterestRatesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FloatingInterestRatesComponent]
+      declarations: [FloatingInterestRatesComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

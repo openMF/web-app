@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanDisbursalComponent } from './loan-disbursal.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 describe('LoanDisbursalComponent', () => {
   let component: LoanDisbursalComponent;
@@ -8,7 +13,23 @@ describe('LoanDisbursalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoanDisbursalComponent]
+      declarations: [LoanDisbursalComponent],
+      imports: [
+        MatDialogModule,
+        RouterTestingModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        },
+        DatePipe
+
+      ]
     }).compileComponents();
   }));
 

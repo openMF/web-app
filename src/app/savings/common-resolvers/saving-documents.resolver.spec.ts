@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SavingDocumentsResolver } from './saving-documents.resolver';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('SavingDocumentsResolver', () => {
   let resolver: SavingDocumentsResolver;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientModule]
+    });
     resolver = TestBed.inject(SavingDocumentsResolver);
   });
 

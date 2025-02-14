@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewCashierComponent } from './view-cashier.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('ViewCashierComponent', () => {
   let component: ViewCashierComponent;
@@ -8,7 +13,22 @@ describe('ViewCashierComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewCashierComponent]
+      declarations: [ViewCashierComponent],
+      imports: [
+        HttpClientModule,
+        MatDialogModule
+      ],
+      providers: [
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

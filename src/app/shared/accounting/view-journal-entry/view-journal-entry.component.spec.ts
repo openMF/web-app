@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewJournalEntryComponent } from './view-journal-entry.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 describe('ViewJournalEntryComponent', () => {
   let component: ViewJournalEntryComponent;
@@ -8,7 +9,11 @@ describe('ViewJournalEntryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewJournalEntryComponent]
+      declarations: [ViewJournalEntryComponent],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OriginalScheduleTabComponent } from './original-schedule-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('OriginalScheduleTabComponent', () => {
   let component: OriginalScheduleTabComponent;
@@ -8,7 +9,8 @@ describe('OriginalScheduleTabComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OriginalScheduleTabComponent]
+      declarations: [OriginalScheduleTabComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   }));
 

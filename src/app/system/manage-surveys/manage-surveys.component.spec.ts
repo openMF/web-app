@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageSurveysComponent } from './manage-surveys.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SurveysComponent', () => {
   let component: ManageSurveysComponent;
@@ -8,7 +12,19 @@ describe('SurveysComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ManageSurveysComponent]
+      declarations: [ManageSurveysComponent],
+      imports: [
+        HttpClientModule,
+        RouterTestingModule
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

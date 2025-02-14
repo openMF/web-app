@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CloseSharesAccountComponent } from './close-shares-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CloseSharesAccountComponent', () => {
   let component: CloseSharesAccountComponent;
@@ -8,7 +12,13 @@ describe('CloseSharesAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CloseSharesAccountComponent]
+      declarations: [CloseSharesAccountComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        RouterTestingModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

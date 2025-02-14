@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RunSelectedJobsTableComponent } from './run-selected-jobs-table.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RunSelectedJobsTableComponent', () => {
   let component: RunSelectedJobsTableComponent;
@@ -8,7 +9,11 @@ describe('RunSelectedJobsTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RunSelectedJobsTableComponent]
+      declarations: [RunSelectedJobsTableComponent],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(RunSelectedJobsTableComponent);

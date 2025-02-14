@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateTaxComponentComponent } from './create-tax-component.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CreateTaxComponentComponent', () => {
   let component: CreateTaxComponentComponent;
@@ -8,7 +13,18 @@ describe('CreateTaxComponentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateTaxComponentComponent]
+      declarations: [CreateTaxComponentComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        }),
+        RouterTestingModule
+
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

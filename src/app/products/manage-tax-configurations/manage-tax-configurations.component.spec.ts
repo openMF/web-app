@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageTaxConfigurationsComponent } from './manage-tax-configurations.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ManageTaxConfigurationsComponent', () => {
   let component: ManageTaxConfigurationsComponent;
@@ -8,7 +9,8 @@ describe('ManageTaxConfigurationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ManageTaxConfigurationsComponent]
+      declarations: [ManageTaxConfigurationsComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   }));
 

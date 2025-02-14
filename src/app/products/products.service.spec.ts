@@ -1,11 +1,20 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { ProductsService } from './products.service';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('ProductsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ProductsService]
+      imports: [
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [
+        ProductsService,
+        DatePipe
+      ]
     });
   });
 

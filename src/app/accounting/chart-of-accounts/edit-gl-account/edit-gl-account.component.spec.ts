@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditGlAccountComponent } from './edit-gl-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('EditGlAccountComponent', () => {
   let component: EditGlAccountComponent;
@@ -8,7 +12,15 @@ describe('EditGlAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [EditGlAccountComponent]
+      declarations: [EditGlAccountComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        RouterTestingModule
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+      ]
     }).compileComponents();
   }));
 

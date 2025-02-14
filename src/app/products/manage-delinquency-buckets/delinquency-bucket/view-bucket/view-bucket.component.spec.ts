@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewBucketComponent } from './view-bucket.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 describe('ViewBucketComponent', () => {
   let component: ViewBucketComponent;
@@ -8,7 +13,18 @@ describe('ViewBucketComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ViewBucketComponent]
+      declarations: [ViewBucketComponent],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule,
+        MatDialogModule
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   });
 

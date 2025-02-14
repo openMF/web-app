@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './loans-account-view-guarantor-details-dialog.component';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('LoansAccountViewGuarantorDetailsDialogComponent', () => {
   let component: LoansAccountViewGuarantorDetailsDialogComponent;
@@ -8,7 +9,12 @@ describe('LoansAccountViewGuarantorDetailsDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoansAccountViewGuarantorDetailsDialogComponent]
+      declarations: [LoansAccountViewGuarantorDetailsDialogComponent],
+      imports: [MatDialogModule],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ]
     }).compileComponents();
   }));
 

@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClientScreenReportsComponent } from './client-screen-reports.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('ClientScreenReportsComponent', () => {
   let component: ClientScreenReportsComponent;
@@ -8,7 +12,19 @@ describe('ClientScreenReportsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ClientScreenReportsComponent]
+      declarations: [ClientScreenReportsComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

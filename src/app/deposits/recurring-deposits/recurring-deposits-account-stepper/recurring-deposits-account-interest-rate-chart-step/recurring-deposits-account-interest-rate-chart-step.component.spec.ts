@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecurringDepositsAccountInterestRateChartStepComponent } from './recurring-deposits-account-interest-rate-chart-step.component';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('RecurringDepositsAccountInterestRateChartStepComponent', () => {
   let component: RecurringDepositsAccountInterestRateChartStepComponent;
@@ -8,7 +9,13 @@ describe('RecurringDepositsAccountInterestRateChartStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RecurringDepositsAccountInterestRateChartStepComponent]
+      declarations: [RecurringDepositsAccountInterestRateChartStepComponent],
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ]
     }).compileComponents();
   }));
 

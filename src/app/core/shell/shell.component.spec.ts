@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShellComponent } from './shell.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 describe('ShellComponent', () => {
   let component: ShellComponent;
@@ -8,7 +9,8 @@ describe('ShellComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ShellComponent]
+      declarations: [ShellComponent],
+      imports: [MatProgressBarModule]
     }).compileComponents();
   }));
 

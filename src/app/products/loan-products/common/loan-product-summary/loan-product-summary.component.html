@@ -355,7 +355,7 @@
     <span fxFlex="53%">{{ loanProduct.interestCalculationPeriodType?.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div fxFlexFill>
+  <div fxFlexFill *ngIf="loanProduct.allowPartialPeriodInterestCalculation">
     <span fxFlex="47%"
       >{{ 'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate }}:</span
     >

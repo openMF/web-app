@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatatableTransactionTabComponent } from './datatable-transaction-tab.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('DatatableTransactionTabComponent', () => {
   let component: DatatableTransactionTabComponent;
@@ -8,7 +9,8 @@ describe('DatatableTransactionTabComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DatatableTransactionTabComponent]
+      declarations: [DatatableTransactionTabComponent],
+      imports: [RouterTestingModule]
     }).compileComponents();
   });
 

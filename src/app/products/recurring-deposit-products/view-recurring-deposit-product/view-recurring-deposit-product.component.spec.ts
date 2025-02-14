@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewRecurringDepositProductComponent } from './view-recurring-deposit-product.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 
 describe('ViewRecurringDepositProductComponent', () => {
   let component: ViewRecurringDepositProductComponent;
@@ -8,7 +12,23 @@ describe('ViewRecurringDepositProductComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewRecurringDepositProductComponent]
+      declarations: [ViewRecurringDepositProductComponent],
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [
+        TranslateService,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

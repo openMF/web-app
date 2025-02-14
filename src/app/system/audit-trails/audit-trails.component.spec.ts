@@ -1,6 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateFakeLoader } from '@ngx-translate/core';
 
 import { AuditTrailsComponent } from './audit-trails.component';
+import { DatePipe } from '@angular/common';
 
 describe('AuditTrailsComponent', () => {
   let component: AuditTrailsComponent;
@@ -8,7 +15,20 @@ describe('AuditTrailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AuditTrailsComponent]
+      declarations: [AuditTrailsComponent],
+      imports: [
+        RouterTestingModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [
+        DatePipe
+      ]
     }).compileComponents();
   }));
 

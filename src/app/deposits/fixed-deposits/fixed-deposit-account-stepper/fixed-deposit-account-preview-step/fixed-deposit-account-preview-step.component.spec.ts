@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FixedDepositAccountPreviewStepComponent } from './fixed-deposit-account-preview-step.component';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 describe('FixedDepositAccountPreviewStepComponent', () => {
   let component: FixedDepositAccountPreviewStepComponent;
@@ -8,7 +9,13 @@ describe('FixedDepositAccountPreviewStepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FixedDepositAccountPreviewStepComponent]
+      declarations: [FixedDepositAccountPreviewStepComponent],
+      imports: [
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ]
     }).compileComponents();
   }));
 

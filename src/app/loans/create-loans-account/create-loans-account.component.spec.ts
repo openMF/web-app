@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateLoansAccountComponent } from './create-loans-account.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('CreateLoansAccountComponent', () => {
   let component: CreateLoansAccountComponent;
@@ -8,7 +12,20 @@ describe('CreateLoansAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateLoansAccountComponent]
+      declarations: [CreateLoansAccountComponent],
+      imports: [
+        HttpClientModule,
+        CommonModule
+      ],
+      providers: [
+        DatePipe,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

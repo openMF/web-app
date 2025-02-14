@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RejectFixedDepositsAccountComponent } from './reject-fixed-deposits-account.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 describe('RejectFixedDepositsAccountComponent', () => {
   let component: RejectFixedDepositsAccountComponent;
@@ -8,7 +14,20 @@ describe('RejectFixedDepositsAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RejectFixedDepositsAccountComponent]
+      declarations: [RejectFixedDepositsAccountComponent],
+      imports: [
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientModule,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
+
+      ],
+      providers: [
+        DatePipe
+      ]
     }).compileComponents();
   }));
 

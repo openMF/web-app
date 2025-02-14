@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewOfficeComponent } from './view-office.component';
+import { of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewOfficeComponent', () => {
   let component: ViewOfficeComponent;
@@ -8,7 +11,16 @@ describe('ViewOfficeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewOfficeComponent]
+      declarations: [ViewOfficeComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' })
+          }
+        }
+      ]
     }).compileComponents();
   }));
 

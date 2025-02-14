@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { AttachCenterMeetingComponent } from './attach-center-meeting.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
 
 describe('AttachCenterMeetingComponent', () => {
   let component: AttachCenterMeetingComponent;
@@ -8,7 +11,14 @@ describe('AttachCenterMeetingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AttachCenterMeetingComponent]
+      declarations: [AttachCenterMeetingComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule,
+        RouterTestingModule
+      ],
+      providers: [DatePipe]
     }).compileComponents();
   }));
 

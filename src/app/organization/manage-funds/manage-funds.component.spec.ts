@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageFundsComponent } from './manage-funds.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 
 describe('ManageFundsComponent', () => {
   let component: ManageFundsComponent;
@@ -8,7 +14,24 @@ describe('ManageFundsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ManageFundsComponent]
+      declarations: [ManageFundsComponent],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule,
+        CommonModule,
+        MatDialogModule
+      ],
+      providers: [
+        DatePipe,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: '123' }) // Proporciona los parámetros necesarios para ActivatedRoute
+          }
+        }
+      ]
     }).compileComponents();
   }));
 
