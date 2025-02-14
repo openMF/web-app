@@ -59,6 +59,10 @@ export class GlAccountTreeService {
       new GLAccountNode(this.translateService.instant('labels.inputs.accounting.LIABILITY'))
     );
 
+    if (glAccountData.length === 0) {
+      return glAccountTree;
+    }
+
     // Sort by parent id (so that child nodes can be added properly)
     if (!glAccountData[0].parentId) {
       glAccountData[0].parentId = 0;
