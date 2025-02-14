@@ -221,7 +221,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   previousStep() {
     this.configurationWizardService.showUsersForm = false;
     this.configurationWizardService.showUsersList = true;
-    this.router.navigate(['/users']);
+    this.router.navigate(['/appusers']);
   }
 
   /**
