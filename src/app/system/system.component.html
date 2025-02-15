@@ -131,17 +131,19 @@
             </p>
           </mat-list-item>
 
-          <mat-list-item>
-            <mat-icon matListIcon [routerLink]="['reports']">
-              <fa-icon icon="file-word" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['reports']">{{ 'labels.heading.Manage Reports' | translate }}</h4>
-            <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="!arrowBooleans[9]" icon="arrow-down" size="md"></fa-icon>
-            <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="arrowBooleans[9]" icon="arrow-up" size="md"></fa-icon>
-            <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['reports']">
-              {{ 'labels.text.Add new report and classify reports' | translate }}
-            </p>
-          </mat-list-item>
+          <div #manageReports>
+            <mat-list-item>
+              <mat-icon matListIcon [routerLink]="['reports']">
+                <fa-icon icon="file-word" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine [routerLink]="['reports']">{{ 'labels.heading.Manage Reports' | translate }}</h4>
+              <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="!arrowBooleans[9]" icon="arrow-down" size="md"></fa-icon>
+              <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="arrowBooleans[9]" icon="arrow-up" size="md"></fa-icon>
+              <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['reports']">
+                {{ 'labels.text.Add new report and classify reports' | translate }}
+              </p>
+            </mat-list-item>
+          </div>
 
           <mat-list-item>
             <mat-icon matListIcon [routerLink]="['manage-jobs']">
