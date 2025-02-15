@@ -29,7 +29,7 @@
 </div>
 
 <div class="container" [hidden]="viewGroup.value !== 'listView'">
-  <div fxLayout="row" fxLayoutGap="20px">
+  <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>{{ 'Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
