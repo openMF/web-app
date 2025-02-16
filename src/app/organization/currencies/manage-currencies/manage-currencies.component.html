@@ -67,16 +67,16 @@
   </p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{"labels.buttons.Close' | translate }}
+      {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close()">
-      {{"labels.buttons.Add Currency' | translate }}
+      {{ 'labels.buttons.Add Currency' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
-      {{"labels.buttons.Back' | translate }}
+      {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
-      {{"labels.buttons.Next' | translate }}
+      {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
 </ng-template>
