@@ -140,7 +140,7 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showRolesandPermissionPage = false;
     this.configurationWizardService.showRolesandPermissionList = false;
     this.configurationWizardService.showUsers = true;
-    this.router.navigate(['/users']);
+    this.router.navigate(['/appusers']);
   }
 
   /**

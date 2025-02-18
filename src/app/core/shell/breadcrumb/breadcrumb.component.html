@@ -14,7 +14,7 @@
 </nav>
 
 <ng-template #templateBreadcrumb let-popover="popover">
-  <h2>{{ 'labels.popovers.Breadcrumbs' | translate }}</h2>
+  <h2>{{ 'labels.menus.Breadcrumbs' | translate }}</h2>
   <p class="mw300">{{ "labels.text.User's current location" | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
