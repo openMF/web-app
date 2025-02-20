@@ -590,18 +590,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   }
 
   isDelinquencyEnabled(): boolean {
-    if (!this.loanProduct || !this.loanProduct.delinquencyBucket) {
-      return false;
-    }
-    return true;
-  }
-
-  isDownPaymentEnabled(): boolean {
-    console.log(this.loanProduct);
-    if (!this.loanProduct || !this.loanProduct.delinquencyBucket) {
-      return false;
-    }
-    return true;
+    return !!this.loanProduct?.delinquencyBucket?.name;
   }
 
   /**

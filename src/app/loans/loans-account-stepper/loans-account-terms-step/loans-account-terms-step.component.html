@@ -380,11 +380,11 @@
       </p>
     </div>
 
-    <ng-container fxFlex="48%" *ngIf="isDelinquencyEnabled()">
+    <div fxFlex="48%" *ngIf="isDelinquencyEnabled()">
       <mat-checkbox formControlName="enableInstallmentLevelDelinquency">
         <p>{{ 'labels.inputs.Enable installment level Delinquency' | translate }}</p>
       </mat-checkbox>
-    </ng-container>
+    </div>
 
     <ng-container fxFlex="48%" *ngIf="loansAccountTermsData?.isTopup">
       <mat-checkbox fxFlex="20%" formControlName="isTopup">
