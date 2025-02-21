@@ -679,7 +679,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
   clearProperty($event: Event, propertyName: string): void {
     if (propertyName === 'delinquencyBucketId') {
       this.loanProductSettingsForm.patchValue({
-        delinquencyBucketId: ''
+        delinquencyBucketId: '',
+        enableInstallmentLevelDelinquency: false
       });
     }
     this.loanProductSettingsForm.markAsDirty();
