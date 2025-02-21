@@ -1,5 +1,5 @@
 <div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-  <mat-button-toggle-group [formControl]="viewGroup">
+  <mat-button-toggle-group #buttonTreeView [formControl]="viewGroup">
     <mat-button-toggle value="listView">
       <fa-icon icon="list"></fa-icon>
     </mat-button-toggle>
@@ -29,7 +29,7 @@
 </div>
 
 <div class="container" [hidden]="viewGroup.value !== 'listView'">
-  <div fxLayout="row" fxLayoutGap="20px">
+  <div #filter fxLayout="row" fxLayoutGap="20px">
     <mat-form-field fxFlex>
       <mat-label>{{ 'Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
@@ -37,7 +37,7 @@
   </div>
 
   <!-- List View -->
-  <div class="mat-elevation-z8">
+  <div #tableOffices class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' Office Name ' | translate }}</th>

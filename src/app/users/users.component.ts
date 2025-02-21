@@ -129,7 +129,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.configurationWizardService.showUsers = false;
     this.configurationWizardService.showUsersList = false;
     this.configurationWizardService.showUsersForm = true;
-    this.router.navigate(['/users/create']);
+    this.router.navigate(['/appusers/create']);
   }
 
   /**
