@@ -10,3 +10,24 @@
 
 /* You can add global styles to this file, and also import other style files */
 @use 'assets/styles/helper';
+
+.scrollbar-styling {
+  scrollbar-width: thin;
+  scrollbar-color: #889 #f1f1f1;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #889;
+
+  &:hover {
+    background: #555;
+  }
+}
