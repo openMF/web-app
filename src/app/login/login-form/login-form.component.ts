@@ -68,7 +68,7 @@ export class LoginFormComponent implements OnInit {
    * Changes the input type between 'password' and 'text'.
    */
 
-  togglePasswordVisbility() {
+  togglePasswordVisibility() {
     this.passwordInputType = this.passwordInputType === 'password' ? 'text' : 'password';
   }
 
