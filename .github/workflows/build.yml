@@ -50,6 +50,10 @@ jobs:
         run: npm install -g --verbose testrigor-cli
 
       - name: Run testRigor tests
+        env:
+          MIFOS_TEST_SUITE_ID: ${{ secrets.MIFOS_TEST_SUITE_ID }}
+          MIFOS_AUTH_TOKEN: ${{ secrets.MIFOS_AUTH_TOKEN }}
+          LOCALHOST_URL: ${{ secrets.LOCALHOST_URL }}
         run: . ./e2e/testRigor/run_testrigor_tests.sh
 
       - name: Deploy to github pages
