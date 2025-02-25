@@ -4,8 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
 
-/** Environment Configuration */
-
 /** Main Component */
 import { WebAppComponent } from './web-app.component';
 
