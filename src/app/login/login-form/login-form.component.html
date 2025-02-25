@@ -17,24 +17,27 @@
     <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
     <input matInput type="{{ passwordInputType }}" formControlName="password" />
     <button
+      type="button"
       mat-button
-      *ngIf="loginForm.controls.password.value && !loading"
       matSuffix
+      *ngIf="loginForm.controls.password.value && !loading"
       mat-icon-button
-      (mousedown)="passwordInputType = 'text'"
-      (mouseup)="passwordInputType = 'password'"
+      (mousedown)="togglePasswordVisibility()"
+      (mouseup)="togglePasswordVisibility()"
     >
       <fa-icon *ngIf="passwordInputType === 'password'" icon="eye"></fa-icon>
       <fa-icon *ngIf="passwordInputType === 'text'" icon="eye-slash"></fa-icon>
     </button>
     <mat-error *ngIf="loginForm.controls.password.hasError('required')">
-      {{ 'labels.inputs.Password' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
+      {{ 'labels.inputs.Password' | translate }} <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
     </mat-error>
   </mat-form-field>
 
   <mat-checkbox fxFlexAlign="center" formControlName="remember" class="m-t-10">{{
     'labels.inputs.Remember me' | translate
   }}</mat-checkbox>
+
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
   <button mat-raised-button color="primary" fxFlexAlign="center" class="login-button" [disabled]="!loginForm.valid">
     {{ 'labels.buttons.Login' | translate }}
