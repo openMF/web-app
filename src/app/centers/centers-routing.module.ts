@@ -22,7 +22,6 @@ import { CenterSummaryResolver } from './common-resolvers/center-summary.resolve
 import { CenterNotesResolver } from './common-resolvers/center-notes.resolver';
 import { CenterDatatableResolver } from './common-resolvers/center-datatable.resolver';
 import { CenterDatatablesResolver } from './common-resolvers/center-datatables.resolver';
-import { CenterActionsComponent } from './centers-view/center-actions/center-actions.component';
 import { CenterActionsResolver } from './common-resolvers/center-actions.resolver';
 import { CenterDataAndTemplateResolver } from './common-resolvers/center-data-and-template.resolver';
 
@@ -55,7 +54,6 @@ const routes: Routes = [
               path: '',
               component: CentersViewComponent,
               resolve: {
-                centerViewData: CenterViewResolver,
                 centerDatatables: CenterDatatablesResolver
               },
               children: [
@@ -95,22 +93,10 @@ const routes: Routes = [
             {
               path: 'edit',
               component: EditCenterComponent,
-              data: { title: 'Edit Center', breadcrumb: 'Edit', routeParamBreadcrumb: 'Edit' },
+              data: { title: 'Edit Center', breadcrumb: 'Edit' },
               resolve: {
-                centerData: CenterDataAndTemplateResolver
+                centerDataAndTemplate: CenterDataAndTemplateResolver
               }
-            },
-            {
-              path: 'actions/:name',
-              data: { title: 'Center Actions', routeParamBreadcrumb: 'name' },
-              component: CenterActionsComponent,
-              resolve: {
-                centersActionData: CenterActionsResolver
-              }
-            },
-            {
-              path: 'savings-accounts',
-              loadChildren: () => import('../savings/savings.module').then((m) => m.SavingsModule)
             }
           ]
         }
@@ -122,18 +108,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-  providers: [
-    OfficesResolver,
-    CenterViewResolver,
-    SavingsAccountResolver,
-    CenterResourceResolver,
-    CenterSummaryResolver,
-    CenterNotesResolver,
-    CenterDatatableResolver,
-    CenterDatatablesResolver,
-    CenterActionsResolver,
-    CenterDataAndTemplateResolver
-  ]
+  exports: [RouterModule]
 })
 export class CentersRoutingModule {}
