@@ -1,0 +1,8 @@
+click field "Date Of Birth"
+click string with parameters "${todayMonthShort} ${todayYear}"
+// calculate today year - 20 and save as birthYear
+save expression "${todayYear} - 20" as "birthYear"
+click exactly saved value "birthYear"
+click saved value "todayMonthShort"
+pick-today-date
+save string with parameters "${todayDayOfMonth} ${todayMonth} ${birthYear}" as "birthDate"

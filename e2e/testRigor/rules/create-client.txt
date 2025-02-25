@@ -1,0 +1,11 @@
+click "Create Client"
+generate unique name, then enter into "First Name" and save as "firstName"
+generate unique name, then enter into "Last Name" and save as "lastName"
+generate from template "*******", then enter into "External ID" and save as "externalID"
+click "Office"
+click "Head Office"
+pick-birthdate // birthDate
+generate unique email, then enter into "Email Address" and save as "email"
+generate from template "+##-###-###-####", then enter into "Mobile No" and save as "mobileNo"
+click "Next"
+click "Next"

@@ -1,0 +1,16 @@
+log-in-and-validate
+navigate-to-admin-users-management
+create-admin-user
+check that page contains saved value "username" on the right of "Login Name"
+check that page contains saved value "firstName" on the right of "First Name"
+check that page contains saved value "lastName" on the right of "Last Name"
+check that page contains saved value "email" on the right of "Email"
+navigate-to-admin-users-management
+//validate admin profile in table
+enter saved value "firstName" into "Filter"
+check that page contains saved value "firstName" below saved value "firstName"
+check that page contains saved value "lastName" below saved value "firstName"
+check that page contains saved value "email" below saved value "firstName"
+//validate login new admin profile
+logout
+log-in-and-validate

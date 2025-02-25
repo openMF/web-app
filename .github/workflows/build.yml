@@ -46,6 +46,12 @@ jobs:
       - name: Run build
         run: npm run build:prod
 
+      - name: Install testRigor Command Line
+        run: npm install -g --verbose testrigor-cli
+
+      - name: Run testRigor tests
+        run: . ./e2e/testRigor/run_testrigor_tests.sh
+
       - name: Deploy to github pages
         if: ${{ github.event_name == 'push' }}
         uses: JamesIves/github-pages-deploy-action@v4
