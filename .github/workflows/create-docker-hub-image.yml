@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_ORGANIZATION: ${{secrets.DOCKER_ORGANIZATION}}
-      WEB_APP_VERSION: ${{secrets.WEB_APP_LATEST_STABLE_VERSION}}
 
     steps:
       - uses: actions/checkout@v2
@@ -21,11 +20,17 @@ jobs:
         run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+        
       - name: Build the Docker image
         run: docker build -t web-app:latest .
 
       - name: Docker Hub Prepare
-        run: docker image tag web-app $DOCKER_ORGANIZATION/web-app:$WEB_APP_VERSION
+        run: docker image tag web-app $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}
 
       - name: Docker Hub Push
-        run: docker image push $DOCKER_ORGANIZATION/web-app:$WEB_APP_VERSION
+        run: docker image push $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}
+        
