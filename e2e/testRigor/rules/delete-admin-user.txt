@@ -1,0 +1,8 @@
+navigate-to-admin-users-management
+enter saved value "firstName" into "Filter"
+click saved value "firstName" below saved value "firstName"
+click button "Delete"
+click button "Confirm"
+navigate-to-admin-users-management
+enter saved value "firstName" into "Filter"
+validate that page doesn't contain saved value "firstName" below saved value "firstName"
