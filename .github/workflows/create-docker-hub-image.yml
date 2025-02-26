@@ -24,7 +24,7 @@ jobs:
         shell: bash
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
         id: extract_branch
-        
+
       - name: Build the Docker image
         run: docker build -t web-app:latest .
 
@@ -33,4 +33,3 @@ jobs:
 
       - name: Docker Hub Push
         run: docker image push $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}
-        
