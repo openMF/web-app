@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+$purple-green-primary: mat.define-palette(mat.$purple-palette, 500, 300, 700);
+$purple-green-accent: mat.define-palette(mat.$green-palette, 400, 200, 600);
+$purple-green-warn: mat.define-palette(mat.$red-palette);
+
+$purple-green-theme: mat.define-light-theme($purple-green-primary, $purple-green-accent, $purple-green-warn);
+
+.purple-green-theme {
+  @include mat.all-component-themes($purple-green-theme);
+}

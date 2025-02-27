@@ -1,65 +1,73 @@
-/** Angular Imports */
 import { Injectable, EventEmitter } from '@angular/core';
-
-/** Custom Model */
 import { Theme } from './theme.model';
-
-/** Custom Services */
 import { ThemeManagerService } from './theme-manager.service';
 
-/**
- * Theme storage service.
- */
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeStorageService {
-  /** Key to store current theme of application in local storage. */
   private themeStorageKey = 'mifosXTheme';
-  /** Theme update event. */
   onThemeUpdate: EventEmitter<Theme>;
 
-  /**
-   * Initializes theme update event.
-   * @param {ThemeManagerService} themeManagerService
-   */
   constructor(public themeManagerService: ThemeManagerService) {
     this.onThemeUpdate = new EventEmitter<Theme>();
   }
 
-  /**
-   * Stores current theme in local storage and emits a theme update event.
-   * @param mifosXTheme
-   */
   storeTheme(mifosXTheme: Theme) {
     localStorage.setItem(this.themeStorageKey, JSON.stringify(mifosXTheme));
     this.onThemeUpdate.emit(mifosXTheme);
   }
 
-  /**
-   * @returns current theme from local storage
-   */
   getTheme(): Theme {
     return JSON.parse(localStorage.getItem(this.themeStorageKey));
   }
 
-  /**
-   * Removes current theme from local storage.
-   */
   clearTheme() {
     localStorage.removeItem(this.themeStorageKey);
   }
 
   /**
-   * Sets a new theme for the application and stores in local storage.
+   * Dynamically installs the theme by adding a class to the body.
    * @param {Theme} theme
    */
   installTheme(theme: Theme) {
-    if (theme.isDefault) {
-      this.themeManagerService.removeTheme();
-    } else {
-      this.themeManagerService.setTheme(`theme/${theme.href}`);
+    const body = document.body;
+
+    // Remove any previously applied theme classes
+    body.classList.remove(
+      'pictonblue-yellowgreen-theme',
+      'indigo-pink-theme',
+      'deeppurple-amber-theme',
+      'pink-bluegrey-theme',
+      'purple-green-theme'
+    );
+
+    if (!theme.isDefault) {
+      body.classList.add(this.getThemeClass(theme.href));
     }
+
     this.storeTheme(theme);
+  }
+
+  /**
+   * Maps theme file names to their respective CSS class.
+   * @param themeHref The theme file name.
+   * @returns The CSS class name for the theme.
+   */
+  private getThemeClass(themeHref: string): string {
+    switch (themeHref) {
+      case 'pictonblue-yellowgreen.css':
+        return 'pictonblue-yellowgreen-theme';
+      case 'indigo-pink.css':
+        return 'indigo-pink-theme';
+      case 'deeppurple-amber.css':
+        return 'deeppurple-amber-theme';
+      case 'pink-bluegrey.css':
+        return 'pink-bluegrey-theme';
+      case 'purple-green.css':
+        return 'purple-green-theme';
+      default:
+        return '';
+    }
   }
 }
