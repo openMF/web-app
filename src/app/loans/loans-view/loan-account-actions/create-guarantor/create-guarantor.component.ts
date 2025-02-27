@@ -28,7 +28,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
   /** Show Client Details Form */
   showClientDetailsForm = false;
   /** Minimum date allowed. */
-  minDate = new Date(2000, 0, 1);
+  minDate = new Date(1900, 0, 1);
   /** Maximum date allowed. */
   maxDate = new Date();
   /** Client data. */
