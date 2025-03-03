@@ -16,6 +16,9 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { Currency } from 'app/shared/models/general.model';
 import { TranslateService } from '@ngx-translate/core';
 
+/** Environment Configuration */
+import { environment } from 'environments/environment';
+
 /**
  * Savings Account View Component
  */
@@ -78,6 +81,12 @@ export class SavingsAccountViewComponent implements OnInit {
     if (this.savingsAccountData.clientId) {
       this.buttonConfig.addOption({
         name: 'Transfer Funds',
+        taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
+      });
+    }
+    if (this.savingsAccountData.externalId && environment.interbankTransfers === 'true') {
+      this.buttonConfig.addOption({
+        name: 'Interbank Transfer',
         taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
       });
     }
@@ -175,9 +184,15 @@ export class SavingsAccountViewComponent implements OnInit {
         this.disableWithHoldTax();
         break;
       case 'Transfer Funds':
-        const queryParams: any = { savingsId: this.savingsAccountData.id, accountType: 'fromsavings' };
+      //case 'Interbank Transfer':
+       // const interbank = name === 'Interbank Transfer'
+        const queryParams: any = { interbank: false, savingsId: this.savingsAccountData.id, accountType: 'fromsavings', balance: this.savingsAccountData.summary.accountBalance };
         this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
         break;
+      case 'Interbank Transfer':{
+        const queryParams: any = { interbank: true, savingsId: this.savingsAccountData.id, accountType: 'interbank', balance: this.savingsAccountData.summary.accountBalance };
+        this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+        break;}
       case 'Unblock Account':
       case 'Unblock Deposit':
       case 'Unblock Withdrawal':
