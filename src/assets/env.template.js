@@ -44,8 +44,8 @@
   // OAuth Client Id
   window['env']['oauthAppId'] = '$MIFOS_OAUTH_CLIENT_ID';
 
-  window['env']['vNextApiUrl'] = '$V_NEXT_API_URL';
-  window['env']['vNextApiProvider'] = '$V_NEXT_API_PROVIDER';
-  window['env']['vNextApiVersion'] = 'V_NEXT_API_VERSION';
-  window['env']['interbankTransfers'] = 'INTERBANK_TRANSFERS';
+  window['env']['vNextApiUrl'] = '$VNEXT_API_URL';
+  window['env']['vNextApiProvider'] = '$VNEXT_API_PROVIDER';
+  window['env']['vNextApiVersion'] = '$VNEXT_API_VERSION';
+  window['env']['interbankTransfers'] = '$VNEXT_INTERBANK_TRANSFERS';
 })(this);
