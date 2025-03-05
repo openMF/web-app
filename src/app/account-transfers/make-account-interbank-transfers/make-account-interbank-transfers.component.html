@@ -1,0 +1,63 @@
+<form [formGroup]="makeAccountTransferForm">
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <mat-form-field fxFlex="98%" (click)="transferDatePicker.open()">
+      <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="transferDatePicker"
+        required
+        formControlName="transferDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #transferDatePicker></mat-datepicker>
+      <mat-error *ngIf="makeAccountTransferForm.controls.transferDate.hasError('required')">
+        {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="98%">
+      <mat-label>{{ 'labels.inputs.Bank' | translate }}</mat-label>
+      <input matInput formControlName="toBank" />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="98%">
+      <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
+      <input matInput formControlName="toClientId" />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="98%">
+      <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
+      <input matInput formControlName="toAccountType" />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="98%">
+      <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
+      <input matInput formControlName="toAccountId" />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="98%" class="error-warn">
+      <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+      <input #amntInput type="number" matInput required formControlName="transferAmount" />
+      <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
+        {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+      <mat-error *ngIf="makeAccountTransferForm.get('transferAmount')?.hasError('amountExceedsBalance')">
+        <fa-icon icon="exclamation-triangle" size="md"></fa-icon>
+        {{ 'errors.validation.msg.savingsproduct.insufficient.balance' | translate: { balance } }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="98%">
+      <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+      <textarea matInput formControlName="transferDescription" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+      <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')">
+        {{ 'labels.inputs.Transfer Description' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+</form>

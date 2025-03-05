@@ -20,3 +20,19 @@ mat-divider {
 .container {
   max-width: 37rem;
 }
+
+::ng-deep mat-form-field.error-warn.mat-form-field-invalid .mat-form-field-ripple {
+  background-color: #000000de !important;
+}
+
+::ng-deep mat-form-field.error-warn.mat-form-field-invalid .mat-form-field-label {
+  color: #0009 !important;
+
+  .mat-form-field-required-marker {
+    color: #0009 !important;
+  }
+}
+
+::ng-deep mat-form-field.error-warn.mat-form-field-invalid .mat-error {
+  color: #0009 !important;
+}
