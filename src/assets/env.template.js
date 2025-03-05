@@ -35,13 +35,17 @@
   // Time in milliseconds for Session idle timeout, default 300000 seconds
   window['env']['sessionIdleTimeout'] = '$MIFOS_SESSION_IDLE_TIMEOUT';
 
-  // OAuth Server Enabled  
+  // OAuth Server Enabled
   window['env']['oauthServerEnabled'] = '$MIFOS_OAUTH_SERVER_ENABLED';
 
-  // OAuth Server URL  
+  // OAuth Server URL
   window['env']['oauthServerUrl'] = '$MIFOS_OAUTH_SERVER_URL';
 
-  // OAuth Client Id  
+  // OAuth Client Id
   window['env']['oauthAppId'] = '$MIFOS_OAUTH_CLIENT_ID';
 
+  window['env']['vNextApiUrl'] = '$VNEXT_API_URL';
+  window['env']['vNextApiProvider'] = '$VNEXT_API_PROVIDER';
+  window['env']['vNextApiVersion'] = '$VNEXT_API_VERSION';
+  window['env']['interbankTransfers'] = '$VNEXT_INTERBANK_TRANSFERS';
 })(this);

@@ -44,7 +44,11 @@ export const environment = {
     timeout: {
       idleTimeout: window['env']['sessionIdleTimeout'] || 300000, // 5 minutes
     }
-  }
+  },
+  vNextApiUrl: window['env']['vNextApiUrl'] || 'https://apis.flexcore.mx',
+  vNextApiProvider: window['env']['vNextApiProvider'] || '/vnext1',
+  vNextApiVersion: window['env']['vNextApiVersion'] || '/v1.0',
+  interbankTransfers: window['env']['interbankTransfers'] || false
 };
 
 // Server URL

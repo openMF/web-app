@@ -39,7 +39,7 @@ export class ClientsComponent implements OnInit {
   constructor(private clientService: ClientsService) { }
 
   ngOnInit() {
-    if (environment.preloadClients) {
+    if (environment.preloadClients) {      
       this.getClients();
     }
   }
