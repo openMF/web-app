@@ -11,7 +11,7 @@
     "Username or password incorrect.": "Username or password incorrect",
     "error.msg.charge.attach.to.savings.product.invalid.currency": "Charge and Savings Product must have the same currency.",
     "error.msg.charge.cannot.be.applied.to.savings.product": "Charge with identifier `{{params[0].value}} cannot be applied to Savings product.",
-    "error.msg.charge.cannot.be.interbankdeleted.it.is.already.used.in.loan": "This charge cannot be deleted as it is already associated with a Loan Product and/or a Loan.",
+    "error.msg.charge.cannot.be.deleted.it.is.already.used.in.loan": "This charge cannot be deleted as it is already associated with a Loan Product and/or a Loan.",
     "error.msg.charge.due.at.disbursement.cannot.be.penalty": "Charge cannot be setup as a penalty due at disbursement.",
     "error.msg.charge.duplicate.name": "Charge with that name already exists.",
     "error.msg.charge.update.of.charge.applies.to.is.not.supported": "Update of Charge applies to is not supported.",

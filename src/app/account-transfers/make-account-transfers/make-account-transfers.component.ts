@@ -73,7 +73,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     private dateUtils: Dates,
     private settingsService: SettingsService,
     private clientsService: ClientsService) {
-    this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
+      this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
       this.setParams();
       this.setOptions();
@@ -92,7 +92,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.accountTypeId = '2';
         this.id = this.route.snapshot.queryParams['savingsId'];  
         this.interbank = this.route.snapshot.queryParams['interbank'] === 'true';
-        this.balance = this.route.snapshot.queryParams['balance'];
+        this.balance = this.router.getCurrentNavigation().extras.state.balance;
         console.log("is interbank?", this.interbank);
         break;
       default:

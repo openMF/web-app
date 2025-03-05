@@ -184,14 +184,12 @@ export class SavingsAccountViewComponent implements OnInit {
         this.disableWithHoldTax();
         break;
       case 'Transfer Funds':
-      //case 'Interbank Transfer':
-       // const interbank = name === 'Interbank Transfer'
-        const queryParams: any = { interbank: false, savingsId: this.savingsAccountData.id, accountType: 'fromsavings', balance: this.savingsAccountData.summary.accountBalance };
-        this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+        const queryParams: any = { interbank: false, savingsId: this.savingsAccountData.id, accountType: 'fromsavings' };
+        this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams, state: {balance: this.savingsAccountData.summary.availableBalance} });
         break;
       case 'Interbank Transfer':{
-        const queryParams: any = { interbank: true, savingsId: this.savingsAccountData.id, accountType: 'interbank', balance: this.savingsAccountData.summary.accountBalance };
-        this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams });
+        const queryParams: any = { interbank: true, savingsId: this.savingsAccountData.id, accountType: 'interbank' };
+        this.router.navigate(['transfer-funds/make-account-transfer'], { relativeTo: this.route, queryParams: queryParams, state: {balance: this.savingsAccountData.summary.availableBalance} });
         break;}
       case 'Unblock Account':
       case 'Unblock Deposit':
