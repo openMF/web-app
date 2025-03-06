@@ -19,17 +19,32 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
-
       - name: Extract branch name
         shell: bash
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
         id: extract_branch
 
+      - name: Get Git Hashes
+        run: |
+          echo "short_hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "long_hash=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        id: git_hashes
+
       - name: Build the Docker image
         run: docker build -t web-app:latest .
 
       - name: Docker Hub Prepare
-        run: docker image tag web-app $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}
+        run: |
+          docker image tag web-app $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}
+          if [ "${{ steps.extract_branch.outputs.branch }}" == "master" ]; then
+            docker image tag web-app $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.short_hash }}
+            docker image tag web-app $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.long_hash }}
+          fi
 
       - name: Docker Hub Push
-        run: docker image push $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}
+        run: |
+          docker image push $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}
+          if [ "${{ steps.extract_branch.outputs.branch }}" == "master" ]; then
+            docker image push $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.short_hash }}
+            docker image push $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.long_hash }}
+          fi
