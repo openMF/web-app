@@ -34,6 +34,8 @@ export class ViewAuditComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { auditTrail: any }) => {
       this.auditTrailData = data.auditTrail;
+      console.log(this.auditTrailData);
+      
     });
   }
 

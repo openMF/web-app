@@ -44,7 +44,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   /** Audit Trail Search Template Data. */
   auditTrailSearchTemplateData: any;
   /** Columns to be displayed in audit trails table. */
-  displayedColumns: string[] = ['id', 'resourceId', 'processingResult', 'maker', 'actionName', 'entityName', 'officeName', 'madeOnDate', 'checker', 'checkedOnDate'];
+  displayedColumns: string[] = ['id', 'resourceId', 'processingResult', 'maker', 'actionName', 'entityName', 'officeName', 'madeOnDate', 'checker', 'checkedOnDate', 'clientIp'];
   /** Data source for audit trails table. */
   dataSource: AuditTrailsDataSource;
   /** Audit Trails filter. */
@@ -257,6 +257,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   getAuditTrails() {
     this.dataSource = new AuditTrailsDataSource(this.systemService);
     this.dataSource.getAuditTrails(this.filterAuditTrailsBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    console.log(this.dataSource);
+    
   }
 
   /**
@@ -267,6 +269,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       delete this.sort.active;
     }
     this.dataSource.getAuditTrails(this.filterAuditTrailsBy, this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize);
+    console.log(this.dataSource);
+    
   }
 
   /**
