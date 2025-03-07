@@ -32,42 +32,48 @@
   </mat-card>
 </div>
 
-<ng-template #templateButtonDashboard let-popover="popover">
-  <h2>{{ 'labels.heading.Dashboard' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.This will navigate the user to the dashboard component.' | translate }}</p>
+<ng-template #popoverButtons let-popover="popover" let-prev="prev" let-next="next">
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+    <button
+      *ngIf="prev"
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(prev.template, prev.target, 'bottom', true)"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
+      *ngIf="next"
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateSearchActivity, searchActivity, 'bottom', true)"
+      (click)="popover.close(); showPopover(next.template, next.target, 'bottom', true)"
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
 </ng-template>
 
+<ng-template #templateButtonDashboard let-popover="popover">
+  <h2>{{ 'labels.heading.Dashboard' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.This will navigate the user to the dashboard component.' | translate }}</p>
+  <ng-container
+    *ngTemplateOutlet="
+      popoverButtons;
+      context: { popover: popover, prev: null, next: { template: templateSearchActivity, target: searchActivity } }
+    "
+  ></ng-container>
+</ng-template>
+
 <ng-template #templateSearchActivity let-popover="popover">
   <h2>{{ 'labels.heading.Search Activity' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.This will navigate the user to the searched activity.' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateButtonDashboard, buttonDashboard, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
+  <ng-container
+    *ngTemplateOutlet="
+      popoverButtons;
+      context: { popover: popover, prev: { template: templateButtonDashboard, target: buttonDashboard }, next: null }
+    "
+  ></ng-container>
 </ng-template>
