@@ -88,6 +88,14 @@
             {{ auditTrailData.groupLevelName }}
           </div>
 
+          <div fxFlex="50%" class="mat-body-strong" *ngIf="auditTrailData.ip">
+            {{'Client IP' | translate}}
+          </div>
+
+          <div fxFlex="50%" *ngIf="auditTrailData.ip">
+            {{ auditTrailData.ip }}
+          </div>
+
         </div>
 
       </mat-card-content>
