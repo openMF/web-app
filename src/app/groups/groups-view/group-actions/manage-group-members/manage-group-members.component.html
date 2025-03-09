@@ -54,6 +54,8 @@
   </mat-card>
 
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-    <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Back' | translate }}</button>
+    <button type="button" mat-raised-button [routerLink]="['/groups', groupData.id, 'general']">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
   </div>
 </div>
