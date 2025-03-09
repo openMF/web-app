@@ -16,7 +16,7 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top: 10px">
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="form-section">
           <mat-form-field fxFlex="48%">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required autofocus formControlName="name" />
@@ -192,7 +192,7 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" style="margin-top: 10px">
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="form-section">
           <div fxFlex="48%" class="password-never-expires-wrapper">
             <mat-checkbox labelPosition="before" formControlName="active">
               {{ 'labels.status.Active' | translate }}
