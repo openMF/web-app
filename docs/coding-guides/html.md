@@ -8,7 +8,7 @@
 
 ## Coding rules
 
-- Use HTML5 doctype: `<!doctype html>`
+- Use HTML5 DOCTYPE: `<!DOCTYPE html>`
 - Use HTML [semantic elements](https://developer.mozilla.org/docs/Web/HTML/Sections_and_Outlines_of_an_HTML5_document)
 - Use double quotes `"` around attribute values in tags
 - Use a new line for every block, list, or table element, and indent every such child element

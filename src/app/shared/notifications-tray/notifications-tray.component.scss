@@ -2,6 +2,15 @@
   max-height: 20rem !important;
   width: 12.5rem !important;
 
+  .no-notifications {
+    padding: 16px;
+  }
+
+  .notification-icon {
+    font-size: 24px;
+    opacity: 0.8;
+  }
+
   .mat-menu-content {
     padding: 0 !important;
   }
