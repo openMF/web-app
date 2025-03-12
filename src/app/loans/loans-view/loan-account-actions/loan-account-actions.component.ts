@@ -99,7 +99,10 @@ export class LoanAccountActionsComponent {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.navigationData = this.router.getCurrentNavigation().extras.state.data;
+    const currentNavigation = this.router.getCurrentNavigation();
+    // Safely access data with optional chaining
+    this.navigationData = currentNavigation?.extras?.state?.data;
+
     this.route.data.subscribe((data: { actionButtonData: any }) => {
       this.actionButtonData = data.actionButtonData;
     });
@@ -110,9 +113,9 @@ export class LoanAccountActionsComponent {
         this.actionName = 'Assign Loan Officer';
       }
       for (const key of Object.keys(this.actions)) {
-        this.actions[key] = false;
+        this.actions[key as keyof typeof this.actions] = false;
       }
-      this.actions[this.actionName] = true;
+      this.actions[this.actionName as keyof typeof this.actions] = true;
     });
   }
 }
