@@ -156,7 +156,7 @@ export class AddressTabComponent {
 
     for (let index = 0; index < this.clientAddressTemplate.addressTypeIdOptions.length; index++) {
       this.clientAddressTemplate.addressTypeIdOptions[index].name = this.translateService.instant(
-        `${this.clientAddressTemplate.addressTypeIdOptions[index].name}`
+        `labels.catalogs.${this.clientAddressTemplate.addressTypeIdOptions[index].name}`
       );
     }
 
