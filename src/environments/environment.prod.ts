@@ -14,9 +14,9 @@ export const environment = {
   // For connecting to others servers running elsewhere update the base API URL
   baseApiUrls:
     loadedEnv['fineractApiUrls'] ||
-    'https://https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443',
+    'https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443,' + window.location.origin,
   // For connecting to server running elsewhere set the base API URL
-  baseApiUrl: loadedEnv['fineractApiUrl'] || window.location.protocol + '//' + window.location.hostname,
+  baseApiUrl: loadedEnv['fineractApiUrl'] || window.location.origin,
   oauthServerUrl: loadedEnv['oauthServerUrl'] || loadedEnv['fineractApiUrl'] + loadedEnv['apiProvider'],
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: loadedEnv['apiProvider'] || '/fineract-provider/api',
