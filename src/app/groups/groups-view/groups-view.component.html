@@ -78,12 +78,6 @@
           </mat-icon>
           <span>{{ 'labels.buttons.Edit' | translate }}</span>
         </button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_CLIENT'" (click)="doAction('Manage Members')">
-          <mat-icon matListIcon>
-            <fa-icon icon="plus" size="sm"></fa-icon>
-          </mat-icon>
-          <span>{{ 'labels.buttons.Add Clients' | translate }}</span>
-        </button>
         <button mat-menu-item *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
           <mat-icon matListIcon>
             <fa-icon icon="users" size="sm"></fa-icon>
