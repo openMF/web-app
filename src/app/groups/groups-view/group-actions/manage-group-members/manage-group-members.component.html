@@ -1,4 +1,4 @@
-<div class="container" fxLayout="row" fxLayoutGap="3%">
+<div class="container" fxLayout="column" fxLayoutGap="3%">
   <mat-card fxFlex class="client-card" fxLayout="column" fxLayoutGap="2%">
     <mat-form-field fxFlex="30%">
       <mat-label>{{ 'labels.inputs.Add Clients' | translate }}</mat-label>
@@ -53,7 +53,10 @@
     </mat-nav-list>
   </mat-card>
 
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
-    <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Back' | translate }}</button>
+  <!-- Moved Back Button Here -->
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <button type="button" mat-raised-button color="primary" (click)="goBack()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
   </div>
 </div>

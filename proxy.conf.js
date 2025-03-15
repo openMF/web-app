@@ -1,7 +1,6 @@
 'use strict';
 
 const HttpsProxyAgent = require('https-proxy-agent');
-
 /*
  * API proxy configuration.
  * This allows you to proxy HTTP request like `http.get('/api/stuff')` to another server/port.

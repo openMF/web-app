@@ -1,4 +1,8 @@
 {
+  "env": {
+    "es6": true,
+    "node": true
+  },
   "root": true,
   "ignorePatterns": [
     "projects/**/*"
@@ -13,6 +17,8 @@
           "tsconfig.json",
           "e2e/tsconfig.json"
         ],
+        "ecmaVersion": 2021,
+        "sourceType": "module",
         "createDefaultProgram": true
       },
       "extends": [

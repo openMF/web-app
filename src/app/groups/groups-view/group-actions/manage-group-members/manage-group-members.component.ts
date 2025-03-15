@@ -2,6 +2,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, UntypedFormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -37,6 +38,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(
+    private location: Location,
     private route: ActivatedRoute,
     private groupsService: GroupsService,
     private clientsService: ClientsService,
@@ -103,5 +105,8 @@ export class ManageGroupMembersComponent implements AfterViewInit {
    */
   displayClient(client: any): string | undefined {
     return client ? client.displayName : undefined;
+  }
+  goBack() {
+    this.location.back(); // Navigates to the previous step
   }
 }
