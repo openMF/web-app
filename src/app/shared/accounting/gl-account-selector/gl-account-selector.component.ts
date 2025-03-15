@@ -36,7 +36,7 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
       this.searchGLAccount();
     });
 
-    this.placeHolderLabel = this.translateService.instant('labels.inputs.Filter');
+    this.placeHolderLabel = this.translateService.instant('labels.text.Search');
     this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
   }
 
