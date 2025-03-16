@@ -1,0 +1,32 @@
+name: Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  testRigor:
+    runs-on: ubuntu-latest
+    env:
+      MIFOS_TEST_SUITE_ID: ${{secrets.MIFOS_TEST_SUITE_ID}}
+      MIFOS_AUTH_TOKEN: ${{secrets.MIFOS_AUTH_TOKEN}}
+      LOCALHOST_URL: ${{secrets.LOCALHOST_URL}}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v1
+        with:
+          node-version: '22.9.0'
+
+      - name: Install testRigor Command Line
+        run: |
+          npm install -g --verbose testrigor-cli
+
+      - name: Run testRigor tests
+        run: |
+          echo "$MIFOS_TEST_SUITE_ID"
+          chmod +x ./e2e/testRigor/run_testrigor_tests.sh && ./e2e/testRigor/run_testrigor_tests.sh

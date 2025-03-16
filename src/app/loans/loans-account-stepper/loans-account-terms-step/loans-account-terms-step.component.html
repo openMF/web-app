@@ -12,11 +12,7 @@
 
     <h4 fxFlex="98%" class="mat-h4">
       {{ 'labels.heading.Term Options' | translate }}
-      <i
-        class="fas fa-question"
-        matTooltip="The loan term parameter in loan accounts
-      is the default-calculated field based on the number of repayments and repaid every value entered by the user"
-      ></i>
+      <i class="fas fa-question" matTooltip="{{ 'tooltips.The loan term parameter in loan accounts' | translate }}"></i>
     </h4>
 
     <mat-form-field fxFlex="23%">
@@ -57,8 +53,7 @@
         type="number"
         matInput
         formControlName="numberOfRepayments"
-        matTooltip="Enter the total count of repayments that loan schedule has excluding the down-payment. Example:
-      If the loan account has 4 Installments including down-payment then number of repayments is equal to 3"
+        matTooltip="{{ 'tooltips.Enter the total count of repayments' | translate }}"
       />
       <mat-error *ngIf="loansAccountTermsForm.controls.numberOfRepayments.hasError('required')">
         {{ 'labels.inputs.Number of repayments' | translate }} {{ 'labels.commons.is' | translate }}
@@ -154,8 +149,7 @@
       fxFlex="73%"
       labelPosition="before"
       formControlName="enableDownPayment"
-      matTooltip="Leave this checkbox checked if the loan has Down Payment, A Down Payment is
-    a sum a buyer pays upfront when purchasing a good. It represents a percentage of the total purchase price, and the balance is usually financed"
+      matTooltip="{{ 'tooltips.Leave this checkbox checked if the loan has Down Payment' | translate }}"
       class="margin-b"
       *ngIf="productEnableDownPayment"
     >
@@ -600,7 +594,7 @@
     <mat-divider fxFlex="98%"></mat-divider>
 
     <div fxFlex="50%">
-      <div fxLayout="column" fxFlex="50%" class="table_name">
+      <div fxLayout="column" fxFlex="50%" class="table-name">
         <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Collaterals Data' | translate }}</h4>
       </div>
 
