@@ -1,14 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { LoansService } from 'app/loans/loans.service';
+/** Angular Imports */
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 
+/** Custom Services */
+import { LoansService } from '../../../../loans.service';
+import { Commons } from 'app/core/utils/commons';
+import { takeUntil } from 'rxjs/operators';
+import { ReplaySubject, Subject } from 'rxjs';
+
+// Felix: TODO's:
+// - gsimData was already declared, when I found this file. Apparently,
+// glim accounts can only be linked to gsim accounts. Needs to be tested
+// as soon as gsim accounts are implemented.
+/**
+ * GLIM Account Details Step
+ */
 @Component({
   selector: 'mifosx-glim-details-step',
   templateUrl: './glim-details-step.component.html',
   styleUrls: ['./glim-details-step.component.scss']
 })
-export class GlimDetailsStepComponent implements OnInit {
+export class GlimDetailsStepComponent implements OnInit, OnDestroy {
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
   @Input() gsimData: any;
@@ -17,7 +31,7 @@ export class GlimDetailsStepComponent implements OnInit {
   /** Maximum date allowed. */
   maxDate = new Date(2100, 0, 1);
   /** Product Data */
-  productData: any;
+  productList: any;
   /** Loan Officer Data */
   loanOfficerOptions: any;
   /** Loan Purpose Options */
@@ -31,6 +45,16 @@ export class GlimDetailsStepComponent implements OnInit {
   /** Loans Account Details Form */
   loansAccountDetailsForm: UntypedFormGroup;
 
+  loanId: any = null;
+
+  loanProductSelected = false;
+  /** Currency data. */
+  protected productData: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
+  /** control for the filter select */
+  protected filterFormCtrl: UntypedFormControl = new UntypedFormControl('');
+  /** Subject that emits when the component has been destroyed. */
+  protected _onDestroy = new Subject<void>();
+
   /** Loans Account Template with product data  */
   @Output() loansAccountProductTemplate = new EventEmitter();
   /**
@@ -42,17 +66,21 @@ export class GlimDetailsStepComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private loansService: LoansService,
-    private settingsService: SettingsService
+    private route: ActivatedRoute,
+    private settingsService: SettingsService,
+    private commons: Commons
   ) {
-    this.createLoansAccountDetailsForm();
+    this.loanId = this.route.snapshot.params['loanId'];
   }
 
   ngOnInit(): void {
-    this.maxDate = this.settingsService.businessDate;
+    this.createLoansAccountDetailsForm();
+    this.maxDate = this.settingsService.maxFutureDate; // Felix: originally: businessDate;
     this.buildDependencies();
     if (this.loansAccountTemplate) {
-      this.productData = this.loansAccountTemplate.productOptions;
+      this.productList = this.loansAccountTemplate.productOptions.sort(this.commons.dynamicSort('name'));
       if (this.loansAccountTemplate.loanProductId) {
+        console.log('this.loansAccountTemplate.loanOfficerId: ', this.loansAccountTemplate.loanOfficerId);
         this.loansAccountDetailsForm.patchValue({
           productId: this.loansAccountTemplate.loanProductId,
           submittedOnDate:
@@ -68,6 +96,31 @@ export class GlimDetailsStepComponent implements OnInit {
         });
       }
     }
+    this.filterFormCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+      this.searchItem();
+    });
+    this.productData.next(this.productList.slice());
+  }
+
+  ngOnDestroy(): void {
+    this._onDestroy.next();
+    this._onDestroy.complete();
+  }
+
+  searchItem(): void {
+    if (this.productList) {
+      const search: string = this.filterFormCtrl.value.toLowerCase();
+
+      if (!search) {
+        this.productData.next(this.productList.slice());
+      } else {
+        this.productData.next(
+          this.productList.filter((option: any) => {
+            return option['name'].toLowerCase().indexOf(search) >= 0;
+          })
+        );
+      }
+    }
   }
 
   /**
@@ -80,6 +133,7 @@ export class GlimDetailsStepComponent implements OnInit {
         Validators.required
       ],
       loanOfficerId: [''],
+      // Felix: found: loanPurposeId: [''], - not sure, where we add this list...
       fundId: [''],
       submittedOnDate: [
         new Date(),
@@ -89,7 +143,9 @@ export class GlimDetailsStepComponent implements OnInit {
         '',
         Validators.required
       ],
-      linkAccountId: ['']
+      externalId: [''],
+      linkAccountId: [''],
+      createStandingInstructionAtDisbursement: ['']
     });
   }
 
@@ -105,6 +161,7 @@ export class GlimDetailsStepComponent implements OnInit {
         this.loanPurposeOptions = response.loanPurposeOptions;
         this.fundOptions = response.fundOptions;
         this.accountLinkingOptions = response.accountLinkingOptions;
+        this.loanProductSelected = true;
       });
     });
   }
@@ -113,6 +170,6 @@ export class GlimDetailsStepComponent implements OnInit {
    * Returns loans account details form value.
    */
   get loansAccountDetails() {
-    return this.loansAccountDetailsForm.value;
+    return this.loansAccountDetailsForm.getRawValue(); // Felix: was: value;
   }
 }

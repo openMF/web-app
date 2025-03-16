@@ -1,9 +1,16 @@
 <form [formGroup]="loansAccountDetailsForm">
   <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-form-field fxFlex="48%">
+    <mat-form-field fxFlex="72%">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
-      <mat-select formControlName="productId" required>
-        <mat-option *ngFor="let product of productData" [value]="product.id">
+      <mat-select
+        required
+        matTooltip="{{ 'tooltips.Name of the loan product' | translate }}"
+        formControlName="productId"
+      >
+        <mat-option>
+          <ngx-mat-select-search [formControl]="filterFormCtrl"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let product of productData | async" [value]="product.id">
           {{ product.name }}
         </mat-option>
       </mat-select>
@@ -12,10 +19,15 @@
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
+  </div>
 
+  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="loanProductSelected">
     <mat-form-field fxFlex="48%">
       <mat-label>{{ 'labels.inputs.Loan officer' | translate }}</mat-label>
-      <mat-select formControlName="loanOfficerId">
+      <mat-select
+        formControlName="loanOfficerId"
+        matTooltip="{{ 'tooltips.Financial institution representative' | translate }}"
+      >
         <mat-option *ngFor="let loanOfficer of loanOfficerOptions" [value]="loanOfficer.id">
           {{ loanOfficer.displayName }}
         </mat-option>
@@ -38,6 +50,7 @@
         [min]="minDate"
         [max]="maxDate"
         [matDatepicker]="submitPicker"
+        matTooltip="{{ 'tooltips.Date the loan account application' | translate }}"
         required
         formControlName="submittedOnDate"
       />
@@ -56,6 +69,7 @@
         [min]="loansAccountDetailsForm.value.submittedOnDate"
         [max]="maxDate"
         [matDatepicker]="disbursementPicker"
+        matTooltip="{{ 'tooltips.Date that the loan account disbursed' | translate }}"
         required
         formControlName="expectedDisbursementDate"
       />
@@ -67,15 +81,11 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-divider fxFlex="98%"></mat-divider>
-
-    <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Savings Linkage' | translate }}</h3>
-
     <mat-form-field fxFlex="48%">
       <mat-label>{{ 'labels.inputs.Link savings' | translate }}</mat-label>
       <mat-select formControlName="linkAccountId">
         <mat-option *ngFor="let savingaccount of gsimData" [value]="savingaccount.id">
-          {{ savingaccount.accountNumber }}
+          {{ savingaccount.accountNumber }} {{ savingaccount.productName }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -89,6 +99,9 @@
     <button mat-raised-button matStepperNext>
       {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+    </button>
+    <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
+      {{ 'labels.buttons.Cancel' | translate }}
     </button>
   </div>
 </form>

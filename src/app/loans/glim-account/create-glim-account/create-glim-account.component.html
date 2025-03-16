@@ -27,6 +27,7 @@
         [loansAccountTemplate]="loansAccountTemplate"
         (loansAccountProductTemplate)="setTemplate($event)"
         [gsimData]="gsimData"
+        #loansAccountDetailsForm
       >
       </mifosx-glim-details-step>
     </mat-step>
@@ -35,8 +36,10 @@
       <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
       <mifosx-glim-terms-step
+        #loanAccountTerms
         [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountTemplate"
+        [loansAccountFormValid]="loansAccountFormValid"
       >
       </mifosx-glim-terms-step>
     </mat-step>
@@ -45,8 +48,10 @@
       <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
       <mifosx-glim-charges-step
+        #loanAccountCharges
         [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountTemplate"
+        [loansAccountFormValid]="loansAccountFormValid"
         [activeClientMembers]="activeClientMembers"
       >
       </mifosx-glim-charges-step>
