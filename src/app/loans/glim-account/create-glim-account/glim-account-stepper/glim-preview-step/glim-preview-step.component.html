@@ -1,8 +1,6 @@
 <div fxLayout="row wrap" fxLayout.lt-md="column">
   <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Details' | translate }}</h3>
 
-  <mat-divider fxFlexFill></mat-divider>
-
   <div fxFlexFill>
     <span fxFlex="40%">{{ 'labels.inputs.Product' | translate }}:</span>
     <span fxFlex="60%">{{ loansAccount.productId | find: loansAccountTemplate.productOptions : 'id' : 'name' }}</span>
@@ -50,11 +48,16 @@
 
   <div fxFlexFill>
     <span fxFlex="40%">{{ 'labels.inputs.Principal' | translate }}:</span>
-    <span fxFlex="60%">{{ loansAccount.principal }} {{ loansAccountProductTemplate.currency.DisplaySymbol }}</span>
+    <span fxFlex="60%">
+      {{
+        loansAccount.principalAmount | currency: loansAccountProductTemplate.currency.code : 'symbol-narrow' : '1.2-2'
+      }}
+      <span class="m-l-5">{{ loansAccountProductTemplate.currency.code }}</span>
+    </span>
   </div>
 
   <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Loan term' | translate }}:</span>
+    <span fxFlex="40%">{{ 'labels.inputs.Loan Term' | translate }}:</span>
     <span fxFlex="60%"
       >{{ loansAccount.loanTermFrequency }}
       {{
@@ -84,6 +87,11 @@
           | find: loansAccountProductTemplate.repaymentFrequencyDaysOfWeekTypeOptions : 'id' : 'name'
       }}</span
     >
+  </div>
+
+  <div fxFlexFill *ngIf="productEnableDownPayment">
+    <span fxFlex="40%">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
+    <span fxFlex="60%">{{ loansAccount.enableDownPayment | yesNo }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.repaymentsStartingFromDate">
@@ -137,9 +145,7 @@
 
   <div fxFlexFill *ngIf="loansAccount.inArrearsTolerance">
     <span fxFlex="40%">{{ 'labels.inputs.Arrears tolerance' | translate }}: </span>
-    <span fxFlex="60%"
-      >{{ loansAccount.inArrearsTolerance }}&nbsp;{{ loansAccountProductTemplate.currency.displaySymbol }}</span
-    >
+    <span fxFlex="60%">{{ loansAccount.inArrearsTolerance }}</span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.graceOnInterestCharged">
@@ -151,13 +157,23 @@
     <span fxFlex="40%">{{ 'labels.inputs.Repayment strategy' | translate }}: </span>
     <span fxFlex="60%">{{
       loansAccount.transactionProcessingStrategyCode
-        | find: loansAccountTemplate.transactionProcessingStrategyOptions : 'code' : 'name'
+        | find: loansAccountProductTemplate.transactionProcessingStrategyOptions : 'code' : 'name'
     }}</span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Moratorium' | translate }}</h3>
+  <div fxFlexFill>
+    <span fxFlex="40%"> {{ 'labels.inputs.Installment Amount' | translate }} </span>
+    <span fxFlex="60%"> {{ loansAccount.fixedEmiAmount | formatNumber }} </span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%"> {{ 'labels.inputs.Balloon Repayment Amount' | translate }} </span>
+    <span fxFlex="60%"> {{ loansAccount.balloonRepaymentAmount | formatNumber }} </span>
+  </div>
 
   <mat-divider fxFlexFill></mat-divider>
+
+  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Moratorium' | translate }}</h3>
 
   <div fxFlexFill *ngIf="loansAccount.graceOnPrincipalPayment">
     <span fxFlex="40%">{{ 'labels.inputs.On principal payment' | translate }}: </span>
@@ -172,6 +188,11 @@
   <div fxFlexFill *ngIf="loansAccount.graceOnArrearsAgeing">
     <span fxFlex="40%">{{ 'labels.inputs.On Arrears Aging' | translate }}: </span>
     <span fxFlex="60%">{{ loansAccount.graceOnArrearsAgeing }}</span>
+  </div>
+
+  <div fxFlexFill>
+    <span fxFlex="40%"> {{ 'labels.inputs.Enable installment level Delinquency' | translate }} </span>
+    <span fxFlex="60%"> {{ loansAccount.enableInstallmentLevelDelinquency | yesNo }} </span>
   </div>
 
   <div fxFlexFill *ngIf="loansAccount.isTopup">
@@ -291,7 +312,7 @@
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}
   </button>
-  <button mat-raised-button [routerLink]="['../']">
+  <button mat-raised-button [routerLink]="['../..']">
     {{ 'labels.buttons.Cancel' | translate }}
   </button>
   <button mat-raised-button color="primary" (click)="submitEvent.emit()">

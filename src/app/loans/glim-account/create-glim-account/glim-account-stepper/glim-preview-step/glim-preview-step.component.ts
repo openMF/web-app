@@ -1,13 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 
+/**
+ * Create GLIM Account Preview Step
+ */
 @Component({
   selector: 'mifosx-glim-preview-step',
   templateUrl: './glim-preview-step.component.html',
   styleUrls: ['./glim-preview-step.component.scss']
 })
-export class GlimPreviewStepComponent {
+export class GlimPreviewStepComponent implements OnChanges {
   /** Loans Account Template */
-  @Input() loansAccountTemplate: any;
+  @Input() loansAccountTemplate: any = [];
   /** Loans Account Product Template */
   @Input() loansAccountProductTemplate: any;
   /** Loans Account Data */
@@ -31,5 +34,11 @@ export class GlimPreviewStepComponent {
     'collectedon'
   ];
 
+  productEnableDownPayment = false;
+
   constructor() {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.productEnableDownPayment = this.loansAccountProductTemplate.product.enableDownPayment;
+  }
 }
