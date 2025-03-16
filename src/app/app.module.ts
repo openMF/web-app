@@ -40,8 +40,20 @@ import { PortalModule } from '@angular/cdk/portal';
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
 import { DatePipe, LocationStrategy } from '@angular/common';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {
+  TranslateLoader,
+  TranslateModule,
+  MissingTranslationHandler,
+  MissingTranslationHandlerParams
+} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export class CustomMissingTranslationHandler implements MissingTranslationHandler {
+  handle(params: MissingTranslationHandlerParams): string {
+    // Remove the 'labels.catalogs.' prefix and return the fallback value
+    return params.key.replace('labels.catalogs.', '');
+  }
+}
 
 /**
  * App Module
@@ -66,7 +78,8 @@ export function HttpLoaderFactory(http: HttpClient) {
           HttpBackend,
           LocationStrategy
         ]
-      }
+      },
+      missingTranslationHandler: { provide: MissingTranslationHandler, useClass: CustomMissingTranslationHandler }
     }),
     BrowserModule,
     BrowserAnimationsModule,
