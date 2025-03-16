@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Services */
 import { LoansService } from '../../loans.service';
@@ -19,6 +20,10 @@ import { ReplaySubject, Subject } from 'rxjs';
   styleUrls: ['./loans-account-details-step.component.scss']
 })
 export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
+  //** Defining PlaceHolders for the search bar */
+  placeHolderLabel = '';
+  noEntriesFoundLabel = '';
+
   /** Loans Account Template */
   @Input() loansAccountTemplate: any;
 
@@ -63,6 +68,7 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
     private formBuilder: UntypedFormBuilder,
     private loansService: LoansService,
     private route: ActivatedRoute,
+    private translateService: TranslateService,
     private settingsService: SettingsService,
     private commons: Commons
   ) {
@@ -70,6 +76,8 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.placeHolderLabel = this.translateService.instant('labels.text.Search');
+    this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
     this.createLoansAccountDetailsForm();
     this.maxDate = this.settingsService.maxFutureDate;
     this.buildDependencies();
