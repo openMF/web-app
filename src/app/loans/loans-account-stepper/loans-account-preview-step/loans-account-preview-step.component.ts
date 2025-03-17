@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 
 /**
  * Create Loans Account Preview Step
@@ -16,6 +17,9 @@ export class LoansAccountPreviewStepComponent implements OnChanges {
   @Input() loansAccountProductTemplate: any;
   /** Loans Account Data */
   @Input() loansAccount: any;
+  /** active Client Members in case of GSIM Account */
+  @Input() activeClientMembers?: any;
+
   /** Submit Loans Account */
   @Output() submitEvent = new EventEmitter();
 
@@ -35,11 +39,20 @@ export class LoansAccountPreviewStepComponent implements OnChanges {
     'collectedon'
   ];
 
+  /** Table Data Source */
+  dataSource: any;
   productEnableDownPayment = false;
 
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.productEnableDownPayment = this.loansAccountProductTemplate.product.enableDownPayment;
+    if (this.activeClientMembers) {
+      this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
+      this.loansAccount.principalAmount = this.activeClientMembers.reduce(
+        (acc: number, member: any) => acc + (member.principal ?? 0),
+        0
+      );
+    }
   }
 }

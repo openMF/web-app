@@ -619,7 +619,7 @@ export class LoansService {
       }));
     }
 
-    if (loansAccountTemplate.clientId && loansAccountTemplate.group.id) {
+    if (loansAccountTemplate.clientId && loansAccountTemplate.group?.id) {
       loansAccountData.clientId = loansAccountTemplate.clientId;
       loansAccountData.groupId = loansAccountTemplate.group.id;
       loansAccountData.loanType = 'glim';

@@ -351,7 +351,6 @@ const routes: Routes = [
         component: CreateGlimAccountComponent,
         resolve: {
           loansAccountTemplate: GLIMLoanTemplateResolver,
-          gsimData: GSIMAccountsResolver,
           groupsData: GroupViewResolver
         }
       },

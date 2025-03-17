@@ -23,38 +23,57 @@
     <mat-step [stepControl]="loansAccountDetailsForm">
       <ng-template matStepLabel>{{ 'labels.inputs.DETAILS' | translate }}</ng-template>
 
-      <mifosx-glim-details-step
+      <mifosx-loans-account-details-step
         [loansAccountTemplate]="loansAccountTemplate"
         (loansAccountProductTemplate)="setTemplate($event)"
-        [gsimData]="gsimData"
-        #loansAccountDetailsForm
       >
-      </mifosx-glim-details-step>
+      </mifosx-loans-account-details-step>
     </mat-step>
 
     <mat-step [stepControl]="loansAccountTermsForm">
       <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
-      <mifosx-glim-terms-step
+      <mifosx-loans-account-terms-step
         #loanAccountTerms
         [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountTemplate"
+        [collateralOptions]="collateralOptions"
         [loansAccountFormValid]="loansAccountFormValid"
+        [loanPrincipal]="loanPrincipal"
       >
-      </mifosx-glim-terms-step>
+      </mifosx-loans-account-terms-step>
     </mat-step>
 
     <mat-step>
       <ng-template matStepLabel>{{ 'labels.inputs.CHARGES' | translate }}</ng-template>
 
-      <mifosx-glim-charges-step
+      <mifosx-loans-account-charges-step
         #loanAccountCharges
         [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountTemplate"
         [loansAccountFormValid]="loansAccountFormValid"
         [activeClientMembers]="activeClientMembers"
       >
-      </mifosx-glim-charges-step>
+      </mifosx-loans-account-charges-step>
+    </mat-step>
+
+    <mat-step state="repayment" *ngIf="loansAccountFormValid" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.REPAYMENT SCHEDULE' | translate }}</ng-template>
+
+      <mifosx-loans-account-schedule-step
+        #loanAccountSchedule
+        [loansAccountTemplate]="loansAccountTemplate"
+        [loansAccountProductTemplate]="loansAccountProductTemplate"
+        [loansAccount]="loansAccount"
+        [currencyCode]="currencyCode"
+      >
+      </mifosx-loans-account-schedule-step>
+    </mat-step>
+
+    <mat-step *ngFor="let datatable of datatables">
+      <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
+
+      <mifosx-loans-account-datatable-step [datatableData]="datatable" #dtloan></mifosx-loans-account-datatable-step>
     </mat-step>
 
     <mat-step state="preview" *ngIf="loansAccountFormValid" completed>
@@ -64,6 +83,7 @@
         [loansAccountTemplate]="loansAccountTemplate"
         [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccount]="loansAccount"
+        [activeClientMembers]="activeClientMembers"
         (submitEvent)="submit()"
       >
       </mifosx-loans-account-preview-step>

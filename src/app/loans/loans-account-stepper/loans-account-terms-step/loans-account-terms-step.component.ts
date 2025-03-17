@@ -146,6 +146,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         amortizationType: this.loansAccountTermsData.amortizationType.id,
         isEqualAmortization: this.loansAccountTermsData.isEqualAmortization,
         interestType: this.loansAccountTermsData.interestType.id,
+        // TODO: 2025-03-17: Is this correct?
         isFloatingInterestRate: this.loansAccountTermsData.isLoanProductLinkedToFloatingRate ? false : '',
         interestCalculationPeriodType: this.loansAccountTermsData.interestCalculationPeriodType.id,
         allowPartialPeriodInterestCalculation: this.loansAccountTermsData.allowPartialPeriodInterestCalculation,
