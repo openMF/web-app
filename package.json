@@ -58,7 +58,7 @@
     "d3": "^7.9.0",
     "html2canvas": "^1.4.1",
     "install": "^0.13.0",
-    "jspdf": "^3.0.0",
+    "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "lodash": "4.17.21",
     "moment": "^2.29.4",
