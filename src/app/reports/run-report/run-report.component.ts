@@ -85,12 +85,23 @@ export class RunReportComponent implements OnInit {
     this.route.data.subscribe((data: { reportParameters: ReportParameter[]; configurations: any }) => {
       this.paramData = data.reportParameters;
       if (this.isTableReport()) {
-        data.configurations.globalConfiguration.forEach((config: GlobalConfiguration) => {
-          if (config.name === 'report-export-s3-folder-name') {
-            this.exportToS3Allowed = config.enabled;
-            this.exportToS3Repository = config.stringValue;
-          }
-        });
+        const amazonS3Config = data.configurations.globalConfiguration.find(
+          (config: GlobalConfiguration) => config.name === 'amazon-s3'
+        );
+        const reportExportS3Config = data.configurations.globalConfiguration.find(
+          (config: GlobalConfiguration) => config.name === 'report-export-s3-folder-name'
+        );
+
+        if (
+          amazonS3Config &&
+          amazonS3Config.enabled &&
+          reportExportS3Config &&
+          reportExportS3Config.enabled &&
+          reportExportS3Config.stringValue
+        ) {
+          this.exportToS3Allowed = true;
+          this.exportToS3Repository = reportExportS3Config.stringValue;
+        }
       }
     });
   }
