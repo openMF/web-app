@@ -160,6 +160,7 @@
 </div>
 
 <ng-template #templateLogo let-popover="popover">
+  <h2>{{ 'labels.text.Home' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Welcome page logo from anywhere' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
