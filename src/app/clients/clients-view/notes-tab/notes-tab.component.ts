@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -16,7 +16,7 @@ import { AuthenticationService } from 'app/core/authentication/authentication.se
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss']
 })
-export class NotesTabComponent {
+export class NotesTabComponent implements OnInit {
   /** Client ID */
   entityId: string;
   /** Username */
@@ -34,9 +34,13 @@ export class NotesTabComponent {
     private clientsService: ClientsService,
     private authenticationService: AuthenticationService
   ) {
+    this.entityId = this.route.parent.snapshot.params['clientId'];
+    this.addNote = this.addNote.bind(this);
+  }
+
+  ngOnInit(): void {
     const credentials = this.authenticationService.getCredentials();
     this.username = credentials.username;
-    this.entityId = this.route.parent.snapshot.params['clientId'];
     this.route.data.subscribe((data: { clientNotes: any }) => {
       this.entityNotes = data.clientNotes;
     });
