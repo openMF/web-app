@@ -10,8 +10,7 @@ import { TemplatesRoutingModule } from './templates-routing.module';
 /** Custom Components */
 import { TemplatesComponent } from './templates.component';
 import { ViewTemplateComponent } from './view-template/view-template.component';
-import { EditTemplateComponent } from './edit-template/edit-template.component';
-import { CreateTemplateComponent } from './create-template/create-template.component';
+import { CreateEditComponent } from './create-edit-template/create-edit-template.component';
 
 /**
  * Templates Module
@@ -28,8 +27,7 @@ import { CreateTemplateComponent } from './create-template/create-template.compo
   declarations: [
     TemplatesComponent,
     ViewTemplateComponent,
-    EditTemplateComponent,
-    CreateTemplateComponent
+    CreateEditComponent
   ]
 })
 export class TemplatesModule {}
