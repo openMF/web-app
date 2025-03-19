@@ -17,7 +17,7 @@ export class LoansAccountPreviewStepComponent implements OnChanges {
   @Input() loansAccountProductTemplate: any;
   /** Loans Account Data */
   @Input() loansAccount: any;
-  /** active Client Members in case of GSIM Account */
+  /** active Client Members in case of GLIM Account */
   @Input() activeClientMembers?: any;
 
   /** Submit Loans Account */
@@ -38,6 +38,16 @@ export class LoansAccountPreviewStepComponent implements OnChanges {
     'amount',
     'collectedon'
   ];
+  /** Columns to be displayed in active members table. */
+  membersDisplayedColumns: string[] = [
+    'id',
+    'name',
+    'purpose',
+    'principal'
+  ];
+
+  /** Loan Purpose Options */
+  loanPurposeOptions: any[] = [];
 
   /** Table Data Source */
   dataSource: any;
@@ -48,11 +58,18 @@ export class LoansAccountPreviewStepComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.productEnableDownPayment = this.loansAccountProductTemplate.product.enableDownPayment;
     if (this.activeClientMembers) {
-      this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
-      this.loansAccount.principalAmount = this.activeClientMembers.reduce(
-        (acc: number, member: any) => acc + (member.principal ?? 0),
-        0
+      this.loanPurposeOptions = this.loansAccountProductTemplate.loanPurposeOptions;
+      this.dataSource = new MatTableDataSource<any>(
+        this.activeClientMembers
+          .filter((member: any) => member.selected)
+          .map((member: any) => ({
+            ...member,
+            purpose: this.loanPurposeOptions.find((option) => option.id === member.loanPurposeId)?.name
+          }))
       );
+      this.loansAccount.principalAmount = this.activeClientMembers
+        .filter((member: any) => member.selected)
+        .reduce((acc: number, member: any) => acc + (member.principal ?? 0), 0);
     }
   }
 }
