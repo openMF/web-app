@@ -741,7 +741,9 @@
       "Check loan repayment due": "ऋण तिर्न बाँकी जाँच गर्नुहोस्",
       "Transfer to Savings": "बचतमा स्थानान्तरण गर्नुहोस्",
       "Zero interest after charge-off": "चार्ज अफ पछि शून्य ब्याज",
-      "Accelerate maturity to charge-off date": "चार्ज अफ मितिमा परिपक्वतालाई गति दिनुहोस्"
+      "Accelerate maturity to charge-off date": "चार्ज अफ मितिमा परिपक्वतालाई गति दिनुहोस्",
+      "Full Leap Year": "पूर्ण छलांग वर्ष",
+      "Feb 29 Period Only": "फेब्रुअरी 29 अवधि मात्र"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -1458,6 +1460,7 @@
       "Days From": "दिनहरू देखि",
       "Days Till": "दिन सम्म",
       "Days in Year": "वर्षमा दिनहरू",
+      "Days in year custom strategy": "वर्ष अनुकूलन रणनीति मा दिन",
       "Days in month": "महिनामा दिनहरू",
       "Days in year": "वर्षमा दिनहरू",
       "Days to Dormancy": "सुप्तावस्थाका दिनहरू",
@@ -2498,6 +2501,7 @@
       "Deposit": "जम्मा",
       "Disburse": "वितरण गर्नुहोस्",
       "Disburse to Savings": "बचतमा वितरण गर्नुहोस्",
+      "Edit Repayment Schedule": "पुन: भुक्तानी तालिका सम्पादन गर्नुहोस्",
       "Foreclosure": "फोरक्लोजर",
       "Frequent Postings": "बारम्बार पोस्टिंगहरू",
       "Frequently Accessed": "बारम्बार पहुँच",

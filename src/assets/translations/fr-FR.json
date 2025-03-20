@@ -741,7 +741,9 @@
       "Check loan repayment due": "Vérifier le remboursement du prêt dû",
       "Transfer to Savings": "Transfert vers l'épargne",
       "Zero interest after charge-off": "Zéro intérêt après radiation",
-      "Accelerate maturity to charge-off date": "Accélérer la maturité jusqu'à la date de radiation"
+      "Accelerate maturity to charge-off date": "Accélérer la maturité jusqu'à la date de radiation",
+      "Full Leap Year": "Année bissextile complète",
+      "Feb 29 Period Only": "Période du 29 février seulement"
     },
     "commons": {
       "50 characters long": "50 caractères",
@@ -1458,6 +1460,7 @@
       "Days From": "Jours à partir de",
       "Days Till": "Jours jusqu'à",
       "Days in Year": "Jours dans l'année",
+      "Days in year custom strategy": "Stratégie personnalisée jours par an",
       "Days in month": "Jours dans le mois",
       "Days in year": "Jours dans l'année",
       "Days to Dormancy": "Jours avant la dormance",
@@ -2498,6 +2501,7 @@
       "Deposit": "Dépôt",
       "Disburse": "Débourser",
       "Disburse to Savings": "Versement de l'épargne",
+      "Edit Repayment Schedule": "Modifier le calendrier de remboursement",
       "Foreclosure": "Forclusion",
       "Frequent Postings": "Publications fréquentes",
       "Frequently Accessed": "Fréquemment consulté",

@@ -741,7 +741,9 @@
       "Check loan repayment due": "Patikrinkite paskolos grąžinimo terminą",
       "Transfer to Savings": "Perkėlimas į santaupas",
       "Zero interest after charge-off": "Nulinės palūkanos po apmokestinimo",
-      "Accelerate maturity to charge-off date": "Paspartinkite terminą iki nurašymo datos"
+      "Accelerate maturity to charge-off date": "Paspartinkite terminą iki nurašymo datos",
+      "Full Leap Year": "Visi keliamieji metai",
+      "Feb 29 Period Only": "Tik vasario 29 d"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -1458,6 +1460,7 @@
       "Days From": "Dienos nuo",
       "Days Till": "Dienos Iki",
       "Days in Year": "Dienos per metus",
+      "Days in year custom strategy": "Dienų per metus pritaikyta strategija",
       "Days in month": "Dienos per mėnesį",
       "Days in year": "Dienos metuose",
       "Days to Dormancy": "Dienos iki ramybės",
@@ -2498,6 +2501,7 @@
       "Deposit": "Užstatas",
       "Disburse": "Išmokėti",
       "Disburse to Savings": "Išmokėkite santaupoms",
+      "Edit Repayment Schedule": "Redaguoti grąžinimo grafiką",
       "Foreclosure": "Uždarymas",
       "Frequent Postings": "Dažni skelbimai",
       "Frequently Accessed": "Dažnai prieinama",

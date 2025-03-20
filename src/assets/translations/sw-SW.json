@@ -741,7 +741,9 @@
       "Check loan repayment due": "Angalia ulipaji wa mkopo unaodaiwa",
       "Transfer to Savings": "Hamisha kwa Akiba",
       "Zero interest after charge-off": "Riba sifuri baada ya kutozwa",
-      "Accelerate maturity to charge-off date": "Kuharakisha ukomavu hadi tarehe ya kukomesha malipo"
+      "Accelerate maturity to charge-off date": "Kuharakisha ukomavu hadi tarehe ya kukomesha malipo",
+      "Full Leap Year": "Mwaka Kamili wa Kurukaruka",
+      "Feb 29 Period Only": "Feb 29 Kipindi Pekee"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",
@@ -1458,6 +1460,7 @@
       "Days From": "Siku Kutoka",
       "Days Till": "Siku Hadi",
       "Days in Year": "Siku katika Mwaka",
+      "Days in year custom strategy": "Mkakati maalum wa siku kwa mwaka",
       "Days in month": "Siku katika mwezi",
       "Days in year": "Siku katika mwaka",
       "Days to Dormancy": "Siku za kulala",
@@ -2498,6 +2501,7 @@
       "Deposit": "Amana",
       "Disburse": "Lipa",
       "Disburse to Savings": "Lipa kwa Akiba",
+      "Edit Repayment Schedule": "Badilisha Ratiba ya Ulipaji",
       "Foreclosure": "Foreclosure",
       "Frequent Postings": "Machapisho ya Mara kwa Mara",
       "Frequently Accessed": "Zinazofikiwa mara kwa mara",

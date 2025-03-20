@@ -741,7 +741,9 @@
       "Check loan repayment due": "대출 상환 기한 확인",
       "Transfer to Savings": "저축으로 이체",
       "Zero interest after charge-off": "대손충당 후 이자 없음",
-      "Accelerate maturity to charge-off date": "만기일을 대금상환일로 앞당기세요"
+      "Accelerate maturity to charge-off date": "만기일을 대금상환일로 앞당기세요",
+      "Full Leap Year": "전체 윤년",
+      "Feb 29 Period Only": "2월 29일 기간만"
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
@@ -1459,6 +1461,7 @@
       "Days From": "일수:",
       "Days Till": "남은 일수",
       "Days in Year": "연간 일수",
+      "Days in year custom strategy": "연간 맞춤형 전략",
       "Days in month": "월별 일수",
       "Days in year": "연간 일수",
       "Days to Dormancy": "휴면까지의 일수",
@@ -2499,6 +2502,7 @@
       "Deposit": "보증금",
       "Disburse": "지불",
       "Disburse to Savings": "저축으로 지출",
+      "Edit Repayment Schedule": "상환 일정 편집",
       "Foreclosure": "유질",
       "Frequent Postings": "자주 게시되는 게시물",
       "Frequently Accessed": "자주 액세스됨",
