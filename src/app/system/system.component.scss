@@ -1,0 +1,4 @@
+.disabled-item {
+  pointer-events: none; // Prevent clicks
+  opacity: 0.5; // Greyed out effect
+}

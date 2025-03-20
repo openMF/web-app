@@ -149,11 +149,11 @@
             </p>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['surveys']">
-            <mat-icon matListIcon [routerLink]="['surveys']">
+          <mat-list-item [ngClass]="{ 'disabled-item': isDisabled }">
+            <mat-icon matListIcon>
               <fa-icon icon="file-alt" size="sm"></fa-icon>
             </mat-icon>
-            <h4 matLine [routerLink]="['surveys']">{{ 'labels.heading.Manage Surveys' | translate }}</h4>
+            <h4 matLine>{{ 'labels.heading.Manage Surveys' | translate }}</h4>
             <fa-icon
               (click)="arrowBooleansToggle(6); $event.stopPropagation()"
               *ngIf="!arrowBooleans[6]"
@@ -167,7 +167,7 @@
               size="md"
             ></fa-icon>
             <p matLine *ngIf="arrowBooleans[6]" [routerLink]="['surveys']">
-              {{ 'labels.text.Manage your Services' | translate }}
+              {{ 'labels.text.Manage Surveys' | translate }}
             </p>
           </mat-list-item>
 
