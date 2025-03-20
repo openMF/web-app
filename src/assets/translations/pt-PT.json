@@ -741,7 +741,9 @@
       "Check loan repayment due": "Verifique o vencimento do empréstimo",
       "Transfer to Savings": "Transferência para Poupança",
       "Zero interest after charge-off": "Juros zero após baixa",
-      "Accelerate maturity to charge-off date": "Acelerar o vencimento até à data de baixa"
+      "Accelerate maturity to charge-off date": "Acelerar o vencimento até à data de baixa",
+      "Full Leap Year": "Ano bissexto completo",
+      "Feb 29 Period Only": "Somente período de 29 de fevereiro"
     },
     "commons": {
       "50 characters long": "50 caracteres",
@@ -1458,6 +1460,7 @@
       "Days From": "Dias a partir de",
       "Days Till": "Dias até",
       "Days in Year": "Dias no ano",
+      "Days in year custom strategy": "Estratégia personalizada para dias do ano",
       "Days in month": "Dias no mês",
       "Days in year": "Dias no ano",
       "Days to Dormancy": "Dias para Dormência",
@@ -2498,6 +2501,7 @@
       "Deposit": "Depósito",
       "Disburse": "Desembolsar",
       "Disburse to Savings": "Desembolsar para poupança",
+      "Edit Repayment Schedule": "Editar cronograma de reembolso",
       "Foreclosure": "Execução hipotecária",
       "Frequent Postings": "Postagens frequentes",
       "Frequently Accessed": "Acessado com frequência",

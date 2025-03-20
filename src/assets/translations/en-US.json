@@ -744,7 +744,9 @@
       "Check loan repayment due": "Check loan repayment due",
       "Transfer to Savings": "Transfer to Savings",
       "Zero interest after charge-off": "Zero interest after charge-off",
-      "Accelerate maturity to charge-off date": "Accelerate maturity to charge-off date"
+      "Accelerate maturity to charge-off date": "Accelerate maturity to charge-off date",
+      "Full Leap Year": "Full Leap Year",
+      "Feb 29 Period Only": "Feb 29 Period Only"
     },
     "commons": {
       "50 characters long": "50 characters long",
@@ -1461,6 +1463,7 @@
       "Days From": "Days From",
       "Days Till": "Days Till",
       "Days in Year": "Days in Year",
+      "Days in year custom strategy": "Days in year custom strategy",
       "Days in month": "Days in month",
       "Days in year": "Days in year",
       "Days to Dormancy": "Days to Dormancy",
@@ -2504,6 +2507,7 @@
       "Deposit": "Deposit",
       "Disburse": "Disburse",
       "Disburse to Savings": "Disburse to Savings",
+      "Edit Repayment Schedule": "Edit Repayment Schedule",
       "Foreclosure": "Foreclosure",
       "Frequent Postings": "Frequent Postings",
       "Frequently Accessed": "Frequently Accessed",

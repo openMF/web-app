@@ -741,7 +741,9 @@
       "Check loan repayment due": "Pārbaudiet aizdevuma atmaksas termiņu",
       "Transfer to Savings": "Pārskaitījums uz uzkrājumiem",
       "Zero interest after charge-off": "Nulle procenti pēc atskaitīšanas",
-      "Accelerate maturity to charge-off date": "Paātriniet dzēšanas termiņu līdz izņemšanas datumam"
+      "Accelerate maturity to charge-off date": "Paātriniet dzēšanas termiņu līdz izņemšanas datumam",
+      "Full Leap Year": "Pilns lēciens gads",
+      "Feb 29 Period Only": "Tikai 29. februāris"
     },
     "commons": {
       "50 characters long": "50 rakstzīmes garš",
@@ -1458,6 +1460,7 @@
       "Days From": "Dienas No",
       "Days Till": "Dienas Līdz",
       "Days in Year": "Dienas gadā",
+      "Days in year custom strategy": "Dienu gadā pielāgotā stratēģija",
       "Days in month": "Dienas mēnesī",
       "Days in year": "Dienas gadā",
       "Days to Dormancy": "Dienas līdz miegainībai",
@@ -2498,6 +2501,7 @@
       "Deposit": "Depozīts",
       "Disburse": "Izmaksāt",
       "Disburse to Savings": "Izmaksa uzkrājumiem",
+      "Edit Repayment Schedule": "Rediģēt atmaksas grafiku",
       "Foreclosure": "Preces ierobežošana",
       "Frequent Postings": "Bieža publicēšana",
       "Frequently Accessed": "Bieži piekļūts",

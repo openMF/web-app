@@ -741,7 +741,9 @@
       "Check loan repayment due": "Controllare il rimborso del prestito in scadenza",
       "Transfer to Savings": "Trasferimento al risparmio",
       "Zero interest after charge-off": "Zero interessi dopo la cancellazione",
-      "Accelerate maturity to charge-off date": "Accelerare la scadenza alla data di cancellazione"
+      "Accelerate maturity to charge-off date": "Accelerare la scadenza alla data di cancellazione",
+      "Full Leap Year": "Anno bisestile completo",
+      "Feb 29 Period Only": "Solo periodo del 29 febbraio"
     },
     "commons": {
       "50 characters long": "50 caratteri di lunghezza",
@@ -1458,6 +1460,7 @@
       "Days From": "Giorni da",
       "Days Till": "Giorni fino",
       "Days in Year": "Giorni nell'anno",
+      "Days in year custom strategy": "Strategia personalizzata per i giorni dell'anno",
       "Days in month": "Giorni nel mese",
       "Days in year": "Giorni nell'anno",
       "Days to Dormancy": "Giorni di dormienza",
@@ -2498,6 +2501,7 @@
       "Deposit": "Depositare",
       "Disburse": "Sborsare",
       "Disburse to Savings": "Versare al risparmio",
+      "Edit Repayment Schedule": "Modifica il piano di rimborso",
       "Foreclosure": "Pignoramento",
       "Frequent Postings": "Pubblicazioni frequenti",
       "Frequently Accessed": "Accesso frequente",
