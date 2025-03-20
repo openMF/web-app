@@ -741,7 +741,9 @@
       "Check loan repayment due": "Zkontrolujte splatnost půjčky",
       "Transfer to Savings": "Převod do Úspory",
       "Zero interest after charge-off": "Nulový úrok po nabití",
-      "Accelerate maturity to charge-off date": "Urychlete splatnost do data odúčtování"
+      "Accelerate maturity to charge-off date": "Urychlete splatnost do data odúčtování",
+      "Full Leap Year": "Úplný přestupný rok",
+      "Feb 29 Period Only": "Pouze období 29. února"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
@@ -1458,6 +1460,7 @@
       "Days From": "Dny od",
       "Days Till": "Dny do",
       "Days in Year": "Dny v roce",
+      "Days in year custom strategy": "Vlastní strategie dnů v roce",
       "Days in month": "Dny v měsíci",
       "Days in year": "Dny v roce",
       "Days to Dormancy": "Dny do dormance",
@@ -2498,6 +2501,7 @@
       "Deposit": "Vklad",
       "Disburse": "Vyplatit",
       "Disburse to Savings": "Výplata na Úspory",
+      "Edit Repayment Schedule": "Upravit splátkový kalendář",
       "Foreclosure": "Exekuce",
       "Frequent Postings": "Časté příspěvky",
       "Frequently Accessed": "Často používané",

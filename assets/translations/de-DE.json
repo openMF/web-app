@@ -741,7 +741,9 @@
       "Check loan repayment due": "Prüfen Sie, ob die Kreditrückzahlung fällig ist",
       "Transfer to Savings": "Übertragen auf Ersparnisse",
       "Zero interest after charge-off": "Null Zinsen nach Abschreibung",
-      "Accelerate maturity to charge-off date": "Fälligkeit bis zum Abschreibungsdatum beschleunigen"
+      "Accelerate maturity to charge-off date": "Fälligkeit bis zum Abschreibungsdatum beschleunigen",
+      "Full Leap Year": "Volles Schaltjahr",
+      "Feb 29 Period Only": "Nur für den Zeitraum vom 29. Februar"
     },
     "commons": {
       "50 characters long": "50 Zeichen lang",
@@ -1458,6 +1460,7 @@
       "Days From": "Tage ab",
       "Days Till": "Tage bis",
       "Days in Year": "Tage im Jahr",
+      "Days in year custom strategy": "Tage im Jahr, individuelle Strategie",
       "Days in month": "Tage im Monat",
       "Days in year": "Tage im Jahr",
       "Days to Dormancy": "Tage bis zur Ruhephase",
@@ -2498,6 +2501,7 @@
       "Deposit": "Kaution",
       "Disburse": "Auszahlen",
       "Disburse to Savings": "An die Ersparnisse auszahlen",
+      "Edit Repayment Schedule": "Bearbeiten Sie den Rückzahlungsplan",
       "Foreclosure": "Zwangsvollstreckung",
       "Frequent Postings": "Häufige Beiträge",
       "Frequently Accessed": "Häufig aufgerufen",
