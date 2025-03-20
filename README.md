@@ -5,11 +5,13 @@
 Mifos X Web App is a modern Single-Page Application (SPA) built on top of the Mifos X platform for financial inclusion. It's the revamped version of the Mifos X Community App, serving as the default web interface for the Mifos User Community.
 
 **Technologies Used:**
+
 - HTML5, SCSS, and TypeScript
 - Angular framework
 - Angular Material components
 
 ## Quick Links
+
 - [Live Demo](https://sandbox.mifos.community/#/login) (Updated nightly)
 - [GitHub Repository](https://github.com/openMF/web-app)
 - [TestRigor](https://app.testrigor.com/public/X3THbQd9nxLMxkdPu)
@@ -20,6 +22,7 @@ Mifos X Web App is a modern Single-Page Application (SPA) built on top of the Mi
 ## Installation Guide
 
 ### Prerequisites for All Methods
+
 - Git: [Download here](https://git-scm.com/downloads)
 - Mifos X Backend (Fineract) - **Required before running the web app**
 
@@ -30,11 +33,13 @@ Before installing the web app, you need to set up the Fineract backend server:
 1. **Choose ONE of these backend options:**
 
    - **Option A: Use existing remote server**
+
      - Use the sandbox at `https://sandbox.mifos.community`
      - Use the demo at `https://demo.mifos.community`
      - Configure to your server by updating API URLs in environment files
 
    - **Option B: Install local Fineract server**
+
      - For Windows: [Installation Guide](https://cwiki.apache.org/confluence/display/FINERACT/Fineract-platform+Installation+on+Windows)
      - For Ubuntu: [Installation Guide](https://cwiki.apache.org/confluence/display/FINERACT/Fineract+Installation+on+Ubuntu+Server)
 
@@ -114,6 +119,7 @@ This sets up both the Mifos X Web App and Fineract backend:
 ## Default Login Credentials
 
 When using the development server with basic authentication:
+
 - **Username:** mifos
 - **Password:** password
 
@@ -133,50 +139,54 @@ When using the development server with basic authentication:
 All these environment variables can be set when using Docker or Docker Compose:
 
 #### Fineract Backend Settings
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| FINERACT_API_URLS | Fineract server list | https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443 |
-| FINERACT_API_URL | Default Fineract server | https://localhost:8443 |
-| FINERACT_PLATFORM_TENANT_IDENTIFIER | Default tenant identifier (must align with Fineract `tenants` table) | default |
-| FINERACT_PLATFORM_TENANTS_IDENTIFIER | Tenant identifier list (must align with Fineract `tenants` table) | - |
+
+| Variable                             | Description                                                          | Default Value                                                                       |
+| ------------------------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| FINERACT_API_URLS                    | Fineract server list                                                 | https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443 |
+| FINERACT_API_URL                     | Default Fineract server                                              | https://localhost:8443                                                              |
+| FINERACT_PLATFORM_TENANT_IDENTIFIER  | Default tenant identifier (must align with Fineract `tenants` table) | default                                                                             |
+| FINERACT_PLATFORM_TENANTS_IDENTIFIER | Tenant identifier list (must align with Fineract `tenants` table)    | -                                                                                   |
 
 #### Language Settings (i18n)
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| MIFOS_DEFAULT_LANGUAGE | Default language | en-US |
+
+| Variable                  | Description                 | Default Value                                                           |
+| ------------------------- | --------------------------- | ----------------------------------------------------------------------- |
+| MIFOS_DEFAULT_LANGUAGE    | Default language            | en-US                                                                   |
 | MIFOS_SUPPORTED_LANGUAGES | List of supported languages | cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW |
 
 Available languages:
 
-| Language | Code | File |
-|----------|------|------|
-| Czech | cs | cs-CS.json |
-| German | de | de-DE.json |
-| English | en | en-US.json |
-| Spanish | es | es-MX.json |
-| French | fr | fr-FR.json |
-| Italian | it | it-IT.json |
-| Korean | ko | ko-KO.json |
-| Lithuanian | li | li-LI.json |
-| Latvian | lv | lv-LV.json |
-| Nepali | ne | ne-NE.json |
-| Portuguese | pt | pt-PT.json |
-| Swahili | sw | sw-SW.json |
+| Language   | Code | File       |
+| ---------- | ---- | ---------- |
+| Czech      | cs   | cs-CS.json |
+| German     | de   | de-DE.json |
+| English    | en   | en-US.json |
+| Spanish    | es   | es-MX.json |
+| French     | fr   | fr-FR.json |
+| Italian    | it   | it-IT.json |
+| Korean     | ko   | ko-KO.json |
+| Lithuanian | li   | li-LI.json |
+| Latvian    | lv   | lv-LV.json |
+| Nepali     | ne   | ne-NE.json |
+| Portuguese | pt   | pt-PT.json |
+| Swahili    | sw   | sw-SW.json |
 
 #### Session & Performance Settings
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| MIFOS_SESSION_IDLE_TIMEOUT | Session timeout in milliseconds | 300000 |
-| MIFOS_PRELOAD_CLIENTS | Whether to preload clients in Clients view | true |
-| MIFOS_DEFAULT_CHAR_DELIMITER | Character delimiter for CSV exports | , |
-| MIFOS_WAIT_TIME_FOR_NOTIFICATIONS | Wait time in seconds for reading notifications | 60 |
-| MIFOS_WAIT_TIME_FOR_CATCHUP | Wait time in seconds for reading COB Catch-Up status | 30 |
+
+| Variable                          | Description                                          | Default Value |
+| --------------------------------- | ---------------------------------------------------- | ------------- |
+| MIFOS_SESSION_IDLE_TIMEOUT        | Session timeout in milliseconds                      | 300000        |
+| MIFOS_PRELOAD_CLIENTS             | Whether to preload clients in Clients view           | true          |
+| MIFOS_DEFAULT_CHAR_DELIMITER      | Character delimiter for CSV exports                  | ,             |
+| MIFOS_WAIT_TIME_FOR_NOTIFICATIONS | Wait time in seconds for reading notifications       | 60            |
+| MIFOS_WAIT_TIME_FOR_CATCHUP       | Wait time in seconds for reading COB Catch-Up status | 30            |
 
 #### UI Display Settings
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| MIFOS_DISPLAY_TENANT_SELECTOR | Display tenant selector in Login view | true |
-| MIFOS_DISPLAY_BACKEND_INFO | Display backend info in footer | true |
+
+| Variable                      | Description                           | Default Value |
+| ----------------------------- | ------------------------------------- | ------------- |
+| MIFOS_DISPLAY_TENANT_SELECTOR | Display tenant selector in Login view | true          |
+| MIFOS_DISPLAY_BACKEND_INFO    | Display backend info in footer        | true          |
 
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
 
