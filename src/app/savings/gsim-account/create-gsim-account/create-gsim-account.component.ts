@@ -94,7 +94,11 @@ export class CreateGsimAccountComponent {
    * Checks validity of overall savings account form.
    */
   get savingsAccountFormValid() {
-    return this.savingsAccountDetailsForm.valid && this.savingsAccountTermsForm.valid;
+    return (
+      this.savingsAccountDetailsForm.valid &&
+      this.savingsAccountTermsForm.valid &&
+      this.activeClientMembers.filter((m: any) => m.selected).length > 0
+    );
   }
 
   /**

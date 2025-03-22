@@ -114,20 +114,24 @@
           <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'" [routerLink]="['loans-accounts', 'create']">
             {{ 'labels.buttons.Group Loan Application' | translate }}
           </button>
-          <button
-            mat-menu-item
-            *mifosxHasPermission="'CREATE_LOAN'"
-            [routerLink]="['loans-accounts', 'glim-account', 'create']"
-          >
-            {{ 'labels.buttons.GLIM Application' | translate }}
-          </button>
-          <button
-            mat-menu-item
-            *mifosxHasPermission="'CREATE_GSIMACCOUNT'"
-            [routerLink]="['savings-accounts', 'gsim-account', 'create']"
-          >
-            {{ 'labels.buttons.GSIM Application' | translate }}
-          </button>
+          <span *ngIf="groupViewData.clientMembers">
+            <button
+              mat-menu-item
+              *mifosxHasPermission="'CREATE_LOAN'"
+              [routerLink]="['loans-accounts', 'glim-account', 'create']"
+            >
+              {{ 'labels.buttons.GLIM Application' | translate }}
+            </button>
+          </span>
+          <span *ngIf="groupViewData.clientMembers">
+            <button
+              mat-menu-item
+              *mifosxHasPermission="'CREATE_GSIMACCOUNT'"
+              [routerLink]="['savings-accounts', 'gsim-account', 'create']"
+            >
+              {{ 'labels.buttons.GSIM Application' | translate }}
+            </button>
+          </span>
         </mat-menu>
 
         <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>
