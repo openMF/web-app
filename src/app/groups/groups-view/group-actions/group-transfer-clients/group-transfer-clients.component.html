@@ -10,10 +10,6 @@
                 {{ member.displayName }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="transferClientsForm.controls.clients.hasError('required')">
-              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
           </mat-form-field>
 
           <mat-checkbox
@@ -40,7 +36,7 @@
           </mat-option>
         </mat-autocomplete>
 
-        <div class="mat-table" *ngIf="transferClientsForm.get('destinationGroupId').value">
+        <div class="mat-table" *ngIf="transferClientsForm.get('destinationGroupId').value?.id">
           <div class="mat-header-row">
             <div class="mat-header-cell">{{ 'labels.inputs.Destination Group Details' | translate }}</div>
           </div>
