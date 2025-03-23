@@ -105,6 +105,9 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
         if (configuration.name === SettingsService.businessDateConfigName) {
           const msg = configuration.enabled ? 'enabled' : 'disabled';
           this.alertService.alert({ type: SettingsService.businessDateType + ' Set Config', message: msg });
+        } else if (configuration.name === SettingsService.defaultAccountConfigName) {
+          const msg = configuration.enabled ? 'enabled' : 'disabled';
+          this.alertService.alert({type : SettingsService.defaultAccountType + ' Set Config', message: msg});
         }
       });
   }

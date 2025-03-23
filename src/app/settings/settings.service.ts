@@ -17,6 +17,8 @@ export class SettingsService {
   public static businessDateConfigName = 'enable-business-date';
   public static businessDateType = 'BUSINESS_DATE';
   public static cobDateType = 'COB_DATE';
+  public static defaultAccountConfigName = 'belat-account';
+  public static defaultAccountType =  'DEFAULT_ACCOUNT';
   minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
 
@@ -229,6 +231,8 @@ export class SettingsService {
   validateBusinessDateStatus(configurations: any) {
     configurations.some((config: any) => {
       if (config.name === SettingsService.businessDateConfigName) {
+        return config.enabled;
+      } else if (config.name === SettingsService.defaultAccountConfigName) {
         return config.enabled;
       }
     });

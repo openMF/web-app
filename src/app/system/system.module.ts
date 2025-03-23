@@ -77,6 +77,7 @@ import { CustomParametersTableComponent } from './manage-jobs/scheduler-jobs/cus
 import { ErrorLogPopoverComponent } from './manage-jobs/scheduler-jobs/error-log-popover/error-log-popover.component';
 import { RunSelectedJobsPopoverComponent } from './manage-jobs/scheduler-jobs/run-selected-jobs-popover/run-selected-jobs-popover.component';
 import { RunSelectedJobsTableComponent } from './manage-jobs/scheduler-jobs/run-selected-jobs-popover/run-selected-jobs-table/run-selected-jobs-table.component';
+import { DefaultAccountComponent } from './configurations/default-account/default-account.component';
 
 @NgModule({
   imports: [
@@ -153,7 +154,8 @@ import { RunSelectedJobsTableComponent } from './manage-jobs/scheduler-jobs/run-
     CustomParametersTableComponent,
     ErrorLogPopoverComponent,
     RunSelectedJobsPopoverComponent,
-    RunSelectedJobsTableComponent
+    RunSelectedJobsTableComponent,
+    DefaultAccountComponent
   ]
 })
 export class SystemModule {}

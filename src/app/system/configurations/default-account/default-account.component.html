@@ -1,0 +1,38 @@
+<div class="container">
+    <mat-card>
+        <div fxLayout="row wrap" fxLayout.lt-md="column">
+            <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Transferring From Details' | translate }}</h3>
+
+            <mat-form-field fxFlex="98%">
+                <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
+                <input matInput [matAutocomplete]="clientsAutocomplete" [(ngModel)]="selectedClientName"
+                    (ngModelChange)="searchClients($event)" />
+            </mat-form-field>
+
+            <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete"
+                (optionSelected)="onClientSelected($event)">
+                <mat-option *ngFor="let client of clientsData" [value]="client.displayName">
+                    {{ client.id }} - {{ client.displayName }}
+                </mat-option>
+            </mat-autocomplete>
+
+            <mat-form-field fxFlex="98%">
+                <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
+                <mat-select required [(ngModel)]="selectedAccountId">
+                    <mat-option *ngFor="let toAccount of toAccountData" [value]="toAccount.id">
+                        {{ toAccount.productName }} - {{ toAccount.accountNo }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+            <button type="button" mat-raised-button [routerLink]="['../']">
+                {{ 'labels.buttons.Cancel' | translate }}
+            </button>
+            <button mat-raised-button color="primary" [disabled]="selectedAccountId == null"
+                *mifosxHasPermission="'UPDATE_CONFIGURATION'" (click)="submit()">
+                {{ 'labels.buttons.Submit' | translate }}
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

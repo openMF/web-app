@@ -7,6 +7,9 @@
       <mat-tab label="{{ 'labels.inputs.Business Date' | translate }}" *ngIf="isBusinessDateEnabled">
         <mifosx-business-date-tab></mifosx-business-date-tab>
       </mat-tab>
+      <mat-tab label="{{ 'labels.inputs.Default Account' | translate }}" *ngIf="isDefaultAccountEnabled">
+        <mifosx-default-account></mifosx-default-account>
+      </mat-tab>
     </mat-tab-group>
   </mat-card-content>
 </mat-card>
