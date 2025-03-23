@@ -14,3 +14,26 @@
 table {
   width: 100%;
 }
+
+.AddEventButton {
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 5px;
+  background-color: #ffe6e6;
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+.error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+.error-snackbar .mat-simple-snackbar-action {
+  color: white;
+}
