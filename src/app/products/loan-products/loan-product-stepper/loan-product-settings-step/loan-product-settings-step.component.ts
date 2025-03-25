@@ -639,6 +639,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
           'chargeOffBehaviour',
           new UntypedFormControl(this.loanProductsTemplate.chargeOffBehaviour.id)
         );
+        this.validateAdvancedPaymentStrategyControls();
       }
       if (this.loanProductSettingsForm.value.isInterestRecalculationEnabled) {
         this.setRescheduleStrategies();
@@ -720,6 +721,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
   private validateAdvancedPaymentStrategyControls(): void {
     if (this.isAdvancedTransactionProcessingStrategy) {
+      const daysInYearType: any = this.loanProductSettingsForm.get('daysInYearType').value;
       this.loanProductSettingsForm.addControl(
         'loanScheduleProcessingType',
         new UntypedFormControl(
@@ -728,8 +730,20 @@ export class LoanProductSettingsStepComponent implements OnInit {
           [Validators.required]
         )
       );
+      this.useDaysInYearCustomStrategy = daysInYearType === 1;
+      if (this.useDaysInYearCustomStrategy) {
+        const daysInYearCustomStrategy: string = this.loanProductsTemplate.daysInYearCustomStrategy?.id
+          ? this.loanProductsTemplate.daysInYearCustomStrategy.id
+          : '';
+        this.loanProductSettingsForm.addControl(
+          'daysInYearCustomStrategy',
+          new UntypedFormControl(daysInYearCustomStrategy, Validators.required)
+        );
+      }
     } else {
+      this.useDaysInYearCustomStrategy = false;
       this.loanProductSettingsForm.removeControl('loanScheduleProcessingType');
+      this.loanProductSettingsForm.removeControl('daysInYearCustomStrategy');
     }
   }
 }
