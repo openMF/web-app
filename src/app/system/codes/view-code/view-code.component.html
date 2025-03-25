@@ -41,11 +41,20 @@
               <input matInput formControlName="description" />
             </mat-form-field>
 
-            <mat-form-field fxFlex="18%">
+            <mat-form-field fxFlex="8%">
               <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
               <input required matInput formControlName="position" type="number" />
               <mat-error *ngIf="codeValues.at(i).controls.position.hasError('required')">
                 {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="8%">
+              <mat-label>{{ 'labels.inputs.Score' | translate }}</mat-label>
+              <input required matInput formControlName="codeScore" type="number" />
+              <mat-error *ngIf="codeValues.at(i).controls.position.hasError('required')">
+                {{ 'labels.inputs.Score' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
