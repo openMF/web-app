@@ -37,7 +37,7 @@
               </mat-select>
             </mat-form-field>
 
-            <ng-container *ngIf="accountOptions.length > 0">
+            <ng-container *ngIf="accountOptions?.length > 0">
               <mat-form-field>
                 <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
                 <mat-select formControlName="savingsId">
@@ -137,7 +137,7 @@
       </mat-card-content>
     </form>
 
-    <ng-container *ngIf="!(newGuarantorForm.controls.name === undefined)">
+    <ng-container *ngIf="newGuarantorForm?.controls?.name?.value">
       <div class="mat-table">
         <div class="mat-header-row">
           <div class="mat-header-cell">{{ 'labels.inputs.Client Details' | translate }}</div>

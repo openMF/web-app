@@ -6,7 +6,7 @@
           <mat-form-field fxFlex="48%">
             <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
             <mat-select required formControlName="entity">
-              <mat-option *ngFor="let entity of createTemplateData.entities" [value]="entity.id">
+              <mat-option *ngFor="let entity of templateData.entities" [value]="entity.id">
                 {{ entity.name }}
               </mat-option>
             </mat-select>
@@ -19,7 +19,7 @@
           <mat-form-field fxFlex="48%">
             <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
             <mat-select required formControlName="type">
-              <mat-option *ngFor="let type of createTemplateData.types" [value]="type.id">
+              <mat-option *ngFor="let type of templateData.types" [value]="type.id">
                 {{ type.name }}
               </mat-option>
             </mat-select>
@@ -43,18 +43,18 @@
 
     <div role="toggle" fxFlex="13%">
       <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">
-        {{ 'labels.buttons.Advance Options' | translate }}
+        {{ 'labels.buttons.Advanced Options' | translate }}
       </button>
     </div>
 
     <ng-container role="mappers" *ngIf="showAdvanceOptions">
       <div *ngFor="let mapper of mappers; index as i" fxLayout="row" fxLayoutGap="2%">
-        <mat-form-field fxFlex="43%">
+        <mat-form-field fxFlex="48%">
           <mat-label>{{ 'labels.inputs.Mapper Key' | translate }}</mat-label>
           <input matInput [formControl]="mapper.mapperskey" />
         </mat-form-field>
 
-        <mat-form-field fxFlex="43%">
+        <mat-form-field fxFlex="38%">
           <mat-label>{{ 'labels.inputs.Mapper Value' | translate }}</mat-label>
           <input matInput [formControl]="mapper.mappersvalue" />
         </mat-form-field>
@@ -83,7 +83,15 @@
     </ng-container>
 
     <div role="editor">
-      <ckeditor #ckEditor [editor]="Editor"></ckeditor>
+      <label for="ckeditor" class="required-label required-label-ckeditor">
+        {{ 'labels.inputs.Text' | translate }} <span class="required-asterisk">*</span>
+      </label>
+      <ckeditor
+        #ckEditor
+        [editor]="Editor"
+        (change)="onEditorChange($event)"
+        [data]="templateData.template?.text"
+      ></ckeditor>
     </div>
 
     <div role="template-parameters">
@@ -152,7 +160,9 @@
 
     <mat-card-actions class="m-b-20" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
       <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
-      <button mat-raised-button color="primary" (click)="submit()">{{ 'labels.buttons.Submit' | translate }}</button>
+      <button mat-raised-button color="primary" (click)="submit()" [disabled]="!templateForm.valid">
+        {{ 'labels.buttons.Submit' | translate }}
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>

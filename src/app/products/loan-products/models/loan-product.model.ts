@@ -52,6 +52,7 @@ export interface LoanProduct {
   paymentAllocation?: PaymentAllocation[];
   creditAllocation?: CreditAllocation[];
   daysInMonthType: OptionData;
+  daysInYearCustomStrategy?: OptionData;
   daysInYearType: OptionData;
   isInterestRecalculationEnabled: boolean;
   interestRecalculationData?: InterestRecalculationData;

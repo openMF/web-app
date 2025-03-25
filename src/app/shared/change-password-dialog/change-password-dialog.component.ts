@@ -16,6 +16,11 @@ import { PasswordsUtility } from 'app/core/utils/passwords-utility';
 export class ChangePasswordDialogComponent implements OnInit {
   /** Change Password Form */
   changePasswordForm: any;
+  /** Password input field type. */
+  passwordInputType: string[] = [
+    'password',
+    'password'
+  ];
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
@@ -30,6 +35,15 @@ export class ChangePasswordDialogComponent implements OnInit {
 
   ngOnInit() {
     this.createChangePasswordForm();
+  }
+
+  /**
+   * Toggles the visibility of the password input field.
+   *
+   * Changes the input type between 'password' and 'text'.
+   */
+  togglePasswordVisibility(index: number) {
+    this.passwordInputType[index] = this.passwordInputType[index] === 'password' ? 'text' : 'password';
   }
 
   /** Change Password form */

@@ -13,6 +13,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -37,6 +38,9 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./manage-currencies.component.scss']
 })
 export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  //** Defining PlaceHolders for the search bar */
+  placeHolderLabel = '';
+  noEntriesFoundLabel = '';
   /** Selected Currencies data. */
   selectedCurrencies: any[];
   /** Currency options data */
@@ -71,6 +75,7 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
     private organizationservice: OrganizationService,
     public dialog: MatDialog,
     private router: Router,
+    private translateService: TranslateService,
     private configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService
   ) {
@@ -81,6 +86,8 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit() {
+    this.placeHolderLabel = this.translateService.instant('labels.text.Search');
+    this.noEntriesFoundLabel = this.translateService.instant('labels.text.No data found');
     this.filterFormCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
       this.searchItem();
     });

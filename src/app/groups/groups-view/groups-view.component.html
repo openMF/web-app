@@ -18,7 +18,7 @@
             {{ 'labels.heading.Group Name' | translate }} : {{ groupViewData.name }}
           </h3>
 
-          <div fxFlex="5%">
+          <div fxFlex="5%" fxFlex.sm="10%" fxFlex.md="5%" fxFlex.xs="15%">
             <button mat-icon-button [matMenuTriggerFor]="groupMenu" aria-label="Group actions" yPosition="below">
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
@@ -78,12 +78,6 @@
           </mat-icon>
           <span>{{ 'labels.buttons.Edit' | translate }}</span>
         </button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_CLIENT'" (click)="doAction('Manage Members')">
-          <mat-icon matListIcon>
-            <fa-icon icon="plus" size="sm"></fa-icon>
-          </mat-icon>
-          <span>{{ 'labels.buttons.Add Clients' | translate }}</span>
-        </button>
         <button mat-menu-item *mifosxHasPermission="'ASSOCIATECLIENTS_GROUP'" (click)="doAction('Transfer Clients')">
           <mat-icon matListIcon>
             <fa-icon icon="users" size="sm"></fa-icon>
@@ -120,12 +114,24 @@
           <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'" [routerLink]="['loans-accounts', 'create']">
             {{ 'labels.buttons.Group Loan Application' | translate }}
           </button>
-          <button mat-menu-item [routerLink]="['loans-accounts', 'glim-account', 'create']">
-            {{ 'labels.buttons.GLIM Loan Application' | translate }}
-          </button>
-          <button mat-menu-item [routerLink]="['savings-accounts', 'gsim-account', 'create']">
-            {{ 'labels.buttons.GSIM Application' | translate }}
-          </button>
+          <span *ngIf="groupViewData.clientMembers">
+            <button
+              mat-menu-item
+              *mifosxHasPermission="'CREATE_LOAN'"
+              [routerLink]="['loans-accounts', 'glim-account', 'create']"
+            >
+              {{ 'labels.buttons.GLIM Application' | translate }}
+            </button>
+          </span>
+          <span *ngIf="groupViewData.clientMembers">
+            <button
+              mat-menu-item
+              *mifosxHasPermission="'CREATE_GSIMACCOUNT'"
+              [routerLink]="['savings-accounts', 'gsim-account', 'create']"
+            >
+              {{ 'labels.buttons.GSIM Application' | translate }}
+            </button>
+          </span>
         </mat-menu>
 
         <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>

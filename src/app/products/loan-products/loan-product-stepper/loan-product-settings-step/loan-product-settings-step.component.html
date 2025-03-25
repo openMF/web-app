@@ -330,6 +330,21 @@
       </mat-error>
     </mat-form-field>
 
+    <mat-form-field fxFlex="48%" *ngIf="useDaysInYearCustomStrategy">
+      <mat-label>{{ 'labels.inputs.Days in year custom strategy' | translate }}</mat-label>
+      <mat-select
+        matTooltip="{{ 'tooltips.To calculate interest' | translate }}"
+        formControlName="daysInYearCustomStrategy"
+      >
+        <mat-option
+          *ngFor="let daysInYearCustomStrategy of daysInYearCustomStrategyOptions"
+          [value]="daysInYearCustomStrategy.id"
+        >
+          {{ daysInYearCustomStrategy.value | translateKey: 'catalogs' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <mat-form-field fxFlex="48%">
       <mat-label>{{ 'labels.inputs.Days in month' | translate }}</mat-label>
       <mat-select

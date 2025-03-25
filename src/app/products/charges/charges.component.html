@@ -9,11 +9,11 @@
 
 <div class="container">
   <div #filter fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex fxFlex="68%">
+    <mat-form-field fxFlex="68%">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
-    <mat-form-field fxFlex fxFlex="28%">
+    <mat-form-field fxFlex="28%">
       <mat-select
         placeholder="{{ 'labels.inputs.Filter' | translate }}"
         (selectionChange)="filterByAppliesTo($event.value)"
@@ -104,7 +104,7 @@
 
 <ng-template #templateButtonCreateCharge let-popover="popover">
   <h2>{{ 'labels.text.Create Charge' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Supports Loan charges, Savings & deposits' | translate }}</p>
+  <p class="mw300">{{ 'labels.text.Supports Loan charges, Savings &amp; deposits' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}

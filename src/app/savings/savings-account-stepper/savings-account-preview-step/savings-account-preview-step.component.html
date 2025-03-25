@@ -32,7 +32,30 @@
     }}</span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Terms' | translate }}</h3>
+  <ng-container *ngIf="activeClientMembers">
+    <h3 class="mat-h3" fxFlexFill class="margin-t">{{ 'labels.heading.Client Members' | translate }}</h3>
+    <mat-divider fxFlexFill></mat-divider>
+    <div fxFlex="60%">
+      <table mat-table #membersTable [dataSource]="dataSource">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client ID' | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Name' | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.displayName }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="membersDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: membersDisplayedColumns"></tr>
+      </table>
+    </div>
+  </ng-container>
+
+  <h3 class="mat-h3" fxFlexFill class="margin-t">{{ 'labels.heading.Terms' | translate }}</h3>
 
   <mat-divider fxFlexFill></mat-divider>
 

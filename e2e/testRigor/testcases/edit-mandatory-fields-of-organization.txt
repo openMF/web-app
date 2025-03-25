@@ -3,7 +3,7 @@ navigate-to-offices
 create-organization
 //edit  an organization
 enter saved value "officeName" into "Filter"
-click 2nd saved value "officeName"
+double click 2nd saved value "officeName"
 click "Edit"
 double click field "Office"
 enter delete

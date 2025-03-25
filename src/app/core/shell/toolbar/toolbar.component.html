@@ -132,9 +132,9 @@
   <button mat-menu-item [routerLink]="['/self-service/app-configuration']">
     {{ 'labels.menus.App Configuration' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/self-service/task-management']">
+  <!-- <button mat-menu-item [routerLink]="['/self-service/task-management']">
     {{ 'labels.menus.Task Management' | translate }}
-  </button>
+  </button> -->
 </mat-menu>
 
 <!-- Application User Help Menu -->
@@ -304,26 +304,6 @@
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themePicker)">
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #templateThemePicker let-popover="popover">
-  <h2>{{ 'labels.menus.Theme Picker' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Choose a theme as per organization will' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
-    >
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
     <button
       mat-raised-button
       color="primary"
@@ -341,7 +321,31 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themePicker)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themeToggle)">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #templateThemePicker let-popover="popover">
+  <h2>{{ 'labels.menus.Theme Picker' | translate }}</h2>
+  <p class="mw300">{{ 'labels.text.Choose to work with a dark or bright background' | translate }}</p>
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateNotifications, notifications)"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAppMenu, appMenu)">
@@ -357,11 +361,7 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateNotifications, notifications)"
-    >
+    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themeToggle)">
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

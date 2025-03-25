@@ -19,15 +19,9 @@ export const environment = {
   // For connecting to others servers running elsewhere update the base API URL
   baseApiUrls:
     loadedEnv['fineractApiUrls'] ||
-    'https://dev.mifos.io,https://demo.mifos.io,https://qa.mifos.io,https://staging.mifos.io,https://mobile.mifos.io,https://demo.fineract.dev,https://localhost:8443,' +
-      window.location.protocol +
-      '//' +
-      window.location.hostname +
-      ':' +
-      window.location.port,
+    'https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443,' + window.location.origin,
   // For connecting to server running elsewhere set the base API URL
-  baseApiUrl:
-    loadedEnv['baseApiUrl'] || window.location.protocol + '//' + window.location.hostname + ':' + window.location.port,
+  baseApiUrl: loadedEnv['baseApiUrl'] || window.location.origin,
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: loadedEnv['apiProvider'] || '/fineract-provider/api',
   apiVersion: loadedEnv['apiVersion'] || '/v1',
@@ -60,7 +54,11 @@ export const environment = {
     timeout: {
       idleTimeout: loadedEnv['sessionIdleTimeout'] || 300000 // 5 minutes
     }
-  }
+  },
+  vNextApiUrl: window['env']['vNextApiUrl'] || 'https://apis.flexcore.mx',
+  vNextApiProvider: window['env']['vNextApiProvider'] || '/vnext1',
+  vNextApiVersion: window['env']['vNextApiVersion'] || '/v1.0',
+  interbankTransfers: window['env']['interbankTransfers'] || false
 };
 
 // Server URL

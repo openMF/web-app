@@ -15,6 +15,7 @@ import { MakeAccountTransfersComponent } from './make-account-transfers/make-acc
 import { ListStandingInstructionsComponent } from './list-standing-instructions/list-standing-instructions.component';
 import { ListTransactionsComponent } from './list-transactions/list-transactions.component';
 import { ViewAccountTransferComponent } from './view-account-transfer/view-account-transfer.component';
+import { MakeAccountInterbankTransfersComponent } from './make-account-interbank-transfers/make-account-interbank-transfers.component';
 /**
  * Account Transfers Module
  *
@@ -34,7 +35,8 @@ import { ViewAccountTransferComponent } from './view-account-transfer/view-accou
     MakeAccountTransfersComponent,
     ListStandingInstructionsComponent,
     ListTransactionsComponent,
-    ViewAccountTransferComponent
+    ViewAccountTransferComponent,
+    MakeAccountInterbankTransfersComponent
   ],
   providers: []
 })

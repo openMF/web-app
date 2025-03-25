@@ -69,7 +69,7 @@
       </div>
     </mat-card-content>
 
-    <div fxLayout="row wrap" class="content" style="padding-top: 10px">
+    <div fxLayout="row wrap" class="content">
       <h1>
         <b> {{ 'labels.heading.Transactions' | translate }} </b>
       </h1>
@@ -110,7 +110,7 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
           <td mat-cell *matCellDef="let element" [ngClass]="{ strikeoff: element.reversed }">
-            <button mat-raised-button color="primary" (click)="undoTransaction(element.id)" class="delBtn">
+            <button mat-raised-button color="primary" (click)="undoTransaction(element.id)" class="del-btn">
               <fa-icon icon="trash" class="m-r-10"></fa-icon>
             </button>
           </td>

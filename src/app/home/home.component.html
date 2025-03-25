@@ -32,6 +32,30 @@
   </mat-card>
 </div>
 
+<ng-template #popoverButtons let-popover="popover" let-prev="prev" let-next="next">
+  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      *ngIf="prev"
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(prev.template, prev.target, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button
+      *ngIf="next"
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(next.template, next.target, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
+  </div>
+</ng-template>
+
 <ng-template #templateButtonDashboard let-popover="popover">
   <h2>{{ 'labels.heading.Dashboard' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.This will navigate the user to the dashboard component.' | translate }}</p>
@@ -45,7 +69,7 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateSearchActivity, searchActivity, 'bottom', true)"
+      (click)="popover.close(); showPopover(templateSearchActivity, searchActivity, 'top', true)"
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>

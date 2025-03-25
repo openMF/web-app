@@ -45,6 +45,8 @@ export class LoanProductSettingsStepComponent implements OnInit {
   useDueForRepaymentsConfigurations = false;
   rescheduleStrategyTypeDisabled = false;
   chargeOffBehaviourData: StringEnumOptionData[] = [];
+  daysInYearCustomStrategyOptions: OptionData[] = [];
+  useDaysInYearCustomStrategy = false;
 
   /** Values to Days for Repayments */
   defaultConfigValues: GlobalConfiguration[] = [];
@@ -88,8 +90,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
     this.loanScheduleTypeData = this.loanProductsTemplate.loanScheduleTypeOptions;
     this.loanScheduleProcessingTypeData = this.loanProductsTemplate.loanScheduleProcessingTypeOptions;
     this.chargeOffBehaviourData = this.loanProductsTemplate.chargeOffBehaviourOptions;
-
-    // this.useDueForRepaymentsConfigurations = (!this.loanProduct.dueDaysForRepaymentEvent && !this.loanProduct.overDueDaysForRepaymentEvent);
+    this.daysInYearCustomStrategyOptions = this.loanProductsTemplate.daysInYearCustomStrategyOptions;
 
     const transactionProcessingStrategyCode: string =
       this.loanProductsTemplate.transactionProcessingStrategyCode || this.transactionProcessingStrategyData[0].code;
@@ -318,6 +319,23 @@ export class LoanProductSettingsStepComponent implements OnInit {
 
   setConditionalControls() {
     const allowAttributeOverrides = this.loanProductSettingsForm.get('allowAttributeOverrides');
+
+    this.loanProductSettingsForm.get('daysInYearType').valueChanges.subscribe((daysInYearType: any) => {
+      if (this.isAdvancedTransactionProcessingStrategy) {
+        this.useDaysInYearCustomStrategy = daysInYearType == 1;
+        if (this.useDaysInYearCustomStrategy) {
+          const daysInYearCustomStrategy: string = this.loanProductsTemplate.daysInYearCustomStrategy?.id
+            ? this.loanProductsTemplate.daysInYearCustomStrategy.id
+            : '';
+          this.loanProductSettingsForm.addControl(
+            'daysInYearCustomStrategy',
+            new UntypedFormControl(daysInYearCustomStrategy, Validators.required)
+          );
+        } else {
+          this.loanProductSettingsForm.removeControl('daysInYearCustomStrategy');
+        }
+      }
+    });
 
     this.loanProductSettingsForm
       .get('interestCalculationPeriodType')
@@ -621,6 +639,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
           'chargeOffBehaviour',
           new UntypedFormControl(this.loanProductsTemplate.chargeOffBehaviour.id)
         );
+        this.validateAdvancedPaymentStrategyControls();
       }
       if (this.loanProductSettingsForm.value.isInterestRecalculationEnabled) {
         this.setRescheduleStrategies();
@@ -696,11 +715,13 @@ export class LoanProductSettingsStepComponent implements OnInit {
     if (productSettings['delinquencyBucketId'] === '') {
       productSettings['delinquencyBucketId'] = null;
     }
+    console.log(productSettings);
     return productSettings;
   }
 
   private validateAdvancedPaymentStrategyControls(): void {
     if (this.isAdvancedTransactionProcessingStrategy) {
+      const daysInYearType: any = this.loanProductSettingsForm.get('daysInYearType').value;
       this.loanProductSettingsForm.addControl(
         'loanScheduleProcessingType',
         new UntypedFormControl(
@@ -709,8 +730,20 @@ export class LoanProductSettingsStepComponent implements OnInit {
           [Validators.required]
         )
       );
+      this.useDaysInYearCustomStrategy = daysInYearType === 1;
+      if (this.useDaysInYearCustomStrategy) {
+        const daysInYearCustomStrategy: string = this.loanProductsTemplate.daysInYearCustomStrategy?.id
+          ? this.loanProductsTemplate.daysInYearCustomStrategy.id
+          : '';
+        this.loanProductSettingsForm.addControl(
+          'daysInYearCustomStrategy',
+          new UntypedFormControl(daysInYearCustomStrategy, Validators.required)
+        );
+      }
     } else {
+      this.useDaysInYearCustomStrategy = false;
       this.loanProductSettingsForm.removeControl('loanScheduleProcessingType');
+      this.loanProductSettingsForm.removeControl('daysInYearCustomStrategy');
     }
   }
 }

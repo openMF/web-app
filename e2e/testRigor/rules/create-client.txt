@@ -7,5 +7,5 @@ click "Head Office"
 pick-birthdate // birthDate
 generate unique email, then enter into "Email Address" and save as "email"
 generate from template "+##-###-###-####", then enter into "Mobile No" and save as "mobileNo"
-click "Next"
-click "Next"
+check that page contains button "Next"
+click button "Next" up to 5 times until page contains "Submit" on the right of "Previous"

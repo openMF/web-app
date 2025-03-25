@@ -1,0 +1,11 @@
+@use '@angular/material' as mat;
+
+$pink-bluegrey-primary: mat.define-palette(mat.$pink-palette, 500, 300, 700);
+$pink-bluegrey-accent: mat.define-palette(mat.$blue-grey-palette, 400, 200, 600);
+$pink-bluegrey-warn: mat.define-palette(mat.$red-palette);
+
+$pink-bluegrey-theme: mat.define-light-theme($pink-bluegrey-primary, $pink-bluegrey-accent, $pink-bluegrey-warn);
+
+.pink-bluegrey-theme {
+  @include mat.all-component-themes($pink-bluegrey-theme);
+}

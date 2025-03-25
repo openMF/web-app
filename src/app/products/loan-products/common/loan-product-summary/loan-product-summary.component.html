@@ -496,6 +496,11 @@
     <span fxFlex="53%">{{ loanProduct.daysInYearType?.value | translateKey: 'catalogs' }}</span>
   </div>
 
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation && loanProduct.daysInYearCustomStrategy">
+    <span fxFlex="47%">{{ 'labels.inputs.Days in year custom strategy' | translate }}:</span>
+    <span fxFlex="53%">{{ loanProduct.daysInYearCustomStrategy.value | translateKey: 'catalogs' }}</span>
+  </div>
+
   <div fxFlexFill>
     <span fxFlex="47%">{{ 'labels.inputs.Days in month' | translate }}:</span>
     <span fxFlex="53%">{{ loanProduct.daysInMonthType?.value | translateKey: 'catalogs' }}</span>

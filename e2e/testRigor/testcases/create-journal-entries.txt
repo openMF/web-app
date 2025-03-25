@@ -4,9 +4,9 @@ create-account
 //navigate to journal
 click "Accounting"
 click "Create Journal Entries"
-//create a new Journal Entrie
-enter string with parameters "${todayMonthNumber}/${todayDayOfMonth}/${todayYear}" into "Transaction Date"
-click "Office"
+//create a new Journal Entry
+save string with parameters "${todayMonthNumber}/${todayDayOfMonth}/${todayYear}" as "pickdate"
+pick saved value "pickdate" from "Transaction Date"
 click "Office"
 click "Head Office"
 click "Currency"
@@ -22,7 +22,10 @@ click "Money Transfer"
 enter "300" into "Debit Amount"
 enter "300" into "Credit Amount"
 generate from template "%*********", then enter into "Reference Number" and save as "referenceNumber"
+click on the left third of the screen
+check that page contains button "Submit"
 click "Submit"
+check that page doesn't contain button "Submit"
 //validate Transactions
 check that page contains "Revert Transaction"
 grab value from the right of "Transactions" and save as "transactionID"

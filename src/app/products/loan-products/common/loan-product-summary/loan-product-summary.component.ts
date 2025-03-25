@@ -275,6 +275,13 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         this.loanProductsTemplate.daysInYearTypeOptions
       );
       this.loanProduct.daysInYearType = optionValue;
+      if (this.isAdvancedPaymentAllocation && this.loanProduct.daysInYearType.id == 1) {
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.daysInYearCustomStrategy,
+          this.loanProductsTemplate.daysInYearCustomStrategyOptions
+        );
+      }
+      this.loanProduct.daysInYearCustomStrategy = optionValue;
       optionValue = this.optionDataLookUp(
         this.loanProduct.interestRateFrequencyType,
         this.loanProductsTemplate.interestRateFrequencyTypeOptions

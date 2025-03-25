@@ -111,7 +111,8 @@ import {
   faCalendarCheck,
   faPause,
   faReceipt,
-  faTableCells
+  faTableCells,
+  faSave
 } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -235,7 +236,8 @@ export class IconsModule {
       faBars,
       faUndo,
       faReceipt,
-      faTableCells
+      faTableCells,
+      faSave
     );
   }
 }
