@@ -100,7 +100,7 @@ export class CreateProductMixComponent implements OnInit {
       this.router.navigate(
         [
           '../',
-          response.resourceId
+          response.productId
         ],
         { relativeTo: this.route }
       );

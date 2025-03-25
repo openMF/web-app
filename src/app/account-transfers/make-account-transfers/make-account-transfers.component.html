@@ -1,5 +1,11 @@
 <div class="container">
-  <mat-card>
+  <div *ngIf="isLoading" class="loader-wrapper">
+    <div class="bottom triangle"></div>
+    <div class="top triangle"></div>
+    <div class="left triangle"></div>
+    <div class="right triangle"></div>
+  </div>
+  <mat-card *ngIf="!isLoading">
     <mat-card-content>
       <div fxLayout="row wrap" fxLayout.lt-md="column">
         <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Transferring From Details' | translate }}</h3>
@@ -36,11 +42,52 @@
         </div>
       </div>
 
-      <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Transferred To' | translate }}</h3>
+      <div *ngIf="interbank">
+        <div fxFlexFill>
+          <h3 class="mat-h3" fxFlex="40%" fxLayoutAlign="start center">
+            {{ 'labels.heading.Transferred To' | translate }}
+          </h3>
+          <mat-form-field fxFlex="40%">
+            <mat-label>{{ 'labels.inputs.Phone Number' | translate }}</mat-label>
+            <input
+              matInput
+              [disabled]="interbankTransferForm"
+              type="tel"
+              #input
+              [(ngModel)]="phoneAccount"
+              maxlength="10"
+              required
+            /><!-- formControlName="phoneNumber" -->
+            <mat-hint align="end">{{ phoneAccount.length || 0 }}/10</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <mat-card-actions
+          *ngIf="!interbankTransferForm"
+          fxLayout="row"
+          fxLayout.xs="column"
+          fxLayoutAlign="center"
+          fxLayoutGap="5px"
+        >
+          <button type="button" mat-raised-button [routerLink]="['../..']">
+            {{ 'labels.buttons.Cancel' | translate }}
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            [disabled]="phoneAccount.length !== 10"
+            (click)="searchAccountByNumber()"
+            *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'"
+            id="search-button"
+          >
+            {{ 'labels.buttons.Search' | translate }}
+          </button>
+        </mat-card-actions>
+      </div>
 
       <mat-divider [inset]="true"></mat-divider>
 
-      <form [formGroup]="makeAccountTransferForm">
+      <form *ngIf="!interbank" [formGroup]="makeAccountTransferForm">
         <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
           <mat-form-field fxFlex="98%" (click)="transferDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
@@ -121,6 +168,10 @@
               {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
+            <mat-error *ngIf="makeAccountTransferForm.get('transferAmount')?.hasError('amountExceedsBalance')">
+              <fa-icon icon="exclamation-triangle" size="md"></fa-icon>
+              {{ 'errors.validation.msg.savingsproduct.insufficient.balance' | translate: { balance } }}
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
@@ -138,9 +189,20 @@
           </mat-form-field>
         </div>
       </form>
+      <mifosx-make-account-interbank-transfers
+        *ngIf="interbank && interbankTransferForm"
+        [makeAccountTransferForm]="makeAccountTransferForm"
+        [balance]="balance"
+      ></mifosx-make-account-interbank-transfers>
     </mat-card-content>
 
-    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+    <mat-card-actions
+      *ngIf="!interbank === !interbankTransferForm"
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="center"
+      fxLayoutGap="5px"
+    >
       <button type="button" mat-raised-button [routerLink]="['../..']">
         {{ 'labels.buttons.Cancel' | translate }}
       </button>

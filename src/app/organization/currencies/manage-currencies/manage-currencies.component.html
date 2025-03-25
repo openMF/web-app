@@ -14,7 +14,11 @@
           <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
           <mat-select required formControlName="currency">
             <mat-option>
-              <ngx-mat-select-search [formControl]="filterFormCtrl"></ngx-mat-select-search>
+              <ngx-mat-select-search
+                placeholderLabel="{{ placeHolderLabel }}"
+                noEntriesFoundLabel="{{ noEntriesFoundLabel }}"
+                [formControl]="filterFormCtrl"
+              ></ngx-mat-select-search>
             </mat-option>
             <mat-option *ngFor="let currency of currencyData | async" [value]="currency">
               ({{ currency.code }}) {{ currency.name }}

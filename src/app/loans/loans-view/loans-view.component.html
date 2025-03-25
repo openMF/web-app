@@ -39,8 +39,9 @@
                 <span class="m-r-10"
                   >{{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }} :</span
                 >
-                {{ loanDetailsData.clientName || loanDetailsData.groupName
-                }}<span class="m-l-5">({{ loanDetailsData.clientAccountNo }})</span><br />
+                {{ loanDetailsData.clientName || loanDetailsData.group.name
+                }}<span class="m-l-5">({{ loanDetailsData.clientAccountNo || loanDetailsData.group.accountNo }})</span
+                ><br />
               </span>
               <div *ngIf="loanDisplayArrearsDelinquency !== 1">
                 <table class="account-overview">

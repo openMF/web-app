@@ -28,9 +28,9 @@
     </mat-form-field>
 
     <mat-form-field *ngIf="createClientForm.contains('fullname')" fxFlex="48%">
-      <mat-label>{{
-        'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Name', 'Entity Name']) | translate
-      }}</mat-label>
+      <mat-label>
+        {{ 'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Name', 'Entity Name']) | translate }}
+      </mat-label>
       <input matInput required formControlName="fullname" />
       <mat-error *ngIf="createClientForm.controls.fullname.hasError('required')">
         {{ 'labels.inputs.Client name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -80,10 +80,12 @@
     <mat-divider></mat-divider>
 
     <mat-form-field fxFlex="48%" (click)="dateOfBirthDatePicker.open()">
-      <mat-label>{{
-        'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Date of Birth', 'Incorporation Date'])
-          | translate
-      }}</mat-label>
+      <mat-label>
+        {{
+          'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Date of Birth', 'Incorporation Date'])
+            | translate
+        }}
+      </mat-label>
       <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth" />
       <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>

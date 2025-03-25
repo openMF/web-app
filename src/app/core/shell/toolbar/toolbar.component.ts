@@ -149,34 +149,43 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    */
   openDialog() {
     const configWizardRef = this.dialog.open(ConfigurationWizardComponent, {});
-    configWizardRef.afterClosed().subscribe((response: { show: number }) => {
-      if (response.show === 1) {
-        this.configurationWizardService.showToolbar = true;
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-        this.router.onSameUrlNavigation = 'reload';
-        this.router.navigate(['/home']);
+
+    configWizardRef.afterClosed().subscribe((response: { show: number } | undefined) => {
+      if (!response) {
+        return;
       }
-      if (response.show === 2) {
-        this.configurationWizardService.showCreateOffice = true;
-        this.router.navigate(['/organization']);
-      }
-      if (response.show === 3) {
-        this.configurationWizardService.showDatatables = true;
-        this.router.navigate(['/system']);
-      }
-      if (response.show === 4) {
-        this.configurationWizardService.showChartofAccounts = true;
-        this.router.navigate(['/accounting']);
-      }
-      if (response.show === 5) {
-        this.configurationWizardService.showCharges = true;
-        this.router.navigate(['/products']);
-      }
-      if (response.show === 6) {
-        this.configurationWizardService.showManageFunds = true;
-        this.router.navigate(['/organization']);
-      }
-      if (response.show === 0) {
+
+      switch (response.show) {
+        case 1:
+          this.configurationWizardService.showToolbar = true;
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate(['/home']);
+          break;
+        case 2:
+          this.configurationWizardService.showCreateOffice = true;
+          this.router.navigate(['/organization']);
+          break;
+        case 3:
+          this.configurationWizardService.showDatatables = true;
+          this.router.navigate(['/system']);
+          break;
+        case 4:
+          this.configurationWizardService.showChartofAccounts = true;
+          this.router.navigate(['/accounting']);
+          break;
+        case 5:
+          this.configurationWizardService.showCharges = true;
+          this.router.navigate(['/products']);
+          break;
+        case 6:
+          this.configurationWizardService.showManageFunds = true;
+          this.router.navigate(['/organization']);
+          break;
+        case 0:
+          break;
+        default:
+          break;
       }
     });
   }

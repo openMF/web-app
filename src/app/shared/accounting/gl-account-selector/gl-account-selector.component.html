@@ -3,7 +3,11 @@
 
   <mat-select required [formControl]="inputFormControl">
     <mat-option>
-      <ngx-mat-select-search [formControl]="filterFormCtrl"></ngx-mat-select-search>
+      <ngx-mat-select-search
+        placeholderLabel="{{ placeHolderLabel }}"
+        noEntriesFoundLabel="{{ noEntriesFoundLabel }}"
+        [formControl]="filterFormCtrl"
+      ></ngx-mat-select-search>
     </mat-option>
     <mat-option *ngFor="let glAccount of glAccountData | async" [value]="glAccount.id">
       {{ '(' + glAccount.glCode + ') ' + glAccount.name }}

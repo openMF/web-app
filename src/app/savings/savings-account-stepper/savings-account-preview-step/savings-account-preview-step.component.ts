@@ -1,6 +1,7 @@
 /** Angular Imports */
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { MatTableDataSource } from '@angular/material/table';
 
 /**
  * Savings account preview step
@@ -10,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './savings-account-preview-step.component.html',
   styleUrls: ['./savings-account-preview-step.component.scss']
 })
-export class SavingsAccountPreviewStepComponent {
+export class SavingsAccountPreviewStepComponent implements OnChanges {
   /** Savings Account Product Template */
   @Input() savingsAccountProductTemplate: any;
   /** Savings Account Template */
@@ -19,6 +20,11 @@ export class SavingsAccountPreviewStepComponent {
   @Input() savingsAccountTermsForm: any;
   /** Savings Account */
   @Input() savingsAccount: any;
+  /** active Client Members in case of GSIM Account */
+  @Input() activeClientMembers?: any;
+
+  /** Table Data Source */
+  dataSource: any;
 
   /** Display columns for charges table */
   chargesDisplayedColumns: string[] = [
@@ -29,11 +35,22 @@ export class SavingsAccountPreviewStepComponent {
     'date',
     'repaymentsEvery'
   ];
+  /** Columns to be displayed in active members table. */
+  membersDisplayedColumns: string[] = [
+    'id',
+    'name'
+  ];
 
   /** Form submission event */
   @Output() submitEvent = new EventEmitter();
 
   constructor(private translateService: TranslateService) {}
+
+  ngOnChanges(): void {
+    if (this.activeClientMembers?.length > 0) {
+      this.dataSource = new MatTableDataSource<any>(this.activeClientMembers.filter((member: any) => member.selected));
+    }
+  }
 
   getCatalogTranslation(text: string): string {
     return this.translateService.instant('labels.catalogs.' + text);

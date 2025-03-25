@@ -73,9 +73,16 @@ export class CreateLoansAccountComponent {
     this.loansAccountProductTemplate = $event;
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
     const clientId = this.loansAccountTemplate.clientId;
-    this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
-      this.collateralOptions = response;
-    });
+    if (!!clientId) {
+      this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
+        this.collateralOptions = response;
+      });
+    } else {
+      // Fineract API doesn't have "Group Collateral Management" endpoint; from the obsolete
+      // community app it appears getCollateralTemplate(clientId) is called as well, but it's not clear how
+      // the clientId is selected from the clientIds that belong to the group.
+      console.error('No collateral data requested from Fineract, collateral might misbehave');
+    }
     const entityId = this.loansAccountTemplate.clientId
       ? this.loansAccountTemplate.clientId
       : this.loansAccountTemplate.group.id;

@@ -1,12 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
+// import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
+// import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 
 /** Custom Services */
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
@@ -31,6 +32,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   @Input() loansAccountTemplate: any;
   // @Input() loansAccountFormValid: LoansAccountFormValid
   @Input() loansAccountFormValid: boolean;
+  /** active Client Members in case of GSIM Account */
+  @Input() activeClientMembers?: any;
 
   /** Charges Data */
   chargeData: any;
@@ -55,6 +58,20 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     'type',
     'amount',
     'collectedon'
+  ];
+  /** Table Data Source */
+  dataSource: any;
+  /** Check for select all the Clients List */
+  selectAllItems = false;
+  /** Loan Purpose Options */
+  loanPurposeOptions: string[] = [];
+  /** Table Displayed Columns */
+  displayedColumn: string[] = [
+    'check',
+    'id',
+    'name',
+    'purpose',
+    'amount'
   ];
   /** Component is pristine if there has been no changes by user interaction */
   pristine = true;
@@ -84,6 +101,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
       this.chargesDataSource =
         this.loansAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
     }
+    this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
   }
 
   /**
@@ -91,6 +109,7 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    */
   ngOnChanges() {
     if (this.loansAccountProductTemplate) {
+      this.loanPurposeOptions = this.loansAccountProductTemplate.loanPurposeOptions;
       this.chargeData = this.loansAccountProductTemplate.chargeOptions;
       if (this.loansAccountProductTemplate.overdueCharges) {
         this.overDueChargesDataSource = this.loansAccountProductTemplate.overdueCharges;
@@ -236,6 +255,13 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     });
   }
 
+  get isValid() {
+    return (
+      !this.activeClientMembers ||
+      this.selectedClientMembers?.selectedMembers?.reduce((acc: any, cur: any) => acc + (cur.principal ?? 0), 0) > 0
+    );
+  }
+
   /**
    * Returns Loans Account Charges and Collateral Form
    */
@@ -243,5 +269,23 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     return {
       charges: this.chargesDataSource
     };
+  }
+
+  get selectedClientMembers() {
+    return { selectedMembers: this.activeClientMembers.filter((item: any) => item.selected) };
+  }
+
+  /** Toggle all checks */
+  toggleSelects() {
+    for (const member of this.activeClientMembers) {
+      member.selected = this.selectAllItems;
+    }
+  }
+
+  /** Check if all the checks are selected */
+  toggleSelect() {
+    const len = this.activeClientMembers.length;
+    this.selectAllItems =
+      len === 0 ? false : this.activeClientMembers.filter((item: any) => item.selected).length === len;
   }
 }

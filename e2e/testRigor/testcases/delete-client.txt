@@ -1,7 +1,7 @@
 log-in-and-validate
 navigate-to-clients
 create-client
-click "Submit"
+click exactly "Submit"
 //delete client
 click "Client actions"
 click "Actions"

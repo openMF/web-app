@@ -62,8 +62,8 @@
             <tr>
               <td>{{ 'labels.inputs.Arrears By' | translate }}</td>
               <td>
-                {{ dataObject.summary.totalOverdue | formatNumber }}
-                <span *ngIf="dataObject.summary.totalOverdue < 0">{{ 'labels.inputs.Not Provided' | translate }}</span>
+                {{ dataObject.summary?.totalOverdue | formatNumber }}
+                <span *ngIf="dataObject.summary?.totalOverdue < 0">{{ 'labels.inputs.Not Provided' | translate }}</span>
               </td>
             </tr>
           </tbody>
@@ -106,7 +106,7 @@
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Relationship' | translate }}</th>
           <td mat-cell *matCellDef="let guarantor">
             <span *ngIf="!guarantor.guarantorFundingDetails">
-              {{ guarantor.clientRelationshipType.name }}
+              {{ guarantor.clientRelationshipType?.name }}
             </span>
           </td>
         </ng-container>

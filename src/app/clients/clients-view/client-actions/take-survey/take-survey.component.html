@@ -1,7 +1,7 @@
 <div class="container mat-typography">
-  <div class="mat-elevation-z2 surveyCont">
-    <div class="surveySelect" fxLayout="row">
-      <mat-label class="nameLabel">{{ 'labels.inputs.Survey Name' | translate }}</mat-label>
+  <div class="mat-elevation-z2-surveycont">
+    <div class="survey-select" fxLayout="row">
+      <mat-label class="name-label">{{ 'labels.inputs.Survey Name' | translate }}</mat-label>
       <mat-select (selectionChange)="onSurveyChange($event)">
         <mat-option *ngFor="let surveyData of allSurveyData" [value]="surveyData">
           {{ surveyData.name }}
@@ -15,17 +15,16 @@
       <ng-container *ngFor="let component of componentGroups">
         <h2 *ngIf="component[0].componentKey">component[0].componentKey</h2>
 
-        <div fxLayout="column" class="displayQuestions">
+        <div fxLayout="column" class="display-questions">
           <ng-container *ngFor="let question of component">
             <div fxLayout="row" class="question">
-              <mat-label fxFlex="40" class="questionText">{{ question.text }}</mat-label>
+              <mat-label fxFlex="40" class="question-text">{{ question.text }}</mat-label>
 
               <mat-radio-group fxFlex="60" [(ngModel)]="question.answer">
                 <mat-radio-button
                   fxLayout="column"
                   class="radio-button"
                   *ngFor="let options of question.responseDatas"
-                  style="margin-bottom: 5px; align-items: normal; white-space: normal"
                   [value]="options"
                 >
                   <span class="wrap-mat-radio-label">

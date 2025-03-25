@@ -69,7 +69,7 @@
 <div class="mat-elevation-z8 container">
   <mat-card>
     <ng-container>
-      <div fxLayout="row" class="permissionSelected">
+      <div fxLayout="row" class="permission-selected">
         <div fxFlex="75">
           <h3>
             {{ 'labels.buttons.Permissions' | translate }}: <strong>{{ formatName(previousGrouping) }}</strong>
@@ -83,7 +83,7 @@
           fxLayoutAlign="end"
           fxLayoutGap="5px"
           *ngIf="!isDisabled"
-          class="selectDeselect"
+          class="select-deselect"
         >
           <button mat-raised-button color="primary" (click)="selectAll()">
             {{ 'labels.buttons.Select All' | translate }}
@@ -102,7 +102,7 @@
               *ngFor="let grouping of groupings"
               (click)="showPermissions(grouping)"
             >
-              <span class="groupingName">
+              <span class="grouping-name">
                 {{ formatName(grouping) }}
               </span>
             </mat-list-item>
@@ -111,9 +111,9 @@
 
         <mat-divider [vertical]="true"></mat-divider>
 
-        <div fxFlex="70" fxLayout="column" class="listPermission">
+        <div fxFlex="70" fxLayout="column" class="list-permission">
           <form [formGroup]="formGroup" (submit)="submit()">
-            <div *ngFor="let permission of permissions.permissions" class="displayPermissions">
+            <div *ngFor="let permission of permissions.permissions" class="display-permissions">
               <div formArrayName="roster">
                 <div [formGroupName]="permission.id">
                   <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">

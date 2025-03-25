@@ -1,4 +1,4 @@
-.delBtn {
+.del-btn {
   width: 20px !important;
   height: 25px;
   min-width: 20px !important;
@@ -16,4 +16,8 @@
 .share-account-tables {
   display: flex;
   justify-content: space-between;
+}
+
+.content {
+  padding-top: 10px;
 }

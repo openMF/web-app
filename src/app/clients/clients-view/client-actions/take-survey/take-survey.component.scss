@@ -3,7 +3,7 @@
   padding: 5px;
 }
 
-.displayQuestions {
+.display-questions {
   margin-top: 20px;
 }
 
@@ -15,16 +15,16 @@
   white-space: normal;
 }
 
-.questionText {
+.question-text {
   font-weight: bold;
 }
 
-.surveySelect {
+.survey-select {
   height: 40px;
   margin-bottom: 20px;
 }
 
-.nameLabel {
+.name-label {
   width: 25%;
 }
 
@@ -38,4 +38,10 @@
 
 .button-submit {
   margin-left: 2%;
+}
+
+.radio-button {
+  margin-bottom: 5px;
+  align-items: normal;
+  white-space: normal;
 }

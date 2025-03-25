@@ -36,6 +36,10 @@ export class MakeAccountTransferTemplateResolver implements Resolve<Object> {
         this.accountTypeId = '2';
         this.id = route.queryParamMap.get('savingsId');
         break;
+      case 'interbank':
+        this.accountTypeId = '2';
+        this.id = route.queryParamMap.get('savingsId');
+        break;
       default:
         this.accountTypeId = '0';
     }

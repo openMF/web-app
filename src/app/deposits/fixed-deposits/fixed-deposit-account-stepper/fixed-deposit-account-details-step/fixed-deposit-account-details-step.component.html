@@ -51,7 +51,14 @@
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}
     </button>
-    <button mat-raised-button matStepperNext>
+    <button
+      mat-raised-button
+      matStepperNext
+      [disabled]="
+        !fixedDepositAccountDetailsForm.get('productId')?.value ||
+        !fixedDepositAccountDetailsForm.get('submittedOnDate')?.value
+      "
+    >
       {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>

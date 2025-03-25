@@ -56,11 +56,11 @@
       <mat-divider [inset]="true"></mat-divider>
     </mat-card-header>
     <mat-card-content>
-      <div class="survey_questions" *ngFor="let questionData of surveyData.questionDatas; index as i">
+      <div class="survey-questions" *ngFor="let questionData of surveyData.questionDatas; index as i">
         <mat-card>
           <mat-card-content>
             <div>{{ 'labels.heading.Question' | translate }}: {{ i + 1 }}</div>
-            <div fxLayout="row" id="key_text">
+            <div fxLayout="row" id="key-text">
               <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
                 <b>{{ 'labels.inputs.Key' | translate }}:</b>
               </div>

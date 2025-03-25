@@ -362,7 +362,7 @@
 
 <ng-template #templateEmployee let-popover="popover">
   <h2>{{ 'labels.heading.Manage Employees' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.View, edit and/or delete your organization's employees' | translate }}</p>
+  <p class="mw300">{{ 'labels.text.View, edit and delete employees of your organization' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}

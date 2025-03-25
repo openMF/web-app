@@ -5,6 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgModule } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { ChangeDetectorRef } from '@angular/core';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
@@ -17,12 +22,18 @@ import { AddEventDialogComponent } from '../add-event-dialog/add-event-dialog.co
 /**
  * Edit Hook Component.
  */
+
 @Component({
   selector: 'mifosx-edit-hook',
   templateUrl: './edit-hook.component.html',
   styleUrls: ['./edit-hook.component.scss']
 })
 export class EditHookComponent implements OnInit {
+  @NgModule({
+    imports: [
+      MatSnackBarModule
+    ]
+  })
   /** Hooks Template Data. */
   hooksTemplateData: any;
   /** Hook Data. */
@@ -39,6 +50,7 @@ export class EditHookComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   /** Events Data. */
   eventsData: any[] = [];
+  cannotDeleteLastEvent: boolean = false;
   /** Boolean to check if events data is changed or not. */
   eventsDataChanged: Boolean = false;
   /** Sorter for events table. */
@@ -59,7 +71,9 @@ export class EditHookComponent implements OnInit {
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private dialog: MatDialog,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
   ) {
     this.route.data.subscribe((data: { hooksTemplate: any; hook: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
@@ -169,6 +183,14 @@ export class EditHookComponent implements OnInit {
    * @param {number} index Array index from where event form needs to be removed.
    */
   deleteEvent(index: number) {
+    if (this.eventsData.length === 1) {
+      this.snackBar.open('At least one event is required. Cannot delete the last event.', 'Close', {
+        duration: 3000,
+        panelClass: ['error-snackbar']
+      });
+      return;
+    }
+
     const deleteEventDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
         deleteContext:
@@ -177,11 +199,13 @@ export class EditHookComponent implements OnInit {
           this.eventsData[index].entityName
       }
     });
+
     deleteEventDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.eventsData.splice(index, 1);
         this.dataSource.connect().next(this.eventsData);
         this.eventsDataChanged = true;
+        this.cdr.detectChanges();
       }
     });
   }

@@ -69,6 +69,6 @@ export class ViewGlAccountComponent {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigateByUrl('/accounting/chart-of-accounts');
   }
 }

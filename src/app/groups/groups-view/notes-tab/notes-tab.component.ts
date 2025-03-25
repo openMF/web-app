@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -16,7 +16,7 @@ import { GroupsService } from '../../groups.service';
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss']
 })
-export class NotesTabComponent {
+export class NotesTabComponent implements OnInit {
   /** Group ID */
   entityId: string;
   /** Username */
@@ -35,9 +35,13 @@ export class NotesTabComponent {
     private authenticationService: AuthenticationService,
     private groupsService: GroupsService
   ) {
+    this.entityId = this.route.parent.snapshot.params['groupId'];
+    this.addNote = this.addNote.bind(this);
+  }
+
+  ngOnInit() {
     const savedCredentials = this.authenticationService.getCredentials();
     this.username = savedCredentials.username;
-    this.entityId = this.route.parent.snapshot.params['groupId'];
     this.route.data.subscribe((data: { groupNotes: any }) => {
       this.entityNotes = data.groupNotes;
     });

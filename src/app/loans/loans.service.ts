@@ -563,13 +563,15 @@ export class LoansService {
   getGLIMLoanAccountTemplate(groupId: any): Observable<any> {
     const httpParams = new HttpParams()
       .set('groupId', groupId)
-      .set('lendingStrategy', '300')
+      // Commenting parameter, because it doesn't exist:
+      // https://localhost:8443/fineract-provider/swagger-ui/index.html#/Loans/template_10
+      //   .set('lendingStrategy', '300')
       .set('templateType', 'jlgbulk');
     return this.http.get('/loans/template', { params: httpParams });
   }
 
-  createGlimAccount(glimAccount: any): Observable<any> {
-    return this.http.post('/batches?enclosingTransaction=true', glimAccount);
+  createGlimAccount(payload: any): Observable<any> {
+    return this.http.post('/batches?enclosingTransaction=true', payload);
   }
 
   calculateLoanSchedule(payload: any): Observable<any> {
@@ -598,10 +600,6 @@ export class LoansService {
         amount: charge.amount,
         dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat)
       })),
-      collateral: loansAccount.collateral.map((collateralEle: any) => ({
-        clientCollateralId: collateralEle.type.collateralId,
-        quantity: collateralEle.value
-      })),
       disbursementData: loansAccount.disbursementData.map((item: any) => ({
         expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
         principal: item.principal
@@ -613,7 +611,19 @@ export class LoansService {
       dateFormat,
       locale
     };
-    if (loansAccountTemplate.clientId) {
+
+    if (loansAccount.collateral) {
+      loansAccountData.collateral = loansAccount.collateral.map((collateralEle: any) => ({
+        clientCollateralId: collateralEle.type.collateralId,
+        quantity: collateralEle.value
+      }));
+    }
+
+    if (loansAccountTemplate.clientId && loansAccountTemplate.group?.id) {
+      loansAccountData.clientId = loansAccountTemplate.clientId;
+      loansAccountData.groupId = loansAccountTemplate.group.id;
+      loansAccountData.loanType = 'glim';
+    } else if (loansAccountTemplate.clientId) {
       loansAccountData.clientId = loansAccountTemplate.clientId;
       loansAccountData.loanType = 'individual';
     } else {
@@ -651,7 +661,6 @@ export class LoansService {
     // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
     loansAccountData.allowPartialPeriodInterestCalcualtion = loansAccountData.allowPartialPeriodInterestCalculation;
     delete loansAccountData.allowPartialPeriodInterestCalculation;
-
     return loansAccountData;
   }
 }

@@ -343,14 +343,14 @@ const routes: Routes = [
   },
   {
     path: 'glim-account',
+    data: { title: 'Loans', breadcrumb: 'Loans', routeParamBreadcrumb: false },
     children: [
       {
         path: 'create',
-        data: { title: 'Create GLIM Application', breadcrumb: 'Create GLIM Application' },
+        data: { title: 'Create GLIM Application', breadcrumb: 'Create GLIM Application', routeParamBreadcrumb: false },
         component: CreateGlimAccountComponent,
         resolve: {
           loansAccountTemplate: GLIMLoanTemplateResolver,
-          gsimData: GSIMAccountsResolver,
           groupsData: GroupViewResolver
         }
       },

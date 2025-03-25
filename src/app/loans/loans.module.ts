@@ -58,10 +58,6 @@ import { ViewTransactionComponent } from './loans-view/transactions/view-transac
 import { EditTransactionComponent } from './loans-view/transactions/edit-transaction/edit-transaction.component';
 import { GlimAccountComponent } from './glim-account/glim-account.component';
 import { CreateGlimAccountComponent } from './glim-account/create-glim-account/create-glim-account.component';
-import { GlimDetailsStepComponent } from './glim-account/create-glim-account/glim-account-stepper/glim-details-step/glim-details-step.component';
-import { GlimChargesStepComponent } from './glim-account/create-glim-account/glim-account-stepper/glim-charges-step/glim-charges-step.component';
-import { GlimTermsStepComponent } from './glim-account/create-glim-account/glim-account-stepper/glim-terms-step/glim-terms-step.component';
-import { GlimPreviewStepComponent } from './glim-account/create-glim-account/glim-account-stepper/glim-preview-step/glim-preview-step.component';
 
 /** Dialog Components */
 import { LoansAccountViewGuarantorDetailsDialogComponent } from './custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
@@ -152,10 +148,6 @@ import { AddInterestPauseComponent } from './loans-view/loan-account-actions/add
     LoanCreditBalanceRefundComponent,
     GlimAccountComponent,
     CreateGlimAccountComponent,
-    GlimDetailsStepComponent,
-    GlimChargesStepComponent,
-    GlimTermsStepComponent,
-    GlimPreviewStepComponent,
     LoanDelinquencyTagsTabComponent,
     LoansAccountScheduleStepComponent,
     EditRepaymentScheduleComponent,

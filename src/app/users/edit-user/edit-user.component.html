@@ -17,7 +17,7 @@
             <input matInput required formControlName="email" />
             <mat-error *ngIf="editUserForm.controls.email.hasError('email')">
               {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{"labels.commons.invalid' | translate}}</strong>
+              <strong>{{ 'labels.commons.invalid' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editUserForm.controls.email.hasError('required')">
               {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
