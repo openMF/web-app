@@ -1,6 +1,4 @@
 #!/bin/bash
-set -x
-env
 
 # Contributor: In order to test locally, please define default values if variables are missing.
 
