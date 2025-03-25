@@ -24,9 +24,9 @@ jobs:
 
       - name: Install testRigor Command Line
         run: |
-          npm install -g --verbose testrigor-cli
+          npm install -g testrigor-cli
+          sudo apt-get install jq
 
       - name: Run testRigor tests
         run: |
-          echo "$MIFOS_TEST_SUITE_ID"
           chmod +x ./e2e/testRigor/run_testrigor_tests.sh && ./e2e/testRigor/run_testrigor_tests.sh
