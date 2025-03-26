@@ -63,7 +63,7 @@
     "lodash": "4.17.21",
     "moment": "^2.29.4",
     "ngx-mat-select-search": "5.0.0",
-    "rxjs": "6.6.2",
+    "rxjs": "6.6.7",
     "tslib": "^2.0.0",
     "vkbeautify": "^0.99.2",
     "xlsx": "^0.18.5",
