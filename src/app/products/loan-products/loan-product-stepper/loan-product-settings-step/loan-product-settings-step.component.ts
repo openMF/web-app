@@ -326,7 +326,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
         if (this.useDaysInYearCustomStrategy) {
           const daysInYearCustomStrategy: string = this.loanProductsTemplate.daysInYearCustomStrategy?.id
             ? this.loanProductsTemplate.daysInYearCustomStrategy.id
-            : '';
+            : this.daysInYearCustomStrategyOptions[0].id;
           this.loanProductSettingsForm.addControl(
             'daysInYearCustomStrategy',
             new UntypedFormControl(daysInYearCustomStrategy, Validators.required)
@@ -734,7 +734,7 @@ export class LoanProductSettingsStepComponent implements OnInit {
       if (this.useDaysInYearCustomStrategy) {
         const daysInYearCustomStrategy: string = this.loanProductsTemplate.daysInYearCustomStrategy?.id
           ? this.loanProductsTemplate.daysInYearCustomStrategy.id
-          : '';
+          : this.daysInYearCustomStrategyOptions[0].id;
         this.loanProductSettingsForm.addControl(
           'daysInYearCustomStrategy',
           new UntypedFormControl(daysInYearCustomStrategy, Validators.required)
