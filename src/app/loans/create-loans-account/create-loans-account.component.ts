@@ -119,6 +119,10 @@ export class CreateLoansAccountComponent {
     return this.loansAccountDetailsForm.valid && this.loansAccountTermsForm.valid;
   }
 
+  get loansSavingsAccountLinked() {
+    return this.loansAccountDetailsStep.loansAccountDetailsForm.get('linkAccountId').value;
+  }
+
   /** Gets principal Amount */
   get loanPrincipal() {
     return this.loansAccountTermsStep.loansAccountTermsForm.value.principal;
