@@ -45,14 +45,9 @@
       <td mat-cell *matCellDef="let ele">{{ ele.description }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="total">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Total Value' | translate }}</th>
-      <td mat-cell *matCellDef="let ele">{{ ele.total }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="totalCollateral">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Total Collateral Value' | translate }}</th>
-      <td mat-cell *matCellDef="let ele">{{ ele.totalCollateral }}</td>
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Value' | translate }}</th>
+      <td mat-cell *matCellDef="let ele">{{ ele.value | formatNumber }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
