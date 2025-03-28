@@ -114,38 +114,4 @@ export class AccountTransfersService {
   getViewAccountTransferDetails(transferId: any): Observable<any> {
     return this.http.get(`/accounttransfers/${transferId}`);
   }
-
-  getAccountByNumber(accountNumber: string, currency: string): Observable<any> {
-    const payload = {
-      partyId: accountNumber,
-      partyIdType: 'MSISDN',
-      currencyCode: currency
-    };
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http
-      .post(
-        `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/participant`,
-        JSON.stringify(payload),
-        { headers }
-      )
-      .pipe(
-        switchMap((participant: any) => {
-          const body = JSON.stringify({ ...payload, ownerFspId: participant.fspId });
-          return this.http.post(
-            `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/partyinfo`,
-            body,
-            { headers }
-          );
-        })
-      );
-  }
-
-  sendInterbankTransfer(body: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(
-      `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/executetransfer`,
-      body,
-      { headers }
-    );
-  }
 }

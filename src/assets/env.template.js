@@ -44,8 +44,6 @@
   // OAuth Client Id
   window['env']['oauthAppId'] = '$MIFOS_OAUTH_CLIENT_ID';
 
-  window['env']['vNextApiUrl'] = '$VNEXT_API_URL';
-  window['env']['vNextApiProvider'] = '$VNEXT_API_PROVIDER';
-  window['env']['vNextApiVersion'] = '$VNEXT_API_VERSION';
-  window['env']['interbankTransfers'] = '$VNEXT_INTERBANK_TRANSFERS';
+  // Min Password length
+  window['env']['minPasswordLength'] = '$MIFOS_MIN_PASSWORD_LENGTH';
 })(this);

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { environment } from 'environments/environment';
 import { Subscription } from 'rxjs';
 
 @Injectable({
@@ -7,14 +8,14 @@ import { Subscription } from 'rxjs';
 })
 export class PasswordsUtility {
   // password regex pattern
-  public static PASSWORD_REGEX = '^(?!.*(.)\\1)(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{12,50}$';
+  public static PASSWORD_REGEX = '^(?!.*(.)\\1{1,})(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{12,50}$';
 
   public getPasswordValidators(): ValidatorFn[] {
     return [
       Validators.required,
       Validators.pattern(PasswordsUtility.PASSWORD_REGEX),
       Validators.maxLength(50),
-      Validators.minLength(8)];
+      Validators.minLength(environment.minPasswordLength)];
   }
 
   /**

@@ -335,7 +335,7 @@
             </p>
           </mat-list-item>
 
-          <mat-list-item>
+          <mat-list-item [ngClass]="{ 'disabled-item': isDisabled }">
             <mat-icon matListIcon>
               <fa-icon icon="key" size="sm"></fa-icon>
             </mat-icon>

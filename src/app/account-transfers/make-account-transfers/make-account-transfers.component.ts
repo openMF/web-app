@@ -318,31 +318,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       },
       note: this.makeAccountTransferForm.controls.transferDescription.value
     };
-    this.accountTransfersService.sendInterbankTransfer(JSON.stringify(payload)).subscribe(
-      (trnsfr) => {
-        if (trnsfr.systemMessage) {
-          this.isLoading = false;
-          this.router.navigate(['../../transactions'], { relativeTo: this.route });
-        }
-      },
-      (error) => {
-        this.isLoading = false;
-      }
-    );
   }
 
-  searchAccountByNumber() {
-    this.isLoading = true;
-    this.accountTransfersService
-      .getAccountByNumber(this.phoneAccount, this.accountTransferTemplateData.currency.code)
-      .subscribe(
-        (acc) => {
-          this.interbankTransferForm = true;
-          this.createMakeAccountInterbankTransferForm(acc);
-        },
-        (error) => {
-          this.isLoading = false;
-        }
-      );
-  }
+  searchAccountByNumber() {}
 }
