@@ -18,7 +18,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./default-account.component.scss']
 })
 export class DefaultAccountComponent implements OnInit {
-
   /** Subscription to alerts. */
   alert$: Subscription;
   isDefaultAccountEnabled = false;
@@ -35,12 +34,12 @@ export class DefaultAccountComponent implements OnInit {
   /** Configuration. */
   configuration: any;
   /**
- * Retrieves the configurations data from `resolve`.
- * @param {SystemService} systemService System Service.
- * @param {SettingsService} settingsService Settings Service.
- * @param {FormBuilder} formBuilder Form Builder.
- * @param {Dates} dateUtils Date Utils.
- */
+   * Retrieves the configurations data from `resolve`.
+   * @param {SystemService} systemService System Service.
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {FormBuilder} formBuilder Form Builder.
+   * @param {Dates} dateUtils Date Utils.
+   */
   constructor(
     private systemService: SystemService,
     private settingsService: SettingsService,
@@ -48,8 +47,8 @@ export class DefaultAccountComponent implements OnInit {
     private router: Router,
     private alertService: AlertService,
     private clientsService: ClientsService,
-    private route: ActivatedRoute,
-  ) { }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
@@ -61,11 +60,9 @@ export class DefaultAccountComponent implements OnInit {
     this.getConfigurations();
   }
 
-
-
   /**
-* Get the Configuration and the Business Date data
-*/
+   * Get the Configuration and the Business Date data
+   */
   getConfigurations(): void {
     this.systemService
       .getConfigurationByName(SettingsService.defaultAccountConfigName)
@@ -76,20 +73,18 @@ export class DefaultAccountComponent implements OnInit {
       });
   }
 
-
   searchClients(name: string) {
     if (name.length >= 4) {
-      this.clientsService.getFilteredClients('displayName', 'asc', false, name)
-        .subscribe(data => {
-          this.clientsData = data.pageItems;
-        });
+      this.clientsService.getFilteredClients('displayName', 'asc', false, name).subscribe((data) => {
+        this.clientsData = data.pageItems;
+      });
     } else {
       this.clientsData = [];
     }
   }
 
   onClientSelected(event: MatAutocompleteSelectedEvent) {
-    const selectedClient = this.clientsData.find(client => client.displayName === event.option.value);
+    const selectedClient = this.clientsData.find((client) => client.displayName === event.option.value);
     if (selectedClient) {
       this.selectedClientId = selectedClient.id;
       this.loadAccounts(selectedClient.id);
@@ -103,11 +98,9 @@ export class DefaultAccountComponent implements OnInit {
     });
   }
 
-
-
   /**
- * Creates and sets the global configuration form.
- */
+   * Creates and sets the global configuration form.
+   */
   createConfigurationForm() {
     this.configurationForm = this.formBuilder.group({
       name: [
@@ -150,5 +143,4 @@ export class DefaultAccountComponent implements OnInit {
       });
     }
   }
-
 }

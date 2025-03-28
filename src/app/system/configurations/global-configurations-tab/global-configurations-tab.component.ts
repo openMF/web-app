@@ -107,7 +107,7 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
           this.alertService.alert({ type: SettingsService.businessDateType + ' Set Config', message: msg });
         } else if (configuration.name === SettingsService.defaultAccountConfigName) {
           const msg = configuration.enabled ? 'enabled' : 'disabled';
-          this.alertService.alert({type : SettingsService.defaultAccountType + ' Set Config', message: msg});
+          this.alertService.alert({ type: SettingsService.defaultAccountType + ' Set Config', message: msg });
         }
       });
   }

@@ -24,6 +24,15 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   @Input() forEditing = false;
   /** Loan Repayment Schedule Details Data */
   @Input() repaymentScheduleDetails: any = null;
+
+  @Input() wasChanged: any;
+
+  @Output() wasChangedChange = new EventEmitter<boolean>();
+
+  @Input() repaymentScheduleChanges: any = {};
+
+  @Output() wasRepaymentScheduleChanged = new EventEmitter<{}>();
+
   loanDetailsDataRepaymentSchedule: any = [];
 
   editCache: { [key: string]: any } = {};
@@ -153,11 +162,13 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
 
     autoTable(pdf, {
       html: '#repaymentSchedule',
-      bodyStyles: { lineColor: [
+      bodyStyles: {
+        lineColor: [
           0,
           0,
           0
-        ] },
+        ]
+      },
       styles: {
         fontSize: 8,
         cellWidth: 'auto',
@@ -179,8 +190,15 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
       }),
       new InputBase({
         controlName: 'principalDue',
-        label: 'Amount',
+        label: 'Principal',
         value: period.principalDue,
+        type: 'number',
+        required: true
+      }),
+      new InputBase({
+        controlName: 'installmentAmount',
+        label: 'Installment amount',
+        value: period.totalDueForPeriod,
         type: 'number',
         required: true
       })
@@ -194,6 +212,42 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
     const addDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
     addDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
+        const principalDue = parseFloat(response.data.value.principalDue) || 0;
+        const installmentAmount = parseFloat(response.data.value.installmentAmount) || 0;
+
+        const periodsVariation: any = [];
+
+        this.repaymentScheduleDetails['periods'].forEach((periodToModify: any) => {
+          const dueDate = response.data.value.dueDate;
+
+          if (period.period === periodToModify.period) {
+            if (periodToModify.totalDueForPeriod !== installmentAmount) {
+              periodToModify.totalDueForPeriod = installmentAmount;
+            }
+            if (periodToModify.principalDue !== principalDue) {
+              periodToModify.principalDue = principalDue;
+              periodToModify.totalDueForPeriod = principalDue + periodToModify.interestDue;
+            }
+
+            this.wasChanged = true;
+            this.wasChangedChange.emit(this.wasChanged);
+            periodToModify['changed'] = true;
+
+            this.repaymentScheduleChanges[periodToModify.period] = {
+              principal: periodToModify.principalDue,
+              //interestDue: periodToModify.interestDue,
+              installmentAmount: periodToModify.totalDueForPeriod
+            };
+          }
+
+          periodsVariation.push(periodToModify);
+        });
+
+        if (this.repaymentScheduleChanges.length > 0) {
+          this.wasRepaymentScheduleChanged.emit(this.repaymentScheduleChanges);
+        }
+
+        this.repaymentScheduleDetails['periods'] = periodsVariation;
       }
     });
   }

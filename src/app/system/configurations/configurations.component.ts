@@ -27,16 +27,12 @@ export class ConfigurationsComponent implements OnInit {
       const alertType = alertEvent.type;
       if (alertType === SettingsService.businessDateType + ' Set Config') {
         this.isBusinessDateEnabled = alertEvent.message === 'enabled' ? true : false;
-        
       } else if (alertType === SettingsService.defaultAccountType + ' Set Config') {
         this.isDefaultAccountEnabled = alertEvent.message === 'enabled' ? true : false;
-        
       }
       this.getConfigurations();
       this.getConfigurationsDefaultAccount();
     });
-    
-    
   }
 
   /**
@@ -50,15 +46,14 @@ export class ConfigurationsComponent implements OnInit {
       });
   }
 
-    /**
+  /**
    * Get the Configuration default account
    */
-    getConfigurationsDefaultAccount(): void {
-      this.systemService
-        .getConfigurationByName(SettingsService.defaultAccountConfigName)
-        .subscribe((configurationData: any) => {
-          this.isDefaultAccountEnabled = configurationData.enabled;
-        });
-    }
-
+  getConfigurationsDefaultAccount(): void {
+    this.systemService
+      .getConfigurationByName(SettingsService.defaultAccountConfigName)
+      .subscribe((configurationData: any) => {
+        this.isDefaultAccountEnabled = configurationData.enabled;
+      });
+  }
 }

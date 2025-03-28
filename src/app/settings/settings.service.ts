@@ -18,7 +18,7 @@ export class SettingsService {
   public static businessDateType = 'BUSINESS_DATE';
   public static cobDateType = 'COB_DATE';
   public static defaultAccountConfigName = 'belat-account';
-  public static defaultAccountType =  'DEFAULT_ACCOUNT';
+  public static defaultAccountType = 'DEFAULT_ACCOUNT';
   minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
 
