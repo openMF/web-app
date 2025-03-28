@@ -63,6 +63,12 @@ export class EditTaxComponentComponent implements OnInit {
    * Edit tax component form.
    */
   editTaxComponent() {
+    const creditAccountTypeValue = this.taxComponentData?.creditAccountType?.value
+      ? this.translateService.instant(`labels.inputs.accounting.${this.taxComponentData.creditAccountType.value}`)
+      : null;
+
+    const creditAccountName = this.taxComponentData?.creditAccount?.name ?? null;
+
     this.taxComponentForm = this.formBuilder.group({
       name: [
         this.taxComponentData.name,
@@ -78,13 +84,11 @@ export class EditTaxComponentComponent implements OnInit {
       startDate: [this.taxComponentData.startDate && new Date(this.taxComponentData.startDate)],
       creditAccountType: [
         {
-          value: this.translateService.instant(
-            'labels.inputs.accounting.' + this.taxComponentData.creditAccountType.value
-          ),
+          value: creditAccountTypeValue,
           disabled: true
         }
       ],
-      creditAccount: [{ value: this.taxComponentData.creditAccount.name, disabled: true }]
+      creditAccount: [{ value: creditAccountName, disabled: true }]
     });
   }
 

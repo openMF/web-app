@@ -113,15 +113,15 @@ export class CreateTaxComponentComponent implements OnInit {
   getAccountsData(accountTypeId: number) {
     switch (accountTypeId) {
       case 1:
-        return this.taxComponentTemplateData.glAccountOptions.assetAccountOptions;
+        return this.taxComponentTemplateData.glAccountOptions.assetAccountOptions || [];
       case 2:
-        return this.taxComponentTemplateData.glAccountOptions.liabilityAccountOptions;
+        return this.taxComponentTemplateData.glAccountOptions.liabilityAccountOptions || [];
       case 3:
-        return this.taxComponentTemplateData.glAccountOptions.equityAccountOptions;
+        return this.taxComponentTemplateData.glAccountOptions.equityAccountOptions || [];
       case 4:
-        return this.taxComponentTemplateData.glAccountOptions.incomeAccountOptions;
+        return this.taxComponentTemplateData.glAccountOptions.incomeAccountOptions || [];
       case 5:
-        return this.taxComponentTemplateData.glAccountOptions.expenseAccountOptions;
+        return this.taxComponentTemplateData.glAccountOptions.expenseAccountOptions || [];
     }
   }
 

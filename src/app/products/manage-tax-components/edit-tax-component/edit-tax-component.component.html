@@ -21,12 +21,12 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="taxComponentData.creditAccountType.value">
+          <mat-form-field *ngIf="taxComponentData?.creditAccountType?.value">
             <mat-label>{{ 'labels.inputs.Credit Account Type' | translate }}</mat-label>
             <input matInput formControlName="creditAccountType" />
           </mat-form-field>
 
-          <mat-form-field *ngIf="taxComponentData.creditAccount.name">
+          <mat-form-field *ngIf="taxComponentData?.creditAccount?.name">
             <mat-label>{{ 'labels.inputs.Credit Account' | translate }}</mat-label>
             <input matInput formControlName="creditAccount" />
           </mat-form-field>
