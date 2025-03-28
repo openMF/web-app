@@ -44,9 +44,7 @@
   // OAuth Client Id  
   window['env']['oauthAppId'] = '';
 
-  window["env"]["vNextApiUrl"] = '';
-  window["env"]["vNextApiProvider"] = '';
-  window["env"]["vNextApiVersion"] = '';
-  window["env"]["interbankTransfers"] = "false";
+  // Min Password length  
+  window['env']['minPasswordLength'] = '12';
 
 })(this);
