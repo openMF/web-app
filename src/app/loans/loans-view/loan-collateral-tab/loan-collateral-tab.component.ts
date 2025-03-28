@@ -14,7 +14,7 @@ export class LoanCollateralTabComponent implements OnInit {
     'id',
     'currency',
     'description',
-    'total'
+    'value'
   ];
 
   totalAmount: number;
