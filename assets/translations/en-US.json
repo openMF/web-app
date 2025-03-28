@@ -776,7 +776,7 @@
       "is": "is",
       "Is": "is",
       "is required": "is required",
-      "pass is required": "is required(min length 8)",
+      "pass is required": "is required(min length 12)",
       "least one uppercase": "least one uppercase",
       "lowercase and special character": "lowercase and special character",
       "must be": "must be",
