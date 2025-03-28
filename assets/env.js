@@ -47,4 +47,9 @@
   // Min Password length  
   window['env']['minPasswordLength'] = '12';
 
+  window["env"]["vNextApiUrl"] = '';
+  window["env"]["vNextApiProvider"] = '';
+  window["env"]["vNextApiVersion"] = '';
+  window["env"]["interbankTransfers"] = "false";
+
 })(this);
