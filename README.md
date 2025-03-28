@@ -180,6 +180,7 @@ Available languages:
 | MIFOS_DEFAULT_CHAR_DELIMITER      | Character delimiter for CSV exports                  | ,             |
 | MIFOS_WAIT_TIME_FOR_NOTIFICATIONS | Wait time in seconds for reading notifications       | 60            |
 | MIFOS_WAIT_TIME_FOR_CATCHUP       | Wait time in seconds for reading COB Catch-Up status | 30            |
+| MIFOS_MIN_PASSWORD_LENGTH         | WMinimum length for user passwords                   | 12            |
 
 #### UI Display Settings
 
