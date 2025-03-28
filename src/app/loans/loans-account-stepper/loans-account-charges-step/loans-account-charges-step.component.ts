@@ -34,6 +34,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   @Input() loansAccountFormValid: boolean;
   /** active Client Members in case of GSIM Account */
   @Input() activeClientMembers?: any;
+  // returns the chosen savings account linked to the loan account
+  @Input() loansSavingsAccountLinked: any;
 
   /** Charges Data */
   chargeData: any;
@@ -111,6 +113,12 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     if (this.loansAccountProductTemplate) {
       this.loanPurposeOptions = this.loansAccountProductTemplate.loanPurposeOptions;
       this.chargeData = this.loansAccountProductTemplate.chargeOptions;
+      // filter chargeData to have charges that have chargePaymentMode not 'Account Transfer' if loansSavingsAccountLinked is false
+      if (!this.loansSavingsAccountLinked) {
+        this.chargeData = this.chargeData.filter(
+          (charge: any) => charge.chargePaymentMode?.value != 'Account transfer'
+        );
+      }
       if (this.loansAccountProductTemplate.overdueCharges) {
         this.overDueChargesDataSource = this.loansAccountProductTemplate.overdueCharges;
       }
