@@ -55,10 +55,12 @@ export const environment = {
       idleTimeout: loadedEnv['sessionIdleTimeout'] || 300000 // 5 minutes
     }
   },
-  vNextApiUrl: loadedEnv['vNextApiUrl'] || 'https://apis.mifos.community',
-  vNextApiProvider: loadedEnv['vNextApiProvider'] || '/vnext1',
-  vNextApiVersion: loadedEnv['vNextApiVersion'] || '/v1.0',
-  interbankTransfers: loadedEnv['interbankTransfers'] || false,
+
+  vNextApiUrl: window['env']['vNextApiUrl'] || 'https://apis.flexcore.mx',
+  vNextApiProvider: window['env']['vNextApiProvider'] || '/vnext1',
+  vNextApiVersion: window['env']['vNextApiVersion'] || '/v1.0',
+  interbankTransfers: window['env']['interbankTransfers'] || false,
+
   minPasswordLength: loadedEnv['minPasswordLength'] || 12
 };
 
