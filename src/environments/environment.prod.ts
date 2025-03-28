@@ -52,6 +52,11 @@ export const environment = {
     }
   },
 
+  vNextApiUrl: loadedEnv['vNextApiUrl'] || 'https://apis.mifos.community',
+  vNextApiProvider: loadedEnv['vNextApiProvider'] || '/vnext1',
+  vNextApiVersion: loadedEnv['vNextApiVersion'] || '/v1.0',
+  interbankTransfers: loadedEnv['interbankTransfers'] || false,
+
   minPasswordLength: loadedEnv['minPasswordLength'] || 12
 };
 

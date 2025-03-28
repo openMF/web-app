@@ -46,4 +46,9 @@
 
   // Min Password length
   window['env']['minPasswordLength'] = '$MIFOS_MIN_PASSWORD_LENGTH';
+
+  window['env']['vNextApiUrl'] = '$VNEXT_API_URL';
+  window['env']['vNextApiProvider'] = '$VNEXT_API_PROVIDER';
+  window['env']['vNextApiVersion'] = '$VNEXT_API_VERSION';
+  window['env']['interbankTransfers'] = '$VNEXT_INTERBANK_TRANSFERS';
 })(this);
