@@ -282,7 +282,9 @@
         <button mat-menu-item (click)="doAction('Create Collateral')">
           {{ 'labels.buttons.Create Collateral' | translate }}
         </button>
-        <button mat-menu-item (click)="doAction('Survey')">{{ 'labels.buttons.Survey' | translate }}</button>
+        <button mat-menu-item (click)="doAction('Survey')" [disabled]="true">
+          {{ 'labels.buttons.Survey' | translate }}
+        </button>
         <button
           mat-menu-item
           (click)="doAction('Update Default Savings')"
