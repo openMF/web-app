@@ -10,6 +10,7 @@ import { ClientsService } from 'app/clients/clients.service';
 
 /** Step Components */
 import { LoansAccountDetailsStepComponent } from '../../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
+import { LoansActiveClientMembersComponent } from '../../loans-account-stepper/loans-active-client-members/loans-active-client-members.component';
 import { LoansAccountTermsStepComponent } from '../../loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
 import { LoansAccountChargesStepComponent } from '../../loans-account-stepper/loans-account-charges-step/loans-account-charges-step.component';
 import { LoansAccountDatatableStepComponent } from '../../loans-account-stepper/loans-account-datatable-step/loans-account-datatable-step.component';
@@ -26,6 +27,8 @@ export class CreateGlimAccountComponent {
   @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
   @ViewChild(LoansAccountChargesStepComponent, { static: true })
   loansAccountChargesStep: LoansAccountChargesStepComponent;
+  @ViewChild(LoansActiveClientMembersComponent, { static: true })
+  loansActiveClientMembers: LoansActiveClientMembersComponent;
   /** Get handle on dtloan tags in the template */
   @ViewChildren('dtloan') loanDatatables: QueryList<LoansAccountDatatableStepComponent>;
 
@@ -128,7 +131,10 @@ export class CreateGlimAccountComponent {
   /** Checks whether all the forms in different steps are valid or not */
   get loansAccountFormValid() {
     return (
-      this.loansAccountDetailsForm.valid && this.loansAccountTermsForm.valid && this.loansAccountChargesStep.isValid
+      this.loansAccountDetailsForm.valid &&
+      this.loansAccountTermsForm.valid &&
+      // this.loansAccountChargesStep.isValid &&
+      this.loansActiveClientMembers.isValid
     );
   }
 
@@ -139,7 +145,7 @@ export class CreateGlimAccountComponent {
 
   /** Retrieves Data of all forms except Currency to submit the data */
   get loansAccount() {
-    this.selectedMembers = this.loansAccountChargesStep.selectedClientMembers;
+    this.selectedMembers = this.loansActiveClientMembers.selectedClientMembers;
     return {
       ...this.loansAccountDetailsStep.loansAccountDetails,
       ...this.loansAccountTermsStep.loansAccountTerms,

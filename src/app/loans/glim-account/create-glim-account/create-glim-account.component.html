@@ -52,9 +52,17 @@
         [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountTemplate"
         [loansAccountFormValid]="loansAccountFormValid"
-        [activeClientMembers]="activeClientMembers"
       >
       </mifosx-loans-account-charges-step>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{ 'labels.heading.Active Client Members' | translate }}</ng-template>
+
+      <mifosx-loans-active-client-members
+        [activeClientMembers]="activeClientMembers"
+        [loansAccountFormValid]="loansAccountFormValid"
+      >
+      </mifosx-loans-active-client-members>
     </mat-step>
 
     <mat-step state="repayment" *ngIf="loansAccountFormValid" completed>
