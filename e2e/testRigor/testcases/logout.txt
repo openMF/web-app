@@ -8,7 +8,6 @@ check that page contains button "Institution"
 check that page contains button "Accounting"
 check that page contains button "Reports"
 check that page contains button "Admin"
-check that page contains button "Self Service"
 check that page contains button "Configuration Wizard"
 logout
 validate-login-page

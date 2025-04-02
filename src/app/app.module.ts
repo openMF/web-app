@@ -22,7 +22,6 @@ import { ClientsModule } from './clients/clients.module';
 import { GroupsModule } from './groups/groups.module';
 import { CentersModule } from './centers/centers.module';
 import { AccountingModule } from './accounting/accounting.module';
-import { SelfServiceModule } from './self-service/self-service.module';
 import { SystemModule } from './system/system.module';
 import { ProductsModule } from './products/products.module';
 import { OrganizationModule } from './organization/organization.module';
@@ -96,7 +95,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     GroupsModule,
     CentersModule,
     AccountingModule,
-    SelfServiceModule,
     SystemModule,
     ProductsModule,
     OrganizationModule,

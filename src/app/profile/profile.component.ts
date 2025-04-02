@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 /** Custom Services */
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
-import { UserService } from 'app/self-service/users/user.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -41,7 +40,6 @@ export class ProfileComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private settingsService: SettingsService,
-    private userService: UserService,
     private router: Router,
     public dialog: MatDialog
   ) {
@@ -65,7 +63,7 @@ export class ProfileComponent implements OnInit {
         const password = response.password;
         const repeatPassword = response.repeatPassword;
         const data = { password: password, repeatPassword: repeatPassword };
-        this.userService.changePassword(this.profileData.userId, data).subscribe(() => {
+        this.authenticationService.changePassword(this.profileData.userId, data).subscribe(() => {
           this.router.navigate(['/home']);
         });
       }
