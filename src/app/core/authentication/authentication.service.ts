@@ -25,6 +25,9 @@ import { OAuth2Token } from './o-auth2-token.model';
  */
 @Injectable()
 export class AuthenticationService {
+  changePassword(userId: string, passwordObj: any) {
+    return this.http.put(`/users/${userId}`, passwordObj);
+  }
   // User logged in boolean
   private userLoggedIn: boolean;
 

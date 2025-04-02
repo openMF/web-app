@@ -7,14 +7,9 @@ const activities: any[] = [
   { activity: 'organization', path: '/organization' },
   { activity: 'system', path: '/system' },
   { activity: 'templates', path: '/templates' },
-  { activity: 'self-service users', path: '/self-service/users' },
-  { activity: 'self-service app-configuration', path: '/self-service/app-configuration' },
-  { activity: 'task management', path: '/self-service/task-management' },
   { activity: 'create group', path: '' },
   { activity: 'create center', path: '/centers/create' },
   { activity: 'configuration', path: '/system/global-configurations' },
-  { activity: 'tasks', path: '/self-service/task-management' },
-  { activity: 'create template', path: '/self-service/task-management' },
   { activity: 'create loan product', path: '/products/loan-products/create' },
   { activity: 'create saving product', path: '/products/saving-products/create' },
   { activity: 'roles', path: '/system/roles-and-permissions' },
@@ -55,7 +50,6 @@ const activities: any[] = [
   { activity: 'audit', path: '/products/audit-trails' },
   { activity: 'create accounting closure', path: '' },
   { activity: 'navigation', path: '/navigation' },
-  { activity: 'system users', path: '/self-service/users' },
   { activity: '', path: 'home' }
 ];
 

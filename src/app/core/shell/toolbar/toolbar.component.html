@@ -44,17 +44,6 @@
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Admin' | translate }}
       </a>
-      <a
-        #selfService
-        mat-tab-link
-        class="tab-link"
-        [matMenuTriggerFor]="selfServiceMenu"
-        #selfServiceMenuTrigger="matMenuTrigger"
-      >
-        <fa-icon class="mr-05" icon="users" size="lg"></fa-icon>
-        {{ 'labels.menus.Self Service' | translate }}
-      </a>
-
       <a #configWizard mat-tab-link class="tab-link" (click)="openDialog()">
         <fa-icon class="mr-05" icon="info" size="lg"></fa-icon>
         {{ 'labels.menus.Configuration Wizard' | translate }}
@@ -104,7 +93,6 @@
     <button mat-menu-item [routerLink]="['/accounting']">{{ 'labels.menus.Accounting' | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ 'labels.menus.Reports' | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ 'labels.menus.Admin' | translate }}</button>
-    <button mat-menu-item [matMenuTriggerFor]="selfServiceMenu">{{ 'labels.menus.Self Service' | translate }}</button>
   </span>
 </mat-menu>
 
@@ -125,16 +113,6 @@
   <button mat-menu-item [routerLink]="['/system']">{{ 'labels.menus.System' | translate }}</button>
   <button mat-menu-item [routerLink]="['/products']">{{ 'labels.menus.Products' | translate }}</button>
   <button mat-menu-item routerLink="/templates">{{ 'labels.menus.Templates' | translate }}</button>
-</mat-menu>
-
-<mat-menu #selfServiceMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/self-service/users']">{{ 'labels.menus.User Management' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/self-service/app-configuration']">
-    {{ 'labels.menus.App Configuration' | translate }}
-  </button>
-  <!-- <button mat-menu-item [routerLink]="['/self-service/task-management']">
-    {{ 'labels.menus.Task Management' | translate }}
-  </button> -->
 </mat-menu>
 
 <!-- Application User Help Menu -->
@@ -227,8 +205,6 @@
 </ng-template>
 
 <ng-template #templateSelfService let-popover="popover">
-  <h2>{{ 'labels.menus.Self Service' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Dropdown self service user administrative portal' | translate }}</p>
   <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
