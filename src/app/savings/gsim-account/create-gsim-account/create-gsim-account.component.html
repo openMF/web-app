@@ -50,6 +50,13 @@
       </mifosx-savings-account-charges-step>
     </mat-step>
 
+    <mat-step>
+      <ng-template matStepLabel>{{ 'labels.heading.Active Client Members' | translate }}</ng-template>
+
+      <mifosx-savings-active-client-members [activeClientMembers]="activeClientMembers">
+      </mifosx-savings-active-client-members>
+    </mat-step>
+
     <mat-step *ngIf="savingsAccountFormValid" completed>
       <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 

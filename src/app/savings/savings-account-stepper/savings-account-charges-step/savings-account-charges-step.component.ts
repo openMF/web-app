@@ -81,7 +81,6 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
       } else {
         this.chargesDataSource = [];
       }
-      this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
     }
   }
 
@@ -225,25 +224,5 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
    */
   get savingsAccountCharges() {
     return { charges: this.chargesDataSource };
-  }
-
-  get selectedClientMembers() {
-    return {
-      selectedMembers: this.activeClientMembers ? this.activeClientMembers.filter((item: any) => item.selected) : []
-    };
-  }
-
-  /** Toggle all checks */
-  toggleSelects() {
-    for (const member of this.activeClientMembers) {
-      member.selected = this.selectAllItems;
-    }
-  }
-
-  /** Check if all the checks are selected */
-  toggleSelect() {
-    const len = this.activeClientMembers.length;
-    this.selectAllItems =
-      len === 0 ? false : this.activeClientMembers.filter((item: any) => item.selected).length === len;
   }
 }

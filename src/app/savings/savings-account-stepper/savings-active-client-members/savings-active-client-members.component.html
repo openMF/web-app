@@ -1,0 +1,40 @@
+<div *ngIf="activeClientMembers">
+  <table fxFlex="98%" mat-table [dataSource]="dataSource">
+    <!-- Check Column -->
+
+    <ng-container matColumnDef="check">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="toggleSelects()" [(ngModel)]="selectAllItems"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox (change)="toggleSelect()" [(ngModel)]="element.selected"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client ID' | translate }}</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Name' | translate }}</th>
+      <td mat-cell *matCellDef="let element">{{ element.displayName }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumn"></tr>
+  </table>
+</div>
+
+<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <button mat-raised-button matStepperPrevious>
+    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+    {{ 'labels.buttons.Previous' | translate }}
+  </button>
+  <button mat-raised-button matStepperNext [disabled]="selectedClientMembers.selectedMembers.length === 0">
+    {{ 'labels.buttons.Next' | translate }}
+    <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+  </button>
+</div>

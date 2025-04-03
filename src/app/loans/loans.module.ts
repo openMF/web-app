@@ -80,6 +80,7 @@ import { LoanReagingComponent } from './loans-view/loan-account-actions/loan-rea
 import { LoanReamortizeComponent } from './loans-view/loan-account-actions/loan-reamortize/loan-reamortize.component';
 import { LoanTermVariationsTabComponent } from './loans-view/loan-term-variations-tab/loan-term-variations-tab.component';
 import { AddInterestPauseComponent } from './loans-view/loan-account-actions/add-interest-pause/add-interest-pause.component';
+import { LoansActiveClientMembersComponent } from './loans-account-stepper/loans-active-client-members/loans-active-client-members.component';
 
 /**
  * Loans Module
@@ -163,7 +164,8 @@ import { AddInterestPauseComponent } from './loans-view/loan-account-actions/add
     LoanReagingComponent,
     LoanReamortizeComponent,
     LoanTermVariationsTabComponent,
-    AddInterestPauseComponent
+    AddInterestPauseComponent,
+    LoansActiveClientMembersComponent
   ],
   providers: []
 })
