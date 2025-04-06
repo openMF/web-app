@@ -2450,7 +2450,13 @@
       "INTEREST REFUND": "VRÁCENÍ ÚROKU",
       "Supported Interest Refund Types": "Unterstützte Zinsrückerstattungsarten",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Podporované typy vrácení úroků",
-      "Charge-off reason": "Důvod vyúčtování"
+      "Charge-off reason": "Důvod vyúčtování",
+      "Password must contain at least one uppercase letter": "Heslo musí obsahovat alespoň jedno velké písmeno",
+      "Password must contain at least one number": "Heslo musí obsahovat alespoň jedno číslo",
+      "Password must have not consecutive repeating characters": "Heslo nesmí obsahovat po sobě jdoucí opakující se znaky",
+      "Password must contain at least one special character (@$!%*?&)": "Heslo musí obsahovat alespoň jeden speciální znak (@$!%*?&)",
+      "Password minimun length must be": "Minimální délka hesla musí být",
+      "Passwords do not match": "Hesla se neshodují"
     },
     "links": {
       "Community": "Společenství",

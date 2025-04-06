@@ -2451,7 +2451,13 @@
       "INTEREST REFUND": "이자환급",
       "Supported Interest Refund Types": "지원되는 이자 환불 유형",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "지원되는 이자 환불 유형",
-      "Charge-off reason": "청구 취소 사유"
+      "Charge-off reason": "청구 취소 사유",
+      "Password must contain at least one uppercase letter": "비밀번호에는 대문자가 하나 이상 포함되어야 합니다.",
+      "Password must contain at least one number": "비밀번호에는 숫자가 하나 이상 포함되어야 합니다.",
+      "Password must have not consecutive repeating characters": "비밀번호에는 연속된 반복 문자가 없어야 합니다.",
+      "Password must contain at least one special character (@$!%*?&)": "비밀번호에는 특수 문자가 하나 이상 포함되어야 합니다. (@$!%*?&)",
+      "Password minimun length must be": "비밀번호의 최소 길이는 다음과 같아야 합니다.",
+      "Passwords do not match": "비밀번호가 일치하지 않습니다."
     },
     "links": {
       "Community": "지역 사회",
