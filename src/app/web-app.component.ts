@@ -42,14 +42,14 @@ const log = new Logger('MifosX');
     trigger('opacityScale', [
       transition(':enter', [
         style({ opacity: 0, transform: 'scale(.95)' }),
-        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' })),
-      ]),
+        animate('100ms ease-out', style({ opacity: 1, transform: 'scale(1)' }))]),
       transition(':leave', [
         style({ opacity: 1, transform: 'scale(1)' }),
-        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' })),
-      ]),
-    ]),
-  ],
+        animate('75ms ease-in', style({ opacity: 0, transform: 'scale(.95)' }))])
+
+    ])
+
+  ]
 })
 export class WebAppComponent implements OnInit {
   buttonConfig: KeyboardShortcutsConfiguration;
@@ -91,31 +91,30 @@ export class WebAppComponent implements OnInit {
     this.i18nService = new I18nService(this.translateService);
 
     this.router.events
-  .pipe(
-    filter((event) => event instanceof NavigationEnd),
-    map(() => {
-      let route = this.activatedRoute;
-      while (route.firstChild) {
-        route = route.firstChild;
-      }
-      return route;
-    }),
-    switchMap((route) => route.data.pipe(catchError(() => of({ title: 'APP_NAME' })))),
-    switchMap((data) => {
-      const rawTitle = data['title'] || 'APP_NAME';
-      return this.translateService.get(`labels.titles.${rawTitle}`);
-    })
-  )
-  .subscribe((translatedTitle) => {
-    this.titleService.setTitle(translatedTitle);  
-  });
-
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => {
+          let route = this.activatedRoute;
+          while (route.firstChild) {
+            route = route.firstChild;
+          }
+          return route;
+        }),
+        switchMap((route) => route.data.pipe(catchError(() => of({ title: 'APP_NAME' })))),
+        switchMap((data) => {
+          const rawTitle = data['title'] || 'APP_NAME';
+          return this.translateService.get(`labels.titles.${rawTitle}`);
+        })
+      )
+      .subscribe((translatedTitle) => {
+        this.titleService.setTitle(translatedTitle);
+      });
 
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       this.snackBar.open(`${alertEvent.message}`, 'Close', {
         duration: 2000,
         horizontalPosition: 'right',
-        verticalPosition: 'top',
+        verticalPosition: 'top'
       });
     });
 
@@ -126,7 +125,7 @@ export class WebAppComponent implements OnInit {
         if (this.authenticationService.getUserLoggedIn()) {
           this.alertService.alert({
             type: 'Session timeout',
-            message: this.translateService.instant('labels.text.Session timed out'),
+            message: this.translateService.instant('labels.text.Session timed out')
           });
           this.dialog.open(SessionTimeoutDialogComponent);
           this.logout();
@@ -161,11 +160,15 @@ export class WebAppComponent implements OnInit {
           document.getElementById('runReport')?.click();
           break;
         case 'cancel':
-          const cancelButtons = Array.from(document.querySelectorAll('button')).filter((el) => el.textContent?.trim() === 'Cancel');
+          const cancelButtons = Array.from(document.querySelectorAll('button')).filter(
+            (el) => el.textContent?.trim() === 'Cancel'
+          );
           cancelButtons[0]?.click();
           break;
         case 'submit':
-          const submitButtons = Array.from(document.querySelectorAll('button')).filter((el) => el.textContent?.trim() === 'Submit');
+          const submitButtons = Array.from(document.querySelectorAll('button')).filter(
+            (el) => el.textContent?.trim() === 'Submit'
+          );
           submitButtons[0]?.click();
           break;
         default:
