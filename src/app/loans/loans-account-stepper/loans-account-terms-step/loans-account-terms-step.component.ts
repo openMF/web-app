@@ -241,10 +241,13 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
 
     if (this.loansAccountTermsData) {
       if (this.loansAccountTermsData.loanProductId) {
+        let formattedDate = null;
+        if (this.loansAccountTermsData.expectedFirstRepaymentOnDate) {
+          const repaymentDate = new Date(this.loansAccountTermsData.expectedFirstRepaymentOnDate);
+          formattedDate = this.formatDateToDDMMYYYY(repaymentDate);
+        }
         this.loansAccountTermsForm.patchValue({
-          repaymentsStartingFromDate:
-            this.loansAccountTermsData.expectedFirstRepaymentOnDate &&
-            new Date(this.loansAccountTermsData.expectedFirstRepaymentOnDate)
+          repaymentsStartingFromDate: this.loansAccountTermsData.expectedFirstRepaymentOnDate && formattedDate
         });
       }
       this.loansAccountTermsForm.patchValue({
@@ -283,6 +286,12 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
 
   allowAddDisbursementDetails() {
     return this.multiDisburseLoan && !this.loansAccountTermsData.disallowExpectedDisbursements;
+  }
+  formatDateToDDMMYYYY(date: Date): string {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   }
 
   /** Custom Validators for the form */
