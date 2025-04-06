@@ -2,15 +2,21 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="notification">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Notification' | translate }}</th>
-        <td mat-cell *matCellDef="let notification">{{ notification.content }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Notification' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let notification">
+          {{ notification.content }}
+        </td>
       </ng-container>
-
       <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Created At' | translate }}</th>
-        <td mat-cell *matCellDef="let notification">{{ notification.createdAt }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Created At' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let notification">
+          {{ notification.createdAt }}
+        </td>
       </ng-container>
-
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
         mat-row
@@ -18,8 +24,12 @@
         class="select-row"
         [routerLink]="[routeMap[row.objectType], row.objectId]"
       ></tr>
+      <tr *matNoDataRow>
+        <td [attr.colspan]="displayedColumns.length" style="text-align: center; padding: 16px; color: #999">
+          You don't have any notifications
+        </td>
+      </tr>
     </table>
-
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
