@@ -64,6 +64,10 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.destroy();
+  }
+
+  public destroy() {
     clearTimeout(this.timer);
   }
 
