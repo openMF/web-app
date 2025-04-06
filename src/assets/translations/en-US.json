@@ -2457,7 +2457,13 @@
       "INTEREST REFUND": "INTEREST REFUND",
       "Supported Interest Refund Types": "Supported Interest Refund Types",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types",
-      "Charge-off reason": "Charge-off reason"
+      "Charge-off reason": "Charge-off reason",
+      "Password must contain at least one uppercase letter": "Password must contain at least one uppercase letter",
+      "Password must contain at least one number": "Password must contain at least one number",
+      "Password must have not consecutive repeating characters": "Password must have not consecutive repeating characters",
+      "Password must contain at least one special character (@$!%*?&)": "Password must contain at least one special character (@$!%*?&)",
+      "Password minimun length must be": "Password minimun length must be",
+      "Passwords do not match": "Passwords do not match"
     },
     "links": {
       "Community": "Community",

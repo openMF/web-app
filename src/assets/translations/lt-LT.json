@@ -2450,7 +2450,13 @@
       "INTEREST REFUND": "PALŪKANŲ GRĄŽINIMAS",
       "Supported Interest Refund Types": "Palaikomi palūkanų grąžinimo tipai",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Palaikomi palūkanų grąžinimo tipai",
-      "Charge-off reason": "Apmokestinimo priežastis"
+      "Charge-off reason": "Apmokestinimo priežastis",
+      "Password must contain at least one uppercase letter": "Slaptažodyje turi būti bent viena didžioji raidė",
+      "Password must contain at least one number": "Slaptažodyje turi būti bent vienas skaičius",
+      "Password must have not consecutive repeating characters": "Slaptažodyje neturi būti iš eilės besikartojančių simbolių",
+      "Password must contain at least one special character (@$!%*?&)": "Slaptažodyje turi būti bent vienas specialusis simbolis (@$!%*?&)",
+      "Password minimun length must be": "Minimalus slaptažodžio ilgis turi būti",
+      "Passwords do not match": "Slaptažodžiai nesutampa"
     },
     "links": {
       "Community": "bendruomenė",

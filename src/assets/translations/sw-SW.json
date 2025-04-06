@@ -2450,7 +2450,13 @@
       "INTEREST REFUND": "MAREJESHO YA RIBA",
       "Supported Interest Refund Types": "Aina za Urejeshaji wa Riba Zinazotumika",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Aina za kurejesha riba zinazotumika",
-      "Charge-off reason": "Sababu ya malipo"
+      "Charge-off reason": "Sababu ya malipo",
+      "Password must contain at least one uppercase letter": "Nenosiri lazima liwe na angalau herufi kubwa moja",
+      "Password must contain at least one number": "Nenosiri lazima liwe na angalau nambari moja",
+      "Password must have not consecutive repeating characters": "Nenosiri lazima lisiwe na vibambo vinavyorudiwa mfululizo",
+      "Password must contain at least one special character (@$!%*?&)": "Nenosiri lazima liwe na angalau herufi moja maalum (@$!%*?&)",
+      "Password minimun length must be": "Nenosiri la urefu wa chini lazima liwe",
+      "Passwords do not match": "Manenosiri hayalingani"
     },
     "links": {
       "Community": "Jumuiya",

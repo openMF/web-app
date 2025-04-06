@@ -2450,7 +2450,13 @@
       "INTEREST REFUND": "REEMBOLSO DE JUROS",
       "Supported Interest Refund Types": "Tipos de reembolso de juros suportados",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Tipos de reembolso de juros suportados",
-      "Charge-off reason": "Motivo da cobrança"
+      "Charge-off reason": "Motivo da cobrança",
+      "Password must contain at least one uppercase letter": "A senha deve conter pelo menos uma letra maiúscula",
+      "Password must contain at least one number": "A senha deve conter pelo menos um número",
+      "Password must have not consecutive repeating characters": "A senha não deve conter caracteres repetidos consecutivos",
+      "Password must contain at least one special character (@$!%*?&)": "A senha deve conter pelo menos um caractere especial (@$!%*?&)",
+      "Password minimun length must be": "O comprimento mínimo da senha deve ser",
+      "Passwords do not match": "As senhas não coincidem"
     },
     "links": {
       "Community": "Comunidade",

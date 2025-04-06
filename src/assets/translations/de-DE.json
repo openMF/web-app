@@ -2450,7 +2450,13 @@
       "INTEREST REFUND": "ZINSRÜCKERSTATTUNG",
       "Supported Interest Refund Types": "Unterstützte Zinsrückerstattungsarten",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Unterstützte Zinsrückerstattungsarten",
-      "Charge-off reason": "Abschreibungsgrund"
+      "Charge-off reason": "Abschreibungsgrund",
+      "Password must contain at least one uppercase letter": "Das Passwort muss mindestens einen Großbuchstaben enthalten",
+      "Password must contain at least one number": "Das Passwort muss mindestens eine Zahl enthalten",
+      "Password must have not consecutive repeating characters": "Das Passwort darf keine aufeinanderfolgenden, sich wiederholenden Zeichen enthalten",
+      "Password must contain at least one special character (@$!%*?&)": "Das Passwort muss mindestens ein Sonderzeichen enthalten (@$!%*?&)",
+      "Password minimun length must be": "Die Mindestlänge des Passworts muss betragen",
+      "Passwords do not match": "Passwörter stimmen nicht überein"
     },
     "links": {
       "Community": "Gemeinschaft",
