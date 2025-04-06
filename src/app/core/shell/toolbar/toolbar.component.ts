@@ -28,6 +28,7 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 
 /** Custom Components */
 import { ConfigurationWizardComponent } from '../../../configuration-wizard/configuration-wizard.component';
+import { NotificationsTrayComponent } from 'app/shared/notifications-tray/notifications-tray.component';
 
 /**
  * Toolbar component.
@@ -46,6 +47,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   @ViewChild('appMenu') appMenu: ElementRef<any>;
   /* Template for popover on appMenu */
   @ViewChild('templateAppMenu') templateAppMenu: TemplateRef<any>;
+  @ViewChild('notificationsTray') notificationsTray: NotificationsTrayComponent;
 
   /** Subscription to breakpoint observer for handset. */
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -112,7 +114,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    * Logs out the authenticated user and redirects to login page.
    */
   logout() {
-    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService.logout().subscribe(() => {
+      this.notificationsTray.destroy();
+      this.router.navigate(['/login'], { replaceUrl: true });
+    });
   }
 
   /**
