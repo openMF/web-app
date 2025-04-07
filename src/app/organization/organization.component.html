@@ -136,6 +136,20 @@
               </p>
             </mat-list-item>
           </div>
+
+          <div #projects>
+            <mat-list-item>
+              <mat-icon matListIcon [routerLink]="['projects']">
+                <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine [routerLink]="['projects']">{{ 'labels.heading.Manage Projects' | translate }}</h4>
+              <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="!arrowBooleans[0]" icon="arrow-down" size="md"></fa-icon>
+              <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
+              <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['projects']">
+                {{ 'labels.text.Add new project or modify or deactivate project' | translate }}
+              </p>
+            </mat-list-item>
+          </div>
         </mat-nav-list>
       </div>
 

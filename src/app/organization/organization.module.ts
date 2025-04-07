@@ -77,6 +77,10 @@ import { CreateFundComponent } from './manage-funds/create-fund/create-fund.comp
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component';
 import { InvestorsComponent } from './investors/investors.component';
+import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
+import { CreateInvestmentProjectComponent } from './manage-projects/create-investment-project/create-investment-project.component';
+import { EditInvestmentProjectComponent } from './manage-projects/edit-investment-project/edit-investment-project.component';
+import { MakeAccountTransferTemplateResolver } from 'app/account-transfers/common-resolvers/make-account-transfer-template.resolver';
 
 /**
  * Organization Module
@@ -153,7 +157,10 @@ import { InvestorsComponent } from './investors/investors.component';
     CreateFundComponent,
     EditFundComponent,
     ViewFundComponent,
-    InvestorsComponent
+    InvestorsComponent,
+    ManageProjectsComponent,
+    CreateInvestmentProjectComponent,
+    EditInvestmentProjectComponent
   ],
   providers: [
     CreateHoliday,

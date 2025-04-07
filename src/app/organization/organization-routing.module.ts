@@ -103,6 +103,10 @@ import { ViewFundComponent } from './manage-funds/view-fund/view-fund.component'
 import { EditFundComponent } from './manage-funds/edit-fund/edit-fund.component';
 import { CreateFundComponent } from './manage-funds/create-fund/create-fund.component';
 import { InvestorsComponent } from './investors/investors.component';
+import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
+import { ManageProjectsResolver } from './manage-projects/manage-projects.resolver';
+import { CreateInvestmentProjectComponent } from './manage-projects/create-investment-project/create-investment-project.component';
+import { InvestmentProjectTemplateResolver } from './manage-projects/investment-project-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -691,6 +695,71 @@ const routes: Routes = [
               ]
             }
           ]
+        },
+        {
+          path: 'projects',
+          data: { title: 'Manage Projects', breadcrumb: 'Manage Projects' },
+          children: [
+            {
+              path: '',
+              component: ManageProjectsComponent,
+              resolve: {
+                projects: ManageProjectsResolver
+              }
+            },
+            {
+              path: 'create',
+              component: CreateInvestmentProjectComponent,
+              data: { title: 'Create Investment Project', breadcrumb: 'Create Investment Project' },
+              resolve: {
+                accountData: InvestmentProjectTemplateResolver
+              }
+            },
+            {
+              path: ':officeId',
+              data: { title: 'View Office', breadcrumb: 'officeId', routeParamBreadcrumb: 'officeId' },
+              component: ViewOfficeComponent,
+              resolve: {
+                officeDatatables: OfficeDatatablesResolver
+              },
+              children: [
+                {
+                  path: '',
+                  redirectTo: 'general',
+                  pathMatch: 'full'
+                },
+                {
+                  path: 'general',
+                  component: GeneralTabComponent,
+                  data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
+                  resolve: {
+                    office: OfficeResolver
+                  }
+                },
+                {
+                  path: 'datatables',
+                  children: [
+                    {
+                      path: ':datatableName',
+                      component: DatatableTabsComponent,
+                      data: { title: 'Data Table View', routeParamBreadcrumb: 'datatableName' },
+                      resolve: {
+                        officeDatatable: OfficeDatatableResolver
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              path: ':officeId/edit',
+              component: EditOfficeComponent,
+              data: { title: 'Edit Office', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+              resolve: {
+                officeTemplate: EditOfficeResolver
+              }
+            }
+          ]
         }
       ]
     }
@@ -746,7 +815,9 @@ const routes: Routes = [
     LoanProvisioningCriteriaTemplateResolver,
     LoanProvisioningCriteriaAndTemplateResolver,
     StandingInstructionsTemplateResolver,
-    AdvanceSearchTemplateResolver
+    AdvanceSearchTemplateResolver,
+    ManageProjectsResolver,
+    InvestmentProjectTemplateResolver
   ]
 })
 export class OrganizationRoutingModule {}
