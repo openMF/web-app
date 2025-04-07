@@ -35,6 +35,8 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
    */
   ngOnInit() {
     this.minDate = this.settingsService.businessDate;
+    this.minDate.setDate(this.minDate.getDate() + 1);
+    this.minDate.setHours(0, 0, 0, 0);
     let rowDisabled = false;
     if (this.data && new Date(this.data.fromDate) < this.minDate) {
       rowDisabled = true;

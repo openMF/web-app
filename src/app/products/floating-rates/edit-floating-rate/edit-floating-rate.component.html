@@ -148,7 +148,11 @@
           mat-raised-button
           type="submit"
           color="primary"
-          [disabled]="!floatingRateForm.valid || (floatingRateForm.pristine && isFloatingRateFormPristine)"
+          [disabled]="
+            !floatingRateForm.valid ||
+            floatingRatePeriodsData.length === 0 ||
+            (floatingRateForm.pristine && isFloatingRateFormPristine)
+          "
         >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
