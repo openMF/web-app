@@ -2519,6 +2519,7 @@
       "Deposit": "Deposit",
       "Disburse": "Disburse",
       "Disburse to Savings": "Disburse to Savings",
+      "Distribute Funds":"Distribute fund",
       "Edit Repayment Schedule": "Edit Repayment Schedule",
       "Foreclosure": "Foreclosure",
       "Frequent Postings": "Frequent Postings",
@@ -2618,6 +2619,7 @@
     "dialogContext": {
       "Are you sure you want Unassign Staff": "Are you sure you want Unassign Staff",
       "Are you sure you want to calculate interest ?": "Are you sure you want to calculate interest ?",
+      "Are you sure want to distribute fund": "¿Are you sure want to distribute fund?",
       "Are you sure you want to post interest ?": "Are you sure you want to post interest ?",
       "Enable withhold tax for this account ?": "Enable withhold tax for this account ?",
       "Disable withhold tax for this account ?": "Disable withhold tax for this account ?",

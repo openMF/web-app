@@ -2512,6 +2512,7 @@
       "Deposit": "Depósito",
       "Disburse": "Desembolsar",
       "Disburse to Savings": "Desembolsar a Ahorros",
+      "Distribute Funds":"Distribuir el fondo",
       "Edit Repayment Schedule": "Editar calendario de pagos",
       "Foreclosure": "Juicio hipotecario",
       "Frequent Postings": "Publicaciones frecuentes",
@@ -2610,6 +2611,7 @@
     "dialogContext": {
       "Are you sure you want Unassign Staff": "¿Estás seguro de que deseas desasignar al asesor?",
       "Are you sure you want to calculate interest ?": "¿Estás seguro de que deseas calcular los intereses?",
+      "Are you sure want to distribute fund": "¿Estás seguro de que deseas distribuir el fondo?",
       "Are you sure you want to post interest ?": "¿Estás seguro de que deseas contabilizar los intereses?",
       "Enable withhold tax for this account ?": "¿Quieres habilitar la retención de impuestos para esta cuenta?",
       "Disable withhold tax for this account ?": "¿Quieres deshabilitar la retención de impuestos para esta cuenta?",

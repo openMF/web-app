@@ -18,6 +18,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 /** Environment Configuration */
 import { environment } from 'environments/environment';
+import { DistributeFundDialogComponent } from './custom-dialogs/distribute-fund-dialog/distribute-fund-dialog.component';
+import { AlertService } from 'app/core/alert/alert.service';
 
 /**
  * Savings Account View Component
@@ -51,7 +53,8 @@ export class SavingsAccountViewComponent implements OnInit {
     private router: Router,
     private savingsService: SavingsService,
     private translateService: TranslateService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private alertService: AlertService,
   ) {
     this.route.data.subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
@@ -177,6 +180,9 @@ export class SavingsAccountViewComponent implements OnInit {
       case 'Calculate Interest':
         this.calculateInterest();
         break;
+      case 'Distribute Funds':
+        this.distributeFund();
+        break;
       case 'Post Interest':
         this.postInterest();
         break;
@@ -246,6 +252,35 @@ export class SavingsAccountViewComponent implements OnInit {
       }
     });
   }
+
+
+  /**
+   * Distribute funds to investors
+   */
+  private distributeFund() {
+    const distributeFundDialogRef = this.dialog.open(DistributeFundDialogComponent);
+    distributeFundDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.confirm) {
+        this.savingsService
+          .executeDistributeFund(this.savingsAccountData.id, {})
+          .subscribe({
+            next: () => {
+              this.reload();
+            },
+            error: (error) => {
+              if (error?.error?.defaultUserMessage) {
+                const message = error.error.defaultUserMessage;
+                this.alertService.alert({
+                  type: 'Session timeout',
+                  message: message
+                });
+              }
+            }
+          });
+      }
+    });
+  }
+
 
   /**
    * Posts savings account's interest

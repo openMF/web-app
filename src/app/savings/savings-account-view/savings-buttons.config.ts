@@ -60,6 +60,11 @@ export class SavingsButtonsConfiguration {
                 name: 'Block Withdrawal',
                 icon: 'lock',
                 taskPermissionName: 'BLOCKWITHDRAWAL_SAVINGSACCOUNT'
+              },
+              {
+                name: 'Distribute Funds',
+                icon: 'arrow-down',
+                taskPermissionName: 'DISTRIBUTE_FUND_SAVINGACCOUNT'
               }
             );
           } else {
