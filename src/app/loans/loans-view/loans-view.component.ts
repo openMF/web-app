@@ -121,6 +121,11 @@ export class LoansViewComponent implements OnInit {
           icon: 'edit',
           taskPermissionName: 'ADJUST_REPAYMENT_SCHEDULE'
         });
+        this.buttonConfig.addOption({
+          name: 'Create Sub-Credit',
+          icon: 'plus',
+          taskPermissionName: 'CREATE_SUB_CREDIT_LOAN'
+        });
       }
     } else if (this.status === 'Approved') {
       this.buttonConfig.addButton({
@@ -128,7 +133,17 @@ export class LoansViewComponent implements OnInit {
         icon: 'user-tie',
         taskPermissionName: 'DISBURSE_LOAN'
       });
+      this.buttonConfig.addOption({
+        name: 'Create Sub-Credit',
+        icon: 'plus',
+        taskPermissionName: 'CREATE_SUB_CREDIT_LOAN'
+      });
     } else if (this.status === 'Active') {
+      this.buttonConfig.addOption({
+        name: 'Create Sub-Credit',
+        icon: 'plus',
+        taskPermissionName: 'CREATE_SUB_CREDIT_LOAN'
+      });
       if (this.loanDetailsData.canDisburse || this.loanDetailsData.multiDisburseLoan) {
         this.buttonConfig.addButton({
           name: 'Disburse',
