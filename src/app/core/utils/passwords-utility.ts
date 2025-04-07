@@ -1,21 +1,27 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { environment } from 'environments/environment';
 import { Subscription } from 'rxjs';
+import { passwordValidator } from './password.validator';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PasswordsUtility {
+  minPasswordLength: number = environment.minPasswordLength | 12;
   // password regex pattern
-  public static PASSWORD_REGEX = '^(?!.*(.)\\1{1,})(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{12,50}$';
+  public static PASSWORD_REGEX =
+    '^(?!.*(.)\\1{1,})(?!.*\\s)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^\\w\\s]).{' +
+    (environment.minPasswordLength | 12) +
+    ',50}$';
 
   public getPasswordValidators(): ValidatorFn[] {
     return [
       Validators.required,
-      Validators.pattern(PasswordsUtility.PASSWORD_REGEX),
+      Validators.minLength(this.minPasswordLength),
       Validators.maxLength(50),
-      Validators.minLength(environment.minPasswordLength)];
+      passwordValidator()
+    ];
   }
 
   /**

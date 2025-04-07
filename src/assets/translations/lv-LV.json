@@ -2450,7 +2450,13 @@
       "INTEREST REFUND": "PROCENTU ATMAKSĀŠANA",
       "Supported Interest Refund Types": "Atbalstītie procentu atmaksas veidi",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Atbalstītie procentu atmaksas veidi",
-      "Charge-off reason": "Izmaksas iemesls"
+      "Charge-off reason": "Izmaksas iemesls",
+      "Password must contain at least one uppercase letter": "Parolē jāsatur vismaz viens lielais burts",
+      "Password must contain at least one number": "Parolē ir jāsatur vismaz viens cipars",
+      "Password must have not consecutive repeating characters": "Parolē nedrīkst būt secīgas atkārtotas rakstzīmes",
+      "Password must contain at least one special character (@$!%*?&)": "Parolē jāsatur vismaz viena speciālā rakstzīme (@$!%*?&)",
+      "Password minimun length must be": "Paroles minimālajam garumam jābūt",
+      "Passwords do not match": "Paroles nesakrīt"
     },
     "links": {
       "Community": "kopiena",

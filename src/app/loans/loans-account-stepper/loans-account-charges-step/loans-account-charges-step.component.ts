@@ -264,10 +264,9 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   }
 
   get isValid() {
-    return (
-      !this.activeClientMembers ||
-      this.selectedClientMembers?.selectedMembers?.reduce((acc: any, cur: any) => acc + (cur.principal ?? 0), 0) > 0
-    );
+    return true;
+    // !this.activeClientMembers ||
+    // this.selectedClientMembers?.selectedMembers?.reduce((acc: any, cur: any) => acc + (cur.principal ?? 0), 0) > 0
   }
 
   /**

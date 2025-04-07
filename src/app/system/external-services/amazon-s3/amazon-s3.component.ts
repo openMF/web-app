@@ -54,7 +54,9 @@ export class AmazonS3Component implements OnInit {
   getConfigurationValue(configuration: any): string {
     const value = configuration.value;
     if (configuration.name === 's3_access_key' || configuration.name === 's3_secret_key') {
-      return value.replace(value.substr(1, value.length - 3), value.substr(1, value.length - 3).replace(/./g, '*'));
+      return value
+        ? value.replace(value.substr(1, value.length - 3), value.substr(1, value.length - 3).replace(/./g, '*'))
+        : '';
     }
     return value;
   }

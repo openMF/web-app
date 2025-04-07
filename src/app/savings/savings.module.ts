@@ -53,6 +53,7 @@ import { DatatableTransactionTabComponent } from './savings-account-view/transac
 import { SavingsTransactionGeneralTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-general-tab/savings-transaction-general-tab.component';
 import { SavingsTransactionDatatableTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-datatable-tab/savings-transaction-datatable-tab.component';
 import { GeneralTabComponent } from './savings-account-view/general-tab/general-tab.component';
+import { SavingsActiveClientMembersComponent } from './savings-account-stepper/savings-active-client-members/savings-active-client-members.component';
 
 /**
  * Savings Module
@@ -111,7 +112,8 @@ import { GeneralTabComponent } from './savings-account-view/general-tab/general-
     DatatableTransactionTabComponent,
     SavingsTransactionGeneralTabComponent,
     SavingsTransactionDatatableTabComponent,
-    GeneralTabComponent
+    GeneralTabComponent,
+    SavingsActiveClientMembersComponent
   ],
   providers: []
 })

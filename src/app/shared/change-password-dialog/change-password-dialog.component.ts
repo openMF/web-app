@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PasswordsUtility } from 'app/core/utils/passwords-utility';
+import { environment } from 'environments/environment';
 
 /**
  * Change Password Dialog component.
@@ -14,6 +15,8 @@ import { PasswordsUtility } from 'app/core/utils/passwords-utility';
   styleUrls: ['./change-password-dialog.component.scss']
 })
 export class ChangePasswordDialogComponent implements OnInit {
+  minPasswordLength: number = environment.minPasswordLength | 12;
+
   /** Change Password Form */
   changePasswordForm: any;
   /** Password input field type. */
@@ -35,15 +38,6 @@ export class ChangePasswordDialogComponent implements OnInit {
 
   ngOnInit() {
     this.createChangePasswordForm();
-  }
-
-  /**
-   * Toggles the visibility of the password input field.
-   *
-   * Changes the input type between 'password' and 'text'.
-   */
-  togglePasswordVisibility(index: number) {
-    this.passwordInputType[index] = this.passwordInputType[index] === 'password' ? 'text' : 'password';
   }
 
   /** Change Password form */

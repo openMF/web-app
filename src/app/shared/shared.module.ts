@@ -50,6 +50,7 @@ import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 import { LongTextComponent } from './long-text/long-text.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { InputAmountComponent } from './input-amount/input-amount.component';
+import { InputPasswordComponent } from './input-password/input-password.component';
 
 /**
  * Shared Module
@@ -106,7 +107,8 @@ import { InputAmountComponent } from './input-amount/input-amount.component';
     ThemeToggleComponent,
     LongTextComponent,
     DropdownComponent,
-    InputAmountComponent
+    InputAmountComponent,
+    InputPasswordComponent
   ],
   exports: [
     FileUploadComponent,
