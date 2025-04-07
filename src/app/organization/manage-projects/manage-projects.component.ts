@@ -20,18 +20,25 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 })
 export class ManageProjectsComponent implements OnInit, AfterViewInit {
   /** Manage Funds data. */
-  fundsData: any;
+  projectsData: any[] = [];
   /** New Fund form */
-  fundForm: any;
+  projectForm: any;
   /** Funds form reference */
   @ViewChild('formRef') formRef: any;
 
   /* Refernce of funds form */
-  @ViewChild('fundFormRef') fundFormRef: ElementRef<any>;
+  @ViewChild('projectFormRef') projectFormRef: ElementRef<any>;
   /* Template for popover on funds form */
   @ViewChild('templateFundFormRef') templateFundFormRef: TemplateRef<any>;
   /** Columns to be displayed in funds table. */
-  displayedColumns: string[] = ['name'];
+  displayedColumns: string[] = [
+    'name',
+    'country',
+    'active',
+    'occupancyPercentage',
+    'amount',
+    'rate'
+  ];
   /** Data source for Funds table. */
   dataSource: MatTableDataSource<any>;
 
@@ -59,13 +66,14 @@ export class ManageProjectsComponent implements OnInit, AfterViewInit {
     private configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService
   ) {
-    this.route.data.subscribe((data: { funds: any }) => {
-      this.fundsData = data.funds;
+    this.route.data.subscribe((data: { projects: any }) => {
+      this.projectsData = data.projects;
+      this.dataSource = new MatTableDataSource(this.projectsData);
     });
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.fundsData);
+    this.dataSource = new MatTableDataSource(this.projectsData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -82,7 +90,7 @@ export class ManageProjectsComponent implements OnInit, AfterViewInit {
    * Creates the fund form.
    */
   createFundForm() {
-    this.fundForm = this.formBuilder.group({
+    this.projectForm = this.formBuilder.group({
       name: [
         '',
         Validators.required
@@ -94,9 +102,9 @@ export class ManageProjectsComponent implements OnInit, AfterViewInit {
    * Adds a new fund to the list.
    */
   addFund() {
-    const newFund = this.fundForm.value;
+    const newFund = this.projectForm.value;
     this.organizationservice.createFund(newFund).subscribe((response: any) => {
-      this.fundsData.push({
+      this.projectsData.push({
         id: response.resourceId,
         name: newFund.name
       });
@@ -134,7 +142,7 @@ export class ManageProjectsComponent implements OnInit, AfterViewInit {
     editFundDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         this.organizationservice.editFund(fundId, response.data.value).subscribe(() => {
-          this.fundsData[index].name = response.data.value.name;
+          this.projectsData[index].name = response.data.value.name;
         });
       }
     });
@@ -162,7 +170,7 @@ export class ManageProjectsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showManageFunds === true) {
       setTimeout(() => {
-        this.showPopover(this.templateFundFormRef, this.fundFormRef.nativeElement, 'bottom', true);
+        this.showPopover(this.templateFundFormRef, this.projectFormRef.nativeElement, 'bottom', true);
       });
     }
   }

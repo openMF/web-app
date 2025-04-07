@@ -105,6 +105,8 @@ import { CreateFundComponent } from './manage-funds/create-fund/create-fund.comp
 import { InvestorsComponent } from './investors/investors.component';
 import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
 import { ManageProjectsResolver } from './manage-projects/manage-projects.resolver';
+import { CreateInvestmentProjectComponent } from './manage-projects/create-investment-project/create-investment-project.component';
+import { InvestmentProjectTemplateResolver } from './manage-projects/investment-project-template.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -702,15 +704,15 @@ const routes: Routes = [
               path: '',
               component: ManageProjectsComponent,
               resolve: {
-                offices: ManageProjectsResolver
+                projects: ManageProjectsResolver
               }
             },
             {
               path: 'create',
-              component: CreateOfficeComponent,
-              data: { title: 'Create Office', breadcrumb: 'Create Office' },
+              component: CreateInvestmentProjectComponent,
+              data: { title: 'Create Investment Project', breadcrumb: 'Create Investment Project' },
               resolve: {
-                offices: OfficesResolver
+                accountData: InvestmentProjectTemplateResolver
               }
             },
             {
@@ -814,7 +816,8 @@ const routes: Routes = [
     LoanProvisioningCriteriaAndTemplateResolver,
     StandingInstructionsTemplateResolver,
     AdvanceSearchTemplateResolver,
-    ManageProjectsResolver
+    ManageProjectsResolver,
+    InvestmentProjectTemplateResolver
   ]
 })
 export class OrganizationRoutingModule {}

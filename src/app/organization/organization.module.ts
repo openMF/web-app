@@ -80,6 +80,7 @@ import { InvestorsComponent } from './investors/investors.component';
 import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
 import { CreateInvestmentProjectComponent } from './manage-projects/create-investment-project/create-investment-project.component';
 import { EditInvestmentProjectComponent } from './manage-projects/edit-investment-project/edit-investment-project.component';
+import { MakeAccountTransferTemplateResolver } from 'app/account-transfers/common-resolvers/make-account-transfer-template.resolver';
 
 /**
  * Organization Module
