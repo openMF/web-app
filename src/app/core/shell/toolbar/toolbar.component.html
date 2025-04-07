@@ -58,10 +58,10 @@
   </div>
 
   <div #languageSelector>
-    <mifosx-language-selector class="ml-1 language" fxHide.lt-md></mifosx-language-selector>
+    <mifosx-language-selector class="mr-1 language" fxHide.lt-md></mifosx-language-selector>
   </div>
 
-  <button mat-icon-button [matMenuTriggerFor]="languageMenu">
+  <button mat-icon-button [matMenuTriggerFor]="languageMenu" fxHide.gt-sm>
     <mat-icon class="lg-icon">language</mat-icon>
   </button>
 
@@ -74,7 +74,7 @@
   </div>
 
   <div #appMenu>
-    <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
+    <button mat-icon-button class="img-button" [matMenuTriggerFor]="applicationMenu">
       <img src="assets/images/user_placeholder.png" />
     </button>
   </div>
