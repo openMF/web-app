@@ -813,4 +813,8 @@ export class OrganizationService {
     formData.append('dateFormat', this.settingsService.dateFormat);
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData, { params: httpParams });
   }
+
+  getInvestmentProjects(): Observable<any> {
+    return this.http.get('/investmentproject/all');
+  }
 }
