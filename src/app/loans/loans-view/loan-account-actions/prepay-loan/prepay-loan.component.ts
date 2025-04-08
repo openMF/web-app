@@ -39,6 +39,8 @@ export class PrepayLoanComponent implements OnInit {
   prepayData: any;
   currency: Currency | null = null;
 
+  totalinterestPortion: any;
+
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} loanService Loan Service.
@@ -66,6 +68,7 @@ export class PrepayLoanComponent implements OnInit {
     this.createprepayLoanForm();
     this.setPrepayLoanDetails();
     this.prepayData = this.dataObject;
+    this.getTotalInterest(this.prepayData.interestPortion, this.prepayData.amountPrepayCommission);
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
@@ -151,4 +154,9 @@ export class PrepayLoanComponent implements OnInit {
       this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
+
+  getTotalInterest(interestPortion: number, amountPrepayCommission: number) {
+    this.totalinterestPortion = interestPortion + (amountPrepayCommission || 0);
+  }
+  
 }
