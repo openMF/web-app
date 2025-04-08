@@ -555,7 +555,6 @@
       "transaction_client": "transaktionsclient",
       "transaction_loan": "transaktionskredit",
       "transaction_savings": "transaktionsersparnisse",
-      "xbrlmapping": "xbrlmapping",
       "CLIENT": "KLIENT",
       "Loan": "Darlehen",
       "Savings": "Ersparnisse",
@@ -2582,8 +2581,7 @@
       "Apply Additional Shares": "Zusätzlich anwenden",
       "Redeem Shares": "Anteile zurückgeben",
       "Approve Additional Shares": "Genehmigen Sie zusätzliche Freigaben",
-      "Reject Additional Shares": "Zusätzliche Freigaben ablehnen",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "Zusätzliche Freigaben ablehnen"
     },
     "placeholders": {
       "Add new server": "Neuen Server hinzufügen",
@@ -3247,8 +3245,6 @@
       "Working Days": "Arbeitstage",
       "Working days and configure behaviour of payments": "Definieren Sie Arbeitstage und konfigurieren Sie das Verhalten von an Feiertagen fälligen Zahlungen",
       "Working days page allows you to define which days": "Auf der Seite „Arbeitstage“ können Sie festlegen, welche Wochentage Arbeitstage sind.",
-      "XBRL": "XBRL",
-      "XBRL Report": "XBRL-Bericht",
       "Your answer is": "Ihre Antwort ist",
       "by": "von",
       "do not match": "nicht übereinstimmen",

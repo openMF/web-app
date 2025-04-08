@@ -555,7 +555,6 @@
       "transaction_client": "transaction_client",
       "transaction_loan": "लेनदेन_लोन",
       "transaction_savings": "लेनदेन_बचत",
-      "xbrlmapping": "xbrlmapping",
       "CLIENT": "ग्राहक",
       "Loan": "ऋण",
       "Savings": "बचत",
@@ -2582,8 +2581,7 @@
       "Apply Additional Shares": "अतिरिक्त लागू गर्नुहोस्",
       "Redeem Shares": "शेयरहरू रिडिम गर्नुहोस्",
       "Approve Additional Shares": "अतिरिक्त शेयरहरू स्वीकृत गर्नुहोस्",
-      "Reject Additional Shares": "अतिरिक्त शेयरहरू अस्वीकार गर्नुहोस्",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "अतिरिक्त शेयरहरू अस्वीकार गर्नुहोस्"
     },
     "placeholders": {
       "Add new server": "नयाँ सर्भर थप्नुहोस्",
@@ -3248,8 +3246,6 @@
       "Working Days": "काम गर्ने दिनहरू",
       "Working days and configure behaviour of payments": "कामका दिनहरू परिभाषित गर्नुहोस् र छुट्टिहरूमा हुने भुक्तानीहरूको व्यवहार कन्फिगर गर्नुहोस्",
       "Working days page allows you to define which days": "कामका दिनहरू पृष्ठले तपाईंलाई हप्ताको कुन दिनहरू काम गर्ने दिनहरू परिभाषित गर्न अनुमति दिन्छ।",
-      "XBRL": "XBRL",
-      "XBRL Report": "XBRL रिपोर्ट",
       "Your answer is": "तपाईको जवाफ छ",
       "by": "द्वारा",
       "do not match": "मिल्दैन",

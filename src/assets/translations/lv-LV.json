@@ -555,7 +555,6 @@
       "transaction_client": "darījums_klients",
       "transaction_loan": "darījums_aizdevums",
       "transaction_savings": "darījuma_ietaupījumi",
-      "xbrlmapping": "xbrlmapping",
       "CLIENT": "KLIENTS",
       "Loan": "Aizdevums",
       "Savings": "Ietaupījumi",
@@ -2582,8 +2581,7 @@
       "Apply Additional Shares": "Lietot papildu",
       "Redeem Shares": "Izpirkt Akcijas",
       "Approve Additional Shares": "Apstipriniet papildu akcijas",
-      "Reject Additional Shares": "Noraidīt papildu akcijas",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "Noraidīt papildu akcijas"
     },
     "placeholders": {
       "Add new server": "Pievienot jaunu serveri",
@@ -3248,8 +3246,6 @@
       "Working Days": "Darba dienas",
       "Working days and configure behaviour of payments": "Definējiet darba dienas un konfigurējiet brīvdienās veicamo maksājumu darbību",
       "Working days page allows you to define which days": "Lapa Darba dienas ļauj definēt, kuras nedēļas dienas ir darba dienas.",
-      "XBRL": "XBRL",
-      "XBRL Report": "XBRL ziņojums",
       "Your answer is": "Jūsu atbilde ir",
       "by": "autors",
       "do not match": "nesakrīt",

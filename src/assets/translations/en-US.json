@@ -557,7 +557,6 @@
       "transaction_client": "transaction_client",
       "transaction_loan": "transaction_loan",
       "transaction_savings": "transaction_savings",
-      "xbrlmapping": "xbrlmapping",
       "Loan": "Loan",
       "Savings": "Savings",
       "Shares": "Shares",
@@ -2590,8 +2589,7 @@
       "Apply Additional Shares": "Apply Additional Shares",
       "Redeem Shares": "Redeem Shares",
       "Approve Additional Shares": "Approve Additional Shares",
-      "Reject Additional Shares": "Reject Additional Shares",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "Reject Additional Shares"
     },
     "placeholders": {
       "Add new server": "Add new server",
@@ -3353,8 +3351,6 @@
       "Working Days": "Working Days",
       "Working days and configure behaviour of payments": "Define working days and configure behaviour of payments due on holidays",
       "Working days page allows you to define which days": "Working days page allows you to define which days of the week are working days.",
-      "XBRL": "XBRL",
-      "XBRL Report": "XBRL Report",
       "Your answer is": "Your answer is",
       "by": "by",
       "do not match": "do not match",

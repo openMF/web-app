@@ -555,7 +555,6 @@
       "transaction_client": "transazione_cliente",
       "transaction_loan": "transazione_prestito",
       "transaction_savings": "transazione_risparmio",
-      "xbrlmapping": "xbrlmapp",
       "CLIENT": "CLIENTE",
       "Loan": "Prestito",
       "Savings": "Risparmio",
@@ -2582,8 +2581,7 @@
       "Apply Additional Shares": "Applicare aggiuntivo",
       "Redeem Shares": "Riscattare azioni",
       "Approve Additional Shares": "Approvare azioni aggiuntive",
-      "Reject Additional Shares": "Rifiutare condivisioni aggiuntive",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "Rifiutare condivisioni aggiuntive"
     },
     "placeholders": {
       "Add new server": "Aggiungi nuovo server",
@@ -3248,8 +3246,6 @@
       "Working Days": "Giorni lavorativi",
       "Working days and configure behaviour of payments": "Definisci i giorni lavorativi e configura il comportamento dei pagamenti dovuti nei giorni festivi",
       "Working days page allows you to define which days": "La pagina Giorni lavorativi consente di definire quali giorni della settimana sono giorni lavorativi.",
-      "XBRL": "XBRL",
-      "XBRL Report": "Rapporto XBRL",
       "Your answer is": "La tua risposta è",
       "by": "di",
       "do not match": "non corrispondono",

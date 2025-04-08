@@ -555,7 +555,6 @@
       "transaction_client": "muamala_mteja",
       "transaction_loan": "muamala_mkopo",
       "transaction_savings": "akiba_ya_muamala",
-      "xbrlmapping": "xbrlmapping",
       "CLIENT": "MTEJA",
       "Loan": "Mkopo",
       "Savings": "Akiba",
@@ -2582,8 +2581,7 @@
       "Apply Additional Shares": "Omba Ziada",
       "Redeem Shares": "Komboa Hisa",
       "Approve Additional Shares": "Idhinisha Hisa za Ziada",
-      "Reject Additional Shares": "Kataa Hisa za Ziada",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "Kataa Hisa za Ziada"
     },
     "placeholders": {
       "Add new server": "Ongeza seva mpya",
@@ -3248,8 +3246,6 @@
       "Working Days": "Siku za kazi",
       "Working days and configure behaviour of payments": "Bainisha siku za kazi na uweke mipangilio ya tabia ya malipo yanayopaswa kutolewa siku za likizo",
       "Working days page allows you to define which days": "Ukurasa wa siku za kazi hukuruhusu kufafanua ni siku zipi za juma ni siku za kazi.",
-      "XBRL": "XBRL",
-      "XBRL Report": "Ripoti ya XBRL",
       "Your answer is": "Jibu lako ni",
       "by": "kwa",
       "do not match": "hailingani",

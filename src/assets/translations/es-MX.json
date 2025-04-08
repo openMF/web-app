@@ -555,7 +555,6 @@
       "transaction_client": "cliente_transaccion",
       "transaction_loan": "préstamo_transacción",
       "transaction_savings": "transacción_ahorro",
-      "xbrlmapping": "mapeo xbrl",
       "CLIENT": "CLIENTE",
       "Loan": "Crédito",
       "Savings": "Ahorros",
@@ -2582,8 +2581,7 @@
       "Apply Additional Shares": "Adicionar Acciones",
       "Redeem Shares": "Canjear acciones",
       "Approve Additional Shares": "Aprobar acciones adicionales",
-      "Reject Additional Shares": "Rechazar acciones adicionales",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "Rechazar acciones adicionales"
     },
     "placeholders": {
       "Add new server": "Agregar nuevo servidor",
@@ -3248,8 +3246,6 @@
       "Working Days": "Días laborables",
       "Working days and configure behaviour of payments": "Defina días laborables y configure el comportamiento de los pagos vencidos en días festivos.",
       "Working days page allows you to define which days": "La página de días laborables le permite definir qué días de la semana son días laborables.",
-      "XBRL": "XBRL",
-      "XBRL Report": "Reporte XBRL",
       "Your answer is": "Tu respuesta es",
       "by": "por",
       "do not match": "no coinciden",
