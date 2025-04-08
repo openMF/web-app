@@ -54,6 +54,7 @@ import { SavingsTransactionGeneralTabComponent } from './savings-account-view/tr
 import { SavingsTransactionDatatableTabComponent } from './savings-account-view/transactions/view-transaction/savings-transaction-datatable-tab/savings-transaction-datatable-tab.component';
 import { GeneralTabComponent } from './savings-account-view/general-tab/general-tab.component';
 import { SavingsActiveClientMembersComponent } from './savings-account-stepper/savings-active-client-members/savings-active-client-members.component';
+import { DistributeFundDialogComponent } from './savings-account-view/custom-dialogs/distribute-fund-dialog/distribute-fund-dialog.component';
 
 /**
  * Savings Module
@@ -113,7 +114,8 @@ import { SavingsActiveClientMembersComponent } from './savings-account-stepper/s
     SavingsTransactionGeneralTabComponent,
     SavingsTransactionDatatableTabComponent,
     GeneralTabComponent,
-    SavingsActiveClientMembersComponent
+    SavingsActiveClientMembersComponent,
+    DistributeFundDialogComponent
   ],
   providers: []
 })
