@@ -2,7 +2,7 @@
 
 ## Overview
 
-Mifos X Web App is a modern Single-Page Application (SPA) built on top of the Mifos X platform for financial inclusion. It's the revamped version of the Mifos X Community App, serving as the default web interface for the Mifos User Community.
+Mifos X Web App is a modern single-page application (SPA) built on top of the Mifos X platform for financial inclusion. It serves as the default web interface for the Mifos user community.
 
 **Technologies Used:**
 
@@ -16,8 +16,8 @@ Mifos X Web App is a modern Single-Page Application (SPA) built on top of the Mi
 - [GitHub Repository](https://github.com/openMF/web-app)
 - [TestRigor](https://app.testrigor.com/public/X3THbQd9nxLMxkdPu)
 - [Slack Channel](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
-- [Jira Board](https://mifosforge.jira.com/jira/your-work)
-- [Jira Web App Project](https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62)
+- [Jira Board of Mifos](https://mifosforge.jira.com/jira/your-work)
+- [Jira Board of Mifos Web App Project](https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62)
 
 ## Installation Guide
 
@@ -40,8 +40,7 @@ Before installing the web app, you need to set up the Fineract backend server:
 
    - **Option B: Install local Fineract server**
 
-     - For Windows: [Installation Guide](https://cwiki.apache.org/confluence/display/FINERACT/Fineract-platform+Installation+on+Windows)
-     - For Ubuntu: [Installation Guide](https://cwiki.apache.org/confluence/display/FINERACT/Fineract+Installation+on+Ubuntu+Server)
+     [Installation Guide](https://github.com/apache/fineract?tab=readme-ov-file#instructions-how-to-run-for-local-development)
 
    - **Option C: Docker Compose for full stack**
      - See Docker Compose section below for one-step backend+frontend setup
@@ -53,7 +52,7 @@ Before installing the web app, you need to set up the Fineract backend server:
 
 ### Frontend Setup (Web App)
 
-Choose ONE of these methods to install the web app:
+Choose ONE of the following methods to install the web app:
 
 #### Method 1: Manual Installation
 
@@ -191,10 +190,22 @@ Available languages:
 
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
 
+## Releases
+
+### 1.0.0 (Tag: 1.0.0-fineract1.11)
+
+This is the first official release of the Mifos X web application:
+
+- Developed for Fineract 1.11
+- No Self Service area
+- GLIM support limited
+- JLG not yet supported
+- Surveys not yet supported
+
 ## Contributing
 
-We welcome contributions! Please read our [contribution guidelines](.github/CONTRIBUTING.md) before submitting pull requests.
+We welcome contributions! Please read our [contribution guidelines](./CONTRIBUTING.md) before submitting pull requests.
 
 ## Related Projects
 
-[Apache Fineract](https://github.com/apache/fineract) - Apache Fineract provides open APIs and affordable core banking solution for financial institutions and it is the backend for all UIs of the Mifos.
+[Apache Fineract](https://github.com/apache/fineract) - Apache Fineract provides open APIs and affordable core banking solution for financial institutions and is the backend for all UIs of the Mifos.
