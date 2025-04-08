@@ -40,6 +40,13 @@
           <span fxFlex="40%">{{ 'labels.inputs.Currency' | translate }}</span>
           <span fxFlex="60%">{{ accountTransferTemplateData.currency.name }}</span>
         </div>
+
+        <div class="filter-box">
+          <mat-checkbox labelPosition="after" class="m-r-10" (change)="onInvestmentChange($event)"
+            >{{ 'labels.inputs.Is Investment' | translate }}
+          </mat-checkbox>
+        </div>
+        
       </div>
 
       <div *ngIf="interbank">
@@ -58,7 +65,7 @@
               maxlength="10"
               required
             /><!-- formControlName="phoneNumber" -->
-            <mat-hint align="end">{{ phoneAccount.length || 0 }}/10</mat-hint>
+            <mat-hint aling="end">{{ phoneAccount.length || 0 }}/10</mat-hint>
           </mat-form-field>
         </div>
 

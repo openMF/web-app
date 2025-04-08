@@ -19,6 +19,7 @@ import { MatInput } from '@angular/material/input';
 
 /** Environment Configuration */
 import { environment } from 'environments/environment';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 /**
  * Create account transfers
@@ -61,6 +62,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   interbankTransferForm: boolean = false;
   balance: number = 0;
   isLoading: boolean = false;
+  isInvestment: boolean = false;
 
   /**
    * Retrieves the standing instructions template from `resolve`.
@@ -100,7 +102,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.accountTypeId = '2';
         this.id = this.route.snapshot.queryParams['savingsId'];
         this.interbank = this.route.snapshot.queryParams['interbank'] === 'true';
-        this.balance = this.router.getCurrentNavigation().extras.state.balance;
+        this.balance = this.router.getCurrentNavigation().extras.state?.balance;
         console.log('is interbank?', this.interbank);
         break;
       default:
@@ -153,7 +155,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       transferDescription: [
         '',
         Validators.required
-      ]
+      ],
+      isInvestment: [false]
     });
   }
 
@@ -283,7 +286,8 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       fromAccountId: this.id,
       fromAccountType: this.accountTypeId,
       fromClientId: this.accountTransferTemplateData.fromClient.id,
-      fromOfficeId: this.accountTransferTemplateData.fromClient.officeId
+      fromOfficeId: this.accountTransferTemplateData.fromClient.officeId,
+      isInvestment: this.isInvestment
     };
     this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe(() => {
       this.isLoading = false;
@@ -345,4 +349,9 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         }
       );
   }
+
+  onInvestmentChange(event:MatCheckboxChange): void{
+    this.isInvestment = event.checked;
+  }
+
 }

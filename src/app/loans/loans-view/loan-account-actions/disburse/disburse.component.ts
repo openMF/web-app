@@ -59,6 +59,7 @@ export class DisburseComponent implements OnInit {
     this.maxDate = this.settingsService.maxFutureDate;
     this.createDisbursementLoanForm();
     this.setDisbursementLoanDetails();
+    console.log(this.dataObject);
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
