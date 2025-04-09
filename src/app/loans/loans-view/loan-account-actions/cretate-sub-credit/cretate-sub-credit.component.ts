@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
@@ -11,7 +11,6 @@ import { Currency } from 'app/shared/models/general.model';
   styleUrls: ['./cretate-sub-credit.component.scss']
 })
 export class CretateSubCreditComponent implements OnInit {
-
   @Input() dataObject: any;
 
   loanId: String;
@@ -28,7 +27,7 @@ export class CretateSubCreditComponent implements OnInit {
     private settingService: SettingsService
   ) {
     this.loanId = this.route.snapshot.params['loanId'];
-   }
+  }
 
   ngOnInit(): void {
     this.maxDate = this.settingService.maxFutureDate;
@@ -36,7 +35,6 @@ export class CretateSubCreditComponent implements OnInit {
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
-
   }
 
   /**
@@ -44,7 +42,7 @@ export class CretateSubCreditComponent implements OnInit {
    */
   createSubCreditLoanForm() {
     this.createSubCreditForm = this.formBuilder.group({
-      subCreditAmount:[
+      subCreditAmount: [
         '',
         Validators.required
       ],
@@ -72,11 +70,12 @@ export class CretateSubCreditComponent implements OnInit {
       dateFormat
     };
     data['subCreditAmount'] = data['subCreditAmount'] * 1;
-    this.loanService.executeLoansAccountTransactionsCommand(this.loanId.toString(), 'createSubCredit', data, null).subscribe((response: any) => {
-      this.router.navigate(['../../general'], {
-        relativeTo: this.route
-      })
-    });
+    this.loanService
+      .executeLoansAccountTransactionsCommand(this.loanId.toString(), 'createSubCredit', data, null)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], {
+          relativeTo: this.route
+        });
+      });
   }
-
 }

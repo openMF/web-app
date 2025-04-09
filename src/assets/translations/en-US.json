@@ -1777,7 +1777,7 @@
       "Is Floating calculation allowed?": "Is Floating calculation allowed?",
       "Is Interest Posting required on closure date": "Is Interest Posting required on closure date",
       "Is interest recognition on disbursement date?": "Is interest recognition on disbursement date?",
-      "Is Investment":"Is it an investment?",
+      "Is Investment": "Is it an investment?",
       "Is Linked to floating interest rates?": "Is Linked to floating interest rates?",
       "Is Loan Officer": "Is Loan Officer",
       "Is Mandatory Deposit": "Is Mandatory Deposit",
@@ -2468,7 +2468,14 @@
       "Password must have not consecutive repeating characters": "Password must have not consecutive repeating characters",
       "Password must contain at least one special character (@$!%*?&)": "Password must contain at least one special character (@$!%*?&)",
       "Password minimun length must be": "Password minimun length must be",
-      "Passwords do not match": "Passwords do not match"
+      "Passwords do not match": "Passwords do not match",
+      "custom": {
+        "Subtitle": "Subtitle",
+        "Institution Description": "Institution Description",
+        "Team Description": "Team Description",
+        "Financial Description": "Financial Description",
+        "Impact Description": "Impact Description"
+      }
     },
     "links": {
       "Community": "Community",
@@ -2515,14 +2522,14 @@
       "Configuration Wizard": "Configuration Wizard",
       "Create Guarantor": "Create Guarantor",
       "Create Journal Entry": "Create Journal Entry",
-      "Create Sub-Credit":"Create Sub-Credit",
+      "Create Sub-Credit": "Create Sub-Credit",
       "Credit Balance Refund": "Credit Balance Refund",
       "Dashboard": "Dashboard",
       "Delete": "Delete",
       "Deposit": "Deposit",
       "Disburse": "Disburse",
       "Disburse to Savings": "Disburse to Savings",
-      "Distribute Funds":"Distribute fund",
+      "Distribute Funds": "Distribute fund",
       "Edit Repayment Schedule": "Edit Repayment Schedule",
       "Foreclosure": "Foreclosure",
       "Frequent Postings": "Frequent Postings",

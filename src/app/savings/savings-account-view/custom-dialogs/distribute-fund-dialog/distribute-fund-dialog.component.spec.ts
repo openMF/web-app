@@ -8,9 +8,8 @@ describe('DistributeFundDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DistributeFundDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [DistributeFundDialogComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DistributeFundDialogComponent);
     component = fixture.componentInstance;
