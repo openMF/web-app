@@ -80,7 +80,7 @@ import { InvestorsComponent } from './investors/investors.component';
 import { ManageProjectsComponent } from './manage-projects/manage-projects.component';
 import { CreateInvestmentProjectComponent } from './manage-projects/create-investment-project/create-investment-project.component';
 import { EditInvestmentProjectComponent } from './manage-projects/edit-investment-project/edit-investment-project.component';
-import { MakeAccountTransferTemplateResolver } from 'app/account-transfers/common-resolvers/make-account-transfer-template.resolver';
+import { ManageProjectParticipationComponent } from './manage-project-participation/manage-project-participation.component';
 
 /**
  * Organization Module
@@ -160,7 +160,8 @@ import { MakeAccountTransferTemplateResolver } from 'app/account-transfers/commo
     InvestorsComponent,
     ManageProjectsComponent,
     CreateInvestmentProjectComponent,
-    EditInvestmentProjectComponent
+    EditInvestmentProjectComponent,
+    ManageProjectParticipationComponent
   ],
   providers: [
     CreateHoliday,

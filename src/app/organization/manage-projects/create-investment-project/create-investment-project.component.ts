@@ -3,7 +3,6 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { OrganizationService } from 'app/organization/organization.service';
-import { SettingsService } from 'app/settings/settings.service';
 
 @Component({
   selector: 'mifosx-create-investment-project',
@@ -21,8 +20,7 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private clientsService: ClientsService,
-    private organizationService: OrganizationService,
-    private settingsService: SettingsService
+    private organizationService: OrganizationService
   ) {
     this.route.data.subscribe((data: { accountData: any }) => {
       this.currency = data.accountData.currency;

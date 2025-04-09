@@ -137,16 +137,32 @@
             </mat-list-item>
           </div>
 
-          <div #projects>
+          <div #projects class="custom-task">
             <mat-list-item>
               <mat-icon matListIcon [routerLink]="['projects']">
-                <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+                <fa-icon icon="book" size="sm"></fa-icon>
               </mat-icon>
               <h4 matLine [routerLink]="['projects']">{{ 'labels.heading.Manage Projects' | translate }}</h4>
               <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="!arrowBooleans[0]" icon="arrow-down" size="md"></fa-icon>
               <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
               <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['projects']">
                 {{ 'labels.text.Add new project or modify or deactivate project' | translate }}
+              </p>
+            </mat-list-item>
+          </div>
+
+          <div #projectparticipations class="custom-task">
+            <mat-list-item>
+              <mat-icon matListIcon [routerLink]="['project-participation']">
+                <fa-icon icon="money-bill-alt" size="sm"></fa-icon>
+              </mat-icon>
+              <h4 matLine [routerLink]="['project-participation']">
+                {{ 'labels.heading.Manage Project Participations' | translate }}
+              </h4>
+              <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="!arrowBooleans[0]" icon="arrow-down" size="md"></fa-icon>
+              <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
+              <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['project-participation']">
+                {{ 'labels.text.Manage the manual project participations' | translate }}
               </p>
             </mat-list-item>
           </div>
