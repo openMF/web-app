@@ -791,7 +791,8 @@
       "required": "required",
       "required and cannot be negative": "required and cannot be negative",
       "should": "should",
-      "on": "on"
+      "on": "on",
+      "Password validation": "Password should contain minimum {{minchar}} characters, that should income 1 uppercase, lowercase and special character and should not consists of repeated characters or white-spaces"
     },
     "heading": {
       "Account Linked Financial": "List of accounts linked to different financial activities. To know more click:",
