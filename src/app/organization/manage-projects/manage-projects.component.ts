@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -18,7 +18,7 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
   templateUrl: './manage-projects.component.html',
   styleUrls: ['./manage-projects.component.scss']
 })
-export class ManageProjectsComponent implements OnInit, AfterViewInit {
+export class ManageProjectsComponent implements OnInit {
   /** Manage Funds data. */
   projectsData: any[] = [];
   /** New Fund form */
@@ -162,17 +162,6 @@ export class ManageProjectsComponent implements OnInit, AfterViewInit {
     backdrop: boolean
   ): void {
     setTimeout(() => this.popoverService.open(template, target, position, backdrop, {}), 200);
-  }
-
-  /**
-   * To show popover.
-   */
-  ngAfterViewInit() {
-    if (this.configurationWizardService.showManageFunds === true) {
-      setTimeout(() => {
-        this.showPopover(this.templateFundFormRef, this.projectFormRef.nativeElement, 'bottom', true);
-      });
-    }
   }
 
   /**
