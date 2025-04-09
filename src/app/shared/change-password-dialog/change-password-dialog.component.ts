@@ -42,18 +42,21 @@ export class ChangePasswordDialogComponent implements OnInit {
 
   /** Change Password form */
   createChangePasswordForm() {
-    this.changePasswordForm = this.formBuilder.group({
-      password: [
-        '',
-        this.passwordsUtility.getPasswordValidators()
-      ],
-      repeatPassword: [
-        '',
-        [
-          Validators.required,
-          this.confirmPassword('password')]
-      ]
-    });
+    this.changePasswordForm = this.formBuilder.group(
+      {
+        password: [
+          '',
+          this.passwordsUtility.getPasswordValidators()
+        ],
+        repeatPassword: [
+          '',
+          [
+            Validators.required,
+            this.confirmPassword('password')]
+        ]
+      },
+      { updateOn: 'blur' }
+    );
   }
 
   /**

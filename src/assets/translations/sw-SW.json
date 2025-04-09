@@ -786,7 +786,8 @@
       "required": "inahitajika",
       "required and cannot be negative": "inahitajika na haiwezi kuwa hasi",
       "should": "lazima",
-      "on": "juu"
+      "on": "juu",
+      "Password validation": "Nenosiri lazima liwe na herufi {{minchar}}, ambazo zinafaa kuingiza herufi 1 kubwa, ndogo na maalum na haipaswi kuwa na herufi zinazorudiwa au nafasi nyeupe."
     },
     "heading": {
       "Account Linked Financial": "Orodha ya akaunti zilizounganishwa na shughuli tofauti za kifedha. Kujua zaidi bofya:",
