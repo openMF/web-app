@@ -786,7 +786,8 @@
       "required": "obrigatório",
       "required and cannot be negative": "obrigatório e não pode ser negativo",
       "should": "deve",
-      "on": "sobre"
+      "on": "sobre",
+      "Password validation": "A senha deve conter no mínimo {{minchar}} caracteres, que deve conter 1 letra maiúscula, minúscula e caractere especial e não deve consistir em caracteres repetidos ou espaços em branco"
     },
     "heading": {
       "Account Linked Financial": "Lista de contas vinculadas a diferentes atividades financeiras. Para saber mais clique:",

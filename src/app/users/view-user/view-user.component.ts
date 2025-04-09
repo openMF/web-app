@@ -61,8 +61,7 @@ export class ViewUserComponent {
    */
   changeUserPassword() {
     const changeUserPasswordDialogRef = this.dialog.open(ChangePasswordDialogComponent, {
-      width: '400px',
-      height: '300px'
+      width: '440px'
     });
     changeUserPasswordDialogRef.afterClosed().subscribe((response: any) => {
       if (response.password && response.repeatPassword) {
