@@ -38,7 +38,8 @@ import { PortalModule } from '@angular/cdk/portal';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
-import { DatePipe, LocationStrategy } from '@angular/common';
+import { DatePipe, LocationStrategy, registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 import {
   TranslateLoader,
   TranslateModule,
@@ -46,6 +47,10 @@ import {
   MissingTranslationHandlerParams
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { LOCALE_ID } from '@angular/core';
+
+registerLocaleData(localeEs);
 
 export class CustomMissingTranslationHandler implements MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams): string {
@@ -112,7 +117,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebAppComponent,
     NotFoundComponent
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    { provide: LOCALE_ID, useValue: 'es' }
+  ],
   bootstrap: [WebAppComponent]
 })
 export class AppModule {}
