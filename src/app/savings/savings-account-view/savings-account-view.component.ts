@@ -54,7 +54,7 @@ export class SavingsAccountViewComponent implements OnInit {
     private savingsService: SavingsService,
     private translateService: TranslateService,
     public dialog: MatDialog,
-    private alertService: AlertService,
+    private alertService: AlertService
   ) {
     this.route.data.subscribe((data: { savingsAccountData: any; savingsDatatables: any }) => {
       this.savingsAccountData = data.savingsAccountData;
@@ -253,7 +253,6 @@ export class SavingsAccountViewComponent implements OnInit {
     });
   }
 
-
   /**
    * Distribute funds to investors
    */
@@ -261,26 +260,23 @@ export class SavingsAccountViewComponent implements OnInit {
     const distributeFundDialogRef = this.dialog.open(DistributeFundDialogComponent);
     distributeFundDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeDistributeFund(this.savingsAccountData.id, {})
-          .subscribe({
-            next: () => {
-              this.reload();
-            },
-            error: (error) => {
-              if (error?.error?.defaultUserMessage) {
-                const message = error.error.defaultUserMessage;
-                this.alertService.alert({
-                  type: 'Session timeout',
-                  message: message
-                });
-              }
+        this.savingsService.executeDistributeFund(this.savingsAccountData.id, {}).subscribe({
+          next: () => {
+            this.reload();
+          },
+          error: (error) => {
+            if (error?.error?.defaultUserMessage) {
+              const message = error.error.defaultUserMessage;
+              this.alertService.alert({
+                type: 'Session timeout',
+                message: message
+              });
             }
-          });
+          }
+        });
       }
     });
   }
-
 
   /**
    * Posts savings account's interest

@@ -8,9 +8,8 @@ describe('CretateSubCreditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CretateSubCreditComponent ]
-    })
-    .compileComponents();
+      declarations: [CretateSubCreditComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CretateSubCreditComponent);
     component = fixture.componentInstance;

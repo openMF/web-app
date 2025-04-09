@@ -203,17 +203,17 @@ export class SavingsService {
     return this.http.post(`/savingsaccounts/${accountId}`, data, { params: httpParams });
   }
 
-    /**
+  /**
    * @param {string} accountId Savings Account Id
    * @param {string} command Command
    * @param {any} data Data
    * @returns {Observable<any>}
    */
-    executeDistributeFund(accountId: string, data: any): Observable<any> {
-      const httpParams = new HttpParams().set('fundSavingsAccountId', accountId);
-      data.fundSavingsAccountId = accountId;
-      return this.http.post(`/distributefund`, data, { params: httpParams });
-    }
+  executeDistributeFund(accountId: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('fundSavingsAccountId', accountId);
+    data.fundSavingsAccountId = accountId;
+    return this.http.post(`/distributefund`, data, { params: httpParams });
+  }
 
   /**
    * @param {string} accountId Savings Account Id

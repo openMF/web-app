@@ -51,7 +51,7 @@ export class LoanAccountActionsComponent {
     'Re-Amortize': boolean;
     'Interest Payment Waiver': boolean;
     'Add Interest Pause': boolean;
-    'Create Sub-Credit':boolean;
+    'Create Sub-Credit': boolean;
   } = {
     Close: false,
     'Undo Approval': false,
@@ -88,7 +88,7 @@ export class LoanAccountActionsComponent {
     'Re-Amortize': false,
     'Interest Payment Waiver': false,
     'Add Interest Pause': false,
-    'Create Sub-Credit':false
+    'Create Sub-Credit': false
   };
 
   actionButtonData: any;

@@ -8,7 +8,6 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./distribute-fund-dialog.component.scss']
 })
 export class DistributeFundDialogComponent {
-
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */

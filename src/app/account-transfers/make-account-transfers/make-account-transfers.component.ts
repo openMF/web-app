@@ -350,8 +350,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       );
   }
 
-  onInvestmentChange(event:MatCheckboxChange): void{
+  onInvestmentChange(event: MatCheckboxChange): void {
     this.isInvestment = event.checked;
   }
-
 }

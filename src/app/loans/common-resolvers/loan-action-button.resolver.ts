@@ -76,7 +76,7 @@ export class LoanActionButtonResolver implements Resolve<Object> {
       return this.loansService.getLoanActionTemplate(loanId, 'charge-off');
     } else if (loanActionButton === 'Create Sub-Credit') {
       return this.loansService.getLoanAccountDetails(loanId);
-    }else {
+    } else {
       return undefined;
     }
   }

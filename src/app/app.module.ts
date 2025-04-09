@@ -119,8 +119,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     DatePipe,
-    { provide: LOCALE_ID, useValue: 'es' }
-  ],
+    { provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [WebAppComponent]
 })
 export class AppModule {}

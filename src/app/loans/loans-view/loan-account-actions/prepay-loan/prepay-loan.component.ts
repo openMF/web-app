@@ -158,5 +158,4 @@ export class PrepayLoanComponent implements OnInit {
   getTotalInterest(interestPortion: number, amountPrepayCommission: number) {
     this.totalinterestPortion = interestPortion + (amountPrepayCommission || 0);
   }
-  
 }
