@@ -1,6 +1,6 @@
 {
   "name": "mifosx-web-app",
-  "version": "0.10.0",
+  "version": "1.0.0",
   "description": "MifosX Web App is the default web application built on top of the Fineract platform for the Mifos user community leveraging the popular Angular framework.",
   "keywords": [
     "mifos",
@@ -127,7 +127,7 @@
     "url": "git+https://github.com/openMF/web-app.git"
   },
   "bugs": {
-    "url": "https://github.com/openMF/web-app/issues"
+    "url": "https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62"
   },
   "engines": {
     "node": ">= 16.15.1",
