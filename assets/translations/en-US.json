@@ -790,7 +790,8 @@
       "required": "required",
       "required and cannot be negative": "required and cannot be negative",
       "should": "should",
-      "on": "on"
+      "on": "on",
+      "Password validation": "Password should contain minimum {{minchar}} characters, that should income 1 uppercase, lowercase and special character and should not consists of repeated characters or white-spaces"
     },
     "heading": {
       "Account Linked Financial": "List of accounts linked to different financial activities. To know more click:",
@@ -804,6 +805,7 @@
       "Accounts linked to Financial Activities": "Accounts linked to Financial Activities",
       "Accruals": "Accruals",
       "Active Asset Transfer": "Active Asset Transfer",
+      "Active Client Members": "Active Client Members",
       "AdHocQuery": "AdHocQuery",
       "Add Account": "Add Account",
       "Add Currency Form": "Add Currency Form",
@@ -2456,7 +2458,13 @@
       "INTEREST REFUND": "INTEREST REFUND",
       "Supported Interest Refund Types": "Supported Interest Refund Types",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Supported interest refund types",
-      "Charge-off reason": "Charge-off reason"
+      "Charge-off reason": "Charge-off reason",
+      "Password must contain at least one uppercase letter": "Password must contain at least one uppercase letter",
+      "Password must contain at least one number": "Password must contain at least one number",
+      "Password must have not consecutive repeating characters": "Password must have not consecutive repeating characters",
+      "Password must contain at least one special character (@$!%*?&)": "Password must contain at least one special character (@$!%*?&)",
+      "Password minimun length must be": "Password minimun length must be",
+      "Passwords do not match": "Passwords do not match"
     },
     "links": {
       "Community": "Community",

@@ -786,7 +786,8 @@
       "required": "requis",
       "required and cannot be negative": "obligatoire et ne peut pas être négatif",
       "should": "devrait",
-      "on": "sur"
+      "on": "sur",
+      "Password validation": "Le mot de passe doit contenir au minimum {{minchar}} caractères, dont 1 majuscule, 1 minuscule et un caractère spécial et ne doit pas être composé de caractères répétés ou d'espaces blancs."
     },
     "heading": {
       "Account Linked Financial": "Liste des comptes liés aux différentes activités financières. Pour en savoir plus cliquez :",
@@ -2450,7 +2451,13 @@
       "INTEREST REFUND": "REMBOURSEMENT DES INTÉRÊTS",
       "Supported Interest Refund Types": "Types de remboursement d'intérêts pris en charge",
       "SUPPORTED REFUND TRANSACTIONS FOR INTEREST REFUND": "Types de remboursement d'intérêts pris en charge",
-      "Charge-off reason": "Motif de la radiation"
+      "Charge-off reason": "Motif de la radiation",
+      "Password must contain at least one uppercase letter": "Le mot de passe doit contenir au moins une lettre majuscule",
+      "Password must contain at least one number": "Le mot de passe doit contenir au moins un chiffre",
+      "Password must have not consecutive repeating characters": "Le mot de passe ne doit pas contenir de caractères répétitifs consécutifs",
+      "Password must contain at least one special character (@$!%*?&)": "Le mot de passe doit contenir au moins un caractère spécial (@$!%*?&)",
+      "Password minimun length must be": "La longueur minimale du mot de passe doit être",
+      "Passwords do not match": "Les mots de passe ne correspondent pas"
     },
     "links": {
       "Community": "Communauté",
