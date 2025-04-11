@@ -555,7 +555,6 @@
       "transaction_client": "transakce_klient",
       "transaction_loan": "transakce_půjčka",
       "transaction_savings": "transakční_úspory",
-      "xbrlmapping": "xbrlmapping",
       "CLIENT": "KLIENT",
       "Loan": "Loan",
       "Savings": "Savings",
@@ -2583,8 +2582,7 @@
       "Apply Additional Shares": "Použít další",
       "Redeem Shares": "Uplatnit akcie",
       "Approve Additional Shares": "Schválit další akcie",
-      "Reject Additional Shares": "Odmítnout další akcie",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "Odmítnout další akcie"
     },
     "placeholders": {
       "Add new server": "Přidat nový server",
@@ -3249,8 +3247,6 @@
       "Working Days": "Pracovní dny",
       "Working days and configure behaviour of payments": "Definujte pracovní dny a nakonfigurujte chování plateb splatných o svátcích",
       "Working days page allows you to define which days": "Stránka Pracovní dny umožňuje definovat, které dny v týdnu jsou pracovními dny.",
-      "XBRL": "XBRL",
-      "XBRL Report": "Zpráva XBRL",
       "Your answer is": "Vaše odpověď je",
       "by": "podle",
       "do not match": "neshodují",
