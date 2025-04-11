@@ -1,5 +1,5 @@
 # https://github.com/marketplace/actions/close-stale-issues
-# https://github.com/actions/stale/blob/master/action.yml
+# https://github.com/actions/stale/blob/main/action.yml
 # https://github.com/actions/stale
 name: Mark stale issues and pull requests
 on:
