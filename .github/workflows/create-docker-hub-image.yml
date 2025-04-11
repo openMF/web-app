@@ -2,7 +2,7 @@ name: Publish Image in Docker Hub
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build:
@@ -43,7 +43,7 @@ jobs:
         run: |
           TAGS="--tag $DOCKER_ORGANIZATION/web-app:${{ steps.extract_branch.outputs.branch }}"
 
-          if [ "${{ steps.extract_branch.outputs.branch }}" == "master" ]; then
+          if [ "${{ steps.extract_branch.outputs.branch }}" == "main" ]; then
             TAGS="$TAGS --tag $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.short_hash }} --tag $DOCKER_ORGANIZATION/web-app:${{ steps.git_hashes.outputs.long_hash }}"
           fi
 
