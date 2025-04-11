@@ -3,7 +3,7 @@
 - View the [README](../README.md) or [watch this video](https://youtu.be/OnxxC3K2oro) to get your development environment up and running.
 - Learn how to [format pull requests](#submitting-a-pull-request).
 - Read how to [rebase/merge upstream branches](#configuring-remotes).
-- Understand our [commit message conventions](https://github.com/openMF/web-app/blob/main/.github/COMMIT_MESSAGE.md).
+- Understand our [commit message conventions](https://github.com/openMF/web-app/blob/master/.github/COMMIT_MESSAGE.md).
 - Sign our [Mifos CLA](http://mifos.org/about-us/financial-legal/mifos-contributor-agreement/).
 - Follow our [code of conduct](CODE_OF_CONDUCT.md).
 - [Find an issue to work on](https://github.com/openMF/web-app/issues) and start smashing!
@@ -49,10 +49,10 @@ Remember that this is an inclusive community, committed to creating a safe, posi
 git clone https://github.com/your-username/web-app.git
 ```
 
-- Make sure you are in the `main` branch.
+- Make sure you are in the `master` branch.
 
 ```
-git checkout main
+git checkout master
 ```
 
 - Create a new branch with a meaningful name before adding and committing your changes.
@@ -97,7 +97,7 @@ git push origin branch-name
 git push origin remote-branch-name --force
 ```
 
-- Follow the Pull request template and submit a pull request with a motive for your change and the method you used to achieve it to be merged with the `main` branch.
+- Follow the Pull request template and submit a pull request with a motive for your change and the method you used to achieve it to be merged with the `master` branch.
 - If you can, please submit the pull request with the fix or improvements including tests.
 - During review, if you are requested to make changes, rebase your branch and squash the multiple commits into one. Once you push these changes the pull request will edit automatically.
 
@@ -120,18 +120,18 @@ git remote add upstream https://github.com/openMF/web-app.git
   > upstream  https://github.com/openMF/web-app.git (push)
 ```
 
-3. To update your local copy with remote changes, run the following: (This will give you an exact copy of the current remote. You should not have any local changes on your main branch, if you do, use rebase instead.)
+3. To update your local copy with remote changes, run the following: (This will give you an exact copy of the current remote. You should not have any local changes on your master branch, if you do, use rebase instead.)
 
 ```
 git fetch upstream
-git checkout main
-git merge upstream/main
+git checkout master
+git merge upstream/master
 ```
 
-4. Push these merged changes to the main branch on your fork. Ensure to pull in upstream changes regularly to keep your forked repository up to date.
+4. Push these merged changes to the master branch on your fork. Ensure to pull in upstream changes regularly to keep your forked repository up to date.
 
 ```
-git push origin main
+git push origin master
 ```
 
 5. Switch to the branch you are using for some piece of work.
@@ -143,7 +143,7 @@ git checkout branch-name
 6. Rebase your branch, which means, take in all latest changes and replay your work in the branch on top of this - this produces cleaner versions/history.
 
 ```
-git rebase main
+git rebase master
 ```
 
 7. Push the final changes when you're ready.
@@ -162,10 +162,10 @@ After your pull request is merged, you can safely delete your branch and pull th
 git push origin --delete branch-name
 ```
 
-2. Checkout the main branch.
+2. Checkout the master branch.
 
 ```
-git checkout main
+git checkout master
 ```
 
 3. Delete the local branch.
@@ -174,10 +174,10 @@ git checkout main
 git branch -D branch-name
 ```
 
-4. Update your main branch with the latest upstream version.
+4. Update your master branch with the latest upstream version.
 
 ```
-git pull upstream main
+git pull upstream master
 ```
 
 ## Skipping a Travis CI Build
