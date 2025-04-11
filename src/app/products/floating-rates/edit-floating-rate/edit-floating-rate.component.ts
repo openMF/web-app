@@ -30,8 +30,6 @@ export class EditFloatingRateComponent implements OnInit {
   floatingRateForm: UntypedFormGroup;
   /** Floating Rate Data. */
   floatingRateData: any;
-  /** Minimum floating rate period date allowed. */
-  minDate = new Date();
   /** Form Pristine Status. */
   isFloatingRateFormPristine = true;
   /** Columns to be displayed in floating rate periods table. */

@@ -155,7 +155,7 @@
           mat-raised-button
           type="submit"
           color="primary"
-          [disabled]="!floatingRateForm.valid"
+          [disabled]="!floatingRateForm.valid || floatingRatePeriodsData.length === 0"
           *mifosxHasPermission="'CREATE_FLOATINGRATE'"
         >
           {{ 'labels.buttons.Submit' | translate }}
