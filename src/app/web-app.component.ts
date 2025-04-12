@@ -1,3 +1,4 @@
+/** Angular Imports */
 import { Component, OnInit, HostListener, HostBinding } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -5,8 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { merge, of } from 'rxjs';
-import { filter, map, switchMap, catchError } from 'rxjs/operators';
+import { merge } from 'rxjs';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 /** Translation Imports */
 import { TranslateService } from '@ngx-translate/core';
@@ -34,6 +35,35 @@ import { ThemingService } from './shared/theme-toggle/theming.service';
 /** Initialize Logger */
 const log = new Logger('MifosX');
 
+import { registerLocaleData } from '@angular/common';
+import localeCS from '@angular/common/locales/cs';
+import localeEN from '@angular/common/locales/en';
+import localeES from '@angular/common/locales/es';
+import localeDE from '@angular/common/locales/de';
+import localeFR from '@angular/common/locales/fr';
+import localeIT from '@angular/common/locales/it';
+import localeKO from '@angular/common/locales/ko';
+import localeLT from '@angular/common/locales/lt';
+import localeLV from '@angular/common/locales/lv';
+import localeNE from '@angular/common/locales/ne';
+import localePT from '@angular/common/locales/pt';
+import localeSW from '@angular/common/locales/sw';
+registerLocaleData(localeCS);
+registerLocaleData(localeEN);
+registerLocaleData(localeES);
+registerLocaleData(localeDE);
+registerLocaleData(localeFR);
+registerLocaleData(localeIT);
+registerLocaleData(localeKO);
+registerLocaleData(localeLT);
+registerLocaleData(localeLV);
+registerLocaleData(localeNE);
+registerLocaleData(localePT);
+registerLocaleData(localeSW);
+
+/**
+ * Main web app component.
+ */
 @Component({
   selector: 'mifosx-web-app',
   templateUrl: './web-app.component.html',
@@ -53,8 +83,23 @@ const log = new Logger('MifosX');
 })
 export class WebAppComponent implements OnInit {
   buttonConfig: KeyboardShortcutsConfiguration;
+
   i18nService: I18nService;
 
+  /**
+   * @param {Router} router Router for navigation.
+   * @param {ActivatedRoute} activatedRoute Activated Route.
+   * @param {Title} titleService Title Service.
+   * @param {TranslateService} translateService Translate Service.
+   * @param {ThemeStorageService} themeStorageService Theme Storage Service.
+   * @param {MatSnackBar} snackBar Material Snackbar for notifications.
+   * @param {AlertService} alertService Alert Service.
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {AuthenticationService} authenticationService Authentication service.
+   * @param {Dates} dateUtils Dates service.
+   * @param {IdleTimeoutService} idle Idle timeout service.
+   * @param {MatDialog} dialog Dialog component.
+   */
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -73,6 +118,17 @@ export class WebAppComponent implements OnInit {
 
   @HostBinding('class') public cssClass: string;
 
+  /**
+   * Initial Setup:
+   *
+   * 1) Logger
+   *
+   * 2) Language and Translations
+   *
+   * 3) Page Title
+   *
+   * 4) Alerts
+   */
   ngOnInit() {
     this.themingService.theme.subscribe((value: string) => {
       this.cssClass = value;
@@ -80,19 +136,26 @@ export class WebAppComponent implements OnInit {
     this.themingService.setInitialDarkMode();
     this.themingService.setDarkMode(this.settingsService.themeDarkEnabled === 'true');
 
+    // Setup logger
     if (environment.production) {
       Logger.enableProductionMode();
     }
     log.debug('init');
 
+    // Setup translations
     this.translateService.addLangs(environment.supportedLanguages.split(','));
-    this.translateService.use(this.settingsService.languageCode || environment.defaultLanguage);
+    if (this.settingsService.language) {
+      this.translateService.use(this.settingsService.languageCode);
+    } else {
+      this.translateService.use(environment.defaultLanguage);
+    }
 
     this.i18nService = new I18nService(this.translateService);
 
-    this.router.events
+    // Change page title on navigation or language change, based on route data
+    const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
+    merge(this.translateService.onLangChange, onNavigationEnd)
       .pipe(
-        filter((event) => event instanceof NavigationEnd),
         map(() => {
           let route = this.activatedRoute;
           while (route.firstChild) {
@@ -100,16 +163,30 @@ export class WebAppComponent implements OnInit {
           }
           return route;
         }),
-        switchMap((route) => route.data.pipe(catchError(() => of({ title: 'APP_NAME' })))),
-        switchMap((data) => {
-          const rawTitle = data['title'] || 'APP_NAME';
-          return this.translateService.get(`labels.titles.${rawTitle}`);
-        })
+        filter((route) => route.outlet === 'primary'),
+        mergeMap((route) => route.data)
       )
-      .subscribe((translatedTitle) => {
-        this.titleService.setTitle(translatedTitle);
+      .subscribe((event) => {
+        const title = event['title'] ? `labels.text.${event['title']}` : 'APP_NAME';
+        this.i18nService.translate(title).subscribe((titleTranslated: any) => {
+          this.titleService.setTitle(titleTranslated);
+        });
       });
 
+    // Stores top 100 user activites as local storage object.
+    let activities: string[] = [];
+    if (localStorage.getItem('mifosXLocation')) {
+      const activitiesArray: string[] = JSON.parse(localStorage.getItem('mifosXLocation'));
+      const length = activitiesArray.length;
+      activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
+    }
+    // Store route URLs array in local storage on navigation end.
+    onNavigationEnd.subscribe(() => {
+      activities.push(this.router.url);
+      localStorage.setItem('mifosXLocation', JSON.stringify(activities));
+    });
+
+    // Setup alerts
     this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       this.snackBar.open(`${alertEvent.message}`, 'Close', {
         duration: 2000,
@@ -117,9 +194,26 @@ export class WebAppComponent implements OnInit {
         verticalPosition: 'top'
       });
     });
-
     this.buttonConfig = new KeyboardShortcutsConfiguration();
 
+    // initialize language and date format if they are null.
+    if (!localStorage.getItem('mifosXLanguage')) {
+      this.settingsService.setDefaultLanguage();
+    }
+    if (!localStorage.getItem('mifosXDateFormat')) {
+      this.settingsService.setDateFormat('dd MMMM yyyy');
+    }
+    // Set default max date picker as Today
+    this.settingsService.setBusinessDate(this.dateUtils.formatDate(new Date(), SettingsService.businessDateFormat));
+    // Set the server list from the env var FINERACT_API_URLS
+    this.settingsService.setServers(environment.baseApiUrls.split(','));
+    // Set the Tenant Identifier(s) list from the env var
+    if (!localStorage.getItem('mifosXTenantIdentifier')) {
+      this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
+    }
+    this.settingsService.setTenantIdentifiers(environment.fineractPlatformTenantIds.split(','));
+
+    // Subscribe to session timeout If IdleTimeout is higher than 0 (zero)
     if (environment.session.timeout.idleTimeout > 0) {
       this.idle.$onSessionTimeout.subscribe(() => {
         if (this.authenticationService.getUserLoggedIn()) {
@@ -142,13 +236,14 @@ export class WebAppComponent implements OnInit {
     window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
   }
 
+  // Monitor all keyboard events and excute keyboard shortcuts
   @HostListener('window:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
     const routeD = this.buttonConfig.buttonCombinations.find(
       (x) =>
         x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key
     );
-    if (routeD) {
+    if (!(routeD === undefined)) {
       switch (routeD.id) {
         case 'logout':
           this.logout();
@@ -157,19 +252,25 @@ export class WebAppComponent implements OnInit {
           this.help();
           break;
         case 'runReport':
-          document.getElementById('runReport')?.click();
+          document.getElementById('runReport').click();
           break;
         case 'cancel':
-          const cancelButtons = Array.from(document.querySelectorAll('button')).filter(
-            (el) => el.textContent?.trim() === 'Cancel'
-          );
-          cancelButtons[0]?.click();
+          const cancelButtons = document.querySelectorAll('button');
+          const filteredcancelButtons = Array.prototype.filter.call(cancelButtons, function (el: any) {
+            return el.textContent.trim() === 'Cancel';
+          });
+          if (filteredcancelButtons.length > 0) {
+            filteredcancelButtons[0].click();
+          }
           break;
         case 'submit':
-          const submitButtons = Array.from(document.querySelectorAll('button')).filter(
-            (el) => el.textContent?.trim() === 'Submit'
-          );
-          submitButtons[0]?.click();
+          const submitButton = document.querySelectorAll('button');
+          const filteredSubmitButton = Array.prototype.filter.call(submitButton, function (el: any) {
+            return el.textContent.trim() === 'Submit';
+          });
+          if (filteredSubmitButton.length > 0) {
+            filteredSubmitButton[0].click();
+          }
           break;
         default:
           this.router.navigate([routeD.route], { relativeTo: this.activatedRoute });
