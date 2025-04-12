@@ -555,7 +555,6 @@
       "transaction_client": "sandorio_klientas",
       "transaction_loan": "sandorio_paskola",
       "transaction_savings": "sandorių_saupymai",
-      "xbrlmapping": "xbrlmapping",
       "CLIENT": "KLIENTAS",
       "Loan": "Paskola",
       "Savings": "Taupymas",
@@ -2583,8 +2582,7 @@
       "Apply Additional Shares": "Taikyti Papildomą",
       "Redeem Shares": "Išpirkti akcijas",
       "Approve Additional Shares": "Patvirtinti papildomas akcijas",
-      "Reject Additional Shares": "Atmesti papildomas akcijas",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "Atmesti papildomas akcijas"
     },
     "placeholders": {
       "Add new server": "Pridėti naują serverį",
@@ -3249,8 +3247,6 @@
       "Working Days": "Darbo dienos",
       "Working days and configure behaviour of payments": "Apibrėžkite darbo dienas ir konfigūruokite mokėjimų, atliekamų švenčių dienomis, elgesį",
       "Working days page allows you to define which days": "Darbo dienų puslapyje galite nustatyti, kurios savaitės dienos yra darbo dienos.",
-      "XBRL": "XBRL",
-      "XBRL Report": "XBRL ataskaita",
       "Your answer is": "Jūsų atsakymas yra",
       "by": "pateikė",
       "do not match": "nesutampa",

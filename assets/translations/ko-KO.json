@@ -555,7 +555,6 @@
       "transaction_client": "transaction_client",
       "transaction_loan": "거래_대출",
       "transaction_savings": "거래_저축",
-      "xbrlmapping": "xbrl매핑",
       "CLIENT": "고객",
       "Loan": "대출",
       "Savings": "저금",
@@ -2583,8 +2582,7 @@
       "Apply Additional Shares": "추가 신청",
       "Redeem Shares": "주식 상환",
       "Approve Additional Shares": "추가 공유 승인",
-      "Reject Additional Shares": "추가 공유 거부",
-      "XBRL": "XBRL"
+      "Reject Additional Shares": "추가 공유 거부"
     },
     "placeholders": {
       "Add new server": "새 서버 추가",
@@ -3249,8 +3247,6 @@
       "Working Days": "일하는 날",
       "Working days and configure behaviour of payments": "영업일 정의 및 휴일 지급 방식 구성",
       "Working days page allows you to define which days": "근무일 페이지에서는 어느 요일이 근무일인지 정의할 수 있습니다.",
-      "XBRL": "XBRL",
-      "XBRL Report": "XBRL 보고서",
       "Your answer is": "당신의 대답은",
       "by": "~에 의해",
       "do not match": "일치하지 않는",
