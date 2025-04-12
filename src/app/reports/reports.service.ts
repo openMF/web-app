@@ -31,37 +31,6 @@ export class ReportsService {
   }
 
   /**
-   * @returns {Observable<any>} Mix Taxonomy data
-   */
-  getMixTaxonomyArray(): Observable<any> {
-    return this.http.get('/mixtaxonomy');
-  }
-
-  /**
-   * @returns {Observable<any>} Mix Taxonomy data
-   */
-  getMixMappings(): Observable<any> {
-    return this.http.get('/mixmapping');
-  }
-
-  /**
-   * @param {any} mixMappingData Mix Mapping data to be posted
-   * @returns {Observable<any>} response code
-   */
-  editMixMappings(mixMappingData: any): Observable<any> {
-    return this.http.put('/mixmapping', mixMappingData);
-  }
-
-  /**
-   * @param {any} dates start date and end date
-   * @returns {Observable<any>} Mix Report
-   */
-  getMixReport(dates: any): Observable<any> {
-    const httpParams = new HttpParams().set('startDate', dates.startDate).set('endDate', dates.endDate);
-    return this.http.get('/mixreport', { params: httpParams, responseType: 'text' });
-  }
-
-  /**
    * @param {string} reportName Report name for which parameters are needed.
    * @returns {Observable<ReportParameter[]>}
    */
