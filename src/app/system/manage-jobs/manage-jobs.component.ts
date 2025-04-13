@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatLegacyTabChangeEvent as MatTabChangeEvent } from '@angular/material/legacy-tabs';
 import { SystemService } from '../system.service';
 import { TranslateService } from '@ngx-translate/core';
 

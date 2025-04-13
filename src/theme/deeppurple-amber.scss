@@ -11,5 +11,5 @@ $deeppurple-amber-theme: mat.define-light-theme(
 );
 
 .deeppurple-amber-theme {
-  @include mat.all-component-themes($deeppurple-amber-theme);
+  @include mat.all-legacy-component-themes($deeppurple-amber-theme);
 }

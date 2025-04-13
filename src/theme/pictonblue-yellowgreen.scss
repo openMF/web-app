@@ -13,5 +13,5 @@ $pictonblue-yellowgreen-theme: mat.define-light-theme(
 );
 
 .pictonblue-yellowgreen-theme {
-  @include mat.all-component-themes($pictonblue-yellowgreen-theme);
+  @include mat.all-legacy-component-themes($pictonblue-yellowgreen-theme);
 }

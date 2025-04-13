@@ -1,6 +1,9 @@
 /** Angular Imports */
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
+import {
+  MatLegacyTableDataSource as MatTableDataSource,
+  MatLegacyTable as MatTable
+} from '@angular/material/legacy-table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 /**

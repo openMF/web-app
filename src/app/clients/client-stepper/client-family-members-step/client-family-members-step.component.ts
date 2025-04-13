@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
