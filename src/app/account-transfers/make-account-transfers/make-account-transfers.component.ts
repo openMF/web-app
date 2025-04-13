@@ -15,11 +15,12 @@ import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
-import { MatInput } from '@angular/material/input';
 
 /** Environment Configuration */
 import { environment } from 'environments/environment';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { OrganizationService } from 'app/organization/organization.service';
+import { AlertService } from 'app/core/alert/alert.service';
 
 /**
  * Create account transfers
@@ -62,7 +63,12 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   interbankTransferForm: boolean = false;
   balance: number = 0;
   isLoading: boolean = false;
-  isInvestment: boolean = false;
+
+  isInvestment: boolean = true;
+  staffData: any;
+  statusEmployees = 'active';
+  searchTerm: string = '';
+  filteredStaffData: any[] = [];
 
   /**
    * Retrieves the standing instructions template from `resolve`.
@@ -81,12 +87,23 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     private accountTransfersService: AccountTransfersService,
     private dateUtils: Dates,
     private settingsService: SettingsService,
-    private clientsService: ClientsService
+    private clientsService: ClientsService,
+    private orgService: OrganizationService,
+    private alertService: AlertService
   ) {
     this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
       this.setParams();
       this.setOptions();
+      this.orgService.getEmployeesByStatus(this.statusEmployees).subscribe(
+        (response) => {
+          this.staffData = response;
+        },
+        (error) => {
+          console.log(error);
+          this.alertService.alert({ type: 'Resource does not exist', message: 'Error obteniendo la lista de empleados' });
+        }
+      );
     });
   }
   /** Sets the value from the URL */
@@ -156,44 +173,50 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         '',
         Validators.required
       ],
-      isInvestment: [false]
+      isInvestment: [this.isInvestment],
+      percentageInvestmentAgent: [
+        ''
+      ],
+      investmentAgentId: [
+        ''
+      ]
     });
   }
 
   createMakeAccountInterbankTransferForm(account: any) {
     /* --> */ this.makeAccountTransferForm = this.formBuilder.group({
-      toBank: [
-        { value: account.sourceFspId, disabled: true },
-        Validators.required
-      ],
-      toClientId: [
-        { value: account.firsName + ' ' + account.lastName, disabled: true },
-        Validators.required
-      ],
-      toAccountType: [
-        { value: 'Saving Account', disabled: true },
-        Validators.required
-      ],
-      toAccountId: [
-        { value: account.partyId, disabled: true },
-        Validators.required
-      ],
-      transferAmount: [
-        this.accountTransferTemplateData.transferAmount,
-        [
-          Validators.required,
-          Validators.min(0.01),
-          this.amountExceedsBalanceValidator.bind(this)]
-      ],
-      transferDate: [
-        this.settingsService.businessDate,
-        Validators.required
-      ],
-      transferDescription: [
-        '',
-        Validators.required
-      ]
-    });
+    toBank: [
+      { value: account.sourceFspId, disabled: true },
+      Validators.required
+    ],
+    toClientId: [
+      { value: account.firsName + ' ' + account.lastName, disabled: true },
+      Validators.required
+    ],
+    toAccountType: [
+      { value: 'Saving Account', disabled: true },
+      Validators.required
+    ],
+    toAccountId: [
+      { value: account.partyId, disabled: true },
+      Validators.required
+    ],
+    transferAmount: [
+      this.accountTransferTemplateData.transferAmount,
+      [
+        Validators.required,
+        Validators.min(0.01),
+        this.amountExceedsBalanceValidator.bind(this)]
+    ],
+    transferDate: [
+      this.settingsService.businessDate,
+      Validators.required
+    ],
+    transferDescription: [
+      '',
+      Validators.required
+    ]
+  });
     this.isLoading = false;
   }
 
@@ -287,14 +310,22 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       fromAccountType: this.accountTypeId,
       fromClientId: this.accountTransferTemplateData.fromClient.id,
       fromOfficeId: this.accountTransferTemplateData.fromClient.officeId,
-      isInvestment: this.isInvestment
+      isInvestment: this.isInvestment,
+      investmentAgentId: this.makeAccountTransferForm.controls.investmentAgentId.value,
+      percentageInvestmentAgent: this.makeAccountTransferForm.controls.percentageInvestmentAgent.value
     };
-    this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe(() => {
-      this.isLoading = false;
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      }
+    });     
   }
-
+  
   makeInterbankTransfer() {
     this.isLoading = true;
     const payload = {
@@ -352,5 +383,15 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
 
   onInvestmentChange(event: MatCheckboxChange): void {
     this.isInvestment = event.checked;
+  }
+
+  filterStaff() {
+    this.filteredStaffData = this.staffData.filter((staff: { displayName: string; }) =>
+      staff.displayName.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  stopClosing(event: KeyboardEvent) {
+    event.stopPropagation();
   }
 }

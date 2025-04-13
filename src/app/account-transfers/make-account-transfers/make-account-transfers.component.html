@@ -41,9 +41,9 @@
           <span fxFlex="60%">{{ accountTransferTemplateData.currency.name }}</span>
         </div>
 
-        <div class="filter-box">
-          <mat-checkbox labelPosition="after" class="m-r-10" (change)="onInvestmentChange($event)"
-            >{{ 'labels.inputs.Is Investment' | translate }}
+        <div class="filter-box" [formGroup]="makeAccountTransferForm">
+          <mat-checkbox labelPosition="after" formControlName="isInvestment" class="m-r-10"
+            (change)="onInvestmentChange($event)">{{ 'labels.inputs.Is Investment' | translate }}
           </mat-checkbox>
         </div>
       </div>
@@ -165,6 +165,33 @@
               {{ 'labels.inputs.Account' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.External Agent' | translate }}</mat-label>
+            <mat-select formControlName="investmentAgentId" #selectPanel>
+              <mat-option>
+                <input
+                  matInput
+                  [(ngModel)]="searchTerm"
+                  [ngModelOptions]="{ standalone: true }"
+                  (ngModelChange)="filterStaff()"
+                  (click)="$event.stopPropagation()"
+                  (keydown)="stopClosing($event)"
+                  placeholder="Buscar por nombre"
+                />
+              </mat-option>
+          
+              <mat-option *ngFor="let staff of filteredStaffData" [value]="staff.id">
+                {{ staff.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.Percentage' | translate }}</mat-label>
+            <input type="number" matInput formControlName="percentageInvestmentAgent" />
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
