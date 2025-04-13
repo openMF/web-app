@@ -23,7 +23,7 @@
   </div>
 
   <div class="m-t-10">
-    <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z1 m-b-25" [fxHide]="isLoading">
+    <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z1 m-b-25">
       <ng-container *ngFor="let datatableColumn of datatableColumns; let i = index" [matColumnDef]="datatableColumn">
         <ng-container *ngIf="i === 0">
           <th mat-header-cell *matHeaderCellDef></th>

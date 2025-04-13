@@ -3,9 +3,9 @@
 <div
   mat-dialog-content
   [formGroup]="form"
-  [fxLayout]="layout.columns > 1 ? 'row wrap' : 'column'"
+  [ngClass]="layout.columns > 1 ? 'flex flex-wrap' : 'flex flex-col'"
   fxLayout.lt-md="column"
-  [fxLayoutGap]="(layout.columns > 1 ? layout.gap : 0) + '%'"
+  [ngStyle]="{ gap: (layout.columns > 1 ? layout.gap : 0) + '%' }"
   fxLayoutGap.lt-md="0%"
 >
   <div *ngFor="let formfield of formfields" [fxFlex]="layout.flex + '%'" fxFlex.lt-md="100%">
