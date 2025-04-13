@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -43,12 +42,11 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 /**
  * Material Module
  *
- * Angular CDK, Angular Material and Flex Layout modules are exported here.
+ * Angular CDK and Angular Material modules are exported here.
  */
 @NgModule({
   exports: [
     DragDropModule,
-    FlexLayoutModule,
     LayoutModule,
     MatAutocompleteModule,
     MatButtonModule,
