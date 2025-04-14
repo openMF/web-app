@@ -1695,6 +1695,8 @@
       "Incentive Type": "Stimulēšanas veids",
       "Include in Customer Loan Counter": "Iekļaut klientu aizdevumu skaitītājā",
       "Income Account": "Ienākumu konts",
+      "Income capitalization": "Ienākumu kapitalizācija",
+      "INCOME CAPITALIZATION": "IENĀKUMU KAPITALIZĀCIJA",
       "Income from Charge": "Ienākumi no maksas",
       "Income from ChargeOff Fees": "Ienākumi no ChargeOff maksas",
       "Income from ChargeOff Interest": "Ienākumi no ChargeOff procentiem",
@@ -2456,7 +2458,10 @@
       "Password must have not consecutive repeating characters": "Parolē nedrīkst būt secīgas atkārtotas rakstzīmes",
       "Password must contain at least one special character (@$!%*?&)": "Parolē jāsatur vismaz viena speciālā rakstzīme (@$!%*?&)",
       "Password minimun length must be": "Paroles minimālajam garumam jābūt",
-      "Passwords do not match": "Paroles nesakrīt"
+      "Passwords do not match": "Paroles nesakrīt",
+      "Enable income capitalization": "Iespējot ienākumu kapitalizāciju",
+      "Income capitalization calculation type": "Ienākumu kapitalizācijas aprēķina veids",
+      "Income capitalization strategy": "Ienākumu kapitalizācijas stratēģija"
     },
     "links": {
       "Community": "kopiena",

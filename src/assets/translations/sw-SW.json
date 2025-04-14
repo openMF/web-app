@@ -1695,6 +1695,8 @@
       "Incentive Type": "Aina ya motisha",
       "Include in Customer Loan Counter": "Jumuisha katika Kaunta ya Mkopo kwa Wateja",
       "Income Account": "Akaunti ya Mapato",
+      "Income capitalization": "Mtaji wa mapato",
+      "INCOME CAPITALIZATION": "MTAJI WA KIPATO",
       "Income from Charge": "Mapato kutoka kwa Malipo",
       "Income from ChargeOff Fees": "Mapato kutoka kwa Ada ya ChargeOff",
       "Income from ChargeOff Interest": "Mapato kutoka kwa Riba ya ChargeOff",
@@ -2456,7 +2458,10 @@
       "Password must have not consecutive repeating characters": "Nenosiri lazima lisiwe na vibambo vinavyorudiwa mfululizo",
       "Password must contain at least one special character (@$!%*?&)": "Nenosiri lazima liwe na angalau herufi moja maalum (@$!%*?&)",
       "Password minimun length must be": "Nenosiri la urefu wa chini lazima liwe",
-      "Passwords do not match": "Manenosiri hayalingani"
+      "Passwords do not match": "Manenosiri hayalingani",
+      "Enable income capitalization": "Washa mtaji wa mapato",
+      "Income capitalization calculation type": "Aina ya kukokotoa mtaji wa mapato",
+      "Income capitalization strategy": "Mkakati wa mtaji wa mapato"
     },
     "links": {
       "Community": "Jumuiya",

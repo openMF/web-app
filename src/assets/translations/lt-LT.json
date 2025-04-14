@@ -1695,6 +1695,8 @@
       "Incentive Type": "Paskatinimo tipas",
       "Include in Customer Loan Counter": "Įtraukti į klientų paskolų skaitiklį",
       "Income Account": "Pajamų sąskaita",
+      "Income capitalization": "Pajamų kapitalizacija",
+      "INCOME CAPITALIZATION": "PAJAMŲ KAPITALIZAVIMAS",
       "Income from Charge": "Pajamos iš mokesčių",
       "Income from ChargeOff Fees": "Pajamos iš ChargeOff mokesčių",
       "Income from ChargeOff Interest": "Pajamos iš ChargeOff palūkanų",
@@ -2456,7 +2458,10 @@
       "Password must have not consecutive repeating characters": "Slaptažodyje neturi būti iš eilės besikartojančių simbolių",
       "Password must contain at least one special character (@$!%*?&)": "Slaptažodyje turi būti bent vienas specialusis simbolis (@$!%*?&)",
       "Password minimun length must be": "Minimalus slaptažodžio ilgis turi būti",
-      "Passwords do not match": "Slaptažodžiai nesutampa"
+      "Passwords do not match": "Slaptažodžiai nesutampa",
+      "Enable income capitalization": "Įgalinti pajamų kapitalizaciją",
+      "Income capitalization calculation type": "Pajamų kapitalizavimo skaičiavimo tipas",
+      "Income capitalization strategy": "Pajamų kapitalizavimo strategija"
     },
     "links": {
       "Community": "bendruomenė",
