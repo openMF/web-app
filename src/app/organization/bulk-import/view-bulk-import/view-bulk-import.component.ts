@@ -1,12 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {
-  MatLegacyTableDataSource as MatTableDataSource,
-  MatLegacyTable as MatTable
-} from '@angular/material/legacy-table';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 
 /** Custom Imports */

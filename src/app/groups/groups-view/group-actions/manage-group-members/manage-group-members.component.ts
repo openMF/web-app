@@ -9,7 +9,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { ClientsService } from 'app/clients/clients.service';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 /**
  * Manage Group Members Component

@@ -9,11 +9,11 @@ import {
   PaymentAllocationOrder,
   PaymentAllocationTransactionType
 } from './payment-allocation-model';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { MatLegacyTabGroup as MatTabGroup } from '@angular/material/legacy-tabs';
+import { MatTabGroup as MatTabGroup } from '@angular/material/tabs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

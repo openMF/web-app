@@ -1,11 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import {
-  MatLegacyTableDataSource as MatTableDataSource,
-  MatLegacyTable as MatTable
-} from '@angular/material/legacy-table';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Dialogs */

@@ -7,5 +7,5 @@ $pink-bluegrey-warn: mat.define-palette(mat.$red-palette);
 $pink-bluegrey-theme: mat.define-light-theme($pink-bluegrey-primary, $pink-bluegrey-accent, $pink-bluegrey-warn);
 
 .pink-bluegrey-theme {
-  @include mat.all-legacy-component-themes($pink-bluegrey-theme);
+  @include mat.all-component-themes($pink-bluegrey-theme);
 }

@@ -7,5 +7,5 @@ $indigo-pink-warn: mat.define-palette(mat.$red-palette);
 $indigo-pink-theme: mat.define-light-theme($indigo-pink-primary, $indigo-pink-accent, $indigo-pink-warn);
 
 .indigo-pink-theme {
-  @include mat.all-legacy-component-themes($indigo-pink-theme);
+  @include mat.all-component-themes($indigo-pink-theme);
 }

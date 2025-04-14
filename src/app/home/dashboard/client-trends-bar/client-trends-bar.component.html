@@ -21,7 +21,7 @@
     <div [ngStyle]="{ display: hideOutput ? 'none' : 'block' }">
       <canvas id="client-trends-bar" width="800" height="465" class="fallback"></canvas>
     </div>
-    <mat-button-toggle-group [formControl]="timescale" id="timescale" appearance="legacy">
+    <mat-button-toggle-group [formControl]="timescale" id="timescale">
       <mat-button-toggle value="Day">{{ 'labels.buttons.Day' | translate }}</mat-button-toggle>
       <mat-button-toggle value="Week">{{ 'labels.buttons.Week' | translate }}</mat-button-toggle>
       <mat-button-toggle value="Month">{{ 'labels.buttons.Month' | translate }}</mat-button-toggle>

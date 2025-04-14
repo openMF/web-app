@@ -7,5 +7,5 @@ $purple-green-warn: mat.define-palette(mat.$red-palette);
 $purple-green-theme: mat.define-light-theme($purple-green-primary, $purple-green-accent, $purple-green-warn);
 
 .purple-green-theme {
-  @include mat.all-legacy-component-themes($purple-green-theme);
+  @include mat.all-component-themes($purple-green-theme);
 }
