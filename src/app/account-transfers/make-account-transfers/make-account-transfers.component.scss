@@ -36,3 +36,7 @@ mat-divider {
 ::ng-deep mat-form-field.error-warn.mat-form-field-invalid .mat-error {
   color: #0009 !important;
 }
+
+::ng-deep .mat-select-panel {
+  max-height: 200px !important;
+}
