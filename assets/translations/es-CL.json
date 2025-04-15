@@ -1694,6 +1694,8 @@
       "Incentive Type": "Tipo de incentivo",
       "Include in Customer Loan Counter": "Incluir en el contador de Créditos al cliente",
       "Income Account": "Cuenta de Ingresos",
+      "Income capitalization": "Capitalización de ingresos",
+      "INCOME CAPITALIZATION": "CAPITALIZACIÓN DE INGRESOS",
       "Income from Charge": "Ingresos por cargo",
       "Income from ChargeOff Fees": "Ingresos por comisiones de cancelación",
       "Income from ChargeOff Interest": "Ingresos por intereses de cancelación",
@@ -2456,7 +2458,10 @@
       "Password must have not consecutive repeating characters": "La contraseña no debe tener caracteres repetidos consecutivos.",
       "Password must contain at least one special character (@$!%*?&)": "La contraseña debe contener al menos un carácter especial (@$!%*?&)",
       "Password minimun length must be": "La longitud mínima de la contraseña debe ser",
-      "Passwords do not match": "Las contraseñas no coinciden"
+      "Passwords do not match": "Las contraseñas no coinciden",
+      "Enable income capitalization": "Habilitar capitalización de ingresos",
+      "Income capitalization calculation type": "Tipo de cálculo de capitalización de ingresos",
+      "Income capitalization strategy": "Estrategia de capitalización de ingresos"
     },
     "links": {
       "Community": "Comunidad",

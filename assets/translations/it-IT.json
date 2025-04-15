@@ -1695,6 +1695,8 @@
       "Incentive Type": "Tipo di incentivo",
       "Include in Customer Loan Counter": "Includi nel contatore dei prestiti al cliente",
       "Income Account": "Conto dei redditi",
+      "Income capitalization": "Capitalizzazione del reddito",
+      "INCOME CAPITALIZATION": "CAPITALIZZAZIONE DEL REDDITO",
       "Income from Charge": "Proventi da carica",
       "Income from ChargeOff Fees": "Proventi da commissioni di addebito",
       "Income from ChargeOff Interest": "Proventi da interessi di addebito",
@@ -2456,7 +2458,10 @@
       "Password must have not consecutive repeating characters": "La password non deve contenere caratteri ripetuti consecutivi",
       "Password must contain at least one special character (@$!%*?&)": "La password deve contenere almeno un carattere speciale (@$!%*?&)",
       "Password minimun length must be": "La lunghezza minima della password deve essere",
-      "Passwords do not match": "Le password non corrispondono"
+      "Passwords do not match": "Le password non corrispondono",
+      "Enable income capitalization": "Abilita la capitalizzazione del reddito",
+      "Income capitalization calculation type": "Tipo di calcolo della capitalizzazione del reddito",
+      "Income capitalization strategy": "Strategia di capitalizzazione del reddito"
     },
     "links": {
       "Community": "Comunità",

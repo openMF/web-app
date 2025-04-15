@@ -1696,6 +1696,8 @@
       "Incentive Type": "인센티브 유형",
       "Include in Customer Loan Counter": "고객 대출 카운터에 포함",
       "Income Account": "소득 계정",
+      "Income capitalization": "소득 자본화",
+      "INCOME CAPITALIZATION": "소득 자본화",
       "Income from Charge": "수수료 수입",
       "Income from ChargeOff Fees": "ChargeOff 수수료로 인한 소득",
       "Income from ChargeOff Interest": "ChargeOff 이자 소득",
@@ -2457,7 +2459,10 @@
       "Password must have not consecutive repeating characters": "비밀번호에는 연속된 반복 문자가 없어야 합니다.",
       "Password must contain at least one special character (@$!%*?&)": "비밀번호에는 특수 문자가 하나 이상 포함되어야 합니다. (@$!%*?&)",
       "Password minimun length must be": "비밀번호의 최소 길이는 다음과 같아야 합니다.",
-      "Passwords do not match": "비밀번호가 일치하지 않습니다."
+      "Passwords do not match": "비밀번호가 일치하지 않습니다.",
+      "Enable income capitalization": "소득 자본화 활성화",
+      "Income capitalization calculation type": "소득 자본화 계산 유형",
+      "Income capitalization strategy": "소득 자본화 전략"
     },
     "links": {
       "Community": "지역 사회",

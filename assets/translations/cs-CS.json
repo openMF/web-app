@@ -1695,6 +1695,8 @@
       "Incentive Type": "Typ pobídky",
       "Include in Customer Loan Counter": "Zahrnout do přepážky zákaznických půjček",
       "Income Account": "Příjmový účet",
+      "Income capitalization": "Kapitalizace příjmu",
+      "INCOME CAPITALIZATION": "KAPITALIZACE PŘÍJMU",
       "Income from Charge": "Příjem z poplatku",
       "Income from ChargeOff Fees": "Příjem z poplatků za ChargeOff",
       "Income from ChargeOff Interest": "Příjem z úroků ChargeOff",
@@ -2456,7 +2458,10 @@
       "Password must have not consecutive repeating characters": "Heslo nesmí obsahovat po sobě jdoucí opakující se znaky",
       "Password must contain at least one special character (@$!%*?&)": "Heslo musí obsahovat alespoň jeden speciální znak (@$!%*?&)",
       "Password minimun length must be": "Minimální délka hesla musí být",
-      "Passwords do not match": "Hesla se neshodují"
+      "Passwords do not match": "Hesla se neshodují",
+      "Enable income capitalization": "Povolit kapitalizaci příjmu",
+      "Income capitalization calculation type": "Typ výpočtu kapitalizace příjmu",
+      "Income capitalization strategy": "Strategie kapitalizace příjmu"
     },
     "links": {
       "Community": "Společenství",
