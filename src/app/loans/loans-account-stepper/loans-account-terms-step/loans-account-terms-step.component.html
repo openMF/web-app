@@ -290,11 +290,6 @@
       <input type="number" matInput formControlName="fixedEmiAmount" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
-      <mat-label>{{ 'labels.inputs.Balloon Repayment Amount' | translate }}</mat-label>
-      <input type="number" matInput formControlName="balloonRepaymentAmount" />
-    </mat-form-field>
-
     <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Interest Calculations' | translate }}</h4>
 
     <mat-form-field fxFlex="48%">
@@ -472,6 +467,13 @@
     >
       <span fxFlex="40%">{{ 'labels.inputs.Frequency Interval for recalculation' | translate }}</span>
       <span fxFlex="60%">{{ loansAccountTermsData.interestRecalculationData.recalculationRestFrequencyInterval }}</span>
+    </div>
+
+    <div fxFlexFill>
+      <span fxFlex="40%"
+        ><b>{{ 'labels.inputs.Enable income capitalization' | translate }}</b></span
+      >
+      <span fxFlex="60%">{{ enableIncomeCapitalization | yesNo }}</span>
     </div>
 
     <ng-container *ngIf="multiDisburseLoan">
