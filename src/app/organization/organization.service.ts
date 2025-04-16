@@ -826,6 +826,10 @@ export class OrganizationService {
     return this.http.get('/investmentproject/all');
   }
 
+  getInvestmentProject(projectId: any): Observable<any> {
+    return this.http.get(`/investmentproject/search?id=${projectId}`);
+  }
+
   createInvestmentProjects(payload: any): Observable<any> {
     return this.http.post('/investmentproject', payload);
   }

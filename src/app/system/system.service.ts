@@ -155,6 +155,9 @@ export class SystemService {
     return this.http.get(`/codes/${codeId}`);
   }
 
+  getCodeByName(codeName: string): Observable<any> {
+    return this.http.get(`/codes/name/${codeName}`);
+  }
   /**
    * @param code Code.
    * @param codeId Code ID.

@@ -4,12 +4,12 @@
       <mat-card-content>
         <div fxLayout="column">
           <mat-form-field fxFlex="98%">
-            <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
-            <input matInput autofocus formControlName="name" />
-            <mat-error *ngIf="investmentProjectForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            <mat-label>{{ 'labels.inputs.Country' | translate }}</mat-label>
+            <mat-select required formControlName="countryId">
+              <mat-option *ngFor="let country of countryData" [value]="country.id">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
@@ -21,11 +21,34 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+          <mat-autocomplete
+            autoActiveFirstOption
+            #clientsAutocomplete="matAutocomplete"
+            [displayWith]="displayClient"
+            (optionSelected)="clientSelected($event)"
+          >
             <mat-option *ngFor="let client of clientsData" [value]="client">
               {{ client.id }} - {{ client.displayName }}
             </mat-option>
           </mat-autocomplete>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.Loan Account' | translate }}</mat-label>
+            <mat-select required formControlName="loanId">
+              <mat-option *ngFor="let loan of loansData" [value]="loan.id">
+                {{ loan.accountNo }} - {{ loan.productName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
+            <input matInput autofocus formControlName="name" />
+            <mat-error *ngIf="investmentProjectForm.controls.name.hasError('required')">
+              {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
 
           <mat-form-field fxFlex="98%">
             <mat-label>{{ 'labels.inputs.custom.Subtitle' | translate }}</mat-label>
@@ -113,6 +136,33 @@
               {{ 'labels.inputs.Number of Installments' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.custom.Category' | translate }}</mat-label>
+            <mat-select required formControlName="categoryId">
+              <mat-option *ngFor="let category of categoryData" [value]="category.id">
+                {{ category.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.custom.Subcategory' | translate }}</mat-label>
+            <mat-select required formControlName="subCategories" multiple>
+              <mat-option *ngFor="let subcategory of subcategoryData" [value]="subcategory.id">
+                {{ subcategory.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.custom.Area' | translate }}</mat-label>
+            <mat-select required formControlName="areaId">
+              <mat-option *ngFor="let area of areaData" [value]="area.id">
+                {{ area.name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <div class="filter-box">

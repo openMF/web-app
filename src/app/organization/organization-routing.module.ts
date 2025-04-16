@@ -109,6 +109,13 @@ import { CreateInvestmentProjectComponent } from './manage-projects/create-inves
 import { InvestmentProjectTemplateResolver } from './manage-projects/investment-project-template.resolver';
 import { ManageProjectParticipationComponent } from './manage-project-participation/manage-project-participation.component';
 import { ManageProjectParticipationsResolver } from './manage-project-participation/manage-project-participations.resolver';
+import { ManageProjectResolver } from './manage-projects/manage-project.resolver';
+import { ViewInvestmentProjectComponent } from './manage-projects/view-investment-project/view-investment-project.component';
+import { EditInvestmentProjectComponent } from './manage-projects/edit-investment-project/edit-investment-project.component';
+import { DataCodeCountryResolver } from './manage-projects/data-code-country.resolver';
+import { DataCodeCategoryResolver } from './manage-projects/data-code-category.resolver';
+import { DataCodeSubCategoryResolver } from './manage-projects/data-code-subcategory.resolver';
+import { DataCodeAreaResolver } from './manage-projects/data-code-area.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -714,8 +721,33 @@ const routes: Routes = [
               component: CreateInvestmentProjectComponent,
               data: { title: 'Create Investment Project', breadcrumb: 'Create Investment Project' },
               resolve: {
-                accountData: InvestmentProjectTemplateResolver
+                accountData: InvestmentProjectTemplateResolver,
+                countryData: DataCodeCountryResolver,
+                categoryData: DataCodeCategoryResolver,
+                subcategoryData: DataCodeSubCategoryResolver,
+                areaData: DataCodeAreaResolver
               }
+            },
+            {
+              path: ':id',
+              data: { title: 'View Investment Project', routeParamBreadcrumb: 'id' },
+              children: [
+                {
+                  path: '',
+                  component: ViewInvestmentProjectComponent,
+                  resolve: {
+                    accountData: ManageProjectResolver
+                  }
+                },
+                {
+                  path: 'edit',
+                  component: EditInvestmentProjectComponent,
+                  data: { title: 'Edit Investment Project', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  resolve: {
+                    accountData: InvestmentProjectTemplateResolver
+                  }
+                }
+              ]
             }
           ]
         },
@@ -788,8 +820,13 @@ const routes: Routes = [
     StandingInstructionsTemplateResolver,
     AdvanceSearchTemplateResolver,
     ManageProjectsResolver,
+    ManageProjectResolver,
     InvestmentProjectTemplateResolver,
-    ManageProjectParticipationsResolver
+    ManageProjectParticipationsResolver,
+    DataCodeCountryResolver,
+    DataCodeCategoryResolver,
+    DataCodeSubCategoryResolver,
+    DataCodeAreaResolver
   ]
 })
 export class OrganizationRoutingModule {}

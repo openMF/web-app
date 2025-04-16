@@ -2472,7 +2472,10 @@
         "Institution Description": "Descripción de Institución",
         "Team Description": "Descripción de Equipo",
         "Financial Description": "Descripción Fianciera",
-        "Impact Description": "Descripción de Impacto"
+        "Impact Description": "Descripción de Impacto",
+        "Category": "Categoría",
+        "Subcategory": "Subcategoría",
+        "Area": "Area"
       }
     },
     "links": {
