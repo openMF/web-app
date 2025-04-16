@@ -3,7 +3,7 @@
 </div>
 
 <div class="savings-account-tables" fxLayout="row" fxLayoutGap="2%" *ngIf="!isLoading">
-  <div fxFlex="49%" fxLayout="column" fxLayoutGap="4%">
+  <div fxFlex="49%" class="layout-column" fxLayoutGap="4%">
     <div
       *ngIf="
         !savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval;

@@ -11,34 +11,37 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap content">
+        <div class="flex-50">
+          class="mat-body-strong">
           {{ 'labels.inputs.Job Name' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ jobData.displayName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50">
+          class="mat-body-strong">
           {{ 'labels.inputs.Cron Expression' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ jobData.cronExpression }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">{{ 'labels.inputs.Is Active Job' | translate }}?</div>
+        <div class="flex-50">class="mat-body-strong">{{ 'labels.inputs.Is Active Job' | translate }}?</div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ jobData.active | yesNo }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50">
+          class="mat-body-strong">
           {{ 'labels.inputs.Follow' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           <a href="http://www.cronmaker.com/">
             {{ 'labels.text.Click Here To Generate Cron Expression' | translate }}
           </a>
@@ -47,7 +50,7 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div class="layout-row" class="layout-align-center" fxLayoutGap="2%" fxLayout.lt-md="column">
         <button type="button" color="primary" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Back' | translate }}
         </button>

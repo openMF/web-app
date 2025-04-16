@@ -1,7 +1,7 @@
 <form [formGroup]="savingProductAccountingForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row-wrap custom-gap responsive-column">
     <mat-radio-group
-      fxFlex="98%"
+      class="flex-98"
       fxLayout="row"
       fxLayoutGap="5%"
       fxLayout.lt-md="column"
@@ -12,10 +12,10 @@
       </mat-radio-button>
     </mat-radio-group>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
     <div *ngIf="isCashOrAccrualAccounting()" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
 
       <mifosx-gl-account-selector
         fxFlex="48%"
@@ -55,9 +55,9 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
 
       <mifosx-gl-account-selector
         fxFlex="48%"
@@ -97,7 +97,7 @@
       >
       </mifosx-gl-account-selector>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
+      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
 
       <mifosx-gl-account-selector
         fxFlex="48%"
@@ -117,9 +117,9 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
 
       <mifosx-gl-account-selector
         fxFlex="48%"
@@ -148,7 +148,7 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
       <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules">{{
         'labels.heading.Advanced Accounting Rules' | translate
@@ -161,7 +161,7 @@
         fxLayoutGap="2%"
         fxLayout.lt-md="column"
       >
-        <div fxFlex="100%">
+        <div class="flex-100">
           <h4 fxFlex="63%" class="mat-h4">
             {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
           </h4>
@@ -179,7 +179,7 @@
           </div>
 
           <table
-            fxFlex="98%"
+            class="flex-98"
             class="mat-elevation-z1"
             mat-table
             [dataSource]="paymentChannelToFundSourceMappings.value"
@@ -220,7 +220,7 @@
           </table>
         </div>
 
-        <div fxFlex="100%" *ngIf="existCharges()">
+        <div class="flex-100" *ngIf="existCharges()">
           <h4 fxFlex="63%" class="mat-h4">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
 
           <div fxFlex="33%" *ngIf="existCharges()">
@@ -236,7 +236,7 @@
           </div>
 
           <table
-            fxFlex="98%"
+            class="flex-98"
             class="mat-elevation-z1"
             mat-table
             [dataSource]="feeToIncomeAccountMappings.value"
@@ -273,7 +273,7 @@
           </table>
         </div>
 
-        <div fxFlex="100%" *ngIf="existCharges()">
+        <div class="flex-100" *ngIf="existCharges()">
           <h4 fxFlex="63%" class="mat-h4">
             {{ 'labels.heading.Map Penalties to Specific Income Accounts' | translate }}
           </h4>
@@ -291,7 +291,7 @@
           </div>
 
           <table
-            fxFlex="98%"
+            class="flex-98"
             class="mat-elevation-z1"
             mat-table
             [dataSource]="penaltyToIncomeAccountMappings.value"
@@ -335,7 +335,7 @@
     </div>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

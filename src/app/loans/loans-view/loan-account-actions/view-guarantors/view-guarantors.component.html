@@ -71,16 +71,16 @@
       </div>
     </div>
 
-    <div fxFlexFill *ngIf="guarantorDetails" fxLayout="row wrap" fxLayout.lt-md="column">
+    <div class="flex-fill" *ngIf="guarantorDetails" class="layout-row-wrap responsive-column">
       <!-- guarantors details table -->
       <div class="heading-content">
-        <div fxLayout="column" fxFlex="50%">
+        <div class="layout-column flex-50">
           <div class="heading-name">
             <h3>{{ 'labels.heading.Guarantors Details' | translate }}</h3>
           </div>
         </div>
-        <div fxLayout="column" fxFlex="50%">
-          <div fxLayout="row" fxLayoutAlign="flex-end">
+        <div class="layout-column flex-50">
+          <div class="layout-row align-flex-end">
             <button mat-raised-button class="f-right" color="primary" (click)="toggleGuarantorsDetailsOverview()">
               {{ showDeletedGuarantorsAccounts ? 'Hide Deleted Guarantors' : 'Show Deleted Guarantors' }}
             </button>

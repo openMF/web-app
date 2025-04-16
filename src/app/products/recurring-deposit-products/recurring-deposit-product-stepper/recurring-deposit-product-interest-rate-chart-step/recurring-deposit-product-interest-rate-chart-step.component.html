@@ -1,5 +1,5 @@
 <form [formGroup]="recurringDepositProductInterestRateChartForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row-wrap gap-2px responsive-column">
     <h3 fxFlex="83%" class="mat-h3">{{ 'labels.heading.Interest Rate Charts' | translate }}</h3>
 
     <div fxFlex="13%" fxLayout="row" fxLayoutAlign="start center">
@@ -16,10 +16,10 @@
       formArrayName="charts"
       *ngFor="let chart of charts.controls; let chartIndex = index"
     >
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="chartIndex">
-        <div fxFlex="98%" fxLayout="row" fxLayoutAlign="end center">
+      <div class="flex-fill" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="chartIndex">
+        <div class="flex-98" fxLayout="row" fxLayoutAlign="end center">
           <button
             type="button"
             mat-icon-button
@@ -32,7 +32,7 @@
           </button>
         </div>
 
-        <mat-form-field fxFlex="32%">
+        <mat-form-field class="flex-fill" ="32%">
           <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
           <input
             matInput
@@ -42,7 +42,7 @@
           />
         </mat-form-field>
 
-        <mat-form-field fxFlex="31%" (click)="validFromDatePicker.open()">
+        <mat-form-field class="flex-fill" ="31%" (click)="validFromDatePicker.open()">
           <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
           <input
             matInput
@@ -60,14 +60,14 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="31%" (click)="endDatePicker.open()">
+        <mat-form-field class="flex-fill" ="31%" (click)="endDatePicker.open()">
           <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate" />
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #endDatePicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field fxFlex="65%">
+        <mat-form-field class="flex-fill" ="65%">
           <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
           <textarea
             matInput
@@ -81,19 +81,19 @@
             {{ 'labels.inputs.Is primary grouping by amount?' | translate }}
           </mat-checkbox>
         </div>
-        <div fxFlex="100%" class="center">
+        <div class="flex-100" class="center">
           <button type="button" mat-raised-button color="primary" (click)="addChartSlab(chart.controls.chartSlabs)">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add Slab' | translate }}
           </button>
         </div>
 
-        <div fxFlex="100%" *ngIf="chart.value.chartSlabs.length === 0">
+        <div class="flex-100" *ngIf="chart.value.chartSlabs.length === 0">
           <h3 class="mat-h3">{{ 'labels.heading.It is required to add at least one Slab' | translate }}</h3>
         </div>
 
         <table
-          fxFlex="98%"
+          class="flex-98"
           class="mat-elevation-z1"
           mat-table
           [dataSource]="chart.value.chartSlabs"
@@ -289,7 +289,7 @@
     </div>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

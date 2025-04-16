@@ -2,28 +2,28 @@
   <mat-card>
     <form [formGroup]="settleCashForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="48%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <input matInput required formControlName="office" />
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Teller Name' | translate }}</mat-label>
             <input matInput required formControlName="tellerName" />
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Cashier' | translate }}</mat-label>
             <input matInput required formControlName="cashier" />
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Assignment Period' | translate }}</mat-label>
             <input matInput formControlName="assignmentPeriod" />
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" (click)="cashDatePicker.open()">
+          <mat-form-field class="flex-48" (click)="cashDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Date' | translate }}</mat-label>
             <input
               matInput
@@ -41,7 +41,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currencyCode">
               <mat-option *ngFor="let currency of cashierData.currencyOptions" [value]="currency.code">
@@ -54,7 +54,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input matInput required formControlName="txnAmount" />
             <mat-error *ngIf="settleCashForm.controls.txnAmount.hasError('required')">
@@ -63,7 +63,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Notes/Comments' | translate }}</mat-label>
             <input matInput required formControlName="txnNote" />
             <mat-error *ngIf="settleCashForm.controls.txnNote.hasError('required')">
@@ -74,7 +74,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

@@ -17,17 +17,19 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap content">
+        <div class="flex-50">
+          class="mat-body-strong">
           {{ 'labels.inputs.Name' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ delinquencyBucketData.name }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
-          {{ 'labels.inputs.Classification' | translate }} {{ 'labels.inputs.Name' | translate }}
+        <div class="flex-50">
+          class="mat-body-strong"> {{ 'labels.inputs.Classification' | translate }}
+          {{ 'labels.inputs.Name' | translate }}
         </div>
 
         <div fxFlex="25%" class="mat-body-strong">
@@ -40,7 +42,7 @@
       </div>
 
       <div fxLayout="row wrap" class="content" *ngFor="let range of delinquencyBucketData.ranges">
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ range.classification }}
         </div>
 

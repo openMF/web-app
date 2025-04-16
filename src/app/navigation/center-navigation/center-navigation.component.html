@@ -32,60 +32,72 @@
 <mat-card-content>
   <mat-tab-group>
     <mat-tab label="Details">
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap content">
+        <div class="flex-50">
+          class="mat-body-strong">
           {{ 'labels.inputs.Activation Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ centerData.activationDate | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50">
+          class="mat-body-strong">
           {{ 'labels.inputs.Associated Officer' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ centerData.staffName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          class="mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Clients' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          *ngIf="centerSummaryData">
           {{ centerSummaryData.activeClients }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          class="mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Client Loans' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          *ngIf="centerSummaryData">
           {{ centerSummaryData.activeClientLoans }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          class="mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Client Borrowers' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          *ngIf="centerSummaryData">
           {{ centerSummaryData.activeClientBorrowers }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          class="mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Overdue Group Loans' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          *ngIf="centerSummaryData">
           {{ centerSummaryData.overdueGroupLoans }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          class="mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Overdue Client Loans' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50">
+          *ngIf="centerSummaryData">
           {{ centerSummaryData.overdueClientLoans }}
         </div>
 
@@ -119,11 +131,12 @@
           {{ centerSummaryData.collectionMeetingCalendar.humanReadable }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50">
+          class="mat-body-strong">
           {{ 'labels.inputs.Number of Groups' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ groupData ? groupData.length : '' }}
         </div>
       </div>

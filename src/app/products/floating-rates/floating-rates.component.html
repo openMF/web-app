@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_FLOATINGRATE'">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Create Floating Rate' | translate }}
@@ -6,8 +6,8 @@
 </div>
 
 <div class="container">
-  <div fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex>
+  <div class="layout-row gap-20px">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>

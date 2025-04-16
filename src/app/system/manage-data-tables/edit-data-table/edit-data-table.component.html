@@ -2,13 +2,13 @@
   <mat-card>
     <form [formGroup]="dataTableForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="40%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Data Table Name' | translate }}</mat-label>
             <input matInput required formControlName="datatableName" />
           </mat-form-field>
 
-          <mat-form-field fxFlex="20%">
+          <mat-form-field class="flex-fill" ="20%">
             <mat-label>{{ 'labels.inputs.Application Table Name' | translate }}</mat-label>
             <mat-select required formControlName="apptableName">
               <mat-option *ngFor="let appTable of appTableData" [value]="appTable.value">
@@ -21,7 +21,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="20%" *ngIf="showEntitySubType">
+          <mat-form-field class="flex-fill" ="20%" *ngIf="showEntitySubType">
             <mat-label>{{ 'labels.inputs.Entity SubType' | translate }}</mat-label>
             <mat-select formControlName="entitySubType">
               <mat-option *ngFor="let entitySubType of entitySubTypeData" [value]="entitySubType.value">
@@ -166,7 +166,7 @@
         <mat-paginator [pageSizeOptions]="[10, 25]" showFirstLastButtons></mat-paginator>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

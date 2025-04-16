@@ -1,28 +1,28 @@
 <div class="container m-b-20">
   <mat-card class="mat-elevation-z8">
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+      <div class="layout-row-wrap content">
+        <div class="flex-25 header">
           {{ 'labels.inputs.From Account' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
+        <div class="flex-25">
           {{ listTransactionData.fromAccount.accountNo }}({{ listTransactionData.fromAccountType.value }})
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-25 header">
           {{ 'labels.inputs.To Account' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
+        <div class="flex-25">
           {{ listTransactionData.toAccount.accountNo }}({{ listTransactionData.toAccountType.value }})
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-25 header">
           {{ 'labels.inputs.Destination' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
+        <div class="flex-25">
           {{ listTransactionData.toClient.displayName }}
         </div>
       </div>

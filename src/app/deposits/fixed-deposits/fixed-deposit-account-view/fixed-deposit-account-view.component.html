@@ -1,5 +1,5 @@
 <mat-card class="account-card">
-  <mat-card-header fxLayout="column" class="header">
+  <mat-card-header class="header layout-column">
     <mat-card-title-group class="header-title-group">
       <div class="profile-image-container">
         <div>
@@ -41,10 +41,10 @@
               !fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval
             "
             fxFlex="30%"
-            fxLayout="column"
+            class="layout-column"
           >
-            <h3 fxFlex="100%">{{ 'labels.heading.Account Overview' | translate }}</h3>
-            <table class="account-overview" fxFlex="100%">
+            <h3 class="flex-100">{{ 'labels.heading.Account Overview' | translate }}</h3>
+            <table class="account-overview" class="flex-100">
               <tbody>
                 <tr>
                   <td fxFlex="70%">{{ 'labels.inputs.Current Balance' | translate }}</td>
@@ -67,7 +67,8 @@
 
           <span fxFlex="auto"></span>
 
-          <div fxFlex="5%">
+          <div class="flex-5">
+            >
             <button
               mat-icon-button
               [matMenuTriggerFor]="accountMenu"

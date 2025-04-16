@@ -1,7 +1,7 @@
 <div class="tab-container mat-typography">
-  <div fxFlexFill *ngIf="existActiveTransfer">
+  <div class="flex-fill" *ngIf="existActiveTransfer">
     <h3>{{ 'labels.heading.Active Asset Transfer' | translate }}</h3>
-    <div fxLayout="row" fxLayoutGap="32px" class="asset-transfer-container">
+    <div class="layout-row" fxLayoutGap="32px" class="asset-transfer-container">
       <table>
         <tbody>
           <tr>
@@ -100,7 +100,7 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="start center">
+  <div class="layout-row align-start-center">
     <h3 fxFlex="90%">{{ 'labels.heading.External Asset Owner' | translate }}</h3>
 
     <div fxFlex="10%" *ngIf="canBeSold()">

@@ -1,4 +1,4 @@
-<mat-toolbar fxLayout="row" color="primary" id="mifosx-toolbar">
+<mat-toolbar class="layout-row" color="primary" id="mifosx-toolbar">
   <button
     mat-icon-button
     *ngIf="!sidenavCollapsed"
@@ -13,7 +13,7 @@
     *ngIf="sidenav.opened"
     (click)="toggleSidenavCollapse()"
     matTooltip="{{ 'tooltips.Toggle Collapse' | translate }}"
-    fxHide.lt-md="true"
+    class="hide-lt-md"
   >
     <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
     <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
@@ -31,7 +31,7 @@
       {{ 'labels.menus.Institution' | translate }}
     </a>
 
-    <span fxHide.lt-lg="true">
+    <span class="hide-lt-md">
       <a #accounting mat-tab-link class="tab-link" [routerLink]="['/accounting']">
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Accounting' | translate }}
@@ -51,14 +51,14 @@
     </span>
   </nav>
 
-  <span fxFlex="auto"></span>
+  <span class="flex-auto"></span>
 
   <div #globalSearch>
     <mifosx-search-tool></mifosx-search-tool>
   </div>
 
   <div #languageSelector>
-    <mifosx-language-selector class="ml-1 language" fxHide.lt-md></mifosx-language-selector>
+    <mifosx-language-selector class="ml-1 language hide-lt-md"></mifosx-language-selector>
   </div>
 
   <button mat-icon-button [matMenuTriggerFor]="languageMenu">
@@ -66,7 +66,7 @@
   </button>
 
   <div #notifications>
-    <mifosx-notifications-tray #notificationsTray fxHide.lt-md></mifosx-notifications-tray>
+    <mifosx-notifications-tray #notificationsTray class="hide-lt-md"></mifosx-notifications-tray>
   </div>
 
   <div #themeToggle>
@@ -89,7 +89,7 @@
   <button mat-menu-item routerLink="/clients">{{ 'labels.menus.Clients' | translate }}</button>
   <button mat-menu-item routerLink="/groups">{{ 'labels.menus.Groups' | translate }}</button>
   <button mat-menu-item routerLink="/centers">{{ 'labels.menus.Centers' | translate }}</button>
-  <span fxHide.lt>
+  <span class="hide-lt-md">
     <button mat-menu-item [routerLink]="['/accounting']">{{ 'labels.menus.Accounting' | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="reportsMenu">{{ 'labels.menus.Reports' | translate }}</button>
     <button mat-menu-item [matMenuTriggerFor]="adminMenu">{{ 'labels.menus.Admin' | translate }}</button>
@@ -145,7 +145,7 @@
 <ng-template #templateInstitution let-popover="popover">
   <h2>{{ 'labels.menus.Institution' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Button for individual account' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -158,7 +158,7 @@
 <ng-template #templateAccounting let-popover="popover">
   <h2>{{ 'labels.menus.Accounting' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Button for accounting department' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -174,7 +174,7 @@
 <ng-template #templateReports let-popover="popover">
   <h2>{{ 'labels.menus.Reports' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Dropdown system reports' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -190,7 +190,7 @@
 <ng-template #templateAdmin let-popover="popover">
   <h2>{{ 'labels.menus.Admin' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Setup organization including users' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -204,7 +204,7 @@
 </ng-template>
 
 <ng-template #templateSelfService let-popover="popover">
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -224,7 +224,7 @@
 <ng-template #templateConfigWizard let-popover="popover">
   <h2>{{ 'labels.menus.Configuration Wizard' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Initial setup and application tour' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -244,7 +244,7 @@
 <ng-template #templateGlobalSearch let-popover="popover">
   <h2>{{ 'labels.menus.Global Search' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Navigate system selecting entity' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -268,7 +268,7 @@
 <ng-template #templateLanguageSelector let-popover="popover">
   <h2>{{ 'labels.menus.Language Selector' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Organization available languages' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -292,7 +292,7 @@
 <ng-template #templateNotifications let-popover="popover">
   <h2>{{ 'labels.menus.Notifications' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.This shows all the notifications.' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -312,7 +312,7 @@
 <ng-template #templateThemePicker let-popover="popover">
   <h2>{{ 'labels.menus.Theme Picker' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Choose to work with a dark or bright background' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -332,7 +332,7 @@
 <ng-template #templateAppMenu let-popover="popover">
   <h2>{{ 'labels.menus.Application Menu' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.User settings and sign out button' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

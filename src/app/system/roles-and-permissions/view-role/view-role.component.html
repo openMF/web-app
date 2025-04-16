@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button
     mat-raised-button
     color="primary"
@@ -45,7 +45,7 @@
 <div class="container m-b-20">
   <mat-card class="mat-elevation-z8">
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
+      <div class="layout-row-wrap content">
         <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
           <b>{{ 'labels.inputs.Name' | translate }}:</b>
         </div>
@@ -69,7 +69,7 @@
 <div class="mat-elevation-z8 container">
   <mat-card>
     <ng-container>
-      <div fxLayout="row" class="permission-selected">
+      <div class="layout-row" class="permission-selected">
         <div fxFlex="75">
           <h3>
             {{ 'labels.buttons.Permissions' | translate }}: <strong>{{ formatName(previousGrouping) }}</strong>
@@ -94,8 +94,8 @@
         </div>
       </div>
 
-      <div fxLayout="row">
-        <div fxFlex="30" fxLayout="column">
+      <div class="layout-row">
+        <div fxFlex="30" class="layout-column">
           <mat-list>
             <mat-list-item
               [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
@@ -111,7 +111,7 @@
 
         <mat-divider [vertical]="true"></mat-divider>
 
-        <div fxFlex="70" fxLayout="column" class="list-permission">
+        <div fxFlex="70" class="layout-column" class="list-permission">
           <form [formGroup]="formGroup" (submit)="submit()">
             <div *ngFor="let permission of permissions.permissions" class="display-permissions">
               <div formArrayName="roster">
@@ -127,7 +127,7 @@
       </div>
     </ng-container>
 
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="!isDisabled">
+    <div class="layout-row" fxLayout.xs="column" class="layout-align-center" fxLayoutGap="5px" *ngIf="!isDisabled">
       <mat-card-actions>
         <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
           {{ 'labels.buttons.Cancel' | translate }}

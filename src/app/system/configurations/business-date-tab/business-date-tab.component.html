@@ -10,18 +10,19 @@
       <mat-card>
         <form [formGroup]="businessDateForm">
           <mat-card-content>
-            <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="space">
-              <div fxFlex="50%">
+            <div class="flex-fill" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="space">
+              <div class="flex-50">
                 <span fxFlex="40%" class="date-type">{{ 'labels.inputs.User date format' | translate }}: </span>
-                <span fxFlex="60%" class="date-value">{{ userDateFormat }}</span>
+                <span class="flex-60" class="date-value">{{ userDateFormat }}</span>
               </div>
             </div>
 
             <!-- Business Date -->
-            <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-              <div fxFlex="50%" *ngIf="!isEditInProgress">
+            <div class="flex-fill" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <div class="flex-50">
+                *ngIf="!isEditInProgress">
                 <span fxFlex="40%" class="date-type">{{ 'labels.inputs.Business Date' | translate }}: </span>
-                <span fxFlex="60%" class="date-value">{{ businessDate | dateFormat }}</span>
+                <span class="flex-60" class="date-value">{{ businessDate | dateFormat }}</span>
               </div>
 
               <mat-form-field (click)="businessDatePicker.open()" *ngIf="isEditInProgress && dateIndex === 0">
@@ -71,10 +72,11 @@
             </div>
 
             <!-- COB Date -->
-            <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-              <div fxFlex="50%" *ngIf="!isEditInProgress">
+            <div class="flex-fill" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+              <div class="flex-50">
+                *ngIf="!isEditInProgress">
                 <span fxFlex="40%" class="date-type">{{ 'labels.inputs.COB Date' | translate }}: </span>
-                <span fxFlex="60%" class="date-value">{{ cobDate | dateFormat }}</span>
+                <span class="flex-60" class="date-value">{{ cobDate | dateFormat }}</span>
               </div>
 
               <mat-form-field (click)="cobDatePicker.open()" *ngIf="isEditInProgress && dateIndex === 1">

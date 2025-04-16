@@ -7,10 +7,10 @@
         fxLayout="row"
         fxLayoutAlign="start baseline"
         fxLayoutGap="20px"
-        fxFlex="48%"
+        class="flex-48"
         (ngSubmit)="addCurrency()"
       >
-        <mat-form-field fxFlex="calc(90%-20px)">
+        <mat-form-field class="flex-fill" ="calc(90%-20px)">
           <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
           <mat-select required formControlName="currency">
             <mat-option>
@@ -46,7 +46,7 @@
       <mat-grid-tile *ngFor="let currency of selectedCurrencies; index as i">
         <input matInput [value]="currency.name" />
 
-        <div fxLayout="row" fxLayoutAlign="flex-start">
+        <div class="layout-row align-start">
           <button
             mat-button
             color="warn"
@@ -69,7 +69,7 @@
       'labels.inputs.Currency Configuration' | translate
     }}</a>
   </p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

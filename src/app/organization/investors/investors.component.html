@@ -1,11 +1,11 @@
 <mat-card class="container">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-form-field fxFlex="18%">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <mat-form-field class="flex-fill" ="18%">
       <mat-label>{{ 'labels.text.Search by Text' | translate }}</mat-label>
       <input matInput [formControl]="searchText" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="18%" (click)="effectiveFromDatePicker.open()">
+    <mat-form-field class="flex-fill" ="18%" (click)="effectiveFromDatePicker.open()">
       <mat-label>{{ 'labels.text.Effective Date From' | translate }}</mat-label>
       <input
         matInput
@@ -18,7 +18,7 @@
       <mat-datepicker #effectiveFromDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="18%" (click)="effectiveToDatePicker.open()">
+    <mat-form-field class="flex-fill" ="18%" (click)="effectiveToDatePicker.open()">
       <mat-label>{{ 'labels.text.Effective Date To' | translate }}</mat-label>
       <input
         matInput
@@ -31,7 +31,7 @@
       <mat-datepicker #effectiveToDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="18%" (click)="settlementFromDatePicker.open()">
+    <mat-form-field class="flex-fill" ="18%" (click)="settlementFromDatePicker.open()">
       <mat-label>{{ 'labels.text.Settlement Date From' | translate }}</mat-label>
       <input
         matInput
@@ -44,7 +44,7 @@
       <mat-datepicker #settlementFromDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="18%" (click)="settlementToDatePicker.open()">
+    <mat-form-field class="flex-fill" ="18%" (click)="settlementToDatePicker.open()">
       <mat-label>{{ 'labels.text.Settlement Date To' | translate }}</mat-label>
       <input
         matInput
@@ -57,7 +57,7 @@
       <mat-datepicker #settlementToDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <div fxFlex="98%" class="center m-t-15">
+    <div class="flex-98" class="center m-t-15">
       <button mat-raised-button color="primary" (click)="searchEAO()">
         <fa-icon icon="search" class="m-r-10"></fa-icon> {{ 'labels.buttons.Search' | translate }}
       </button>

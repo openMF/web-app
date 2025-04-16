@@ -1,14 +1,14 @@
 <div class="tab-container mat-typography">
-  <div fxLayout="row" fxLayoutAlign="start center">
+  <div class="layout-row align-start-center">
     <h3 fxFlex="90%">{{ 'labels.inputs.Loan Collateral Details' | translate }}</h3>
-    <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" class="action-buttons">
+    <div class="layout-row" fxLayoutAlign="end" fxLayoutGap="20px" class="action-buttons">
       <button mat-raised-button color="primary" [routerLink]="['../actions/Add Collateral']">
         {{ 'labels.buttons.Add Collateral' | translate }}
       </button>
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutGap="32px" *ngIf="loanCollaterals?.length > 0" class="performance-history-container">
+  <div class="layout-row" fxLayoutGap="32px" *ngIf="loanCollaterals?.length > 0" class="performance-history-container">
     <table>
       <tbody>
         <tr>
