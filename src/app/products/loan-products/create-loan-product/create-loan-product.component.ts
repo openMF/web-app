@@ -144,6 +144,12 @@ export class CreateLoanProductComponent implements OnInit {
     this.supportedInterestRefundTypes = supportedInterestRefundTypes;
   }
 
+  setCapitalizedIncome(capitalizedIncome: CapitalizedIncome): void {
+    if (this.isAdvancedPaymentStrategy) {
+      this.capitalizedIncome = capitalizedIncome;
+    }
+  }
+
   get loanProductSettingsForm() {
     return this.loanProductSettingsStep.loanProductSettingsForm;
   }
@@ -181,6 +187,13 @@ export class CreateLoanProductComponent implements OnInit {
       loanProduct['paymentAllocation'] = this.paymentAllocation;
       loanProduct['creditAllocation'] = this.creditAllocation;
       loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
+      if (this.capitalizedIncome != null) {
+        loanProduct['enableIncomeCapitalization'] = this.capitalizedIncome.enableIncomeCapitalization;
+        if (this.capitalizedIncome.enableIncomeCapitalization) {
+          loanProduct['capitalizedIncomeCalculationType'] = this.capitalizedIncome.incomeCapitalizationCalculationType;
+          loanProduct['capitalizedIncomeStrategy'] = this.capitalizedIncome.incomeCapitalizationStrategy;
+        }
+      }
     }
     return loanProduct;
   }

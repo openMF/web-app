@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CapitalizedIncome } from '../loan-product-payment-strategy-step/payment-allocation-model';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
@@ -8,7 +8,7 @@ import { StringEnumOptionData } from 'app/shared/models/option-data.model';
   templateUrl: './loan-product-capitalized-income-step.component.html',
   styleUrls: ['./loan-product-capitalized-income-step.component.scss']
 })
-export class LoanProductCapitalizedIncomeStepComponent {
+export class LoanProductCapitalizedIncomeStepComponent implements OnChanges {
   @Input() capitalizedIncome: CapitalizedIncome;
   @Input() capitalizedIncomeCalculationTypeOptions: StringEnumOptionData[];
   @Input() capitalizedIncomeStrategyOptions: StringEnumOptionData[];
@@ -46,22 +46,45 @@ export class LoanProductCapitalizedIncomeStepComponent {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.enableIncomeCapitalization = this.capitalizedIncome.enableIncomeCapitalization;
+    if (this.enableIncomeCapitalization) {
+      this.loanIncomeCapitalizationForm.patchValue({
+        enableIncomeCapitalization: this.enableIncomeCapitalization,
+        incomeCapitalizationCalculationType: this.capitalizedIncome.incomeCapitalizationCalculationType,
+        incomeCapitalizationStrategy: this.capitalizedIncome.incomeCapitalizationStrategy
+      });
+    }
+  }
+
   setConditionalControls() {
     this.loanIncomeCapitalizationForm.get('enableIncomeCapitalization').valueChanges.subscribe((enabled: boolean) => {
       this.enableIncomeCapitalization = enabled;
       if (this.enableIncomeCapitalization) {
+        const incomeCapitalizationCalculationType =
+          this.capitalizedIncome.incomeCapitalizationCalculationType == ''
+            ? this.capitalizedIncomeCalculationTypeOptions[0].id
+            : this.capitalizedIncome.incomeCapitalizationCalculationType;
         this.loanIncomeCapitalizationForm.addControl(
           'incomeCapitalizationCalculationType',
-          new UntypedFormControl(this.capitalizedIncome.incomeCapitalizationCalculationType, Validators.required)
+          new UntypedFormControl(
+            this.capitalizedIncome.incomeCapitalizationCalculationType ||
+              this.capitalizedIncomeCalculationTypeOptions[0].id,
+            Validators.required
+          )
         );
+        const incomeCapitalizationStrategy =
+          this.capitalizedIncome.incomeCapitalizationStrategy == ''
+            ? this.capitalizedIncomeStrategyOptions[0].id
+            : this.capitalizedIncome.incomeCapitalizationStrategy;
         this.loanIncomeCapitalizationForm.addControl(
           'incomeCapitalizationStrategy',
-          new UntypedFormControl(this.capitalizedIncome.incomeCapitalizationStrategy, Validators.required)
+          new UntypedFormControl(incomeCapitalizationStrategy, Validators.required)
         );
         this.setCapitalizedIncome.emit({
           enableIncomeCapitalization: true,
-          incomeCapitalizationCalculationType: '',
-          incomeCapitalizationStrategy: ''
+          incomeCapitalizationCalculationType: incomeCapitalizationCalculationType,
+          incomeCapitalizationStrategy: incomeCapitalizationStrategy
         });
 
         this.loanIncomeCapitalizationForm
