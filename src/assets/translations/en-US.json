@@ -2478,7 +2478,10 @@
         "Institution Description": "Institution Description",
         "Team Description": "Team Description",
         "Financial Description": "Financial Description",
-        "Impact Description": "Impact Description"
+        "Impact Description": "Impact Description",
+        "Category": "Category",
+        "Subcategory": "Subcategory",
+        "Area": "Area"
       }
     },
     "links": {

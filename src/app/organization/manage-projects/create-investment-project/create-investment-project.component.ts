@@ -13,6 +13,11 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
   /** New Investment Project form */
   investmentProjectForm: UntypedFormGroup;
   clientsData: any[] = [];
+  loansData: any[] = [];
+  countryData: any[] = [];
+  categoryData: any[] = [];
+  subcategoryData: any[] = [];
+  areaData: any[] = [];
   currency: any;
 
   constructor(
@@ -22,14 +27,21 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
     private clientsService: ClientsService,
     private organizationService: OrganizationService
   ) {
-    this.route.data.subscribe((data: { accountData: any }) => {
-      this.currency = data.accountData.currency;
-      this.clientsData = [];
-    });
+    this.route.data.subscribe(
+      (data: { accountData: any; countryData: any; categoryData: any; subcategoryData: any; areaData: any }) => {
+        this.currency = data.accountData.currency;
+        this.clientsData = [];
+        this.countryData = data.countryData.codeValues;
+        this.categoryData = data.categoryData.codeValues;
+        this.subcategoryData = data.subcategoryData.codeValues;
+        this.areaData = data.areaData.codeValues;
+      }
+    );
   }
 
   ngOnInit(): void {
     this.setupInvestmentProjectForm();
+    this.loansData = [];
   }
 
   ngAfterViewInit() {
@@ -44,7 +56,15 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
 
   setupInvestmentProjectForm() {
     this.investmentProjectForm = this.formBuilder.group({
+      countryId: [
+        '',
+        Validators.required
+      ],
       ownerId: [
+        0,
+        Validators.required
+      ],
+      loanId: [
         0,
         Validators.required
       ],
@@ -77,11 +97,23 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
         Validators.required
       ],
       projectRate: [
-        0,
+        '',
         Validators.required
       ],
       period: [
-        0,
+        '',
+        Validators.required
+      ],
+      categoryId: [
+        '',
+        Validators.required
+      ],
+      subCategories: [
+        '',
+        Validators.required
+      ],
+      areaId: [
+        '',
         Validators.required
       ],
       isActive: [false]
@@ -97,21 +129,31 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
     return client ? client.displayName : undefined;
   }
 
+  clientSelected(event: any) {
+    const client: any = event.option.value;
+    this.loansData = [];
+    this.clientsService.getClientAccountData(client.id).subscribe((response: any) => {
+      if (response.loanAccounts) {
+        response.loanAccounts.forEach((loan: any) => {
+          if (loan.status.id == 100) {
+            this.loansData.push({ id: loan.id, accountNo: loan.accountNo, productName: loan.productName });
+          }
+        });
+      }
+    });
+  }
+
   submit() {
     const currencyCode: string = this.currency.code;
-    const categories: number[] = [
-      1,
-      2
-    ];
+
     const payload = {
       ...this.investmentProjectForm.getRawValue(),
-      currencyCode,
-      categories
+      currencyCode
     };
     const owner: any = payload['ownerId'];
     payload['ownerId'] = owner['id'];
     payload['amount'] = payload['amount'] * 1;
-    payload['countryId'] = 18;
+    payload['subCategories'] = '[' + payload['subCategories'].join(',') + ']';
     console.log(payload);
     this.organizationService.createInvestmentProjects(payload).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });

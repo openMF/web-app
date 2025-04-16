@@ -17,7 +17,7 @@ export class ManageProjectResolver implements Resolve<boolean> {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const fundId = route.paramMap.get('id');
-    return this.organizationService.getFund(fundId);
+    const projectId = route.paramMap.get('id');
+    return this.organizationService.getInvestmentProject(projectId);
   }
 }
