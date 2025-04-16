@@ -859,6 +859,27 @@
     </table>
   </div>
 
+  <div fxFlexFill *ngIf="isAdvancedPaymentAllocation" fxLayout="row wrap" fxLayout.lt-md="column">
+    <h3 class="mat-h3" fxFlexFill>{{ 'labels.inputs.Income capitalization' | translate }}</h3>
+
+    <mat-divider [inset]="true"></mat-divider>
+
+    <div fxFlexFill>
+      <span fxFlex="47%">{{ 'labels.inputs.Enable income capitalization' | translate }}:</span>
+      <span fxFlex="53%">{{ loanProduct.enableIncomeCapitalization | yesNo }}</span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanProduct.enableIncomeCapitalization">
+      <span fxFlex="47%">{{ 'labels.inputs.Income capitalization calculation type' | translate }}:</span>
+      <span fxFlex="53%">{{ loanProduct.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }}</span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanProduct.enableIncomeCapitalization">
+      <span fxFlex="47%">{{ 'labels.inputs.Income capitalization strategy' | translate }}:</span>
+      <span fxFlex="53%">{{ loanProduct.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }}</span>
+    </div>
+  </div>
+
   <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Accounting' | translate }}</h3>
 
   <mat-divider [inset]="true"></mat-divider>

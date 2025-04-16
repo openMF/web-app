@@ -66,6 +66,9 @@ export interface LoanProduct {
   isArrearsBasedOnOriginalSchedule?: boolean;
   isCompoundingToBePostedAsTransaction?: boolean;
   recalculationRestFrequencyInterval?: number;
+  enableIncomeCapitalization?: boolean;
+  capitalizedIncomeCalculationType?: OptionData;
+  capitalizedIncomeStrategy?: OptionData;
 
   canDefineInstallmentAmount: boolean;
   graceOnArrearsAgeing?: number;

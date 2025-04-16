@@ -1695,6 +1695,8 @@
       "Incentive Type": "प्रोत्साहन प्रकार",
       "Include in Customer Loan Counter": "ग्राहक ऋण काउन्टरमा समावेश गर्नुहोस्",
       "Income Account": "आय खाता",
+      "Income capitalization": "आय पूंजीकरण",
+      "INCOME CAPITALIZATION": "आय पूंजीकरण",
       "Income from Charge": "शुल्कबाट आम्दानी",
       "Income from ChargeOff Fees": "चार्जअफ शुल्कबाट आय",
       "Income from ChargeOff Interest": "चार्जअफ ब्याजबाट आम्दानी",
@@ -2456,7 +2458,10 @@
       "Password must have not consecutive repeating characters": "पासवर्डमा लगातार दोहोरिने क्यारेक्टरहरू हुनु हुँदैन",
       "Password must contain at least one special character (@$!%*?&)": "पासवर्डमा कम्तिमा एउटा विशेष वर्ण हुनुपर्छ (@$!%*?&)",
       "Password minimun length must be": "पासवर्ड न्यूनतम लम्बाइ हुनुपर्छ",
-      "Passwords do not match": "पासवर्डहरू मेल खाँदैनन्"
+      "Passwords do not match": "पासवर्डहरू मेल खाँदैनन्",
+      "Enable income capitalization": "आय पूंजीकरण सक्षम गर्नुहोस्",
+      "Income capitalization calculation type": "आय पूंजीकरण गणना प्रकार",
+      "Income capitalization strategy": "आय पूंजीकरण रणनीति"
     },
     "links": {
       "Community": "समुदाय",

@@ -80,6 +80,21 @@
     </div>
 
     <div fxFlexFill>
+      <span fxFlex="50%"> {{ 'labels.inputs.Enable income capitalization' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.enableIncomeCapitalization | yesNo }} </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.enableIncomeCapitalization">
+      <span fxFlex="50%"> {{ 'labels.inputs.Income capitalization calculation type' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div fxFlexFill *ngIf="loanDetails.enableIncomeCapitalization">
+      <span fxFlex="50%"> {{ 'labels.inputs.Income capitalization strategy' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div fxFlexFill>
       <span fxFlex="50%"> {{ 'labels.inputs.Grace: On Principal Payment' | translate }}</span>
       <span fxFlex="50%"> {{ loanDetails.graceOnPrincipalPayment }} </span>
     </div>

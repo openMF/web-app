@@ -42,6 +42,12 @@ export interface CreditAllocation {
   creditAllocationOrder: CreditAllocationOrder[];
 }
 
+export interface CapitalizedIncome {
+  enableIncomeCapitalization: boolean;
+  incomeCapitalizationCalculationType?: string;
+  incomeCapitalizationStrategy?: string;
+}
+
 export class PaymentAllocationTransactionTypes {
   public static DEFAULT_TRANSACTION: PaymentAllocationTransactionType = { id: 1, value: 'Default', code: 'DEFAULT' };
 }

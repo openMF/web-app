@@ -18,12 +18,14 @@ import {
   AdvancedCreditAllocation,
   AdvancedPaymentAllocation,
   AdvancedPaymentStrategy,
+  CapitalizedIncome,
   CreditAllocation,
   PaymentAllocation
 } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { Accounting } from 'app/core/utils/accounting';
 import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
 import { StringEnumOptionData } from '../../../shared/models/option-data.model';
+import { LoanProductCapitalizedIncomeStepComponent } from '../loan-product-stepper/loan-product-capitalized-income-step/loan-product-capitalized-income-step.component';
 
 @Component({
   selector: 'mifosx-edit-loan-product',
@@ -36,6 +38,8 @@ export class EditLoanProductComponent implements OnInit {
   loanProductCurrencyStep: LoanProductCurrencyStepComponent;
   @ViewChild(LoanProductInterestRefundStepComponent, { static: true })
   loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
+  @ViewChild(LoanProductCapitalizedIncomeStepComponent, { static: true })
+  loanProductCapitalizedIncomeStep: LoanProductCapitalizedIncomeStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true })
   loanProductSettingsStep: LoanProductSettingsStepComponent;
@@ -54,6 +58,8 @@ export class EditLoanProductComponent implements OnInit {
   advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   advancedCreditAllocations: AdvancedCreditAllocation[] = [];
   supportedInterestRefundTypes: StringEnumOptionData[] = [];
+
+  capitalizedIncome: CapitalizedIncome | null = null;
 
   /**
    * @param {ActivatedRoute} route Activated Route.
@@ -90,6 +96,17 @@ export class EditLoanProductComponent implements OnInit {
       this.paymentAllocation = this.loanProductAndTemplate.paymentAllocation;
       this.creditAllocation = this.loanProductAndTemplate.creditAllocation;
       this.supportedInterestRefundTypes = this.loanProductAndTemplate.supportedInterestRefundTypes;
+      if (this.loanProductAndTemplate.enableIncomeCapitalization) {
+        this.capitalizedIncome = {
+          enableIncomeCapitalization: true,
+          incomeCapitalizationCalculationType: this.loanProductAndTemplate.capitalizedIncomeCalculationType.id,
+          incomeCapitalizationStrategy: this.loanProductAndTemplate.capitalizedIncomeStrategy.id
+        };
+      } else {
+        this.capitalizedIncome = {
+          enableIncomeCapitalization: false
+        };
+      }
     }
   }
 
@@ -112,6 +129,12 @@ export class EditLoanProductComponent implements OnInit {
   get loanProductInterestRefundForm() {
     if (this.loanProductInterestRefundStep != null) {
       return this.loanProductInterestRefundStep.loanProductInterestRefundForm;
+    }
+  }
+
+  get loanIncomeCapitalizationForm() {
+    if (this.loanProductCapitalizedIncomeStep != null) {
+      return this.loanProductCapitalizedIncomeStep.loanIncomeCapitalizationForm;
     }
   }
 
@@ -144,6 +167,12 @@ export class EditLoanProductComponent implements OnInit {
 
   paymentAllocationChanged(value: boolean): void {
     this.wasPaymentAllocationChanged = value;
+  }
+
+  setCapitalizedIncome(capitalizedIncome: CapitalizedIncome): void {
+    if (this.isAdvancedPaymentStrategy) {
+      this.capitalizedIncome = capitalizedIncome;
+    }
   }
 
   get loanProductAccountingForm() {
@@ -184,6 +213,13 @@ export class EditLoanProductComponent implements OnInit {
       loanProduct['paymentAllocation'] = this.paymentAllocation;
       loanProduct['creditAllocation'] = this.creditAllocation;
       loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
+      if (this.capitalizedIncome != null) {
+        loanProduct['enableIncomeCapitalization'] = this.capitalizedIncome.enableIncomeCapitalization;
+        if (this.capitalizedIncome.enableIncomeCapitalization) {
+          loanProduct['capitalizedIncomeCalculationType'] = this.capitalizedIncome.incomeCapitalizationCalculationType;
+          loanProduct['capitalizedIncomeStrategy'] = this.capitalizedIncome.incomeCapitalizationStrategy;
+        }
+      }
     }
     return loanProduct;
   }

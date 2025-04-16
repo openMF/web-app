@@ -1695,6 +1695,8 @@
       "Incentive Type": "Type d'incitation",
       "Include in Customer Loan Counter": "Inclure dans le compteur de prêts clients",
       "Income Account": "Compte de revenu",
+      "Income capitalization": "Capitalisation des revenus",
+      "INCOME CAPITALIZATION": "CAPITALISATION DES REVENUS",
       "Income from Charge": "Revenu de Charge",
       "Income from ChargeOff Fees": "Revenus provenant des frais ChargeOff",
       "Income from ChargeOff Interest": "Revenus des intérêts facturés",
@@ -2456,7 +2458,10 @@
       "Password must have not consecutive repeating characters": "Le mot de passe ne doit pas contenir de caractères répétitifs consécutifs",
       "Password must contain at least one special character (@$!%*?&)": "Le mot de passe doit contenir au moins un caractère spécial (@$!%*?&)",
       "Password minimun length must be": "La longueur minimale du mot de passe doit être",
-      "Passwords do not match": "Les mots de passe ne correspondent pas"
+      "Passwords do not match": "Les mots de passe ne correspondent pas",
+      "Enable income capitalization": "Activer la capitalisation des revenus",
+      "Income capitalization calculation type": "Type de calcul de capitalisation des revenus",
+      "Income capitalization strategy": "Stratégie de capitalisation des revenus"
     },
     "links": {
       "Community": "Communauté",

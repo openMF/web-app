@@ -91,6 +91,20 @@
       </mifosx-loan-product-charges-step>
     </mat-step>
 
+    <mat-step *ngIf="isAdvancedPaymentStrategy" [stepControl]="loanIncomeCapitalizationForm" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.INCOME CAPITALIZATION' | translate }}</ng-template>
+
+      <mifosx-loan-product-capitalized-income-step
+        [capitalizedIncome]="capitalizedIncome"
+        [capitalizedIncomeCalculationTypeOptions]="loanProductsTemplate.capitalizedIncomeCalculationTypeOptions"
+        [capitalizedIncomeStrategyOptions]="loanProductsTemplate.capitalizedIncomeStrategyOptions"
+        (setCapitalizedIncome)="setCapitalizedIncome($event)"
+      >
+      </mifosx-loan-product-capitalized-income-step>
+
+      <mifosx-stepper-buttons></mifosx-stepper-buttons>
+    </mat-step>
+
     <mat-step [stepControl]="loanProductAccountingForm">
       <ng-template matStepLabel>{{ 'labels.inputs.ACCOUNTING' | translate }}</ng-template>
 

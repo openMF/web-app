@@ -1699,6 +1699,8 @@
       "Incentive Type": "Incentive Type",
       "Include in Customer Loan Counter": "Include in Customer Loan Counter",
       "Income Account": "Income Account",
+      "Income capitalization": "Income capitalization",
+      "INCOME CAPITALIZATION": "INCOME CAPITALIZATION",
       "Income from Charge": "Income from Charge",
       "Income from ChargeOff Fees": "Income from ChargeOff Fees",
       "Income from ChargeOff Interest": "Income from ChargeOff Interest",
@@ -2463,7 +2465,10 @@
       "Password must have not consecutive repeating characters": "Password must have not consecutive repeating characters",
       "Password must contain at least one special character (@$!%*?&)": "Password must contain at least one special character (@$!%*?&)",
       "Password minimun length must be": "Password minimun length must be",
-      "Passwords do not match": "Passwords do not match"
+      "Passwords do not match": "Passwords do not match",
+      "Enable income capitalization": "Enable income capitalization",
+      "Income capitalization calculation type": "Income capitalization calculation type",
+      "Income capitalization strategy": "Income capitalization strategy"
     },
     "links": {
       "Community": "Community",
