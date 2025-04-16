@@ -2,7 +2,7 @@
 
 <mat-dialog-content>
   <form [formGroup]="floatingRatePeriodForm">
-    <div fxLayout="column">
+    <div class="layout-column">
       <mat-form-field (click)="fromDatePicker.open()">
         <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
         <input required matInput formControlName="fromDate" [min]="minDate" [matDatepicker]="fromDatePicker" />

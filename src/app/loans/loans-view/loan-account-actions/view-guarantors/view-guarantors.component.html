@@ -1,7 +1,7 @@
 <div class="container mat-elevation-z8">
   <mat-card>
-    <div class="view-guarantors-account-tables" fxLayout="row" fxLayoutGap="2%">
-      <div fxFlex="49%">
+    <div class="view-guarantors-account-tables layout-row gap-2percent">
+      <div class="flex-49">
         <table>
           <tbody>
             <tr>
@@ -37,7 +37,7 @@
         </table>
       </div>
 
-      <div fxFlex="49%">
+      <div class="flex-49">
         <table>
           <tbody>
             <tr>
@@ -71,16 +71,16 @@
       </div>
     </div>
 
-    <div fxFlexFill *ngIf="guarantorDetails" fxLayout="row wrap" fxLayout.lt-md="column">
+    <div *ngIf="guarantorDetails" class="layout-row-wrap responsive-column flex-fill">
       <!-- guarantors details table -->
       <div class="heading-content">
-        <div fxLayout="column" fxFlex="50%">
+        <div class="layout-column flex-50">
           <div class="heading-name">
             <h3>{{ 'labels.heading.Guarantors Details' | translate }}</h3>
           </div>
         </div>
-        <div fxLayout="column" fxFlex="50%">
-          <div fxLayout="row" fxLayoutAlign="flex-end">
+        <div class="layout-column flex-50">
+          <div class="layout-row align-flex-end">
             <button mat-raised-button class="f-right" color="primary" (click)="toggleGuarantorsDetailsOverview()">
               {{ showDeletedGuarantorsAccounts ? 'Hide Deleted Guarantors' : 'Show Deleted Guarantors' }}
             </button>
@@ -89,7 +89,7 @@
       </div>
 
       <table
-        fxFlexFill
+        class="flex-fill"
         mat-table
         [dataSource]="guarantorDetails | accountsFilter: 'guarantor' : showDeletedGuarantorsAccounts"
       >

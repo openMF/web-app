@@ -1,5 +1,5 @@
-<div class="fixed-deposits-account-tables" fxLayout="row" fxLayoutGap="2%">
-  <div fxFlex="49%" fxLayout="column" fxLayoutGap="4%">
+<div class="fixed-deposits-account-tables layout-row gap-2percent">
+  <div class="flex-49 layout-column gap-4percent">
     <div>
       <h4 class="table-headers">{{ 'labels.heading.Fixed Deposit Details' | translate }}</h4>
       <table>
@@ -104,7 +104,7 @@
     </div>
   </div>
 
-  <div fxFlex="49%">
+  <div class="flex-49">
     <div
       *ngIf="
         !fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval;

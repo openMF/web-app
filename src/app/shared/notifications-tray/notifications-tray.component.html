@@ -13,12 +13,7 @@
 </button>
 
 <mat-menu class="mifosx-notifications-menu" #notificationsMenu="matMenu" [overlapTrigger]="false">
-  <div
-    *ngIf="unreadNotifications.length === 0"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-    class="no-notifications"
-  >
+  <div *ngIf="unreadNotifications.length === 0" class="layout-column align-center-center no-notifications">
     <mat-icon class="no-notifications-icon">
       <span class="material-icons">{{ 'labels.menus.Notifications' | translate }}</span>
     </mat-icon>

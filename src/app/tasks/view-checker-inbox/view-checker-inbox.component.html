@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="1%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-1percent layout-lt-md-column container m-b-20">
   <button mat-raised-button color="success" (click)="approveChecker()">
     <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
   </button>
@@ -13,74 +13,74 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" fxLayout.lt-md="column">
-        <h2 class="mat-h2" fxFlexFill>{{ 'labels.heading.View Checker Inbox' | translate }}</h2>
+      <div class="layout-row-wrap responsive-column">
+        <h2 class="mat-h2 flex-fill">{{ 'labels.heading.View Checker Inbox' | translate }}</h2>
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Details' | translate }}</h3>
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Details' | translate }}</h3>
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.ID' | translate }}:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.id }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.ID' | translate }}:</span>
+          <span class="flex-60">{{ checkerInboxDetail.id }}</span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.Status' | translate }}:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.processingResult }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Status' | translate }}:</span>
+          <span class="flex-60">{{ checkerInboxDetail.processingResult }}</span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.User' | translate }}:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.maker }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.User' | translate }}:</span>
+          <span class="flex-60">{{ checkerInboxDetail.maker }}</span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.Action' | translate }}:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.actionName }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Action' | translate }}:</span>
+          <span class="flex-60">{{ checkerInboxDetail.actionName }}</span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.Entity' | translate }}:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.entityName }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Entity' | translate }}:</span>
+          <span class="flex-60">{{ checkerInboxDetail.entityName }}</span>
         </div>
 
-        <div fxFlexFill *ngIf="checkerInboxDetail.resourceId">
-          <span fxFlex="40%">{{ 'labels.inputs.Resource ID' | translate }}:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.resourceId }}</span>
+        <div class="flex-fill" *ngIf="checkerInboxDetail.resourceId">
+          <span class="flex-40">{{ 'labels.inputs.Resource ID' | translate }}:</span>
+          <span class="flex-60">{{ checkerInboxDetail.resourceId }}</span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.Date' | translate }}:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.madeOnDate | dateFormat }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Date' | translate }}:</span>
+          <span class="flex-60">{{ checkerInboxDetail.madeOnDate | dateFormat }}</span>
         </div>
 
-        <div fxFlexFill *ngIf="checkerInboxDetail.officeName">
-          <span fxFlex="40%">{{ 'labels.inputs.Office' | translate }}:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.officeName }}</span>
+        <div class="flex-fill" *ngIf="checkerInboxDetail.officeName">
+          <span class="flex-40">{{ 'labels.inputs.Office' | translate }}:</span>
+          <span class="flex-60">{{ checkerInboxDetail.officeName }}</span>
         </div>
 
-        <div fxFlexFill *ngIf="checkerInboxDetail.savingsAccountNo">
-          <span fxFlex="40%">{{ 'labels.inputs.Savings Account Number' | translate }}:</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.savingsAccountNo }}</span>
+        <div class="flex-fill" *ngIf="checkerInboxDetail.savingsAccountNo">
+          <span class="flex-40">{{ 'labels.inputs.Savings Account Number' | translate }}:</span>
+          <span class="flex-60">{{ checkerInboxDetail.savingsAccountNo }}</span>
         </div>
 
-        <div fxFlexFill *ngIf="checkerInboxDetail.groupLevelName">
-          <span fxFlex="40%"> {{ checkerInboxDetail.groupLevelName }}</span>
-          <span fxFlex="60%">{{ checkerInboxDetail.groupName }}</span>
+        <div class="flex-fill" *ngIf="checkerInboxDetail.groupLevelName">
+          <span class="flex-40"> {{ checkerInboxDetail.groupLevelName }}</span>
+          <span class="flex-60">{{ checkerInboxDetail.groupName }}</span>
         </div>
 
         <ng-container *ngIf="displayJSONData">
-          <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Command' | translate }}</h3>
+          <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Command' | translate }}</h3>
 
           <mat-divider [inset]="true"></mat-divider>
 
           <ng-container *ngFor="let json of jsondata | keyvalue">
-            <div fxFlexFill>
-              <span fxFlex="40%">{{ json.key }}:</span>
-              <span fxFlex="60%">{{ json.value }}</span>
+            <div class="flex-fill">
+              <span class="flex-40">{{ json.key }}:</span>
+              <span class="flex-60">{{ json.value }}</span>
             </div>
           </ng-container>
         </ng-container>

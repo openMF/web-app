@@ -1,17 +1,17 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" (click)="downloadCSV()">
     <fa-icon icon="file" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Download CSV' | translate }}
   </button>
 </div>
 
-<div class="container" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  <mat-form-field fxFlex="48%">
+<div class="container layout-row-wrap gap-2px responsive-column">
+  <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Resource ID' | translate }}</mat-label>
     <input matInput [formControl]="resourceId" />
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%">
+  <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
     <mat-select [formControl]="processingResult" (selectionChange)="applyFilter($event.value, 'processingResult')">
       <mat-option
@@ -23,41 +23,41 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%">
+  <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.User' | translate }}</mat-label>
     <input matInput [formControl]="user" [matAutocomplete]="userNameAutocomplete" />
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%">
+  <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
     <input matInput [formControl]="actionName" [matAutocomplete]="actionNameAutocomplete" />
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%">
+  <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
     <input matInput [formControl]="entityName" [matAutocomplete]="entityNameAutocomplete" />
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%">
+  <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Checker' | translate }}</mat-label>
     <input matInput [formControl]="checker" [matAutocomplete]="checkerAutocomplete" />
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%" (click)="fromDatePicker.open()">
+  <mat-form-field class="flex-48" (click)="fromDatePicker.open()">
     <mat-label>{{ 'labels.inputs.Maker From Date' | translate }}</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" [formControl]="fromDate" />
     <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #fromDatePicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%" (click)="toDatePicker.open()">
+  <mat-form-field class="flex-48" (click)="toDatePicker.open()">
     <mat-label>{{ 'labels.inputs.Maker To Date' | translate }}</mat-label>
     <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" [formControl]="toDate" />
     <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #toDatePicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%" (click)="checkedFromDatePicker.open()">
+  <mat-form-field class="flex-48" (click)="checkedFromDatePicker.open()">
     <mat-label>{{ 'labels.inputs.Checker From Date' | translate }}</mat-label>
     <input
       matInput
@@ -70,7 +70,7 @@
     <mat-datepicker #checkedFromDatePicker></mat-datepicker>
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%" (click)="checkedToDatePicker.open()">
+  <mat-form-field class="flex-48" (click)="checkedToDatePicker.open()">
     <mat-label>{{ 'labels.inputs.Checked To Date' | translate }}</mat-label>
     <input
       matInput

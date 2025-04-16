@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-content>
       <form [formGroup]="writeOffForm">
-        <div fxLayout="column">
+        <div class="layout-column">
           <mat-form-field (click)="writeOffDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Write off on' | translate }}</mat-label>
             <input
@@ -33,7 +33,7 @@
         </div>
       </form>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../../general']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
