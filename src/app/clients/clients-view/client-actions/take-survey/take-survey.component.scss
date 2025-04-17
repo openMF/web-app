@@ -45,3 +45,15 @@
   align-items: normal;
   white-space: normal;
 }
+
+.radio-group-spacing {
+  display: flex;
+  gap: 2rem;
+  flex-direction: row;
+}
+
+@media (width <= 768px) {
+  .radio-group-spacing {
+    flex-direction: column;
+  }
+}

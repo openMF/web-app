@@ -6,6 +6,7 @@
       fxLayoutGap="5%"
       fxLayout.lt-md="column"
       formControlName="accountingRule"
+      class="radio-group-spacing"
     >
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
         {{ 'labels.accounting.' + accountingRule | translate }}
