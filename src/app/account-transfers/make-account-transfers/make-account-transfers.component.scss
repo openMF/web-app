@@ -36,13 +36,3 @@ mat-divider {
 ::ng-deep mat-form-field.error-warn.mat-form-field-invalid .mat-error {
   color: #0009 !important;
 }
-
-.flex-fill {
-  flex: 1 1 auto;
-}
-
-.align-start-center {
-  justify-content: flex-start;
-  align-items: center;
-  display: flex;
-}
