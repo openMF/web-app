@@ -16,7 +16,7 @@
   <mat-card>
     <ng-container>
       <div class="layout-row">
-        <div #mcTable fxFlex="30" class="layout-column">
+        <div #mcTable class="layout-column flex-30">
           <mat-list>
             <mat-list-item
               [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
@@ -32,7 +32,7 @@
 
         <mat-divider [vertical]="true"></mat-divider>
 
-        <div fxFlex="70" class="layout-column" class="list-permission">
+        <div class="list-permission layout-column flex-70">
           <form [formGroup]="formGroup" (submit)="submit()">
             <div *ngFor="let permission of permissions.permissions" class="display-permissions">
               <div formArrayName="roster">
@@ -48,7 +48,7 @@
       </div>
     </ng-container>
 
-    <div class="layout-row" fxLayout.xs="column" class="layout-align-center" fxLayoutGap="5px" *ngIf="!isDisabled">
+    <div class="layout-row layout-align-center gap-5px layout-xs-column" *ngIf="!isDisabled">
       <mat-card-actions>
         <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
           {{ 'labels.buttons.Cancel' | translate }}

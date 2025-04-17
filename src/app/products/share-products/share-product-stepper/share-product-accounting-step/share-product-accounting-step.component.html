@@ -1,12 +1,6 @@
 <form [formGroup]="shareProductAccountingForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <mat-radio-group
-      class="flex-98"
-      fxLayout="row"
-      fxLayoutGap="5%"
-      fxLayout.lt-md="column"
-      formControlName="accountingRule"
-    >
+    <mat-radio-group class="flex-98 layout-row gap-5percent layout-column.lt-md" formControlName="accountingRule">
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
         {{ 'labels.accounting.' + accountingRule | translate }}
       </mat-radio-button>
@@ -16,12 +10,9 @@
 
     <div
       *ngIf="shareProductAccountingForm.value.accountingRule === 2"
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -34,7 +25,7 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -47,7 +38,7 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Share Equity' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Share Equity' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -60,7 +51,7 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"

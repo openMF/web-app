@@ -91,11 +91,11 @@
     <span class="flex-60">{{ sharesAccount.allowDividendCalculationForInactiveClients | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="sharesAccount.charges.length" class="layout-row-wrap responsive-column">
+  <div *ngIf="sharesAccount.charges.length" class="layout-row-wrap responsive-column flex-fill">
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
 
     <mat-divider class="flex-fill"></mat-divider>
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="sharesAccount.charges">
+    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="sharesAccount.charges">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">

@@ -1,12 +1,6 @@
 <form [formGroup]="loanProductAccountingForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <mat-radio-group
-      class="flex-98"
-      fxLayout="row"
-      fxLayoutGap="5%"
-      fxLayout.lt-md="column"
-      formControlName="accountingRule"
-    >
+    <mat-radio-group class="flex-98 layout-row gap-5percent layout-lt-md-column" formControlName="accountingRule">
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
         {{ 'labels.accounting.' + accountingRule | translate }}
       </mat-radio-button>
@@ -16,16 +10,13 @@
 
     <div
       *ngIf="loanProductAccountingForm.value.accountingRule >= 2 && loanProductAccountingForm.value.accountingRule <= 4"
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
-      <mat-checkbox *ngIf="isAccountingAccrualBased" fxFlex="73%" formControlName="enableAccrualActivityPosting">{{
+      <mat-checkbox *ngIf="isAccountingAccrualBased" class="flex-73" formControlName="enableAccrualActivityPosting">{{
         'labels.inputs.Enable Accrual Activity Posting on Installment Due Date' | translate
       }}</mat-checkbox>
 
-      <h4 class="flex-98" class="mat-h4">
+      <h4 class="mat-h4 flex-98">
         {{ 'labels.heading.Assets' | translate }} / {{ 'labels.heading.Liabilities' | translate }}
       </h4>
 
@@ -38,7 +29,7 @@
       >
       </mifosx-gl-account-selector>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -62,10 +53,7 @@
         *ngIf="
           loanProductAccountingForm.value.accountingRule === 3 || loanProductAccountingForm.value.accountingRule === 4
         "
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayoutGap="2%"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap gap-2percent responsive-column"
       >
         <mifosx-gl-account-selector
           class="flex-48"
@@ -97,7 +85,7 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -191,7 +179,7 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -231,7 +219,7 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -244,22 +232,21 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules">{{
-        'labels.heading.Advanced Accounting Rules' | translate
-      }}</mat-checkbox>
+      <mat-checkbox class="flex-73">
+        formControlName="advancedAccountingRules">{{
+          'labels.heading.Advanced Accounting Rules' | translate
+        }}</mat-checkbox
+      >
 
       <div
         *ngIf="loanProductAccountingForm.value.advancedAccountingRules"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayoutGap="2%"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap gap-2percent responsive-column"
       >
-        <h4 fxFlex="33%" class="mat-h4">
+        <h4 class="mat-h4 flex-33">
           {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
         </h4>
 
-        <div fxFlex="63%">
+        <div class="flex-63">
           <button
             type="button"
             mat-raised-button
@@ -316,9 +303,9 @@
           <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns"></tr>
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
+        <h4 class="mat-h4 flex-33">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
 
-        <div fxFlex="63%">
+        <div class="flex-63">
           <button
             type="button"
             mat-raised-button
@@ -367,11 +354,11 @@
           <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">
+        <h4 class="mat-h4 flex-33">
           {{ 'labels.heading.Map Penalties to Specific Income Accounts' | translate }}
         </h4>
 
-        <div fxFlex="63%">
+        <div class="flex-63">
           <button
             type="button"
             mat-raised-button
@@ -424,11 +411,11 @@
           <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">
+        <h4 class="mat-h4 flex-33">
           {{ 'labels.heading.Map Charge-off reasons to Expense accounts' | translate }}
         </h4>
 
-        <div fxFlex="63%">
+        <div class="flex-63">
           <button
             type="button"
             mat-raised-button

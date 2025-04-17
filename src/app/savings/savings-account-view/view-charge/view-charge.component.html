@@ -1,10 +1,6 @@
 <div
   *ngIf="savingsAccountData.status.value === 'Active' && chargeData.amountOutstanding !== 0"
-  fxLayout="row"
-  fxLayoutAlign="end"
-  fxLayoutGap="2%"
-  fxLayout.lt-md="column"
-  class="container m-b-20"
+  class="layout-row align-end gap-2percent layout-xs-column container m-b-20"
 >
   <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
     <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>
@@ -29,11 +25,7 @@
 
 <div
   *ngIf="savingsAccountData.status.value === 'Submitted and pending approval'"
-  fxLayout="row"
-  fxLayoutAlign="end"
-  fxLayoutGap="2%"
-  fxLayout.lt-md="column"
-  class="container m-b-20"
+  class="layout-row align-end gap-2percent layout-xs-column container m-b-20"
 >
   <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="editCharge()">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
@@ -140,7 +132,7 @@
         </div>
       </div>
 
-      <div class="layout-row" class="layout-align-center" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div class="layout-row layout-align-center gap-2percent column-on-mobile">
         <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
           {{ 'labels.buttons.Back' | translate }}
         </button>

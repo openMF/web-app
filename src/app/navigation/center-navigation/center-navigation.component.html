@@ -1,4 +1,4 @@
-<mat-card-header fxLayout="row" fxLayoutGap="5%" class="header">
+<mat-card-header class="layout-row gap-5percent header">
   <fa-icon class="main-icon" icon="building" size="3x"></fa-icon>
   <mat-card-title-group>
     <div class="mat-typography">
@@ -102,30 +102,28 @@
         </div>
 
         <div
-          fxFlex="50%"
-          class="mat-body-strong"
+          class="mat-body-strong flex-50"
           *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]"
         >
           {{ 'labels.inputs.Next Meeting Date' | translate }}
         </div>
 
         <div
-          fxFlex="50%"
+          class="flex-50"
           *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]"
         >
           {{ centerSummaryData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat }}
         </div>
 
         <div
-          fxFlex="50%"
-          class="mat-body-strong"
+          class="mat-body-strong flex-50"
           *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable"
         >
           {{ 'labels.inputs.Meeting Frequency' | translate }}
         </div>
 
         <div
-          fxFlex="50%"
+          class="flex-50"
           *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable"
         >
           {{ centerSummaryData.collectionMeetingCalendar.humanReadable }}

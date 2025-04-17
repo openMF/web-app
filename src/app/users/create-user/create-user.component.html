@@ -2,7 +2,7 @@
   <mat-card>
     <form [formGroup]="userForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div #userFormRef fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+        <div #userFormRef class="layout-row-wrap layout-lt-md-column gap-2percent">
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
             <input matInput required formControlName="username" />
@@ -51,13 +51,13 @@
             </mat-error>
           </mat-form-field>
 
-          <div class="flex-48" class="password-never-expires-wrapper">
+          <div class="password-never-expires-wrapper flex-48">
             <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires">
               {{ 'labels.inputs.Password never expires' | translate }}
             </mat-checkbox>
           </div>
 
-          <div class="flex-48" class="send-password-to-email-wrapper">
+          <div class="send-password-to-email-wrapper flex-48">
             <mat-checkbox labelPosition="before" formControlName="sendPasswordToEmail">
               {{ 'labels.inputs.Send password to email address' | translate }}
             </mat-checkbox>

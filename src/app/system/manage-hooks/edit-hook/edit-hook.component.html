@@ -2,7 +2,7 @@
   <mat-card>
     <form [formGroup]="hookForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div class="layout-row-wrap responsive-column" fxLayoutGap="4%">
+        <div class="layout-row-wrap responsive-column gap-4percent">
           <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Hook Template' | translate }}</mat-label>
             <mat-select required formControlName="name">
@@ -26,13 +26,13 @@
           </mat-form-field>
 
           <div class="is-active-wrapper">
-            <mat-checkbox class="is-active" fxFlex="10%" labelPosition="before" formControlName="isActive">
+            <mat-checkbox class="is-active flex-10" labelPosition="before" formControlName="isActive">
               {{ 'labels.inputs.Is Active' | translate }}?
             </mat-checkbox>
           </div>
         </div>
 
-        <div class="layout-row-wrap responsive-column" fxLayoutGap="4%">
+        <div class="layout-row-wrap responsive-column gap-4percent">
           <mat-form-field class="flex-fill" ="40%" *ngIf="hookForm.controls.name.value === 'Web'">
             <mat-label>{{ 'labels.inputs.Content Type' | translate }}</mat-label>
             <mat-select required formControlName="contentType">
@@ -70,9 +70,7 @@
         </div>
 
         <div
-          fxLayout="row wrap"
-          fxLayout.lt-md="column"
-          fxLayoutGap="4%"
+          class="layout-row-wrap responsive-column gap-4percent"
           *ngIf="hookForm.controls.name.value === 'SMS Bridge'"
         >
           <mat-form-field class="flex-30">
@@ -110,18 +108,9 @@
         <br />
 
         <div class="layout-row-wrap responsive-column">
-          <p fxFlex="20%" class="mat-title">
-            {{ 'labels.inputs.Events' | translate }} <span style="color: red">*</span>
-          </p>
+          <p class="mat-title flex-20">{{ 'labels.inputs.Events' | translate }} <span style="color: red">*</span></p>
 
-          <button
-            mat-raised-button
-            class="AddEventButton"
-            fxFlex="20%"
-            type="button"
-            color="primary"
-            (click)="addEvent()"
-          >
+          <button mat-raised-button class="AddEventButton flex-20" type="button" color="primary" (click)="addEvent()">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Events' | translate }}
           </button>

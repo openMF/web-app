@@ -1,6 +1,6 @@
 <div class="container">
   <form [formGroup]="surveyForm" (ngSubmit)="submit()">
-    <div class="layout-column" fxLayoutGap="4%">
+    <div class="layout-column gap-4percent">
       <mat-card>
         <mat-card-content>
           <div class="layout-row-wrap gap-2px responsive-column">
@@ -41,11 +41,7 @@
             </mat-form-field>
 
             <div
-              fxFlexFill
-              fxLayout="row"
-              fxLayout.xs="column"
-              class="layout-align-center"
-              fxLayoutGap="5px"
+              class="flex-fill layout-row layout-align-center gap-5px layout-xs-column"
               *ngIf="!questionDatas.length"
             >
               <button type="button" mat-raised-button [routerLink]="['../']">
@@ -71,7 +67,7 @@
         </mat-card-content>
       </mat-card>
 
-      <div cdkDropList (cdkDropListDropped)="dropQuestion($event)" class="layout-column" fxLayoutGap="4%">
+      <div cdkDropList (cdkDropListDropped)="dropQuestion($event)" class="layout-column gap-4percent">
         <mat-card
           cdkDrag
           cdkDragLockAxis="y"
@@ -79,14 +75,8 @@
           *ngFor="let question of questionDatas.controls; let questionIndex = index; last as isLast"
         >
           <mat-card-content>
-            <div
-              fxFlexFill
-              fxLayoutGap="2%"
-              fxLayout.lt-md="column"
-              fxLayout="row wrap"
-              [formGroupName]="questionIndex"
-            >
-              <div class="flex-98" fxLayout="row wrap" fxLayoutGap="2%" fxLayoutAlign="space-between center">
+            <div class="flex-fill gap-2percent responsive-column layout-row-wrap" [formGroupName]="questionIndex">
+              <div class="flex-98 layout-row-wrap gap-2percent align-between align-items-center">
                 <h2 class="mat-h2">{{ 'labels.heading.Question' | translate }} {{ questionIndex + 1 }}</h2>
                 <button
                   mat-raised-button
@@ -124,7 +114,7 @@
 
               <mat-divider [inset]="true"></mat-divider>
 
-              <div class="flex-98" fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="flex-98 layout-row align-between align-items-center">
                 <h4 class="mat-h4">{{ 'labels.heading.Options' | translate }}</h4>
                 <button type="button" mat-raised-button color="primary" (click)="addResponse(questionIndex)">
                   <fa-icon icon="plus" class="m-r-10"></fa-icon>
@@ -135,20 +125,16 @@
               <div
                 cdkDropList
                 (cdkDropListDropped)="dropResponse($event, questionIndex)"
-                fxFlexFill
-                fxLayout="row wrap"
-                fxLayoutGap="2%"
+                class="flex-fill layout-row-wrap gap-2percent"
               >
                 <div
                   cdkDrag
                   cdkDragLockAxis="y"
-                  fxFlexFill
-                  fxLayout="row wrap"
-                  fxLayoutGap="2%"
+                  class="flex-fill layout-row-wrap gap-2percent"
                   formArrayName="responseDatas"
                   *ngFor="let response of getResponseDatas(questionIndex).controls; let responseIndex = index"
                 >
-                  <div class="flex-fill" fxLayout="row wrap" fxLayoutGap="2%" [formGroupName]="responseIndex">
+                  <div class="flex-fill layout-row-wrap gap-2percent" [formGroupName]="responseIndex">
                     <mat-form-field class="flex-43">
                       <mat-label>{{ 'labels.inputs.Text' | translate }}</mat-label>
                       <input matInput required formControlName="text" />
@@ -171,7 +157,7 @@
                       </mat-error>
                     </mat-form-field>
 
-                    <div fxFlex="8%">
+                    <div class="flex-8">
                       <div class="delete-wrapper">
                         <button
                           type="button"
@@ -193,13 +179,7 @@
           </mat-card-content>
 
           <div>
-            <mat-card-actions
-              *ngIf="isLast"
-              fxLayout="row"
-              fxLayout.xs="column"
-              class="layout-align-center"
-              fxLayoutGap="5px"
-            >
+            <mat-card-actions *ngIf="isLast" class="layout-row layout-xs-column layout-align-center gap-5px">
               <button type="button" mat-raised-button (click)="cancelSurvey()">
                 {{ 'labels.buttons.Cancel' | translate }}
               </button>

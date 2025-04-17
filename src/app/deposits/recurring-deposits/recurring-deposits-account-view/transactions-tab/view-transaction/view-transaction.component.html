@@ -1,4 +1,4 @@
-<div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%" *ngIf="!transactionData.reversed">
+<div class="container m-b-20 align-end gap-2percent" *ngIf="!transactionData.reversed">
   <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
     <button
       mat-raised-button
@@ -88,7 +88,7 @@
       </div>
     </mat-card-content>
 
-    <mat-card-actions fxLayout="row" fxLayout.xs="column" class="layout-align-center" fxLayoutGap="5px" class="m-b-20">
+    <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px m-b-20">
       <button type="button" color="primary" mat-raised-button (click)="goBack()">
         {{ 'labels.buttons.Back' | translate }}
       </button>

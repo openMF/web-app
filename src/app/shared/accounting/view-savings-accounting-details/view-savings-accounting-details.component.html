@@ -1,11 +1,11 @@
 <div class="layout-row-wrap responsive-column">
-  <div class="flex-fill" class="flex-98" *ngIf="accountingRule" class="layout-row-wrap responsive-column">
+  <div *ngIf="accountingRule" class="layout-row-wrap responsive-column flex-fill flex-98">
     <span class="flex-40">{{ 'labels.inputs.Type' | translate }}:</span>
     <span class="flex-60">{{ 'labels.accounting.' + getAccountingRuleName(accountingRule.value) | translate }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="isCashOrAccrualAccounting()" class="layout-row-wrap responsive-column">
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+  <div *ngIf="isCashOrAccrualAccounting()" class="layout-row-wrap responsive-column flex-fill">
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Assets' | translate }}</h4>
     <mifosx-gl-account-display
       class="flex-100"
       [accountTitle]="'Saving reference'"
@@ -38,7 +38,7 @@
     >
     </mifosx-gl-account-display>
 
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Liabilities' | translate }}</h4>
     <mifosx-gl-account-display
       class="flex-100"
       [accountTitle]="'Saving control'"
@@ -70,7 +70,7 @@
     >
     </mifosx-gl-account-display>
 
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Income' | translate }}</h4>
     <mifosx-gl-account-display
       class="flex-100"
       [accountTitle]="'Income from fees'"
@@ -94,7 +94,7 @@
     >
     </mifosx-gl-account-display>
 
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Expenses' | translate }}</h4>
     <mifosx-gl-account-display
       class="flex-100"
       [accountTitle]="'Interest on savings'"

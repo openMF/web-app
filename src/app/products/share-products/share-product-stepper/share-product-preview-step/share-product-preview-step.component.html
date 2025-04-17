@@ -98,11 +98,11 @@
     <span class="flex-60">{{ shareProduct.allowDividendCalculationForInactiveClients | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="shareProduct.marketPricePeriods.length" class="layout-row-wrap responsive-column">
+  <div *ngIf="shareProduct.marketPricePeriods.length" class="layout-row-wrap responsive-column flex-fill">
     <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Market Price Period' | translate }}</h3>
 
     <mat-divider class="flex-fill"></mat-divider>
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="shareProduct.marketPricePeriods">
+    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="shareProduct.marketPricePeriods">
       <ng-container matColumnDef="fromDate">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.From Date' | translate }}</th>
         <td mat-cell *matCellDef="let marketPricePeriod">
@@ -122,11 +122,11 @@
     </table>
   </div>
 
-  <div class="flex-fill" *ngIf="shareProduct.chargesSelected.length" class="layout-row-wrap responsive-column">
+  <div *ngIf="shareProduct.chargesSelected.length" class="layout-row-wrap responsive-column flex-fill">
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
 
     <mat-divider class="flex-fill"></mat-divider>
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="shareProduct.chargesSelected">
+    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="shareProduct.chargesSelected">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
@@ -168,8 +168,8 @@
     <span class="flex-60">{{ accountingRuleData[shareProduct.accountingRule - 1] }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="shareProduct.accountingRule === 2" class="layout-row-wrap responsive-column">
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+  <div *ngIf="shareProduct.accountingRule === 2" class="layout-row-wrap responsive-column flex-fill">
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Assets' | translate }}</h4>
 
     <div class="flex-fill">
       <span class="flex-40">{{ 'labels.inputs.Share reference' | translate }}:</span>
@@ -179,7 +179,7 @@
       }}</span>
     </div>
 
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Liabilities' | translate }}</h4>
 
     <div class="flex-fill">
       <span class="flex-40">{{ 'labels.inputs.Share suspense control' | translate }}:</span>
@@ -189,7 +189,7 @@
       }}</span>
     </div>
 
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Share Equity' | translate }}</h4>
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Share Equity' | translate }}</h4>
 
     <div class="flex-fill">
       <span class="flex-40">{{ 'labels.inputs.Equity' | translate }}:</span>
@@ -199,7 +199,7 @@
       }}</span>
     </div>
 
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Income' | translate }}</h4>
 
     <div class="flex-fill">
       <span class="flex-40">{{ 'labels.inputs.Income from fees' | translate }}:</span>

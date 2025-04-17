@@ -1,5 +1,5 @@
-<div [formGroup]="form" fxFlexFill>
-  <div *ngIf="formfield.controlType === 'input' || formfield.controlType === 'select'" fxFlexFill>
+<div [formGroup]="form" class="flex-fill">
+  <div *ngIf="formfield.controlType === 'input' || formfield.controlType === 'select'" class="flex-fill">
     <mat-form-field class="flex-fill">
       <mat-label>{{ formfield.label }}</mat-label>
 

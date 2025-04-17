@@ -1,4 +1,4 @@
-<div class="container m-b-20 space-top" fxLayout="row" fxLayoutGap="20px">
+<div class="container m-b-20 space-top layout-row gap-20px">
   <div #schedulerStatus>
     <h2 class="no-m">
       {{ 'labels.heading.Scheduler Status' | translate }}:<span class="m-l-20 m-r-20">{{
@@ -24,7 +24,7 @@
     </mat-form-field>
   </div>
 
-  <div class="space-top" fxLayout="row" fxLayoutGap="20px">
+  <div class="space-top layout-row gap-20percent">
     <button mat-raised-button color="primary" (click)="openRunSelectedJobsDialog()" [disabled]="!isAnyJobSelected()">
       <fa-icon icon="play" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Run Selected Jobs' | translate }}
@@ -152,7 +152,7 @@
   </div>
 </div>
 
-<div class="container space-top" fxLayout="row" fxLayoutGap="20px">
+<div class="container space-top layout-row gap-20percent">
   <button mat-raised-button color="primary" (click)="openRunSelectedJobsDialog()" [disabled]="!isAnyJobSelected()">
     <fa-icon icon="play" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Run Selected Jobs' | translate }}

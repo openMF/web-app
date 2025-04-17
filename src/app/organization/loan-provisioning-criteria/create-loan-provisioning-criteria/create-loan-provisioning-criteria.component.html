@@ -2,7 +2,7 @@
   <mat-card>
     <div>
       <form [formGroup]="provisioningCriteriaForm">
-        <div class="layout-row" fxLayoutGap="2%">
+        <div class="layout-row gap-2percent">
           <mat-form-field class="flex-fill">
             <mat-label>{{ 'labels.inputs.Provisioning Criteria' | translate }}</mat-label>
             <input required matInput formControlName="criteriaName" />
@@ -81,7 +81,7 @@
       </table>
     </div>
 
-    <div class="m-t-20" fxLayout="row" class="layout-align-center" fxLayoutGap="20px">
+    <div class="m-t-20 layout-row layout-align-center gap-20px">
       <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
       <button
         mat-raised-button

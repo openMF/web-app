@@ -43,7 +43,7 @@
             </mat-select>
           </mat-form-field>
 
-          <div fxFlex="14%" class="multi-row-wrapper">
+          <div class="multi-row-wrapper flex-14">
             <mat-checkbox labelPosition="before" formControlName="multiRow" class="multi-row">{{
               'labels.inputs.Multi Row' | translate
             }}</mat-checkbox>
@@ -51,10 +51,10 @@
         </div>
         <br />
 
-        <div fxLayout="row wrap" fxLayoutGap="60%" fxLayout.lt-md="column">
-          <p fxFlex="20%" class="mat-title">{{ 'labels.inputs.Columns' | translate }}</p>
+        <div class="layout-row-wrap gap-60percent layout-lt-md-column">
+          <p class="mat-title flex-20">{{ 'labels.inputs.Columns' | translate }}</p>
 
-          <button mat-raised-button fxFlex="20%" type="button" color="primary" (click)="addColumn()">
+          <button mat-raised-button class="flex-20" type="button" color="primary" (click)="addColumn()">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Columns' | translate }}
           </button>
@@ -165,7 +165,7 @@
 
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Actions' | translate }}</th>
-            <td mat-cell *matCellDef="let column" fxLayoutGap="15%">
+            <td mat-cell *matCellDef="let column" class="gap-15percent">
               <button type="button" color="primary" mat-icon-button (click)="editColumn(column)">
                 <fa-icon icon="edit" size="lg"></fa-icon>
               </button>

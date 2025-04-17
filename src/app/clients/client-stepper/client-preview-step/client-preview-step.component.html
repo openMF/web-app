@@ -128,7 +128,7 @@
     </div>
   </ng-container>
 
-  <div class="flex-fill" *ngIf="client.familyMembers.length" class="layout-row-wrap responsive-column" class="m-b-20">
+  <div *ngIf="client.familyMembers.length" class="layout-row-wrap responsive-column flex-fill m-b-20">
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Family Members' | translate }}</h3>
 
     <mat-divider class="flex-fill"></mat-divider>

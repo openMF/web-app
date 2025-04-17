@@ -1,4 +1,4 @@
-<div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%">
+<div class="container m-b-20 align-end-center gap-2percent">
   <span *ngIf="allowUndo()">
     <button
       mat-raised-button
@@ -78,7 +78,7 @@
         </mifosx-transaction-payment-detail>
       </div>
 
-      <div class="layout-row" class="layout-align-center" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div class="layout-row layout-align-center gap-2percent column-on-mobile">
         <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
           {{ 'labels.buttons.Back' | translate }}
         </button>

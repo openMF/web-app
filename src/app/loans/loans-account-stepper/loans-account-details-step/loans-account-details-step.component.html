@@ -1,6 +1,6 @@
 <form [formGroup]="loansAccountDetailsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <mat-form-field class="flex-fill" ="72%">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
       <mat-select
         required
@@ -25,7 +25,7 @@
     </mat-form-field>
   </div>
 
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="loanProductSelected">
+  <div class="layout-row-wrap layout-lt-md-column gap-2percent" *ngIf="loanProductSelected">
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.External id' | translate }}</mat-label>
       <input matInput formControlName="externalId" matTooltip="{{ 'tooltips.Provides an external id' | translate }}" />

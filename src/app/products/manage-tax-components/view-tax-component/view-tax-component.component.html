@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+<div class="container m-b-20 layout-row layout-lt-md-column align-end gap-2percent">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_TAXCOMPONENT'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -78,7 +78,7 @@
       </div>
     </mat-card-content>
 
-    <div class="layout-row" class="layout-align-center" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <div class="layout-row layout-align-center gap-2percent layout-lt-md-column">
       <button type="button" color="primary" mat-raised-button [routerLink]="['../']">
         {{ 'labels.buttons.Back' | translate }}
       </button>

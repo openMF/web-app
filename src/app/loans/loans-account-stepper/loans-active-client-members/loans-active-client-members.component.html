@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="activeClientMembers">
+<div *ngIf="activeClientMembers" class="layout-row-wrap gap-2percent layout-xs-column">
   <table class="flex-98" mat-table [dataSource]="dataSource">
     <!-- Check Column -->
     <ng-container matColumnDef="check">

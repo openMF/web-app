@@ -1,9 +1,4 @@
-<div
-  fxLayoutAlign="end"
-  class="container m-b-20 transaction-buttons"
-  fxLayoutGap="2%"
-  *ngIf="!transactionData.type.contra"
->
+<div class="container m-b-20 transaction-buttons layout-align-end gap-2percent" *ngIf="!transactionData.type.contra">
   <span *mifosxHasPermission="'ADJUST_LOAN'">
     <button mat-raised-button color="primary" [routerLink]="'edit'" [disabled]="!allowEdition">
       <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'Edit' | translate }}
@@ -98,7 +93,7 @@
 
         <mat-divider *ngIf="existTransactionRelations" [inset]="true"></mat-divider>
 
-        <div class="flex-100" class="mat-body-strong" *ngIf="existTransactionRelations">
+        <div class="mat-body-strong flex-100" *ngIf="existTransactionRelations">
           {{ 'Linked Transactions' | translate }}
           <br />
 
@@ -137,7 +132,7 @@
         </mifosx-transaction-payment-detail>
       </div>
 
-      <div class="layout-row" class="layout-align-center" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div class="layout-row layout-align-center gap-2percent column-on-mobile">
         <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
           {{ 'labels.buttons.Back' | translate }}
         </button>

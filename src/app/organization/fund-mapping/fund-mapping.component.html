@@ -12,7 +12,7 @@
         </mat-select>
       </mat-form-field>
 
-      <span class="flex-48" fxHide.lt-md></span>
+      <span class="flex-48 hide-lt-md"></span>
 
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label>
@@ -78,22 +78,18 @@
       </mat-form-field>
 
       <mat-checkbox
-        fxFlex="73%"
         labelPosition="before"
         formControlName="includeOutStandingAmountPercentage"
-        class="margin-b"
+        class="margin-b flex-73"
       >
         {{ 'labels.inputs.Loan Outstanding Percentage' | translate }}
       </mat-checkbox>
 
       <div
         *ngIf="fundMappingForm.value.includeOutStandingAmountPercentage"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayoutGap="2%"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap gap-2percent layout-xs-column"
       >
-        <mat-form-field *ngIf="fundMappingForm.contains('outStandingAmountPercentageCondition')" fxFlex="31%">
+        <mat-form-field *ngIf="fundMappingForm.contains('outStandingAmountPercentageCondition')" class="flex-31">
           <mat-label>{{ 'labels.inputs.Comparison Condition' | translate }}</mat-label>
           <mat-select required formControlName="outStandingAmountPercentageCondition">
             <mat-option value="between">{{ 'labels.inputs.between' | translate }}</mat-option>
@@ -109,7 +105,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngIf="fundMappingForm.contains('minOutStandingAmountPercentage')" fxFlex="31%">
+        <mat-form-field *ngIf="fundMappingForm.contains('minOutStandingAmountPercentage')" class="flex-31">
           <mat-label>{{ 'labels.inputs.Minimum Value' | translate }}</mat-label>
           <input type="number" matInput required formControlName="minOutStandingAmountPercentage" />
           <mat-error *ngIf="fundMappingForm.controls.minOutStandingAmountPercentage.hasError('required')">
@@ -118,7 +114,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngIf="fundMappingForm.contains('outStandingAmountPercentage')" fxFlex="31%">
+        <mat-form-field *ngIf="fundMappingForm.contains('outStandingAmountPercentage')" class="flex-31">
           <mat-label>{{ 'labels.inputs.Comparison Value' | translate }}</mat-label>
           <input type="number" matInput required formControlName="outStandingAmountPercentage" />
           <mat-error *ngIf="fundMappingForm.controls.outStandingAmountPercentage.hasError('required')">
@@ -127,7 +123,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngIf="fundMappingForm.contains('maxOutStandingAmountPercentage')" fxFlex="31%">
+        <mat-form-field *ngIf="fundMappingForm.contains('maxOutStandingAmountPercentage')" class="flex-31">
           <mat-label>{{ 'labels.inputs.Maximum Value' | translate }}</mat-label>
           <input type="number" matInput required formControlName="maxOutStandingAmountPercentage" />
           <mat-error *ngIf="fundMappingForm.controls.maxOutStandingAmountPercentage.hasError('required')">
@@ -137,18 +133,16 @@
         </mat-form-field>
       </div>
 
-      <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="includeOutstandingAmount" class="margin-b">
+      <mat-checkbox class="flex-73">
+        labelPosition="before" formControlName="includeOutstandingAmount" class="margin-b">
         {{ 'labels.inputs.Loan Outstanding Amount' | translate }}
       </mat-checkbox>
 
       <div
         *ngIf="fundMappingForm.value.includeOutstandingAmount"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayoutGap="2%"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap gap-2percent responsive-column"
       >
-        <mat-form-field *ngIf="fundMappingForm.contains('outstandingAmountCondition')" fxFlex="31%">
+        <mat-form-field *ngIf="fundMappingForm.contains('outstandingAmountCondition')" class="flex-31">
           <mat-label>{{ 'labels.inputs.Comparison Condition' | translate }}</mat-label>
           <mat-select required formControlName="outstandingAmountCondition">
             <mat-option value="between">{{ 'labels.inputs.between' | translate }}</mat-option>
@@ -164,7 +158,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngIf="fundMappingForm.contains('minOutstandingAmount')" fxFlex="31%">
+        <mat-form-field *ngIf="fundMappingForm.contains('minOutstandingAmount')" class="flex-31">
           <mat-label>{{ 'labels.inputs.Minimum Value' | translate }}</mat-label>
           <input type="number" matInput required formControlName="minOutstandingAmount" />
           <mat-error *ngIf="fundMappingForm.controls.minOutstandingAmount.hasError('required')">
@@ -173,7 +167,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngIf="fundMappingForm.contains('outstandingAmount')" fxFlex="31%">
+        <mat-form-field *ngIf="fundMappingForm.contains('outstandingAmount')" class="flex-31">
           <mat-label>{{ 'labels.inputs.Comparison Value' | translate }}</mat-label>
           <input type="number" matInput required formControlName="outstandingAmount" />
           <mat-error *ngIf="fundMappingForm.controls.outstandingAmount.hasError('required')">
@@ -182,7 +176,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field *ngIf="fundMappingForm.contains('maxOutstandingAmount')" fxFlex="31%">
+        <mat-form-field *ngIf="fundMappingForm.contains('maxOutstandingAmount')" class="flex-31">
           <mat-label>{{ 'labels.inputs.Maximum Value' | translate }}</mat-label>
           <input type="number" matInput required formControlName="maxOutstandingAmount" />
           <mat-error *ngIf="fundMappingForm.controls.maxOutstandingAmount.hasError('required')">

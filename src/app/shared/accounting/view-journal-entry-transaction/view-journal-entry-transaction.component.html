@@ -1,5 +1,5 @@
 <div *ngIf="isJournalEntryLoaded">
-  <div class="layout-row" fxLayoutAlign="end" class="container m-b-20" *ngIf="dataSource?.data[0].manualEntry">
+  <div *ngIf="dataSource?.data[0].manualEntry" class="layout-row layout-align-end container m-b-20">
     <button
       mat-raised-button
       color="primary"
@@ -54,7 +54,7 @@
     </mat-card>
   </div>
 
-  <div class="mat-elevation-z8 container" class="layout-align-center" fxLayout="row wrap">
+  <div class="mat-elevation-z8 container layout-align-center layout-row-wrap">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
         <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header>
@@ -115,7 +115,7 @@
       ></tr>
     </table>
 
-    <div class="layout-row" fxLayout.xs="column" class="layout-align-center" fxLayoutGap="5px" class="m-t-15 m-b-15">
+    <div class="layout-row layout-align-center m-t-15 m-b-15 gap-5px layout-xs-column">
       <button type="button" color="primary" mat-raised-button (click)="goBack()">
         {{ 'labels.buttons.Back' | translate }}
       </button>
@@ -131,7 +131,7 @@
     </div>
   </div>
 
-  <div class="layout-row" fxLayout.xs="column" class="layout-align-center" fxLayoutGap="5px" class="m-t-15 m-b-15">
+  <div class="layout-row layout-align-center m-t-15 m-b-15 gap-5px layout-xs-column">
     <button type="button" color="primary" mat-raised-button (click)="goBack()">
       {{ 'labels.buttons.Back' | translate }}
     </button>

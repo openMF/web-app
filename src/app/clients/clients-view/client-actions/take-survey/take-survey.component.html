@@ -15,10 +15,10 @@
       <ng-container *ngFor="let component of componentGroups">
         <h2 *ngIf="component[0].componentKey">component[0].componentKey</h2>
 
-        <div class="layout-column" class="display-questions">
+        <div class="layout-column display-questions">
           <ng-container *ngFor="let question of component">
-            <div class="layout-row" class="question">
-              <mat-label class="flex-40" class="question-text">{{ question.text }}</mat-label>
+            <div class="layout-row question">
+              <mat-label class="flex-40 question-text">{{ question.text }}</mat-label>
 
               <mat-radio-group class="flex-60" [(ngModel)]="question.answer">
                 <mat-radio-button

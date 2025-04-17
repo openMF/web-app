@@ -52,14 +52,14 @@
         </div>
 
         <div
-          fxFlex="50%"
+          class="flex-50"
           *ngIf="holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null"
         >
           {{ holidayData.repaymentsRescheduledTo | dateFormat }}
         </div>
 
         <div
-          fxFlex="50%"
+          class="flex-50"
           *ngIf="holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null"
         >
           {{ 'labels.inputs.Next Repayment Date' | translate }}

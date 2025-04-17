@@ -47,9 +47,9 @@
   </div>
 
   <ng-container *ngIf="activeClientMembers">
-    <h3 class="mat-h3" fxFlexFill class="margin-t">{{ 'labels.heading.Client Members' | translate }}</h3>
+    <h3 class="mat-h3 margin-t flex-fill">{{ 'labels.heading.Client Members' | translate }}</h3>
     <mat-divider class="flex-fill"></mat-divider>
-    <div fxFlex="60%">
+    <div class="flex-60">
       <table mat-table #membersTable [dataSource]="dataSource">
         <!-- ID Column -->
         <ng-container matColumnDef="id">
@@ -83,7 +83,7 @@
     </div>
   </ng-container>
 
-  <h3 class="mat-h3" fxFlexFill class="margin-t">{{ 'labels.heading.Terms' | translate }}</h3>
+  <h3 class="mat-h3 margin-t flex-fill">{{ 'labels.heading.Terms' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
   <div class="flex-fill">
@@ -211,7 +211,7 @@
     <span class="flex-60"> {{ loansAccount.balloonRepaymentAmount | formatNumber }} </span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill class="margin-t">{{ 'labels.heading.Moratorium' | translate }}</h3>
+  <h3 class="mat-h3 margin-t flex-fill">{{ 'labels.heading.Moratorium' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
   <div class="flex-fill" *ngIf="loansAccount.graceOnPrincipalPayment">
@@ -249,11 +249,11 @@
     <span class="flex-60">{{ loansAccountProductTemplate?.daysInMonthType.value }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loansAccount.charges.length" class="layout-row-wrap responsive-column" class="margin-t">
+  <div *ngIf="loansAccount.charges.length" class="layout-row-wrap responsive-column flex-fill margin-t">
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
 
     <mat-divider class="flex-fill"></mat-divider>
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
+    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="loansAccount.charges">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
@@ -314,13 +314,10 @@
   </div>
 
   <div
-    fxFlexFill
     *ngIf="loansAccountProductTemplate.overdueCharges.length"
-    fxLayout="row wrap"
-    fxLayout.lt-md="column"
-    class="margin-t"
+    class="flex-fill layout-row-wrap layout-xs-column margin-t"
   >
-    <h3 class="flex-98" class="mat-h3">{{ 'labels.heading.Overdue Charges' | translate }}</h3>
+    <h3 class="mat-h3 flex-98">{{ 'labels.heading.Overdue Charges' | translate }}</h3>
 
     <mat-divider class="flex-98"></mat-divider>
 

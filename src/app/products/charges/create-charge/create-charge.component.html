@@ -23,10 +23,7 @@
 
           <div
             *ngIf="chargeForm.controls.chargeAppliesTo.value"
-            fxFlexFill
-            fxLayout="row wrap"
-            fxLayoutGap="2%"
-            fxLayout.lt-md="column"
+            class="flex-fill layout-row-wrap gap-2percent responsive-column"
           >
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Charge Name' | translate }}</mat-label>
@@ -224,7 +221,7 @@
               <input matInput formControlName="maxCap" />
             </mat-form-field>
 
-            <div class="flex-48" fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column">
+            <div class="flex-48 layout-row gap-2percent layout-lt-md-column">
               <div class="flex-50">
                 class="active-wrapper">
                 <mat-checkbox labelPosition="before" formControlName="active">

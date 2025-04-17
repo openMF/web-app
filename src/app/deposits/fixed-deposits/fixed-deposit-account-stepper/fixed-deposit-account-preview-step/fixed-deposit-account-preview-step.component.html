@@ -189,7 +189,7 @@
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Interest Rate Chart' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
-  <div class="margin-b" fxFlexFill class="layout-column">
+  <div class="margin-b layout-column flex-fill">
     <div class="flex-fill" *ngIf="fixedDepositsAccountProductTemplate?.accountChart.name">
       <span class="flex-40">{{ 'labels.inputs.name' | translate }}:</span>
       <span class="flex-60">{{ fixedDepositsAccountProductTemplate?.accountChart.name }}</span>
@@ -271,19 +271,16 @@
           [attr.colspan]="chartSlabsDisplayedColumns.length"
         >
           <div
-            fxLayout="row wrap"
-            fxFlexFill
-            class="incentives"
+            class="layout-row-wrap flex-fill incentives"
             [@expandChartSlab]="chartSlabIndex === expandChartSlabIndex ? 'expanded' : 'collapsed'"
           >
-            <mat-card fxLayout="row wrap" fxFlexFill>
-              <h4 class="m-b-10" fxFlex="13%">
+            <mat-card class="layout-row-wrap flex-fill">
+              <h4 class="m-b-10 flex-13">
                 {{ 'labels.heading.Incentives' | translate }}
               </h4>
 
               <table
-                fxFlexFill
-                class="mat-elevation-z1"
+                class="flex-fill mat-elevation-z1"
                 mat-table
                 [dataSource]="chartSlab.incentives"
                 *ngIf="chartSlab.incentives.length"
@@ -344,11 +341,11 @@
     </table>
   </div>
 
-  <div class="flex-fill" *ngIf="fixedDepositAccountData.charges.length" class="layout-row-wrap responsive-column">
+  <div *ngIf="fixedDepositAccountData.charges.length" class="layout-row-wrap responsive-column flex-fill">
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
 
     <mat-divider class="flex-fill"></mat-divider>
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="fixedDepositAccountData.charges">
+    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="fixedDepositAccountData.charges">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">

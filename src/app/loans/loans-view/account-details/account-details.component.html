@@ -9,7 +9,7 @@
 
     <div class="flex-fill">
       <span class="flex-50">{{ 'labels.inputs.Repayments' | translate }}</span>
-      <span fxFlex="50%"
+      <span class="flex-50"
         >{{ loanDetails.numberOfRepayments }} every {{ loanDetails.repaymentEvery }}&nbsp;{{
           loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs'
         }}
@@ -101,8 +101,8 @@
 
     <div class="flex-fill">
       <span class="flex-50"> {{ 'labels.inputs.Fund Source' | translate }} </span>
-      <span fxFlex="50%" *ngIf="loanDetails.fundName"> {{ loanDetails.fundName }} </span>
-      <span fxFlex="50%" *ngIf="!loanDetails.fundName"> {{ 'labels.inputs.Unassigned' | translate }} </span>
+      <span class="flex-50" *ngIf="loanDetails.fundName"> {{ loanDetails.fundName }} </span>
+      <span class="flex-50" *ngIf="!loanDetails.fundName"> {{ 'labels.inputs.Unassigned' | translate }} </span>
     </div>
 
     <div class="flex-fill">
@@ -206,7 +206,7 @@
     </div>
 
     <div
-      fxFlexFill
+      class="flex-fill"
       *ngIf="
         loanDetails.isInterestRecalculationEnabled &&
         loanDetails.interestRecalculationData.interestRecalculationCompoundingType.id !== 0

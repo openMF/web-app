@@ -1,12 +1,6 @@
 <form [formGroup]="savingProductAccountingForm">
   <div class="layout-row-wrap custom-gap responsive-column">
-    <mat-radio-group
-      class="flex-98"
-      fxLayout="row"
-      fxLayoutGap="5%"
-      fxLayout.lt-md="column"
-      formControlName="accountingRule"
-    >
+    <mat-radio-group class="flex-98 layout-row gap-5percent layout-column.lt-md" formControlName="accountingRule">
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
         {{ 'labels.accounting.' + accountingRule | translate }}
       </mat-radio-button>
@@ -14,11 +8,11 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <div *ngIf="isCashOrAccrualAccounting()" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+    <div *ngIf="isCashOrAccrualAccounting()" class="flex-fill layout-row-wrap gap-2percent layout-xs-column">
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="savingProductAccountingForm.controls.savingsReferenceAccountId"
         [glAccountList]="assetAccountData"
         [required]="true"
@@ -27,7 +21,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="savingProductAccountingForm.controls.overdraftPortfolioControlId"
         [glAccountList]="assetAccountData"
         [required]="true"
@@ -36,7 +30,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         *ngIf="isAccrualAccounting()"
         [inputFormControl]="savingProductAccountingForm.controls.feesReceivableAccountId"
         [glAccountList]="assetAccountData"
@@ -46,7 +40,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         *ngIf="isAccrualAccounting()"
         [inputFormControl]="savingProductAccountingForm.controls.penaltiesReceivableAccountId"
         [glAccountList]="assetAccountData"
@@ -57,10 +51,10 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="savingProductAccountingForm.controls.savingsControlAccountId"
         [glAccountList]="liabilityAccountData"
         [required]="true"
@@ -69,7 +63,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="savingProductAccountingForm.controls.transfersInSuspenseAccountId"
         [glAccountList]="liabilityAccountData"
         [required]="true"
@@ -78,7 +72,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         *ngIf="isAccrualAccounting()"
         [inputFormControl]="savingProductAccountingForm.controls.interestPayableAccountId"
         [glAccountList]="liabilityAccountData"
@@ -88,7 +82,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         *ngIf="isDormancyTrackingActive.value"
         [inputFormControl]="savingProductAccountingForm.controls.escheatLiabilityId"
         [glAccountList]="liabilityAccountData"
@@ -97,10 +91,10 @@
       >
       </mifosx-gl-account-selector>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="savingProductAccountingForm.controls.interestOnSavingsAccountId"
         [glAccountList]="expenseAccountData"
         [required]="true"
@@ -109,7 +103,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="savingProductAccountingForm.controls.writeOffAccountId"
         [glAccountList]="expenseAccountData"
         [required]="true"
@@ -119,10 +113,10 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="savingProductAccountingForm.controls.incomeFromFeeAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -131,7 +125,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="savingProductAccountingForm.controls.incomeFromPenaltyAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -140,7 +134,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="savingProductAccountingForm.controls.incomeFromInterestId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -150,23 +144,22 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules">{{
-        'labels.heading.Advanced Accounting Rules' | translate
-      }}</mat-checkbox>
+      <mat-checkbox class="flex-73">
+        formControlName="advancedAccountingRules">{{
+          'labels.heading.Advanced Accounting Rules' | translate
+        }}</mat-checkbox
+      >
 
       <div
         *ngIf="savingProductAccountingForm.value.advancedAccountingRules"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayoutGap="2%"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap gap-2percent responsive-column"
       >
         <div class="flex-100">
-          <h4 fxFlex="63%" class="mat-h4">
+          <h4 class="mat-h4 flex-63">
             {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
           </h4>
 
-          <div fxFlex="33%">
+          <div class="flex-33">
             <button
               type="button"
               mat-raised-button
@@ -221,9 +214,9 @@
         </div>
 
         <div class="flex-100" *ngIf="existCharges()">
-          <h4 fxFlex="63%" class="mat-h4">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
+          <h4 class="mat-h4 flex-63">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
 
-          <div fxFlex="33%" *ngIf="existCharges()">
+          <div class="flex-33" *ngIf="existCharges()">
             <button
               type="button"
               mat-raised-button
@@ -274,11 +267,11 @@
         </div>
 
         <div class="flex-100" *ngIf="existCharges()">
-          <h4 fxFlex="63%" class="mat-h4">
+          <h4 class="mat-h4 flex-63">
             {{ 'labels.heading.Map Penalties to Specific Income Accounts' | translate }}
           </h4>
 
-          <div fxFlex="33%">
+          <div class="flex-33">
             <button
               type="button"
               mat-raised-button

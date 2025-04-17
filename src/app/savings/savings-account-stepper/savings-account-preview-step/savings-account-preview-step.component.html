@@ -32,9 +32,9 @@
   </div>
 
   <ng-container *ngIf="activeClientMembers">
-    <h3 class="mat-h3" fxFlexFill class="margin-t">{{ 'labels.heading.Client Members' | translate }}</h3>
+    <h3 class="mat-h3 margin-t flex-fill">{{ 'labels.heading.Client Members' | translate }}</h3>
     <mat-divider class="flex-fill"></mat-divider>
-    <div fxFlex="60%">
+    <div class="flex-60">
       <table mat-table #membersTable [dataSource]="dataSource">
         <!-- ID Column -->
         <ng-container matColumnDef="id">
@@ -54,7 +54,7 @@
     </div>
   </ng-container>
 
-  <h3 class="mat-h3" fxFlexFill class="margin-t">{{ 'labels.heading.Terms' | translate }}</h3>
+  <h3 class="mat-h3 margin-t flex-fill">{{ 'labels.heading.Terms' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
   <div class="flex-fill">
@@ -164,11 +164,11 @@
     <span class="flex-60">{{ savingsAccount.minRequiredBalance }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="savingsAccount.charges.length" class="layout-row-wrap responsive-column">
+  <div *ngIf="savingsAccount.charges.length" class="layout-row-wrap responsive-column flex-fill">
     <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Charges' | translate }}</h3>
 
     <mat-divider class="flex-fill"></mat-divider>
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingsAccount.charges">
+    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="savingsAccount.charges">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">

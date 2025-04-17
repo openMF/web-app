@@ -1,6 +1,6 @@
 <form [formGroup]="recurringDepositAccountSettingsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <mat-checkbox class="flex-48" labelPosition="before" formControlName="isMandatoryDeposit" class="margin-v">
+    <mat-checkbox labelPosition="before" formControlName="isMandatoryDeposit" class="margin-v flex-48">
       {{ 'labels.inputs.Is Mandatory Deposit' | translate }}?
     </mat-checkbox>
 
@@ -13,11 +13,11 @@
       {{ 'labels.inputs.Adjust advance payments toward future installments' | translate }}?
     </mat-checkbox>
 
-    <mat-checkbox class="flex-48" labelPosition="before" formControlName="allowWithdrawal" class="margin-v">
+    <mat-checkbox labelPosition="before" formControlName="allowWithdrawal" class="margin-v flex-48">
       {{ 'labels.inputs.Allow Withdrawals' | translate }}?
     </mat-checkbox>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Lock-in Period' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Lock-in Period' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
@@ -36,7 +36,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Recurring Deposit Details' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Recurring Deposit Details' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Recurring Deposit Amount' | translate }}</mat-label>
@@ -47,7 +47,7 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Deposit Period' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Deposit Period' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Deposit Period' | translate }}</mat-label>
@@ -63,7 +63,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox class="flex-48" labelPosition="before" formControlName="isCalendarInherited" class="margin-v">
+    <mat-checkbox labelPosition="before" formControlName="isCalendarInherited" class="margin-v flex-48">
       {{ 'labels.inputs.Deposit Frequency Same as Group/Center meeting' | translate }}
     </mat-checkbox>
 
@@ -82,7 +82,7 @@
         <mat-datepicker #expectedFirstDepositOnDatePicker></mat-datepicker>
       </mat-form-field>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Deposit Frequency' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Deposit Frequency' | translate }}</h4>
 
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Deposit Frequency' | translate }}</mat-label>
@@ -109,7 +109,7 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Minimum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Minimum Deposit Term' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
@@ -133,7 +133,7 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
@@ -149,7 +149,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Maximum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Maximum Deposit Term' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
@@ -167,9 +167,10 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
+    <mat-checkbox class="flex-73">
+      labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
       {{ 'labels.inputs.Apply Penal Interest (less)' | translate }}
     </mat-checkbox>
 
@@ -198,9 +199,9 @@
     </mat-form-field>
 
     <ng-container *ngIf="taxGroup">
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Tax Group' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Tax Group' | translate }}</h4>
 
-      <mat-checkbox class="flex-48" labelPosition="before" formControlName="withHoldTax" class="margin-v">
+      <mat-checkbox labelPosition="before" formControlName="withHoldTax" class="margin-v flex-48">
         {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}?
       </mat-checkbox>
 

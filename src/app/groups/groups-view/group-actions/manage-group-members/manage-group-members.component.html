@@ -1,5 +1,5 @@
 <div class="container layout-row gap-3percent">
-  <mat-card fxFlex class="client-card" class="layout-column" fxLayoutGap="2%">
+  <mat-card class="client-card layout-column flex gap-2px">
     <mat-form-field class="flex-30">
       <mat-label>{{ 'labels.inputs.Add Clients' | translate }}</mat-label>
       <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete" />
@@ -33,7 +33,7 @@
     </div>
   </mat-card>
 
-  <mat-card fxFlex="50%">
+  <mat-card class="flex-50">
     <h3 matSubheader>{{ 'labels.heading.Client Members' | translate }}</h3>
 
     <mat-nav-list *ngIf="clientMembers?.length">

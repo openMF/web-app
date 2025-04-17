@@ -1,5 +1,5 @@
-<div class="container" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap.lt-md="4%" fxLayout.lt-md="column">
-  <div fxFlex="46%">
+<div class="container layout-row-wrap align-between responsive-column gap-4percent">
+  <div class="flex-46">
     <mat-card>
       <mat-card-content>
         <div class="layout-row-wrap content">
@@ -100,7 +100,7 @@
     </mat-card>
   </div>
 
-  <div fxFlex="46%">
+  <div class="flex-46">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="command">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Command' | translate }}</th>

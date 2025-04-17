@@ -1,6 +1,6 @@
 <form [formGroup]="fixedDepositAccountSettingsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Lock-in Period' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Lock-in Period' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
@@ -19,7 +19,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Minimum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Minimum Deposit Term' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
@@ -43,7 +43,7 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
@@ -59,7 +59,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Maximum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Maximum Deposit Term' | translate }}</h4>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
@@ -77,13 +77,14 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">{{ 'labels.heading.Interest Transfer' | translate }}</h3>
+    <h3 class="mat-h3 flex-23">{{ 'labels.heading.Interest Transfer' | translate }}</h3>
 
-    <mat-checkbox fxFlex="32%" labelPosition="before" formControlName="transferInterestToSavings" class="margin-b">
+    <mat-checkbox class="flex-32">
+      labelPosition="before" formControlName="transferInterestToSavings" class="margin-b">
       {{ 'labels.inputs.Transfer Interest to Linked Savings Account' | translate }}?
     </mat-checkbox>
 
-    <mat-form-field class="flex-48" *ngIf="fixedDepositAccountSettingsForm.contains('linkAccountId')" class="margin-b">
+    <mat-form-field *ngIf="fixedDepositAccountSettingsForm.contains('linkAccountId')" class="margin-b flex-48">
       <mat-label>{{ 'labels.inputs.Linked Savings Account' | translate }}</mat-label>
       <mat-select formControlName="linkAccountId" required>
         <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
@@ -126,9 +127,10 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <h4 fxFlex="23%" class="mat-h4">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
+    <h4 class="mat-h4 flex-23">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
+    <mat-checkbox class="flex-73">
+      labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
       {{ 'labels.inputs.Apply Penal Interest (less)' | translate }}
     </mat-checkbox>
 
@@ -152,11 +154,11 @@
     <ng-container *ngIf="fixedDepositAccountSettingsForm.controls.withHoldTax">
       <mat-divider class="flex-98"></mat-divider>
 
-      <mat-checkbox class="flex-48" labelPosition="before" formControlName="withHoldTax" class="margin-p">
+      <mat-checkbox labelPosition="before" formControlName="withHoldTax" class="margin-p flex-48">
         {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}?
       </mat-checkbox>
 
-      <mat-form-field class="flex-48" *ngIf="fixedDepositAccountSettingsForm.controls.taxGroupId" class="p-b-25">
+      <mat-form-field *ngIf="fixedDepositAccountSettingsForm.controls.taxGroupId" class="p-b-25 flex-48">
         <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
         <input matInput formControlName="taxGroupId" />
       </mat-form-field>

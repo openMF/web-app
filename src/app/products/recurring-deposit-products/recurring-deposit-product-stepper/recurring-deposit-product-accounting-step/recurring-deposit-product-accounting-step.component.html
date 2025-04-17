@@ -1,12 +1,6 @@
 <form [formGroup]="recurringDepositProductAccountingForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <mat-radio-group
-      class="flex-98"
-      fxLayout="row"
-      fxLayoutGap="5%"
-      fxLayout.lt-md="column"
-      formControlName="accountingRule"
-    >
+    <mat-radio-group class="flex-98 layout-row gap-5percent layout-column.lt-md" formControlName="accountingRule">
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
         {{ 'labels.accounting.' + accountingRule | translate }}
       </mat-radio-button>
@@ -14,8 +8,8 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <div *ngIf="isCashOrAccrualAccounting()" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+    <div *ngIf="isCashOrAccrualAccounting()" class="flex-fill layout-row-wrap gap-2percent layout-xs-column">
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -48,7 +42,7 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -80,7 +74,7 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -93,7 +87,7 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h4 class="flex-98" class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
 
       <mifosx-gl-account-selector
         class="flex-48"
@@ -115,23 +109,20 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <h3 fxFlex="23%" class="mat-h3">{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
+      <h3 class="mat-h3 flex-23">{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
 
-      <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules"></mat-checkbox>
+      <mat-checkbox class="flex-73"> formControlName="advancedAccountingRules"></mat-checkbox>
 
       <div
         *ngIf="recurringDepositProductAccountingForm.value.advancedAccountingRules"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayoutGap="2%"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap gap-2percent responsive-column"
       >
-        <div class="flex-100" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <h4 fxFlex="63%" class="mat-h4">
+        <div class="flex-100 layout-row-wrap gap-2percent layout-lt-md-column">
+          <h4 class="mat-h4 flex-63">
             {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
           </h4>
 
-          <div fxFlex="33%">
+          <div class="flex-33">
             <button
               type="button"
               mat-raised-button
@@ -185,9 +176,9 @@
           </table>
         </div>
         <div class="flex-100" *ngIf="existCharges()">
-          <h4 fxFlex="63%" class="mat-h4">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
+          <h4 class="mat-h4 flex-63">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
 
-          <div fxFlex="33%">
+          <div class="flex-33">
             <button
               type="button"
               mat-raised-button
@@ -238,11 +229,11 @@
         </div>
 
         <div class="flex-100" *ngIf="existCharges()">
-          <h4 fxFlex="63%" class="mat-h4">
+          <h4 class="mat-h4 flex-63">
             {{ 'labels.heading.Map Penalties to Specific Income Accounts' | translate }}
           </h4>
 
-          <div fxFlex="33%">
+          <div class="flex-33">
             <button
               type="button"
               mat-raised-button

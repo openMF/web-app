@@ -4,7 +4,7 @@
   <div class="layout-column gap-2px">
     <ng-container *ngFor="let item of buttonConfig.buttonCombinations">
       <mat-divider [inset]="true"></mat-divider>
-      <div class="flex-fill" fxFlex="50%">
+      <div class="flex-fill flex-50">
         <span class="flex-50">
           <span *ngIf="item.ctrlKey">
             <span class="modifier-key">{{ 'labels.inputs.Ctrl' | translate }}</span> +

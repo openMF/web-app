@@ -147,7 +147,7 @@
       <span class="flex-60">{{ savingProduct.isDormancyTrackingActive | yesNo }}</span>
     </div>
 
-    <div class="flex-fill" *ngIf="savingProduct.isDormancyTrackingActive" class="layout-row-wrap responsive-column">
+    <div *ngIf="savingProduct.isDormancyTrackingActive" class="layout-row-wrap responsive-column flex-fill">
       <span class="flex-40">{{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}:</span>
       <span class="flex-60">{{ savingProduct.daysToInactive }}</span>
       <span class="flex-40">{{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }}:</span>
@@ -156,12 +156,12 @@
       <span class="flex-60">{{ savingProduct.daysToEscheat }}</span>
     </div>
 
-    <div class="flex-fill" *ngIf="savingProduct.charges.length" class="layout-row-wrap responsive-column">
+    <div *ngIf="savingProduct.charges.length" class="layout-row-wrap responsive-column flex-fill">
       <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
 
       <mat-divider [inset]="true"></mat-divider>
 
-      <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingProduct.charges">
+      <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="savingProduct.charges">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
           <td mat-cell *matCellDef="let charge">
@@ -212,9 +212,7 @@
         savingProduct.feeToIncomeAccountMappings?.length ||
         savingProduct.penaltyToIncomeAccountMappings?.length
       "
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap responsive-column"
     >
       <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Advanced Accounting Rules' | translate }}</h3>
 
@@ -222,15 +220,12 @@
 
       <div
         *ngIf="savingProduct.paymentChannelToFundSourceMappings?.length"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap responsive-column"
       >
-        <h4 class="mat-h4" fxFlexFill>{{ 'labels.inputs.Fund Sources for Payment Channels' | translate }}</h4>
+        <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Fund Sources for Payment Channels' | translate }}</h4>
 
         <table
-          fxFlexFill
-          class="mat-elevation-z1"
+          class="mat-elevation-z1 flex-fill"
           mat-table
           [dataSource]="savingProduct.paymentChannelToFundSourceMappings"
         >
@@ -253,15 +248,10 @@
         </table>
       </div>
 
-      <div
-        *ngIf="savingProduct.feeToIncomeAccountMappings?.length"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayout.lt-md="column"
-      >
-        <h4 class="mat-h4" fxFlexFill>{{ 'labels.inputs.Fees to Specific Income Accounts' | translate }}</h4>
+      <div *ngIf="savingProduct.feeToIncomeAccountMappings?.length" class="flex-fill layout-row-wrap responsive-column">
+        <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Fees to Specific Income Accounts' | translate }}</h4>
 
-        <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="savingProduct.feeToIncomeAccountMappings">
+        <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="savingProduct.feeToIncomeAccountMappings">
           <ng-container matColumnDef="chargeId">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fees' | translate }}</th>
             <td mat-cell *matCellDef="let feesIncome">
@@ -283,18 +273,11 @@
 
       <div
         *ngIf="savingProduct.penaltyToIncomeAccountMappings?.length"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap responsive-column"
       >
-        <h4 class="mat-h4" fxFlexFill>{{ 'labels.inputs.Penalties to Specific Income Accounts' | translate }}</h4>
+        <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Penalties to Specific Income Accounts' | translate }}</h4>
 
-        <table
-          fxFlexFill
-          class="mat-elevation-z1"
-          mat-table
-          [dataSource]="savingProduct.penaltyToIncomeAccountMappings"
-        >
+        <table class="mat-elevation-z1 flex-fill" mat-table [dataSource]="savingProduct.penaltyToIncomeAccountMappings">
           <ng-container matColumnDef="chargeId">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Penalty' | translate }}</th>
             <td mat-cell *matCellDef="let penaltyIncome">

@@ -1,6 +1,6 @@
 <form [formGroup]="shareProductSettingsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <h4 class="flex-98" class="mat-h4">
+    <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Shares per Client' | translate }}
       <i
         class="fas fa-question"
@@ -29,7 +29,7 @@
       <input type="number" matInput formControlName="maximumShares" />
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">
+    <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Minimum Active Period' | translate }}
       <i
         class="fas fa-question"
@@ -54,7 +54,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">
+    <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Lock-in Period' | translate }}
       <i class="fas fa-question" matTooltip="{{ 'tooltips.Used to indicate the length of time' | translate }}"></i>
     </h4>

@@ -6,7 +6,7 @@
           <mat-form-field appearance="fill">
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <span matTextSuffix class="m-l-10">{{ loanDetailsData.currency.code }}</span>
-            <span fxFlex="auto"></span>
+            <span class="flex-auto"></span>
             <input type="number" matInput required class="right-input" formControlName="amount" />
             <mat-error *ngIf="adjustLoanChargeForm.controls.amount.hasError('required')">
               {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
@@ -29,7 +29,8 @@
           </mat-form-field>
 
           <div class="flex-fill">
-            <span fxFlex="75%" class="expandcollapsebutton m-l-10 m-t-40" (click)="addPaymentDetails()">
+            <span class="expandcollapsebutton m-l-10 m-t-40 flex-75">
+              (click)="addPaymentDetails()">
               <mat-slide-toggle>
                 <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
                   <span class="m-l-10">{{ 'labels.inputs.Show Payment Details' | translate }}</span>

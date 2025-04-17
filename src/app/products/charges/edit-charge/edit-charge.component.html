@@ -16,7 +16,7 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="form-section">
+        <div class="layout-row-wrap gap-2percent layout-lt-md-column form-section">
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required autofocus formControlName="name" />
@@ -159,7 +159,7 @@
             </mat-select>
           </mat-form-field>
 
-          <div class="flex-48" class="password-never-expires-wrapper checkbox" *ngIf="addFeeFrequency">
+          <div class="password-never-expires-wrapper checkbox flex-48" *ngIf="addFeeFrequency">
             <mat-checkbox
               labelPosition="before"
               [checked]="addFeeFrequency && showFeeOptions"
@@ -192,14 +192,14 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="form-section">
-          <div class="flex-48" class="password-never-expires-wrapper">
+        <div class="layout-row-wrap gap-2percent layout-lt-md-column form-section">
+          <div class="password-never-expires-wrapper flex-48">
             <mat-checkbox labelPosition="before" formControlName="active">
               {{ 'labels.status.Active' | translate }}
             </mat-checkbox>
           </div>
 
-          <div class="flex-48" class="send-password-to-email-wrapper" *ngIf="showPenalty">
+          <div class="send-password-to-email-wrapper flex-48" *ngIf="showPenalty">
             <mat-checkbox labelPosition="before" formControlName="penalty">
               {{ 'labels.commons.Is' | translate }} {{ 'labels.inputs.Penalty' | translate }}
             </mat-checkbox>

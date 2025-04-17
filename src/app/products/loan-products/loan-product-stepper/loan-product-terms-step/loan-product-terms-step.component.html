@@ -1,6 +1,6 @@
 <form [formGroup]="loanProductTermsForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <h4 class="flex-98" class="mat-h4">
+    <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Principal' | translate
       }}<i
         class="m-l-10 fas fa-question"
@@ -37,11 +37,11 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-checkbox fxFlex="96%" labelPosition="before" formControlName="allowApprovedDisbursedAmountsOverApplied">
+    <mat-checkbox class="flex-60" labelPosition="before" formControlName="allowApprovedDisbursedAmountsOverApplied">
       {{ 'labels.inputs.Allow approval / disbursal above loan applied amount' | translate }}
     </mat-checkbox>
 
-    <div class="flex-98" fxLayoutGap="2%" class="layout-row-wrap responsive-column">
+    <div class="flex-98 layout-row-wrap responsive-column gap-2percent">
       <mat-form-field
         class="flex-fill"
         ="32%"
@@ -86,7 +86,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 class="flex-98" class="mat-h4">
+    <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Number of repayments' | translate }}
       <i
         class="fas fa-question"
@@ -127,15 +127,15 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <mat-checkbox fxFlex="96%" labelPosition="before" formControlName="interestRecognitionOnDisbursementDate">
+    <mat-checkbox class="flex-96" labelPosition="before" formControlName="interestRecognitionOnDisbursementDate">
       {{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}
     </mat-checkbox>
 
-    <h3 fxFlex="23%" class="mat-h3">{{ 'labels.inputs.Interest Rates' | translate }}</h3>
+    <h3 class="mat-h3 flex-23">{{ 'labels.inputs.Interest Rates' | translate }}</h3>
 
     <mat-checkbox
       [formControl]="zeroInterest"
-      fxFlex="23%"
+      class="flex-23"
       labelPosition="before"
       *ngIf="!loanProductTermsForm.value.isLinkedToFloatingInterestRates"
     >
@@ -143,7 +143,7 @@
     </mat-checkbox>
 
     <mat-checkbox
-      fxFlex="32%"
+      class="flex-32"
       labelPosition="before"
       formControlName="isLinkedToFloatingInterestRates"
       *ngIf="!isZeroInterest()"
@@ -153,12 +153,9 @@
 
     <div
       *ngIf="!loanProductTermsForm.value.isLinkedToFloatingInterestRates"
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
-      <h4 class="flex-98" class="mat-h4">
+      <h4 class="mat-h4 flex-98">
         {{ 'labels.inputs.Nominal interest rate' | translate }}
         <i
           class="fas fa-question"
@@ -234,13 +231,9 @@
 
     <div
       *ngIf="loanProductTermsForm.value.isLinkedToFloatingInterestRates && !isZeroInterest()"
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
-      fxLayoutAlign.gt-sm="start center"
+      class="flex-fill layout-row-wrap gap-2percent responsive-column align-gt-sm-start-center"
     >
-      <h4 class="flex-98" class="mat-h4">
+      <h4 class="mat-h4 flex-98">
         {{ 'labels.inputs.Floating Interest Rate' | translate }}
         <i
           class="fas fa-question"
@@ -272,7 +265,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-checkbox fxFlex="31%" labelPosition="before" formControlName="isFloatingInterestRateCalculationAllowed">
+      <mat-checkbox class="flex-31" labelPosition="before" formControlName="isFloatingInterestRateCalculationAllowed">
         {{ 'labels.inputs.Is Floating calculation allowed?' | translate }}
       </mat-checkbox>
 
@@ -306,22 +299,20 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">{{ 'labels.inputs.Variations' | translate }}</h3>
+    <h3 class="mat-h3 flex-23">{{ 'labels.inputs.Variations' | translate }}</h3>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="useBorrowerCycle">
+    <mat-checkbox class="flex-73">
+      labelPosition="before" formControlName="useBorrowerCycle">
       {{ 'labels.inputs.Terms vary based on loan cycle' | translate }}
     </mat-checkbox>
 
     <div
       *ngIf="loanProductTermsForm.value.useBorrowerCycle"
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
-      <h4 fxFlex="73%" class="mat-h4">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
+      <h4 class="mat-h4 flex-73">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
 
-      <div fxFlex="23%">
+      <div class="flex-23">
         <button
           type="button"
           mat-raised-button
@@ -399,9 +390,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
-      <h4 fxFlex="73%" class="mat-h4">{{ 'labels.inputs.Number of repayments by loan cycle' | translate }}</h4>
+      <h4 class="mat-h4 flex-73">{{ 'labels.inputs.Number of repayments by loan cycle' | translate }}</h4>
 
-      <div fxFlex="23%">
+      <div class="flex-23">
         <button
           type="button"
           mat-raised-button
@@ -481,9 +472,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
-      <h4 fxFlex="73%" class="mat-h4">{{ 'labels.inputs.Nominal interest rate by loan cycle' | translate }}</h4>
+      <h4 class="mat-h4 flex-73">{{ 'labels.inputs.Nominal interest rate by loan cycle' | translate }}</h4>
 
-      <div fxFlex="23%">
+      <div class="flex-23">
         <button
           type="button"
           mat-raised-button
@@ -564,7 +555,7 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <h4 fxFlex="33%" class="mat-h4">
+    <h4 class="mat-h4 flex-33">
       {{ 'labels.inputs.Repaid every' | translate }}
       <i
         class="fas fa-question"
@@ -597,7 +588,7 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="33%" class="mat-h4" *ngIf="allowFixedLength()">
+    <h4 class="mat-h4 flex-30" *ngIf="allowFixedLength()">
       {{ 'labels.inputs.Fixed Length' | translate }}
       <i
         class="fas fa-question"
@@ -605,11 +596,11 @@
       ></i>
     </h4>
 
-    <mat-form-field class="flex-fill" ="30%" *ngIf="allowFixedLength()">
+    <mat-form-field class="flex-30" *ngIf="allowFixedLength()">
       <mat-label>{{ 'labels.inputs.Fixed Length' | translate }}</mat-label>
       <input type="number" matInput formControlName="fixedLength" />
     </mat-form-field>
-    <span fxFlex="30%" *ngIf="allowFixedLength()" class="label-field">{{
+    <span *ngIf="allowFixedLength()" class="label-field flex-30">{{
       loanProductTermsForm.value.repaymentFrequencyType
         | find: repaymentFrequencyTypeData : 'id' : 'value'
         | translateKey: 'catalogs'

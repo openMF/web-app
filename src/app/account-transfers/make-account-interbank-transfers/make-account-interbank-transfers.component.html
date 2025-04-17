@@ -38,7 +38,7 @@
       <input matInput formControlName="toAccountId" />
     </mat-form-field>
 
-    <mat-form-field class="flex-98" class="error-warn">
+    <mat-form-field class="flex-98 error-warn">
       <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
       <input #amntInput type="number" matInput required formControlName="transferAmount" />
       <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">

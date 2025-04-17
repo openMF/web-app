@@ -1,7 +1,7 @@
 <div class="container mat-elevation-z8">
   <mat-card>
-    <div class="view-guarantors-account-tables" fxLayout="row" fxLayoutGap="2%">
-      <div fxFlex="49%">
+    <div class="view-guarantors-account-tables layout-row gap-2percent">
+      <div class="flex-49">
         <table>
           <tbody>
             <tr>
@@ -37,7 +37,7 @@
         </table>
       </div>
 
-      <div fxFlex="49%">
+      <div class="flex-49">
         <table>
           <tbody>
             <tr>
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <div class="flex-fill" *ngIf="guarantorDetails" class="layout-row-wrap responsive-column">
+    <div *ngIf="guarantorDetails" class="layout-row-wrap responsive-column flex-fill">
       <!-- guarantors details table -->
       <div class="heading-content">
         <div class="layout-column flex-50">
@@ -89,7 +89,7 @@
       </div>
 
       <table
-        fxFlexFill
+        class="flex-fill"
         mat-table
         [dataSource]="guarantorDetails | accountsFilter: 'guarantor' : showDeletedGuarantorsAccounts"
       >

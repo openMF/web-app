@@ -10,7 +10,7 @@
       />
     </mat-form-field>
 
-    <span class="flex-48" fxHide.lt-md></span>
+    <span class="flex-48 hide-lt-md"></span>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Lock-in Period' | translate }}</mat-label>
@@ -98,10 +98,10 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">{{ 'labels.inputs.Overdraft' | translate }}</h3>
+    <h3 class="mat-h3 flex-23">{{ 'labels.inputs.Overdraft' | translate }}</h3>
 
     <mat-checkbox
-      fxFlex="73%"
+      class="flex-73"
       labelPosition="before"
       matTooltip="{{ 'tooltips.Indicates whether saving accounts based on this saving product' | translate }}"
       formControlName="allowOverdraft"
@@ -112,10 +112,7 @@
 
     <div
       *ngIf="savingProductSettingsForm.value.allowOverdraft"
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
       <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</mat-label>
@@ -150,10 +147,10 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">{{ 'labels.inputs.Dormancy Tracking' | translate }}</h3>
+    <h3 class="mat-h3 flex-23">{{ 'labels.inputs.Dormancy Tracking' | translate }}</h3>
 
     <mat-checkbox
-      fxFlex="73%"
+      class="flex-73"
       labelPosition="before"
       matTooltip="{{ 'tooltips.Enables definition and tracking inactive Savings Accounts' | translate }}"
       formControlName="isDormancyTrackingActive"
@@ -164,10 +161,7 @@
 
     <div
       *ngIf="savingProductSettingsForm.value.isDormancyTrackingActive"
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
       <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}</mat-label>

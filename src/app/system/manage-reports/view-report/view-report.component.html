@@ -24,11 +24,11 @@
           {{ reportData.reportType | translateKey: 'text' }}
         </div>
 
-        <div *ngIf="reportData.reportSubType" fxFlex="50%" class="mat-body-strong">
+        <div *ngIf="reportData.reportSubType" class="mat-body-strong flex-50">
           {{ 'labels.inputs.Report Sub Type' | translate }}:
         </div>
 
-        <div *ngIf="reportData.reportSubType" fxFlex="50%">
+        <div *ngIf="reportData.reportSubType" class="flex-50">
           {{ reportData.reportSubType | translateKey: 'text' }}
         </div>
 
