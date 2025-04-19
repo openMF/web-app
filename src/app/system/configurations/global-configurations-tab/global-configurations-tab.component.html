@@ -1,6 +1,6 @@
 <div class="container">
-  <div #filter fxLayout="row">
-    <mat-form-field fxFlex>
+  <div #filter class="layout-row">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
@@ -71,7 +71,7 @@
 
 <ng-template #templateFilter let-data let-popover="popover">
   <h4>{{ 'labels.heading.Search bar to filter configurations' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -95,7 +95,7 @@
       'labels.inputs.Global Configurations' | translate
     }}</a>
   </h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

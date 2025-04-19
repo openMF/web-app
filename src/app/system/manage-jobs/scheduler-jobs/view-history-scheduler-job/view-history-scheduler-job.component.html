@@ -1,6 +1,6 @@
 <div class="container">
-  <div fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex>
+  <div class="layout-row gap-20px">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter By Version' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
@@ -72,7 +72,7 @@
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
-    <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+    <div class="layout-row layout-align-center gap-2percent layout-lt-md-column">
       <button type="button" color="primary" mat-raised-button [routerLink]="['../']">
         {{ 'labels.buttons.Back' | translate }}
       </button>

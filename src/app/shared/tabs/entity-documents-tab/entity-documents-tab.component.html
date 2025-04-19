@@ -1,8 +1,8 @@
 <div class="tab-container mat-typography">
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <h3 fxFlex="90%">{{ 'labels.heading.Documents' | translate }}</h3>
+  <div class="layout-row align-start-center">
+    <h3 class="flex-90">{{ 'labels.heading.Documents' | translate }}</h3>
 
-    <div fxFlex="10%" *mifosxHasPermission="'CREATE_DOCUMENT'">
+    <div class="flex-10" *mifosxHasPermission="'CREATE_DOCUMENT'">
       <button mat-raised-button class="f-right" color="primary" (click)="uploadDocument()">
         <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
       </button>

@@ -3,7 +3,7 @@
     <form [formGroup]="clientScreenReportForm" (ngSubmit)="generate()">
       <mat-card-content>
         <div>
-          <mat-form-field fxFlex>
+          <mat-form-field class="flex-fill">
             <mat-label>{{ 'labels.inputs.Client Screen Reports' | translate }}</mat-label>
             <mat-select formControlName="templateId">
               <mat-option *ngFor="let template of templatesData" [value]="template.id">
@@ -18,7 +18,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
@@ -31,15 +31,15 @@
 </div>
 
 <div #output class="container">
-  <mat-card fxLayout="column" fxLayoutGap="3%">
-    <div fxLayoutAlign="end">
+  <mat-card class="layout-column gap-3percent">
+    <div class="layout-align-end">
       <button mat-stroked-button color="primary" [disabled]="!template" (click)="print()">
         <fa-icon icon="file" class="m-r-10"></fa-icon>
         {{ 'labels.buttons.Print' | translate }}
       </button>
     </div>
 
-    <div #screenReport fxLayoutAlign="center">
+    <div #screenReport class="layout-align-center">
       <p>{{ 'labels.text.Please select a screen report.' | translate }}</p>
     </div>
   </mat-card>

@@ -1,23 +1,23 @@
 <div class="tab-container mat-typography">
-  <div fxFlexFill *ngIf="existActiveTransfer">
+  <div class="flex-fill" *ngIf="existActiveTransfer">
     <h3>{{ 'labels.heading.Active Asset Transfer' | translate }}</h3>
-    <div fxLayout="row" fxLayoutGap="32px" class="asset-transfer-container">
+    <div class="layout-row gap-32px asset-transfer-container">
       <table>
         <tbody>
           <tr>
-            <td fxFlex="25%">
+            <td class="flex-25">
               <b>{{ 'labels.inputs.Status' | translate }} :</b>
             </td>
-            <td fxFlex="25%" class="left">
+            <td class="flex-25 left">
               <div [ngClass]="itemStatus(activeTransferData.status)">
                 <fa-icon icon="stop"></fa-icon>
                 <span class="m-l-10 external-asset-owner-status">{{ activeTransferData.status }}</span>
               </div>
             </td>
-            <td fxFlex="25%">
+            <td class="flex-25">
               <b>{{ 'labels.inputs.Owner External Id' | translate }} :</b>
             </td>
-            <td fxFlex="25%" class="left">
+            <td class="flex-25 left">
               <mifosx-external-identifier
                 externalId="{{ activeTransferData.owner.externalId }}"
                 completed="true"
@@ -25,71 +25,71 @@
             </td>
           </tr>
           <tr>
-            <td fxFlex="25%">
+            <td class="flex-25">
               <b>{{ 'labels.inputs.Settlement Date' | translate }} :</b>
             </td>
-            <td fxFlex="25%" class="left">
+            <td class="flex-25 left">
               {{ activeTransferData.settlementDate | dateFormat }}
             </td>
-            <td fxFlex="25%">
+            <td class="flex-25">
               <b>{{ 'labels.inputs.Effective Date' | translate }} :</b>
             </td>
-            <td fxFlex="25%" class="left">
+            <td class="flex-25 left">
               {{ activeTransferData.effectiveFrom | dateFormat }}
             </td>
           </tr>
           <tr>
-            <td fxFlex="25%">
+            <td class="flex-25">
               <b>{{ 'labels.inputs.Details' | translate }} :</b>
             </td>
-            <td fxFlex="75%" class="left">
+            <td class="flex-75 left">
               <table>
                 <tbody>
                   <tr>
-                    <td fxFlex="50%">
+                    <td class="flex-50">
                       <b>{{ 'labels.inputs.Principal Outstanding' | translate }} :</b>
                     </td>
-                    <td fxFlex="50%" class="r-amount">
+                    <td class="flex-50 r-amount">
                       {{ activeTransferData.details.totalPrincipalOutstanding | formatNumber }}
                     </td>
                   </tr>
                   <tr>
-                    <td fxFlex="50%">
+                    <td class="flex-50">
                       <b>{{ 'labels.inputs.Interest Outstanding' | translate }} :</b>
                     </td>
-                    <td fxFlex="50%" class="r-amount">
+                    <td class="flex-50 r-amount">
                       {{ activeTransferData.details.totalInterestOutstanding | formatNumber }}
                     </td>
                   </tr>
                   <tr>
-                    <td fxFlex="50%">
+                    <td class="flex-50">
                       <b>{{ 'labels.inputs.Fees Outstanding' | translate }} :</b>
                     </td>
-                    <td fxFlex="50%" class="r-amount">
+                    <td class="flex-50 r-amount">
                       {{ activeTransferData.details.totalFeeChargesOutstanding | formatNumber }}
                     </td>
                   </tr>
                   <tr>
-                    <td fxFlex="50%">
+                    <td class="flex-50">
                       <b>{{ 'labels.inputs.Penalties Outstanding' | translate }} :</b>
                     </td>
-                    <td fxFlex="50%" class="r-amount">
+                    <td class="flex-50 r-amount">
                       {{ activeTransferData.details.totalPenaltyChargesOutstanding | formatNumber }}
                     </td>
                   </tr>
                   <tr>
-                    <td fxFlex="50%">
+                    <td class="flex-50">
                       <b>{{ 'labels.inputs.Outstanding' | translate }} :</b>
                     </td>
-                    <td fxFlex="50%" class="r-amount">
+                    <td class="flex-50 r-amount">
                       {{ activeTransferData.details.totalOutstanding | formatNumber }}
                     </td>
                   </tr>
                   <tr>
-                    <td fxFlex="50%">
+                    <td class="flex-50">
                       <b>{{ 'labels.inputs.Overpaid' | translate }} :</b>
                     </td>
-                    <td fxFlex="50%" class="r-amount">{{ activeTransferData.details.totalOverpaid | formatNumber }}</td>
+                    <td class="flex-50 r-amount">{{ activeTransferData.details.totalOverpaid | formatNumber }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -100,16 +100,16 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <h3 fxFlex="90%">{{ 'labels.heading.External Asset Owner' | translate }}</h3>
+  <div class="layout-row align-start-center">
+    <h3 class="flex-90">{{ 'labels.heading.External Asset Owner' | translate }}</h3>
 
-    <div fxFlex="10%" *ngIf="canBeSold()">
+    <div class="flex-10" *ngIf="canBeSold()">
       <button mat-raised-button class="f-right" color="primary" (click)="saleLoan()" *mifosxHasPermission="'SALE_LOAN'">
         <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>{{ 'labels.buttons.Sell Loan' | translate }}
       </button>
     </div>
 
-    <div fxFlex="10%" *ngIf="canBeCancelled()">
+    <div class="flex-10" *ngIf="canBeCancelled()">
       <button
         mat-raised-button
         class="f-right"
@@ -121,7 +121,7 @@
       </button>
     </div>
 
-    <div fxFlex="10%" *ngIf="canBeBuyed()">
+    <div class="flex-10" *ngIf="canBeBuyed()">
       <button
         mat-raised-button
         class="f-right"

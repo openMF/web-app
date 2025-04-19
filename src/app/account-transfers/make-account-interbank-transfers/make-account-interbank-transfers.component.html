@@ -1,6 +1,6 @@
 <form [formGroup]="makeAccountTransferForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-form-field fxFlex="98%" (click)="transferDatePicker.open()">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <mat-form-field class="flex-98" (click)="transferDatePicker.open()">
       <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
       <input
         matInput
@@ -18,27 +18,27 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="98%">
+    <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Bank' | translate }}</mat-label>
       <input matInput formControlName="toBank" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="98%">
+    <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
       <input matInput formControlName="toClientId" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="98%">
+    <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
       <input matInput formControlName="toAccountType" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="98%">
+    <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
       <input matInput formControlName="toAccountId" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="98%" class="error-warn">
+    <mat-form-field class="flex-98 error-warn">
       <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
       <input #amntInput type="number" matInput required formControlName="transferAmount" />
       <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
@@ -51,7 +51,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="98%">
+    <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
       <textarea matInput formControlName="transferDescription" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
       <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')">

@@ -2,7 +2,7 @@
   <mat-card>
     <form [formGroup]="approveLoanForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
+        <div class="layout-column">
           <mat-form-field (click)="approvedDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Approved On' | translate }}</mat-label>
             <input
@@ -55,7 +55,7 @@
           </mat-form-field>
         </div>
 
-        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <mat-card-actions class="layout-row align-center gap-5px responsive-column">
           <button type="button" mat-raised-button [routerLink]="['../../general']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>

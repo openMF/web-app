@@ -1,17 +1,17 @@
 <div class="container mat-elevation-z8">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="column" class="m-b-10">
+      <div class="m-b-10 layout-column">
         <mifosx-repayment-schedule-tab
           *ngIf="repaymentScheduleDetails"
-          fxFlex="100%"
+          class="flex-100"
           [repaymentScheduleDetails]="repaymentScheduleDetails"
           [forEditing]="true"
         >
         </mifosx-repayment-schedule-tab>
       </div>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../../general']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

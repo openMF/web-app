@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="provisioningEntryForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
-          <mat-form-field fxFlex (click)="datePicker.open()">
+        <div class="layout-column">
+          <mat-form-field class="flex-fill" (click)="datePicker.open()">
             <mat-label>{{ 'labels.inputs.Date' | translate }}</mat-label>
             <input
               matInput
@@ -21,7 +21,7 @@
             </mat-error>
           </mat-form-field>
 
-          <div fxFlex>
+          <div class="flex-fill">
             <mat-checkbox labelPosition="before" formControlName="createjournalentries">
               {{ 'labels.inputs.Create Journal Entries' | translate }}
             </mat-checkbox>
@@ -29,7 +29,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

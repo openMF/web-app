@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50%">
+    <div class="layout-row responsive-column gap-20px">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item *mifosxHasPermission="'CREATE_JOURNALENTRY'">
             <mat-icon matListIcon [routerLink]="['journal-entries/frequent-postings']">
@@ -81,7 +81,7 @@
         </mat-nav-list>
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         <mat-nav-list>
           <div #chartofAccounts>
             <mat-list-item *mifosxHasPermission="'READ_GLACCOUNT'">
@@ -157,7 +157,7 @@
 <ng-template #templateChartofAccounts let-popover="popover">
   <h2>{{ 'labels.heading.Chart of Accounts' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.The Chart of Accounts - General Ledger Setup' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -173,7 +173,7 @@
 <ng-template #templateAccountsLinked let-popover="popover">
   <h2>{{ 'labels.heading.Accounts Linked to Financial Activities' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Accounts linked to Financial Activities' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -189,7 +189,7 @@
 <ng-template #templateMigrateOpeningBalances let-popover="popover">
   <h2>{{ 'labels.heading.Migrate Opening Balances (Office-wise)' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.GLAccount Balances Application' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -205,7 +205,7 @@
 <ng-template #templateClosingEntries let-popover="popover">
   <h2>{{ 'labels.heading.Closing Entries' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Accounting to journal entries' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -221,7 +221,7 @@
 <ng-template #templateCreateJournalEntries let-popover="popover">
   <h2>{{ 'labels.heading.Create Journal Entries' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Journal Entries Transactions' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

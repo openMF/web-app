@@ -1,6 +1,6 @@
 <form [formGroup]="fixedDepositAccountDetailsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-form-field fxFlex="48%">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
       <mat-select formControlName="productId" required>
         <mat-option *ngFor="let product of productData" [value]="product.id">
@@ -13,7 +13,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" (click)="submittedOnDatePicker.open()" *ngIf="isProductSelected">
+    <mat-form-field class="flex-48" (click)="submittedOnDatePicker.open()" *ngIf="isProductSelected">
       <mat-label>{{ 'labels.inputs.Submitted On' | translate }}</mat-label>
       <input
         matInput
@@ -31,7 +31,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" *ngIf="isProductSelected">
+    <mat-form-field class="flex-48" *ngIf="isProductSelected">
       <mat-label>{{ 'labels.inputs.Field Officer' | translate }}</mat-label>
       <mat-select formControlName="fieldOfficerId">
         <mat-option *ngFor="let officer of fieldOfficerData" [value]="officer.id">
@@ -40,13 +40,13 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" *ngIf="isProductSelected">
+    <mat-form-field class="flex-48" *ngIf="isProductSelected">
       <mat-label>{{ 'labels.inputs.External id' | translate }}</mat-label>
       <input matInput formControlName="externalId" matTooltip="{{ 'tooltips.Provides an external id' | translate }}" />
     </mat-form-field>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

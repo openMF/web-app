@@ -1,7 +1,7 @@
 <div class="container mat-typography">
   <mat-card>
     <form [formGroup]="transactionForm" (ngSubmit)="submit()">
-      <div fxLayout="column">
+      <div class="layout-column">
         <mat-form-field>
           <mat-label> {{ 'labels.inputs.Amount' | translate }} </mat-label>
           <input matInput required autofocus formControlName="amount" />
@@ -29,7 +29,7 @@
         </mat-form-field>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5px">
+      <div class="layout-row align-center gap-5px">
         <button type="button" mat-raised-button [routerLink]="['../../..', 'general']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

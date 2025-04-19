@@ -1,4 +1,4 @@
-<div fxLayput="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <div #buttonDashboard class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
       <fa-icon icon="tachometer-alt" class="m-r-10"></fa-icon>
@@ -14,7 +14,7 @@
     </mat-card-header>
 
     <mat-card-content #searchActivity>
-      <div fxLayout="column">
+      <div class="layout-column">
         <mat-form-field>
           <mat-label>{{ 'labels.placeholders.Search Activity' | translate }}</mat-label>
           <input matInput [matAutocomplete]="activitySearch" [formControl]="searchText" />
@@ -33,7 +33,7 @@
 </div>
 
 <ng-template #popoverButtons let-popover="popover" let-prev="prev" let-next="next">
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -59,7 +59,7 @@
 <ng-template #templateButtonDashboard let-popover="popover">
   <h2>{{ 'labels.heading.Dashboard' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.This will navigate the user to the dashboard component.' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -79,7 +79,7 @@
 <ng-template #templateSearchActivity let-popover="popover">
   <h2>{{ 'labels.heading.Search Activity' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.This will navigate the user to the searched activity.' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

@@ -1,5 +1,5 @@
 <!-- The viewport is divided into two parts having max-width 70% and 30% -->
-<div fxLayout="row">
+<div class="layout-row">
   <!--
     Content in 70%: (TODO: Allow customization by organization)
       Cover Image
@@ -9,7 +9,7 @@
     This content will be hidden for smaller screens.
   -->
 
-  <div fxFlex="70%" fxLayout="column" fxLayoutAlign="center center" fxHide.lt-sm class="cover">
+  <div class="flex-70 layout-column align-center align-items-center hide-lt-sm cover">
     <div class="cover-content">
       <h1 class="mat-display-1 cover-title">{{ 'APP_NAME' | translate }}</h1>
       <p class="mat-headline cover-description">
@@ -38,12 +38,12 @@
       Footer
   -->
 
-  <div fxLayout="column" fxFlex.gt-sm="1 0 30%" class="login-container">
+  <div class="layout-column flex-gt-sm-30 login-container">
     <!-- Language Selector to the extreme right -->
-    <div fxLayout="row-reverse" fxFlex="1 0 auto">
+    <div class="layout-row-reverse flex-auto">
       <mifosx-language-selector class="p-r-10 p-t-10"></mifosx-language-selector>
       <mifosx-theme-toggle class="p-r-10 p-t-10"></mifosx-theme-toggle>
-      <div fxFlex></div>
+      <div class="flex-fill"></div>
       <mifosx-server-selector
         class="p-l-10 p-t-10"
         *ngIf="!environment.production && environment.allowServerSwitch"
@@ -51,12 +51,12 @@
     </div>
 
     <!-- Logo with Organization Name -->
-    <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 0 auto">
+    <div class="layout-row align-center-center flex-auto">
       <img src="assets/images/mifos_lg-logo.png" alt="{{ 'APP_NAME' | translate }} Logo" class="img-container" />
     </div>
 
     <!-- Tenant Identifier Name -->
-    <div fxLayout="row" fxLayoutAlign="center center" fxFlex="1 0 auto" *ngIf="displayTenantSelector()">
+    <div class="layout-row align-center-center flex-auto" *ngIf="displayTenantSelector()">
       <mifosx-tenant-selector></mifosx-tenant-selector>
     </div>
 
@@ -67,14 +67,14 @@
         Two Factor Authentication
         Forgot Password (TODO: Decision to be taken on providing this feature.)
     -->
-    <div fxLayout="row" fxFlex="3 0 auto" fxLayoutAlign="center start">
+    <div class="layout-row align-center-start flex-3-auto">
       <mifosx-login-form *ngIf="!resetPassword && !twoFactorAuthenticationRequired"></mifosx-login-form>
       <mifosx-reset-password *ngIf="resetPassword"></mifosx-reset-password>
       <mifosx-two-factor-authentication *ngIf="twoFactorAuthenticationRequired"></mifosx-two-factor-authentication>
     </div>
 
     <!-- Contact Information/Resources (hidden on smaller screens) -->
-    <mat-list fxHide.lt-lg fxLayout="row" fxFlexAlign="center" fxFlex="3 0 auto" class="information-list">
+    <mat-list class="information-list align-items-center custom-horizontal-list hide-lt-lg">
       <mat-list-item
         ><button mat-button [matMenuTriggerFor]="resourcesMenu">
           {{ 'labels.links.Resources' | translate }}
@@ -95,7 +95,7 @@
     <!-- Footer -->
     <mifosx-footer></mifosx-footer>
 
-    <div fxLayout="row" fxLayoutAlign="end" class="m-b-20 m-r-10">
+    <div class="layout-row align-end m-b-20 m-r-10">
       <a (click)="reloadSettings()"><fa-icon icon="refresh"></fa-icon></a>
     </div>
   </div>

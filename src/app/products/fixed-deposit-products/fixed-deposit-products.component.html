@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateFixedProduct class="in-block">
     <button
       mat-raised-button
@@ -13,8 +13,8 @@
 </div>
 
 <div class="container">
-  <div #filter fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex>
+  <div #filter class="layout-row gap-20px">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
@@ -43,7 +43,7 @@
 <ng-template #templateButtonCreateFixedProduct let-popover="popover">
   <h2>{{ 'labels.buttons.Create Fixed Deposit Product' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Allows you to create new fixed deposit product' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -62,7 +62,7 @@
 
 <ng-template #templateFilter let-popover="popover">
   <h4>{{ 'labels.text.Search bar to filter fixed deposit products.' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -90,7 +90,7 @@
       'labels.inputs.Fixed Deposit Products' | translate
     }}</a>
   </h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

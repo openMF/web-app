@@ -1,7 +1,7 @@
 <div class="mat-typography">
   <h3>{{ 'labels.heading.Family Members' | translate }}</h3>
 
-  <div fxLayout="row" fxLayoutAlign="flex-end" class="m-b-20">
+  <div class="layout-row align-end m-b-20">
     <button mat-raised-button color="primary" (click)="addFamilyMember()">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
     </button>
@@ -21,7 +21,7 @@
 
       <mat-divider></mat-divider>
 
-      <div class="family-member-actions" fxLayout="row" fxLayoutAlign="flex-end">
+      <div class="family-member-actions layout-row align-end">
         <button mat-button color="primary">
           <fa-icon icon="edit" (click)="editFamilyMember(member, i)"></fa-icon>
         </button>
@@ -52,7 +52,7 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

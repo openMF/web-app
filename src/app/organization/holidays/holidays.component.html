@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateHoliday class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_HOLIDAY'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
@@ -8,8 +8,8 @@
 </div>
 
 <div class="container">
-  <div #filterRef fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex>
+  <div #filterRef class="layout-row gap-20px">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
@@ -67,7 +67,7 @@
 <ng-template #templateButtonCreateHoliday let-popover="popover">
   <h2>{{ 'labels.heading.Create Holiday' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Create holidays for different offices' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -86,7 +86,7 @@
 
 <ng-template #templateFilterRef let-popover="popover">
   <h4>{{ 'labels.heading.Filter holidays' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
