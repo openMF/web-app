@@ -31,8 +31,7 @@ export class LoanActionButtonResolver implements Resolve<Object> {
       return this.loansService.getLoanActionTemplate(loanId, 'repayment');
     } else if (loanActionButton === 'Goodwill Credit') {
       return this.loansService.getLoanActionTemplate(loanId, 'goodwillCredit');
-    }
-    if (loanActionButton === 'Interest Payment Waiver') {
+    } else if (loanActionButton === 'Interest Payment Waiver') {
       return this.loansService.getLoanActionTemplate(loanId, 'interestPaymentWaiver');
     } else if (loanActionButton === 'Payout Refund') {
       return this.loansService.getLoanActionTemplate(loanId, 'payoutRefund');
@@ -74,6 +73,8 @@ export class LoanActionButtonResolver implements Resolve<Object> {
       return this.loansService.getLoanForeclosureActionTemplate(loanId);
     } else if (loanActionButton === 'Charge-Off') {
       return this.loansService.getLoanActionTemplate(loanId, 'charge-off');
+    } else if (loanActionButton === 'Capitalized Income') {
+      return this.loansService.getLoanActionTemplate(loanId, 'capitalizedIncome');
     } else {
       return undefined;
     }
