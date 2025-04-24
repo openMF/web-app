@@ -301,6 +301,11 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
           this.loanProductsTemplate.capitalizedIncomeStrategyOptions
         );
         this.loanProduct.capitalizedIncomeStrategy = optionValue;
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.capitalizedIncomeType,
+          this.loanProductsTemplate.capitalizedIncomeTypeOptions
+        );
+        this.loanProduct.capitalizedIncomeType = optionValue;
       }
       optionValue = this.optionDataLookUp(
         this.loanProduct.interestRateFrequencyType,

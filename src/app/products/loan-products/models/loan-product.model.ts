@@ -69,6 +69,7 @@ export interface LoanProduct {
   enableIncomeCapitalization?: boolean;
   capitalizedIncomeCalculationType?: OptionData;
   capitalizedIncomeStrategy?: OptionData;
+  capitalizedIncomeType?: OptionData;
 
   canDefineInstallmentAmount: boolean;
   graceOnArrearsAgeing?: number;

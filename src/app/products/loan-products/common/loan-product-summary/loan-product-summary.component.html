@@ -878,6 +878,11 @@
       <span fxFlex="47%">{{ 'labels.inputs.Income capitalization strategy' | translate }}:</span>
       <span fxFlex="53%">{{ loanProduct.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }}</span>
     </div>
+
+    <div fxFlexFill *ngIf="loanProduct.enableIncomeCapitalization">
+      <span fxFlex="47%">{{ 'labels.inputs.Income type' | translate }}:</span>
+      <span fxFlex="53%">{{ loanProduct.capitalizedIncomeType?.value | translateKey: 'catalogs' }}</span>
+    </div>
   </div>
 
   <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Accounting' | translate }}</h3>
