@@ -112,7 +112,6 @@ export class ViewTransactionComponent implements OnInit {
     });
     this.clientId = this.route.snapshot.params['clientId'];
     this.loanId = this.route.snapshot.params['loanId'];
-    console.log(this.transactionType);
   }
 
   ngOnInit(): void {

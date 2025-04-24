@@ -217,7 +217,7 @@
 
             <mat-form-field fxFlex="48%" *ngIf="showMinMaxCap()">
               <mat-label>{{ 'labels.inputs.Maximum Charge Cap' | translate }}</mat-label>
-              <input matInput formControlName="maxCap" />
+              <input matInput [min]="chargeForm.value.minCap" formControlName="maxCap" />
             </mat-form-field>
 
             <div fxFlex="48%" fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column">
