@@ -101,8 +101,9 @@ export class EditLoanProductComponent implements OnInit {
       if (this.loanProductAndTemplate.enableIncomeCapitalization) {
         this.capitalizedIncome = {
           enableIncomeCapitalization: true,
-          incomeCapitalizationCalculationType: this.loanProductAndTemplate.capitalizedIncomeCalculationType.id,
-          incomeCapitalizationStrategy: this.loanProductAndTemplate.capitalizedIncomeStrategy.id
+          capitalizedIncomeCalculationType: this.loanProductAndTemplate.capitalizedIncomeCalculationType.id,
+          capitalizedIncomeStrategy: this.loanProductAndTemplate.capitalizedIncomeStrategy.id,
+          capitalizedIncomeType: this.loanProductAndTemplate.capitalizedIncomeType.id
         };
       } else {
         this.capitalizedIncome = {
@@ -236,8 +237,9 @@ export class EditLoanProductComponent implements OnInit {
       if (this.capitalizedIncome != null) {
         loanProduct['enableIncomeCapitalization'] = this.capitalizedIncome.enableIncomeCapitalization;
         if (this.capitalizedIncome.enableIncomeCapitalization) {
-          loanProduct['capitalizedIncomeCalculationType'] = this.capitalizedIncome.incomeCapitalizationCalculationType;
-          loanProduct['capitalizedIncomeStrategy'] = this.capitalizedIncome.incomeCapitalizationStrategy;
+          loanProduct['capitalizedIncomeCalculationType'] = this.capitalizedIncome.capitalizedIncomeCalculationType;
+          loanProduct['capitalizedIncomeStrategy'] = this.capitalizedIncome.capitalizedIncomeStrategy;
+          loanProduct['capitalizedIncomeType'] = this.capitalizedIncome.capitalizedIncomeType;
         }
       }
     }
