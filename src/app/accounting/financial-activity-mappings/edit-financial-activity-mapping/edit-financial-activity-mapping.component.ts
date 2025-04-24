@@ -46,7 +46,6 @@ export class EditFinancialActivityMappingComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { financialActivityAccountAndTemplate: any }) => {
       this.financialActivityAccountId = data.financialActivityAccountAndTemplate.id;
-      console.log(data.financialActivityAccountAndTemplate.financialActivityData);
       this.financialActivityId = data.financialActivityAccountAndTemplate.financialActivityData.id;
       this.glAccountId = data.financialActivityAccountAndTemplate.glAccountData.id;
       this.glAccountOptions = data.financialActivityAccountAndTemplate.glAccountOptions;
