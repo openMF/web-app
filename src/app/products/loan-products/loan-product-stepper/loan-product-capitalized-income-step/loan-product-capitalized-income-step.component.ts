@@ -18,6 +18,7 @@ export class LoanProductCapitalizedIncomeStepComponent implements OnChanges {
   enableIncomeCapitalization: boolean;
 
   @Output() setCapitalizedIncome = new EventEmitter<CapitalizedIncome>();
+  @Output() setViewChildForm = new EventEmitter<UntypedFormGroup>();
 
   constructor(private formBuilder: UntypedFormBuilder) {
     this.enableIncomeCapitalization =
@@ -44,6 +45,7 @@ export class LoanProductCapitalizedIncomeStepComponent implements OnChanges {
         enableIncomeCapitalization: [this.enableIncomeCapitalization]
       });
     }
+    this.setViewChildForm.emit(this.loanIncomeCapitalizationForm);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -55,6 +57,7 @@ export class LoanProductCapitalizedIncomeStepComponent implements OnChanges {
         incomeCapitalizationStrategy: this.capitalizedIncome.incomeCapitalizationStrategy
       });
     }
+    this.setViewChildForm.emit(this.loanIncomeCapitalizationForm);
   }
 
   setConditionalControls() {
@@ -63,7 +66,7 @@ export class LoanProductCapitalizedIncomeStepComponent implements OnChanges {
       if (this.enableIncomeCapitalization) {
         const incomeCapitalizationCalculationType =
           this.capitalizedIncome.incomeCapitalizationCalculationType == ''
-            ? this.capitalizedIncomeCalculationTypeOptions[0].id
+            ? ''
             : this.capitalizedIncome.incomeCapitalizationCalculationType;
         this.loanIncomeCapitalizationForm.addControl(
           'incomeCapitalizationCalculationType',
@@ -75,7 +78,7 @@ export class LoanProductCapitalizedIncomeStepComponent implements OnChanges {
         );
         const incomeCapitalizationStrategy =
           this.capitalizedIncome.incomeCapitalizationStrategy == ''
-            ? this.capitalizedIncomeStrategyOptions[0].id
+            ? ''
             : this.capitalizedIncome.incomeCapitalizationStrategy;
         this.loanIncomeCapitalizationForm.addControl(
           'incomeCapitalizationStrategy',
@@ -111,6 +114,8 @@ export class LoanProductCapitalizedIncomeStepComponent implements OnChanges {
         this.loanIncomeCapitalizationForm.removeControl('incomeCapitalizationStrategy');
         this.setCapitalizedIncome.emit({ enableIncomeCapitalization: false });
       }
+
+      this.setViewChildForm.emit(this.loanIncomeCapitalizationForm);
     });
   }
 }

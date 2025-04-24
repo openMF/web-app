@@ -23,6 +23,7 @@ import {
 import { Accounting } from 'app/core/utils/accounting';
 import { StringEnumOptionData } from '../../../shared/models/option-data.model';
 import { LoanProductCapitalizedIncomeStepComponent } from '../loan-product-stepper/loan-product-capitalized-income-step/loan-product-capitalized-income-step.component';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-create-loan-product',
@@ -56,6 +57,7 @@ export class CreateLoanProductComponent implements OnInit {
   advancedCreditAllocations: AdvancedPaymentAllocation[] = [];
 
   capitalizedIncome: CapitalizedIncome | null = null;
+  loanIncomeCapitalizationForm: UntypedFormGroup;
 
   /**
    * @param {ActivatedRoute} route Activated Route.
@@ -150,6 +152,10 @@ export class CreateLoanProductComponent implements OnInit {
     }
   }
 
+  setViewChildForm(viewChildForm: UntypedFormGroup): void {
+    this.loanIncomeCapitalizationForm = viewChildForm;
+  }
+
   get loanProductSettingsForm() {
     return this.loanProductSettingsStep.loanProductSettingsForm;
   }
@@ -158,20 +164,25 @@ export class CreateLoanProductComponent implements OnInit {
     return this.loanProductAccountingStep.loanProductAccountingForm;
   }
 
-  get loanIncomeCapitalizationForm() {
-    if (this.loanProductCapitalizedIncomeStep != null) {
-      return this.loanProductCapitalizedIncomeStep.loanIncomeCapitalizationForm;
-    }
-  }
-
   get loanProductFormValid() {
-    return (
-      this.loanProductDetailsForm.valid &&
-      this.loanProductCurrencyForm.valid &&
-      this.loanProductTermsForm.valid &&
-      this.loanProductSettingsForm.valid &&
-      this.loanProductAccountingForm.valid
-    );
+    if (this.isAdvancedPaymentStrategy) {
+      return (
+        this.loanProductDetailsForm.valid &&
+        this.loanProductCurrencyForm.valid &&
+        this.loanProductTermsForm.valid &&
+        this.loanProductSettingsForm.valid &&
+        this.loanIncomeCapitalizationForm.valid &&
+        this.loanProductAccountingForm.valid
+      );
+    } else {
+      return (
+        this.loanProductDetailsForm.valid &&
+        this.loanProductCurrencyForm.valid &&
+        this.loanProductTermsForm.valid &&
+        this.loanProductSettingsForm.valid &&
+        this.loanProductAccountingForm.valid
+      );
+    }
   }
 
   get loanProduct() {
