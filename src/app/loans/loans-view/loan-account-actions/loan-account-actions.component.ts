@@ -51,6 +51,7 @@ export class LoanAccountActionsComponent {
     'Re-Amortize': boolean;
     'Interest Payment Waiver': boolean;
     'Add Interest Pause': boolean;
+    'Capitalized Income': boolean;
   } = {
     Close: false,
     'Undo Approval': false,
@@ -86,7 +87,8 @@ export class LoanAccountActionsComponent {
     'Re-Age': false,
     'Re-Amortize': false,
     'Interest Payment Waiver': false,
-    'Add Interest Pause': false
+    'Add Interest Pause': false,
+    'Capitalized Income': false
   };
 
   actionButtonData: any;

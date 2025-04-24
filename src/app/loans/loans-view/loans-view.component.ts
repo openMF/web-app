@@ -129,6 +129,14 @@ export class LoansViewComponent implements OnInit {
         taskPermissionName: 'DISBURSE_LOAN'
       });
     } else if (this.status === 'Active') {
+      if (this.loanDetailsData.enableIncomeCapitalization) {
+        this.buttonConfig.addButton({
+          name: 'Capitalized Income',
+          icon: 'coins',
+          taskPermissionName: 'CAPITALIZED_INCOME_LOAN'
+        });
+      }
+
       if (this.loanDetailsData.canDisburse || this.loanDetailsData.multiDisburseLoan) {
         this.buttonConfig.addButton({
           name: 'Disburse',
