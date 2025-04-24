@@ -117,6 +117,7 @@ export interface LoanProduct {
   accountingMappings?: { [key: string]: AccountingMapping };
   fundSourceAccountId?: number;
   goodwillCreditAccountId?: number;
+  incomeFromCapitalizationAccountId?: number;
   incomeFromChargeOffFeesAccountId?: number;
   incomeFromChargeOffInterestAccountId?: number;
   incomeFromChargeOffPenaltyAccountId?: number;
@@ -134,6 +135,7 @@ export interface LoanProduct {
   receivablePenaltyAccountId?: number;
   transfersInSuspenseAccountId?: number;
   writeOffAccountId?: number;
+  deferredIncomeLiabilityAccountId?: number;
   // Advanced Accounting
   paymentChannelToFundSourceMappings?: PaymentChannelToFundSourceMapping[];
   feeToIncomeAccountMappings?: ChargeToIncomeAccountMapping[];

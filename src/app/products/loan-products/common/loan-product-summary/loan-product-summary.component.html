@@ -1011,6 +1011,14 @@
       [withTitle]="'47%'"
     >
     </mifosx-gl-account-display>
+    <mifosx-gl-account-display
+      fxFlex="100%"
+      *ngIf="accountingMappings.incomeFromCapitalizationAccount"
+      [accountTitle]="'Income capitalization'"
+      [glAccount]="accountingMappings.incomeFromCapitalizationAccount"
+      [withTitle]="'47%'"
+    >
+    </mifosx-gl-account-display>
 
     <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
 
@@ -1051,6 +1059,14 @@
         fxFlex="100%"
         [accountTitle]="'Over payment liability'"
         [glAccount]="accountingMappings.overpaymentLiabilityAccount"
+        [withTitle]="'47%'"
+      >
+      </mifosx-gl-account-display>
+      <mifosx-gl-account-display
+        fxFlex="100%"
+        *ngIf="accountingMappings.deferredIncomeLiabilityAccount"
+        [accountTitle]="'Deferred income'"
+        [glAccount]="accountingMappings.deferredIncomeLiabilityAccount"
         [withTitle]="'47%'"
       >
       </mifosx-gl-account-display>
