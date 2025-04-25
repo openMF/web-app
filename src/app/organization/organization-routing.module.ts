@@ -116,6 +116,10 @@ import { DataCodeCountryResolver } from './manage-projects/data-code-country.res
 import { DataCodeCategoryResolver } from './manage-projects/data-code-category.resolver';
 import { DataCodeSubCategoryResolver } from './manage-projects/data-code-subcategory.resolver';
 import { DataCodeAreaResolver } from './manage-projects/data-code-area.resolver';
+import { DataCodeStatusResolver } from './manage-projects/data-code-status.resolver';
+import { ViewStatusHistoryComponent } from './manage-projects/view-status-history/view-status-history.component';
+import { StatusHistoryProjectResolver } from './manage-projects/status-history-project.resolver';
+import { BreadcrumbComponent } from 'app/core/shell/breadcrumb/breadcrumb.component';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -725,8 +729,17 @@ const routes: Routes = [
                 countryData: DataCodeCountryResolver,
                 categoryData: DataCodeCategoryResolver,
                 subcategoryData: DataCodeSubCategoryResolver,
-                areaData: DataCodeAreaResolver
+                areaData: DataCodeAreaResolver,
+                statusData: DataCodeStatusResolver
               }
+            },
+            {
+              path: 'statusHistory/:id',
+              component: ViewStatusHistoryComponent,
+              // data: {routeParamBreadcrumb: 'id'},
+              // resolve: {
+              //   statusHistoryData: StatusHistoryProjectResolver
+              // }
             },
             {
               path: ':id',
@@ -826,7 +839,9 @@ const routes: Routes = [
     DataCodeCountryResolver,
     DataCodeCategoryResolver,
     DataCodeSubCategoryResolver,
-    DataCodeAreaResolver
+    DataCodeAreaResolver,
+    DataCodeStatusResolver,
+    StatusHistoryProjectResolver
   ]
 })
 export class OrganizationRoutingModule {}
