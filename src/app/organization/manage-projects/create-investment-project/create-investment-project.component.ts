@@ -19,6 +19,7 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
   subcategoryData: any[] = [];
   areaData: any[] = [];
   currency: any;
+  statusData: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -28,13 +29,14 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
     private organizationService: OrganizationService
   ) {
     this.route.data.subscribe(
-      (data: { accountData: any; countryData: any; categoryData: any; subcategoryData: any; areaData: any }) => {
+      (data: { accountData: any; countryData: any; categoryData: any; subcategoryData: any; areaData: any; statusData: any}) => {
         this.currency = data.accountData.currency;
         this.clientsData = [];
         this.countryData = data.countryData.codeValues;
         this.categoryData = data.categoryData.codeValues;
         this.subcategoryData = data.subcategoryData.codeValues;
         this.areaData = data.areaData.codeValues;
+        this.statusData = data.statusData.codeValues;
       }
     );
   }
@@ -116,7 +118,11 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
         '',
         Validators.required
       ],
-      isActive: [false]
+      isActive: [false],
+      statusId: [
+        '',
+        Validators.required
+      ]
     });
   }
 

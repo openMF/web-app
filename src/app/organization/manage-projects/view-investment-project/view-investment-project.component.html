@@ -85,6 +85,12 @@
         <div fxFlex="70%">
           {{ projectData.isActive | yesNo }}
         </div>
+        <div fxFlex="30%" class="mat-body-strong">
+          {{ 'labels.inputs.Status' | translate }}
+        </div>
+        <div fxFlex="70%">
+          {{ projectData.status?.statusValue?.name }}
+        </div>
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
