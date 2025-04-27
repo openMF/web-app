@@ -1,12 +1,4 @@
-<div
-  *ngIf="searchVisible"
-  class="search-bar"
-  fxFlex="auto"
-  fxHide.lt-sm="true"
-  fxLayout="row"
-  fxLayoutGap="2%"
-  [@fadeInOut]
->
+<div *ngIf="searchVisible" class="search-bar flex-auto layout-row gap-2percent hide-lt-sm" [@fadeInOut]>
   <mat-form-field class="search">
     <mat-label>{{ 'labels.text.Search' | translate }}</mat-label>
     <input matInput type="text" [formControl]="query" (keydown.enter)="search()" />
@@ -23,7 +15,7 @@
 </div>
 
 <div class="search-icon">
-  <button mat-icon-button (click)="toggleSearchVisibility()" fxHide.lt-sm="true">
+  <button mat-icon-button (click)="toggleSearchVisibility()" class="hide-lt-sm">
     <fa-icon icon="search" size="lg" matTooltip="{{ 'labels.text.Search' | translate }}"></fa-icon>
   </button>
 </div>

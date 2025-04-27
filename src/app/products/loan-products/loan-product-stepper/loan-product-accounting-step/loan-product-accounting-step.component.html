@@ -1,37 +1,27 @@
 <form [formGroup]="loanProductAccountingForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-radio-group
-      fxFlex="98%"
-      fxLayout="row"
-      fxLayoutGap="5%"
-      fxLayout.lt-md="column"
-      formControlName="accountingRule"
-      class="radio-group-spacing"
-    >
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <mat-radio-group class="flex-98 layout-row gap-5percent layout-lt-md-column radio-group-spacing" formControlName="accountingRule">
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
         {{ 'labels.accounting.' + accountingRule | translate }}
       </mat-radio-button>
     </mat-radio-group>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
     <div
       *ngIf="loanProductAccountingForm.value.accountingRule >= 2 && loanProductAccountingForm.value.accountingRule <= 4"
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
-      <mat-checkbox *ngIf="isAccountingAccrualBased" fxFlex="73%" formControlName="enableAccrualActivityPosting">{{
+      <mat-checkbox *ngIf="isAccountingAccrualBased" class="flex-73" formControlName="enableAccrualActivityPosting">{{
         'labels.inputs.Enable Accrual Activity Posting on Installment Due Date' | translate
       }}</mat-checkbox>
 
-      <h4 fxFlex="98%" class="mat-h4">
+      <h4 class="mat-h4 flex-98">
         {{ 'labels.heading.Assets' | translate }} / {{ 'labels.heading.Liabilities' | translate }}
       </h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.fundSourceAccountId"
         [glAccountList]="assetAndLiabilityAccountData"
         [required]="true"
@@ -39,10 +29,10 @@
       >
       </mifosx-gl-account-selector>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.loanPortfolioAccountId"
         [glAccountList]="assetAccountData"
         [required]="true"
@@ -51,7 +41,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.transfersInSuspenseAccountId"
         [glAccountList]="assetAccountData"
         [required]="true"
@@ -63,13 +53,10 @@
         *ngIf="
           loanProductAccountingForm.value.accountingRule === 3 || loanProductAccountingForm.value.accountingRule === 4
         "
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayoutGap="2%"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap gap-2percent responsive-column"
       >
         <mifosx-gl-account-selector
-          fxFlex="48%"
+          class="flex-48"
           [inputFormControl]="loanProductAccountingForm.controls.receivableInterestAccountId"
           [glAccountList]="assetAccountData"
           [required]="true"
@@ -78,7 +65,7 @@
         </mifosx-gl-account-selector>
 
         <mifosx-gl-account-selector
-          fxFlex="48%"
+          class="flex-48"
           [inputFormControl]="loanProductAccountingForm.controls.receivableFeeAccountId"
           [glAccountList]="assetAccountData"
           [required]="true"
@@ -87,7 +74,7 @@
         </mifosx-gl-account-selector>
 
         <mifosx-gl-account-selector
-          fxFlex="48%"
+          class="flex-48"
           [inputFormControl]="loanProductAccountingForm.controls.receivablePenaltyAccountId"
           [glAccountList]="assetAccountData"
           [required]="true"
@@ -96,12 +83,12 @@
         </mifosx-gl-account-selector>
       </div>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.interestOnLoanAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -110,7 +97,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromFeeAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -119,7 +106,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromPenaltyAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -128,7 +115,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromRecoveryAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -137,7 +124,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffInterestAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -146,7 +133,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffFeesAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -155,7 +142,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromChargeOffPenaltyAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -164,7 +151,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditInterestAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -173,7 +160,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditFeesAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -182,7 +169,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromGoodwillCreditPenaltyAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -190,12 +177,12 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.writeOffAccountId"
         [glAccountList]="expenseAccountData"
         [required]="true"
@@ -204,7 +191,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.goodwillCreditAccountId"
         [glAccountList]="expenseAccountData"
         [required]="true"
@@ -213,7 +200,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.chargeOffExpenseAccountId"
         [glAccountList]="expenseAccountData"
         [required]="true"
@@ -222,7 +209,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.chargeOffFraudExpenseAccountId"
         [glAccountList]="expenseAccountData"
         [required]="true"
@@ -230,12 +217,12 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.overpaymentLiabilityAccountId"
         [glAccountList]="liabilityAccountData"
         [required]="true"
@@ -243,24 +230,23 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules">{{
-        'labels.heading.Advanced Accounting Rules' | translate
-      }}</mat-checkbox>
+      <mat-checkbox class="flex-73">
+        formControlName="advancedAccountingRules">{{
+          'labels.heading.Advanced Accounting Rules' | translate
+        }}</mat-checkbox
+      >
 
       <div
         *ngIf="loanProductAccountingForm.value.advancedAccountingRules"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayoutGap="2%"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap gap-2percent responsive-column"
       >
-        <h4 fxFlex="33%" class="mat-h4">
+        <h4 class="mat-h4 flex-33">
           {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
         </h4>
 
-        <div fxFlex="63%">
+        <div class="flex-63">
           <button
             type="button"
             mat-raised-button
@@ -273,7 +259,7 @@
         </div>
 
         <table
-          fxFlex="98%"
+          class="flex-98"
           class="mat-elevation-z1"
           mat-table
           [dataSource]="paymentChannelToFundSourceMappings.value"
@@ -317,9 +303,9 @@
           <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns"></tr>
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
+        <h4 class="mat-h4 flex-33">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
 
-        <div fxFlex="63%">
+        <div class="flex-63">
           <button
             type="button"
             mat-raised-button
@@ -332,7 +318,7 @@
         </div>
 
         <table
-          fxFlex="98%"
+          class="flex-98"
           class="mat-elevation-z1"
           mat-table
           [dataSource]="feeToIncomeAccountMappings.value"
@@ -368,11 +354,11 @@
           <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">
+        <h4 class="mat-h4 flex-33">
           {{ 'labels.heading.Map Penalties to Specific Income Accounts' | translate }}
         </h4>
 
-        <div fxFlex="63%">
+        <div class="flex-63">
           <button
             type="button"
             mat-raised-button
@@ -385,7 +371,7 @@
         </div>
 
         <table
-          fxFlex="98%"
+          class="flex-98"
           class="mat-elevation-z1"
           mat-table
           [dataSource]="penaltyToIncomeAccountMappings.value"
@@ -425,11 +411,11 @@
           <tr mat-row *matRowDef="let row; columns: feesPenaltyIncomeDisplayedColumns"></tr>
         </table>
 
-        <h4 fxFlex="33%" class="mat-h4">
+        <h4 class="mat-h4 flex-33">
           {{ 'labels.heading.Map Charge-off reasons to Expense accounts' | translate }}
         </h4>
 
-        <div fxFlex="63%">
+        <div class="flex-63">
           <button
             type="button"
             mat-raised-button
@@ -442,7 +428,7 @@
           </button>
         </div>
         <table
-          fxFlex="98%"
+          class="flex-98"
           class="mat-elevation-z1"
           mat-table
           [dataSource]="chargeOffReasonToExpenseAccountMappings.value"
@@ -489,7 +475,7 @@
     </div>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

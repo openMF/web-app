@@ -55,3 +55,27 @@
     max-width: 18rem;
   }
 }
+
+.layout-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-horizontal-list {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem; // space between items
+
+  mat-list-item {
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+
+    [mat-button] {
+      white-space: nowrap;
+    }
+  }
+}

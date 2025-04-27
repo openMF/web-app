@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50%">
+    <div class="layout-row responsive-column gap-20px">
+      <div class="flex-50">
         <mat-nav-list>
           <div #datatables>
             <mat-list-item [routerLink]="['data-tables']">
@@ -197,7 +197,7 @@
         </mat-nav-list>
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item [routerLink]="['audit-trails']">
             <mat-icon matListIcon [routerLink]="['audit-trails']">
@@ -365,7 +365,7 @@
 <ng-template #templateDatatables let-popover="popover">
   <h2>{{ 'labels.heading.Manage Data Tables' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Mifos X data-tables allow the user to add custom fields' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -381,7 +381,7 @@
 <ng-template #templateCodes let-popover="popover">
   <h2>{{ 'labels.heading.Manage Codes' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Selection you can create new drop-downs and edit' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -397,7 +397,7 @@
 <ng-template #templateRolesandPermission let-popover="popover">
   <h2>{{ 'labels.heading.Manage Roles and Permissions' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Roles and Permissions allow the administrator to control access' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -413,7 +413,7 @@
 <ng-template #templateMakerCheckerTable let-popover="popover">
   <h2>{{ 'labels.heading.Configure Maker-Checker Tasks' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.“Maker-Checker” principle requires every tasks' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -429,7 +429,7 @@
 <ng-template #templateConfigurations let-popover="popover">
   <h2>{{ 'labels.heading.Configuration' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Configurations page allows you to further customize' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -445,7 +445,7 @@
 <ng-template #templateSchedulerJobs let-popover="popover">
   <h2>{{ 'labels.heading.Manage Scheduler Jobs' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Scheduler Jobs can set batch jobs' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -461,7 +461,7 @@
 <ng-template #templateManageReports let-popover="popover">
   <h2>{{ 'labels.heading.Manage Reports' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Add customized reports and edit core reports' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

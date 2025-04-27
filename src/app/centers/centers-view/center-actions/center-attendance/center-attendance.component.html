@@ -1,6 +1,6 @@
 <div class="container">
-  <mat-card fxLayout="column" fxLayoutGap="3%">
-    <mat-form-field fxFlex>
+  <mat-card class="layout-column gap-3percent">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Meeting Date' | translate }}</mat-label>
       <mat-select [formControl]="meetingDate">
         <mat-option *ngFor="let date of meetingDates" [value]="date">
@@ -37,7 +37,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
 
-    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+    <mat-card-actions class="layout-row align-center gap-5px responsive-column">
       <button type="button" mat-raised-button [routerLink]="['../../']">
         {{ 'labels.buttons.Cancel' | translate }}
       </button>

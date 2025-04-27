@@ -1,6 +1,6 @@
 <div class="tab-container mat-typography">
   <h3>{{ datatableName }}</h3>
-  <div fxLayout="row" fxLayoutAlign="flex-end" class="m-b-20">
+  <div class="layout-row align-end m-b-20">
     <button mat-raised-button color="primary" (click)="add()" *ngIf="!dataObject.data[0]">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
     </button>
@@ -16,19 +16,16 @@
 
   <div class="m-t-10" *ngIf="dataObject.data.length > 0">
     <div
-      fxFlexFill
+      class="flex-fill"
       *ngFor="let columnHeader of dataObject.columnHeaders; let i = index"
       [ngClass]="setAttributeClass(columnHeader.columnName)"
     >
-      <div fxFlex="40%" class="mat-body-strong left">
+      <div class="mat-body-strong left flex-40">
+        {{ columnHeader.columnDisplayName }}
         {{ getInputName(columnHeader.columnName) }}
       </div>
 
-      <div
-        fxFlex="68%"
-        [ngSwitch]="getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)"
-        class="right"
-      >
+      <div [ngSwitch]="getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)" class="right flex-60">
         <span *ngSwitchCase="'DATE'">
           {{ dataObject.data[0].row[i] | dateFormat }}
         </span>

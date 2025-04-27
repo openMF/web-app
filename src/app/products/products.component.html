@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50%">
+    <div class="layout-row responsive-column gap-20px">
+      <div class="flex-50">
         <mat-nav-list>
           <div #loanProducts>
             <mat-list-item [routerLink]="['loan-products']" *mifosxHasPermission="'READ_LOANPRODUCT'">
@@ -152,7 +152,7 @@
         </mat-nav-list>
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item [routerLink]="['products-mix']" *mifosxHasPermission="'READ_PRODUCTMIX'">
             <mat-icon matListIcon [routerLink]="['products-mix']">
@@ -285,7 +285,7 @@
 <ng-template #templateCharges let-popover="popover">
   <h2>{{ 'labels.heading.Charges' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Two types of charges—fees and penalties' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       Close
     </button>
@@ -301,7 +301,7 @@
 <ng-template #templateLoanProducts let-popover="popover">
   <h2>{{ 'labels.heading.Loan Products' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Loan products define the rules, default settings' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -317,7 +317,7 @@
 <ng-template #templateSavingsProducts let-popover="popover">
   <h2>{{ 'labels.heading.Savings Products' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Savings products define the rules, default settings' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -333,7 +333,7 @@
 <ng-template #templateShareProducts let-popover="popover">
   <h2>{{ 'labels.heading.Share Products' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Share products define the rules, default settings' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -349,7 +349,7 @@
 <ng-template #templateFixedDepositProducts let-popover="popover">
   <h2>{{ 'labels.heading.Fixed Deposit Products' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Fixed Deposit Products defines the rules, default settings' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -365,7 +365,7 @@
 <ng-template #templateRecurringDepositProducts let-popover="popover">
   <h2>{{ 'labels.heading.Recurring Deposit Products' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Recurring Deposit products define the rules, default settings' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

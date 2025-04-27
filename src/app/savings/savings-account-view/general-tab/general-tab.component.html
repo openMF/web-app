@@ -2,8 +2,8 @@
   <div class="loading"></div>
 </div>
 
-<div class="savings-account-tables" fxLayout="row" fxLayoutGap="2%" *ngIf="!isLoading">
-  <div fxFlex="49%" fxLayout="column" fxLayoutGap="4%">
+<div class="savings-account-tables layout-row gap-2percent" *ngIf="!isLoading">
+  <div class="flex-49 layout-column gap-4percent">
     <div
       *ngIf="
         !savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval;
@@ -92,7 +92,7 @@
     </div>
   </div>
 
-  <div fxFlex="49%" *ngIf="isActive; else alternateSummary">
+  <div class="flex-49" *ngIf="isActive; else alternateSummary">
     <h4 class="table-headers">{{ 'labels.heading.Account Summary' | translate }}</h4>
     <table>
       <tbody>
@@ -247,7 +247,7 @@
   </div>
 
   <ng-template #alternateSummary>
-    <div fxFlex="49%">
+    <div class="flex-49">
       <h4 class="table-headers">{{ 'labels.heading.Account Summary' | translate }}</h4>
       <table>
         <tbody>

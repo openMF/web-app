@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="floatingRateForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="15%">
-          <mat-form-field fxFlex="25%">
+        <div class="layout-row-wrap responsive-column gap-15percent">
+          <mat-form-field class="flex-25">
             <mat-label>{{ 'labels.inputs.Floating Rate Name' | translate }}</mat-label>
             <input
               matInput
@@ -17,7 +17,7 @@
             </mat-error>
           </mat-form-field>
 
-          <div class="checkbox-wrapper" fxFlex="25%">
+          <div class="checkbox-wrapper flex-25">
             <mat-checkbox
               formControlName="isBaseLendingRate"
               matTooltip="{{ 'tooltips.Base lending rate for the organisation' | translate }}"
@@ -28,7 +28,7 @@
             </mat-checkbox>
           </div>
 
-          <div class="checkbox-wrapper" fxFlex="15%">
+          <div class="checkbox-wrapper flex-15">
             <mat-checkbox
               formControlName="isActive"
               matTooltip="{{ 'tooltips.Floating rate scheme to be activated' | translate }}"
@@ -46,8 +46,8 @@
 
         <br />
 
-        <div fxLayout="row wrap" fxLayoutGap="70%" fxLayoutGap.lt-md="0px" class="m-b-10" fxLayout.lt-md="column">
-          <p fxFlex="25%" class="mat-title">
+        <div class="layout-row-wrap gap-70percent m-b-10 layout-lt-md-column">
+          <p class="mat-title flex-25">
             {{ 'labels.inputs.Floating Rate Periods' | translate }}
             <i
               class="fas fa-question"
@@ -140,7 +140,7 @@
         <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

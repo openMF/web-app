@@ -2,18 +2,18 @@
   <mat-card>
     <form [formGroup]="createCashierForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="48%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <input matInput required autofocus [value]="cashierTemplate.officeName" disabled />
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Teller Name' | translate }}</mat-label>
             <input matInput required autofocus [value]="cashierTemplate.tellerName" disabled />
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Cashier' | translate }}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of cashierTemplate.staffOptions" [value]="staff.id">
@@ -26,12 +26,12 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Description/Notes' | translate }}</mat-label>
             <input matInput autofocus formControlName="description" />
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" (click)="fromDatePicker.open()">
+          <mat-form-field class="flex-48" (click)="fromDatePicker.open()">
             <mat-label>{{ 'labels.inputs.From' | translate }}</mat-label>
             <input
               matInput
@@ -49,7 +49,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" (click)="toDatePicker.open()">
+          <mat-form-field class="flex-48" (click)="toDatePicker.open()">
             <mat-label>{{ 'labels.inputs.To' | translate }}</mat-label>
             <input
               matInput
@@ -67,7 +67,7 @@
             </mat-error>
           </mat-form-field>
 
-          <div fxFlex="48%" class="space">
+          <div class="space flex-48">
             <mat-checkbox labelPosition="before" formControlName="isFullDay">
               {{ 'labels.inputs.Full Day' | translate }}?
             </mat-checkbox>
@@ -75,7 +75,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

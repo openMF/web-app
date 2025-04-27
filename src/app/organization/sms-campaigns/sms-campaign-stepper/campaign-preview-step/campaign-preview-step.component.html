@@ -17,13 +17,13 @@
       {{ campaign.editFlag ? campaign.reportName : campaign.paramValue?.reportName }}
     </mat-list-item>
 
-    <div fxLayout="column" fxLayoutGap="10px" class="template-message">
+    <div class="layout-column gap-10px template-message">
       <h3>{{ 'labels.heading.Campaign Message' | translate }} :</h3>
       <textarea matInput disabled>{{ campaign.editFlag ? editedCampaignMessage : campaign.message }}</textarea>
     </div>
   </mat-list>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button [routerLink]="['../']">
       {{ 'labels.buttons.Cancel' | translate }}
     </button>

@@ -1,6 +1,6 @@
-<div [formGroup]="form" fxFlexFill>
-  <div *ngIf="formfield.controlType === 'input' || formfield.controlType === 'select'" fxFlexFill>
-    <mat-form-field fxFlexFill>
+<div [formGroup]="form" class="flex-fill">
+  <div *ngIf="formfield.controlType === 'input' || formfield.controlType === 'select'" class="flex-fill">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ formfield.label }}</mat-label>
 
       <input
@@ -28,7 +28,7 @@
     </mat-form-field>
   </div>
 
-  <mat-form-field fxFlexFill *ngIf="formfield.controlType === 'datepicker'" (click)="datePicker.open()">
+  <mat-form-field class="flex-fill" Fill *ngIf="formfield.controlType === 'datepicker'" (click)="datePicker.open()">
     <mat-label>{{ formfield.label }}</mat-label>
     <input
       matInput
@@ -46,7 +46,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field fxFlexFill *ngIf="formfield.controlType === 'datetimepicker'" (click)="datePicker.open()">
+  <mat-form-field class="flex-fill" Fill *ngIf="formfield.controlType === 'datetimepicker'" (click)="datePicker.open()">
     <mat-label>{{ formfield.label }}</mat-label>
     <input
       matInput
