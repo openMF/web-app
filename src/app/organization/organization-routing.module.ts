@@ -119,7 +119,10 @@ import { DataCodeAreaResolver } from './manage-projects/data-code-area.resolver'
 import { DataCodeStatusResolver } from './manage-projects/data-code-status.resolver';
 import { ViewStatusHistoryComponent } from './manage-projects/view-status-history/view-status-history.component';
 import { StatusHistoryProjectResolver } from './manage-projects/status-history-project.resolver';
-import { BreadcrumbComponent } from 'app/core/shell/breadcrumb/breadcrumb.component';
+import { InvestmentProjectDocumentsResolver } from './manage-projects/investment-project-documents.resolver';
+import { InvestmentProjectGeneralTabComponent } from './manage-projects/view-investment-project/investment-project-general-tab/investment-project-general-tab.component';
+import { InvestmentProjectImageTabComponent } from './manage-projects/view-investment-project/investment-project-image-tab/investment-project-image-tab.component';
+import { DataCodeObjectiveResolver } from './manage-projects/data-code-objective.resolver';
 
 /** Organization Routes */
 const routes: Routes = [
@@ -730,12 +733,13 @@ const routes: Routes = [
                 categoryData: DataCodeCategoryResolver,
                 subcategoryData: DataCodeSubCategoryResolver,
                 areaData: DataCodeAreaResolver,
+                objectivesData: DataCodeObjectiveResolver,
                 statusData: DataCodeStatusResolver
               }
             },
             {
               path: 'statusHistory/:id',
-              component: ViewStatusHistoryComponent,
+              component: ViewStatusHistoryComponent
               // data: {routeParamBreadcrumb: 'id'},
               // resolve: {
               //   statusHistoryData: StatusHistoryProjectResolver
@@ -743,13 +747,28 @@ const routes: Routes = [
             },
             {
               path: ':id',
+              component: ViewInvestmentProjectComponent,
               data: { title: 'View Investment Project', routeParamBreadcrumb: 'id' },
               children: [
                 {
                   path: '',
-                  component: ViewInvestmentProjectComponent,
+                  redirectTo: 'general',
+                  pathMatch: 'full'
+                },
+                {
+                  path: 'general',
+                  component: InvestmentProjectGeneralTabComponent,
+                  data: { title: 'Investment Project', breadcrumb: 'View', routeParamBreadcrumb: false },
                   resolve: {
                     accountData: ManageProjectResolver
+                  }
+                },
+                {
+                  path: 'images',
+                  component: InvestmentProjectImageTabComponent,
+                  data: { title: 'Investment Project', breadcrumb: 'Images', routeParamBreadcrumb: false },
+                  resolve: {
+                    imageData: InvestmentProjectDocumentsResolver
                   }
                 },
                 {
@@ -841,7 +860,9 @@ const routes: Routes = [
     DataCodeSubCategoryResolver,
     DataCodeAreaResolver,
     DataCodeStatusResolver,
-    StatusHistoryProjectResolver
+    StatusHistoryProjectResolver,
+    InvestmentProjectDocumentsResolver,
+    DataCodeObjectiveResolver
   ]
 })
 export class OrganizationRoutingModule {}

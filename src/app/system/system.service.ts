@@ -675,6 +675,10 @@ export class SystemService {
     return this.http.get('/loanproducts');
   }
 
+  getObjectDocuments(entityType: string, entityId: any): Observable<any> {
+    return this.http.get(`/${entityType}/${entityId}/documents`);
+  }
+
   /**
    * @returns {Observable<any>} Saving products data
    */

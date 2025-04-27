@@ -20,8 +20,10 @@ export class ViewStatusHistoryComponent implements OnInit {
   /** Sorter for status table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-
-  constructor(private route: ActivatedRoute, private organizationService: OrganizationService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private organizationService: OrganizationService
+  ) {}
 
   ngOnInit(): void {
     // this.route.data.subscribe(
@@ -32,7 +34,7 @@ export class ViewStatusHistoryComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
-      this.organizationService.getStatusHistoryProjects(id).subscribe(data => {
+      this.organizationService.getStatusHistoryProjects(id).subscribe((data) => {
         this.statusHistoryData = data;
         this.dataSource = new MatTableDataSource(this.statusHistoryData);
         this.dataSource.filterPredicate = (data: any, filter: string) => {
@@ -44,16 +46,18 @@ export class ViewStatusHistoryComponent implements OnInit {
       });
     }
 
-
-    this.displayedColumns = ['personInCharge', 'dateUpdate', 'status'];
+    this.displayedColumns = [
+      'personInCharge',
+      'dateUpdate',
+      'status'
+    ];
   }
 
   /**
- * Filters
- * @param {string} filterValue Value to filter data.
- */
+   * Filters
+   * @param {string} filterValue Value to filter data.
+   */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }

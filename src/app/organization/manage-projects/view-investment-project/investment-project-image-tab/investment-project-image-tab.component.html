@@ -1,0 +1,20 @@
+<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+  <button mat-raised-button color="primary" (click)="uploadDocument()">
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
+    {{ 'labels.buttons.Add' | translate }}
+  </button>
+</div>
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="row wrap" class="content">
+        <div class="thumbnail-wall">
+          <<ng-container class="thumbnail" *ngFor="let image of imageData">
+            <img class="project-img" [src]="getImagePath(image.location)" />
+          </ng-container>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

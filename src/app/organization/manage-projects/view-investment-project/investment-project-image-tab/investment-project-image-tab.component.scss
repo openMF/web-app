@@ -1,0 +1,33 @@
+.container {
+  max-width: 77rem;
+
+  .content {
+    div {
+      margin: 1rem 0;
+      word-wrap: break-word;
+    }
+  }
+}
+
+.thumbnail-wall {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.thumbnail {
+  max-width: 76rem;
+  width: calc((100% - 32px) / 3);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba($color: #000, $alpha: 10%);
+}
+
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: 22rem;
+}

@@ -101,7 +101,10 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         },
         (error) => {
           console.log(error);
-          this.alertService.alert({ type: 'Resource does not exist', message: 'Error obteniendo la lista de empleados' });
+          this.alertService.alert({
+            type: 'Resource does not exist',
+            message: 'Error obteniendo la lista de empleados'
+          });
         }
       );
     });
@@ -185,38 +188,38 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
 
   createMakeAccountInterbankTransferForm(account: any) {
     /* --> */ this.makeAccountTransferForm = this.formBuilder.group({
-    toBank: [
-      { value: account.sourceFspId, disabled: true },
-      Validators.required
-    ],
-    toClientId: [
-      { value: account.firsName + ' ' + account.lastName, disabled: true },
-      Validators.required
-    ],
-    toAccountType: [
-      { value: 'Saving Account', disabled: true },
-      Validators.required
-    ],
-    toAccountId: [
-      { value: account.partyId, disabled: true },
-      Validators.required
-    ],
-    transferAmount: [
-      this.accountTransferTemplateData.transferAmount,
-      [
-        Validators.required,
-        Validators.min(0.01),
-        this.amountExceedsBalanceValidator.bind(this)]
-    ],
-    transferDate: [
-      this.settingsService.businessDate,
-      Validators.required
-    ],
-    transferDescription: [
-      '',
-      Validators.required
-    ]
-  });
+      toBank: [
+        { value: account.sourceFspId, disabled: true },
+        Validators.required
+      ],
+      toClientId: [
+        { value: account.firsName + ' ' + account.lastName, disabled: true },
+        Validators.required
+      ],
+      toAccountType: [
+        { value: 'Saving Account', disabled: true },
+        Validators.required
+      ],
+      toAccountId: [
+        { value: account.partyId, disabled: true },
+        Validators.required
+      ],
+      transferAmount: [
+        this.accountTransferTemplateData.transferAmount,
+        [
+          Validators.required,
+          Validators.min(0.01),
+          this.amountExceedsBalanceValidator.bind(this)]
+      ],
+      transferDate: [
+        this.settingsService.businessDate,
+        Validators.required
+      ],
+      transferDescription: [
+        '',
+        Validators.required
+      ]
+    });
     this.isLoading = false;
   }
 
@@ -323,9 +326,9 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.isLoading = false;
         this.router.navigate(['../../transactions'], { relativeTo: this.route });
       }
-    });     
+    });
   }
-  
+
   makeInterbankTransfer() {
     this.isLoading = true;
     const payload = {
@@ -386,7 +389,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   }
 
   filterStaff() {
-    this.filteredStaffData = this.staffData.filter((staff: { displayName: string; }) =>
+    this.filteredStaffData = this.staffData.filter((staff: { displayName: string }) =>
       staff.displayName.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }

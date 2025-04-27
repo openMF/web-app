@@ -948,6 +948,7 @@
       "Holiday": "Holiday",
       "identifier id": "identifier id",
       "Identities": "Identities",
+      "Images": "Images",
       "Import Employees": "Import Employees",
       "Import Offices": "Import Offices",
       "Inactivate Charge": "Inactivate Charge",
@@ -1138,6 +1139,7 @@
       "Undo Transaction": "Undo Transaction",
       "Upcoming Charges": "Upcoming Charges",
       "Upload": "Upload",
+      "Upload Image": "Upload Image",
       "Upload Client Image": "Upload Client Image",
       "Upload Client Signature": "Upload Client Signature",
       "Users": "Users",
@@ -1595,7 +1597,7 @@
       "Expiry Date": "Expiry Date",
       "Export to File": "Export to File",
       "Extend Repayment Period": "Extend Repayment Period",
-      "External Agent":"External Agent",
+      "External Agent": "External Agent",
       "External Asset Owner": "External Asset Owner",
       "External ID": "External ID",
       "External Id": "External Id",
@@ -2484,7 +2486,13 @@
         "Impact Description": "Impact Description",
         "Category": "Category",
         "Subcategory": "Subcategory",
-        "Area": "Area"
+        "Area": "Area",
+        "Objectives": "ODS",
+        "Max Amount": "Max Amount",
+        "Min Amount": "Min Amount",
+        "Mnemonic": "Mnemonic",
+        "Socio Environmental Description": "Socio Environmental Description",
+        "Detailed Socio Environmental Description": "Detailed Socio Environmental Description"
       }
     },
     "links": {

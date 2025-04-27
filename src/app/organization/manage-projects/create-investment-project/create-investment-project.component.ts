@@ -20,6 +20,7 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
   areaData: any[] = [];
   currency: any;
   statusData: any[] = [];
+  objectivesData: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +30,15 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
     private organizationService: OrganizationService
   ) {
     this.route.data.subscribe(
-      (data: { accountData: any; countryData: any; categoryData: any; subcategoryData: any; areaData: any; statusData: any}) => {
+      (data: {
+        accountData: any;
+        countryData: any;
+        categoryData: any;
+        subcategoryData: any;
+        areaData: any;
+        statusData: any;
+        objectivesData: any;
+      }) => {
         this.currency = data.accountData.currency;
         this.clientsData = [];
         this.countryData = data.countryData.codeValues;
@@ -37,6 +46,7 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
         this.subcategoryData = data.subcategoryData.codeValues;
         this.areaData = data.areaData.codeValues;
         this.statusData = data.statusData.codeValues;
+        this.objectivesData = data.objectivesData.codeValues;
       }
     );
   }
@@ -78,6 +88,10 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
         '',
         Validators.required
       ],
+      mnemonic: [
+        '',
+        Validators.required
+      ],
       impactDescription: [
         '',
         Validators.required
@@ -91,6 +105,14 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
         Validators.required
       ],
       financingDescription: [
+        '',
+        Validators.required
+      ],
+      littleSocioEnvironmentalDescription: [
+        '',
+        Validators.required
+      ],
+      detailedSocioEnvironmentalDescription: [
         '',
         Validators.required
       ],
@@ -121,6 +143,18 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
       isActive: [false],
       statusId: [
         '',
+        Validators.required
+      ],
+      objectives: [
+        '',
+        Validators.required
+      ],
+      maxAmount: [
+        0,
+        Validators.required
+      ],
+      minAmount: [
+        0,
         Validators.required
       ]
     });
@@ -160,6 +194,7 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
     payload['ownerId'] = owner['id'];
     payload['amount'] = payload['amount'] * 1;
     payload['subCategories'] = '[' + payload['subCategories'].join(',') + ']';
+    payload['objectives'] = '[' + payload['objectives'].join(',') + ']';
     console.log(payload);
     this.organizationService.createInvestmentProjects(payload).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
