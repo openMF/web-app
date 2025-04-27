@@ -1,103 +1,18 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_FUND'">
-    <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.Edit' | translate }}
-  </button>
-</div>
-
 <div class="container">
-  <mat-card>
-    <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.Client Name' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.ownerName }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.name' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.name }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.custom.Subtitle' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.subtitle }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.Country' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.country.code }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.Currency' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.currencyCode }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.custom.Financial Description' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.financingDescription }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.custom.Impact Description' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.impactDescription }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.custom.Institution Description' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.institutionDescription }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.custom.Team Description' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.teamDescription }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.Amount' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.amount | currency: projectData.currencyCode }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.Interest Rate' | translate }}
-        </div>
-        <div fxFlex="70%">{{ projectData.rate | formatNumber }} %</div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.Number of Installments' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.period }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.Active' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.isActive | yesNo }}
-        </div>
-        <div fxFlex="30%" class="mat-body-strong">
-          {{ 'labels.inputs.Status' | translate }}
-        </div>
-        <div fxFlex="70%">
-          {{ projectData.status?.statusValue?.name }}
-        </div>
-      </div>
+  <nav mat-tab-nav-bar class="navigation-tabs">
+    <a
+      mat-tab-link
+      [routerLink]="['./general']"
+      routerLinkActive
+      #general="routerLinkActive"
+      [active]="general.isActive"
+    >
+      {{ 'labels.heading.General' | translate }}
+    </a>
+    <a mat-tab-link [routerLink]="['./images']" routerLinkActive #images="routerLinkActive" [active]="images.isActive">
+      {{ 'labels.heading.Images' | translate }}
+    </a>
+  </nav>
 
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
-        <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
-          {{ 'labels.buttons.Back' | translate }}
-        </button>
-      </div>
-    </mat-card-content>
-  </mat-card>
+  <router-outlet></router-outlet>
 </div>

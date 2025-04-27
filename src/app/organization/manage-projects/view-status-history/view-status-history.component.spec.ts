@@ -8,9 +8,8 @@ describe('ViewStatusHistoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewStatusHistoryComponent ]
-    })
-    .compileComponents();
+      declarations: [ViewStatusHistoryComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ViewStatusHistoryComponent);
     component = fixture.componentInstance;

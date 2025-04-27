@@ -42,8 +42,12 @@
         </div>
 
         <div class="filter-box" [formGroup]="makeAccountTransferForm">
-          <mat-checkbox labelPosition="after" formControlName="isInvestment" class="m-r-10"
-            (change)="onInvestmentChange($event)">{{ 'labels.inputs.Is Investment' | translate }}
+          <mat-checkbox
+            labelPosition="after"
+            formControlName="isInvestment"
+            class="m-r-10"
+            (change)="onInvestmentChange($event)"
+            >{{ 'labels.inputs.Is Investment' | translate }}
           </mat-checkbox>
         </div>
       </div>
@@ -181,14 +185,13 @@
                   placeholder="Buscar por nombre"
                 />
               </mat-option>
-          
+
               <mat-option *ngFor="let staff of filteredStaffData" [value]="staff.id">
                 {{ staff.displayName }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          
-          
+
           <mat-form-field fxFlex="98%">
             <mat-label>{{ 'labels.inputs.Percentage' | translate }}</mat-label>
             <input type="number" matInput formControlName="percentageInvestmentAgent" />

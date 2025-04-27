@@ -60,6 +60,15 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.custom.Mnemonic' | translate }}</mat-label>
+            <input matInput autofocus formControlName="mnemonic" />
+            <mat-error *ngIf="investmentProjectForm.controls.mnemonic.hasError('required')">
+              {{ 'labels.inputs.custom.Mnemonic' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
             <mat-label>{{ 'labels.inputs.custom.Impact Description' | translate }}</mat-label>
             <input matInput autofocus formControlName="impactDescription" />
             <textarea
@@ -112,6 +121,38 @@
             </mat-error>
           </mat-form-field>
 
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.custom.Socio Environmental Description' | translate }}</mat-label>
+            <textarea
+              matInput
+              formControlName="littleSocioEnvironmentalDescription"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
+            <mat-error *ngIf="investmentProjectForm.controls.littleSocioEnvironmentalDescription.hasError('required')">
+              {{ 'labels.inputs.custom.Socio Environmental Description' | translate }}
+              {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.custom.Detailed Socio Environmental Description' | translate }}</mat-label>
+            <textarea
+              matInput
+              formControlName="detailedSocioEnvironmentalDescription"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
+            <mat-error
+              *ngIf="investmentProjectForm.controls.detailedSocioEnvironmentalDescription.hasError('required')"
+            >
+              {{ 'labels.inputs.custom.Detailed Socio Environmental Description' | translate }}
+              {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
           <mifosx-input-amount
             [currency]="currency"
             [isRequired]="true"
@@ -119,6 +160,24 @@
             [inputLabel]="'Amount'"
           >
           </mifosx-input-amount>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.Max Amount' | translate }}</mat-label>
+            <input type="number" matInput required formControlName="maxAmount" />
+            <mat-error *ngIf="investmentProjectForm.controls.maxAmount.hasError('required')">
+              {{ 'labels.inputs.Max Amount' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.Min Amount' | translate }}</mat-label>
+            <input type="number" matInput required formControlName="minAmount" />
+            <mat-error *ngIf="investmentProjectForm.controls.minAmount.hasError('required')">
+              {{ 'labels.inputs.Min Amount' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
 
           <mat-form-field fxFlex="98%">
             <mat-label>{{ 'labels.inputs.Interest Rate' | translate }}</mat-label>
@@ -170,6 +229,15 @@
             <mat-select required formControlName="areaId">
               <mat-option *ngFor="let area of areaData" [value]="area.id">
                 {{ area.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.custom.Objectives' | translate }}</mat-label>
+            <mat-select required formControlName="objectives" multiple>
+              <mat-option *ngFor="let objectives of objectivesData" [value]="objectives.id">
+                {{ objectives.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>

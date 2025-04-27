@@ -51,6 +51,7 @@ import { LongTextComponent } from './long-text/long-text.component';
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { InputAmountComponent } from './input-amount/input-amount.component';
 import { InputPasswordComponent } from './input-password/input-password.component';
+import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 
 /**
  * Shared Module
@@ -67,7 +68,8 @@ import { InputPasswordComponent } from './input-password/input-password.componen
     PipesModule,
     DirectivesModule,
     NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    RichTextEditorModule
   ],
   declarations: [
     FormfieldComponent,
