@@ -2463,7 +2463,8 @@
       "Passwords do not match": "Le password non corrispondono",
       "Enable income capitalization": "Abilita la capitalizzazione del reddito",
       "Income capitalization calculation type": "Tipo di calcolo della capitalizzazione del reddito",
-      "Income capitalization strategy": "Strategia di capitalizzazione del reddito"
+      "Income capitalization strategy": "Strategia di capitalizzazione del reddito",
+      "Income capitalization type": "Tipo di capitalizzazione del reddito"
     },
     "links": {
       "Community": "Comunità",

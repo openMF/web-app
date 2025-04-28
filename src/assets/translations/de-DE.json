@@ -2463,7 +2463,8 @@
       "Passwords do not match": "Passwörter stimmen nicht überein",
       "Enable income capitalization": "Aktivieren Sie die Einkommenskapitalisierung",
       "Income capitalization calculation type": "Berechnungsart der Einkommenskapitalisierung",
-      "Income capitalization strategy": "Strategie zur Ertragskapitalisierung"
+      "Income capitalization strategy": "Strategie zur Ertragskapitalisierung",
+      "Income capitalization type": "Art der Ertragskapitalisierung"
     },
     "links": {
       "Community": "Gemeinschaft",
