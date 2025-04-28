@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { DecimalPipe } from '@angular/common';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { MatLegacyCheckboxChange as MatCheckboxChange } from '@angular/material/legacy-checkbox';
+import { MatCheckboxChange as MatCheckboxChange } from '@angular/material/checkbox';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { MatLegacyTable as MatTable } from '@angular/material/legacy-table';
 import { ActivatedRoute } from '@angular/router';
