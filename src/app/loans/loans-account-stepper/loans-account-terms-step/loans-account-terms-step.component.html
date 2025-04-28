@@ -15,7 +15,7 @@
       <i class="fas fa-question" matTooltip="{{ 'tooltips.The loan term parameter in loan accounts' | translate }}"></i>
     </h4>
 
-    <mat-form-field class="flex-fill" ="23%">
+    <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Loan Term' | translate }}</mat-label>
       <input type="number" matInput required disabled formControlName="loanTermFrequency" />
       <mat-error *ngIf="loansAccountTermsForm.controls.loanTermFrequency.hasError('required')">
@@ -24,7 +24,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="23%">
+    <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <mat-select required formControlName="loanTermFrequencyType">
         <mat-option *ngFor="let type of termFrequencyTypeData" [value]="type.id">
@@ -37,7 +37,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="20%" *ngIf="hasFixedLength()">
+    <mat-form-field class="flex-fill flex-20" *ngIf="hasFixedLength()">
       <mat-label>{{ 'labels.inputs.Fixed Length' | translate }}</mat-label>
       <input type="number" matInput formControlName="fixedLength" />
     </mat-form-field>
@@ -61,7 +61,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="23%" (click)="repaymentsPicker.open()">
+    <mat-form-field class="flex-fill flex-23" (click)="repaymentsPicker.open()">
       <mat-label>{{ 'labels.inputs.First repayment on' | translate }}</mat-label>
       <input
         matInput
@@ -75,7 +75,7 @@
       <mat-datepicker #repaymentsPicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="23%" (click)="interestPicker.open()">
+    <mat-form-field class="flex-fill flex-23" (click)="interestPicker.open()">
       <mat-label>{{ 'labels.inputs.Interest charged from' | translate }}</mat-label>
       <input
         matInput
@@ -97,7 +97,7 @@
       ></i>
     </h4>
 
-    <mat-form-field class="flex-fill" ="23%">
+    <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Repaid every' | translate }}</mat-label>
       <input
         type="number"
@@ -112,7 +112,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="23%">
+    <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <mat-select formControlName="repaymentFrequencyType" disabled required>
         <mat-option *ngFor="let repaymentFrequencyType of termFrequencyTypeData" [value]="repaymentFrequencyType.id">
@@ -121,7 +121,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="14%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value === 2">
+    <mat-form-field class="flex-fill flex-14" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value === 2">
       <mat-label>{{ 'labels.inputs.Select On' | translate }}</mat-label>
       <mat-select formControlName="repaymentFrequencyNthDayType">
         <mat-option
@@ -133,7 +133,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="14%" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value === 2">
+    <mat-form-field class="flex-fill flex-14" *ngIf="loansAccountTermsForm.controls.repaymentFrequencyType.value === 2">
       <mat-label>{{ 'labels.inputs.Select Day' | translate }}</mat-label>
       <mat-select formControlName="repaymentFrequencyDayOfWeekType">
         <mat-option
@@ -158,12 +158,12 @@
     <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Nominal interest rate' | translate }}</h4>
 
     <ng-container *ngIf="!loansAccountTermsData?.isLoanProductLinkedToFloatingRate">
-      <mat-form-field class="flex-fill" ="23%">
+      <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Nominal interest rate' | translate }} %</mat-label>
         <input type="number" matInput formControlName="interestRatePerPeriod" />
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="23%">
+      <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
         <mat-select formControlName="interestRateFrequencyType">
           <mat-option
@@ -179,7 +179,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="23%">
+      <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Interest method' | translate }}</mat-label>
         <mat-select formControlName="interestType" matTooltip="{{ 'tooltips.The Interest method value' | translate }}">
           <mat-option *ngFor="let interestType of interestTypeData" [value]="interestType.id">
@@ -188,7 +188,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="23%">
+      <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Amortization' | translate }}</mat-label>
         <mat-select
           required
@@ -205,7 +205,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="23%" *ngIf="isEqualPrincipalPayments()">
+      <mat-form-field class="flex-fill flex-23" *ngIf="isEqualPrincipalPayments()">
         <mat-label>{{ 'labels.inputs.Principal Percentage Per Installment' | translate }}</mat-label>
         <input type="number" matInput formControlName="fixedPrincipalPercentagePerInstallment" />
       </mat-form-field>
@@ -349,12 +349,12 @@
       <i class="fas fa-question" matTooltip="{{ 'tooltips.The moratorium information' | translate }}"></i>
     </h4>
 
-    <mat-form-field class="flex-fill" ="23%">
+    <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Grace on principal payment' | translate }}</mat-label>
       <input type="number" matInput formControlName="graceOnPrincipalPayment" />
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="23%">
+    <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Grace on interest payment' | translate }}</mat-label>
       <input type="number" matInput formControlName="graceOnInterestPayment" />
     </mat-form-field>
@@ -384,7 +384,7 @@
         <p>{{ 'labels.inputs.Is Topup Loan' | translate }}?</p>
       </mat-checkbox>
 
-      <mat-form-field class="flex-fill" ="24%" *ngIf="loansAccountTermsForm.controls.isTopup.value">
+      <mat-form-field class="flex-fill flex-24" *ngIf="loansAccountTermsForm.controls.isTopup.value">
         <mat-label>{{ 'labels.inputs.Loan closed with Topup' | translate }}</mat-label>
         <mat-select formControlName="loanIdToClose">
           <mat-option *ngFor="let clientActiveLoan of clientActiveLoanData" [value]="clientActiveLoan.id">

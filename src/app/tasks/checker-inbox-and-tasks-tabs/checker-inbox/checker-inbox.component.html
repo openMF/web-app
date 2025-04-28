@@ -1,7 +1,7 @@
 <div class="tab-container mat-typography" *ngIf="checkerData">
   <div class="layout-row align-start-center">
     <div class="search-box flex-40">
-      <mat-form-field class="flex-fill" ="90%">
+      <mat-form-field class="flex-fill flex-90">
         <input
           matInput
           placeholder="{{ 'labels.text.Search by user' | translate }}"
@@ -24,7 +24,7 @@
 
   <form [formGroup]="makerCheckerSearchForm">
     <div class="layout-row-wrap gap-2px responsive-column">
-      <mat-form-field class="flex-fill" ="31%" (click)="makerDateTimeFromPicker.open()">
+      <mat-form-field class="flex-fill flex-31" (click)="makerDateTimeFromPicker.open()">
         <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
         <input
           matInput
@@ -37,7 +37,7 @@
         <mat-datepicker #makerDateTimeFromPicker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="31%" (click)="makerDateTimetoPicker.open()">
+      <mat-form-field class="flex-fill flex-31" (click)="makerDateTimetoPicker.open()">
         <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
         <input
           matInput

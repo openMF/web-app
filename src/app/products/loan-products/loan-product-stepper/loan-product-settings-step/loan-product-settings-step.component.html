@@ -102,7 +102,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="30%" *ngIf="isAdvancedTransactionProcessingStrategy">
+    <mat-form-field class="flex-fill flex-30" *ngIf="isAdvancedTransactionProcessingStrategy">
       <mat-label>{{ 'labels.inputs.Loan Schedule Processing Type' | translate }}</mat-label>
       <mat-select formControlName="loanScheduleProcessingType" required>
         <mat-option
@@ -447,8 +447,12 @@
 
     <h3 class="mat-h3 flex-96">{{ 'labels.heading.Interest Recalculation' | translate }}</h3>
 
-    <mat-checkbox class="flex-73">
-      labelPosition="before" formControlName="isInterestRecalculationEnabled" class="margin-b">
+    <mat-checkbox
+      class="flex-73"
+      labelPosition="before"
+      formControlName="isInterestRecalculationEnabled"
+      class="margin-b"
+    >
       {{ 'labels.inputs.Recalculate Interest' | translate }}
     </mat-checkbox>
 
@@ -699,8 +703,7 @@
 
     <h3 class="mat-h3 flex-23">{{ 'labels.heading.Guarantee Requirements' | translate }}</h3>
 
-    <mat-checkbox class="flex-73">
-      labelPosition="before" formControlName="holdGuaranteeFunds" class="margin-b">
+    <mat-checkbox class="flex-73" labelPosition="before" formControlName="holdGuaranteeFunds" class="margin-b">
       {{ 'labels.inputs.Place Guarantee Funds On-Hold' | translate }}
     </mat-checkbox>
 

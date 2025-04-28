@@ -13,8 +13,7 @@
   <mat-card>
     <mat-card-content>
       <div class="layout-row-wrap content">
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Name' | translate }}
         </div>
 
@@ -22,8 +21,7 @@
           {{ chargeData.name }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Applies To' | translate }}
         </div>
 
@@ -31,8 +29,7 @@
           {{ chargeData.chargeAppliesTo.value | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Penalty' | translate }}
         </div>
 
@@ -40,8 +37,7 @@
           {{ chargeData.penalty === true | yesNo }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Currency' | translate }}
         </div>
 
@@ -49,8 +45,7 @@
           {{ chargeData.currency.name }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Amount' | translate }}
         </div>
 
@@ -58,28 +53,23 @@
           {{ chargeData.amount | formatNumber }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="minCap">
+        <div class="flex-50 mat-body-strong" *ngIf="minCap">
           {{ 'labels.inputs.Minimum Charge Cap' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="minCap">
+        <div class="flex-50" *ngIf="minCap">
           {{ chargeData.minCap }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="maxCap">
+        <div class="flex-50 mat-body-strong" *ngIf="maxCap">
           {{ 'labels.inputs.Maximum Charge Cap' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="maxCap">
+        <div class="flex-50" *ngIf="maxCap">
           {{ chargeData.maxCap }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Time Type' | translate }}
         </div>
 
@@ -87,8 +77,7 @@
           {{ chargeData.chargeTimeType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Calculation Type' | translate }}
         </div>
 
@@ -96,8 +85,7 @@
           {{ chargeData.chargeCalculationType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Payment Mode' | translate }}
         </div>
 
@@ -105,8 +93,7 @@
           {{ chargeData.chargePaymentMode.value | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.status.Active' | translate }}
         </div>
 
@@ -114,8 +101,7 @@
           {{ chargeData.active === true | yesNo }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency">
+        <div class="flex-50 mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency">
           {{ 'labels.inputs.Add Fee Frequency' | translate }}
         </div>
 
@@ -126,13 +112,11 @@
           {{ chargeData.feeFrequency.value | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
+        <div class="flex-50 mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
           {{ 'labels.inputs.Frequency Interval' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
+        <div class="flex-50" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
           {{ chargeData.feeInterval }}
         </div>
 
@@ -145,13 +129,11 @@
         >
         </mifosx-gl-account-display>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="chargeData.taxGroup">
+        <div class="flex-50 mat-body-strong" *ngIf="chargeData.taxGroup">
           {{ 'labels.inputs.Tax Group' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="chargeData.taxGroup">
+        <div class="flex-50" *ngIf="chargeData.taxGroup">
           {{ chargeData.taxGroup.name }}
         </div>
       </div>

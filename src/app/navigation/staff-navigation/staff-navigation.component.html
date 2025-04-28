@@ -24,8 +24,7 @@
 
 <mat-card-content>
   <div class="layout-row-wrap content">
-    <div class="flex-50">
-      class="mat-body-strong">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Joined On' | translate }}
     </div>
 
@@ -33,8 +32,7 @@
       {{ employeeData.joiningDate | dateFormat }}
     </div>
 
-    <div class="flex-50">
-      class="mat-body-strong">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Loan Officer' | translate }}
     </div>
 
@@ -42,18 +40,15 @@
       {{ employeeData.isLoanOfficer | yesNo }}
     </div>
 
-    <div class="flex-50">
-      class="mat-body-strong" *ngIf="employeeData.mobileNo">
+    <div class="flex-50 mat-body-strong" *ngIf="employeeData.mobileNo">
       {{ 'labels.inputs.Mobile Number' | translate }}
     </div>
 
-    <div class="flex-50">
-      *ngIf="employeeData.mobileNo">
+    <div class="flex-50" *ngIf="employeeData.mobileNo">
       {{ employeeData.mobileNo }}
     </div>
 
-    <div class="flex-50">
-      class="mat-body-strong">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Number of Centers' | translate }}
     </div>
 

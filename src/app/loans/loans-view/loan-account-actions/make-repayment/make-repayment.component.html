@@ -22,43 +22,35 @@
           </mat-form-field>
 
           <div class="layout-row-wrap content">
-            <div class="flex-50">
-              class="mat-body-strong">
+            <div class="flex-50 mat-body-strong">
               {{ 'Principal' | translate }}
             </div>
 
-            <div class="flex-50">
-              class="r-amount right-label">
+            <div class="flex-50 r-amount right-label">
               {{ dataObject.principalPortion | formatNumber }}
             </div>
 
-            <div class="flex-50">
-              class="mat-body-strong">
+            <div class="flex-50 mat-body-strong">
               {{ 'Interest' | translate }}
             </div>
 
-            <div class="flex-50">
-              class="r-amount right-label">
+            <div class="flex-50 r-amount right-label">
               {{ dataObject.interestPortion | formatNumber }}
             </div>
 
-            <div class="flex-50">
-              class="mat-body-strong">
+            <div class="flex-50 mat-body-strong">
               {{ 'Fees' | translate }}
             </div>
 
-            <div class="flex-50">
-              class="r-amount right-label">
+            <div class="flex-50 r-amount right-label">
               {{ dataObject.feeChargesPortion | formatNumber }}
             </div>
 
-            <div class="flex-50">
-              class="mat-body-strong">
+            <div class="flex-50 mat-body-strong">
               {{ 'Penalties' | translate }}
             </div>
 
-            <div class="flex-50">
-              class="r-amount right-label">
+            <div class="flex-50 r-amount right-label">
               {{ dataObject.penaltyChargesPortion | formatNumber }}
             </div>
           </div>
@@ -86,8 +78,7 @@
           </mat-form-field>
 
           <div class="flex-fill">
-            <span class="expandcollapsebutton m-l-10 m-t-40 flex-75">
-              (click)="addPaymentDetails()">
+            <span class="expandcollapsebutton m-l-10 m-t-40 flex-75" (click)="addPaymentDetails()">
               <mat-slide-toggle>
                 <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
                   <span class="m-l-10">{{ 'labels.inputs.Show Payment Details' | translate }}</span>

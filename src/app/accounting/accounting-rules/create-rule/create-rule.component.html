@@ -29,8 +29,10 @@
             <mat-label class="flex-50"
               >{{ 'labels.inputs.Affected GL Entry (Debit) Rule Type' | translate }} *</mat-label
             >
-            <mat-radio-group class="flex-50 layout-row gap-5percent radio-group-spacing" formControlName="debitRuleType">
-
+            <mat-radio-group
+              class="flex-50 layout-row gap-5percent radio-group-spacing"
+              formControlName="debitRuleType"
+            >
               <mat-radio-button value="fixedAccount">{{ 'labels.inputs.Fixed Account' | translate }}</mat-radio-button>
               <mat-radio-button value="listOfAccounts">{{
                 'labels.inputs.List of Accounts' | translate
@@ -47,8 +49,10 @@
             </mat-select>
           </mat-form-field>
 
-          <div class="flex-48 layout-row gap-2percent responsive-column">
-            *ngIf="accountingRuleForm.controls.debitRuleType.value === 'listOfAccounts'" >
+          <div
+            class="flex-48 layout-row gap-2percent responsive-column"
+            *ngIf="accountingRuleForm.controls.debitRuleType.value === 'listOfAccounts'"
+          >
             <mat-form-field class="flex-50">
               <mat-label>{{ 'labels.inputs.Debit Tags' | translate }}</mat-label>
               <mat-select formControlName="debitTags" multiple>
@@ -58,8 +62,7 @@
               </mat-select>
             </mat-form-field>
 
-            <div class="flex-50">
-              ngClass.gt-md="entries-wrapper">
+            <div class="flex-50" ngClass.gt-md="entries-wrapper">
               <mat-checkbox labelPosition="before" formControlName="allowMultipleDebitEntries" class="entries">
                 {{ 'labels.inputs.Multiple Debit Entries Allowed' | translate }}
               </mat-checkbox>
@@ -70,9 +73,10 @@
             <mat-label class="flex-50"
               >{{ 'labels.inputs.Affected GL Entry (Credit) Rule Type' | translate }} *</mat-label
             >
-            <mat-radio-group class="flex-50 layout-row gap-5-percent radio-group-spacing">
-              formControlName="creditRuleType">
-
+            <mat-radio-group
+              class="flex-50 layout-row gap-5-percent radio-group-spacing"
+              formControlName="creditRuleType"
+            >
               <mat-radio-button value="fixedAccount">{{ 'labels.inputs.Fixed Account' | translate }}</mat-radio-button>
               <mat-radio-button value="listOfAccounts">{{
                 'labels.inputs.List of Accounts' | translate
@@ -89,8 +93,10 @@
             </mat-select>
           </mat-form-field>
 
-          <div class="flex-48 layout-row gap-2percent responsive-column">
-            *ngIf="accountingRuleForm.controls.creditRuleType.value === 'listOfAccounts'" >
+          <div
+            class="flex-48 layout-row gap-2percent responsive-column"
+            *ngIf="accountingRuleForm.controls.creditRuleType.value === 'listOfAccounts'"
+          >
             <mat-form-field class="flex-50">
               <mat-label>{{ 'labels.inputs.Credit Tags' | translate }}</mat-label>
               <mat-select formControlName="creditTags" multiple>
@@ -100,8 +106,7 @@
               </mat-select>
             </mat-form-field>
 
-            <div class="flex-50">
-              ngClass.gt-md="entries-wrapper">
+            <div class="flex-50" ngClass.gt-md="entries-wrapper">
               <mat-checkbox labelPosition="before" formControlName="allowMultipleCreditEntries" class="entries">
                 {{ 'labels.inputs.Multiple Credit Entries Allowed' | translate }}
               </mat-checkbox>

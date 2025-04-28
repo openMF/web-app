@@ -12,8 +12,7 @@
   <mat-card>
     <mat-card-content>
       <div class="layout-row-wrap content">
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Job Name' | translate }}
         </div>
 
@@ -21,8 +20,7 @@
           {{ jobData.displayName }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Cron Expression' | translate }}
         </div>
 
@@ -30,14 +28,13 @@
           {{ jobData.cronExpression }}
         </div>
 
-        <div class="flex-50">class="mat-body-strong">{{ 'labels.inputs.Is Active Job' | translate }}?</div>
+        <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Is Active Job' | translate }}?</div>
 
         <div class="flex-50">
           {{ jobData.active | yesNo }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Follow' | translate }}
         </div>
 
