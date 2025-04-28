@@ -1482,6 +1482,7 @@
       "Default Savings Account": "Conta poupança padrão",
       "Default Shares per Client": "Compartilhamentos padrão por cliente",
       "Default Theme": "Tema Padrão",
+      "Deferred income": "Renda diferida",
       "Deleted": "Excluído",
       "Delinquency Action": "Ação de inadimplência",
       "Delinquency Bucket": "Balde de inadimplência",
@@ -1709,6 +1710,7 @@
       "Income from fees": "Renda de taxas",
       "Income from fees Repayments": "Reembolsos de taxas",
       "Income from penalties": "Renda de penalidades",
+      "Income type": "Tipo de renda",
       "Incorporation No": "Incorporação Não",
       "Incorporation Number": "Número de Incorporação",
       "Incorporation Validity Till Date": "Validade de incorporação até a data",
@@ -2461,7 +2463,8 @@
       "Passwords do not match": "As senhas não coincidem",
       "Enable income capitalization": "Habilitar capitalização de renda",
       "Income capitalization calculation type": "Tipo de cálculo de capitalização de renda",
-      "Income capitalization strategy": "Estratégia de capitalização de renda"
+      "Income capitalization strategy": "Estratégia de capitalização de renda",
+      "Income capitalization type": "Tipo de capitalização de renda"
     },
     "links": {
       "Community": "Comunidade",
@@ -2498,6 +2501,7 @@
       "Block Withdrawal": "Retirada de bloco",
       "Breadcrumbs": "Migalhas de pão",
       "Calculate Interest": "Calcular juros",
+      "Capitalized Income": "Renda Capitalizada",
       "Centers": "Centros",
       "Charge-Off": "Cobrança",
       "Chart of Accounts": "Plano de contas",

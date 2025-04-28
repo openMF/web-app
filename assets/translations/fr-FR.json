@@ -1482,6 +1482,7 @@
       "Default Savings Account": "Compte d'épargne par défaut",
       "Default Shares per Client": "Actions par défaut par client",
       "Default Theme": "Thème par défaut",
+      "Deferred income": "Produits différés",
       "Deleted": "Supprimé",
       "Delinquency Action": "Action de délinquance",
       "Delinquency Bucket": "Seau de délinquance",
@@ -1709,6 +1710,7 @@
       "Income from fees": "Revenus d'honoraires",
       "Income from fees Repayments": "Revenus de taxes Remboursements",
       "Income from penalties": "Revenus des pénalités",
+      "Income type": "Type de revenu",
       "Incorporation No": "Numéro de constitution",
       "Incorporation Number": "Numéro de constitution",
       "Incorporation Validity Till Date": "Validité de la constitution jusqu'à la date",
@@ -2461,7 +2463,8 @@
       "Passwords do not match": "Les mots de passe ne correspondent pas",
       "Enable income capitalization": "Activer la capitalisation des revenus",
       "Income capitalization calculation type": "Type de calcul de capitalisation des revenus",
-      "Income capitalization strategy": "Stratégie de capitalisation des revenus"
+      "Income capitalization strategy": "Stratégie de capitalisation des revenus",
+      "Income capitalization type": "Type de capitalisation des revenus"
     },
     "links": {
       "Community": "Communauté",
@@ -2498,6 +2501,7 @@
       "Block Withdrawal": "Bloquer le retrait",
       "Breadcrumbs": "Chapelure",
       "Calculate Interest": "Calculer les intérêts",
+      "Capitalized Income": "Revenu capitalisé",
       "Centers": "Centres",
       "Charge-Off": "Amortir",
       "Chart of Accounts": "Plan comptable",

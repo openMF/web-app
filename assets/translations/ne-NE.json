@@ -1482,6 +1482,7 @@
       "Default Savings Account": "पूर्वनिर्धारित बचत खाता",
       "Default Shares per Client": "प्रति ग्राहक पूर्वनिर्धारित शेयरहरू",
       "Default Theme": "पूर्वनिर्धारित विषयवस्तु",
+      "Deferred income": "स्थगित आय",
       "Deleted": "मेटाइयो",
       "Delinquency Action": "अपराध कार्य",
       "Delinquency Bucket": "अपराध बाल्टी",
@@ -1709,6 +1710,7 @@
       "Income from fees": "शुल्कबाट आम्दानी",
       "Income from fees Repayments": "शुल्क भुक्तानीबाट आय",
       "Income from penalties": "दण्डबाट आम्दानी",
+      "Income type": "आय प्रकार",
       "Incorporation No": "निगम नं",
       "Incorporation Number": "निगमन नम्बर",
       "Incorporation Validity Till Date": "मिति सम्म सम्मिलित वैधता",
@@ -2461,7 +2463,8 @@
       "Passwords do not match": "पासवर्डहरू मेल खाँदैनन्",
       "Enable income capitalization": "आय पूंजीकरण सक्षम गर्नुहोस्",
       "Income capitalization calculation type": "आय पूंजीकरण गणना प्रकार",
-      "Income capitalization strategy": "आय पूंजीकरण रणनीति"
+      "Income capitalization strategy": "आय पूंजीकरण रणनीति",
+      "Income capitalization type": "आय पूँजीकरण प्रकार"
     },
     "links": {
       "Community": "समुदाय",
@@ -2498,6 +2501,7 @@
       "Block Withdrawal": "ब्लक निकासी",
       "Breadcrumbs": "ब्रेडक्रम्ब्स",
       "Calculate Interest": "ब्याज गणना गर्नुहोस्",
+      "Capitalized Income": "पुँजीगत आय",
       "Centers": "केन्द्रहरू",
       "Charge-Off": "चार्ज-अफ",
       "Chart of Accounts": "लेखाको चार्ट",

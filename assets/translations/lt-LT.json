@@ -1482,6 +1482,7 @@
       "Default Savings Account": "Numatytoji taupomoji sąskaita",
       "Default Shares per Client": "Numatytosios akcijos vienam klientui",
       "Default Theme": "Numatytoji tema",
+      "Deferred income": "Atidėtos pajamos",
       "Deleted": "Ištrinta",
       "Delinquency Action": "Deliktingumo veiksmas",
       "Delinquency Bucket": "Nusikaltimų kibiras",
@@ -1709,6 +1710,7 @@
       "Income from fees": "Pajamos iš mokesčių",
       "Income from fees Repayments": "Pajamos iš mokesčių Grąžinimai",
       "Income from penalties": "Pajamos iš baudų",
+      "Income type": "Pajamų rūšis",
       "Incorporation No": "Įmonės Nr",
       "Incorporation Number": "Įmonės numeris",
       "Incorporation Validity Till Date": "Įkūrimo galiojimas iki datos",
@@ -2461,7 +2463,8 @@
       "Passwords do not match": "Slaptažodžiai nesutampa",
       "Enable income capitalization": "Įgalinti pajamų kapitalizaciją",
       "Income capitalization calculation type": "Pajamų kapitalizavimo skaičiavimo tipas",
-      "Income capitalization strategy": "Pajamų kapitalizavimo strategija"
+      "Income capitalization strategy": "Pajamų kapitalizavimo strategija",
+      "Income capitalization type": "Pajamų kapitalizacijos tipas"
     },
     "links": {
       "Community": "bendruomenė",
@@ -2498,6 +2501,7 @@
       "Block Withdrawal": "Blokuoti išėmimą",
       "Breadcrumbs": "Duonos trupiniai",
       "Calculate Interest": "Apskaičiuokite palūkanas",
+      "Capitalized Income": "Kapitalizuotos pajamos",
       "Centers": "Centrai",
       "Charge-Off": "Atsakingas už",
       "Chart of Accounts": "Sąskaitų planas",
