@@ -2463,7 +2463,8 @@
       "Passwords do not match": "Hesla se neshodují",
       "Enable income capitalization": "Povolit kapitalizaci příjmu",
       "Income capitalization calculation type": "Typ výpočtu kapitalizace příjmu",
-      "Income capitalization strategy": "Strategie kapitalizace příjmu"
+      "Income capitalization strategy": "Strategie kapitalizace příjmu",
+      "Income capitalization type": "Typ kapitalizace příjmu"
     },
     "links": {
       "Community": "Společenství",

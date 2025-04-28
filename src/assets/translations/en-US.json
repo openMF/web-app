@@ -2470,7 +2470,8 @@
       "Passwords do not match": "Passwords do not match",
       "Enable income capitalization": "Enable income capitalization",
       "Income capitalization calculation type": "Income capitalization calculation type",
-      "Income capitalization strategy": "Income capitalization strategy"
+      "Income capitalization strategy": "Income capitalization strategy",
+      "Income capitalization type": "Income capitalization type"
     },
     "links": {
       "Community": "Community",

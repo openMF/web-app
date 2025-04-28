@@ -2463,7 +2463,8 @@
       "Passwords do not match": "Slaptažodžiai nesutampa",
       "Enable income capitalization": "Įgalinti pajamų kapitalizaciją",
       "Income capitalization calculation type": "Pajamų kapitalizavimo skaičiavimo tipas",
-      "Income capitalization strategy": "Pajamų kapitalizavimo strategija"
+      "Income capitalization strategy": "Pajamų kapitalizavimo strategija",
+      "Income capitalization type": "Pajamų kapitalizacijos tipas"
     },
     "links": {
       "Community": "bendruomenė",

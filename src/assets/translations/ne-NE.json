@@ -2463,7 +2463,8 @@
       "Passwords do not match": "पासवर्डहरू मेल खाँदैनन्",
       "Enable income capitalization": "आय पूंजीकरण सक्षम गर्नुहोस्",
       "Income capitalization calculation type": "आय पूंजीकरण गणना प्रकार",
-      "Income capitalization strategy": "आय पूंजीकरण रणनीति"
+      "Income capitalization strategy": "आय पूंजीकरण रणनीति",
+      "Income capitalization type": "आय पूँजीकरण प्रकार"
     },
     "links": {
       "Community": "समुदाय",

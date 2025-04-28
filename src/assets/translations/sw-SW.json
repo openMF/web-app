@@ -2463,7 +2463,8 @@
       "Passwords do not match": "Manenosiri hayalingani",
       "Enable income capitalization": "Washa mtaji wa mapato",
       "Income capitalization calculation type": "Aina ya kukokotoa mtaji wa mapato",
-      "Income capitalization strategy": "Mkakati wa mtaji wa mapato"
+      "Income capitalization strategy": "Mkakati wa mtaji wa mapato",
+      "Income capitalization type": "Aina ya mtaji wa mapato"
     },
     "links": {
       "Community": "Jumuiya",

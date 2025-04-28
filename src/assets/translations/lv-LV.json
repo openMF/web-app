@@ -2463,7 +2463,8 @@
       "Passwords do not match": "Paroles nesakrīt",
       "Enable income capitalization": "Iespējot ienākumu kapitalizāciju",
       "Income capitalization calculation type": "Ienākumu kapitalizācijas aprēķina veids",
-      "Income capitalization strategy": "Ienākumu kapitalizācijas stratēģija"
+      "Income capitalization strategy": "Ienākumu kapitalizācijas stratēģija",
+      "Income capitalization type": "Ienākumu kapitalizācijas veids"
     },
     "links": {
       "Community": "kopiena",

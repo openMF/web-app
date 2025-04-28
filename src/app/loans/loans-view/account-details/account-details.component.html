@@ -94,6 +94,11 @@
       <span fxFlex="50%"> {{ loanDetails.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }} </span>
     </div>
 
+    <div fxFlexFill *ngIf="loanDetails.enableIncomeCapitalization">
+      <span fxFlex="50%"> {{ 'labels.inputs.Income capitalization type' | translate }}</span>
+      <span fxFlex="50%"> {{ loanDetails.capitalizedIncomeType?.value | translateKey: 'catalogs' }} </span>
+    </div>
+
     <div fxFlexFill>
       <span fxFlex="50%"> {{ 'labels.inputs.Grace: On Principal Payment' | translate }}</span>
       <span fxFlex="50%"> {{ loanDetails.graceOnPrincipalPayment }} </span>
