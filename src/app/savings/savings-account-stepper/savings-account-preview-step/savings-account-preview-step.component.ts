@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatTableDataSource } from '@angular/material/table';
 
 /**
  * Savings account preview step
