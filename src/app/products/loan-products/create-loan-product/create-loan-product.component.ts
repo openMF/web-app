@@ -223,6 +223,7 @@ export class CreateLoanProductComponent implements OnInit {
       );
     } else {
       delete loanProduct['supportedInterestRefundTypes'];
+      delete loanProduct['daysInYearCustomStrategy'];
     }
     delete loanProduct['useDueForRepaymentsConfigurations'];
 
