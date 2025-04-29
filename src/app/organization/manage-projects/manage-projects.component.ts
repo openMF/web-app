@@ -37,7 +37,9 @@ export class ManageProjectsComponent implements OnInit {
     'active',
     'occupancyPercentage',
     'amount',
-    'rate'
+    'rate',
+    'status',
+    'actions'
   ];
   /** Data source for Funds table. */
   dataSource: MatTableDataSource<any>;

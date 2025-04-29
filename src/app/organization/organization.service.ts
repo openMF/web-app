@@ -822,6 +822,10 @@ export class OrganizationService {
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData, { params: httpParams });
   }
 
+  getStatusHistoryProjects(projectId: any): Observable<any> {
+    return this.http.get(`/investmentproject/historyStatus?id=${projectId}`);
+  }
+
   getInvestmentProjects(): Observable<any> {
     return this.http.get('/investmentproject/all');
   }

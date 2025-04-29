@@ -139,6 +139,15 @@
           </mat-form-field>
 
           <mat-form-field fxFlex="98%">
+            <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
+            <mat-select required formControlName="statusId">
+              <mat-option *ngFor="let status of statusData" [value]="status.id">
+                {{ status.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="98%">
             <mat-label>{{ 'labels.inputs.custom.Category' | translate }}</mat-label>
             <mat-select required formControlName="categoryId">
               <mat-option *ngFor="let category of categoryData" [value]="category.id">
