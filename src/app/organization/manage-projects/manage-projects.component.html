@@ -58,7 +58,7 @@
 
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
-        <td mat-cell *matCellDef="let item">{{ item.status?.statusValue?.name }} </td>
+        <td mat-cell *matCellDef="let item">{{ item.status?.statusValue?.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
@@ -70,8 +70,7 @@
             color="primary"
             [routerLink]="['statusHistory/', element.id]"
           >
-          <i [matTooltip]="'labels.buttons.View Status History' | translate"  class="fa fa-history"></i>
-        
+            <i [matTooltip]="'labels.buttons.View Status History' | translate" class="fa fa-history"></i>
           </button>
         </td>
       </ng-container>

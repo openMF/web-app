@@ -194,13 +194,13 @@ export class OrganizationService {
     return this.http.get('/staff', { params: httpParams });
   }
 
-    /**
+  /**
    * @returns {Observable<any>} Employees data
    */
-    getEmployeesByStatus(status:string): Observable<any> {
-      const httpParams = new HttpParams().set('status', status);
-      return this.http.get('/staff', { params: httpParams });
-    }
+  getEmployeesByStatus(status: string): Observable<any> {
+    const httpParams = new HttpParams().set('status', status);
+    return this.http.get('/staff', { params: httpParams });
+  }
 
   /**
    * @param {any} employee Employee to be created.
@@ -844,5 +844,9 @@ export class OrganizationService {
 
   updateInvestmentProjectParticipations(itemId: number, payload: any): Observable<any> {
     return this.http.put(`/projectparticipation/${itemId}`, payload);
+  }
+
+  uploadProjectDocumentsImage(projectId: string, formData: FormData) {
+    return this.http.post(`/projects/${projectId}/documents`, formData);
   }
 }

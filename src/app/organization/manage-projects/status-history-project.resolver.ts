@@ -21,4 +21,3 @@ export class StatusHistoryProjectResolver implements Resolve<boolean> {
     return this.organizationService.getStatusHistoryProjects(projectId);
   }
 }
-
