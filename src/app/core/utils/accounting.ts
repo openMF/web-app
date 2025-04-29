@@ -41,7 +41,7 @@ export class Accounting {
         'ACCRUAL (UPFRONT)'
       ].includes(value)) {
       return 'Accrual (upfront)';
-    } else if (value === 'CASH BASED') {
+    } else if (value.startsWith('CASH')) {
       return 'Cash';
     } else if (value === 'NONE') {
       return 'NONE';

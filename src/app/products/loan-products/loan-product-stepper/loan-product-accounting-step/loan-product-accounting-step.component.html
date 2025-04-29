@@ -190,7 +190,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        *ngIf="capitalizedIncome.enableIncomeCapitalization"
+        *ngIf="capitalizedIncome?.enableIncomeCapitalization"
         fxFlex="48%"
         [inputFormControl]="loanProductAccountingForm.controls.incomeFromCapitalizationAccountId"
         [glAccountList]="incomeAccountData"
@@ -253,7 +253,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        *ngIf="capitalizedIncome.enableIncomeCapitalization"
+        *ngIf="capitalizedIncome?.enableIncomeCapitalization"
         fxFlex="48%"
         [inputFormControl]="loanProductAccountingForm.controls.deferredIncomeLiabilityAccountId"
         [glAccountList]="liabilityAccountData"
