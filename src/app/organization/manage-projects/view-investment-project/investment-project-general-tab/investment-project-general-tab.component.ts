@@ -65,15 +65,22 @@ export class InvestmentProjectGeneralTabComponent implements OnInit {
   }
 
   addAddress() {
-
     const data = {
       formfields: this.getAddressFormFields('add', this.addressData)
     };
+  
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
+  
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
+      if (response?.data) {
+        const dataToSend = {
+          ...response.data.value,
+          latitude: response.data.value.latitude,
+          longitude: response.data.value.longitude
+        };
+  
         this.organizationService
-          .addOrUpdateAddress(response.data.value, this.idProject)
+          .addOrUpdateAddress(dataToSend, this.idProject)
           .subscribe((res: any) => {
             if (res) {
               window.location.reload();
@@ -82,6 +89,7 @@ export class InvestmentProjectGeneralTabComponent implements OnInit {
       }
     });
   }
+  
 
   getAddressFormFields(formType?: string, address?: any) {
     let formfields: FormfieldBase[] = [];
@@ -99,38 +107,13 @@ export class InvestmentProjectGeneralTabComponent implements OnInit {
       );
     }
   
-    
-    if (formType === 'add') {
-      formfields.push(
-        new SelectBase({
-          controlName: 'addressType',
-          label: this.translateService.instant('labels.inputs.Address Type'),
-          value: normalizedAddress ? normalizedAddress.addressType : '', 
-          options: { label: 'name', value: 'id', data: this.addressTemplate.addressTypeIdOptions },
-          order: 1
-        })
-      );
-    }
-  
-    
-    formfields.push(
-      new InputBase({
-        controlName: 'street',
-        label: this.translateService.instant('labels.inputs.Street'),
-        value: normalizedAddress ? normalizedAddress.street : '',
-        type: 'text',
-        required: false,
-        order: 2
-      })
-    );
-  
     formfields.push(
       new InputBase({
         controlName: 'addressLine1',
         label: this.translateService.instant('labels.inputs.Address Line') + ' 1',
-        value: normalizedAddress ? normalizedAddress.addressLine1 : '',
+        value: normalizedAddress ? normalizedAddress?.addressLine1 : '',
         type: 'text',
-        order: 3
+        order: 1
       })
     );
   
@@ -138,9 +121,9 @@ export class InvestmentProjectGeneralTabComponent implements OnInit {
       new InputBase({
         controlName: 'addressLine2',
         label: this.translateService.instant('labels.inputs.Address Line') + ' 2',
-        value: normalizedAddress ? normalizedAddress.addressLine2 : '',
+        value: normalizedAddress ? normalizedAddress?.addressLine2 : '',
         type: 'text',
-        order: 4
+        order: 2
       })
     );
   
@@ -148,9 +131,9 @@ export class InvestmentProjectGeneralTabComponent implements OnInit {
       new InputBase({
         controlName: 'addressLine3',
         label: this.translateService.instant('labels.inputs.Address Line') + ' 3',
-        value: normalizedAddress ? normalizedAddress.addressLine3 : '',
+        value: normalizedAddress ? normalizedAddress?.addressLine3 : '',
         type: 'text',
-        order: 5
+        order: 3
       })
     );
   
@@ -158,60 +141,72 @@ export class InvestmentProjectGeneralTabComponent implements OnInit {
       new InputBase({
         controlName: 'townVillage',
         label: this.translateService.instant('labels.inputs.Town / Village'),
-        value: normalizedAddress ? normalizedAddress.townVillage : '',
+        value: normalizedAddress ? normalizedAddress?.townVillage : '',
         type: 'text',
-        order: 6
+        order: 4
       })
     );
-  
+
     formfields.push(
-      new InputBase({
-        controlName: 'city',
-        label: this.translateService.instant('labels.inputs.City'),
-        value: normalizedAddress ? normalizedAddress.city : '',
-        type: 'text',
-        order: 7
+      new SelectBase({
+        controlName: 'countryId',
+        label: this.translateService.instant('labels.inputs.Country'),
+        value: normalizedAddress ? normalizedAddress?.countryId : '', 
+        options: { label: 'name', value: 'id', data: this.addressTemplate?.countryIdOptions },
+        order: 5
       })
     );
-  
     
     formfields.push(
       new SelectBase({
         controlName: 'stateProvinceId',
         label: this.translateService.instant('labels.inputs.State / Province'),
-        value: normalizedAddress ? normalizedAddress.stateProvinceId : '', 
-        options: { label: 'name', value: 'id', data: this.addressTemplate.stateProvinceIdOptions },
-        order: 8
+        value: normalizedAddress ? normalizedAddress?.stateProvinceId : '', 
+        options: { label: 'name', value: 'id', data: this.addressTemplate?.stateProvinceIdOptions },
+        order: 6
       })
     );
-  
+
     formfields.push(
       new InputBase({
-        controlName: 'countryDistrict',
-        label: this.translateService.instant('labels.inputs.State / Province'),
-        value: normalizedAddress ? normalizedAddress.countyDistrict : '',
+        controlName: 'city',
+        label: this.translateService.instant('labels.inputs.City'),
+        value: normalizedAddress ? normalizedAddress?.city : '',
         type: 'text',
-        order: 11
+        order: 7
       })
     );
   
-    formfields.push(
-      new SelectBase({
-        controlName: 'countryId',
-        label: this.translateService.instant('labels.inputs.Country'),
-        value: normalizedAddress ? normalizedAddress.countryId : '', 
-        options: { label: 'name', value: 'id', data: this.addressTemplate.countryIdOptions },
-        order: 10
-      })
-    );
   
     formfields.push(
       new InputBase({
         controlName: 'postalCode',
         label: this.translateService.instant('labels.inputs.Postal Code'),
-        value: normalizedAddress ? normalizedAddress.postalCode : '',
+        value: normalizedAddress ? normalizedAddress?.postalCode : '',
         type: 'text',
-        order: 11
+        order: 8
+      })
+    );
+
+    formfields.push(
+      new InputBase({
+        controlName: 'latitude',
+        label: 'Latitude',
+        value: normalizedAddress ? normalizedAddress?.latitude : '',
+        type: 'text',
+        required: false,
+        order: 9
+      })
+    );
+  
+    formfields.push(
+      new InputBase({
+        controlName: 'longitude',
+        label: 'Longitude',  
+        value: normalizedAddress ? normalizedAddress?.longitude : '',  
+        type: 'text',
+        required: false,
+        order: 10
       })
     );
   

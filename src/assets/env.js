@@ -44,4 +44,9 @@
   // OAuth Client Id  
   window['env']['oauthAppId'] = '';
 
+  window.env = {
+    GOOGLE_MAPS_API_KEY: 'API_KEY'
+  };
+  
+
 })(this);
