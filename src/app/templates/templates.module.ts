@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 /** Custom Modules */
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { SharedModule } from '../shared/shared.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { TemplatesRoutingModule } from './templates-routing.module';
 
@@ -11,6 +10,7 @@ import { TemplatesRoutingModule } from './templates-routing.module';
 import { TemplatesComponent } from './templates.component';
 import { ViewTemplateComponent } from './view-template/view-template.component';
 import { CreateEditComponent } from './create-edit-template/create-edit-template.component';
+import { SharedModule } from 'app/shared/shared.module';
 
 /**
  * Templates Module

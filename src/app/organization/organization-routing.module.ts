@@ -776,7 +776,13 @@ const routes: Routes = [
                   component: EditInvestmentProjectComponent,
                   data: { title: 'Edit Investment Project', breadcrumb: 'Edit', routeParamBreadcrumb: false },
                   resolve: {
-                    accountData: InvestmentProjectTemplateResolver
+                    accountData: InvestmentProjectTemplateResolver,
+                    countryData: DataCodeCountryResolver,
+                    categoryData: DataCodeCategoryResolver,
+                    subcategoryData: DataCodeSubCategoryResolver,
+                    areaData: DataCodeAreaResolver,
+                    objectivesData: DataCodeObjectiveResolver,
+                    statusData: DataCodeStatusResolver
                   }
                 }
               ]

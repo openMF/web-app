@@ -3,6 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { OrganizationService } from 'app/organization/organization.service';
+import { SystemService } from 'app/system/system.service';
 
 @Component({
   selector: 'mifosx-edit-investment-project',
@@ -19,22 +20,25 @@ export class EditInvestmentProjectComponent implements OnInit {
   subcategoryData: any[] = [];
   areaData: any[] = [];
   currency: any;
+  statusData: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private clientsService: ClientsService,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private systemService: SystemService
   ) {
     this.route.data.subscribe(
-      (data: { accountData: any; countryData: any; categoryData: any; subcategoryData: any; areaData: any }) => {
+      (data: { accountData: any; countryData: any; categoryData: any; subcategoryData: any; areaData: any; statusData: any; }) => {
         this.currency = data.accountData.currency;
         this.clientsData = [];
         this.countryData = data.countryData.codeValues;
         this.categoryData = data.categoryData.codeValues;
         this.subcategoryData = data.subcategoryData.codeValues;
         this.areaData = data.areaData.codeValues;
+        this.statusData = data.statusData.codeValues;
       }
     );
   }
@@ -116,7 +120,12 @@ export class EditInvestmentProjectComponent implements OnInit {
         '',
         Validators.required
       ],
-      isActive: [false]
+      isActive: [false],      
+      statusId: [
+        '',
+        Validators.required
+      ],
+
     });
   }
 
