@@ -3,6 +3,10 @@
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
   </button>
+  <button mat-raised-button color="primary" (click)="addAddress()" *mifosxHasPermission="'CREATE_ADDRESS'">
+    <fa-icon icon="plus" class="m-r-10"></fa-icon>
+    {{ 'labels.inputs.Add or update address' | translate }}
+  </button>
 </div>
 
 <div class="container">
@@ -98,6 +102,12 @@
           {{ projectData.period }}
         </div>
         <div fxFlex="30%" class="mat-body-strong">
+          {{ 'labels.inputs.custom.Position' | translate }}
+        </div>
+        <div fxFlex="70%">
+          {{ projectData.position }}
+        </div>
+        <div fxFlex="30%" class="mat-body-strong">
           {{ 'labels.inputs.custom.Min Amount' | translate }}
         </div>
         <div fxFlex="70%">
@@ -114,6 +124,12 @@
         </div>
         <div fxFlex="70%">
           {{ projectData.isActive | yesNo }}
+        </div>
+        <div fxFlex="30%" class="mat-body-strong">
+          {{ 'labels.inputs.Status' | translate }}
+        </div>
+        <div fxFlex="70%">
+          {{ projectData.status?.statusValue?.name }}
         </div>
       </div>
 

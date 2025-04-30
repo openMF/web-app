@@ -19,6 +19,18 @@
   </head>
   <body class="h-full">
     <script src="assets/env.js"></script>
+    <script>
+      const apiKey = window.env?.GOOGLE_MAPS_API_KEY;
+      if (apiKey) {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      } else {
+        console.error('Google Maps API key not found in window.env');
+      }
+    </script>
     <!--[if lt IE 10]>
       <p>
         You are using an <strong>outdated</strong> browser. Please

@@ -822,6 +822,14 @@ export class OrganizationService {
     return this.http.post(`${urlSuffix}/uploadtemplate`, formData, { params: httpParams });
   }
 
+  getAddresDataByProjectId(projectId: any): Observable<any> {
+    return this.http.get(`/investmentProjectAddress/${projectId}`);
+  }
+
+  addOrUpdateAddress(payload: any, projectId: any): Observable<any> {
+    return this.http.post(`/investmentProjectAddress/${projectId}`, payload);
+  }
+
   getStatusHistoryProjects(projectId: any): Observable<any> {
     return this.http.get(`/investmentproject/historyStatus?id=${projectId}`);
   }
