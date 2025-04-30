@@ -191,18 +191,6 @@
                 {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
-              <mat-error *ngIf="chargeForm.controls.amount.hasError('pattern') && currencyDecimalPlaces !== undefined">
-                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.must be' | translate }}
-                <strong
-                  >{{ 'labels.commons.a positive number with' | translate }}
-                  {{ currencyDecimalPlaces ? 'up to ' + currencyDecimalPlaces : 'no' }}
-                  {{ 'labels.inputs.decimal places' | translate }}</strong
-                >
-              </mat-error>
-              <mat-error *ngIf="chargeForm.controls.amount.hasError('pattern') && currencyDecimalPlaces === undefined">
-                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.must be' | translate }}
-                <strong>{{ 'labels.commons.a positive number' | translate }}</strong>
-              </mat-error>
             </mat-form-field>
             <!--
    * minCap and maxCap only allowed for loan ,shares and savings entitites
@@ -218,6 +206,10 @@
             <mat-form-field fxFlex="48%" *ngIf="showMinMaxCap()">
               <mat-label>{{ 'labels.inputs.Maximum Charge Cap' | translate }}</mat-label>
               <input matInput [min]="chargeForm.value.minCap" formControlName="maxCap" />
+              <mat-error *ngIf="chargeForm.errors?.minGreaterThanMax">
+                {{ 'labels.inputs.Maximum Charge Cap' | translate }} ({{ repeatEveryLabel }})
+                <strong>{{ 'labels.commons.must higher than Minimum Charge Cap' | translate }}</strong>
+              </mat-error>
             </mat-form-field>
 
             <div fxFlex="48%" fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column">

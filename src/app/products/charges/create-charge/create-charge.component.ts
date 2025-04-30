@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { minLessThanOrEqualMaxValidator } from 'app/shared/validators/min-max-values.validator';
 
 /**
  * Create charge component.
@@ -79,39 +80,40 @@ export class CreateChargeComponent implements OnInit {
    * Creates the charge form.
    */
   createChargeForm() {
-    this.chargeForm = this.formBuilder.group({
-      chargeAppliesTo: [
-        '',
-        Validators.required
-      ],
-      name: [
-        '',
-        Validators.required
-      ],
-      currencyCode: [
-        '',
-        Validators.required
-      ],
-      chargeTimeType: [
-        '',
-        Validators.required
-      ],
-      chargeCalculationType: [
-        '',
-        Validators.required
-      ],
-      amount: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^\\s*(?=.*[1-9])\\d*(?:\\.\\d+)?\\s*$')]
-      ],
-      active: [false],
-      penalty: [false],
-      taxGroupId: [''],
-      minCap: [''],
-      maxCap: ['']
-    });
+    this.chargeForm = this.formBuilder.group(
+      {
+        chargeAppliesTo: [
+          '',
+          Validators.required
+        ],
+        name: [
+          '',
+          Validators.required
+        ],
+        currencyCode: [
+          '',
+          Validators.required
+        ],
+        chargeTimeType: [
+          '',
+          Validators.required
+        ],
+        chargeCalculationType: [
+          '',
+          Validators.required
+        ],
+        amount: [
+          '',
+          Validators.required
+        ],
+        active: [false],
+        penalty: [false],
+        taxGroupId: [''],
+        minCap: [''],
+        maxCap: ['']
+      },
+      { validators: minLessThanOrEqualMaxValidator('minCap', 'maxCap') }
+    );
   }
 
   /**
@@ -275,15 +277,6 @@ export class CreateChargeComponent implements OnInit {
       this.currencyDecimalPlaces = this.chargesTemplateData.currencyOptions.find(
         (currency: any) => currency.code === currencyCode
       ).decimalPlaces;
-      if (this.currencyDecimalPlaces === 0) {
-        this.chargeForm.get('amount').setValidators([
-          Validators.required,
-          Validators.pattern('^[1-9]\\d*$')]);
-      } else {
-        this.chargeForm.get('amount').setValidators([
-          Validators.required,
-          Validators.pattern(`^\\s*(?=.*[1-9])\\d*(\\.\\d{1,${this.currencyDecimalPlaces}})?\\s*$`)]);
-      }
     });
   }
 
