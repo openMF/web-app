@@ -49,7 +49,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="flex-fill" ="40%" *ngIf="hookForm.controls.name.value === 'SMS Bridge'">
+          <mat-form-field class="flex-fill flex-40" *ngIf="hookForm.controls.name.value === 'SMS Bridge'">
             <mat-label>{{ 'labels.inputs.Phone Number' | translate }}</mat-label>
             <input matInput type="tel" #input maxlength="10" required formControlName="phoneNumber" />
             <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>

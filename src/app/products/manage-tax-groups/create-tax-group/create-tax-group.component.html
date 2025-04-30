@@ -3,7 +3,7 @@
     <form [formGroup]="taxGroupForm" (ngSubmit)="submit()">
       <mat-card-content>
         <div class="layout-row-wrap custom-gap responsive-column">
-          <mat-form-field class="flex-fill" ="100%">
+          <mat-form-field class="flex-fill flex-100">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
             <mat-error *ngIf="taxGroupForm.controls.name.hasError('required')">

@@ -18,7 +18,7 @@
 
     <mat-card-content>
       <div class="layout-row-wrap content">
-        <div class="flex-50">class="mat-body-strong">{{ 'labels.inputs.Report Type' | translate }}:</div>
+        <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Report Type' | translate }}:</div>
 
         <div class="flex-50">
           {{ reportData.reportType | translateKey: 'text' }}
@@ -32,19 +32,19 @@
           {{ reportData.reportSubType | translateKey: 'text' }}
         </div>
 
-        <div class="flex-50">class="mat-body-strong">{{ 'labels.inputs.Report Category' | translate }}:</div>
+        <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Report Category' | translate }}:</div>
 
         <div class="flex-50">
           {{ reportData.reportCategory | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">class="mat-body-strong">{{ 'labels.inputs.Core Report' | translate }}:</div>
+        <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Core Report' | translate }}:</div>
 
         <div class="flex-50">
           {{ reportData.coreReport | yesNo }}
         </div>
 
-        <div class="flex-50">class="mat-body-strong">{{ 'labels.inputs.User Report' | translate }}:</div>
+        <div class="flex-50 mat-body-strong">{{ 'labels.inputs.User Report' | translate }}:</div>
 
         <div class="flex-50">
           {{ reportData.useReport | yesNo }}

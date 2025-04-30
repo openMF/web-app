@@ -43,8 +43,7 @@
 
     <div class="flex-98 layout-row-wrap responsive-column gap-2percent">
       <mat-form-field
-        class="flex-fill"
-        ="32%"
+        class="flex-fill flex-32"
         *ngIf="loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied"
       >
         <mat-label>{{ 'labels.inputs.Over Amount Calculation Type' | translate }}</mat-label>
@@ -59,8 +58,7 @@
       </mat-form-field>
 
       <mat-form-field
-        class="flex-fill"
-        ="32%"
+        class="flex-fill flex-32"
         *ngIf="loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied"
       >
         <mat-label>{{ 'labels.inputs.Over Amount' | translate }}</mat-label>
@@ -165,7 +163,7 @@
         ></i>
       </h4>
 
-      <mat-form-field class="flex-fill" ="23%">
+      <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
         <input
           type="number"
@@ -180,7 +178,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="23%">
+      <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
         <input
           type="number"
@@ -195,7 +193,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="23%">
+      <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
         <input
           type="number"
@@ -212,7 +210,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="23%">
+      <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
         <mat-select formControlName="interestRateFrequencyType" required [disabled]="isZeroInterest()">
           <mat-option
@@ -301,8 +299,7 @@
 
     <h3 class="mat-h3 flex-23">{{ 'labels.inputs.Variations' | translate }}</h3>
 
-    <mat-checkbox class="flex-73">
-      labelPosition="before" formControlName="useBorrowerCycle">
+    <mat-checkbox class="flex-73" labelPosition="before" formControlName="useBorrowerCycle">
       {{ 'labels.inputs.Terms vary based on loan cycle' | translate }}
     </mat-checkbox>
 

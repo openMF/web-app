@@ -30,7 +30,7 @@
           </button>
         </div>
 
-        <mat-form-field class="flex-fill" ="32%">
+        <mat-form-field class="flex-fill flex-32">
           <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
           <input
             matInput
@@ -40,7 +40,7 @@
           />
         </mat-form-field>
 
-        <mat-form-field class="flex-fill" ="31%" (click)="validFromDatePicker.open()">
+        <mat-form-field class="flex-fill flex-31" (click)="validFromDatePicker.open()">
           <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
           <input
             matInput
@@ -58,14 +58,14 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="flex-fill" ="31%" (click)="endDatePicker.open()">
+        <mat-form-field class="flex-fill flex-31" (click)="endDatePicker.open()">
           <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate" />
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #endDatePicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field class="flex-fill" ="65%">
+        <mat-form-field class="flex-fill flex-65">
           <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
           <textarea
             matInput

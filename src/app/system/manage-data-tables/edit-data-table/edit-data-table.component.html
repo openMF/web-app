@@ -8,7 +8,7 @@
             <input matInput required formControlName="datatableName" />
           </mat-form-field>
 
-          <mat-form-field class="flex-fill" ="20%">
+          <mat-form-field class="flex-fill flex-20">
             <mat-label>{{ 'labels.inputs.Application Table Name' | translate }}</mat-label>
             <mat-select required formControlName="apptableName">
               <mat-option *ngFor="let appTable of appTableData" [value]="appTable.value">
@@ -21,7 +21,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="flex-fill" ="20%" *ngIf="showEntitySubType">
+          <mat-form-field class="flex-fill flex-20" *ngIf="showEntitySubType">
             <mat-label>{{ 'labels.inputs.Entity SubType' | translate }}</mat-label>
             <mat-select formControlName="entitySubType">
               <mat-option *ngFor="let entitySubType of entitySubTypeData" [value]="entitySubType.value">

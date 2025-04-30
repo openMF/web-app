@@ -29,8 +29,7 @@
   <mat-tab-group>
     <mat-tab label="Details">
       <div class="layout-row-wrap content">
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Activation Date' | translate }}
         </div>
 
@@ -38,8 +37,7 @@
           {{ groupData.activationDate | dateFormat }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Associated Officer' | translate }}
         </div>
 
@@ -47,13 +45,11 @@
           {{ groupData.staffName }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="groupData.centerName">
+        <div class="flex-50 mat-body-strong" *ngIf="groupData.centerName">
           {{ 'labels.inputs.Associated Center' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="groupData.centerName">
+        <div class="flex-50" *ngIf="groupData.centerName">
           {{ groupData.centerName }}
         </div>
 
@@ -85,8 +81,7 @@
           {{ groupData.collectionMeetingCalendar.humanReadable }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Number of Clients' | translate }}
         </div>
 

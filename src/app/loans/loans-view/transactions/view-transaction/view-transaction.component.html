@@ -21,8 +21,7 @@
       <div class="layout-row-wrap content">
         <div class="flex-100" [ngClass]="loanTransactionColor()"></div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Transaction Id' | translate }}
         </div>
 
@@ -30,20 +29,17 @@
           {{ transactionData.id }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="transactionData.toLoanTransactionRelation">
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.toLoanTransactionRelation">
           {{ 'Repayment Transaction' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="transactionData.toLoanTransactionRelation">
+        <div class="flex-50" *ngIf="transactionData.toLoanTransactionRelation">
           <a [href]="loanTransactionRelatedLink(transactionData.toLoanTransactionRelation.fromLoanTransaction)">
             {{ transactionData.toLoanTransactionRelation.fromLoanTransaction }}
           </a>
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Type' | translate }}
         </div>
 
@@ -51,8 +47,7 @@
           {{ transactionData.type.value }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Transaction Date' | translate }}
         </div>
 
@@ -60,8 +55,7 @@
           {{ transactionData.date | dateFormat }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Currency' | translate }}
         </div>
 
@@ -69,8 +63,7 @@
           {{ transactionData.currency.name }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Amount' | translate }}
         </div>
 
@@ -78,13 +71,11 @@
           {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="transactionData.externalId">
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.externalId">
           {{ 'External Id' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="transactionData.externalId">
+        <div class="flex-50" *ngIf="transactionData.externalId">
           <mifosx-external-identifier
             externalId="{{ transactionData.externalId }}"
             completed="true"

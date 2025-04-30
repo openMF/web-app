@@ -17,8 +17,7 @@
   <mat-card>
     <mat-card-content>
       <div class="layout-row-wrap content">
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Login Name' | translate }}
         </div>
 
@@ -26,8 +25,7 @@
           {{ userData.username }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.First Name' | translate }}
         </div>
 
@@ -35,8 +33,7 @@
           {{ userData.firstname }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Last Name' | translate }}
         </div>
 
@@ -44,18 +41,15 @@
           {{ userData.lastname }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="userData.email">
+        <div class="flex-50 mat-body-strong" *ngIf="userData.email">
           {{ 'labels.inputs.Email' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="userData.email">
+        <div class="flex-50" *ngIf="userData.email">
           {{ userData.email }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Office' | translate }}
         </div>
 
@@ -63,8 +57,7 @@
           {{ userData.officeName }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Roles' | translate }}
         </div>
 

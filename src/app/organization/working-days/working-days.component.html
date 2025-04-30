@@ -5,8 +5,7 @@
         <div #workingDaysFormRef class="layout-column">
           <div class="layout-row responsive-column">
             <mat-label class="mat-h4 flex-50">{{ 'labels.inputs.Working Days' | translate }}</mat-label>
-            <div class="flex-50 layout-column">
-              formArrayName="recurrence">
+            <div class="flex-50 layout-column" formArrayName="recurrence">
               <div *ngFor="let day of recurrence.controls; let i = index">
                 <mat-checkbox labelPosition="after" [formControlName]="i">
                   {{ weekDays[i].name }}

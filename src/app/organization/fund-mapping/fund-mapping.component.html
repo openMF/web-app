@@ -41,7 +41,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="31%" (click)="fromDatePicker.open()">
+      <mat-form-field class="flex-fill flex-31" (click)="fromDatePicker.open()">
         <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
         <input
           matInput
@@ -59,7 +59,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="31%" (click)="toDatePicker.open()">
+      <mat-form-field class="flex-fill flex-31" (click)="toDatePicker.open()">
         <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
         <input
           matInput
@@ -133,8 +133,7 @@
         </mat-form-field>
       </div>
 
-      <mat-checkbox class="flex-73">
-        labelPosition="before" formControlName="includeOutstandingAmount" class="margin-b">
+      <mat-checkbox class="flex-73" labelPosition="before" formControlName="includeOutstandingAmount" class="margin-b">
         {{ 'labels.inputs.Loan Outstanding Amount' | translate }}
       </mat-checkbox>
 
