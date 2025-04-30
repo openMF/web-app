@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { minLessThanOrEqualMaxValidator } from 'app/shared/validators/min-max-values.validator';
 
 /**
  * Edit Charge component.
@@ -73,36 +74,39 @@ export class EditChargeComponent implements OnInit {
   editChargeForm() {
     this.showFeeOptions = this.chargeData.feeInterval && this.chargeData.feeInterval > 0;
 
-    this.chargeForm = this.formBuilder.group({
-      name: [
-        this.chargeData.name,
-        Validators.required
-      ],
-      chargeAppliesTo: [
-        { value: this.chargeData.chargeAppliesTo.id, disabled: true },
-        Validators.required
-      ],
-      currencyCode: [
-        this.chargeData.currency.code,
-        Validators.required
-      ],
-      amount: [
-        this.chargeData.amount,
-        Validators.required
-      ],
-      active: [this.chargeData.active],
-      penalty: [this.chargeData.penalty],
-      minCap: [this.chargeData.minCap],
-      maxCap: [this.chargeData.maxCap],
-      chargeTimeType: [
-        this.chargeData.chargeTimeType.id,
-        Validators.required
-      ],
-      chargeCalculationType: [
-        this.chargeData.chargeCalculationType.id,
-        Validators.required
-      ]
-    });
+    this.chargeForm = this.formBuilder.group(
+      {
+        name: [
+          this.chargeData.name,
+          Validators.required
+        ],
+        chargeAppliesTo: [
+          { value: this.chargeData.chargeAppliesTo.id, disabled: true },
+          Validators.required
+        ],
+        currencyCode: [
+          this.chargeData.currency.code,
+          Validators.required
+        ],
+        amount: [
+          this.chargeData.amount,
+          Validators.required
+        ],
+        active: [this.chargeData.active],
+        penalty: [this.chargeData.penalty],
+        minCap: [this.chargeData.minCap],
+        maxCap: [this.chargeData.maxCap],
+        chargeTimeType: [
+          this.chargeData.chargeTimeType.id,
+          Validators.required
+        ],
+        chargeCalculationType: [
+          this.chargeData.chargeCalculationType.id,
+          Validators.required
+        ]
+      },
+      { validators: minLessThanOrEqualMaxValidator('minCap', 'maxCap') }
+    );
     switch (this.chargeData.chargeAppliesTo.value) {
       case 'Loan': {
         this.chargeTimeTypeOptions = this.chargeData.loanChargeTimeTypeOptions;
