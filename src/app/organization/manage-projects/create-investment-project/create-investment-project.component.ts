@@ -156,6 +156,10 @@ export class CreateInvestmentProjectComponent implements OnInit, AfterViewInit {
       minAmount: [
         0,
         Validators.required
+      ],
+      position: [
+        0,
+        Validators.required
       ]
     });
   }

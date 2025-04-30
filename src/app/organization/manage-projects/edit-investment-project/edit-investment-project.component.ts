@@ -31,7 +31,14 @@ export class EditInvestmentProjectComponent implements OnInit {
     private systemService: SystemService
   ) {
     this.route.data.subscribe(
-      (data: { accountData: any; countryData: any; categoryData: any; subcategoryData: any; areaData: any; statusData: any; }) => {
+      (data: {
+        accountData: any;
+        countryData: any;
+        categoryData: any;
+        subcategoryData: any;
+        areaData: any;
+        statusData: any;
+      }) => {
         this.currency = data.accountData.currency;
         this.clientsData = [];
         this.countryData = data.countryData.codeValues;
@@ -108,6 +115,10 @@ export class EditInvestmentProjectComponent implements OnInit {
         '',
         Validators.required
       ],
+      position: [
+        '',
+        Validators.required
+      ],
       categoryId: [
         '',
         Validators.required
@@ -120,12 +131,11 @@ export class EditInvestmentProjectComponent implements OnInit {
         '',
         Validators.required
       ],
-      isActive: [false],      
+      isActive: [false],
       statusId: [
         '',
         Validators.required
-      ],
-
+      ]
     });
   }
 

@@ -102,6 +102,12 @@
           {{ projectData.period }}
         </div>
         <div fxFlex="30%" class="mat-body-strong">
+          {{ 'labels.inputs.custom.Position' | translate }}
+        </div>
+        <div fxFlex="70%">
+          {{ projectData.position }}
+        </div>
+        <div fxFlex="30%" class="mat-body-strong">
           {{ 'labels.inputs.custom.Min Amount' | translate }}
         </div>
         <div fxFlex="70%">
@@ -125,7 +131,6 @@
         <div fxFlex="70%">
           {{ projectData.status?.statusValue?.name }}
         </div>
-
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
