@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './datatable-tab.component.html',
   styleUrls: ['./datatable-tab.component.scss']
 })
-export class DatatableTabComponent {
+export class DatatableTabComponent implements OnInit {
   entityId: string;
   /** Loan Datatable */
   entityDatatable: any = null;
@@ -23,6 +23,12 @@ export class DatatableTabComponent {
     this.route.data.subscribe((data: { loanDatatable: any }) => {
       this.entityDatatable = data.loanDatatable;
       this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+    });
+  }
+
+  ngOnInit() {
+    this.route.parent.parent.params.subscribe((params) => {
+      this.entityId = params['loanId'];
     });
   }
 }

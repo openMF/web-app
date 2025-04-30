@@ -82,6 +82,12 @@ export class LoansViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.subscribe((params) => {
+      if (this.loanId != params['loanId']) {
+        this.loanId = params['loanId'];
+        this.reload();
+      }
+    });
     this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
     this.status = this.loanDetailsData.status.value;
     if (this.loanStatus.active && this.loanDetailsData.multiDisburseLoan) {
