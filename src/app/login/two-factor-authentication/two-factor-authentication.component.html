@@ -14,7 +14,10 @@
   class="two-factor-auth-form"
   (ngSubmit)="requestOTP()"
 >
-  <mat-radio-group class="layout-column align-center radio-group-spacing" formControlName="twoFactorAuthenticationDeliveryMethod">
+  <mat-radio-group
+    class="layout-column align-center radio-group-spacing"
+    formControlName="twoFactorAuthenticationDeliveryMethod"
+  >
     <mat-radio-button
       *ngFor="let twoFactorAuthenticationDeliveryMethod of twoFactorAuthenticationDeliveryMethods"
       [value]="twoFactorAuthenticationDeliveryMethod"

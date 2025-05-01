@@ -2,10 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
 import { MatSort } from '@angular/material/sort';
-import {
-  MatLegacyTable as MatTable,
-  MatLegacyTableDataSource as MatTableDataSource
-} from '@angular/material/legacy-table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { UploadDocumentDialogComponent } from 'app/clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
 import { ClientsService } from 'app/clients/clients.service';
 import { LoansService } from 'app/loans/loans.service';

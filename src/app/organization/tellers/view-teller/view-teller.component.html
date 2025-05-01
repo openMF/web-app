@@ -13,8 +13,7 @@
   <mat-card>
     <mat-card-content>
       <div class="layout-row-wrap content">
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Teller Name' | translate }}
         </div>
 
@@ -22,8 +21,7 @@
           {{ tellerData.name }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Office' | translate }}
         </div>
 
@@ -31,18 +29,15 @@
           {{ tellerData.officeName }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="tellerData.description">
+        <div class="flex-50 mat-body-strong" *ngIf="tellerData.description">
           {{ 'labels.inputs.Description' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="tellerData.description">
+        <div class="flex-50" *ngIf="tellerData.description">
           {{ tellerData.description }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Start Date' | translate }}
         </div>
 
@@ -50,18 +45,15 @@
           {{ tellerData.startDate | dateFormat }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="tellerData.endDate">
+        <div class="flex-50 mat-body-strong" *ngIf="tellerData.endDate">
           {{ 'labels.inputs.End Date' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="tellerData.endDate">
+        <div class="flex-50" *ngIf="tellerData.endDate">
           {{ tellerData.endDate | dateFormat }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Status' | translate }}
         </div>
 

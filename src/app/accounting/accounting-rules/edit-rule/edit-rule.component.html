@@ -29,8 +29,10 @@
             <mat-label class="flex-50"
               >{{ 'labels.inputs.Affected GL Entry (Debit) Rule Type' | translate }} *</mat-label
             >
-            <mat-radio-group class="flex-50 layout-row gap-5percent radio-group-spacing" formControlName="debitRuleType">
-
+            <mat-radio-group
+              class="flex-50 layout-row gap-5percent radio-group-spacing"
+              formControlName="debitRuleType"
+            >
               <mat-radio-button value="fixedAccount">{{ 'labels.inputs.Fixed Account' | translate }}</mat-radio-button>
               <mat-radio-button value="listOfAccounts">{{
                 'labels.inputs.List of Accounts' | translate

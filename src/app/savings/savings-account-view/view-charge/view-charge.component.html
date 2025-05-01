@@ -41,8 +41,7 @@
   <mat-card>
     <mat-card-content>
       <div class="layout-row-wrap content">
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Name' | translate }}
         </div>
 
@@ -50,8 +49,7 @@
           {{ chargeData.name }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Type' | translate }}
         </div>
 
@@ -59,8 +57,7 @@
           {{ chargeData.penalty ? 'Penalty' : ('Fee' | translateKey: 'catalogs') }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Currency' | translate }}
         </div>
 
@@ -68,8 +65,7 @@
           {{ chargeData.currency.displayLabel }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Payment due at' | translate }}
         </div>
 
@@ -77,8 +73,7 @@
           {{ chargeData.chargeTimeType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Payment due as of' | translate }}
         </div>
 
@@ -86,8 +81,7 @@
           {{ chargeData.dueDate | dateFormat }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Calculation Type' | translate }}
         </div>
 
@@ -95,8 +89,7 @@
           {{ chargeData.chargeCalculationType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Due' | translate }}
         </div>
 
@@ -104,8 +97,7 @@
           {{ chargeData.amount | formatNumber }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Paid' | translate }}
         </div>
 
@@ -113,8 +105,7 @@
           {{ chargeData.amountPaid | formatNumber }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Waived' | translate }}
         </div>
 
@@ -122,8 +113,7 @@
           {{ chargeData.amountWaived | formatNumber }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Outstanding' | translate }}
         </div>
 

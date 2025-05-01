@@ -14,8 +14,7 @@
   <mat-card>
     <mat-card-content>
       <div class="layout-row-wrap content">
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Account Type' | translate }}
         </div>
 
@@ -23,13 +22,11 @@
           {{ accountNumberPreferenceData.accountType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong" *ngIf="accountNumberPreferenceData.prefixType">
+        <div class="flex-50 mat-body-strong" *ngIf="accountNumberPreferenceData.prefixType">
           {{ 'labels.inputs.Prefix Type' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="accountNumberPreferenceData.prefixType">
+        <div class="flex-50" *ngIf="accountNumberPreferenceData.prefixType">
           {{ accountNumberPreferenceData.prefixType.value }}
         </div>
       </div>

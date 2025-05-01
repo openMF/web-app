@@ -3,8 +3,7 @@
     <mat-card>
       <mat-card-content>
         <div class="layout-row-wrap content">
-          <div class="flex-50">
-            class="mat-body-strong">
+          <div class="flex-50 mat-body-strong">
             {{ 'labels.inputs.ID' | translate }}
           </div>
 
@@ -12,8 +11,7 @@
             {{ auditTrailData.id }}
           </div>
 
-          <div class="flex-50">
-            class="mat-body-strong">
+          <div class="flex-50 mat-body-strong">
             {{ 'labels.inputs.Status' | translate }}
           </div>
 
@@ -21,8 +19,7 @@
             {{ auditTrailData.processingResult }}
           </div>
 
-          <div class="flex-50">
-            class="mat-body-strong">
+          <div class="flex-50 mat-body-strong">
             {{ 'labels.inputs.User' | translate }}
           </div>
 
@@ -30,8 +27,7 @@
             {{ auditTrailData.maker }}
           </div>
 
-          <div class="flex-50">
-            class="mat-body-strong">
+          <div class="flex-50 mat-body-strong">
             {{ 'labels.inputs.Action' | translate }}
           </div>
 
@@ -39,8 +35,7 @@
             {{ auditTrailData.actionName }}
           </div>
 
-          <div class="flex-50">
-            class="mat-body-strong">
+          <div class="flex-50 mat-body-strong">
             {{ 'labels.inputs.Entity' | translate }}
           </div>
 
@@ -48,8 +43,7 @@
             {{ auditTrailData.entityName }}
           </div>
 
-          <div class="flex-50">
-            class="mat-body-strong">
+          <div class="flex-50 mat-body-strong">
             {{ 'labels.inputs.Resource ID' | translate }}
           </div>
 
@@ -57,8 +51,7 @@
             {{ auditTrailData.resourceId }}
           </div>
 
-          <div class="flex-50">
-            class="mat-body-strong">
+          <div class="flex-50 mat-body-strong">
             {{ 'labels.inputs.Date' | translate }}
           </div>
 
@@ -66,33 +59,27 @@
             {{ auditTrailData.madeOnDate | dateFormat }}
           </div>
 
-          <div class="flex-50">
-            class="mat-body-strong" *ngIf="auditTrailData.officeName">
+          <div class="flex-50 mat-body-strong" *ngIf="auditTrailData.officeName">
             {{ 'labels.inputs.Office' | translate }}
           </div>
 
-          <div class="flex-50">
-            *ngIf="auditTrailData.officeName">
+          <div class="flex-50" *ngIf="auditTrailData.officeName">
             {{ auditTrailData.officeName }}
           </div>
 
-          <div class="flex-50">
-            class="mat-body-strong" *ngIf="auditTrailData.savingsAccountNo">
+          <div class="flex-50 mat-body-strong" *ngIf="auditTrailData.savingsAccountNo">
             {{ 'labels.inputs.Savings Account No' | translate }}
           </div>
 
-          <div class="flex-50">
-            *ngIf="auditTrailData.savingsAccountNo">
+          <div class="flex-50" *ngIf="auditTrailData.savingsAccountNo">
             {{ auditTrailData.savingsAccountNo }}
           </div>
 
-          <div class="flex-50">
-            class="mat-body-strong" *ngIf="auditTrailData.groupLevelName">
+          <div class="flex-50 mat-body-strong" *ngIf="auditTrailData.groupLevelName">
             {{ 'labels.inputs.Group Level' | translate }}
           </div>
 
-          <div class="flex-50">
-            *ngIf="auditTrailData.groupLevelName">
+          <div class="flex-50" *ngIf="auditTrailData.groupLevelName">
             {{ auditTrailData.groupLevelName }}
           </div>
         </div>

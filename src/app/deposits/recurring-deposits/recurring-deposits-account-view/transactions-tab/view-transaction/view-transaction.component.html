@@ -25,8 +25,7 @@
       <div class="layout-row-wrap content">
         <div class="flex-100" [ngClass]="transactionColor()"></div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Transaction Id' | translate }}
         </div>
 
@@ -34,8 +33,7 @@
           {{ transactionData.id }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Type' | translate }}
         </div>
 
@@ -43,8 +41,7 @@
           {{ transactionData.transactionType.value }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Transaction Date' | translate }}
         </div>
 
@@ -52,8 +49,7 @@
           {{ transactionData.date | dateFormat }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Currency' | translate }}
         </div>
 
@@ -61,8 +57,7 @@
           {{ transactionData.currency.displayLabel }}
         </div>
 
-        <div class="flex-50">
-          class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Amount' | translate }}
         </div>
 
@@ -70,8 +65,7 @@
           {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="transactionData.note" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.note">
           {{ 'labels.inputs.Note' | translate }}
         </div>
 

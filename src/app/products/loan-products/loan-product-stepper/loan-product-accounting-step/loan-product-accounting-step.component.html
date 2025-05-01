@@ -1,6 +1,9 @@
 <form [formGroup]="loanProductAccountingForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <mat-radio-group class="flex-98 layout-row gap-5percent layout-lt-md-column radio-group-spacing" formControlName="accountingRule">
+    <mat-radio-group
+      class="flex-98 layout-row gap-5percent layout-lt-md-column radio-group-spacing"
+      formControlName="accountingRule"
+    >
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
         {{ 'labels.accounting.' + accountingRule | translate }}
       </mat-radio-button>

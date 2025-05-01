@@ -13,8 +13,7 @@
   <mat-card>
     <mat-card-content>
       <div class="layout-row-wrap content">
-        <div class="flex-50">
-          class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Name' | translate }}
         </div>
 
@@ -22,8 +21,7 @@
           {{ cashierData.staffName }}
         </div>
 
-        <div class="flex-50">
-          class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Teller' | translate }}
         </div>
 
@@ -31,18 +29,15 @@
           {{ cashierData.tellerName }}
         </div>
 
-        <div class="flex-50">
-          class="header" *ngIf="cashierData.description !== ''">
+        <div class="flex-50 header" *ngIf="cashierData.description !== ''">
           {{ 'labels.inputs.Description' | translate }}
         </div>
 
-        <div class="flex-50">
-          *ngIf="cashierData.description !== ''">
+        <div class="flex-50" *ngIf="cashierData.description !== ''">
           {{ cashierData.description }}
         </div>
 
-        <div class="flex-50">
-          class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Start Date' | translate }}
         </div>
 
@@ -50,8 +45,7 @@
           {{ cashierData.startDate | dateFormat }}
         </div>
 
-        <div class="flex-50">
-          class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.End Date' | translate }}
         </div>
 
@@ -59,8 +53,7 @@
           {{ cashierData.endDate | dateFormat }}
         </div>
 
-        <div class="flex-50">
-          class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Full Day/Time' | translate }}
         </div>
 

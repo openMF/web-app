@@ -27,7 +27,7 @@
       <mat-card-content>
         <div formArrayName="codeValues" *ngFor="let codeValue of codeValues.controls; let i = index">
           <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
-            <mat-form-field class="flex-fill" ="20%">
+            <mat-form-field class="flex-fill flex-20">
               <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
               <input required matInput formControlName="name" />
               <mat-error *ngIf="codeValues.at(i).controls.name.hasError('required')">
@@ -36,12 +36,12 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="flex-fill" ="22%">
+            <mat-form-field class="flex-fill flex-22">
               <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
               <input matInput formControlName="description" />
             </mat-form-field>
 
-            <mat-form-field class="flex-fill" ="18%">
+            <mat-form-field class="flex-fill flex-18">
               <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
               <input required matInput formControlName="position" type="number" />
               <mat-error *ngIf="codeValues.at(i).controls.position.hasError('required')">

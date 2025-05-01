@@ -20,8 +20,7 @@
 
 <mat-card-content>
   <div class="layout-row-wrap content">
-    <div class="flex-50">
-      class="mat-body-strong">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Opened On' | translate }}
     </div>
 
@@ -29,18 +28,15 @@
       {{ officeData.openingDate | dateFormat }}
     </div>
 
-    <div class="flex-50">
-      class="mat-body-strong" *ngIf="officeData.parentName">
+    <div class="flex-50 mat-body-strong" *ngIf="officeData.parentName">
       {{ 'labels.inputs.Parent officeData' | translate }}
     </div>
 
-    <div class="flex-50">
-      *ngIf="officeData.parentName">
+    <div class="flex-50" *ngIf="officeData.parentName">
       {{ officeData.parentName }}
     </div>
 
-    <div class="flex-50">
-      class="mat-body-strong">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Number of Staff' | translate }}
     </div>
 

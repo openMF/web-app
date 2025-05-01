@@ -13,7 +13,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="23%">
+    <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Legal Form' | translate }}</mat-label>
       <mat-select required formControlName="legalFormId">
         <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
@@ -22,7 +22,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" ="23%">
+    <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
       <input matInput formControlName="externalId" />
     </mat-form-field>

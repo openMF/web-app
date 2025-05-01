@@ -135,18 +135,15 @@
           <mat-tab-group>
             <mat-tab label="General">
               <div class="layout-row-wrap content">
-                <div class="flex-50">
-                  class="mat-body-strong" *ngIf="office.parentId">
+                <div class="flex-50 mat-body-strong" *ngIf="office.parentId">
                   {{ 'Parent Office' | translate }}
                 </div>
 
-                <div class="flex-50">
-                  *ngIf="office.parentId">
+                <div class="flex-50" *ngIf="office.parentId">
                   {{ office.parentName }}
                 </div>
 
-                <div class="flex-50">
-                  class="mat-body-strong">
+                <div class="flex-50 mat-body-strong">
                   {{ ' Opened On' | translate }}
                 </div>
 
@@ -154,13 +151,11 @@
                   {{ office.openingDate | date }}
                 </div>
 
-                <div class="flex-50">
-                  class="mat-body-strong" *ngIf="office.externalId">
+                <div class="flex-50 mat-body-strong" *ngIf="office.externalId">
                   {{ 'External Id' | translate }}
                 </div>
 
-                <div class="flex-50">
-                  *ngIf="office.externalId">
+                <div class="flex-50" *ngIf="office.externalId">
                   <mifosx-external-identifier externalId="{{ office.externalId }}"></mifosx-external-identifier>
                 </div>
               </div>
