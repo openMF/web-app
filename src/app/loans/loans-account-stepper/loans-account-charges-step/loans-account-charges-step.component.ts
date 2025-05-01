@@ -2,7 +2,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 // import { FormControl } from '@angular/forms';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatTableDataSource } from '@angular/material/table';
 
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';

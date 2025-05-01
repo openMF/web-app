@@ -13,7 +13,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatTableDataSource } from '@angular/material/table';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';

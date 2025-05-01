@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Models */

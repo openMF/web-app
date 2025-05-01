@@ -3,7 +3,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatCheckboxChange as MatCheckboxChange } from '@angular/material/checkbox';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { MatLegacyTable as MatTable } from '@angular/material/legacy-table';
+import { MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Datatables } from 'app/core/utils/datatables';
 import { Dates } from 'app/core/utils/dates';
