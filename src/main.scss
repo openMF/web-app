@@ -487,6 +487,14 @@
   flex: 1 1 calc(50% - 25px);
 }
 
+.flex-85-minus-20px {
+  flex: 1 1 calc(85% - 20px);
+}
+
+.flex-90-minus-20px {
+  flex: 1 1 calc(90% - 20px);
+}
+
 .layout-lt-md-column {
   @media (width <= 768px) {
     flex-direction: column;
