@@ -91,7 +91,11 @@
       <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <div class="flex-100 layout-row-wrap responsive-column gap-4percent" formGroupName="clientNonPersonDetails">
+    <div
+      class="flex-100 layout-row-wrap responsive-column gap-4percent"
+      formGroupName="clientNonPersonDetails"
+      *ngIf="createClientForm.get('clientNonPersonDetails')"
+    >
       *ngIf="createClientForm.contains('clientNonPersonDetails')" >
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
