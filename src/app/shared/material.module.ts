@@ -9,7 +9,7 @@ import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/lega
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
