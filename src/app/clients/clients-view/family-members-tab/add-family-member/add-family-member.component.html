@@ -1,7 +1,7 @@
 <div class="add-family-member-container">
   <form [formGroup]="addFamilyMemberForm" (ngSubmit)="submit()">
     <div class="layout-row-wrap responsive-column align-start-center">
-      <mat-form-field class="flex-fill" ="calc(50% - 25px)">
+      <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
         <input formControlName="firstName" required matInput />
         <mat-error *ngIf="addFamilyMemberForm.controls.firstName.hasError('required')">
@@ -10,12 +10,12 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="calc(50% - 25px)">
+      <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
         <input formControlName="middleName" matInput />
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="calc(50% - 25px)">
+      <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
         <input formControlName="lastName" required matInput />
         <mat-error *ngIf="addFamilyMemberForm.controls.lastName.hasError('required')">
@@ -24,12 +24,12 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="calc(50% - 25px)">
+      <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Qualification' | translate }}</mat-label>
         <input formControlName="qualification" matInput />
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="calc(50% - 25px)">
+      <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Age' | translate }}</mat-label>
         <input type="number" formControlName="age" required matInput [min]="minAge" />
         <mat-error *ngIf="addFamilyMemberForm.controls.age.hasError('required')">
@@ -42,7 +42,7 @@
         >{{ 'labels.inputs.Is Dependent' | translate }}?
       </mat-checkbox>
 
-      <mat-form-field class="flex-fill" ="calc(50% - 25px)">
+      <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Relationship' | translate }}</mat-label>
         <mat-select formControlName="relationshipId" required>
           <mat-option *ngFor="let relation of addFamilyMemberTemplate.relationshipIdOptions" [value]="relation.id">
@@ -55,7 +55,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="calc(50% - 25px)">
+      <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
         <mat-select formControlName="genderId" required>
           <mat-option *ngFor="let gender of addFamilyMemberTemplate.genderIdOptions" [value]="gender.id">
@@ -68,7 +68,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="calc(50% - 25px)">
+      <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Profession' | translate }}</mat-label>
         <mat-select formControlName="professionId">
           <mat-option *ngFor="let profession of addFamilyMemberTemplate.professionIdOptions" [value]="profession.id">
@@ -77,7 +77,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="flex-fill" ="calc(50% - 25px)">
+      <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Marital Status' | translate }}</mat-label>
         <mat-select formControlName="maritalStatusId">
           <mat-option
