@@ -49,8 +49,10 @@
             </mat-select>
           </mat-form-field>
 
-          <div class="flex-48 layout-row gap-2percent responsive-column">
-            *ngIf="accountingRuleForm.controls.debitRuleType.value === 'listOfAccounts'" >
+          <div
+            class="flex-48 layout-row gap-2percent responsive-column"
+            *ngIf="accountingRuleForm.controls.debitRuleType.value === 'listOfAccounts'"
+          >
             <mat-form-field class="flex-50">
               <mat-label>{{ 'labels.inputs.Debit Tags' | translate }}</mat-label>
               <mat-select formControlName="debitTags" multiple>
@@ -90,8 +92,10 @@
             </mat-select>
           </mat-form-field>
 
-          <div class="flex-48 layout-row gap-2percent responsive-column">
-            *ngIf="accountingRuleForm.controls.creditRuleType.value === 'listOfAccounts'" >
+          <div
+            class="flex-48 layout-row gap-2percent responsive-column"
+            *ngIf="accountingRuleForm.controls.creditRuleType.value === 'listOfAccounts'"
+          >
             <mat-form-field class="flex-50">
               <mat-label>{{ 'labels.inputs.Credit Tags' | translate }}</mat-label>
               <mat-select formControlName="creditTags" multiple>
