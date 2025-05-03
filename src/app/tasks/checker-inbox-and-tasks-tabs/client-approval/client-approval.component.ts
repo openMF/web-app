@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
