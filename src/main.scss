@@ -510,6 +510,17 @@
   align-items: center;
 }
 
+.mat-mdc-form-field {
+  .mat-mdc-input-element::placeholder {
+    font-size: 14px !important;
+    color: #999 !important;
+  }
+
+  .mdc-floating-label {
+    font-size: 14px !important;
+  }
+}
+
 @media (width <= 768px) {
   .flex-lt-md-50 {
     flex: 0 0 50%;
