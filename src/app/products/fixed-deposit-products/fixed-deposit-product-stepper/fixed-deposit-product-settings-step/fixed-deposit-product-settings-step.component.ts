@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
-import { LegacyTooltipPosition as TooltipPosition } from '@angular/material/legacy-tooltip';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-settings-step',

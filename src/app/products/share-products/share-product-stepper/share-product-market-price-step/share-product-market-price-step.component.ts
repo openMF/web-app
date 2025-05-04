@@ -2,7 +2,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { LegacyTooltipPosition as TooltipPosition } from '@angular/material/legacy-tooltip';
 
 /** Dialog Components */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';

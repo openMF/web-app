@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { combineLatest } from 'rxjs';
-import { LegacyTooltipPosition as TooltipPosition } from '@angular/material/legacy-tooltip';
 
 @Component({
   selector: 'mifosx-share-product-terms-step',
