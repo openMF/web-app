@@ -112,7 +112,7 @@
   </mat-card-header>
 
   <mat-card-content class="content">
-    <nav mat-tab-nav-bar class="navigation-tabs" *ngIf="isActive">
+    <nav mat-tab-nav-bar class="navigation-tabs" *ngIf="isActive" [tabPanel]="tabPanel">
       <a
         mat-tab-link
         [routerLink]="['./general']"
@@ -185,6 +185,8 @@
       </ng-container>
     </nav>
 
-    <router-outlet></router-outlet>
+    <mat-tab-nav-panel #tabPanel>
+      <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
   </mat-card-content>
 </mat-card>

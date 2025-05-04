@@ -1,5 +1,5 @@
 <div class="container">
-  <nav mat-tab-nav-bar class="navigation-tabs">
+  <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
     <a
       mat-tab-link
       [routerLink]="['./general']"
@@ -23,5 +23,7 @@
     </ng-container>
   </nav>
 
-  <router-outlet></router-outlet>
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet></router-outlet>
+  </mat-tab-nav-panel>
 </div>
