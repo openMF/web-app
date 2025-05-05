@@ -2,10 +2,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import {
-  MatLegacyTableDataSource as MatTableDataSource,
-  MatLegacyTable as MatTable
-} from '@angular/material/legacy-table';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 
