@@ -69,6 +69,7 @@ export interface LoanProduct {
   enableIncomeCapitalization?: boolean;
   capitalizedIncomeCalculationType?: OptionData;
   capitalizedIncomeStrategy?: OptionData;
+  capitalizedIncomeType?: OptionData;
 
   canDefineInstallmentAmount: boolean;
   graceOnArrearsAgeing?: number;
@@ -117,6 +118,7 @@ export interface LoanProduct {
   accountingMappings?: { [key: string]: AccountingMapping };
   fundSourceAccountId?: number;
   goodwillCreditAccountId?: number;
+  incomeFromCapitalizationAccountId?: number;
   incomeFromChargeOffFeesAccountId?: number;
   incomeFromChargeOffInterestAccountId?: number;
   incomeFromChargeOffPenaltyAccountId?: number;
@@ -134,6 +136,7 @@ export interface LoanProduct {
   receivablePenaltyAccountId?: number;
   transfersInSuspenseAccountId?: number;
   writeOffAccountId?: number;
+  deferredIncomeLiabilityAccountId?: number;
   // Advanced Accounting
   paymentChannelToFundSourceMappings?: PaymentChannelToFundSourceMapping[];
   feeToIncomeAccountMappings?: ChargeToIncomeAccountMapping[];

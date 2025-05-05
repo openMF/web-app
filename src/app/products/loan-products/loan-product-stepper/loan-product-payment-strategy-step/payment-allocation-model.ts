@@ -44,8 +44,9 @@ export interface CreditAllocation {
 
 export interface CapitalizedIncome {
   enableIncomeCapitalization: boolean;
-  incomeCapitalizationCalculationType?: string;
-  incomeCapitalizationStrategy?: string;
+  capitalizedIncomeCalculationType?: string;
+  capitalizedIncomeStrategy?: string;
+  capitalizedIncomeType?: string;
 }
 
 export class PaymentAllocationTransactionTypes {

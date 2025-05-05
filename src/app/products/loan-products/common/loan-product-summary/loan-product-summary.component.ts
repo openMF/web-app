@@ -152,6 +152,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
             this.loanProduct.incomeFromChargeOffPenaltyAccountId,
             incomeAccountData
           ),
+          incomeFromCapitalizationAccount: this.glAccountLookUp(
+            this.loanProduct.incomeFromCapitalizationAccountId,
+            incomeAccountData
+          ),
 
           writeOffAccount: this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
           goodwillCreditAccount: this.glAccountLookUp(this.loanProduct.goodwillCreditAccountId, expenseAccountData),
@@ -160,6 +164,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
 
           overpaymentLiabilityAccount: this.glAccountLookUp(
             this.loanProduct.overpaymentLiabilityAccountId,
+            liabilityAccountData
+          ),
+          deferredIncomeLiabilityAccount: this.glAccountLookUp(
+            this.loanProduct.deferredIncomeLiabilityAccountId,
             liabilityAccountData
           )
         };
@@ -293,6 +301,11 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
           this.loanProductsTemplate.capitalizedIncomeStrategyOptions
         );
         this.loanProduct.capitalizedIncomeStrategy = optionValue;
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.capitalizedIncomeType,
+          this.loanProductsTemplate.capitalizedIncomeTypeOptions
+        );
+        this.loanProduct.capitalizedIncomeType = optionValue;
       }
       optionValue = this.optionDataLookUp(
         this.loanProduct.interestRateFrequencyType,

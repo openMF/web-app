@@ -1482,6 +1482,7 @@
       "Default Savings Account": "Výchozí spořicí účet",
       "Default Shares per Client": "Výchozí podíly na klienta",
       "Default Theme": "Výchozí motiv",
+      "Deferred income": "Výnosy příštích období",
       "Deleted": "Smazáno",
       "Delinquency Action": "Akce delikvence",
       "Delinquency Bucket": "Delikvence Bucket",
@@ -1709,6 +1710,7 @@
       "Income from fees": "Příjem z poplatků",
       "Income from fees Repayments": "Příjmy z poplatků Splátky",
       "Income from penalties": "Příjem z penále",
+      "Income type": "Typ příjmu",
       "Incorporation No": "Čís",
       "Incorporation Number": "Číslo zápisu",
       "Incorporation Validity Till Date": "Platnost založení do data",
@@ -2461,7 +2463,8 @@
       "Passwords do not match": "Hesla se neshodují",
       "Enable income capitalization": "Povolit kapitalizaci příjmu",
       "Income capitalization calculation type": "Typ výpočtu kapitalizace příjmu",
-      "Income capitalization strategy": "Strategie kapitalizace příjmu"
+      "Income capitalization strategy": "Strategie kapitalizace příjmu",
+      "Income capitalization type": "Typ kapitalizace příjmu"
     },
     "links": {
       "Community": "Společenství",
@@ -2498,6 +2501,7 @@
       "Block Withdrawal": "Blokovat výběr",
       "Breadcrumbs": "Strouhanka",
       "Calculate Interest": "Vypočítejte úrok",
+      "Capitalized Income": "Kapitalizovaný příjem",
       "Centers": "Střediska",
       "Charge-Off": "Charge-Off",
       "Chart of Accounts": "Graf účtů",

@@ -113,6 +113,12 @@
           >
             <mat-label>{{ 'labels.inputs.Minimum Charge Cap' | translate }}</mat-label>
             <input matInput autofocus formControlName="minCap" />
+            <mat-error
+              *ngIf="chargeForm.controls.maxCap.hasError('minGreaterThanMax') || chargeForm.errors?.minGreaterThanMax"
+            >
+              {{ 'labels.inputs.Minimum Charge Cap' | translate }} ({{ repeatEveryLabel }})
+              <strong>{{ 'labels.commons.must lower than Maximum Charge Cap' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
           <mat-form-field
             fxFlex="48%"
@@ -131,7 +137,11 @@
             "
           >
             <mat-label>{{ 'labels.inputs.Maximum Charge Cap' | translate }}</mat-label>
-            <input matInput autofocus formControlName="maxCap" />
+            <input matInput [min]="chargeForm.value.minCap" autofocus formControlName="maxCap" />
+            <mat-error *ngIf="chargeForm.hasError('minGreaterThanMax') || chargeForm.errors?.minGreaterThanMax">
+              {{ 'labels.inputs.Maximum Charge Cap' | translate }} ({{ repeatEveryLabel }})
+              <strong>{{ 'labels.commons.must be equal or greater than Minimum Charge Cap' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
           <mifosx-gl-account-selector

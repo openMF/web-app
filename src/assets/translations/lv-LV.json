@@ -1482,6 +1482,7 @@
       "Default Savings Account": "Noklusējuma krājkonts",
       "Default Shares per Client": "Noklusējuma akcijas vienam klientam",
       "Default Theme": "Noklusējuma motīvs",
+      "Deferred income": "Atliktie ienākumi",
       "Deleted": "Izdzēsts",
       "Delinquency Action": "Likumpārkāpums",
       "Delinquency Bucket": "Noziedzības spainis",
@@ -1709,6 +1710,7 @@
       "Income from fees": "Ienākumi no honorāriem",
       "Income from fees Repayments": "Ienākumi no nodevām Atmaksas",
       "Income from penalties": "Ienākumi no sodiem",
+      "Income type": "Ienākumu veids",
       "Incorporation No": "Dibināšanas Nr",
       "Incorporation Number": "Uzņēmuma numurs",
       "Incorporation Validity Till Date": "Reģistrācijas derīguma termiņš līdz datumam",
@@ -2461,7 +2463,8 @@
       "Passwords do not match": "Paroles nesakrīt",
       "Enable income capitalization": "Iespējot ienākumu kapitalizāciju",
       "Income capitalization calculation type": "Ienākumu kapitalizācijas aprēķina veids",
-      "Income capitalization strategy": "Ienākumu kapitalizācijas stratēģija"
+      "Income capitalization strategy": "Ienākumu kapitalizācijas stratēģija",
+      "Income capitalization type": "Ienākumu kapitalizācijas veids"
     },
     "links": {
       "Community": "kopiena",
@@ -2498,6 +2501,7 @@
       "Block Withdrawal": "Bloķēt izņemšanu",
       "Breadcrumbs": "Maizes drupačas",
       "Calculate Interest": "Aprēķināt procentus",
+      "Capitalized Income": "Kapitalizētie ienākumi",
       "Centers": "Centri",
       "Charge-Off": "Charge-Off",
       "Chart of Accounts": "Kontu plāns",

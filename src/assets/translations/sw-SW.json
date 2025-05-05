@@ -1482,6 +1482,7 @@
       "Default Savings Account": "Akaunti ya Akiba chaguomsingi",
       "Default Shares per Client": "Hisa Chaguomsingi kwa kila Mteja",
       "Default Theme": "Mandhari Chaguomsingi",
+      "Deferred income": "Mapato yaliyoahirishwa",
       "Deleted": "Imefutwa",
       "Delinquency Action": "Kitendo cha Delinquency",
       "Delinquency Bucket": "Ndoo ya Uhalifu",
@@ -1709,6 +1710,7 @@
       "Income from fees": "Mapato kutoka kwa ada",
       "Income from fees Repayments": "Mapato kutokana na Malipo ya ada",
       "Income from penalties": "Mapato kutoka kwa adhabu",
+      "Income type": "Aina ya mapato",
       "Incorporation No": "Incorporation No",
       "Incorporation Number": "Nambari ya Kuingiza",
       "Incorporation Validity Till Date": "Uhalali wa Ujumuishaji Hadi Tarehe",
@@ -2461,7 +2463,8 @@
       "Passwords do not match": "Manenosiri hayalingani",
       "Enable income capitalization": "Washa mtaji wa mapato",
       "Income capitalization calculation type": "Aina ya kukokotoa mtaji wa mapato",
-      "Income capitalization strategy": "Mkakati wa mtaji wa mapato"
+      "Income capitalization strategy": "Mkakati wa mtaji wa mapato",
+      "Income capitalization type": "Aina ya mtaji wa mapato"
     },
     "links": {
       "Community": "Jumuiya",
@@ -2498,6 +2501,7 @@
       "Block Withdrawal": "Zuia Uondoaji",
       "Breadcrumbs": "Makombo ya mkate",
       "Calculate Interest": "Hesabu Riba",
+      "Capitalized Income": "Mapato ya Mtaji",
       "Centers": "Vituo",
       "Charge-Off": "Chaji-Zima",
       "Chart of Accounts": "Chati ya Hesabu",

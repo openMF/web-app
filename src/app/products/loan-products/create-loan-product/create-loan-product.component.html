@@ -98,7 +98,9 @@
         [capitalizedIncome]="capitalizedIncome"
         [capitalizedIncomeCalculationTypeOptions]="loanProductsTemplate.capitalizedIncomeCalculationTypeOptions"
         [capitalizedIncomeStrategyOptions]="loanProductsTemplate.capitalizedIncomeStrategyOptions"
+        [capitalizedIncomeTypeOptions]="loanProductsTemplate.capitalizedIncomeTypeOptions"
         (setCapitalizedIncome)="setCapitalizedIncome($event)"
+        (setViewChildForm)="setViewChildForm($event)"
       >
       </mifosx-loan-product-capitalized-income-step>
 
@@ -112,6 +114,7 @@
         [loanProductsTemplate]="loanProductsTemplate"
         [accountingRuleData]="accountingRuleData"
         [loanProductFormValid]="loanProductFormValid"
+        [capitalizedIncome]="capitalizedIncome"
       >
       </mifosx-loan-product-accounting-step>
     </mat-step>

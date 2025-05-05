@@ -82,6 +82,12 @@ export class LoansViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.params.subscribe((params) => {
+      if (this.loanId != params['loanId']) {
+        this.loanId = params['loanId'];
+        this.reload();
+      }
+    });
     this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
     this.status = this.loanDetailsData.status.value;
     if (this.loanStatus.active && this.loanDetailsData.multiDisburseLoan) {
@@ -129,6 +135,14 @@ export class LoansViewComponent implements OnInit {
         taskPermissionName: 'DISBURSE_LOAN'
       });
     } else if (this.status === 'Active') {
+      if (this.loanDetailsData.enableIncomeCapitalization) {
+        this.buttonConfig.addButton({
+          name: 'Capitalized Income',
+          icon: 'coins',
+          taskPermissionName: 'CAPITALIZED_INCOME_LOAN'
+        });
+      }
+
       if (this.loanDetailsData.canDisburse || this.loanDetailsData.multiDisburseLoan) {
         this.buttonConfig.addButton({
           name: 'Disburse',

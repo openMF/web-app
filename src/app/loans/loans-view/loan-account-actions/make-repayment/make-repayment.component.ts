@@ -33,6 +33,8 @@ export class MakeRepaymentComponent implements OnInit {
   repaymentLoanForm: UntypedFormGroup;
   currency: Currency | null = null;
 
+  command: string | null = null;
+
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} loanService Loan Service.
@@ -62,6 +64,7 @@ export class MakeRepaymentComponent implements OnInit {
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
+    this.command = this.dataObject.type.code.split('.')[1];
   }
 
   /**
@@ -110,6 +113,10 @@ export class MakeRepaymentComponent implements OnInit {
     }
   }
 
+  showDetails(): boolean {
+    return !['capitalizedIncome'].includes(this.command);
+  }
+
   /** Submits the repayment form */
   submit() {
     const repaymentLoanFormData = this.repaymentLoanForm.value;
@@ -124,9 +131,8 @@ export class MakeRepaymentComponent implements OnInit {
       dateFormat,
       locale
     };
-    const command = this.dataObject.type.code.split('.')[1];
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
+    this.loanService.submitLoanActionButton(this.loanId, data, this.command).subscribe((response: any) => {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }

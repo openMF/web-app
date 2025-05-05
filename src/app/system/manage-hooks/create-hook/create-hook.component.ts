@@ -141,7 +141,6 @@ export class CreateHookComponent implements OnInit {
     const addEventDialogRef = this.dialog.open(AddEventDialogComponent, {
       data: this.hooksTemplateData
     });
-    console.log(this.hooksTemplateData);
 
     addEventDialogRef.afterClosed().subscribe((response: any) => {
       if (response) {

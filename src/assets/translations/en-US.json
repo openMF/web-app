@@ -1486,6 +1486,7 @@
       "Default Savings Account": "Default Savings Account",
       "Default Shares per Client": "Default Shares per Client",
       "Default Theme": "Default Theme",
+      "Deferred income": "Deferred income",
       "Deleted": "Deleted",
       "Delinquency Action": "Delinquency Action",
       "Delinquency Bucket": "Delinquency Bucket",
@@ -1713,6 +1714,7 @@
       "Income from fees": "Income from fees",
       "Income from fees Repayments": "Income from fees Repayments",
       "Income from penalties": "Income from penalties",
+      "Income type": "Income type",
       "Incorporation No": "Incorporation No",
       "Incorporation Number": "Incorporation Number",
       "Incorporation Date": "Incorporation Date",
@@ -2468,7 +2470,8 @@
       "Passwords do not match": "Passwords do not match",
       "Enable income capitalization": "Enable income capitalization",
       "Income capitalization calculation type": "Income capitalization calculation type",
-      "Income capitalization strategy": "Income capitalization strategy"
+      "Income capitalization strategy": "Income capitalization strategy",
+      "Income capitalization type": "Income capitalization type"
     },
     "links": {
       "Community": "Community",
@@ -2505,6 +2508,7 @@
       "Block Withdrawal": "Block Withdrawal",
       "Breadcrumbs": "Breadcrumbs",
       "Calculate Interest": "Calculate Interest",
+      "Capitalized Income": "Capitalized Income",
       "Centers": "Centers",
       "Charge-Off": "Charge-Off",
       "Chart of Accounts": "Chart of Accounts",

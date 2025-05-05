@@ -1481,6 +1481,7 @@
       "Default Savings Account": "Cuenta de Ahorros predeterminada",
       "Default Shares per Client": "Acciones predeterminadas por cliente",
       "Default Theme": "Tema predeterminado",
+      "Deferred income": "Ingresos diferidos",
       "Deleted": "Eliminado",
       "Delinquency Action": "Acción de morosidad",
       "Delinquency Bucket": "Clasificación de morosidad",
@@ -1708,6 +1709,7 @@
       "Income from fees": "Ingresos por Comisiones",
       "Income from fees Repayments": "Ingresos por comisiones Amortizaciones",
       "Income from penalties": "Ingresos por penalizaciones",
+      "Income type": "Tipo de ingreso",
       "Incorporation No": "Número de constitución",
       "Incorporation Number": "Número de constitución",
       "Incorporation Validity Till Date": "Validez de constitución hasta la fecha",
@@ -2461,7 +2463,8 @@
       "Passwords do not match": "Las contraseñas no coinciden",
       "Enable income capitalization": "Habilitar capitalización de ingresos",
       "Income capitalization calculation type": "Tipo de cálculo de capitalización de ingresos",
-      "Income capitalization strategy": "Estrategia de capitalización de ingresos"
+      "Income capitalization strategy": "Estrategia de capitalización de ingresos",
+      "Income capitalization type": "Tipo de capitalización de ingresos"
     },
     "links": {
       "Community": "Comunidad",
@@ -2498,6 +2501,7 @@
       "Block Withdrawal": "Bloquear retiros",
       "Breadcrumbs": "Migas de pan",
       "Calculate Interest": "Calcular interés",
+      "Capitalized Income": "Ingreso capitalizado",
       "Centers": "Centros",
       "Charge-Off": "Cancelación",
       "Chart of Accounts": "Catálogo de cuentas",

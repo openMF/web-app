@@ -68,7 +68,6 @@ export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges 
         depositPeriod: this.fixedDepositsAccountTemplate.depositPeriod,
         depositPeriodFrequencyId: this.fixedDepositsAccountTemplate.depositPeriodFrequency.id
       });
-      console.log(this.fixedDepositAccountTermsForm.value);
     }
   }
 
