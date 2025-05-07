@@ -2,6 +2,7 @@
 import env from './.env';
 
 // The `window['env']` object is loaded in the `index.html` file
+// @ts-ignore
 const loadedEnv = window['env'] || {};
 
 export const environment = {
@@ -53,10 +54,13 @@ export const environment = {
       idleTimeout: loadedEnv['sessionIdleTimeout'] || 300000 // 5 minutes
     }
   },
-
+  // @ts-ignore
   vNextApiUrl: window['env']['vNextApiUrl'] || 'https://apis.mifos.community',
+  // @ts-ignore
   vNextApiProvider: window['env']['vNextApiProvider'] || '/vnext1',
+  // @ts-ignore
   vNextApiVersion: window['env']['vNextApiVersion'] || '/v1.0',
+  // @ts-ignore
   interbankTransfers: window['env']['interbankTransfers'] || false,
 
   minPasswordLength: loadedEnv['minPasswordLength'] || 12
