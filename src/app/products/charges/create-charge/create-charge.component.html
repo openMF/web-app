@@ -200,15 +200,17 @@
   -->
             <mat-form-field fxFlex="48%" *ngIf="showMinMaxCap()">
               <mat-label>{{ 'labels.inputs.Minimum Charge Cap' | translate }}</mat-label>
-              <input matInput formControlName="minCap" />
+              <input matInput autofocus formControlName="minCap" />
             </mat-form-field>
 
             <mat-form-field fxFlex="48%" *ngIf="showMinMaxCap()">
               <mat-label>{{ 'labels.inputs.Maximum Charge Cap' | translate }}</mat-label>
-              <input matInput [min]="chargeForm.value.minCap" formControlName="maxCap" />
-              <mat-error *ngIf="chargeForm.errors?.minGreaterThanMax">
-                {{ 'labels.inputs.Maximum Charge Cap' | translate }} ({{ repeatEveryLabel }})
-                <strong>{{ 'labels.commons.must higher than Minimum Charge Cap' | translate }}</strong>
+              <input matInput autofocus formControlName="maxCap" />
+
+              <mat-error *ngIf="chargeForm.controls.maxCap.hasError('minValue')">
+                {{ 'errors.validation.msg.loanproduct.maximumGap.not.greater.than.specified.number' | translate }} ({{
+                  repeatEveryLabel
+                }})
               </mat-error>
             </mat-form-field>
 
