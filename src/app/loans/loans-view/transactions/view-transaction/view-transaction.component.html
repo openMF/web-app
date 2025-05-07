@@ -1,9 +1,4 @@
-<div
-  fxLayoutAlign="end"
-  class="container m-b-20 transaction-buttons"
-  fxLayoutGap="2%"
-  *ngIf="!transactionData.type.contra"
->
+<div class="container m-b-20 transaction-buttons layout-align-end gap-2percent" *ngIf="!transactionData.type.contra">
   <span *mifosxHasPermission="'ADJUST_LOAN'">
     <button mat-raised-button color="primary" [routerLink]="'edit'" [disabled]="!allowEdition">
       <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'Edit' | translate }}
@@ -23,64 +18,64 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="100%" [ngClass]="loanTransactionColor()"></div>
+      <div class="layout-row-wrap content">
+        <div class="flex-100" [ngClass]="loanTransactionColor()"></div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Transaction Id' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.id }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.toLoanTransactionRelation">
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.toLoanTransactionRelation">
           {{ 'Repayment Transaction' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="transactionData.toLoanTransactionRelation">
+        <div class="flex-50" *ngIf="transactionData.toLoanTransactionRelation">
           <a [href]="loanTransactionRelatedLink(transactionData.toLoanTransactionRelation.fromLoanTransaction)">
             {{ transactionData.toLoanTransactionRelation.fromLoanTransaction }}
           </a>
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Type' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.type.value }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Transaction Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.date | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Currency' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.currency.name }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'Amount' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.externalId">
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.externalId">
           {{ 'External Id' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="transactionData.externalId">
+        <div class="flex-50" *ngIf="transactionData.externalId">
           <mifosx-external-identifier
             externalId="{{ transactionData.externalId }}"
             completed="true"
@@ -89,7 +84,7 @@
 
         <mat-divider *ngIf="existTransactionRelations" [inset]="true"></mat-divider>
 
-        <div fxFlex="100%" class="mat-body-strong" *ngIf="existTransactionRelations">
+        <div class="mat-body-strong flex-100" *ngIf="existTransactionRelations">
           {{ 'Linked Transactions' | translate }}
           <br />
 
@@ -128,7 +123,7 @@
         </mifosx-transaction-payment-detail>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div class="layout-row layout-align-center gap-2percent column-on-mobile">
         <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
           {{ 'labels.buttons.Back' | translate }}
         </button>

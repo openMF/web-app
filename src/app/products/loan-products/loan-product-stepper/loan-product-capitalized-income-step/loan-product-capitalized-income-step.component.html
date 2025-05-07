@@ -1,10 +1,10 @@
 <form [formGroup]="loanIncomeCapitalizationForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-checkbox fxFlex="98%" labelPosition="before" formControlName="enableIncomeCapitalization">
+  <div class="layout-row-wrap gap-2percent layout-lt-md-column">
+    <mat-checkbox class="flex-98" labelPosition="before" formControlName="enableIncomeCapitalization">
       {{ 'labels.inputs.Enable income capitalization' | translate }}
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%" *ngIf="enableIncomeCapitalization">
+    <mat-form-field class="flex-48" *ngIf="enableIncomeCapitalization">
       <mat-label>{{ 'labels.inputs.Income capitalization calculation type' | translate }}</mat-label>
       <mat-select formControlName="capitalizedIncomeCalculationType" required>
         <mat-option
@@ -15,7 +15,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field fxFlex="48%" *ngIf="enableIncomeCapitalization">
+    <mat-form-field class="flex-48" *ngIf="enableIncomeCapitalization">
       <mat-label>{{ 'labels.inputs.Income capitalization strategy' | translate }}</mat-label>
       <mat-select formControlName="capitalizedIncomeStrategy" required>
         <mat-option
@@ -26,7 +26,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field fxFlex="48%" *ngIf="enableIncomeCapitalization">
+    <mat-form-field class="flex-48" *ngIf="enableIncomeCapitalization">
       <mat-label>{{ 'labels.inputs.Income type' | translate }}</mat-label>
       <mat-select formControlName="capitalizedIncomeType" required>
         <mat-option

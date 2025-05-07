@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="editUserForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="48%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
             <input matInput required formControlName="username" />
             <mat-error *ngIf="editUserForm.controls.username.hasError('required')">
@@ -12,7 +12,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
             <input matInput required formControlName="email" />
             <mat-error *ngIf="editUserForm.controls.email.hasError('email')">
@@ -25,7 +25,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
             <input matInput required formControlName="firstname" />
             <mat-error *ngIf="editUserForm.controls.firstname.hasError('pattern')">
@@ -38,7 +38,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
             <input matInput required formControlName="lastname" />
             <mat-error *ngIf="editUserForm.controls.lastname.hasError('pattern')">
@@ -51,13 +51,13 @@
             </mat-error>
           </mat-form-field>
 
-          <div class="password-never-expires-wrapper" fxFlex="48%">
+          <div class="password-never-expires-wrapper flex-48">
             <mat-checkbox labelPosition="before" formControlName="passwordNeverExpires">
               {{ 'labels.inputs.Password never expires' | translate }}
             </mat-checkbox>
           </div>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId" (selectionChange)="officeChanged($event.value)">
               <mat-option *ngFor="let office of officesData" [value]="office.id">
@@ -70,7 +70,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffData" [value]="staff.id">
@@ -79,7 +79,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Roles' | translate }}</mat-label>
             <mat-select required formControlName="roles" multiple>
               <mat-option *ngFor="let role of rolesData" [value]="role.id">
@@ -94,7 +94,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

@@ -2,8 +2,8 @@
   <mat-card>
     <div>
       <form [formGroup]="provisioningCriteriaForm">
-        <div fxLayout="row" fxLayoutGap="2%">
-          <mat-form-field fxFlex>
+        <div class="layout-row gap-2percent">
+          <mat-form-field class="flex-fill">
             <mat-label>{{ 'labels.inputs.Provisioning Criteria' | translate }}</mat-label>
             <input required matInput formControlName="criteriaName" />
             <mat-error *ngIf="provisioningCriteriaForm.controls.criteriaName.hasError('required')">
@@ -12,7 +12,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex>
+          <mat-form-field class="flex-fill">
             <mat-label>{{ 'labels.inputs.Selected Products' | translate }}</mat-label>
             <mat-select formControlName="loanProducts" [compareWith]="compareOptions" multiple>
               <mat-option *ngFor="let product of loanProducts" [value]="product">
@@ -84,7 +84,7 @@
       </table>
     </div>
 
-    <div class="m-t-20" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="20px">
+    <div class="m-t-20 layout-row layout-align-center gap-20px">
       <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
       <button
         mat-raised-button

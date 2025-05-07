@@ -1,6 +1,6 @@
-<div class="container" fxLayout="row" fxLayoutGap="3%">
-  <mat-card fxFlex class="client-card" fxLayout="column" fxLayoutGap="2%">
-    <mat-form-field fxFlex="30%">
+<div class="container layout-row gap-3percent">
+  <mat-card class="client-card layout-column flex gap-2px">
+    <mat-form-field class="flex-30">
       <mat-label>{{ 'labels.inputs.Add Clients' | translate }}</mat-label>
       <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete" />
     </mat-form-field>
@@ -33,13 +33,13 @@
     </div>
   </mat-card>
 
-  <mat-card fxFlex="50%">
+  <mat-card class="flex-50">
     <h3 matSubheader>{{ 'labels.heading.Client Members' | translate }}</h3>
 
     <mat-nav-list *ngIf="clientMembers?.length">
       <div mat-list-item *ngFor="let client of clientMembers; index as i">
         <span matLine class="p-t-10">{{ client.displayName }}</span>
-        <div fxFlex></div>
+        <div class="flex-fill"></div>
         <button
           mat-icon-button
           color="warn"

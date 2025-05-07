@@ -5,9 +5,25 @@
     0 2px 2px 0 rgb(0 0 0 / 14%),
     0 1px 5px 0 rgb(0 0 0 / 12%);
 
+  .tab-nav-bar {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
   .tab-link {
     min-width: auto;
-    padding: 0 1rem;
+    padding: 15px 1rem;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    color: rgb(255 255 255 / 70%);
+
+    &:hover {
+      color: #fff;
+    }
+
+    cursor: pointer;
   }
 
   .search-bar {

@@ -1,6 +1,6 @@
 <form [formGroup]="savingProductTermsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-form-field fxFlex="48%">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Nominal Annual Interest' | translate }}</mat-label>
       <input
         type="number"
@@ -15,9 +15,9 @@
       </mat-error>
     </mat-form-field>
 
-    <span fxFlex="48%" fxHide.lt-md></span>
+    <span class="flex-48 hide-lt-md"></span>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Compounding Period' | translate }}</mat-label>
       <mat-select
         formControlName="interestCompoundingPeriodType"
@@ -37,7 +37,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Posting Period' | translate }}</mat-label>
       <mat-select
         formControlName="interestPostingPeriodType"
@@ -57,7 +57,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Calculated using' | translate }}</mat-label>
       <mat-select
         formControlName="interestCalculationType"
@@ -77,7 +77,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Days in Year' | translate }}</mat-label>
       <mat-select
         formControlName="interestCalculationDaysInYearType"
@@ -98,7 +98,7 @@
     </mat-form-field>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

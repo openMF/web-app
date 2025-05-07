@@ -1,5 +1,5 @@
-<form fxLayout="column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
-  <mat-form-field fxFlexAlign="center" class="login-input">
+<form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
+  <mat-form-field class="login-input flex-align-center">
     <span matPrefix class="m-r-10">
       <fa-icon icon="user-circle" size="lg"></fa-icon>
     </span>
@@ -10,7 +10,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field fxFlexAlign="center" class="login-input">
+  <mat-form-field class="login-input flex-align-center">
     <span matPrefix class="m-r-10">
       <fa-icon icon="lock" size="lg"></fa-icon>
     </span>
@@ -18,7 +18,6 @@
     <input matInput type="{{ passwordInputType }}" formControlName="password" />
     <button
       type="button"
-      mat-button
       matSuffix
       *ngIf="loginForm.controls.password.value && !loading"
       mat-icon-button
@@ -33,13 +32,13 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-checkbox fxFlexAlign="center" formControlName="remember" class="m-t-10">{{
+  <mat-checkbox formControlName="remember" class="m-t-10 flex-align-center">{{
     'labels.inputs.Remember me' | translate
   }}</mat-checkbox>
 
   <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
-  <button mat-raised-button color="primary" fxFlexAlign="center" class="login-button" [disabled]="!loginForm.valid">
+  <button mat-raised-button color="primary" class="login-button flex-align-center" [disabled]="!loginForm.valid">
     {{ 'labels.buttons.Login' | translate }}
     <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
   </button>
@@ -47,8 +46,7 @@
   <button
     type="button"
     mat-button
-    fxFlexAlign="center"
-    class="login-button"
+    class="login-button flex-align-center"
     (click)="forgotPassword()"
     [disabled]="loading"
   >

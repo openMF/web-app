@@ -1,67 +1,67 @@
-<div fxLayout="row wrap" fxLayout.lt-md="column">
-  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Details' | translate }}</h3>
+<div class="layout-row-wrap responsive-column">
+  <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Details' | translate }}</h3>
 
-  <mat-divider fxFlexFill></mat-divider>
-
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Product' | translate }}</span>
-    <span fxFlex="60%">{{ sharesAccount.productId | find: sharesAccountTemplate.productOptions : 'id' : 'name' }}</span>
+  <mat-divider class="flex-fill"></mat-divider>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Product' | translate }}</span>
+    <span class="flex-60">{{
+      sharesAccount.productId | find: sharesAccountTemplate.productOptions : 'id' : 'name'
+    }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Submitted On' | translate }}</span>
-    <span fxFlex="60%">{{ sharesAccount.submittedDate | dateFormat }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Submitted On' | translate }}</span>
+    <span class="flex-60">{{ sharesAccount.submittedDate | dateFormat }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.External Id' | translate }}</span>
-    <span fxFlex="60%" *ngIf="sharesAccount.externalId">
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.External Id' | translate }}</span>
+    <span class="flex-60" *ngIf="sharesAccount.externalId">
       <mifosx-external-identifier externalId="{{ sharesAccount.externalId }}"></mifosx-external-identifier>
     </span>
-    <span fxFlex="60%" *ngIf="!sharesAccount.externalId">
+    <span class="flex-60" *ngIf="!sharesAccount.externalId">
       {{ 'labels.inputs.Unassigned' | translate }}
     </span>
   </div>
 
-  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Terms' | translate }}</h3>
+  <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Terms' | translate }}</h3>
 
-  <mat-divider fxFlexFill></mat-divider>
-
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Currency' | translate }}</span>
-    <span fxFlex="60%">{{
+  <mat-divider class="flex-fill"></mat-divider>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Currency' | translate }}</span>
+    <span class="flex-60">{{
       sharesAccountTermsForm.get('currencyCode').value
         | find: [sharesAccountProductTemplate.currency] : 'code' : 'displayLabel'
     }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Total Number of Shares' | translate }}</span>
-    <span fxFlex="60%">{{ sharesAccount.requestedShares | formatNumber }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Total Number of Shares' | translate }}</span>
+    <span class="flex-60">{{ sharesAccount.requestedShares | formatNumber }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Current Price' | translate }}</span>
-    <span fxFlex="60%">{{ sharesAccountTermsForm.get('unitPrice').value | formatNumber }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Current Price' | translate }}</span>
+    <span class="flex-60">{{ sharesAccountTermsForm.get('unitPrice').value | formatNumber }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Amount' | translate }}</span>
-    <span fxFlex="60%">{{
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Amount' | translate }}</span>
+    <span class="flex-60">{{
       sharesAccount.requestedShares * sharesAccountTermsForm.get('unitPrice').value | formatNumber
     }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Default Savings Account' | translate }}</span>
-    <span fxFlex="60%">{{
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Default Savings Account' | translate }}</span>
+    <span class="flex-60">{{
       sharesAccount.savingsAccountId | find: sharesAccountProductTemplate.clientSavingsAccounts : 'id' : 'accountNo'
     }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="sharesAccount.minimumActivePeriod">
-    <span fxFlex="40%">{{ 'labels.inputs.Minimum Active Period' | translate }}</span>
-    <span fxFlex="60%"
+  <div class="flex-fill" *ngIf="sharesAccount.minimumActivePeriod">
+    <span class="flex-40">{{ 'labels.inputs.Minimum Active Period' | translate }}</span>
+    <span class="flex-60"
       >{{ sharesAccount.minimumActivePeriod }}&nbsp;{{
         sharesAccount.minimumActivePeriodFrequencyType
           | find: sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions : 'id' : 'value'
@@ -70,9 +70,9 @@
     >
   </div>
 
-  <div fxFlexFill *ngIf="sharesAccount.lockinPeriodFrequency">
-    <span fxFlex="40%">{{ 'labels.inputs.Lock-in Period' | translate }}</span>
-    <span fxFlex="60%"
+  <div class="flex-fill" *ngIf="sharesAccount.lockinPeriodFrequency">
+    <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}</span>
+    <span class="flex-60"
       >{{ sharesAccount.lockinPeriodFrequency }}&nbsp;{{
         sharesAccount.lockinPeriodFrequencyType
           | find: sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value'
@@ -81,22 +81,21 @@
     >
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Application Date' | translate }}</span>
-    <span fxFlex="60%">{{ sharesAccount.applicationDate | dateFormat }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Application Date' | translate }}</span>
+    <span class="flex-60">{{ sharesAccount.applicationDate | dateFormat }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Allow dividends for inactive clients' | translate }}</span>
-    <span fxFlex="60%">{{ sharesAccount.allowDividendCalculationForInactiveClients | yesNo }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Allow dividends for inactive clients' | translate }}</span>
+    <span class="flex-60">{{ sharesAccount.allowDividendCalculationForInactiveClients | yesNo }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="sharesAccount.charges.length" fxLayout="row wrap" fxLayout.lt-md="column">
-    <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Charges' | translate }}</h3>
+  <div *ngIf="sharesAccount.charges.length" class="layout-row-wrap responsive-column flex-fill">
+    <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
 
-    <mat-divider fxFlexFill></mat-divider>
-
-    <table fxFlexFill class="mat-elevation-z1" mat-table [dataSource]="sharesAccount.charges">
+    <mat-divider class="flex-fill"></mat-divider>
+    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="sharesAccount.charges">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
@@ -131,7 +130,7 @@
   </div>
 </div>
 
-<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<div class="layout-row responsive-column align-center gap-2px margin-t">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}

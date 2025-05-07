@@ -1,18 +1,18 @@
 <form [formGroup]="fixedDepositAccountTermsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row-wrap gap-2px responsive-column">
     <mifosx-input-amount
       [currency]="currency"
       [isRequired]="true"
       *ngIf="currency"
-      fxFlex="48%"
+      class="flex-48"
       [inputFormControl]="fixedDepositAccountTermsForm.controls.depositAmount"
       [inputLabel]="'Deposit Amount'"
     >
     </mifosx-input-amount>
 
-    <span fxFlex="48%" fxHide.lt-md></span>
+    <span class="flex-48 hide-lt-md"></span>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Deposit Period' | translate }}</mat-label>
       <input type="number" matInput formControlName="depositPeriod" required />
       <mat-error>
@@ -21,7 +21,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Deposit Period Type' | translate }}</mat-label>
       <mat-select formControlName="depositPeriodFrequencyId" required>
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -34,9 +34,9 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Compounding Period' | translate }}</mat-label>
       <mat-select formControlName="interestCompoundingPeriodType" required>
         <mat-option
@@ -52,7 +52,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Posting Period' | translate }}</mat-label>
       <mat-select formControlName="interestPostingPeriodType" required>
         <mat-option
@@ -68,7 +68,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Calculated using' | translate }}</mat-label>
       <mat-select formControlName="interestCalculationType" required>
         <mat-option
@@ -84,7 +84,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Days in Year' | translate }}</mat-label>
       <mat-select formControlName="interestCalculationDaysInYearType" required>
         <mat-option
@@ -101,7 +101,7 @@
     </mat-form-field>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

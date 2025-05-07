@@ -15,7 +15,6 @@ import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
-import { MatInput } from '@angular/material/input';
 
 /** Environment Configuration */
 import { environment } from 'environments/environment';

@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="bucketForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="100%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-100">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
             <mat-error *ngIf="bucketForm.controls.name.hasError('required')">
@@ -12,9 +12,9 @@
             </mat-error>
           </mat-form-field>
 
-          <h3 fxFlex="40%" class="mat-h3">{{ 'labels.heading.Delinquency Ranges' | translate }}</h3>
+          <h3 class="mat-h3 flex-40">{{ 'labels.heading.Delinquency Ranges' | translate }}</h3>
 
-          <div fxFlex="40%" fxLayout="row" fxLayoutAlign="start center">
+          <div class="flex-40 layout-row align-start-center">
             <button type="button" mat-raised-button color="primary" (click)="addDelinquencyRange()">
               <fa-icon icon="plus" class="m-r-10"></fa-icon>
               {{ 'labels.buttons.Add' | translate }}
@@ -65,7 +65,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

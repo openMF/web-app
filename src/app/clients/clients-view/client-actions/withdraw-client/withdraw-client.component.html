@@ -2,7 +2,7 @@
   <mat-card>
     <form [formGroup]="withdrawClientForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
+        <div class="layout-column">
           <mat-form-field (click)="withdrawalDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Withdrawal Date' | translate }}</mat-label>
             <input
@@ -21,7 +21,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Withdrawal Reason' | translate }}</mat-label>
             <mat-select formControlName="withdrawalReasonId">
               <mat-option *ngFor="let reason of withdrawalData" [value]="reason.id">
@@ -36,7 +36,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

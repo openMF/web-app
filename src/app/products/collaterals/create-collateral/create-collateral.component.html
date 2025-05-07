@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="collateralForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="48%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
             <mat-error *ngIf="collateralForm.controls.name.hasError('required')">
@@ -11,7 +11,7 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Type/Quality' | translate }}</mat-label>
             <input matInput required formControlName="quality" />
             <mat-error *ngIf="collateralForm.controls.quality.hasError('required')">
@@ -19,7 +19,7 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Unit Type' | translate }}</mat-label>
             <input matInput required formControlName="unitType" />
             <mat-error *ngIf="collateralForm.controls.unitType.hasError('required')">
@@ -27,7 +27,7 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Base Price' | translate }}</mat-label>
             <input matInput required formControlName="basePrice" />
             <mat-error *ngIf="collateralForm.controls.basePrice.hasError('required')">
@@ -35,7 +35,7 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Percentage to Base' | translate }}</mat-label>
             <input matInput required formControlName="pctToBase" />
             <mat-error *ngIf="collateralForm.controls.pctToBase.hasError('required')">
@@ -43,7 +43,7 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.heading.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currency">
               <mat-option *ngFor="let currency of collateralTemplateData" [value]="currency.code">
@@ -58,7 +58,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

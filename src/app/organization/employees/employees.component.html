@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonImportEmployees>
     <button
       mat-raised-button
@@ -19,8 +19,8 @@
 </div>
 
 <div class="container">
-  <div #filter fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex>
+  <div #filter class="layout-row gap-20px">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
@@ -85,7 +85,7 @@
 <ng-template #templateButtonImportEmployees let-data let-popover="popover">
   <h2>{{ 'labels.heading.Import Employees' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Import employee details from your local device' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -105,7 +105,7 @@
 <ng-template #templateButtonCreateEmployee let-popover="popover">
   <h2>{{ 'labels.heading.Create Employee' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Create new employees in your organization' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -128,7 +128,7 @@
 
 <ng-template #templateFilter let-popover="popover">
   <h4>{{ 'labels.heading.Search bar to filter employees.' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -151,7 +151,7 @@
 
 <ng-template #templateTableEmployees let-popover="popover">
   <h4>{{ 'labels.heading.List of employees in the organization.' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

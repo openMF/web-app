@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="closeRecurringDepositForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
-          <h3 class="mat-h3" fxFlexFill>{{ title }}</h3>
+        <div class="layout-column">
+          <h3 class="mat-h3 flex-fill">{{ title }}</h3>
 
           <mat-form-field (click)="closedOnDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Closed On' | translate }}</mat-label>
@@ -61,9 +61,9 @@
             </mat-error>
           </mat-form-field>
 
-          <div fxFlexFill>
-            <span fxFlex="25%">{{ 'labels.inputs.Show Payment Details' | translate }}</span>
-            <span fxFlex="75%" class="expandcollapsebutton" (click)="toggleDisplay()">
+          <div class="flex-fill">
+            <span class="flex-25"> {{ 'labels.inputs.Show Payment Details' | translate }}</span>
+            <span class="expandcollapsebutton flex-75" (click)="toggleDisplay()">
               <button mat-raised-button color="primary" *ngIf="showPaymentDetails">
                 <i class="fa fa-minus"></i>
               </button>
@@ -107,7 +107,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../general']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

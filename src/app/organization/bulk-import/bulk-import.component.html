@@ -1,8 +1,8 @@
 <!-- TODO: Refactor Permissions -->
 <div class="container">
   <mat-card>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50%">
+    <div class="layout-row responsive-column gap-20px">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon [routerLink]="['Offices']">
@@ -109,7 +109,7 @@
         </mat-nav-list>
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item *mifosxHasPermission="'READ_OFFICE'">
             <mat-icon matListIcon [routerLink]="['Employees']">

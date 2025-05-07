@@ -2,13 +2,13 @@
   <mat-card>
     <form [formGroup]="dataTableForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="40%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Data Table Name' | translate }}</mat-label>
             <input matInput required formControlName="datatableName" />
           </mat-form-field>
 
-          <mat-form-field fxFlex="20%">
+          <mat-form-field class="flex-fill flex-20">
             <mat-label>{{ 'labels.inputs.Application Table Name' | translate }}</mat-label>
             <mat-select required formControlName="apptableName">
               <mat-option *ngFor="let appTable of appTableData" [value]="appTable.value">
@@ -21,7 +21,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="20%" *ngIf="showEntitySubType">
+          <mat-form-field class="flex-fill flex-20" *ngIf="showEntitySubType">
             <mat-label>{{ 'labels.inputs.Entity SubType' | translate }}</mat-label>
             <mat-select formControlName="entitySubType">
               <mat-option *ngFor="let entitySubType of entitySubTypeData" [value]="entitySubType.value">
@@ -33,10 +33,10 @@
 
         <br />
 
-        <div fxLayout="row wrap" fxLayoutGap="60%" fxLayout.lt-md="column">
-          <p fxFlex="20%" class="mat-title">{{ 'labels.inputs.Columns' | translate }}</p>
+        <div class="layout-row-wrap gap-60percent layout-lt-md-column">
+          <p class="mat-title flex-20">{{ 'labels.inputs.Columns' | translate }}</p>
 
-          <button mat-raised-button fxFlex="20%" type="button" color="primary" (click)="addColumn()">
+          <button mat-raised-button class="flex-20" type="button" color="primary" (click)="addColumn()">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Columns' | translate }}
           </button>
@@ -149,7 +149,7 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="center">
               {{ 'labels.inputs.Actions' | translate }}
             </th>
-            <td mat-cell *matCellDef="let column" fxLayoutGap="15%" class="center">
+            <td mat-cell *matCellDef="let column" class="center gap-15percent">
               <button type="button" color="primary" mat-icon-button (click)="editColumn(column)" *ngIf="!column.system">
                 <fa-icon icon="edit" size="lg"></fa-icon>
               </button>
@@ -166,7 +166,7 @@
         <mat-paginator [pageSizeOptions]="[10, 25]" showFirstLastButtons></mat-paginator>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

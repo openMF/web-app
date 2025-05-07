@@ -10,30 +10,30 @@
 @use '../app/shares/shares-account-view/shares-account-view.component-theme.scss' as *;
 @use 'content' as *;
 @use 'dark_content' as *;
-@use 'pictonblue-yellowgreen' as *;
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+@include mat.all-component-typographies();
 @include mat.core();
 
 /* ################################## Light theme ################################### */
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$mifosx-app-primary: mat.define-palette($primary-palette);
-$mifosx-app-accent: mat.define-palette($accent-palette);
+$mifosx-color-config: (
+  primary: mat.define-palette($primary-palette),
+  accent: mat.define-palette($accent-palette),
+  warn: mat.define-palette(mat.$red-palette)
+);
 
-// The warn palette is optional (defaults to red).
-$mifosx-app-warn: mat.define-palette(mat.$red-palette);
+$mifosx-typography: mat.define-typography-config();
+$mifosx-density: 0;
 
-// Create the theme object (a Sass map containing all of the palettes).
-$mifosx-app-theme: mat.define-light-theme($mifosx-app-primary, $mifosx-app-accent, $mifosx-app-warn);
+$mifosx-app-theme: mat.define-light-theme(
+  (
+    color: $mifosx-color-config,
+    typography: $mifosx-typography,
+    density: $mifosx-density
+  )
+);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
+@include mat.typography-hierarchy($mifosx-typography);
 @include mat.all-component-themes($mifosx-app-theme);
 @include groups-view-component-theme($mifosx-app-theme);
 @include centers-view-component-theme($mifosx-app-theme);
@@ -43,17 +43,20 @@ $mifosx-app-theme: mat.define-light-theme($mifosx-app-primary, $mifosx-app-accen
 
 /* ################################## Dark theme ################################### */
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-$mifosx-app-dark-primary: mat.define-palette($dark-primary-palette);
-$mifosx-app-dark-accent: mat.define-palette($dark-accent-palette);
-$mifosx-app-dark-warn: mat.define-palette(mat.$red-palette);
+$mifosx-dark-color-config: (
+  primary: mat.define-palette($dark-primary-palette),
+  accent: mat.define-palette($dark-accent-palette),
+  warn: mat.define-palette(mat.$red-palette)
+);
 
-// Create the theme object (a Sass map containing all of the palettes).
-$mifosx-app-dark-theme: mat.define-dark-theme($mifosx-app-dark-primary, $mifosx-app-dark-accent, $mifosx-app-dark-warn);
+$mifosx-app-dark-theme: mat.define-dark-theme(
+  (
+    color: $mifosx-dark-color-config
+  )
+);
 
-// Include theme styles for core and each component used in your app.
 .dark-theme {
-  @include mat.all-component-themes($mifosx-app-dark-theme);
+  @include mat.all-component-colors($mifosx-app-dark-theme);
   @include groups-view-component-theme($mifosx-app-dark-theme);
   @include centers-view-component-theme($mifosx-app-dark-theme);
   @include dashboard-component-theme($mifosx-app-dark-theme);

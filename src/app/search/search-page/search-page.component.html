@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-card fxLayout="column" fxLayoutGap="2%" *ngIf="hasResults">
+  <mat-card class="layout-column gap-2percent" *ngIf="hasResults">
     <mat-error *ngIf="overload">{{ 'error.Searched query resulted more than 200 records' | translate }}</mat-error>
 
     <table mat-table [dataSource]="dataSource">
@@ -60,7 +60,7 @@
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
   </mat-card>
 
-  <mat-card fxLayout="column" fxLayoutGap="2%" *ngIf="!hasResults">
+  <mat-card class="layout-column gap-2percent" *ngIf="!hasResults">
     <div class="alert">
       <div class="message">
         <i class="fa fa-exclamation-circle alert-check"></i>

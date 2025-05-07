@@ -1,5 +1,5 @@
 <mat-card class="center-card">
-  <mat-card-header fxLayout="column" class="header">
+  <mat-card-header class="header layout-column">
     <mat-card-title-group class="header-title-group">
       <div class="profile-image-container">
         <div>
@@ -8,7 +8,7 @@
       </div>
       <div class="mat-typography center-card-title">
         <mat-card-title>
-          <h3 fxFlex="95%">
+          <h3 class="flex-95">
             <i
               class="fa fa-stop"
               matTooltip="{{ centerViewData.status.value }}"
@@ -16,7 +16,7 @@
             ></i>
             <b>{{ 'labels.heading.Center Name' | translate }} :</b> {{ centerViewData.name }}
           </h3>
-          <div fxFlex="5%" *ngIf="!(centerViewData.status.value === 'Closed')">
+          <div class="flex-5" *ngIf="!(centerViewData.status.value === 'Closed')">
             <button mat-icon-button [matMenuTriggerFor]="centerMenu" aria-label="Center actions" yPosition="below">
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
@@ -25,8 +25,8 @@
           </div>
         </mat-card-title>
         <mat-card-subtitle>
-          <div fxLayout="row" fxLayout.lt-md="column">
-            <div fxFlex="50%">
+          <div class="layout-row responsive-column">
+            <div class="flex-50">
               <p>
                 {{ 'labels.inputs.Account' | translate }} #:{{ centerViewData.accountNo }} <br />
                 {{ 'labels.inputs.Office' | translate }}: {{ centerViewData.officeName }} <br />
@@ -43,7 +43,7 @@
                 }}<br />
               </p>
             </div>
-            <div fxFlex="45%" class="center-meeting" fxLayoutAlign="start start">
+            <div class="center-meeting flex-45 align-start-start">
               <div *ngIf="centerViewData.collectionMeetingCalendar; else unassigned">
                 <p>
                   {{ 'labels.inputs.Next Meeting on' | translate }}:
@@ -140,7 +140,7 @@
     </mat-card-title-group>
   </mat-card-header>
   <mat-card-content>
-    <nav mat-tab-nav-bar class="navigation-tabs">
+    <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
       <a
         mat-tab-link
         [routerLink]="['./general']"
@@ -173,6 +173,8 @@
         </a>
       </span>
     </nav>
-    <router-outlet></router-outlet>
+    <mat-tab-nav-panel #tabPanel>
+      <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
   </mat-card-content>
 </mat-card>

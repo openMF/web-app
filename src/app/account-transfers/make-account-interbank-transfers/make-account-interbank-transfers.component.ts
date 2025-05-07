@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { MatInput } from '@angular/material/input';
-
 @Component({
   selector: 'mifosx-make-account-interbank-transfers',
   templateUrl: './make-account-interbank-transfers.component.html',

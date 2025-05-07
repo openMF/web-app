@@ -10,18 +10,19 @@
       <mat-card>
         <form [formGroup]="businessDateForm">
           <mat-card-content>
-            <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="space">
-              <div fxFlex="50%">
-                <span fxFlex="40%" class="date-type">{{ 'labels.inputs.User date format' | translate }}: </span>
-                <span fxFlex="60%" class="date-value">{{ userDateFormat }}</span>
+            <div class="flex-fill layout-row-wrap gap-2percent layout-lt-md-column space">
+              <div class="flex-50">
+                <span class="date-type flex-40">{{ 'labels.inputs.User date format' | translate }}: </span>
+                <span class="date-value flex-60">{{ userDateFormat }}</span>
               </div>
             </div>
 
             <!-- Business Date -->
-            <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-              <div fxFlex="50%" *ngIf="!isEditInProgress">
-                <span fxFlex="40%" class="date-type">{{ 'labels.inputs.Business Date' | translate }}: </span>
-                <span fxFlex="60%" class="date-value">{{ businessDate | dateFormat }}</span>
+            <div class="flex-fill layout-row-wrap gap-2percent layout-lt-md-column">
+              <div class="flex-50">
+                *ngIf="!isEditInProgress">
+                <span class="date-type flex-40">{{ 'labels.inputs.Business Date' | translate }}: </span>
+                <span class="date-value flex-60">{{ businessDate | dateFormat }}</span>
               </div>
 
               <mat-form-field (click)="businessDatePicker.open()" *ngIf="isEditInProgress && dateIndex === 0">
@@ -41,7 +42,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <div fxLayoutGap="2%" fxFlex="22%" class="options-wrapper">
+              <div class="options-wrapper gap-2percent flex-22">
                 <span *ngIf="isEditInProgress && dateIndex === 0">
                   <button
                     mat-raised-button
@@ -71,10 +72,11 @@
             </div>
 
             <!-- COB Date -->
-            <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-              <div fxFlex="50%" *ngIf="!isEditInProgress">
-                <span fxFlex="40%" class="date-type">{{ 'labels.inputs.COB Date' | translate }}: </span>
-                <span fxFlex="60%" class="date-value">{{ cobDate | dateFormat }}</span>
+            <div class="flex-fill layout-row-wrap gap-2percent layout-lt-md-column">
+              <div class="flex-50">
+                *ngIf="!isEditInProgress">
+                <span class="date-type">{{ 'labels.inputs.COB Date' | translate }}: </span>
+                <span class="date-value flex-60">{{ cobDate | dateFormat }}</span>
               </div>
 
               <mat-form-field (click)="cobDatePicker.open()" *ngIf="isEditInProgress && dateIndex === 1">
@@ -94,7 +96,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <div fxLayoutGap="4%" fxFlex="22%" class="options-wrapper">
+              <div class="options-wrapper flex-22 gap-4percent">
                 <span *ngIf="isEditInProgress && dateIndex === 1">
                   <button
                     mat-stroked-button

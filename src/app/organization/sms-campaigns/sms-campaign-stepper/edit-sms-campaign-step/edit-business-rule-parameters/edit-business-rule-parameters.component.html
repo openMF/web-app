@@ -1,13 +1,13 @@
-<div fxLayout="column">
-  <mat-divider fxFlex="98%"></mat-divider>
+<div class="layout-column">
+  <mat-divider class="flex-98"></mat-divider>
 
-  <h3 fxFlex="98%" class="mat-h3">{{ 'labels.heading.Business Rule Parameters' | translate }}</h3>
+  <h3 class="mat-h3 flex-98">{{ 'labels.heading.Business Rule Parameters' | translate }}</h3>
 
   <form [formGroup]="ReportForm">
-    <div fxLayout="row wrap" fxLayoutGap="2%">
+    <div class="layout-row-wrap gap-2percent">
       <ng-container *ngFor="let param of paramData" [ngSwitch]="param.displayType">
         <ng-container *ngIf="ReportForm.controls[param.name]">
-          <mat-form-field fxFlex="48%" *ngSwitchCase="'text'">
+          <mat-form-field class="flex-48" *ngSwitchCase="'text'">
             <mat-label>{{ param.label }}</mat-label>
             <input matInput required [formControlName]="param.name" />
             <mat-error *ngIf="ReportForm.controls[param.name].hasError('required')">
@@ -16,7 +16,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
+          <mat-form-field class="flex-48" *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
             <mat-label>{{ param.label }}</mat-label>
             <input
               matInput
@@ -34,7 +34,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" *ngSwitchCase="'select'">
+          <mat-form-field class="flex-48" *ngSwitchCase="'select'">
             <mat-label>{{ param.label }}</mat-label>
             <mat-select required [formControlName]="param.name" [compareWith]="compareOptions">
               <mat-option *ngFor="let option of param.selectOptions" [value]="option">
@@ -52,7 +52,7 @@
   </form>
 </div>
 
-<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<div class="layout-row responsive-column align-center gap-2px margin-t">
   <button mat-raised-button matStepperPrevious disabled>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}

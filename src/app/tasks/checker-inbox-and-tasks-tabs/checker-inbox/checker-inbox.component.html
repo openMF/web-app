@@ -1,7 +1,7 @@
 <div class="tab-container mat-typography" *ngIf="checkerData">
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="search-box" fxFlex="40%">
-      <mat-form-field fxFlex="90%">
+  <div class="layout-row align-start-center">
+    <div class="search-box flex-40">
+      <mat-form-field class="flex-fill flex-90">
         <input
           matInput
           placeholder="{{ 'labels.text.Search by user' | translate }}"
@@ -9,7 +9,7 @@
         />
       </mat-form-field>
     </div>
-    <div fxFlex="60%" fxLayoutGap="0.5rem">
+    <div class="flex-60 gap-8px">
       <button mat-raised-button color="success" (click)="approveChecker()">
         <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
       </button>
@@ -23,8 +23,8 @@
   </div>
 
   <form [formGroup]="makerCheckerSearchForm">
-    <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <mat-form-field fxFlex="31%" (click)="makerDateTimeFromPicker.open()">
+    <div class="layout-row-wrap gap-2px responsive-column">
+      <mat-form-field class="flex-fill flex-31" (click)="makerDateTimeFromPicker.open()">
         <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
         <input
           matInput
@@ -37,7 +37,7 @@
         <mat-datepicker #makerDateTimeFromPicker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%" (click)="makerDateTimetoPicker.open()">
+      <mat-form-field class="flex-fill flex-31" (click)="makerDateTimetoPicker.open()">
         <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
         <input
           matInput
@@ -50,7 +50,7 @@
         <mat-datepicker #makerDateTimetoPicker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
         <mat-select formControlName="actionName">
           <mat-option *ngFor="let action of makerCheckerTemplate.actionNames" [value]="action">
@@ -59,7 +59,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
         <mat-select formControlName="entityName">
           <mat-option *ngFor="let entity of makerCheckerTemplate.entityNames" [value]="entity">
@@ -68,7 +68,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Resource ID' | translate }}</mat-label>
         <input matInput formControlName="resourceId" />
       </mat-form-field>

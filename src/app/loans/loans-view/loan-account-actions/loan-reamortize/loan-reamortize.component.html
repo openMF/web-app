@@ -2,21 +2,21 @@
   <mat-card>
     <form [formGroup]="reamortizeLoanForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
+        <div class="layout-column">
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
             <input matInput formControlName="note" />
           </mat-form-field>
         </div>
 
-        <div fxLayout="column">
+        <div class="layout-column">
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput formControlName="externalId" />
           </mat-form-field>
         </div>
 
-        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <mat-card-actions class="layout-row align-center gap-5px responsive-column">
           <button type="button" mat-raised-button [routerLink]="['../../general']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>

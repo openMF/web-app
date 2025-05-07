@@ -1,7 +1,7 @@
 <div class="tab-container mat-typography">
   <h3>{{ 'labels.heading.Address' | translate }}</h3>
 
-  <div fxLayout="row" fxLayoutAlign="flex-end">
+  <div class="layout-row align-flex-end">
     <button mat-raised-button color="primary" (click)="addAddress()">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
     </button>
@@ -20,7 +20,7 @@
 
       <mat-divider [inset]="true"></mat-divider>
 
-      <div class="address-actions" fxLayout="row" fxLayoutAlign="flex-end center">
+      <div class="address-actions layout-row align-end align-items-center">
         <button mat-button color="primary" (click)="editAddress(address, i)">
           <fa-icon icon="edit"></fa-icon>
         </button>

@@ -1,11 +1,11 @@
 <mat-card class="container">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-form-field fxFlex="18%">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <mat-form-field class="flex-fill flex-18">
       <mat-label>{{ 'labels.text.Search by Text' | translate }}</mat-label>
       <input matInput [formControl]="searchText" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="18%" (click)="effectiveFromDatePicker.open()">
+    <mat-form-field class="flex-fill flex-18" (click)="effectiveFromDatePicker.open()">
       <mat-label>{{ 'labels.text.Effective Date From' | translate }}</mat-label>
       <input
         matInput
@@ -18,7 +18,7 @@
       <mat-datepicker #effectiveFromDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="18%" (click)="effectiveToDatePicker.open()">
+    <mat-form-field class="flex-fill flex-18" (click)="effectiveToDatePicker.open()">
       <mat-label>{{ 'labels.text.Effective Date To' | translate }}</mat-label>
       <input
         matInput
@@ -31,7 +31,7 @@
       <mat-datepicker #effectiveToDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="18%" (click)="settlementFromDatePicker.open()">
+    <mat-form-field class="flex-fill flex-18" (click)="settlementFromDatePicker.open()">
       <mat-label>{{ 'labels.text.Settlement Date From' | translate }}</mat-label>
       <input
         matInput
@@ -44,7 +44,7 @@
       <mat-datepicker #settlementFromDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="18%" (click)="settlementToDatePicker.open()">
+    <mat-form-field class="flex-fill flex-18" (click)="settlementToDatePicker.open()">
       <mat-label>{{ 'labels.text.Settlement Date To' | translate }}</mat-label>
       <input
         matInput
@@ -57,7 +57,7 @@
       <mat-datepicker #settlementToDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <div fxFlex="98%" class="center m-t-15">
+    <div class="center m-t-15 flex-98">
       <button mat-raised-button color="primary" (click)="searchEAO()">
         <fa-icon icon="search" class="m-r-10"></fa-icon> {{ 'labels.buttons.Search' | translate }}
       </button>
@@ -99,19 +99,19 @@
           <table>
             <tbody>
               <tr>
-                <td fxFlex="25%" class="m-l-5">
+                <td class="m-l-5 flex-25">
                   <b>{{ 'labels.inputs.Status' | translate }} :</b>
                 </td>
-                <td fxFlex="25%" class="m-l-5 left">
+                <td class="flex-25 m-l-5 left">
                   <div [ngClass]="itemStatus(record.status)">
                     <fa-icon icon="stop"></fa-icon>
                     <span class="m-l-5 status">{{ record.status }}</span>
                   </div>
                 </td>
-                <td fxFlex="25%" class="m-l-5">
+                <td class="m-l-5 flex-25">
                   <b>{{ 'labels.inputs.Owner External Id' | translate }} :</b>
                 </td>
-                <td fxFlex="25%" class="m-l-5 left">
+                <td class="flex-25 m-l-5 left">
                   <mifosx-external-identifier
                     externalId="{{ record.owner.externalId }}"
                     completed="true"
@@ -119,69 +119,69 @@
                 </td>
               </tr>
               <tr>
-                <td fxFlex="25%" class="m-l-5">
+                <td class="m-l-5 flex-25">
                   <b>{{ 'labels.inputs.Settlement Date' | translate }} :</b>
                 </td>
-                <td fxFlex="25%" class="m-l-5">
+                <td class="m-l-5 flex-25">
                   {{ record.settlementDate | dateFormat }}
                 </td>
-                <td fxFlex="25%" class="m-l-5">
+                <td class="m-l-5 flex-25">
                   <b>{{ 'labels.inputs.Effective Date' | translate }} :</b>
                 </td>
-                <td fxFlex="25%" class="m-l-5">
+                <td class="m-l-5 flex-25">
                   {{ record.effectiveFrom | dateFormat }}
                 </td>
               </tr>
               <tr *ngIf="record.details">
-                <td fxFlex="25%" class="m-l-5">
+                <td class="m-l-5 flex-25">
                   <b>{{ 'labels.inputs.Details' | translate }} :</b>
                 </td>
-                <td fxFlex="75%" class="left">
+                <td class="flex-75 left">
                   <table>
                     <tbody>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5">
+                        <td class="flex-50 m-l-5">
                           <b>{{ 'labels.inputs.Principal Outstanding' | translate }} :</b>
                         </td>
-                        <td fxFlex="50%" class="r-amount">
+                        <td class="flex-50 r-amount">
                           {{ record.details.totalPrincipalOutstanding | formatNumber }}
                         </td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5">
+                        <td class="flex-50 m-l-5">
                           <b>{{ 'labels.inputs.Interest Outstanding' | translate }} :</b>
                         </td>
-                        <td fxFlex="50%" class="r-amount">
+                        <td class="flex-50 r-amount">
                           {{ record.details.totalInterestOutstanding | formatNumber }}
                         </td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5">
+                        <td class="flex-50 m-l-5">
                           <b>{{ 'labels.inputs.Fees Outstanding' | translate }} :</b>
                         </td>
-                        <td fxFlex="50%" class="r-amount">
+                        <td class="flex-50 r-amount">
                           {{ record.details.totalFeeChargesOutstanding | formatNumber }}
                         </td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5">
+                        <td class="flex-50 m-l-5">
                           <b>{{ 'labels.inputs.Penalties Outstanding' | translate }} :</b>
                         </td>
-                        <td fxFlex="50%" class="r-amount">
+                        <td class="flex-50 r-amount">
                           {{ record.details.totalPenaltyChargesOutstanding | formatNumber }}
                         </td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5">
+                        <td class="flex-50 m-l-5">
                           <b>{{ 'labels.inputs.Outstanding' | translate }} :</b>
                         </td>
-                        <td fxFlex="50%" class="r-amount">{{ record.details.totalOutstanding | formatNumber }}</td>
+                        <td class="flex-50 r-amount">{{ record.details.totalOutstanding | formatNumber }}</td>
                       </tr>
                       <tr>
-                        <td fxFlex="50%" class="m-l-5">
+                        <td class="flex-50 m-l-5">
                           <b>{{ 'labels.inputs.Overpaid' | translate }} :</b>
                         </td>
-                        <td fxFlex="50%" class="r-amount">{{ record.details.totalOverpaid | formatNumber }}</td>
+                        <td class="flex-50 r-amount">{{ record.details.totalOverpaid | formatNumber }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -193,7 +193,7 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="record-actions" fxLayout="row" fxLayoutAlign="flex-end" *ngIf="canBeCancelled(record)">
+        <div class="record-actions layout-row align-flex-end" *ngIf="canBeCancelled(record)">
           <button
             mat-button
             color="warn"

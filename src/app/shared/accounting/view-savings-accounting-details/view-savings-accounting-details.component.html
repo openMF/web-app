@@ -1,20 +1,20 @@
-<div fxLayout="row wrap" fxLayout.lt-md="column">
-  <div fxFlexFill fxFlex="98%" *ngIf="accountingRule" fxLayout="row wrap" fxLayout.lt-md="column">
-    <span fxFlex="40%">{{ 'labels.inputs.Type' | translate }}:</span>
-    <span fxFlex="60%">{{ 'labels.accounting.' + getAccountingRuleName(accountingRule.value) | translate }}</span>
+<div class="layout-row-wrap responsive-column">
+  <div *ngIf="accountingRule" class="layout-row-wrap responsive-column flex-fill flex-98">
+    <span class="flex-40">{{ 'labels.inputs.Type' | translate }}:</span>
+    <span class="flex-60">{{ 'labels.accounting.' + getAccountingRuleName(accountingRule.value) | translate }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="isCashOrAccrualAccounting()" fxLayout="row wrap" fxLayout.lt-md="column">
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+  <div *ngIf="isCashOrAccrualAccounting()" class="layout-row-wrap responsive-column flex-fill">
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Assets' | translate }}</h4>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Saving reference'"
       [glAccount]="accountingMappings.savingsReferenceAccount"
       [withTitle]="'40%'"
     >
     </mifosx-gl-account-display>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Overdraft portfolio'"
       *ngIf="accountingMappings.overdraftPortfolioControl"
       [glAccount]="accountingMappings.overdraftPortfolioControl"
@@ -22,7 +22,7 @@
     >
     </mifosx-gl-account-display>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Fees Receivable'"
       *ngIf="isAccrualAccounting()"
       [glAccount]="accountingMappings.feeReceivableAccount"
@@ -30,7 +30,7 @@
     >
     </mifosx-gl-account-display>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Penalties Receivable'"
       *ngIf="isAccrualAccounting()"
       [glAccount]="accountingMappings.penaltyReceivableAccount"
@@ -38,23 +38,23 @@
     >
     </mifosx-gl-account-display>
 
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Liabilities' | translate }}</h4>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Saving control'"
       [glAccount]="accountingMappings.savingsControlAccount"
       [withTitle]="'40%'"
     >
     </mifosx-gl-account-display>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Savings transfers in suspense'"
       [glAccount]="accountingMappings.transfersInSuspenseAccount"
       [withTitle]="'40%'"
     >
     </mifosx-gl-account-display>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Interest Payable'"
       *ngIf="isAccrualAccounting()"
       [glAccount]="accountingMappings.interestPayableAccount"
@@ -62,7 +62,7 @@
     >
     </mifosx-gl-account-display>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Escheat liability'"
       *ngIf="accountingMappings.escheatLiabilityAccount"
       [glAccount]="accountingMappings.escheatLiabilityAccount"
@@ -70,23 +70,23 @@
     >
     </mifosx-gl-account-display>
 
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Income' | translate }}</h4>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Income from fees'"
       [glAccount]="accountingMappings.incomeFromFeeAccount"
       [withTitle]="'40%'"
     >
     </mifosx-gl-account-display>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Income from penalties'"
       [glAccount]="accountingMappings.incomeFromPenaltyAccount"
       [withTitle]="'40%'"
     >
     </mifosx-gl-account-display>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Income from Interest'"
       *ngIf="accountingMappings.incomeFromInterest"
       [glAccount]="accountingMappings.incomeFromInterest"
@@ -94,16 +94,16 @@
     >
     </mifosx-gl-account-display>
 
-    <h4 fxFlexFill class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
+    <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Expenses' | translate }}</h4>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Interest on savings'"
       [glAccount]="accountingMappings.interestOnSavingsAccount"
       [withTitle]="'40%'"
     >
     </mifosx-gl-account-display>
     <mifosx-gl-account-display
-      fxFlex="100%"
+      class="flex-100"
       [accountTitle]="'Write-off'"
       *ngIf="accountingMappings.writeOffAccount"
       [glAccount]="accountingMappings.writeOffAccount"

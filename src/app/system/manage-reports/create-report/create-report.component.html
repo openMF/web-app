@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="reportForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="4%">
-          <mat-form-field fxFlex="30%">
+        <div class="layout-row-wrap responsive-column gap-4percent">
+          <mat-form-field class="flex-30">
             <mat-label>{{ 'labels.inputs.Report Name' | translate }}</mat-label>
             <input matInput required formControlName="reportName" />
             <mat-error *ngIf="reportForm.controls.reportName.hasError('required')">
@@ -12,7 +12,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="30%">
+          <mat-form-field class="flex-30">
             <mat-label>{{ 'labels.inputs.Report Type' | translate }}</mat-label>
             <mat-select required formControlName="reportType">
               <mat-option
@@ -28,7 +28,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="30%">
+          <mat-form-field class="flex-30">
             <mat-label>{{ 'labels.inputs.Report Sub Type' | translate }}</mat-label>
             <mat-select formControlName="reportSubType">
               <mat-option
@@ -41,8 +41,8 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="4%">
-          <mat-form-field fxFlex="40%">
+        <div class="layout-row-wrap responsive-column gap-4percent">
+          <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Report Category' | translate }}</mat-label>
             <mat-select formControlName="reportCategory">
               <mat-option *ngFor="let reportCategoryType of reportCategoryTypeOptions" [value]="reportCategoryType">
@@ -51,20 +51,20 @@
             </mat-select>
           </mat-form-field>
 
-          <div fxFlex="10%" class="user-report-wrapper">
+          <div class="user-report-wrapper flex-10">
             <mat-checkbox class="user-report" labelPosition="after" formControlName="useReport">
               {{ 'labels.inputs.User Report (UI)' | translate }}
             </mat-checkbox>
           </div>
         </div>
 
-        <div fxLayout="column">
-          <mat-form-field fxFlex="98%">
+        <div class="layout-column">
+          <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
             <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>
 
-          <mat-form-field fxFlex="98%">
+          <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.SQL' | translate }}</mat-label>
             <textarea
               matInput
@@ -82,48 +82,58 @@
 
         <br />
 
-        <div fxLayout="row wrap" fxLayoutGap="60%" fxLayout.lt-md="column">
-          <p fxFlex="20%" class="mat-title">{{ 'labels.inputs.Report Parameters' | translate }}</p>
+        <div class="layout-row-wrap gap-60percent layout-lt-md-column">
+          <p class="mat-title flex-20">{{ 'labels.inputs.Report Parameters' | translate }}</p>
 
-          <button mat-raised-button fxFlex="20%" type="button" color="primary" (click)="addReportParameter()">
+          <button mat-raised-button class="flex-20" type="button" color="primary" (click)="addReportParameter()">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add Report Parameter' | translate }}
           </button>
         </div>
 
         <table mat-table [dataSource]="dataSource" matSort>
           <ng-container matColumnDef="parameterName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.buttons.Parameters' | translate }}</th>
-            <td mat-cell *matCellDef="let reportParameter">{{ reportParameter.parameterName }}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'labels.buttons.Parameters' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let reportParameter">
+              {{ reportParameter.parameterName }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="parameterNamePassed">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               {{ 'labels.inputs.Parameter Name Passed to Pentaho' | translate }}
             </th>
-            <td mat-cell *matCellDef="let reportParameter">{{ reportParameter.reportParameterName }}</td>
+            <td mat-cell *matCellDef="let reportParameter">
+              {{ reportParameter.reportParameterName }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-            <td mat-cell *matCellDef="let reportParameter" fxLayoutGap="15%">
-              <button
-                type="button"
-                fxFlex="8%"
-                color="primary"
-                mat-icon-button
-                (click)="editReportParameter(reportParameter)"
-              >
-                <fa-icon icon="edit" size="lg"></fa-icon>
-              </button>
-              <button
-                type="button"
-                fxFlex="8%"
-                color="warn"
-                mat-icon-button
-                (click)="deleteReportParameter(reportParameter)"
-              >
-                <fa-icon icon="trash" size="lg"></fa-icon>
-              </button>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ 'labels.inputs.Actions' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let reportParameter">
+              <div class="layout-row gap-15percent">
+                <button
+                  type="button"
+                  class="flex-8"
+                  color="primary"
+                  mat-icon-button
+                  (click)="editReportParameter(reportParameter)"
+                >
+                  <fa-icon icon="edit" size="lg"></fa-icon>
+                </button>
+                <button
+                  type="button"
+                  class="flex-8"
+                  color="warn"
+                  mat-icon-button
+                  (click)="deleteReportParameter(reportParameter)"
+                >
+                  <fa-icon icon="trash" size="lg"></fa-icon>
+                </button>
+              </div>
             </td>
           </ng-container>
 
@@ -134,7 +144,7 @@
         <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

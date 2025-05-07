@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
   selector: 'mifosx-share-product-accounting-step',

@@ -1,4 +1,4 @@
-<mat-tab-group animationDuration="0ms" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+<mat-tab-group animationDuration="0ms" class="layout-row-wrap gap-2percent layout-lt-md-column">
   <mat-tab *ngFor="let advancedPaymentAllocation of advancedPaymentAllocations">
     <ng-template mat-tab-label>
       {{ advancedPaymentAllocation.transaction.value | translateKey: 'catalogs' }}

@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-  <div fxLayoutAlign="start">
+  <div class="align-start-center">
     <div class="m-b-20">
       <h3>{{ 'labels.heading.All Interest Rates' | translate }}</h3>
     </div>
@@ -60,19 +60,16 @@
           [attr.colspan]="chartSlabsDisplayedColumns.length"
         >
           <div
-            fxLayout="row wrap"
-            fxFlexFill
-            class="incentives"
+            class="layout-row-wrap flex-fill incentives"
             [@expandChartSlab]="chartSlabIndex === expandChartSlabIndex ? 'expanded' : 'collapsed'"
           >
-            <mat-card fxLayout="row wrap" fxFlexFill>
-              <h4 class="m-b-10" fxFlex="13%">
+            <mat-card class="layout-row-wrap flex-fill">
+              <h4 class="m-b-10 flex-13">
                 {{ 'labels.heading.Incentives' | translate }}
               </h4>
 
               <table
-                fxFlexFill
-                class="mat-elevation-z1"
+                class="flex-fill mat-elevation-z1"
                 mat-table
                 [dataSource]="chartSlab.incentives"
                 *ngIf="chartSlab.incentives?.length"

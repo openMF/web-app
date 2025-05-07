@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_DELINQUENCY_RANGE'">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
     {{ 'labels.text.Create Delinquency Range' | translate }}
@@ -6,8 +6,8 @@
 </div>
 
 <div class="container">
-  <div fxLayout="row">
-    <mat-form-field fxFlex>
+  <div class="layout-row">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>

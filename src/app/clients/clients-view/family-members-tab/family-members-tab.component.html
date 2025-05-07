@@ -2,7 +2,7 @@
   <router-outlet>
     <h3>{{ 'labels.heading.Family Members' | translate }}</h3>
 
-    <div fxLayout="row" fxLayoutAlign="flex-end">
+    <div class="layout-row align-flex-end">
       <button mat-raised-button color="primary" [routerLink]="['./add']">
         <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
       </button>
@@ -21,7 +21,7 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="family-member-actions" fxLayout="row" fxLayoutAlign="flex-end">
+        <div class="family-member-actions layout-row align-end">
           <button mat-button color="primary">
             <fa-icon icon="edit" [routerLink]="[member.id, 'edit']"></fa-icon>
           </button>
