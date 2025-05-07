@@ -3,9 +3,9 @@
   <mat-card>
     <form [formGroup]="openingBalancesForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div #searchFormRef fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <div class="m-r-30" fxFlex="83%">
-            <mat-form-field fxFlex="96%">
+        <div #searchFormRef class="layout-row-wrap responsive-column gap-2px">
+          <div class="m-r-30 flex-83">
+            <mat-form-field class="flex-96">
               <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
               <mat-select required formControlName="officeId">
                 <mat-option *ngFor="let office of officeData" [value]="office.id">
@@ -19,23 +19,23 @@
             </mat-form-field>
           </div>
 
-          <div fxFlex="15%">
+          <div class="flex-15">
             <button mat-raised-button color="primary" (click)="retrieveOpeningBalances()">
               {{ 'labels.buttons.Retrieve' | translate }}
             </button>
           </div>
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" *ngIf="openingBalancesData">
+        <div class="layout-row-wrap gap-2percent responsive-column" *ngIf="openingBalancesData">
           <mifosx-gl-account-display
-            fxFlex="100%"
+            class="flex-100"
             [accountTitle]="'Opening Balances Contra Account'"
             [glAccount]="openingBalancesData.contraAccount"
             [withTitle]="'50%'"
           >
           </mifosx-gl-account-display>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currencyCode">
               <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
@@ -48,7 +48,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%" (click)="openingBalancesDatePicker.open()">
+          <mat-form-field class="flex-48" (click)="openingBalancesDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Opening Balances Date' | translate }}</mat-label>
             <input
               matInput
@@ -66,40 +66,38 @@
             </mat-error>
           </mat-form-field>
 
-          <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" class="content" fxFlex="100%">
-            <div class="header" fxFlex="8%">
+          <div class="layout-row-wrap gap-2percent responsive-column flex-100 content">
+            <div class="header flex-8">
               {{ 'labels.inputs.Type' | translate }}
             </div>
 
-            <div class="header" fxFlex="18%">
+            <div class="header flex-18">
               {{ 'labels.inputs.GL Code' | translate }}
             </div>
 
-            <div class="header" fxFlex="18%">
+            <div class="header flex-18">
+              {{ 'labels.inputs.GL Name' | translate }}
               {{ 'labels.inputs.Account' | translate }}
             </div>
 
-            <div class="header r-amount" fxFlex="23%">
+            <div class="header r-amount flex-18">
               {{ 'labels.inputs.Total Debit' | translate }}:
               {{ debitsSum | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
             </div>
 
-            <div class="header r-amount" fxFlex="23%">
+            <div class="header r-amount flex-23">
               {{ 'labels.inputs.Total Credit' | translate }}:
               {{ creditsSum | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
             </div>
           </div>
 
           <div
-            fxFlexFill
-            fxLayout="row wrap"
-            fxLayout.lt-md="column"
-            class="content"
+            class="flex-fill layout-row-wrap responsive-column content"
             formArrayName="glAccountEntries"
             *ngFor="let credit of glAccountEntries.controls; let i = index"
           >
-            <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="i">
-              <div fxFlex="8%">
+            <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
+              <div class="flex-8">
                 {{
                   openingBalancesData.glAccounts[i].glAccountType.value !==
                   openingBalancesData.glAccounts[i - 1]?.glAccountType.value
@@ -108,22 +106,22 @@
                 }}
               </div>
 
-              <div fxFlex="13%">
+              <div class="flex-13">
                 {{ openingBalancesData.glAccounts[i].glAccountCode }}
               </div>
 
-              <div fxFlex="29%">
+              <div class="flex-29">
                 {{ openingBalancesData.glAccounts[i].glAccountName }}
               </div>
 
-              <div fxFlex="20%">
+              <div class="flex-20">
                 <mat-form-field>
                   <mat-label>{{ 'labels.inputs.Debit' | translate }}</mat-label>
                   <input matInput type="number" formControlName="debit" />
                 </mat-form-field>
               </div>
 
-              <div fxFlex="20%">
+              <div class="flex-20">
                 <mat-form-field>
                   <mat-label>{{ 'labels.inputs.Credit' | translate }}</mat-label>
                   <input matInput type="number" formControlName="credit" />
@@ -134,13 +132,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions
-        fxLayout="row"
-        fxLayout.xs="column"
-        fxLayoutAlign="center"
-        fxLayoutGap="5px"
-        *ngIf="openingBalancesData"
-      >
+      <mat-card-actions class="layout-row gap-5px align-center responsive-column" *ngIf="openingBalancesData">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
@@ -167,7 +159,7 @@
       >{{ 'labels.inputs.Migrate opening balances (Office-wise)' | translate }}</a
     >
   </p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

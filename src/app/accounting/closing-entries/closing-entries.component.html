@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateClosure>
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GLCLOSURE'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
@@ -7,8 +7,8 @@
   </div>
 </div>
 
-<div #filter class="container" fxLayout="row">
-  <mat-form-field fxFlex>
+<div #filter class="container layout-row">
+  <mat-form-field class="flex-fill">
     <mat-label>{{ 'labels.inputs.Office Name' | translate }}</mat-label>
     <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete" />
   </mat-form-field>
@@ -60,7 +60,7 @@
 <ng-template #templateButtonCreateClosure let-popover="popover">
   <h2>{{ 'labels.heading.Create Closure' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Create new closure' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -79,7 +79,7 @@
 
 <ng-template #templateFilter let-popover="popover">
   <h4>{{ 'labels.heading.Search bar to filter closures by office.' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -107,7 +107,7 @@
       'labels.inputs.Closing Entries' | translate
     }}</a>
   </h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

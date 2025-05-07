@@ -1,6 +1,6 @@
 <form [formGroup]="loanProductDetailsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
-    <mat-form-field fxFlex="98%">
+  <div class="layout-row-wrap gap-2percent responsive-column align-start-center">
+    <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
       <input
         matInput
@@ -14,7 +14,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Short Name' | translate }}</mat-label>
       <input
         matInput
@@ -29,7 +29,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
       <input
         matInput
@@ -38,7 +38,7 @@
       />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Fund' | translate }}</mat-label>
       <mat-select matTooltip="{{ 'tooltips.Loan products may be assigned' | translate }}" formControlName="fundId">
         <mat-option *ngFor="let fund of fundData" [value]="fund.id">
@@ -51,12 +51,12 @@
       labelPosition="before"
       matTooltip="{{ 'tooltips.A borrower loan counter (cycle)' | translate }}"
       formControlName="includeInBorrowerCycle"
-      fxFlex="48%"
+      class="flex-48"
     >
       {{ 'labels.inputs.Include in Customer Loan Counter' | translate }}
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%" (click)="startDatePicker.open()">
+    <mat-form-field class="flex-48" (click)="startDatePicker.open()">
       <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
       <input
         matInput
@@ -70,7 +70,7 @@
       <mat-datepicker #startDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" (click)="closeDatePicker.open()">
+    <mat-form-field class="flex-48" (click)="closeDatePicker.open()">
       <mat-label>{{ 'labels.inputs.Close Date' | translate }}</mat-label>
       <input
         matInput
@@ -84,7 +84,7 @@
       <mat-datepicker #closeDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field fxFlex="98%">
+    <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
       <textarea
         matInput
@@ -96,7 +96,7 @@
     </mat-form-field>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

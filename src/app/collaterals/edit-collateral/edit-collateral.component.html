@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="clientCollateralForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
-          <div fxLayout="column">
+        <div class="layout-column">
+          <div class="layout-column">
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
               <input matInput required formControlName="name" />
@@ -31,7 +31,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayoutGap="5px" fxLayout="row" fsLayout.xs="column" fxLayoutAlign="center">
+      <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

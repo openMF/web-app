@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50%">
+    <div class="layout-row responsive-column gap-20px">
+      <div class="flex-50">
         <mat-nav-list>
           <div #office>
             <mat-list-item *mifosxHasPermission="'READ_OFFICE'">
@@ -139,7 +139,7 @@
         </mat-nav-list>
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         <mat-nav-list>
           <div #addEditCurrency>
             <mat-list-item *mifosxHasPermission="'READ_CURRENCY'">
@@ -315,7 +315,7 @@
 <ng-template #templateOffice let-popover="popover">
   <h2>{{ 'labels.heading.Manage Offices' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Manage Offices page allows you to create, edit' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -331,7 +331,7 @@
 <ng-template #templateAddEditCurrency let-popover="popover">
   <h2>{{ 'labels.heading.Currency Configuration' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Define what currencies interactions within the Mifos X system' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -347,7 +347,7 @@
 <ng-template #templateHolidays let-popover="popover">
   <h2>{{ 'labels.heading.Manage Holidays' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Ability to manage holidays for individual offices' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -363,7 +363,7 @@
 <ng-template #templateEmployee let-popover="popover">
   <h2>{{ 'labels.heading.Manage Employees' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.View, edit and delete employees of your organization' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -379,7 +379,7 @@
 <ng-template #templateWorkingDays let-popover="popover">
   <h2>{{ 'labels.heading.Working Days' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Working days page allows you to define which days' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -395,7 +395,7 @@
 <ng-template #templateManageFunds let-popover="popover">
   <h2>{{ 'labels.heading.Manage Funds' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.This allows you to manage funds associated with loans.' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

@@ -1,6 +1,6 @@
 <div class="tab-container mat-typography">
   <h3>{{ 'labels.heading.Performance History' | translate }}</h3>
-  <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
+  <div class="layout-row gap-32px performance-history-container">
     <table>
       <tbody>
         <tr>
@@ -25,13 +25,13 @@
 
   <!-- Upcoming Charges -->
   <div class="heading-content">
-    <div fxLayout="column" fxFlex="50%">
+    <div class="layout-column flex-50">
       <div className="heading-name">
         <h3>{{ 'labels.heading.Upcoming Charges' | translate }}</h3>
       </div>
     </div>
-    <div fxLayout="column" fxFlex="50%">
-      <div fxLayout="row" fxLayoutAlign="flex-end">
+    <div class="layout-column flex-50">
+      <div class="layout-row align-flex-end">
         <button
           mat-raised-button
           class="f-right"
@@ -109,13 +109,13 @@
 
   <!-- loans accounts overview table -->
   <div class="heading-content">
-    <div fxLayout="column" fxFlex="50%">
+    <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Loan Accounts' | translate }}</h3>
       </div>
     </div>
-    <div fxLayout="column" fxFlex="50%">
-      <div fxLayout="row" fxLayoutAlign="flex-end">
+    <div class="layout-column flex-50">
+      <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" (click)="toggleLoanAccountsOverview()">
           {{ viewAccountsLabel(showClosedLoanAccounts) | translate }}
         </button>
@@ -299,13 +299,13 @@
 
   <!-- Saving overview Table -->
   <div class="heading-content">
-    <div fxLayout="column" fxFlex="50%">
+    <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Saving Accounts' | translate }}</h3>
       </div>
     </div>
-    <div fxLayout="column" fxFlex="50%">
-      <div fxLayout="row" fxLayoutAlign="flex-end">
+    <div class="layout-column flex-50">
+      <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" (click)="toggleSavingAccountsOverview()">
           {{ viewAccountsLabel(showClosedSavingAccounts) | translate }}
         </button>
@@ -441,13 +441,13 @@
 
   <!-- Fixed Deposit Table -->
   <div class="heading-content">
-    <div fxLayout="column" fxFlex="50%">
+    <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Fixed Deposit Accounts' | translate }}</h3>
       </div>
     </div>
-    <div fxLayout="column" fxFlex="50%">
-      <div fxLayout="row" fxLayoutAlign="flex-end">
+    <div class="layout-column flex-50">
+      <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" (click)="toggleFixedAccountsOverview()">
           {{ viewAccountsLabel(showClosedFixedAccounts) | translate }}
         </button>
@@ -562,13 +562,13 @@
 
   <!-- Recurring Deposit Table -->
   <div class="heading-content">
-    <div fxLayout="column" fxFlex="50%">
+    <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Recurring Deposit Accounts' | translate }}</h3>
       </div>
     </div>
-    <div fxLayout="column" fxFlex="50%">
-      <div fxLayout="row" fxLayoutAlign="flex-end">
+    <div class="layout-column flex-50">
+      <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" (click)="toggleRecurringAccountsOverview()">
           {{ viewAccountsLabel(showClosedRecurringAccounts) | translate }}
         </button>
@@ -691,13 +691,13 @@
 
   <!-- Shares overview Table -->
   <div class="heading-content">
-    <div fxLayout="column" fxFlex="50%">
+    <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.inputs.Shares Accounts' | translate }}</h3>
       </div>
     </div>
-    <div fxLayout="column" fxFlex="50%">
-      <div fxLayout="row" fxLayoutAlign="flex-end">
+    <div class="layout-column flex-50">
+      <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" (click)="toggleShareAccountsOverview()">
           {{ viewAccountsLabel(showClosedShareAccounts) | translate }}
         </button>
@@ -815,13 +815,13 @@
 
   <!-- Collateral Data Table -->
   <div class="heading-content">
-    <div fxLayout="column" fxFlex="50%">
+    <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Collateral Data' | translate }}</h3>
       </div>
     </div>
-    <div fxLayout="column" fxFlex="50%">
-      <div fxLayout="row" fxLayoutAlign="flex-end">
+    <div class="layout-column flex-50">
+      <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" disabled>
           {{ 'labels.buttons.View Collaterals' | translate }}
         </button>

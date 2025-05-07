@@ -1,12 +1,12 @@
-<div fxLayout="column">
-  <mat-form-field fxFlex="98%">
+<div class="layout-column">
+  <mat-form-field class="flex-98">
     <mat-label>{{ 'labels.inputs.Campaign Message' | translate }}</mat-label>
     <textarea matInput [formControl]="message"></textarea>
   </mat-form-field>
 
-  <h3 fxFlex="98%" class="mat-h3">{{ 'labels.heading.Template Parameters' | translate }}</h3>
+  <h3 class="mat-h3 flex-98">{{ 'labels.heading.Template Parameters' | translate }}</h3>
 
-  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
+  <div class="layout-row-wrap layout-xs-column layout-align-center">
     <button
       mat-stroked-button
       color="primary"
@@ -18,7 +18,7 @@
     </button>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

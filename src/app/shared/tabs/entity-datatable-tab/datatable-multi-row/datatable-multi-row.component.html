@@ -1,29 +1,35 @@
 <div class="tab-container mat-typography">
-  <div fxLayout="row" fxLayoutAlign="start">
+  <div class="layout-row align-start">
     <div class="m-b-10">
       <h3>{{ datatableName }}</h3>
     </div>
-    <div class="action-button m-b-7" fxLayoutGap="10px">
+    <div class="action-button m-b-7 gap-10px">
       <span *mifosxHasPermission="'CREATE_' + datatableName">
         <button mat-raised-button color="primary" (click)="add()">
           <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
         </button>
       </span>
-      <span *mifosxHasPermission="'DELETE_' + datatableName" [fxShow]="isSelected">
-        <button class="delete-button" mat-raised-button color="warn" (click)="deleteSelected()">
-          <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete Selected' | translate }}
-        </button>
-      </span>
-      <span *mifosxHasPermission="'DELETE_' + datatableName" [fxShow]="datatableData.length > 0">
-        <button class="delete-button" mat-raised-button color="warn" (click)="delete()">
-          <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete All' | translate }}
-        </button>
-      </span>
+      <ng-container *mifosxHasPermission="'DELETE_' + datatableName">
+        <span *ngIf="isSelected">
+          <button class="delete-button" mat-raised-button color="warn" (click)="deleteSelected()">
+            <fa-icon icon="trash" class="m-r-10"></fa-icon>
+            {{ 'labels.buttons.Delete Selected' | translate }}
+          </button>
+        </span>
+      </ng-container>
+      <ng-container *mifosxHasPermission="'DELETE_' + datatableName">
+        <span *ngIf="datatableData.length > 0">
+          <button class="delete-button" mat-raised-button color="warn" (click)="delete()">
+            <fa-icon icon="trash" class="m-r-10"></fa-icon>
+            {{ 'labels.buttons.Delete All' | translate }}
+          </button>
+        </span>
+      </ng-container>
     </div>
   </div>
 
   <div class="m-t-10">
-    <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z1 m-b-25" [fxHide]="isLoading">
+    <table #dataTable mat-table [dataSource]="datatableData" class="mat-elevation-z1 m-b-25">
       <ng-container *ngFor="let datatableColumn of datatableColumns; let i = index" [matColumnDef]="datatableColumn">
         <ng-container *ngIf="i === 0">
           <th mat-header-cell *matHeaderCellDef></th>

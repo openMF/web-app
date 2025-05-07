@@ -3,12 +3,12 @@
   margin: 0 auto;
   padding: 5%;
 
-  @media screen and (width >=960px) {
-    [fxFlex]:nth-child(odd) {
+  @media screen and (width >= 960px) {
+    .flex-50-minus-25px:nth-child(odd) {
       margin-right: 25px;
     }
 
-    [fxFlex]:last-child {
+    .flex-50-minus-25px:last-child {
       margin-right: 0;
     }
   }
