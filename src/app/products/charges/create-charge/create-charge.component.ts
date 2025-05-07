@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { minLessThanOrEqualMaxValidator } from 'app/shared/validators/min-max-values.validator';
+import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
 
 /**
  * Create charge component.
@@ -80,40 +80,42 @@ export class CreateChargeComponent implements OnInit {
    * Creates the charge form.
    */
   createChargeForm() {
-    this.chargeForm = this.formBuilder.group(
-      {
-        chargeAppliesTo: [
-          '',
-          Validators.required
-        ],
-        name: [
-          '',
-          Validators.required
-        ],
-        currencyCode: [
-          '',
-          Validators.required
-        ],
-        chargeTimeType: [
-          '',
-          Validators.required
-        ],
-        chargeCalculationType: [
-          '',
-          Validators.required
-        ],
-        amount: [
-          '',
-          Validators.required
-        ],
-        active: [false],
-        penalty: [false],
-        taxGroupId: [''],
-        minCap: [''],
-        maxCap: ['']
-      },
-      { validators: minLessThanOrEqualMaxValidator('minCap', 'maxCap') }
-    );
+    this.chargeForm = this.formBuilder.group({
+      chargeAppliesTo: [
+        '',
+        Validators.required
+      ],
+      name: [
+        '',
+        Validators.required
+      ],
+      currencyCode: [
+        '',
+        Validators.required
+      ],
+      chargeTimeType: [
+        '',
+        Validators.required
+      ],
+      chargeCalculationType: [
+        '',
+        Validators.required
+      ],
+      amount: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^\\s*(?=.*[1-9])\\d*(?:\\.\\d+)?\\s*$')]
+      ],
+      active: [false],
+      penalty: [false],
+      taxGroupId: [null],
+      minCap: [null],
+      maxCap: [
+        null,
+        [minNumberValueValidator('minCap')]
+      ]
+    });
   }
 
   /**
