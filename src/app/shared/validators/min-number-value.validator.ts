@@ -7,9 +7,19 @@ export function minNumberValueValidator(minControlName: string): ValidatorFn {
       return null;
     }
 
-    const minValue = minControl.value;
-    if (control.value < minValue) {
-      return { minValue: { requiredMin: minValue, actual: control.value } };
+    let minValue = minControl.value;
+    if (typeof minValue === 'undefined') {
+      return null;
+    }
+    if (typeof minValue !== 'number') {
+      minValue = minValue * 1;
+    }
+    let controlValue = control.value;
+    if (typeof controlValue !== 'number') {
+      controlValue = controlValue * 1;
+    }
+    if (controlValue < minValue) {
+      return { minValue: { requiredMin: minValue, actual: controlValue } };
     }
     return null;
   };
