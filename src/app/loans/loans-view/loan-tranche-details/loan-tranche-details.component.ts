@@ -212,7 +212,8 @@ export class LoanTrancheDetailsComponent implements OnInit {
           item.expectedDisbursementDate,
           this.settingsService.dateFormat
         ),
-        principal: item.principal
+        principal: item.principal,
+        id: item.id
       });
     });
 
