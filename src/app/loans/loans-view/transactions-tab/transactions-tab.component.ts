@@ -12,6 +12,11 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { TranslateService } from '@ngx-translate/core';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
+import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
+import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
+import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { AlertService } from 'app/core/alert/alert.service';
+import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 
 @Component({
   selector: 'mifosx-transactions-tab',
@@ -80,7 +85,8 @@ export class TransactionsTabComponent implements OnInit {
     private dialog: MatDialog,
     private loansService: LoansService,
     private translateService: TranslateService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private alertService: AlertService
   ) {
     this.route.parent.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.transactionsData = data.loanDetailsData.transactions;
@@ -332,6 +338,10 @@ export class TransactionsTabComponent implements OnInit {
     return transactionType.reAmortize || transactionType.code === 'loanTransactionType.reAmortize';
   }
 
+  private isCapitalizedIncome(transactionType: LoanTransactionType): boolean {
+    return transactionType.capitalizedIncome || transactionType.code === 'loanTransactionType.capitalizedIncome';
+  }
+
   private isReAgoeOrReAmortize(transactionType: LoanTransactionType): boolean {
     return this.isReAmortize(transactionType) || this.isReAge(transactionType);
   }
@@ -353,5 +363,73 @@ export class TransactionsTabComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  capitalizedIncomeAdjustmentTransaction(transaction: LoanTransaction) {
+    const accountId = `${this.loanId}`;
+    this.loansService
+      .getLoanTransactionActionTemplate(accountId, 'capitalizedIncomeAdjustment', `${transaction.id}`)
+      .subscribe((response: any) => {
+        const transactionDate = response.date || transaction.date;
+        const transactionAmount = response.amount || transaction.amount;
+        const formfields: FormfieldBase[] = [
+          new DatepickerBase({
+            controlName: 'transactionDate',
+            label: 'Date',
+            value: this.dateUtils.parseDate(transactionDate),
+            type: 'datetime-local',
+            required: true,
+            minDate: transaction.date,
+            order: 1
+          }),
+          new InputBase({
+            controlName: 'amount',
+            label: 'Amount',
+            value: transactionAmount,
+            type: 'number',
+            required: true,
+            max: transactionAmount,
+            min: 0.001,
+            order: 2
+          })
+
+        ];
+        const data = {
+          title: `Adjustment ${transaction.type.value} Transaction`,
+          layout: { addButtonText: 'Adjustment' },
+          formfields: formfields
+        };
+        const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
+        chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
+          if (response.data) {
+            const dateFormat = this.settingsService.dateFormat;
+
+            if (response.data.value.amount <= transactionAmount) {
+              const locale = this.settingsService.language.code;
+              const payload = {
+                transactionDate: this.dateUtils.formatDate(response.data.value.transactionDate, dateFormat),
+                transactionAmount: response.data.value.amount,
+                locale,
+                dateFormat
+              };
+              this.loansService
+                .executeLoansAccountTransactionsCommand(
+                  accountId,
+                  'capitalizedIncomeAdjustment',
+                  payload,
+                  transaction.id
+                )
+                .subscribe(() => {
+                  this.router.navigate(['../'], { relativeTo: this.route });
+                });
+            } else {
+              this.alertService.alert({
+                type: 'BusinessRule',
+                message: 'Chargeback amount must be lower or equal to: ' + transaction.amount
+              });
+            }
+          }
+        });
+      });
   }
 }
