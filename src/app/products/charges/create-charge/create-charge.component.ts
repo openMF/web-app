@@ -8,6 +8,7 @@ import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
+import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.validator';
 
 /**
  * Create charge component.
@@ -110,7 +111,10 @@ export class CreateChargeComponent implements OnInit {
       active: [false],
       penalty: [false],
       taxGroupId: [null],
-      minCap: [null],
+      minCap: [
+        null,
+        [maxNumberValueValidator('maxCap')]
+      ],
       maxCap: [
         null,
         [minNumberValueValidator('minCap')]
