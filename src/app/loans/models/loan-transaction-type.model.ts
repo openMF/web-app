@@ -32,4 +32,6 @@ export interface LoanTransactionType {
   downPayment: boolean;
   reAge: boolean;
   reAmortize: boolean;
+  capitalizedIncome: boolean;
+  capitalizedIncomeAdjustment: boolean;
 }

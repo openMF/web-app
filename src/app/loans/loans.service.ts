@@ -32,6 +32,11 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
   }
 
+  getLoanTransactionActionTemplate(loanId: string, command: string, transactionId: string): Observable<any> {
+    const httpParams = new HttpParams().set('command', command).set('transactionId', transactionId);
+    return this.http.get(`/loans/${loanId}/transactions/template`, { params: httpParams });
+  }
+
   getLoanPrepayLoanActionTemplate(loanId: string, transactionDate: string): Observable<any> {
     if (!transactionDate) {
       transactionDate = this.dateUtils.formatDate(this.settingsService.businessDate, this.settingsService.dateFormat);
