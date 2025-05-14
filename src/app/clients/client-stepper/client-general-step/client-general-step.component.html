@@ -96,7 +96,6 @@
       formGroupName="clientNonPersonDetails"
       *ngIf="createClientForm.get('clientNonPersonDetails')"
     >
-      *ngIf="createClientForm.contains('clientNonPersonDetails')" >
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
         <mat-select formControlName="constitutionId" required>
@@ -159,10 +158,9 @@
 
     <mat-checkbox
       *ngIf="createClientForm.value.legalFormId === 1"
-      class="flex-48"
+      class="flex-48 margin-v"
       labelPosition="before"
       formControlName="isStaff"
-      class="margin-v"
     >
       {{ 'labels.inputs.Is staff' | translate }}?
     </mat-checkbox>

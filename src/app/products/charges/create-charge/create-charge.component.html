@@ -92,11 +92,7 @@
               </mat-error>
             </mat-form-field>
 
-            <div
-              class="flex-48"
-              *ngIf="chargeForm.controls.chargeTimeType.value === 9"
-              class="add-fee-frequency-wrapper"
-            >
+            <div class="flex-48 add-fee-frequency-wrapper" *ngIf="chargeForm.controls.chargeTimeType.value === 9">
               <mat-checkbox labelPosition="before" formControlName="addFeeFrequency">
                 {{ 'labels.inputs.Add Fee Frequency' | translate }}
               </mat-checkbox>
@@ -222,15 +218,13 @@
             </mat-form-field>
 
             <div class="flex-48 layout-row gap-2percent layout-lt-md-column">
-              <div class="flex-50">
-                class="active-wrapper">
+              <div class="flex-50 active-wrapper">
                 <mat-checkbox labelPosition="before" formControlName="active">
                   {{ 'labels.status.Active' | translate }}
                 </mat-checkbox>
               </div>
 
-              <div class="flex-50">
-                class="penalty-wrapper">
+              <div class="flex-50 penalty-wrapper">
                 <mat-checkbox labelPosition="before" formControlName="penalty">
                   {{ 'labels.commons.Is' | translate }} {{ 'labels.inputs.Penalty' | translate }}
                 </mat-checkbox>

@@ -103,7 +103,7 @@
       ></i>
     </h4>
 
-    <mat-checkbox class="flex-73" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
+    <mat-checkbox class="flex-73 margin-v" labelPosition="before" formControlName="preClosurePenalApplicable">
       {{ 'labels.inputs.Apply Penal Interest (less)' | translate }}
     </mat-checkbox>
 
@@ -127,10 +127,9 @@
     <mat-divider class="flex-98"></mat-divider>
 
     <mat-checkbox
-      class="flex-48"
+      class="flex-48 margin-v"
       labelPosition="before"
       formControlName="withHoldTax"
-      class="margin-v"
       matTooltip="{{ 'tooltips.An boolean flag to attach' | translate }}"
     >
       {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}
