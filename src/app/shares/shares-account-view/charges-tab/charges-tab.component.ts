@@ -40,7 +40,6 @@ export class ChargesTabComponent implements OnInit {
       this.sharesAccountData = data.sharesAccountData;
       this.chargesData = this.sharesAccountData.charges;
     });
-    console.log(this.sharesAccountData);
   }
 
   ngOnInit() {

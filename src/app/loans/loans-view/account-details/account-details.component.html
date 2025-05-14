@@ -80,6 +80,28 @@
     </div>
 
     <div class="flex-fill">
+      <span class="flex-50"> {{ 'labels.inputs.Enable income capitalization' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.enableIncomeCapitalization | yesNo }} </span>
+    </div>
+
+    <div class="flex-fill" *ngIf="loanDetails.enableIncomeCapitalization">
+      <span class="flex-50"> {{ 'labels.inputs.Income capitalization calculation type' | translate }}</span>
+      <span class="flex-50">
+        {{ loanDetails.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }}
+      </span>
+    </div>
+
+    <div class="flex-fill" *ngIf="loanDetails.enableIncomeCapitalization">
+      <span class="flex-50"> {{ 'labels.inputs.Income capitalization strategy' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div class="flex-fill" *ngIf="loanDetails.enableIncomeCapitalization">
+      <span class="flex-50"> {{ 'labels.inputs.Income capitalization type' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.capitalizedIncomeType?.value | translateKey: 'catalogs' }} </span>
+    </div>
+
+    <div class="flex-fill">
       <span class="flex-50"> {{ 'labels.inputs.Grace: On Principal Payment' | translate }}</span>
       <span class="flex-50"> {{ loanDetails.graceOnPrincipalPayment }} </span>
     </div>
@@ -226,7 +248,7 @@
       <span class="flex-50">
         {{ loanDetails.minimumGap | formatNumber }}&nbsp;{{ 'labels.text.Days' | translate }}&nbsp;, Max:{{
           loanDetails.maximumGap | formatNumber
-        }}&nbsp;{{ 'labels.text.Days' | translate }})
+        }}&nbsp;{{ 'labels.text.Days' | translate }}
       </span>
     </div>
   </div>

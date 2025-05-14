@@ -152,6 +152,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
             this.loanProduct.incomeFromChargeOffPenaltyAccountId,
             incomeAccountData
           ),
+          incomeFromCapitalizationAccount: this.glAccountLookUp(
+            this.loanProduct.incomeFromCapitalizationAccountId,
+            incomeAccountData
+          ),
 
           writeOffAccount: this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
           goodwillCreditAccount: this.glAccountLookUp(this.loanProduct.goodwillCreditAccountId, expenseAccountData),
@@ -160,6 +164,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
 
           overpaymentLiabilityAccount: this.glAccountLookUp(
             this.loanProduct.overpaymentLiabilityAccountId,
+            liabilityAccountData
+          ),
+          deferredIncomeLiabilityAccount: this.glAccountLookUp(
+            this.loanProduct.deferredIncomeLiabilityAccountId,
             liabilityAccountData
           )
         };
@@ -275,13 +283,30 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         this.loanProductsTemplate.daysInYearTypeOptions
       );
       this.loanProduct.daysInYearType = optionValue;
-      if (this.isAdvancedPaymentAllocation && this.loanProduct.daysInYearType.id == 1) {
+      if (this.isAdvancedPaymentAllocation && this.loanProduct.daysInYearType?.id == 1) {
         optionValue = this.optionDataLookUp(
           this.loanProduct.daysInYearCustomStrategy,
           this.loanProductsTemplate.daysInYearCustomStrategyOptions
         );
       }
       this.loanProduct.daysInYearCustomStrategy = optionValue;
+      if (this.isAdvancedPaymentAllocation && this.loanProduct.enableIncomeCapitalization) {
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.capitalizedIncomeCalculationType,
+          this.loanProductsTemplate.capitalizedIncomeCalculationTypeOptions
+        );
+        this.loanProduct.capitalizedIncomeCalculationType = optionValue;
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.capitalizedIncomeStrategy,
+          this.loanProductsTemplate.capitalizedIncomeStrategyOptions
+        );
+        this.loanProduct.capitalizedIncomeStrategy = optionValue;
+        optionValue = this.optionDataLookUp(
+          this.loanProduct.capitalizedIncomeType,
+          this.loanProductsTemplate.capitalizedIncomeTypeOptions
+        );
+        this.loanProduct.capitalizedIncomeType = optionValue;
+      }
       optionValue = this.optionDataLookUp(
         this.loanProduct.interestRateFrequencyType,
         this.loanProductsTemplate.interestRateFrequencyTypeOptions

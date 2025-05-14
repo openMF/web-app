@@ -715,7 +715,6 @@ export class LoanProductSettingsStepComponent implements OnInit {
     if (productSettings['delinquencyBucketId'] === '') {
       productSettings['delinquencyBucketId'] = null;
     }
-    console.log(productSettings);
     return productSettings;
   }
 

@@ -231,9 +231,7 @@ export class ViewRoleComponent implements OnInit {
     this.formGroup.controls.roster.disable();
     this.checkboxesChanged = false;
     this.isDisabled = true;
-    this.systemService.updateRolePermission(this.roleId, permissionData).subscribe((response: any) => {
-      console.log('response: ', response);
-    });
+    this.systemService.updateRolePermission(this.roleId, permissionData).subscribe((response: any) => {});
   }
 
   /**

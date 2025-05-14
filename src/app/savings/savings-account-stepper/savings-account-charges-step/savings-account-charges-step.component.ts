@@ -170,7 +170,6 @@ export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {
             newCharge = { ...charge, feeOnMonthDay: dateMonthDay };
             break;
         }
-        console.log(newCharge);
         this.chargesDataSource.splice(this.chargesDataSource.indexOf(charge), 1, newCharge);
         this.chargesDataSource = this.chargesDataSource.concat([]);
       }

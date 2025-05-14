@@ -18,12 +18,15 @@ import {
   AdvancedCreditAllocation,
   AdvancedPaymentAllocation,
   AdvancedPaymentStrategy,
+  CapitalizedIncome,
   CreditAllocation,
   PaymentAllocation
 } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { Accounting } from 'app/core/utils/accounting';
 import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
 import { StringEnumOptionData } from '../../../shared/models/option-data.model';
+import { LoanProductCapitalizedIncomeStepComponent } from '../loan-product-stepper/loan-product-capitalized-income-step/loan-product-capitalized-income-step.component';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'mifosx-edit-loan-product',
@@ -36,6 +39,8 @@ export class EditLoanProductComponent implements OnInit {
   loanProductCurrencyStep: LoanProductCurrencyStepComponent;
   @ViewChild(LoanProductInterestRefundStepComponent, { static: true })
   loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
+  @ViewChild(LoanProductCapitalizedIncomeStepComponent, { static: true })
+  loanProductCapitalizedIncomeStep: LoanProductCapitalizedIncomeStepComponent;
   @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true })
   loanProductSettingsStep: LoanProductSettingsStepComponent;
@@ -54,6 +59,9 @@ export class EditLoanProductComponent implements OnInit {
   advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];
   advancedCreditAllocations: AdvancedCreditAllocation[] = [];
   supportedInterestRefundTypes: StringEnumOptionData[] = [];
+
+  capitalizedIncome: CapitalizedIncome | null = null;
+  loanIncomeCapitalizationForm: UntypedFormGroup | null = null;
 
   /**
    * @param {ActivatedRoute} route Activated Route.
@@ -90,6 +98,18 @@ export class EditLoanProductComponent implements OnInit {
       this.paymentAllocation = this.loanProductAndTemplate.paymentAllocation;
       this.creditAllocation = this.loanProductAndTemplate.creditAllocation;
       this.supportedInterestRefundTypes = this.loanProductAndTemplate.supportedInterestRefundTypes;
+      if (this.loanProductAndTemplate.enableIncomeCapitalization) {
+        this.capitalizedIncome = {
+          enableIncomeCapitalization: true,
+          capitalizedIncomeCalculationType: this.loanProductAndTemplate.capitalizedIncomeCalculationType.id,
+          capitalizedIncomeStrategy: this.loanProductAndTemplate.capitalizedIncomeStrategy.id,
+          capitalizedIncomeType: this.loanProductAndTemplate.capitalizedIncomeType.id
+        };
+      } else {
+        this.capitalizedIncome = {
+          enableIncomeCapitalization: false
+        };
+      }
     }
   }
 
@@ -113,6 +133,10 @@ export class EditLoanProductComponent implements OnInit {
     if (this.loanProductInterestRefundStep != null) {
       return this.loanProductInterestRefundStep.loanProductInterestRefundForm;
     }
+  }
+
+  setViewChildForm(viewChildForm: UntypedFormGroup): void {
+    this.loanIncomeCapitalizationForm = viewChildForm;
   }
 
   advancePaymentStrategy(value: string): void {
@@ -146,25 +170,51 @@ export class EditLoanProductComponent implements OnInit {
     this.wasPaymentAllocationChanged = value;
   }
 
+  setCapitalizedIncome(capitalizedIncome: CapitalizedIncome): void {
+    if (this.isAdvancedPaymentStrategy) {
+      this.capitalizedIncome = capitalizedIncome;
+    }
+  }
+
   get loanProductAccountingForm() {
     return this.loanProductAccountingStep.loanProductAccountingForm;
   }
 
   get loanProductFormValidAndNotPristine() {
-    return (
-      this.loanProductDetailsForm.valid &&
-      this.loanProductCurrencyForm.valid &&
-      this.loanProductTermsForm.valid &&
-      this.loanProductSettingsForm.valid &&
-      this.loanProductAccountingForm.valid &&
-      (!this.loanProductDetailsForm.pristine ||
-        !this.loanProductCurrencyForm.pristine ||
-        !this.loanProductTermsForm.pristine ||
-        !this.loanProductSettingsForm.pristine ||
-        !this.loanProductChargesStep.pristine ||
-        !this.loanProductAccountingForm.pristine ||
-        this.wasPaymentAllocationChanged)
-    );
+    if (this.isAdvancedPaymentStrategy) {
+      return (
+        this.loanProductDetailsForm.valid &&
+        this.loanProductCurrencyForm.valid &&
+        this.loanProductTermsForm.valid &&
+        this.loanProductSettingsForm.valid &&
+        this.loanProductAccountingForm.valid &&
+        this.loanIncomeCapitalizationForm != null &&
+        this.loanIncomeCapitalizationForm.valid &&
+        (!this.loanProductDetailsForm.pristine ||
+          !this.loanProductCurrencyForm.pristine ||
+          !this.loanProductTermsForm.pristine ||
+          !this.loanProductSettingsForm.pristine ||
+          !this.loanProductChargesStep.pristine ||
+          !this.loanProductAccountingForm.pristine ||
+          !this.loanIncomeCapitalizationForm.pristine ||
+          this.wasPaymentAllocationChanged)
+      );
+    } else {
+      return (
+        this.loanProductDetailsForm.valid &&
+        this.loanProductCurrencyForm.valid &&
+        this.loanProductTermsForm.valid &&
+        this.loanProductSettingsForm.valid &&
+        this.loanProductAccountingForm.valid &&
+        (!this.loanProductDetailsForm.pristine ||
+          !this.loanProductCurrencyForm.pristine ||
+          !this.loanProductTermsForm.pristine ||
+          !this.loanProductSettingsForm.pristine ||
+          !this.loanProductChargesStep.pristine ||
+          !this.loanProductAccountingForm.pristine ||
+          this.wasPaymentAllocationChanged)
+      );
+    }
   }
 
   get loanProduct() {
@@ -184,6 +234,14 @@ export class EditLoanProductComponent implements OnInit {
       loanProduct['paymentAllocation'] = this.paymentAllocation;
       loanProduct['creditAllocation'] = this.creditAllocation;
       loanProduct['supportedInterestRefundTypes'] = this.supportedInterestRefundTypes;
+      if (this.capitalizedIncome != null) {
+        loanProduct['enableIncomeCapitalization'] = this.capitalizedIncome.enableIncomeCapitalization;
+        if (this.capitalizedIncome.enableIncomeCapitalization) {
+          loanProduct['capitalizedIncomeCalculationType'] = this.capitalizedIncome.capitalizedIncomeCalculationType;
+          loanProduct['capitalizedIncomeStrategy'] = this.capitalizedIncome.capitalizedIncomeStrategy;
+          loanProduct['capitalizedIncomeType'] = this.capitalizedIncome.capitalizedIncomeType;
+        }
+      }
     }
     return loanProduct;
   }
@@ -200,6 +258,7 @@ export class EditLoanProductComponent implements OnInit {
       );
     } else {
       delete loanProduct['supportedInterestRefundTypes'];
+      delete loanProduct['daysInYearCustomStrategy'];
     }
     delete loanProduct['useDueForRepaymentsConfigurations'];
 

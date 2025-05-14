@@ -42,6 +42,7 @@ export class LoansAccountScheduleStepComponent {
       dateFormat
     );
     delete payload['enableInstallmentLevelDelinquency'];
+    delete payload['externalId'];
 
     this.loansService.calculateLoanSchedule(payload).subscribe((response: any) => {
       this.repaymentScheduleDetails = response;

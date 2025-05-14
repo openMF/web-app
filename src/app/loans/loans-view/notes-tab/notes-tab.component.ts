@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -12,7 +12,7 @@ import { AuthenticationService } from '../../../core/authentication/authenticati
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss']
 })
-export class NotesTabComponent {
+export class NotesTabComponent implements OnInit {
   entityId: string;
   username: string;
   entityNotes: any;
@@ -27,6 +27,12 @@ export class NotesTabComponent {
     this.entityId = this.route.parent.snapshot.params['loanId'];
     this.route.data.subscribe((data: { loanNotes: any }) => {
       this.entityNotes = data.loanNotes;
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.parent.params.subscribe((params) => {
+      this.entityId = params['loanId'];
     });
   }
 

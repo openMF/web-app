@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
+import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.validator';
 
 /**
  * Create charge component.
@@ -108,9 +110,15 @@ export class CreateChargeComponent implements OnInit {
       ],
       active: [false],
       penalty: [false],
-      taxGroupId: [''],
-      minCap: [''],
-      maxCap: ['']
+      taxGroupId: [null],
+      minCap: [
+        null,
+        [maxNumberValueValidator('maxCap')]
+      ],
+      maxCap: [
+        null,
+        [minNumberValueValidator('minCap')]
+      ]
     });
   }
 
@@ -275,15 +283,6 @@ export class CreateChargeComponent implements OnInit {
       this.currencyDecimalPlaces = this.chargesTemplateData.currencyOptions.find(
         (currency: any) => currency.code === currencyCode
       ).decimalPlaces;
-      if (this.currencyDecimalPlaces === 0) {
-        this.chargeForm.get('amount').setValidators([
-          Validators.required,
-          Validators.pattern('^[1-9]\\d*$')]);
-      } else {
-        this.chargeForm.get('amount').setValidators([
-          Validators.required,
-          Validators.pattern(`^\\s*(?=.*[1-9])\\d*(\\.\\d{1,${this.currencyDecimalPlaces}})?\\s*$`)]);
-      }
     });
   }
 

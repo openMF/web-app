@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.validator';
+import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
 
 /**
  * Edit Charge component.
@@ -92,8 +94,15 @@ export class EditChargeComponent implements OnInit {
       ],
       active: [this.chargeData.active],
       penalty: [this.chargeData.penalty],
-      minCap: [this.chargeData.minCap],
-      maxCap: [this.chargeData.maxCap],
+      minCap: [
+        this.chargeData.minCap || null,
+        ,
+        [maxNumberValueValidator('maxCap')]
+      ],
+      maxCap: [
+        this.chargeData.maxCap || null,
+        [minNumberValueValidator('minCap')]
+      ],
       chargeTimeType: [
         this.chargeData.chargeTimeType.id,
         Validators.required
