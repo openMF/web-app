@@ -58,6 +58,7 @@ export class MakeRepaymentComponent implements OnInit {
    * and initialize with the required values
    */
   ngOnInit() {
+    this.command = this.dataObject.type.code.split('.')[1];
     this.maxDate = this.settingsService.businessDate;
     this.createRepaymentLoanForm();
     this.setRepaymentLoanDetails();
@@ -76,14 +77,27 @@ export class MakeRepaymentComponent implements OnInit {
         this.settingsService.businessDate,
         Validators.required
       ],
-      transactionAmount: [
-        '',
-        Validators.required
-      ],
       externalId: '',
       paymentTypeId: '',
       note: ''
     });
+
+    if (this.isCapitalizedIncome()) {
+      this.repaymentLoanForm.addControl(
+        'transactionAmount',
+        new UntypedFormControl('', [
+          Validators.required,
+          Validators.min(0.001),
+          Validators.max(this.dataObject.amount)])
+      );
+    } else {
+      this.repaymentLoanForm.addControl(
+        'transactionAmount',
+        new UntypedFormControl('', [
+          Validators.required,
+          Validators.min(0.001)])
+      );
+    }
   }
 
   setRepaymentLoanDetails() {
@@ -114,7 +128,14 @@ export class MakeRepaymentComponent implements OnInit {
   }
 
   showDetails(): boolean {
-    return !['capitalizedIncome'].includes(this.command);
+    return !this.isCapitalizedIncome();
+  }
+
+  isCapitalizedIncome(): boolean {
+    return [
+      'capitalizedIncome',
+      'capitalizedIncomeAdjustment'
+    ].includes(this.command);
   }
 
   /** Submits the repayment form */
