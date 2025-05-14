@@ -54,6 +54,8 @@
         (supportedInterestRefundTypes)="setSupportedInterestRefundTypes($event)"
       >
       </mifosx-loan-product-interest-refund-step>
+
+      <mifosx-stepper-buttons></mifosx-stepper-buttons>
     </mat-step>
 
     <mat-step *ngIf="isAdvancedPaymentStrategy" completed>
@@ -91,6 +93,22 @@
       </mifosx-loan-product-charges-step>
     </mat-step>
 
+    <mat-step *ngIf="isAdvancedPaymentStrategy" [stepControl]="loanIncomeCapitalizationForm" completed>
+      <ng-template matStepLabel>{{ 'labels.inputs.INCOME CAPITALIZATION' | translate }}</ng-template>
+
+      <mifosx-loan-product-capitalized-income-step
+        [capitalizedIncome]="capitalizedIncome"
+        [capitalizedIncomeCalculationTypeOptions]="loanProductAndTemplate.capitalizedIncomeCalculationTypeOptions"
+        [capitalizedIncomeStrategyOptions]="loanProductAndTemplate.capitalizedIncomeStrategyOptions"
+        [capitalizedIncomeTypeOptions]="loanProductAndTemplate.capitalizedIncomeTypeOptions"
+        (setCapitalizedIncome)="setCapitalizedIncome($event)"
+        (setViewChildForm)="setViewChildForm($event)"
+      >
+      </mifosx-loan-product-capitalized-income-step>
+
+      <mifosx-stepper-buttons></mifosx-stepper-buttons>
+    </mat-step>
+
     <mat-step [stepControl]="loanProductAccountingForm" completed>
       <ng-template matStepLabel>{{ 'labels.inputs.ACCOUNTING' | translate }}</ng-template>
 
@@ -98,6 +116,7 @@
         [loanProductsTemplate]="loanProductAndTemplate"
         [accountingRuleData]="accountingRuleData"
         [loanProductFormValid]="loanProductFormValidAndNotPristine"
+        [capitalizedIncome]="capitalizedIncome"
       >
       </mifosx-loan-product-accounting-step>
     </mat-step>

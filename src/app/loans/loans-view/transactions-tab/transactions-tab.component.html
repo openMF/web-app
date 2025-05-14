@@ -194,6 +194,16 @@
               <span>{{ 'labels.menus.Undo Re-Amortize' | translate }}</span>
             </button>
           </span>
+          <span *ngIf="isCapitalizedIncome(transaction.type) && !transaction.manuallyReversed">
+            <button
+              mat-menu-item
+              *mifosxHasPermission="'CAPITALIZED_INCOME_LOAN'"
+              (click)="capitalizedIncomeAdjustmentTransaction(transaction, $event)"
+            >
+              <mat-icon><fa-icon icon="coins" size="sm"></fa-icon></mat-icon>
+              <span>{{ 'labels.menus.Capitalized Income Adjustment' | translate }}</span>
+            </button>
+          </span>
           <span *ngIf="viewJournalEntry(transaction.type)">
             <button
               mat-menu-item

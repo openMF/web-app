@@ -100,6 +100,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
   currency: Currency;
 
   productEnableDownPayment = false;
+  enableIncomeCapitalization = false;
   isProgressive = false;
 
   /**
@@ -128,6 +129,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         this.loansAccountTermsData = this.loansAccountTemplate;
       }
       this.productEnableDownPayment = this.loansAccountTermsData.product.enableDownPayment;
+      this.enableIncomeCapitalization = this.loansAccountTermsData.product.enableIncomeCapitalization;
       this.isProgressive =
         this.loansAccountTermsData.loanScheduleType.code == LoanProducts.LOAN_SCHEDULE_TYPE_PROGRESSIVE;
       if (this.loansAccountTermsData.product) {

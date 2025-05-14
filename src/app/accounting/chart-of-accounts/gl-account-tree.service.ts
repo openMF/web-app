@@ -92,7 +92,6 @@ export class GlAccountTreeService {
     // and rest as children to respective parent nodes.
     for (const glAccount of glAccountData) {
       if (glAccount.parentId === 0) {
-        console.log(glAccount.type.value);
         if (glAccount.type.value === 'ASSET') {
           glAccountTree[0].children[0].children.push(glAccounts[glAccount.id]);
         } else if (glAccount.type.value === 'EQUITY') {

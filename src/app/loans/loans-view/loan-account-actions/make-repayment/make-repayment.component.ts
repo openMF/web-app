@@ -33,6 +33,8 @@ export class MakeRepaymentComponent implements OnInit {
   repaymentLoanForm: UntypedFormGroup;
   currency: Currency | null = null;
 
+  command: string | null = null;
+
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} loanService Loan Service.
@@ -56,6 +58,7 @@ export class MakeRepaymentComponent implements OnInit {
    * and initialize with the required values
    */
   ngOnInit() {
+    this.command = this.dataObject.type.code.split('.')[1];
     this.maxDate = this.settingsService.businessDate;
     this.createRepaymentLoanForm();
     this.setRepaymentLoanDetails();
@@ -73,14 +76,17 @@ export class MakeRepaymentComponent implements OnInit {
         this.settingsService.businessDate,
         Validators.required
       ],
-      transactionAmount: [
-        '',
-        Validators.required
-      ],
       externalId: '',
       paymentTypeId: '',
       note: ''
     });
+
+    this.repaymentLoanForm.addControl(
+      'transactionAmount',
+      new UntypedFormControl('', [
+        Validators.required,
+        Validators.min(0.001)])
+    );
   }
 
   setRepaymentLoanDetails() {
@@ -110,6 +116,17 @@ export class MakeRepaymentComponent implements OnInit {
     }
   }
 
+  showDetails(): boolean {
+    return !this.isCapitalizedIncome();
+  }
+
+  isCapitalizedIncome(): boolean {
+    return [
+      'capitalizedIncome',
+      'capitalizedIncomeAdjustment'
+    ].includes(this.command);
+  }
+
   /** Submits the repayment form */
   submit() {
     const repaymentLoanFormData = this.repaymentLoanForm.value;
@@ -124,9 +141,8 @@ export class MakeRepaymentComponent implements OnInit {
       dateFormat,
       locale
     };
-    const command = this.dataObject.type.code.split('.')[1];
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
+    this.loanService.submitLoanActionButton(this.loanId, data, this.command).subscribe((response: any) => {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
   }

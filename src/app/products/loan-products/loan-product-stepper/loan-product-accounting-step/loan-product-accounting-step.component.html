@@ -180,6 +180,16 @@
       >
       </mifosx-gl-account-selector>
 
+      <mifosx-gl-account-selector
+        *ngIf="capitalizedIncome?.enableIncomeCapitalization"
+        class="flex-48"
+        [inputFormControl]="loanProductAccountingForm.controls.incomeFromCapitalizationAccountId"
+        [glAccountList]="incomeAccountData"
+        [required]="true"
+        [inputLabel]="'Income capitalization'"
+      >
+      </mifosx-gl-account-selector>
+
       <mat-divider class="flex-98"></mat-divider>
 
       <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
@@ -230,6 +240,16 @@
         [glAccountList]="liabilityAccountData"
         [required]="true"
         [inputLabel]="'Over payment liability'"
+      >
+      </mifosx-gl-account-selector>
+
+      <mifosx-gl-account-selector
+        *ngIf="capitalizedIncome?.enableIncomeCapitalization"
+        class="flex-48"
+        [inputFormControl]="loanProductAccountingForm.controls.deferredIncomeLiabilityAccountId"
+        [glAccountList]="liabilityAccountData"
+        [required]="true"
+        [inputLabel]="'Deferred income'"
       >
       </mifosx-gl-account-selector>
 

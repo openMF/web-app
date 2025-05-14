@@ -143,7 +143,7 @@
     >
   </div>
 
-  <div *ngIf="loanProduct.isLinkedToFloatingInterestRates" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.isLinkedToFloatingInterestRates">
     <span class="flex-47">{{ 'labels.inputs.Floating Lending Interest Rate' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.floatingRateName }}</span>
     <span class="flex-47">{{ 'labels.inputs.Interest Rate Differential' | translate }}:</span>
@@ -173,7 +173,7 @@
   <div class="flex-fill" *ngIf="loanProduct.principalVariationsForBorrowerCycle?.length">
     <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
 
-    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="loanProduct.principalVariationsForBorrowerCycle">
+    <table class="mat-elevation-z1 flex-fill" mat-table [dataSource]="loanProduct.principalVariationsForBorrowerCycle">
       <ng-container matColumnDef="valueConditionType">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Condition' | translate }}</th>
         <td mat-cell *matCellDef="let variation">
@@ -218,7 +218,7 @@
     <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Number of Repayments by loan cycle' | translate }}</h4>
 
     <table
-      class="flex-fill mat-elevation-z1"
+      class="mat-elevation-z1 flex-fill"
       mat-table
       [dataSource]="loanProduct.numberOfRepaymentVariationsForBorrowerCycle"
     >
@@ -266,7 +266,7 @@
     <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Nominal Interest Rate by loan cycle' | translate }}</h4>
 
     <table
-      class="flex-fill mat-elevation-z1"
+      class="mat-elevation-z1 flex-fill"
       mat-table
       [dataSource]="loanProduct.interestRateVariationsForBorrowerCycle"
     >
@@ -378,7 +378,7 @@
 
   <div class="flex-fill">
     <span class="flex-47">{{ 'labels.inputs.Repayment Strategy' | translate }}:</span>
-    <span class="repayment-strategy flex-53">{{
+    <span class="flex-53" class="repayment-strategy">{{
       loanProduct.transactionProcessingStrategyName | translateKey: 'catalogs'
     }}</span>
   </div>
@@ -432,17 +432,17 @@
     <span class="flex-53">{{ loanProduct.enableDownPayment | yesNo }}</span>
   </div>
 
-  <div *ngIf="loanProduct.enableDownPayment" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.enableDownPayment">
     <span class="flex-47">{{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }} (%):</span>
     <span class="flex-53">{{ loanProduct.disbursedAmountPercentageForDownPayment }} %</span>
   </div>
 
-  <div *ngIf="loanProduct.enableDownPayment" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.enableDownPayment">
     <span class="flex-47">{{ 'labels.inputs.Enable Auto Repayment for Down Payment' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.enableAutoRepaymentForDownPayment | yesNo }}</span>
   </div>
 
-  <div *ngIf="isAdvancedPaymentAllocation" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="isAdvancedPaymentAllocation">
     <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}</h3>
 
     <mat-divider [inset]="true"></mat-divider>
@@ -563,7 +563,7 @@
     <span class="flex-53">{{ loanProduct.canUseForTopup | yesNo }}</span>
   </div>
 
-  <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Interest Recalculation' | translate }}</h3>
+  <h3 class="mat-h3" class="flex-fill">{{ 'labels.heading.Interest Recalculation' | translate }}</h3>
 
   <mat-divider [inset]="true"></mat-divider>
 
@@ -572,7 +572,7 @@
     <span class="flex-53">{{ loanProduct.isInterestRecalculationEnabled | yesNo }}</span>
   </div>
 
-  <div *ngIf="loanProduct.isInterestRecalculationEnabled" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.isInterestRecalculationEnabled">
     <span class="flex-47">{{ 'labels.inputs.Pre-closure interest calculation rule' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.interestRecalculationData.preClosureInterestCalculationStrategy.value }}</span>
     <span class="flex-47">{{ 'labels.inputs.Advance payments adjustment type' | translate }}:</span>
@@ -580,7 +580,7 @@
     <span class="flex-47">{{ 'labels.inputs.Interest recalculation compounding on' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.interestRecalculationData.interestRecalculationCompoundingType.value }}</span>
     <div
-      class="flex-fill layout-row-wrap layout-lt-md-column"
+      class="flex-fill layout-row-wrap responsive-column"
       *ngIf="loanProduct.interestRecalculationData.interestRecalculationCompoundingType.id !== 0"
     >
       <span class="flex-47">{{ 'labels.inputs.Frequency for compounding' | translate }}:</span>
@@ -614,7 +614,7 @@
         >
       </span>
       <div
-        class="flex-fill layout-row-wrap layout-lt-md-column"
+        class="flex-fill layout-row-wrap responsive-column"
         *ngIf="loanProduct.interestRecalculationData.recalculationCompoundingFrequencyType.id !== 1"
       >
         <span class="flex-47">{{ 'labels.inputs.Frequency Interval for compounding' | translate }}:</span>
@@ -623,7 +623,7 @@
         }}</span>
       </div>
     </div>
-    <div class="layout-row-wrap responsive-column flex-fill">
+    <div class="flex-fill layout-row-wrap responsive-column">
       <span class="flex-47">{{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}:</span>
       <span class="flex-53">
         {{ loanProduct.interestRecalculationData.recalculationRestFrequencyType.value }}
@@ -652,8 +652,8 @@
       </span>
     </div>
     <div
+      class="flex-fill layout-row-wrap responsive-column"
       *ngIf="loanProduct.interestRecalculationData.recalculationRestFrequencyType.id !== 1"
-      class="flex-fill layout-row-wrap layout-xs-column"
     >
       <span class="flex-47">{{ 'labels.inputs.Frequency Interval for recalculation' | translate }}:</span>
       <span class="flex-53">{{ loanProduct.interestRecalculationData.recalculationRestFrequencyInterval }}</span>
@@ -687,7 +687,7 @@
     <span class="flex-53">{{ loanProduct.holdGuaranteeFunds | yesNo }}</span>
   </div>
 
-  <div *ngIf="loanProduct.holdGuaranteeFunds" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.holdGuaranteeFunds">
     <span class="flex-47">{{ 'labels.inputs.Mandatory Guarantee' | translate }} (%):</span>
     <span class="flex-53">{{ loanProduct.productGuaranteeData.mandatoryGuarantee }}</span>
     <div class="flex-fill" *ngIf="loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds">
@@ -709,7 +709,7 @@
     <span class="flex-53">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
   </div>
 
-  <div *ngIf="loanProduct.multiDisburseLoan" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.multiDisburseLoan">
     <span class="flex-47">{{ 'labels.inputs.Maximum Tranche count' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.maxTrancheCount }}</span>
     <div class="flex-fill" *ngIf="loanProduct.outstandingLoanBalance">
@@ -754,7 +754,7 @@
     <span class="flex-53">{{ loanProduct.allowAttributeConfiguration | yesNo }}</span>
   </div>
 
-  <div *ngIf="loanProduct.allowAttributeConfiguration" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.allowAttributeConfiguration">
     <span class="flex-47">{{ 'labels.inputs.Amortization' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.allowAttributeOverrides.amortizationType | yesNo }}</span>
     <span class="flex-47">{{ 'labels.inputs.Interest method' | translate }}:</span>
@@ -775,13 +775,13 @@
     <span class="flex-53">{{ loanProduct.allowAttributeOverrides.graceOnArrearsAgeing | yesNo }}</span>
   </div>
 
-  <div *ngIf="loanProduct.charges.length" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.charges.length">
     <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Charges' | translate }}</h3>
 
     <mat-divider [inset]="true"></mat-divider>
 
     <table
-      class="flex-fill mat-elevation-z1"
+      class="mat-elevation-z1 flex-fill"
       mat-table
       [dataSource]="loanProduct.charges | chargesPenaltyFilter: false"
     >
@@ -821,7 +821,7 @@
 
     <mat-divider [inset]="true"></mat-divider>
 
-    <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="loanProduct.charges | chargesPenaltyFilter: true">
+    <table class="mat-elevation-z1 flex-fill" mat-table [dataSource]="loanProduct.charges | chargesPenaltyFilter: true">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
         <td mat-cell *matCellDef="let overdueCharge">
@@ -855,6 +855,32 @@
     </table>
   </div>
 
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="isAdvancedPaymentAllocation">
+    <h3 class="mat-h3 flex-fill">{{ 'labels.inputs.Income capitalization' | translate }}</h3>
+
+    <mat-divider [inset]="true"></mat-divider>
+
+    <div class="flex-fill">
+      <span class="flex-47">{{ 'labels.inputs.Enable income capitalization' | translate }}:</span>
+      <span class="flex-53">{{ loanProduct.enableIncomeCapitalization | yesNo }}</span>
+    </div>
+
+    <div class="flex-fill" *ngIf="loanProduct.enableIncomeCapitalization">
+      <span class="flex-47">{{ 'labels.inputs.Income capitalization calculation type' | translate }}:</span>
+      <span class="flex-53">{{ loanProduct.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }}</span>
+    </div>
+
+    <div class="flex-fill" *ngIf="loanProduct.enableIncomeCapitalization">
+      <span class="flex-47">{{ 'labels.inputs.Income capitalization strategy' | translate }}:</span>
+      <span class="flex-53">{{ loanProduct.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }}</span>
+    </div>
+
+    <div class="flex-fill" *ngIf="loanProduct.enableIncomeCapitalization">
+      <span class="flex-47">{{ 'labels.inputs.Income type' | translate }}:</span>
+      <span class="flex-53">{{ loanProduct.capitalizedIncomeType?.value | translateKey: 'catalogs' }}</span>
+    </div>
+  </div>
+
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Accounting' | translate }}</h3>
 
   <mat-divider [inset]="true"></mat-divider>
@@ -873,12 +899,12 @@
     <span class="flex-53">{{ loanProduct.enableAccrualActivityPosting | yesNo }}</span>
   </div>
 
-  <div *ngIf="isAccountingEnabled()" class="layout-row-wrap responsive-column flex-fill">
+  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="isAccountingEnabled()">
     <h4 class="mat-h4 flex-fill">
       {{ 'labels.heading.Assets' | translate }} / {{ 'labels.heading.Liabilities' | translate }}
     </h4>
 
-    <div class="layout-row-wrap responsive-column flex-fill">
+    <div class="flex-fill layout-row-wrap responsive-column">
       <mifosx-gl-account-display
         class="flex-100"
         [accountTitle]="'Fund source'"
@@ -889,7 +915,7 @@
     </div>
 
     <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Assets' | translate }}</h4>
-    <div class="layout-row-wrap responsive-column flex-fill">
+    <div class="flex-fill layout-row-wrap responsive-column">
       <mifosx-gl-account-display
         class="flex-100"
         [accountTitle]="'Loan portfolio'"
@@ -898,8 +924,8 @@
       >
       </mifosx-gl-account-display>
       <div
+        class="flex-fill layout-row-wrap responsive-column"
         *ngIf="loanProduct.accountingRule.id === 3 || loanProduct.accountingRule.id === 4"
-        class="flex-fill layout-row-wrap layout-xs-column"
       >
         <mifosx-gl-account-display
           class="flex-100"
@@ -986,10 +1012,18 @@
       [withTitle]="'47%'"
     >
     </mifosx-gl-account-display>
+    <mifosx-gl-account-display
+      class="flex-100"
+      *ngIf="accountingMappings.incomeFromCapitalizationAccount"
+      [accountTitle]="'Income capitalization'"
+      [glAccount]="accountingMappings.incomeFromCapitalizationAccount"
+      [withTitle]="'47%'"
+    >
+    </mifosx-gl-account-display>
 
     <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Expenses' | translate }}</h4>
 
-    <div class="layout-row-wrap responsive-column flex-fill">
+    <div class="flex-fill layout-row-wrap responsive-column">
       <mifosx-gl-account-display
         class="flex-100"
         [accountTitle]="'Losses written off'"
@@ -1029,18 +1063,26 @@
         [withTitle]="'47%'"
       >
       </mifosx-gl-account-display>
+      <mifosx-gl-account-display
+        class="flex-100"
+        *ngIf="accountingMappings.deferredIncomeLiabilityAccount"
+        [accountTitle]="'Deferred income'"
+        [glAccount]="accountingMappings.deferredIncomeLiabilityAccount"
+        [withTitle]="'47%'"
+      >
+      </mifosx-gl-account-display>
 
-      <div *ngIf="isAdvancedAccountingEnabled()" class="layout-row-wrap responsive-column flex-fill">
+      <div *ngIf="isAdvancedAccountingEnabled()" class="flex-fill layout-row-wrap responsive-column">
         <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div *ngIf="paymentChannelToFundSourceMappings.length" class="layout-row-wrap responsive-column flex-fill">
+        <div *ngIf="paymentChannelToFundSourceMappings.length" class="flex-fill layout-row-wrap responsive-column">
           <h4 class="mat-h4 flex-fill">
             {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
           </h4>
 
-          <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="paymentChannelToFundSourceMappings">
+          <table class="mat-elevation-z1 flex-fill" mat-table [dataSource]="paymentChannelToFundSourceMappings">
             <ng-container matColumnDef="paymentTypeId">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Payment Type' | translate }}</th>
               <td mat-cell *matCellDef="let paymentFundSource">
@@ -1060,9 +1102,10 @@
           </table>
         </div>
 
-        <div *ngIf="feeToIncomeAccountMappings.length" class="layout-row-wrap responsive-column flex-fill">
+        <div *ngIf="feeToIncomeAccountMappings.length" class="flex-fill layout-row-wrap responsive-column">
           <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
-          <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="feeToIncomeAccountMappings">
+
+          <table class="mat-elevation-z1 flex-fill" mat-table [dataSource]="feeToIncomeAccountMappings">
             <ng-container matColumnDef="chargeId">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.catalogs.Fees' | translate }}</th>
               <td mat-cell *matCellDef="let feesIncome">
@@ -1084,12 +1127,12 @@
           </table>
         </div>
 
-        <div *ngIf="penaltyToIncomeAccountMappings.length" class="layout-row-wrap responsive-column flex-fill">
+        <div *ngIf="penaltyToIncomeAccountMappings.length" class="flex-fill layout-row-wrap responsive-column">
           <h4 class="mat-h4 flex-fill">
             {{ 'labels.heading.Map Penalties to Specific Income Accounts' | translate }}
           </h4>
 
-          <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="penaltyToIncomeAccountMappings">
+          <table class="mat-elevation-z1 flex-fill" mat-table [dataSource]="penaltyToIncomeAccountMappings">
             <ng-container matColumnDef="chargeId">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Penalty' | translate }}</th>
               <td mat-cell *matCellDef="let penaltyIncome">
@@ -1109,12 +1152,12 @@
           </table>
         </div>
 
-        <div *ngIf="chargeOffReasonToExpenseAccountMappings.length" class="flex-fill layout-row-wrap layout-xs-column">
+        <div *ngIf="chargeOffReasonToExpenseAccountMappings.length" class="flex-fill layout-row-wrap responsive-column">
           <h4 class="mat-h4 flex-fill">
             {{ 'labels.heading.Map Charge-off reasons to Expense accounts' | translate }}
           </h4>
 
-          <table class="flex-fill mat-elevation-z1" mat-table [dataSource]="chargeOffReasonToExpenseAccountMappings">
+          <table class="mat-elevation-z1 flex-fill" mat-table [dataSource]="chargeOffReasonToExpenseAccountMappings">
             <ng-container matColumnDef="chargeOffReasonCodeValueId">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Charge-off reason' | translate }}</th>
               <td mat-cell *matCellDef="let chargeOffReasonToExpenseAccountMapping">

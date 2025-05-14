@@ -82,7 +82,7 @@ export class GeneralTabComponent implements OnInit {
     this.loanSummaryTableData = [
       {
         property: 'Principal',
-        original: this.loanDetails.summary.principalDisbursed,
+        original: this.loanDetails.summary.totalPrincipal,
         adjustment: this.loanDetails.summary.principalAdjustments || 0,
         paid: this.loanDetails.summary.principalPaid,
         waived: this.loanDetails.summary.principalWaived || 0,

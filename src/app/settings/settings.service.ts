@@ -157,7 +157,11 @@ export class SettingsService {
     if (localStorage.getItem('mifosXServerURL')) {
       return localStorage.getItem('mifosXServerURL');
     }
-    return environment.baseApiUrl;
+    if (environment.baseApiUrl && environment.baseApiUrl !== '') {
+      return environment.baseApiUrl;
+    } else {
+      return this.servers()[0];
+    }
   }
 
   /**

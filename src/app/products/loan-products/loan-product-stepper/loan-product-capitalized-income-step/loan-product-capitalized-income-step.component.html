@@ -1,0 +1,41 @@
+<form [formGroup]="loanIncomeCapitalizationForm">
+  <div class="layout-row-wrap gap-2percent layout-column-lt-md">
+    <mat-checkbox class="flex-98" labelPosition="before" formControlName="enableIncomeCapitalization">
+      {{ 'labels.inputs.Enable income capitalization' | translate }}
+    </mat-checkbox>
+
+    <mat-form-field class="flex-48" *ngIf="enableIncomeCapitalization">
+      <mat-label>{{ 'labels.inputs.Income capitalization calculation type' | translate }}</mat-label>
+      <mat-select formControlName="capitalizedIncomeCalculationType" required>
+        <mat-option
+          *ngFor="let capitalizedIncomeCalculationType of capitalizedIncomeCalculationTypeOptions"
+          [value]="capitalizedIncomeCalculationType.id"
+        >
+          {{ capitalizedIncomeCalculationType.value | translateKey: 'catalogs' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="flex-48" *ngIf="enableIncomeCapitalization">
+      <mat-label>{{ 'labels.inputs.Income capitalization strategy' | translate }}</mat-label>
+      <mat-select formControlName="capitalizedIncomeStrategy" required>
+        <mat-option
+          *ngFor="let capitalizedIncomeStrategy of capitalizedIncomeStrategyOptions"
+          [value]="capitalizedIncomeStrategy.id"
+        >
+          {{ capitalizedIncomeStrategy.value | translateKey: 'catalogs' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="flex-48" *ngIf="enableIncomeCapitalization">
+      <mat-label>{{ 'labels.inputs.Income type' | translate }}</mat-label>
+      <mat-select formControlName="capitalizedIncomeType" required>
+        <mat-option
+          *ngFor="let capitalizedIncomeType of capitalizedIncomeTypeOptions"
+          [value]="capitalizedIncomeType.id"
+        >
+          {{ capitalizedIncomeType.value | translateKey: 'catalogs' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>

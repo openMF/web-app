@@ -188,18 +188,6 @@
                 {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
-              <mat-error *ngIf="chargeForm.controls.amount.hasError('pattern') && currencyDecimalPlaces !== undefined">
-                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.must be' | translate }}
-                <strong
-                  >{{ 'labels.commons.a positive number with' | translate }}
-                  {{ currencyDecimalPlaces ? 'up to ' + currencyDecimalPlaces : 'no' }}
-                  {{ 'labels.inputs.decimal places' | translate }}</strong
-                >
-              </mat-error>
-              <mat-error *ngIf="chargeForm.controls.amount.hasError('pattern') && currencyDecimalPlaces === undefined">
-                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.must be' | translate }}
-                <strong>{{ 'labels.commons.a positive number' | translate }}</strong>
-              </mat-error>
             </mat-form-field>
             <!--
    * minCap and maxCap only allowed for loan ,shares and savings entitites
@@ -209,12 +197,23 @@
   -->
             <mat-form-field class="flex-48" *ngIf="showMinMaxCap()">
               <mat-label>{{ 'labels.inputs.Minimum Charge Cap' | translate }}</mat-label>
-              <input matInput formControlName="minCap" />
+              <input matInput autofocus formControlName="minCap" mifosxValidateOnFocus />
+              <mat-error *ngIf="chargeForm.controls.minCap.hasError('maxValue')">
+                {{ 'errors.validation.msg.loanproduct.maximumGap.not.greater.than.specified.number' | translate }} ({{
+                  chargeForm.controls.maxCap.value
+                }})
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field class="flex-48" *ngIf="showMinMaxCap()">
               <mat-label>{{ 'labels.inputs.Maximum Charge Cap' | translate }}</mat-label>
-              <input matInput formControlName="maxCap" />
+              <input matInput autofocus formControlName="maxCap" mifosxValidateOnFocus />
+
+              <mat-error *ngIf="chargeForm.controls.maxCap.hasError('minValue')">
+                {{ 'errors.validation.msg.loanproduct.maximumGap.not.greater.than.specified.number' | translate }} ({{
+                  chargeForm.controls.minCap.value
+                }})
+              </mat-error>
             </mat-form-field>
 
             <div class="flex-48 layout-row gap-2percent layout-lt-md-column">
