@@ -8,10 +8,9 @@
 <p *ngIf="!otpRequested">{{ 'labels.text.Please select a delivery method' | translate }}:</p>
 
 <form
-  class="layout-column"
+  class="layout-column two-factor-auth-form"
   *ngIf="!otpRequested"
   [formGroup]="twoFactorAuthenticationDeliveryMethodForm"
-  class="two-factor-auth-form"
   (ngSubmit)="requestOTP()"
 >
   <mat-radio-group
@@ -42,13 +41,12 @@
 <p *ngIf="otpRequested">{{ 'labels.text.Please enter the OTP' | translate }}:</p>
 
 <form
-  class="layout-column"
+  class="layout-column two-factor-auth-form"
   *ngIf="otpRequested"
   [formGroup]="twoFactorAuthenticationForm"
-  class="two-factor-auth-form"
   (ngSubmit)="validateOTP()"
 >
-  <mat-form-field Align="center" class="two-factor-auth-input flex-fill">
+  <mat-form-field class="two-factor-auth-input flex-fill align-center">
     <span matPrefix>
       <fa-icon icon="user-shield" class="m-r-10"></fa-icon>
     </span>

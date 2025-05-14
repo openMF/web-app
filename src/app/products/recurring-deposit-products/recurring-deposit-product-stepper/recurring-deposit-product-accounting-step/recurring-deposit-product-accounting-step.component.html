@@ -114,7 +114,7 @@
 
       <h3 class="mat-h3 flex-23">{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
 
-      <mat-checkbox class="flex-73"> formControlName="advancedAccountingRules"></mat-checkbox>
+      <mat-checkbox class="flex-73" formControlName="advancedAccountingRules"></mat-checkbox>
 
       <div
         *ngIf="recurringDepositProductAccountingForm.value.advancedAccountingRules"
@@ -138,8 +138,7 @@
           </div>
 
           <table
-            class="flex-98"
-            class="mat-elevation-z1"
+            class="flex-98 mat-elevation-z1"
             mat-table
             [dataSource]="paymentChannelToFundSourceMappings.value"
             *ngIf="paymentChannelToFundSourceMappings.value.length !== 0"
@@ -194,8 +193,7 @@
           </div>
 
           <table
-            class="flex-98"
-            class="mat-elevation-z1"
+            class="flex-98 mat-elevation-z1"
             mat-table
             [dataSource]="feeToIncomeAccountMappings.value"
             *ngIf="feeToIncomeAccountMappings.value.length !== 0"
@@ -249,8 +247,7 @@
           </div>
 
           <table
-            class="flex-98"
-            class="mat-elevation-z1"
+            class="flex-98 mat-elevation-z1"
             mat-table
             [dataSource]="penaltyToIncomeAccountMappings.value"
             *ngIf="penaltyToIncomeAccountMappings.value.length !== 0"

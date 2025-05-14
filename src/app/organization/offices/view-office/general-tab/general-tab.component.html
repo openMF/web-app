@@ -9,30 +9,25 @@
 
   <div class="layout-row-wrap responsive-column">
     <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Parent Office' | translate }}</div>
-    <div class="flex-50">
-      class="right">
+    <div class="flex-50 right">
       {{ officeData.parentName ? officeData.parentName : 'N/A' }}
     </div>
 
     <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Opened On' | translate }}</div>
-    <div class="flex-50">
-      class="right">
+    <div class="flex-50 right">
       {{ officeData.openingDate ? (officeData.openingDate | dateFormat) : 'Unassigned' }}
     </div>
 
     <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Name Decorated' | translate }}</div>
-    <div class="flex-50">
-      class="right">
+    <div class="flex-50 right">
       {{ officeData.nameDecorated ? officeData.nameDecorated : 'Unassigned' }}
     </div>
 
     <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.External Id' | translate }}</div>
-    <div class="flex-50">
-      class="right" *ngIf="officeData.externalId">
+    <div class="flex-50 right" *ngIf="officeData.externalId">
       <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
     </div>
-    <div class="flex-50">
-      class="right" *ngIf="!officeData.externalId">
+    <div class="flex-50 right" *ngIf="!officeData.externalId">
       {{ 'labels.inputs.Unassigned' | translate }}
     </div>
   </div>

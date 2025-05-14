@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="layout-row align-flex-end action-buttons m-b-20" style="gap: 1%">
+  <div class="layout-row align-flex-end action-buttons m-b-20 gap-1percent">
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'active'">
       <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SMSCAMPAIGN'" [routerLink]="['edit']">
         <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}

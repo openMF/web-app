@@ -154,12 +154,7 @@
         />
       </mat-form-field>
 
-      <mat-checkbox
-        class="flex-48"
-        labelPosition="before"
-        formControlName="disallowExpectedDisbursements"
-        class="margin-v"
-      >
+      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="disallowExpectedDisbursements">
         {{ 'labels.inputs.Disallow Expected Disbursements' | translate }}
       </mat-checkbox>
     </div>
@@ -204,11 +199,10 @@
       </mat-form-field>
 
       <mat-checkbox
-        class="flex-48"
+        class="flex-48 margin-v"
         labelPosition="before"
         formControlName="enableAutoRepaymentForDownPayment"
         matTooltip="{{ 'tooltips.Enable or disable the auto repayment of down-payment.' | translate }}"
-        class="margin-b"
       >
         {{ 'labels.inputs.Enable Auto Repayment for Down Payment' | translate }}
       </mat-checkbox>
@@ -271,10 +265,9 @@
     </mat-form-field>
 
     <mat-checkbox
-      class="flex-48"
+      class="flex-48 margin-v"
       labelPosition="before"
       formControlName="enableInstallmentLevelDelinquency"
-      class="margin-v"
       *ngIf="loanProductSettingsForm.value.delinquencyBucketId"
     >
       {{ 'labels.inputs.Enable installment level Delinquency' | translate }}
@@ -385,10 +378,9 @@
     </mat-form-field>
 
     <mat-checkbox
-      class="flex-48"
+      class="flex-48 margin-v"
       labelPosition="before"
       formControlName="accountMovesOutOfNPAOnlyOnArrearsCompletion"
-      class="margin-v"
     >
       {{ 'labels.inputs.Account moves out of NPA only after all arrears have been cleared' | translate }}
     </mat-checkbox>
@@ -399,11 +391,10 @@
     </mat-form-field>
 
     <mat-checkbox
-      class="flex-48"
+      class="flex-48 margin-v"
       labelPosition="before"
       matTooltip="{{ 'tooltips.Fields are used to define the minimum, maximum gap' | translate }}"
       formControlName="allowVariableInstallments"
-      class="margin-v"
     >
       {{ 'labels.inputs.Are Variable Installments allowed?' | translate }}
     </mat-checkbox>
@@ -434,11 +425,10 @@
     </div>
 
     <mat-checkbox
-      class="flex-48"
+      class="flex-48 margin-v"
       labelPosition="before"
       matTooltip="{{ 'tooltips.Loan Product can be used to apply for Topup Loans' | translate }}"
       formControlName="canUseForTopup"
-      class="margin-v"
     >
       {{ 'labels.inputs.Allowed to be used for providing Topup Loans' | translate }}
     </mat-checkbox>
@@ -447,12 +437,7 @@
 
     <h3 class="mat-h3 flex-96">{{ 'labels.heading.Interest Recalculation' | translate }}</h3>
 
-    <mat-checkbox
-      class="flex-73"
-      labelPosition="before"
-      formControlName="isInterestRecalculationEnabled"
-      class="margin-b"
-    >
+    <mat-checkbox class="flex-73 margin-b" labelPosition="before" formControlName="isInterestRecalculationEnabled">
       {{ 'labels.inputs.Recalculate Interest' | translate }}
     </mat-checkbox>
 
@@ -679,21 +664,15 @@
         </mat-form-field>
       </div>
 
-      <mat-checkbox
-        class="flex-98"
-        labelPosition="before"
-        formControlName="isArrearsBasedOnOriginalSchedule"
-        class="margin-v"
-      >
+      <mat-checkbox class="flex-98 margin-v" labelPosition="before" formControlName="isArrearsBasedOnOriginalSchedule">
         {{ 'labels.inputs.Is Arrears recognization based on original schedule' | translate }}?
       </mat-checkbox>
 
       <mat-checkbox
         *ngIf="loanProductSettingsForm.value.loanScheduleType === 'PROGRESSIVE'"
-        class="flex-98"
+        class="flex-98 margin-v"
         labelPosition="before"
         formControlName="disallowInterestCalculationOnPastDue"
-        class="margin-v"
       >
         {{ 'labels.inputs.Do not calculate interest on past due principal balances' | translate }}
       </mat-checkbox>
@@ -703,7 +682,7 @@
 
     <h3 class="mat-h3 flex-23">{{ 'labels.heading.Guarantee Requirements' | translate }}</h3>
 
-    <mat-checkbox class="flex-73" labelPosition="before" formControlName="holdGuaranteeFunds" class="margin-b">
+    <mat-checkbox class="flex-73 margin-b" labelPosition="before" formControlName="holdGuaranteeFunds">
       {{ 'labels.inputs.Place Guarantee Funds On-Hold' | translate }}
     </mat-checkbox>
 
@@ -742,11 +721,10 @@
     </h3>
 
     <mat-checkbox
-      class="flex-48"
+      class="flex-48 margin-b"
       labelPosition="before"
       formControlName="useDueForRepaymentsConfigurations"
       matTooltip="{{ 'tooltips.Use or not the Global Configurations' | translate }}"
-      class="margin-b"
     >
       {{ 'labels.inputs.Use the Global Configurations values to the Repayment Event (notifications)' | translate }}
     </mat-checkbox>
@@ -797,21 +775,11 @@
         {{ 'labels.inputs.Interest method' | translate }}
       </mat-checkbox>
 
-      <mat-checkbox
-        class="flex-48"
-        labelPosition="before"
-        formControlName="transactionProcessingStrategyCode"
-        class="margin-v"
-      >
+      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="transactionProcessingStrategyCode">
         {{ 'labels.inputs.Repayment strategy' | translate }}
       </mat-checkbox>
 
-      <mat-checkbox
-        class="flex-48"
-        labelPosition="before"
-        formControlName="interestCalculationPeriodType"
-        class="margin-v"
-      >
+      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="interestCalculationPeriodType">
         {{ 'labels.inputs.Interest calculation period' | translate }}
       </mat-checkbox>
 
@@ -824,10 +792,9 @@
       </mat-checkbox>
 
       <mat-checkbox
-        class="flex-48"
+        class="flex-48 margin-v"
         labelPosition="before"
         formControlName="graceOnPrincipalAndInterestPayment"
-        class="margin-v"
       >
         {{ 'labels.inputs.Moratorium' | translate }}
       </mat-checkbox>

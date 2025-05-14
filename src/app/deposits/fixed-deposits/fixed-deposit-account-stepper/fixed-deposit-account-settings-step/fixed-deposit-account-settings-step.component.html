@@ -79,7 +79,7 @@
 
     <h3 class="mat-h3 flex-23">{{ 'labels.heading.Interest Transfer' | translate }}</h3>
 
-    <mat-checkbox class="flex-32" labelPosition="before" formControlName="transferInterestToSavings" class="margin-b">
+    <mat-checkbox class="flex-32 margin-b" labelPosition="before" formControlName="transferInterestToSavings">
       {{ 'labels.inputs.Transfer Interest to Linked Savings Account' | translate }}?
     </mat-checkbox>
 
@@ -107,11 +107,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field
-      class="flex-48"
-      *ngIf="fixedDepositAccountSettingsForm.contains('transferToSavingsId')"
-      class="margin-b"
-    >
+    <mat-form-field class="flex-48 margin-b" *ngIf="fixedDepositAccountSettingsForm.contains('transferToSavingsId')">
       <mat-label>{{ 'labels.inputs.Transfer to savings account' | translate }}</mat-label>
       <mat-select formControlName="transferToSavingsId" required>
         <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
@@ -128,8 +124,7 @@
 
     <h4 class="mat-h4 flex-23">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
 
-    <mat-checkbox class="flex-73">
-      labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
+    <mat-checkbox class="flex-73 margin-v" labelPosition="before" formControlName="preClosurePenalApplicable">
       {{ 'labels.inputs.Apply Penal Interest (less)' | translate }}
     </mat-checkbox>
 
