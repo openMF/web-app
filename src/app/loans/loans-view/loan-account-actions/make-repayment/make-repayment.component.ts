@@ -82,22 +82,12 @@ export class MakeRepaymentComponent implements OnInit {
       note: ''
     });
 
-    if (this.isCapitalizedIncome()) {
-      this.repaymentLoanForm.addControl(
-        'transactionAmount',
-        new UntypedFormControl('', [
-          Validators.required,
-          Validators.min(0.001),
-          Validators.max(this.dataObject.amount)])
-      );
-    } else {
-      this.repaymentLoanForm.addControl(
-        'transactionAmount',
-        new UntypedFormControl('', [
-          Validators.required,
-          Validators.min(0.001)])
-      );
-    }
+    this.repaymentLoanForm.addControl(
+      'transactionAmount',
+      new UntypedFormControl('', [
+        Validators.required,
+        Validators.min(0.001)])
+    );
   }
 
   setRepaymentLoanDetails() {
