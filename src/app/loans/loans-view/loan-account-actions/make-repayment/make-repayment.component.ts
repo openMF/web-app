@@ -65,7 +65,6 @@ export class MakeRepaymentComponent implements OnInit {
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
-    this.command = this.dataObject.type.code.split('.')[1];
   }
 
   /**
