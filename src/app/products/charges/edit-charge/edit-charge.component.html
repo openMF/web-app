@@ -115,7 +115,7 @@
             <input matInput autofocus formControlName="minCap" mifosxValidateOnFocus />
             <mat-error *ngIf="chargeForm.controls.minCap.hasError('maxValue')">
               {{ 'errors.validation.msg.loanproduct.maximumGap.not.greater.than.specified.number' | translate }} ({{
-                chargeForm.controls.maxCap.value
+                chargeForm.controls.minCap.value
               }})
             </mat-error>
           </mat-form-field>
