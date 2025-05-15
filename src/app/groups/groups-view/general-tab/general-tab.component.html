@@ -1,7 +1,7 @@
 <div class="tab-container mat-typography">
   <h3>{{ 'labels.heading.Group Details' | translate }}</h3>
 
-  <div fxLayout="row" fxLayoutGap="32px" class="group-details-container m-b-30">
+  <div class="layout-row gap-32px group-details-container m-b-30">
     <p>
       {{ 'labels.inputs.Active Client Loans' | translate }}: {{ groupSummary?.activeClientLoans }}<br />
       {{ 'labels.inputs.Active Client Borrowers' | translate }}: {{ groupSummary?.activeClientBorrowers }}<br />
@@ -60,7 +60,7 @@
   </div>
 
   <div *ngIf="loanAccounts">
-    <div fxLayout="row" fxLayoutAlign="start" class="table-header">
+    <div class="layout-row align-start table-header">
       <div class="m-b-10">
         <h3>{{ 'labels.heading.Loan Accounts' | translate }}</h3>
       </div>
@@ -227,7 +227,7 @@
   </div>
 
   <div *ngIf="gsimAccounts">
-    <div fxLayout="row" fxLayoutAlign="start" class="table-header">
+    <div class="layout-row align-start table-header">
       <div class="m-b-10">
         <h3>{{ 'labels.heading.GSIM Account Overview' | translate }}</h3>
       </div>
@@ -272,7 +272,7 @@
   </div>
 
   <div *ngIf="glimAccounts">
-    <div fxLayout="row" fxLayoutAlign="start" class="table-header">
+    <div class="layout-row align-start table-header">
       <div class="m-b-10">
         <h3>{{ 'labels.heading.GLIM Loans Account Overview' | translate }}</h3>
       </div>
@@ -317,7 +317,7 @@
   </div>
 
   <div *ngIf="savingAccounts">
-    <div fxLayout="row" fxLayoutAlign="start" class="table-header">
+    <div class="layout-row align-start table-header">
       <div class="m-b-10">
         <h3>{{ 'labels.heading.Saving Accounts' | translate }}</h3>
       </div>

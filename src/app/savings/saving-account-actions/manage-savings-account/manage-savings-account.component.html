@@ -4,7 +4,7 @@
     <h2 mat-title *ngIf="transactionType.blockaccount">{{ 'labels.heading.Block Savings Account' | translate }}</h2>
 
     <form [formGroup]="manageSavingsAccountForm" (ngSubmit)="submit()">
-      <mat-card-content fxLayout="column">
+      <mat-card-content class="layout-column">
         <mat-form-field>
           <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
           <mat-select required formControlName="reasonForBlock">
@@ -18,7 +18,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex (click)="transactionDatePicker.open()" *ngIf="transactionType.holdamount">
+        <mat-form-field class="flex-fill" (click)="transactionDatePicker.open()" *ngIf="transactionType.holdamount">
           <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
           <input
             matInput
@@ -46,7 +46,7 @@
         </mifosx-input-amount>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../../transactions']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

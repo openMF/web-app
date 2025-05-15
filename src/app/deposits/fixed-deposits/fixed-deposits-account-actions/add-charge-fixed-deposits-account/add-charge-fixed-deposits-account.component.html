@@ -2,7 +2,7 @@
   <mat-card>
     <form [formGroup]="fixedDepositsChargeForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
+        <div class="layout-column">
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
             <mat-select required formControlName="chargeId">
@@ -16,7 +16,7 @@
             </mat-error>
           </mat-form-field>
 
-          <div *ngIf="chargeDetails" fxLayout="column">
+          <div *ngIf="chargeDetails" class="layout-column">
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
               <input type="number" required matInput formControlName="amount" />
@@ -93,7 +93,7 @@
           </div>
         </div>
 
-        <mat-card-actions fxLayoutGap="5px" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center">
+        <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">
           <button type="button" mat-raised-button [routerLink]="['../../']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>

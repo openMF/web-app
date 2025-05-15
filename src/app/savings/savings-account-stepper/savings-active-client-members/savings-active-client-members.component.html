@@ -1,5 +1,5 @@
 <div *ngIf="activeClientMembers">
-  <table fxFlex="98%" mat-table [dataSource]="dataSource">
+  <table class="flex-98" mat-table [dataSource]="dataSource">
     <!-- Check Column -->
 
     <ng-container matColumnDef="check">
@@ -28,7 +28,7 @@
   </table>
 </div>
 
-<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<div class="layout-row responsive-column align-center gap-2px margin-t">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}

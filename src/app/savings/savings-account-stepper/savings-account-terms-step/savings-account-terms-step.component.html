@@ -1,16 +1,16 @@
 <form [formGroup]="savingsAccountTermsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
-    <mat-form-field fxFlex="48%">
+  <div class="layout-row-wrap gap-2percent responsive-column align-start-center">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
       <input matInput formControlName="currencyCode" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Decimal Places' | translate }}</mat-label>
       <input type="number" matInput formControlName="decimal" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Nominal Annual Interest' | translate }}</mat-label>
       <input type="number" matInput formControlName="nominalAnnualInterestRate" required />
       <mat-error>
@@ -19,7 +19,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Compounding Period' | translate }}</mat-label>
       <mat-select formControlName="interestCompoundingPeriodType" required>
         <mat-option
@@ -35,7 +35,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Posting Period' | translate }}</mat-label>
       <mat-select formControlName="interestPostingPeriodType" required>
         <mat-option
@@ -51,7 +51,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest Calculated using' | translate }}</mat-label>
       <mat-select formControlName="interestCalculationType" required>
         <mat-option
@@ -67,7 +67,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Days in Year' | translate }}</mat-label>
       <mat-select formControlName="interestCalculationDaysInYearType" required>
         <mat-option
@@ -83,23 +83,23 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Minimum Opening Balance' | translate }}</mat-label>
       <input type="number" matInput formControlName="minRequiredOpeningBalance" />
     </mat-form-field>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withdrawalFeeForTransfers" class="margin-v">
+    <mat-checkbox labelPosition="before" formControlName="withdrawalFeeForTransfers" class="margin-v flex-48">
       {{ 'labels.inputs.Apply Withdrawal Fee for Transfers' | translate }}
     </mat-checkbox>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.inputs.Lock-in Period' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Lock-in Period' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="lockinPeriodFrequency" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         <mat-option
@@ -111,55 +111,52 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">{{ 'labels.inputs.Overdraft' | translate }}</h3>
+    <h3 class="mat-h3 flex-23">{{ 'labels.inputs.Overdraft' | translate }}</h3>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="allowOverdraft" class="margin-b">
+    <mat-checkbox class="flex-73 margin-b" labelPosition="before" formControlName="allowOverdraft">
       {{ 'labels.inputs.Is Overdraft Allowed' | translate }}
     </mat-checkbox>
 
     <div
       *ngIf="savingsAccountTermsForm.value.allowOverdraft"
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayoutGap="2%"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
-      <mat-form-field fxFlex="31%">
+      <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</mat-label>
         <input type="number" matInput formControlName="minOverdraftForInterestCalculation" />
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}</mat-label>
         <input type="number" matInput formControlName="nominalAnnualInterestRateOverdraft" />
       </mat-form-field>
 
-      <mat-form-field fxFlex="31%">
+      <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Maximum Overdraft Amount Limit' | translate }}</mat-label>
         <input type="number" matInput formControlName="overdraftLimit" />
       </mat-form-field>
     </div>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="enforceMinRequiredBalance" class="margin-v">
+    <mat-checkbox labelPosition="before" formControlName="enforceMinRequiredBalance" class="margin-v flex-48">
       {{ 'labels.inputs.Enforce Minimum Balance' | translate }}
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Minimum Balance' | translate }}</mat-label>
       <input type="number" matInput formControlName="minRequiredBalance" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" *ngIf="savingsAccountTermsForm.controls.minBalanceForInterestCalculation.value">
+    <mat-form-field class="flex-48" *ngIf="savingsAccountTermsForm.controls.minBalanceForInterestCalculation.value">
       <mat-label>{{ 'labels.inputs.Balance Required for Interest Calculation' | translate }}</mat-label>
       <input type="number" matInput formControlName="minBalanceForInterestCalculation" />
     </mat-form-field>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

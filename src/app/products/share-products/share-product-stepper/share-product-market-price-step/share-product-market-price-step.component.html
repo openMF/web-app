@@ -1,10 +1,10 @@
-<div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  <h4 fxFlex="23%" class="mat-h4">
+<div class="layout-row-wrap gap-2px responsive-column">
+  <h4 class="mat-h4 flex-23">
     {{ 'labels.inputs.Market Price Period' | translate }}
     <i class="fas fa-question" matTooltip="{{ 'tooltips.Add future share value with date range' | translate }}"></i>
   </h4>
 
-  <div fxFlex="73%">
+  <div class="flex-73">
     <button type="button" mat-raised-button color="primary" (click)="addMarketPricePeriod()">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Add' | translate }}
@@ -12,8 +12,7 @@
   </div>
 
   <table
-    fxFlex="98%"
-    class="mat-elevation-z1"
+    class="flex-98 mat-elevation-z1"
     mat-table
     [dataSource]="marketPricePeriods.value"
     *ngIf="marketPricePeriods.value.length"
@@ -49,7 +48,7 @@
   </table>
 </div>
 
-<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<div class="layout-row responsive-column align-center gap-2px margin-t">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}

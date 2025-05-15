@@ -1,6 +1,6 @@
 <div class="container">
-  <div fxLayoutGap="2%" class="m-b-20">
-    <mat-card fxLayout="column" fxLayoutGap="2%" fxFlex="50%">
+  <div class="gap-2percent m-b-20">
+    <mat-card class="layout-column gap-2percent flex-50">
       <h3>
         <strong>{{ bulkImport.name }} {{ 'labels.heading.Template' | translate }}</strong>
       </h3>
@@ -8,7 +8,7 @@
       <form [formGroup]="bulkImportForm">
         <mat-card-content>
           <div *ngIf="bulkImport.formFields >= 1">
-            <mat-form-field fxFlex>
+            <mat-form-field class="flex-fill">
               <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
               <mat-select formControlName="officeId">
                 <mat-option *ngFor="let office of officeData" [value]="office.id">
@@ -19,7 +19,7 @@
           </div>
 
           <div *ngIf="bulkImport.formFields >= 2">
-            <mat-form-field fxFlex>
+            <mat-form-field class="flex-fill">
               <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
               <mat-select formControlName="staffId">
                 <mat-option *ngFor="let staff of staffData" [value]="staff.id">
@@ -30,7 +30,7 @@
           </div>
 
           <div *ngIf="bulkImport.formFields === 3">
-            <mat-form-field fxFlex>
+            <mat-form-field class="flex-fill">
               <mat-label>{{ 'labels.inputs.Legal Form' | translate }}</mat-label>
               <mat-select required formControlName="legalForm">
                 <mat-option value="Entity">{{ 'labels.inputs.Entity' | translate }}</mat-option>
@@ -41,7 +41,7 @@
         </mat-card-content>
       </form>
 
-      <div fxFlex="13%">
+      <div class="flex-13">
         <button
           mat-raised-button
           color="primary"
@@ -53,7 +53,7 @@
       </div>
     </mat-card>
 
-    <mat-card fxLayout="column" fxLayoutGap="2%" fxFlex="50%">
+    <mat-card class="layout-column gap-2percent flex-50">
       <h3>
         <strong>{{ bulkImport.name }}</strong>
       </h3>
@@ -66,13 +66,13 @@
         'labels.text.Please retain the value Entity/Person in the filename.' | translate
       }}</mat-hint>
 
-      <div fxFlex="13%">
+      <div class="flex-13">
         <button mat-raised-button color="primary" [disabled]="!template" (click)="uploadTemplate()">
           <i class="fa fa-upload"></i>&nbsp;&nbsp;{{ 'labels.buttons.Upload' | translate }}
         </button>
       </div>
 
-      <div *ngIf="bulkImport.formFields >= 2" fxFlex class="cover"></div>
+      <div *ngIf="bulkImport.formFields >= 2" class="flex cover"></div>
     </mat-card>
   </div>
 
@@ -83,7 +83,7 @@
       </h3>
     </div>
 
-    <div class="m-b-10" fxLayoutAlign="end">
+    <div class="m-b-10 layout-align-end">
       <button mat-raised-button color="primary" (click)="refreshDocuments()">
         <i class="fa fa-repeat"></i>&nbsp;&nbsp;{{ 'labels.buttons.Refresh' | translate }}
       </button>

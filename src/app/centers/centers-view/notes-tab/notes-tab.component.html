@@ -4,12 +4,10 @@
     <form
       #formRef="ngForm"
       [formGroup]="noteForm"
-      fxLayout="row"
-      fxLayoutAlign="start baseline"
-      fxLayoutGap="20px"
+      class="layout-row align-start-baseline gap-20px"
       (ngSubmit)="submit()"
     >
-      <mat-form-field fxFlex="calc(90%-20px)">
+      <mat-form-field class="flex-90-minus-20px">
         <textarea
           formControlName="note"
           matInput
@@ -18,7 +16,7 @@
       </mat-form-field>
       <button
         mat-raised-button
-        fxFlex
+        class="flex-fill"
         color="primary"
         [disabled]="!noteForm.valid"
         *mifosxHasPermission="'CREATE_GROUPNOTE'"
@@ -36,7 +34,7 @@
         ><br />
         <span>{{ 'labels.inputs.Date' | translate }}: {{ centerNote.createdOn | dateFormat }}</span>
       </p>
-      <div fxLayout="row" fxLayoutAlign="flex-start">
+      <div class="layout-row align-start">
         <button mat-button color="primary" (click)="editNote(centerNote.id, centerNote.note, i)">
           <fa-icon icon="edit"></fa-icon>
         </button>

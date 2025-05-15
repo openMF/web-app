@@ -1,27 +1,27 @@
 <div class="tab-container mat-typography">
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <h3 fxFlex="90%">{{ 'labels.inputs.Loan Collateral Details' | translate }}</h3>
-    <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" class="action-buttons">
+  <div class="layout-row align-start-center">
+    <h3 class="flex-90">{{ 'labels.inputs.Loan Collateral Details' | translate }}</h3>
+    <div class="layout-row gap-20px align-end align-items-center action-buttons">
       <button mat-raised-button color="primary" [routerLink]="['../actions/Add Collateral']">
         {{ 'labels.buttons.Add Collateral' | translate }}
       </button>
     </div>
   </div>
 
-  <div fxLayout="row" fxLayoutGap="32px" *ngIf="loanCollaterals?.length > 0" class="performance-history-container">
+  <div class="layout-row gap-32px performance-history-container" *ngIf="loanCollaterals?.length > 0">
     <table>
       <tbody>
         <tr>
-          <td fxFlex="25%">
+          <td class="flex-25">
             <b>{{ 'labels.inputs.Number of Collaterals' | translate }} :</b>
           </td>
-          <td fxFlex="25%" class="left">
+          <td class="flex-25 left">
             {{ loanCollaterals?.length | formatNumber }}
           </td>
-          <td fxFlex="25%">
+          <td class="flex-25">
             <b>{{ 'labels.inputs.Total Amount' | translate }} :</b>
           </td>
-          <td fxFlex="25%" class="left">
+          <td class="flex-25 left">
             {{ totalAmount | formatNumber }}
           </td>
         </tr>

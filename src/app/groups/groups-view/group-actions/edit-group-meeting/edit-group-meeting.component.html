@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end">
+<div class="container m-b-20 layout-row align-end">
   <button mat-raised-button color="primary" (click)="editSchedule()">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit Schedule' | translate }}
@@ -9,7 +9,7 @@
   <mat-card>
     <form [formGroup]="groupEditMeetingForm">
       <mat-card-content>
-        <div fxLayout="column">
+        <div class="layout-column">
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Repetition Frequency' | translate }}</mat-label>
             <mat-select formControlName="frequency">
@@ -72,7 +72,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

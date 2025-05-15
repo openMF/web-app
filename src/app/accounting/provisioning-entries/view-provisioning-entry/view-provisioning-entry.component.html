@@ -1,5 +1,5 @@
 <div class="container" *ngIf="provisioningEntry">
-  <div class="m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+  <div class="m-b-20 layout-row align-end gap-20px">
     <button
       mat-raised-button
       color="primary"
@@ -14,28 +14,27 @@
 
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content" fxLayout.lt-md="column">
-        <div fxFlex="16%" class="header">
+      <div class="layout-row-wrap responsive-column content">
+        <div class="flex-16 header">
           {{ 'labels.inputs.Created By' | translate }}
         </div>
-
-        <div fxFlex="16%">
+        <div class="flex-16">
           {{ provisioningEntry.createdUser }}
         </div>
 
-        <div fxFlex="16%" class="header">
+        <div class="flex-16 header">
           {{ 'labels.inputs.Created On' | translate }}
         </div>
 
-        <div fxFlex="16%">
+        <div class="flex-16">
           {{ provisioningEntry.createdDate }}
         </div>
 
-        <div fxFlex="18%" class="header">
+        <div class="flex-18 header">
           {{ 'labels.inputs.Amount to be Reserved' | translate }}
         </div>
 
-        <div fxFlex="18%">
+        <div class="flex-18">
           {{ provisioningEntry.reservedAmount }}
         </div>
       </div>
@@ -44,18 +43,18 @@
 </div>
 
 <!-- Search -->
-<div class="container m-t-20" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  <mat-form-field fxFlex="31%">
+<div class="container m-t-20 layout-row-wrap responsive-column gap-2percent">
+  <mat-form-field class="flex-31">
     <mat-label>{{ 'labels.inputs.Office Name' | translate }}</mat-label>
     <input matInput [formControl]="officeName" [matAutocomplete]="officeNameAutocomplete" />
   </mat-form-field>
 
-  <mat-form-field fxFlex="31%">
+  <mat-form-field class="flex-31">
     <mat-label>{{ 'labels.inputs.Loan Product' | translate }}</mat-label>
     <input matInput [formControl]="loanProduct" [matAutocomplete]="loanProductAutocomplete" />
   </mat-form-field>
 
-  <mat-form-field fxFlex="31%">
+  <mat-form-field class="flex-31">
     <mat-label>{{ 'labels.inputs.Provisioning Category' | translate }}</mat-label>
     <input matInput [formControl]="provisioningCategory" [matAutocomplete]="provisioningCategoryAutocomplete" />
   </mat-form-field>

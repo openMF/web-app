@@ -1,5 +1,5 @@
 <mat-card class="account-card">
-  <mat-card-header fxLayout="column" class="header">
+  <mat-card-header class="header layout-column">
     <mat-card-title-group class="header-title-group">
       <div class="profile-image-container">
         <div>
@@ -13,8 +13,8 @@
       </div>
 
       <div class="mat-typography account-card-title">
-        <mat-card-title fxLayout="row" fxLayout.lt-md="column">
-          <div fxFlex="60%">
+        <mat-card-title class="layout-row layout-lt-md-column">
+          <div class="flex-60">
             <h3>
               <i
                 class="fa fa-stop"
@@ -70,9 +70,9 @@
             </table>
           </div>
 
-          <span fxFlex="auto"></span>
-
-          <div fxFlex="5%">
+          <span class="flex-auto"></span>
+          <div class="flex-5">
+            >
             <button
               mat-icon-button
               [matMenuTriggerFor]="accountMenu"
@@ -112,7 +112,7 @@
   </mat-card-header>
 
   <mat-card-content class="content">
-    <nav mat-tab-nav-bar class="navigation-tabs" *ngIf="isActive">
+    <nav mat-tab-nav-bar class="navigation-tabs" *ngIf="isActive" [tabPanel]="tabPanel">
       <a
         mat-tab-link
         [routerLink]="['./general']"
@@ -185,6 +185,8 @@
       </ng-container>
     </nav>
 
-    <router-outlet></router-outlet>
+    <mat-tab-nav-panel #tabPanel>
+      <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
   </mat-card-content>
 </mat-card>

@@ -1,6 +1,6 @@
 <div class="container">
-  <mat-card class="card" fxLayout="column" fxLayoutGap="40px">
-    <div fxLayout="row" class="search">
+  <mat-card class="card layout-column gap-40px">
+    <div class="layout-row search">
       <mat-card-content>
         <mat-form-field>
           <mat-label>{{ 'labels.placeholders.Search Activity' | translate }}</mat-label>
@@ -15,13 +15,13 @@
       </mat-card-content>
     </div>
 
-    <div fxLayout="row" class="top-card">
+    <div class="layout-row top-card">
       <div class="trends-bar">
         <mifosx-client-trends-bar></mifosx-client-trends-bar>
       </div>
     </div>
 
-    <div fxLayout="row" class="bottom-card">
+    <div class="layout-row bottom-card">
       <div class="amount-disbursed">
         <mifosx-amount-disbursed-pie></mifosx-amount-disbursed-pie>
       </div>

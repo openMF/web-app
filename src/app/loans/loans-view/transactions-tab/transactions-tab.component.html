@@ -1,5 +1,5 @@
 <div class="container">
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px" class="transaction-buttons" *ngIf="checkStatus()">
+  <div class="layout-row transaction-buttons align-end gap-20px" *ngIf="checkStatus()">
     <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
       {{ 'labels.inputs.Hide Reversed' | translate }}</mat-checkbox
     >

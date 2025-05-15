@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.heading.Edit' | translate }}
@@ -12,116 +12,116 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap content">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Name' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ chargeData.name }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Applies To' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ chargeData.chargeAppliesTo.value | translateKey: 'catalogs' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Penalty' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ chargeData.penalty === true | yesNo }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Currency' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ chargeData.currency.name }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Amount' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ chargeData.amount }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="minCap">
+        <div class="flex-50 mat-body-strong" *ngIf="minCap">
           {{ 'labels.inputs.Minimum Charge Cap' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="minCap">
+        <div class="flex-50" *ngIf="minCap">
           {{ chargeData.minCap }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="maxCap">
+        <div class="flex-50 mat-body-strong" *ngIf="maxCap">
           {{ 'labels.inputs.Maximum Charge Cap' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="maxCap">
+        <div class="flex-50" *ngIf="maxCap">
           {{ chargeData.maxCap }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Time Type' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ chargeData.chargeTimeType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Calculation Type' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ chargeData.chargeCalculationType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Charge Payment Mode' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ chargeData.chargePaymentMode.value | translateKey: 'catalogs' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.status.Active' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ chargeData.active === true | yesNo }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency">
+        <div class="flex-50 mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency">
           {{ 'labels.inputs.Add Fee Frequency' | translate }}
         </div>
 
         <div
-          fxFlex="50%"
+          class="flex-50"
           *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency && chargeData.feeFrequency"
         >
           {{ chargeData.feeFrequency.value | translateKey: 'catalogs' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
+        <div class="flex-50 mat-body-strong" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
           {{ 'labels.inputs.Frequency Interval' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
+        <div class="flex-50" *ngIf="chargeData.chargeTimeType.id === 9 && chargeData.feeInterval">
           {{ chargeData.feeInterval }}
         </div>
 
         <mifosx-gl-account-display
-          fxFlex="100%"
+          class="flex-100"
           [accountTitle]="'Income From Charges'"
           *ngIf="chargeData.incomeOrLiabilityAccount"
           [glAccount]="chargeData.incomeOrLiabilityAccount"
@@ -129,16 +129,16 @@
         >
         </mifosx-gl-account-display>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="chargeData.taxGroup">
+        <div class="flex-50 mat-body-strong" *ngIf="chargeData.taxGroup">
           {{ 'labels.inputs.Tax Group' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="chargeData.taxGroup">
+        <div class="flex-50" *ngIf="chargeData.taxGroup">
           {{ chargeData.taxGroup.name }}
         </div>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div class="layout-row layout-align-center gap-2percent column-on-mobile">
         <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
           {{ 'labels.buttons.Back' | translate }}
         </button>

@@ -1,9 +1,9 @@
-<div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  <h4 class="m-b-15 right" fxFlex="90%">
+<div class="flex-fill layout-row-wrap gap-2percent layout-lt-md-column">
+  <h4 class="m-b-15 right flex-90">
     {{ 'labels.heading.You can drag and drop the rows to set a Payment Allocations order' | translate }}
   </h4>
 
-  <div class="right" fxFlex="4%" *ngIf="!isDefault()">
+  <div class="right flex-4" *ngIf="!isDefault()">
     <button mat-button color="warn" (click)="removeTransaction()">
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
     </button>
@@ -72,8 +72,7 @@
   </div>
 
   <mat-form-field
-    fxFlex="33%"
-    class="m-t-20"
+    class="m-t-20 flex-33"
     *ngIf="advancedPaymentAllocation && advancedPaymentAllocation.futureInstallmentAllocationRules"
   >
     <mat-label>{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}</mat-label>

@@ -1,5 +1,5 @@
 <mat-card class="account-card">
-  <mat-card-header fxLayout="column" class="header">
+  <mat-card-header class="header layout-column">
     <mat-card-title-group class="header-title-group">
       <div class="profile-image-container">
         <div>
@@ -14,7 +14,7 @@
 
       <div class="mat-typography account-card-title">
         <mat-card-title>
-          <div fxFlex="60%">
+          <div class="flex-60">
             <h3>
               <i
                 class="fa fa-stop"
@@ -40,15 +40,14 @@
             *ngIf="
               !fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval
             "
-            fxFlex="30%"
-            fxLayout="column"
+            class="layout-column flex-30"
           >
-            <h3 fxFlex="100%">{{ 'labels.heading.Account Overview' | translate }}</h3>
-            <table class="account-overview" fxFlex="100%">
+            <h3 class="flex-100">{{ 'labels.heading.Account Overview' | translate }}</h3>
+            <table class="account-overview flex-100">
               <tbody>
                 <tr>
-                  <td fxFlex="70%">{{ 'labels.inputs.Current Balance' | translate }}</td>
-                  <td fxFlex="30%" class="r-amount">
+                  <td class="flex-70">{{ 'labels.inputs.Current Balance' | translate }}</td>
+                  <td class="r-amount flex-30">
                     {{
                       fixedDepositsAccountData.summary.accountBalance
                         | currency: currency.code : 'symbol-narrow' : '1.2-2'
@@ -56,8 +55,8 @@
                   </td>
                 </tr>
                 <tr>
-                  <td fxFlex="70%">{{ 'labels.inputs.Deposit Amount' | translate }}</td>
-                  <td fxFlex="30%" class="r-amount">
+                  <td class="flex-70">{{ 'labels.inputs.Deposit Amount' | translate }}</td>
+                  <td class="r-amount flex-30">
                     {{ fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
                   </td>
                 </tr>
@@ -65,9 +64,8 @@
             </table>
           </div>
 
-          <span fxFlex="auto"></span>
-
-          <div fxFlex="5%">
+          <span class="flex-auto"></span>
+          <div class="flex-5">
             <button
               mat-icon-button
               [matMenuTriggerFor]="accountMenu"
@@ -102,7 +100,7 @@
   </mat-card-header>
 
   <mat-card-content class="content">
-    <nav mat-tab-nav-bar class="navigation-tabs">
+    <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
       <a
         mat-tab-link
         [routerLink]="['./general']"
@@ -165,6 +163,8 @@
       </ng-container>
     </nav>
 
-    <router-outlet></router-outlet>
+    <mat-tab-nav-panel #tabPanel>
+      <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
   </mat-card-content>
 </mat-card>

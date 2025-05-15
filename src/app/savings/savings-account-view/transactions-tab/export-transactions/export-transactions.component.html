@@ -1,6 +1,6 @@
-<form class="m-t-20" fxLayout="column" [formGroup]="transactionsReportForm" (ngSubmit)="generate()">
-  <div fxLayout="row" fxLayoutGap="3%" fxLayoutAlign="center">
-    <mat-form-field fxFlex="30%" (click)="fromDatePicker.open()">
+<form class="m-t-20 layout-column" [formGroup]="transactionsReportForm" (ngSubmit)="generate()">
+  <div class="layout-row layout-align-center gap-3percent">
+    <mat-form-field class="flex-30" (click)="fromDatePicker.open()">
       <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
       <input
         matInput
@@ -18,7 +18,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="30%" (click)="toDatePicker.open()">
+    <mat-form-field class="flex-30" (click)="toDatePicker.open()">
       <mat-label>{{ 'labels.inputs.To Date' | translate }}</mat-label>
       <input
         matInput
@@ -37,7 +37,7 @@
     </mat-form-field>
   </div>
 
-  <div class="generate-button" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5%">
+  <div class="generate-button layout-row layout-xs-column layout-align-center gap-5percent">
     <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
     <button mat-raised-button color="primary" [disabled]="!transactionsReportForm.valid">
       <fa-icon icon="cogs" class="m-r-10"></fa-icon>{{ 'labels.buttons.Generate Report' | translate }} &nbsp;

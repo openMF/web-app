@@ -21,3 +21,15 @@
     margin: 0.5rem 0;
   }
 }
+
+.radio-group-spacing {
+  display: flex;
+  gap: 2rem;
+  flex-direction: row;
+}
+
+@media (width <= 768px) {
+  .radio-group-spacing {
+    flex-direction: column;
+  }
+}

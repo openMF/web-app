@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonCreateCharge class="in-block">
     <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CHARGE'">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
@@ -8,12 +8,12 @@
 </div>
 
 <div class="container">
-  <div #filter fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex="68%">
+  <div #filter class="layout-row gap-20px">
+    <mat-form-field class="flex-fill flex-68">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
-    <mat-form-field fxFlex="28%">
+    <mat-form-field class="flex-28">
       <mat-select
         placeholder="{{ 'labels.inputs.Filter' | translate }}"
         (selectionChange)="filterByAppliesTo($event.value)"
@@ -105,7 +105,7 @@
 <ng-template #templateButtonCreateCharge let-popover="popover">
   <h2>{{ 'labels.text.Create Charge' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Supports Loan charges, Savings &amp; deposits' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -124,7 +124,7 @@
 
 <ng-template #templateFilter let-popover="popover">
   <h4>{{ 'labels.heading.Search bar to filter charges.' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -152,7 +152,7 @@
       'labels.heading.Charges' | translate
     }}</a>
   </h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

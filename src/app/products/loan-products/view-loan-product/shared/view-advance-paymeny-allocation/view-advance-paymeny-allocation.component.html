@@ -1,24 +1,24 @@
 <mat-expansion-panel *ngIf="paymentAllocation">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <div fxFlexFill>
-        <span fxFlex="40%">{{ 'labels.inputs.Transaction Type' | translate }}:</span>
-        <span fxFlex="60%">{{ transactionTypeValue(paymentAllocation.transactionType) }}</span>
+      <div class="flex-fill">
+        <span class="flex-40">{{ 'labels.inputs.Transaction Type' | translate }}:</span>
+        <span class="flex-60">{{ transactionTypeValue(paymentAllocation.transactionType) }}</span>
       </div>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <div fxFlexFill>
-    <div fxFlexFill>
-      <span fxFlex="40%">{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}:</span>
-      <span fxFlex="60%">{{
+  <div class="flex-fill">
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}:</span>
+      <span class="flex-60">{{
         futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) | translateKey: 'catalogs'
       }}</span>
     </div>
 
-    <div fxFlexFill>
-      <span fxFlex="40%">{{ 'labels.inputs.Payment Allocation Order' | translate }}</span>
-      <span fxFlex="60%">
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Payment Allocation Order' | translate }}</span>
+      <span class="flex-60">
         <table>
           <thead>
             <tr>
@@ -40,17 +40,17 @@
 <mat-expansion-panel *ngIf="creditAllocation">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <div fxFlexFill>
-        <span fxFlex="40%">{{ 'labels.inputs.Transaction Type' | translate }}:</span>
-        <span fxFlex="60%">{{ transactionTypeValue(creditAllocation.transactionType) }}</span>
+      <div class="flex-fill">
+        <span class="flex-40">{{ 'labels.inputs.Transaction Type' | translate }}:</span>
+        <span class="flex-60">{{ transactionTypeValue(creditAllocation.transactionType) }}</span>
       </div>
     </mat-panel-title>
   </mat-expansion-panel-header>
 
-  <div fxFlexFill>
-    <div fxFlexFill>
-      <span fxFlex="40%">{{ 'labels.inputs.Credit Allocation Order' | translate }}</span>
-      <span fxFlex="60%">
+  <div class="flex-fill">
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Credit Allocation Order' | translate }}</span>
+      <span class="flex-60">
         <table>
           <thead>
             <tr>
