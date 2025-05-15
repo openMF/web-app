@@ -8,6 +8,9 @@ export function maxNumberValueValidator(maxControlName: string): ValidatorFn {
     }
 
     let maxValue = maxControl.value;
+    if (maxValue == null) {
+      return null;
+    }
     if (typeof maxValue === 'undefined') {
       return null;
     }
