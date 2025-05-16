@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { OrganizationService } from '../../organization.service';
  * Loan Provisioning Criteria data resolver.
  */
 @Injectable()
-export class LoanProvisioningCriteriaResolver implements Resolve<Object> {
+export class LoanProvisioningCriteriaResolver {
   /**
    * @param {OrganizationService} organizationService Organization service.
    */

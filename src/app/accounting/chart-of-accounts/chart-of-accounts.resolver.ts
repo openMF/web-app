@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +11,7 @@ import { AccountingService } from '../accounting.service';
  * Chart of acocunts data resolver.
  */
 @Injectable()
-export class ChartOfAccountsResolver implements Resolve<Object> {
+export class ChartOfAccountsResolver {
   /**
    * @param {AccountingService} accountingService Accounting service.
    */

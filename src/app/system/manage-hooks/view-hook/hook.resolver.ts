@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { SystemService } from '../../system.service';
  * Hook data resolver.
  */
 @Injectable()
-export class HookResolver implements Resolve<Object> {
+export class HookResolver {
   /**
    * @param {SystemService} systemService System service.
    */
