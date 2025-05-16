@@ -96,7 +96,7 @@
     "eslint": "^8.57.0",
     "git-describe": "^4.1.1",
     "htmlhint": "1.1.4",
-    "https-proxy-agent": "2.2.1",
+    "https-proxy-agent": "2.2.4",
     "husky": "^9.1.7",
     "jasmine-core": "^4.2.0",
     "jasmine-spec-reporter": "~5.0.0",
