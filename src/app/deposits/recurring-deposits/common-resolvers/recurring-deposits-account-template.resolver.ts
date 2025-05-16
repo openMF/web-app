@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { RecurringDepositsService } from '../recurring-deposits.service';
  * Savings Account Template resolver.
  */
 @Injectable()
-export class RecurringDepositsAccountTemplateResolver implements Resolve<Object> {
+export class RecurringDepositsAccountTemplateResolver {
   /**
    * @param {recurringDepositsService} RecurringDepositsService Savings service.
    */

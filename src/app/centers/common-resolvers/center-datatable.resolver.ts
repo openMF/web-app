@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { CentersService } from '../centers.service';
  * Centers notes data resolver.
  */
 @Injectable()
-export class CenterDatatableResolver implements Resolve<Object> {
+export class CenterDatatableResolver {
   /**
    * @param {CentersService} CentersService Centers service.
    */

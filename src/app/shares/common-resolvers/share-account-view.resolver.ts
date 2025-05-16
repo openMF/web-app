@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { SharesService } from '../shares.service';
  * Shares Account data resolver.
  */
 @Injectable()
-export class SharesAccountViewResolver implements Resolve<Object> {
+export class SharesAccountViewResolver {
   /**
    * @param {SharesService} SharesService Shares service.
    */

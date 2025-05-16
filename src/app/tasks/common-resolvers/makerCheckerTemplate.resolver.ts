@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +11,7 @@ import { TasksService } from '../tasks.service';
  * Maker Checker Template resolver.
  */
 @Injectable()
-export class MakerCheckerTemplate implements Resolve<Object> {
+export class MakerCheckerTemplate {
   /**
    * @param {TasksService} tasksService Tasks service.
    */

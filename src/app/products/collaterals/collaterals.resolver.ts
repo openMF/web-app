@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { ProductsService } from '../products.service';
  * Collaterals data resolver
  */
 @Injectable()
-export class CollateralsResolver implements Resolve<Object> {
+export class CollateralsResolver {
   /**
    * @param {ProductsService} productsService Products service
    */

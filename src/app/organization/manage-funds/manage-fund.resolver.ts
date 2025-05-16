@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OrganizationService } from '../organization.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ManageFundResolver implements Resolve<boolean> {
+export class ManageFundResolver {
   /**
    * @param {OrganizationService} organizationService Organization service.
    */

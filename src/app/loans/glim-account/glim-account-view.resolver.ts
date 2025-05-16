@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { LoansService } from '../loans.service';
  * GLIM Account data resolver.
  */
 @Injectable()
-export class GLIMViewResolver implements Resolve<Object> {
+export class GLIMViewResolver {
   /**
    * @param {LoansService} loansService Loans service.
    */

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { SystemService } from '../../system.service';
  * Configurations data resolver.
  */
 @Injectable()
-export class GlobalConfigurationResolver implements Resolve<Object> {
+export class GlobalConfigurationResolver {
   /**
    * @param {SystemService} systemService System service.
    */

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { TasksService } from '../tasks.service';
  * Checker Inbox Detail resolver.
  */
 @Injectable()
-export class GetCheckerInboxDetailResolver implements Resolve<Object> {
+export class GetCheckerInboxDetailResolver {
   /**
    * @param {TasksService} tasksService Tasks service.
    */

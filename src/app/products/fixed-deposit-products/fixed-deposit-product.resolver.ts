@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { ProductsService } from '../products.service';
  * Fixed Deposit Product data resolver.
  */
 @Injectable()
-export class FixedDepositProductResolver implements Resolve<Object> {
+export class FixedDepositProductResolver {
   /**
    * @param {ProductsService} productsService Products service.
    */
