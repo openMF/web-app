@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { SystemService } from '../../system.service';
  * Account Number Preference data resolver.
  */
 @Injectable()
-export class AccountNumberPreferenceResolver implements Resolve<Object> {
+export class AccountNumberPreferenceResolver {
   /**
    * @param {SystemService} systemService System service.
    */

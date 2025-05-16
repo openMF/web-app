@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { ProductsService } from '../products.service';
 
 @Injectable()
-export class ChargesTemplateAndResolver implements Resolve<Object> {
+export class ChargesTemplateAndResolver {
   constructor(private productsService: ProductsService) {}
 
   /**

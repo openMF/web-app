@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { SystemService } from 'app/system/system.service';
 
 /** rxjs Imports */
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
  * Office Datatables data resolver.
  */
 @Injectable()
-export class OfficeDatatablesResolver implements Resolve<Object> {
+export class OfficeDatatablesResolver {
   /**
    * @param {SystemService} systemService Products service.
    */

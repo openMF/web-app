@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +11,7 @@ import { ProductsService } from '../products.service';
  * Products mix template data resolver.
  */
 @Injectable()
-export class ProductsMixTemplateResolver implements Resolve<Object> {
+export class ProductsMixTemplateResolver {
   /**
    * @param {ProductsService} productsService Products service.
    */

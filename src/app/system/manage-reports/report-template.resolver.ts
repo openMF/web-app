@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +11,7 @@ import { SystemService } from '../system.service';
  * Report Template data resolver.
  */
 @Injectable()
-export class ReportTemplateResolver implements Resolve<Object> {
+export class ReportTemplateResolver {
   /**
    * @param {SystemService} systemService System service.
    */

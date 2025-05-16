@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { OrganizationService } from 'app/organization/organization.service';
  * Cashier transaction data resolver.
  */
 @Injectable()
-export class CashierTransactionTemplateResolver implements Resolve<Object> {
+export class CashierTransactionTemplateResolver {
   /**
    * @param {OrganizationService} organizationService Organization service.
    */

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { AccountingService } from '../accounting.service';
  * GL Account and chart of accounts template data resolver.
  */
 @Injectable()
-export class GlAccountAndChartOfAccountsTemplateResolver implements Resolve<Object> {
+export class GlAccountAndChartOfAccountsTemplateResolver {
   /**
    * @param {AccountingService} accountingService Accounting service.
    */

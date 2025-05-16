@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable, forkJoin } from 'rxjs';
@@ -12,7 +12,7 @@ import { SavingsService } from '../savings.service';
  * Savings Account Actions data resolver.
  */
 @Injectable()
-export class SavingsAccountActionsResolver implements Resolve<Object> {
+export class SavingsAccountActionsResolver {
   /**
    * @param {SavingsService} SavingsService Savings service.
    */

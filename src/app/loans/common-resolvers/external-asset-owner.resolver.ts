@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ExternalAssetOwnerService } from '../services/external-asset-owner.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ExternalAssetOwnerResolver implements Resolve<boolean> {
+export class ExternalAssetOwnerResolver {
   /**
    * @param {ExternalAssetOwnerService} externalAssetOwnerService External Asset Owner service.
    */

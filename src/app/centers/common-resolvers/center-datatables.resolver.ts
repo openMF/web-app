@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +11,7 @@ import { CentersService } from '../centers.service';
  * center datatables resolver.
  */
 @Injectable()
-export class CenterDatatablesResolver implements Resolve<Object> {
+export class CenterDatatablesResolver {
   /**
    * @param {centersService} centersService centers service.
    */
