@@ -1,7 +1,7 @@
 <div class="tab-container mat-typography" *ngIf="loans && loans.length > 0">
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="search-box" fxFlex="40%">
-      <mat-form-field fxFlex="90%">
+  <div class="layout-row align-start-center">
+    <div class="search-box flex-40">
+      <mat-form-field class="flex-90">
         <input
           matInput
           placeholder="{{ 'labels.text.Filter by name' | translate }}"
@@ -9,7 +9,7 @@
         />
       </mat-form-field>
     </div>
-    <div fxFlex="60%">
+    <div class="flex-60">
       <button
         mat-raised-button
         color="success"

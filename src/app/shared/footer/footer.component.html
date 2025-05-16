@@ -1,6 +1,6 @@
-<div fxLayout="column" id="footer" class="m-b-20" *ngIf="displayBackEndInfo">
-  <mat-divider fxFlexAlign="center" class="divider"></mat-divider>
-  <div fxLayout="column" class="m-b-20 content">
+<div class="layout-column m-b-20" id="footer" *ngIf="displayBackEndInfo">
+  <mat-divider class="divider align-center"></mat-divider>
+  <div class="layout-column m-b-20 content footer-center">
     <table class="versions">
       <tr>
         <td class="footer-content">Mifos</td>
@@ -27,8 +27,6 @@
       </tr>
     </table>
   </div>
-  <mat-divider fxFlexAlign="center" class="divider"></mat-divider>
-  <p fxFlexAlign="center" class="footer-content">
-    {{ 'APP_NAME' | translate }} {{ 'labels.text.by' | translate }} Mifos
-  </p>
+  <mat-divider class="divider align-center"></mat-divider>
+  <p class="footer-content align-center">{{ 'APP_NAME' | translate }} {{ 'labels.text.by' | translate }} Mifos</p>
 </div>

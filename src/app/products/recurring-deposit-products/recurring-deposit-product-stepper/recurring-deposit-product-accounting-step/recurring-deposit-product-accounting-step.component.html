@@ -1,10 +1,7 @@
 <form [formGroup]="recurringDepositProductAccountingForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row-wrap gap-2px responsive-column">
     <mat-radio-group
-      fxFlex="98%"
-      fxLayout="row"
-      fxLayoutGap="5%"
-      fxLayout.lt-md="column"
+      class="flex-98 layout-row gap-5percent layout-column.lt-md radio-group-spacing"
       formControlName="accountingRule"
     >
       <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
@@ -12,13 +9,13 @@
       </mat-radio-button>
     </mat-radio-group>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <div *ngIf="isCashOrAccrualAccounting()" fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Assets' | translate }}</h4>
+    <div *ngIf="isCashOrAccrualAccounting()" class="flex-fill layout-row-wrap gap-2percent layout-xs-column">
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Assets' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="recurringDepositProductAccountingForm.controls.savingsReferenceAccountId"
         [glAccountList]="assetAccountData"
         [required]="true"
@@ -27,7 +24,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         *ngIf="isAccrualAccounting()"
         [inputFormControl]="recurringDepositProductAccountingForm.controls.feesReceivableAccountId"
         [glAccountList]="assetAccountData"
@@ -37,7 +34,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         *ngIf="isAccrualAccounting()"
         [inputFormControl]="recurringDepositProductAccountingForm.controls.penaltiesReceivableAccountId"
         [glAccountList]="assetAccountData"
@@ -46,12 +43,12 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Liabilities' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="recurringDepositProductAccountingForm.controls.savingsControlAccountId"
         [glAccountList]="liabilityAccountData"
         [required]="true"
@@ -60,7 +57,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="recurringDepositProductAccountingForm.controls.transfersInSuspenseAccountId"
         [glAccountList]="liabilityAccountData"
         [required]="true"
@@ -69,7 +66,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         *ngIf="isAccrualAccounting()"
         [inputFormControl]="recurringDepositProductAccountingForm.controls.interestPayableAccountId"
         [glAccountList]="liabilityAccountData"
@@ -78,12 +75,12 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Expenses' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Expenses' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="recurringDepositProductAccountingForm.controls.interestOnSavingsAccountId"
         [glAccountList]="expenseAccountData"
         [required]="true"
@@ -91,12 +88,12 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Income' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Income' | translate }}</h4>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="recurringDepositProductAccountingForm.controls.incomeFromFeeAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -105,7 +102,7 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        fxFlex="48%"
+        class="flex-48"
         [inputFormControl]="recurringDepositProductAccountingForm.controls.incomeFromPenaltyAccountId"
         [glAccountList]="incomeAccountData"
         [required]="true"
@@ -113,25 +110,22 @@
       >
       </mifosx-gl-account-selector>
 
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <h3 fxFlex="23%" class="mat-h3">{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
+      <h3 class="mat-h3 flex-23">{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
 
-      <mat-checkbox fxFlex="73%" formControlName="advancedAccountingRules"></mat-checkbox>
+      <mat-checkbox class="flex-73" formControlName="advancedAccountingRules"></mat-checkbox>
 
       <div
         *ngIf="recurringDepositProductAccountingForm.value.advancedAccountingRules"
-        fxFlexFill
-        fxLayout="row wrap"
-        fxLayoutGap="2%"
-        fxLayout.lt-md="column"
+        class="flex-fill layout-row-wrap gap-2percent responsive-column"
       >
-        <div fxFlex="100%" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <h4 fxFlex="63%" class="mat-h4">
+        <div class="flex-100 layout-row-wrap gap-2percent layout-lt-md-column">
+          <h4 class="mat-h4 flex-63">
             {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
           </h4>
 
-          <div fxFlex="33%">
+          <div class="flex-33">
             <button
               type="button"
               mat-raised-button
@@ -144,8 +138,7 @@
           </div>
 
           <table
-            fxFlex="98%"
-            class="mat-elevation-z1"
+            class="flex-98 mat-elevation-z1"
             mat-table
             [dataSource]="paymentChannelToFundSourceMappings.value"
             *ngIf="paymentChannelToFundSourceMappings.value.length !== 0"
@@ -184,10 +177,10 @@
             <tr mat-row *matRowDef="let row; columns: paymentFundSourceDisplayedColumns"></tr>
           </table>
         </div>
-        <div fxFlex="100%" *ngIf="existCharges()">
-          <h4 fxFlex="63%" class="mat-h4">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
+        <div class="flex-100" *ngIf="existCharges()">
+          <h4 class="mat-h4 flex-63">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
 
-          <div fxFlex="33%">
+          <div class="flex-33">
             <button
               type="button"
               mat-raised-button
@@ -200,8 +193,7 @@
           </div>
 
           <table
-            fxFlex="98%"
-            class="mat-elevation-z1"
+            class="flex-98 mat-elevation-z1"
             mat-table
             [dataSource]="feeToIncomeAccountMappings.value"
             *ngIf="feeToIncomeAccountMappings.value.length !== 0"
@@ -237,12 +229,12 @@
           </table>
         </div>
 
-        <div fxFlex="100%" *ngIf="existCharges()">
-          <h4 fxFlex="63%" class="mat-h4">
+        <div class="flex-100" *ngIf="existCharges()">
+          <h4 class="mat-h4 flex-63">
             {{ 'labels.heading.Map Penalties to Specific Income Accounts' | translate }}
           </h4>
 
-          <div fxFlex="33%">
+          <div class="flex-33">
             <button
               type="button"
               mat-raised-button
@@ -255,8 +247,7 @@
           </div>
 
           <table
-            fxFlex="98%"
-            class="mat-elevation-z1"
+            class="flex-98 mat-elevation-z1"
             mat-table
             [dataSource]="penaltyToIncomeAccountMappings.value"
             *ngIf="penaltyToIncomeAccountMappings.value.length !== 0"
@@ -299,7 +290,7 @@
     </div>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

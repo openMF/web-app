@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="bulkLoanForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="48%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required (selectionChange)="getOffice($event.value)">
               <mat-option *ngFor="let office of offices" [value]="office.id">
@@ -13,8 +13,8 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="48%" (click)="assignmentDatePicker.open()">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48" (click)="assignmentDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Assignment Date' | translate }}</mat-label>
             <input
               matInput
@@ -33,8 +33,8 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="48%" *ngIf="fromLoanOfficers !== undefined">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48" *ngIf="fromLoanOfficers !== undefined">
             <mat-label>{{ 'labels.inputs.From loan officer' | translate }}</mat-label>
             <mat-select required formControlName="fromLoanOfficerId" (selectionChange)="getFromOfficers($event.value)">
               <mat-option *ngFor="let fromOfficers of fromLoanOfficers" [value]="fromOfficers.id">
@@ -48,8 +48,8 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="48%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.To loan officer' | translate }}</mat-label>
             <mat-select required formControlName="toLoanOfficerId">
               <mat-option *ngFor="let toOfficers of toLoanOfficers" [value]="toOfficers.id">
@@ -63,8 +63,8 @@
           </mat-form-field>
         </div>
 
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <table *ngIf="officerTemplate !== undefined" fxFlex="48%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <table *ngIf="officerTemplate !== undefined" class="flex-48">
             <thead>
               <th>{{ 'labels.inputs.Clients' | translate }}</th>
             </thead>
@@ -90,7 +90,7 @@
             </tbody>
           </table>
 
-          <table *ngIf="officerTemplate !== undefined" fxFlex="48%">
+          <table *ngIf="officerTemplate !== undefined" class="flex-48">
             <thead>
               <th>{{ 'labels.inputs.Groups' | translate }}</th>
             </thead>
@@ -116,7 +116,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

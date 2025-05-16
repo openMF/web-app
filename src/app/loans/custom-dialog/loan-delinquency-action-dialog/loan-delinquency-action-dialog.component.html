@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{ 'labels.heading.Loan Delinquency Actions' | translate }}</h2>
 
-<div mat-dialog-content [formGroup]="delinquencyActionForm" fxLayout="column">
-  <mat-form-field fxFlex="48%" (click)="validFromDatePicker.open()">
+<div mat-dialog-content [formGroup]="delinquencyActionForm" class="layout-column">
+  <mat-form-field class="flex-48" (click)="validFromDatePicker.open()">
     <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
     <input
       matInput
@@ -19,7 +19,7 @@
     </mat-error>
   </mat-form-field>
 
-  <mat-form-field fxFlex="48%" (click)="validTillDatePicker.open()">
+  <mat-form-field class="flex-48" (click)="validTillDatePicker.open()">
     <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
     <input
       matInput
@@ -38,7 +38,7 @@
   </mat-form-field>
 </div>
 
-<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
   <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
   <button
     mat-raised-button

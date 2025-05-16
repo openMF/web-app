@@ -1,5 +1,5 @@
-<div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  <mat-form-field fxFlex="48%">
+<div class="layout-row-wrap gap-2px responsive-column">
+  <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
     <mat-select #charge>
       <mat-option *ngFor="let charge of chargeData" [value]="charge">
@@ -8,7 +8,7 @@
     </mat-select>
   </mat-form-field>
 
-  <div fxFlex="48%" fxFlexAlign="center">
+  <div class="flex-48 align-center">
     <button type="button" mat-raised-button color="primary" (click)="addCharge(charge)" [disabled]="!charge.value">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Add' | translate }}
@@ -16,8 +16,7 @@
   </div>
 
   <table
-    fxFlex="98%"
-    class="mat-elevation-z1"
+    class="flex-98 mat-elevation-z1"
     mat-table
     [dataSource]="chargesDataSource"
     [hidden]="chargesDataSource.length === 0"
@@ -120,7 +119,7 @@
   </table>
 </div>
 
-<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<div class="layout-row responsive-column align-center gap-2px margin-t">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}

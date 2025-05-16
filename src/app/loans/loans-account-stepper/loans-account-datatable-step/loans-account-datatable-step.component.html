@@ -1,7 +1,7 @@
 <form [formGroup]="datatableForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <div *ngFor="let datatableInput of datatableInputs" fxFlex="48%">
-      <mat-form-field fxFlex="100%" *ngIf="!isBoolean(datatableInput.columnDisplayType)">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <div *ngFor="let datatableInput of datatableInputs" class="flex-48">
+      <mat-form-field class="flex-100" *ngIf="!isBoolean(datatableInput.columnDisplayType)">
         <mat-label>{{ getInputName(datatableInput) }}</mat-label>
 
         <mat-select
@@ -55,7 +55,7 @@
     </div>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

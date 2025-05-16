@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="clientAssignStaffForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
-          <mat-form-field fxFlex="48%">
+        <div class="layout-column">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
             <mat-select formControlName="staffId">
               <mat-option *ngFor="let staff of staffData" [value]="staff.id">
@@ -18,7 +18,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

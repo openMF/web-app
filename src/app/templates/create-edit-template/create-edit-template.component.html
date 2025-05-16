@@ -1,9 +1,9 @@
 <div class="container">
-  <mat-card fxLayout="column" fxLayoutGap="2%">
+  <mat-card class="layout-column gap-2percent">
     <form [formGroup]="templateForm">
       <mat-card-content>
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="48%">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
             <mat-select required formControlName="entity">
               <mat-option *ngFor="let entity of templateData.entities" [value]="entity.id">
@@ -16,7 +16,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
             <mat-select required formControlName="type">
               <mat-option *ngFor="let type of templateData.types" [value]="type.id">
@@ -29,7 +29,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="48%">
+          <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
             <mat-error *ngIf="templateForm.controls.name.hasError('required')">
@@ -41,38 +41,30 @@
       </mat-card-content>
     </form>
 
-    <div role="toggle" fxFlex="13%">
+    <div role="toggle" class="flex-33">
       <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">
         {{ 'labels.buttons.Advanced Options' | translate }}
       </button>
     </div>
 
     <ng-container role="mappers" *ngIf="showAdvanceOptions">
-      <div *ngFor="let mapper of mappers; index as i" fxLayout="row" fxLayoutGap="2%">
-        <mat-form-field fxFlex="48%">
+      <div *ngFor="let mapper of mappers; index as i" class="layout-row gap-2percent">
+        <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Mapper Key' | translate }}</mat-label>
           <input matInput [formControl]="mapper.mapperskey" />
         </mat-form-field>
 
-        <mat-form-field fxFlex="38%">
+        <mat-form-field class="flex-fill flex-38">
           <mat-label>{{ 'labels.inputs.Mapper Value' | translate }}</mat-label>
           <input matInput [formControl]="mapper.mappersvalue" />
         </mat-form-field>
 
-        <button
-          *ngIf="i === 0"
-          class="mapper-button"
-          fxFlex="8%"
-          mat-raised-button
-          color="primary"
-          (click)="addMapper()"
-        >
+        <button *ngIf="i === 0" class="mapper-button flex-8" mat-raised-button color="primary" (click)="addMapper()">
           <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
         </button>
         <button
           *ngIf="!(i === 0)"
-          class="mapper-button"
-          fxFlex="9%"
+          class="mapper-button flex-9"
           mat-raised-button
           color="primary"
           (click)="removeMapper(i)"
@@ -103,7 +95,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
+          <div class="layout-row-wrap layout-xs-column layout-align-center">
             <button
               mat-stroked-button
               color="primary"
@@ -123,7 +115,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
+          <div class="layout-row-wrap layout-xs-column layout-align-center">
             <button
               mat-stroked-button
               color="primary"
@@ -143,7 +135,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
+          <div class="layout-row-wrap layout-xs-column layout-align-center">
             <button
               mat-stroked-button
               color="primary"
@@ -158,7 +150,7 @@
       </mat-accordion>
     </div>
 
-    <mat-card-actions class="m-b-20" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+    <mat-card-actions class="m-b-20 layout-row layout-xs-column layout-align-center gap-5px">
       <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
       <button mat-raised-button color="primary" (click)="submit()" [disabled]="!templateForm.valid">
         {{ 'labels.buttons.Submit' | translate }}

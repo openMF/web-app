@@ -1,7 +1,7 @@
 <div class="tab-container mat-typography" *ngIf="showData">
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="search-box" fxFlex="40%">
-      <mat-form-field fxFlex="90%">
+  <div class="layout-row align-start-center">
+    <div class="search-box flex-40">
+      <mat-form-field class="flex-fill flex-90">
         <input
           matInput
           placeholder="{{ 'labels.text.Filter by name' | translate }}"
@@ -9,7 +9,7 @@
         />
       </mat-form-field>
     </div>
-    <div fxFlex="60%">
+    <div class="flex-60">
       <button mat-raised-button color="success" *mifosxHasPermission="'ACTIVATE_CLIENT'" (click)="approveClients()">
         <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
       </button>

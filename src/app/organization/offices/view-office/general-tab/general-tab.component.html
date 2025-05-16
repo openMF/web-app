@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-  <div fxLayoutAlign="flex-end" class="action-button m-b-20">
+  <div class="layout-align-end action-button m-b-20">
     <span *mifosxHasPermission="'UPDATE_OFFICE'">
       <button mat-raised-button color="primary" [routerLink]="['../edit']">
         <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
@@ -7,35 +7,27 @@
     </span>
   </div>
 
-  <div fxLayout="row wrap" fxLayout.lt-md="column">
-    <div fxFlex="45%" class="mat-body-strong left">
-      {{ 'labels.inputs.Parent Office' | translate }}
-    </div>
-    <div fxFlex="50%" class="right">
+  <div class="layout-row-wrap responsive-column">
+    <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Parent Office' | translate }}</div>
+    <div class="flex-50 right">
       {{ officeData.parentName ? officeData.parentName : 'N/A' }}
     </div>
 
-    <div fxFlex="45%" class="mat-body-strong left">
-      {{ 'labels.inputs.Opened On' | translate }}
-    </div>
-    <div fxFlex="50%" class="right">
+    <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Opened On' | translate }}</div>
+    <div class="flex-50 right">
       {{ officeData.openingDate ? (officeData.openingDate | dateFormat) : 'Unassigned' }}
     </div>
 
-    <div fxFlex="45%" class="mat-body-strong left">
-      {{ 'labels.inputs.Name Decorated' | translate }}
-    </div>
-    <div fxFlex="50%" class="right">
+    <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.Name Decorated' | translate }}</div>
+    <div class="flex-50 right">
       {{ officeData.nameDecorated ? officeData.nameDecorated : 'Unassigned' }}
     </div>
 
-    <div fxFlex="45%" class="mat-body-strong left">
-      {{ 'labels.inputs.External Id' | translate }}
-    </div>
-    <div fxFlex="50%" class="right" *ngIf="officeData.externalId">
+    <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.External Id' | translate }}</div>
+    <div class="flex-50 right" *ngIf="officeData.externalId">
       <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
     </div>
-    <div fxFlex="50%" class="right" *ngIf="!officeData.externalId">
+    <div class="flex-50 right" *ngIf="!officeData.externalId">
       {{ 'labels.inputs.Unassigned' | translate }}
     </div>
   </div>

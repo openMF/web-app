@@ -1,12 +1,12 @@
 <div class="container">
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}:</span>
-    <span fxFlex="60%">{{ loanDetails.maxOutstandingLoanBalance | formatNumber }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}:</span>
+    <span class="flex-60">{{ loanDetails.maxOutstandingLoanBalance | formatNumber }}</span>
   </div>
 
   <h3>{{ 'labels.heading.Loan Tranche Details' | translate }}</h3>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="flex-end" fxLayoutGap="2%">
+  <div class="layout-row margin-t layout-xs-column layout-align-end gap-2percent">
     <button mat-raised-button color="primary" *ngIf="showAddTrancheButtons()" (click)="addDisbursementDataEntry()">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
     </button>

@@ -1,6 +1,6 @@
-<div class="container" fxLayout="row" fxLayoutGap="3%">
-  <mat-card fxFlex class="group-card" fxLayout="column" fxLayoutGap="2%">
-    <mat-form-field fxFlex="30%">
+<div class="container layout-row gap-3percent">
+  <mat-card class="group-card flex-fill layout-column gap-2percent">
+    <mat-form-field class="flex-30">
       <mat-label>{{ 'labels.inputs.Add Groups' | translate }}</mat-label>
       <input matInput [formControl]="groupChoice" [matAutocomplete]="groupsAutocomplete" />
     </mat-form-field>
@@ -33,13 +33,13 @@
     </div>
   </mat-card>
 
-  <mat-card fxFlex="40%">
+  <mat-card class="flex-40">
     <h3 matSubheader>{{ 'labels.heading.Group Members' | translate }}</h3>
 
     <mat-nav-list *ngIf="groupMembers?.length">
       <div mat-list-item *ngFor="let group of groupMembers; index as i">
         <span matLine class="p-t-10">{{ group.name }}</span>
-        <div fxFlex></div>
+        <div class="flex-fill"></div>
         <button mat-icon-button color="warn" (click)="removeGroup(i, group)">
           <fa-icon icon="trash"></fa-icon>
         </button>

@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{ 'labels.heading.Add Loan Collateral' | translate }}</h1>
 
-<div mat-dialog-content [formGroup]="addCollateralForm" fxLayout="column">
+<div mat-dialog-content [formGroup]="addCollateralForm" class="layout-column">
   <mat-form-field>
     <mat-label>{{ 'labels.inputs.Collateral' | translate }}</mat-label>
     <mat-select formControlName="collateral" required>
@@ -37,7 +37,7 @@
   </mat-form-field>
 </div>
 
-<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
   <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
   <button
     mat-raised-button

@@ -1,26 +1,26 @@
 <mat-card class="container">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <div fxFlexFill *ngIf="isFromClient">
-      <span fxFlex="40%">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <div class="flex-fill" *ngIf="isFromClient">
+      <span class="flex-40">
         <h3 class="mat-h3">{{ 'labels.heading.Client Type' | translate }}</h3>
       </span>
-      <span fxFlex="60%">
+      <span class="flex-60">
         <h3 class="mat-h3">{{ clientName }}</h3>
       </span>
     </div>
 
-    <div fxFlexFill *ngIf="!isFromClient">
-      <mat-form-field fxFlex="30%">
+    <div *ngIf="!isFromClient" class="flex-fill">
+      <mat-form-field class="flex-30">
         <input matInput placeholder="ClientName" [formControl]="clientNameControl" />
       </mat-form-field>
-      <mat-form-field fxFlex="30%">
+      <mat-form-field class="flex-30">
         <input matInput placeholder="From Client Id" [formControl]="fromClientId" />
       </mat-form-field>
     </div>
 
     <mat-divider [inset]="true"></mat-divider>
 
-    <mat-form-field fxFlex="30%">
+    <mat-form-field class="flex-30">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select [formControl]="transferType">
         <mat-option *ngFor="let transferTypeData of transferTypeDatas" [value]="transferTypeData.id">
@@ -29,7 +29,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="30%">
+    <mat-form-field class="flex-30">
       <input matInput placeholder="From Account Id" [formControl]="fromAccountId" />
     </mat-form-field>
 

@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50%">
+    <div class="layout-row responsive-column gap-20px">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item [routerLink]="['tax-components']" *mifosxHasPermission="'READ_TAXCOMPONENT'">
             <mat-icon matListIcon [routerLink]="['tax-components']">
@@ -27,7 +27,7 @@
         </mat-nav-list>
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item [routerLink]="['tax-groups']" *mifosxHasPermission="'READ_TAXGROUP'">
             <mat-icon matListIcon [routerLink]="['tax-groups']">

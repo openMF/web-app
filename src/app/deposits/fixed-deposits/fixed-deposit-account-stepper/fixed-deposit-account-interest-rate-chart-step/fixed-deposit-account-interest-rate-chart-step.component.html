@@ -1,27 +1,27 @@
-<div fxLayout="column" fxLayoutGap="2%">
-  <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate?.accountChart.name">
-    <span fxFlex="40%">{{ 'labels.inputs.name' | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate.accountChart.name }}</span>
+<div class="layout-column gap-2px">
+  <div class="flex-fill" *ngIf="fixedDepositsAccountProductTemplate?.accountChart.name">
+    <span class="flex-40">{{ 'labels.inputs.name' | translate }}:</span>
+    <span class="flex-60">{{ fixedDepositsAccountProductTemplate.accountChart.name }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Valid from Date' | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.fromDate | dateFormat }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Valid from Date' | translate }}:</span>
+    <span class="flex-60">{{ fixedDepositsAccountProductTemplate?.accountChart.fromDate | dateFormat }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate?.accountChart.endDate">
-    <span fxFlex="40%">{{ 'labels.inputs.End Date' | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.endDate | dateFormat }}</span>
+  <div class="flex-fill" *ngIf="fixedDepositsAccountProductTemplate?.accountChart.endDate">
+    <span class="flex-40">{{ 'labels.inputs.End Date' | translate }}:</span>
+    <span class="flex-60">{{ fixedDepositsAccountProductTemplate?.accountChart.endDate | dateFormat }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="fixedDepositsAccountProductTemplate?.accountChart.description">
-    <span fxFlex="40%">{{ 'labels.inputs.Description' | translate }}:</span>
-    <span fxFlex="60%">{{ fixedDepositsAccountProductTemplate?.accountChart.description }}</span>
+  <div class="flex-fill" *ngIf="fixedDepositsAccountProductTemplate?.accountChart.description">
+    <span class="flex-40">{{ 'labels.inputs.Description' | translate }}:</span>
+    <span class="flex-60">{{ fixedDepositsAccountProductTemplate?.accountChart.description }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Primary Grouping by Amount' | translate }}:</span>
-    <span fxFlex="60%">{{
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Primary Grouping by Amount' | translate }}:</span>
+    <span class="flex-60">{{
       fixedDepositsAccountProductTemplate?.accountChart.isPrimaryGroupingByAmount ? 'Yes' : 'No'
     }}</span>
   </div>
@@ -76,19 +76,16 @@
         [attr.colspan]="chartSlabsDisplayedColumns.length"
       >
         <div
-          fxLayout="row wrap"
-          fxFlexFill
-          class="incentives"
+          class="incentives layout-row-wrap flex-fill"
           [@expandChartSlab]="chartSlabIndex === expandChartSlabIndex ? 'expanded' : 'collapsed'"
         >
-          <mat-card fxLayout="row wrap" fxFlexFill>
-            <h4 class="m-b-10" fxFlex="13%">
+          <mat-card class="layout-row-wrap flex-fill">
+            <h4 class="m-b-10 flex-13">
               {{ 'labels.heading.Incentives' | translate }}
             </h4>
 
             <table
-              fxFlexFill
-              class="mat-elevation-z1"
+              class="flex-fill mat-elevation-z1"
               mat-table
               [dataSource]="chartSlab.incentives"
               *ngIf="chartSlab.incentives.length"
@@ -149,7 +146,7 @@
   </table>
 </div>
 
-<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<div class="layout-row responsive-column align-center gap-2px margin-t">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}

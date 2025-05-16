@@ -1,6 +1,6 @@
 <form [formGroup]="smsCampaignDetailsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="start center">
-    <mat-form-field fxFlex="48%">
+  <div class="layout-row-wrap gap-2percent responsive-column align-start-center">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Campaign Name' | translate }}</mat-label>
       <input matInput formControlName="campaignName" required />
       <mat-error>
@@ -9,7 +9,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" *ngIf="!smsCampaignDetailsForm.controls.isNotification.value">
+    <mat-form-field class="flex-48" *ngIf="!smsCampaignDetailsForm.controls.isNotification.value">
       <mat-label>{{ 'labels.inputs.SMS Provider' | translate }}</mat-label>
       <mat-select formControlName="providerId">
         <mat-option *ngFor="let provider of smsProviders" [value]="provider.id">
@@ -18,7 +18,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Trigger Type' | translate }}</mat-label>
       <mat-select formControlName="triggerType" required>
         <mat-option *ngFor="let triggerType of triggerTypes" [value]="triggerType.id">
@@ -31,12 +31,12 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-checkbox labelPosition="before" formControlName="isNotification" fxFlex="48%">
+    <mat-checkbox labelPosition="before" formControlName="isNotification" class="flex-48">
       {{ 'labels.inputs.Is Notification' | translate }}?
     </mat-checkbox>
 
     <mat-form-field
-      fxFlex="48%"
+      class="flex-48"
       *ngIf="smsCampaignDetailsForm.contains('recurrenceStartDate')"
       (click)="recurrenceStartDatePicker.open()"
     >
@@ -57,7 +57,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.contains('frequency')">
+    <mat-form-field class="flex-48" *ngIf="smsCampaignDetailsForm.contains('frequency')">
       <mat-label>{{ 'labels.inputs.Repeats' | translate }}</mat-label>
       <mat-select formControlName="frequency" required>
         <mat-option [value]="1">{{ 'labels.inputs.Daily' | translate }}</mat-option>
@@ -71,7 +71,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.contains('interval')">
+    <mat-form-field class="flex-48" *ngIf="smsCampaignDetailsForm.contains('interval')">
       <mat-label>{{ 'labels.inputs.Repetition Interval' | translate }}</mat-label>
       <mat-select formControlName="interval" required>
         <mat-option *ngFor="let interval of repetitionIntervals" [value]="interval">
@@ -84,7 +84,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%" *ngIf="smsCampaignDetailsForm.contains('repeatsOnDay')">
+    <mat-form-field class="flex-48" *ngIf="smsCampaignDetailsForm.contains('repeatsOnDay')">
       <mat-label>{{ 'labels.inputs.Repeats on Day' | translate }}</mat-label>
       <mat-select formControlName="repeatsOnDay" required>
         <mat-option value="1">{{ 'labels.inputs.Monday' | translate }}</mat-option>
@@ -101,7 +101,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Business Rule' | translate }}</mat-label>
       <mat-select formControlName="runReportId" required>
         <mat-option *ngFor="let rule of businessRules" [value]="rule.reportId">
@@ -116,11 +116,7 @@
   </div>
 
   <div
-    fxLayout="row"
-    class="margin-t"
-    fxLayout.xs="column"
-    fxLayoutAlign="center"
-    fxLayoutGap="2%"
+    class="layout-row layout-xs-column layout-align-center margin-t gap-2percent"
     *ngIf="!smsCampaignDetailsForm.controls.runReportId.value"
   >
     <button mat-raised-button matStepperPrevious disabled>

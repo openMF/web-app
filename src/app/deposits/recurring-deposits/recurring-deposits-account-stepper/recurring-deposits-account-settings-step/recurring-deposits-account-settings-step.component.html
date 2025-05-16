@@ -1,30 +1,25 @@
 <form [formGroup]="recurringDepositAccountSettingsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="isMandatoryDeposit" class="margin-v">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <mat-checkbox labelPosition="before" formControlName="isMandatoryDeposit" class="margin-v flex-48">
       {{ 'labels.inputs.Is Mandatory Deposit' | translate }}?
     </mat-checkbox>
 
-    <mat-checkbox
-      fxFlex="48%"
-      labelPosition="before"
-      formControlName="adjustAdvanceTowardsFuturePayments"
-      class="margin-v"
-    >
+    <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="adjustAdvanceTowardsFuturePayments">
       {{ 'labels.inputs.Adjust advance payments toward future installments' | translate }}?
     </mat-checkbox>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="allowWithdrawal" class="margin-v">
+    <mat-checkbox labelPosition="before" formControlName="allowWithdrawal" class="margin-v flex-48">
       {{ 'labels.inputs.Allow Withdrawals' | translate }}?
     </mat-checkbox>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Lock-in Period' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Lock-in Period' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="lockinPeriodFrequency" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         <mat-option
@@ -36,9 +31,9 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Recurring Deposit Details' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Recurring Deposit Details' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Recurring Deposit Amount' | translate }}</mat-label>
       <input type="number" matInput formControlName="mandatoryRecommendedDepositAmount" required />
       <mat-error>
@@ -47,14 +42,14 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Deposit Period' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Deposit Period' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Deposit Period' | translate }}</mat-label>
       <input type="number" matInput formControlName="depositPeriod" required />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="depositPeriodFrequencyId" required>
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -63,12 +58,12 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="isCalendarInherited" class="margin-v">
+    <mat-checkbox labelPosition="before" formControlName="isCalendarInherited" class="margin-v flex-48">
       {{ 'labels.inputs.Deposit Frequency Same as Group/Center meeting' | translate }}
     </mat-checkbox>
 
     <ng-container *ngIf="!recurringDepositAccountSettingsForm.value.isCalendarInherited">
-      <mat-form-field fxFlex="48%" (click)="expectedFirstDepositOnDatePicker.open()">
+      <mat-form-field class="flex-48" (click)="expectedFirstDepositOnDatePicker.open()">
         <mat-label>{{ 'labels.inputs.Deposit Start Date' | translate }}</mat-label>
         <input
           matInput
@@ -82,9 +77,9 @@
         <mat-datepicker #expectedFirstDepositOnDatePicker></mat-datepicker>
       </mat-form-field>
 
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Deposit Frequency' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Deposit Frequency' | translate }}</h4>
 
-      <mat-form-field fxFlex="48%">
+      <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Deposit Frequency' | translate }}</mat-label>
         <input type="number" matInput formControlName="recurringFrequency" required />
         <mat-error>
@@ -93,7 +88,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field fxFlex="48%">
+      <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
         <mat-select formControlName="recurringFrequencyType" required>
           <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -107,11 +102,11 @@
       </mat-form-field>
     </ng-container>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Minimum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Minimum Deposit Term' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="minDepositTerm" required />
       <mat-error>
@@ -120,7 +115,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
       <mat-select formControlName="minDepositTermTypeId" required>
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -133,14 +128,14 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="inMultiplesOfDepositTerm" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="inMultiplesOfDepositTermTypeId">
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -149,14 +144,14 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Maximum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Maximum Deposit Term' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="maxDepositTerm" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="maxDepositTermTypeId">
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -165,20 +160,20 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
+    <mat-checkbox class="flex-73 margin-v" labelPosition="before" formControlName="preClosurePenalApplicable">
       {{ 'labels.inputs.Apply Penal Interest (less)' | translate }}
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Penal Interest' | translate }} (%)</mat-label>
       <input type="number" matInput formControlName="preClosurePenalInterest" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
       <mat-select formControlName="preClosurePenalInterestOnTypeId">
         <mat-option
@@ -190,28 +185,28 @@
       </mat-select>
     </mat-form-field>
 
-    <!-- <mat-divider fxFlex="98%"></mat-divider> -->
+    <!-- <mat-divider class="flex-98"></mat-divider> -->
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Minimum Balance For Interest Calculation' | translate }}</mat-label>
       <input type="number" matInput formControlName="minBalanceForInterestCalculation" />
     </mat-form-field>
 
     <ng-container *ngIf="taxGroup">
-      <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Tax Group' | translate }}</h4>
+      <h4 class="mat-h4 flex-98">{{ 'labels.heading.Tax Group' | translate }}</h4>
 
-      <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">
+      <mat-checkbox labelPosition="before" formControlName="withHoldTax" class="margin-v flex-48">
         {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}?
       </mat-checkbox>
 
-      <mat-form-field fxFlex="48%" *ngIf="recurringDepositAccountSettingsForm.controls.taxGroupId">
+      <mat-form-field class="flex-48" *ngIf="recurringDepositAccountSettingsForm.controls.taxGroupId">
         <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
         <input type="text" matInput formControlName="taxGroupId" />
       </mat-form-field>
     </ng-container>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}
