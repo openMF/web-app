@@ -14,6 +14,7 @@
   // Language Environment variables
   window['env']['defaultLanguage'] = '$MIFOS_DEFAULT_LANGUAGE';
   window['env']['supportedLanguages'] = '$MIFOS_SUPPORTED_LANGUAGES';
+  window.env['defaultDateFormat'] = "${MIFOS_DEFAULT_DATE_FORMAT}";
 
   window['env']['preloadClients'] = '$MIFOS_PRELOAD_CLIENTS';
 
@@ -51,4 +52,5 @@
   window['env']['vNextApiProvider'] = '$VNEXT_API_PROVIDER';
   window['env']['vNextApiVersion'] = '$VNEXT_API_VERSION';
   window['env']['interbankTransfers'] = '$VNEXT_INTERBANK_TRANSFERS';
+  window['env']['GOOGLE_MAPS_API_KEY'] = 'AIzaSyBIuTaxrgjb1iYJwzGCcjdWZUfqpxW3T_k';
 })(this);
