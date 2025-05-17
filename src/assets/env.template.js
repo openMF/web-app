@@ -14,7 +14,7 @@
   // Language Environment variables
   window['env']['defaultLanguage'] = '$MIFOS_DEFAULT_LANGUAGE';
   window['env']['supportedLanguages'] = '$MIFOS_SUPPORTED_LANGUAGES';
-  window.env['defaultDateFormat'] = "${MIFOS_DEFAULT_DATE_FORMAT}";
+  window['env']['defaultDateFormat'] = "${MIFOS_DEFAULT_DATE_FORMAT}";
 
   window['env']['preloadClients'] = '$MIFOS_PRELOAD_CLIENTS';
 
