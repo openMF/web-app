@@ -17,7 +17,7 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div class="layout-row-wrap responsive-column">
+      <div class="responsive-column">
         <h2 class="mat-h2 flex-fill">{{ shareProduct.name }}</h2>
 
         <mat-divider [inset]="true"></mat-divider>
@@ -26,12 +26,12 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Short Name' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.shortName }}</span>
         </div>
 
-        <div class="flex-fill" *ngIf="shareProduct.description">
+        <div class="flex-fill layout-row" *ngIf="shareProduct.description">
           <span class="flex-40">{{ 'labels.inputs.Description' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.description }}</span>
         </div>
@@ -40,17 +40,17 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Currency' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.currency.name }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.currency.decimalPlaces }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.currency.inMultiplesOf }}</span>
         </div>
@@ -59,22 +59,22 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Total Number of Shares' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.totalShares | formatNumber }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Shares to be Issued' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.totalSharesIssued | formatNumber }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Nominal/Unit Price' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.unitPrice | formatNumber }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Capital Value' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.shareCapital | formatNumber }}</span>
         </div>
@@ -83,7 +83,7 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Shares per Client' | translate }}:</span>
           <span class="flex-60">{{
             shareProduct.nominalShares +
@@ -95,7 +95,7 @@
           }}</span>
         </div>
 
-        <div class="flex-fill" *ngIf="shareProduct.minimumActivePeriod">
+        <div class="flex-fill layout-row" *ngIf="shareProduct.minimumActivePeriod">
           <span class="flex-40">{{ 'labels.inputs.Minimum Active Period' | translate }}:</span>
           <span class="flex-60"
             >{{ shareProduct.minimumActivePeriod }}
@@ -103,7 +103,7 @@
           >
         </div>
 
-        <div class="flex-fill" *ngIf="shareProduct.lockinPeriod">
+        <div class="flex-fill layout-row" *ngIf="shareProduct.lockinPeriod">
           <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
           <span class="flex-60"
             >{{ shareProduct.lockinPeriod }}
@@ -111,7 +111,7 @@
           >
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Allow dividends for inactive clients' | translate }}:</span>
           <span class="flex-60">{{ shareProduct.allowDividendCalculationForInactiveClients | yesNo }}</span>
         </div>
@@ -184,7 +184,7 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Type' | translate }}:</span>
           <span class="flex-60">{{
             'labels.accounting.' + getAccountingRuleName(shareProduct.accountingRule.value) | translate

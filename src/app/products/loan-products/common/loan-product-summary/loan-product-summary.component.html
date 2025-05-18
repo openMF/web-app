@@ -3,44 +3,44 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Name' | translate }}:</span>
     <span class="flex-53"
       ><b>{{ loanProduct.name }}</b></span
     >
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Short Name' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.shortName }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.externalId">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.externalId">
     <span class="flex-47">{{ 'labels.inputs.External Id' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.externalId }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.fundId">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.fundId">
     <span class="flex-47">{{ 'labels.inputs.Fund' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.fundName }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Include in Customer Loan Counter' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.includeInBorrowerCycle | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.startDate">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.startDate">
     <span class="flex-47">{{ 'labels.inputs.Start Date' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.startDate | dateFormat }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.closeDate">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.closeDate">
     <span class="flex-47">{{ 'labels.inputs.Close Date' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.closeDate | dateFormat }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.description">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.description">
     <span class="flex-47">{{ 'labels.inputs.Description' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.description }}</span>
   </div>
@@ -49,27 +49,27 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Currency' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.currency.code }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Currency' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.currency.displayLabel }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.currency.decimalPlaces }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.currency.inMultiplesOf }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Installment in multiples of' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.installmentAmountInMultiplesOf }}</span>
   </div>
@@ -78,7 +78,7 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Principal' | translate }}:</span>
     <span class="flex-53"
       >{{ loanProduct.principal | formatNumber }} (Min
@@ -87,12 +87,12 @@
     </span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Allow Approved / Disbursed Amounts Over Applied' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.allowApprovedDisbursedAmountsOverApplied | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.allowApprovedDisbursedAmountsOverApplied">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.allowApprovedDisbursedAmountsOverApplied">
     <span class="flex-47">{{ 'labels.inputs.Over Amount' | translate }}:</span>
     <span class="flex-53" *ngIf="loanProduct.overAppliedCalculationType === 'percentage'"
       >{{ loanProduct.overAppliedNumber | formatNumber: 0 }} %</span
@@ -102,12 +102,12 @@
     >
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Installment day calculation from' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.repaymentStartDateType?.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Number of Repayments' | translate }}:</span>
     <span class="flex-53">{{
       loanProduct.numberOfRepayments +
@@ -119,12 +119,12 @@
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Linked to floating interest rates' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.isLinkedToFloatingInterestRates | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="!loanProduct.isLinkedToFloatingInterestRates">
+  <div class="flex-fill layout-row" *ngIf="!loanProduct.isLinkedToFloatingInterestRates">
     <span class="flex-47">{{ 'labels.inputs.Nominal interest rate' | translate }}:</span>
     <span class="flex-53"
       >{{
@@ -165,12 +165,12 @@
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Terms vary based on loan cycle' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.useBorrowerCycle | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.principalVariationsForBorrowerCycle?.length">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.principalVariationsForBorrowerCycle?.length">
     <h4 class="mat-h4 flex-fill">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
 
     <table class="mat-elevation-z1 flex-fill" mat-table [dataSource]="loanProduct.principalVariationsForBorrowerCycle">
@@ -310,21 +310,21 @@
     </table>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Repay Every' | translate }}:</span>
     <span class="flex-53"
       >{{ loanProduct.repaymentEvery }} {{ loanProduct.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
     >
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.fixedLength">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.fixedLength">
     <span class="flex-47">{{ 'labels.inputs.Fixed Length' | translate }}:</span>
     <span class="flex-53"
       >{{ loanProduct.fixedLength }} {{ loanProduct.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
     >
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.minimumDaysBetweenDisbursalAndFirstRepayment">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.minimumDaysBetweenDisbursalAndFirstRepayment">
     <span class="flex-47"
       >{{ 'labels.inputs.Minimum days between disbursal and first repayment date' | translate }}:</span
     >
@@ -335,34 +335,34 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill" *ngIf="loanProduct.amortizationType?.value">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.amortizationType?.value">
     <span class="flex-47">{{ 'labels.inputs.Amortization' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.amortizationType.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Is Equal Amortization' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.isEqualAmortization | yesNo }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Interest Method' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.interestType?.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Interest Calculation Period' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.interestCalculationPeriodType?.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47"
       >{{ 'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate }}:</span
     >
     <span class="flex-53">{{ loanProduct.allowPartialPeriodInterestCalculation | yesNo }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.interestRecognitionOnDisbursementDate | yesNo }}</span>
   </div>
@@ -371,24 +371,24 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Loan Schedule Type' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.loanScheduleType.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Repayment Strategy' | translate }}:</span>
     <span class="flex-53" class="repayment-strategy">{{
       loanProduct.transactionProcessingStrategyName | translateKey: 'catalogs'
     }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="isAdvancedPaymentAllocation">
+  <div class="flex-fill layout-row" *ngIf="isAdvancedPaymentAllocation">
     <span class="flex-47">{{ 'labels.inputs.Loan Schedule Processing Type' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.loanScheduleProcessingType.value }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="isAdvancedPaymentAllocation">
+  <div class="flex-fill layout-row" *ngIf="isAdvancedPaymentAllocation">
     <span class="flex-47">{{ 'labels.inputs.Advanced Payment Allocation Transactions' | translate }}:</span>
     <span class="flex-53">
       <mat-accordion>
@@ -402,7 +402,7 @@
     </span>
   </div>
 
-  <div class="flex-fill" *ngIf="isAdvancedPaymentAllocation && creditAllocations.length > 0">
+  <div class="flex-fill layout-row" *ngIf="isAdvancedPaymentAllocation && creditAllocations.length > 0">
     <span class="flex-47">{{ 'labels.inputs.Advanced Credit Allocation Transactions' | translate }}:</span>
     <span class="flex-53">
       <mat-accordion>
@@ -416,7 +416,7 @@
     </span>
   </div>
 
-  <div class="flex-fill" *ngIf="isAdvancedPaymentAllocation && supportedInterestRefundTypes?.length > 0">
+  <div class="flex-fill layout-row" *ngIf="isAdvancedPaymentAllocation && supportedInterestRefundTypes?.length > 0">
     <span class="flex-47">{{ 'labels.inputs.Supported Interest Refund Types' | translate }}:</span>
     <span class="flex-53">
       {{ mapHumanReadableValueStringEnumOptionDataList(supportedInterestRefundTypes) }}
@@ -427,7 +427,7 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Enable Down Payments' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.enableDownPayment | yesNo }}</span>
   </div>
@@ -447,7 +447,7 @@
 
     <mat-divider [inset]="true"></mat-divider>
 
-    <div class="flex-fill">
+    <div class="flex-fill layout-row">
       <span class="flex-47">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}:</span>
       <span class="flex-53">{{ loanProduct.chargeOffBehaviour.value | translateKey: 'catalogs' }}</span>
     </div>
@@ -455,7 +455,7 @@
 
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Moratorium' | translate }}</h3>
 
-  <div class="flex-fill" *ngIf="loanProduct.delinquencyBucket">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.delinquencyBucket">
     <span class="flex-47">{{ 'labels.inputs.Delinquency Bucket' | translate }}:</span>
     <span class="flex-53" *ngIf="loanProduct.delinquencyBucket.name">{{ loanProduct.delinquencyBucket.name }}</span>
     <span class="flex-53" *ngIf="!loanProduct.delinquencyBucket.name">{{
@@ -463,64 +463,64 @@
     }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="!loanProduct.delinquencyBucket">
+  <div class="flex-fill layout-row" *ngIf="!loanProduct.delinquencyBucket">
     <span class="flex-47">{{ 'labels.inputs.Delinquency Bucket' | translate }}:</span>
     <span class="flex-53">{{ 'labels.inputs.Unassigned' | translate }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.delinquencyBucket">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.delinquencyBucket">
     <span class="flex-47">{{ 'labels.inputs.Enable installment level Delinquency' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.enableInstallmentLevelDelinquency | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.graceOnPrincipalPayment">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.graceOnPrincipalPayment">
     <span class="flex-47">{{ 'labels.inputs.Grace on principal payment' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.graceOnPrincipalPayment }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.graceOnInterestPayment">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.graceOnInterestPayment">
     <span class="flex-47">{{ 'labels.inputs.Grace on interest payment' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.graceOnInterestPayment }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.graceOnInterestCharged">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.graceOnInterestCharged">
     <span class="flex-47">{{ 'labels.inputs.Interest free period' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.graceOnInterestCharged }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.inArrearsTolerance">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.inArrearsTolerance">
     <span class="flex-47">{{ 'labels.inputs.Arrears tolerance' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.inArrearsTolerance }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Days in year' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.daysInYearType?.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="isAdvancedPaymentAllocation && loanProduct.daysInYearCustomStrategy">
+  <div class="flex-fill layout-row" *ngIf="isAdvancedPaymentAllocation && loanProduct.daysInYearCustomStrategy">
     <span class="flex-47">{{ 'labels.inputs.Days in year custom strategy' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.daysInYearCustomStrategy.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Days in month' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.daysInMonthType?.value | translateKey: 'catalogs' }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Allow fixing of the installment amount' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.canDefineInstallmentAmount | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.graceOnArrearsAgeing">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.graceOnArrearsAgeing">
     <span class="flex-47"
       >{{ 'labels.inputs.Number of days a loan may be overdue before moving into arrears' | translate }}:</span
     >
     <span class="flex-53">{{ loanProduct.graceOnArrearsAgeing }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.overdueDaysForNPA">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.overdueDaysForNPA">
     <span class="flex-47"
       >{{
         'labels.inputs.Maximum number of days a loan may be overdue before becoming a NPA (non performing asset)'
@@ -530,24 +530,24 @@
     <span class="flex-53">{{ loanProduct.overdueDaysForNPA }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47"
       >{{ 'labels.inputs.Account moves out of NPA only after all arrears have been cleared' | translate }}:</span
     >
     <span class="flex-53">{{ loanProduct.accountMovesOutOfNPAOnlyOnArrearsCompletion | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.principalThresholdForLastInstallment">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.principalThresholdForLastInstallment">
     <span class="flex-47">{{ 'labels.inputs.Principal Threshold (%) for Last Instalment' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.principalThresholdForLastInstallment }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Variable Installments allowed' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.allowVariableInstallments | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.allowVariableInstallments">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.allowVariableInstallments">
     <span class="flex-47">{{ 'labels.inputs.Variable Installments' | translate }}:</span>
     <span class="flex-53">{{
       '(Min: ' +
@@ -558,7 +558,7 @@
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Allowed to be used for providing Topup Loans' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.canUseForTopup | yesNo }}</span>
   </div>
@@ -567,7 +567,7 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Recalculate Interest' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.isInterestRecalculationEnabled | yesNo }}</span>
   </div>
@@ -662,13 +662,13 @@
         <span class="flex-53">{{ loanProduct.interestRecalculationData.recalculationRestFrequencyDate }}</span>
       </div>
     </div>
-    <div class="flex-fill">
+    <div class="flex-fill layout-row">
       <span class="flex-47"
         >{{ 'labels.inputs.Is Arrears recognization based on original schedule' | translate }}:</span
       >
       <span class="flex-53">{{ loanProduct.interestRecalculationData.isArrearsBasedOnOriginalSchedule | yesNo }}</span>
     </div>
-    <div class="flex-fill" *ngIf="loanProduct.loanScheduleType.code === 'PROGRESSIVE'">
+    <div class="flex-fill layout-row" *ngIf="loanProduct.loanScheduleType.code === 'PROGRESSIVE'">
       <span class="flex-47"
         >{{ 'labels.inputs.Do not calculate interest on past due principal balances' | translate }}:</span
       >
@@ -682,7 +682,7 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Place Guarantee Funds On-Hold' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.holdGuaranteeFunds | yesNo }}</span>
   </div>
@@ -690,11 +690,11 @@
   <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.holdGuaranteeFunds">
     <span class="flex-47">{{ 'labels.inputs.Mandatory Guarantee' | translate }} (%):</span>
     <span class="flex-53">{{ loanProduct.productGuaranteeData.mandatoryGuarantee }}</span>
-    <div class="flex-fill" *ngIf="loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds">
+    <div class="flex-fill layout-row" *ngIf="loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds">
       <span class="flex-47">{{ 'labels.inputs.Minimum Guarantee from Own Funds' | translate }} (%):</span>
       <span class="flex-53">{{ loanProduct.productGuaranteeData.minimumGuaranteeFromOwnFunds }}</span>
     </div>
-    <div class="flex-fill" *ngIf="loanProduct.productGuaranteeData.minimumGuaranteeFromGuarantor">
+    <div class="flex-fill layout-row" *ngIf="loanProduct.productGuaranteeData.minimumGuaranteeFromGuarantor">
       <span class="flex-47">{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds' | translate }} (%):</span>
       <span class="flex-53">{{ loanProduct.productGuaranteeData.minimumGuaranteeFromGuarantor }}</span>
     </div>
@@ -704,7 +704,7 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Enable Multiple Disbursals' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
   </div>
@@ -712,11 +712,11 @@
   <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.multiDisburseLoan">
     <span class="flex-47">{{ 'labels.inputs.Maximum Tranche count' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.maxTrancheCount }}</span>
-    <div class="flex-fill" *ngIf="loanProduct.outstandingLoanBalance">
+    <div class="flex-fill layout-row" *ngIf="loanProduct.outstandingLoanBalance">
       <span class="flex-47">{{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}:</span>
       <span class="flex-53">{{ loanProduct.outstandingLoanBalance }}</span>
     </div>
-    <div class="flex-fill">
+    <div class="flex-fill layout-row">
       <span class="flex-47">{{ 'labels.inputs.Disallow Expected Disbursements' | translate }}:</span>
       <span class="flex-53">{{ loanProduct.disallowExpectedDisbursements | yesNo }}</span>
     </div>
@@ -733,12 +733,12 @@
     <span class="flex-53">{{ useDueForRepaymentsConfigurations | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.dueDaysForRepaymentEvent">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.dueDaysForRepaymentEvent">
     <span class="flex-47">{{ 'labels.inputs.Due days for repayment event' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.dueDaysForRepaymentEvent | number }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="loanProduct.overDueDaysForRepaymentEvent">
+  <div class="flex-fill layout-row" *ngIf="loanProduct.overDueDaysForRepaymentEvent">
     <span class="flex-47">{{ 'labels.inputs.OverDue days for repayment event' | translate }}:</span>
     <span class="flex-53">{{ loanProduct.overDueDaysForRepaymentEvent | number }}</span>
   </div>
@@ -747,7 +747,7 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47"
       >{{ 'labels.inputs.Allow overriding select terms and settings in loan accounts' | translate }}:</span
     >
@@ -860,22 +860,22 @@
 
     <mat-divider [inset]="true"></mat-divider>
 
-    <div class="flex-fill">
+    <div class="flex-fill layout-row">
       <span class="flex-47">{{ 'labels.inputs.Enable income capitalization' | translate }}:</span>
       <span class="flex-53">{{ loanProduct.enableIncomeCapitalization | yesNo }}</span>
     </div>
 
-    <div class="flex-fill" *ngIf="loanProduct.enableIncomeCapitalization">
+    <div class="flex-fill layout-row" *ngIf="loanProduct.enableIncomeCapitalization">
       <span class="flex-47">{{ 'labels.inputs.Income capitalization calculation type' | translate }}:</span>
       <span class="flex-53">{{ loanProduct.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }}</span>
     </div>
 
-    <div class="flex-fill" *ngIf="loanProduct.enableIncomeCapitalization">
+    <div class="flex-fill layout-row" *ngIf="loanProduct.enableIncomeCapitalization">
       <span class="flex-47">{{ 'labels.inputs.Income capitalization strategy' | translate }}:</span>
       <span class="flex-53">{{ loanProduct.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }}</span>
     </div>
 
-    <div class="flex-fill" *ngIf="loanProduct.enableIncomeCapitalization">
+    <div class="flex-fill layout-row" *ngIf="loanProduct.enableIncomeCapitalization">
       <span class="flex-47">{{ 'labels.inputs.Income type' | translate }}:</span>
       <span class="flex-53">{{ loanProduct.capitalizedIncomeType?.value | translateKey: 'catalogs' }}</span>
     </div>
@@ -885,14 +885,14 @@
 
   <mat-divider [inset]="true"></mat-divider>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-47">{{ 'labels.inputs.Type' | translate }}:</span>
     <span class="flex-53">{{
       'labels.accounting.' + getAccountingRuleName(accountingRuleData[accountingRule() - 1]) | translate
     }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="isAccountingAccrualBased">
+  <div class="flex-fill layout-row" *ngIf="isAccountingAccrualBased">
     <span class="flex-47"
       >{{ 'labels.inputs.Enable Accrual Activity Posting on Installment Due Date' | translate }}:</span
     >

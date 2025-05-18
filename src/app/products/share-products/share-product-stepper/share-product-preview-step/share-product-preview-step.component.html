@@ -1,16 +1,16 @@
-<div class="layout-row-wrap responsive-column">
+<div class="responsive-column">
   <h2 class="mat-h2 flex-fill">{{ shareProduct.name }}</h2>
 
   <mat-divider class="flex-fill"></mat-divider>
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Details' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Short Name' | translate }}:</span>
     <span class="flex-60">{{ shareProduct.shortName }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="shareProduct.description">
+  <div class="flex-fill layout-row" *ngIf="shareProduct.description">
     <span class="flex-40">{{ 'labels.inputs.Description' | translate }}:</span>
     <span class="flex-60">{{ shareProduct.description }}</span>
   </div>
@@ -18,19 +18,19 @@
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Currency' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Currency' | translate }}:</span>
     <span class="flex-60">{{
       shareProduct.currencyCode | find: shareProductsTemplate.currencyOptions : 'code' : 'name'
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
     <span class="flex-60">{{ shareProduct.digitsAfterDecimal }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
     <span class="flex-60">{{ shareProduct.inMultiplesOf }}</span>
   </div>
@@ -38,22 +38,22 @@
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Terms' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Total Number of Shares' | translate }}:</span>
     <span class="flex-60">{{ shareProduct.totalShares | formatNumber }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Shares to be Issued' | translate }}:</span>
     <span class="flex-60">{{ shareProduct.sharesIssued | formatNumber }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Nominal/Unit Price' | translate }}:</span>
     <span class="flex-60">{{ shareProduct.unitPrice | formatNumber }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Capital Value' | translate }}:</span>
     <span class="flex-60">{{ shareProduct.shareCapital | formatNumber }}</span>
   </div>
@@ -61,7 +61,7 @@
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Settings' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Shares per Client' | translate }}:</span>
     <span class="flex-60">{{
       shareProduct.nominalShares +
@@ -73,7 +73,7 @@
     }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="shareProduct.minimumActivePeriodForDividends">
+  <div class="flex-fill layout-row" *ngIf="shareProduct.minimumActivePeriodForDividends">
     <span class="flex-40">{{ 'labels.inputs.Minimum Active Period' | translate }}:</span>
     <span class="flex-60">{{
       shareProduct.minimumActivePeriodForDividends +
@@ -83,7 +83,7 @@
     }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="shareProduct.lockinPeriodFrequency">
+  <div class="flex-fill layout-row" *ngIf="shareProduct.lockinPeriodFrequency">
     <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
     <span class="flex-60">{{
       shareProduct.lockinPeriodFrequency +
@@ -93,7 +93,7 @@
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Allow dividends for inactive clients' | translate }}:</span>
     <span class="flex-60">{{ shareProduct.allowDividendCalculationForInactiveClients | yesNo }}</span>
   </div>
@@ -163,7 +163,7 @@
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Accounting' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Type' | translate }}:</span>
     <span class="flex-60">{{ accountingRuleData[shareProduct.accountingRule - 1] }}</span>
   </div>
@@ -171,7 +171,7 @@
   <div *ngIf="shareProduct.accountingRule === 2" class="layout-row-wrap responsive-column flex-fill">
     <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Assets' | translate }}</h4>
 
-    <div class="flex-fill">
+    <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Share reference' | translate }}:</span>
       <span class="flex-60">{{
         shareProduct.shareReferenceId
@@ -181,7 +181,7 @@
 
     <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Liabilities' | translate }}</h4>
 
-    <div class="flex-fill">
+    <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Share suspense control' | translate }}:</span>
       <span class="flex-60">{{
         shareProduct.shareSuspenseId
@@ -191,7 +191,7 @@
 
     <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Share Equity' | translate }}</h4>
 
-    <div class="flex-fill">
+    <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Equity' | translate }}:</span>
       <span class="flex-60">{{
         shareProduct.shareEquityId
@@ -201,7 +201,7 @@
 
     <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Income' | translate }}</h4>
 
-    <div class="flex-fill">
+    <div class="flex-fill layout-row">
       <span class="flex-40">{{ 'labels.inputs.Income from fees' | translate }}:</span>
       <span class="flex-60">{{
         shareProduct.incomeFromFeeAccountId
