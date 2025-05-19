@@ -2,3 +2,25 @@
   padding: 1%;
   margin: 1%;
 }
+
+.list-item-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.note-details {
+  font-size: 14px;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.right-section {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+}

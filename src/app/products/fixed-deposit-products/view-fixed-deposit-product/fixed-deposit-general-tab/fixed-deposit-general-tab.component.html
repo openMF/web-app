@@ -7,7 +7,7 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div class="layout-row-wrap responsive-column">
+      <div class="responsive-column">
         <h2 class="mat-h2 flex-fill">{{ fixedDepositProductData.name }}</h2>
 
         <mat-divider [inset]="true"></mat-divider>
@@ -16,12 +16,12 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Short Name' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.shortName }}</span>
         </div>
 
-        <div class="flex-fill" *ngIf="fixedDepositProductData.description">
+        <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.description">
           <span class="flex-40">{{ 'labels.inputs.Description' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.description }}</span>
         </div>
@@ -30,19 +30,19 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.heading.Currency' | translate }}:</span>
           <span class="flex-60"
             >({{ fixedDepositProductData.currency.code }}) {{ fixedDepositProductData.currency.name }}</span
           >
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.currency.decimalPlaces }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Currency in multiples of' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.currency.inMultiplesOf | formatNumber }}</span>
         </div>
@@ -51,7 +51,7 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Deposit Amount' | translate }}:</span>
           <span class="flex-60">{{
             fixedDepositProductData.depositAmount +
@@ -67,22 +67,22 @@
           }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Interest Compounding Period' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.interestCompoundingPeriodType.value }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Interest Posting Period' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.interestPostingPeriodType.value }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Interest Calculated Using' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.interestCalculationType.value }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Days in Year' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.interestCalculationDaysInYearType.value }}</span>
         </div>
@@ -91,7 +91,7 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div class="flex-fill" *ngIf="fixedDepositProductData.lockinPeriodFrequency">
+        <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.lockinPeriodFrequency">
           <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
           <span class="flex-60">
             {{ fixedDepositProductData.lockinPeriodFrequency }}
@@ -99,7 +99,7 @@
           >
         </div>
 
-        <div class="flex-fill" *ngIf="fixedDepositProductData.minDepositTerm">
+        <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.minDepositTerm">
           <span class="flex-40">{{ 'labels.inputs.Minimum Deposit Term' | translate }}:</span>
           <span class="flex-60" *ngIf="fixedDepositProductData.minDepositTerm !== undefined"
             >{{ fixedDepositProductData.minDepositTerm }}
@@ -108,7 +108,7 @@
           >
         </div>
 
-        <div class="flex-fill" *ngIf="fixedDepositProductData.maxDepositTerm">
+        <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.maxDepositTerm">
           <span class="flex-40">{{ 'labels.inputs.Maximum Deposit Term' | translate }}:</span>
           <span class="flex-60" *ngIf="fixedDepositProductData.maxDepositTerm !== undefined"
             >{{ fixedDepositProductData.maxDepositTerm }}
@@ -117,7 +117,7 @@
           >
         </div>
 
-        <div class="flex-fill" *ngIf="fixedDepositProductData.inMultiplesOfDepositTerm">
+        <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.inMultiplesOfDepositTerm">
           <span class="flex-40">{{ 'labels.inputs.Deposit Term In multiple of' | translate }}:</span>
           <span class="flex-60"
             >{{ fixedDepositProductData.inMultiplesOfDepositTerm }}
@@ -126,12 +126,12 @@
           >
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Apply Penal Interest (less)' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.preClosurePenalApplicable | yesNo }}</span>
         </div>
 
-        <div class="flex-fill" *ngIf="fixedDepositProductData.preClosurePenalApplicable">
+        <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.preClosurePenalApplicable">
           <span class="flex-40">{{ 'labels.inputs.Penal Interest' | translate }} (%):</span>
           <span class="flex-60"
             >{{ fixedDepositProductData.preClosurePenalInterest }} &nbsp; &nbsp; % &nbsp; &nbsp; On &nbsp;&nbsp;
@@ -139,48 +139,48 @@
           >
         </div>
 
-        <div class="flex-fill" *ngIf="fixedDepositProductData.minBalanceForInterestCalculation">
+        <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.minBalanceForInterestCalculation">
           <span class="flex-40">{{ 'labels.inputs.Balance Required for Interest Calculation' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.minBalanceForInterestCalculation | formatNumber }}</span>
         </div>
 
-        <div class="flex-fill">
+        <div class="flex-fill layout-row">
           <span class="flex-40">{{ 'labels.inputs.Withhold Tax is Applicable' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.withHoldTax | yesNo }}</span>
         </div>
 
-        <div class="flex-fill" *ngIf="fixedDepositProductData.withHoldTax">
+        <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.withHoldTax">
           <span class="flex-40">{{ 'labels.inputs.Withhold Tax group' | translate }}:</span>
           <span class="flex-60">{{ fixedDepositProductData.taxGroup.name }}</span>
         </div>
 
-        <div *ngIf="fixedDepositProductData.activeChart" class="layout-row-wrap responsive-column flex-fill">
+        <div *ngIf="fixedDepositProductData.activeChart" class="responsive-column flex-fill">
           <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Interest Rate Chart' | translate }}</h3>
 
           <mat-divider [inset]="true"></mat-divider>
 
-          <div class="layout-row-wrap responsive-column flex-fill">
-            <div class="flex-fill" *ngIf="fixedDepositProductData.activeChart.name">
+          <div class="responsive-column flex-fill">
+            <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.activeChart.name">
               <span class="flex-40">{{ 'labels.inputs.Name' | translate }}:</span>
               <span class="flex-60">{{ fixedDepositProductData.activeChart.name }}</span>
             </div>
 
-            <div class="flex-fill" *ngIf="fixedDepositProductData.activeChart.description">
+            <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.activeChart.description">
               <span class="flex-40">{{ 'labels.inputs.Description' | translate }}:</span>
               <span class="flex-60">{{ fixedDepositProductData.activeChart.description }}</span>
             </div>
 
-            <div class="flex-fill">
+            <div class="flex-fill layout-row">
               <span class="flex-40">{{ 'labels.inputs.From Date' | translate }}:</span>
               <span class="flex-60">{{ fixedDepositProductData.activeChart.fromDate | dateFormat }}</span>
             </div>
 
-            <div class="flex-fill" *ngIf="fixedDepositProductData.activeChart.endDate">
+            <div class="flex-fill layout-row" *ngIf="fixedDepositProductData.activeChart.endDate">
               <span class="flex-40">{{ 'labels.inputs.End Date' | translate }}:</span>
               <span class="flex-60">{{ fixedDepositProductData.activeChart.endDate | dateFormat }}</span>
             </div>
 
-            <div class="flex-fill">
+            <div class="flex-fill layout-row">
               <span class="flex-40">{{ 'labels.inputs.Primary Grouping by Amount' | translate }}:</span>
               <span class="flex-60">{{ fixedDepositProductData.activeChart.isPrimaryGroupingByAmount | yesNo }}</span>
             </div>

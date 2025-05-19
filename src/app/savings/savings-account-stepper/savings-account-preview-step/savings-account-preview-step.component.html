@@ -1,20 +1,20 @@
-<div class="layout-row-wrap responsive-column">
+<div class="responsive-column">
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Details' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Product' | translate }}</span>
     <span class="flex-60">{{
       savingsAccount.productId | find: savingsAccountTemplate.productOptions : 'id' : 'name'
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Submitted On' | translate }}</span>
     <span class="flex-60">{{ savingsAccount.submittedOnDate | dateFormat }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.External Id' | translate }}</span>
     <span class="flex-60" *ngIf="savingsAccount.externalId">
       <mifosx-external-identifier externalId="{{ savingsAccount.externalId }}"></mifosx-external-identifier>
@@ -24,7 +24,7 @@
     </span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Field Officer' | translate }}</span>
     <span class="flex-60">{{
       savingsAccount.fieldOfficerId | find: savingsAccountProductTemplate.fieldOfficerOptions : 'id' : 'displayName'
@@ -57,22 +57,22 @@
   <h3 class="mat-h3 margin-t flex-fill">{{ 'labels.heading.Terms' | translate }}</h3>
 
   <mat-divider class="flex-fill"></mat-divider>
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Currency' | translate }}</span>
     <span class="flex-60">{{ savingsAccountTermsForm.get('currencyCode').value }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}</span>
     <span class="flex-60">{{ savingsAccountTermsForm.get('decimal').value }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Nominal Annual Interest' | translate }}:</span>
     <span class="flex-60">{{ savingsAccount.nominalAnnualInterestRate | formatNumber }} %</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Interest Compounding Period' | translate }}:</span>
     <span class="flex-60">{{
       getCatalogTranslation(
@@ -82,7 +82,7 @@
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Interest Posting Period' | translate }}:</span>
     <span class="flex-60">{{
       getCatalogTranslation(
@@ -92,7 +92,7 @@
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Interest Calculated using' | translate }}:</span>
     <span class="flex-60">{{
       getCatalogTranslation(
@@ -102,7 +102,7 @@
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Days in Year' | translate }}:</span>
     <span class="flex-60">{{
       getCatalogTranslation(
@@ -112,17 +112,17 @@
     }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="savingsAccount.minRequiredOpeningBalance">
+  <div class="flex-fill layout-row" *ngIf="savingsAccount.minRequiredOpeningBalance">
     <span class="flex-40">{{ 'labels.inputs.Minimum Opening Balance' | translate }}:</span>
     <span class="flex-60">{{ savingsAccount.minRequiredOpeningBalance | formatNumber }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Apply Withdrawal Fee for Transfers' | translate }}:</span>
     <span class="flex-60">{{ savingsAccount.withdrawalFeeForTransfers | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="savingsAccount.lockinPeriodFrequency">
+  <div class="flex-fill layout-row" *ngIf="savingsAccount.lockinPeriodFrequency">
     <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
     <span class="flex-60">{{
       getCatalogTranslation(
@@ -134,32 +134,32 @@
     }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Is Overdraft Allowed' | translate }}:</span>
     <span class="flex-60">{{ savingsAccount.allowOverdraft | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="savingsAccount.minOverdraftForInterestCalculation">
+  <div class="flex-fill layout-row" *ngIf="savingsAccount.minOverdraftForInterestCalculation">
     <span class="flex-40">{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}:</span>
     <span class="flex-60">{{ savingsAccount.minOverdraftForInterestCalculation | formatNumber }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="savingsAccount.nominalAnnualInterestRateOverdraft">
+  <div class="flex-fill layout-row" *ngIf="savingsAccount.nominalAnnualInterestRateOverdraft">
     <span class="flex-40">{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}:</span>
     <span class="flex-60">{{ savingsAccount.nominalAnnualInterestRateOverdraft | formatNumber }} %</span>
   </div>
 
-  <div class="flex-fill" *ngIf="savingsAccount.overdraftLimit">
+  <div class="flex-fill layout-row" *ngIf="savingsAccount.overdraftLimit">
     <span class="flex-40">{{ 'labels.inputs.Maximum Overdraft Amount Limit' | translate }}:</span>
     <span class="flex-60">{{ savingsAccount.overdraftLimit | formatNumber }}</span>
   </div>
 
-  <div class="flex-fill">
+  <div class="flex-fill layout-row">
     <span class="flex-40">{{ 'labels.inputs.Enforce Minimum Balance' | translate }}:</span>
     <span class="flex-60">{{ savingsAccount.enforceMinRequiredBalance | yesNo }}</span>
   </div>
 
-  <div class="flex-fill" *ngIf="savingsAccount.minRequiredBalance">
+  <div class="flex-fill layout-row" *ngIf="savingsAccount.minRequiredBalance">
     <span class="flex-40">{{ 'labels.inputs.Minimum Balance' | translate }}:</span>
     <span class="flex-60">{{ savingsAccount.minRequiredBalance }}</span>
   </div>
