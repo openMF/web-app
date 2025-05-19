@@ -96,7 +96,6 @@ export class EditChargeComponent implements OnInit {
       penalty: [this.chargeData.penalty],
       minCap: [
         this.chargeData.minCap || null,
-        ,
         [maxNumberValueValidator('maxCap')]
       ],
       maxCap: [
