@@ -23,11 +23,12 @@
     </mifosx-advance-payment-allocation-tab>
   </mat-tab>
 
-  <mat-tab disabled>
+  <mat-tab>
     <ng-template mat-tab-label>
-      <button mat-icon-button (click)="addTransaction()">
+      <button (click)="addTransaction(); $event.stopPropagation()" mat-icon-button type="button">
         <mat-icon><fa-icon icon="plus" size="sm"></fa-icon></mat-icon>
       </button>
     </ng-template>
+    <ng-template matTabContent></ng-template>
   </mat-tab>
 </mat-tab-group>
