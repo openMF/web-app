@@ -1,6 +1,6 @@
 <mat-form-field id="server-selector" *ngIf="existMoreThanOneServer">
   <mat-label>{{ 'labels.inputs.Server' | translate }}</mat-label>
-  <mat-select [formControl]="serverSelector" (selectionChange)="setServer()">
+  <mat-select [formControl]="serverSelector" (selectionChange)="setServer()" panelClass="server-panel">
     <div class="sticky">
       <form [formGroup]="form" (ngSubmit)="addNewServer()">
         <div class="actions">
