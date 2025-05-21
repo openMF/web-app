@@ -13,3 +13,9 @@ table {
 .text-center {
   text-align: center;
 }
+
+.nowrap {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
