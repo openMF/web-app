@@ -8,7 +8,7 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div class="layout-row-wrap content">
+      <div class="layout-row-wrap">
         <div class="mat-body-strong flex-33">
           {{ 'labels.inputs.Name' | translate }}
         </div>
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="layout-row-wrap content" *ngFor="let taxcomponent of taxGroupData.taxAssociations">
+      <div class="layout-row-wrap" *ngFor="let taxcomponent of taxGroupData.taxAssociations">
         <div class="flex-34">
           {{ taxcomponent.taxComponent.glCode }}
           {{ taxcomponent.taxComponent.name }}

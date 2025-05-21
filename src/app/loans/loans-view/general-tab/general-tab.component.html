@@ -192,8 +192,8 @@
   <div *ngIf="!loanDetails.summary">
     <h3>{{ 'labels.heading.Loan Purpose' | translate }}</h3>
     <div class="container">
-      <div class="responsive-column">
-        <div class="flex-fill layout-row">
+      <div class="layout-row-wrap responsive-column">
+        <div class="flex-contents">
           <span class="flex-50">{{ 'labels.inputs.Loan Purpose' | translate }}:</span>
           <span class="flex-50" *ngIf="loanDetails.loanPurposeName">
             {{ loanDetails.loanPurposeName }}
@@ -203,33 +203,33 @@
           </span>
         </div>
 
-        <div class="flex-fill layout-row">
+        <div class="flex-contents">
           <span class="flex-50">{{ 'labels.inputs.Proposed Amount' | translate }}:</span>
           <span class="flex-50">{{
             loanDetails.proposedPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
           }}</span>
         </div>
 
-        <div class="flex-fill layout-row" *ngIf="showApprovedAmountBasedOnStatus()">
+        <div class="flex-contents" *ngIf="showApprovedAmountBasedOnStatus()">
           <span class="flex-50">{{ 'labels.inputs.Approved Amount' | translate }}:</span>
           <span class="flex-50">{{
             loanDetails.approvedPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
           }}</span>
         </div>
 
-        <div class="flex-fill layout-row" *ngIf="showDisbursedAmountBasedOnStatus()">
+        <div class="flex-contents" *ngIf="showDisbursedAmountBasedOnStatus()">
           <span class="flex-50">{{ 'labels.inputs.Disburse Amount' | translate }}:</span>
           <span class="flex-50">{{ loanDetails.principal | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</span>
         </div>
 
-        <div class="flex-fill layout-row" *ngIf="loanDetails.balloonRepaymentAmount > 0">
+        <div class="flex-contents" *ngIf="loanDetails.balloonRepaymentAmount > 0">
           <span class="flex-50">{{ 'labels.inputs.Balloon Repayment Amount' | translate }}:</span>
           <span class="flex-50">{{
             loanDetails.balloonRepaymentAmount | currency: currencyCode : 'symbol-narrow' : '1.2-2'
           }}</span>
         </div>
 
-        <div class="flex-fill layout-row">
+        <div class="flex-contents">
           <span class="flex-50">{{ 'labels.inputs.Arrears By' | translate }}:</span>
           <span class="flex-50">{{ 'labels.inputs.Not Provided' | translate }}</span>
         </div>

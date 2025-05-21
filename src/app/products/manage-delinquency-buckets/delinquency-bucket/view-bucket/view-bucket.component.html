@@ -17,7 +17,7 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div class="layout-row-wrap content">
+      <div class="layout-row-wrap">
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Name' | translate }}
         </div>
@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <div class="layout-row-wrap content" *ngFor="let range of delinquencyBucketData.ranges">
+      <div class="layout-row-wrap" *ngFor="let range of delinquencyBucketData.ranges">
         <div class="flex-50">
           {{ range.classification }}
         </div>

@@ -4,9 +4,10 @@
 #footer {
   align-items: center;
 
-  .content {
-    max-width: 30%;
-    width: 30%;
+  .content-wrapper {
+    max-width: 100%;
+    width: 70%;
+    padding-left: 30%;
 
     .versions {
       width: 100%;

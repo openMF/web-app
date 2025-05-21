@@ -12,6 +12,15 @@
 @use 'dark_content' as *;
 
 @include mat.all-component-typographies();
+
+$mifosx-typography-level: mat.define-typography-level(
+  $font-family: Roboto,
+  $font-weight: 400,
+  $font-size: 1rem,
+  $line-height: 1.5,
+  $letter-spacing: normal
+);
+
 @include mat.core();
 
 /* ################################## Light theme ################################### */
@@ -22,7 +31,18 @@ $mifosx-color-config: (
   warn: mat.define-palette(mat.$red-palette)
 );
 
-$mifosx-typography: mat.define-typography-config();
+$mifosx-typography: mat.define-typography-config(
+  $body-1: $mifosx-typography-level,
+  $body-2: $mifosx-typography-level,
+  $headline-1: $mifosx-typography-level,
+  $headline-2: $mifosx-typography-level,
+  $headline-3: $mifosx-typography-level,
+  $headline-4: $mifosx-typography-level,
+  $headline-5: $mifosx-typography-level,
+  $headline-6: $mifosx-typography-level,
+  $button: $mifosx-typography-level
+);
+
 $mifosx-density: 0;
 
 $mifosx-app-theme: mat.define-light-theme(

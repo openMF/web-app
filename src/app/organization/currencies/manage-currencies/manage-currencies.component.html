@@ -40,18 +40,22 @@
     </div>
 
     <mat-grid-list cols="2" rowHeight="50px">
-      <mat-grid-tile *ngFor="let currency of selectedCurrencies; index as i">
-        <input matInput [value]="currency.name" />
+      <mat-grid-tile class="grid-tile-content" *ngFor="let currency of selectedCurrencies; index as i">
+        <div class="grid-container">
+          <div>
+            <button
+              mat-button
+              color="warn"
+              (click)="deleteCurrency(currency.code, i)"
+              *mifosxHasPermission="'UPDATE_CURRENCY'"
+            >
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </div>
 
-        <div class="layout-row align-start">
-          <button
-            mat-button
-            color="warn"
-            (click)="deleteCurrency(currency.code, i)"
-            *mifosxHasPermission="'UPDATE_CURRENCY'"
+          <span class="label m-l-10 p-t-5"
+            ><b>{{ currency.name }}</b></span
           >
-            <fa-icon icon="trash"></fa-icon>
-          </button>
         </div>
       </mat-grid-tile>
     </mat-grid-list>
