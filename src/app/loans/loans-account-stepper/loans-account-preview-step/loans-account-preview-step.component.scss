@@ -24,3 +24,10 @@ mat-divider {
 .margin-t {
   margin-top: 1em;
 }
+
+.row-style {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
