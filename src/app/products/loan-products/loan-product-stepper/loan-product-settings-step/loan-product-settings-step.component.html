@@ -212,20 +212,19 @@
 
     <span class="flex-48 hide-lt-md"></span>
 
-    <div
-      *ngIf="isAdvancedTransactionProcessingStrategy"
-      class="flex-fill layout-row-wrap gap-2percent responsive-column"
-    >
-      <h3 class="mat-h4 flex-98">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}</h3>
+    <div style="display: flex; justify-content: flex-start; width: 100%">
+      <div *ngIf="isAdvancedTransactionProcessingStrategy">
+        <h3 class="mat-h4 flex-98">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}</h3>
 
-      <mat-form-field class="flex-30">
-        <mat-label>{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}</mat-label>
-        <mat-select formControlName="chargeOffBehaviour" required>
-          <mat-option *ngFor="let chargeOffBehaviour of chargeOffBehaviourData" [value]="chargeOffBehaviour.id">
-            {{ chargeOffBehaviour.value | translateKey: 'catalogs' }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field class="flex-30">
+          <mat-label>{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}</mat-label>
+          <mat-select formControlName="chargeOffBehaviour" required>
+            <mat-option *ngFor="let chargeOffBehaviour of chargeOffBehaviourData" [value]="chargeOffBehaviour.id">
+              {{ chargeOffBehaviour.value | translateKey: 'catalogs' }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
 
     <h4 class="mat-h4 m-r-10 flex-98">

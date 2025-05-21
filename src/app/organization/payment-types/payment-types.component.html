@@ -87,6 +87,7 @@
             [routerLink]="[paymentType.id, 'edit']"
             color="primary"
             *ngIf="!paymentType.isSystemDefined"
+            class="no-wrap"
           >
             <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
           </button>
@@ -95,6 +96,7 @@
             (click)="deletePaymentType(paymentType.id)"
             color="warn"
             *ngIf="!paymentType.isSystemDefined"
+            class="no-wrap"
           >
             <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
           </button>
