@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>
   {{ 'labels.heading.Upload' | translate }} {{ entityType }} {{ 'labels.heading.Documents' | translate }}
 </h1>
-<div>
+<div class="m-l-10 m-r-10">
   <form [formGroup]="uploadDocumentForm" class="layout-column">
     <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.File Name' | translate }}</mat-label>
@@ -27,7 +27,7 @@
         [disabled]="!uploadDocumentForm.valid"
         [mat-dialog-close]="uploadDocumentForm.value"
       >
-        {{ 'labels.buttons.Confirm' | translate }}
+        {{ 'labels.buttons.Upload' | translate }}
       </button>
     </mat-dialog-actions>
   </form>

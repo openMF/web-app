@@ -72,7 +72,7 @@
               </div>
             </div>
 
-            <div *ngIf="loanDetailsData.summary" class="loans-overview mat-typography flex-40">
+            <div *ngIf="loanDetailsData.summary" class="loans-overview mat-typography flex-30">
               <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
               <table class="account-overview">
                 <tbody>
@@ -107,8 +107,7 @@
               </table>
             </div>
 
-            <span class="flex-auto"></span>
-            <div class="flex-4">
+            <div class="flex-5">
               <button
                 mat-icon-button
                 [matMenuTriggerFor]="accountMenu"

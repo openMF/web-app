@@ -147,17 +147,15 @@
 
       <mat-divider class="flex-98"></mat-divider>
 
-      <mat-checkbox class="flex-73">
-        formControlName="advancedAccountingRules">{{
-          'labels.heading.Advanced Accounting Rules' | translate
-        }}</mat-checkbox
-      >
+      <mat-checkbox class="flex-73" formControlName="advancedAccountingRules">{{
+        'labels.heading.Advanced Accounting Rules' | translate
+      }}</mat-checkbox>
 
       <div
         *ngIf="savingProductAccountingForm.value.advancedAccountingRules"
         class="flex-fill layout-row-wrap gap-2percent responsive-column"
       >
-        <div class="flex-100">
+        <div class="layout-row flex-100">
           <h4 class="mat-h4 flex-63">
             {{ 'labels.heading.Configure Fund Sources for Payment Channels' | translate }}
           </h4>
@@ -173,7 +171,9 @@
               {{ 'labels.buttons.Add' | translate }}
             </button>
           </div>
+        </div>
 
+        <div class="flex-100">
           <table
             class="flex-98 mat-elevation-z1"
             mat-table

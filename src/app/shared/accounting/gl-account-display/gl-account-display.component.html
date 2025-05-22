@@ -1,9 +1,9 @@
-<span *ngIf="accountTitle">
-  <div [ngClass]="withTitle" class="header">
+<span class="layout-row" *ngIf="accountTitle">
+  <div [ngClass]="getWithClass(withTitle)" class="header">
     {{ 'labels.inputs.' + accountTitle | translate }}
   </div>
 
-  <div [ngClass]="withAccount">
+  <div [ngClass]="getWithClass(withAccount)">
     {{ glAccountValue() }}
   </div>
 </span>
