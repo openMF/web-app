@@ -1,4 +1,4 @@
-<mat-card-header fxLayout="row" fxLayoutGap="5%">
+<mat-card-header class="layout-row gap-5percent">
   <fa-icon class="main-icon" icon="user" size="3x"></fa-icon>
   <mat-card-title-group>
     <div class="mat-typography">
@@ -28,68 +28,68 @@
 <mat-card-content>
   <mat-tab-group>
     <mat-tab label="Details">
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.firstName">
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong" *ngIf="clientData.firstName">
           {{ 'labels.inputs.First Name' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="clientData.firstName">
+        <div class="flex-50" *ngIf="clientData.firstName">
           {{ clientData.firstName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.middleName">
+        <div class="flex-50 mat-body-strong" *ngIf="clientData.middleName">
           {{ 'labels.inputs.Middle Name' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="clientData.middleName">
+        <div class="flex-50" *ngIf="clientData.middleName">
           {{ clientData.middleName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.lastName">
+        <div class="flex-50 mat-body-strong" *ngIf="clientData.lastName">
           {{ 'labels.inputs.Last Name' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="clientData.lastName">
+        <div class="flex-50" *ngIf="clientData.lastName">
           {{ clientData.lastName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.dateOfBirth">
+        <div class="flex-50 mat-body-strong" *ngIf="clientData.dateOfBirth">
           {{ 'labels.inputs.Date of Birth' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="clientData.dateOfBirth">
+        <div class="flex-50" *ngIf="clientData.dateOfBirth">
           {{ clientData.dateOfBirth | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.mobileNo">
+        <div class="flex-50 mat-body-strong" *ngIf="clientData.mobileNo">
           {{ 'labels.inputs.Mobile Number' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="clientData.mobileNo">
+        <div class="flex-50" *ngIf="clientData.mobileNo">
           {{ clientData.mobileNo }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Activation Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ clientData.activationDate | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.officeName">
+        <div class="flex-50 mat-body-strong" *ngIf="clientData.officeName">
           {{ 'labels.inputs.Associated Office' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="clientData.officeName">
+        <div class="flex-50" *ngIf="clientData.officeName">
           {{ clientData.officeName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="clientData.staffName">
+        <div class="flex-50 mat-body-strong" *ngIf="clientData.staffName">
           {{ 'labels.inputs.Associated Staff' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="clientData.staffName">
+        <div class="flex-50" *ngIf="clientData.staffName">
           {{ clientData.staffName }}
         </div>
       </div>

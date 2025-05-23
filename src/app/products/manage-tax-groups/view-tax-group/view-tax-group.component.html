@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+<div class="container m-b-20 layout-row layout-lt-md-column align-end gap-2percent">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_TAXGROUP'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -8,38 +8,39 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="33%" class="mat-body-strong">
+      <div class="layout-row-wrap">
+        <div class="mat-body-strong flex-33">
           {{ 'labels.inputs.Name' | translate }}
         </div>
 
-        <div fxFlex="67%">
+        <div class="flex-67">
           {{ taxGroupData.name }}
         </div>
 
-        <div fxFlex="34%" class="mat-body-strong">
+        <div class="mat-body-strong flex-34">
           {{ 'labels.inputs.Tax Component' | translate }}
         </div>
 
-        <div fxFlex="33%" class="mat-body-strong">
+        <div class="mat-body-strong flex-33">
           {{ 'labels.inputs.Start Date' | translate }}
         </div>
 
-        <div fxFlex="33%" class="mat-body-strong">
+        <div class="mat-body-strong flex-33">
           {{ 'labels.inputs.End Date' | translate }}
         </div>
       </div>
 
-      <div fxLayout="row wrap" class="content" *ngFor="let taxcomponent of taxGroupData.taxAssociations">
-        <div fxFlex="34%">
+      <div class="layout-row-wrap" *ngFor="let taxcomponent of taxGroupData.taxAssociations">
+        <div class="flex-34">
+          {{ taxcomponent.taxComponent.glCode }}
           {{ taxcomponent.taxComponent.name }}
         </div>
 
-        <div fxFlex="33%">
+        <div class="flex-33">
           {{ taxcomponent.startDate | dateFormat }}
         </div>
 
-        <div fxFlex="33%" *ngIf="taxcomponent.endDate !== undefined || taxcomponent.endDate !== null">
+        <div class="flex-33" *ngIf="taxcomponent.endDate !== undefined || taxcomponent.endDate !== null">
           {{ taxcomponent.endDate | dateFormat }}
         </div>
       </div>

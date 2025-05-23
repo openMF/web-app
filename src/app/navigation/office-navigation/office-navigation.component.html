@@ -1,4 +1,4 @@
-<mat-card-header fxLayout="row" fxLayoutGap="5%" class="header">
+<mat-card-header class="layout-row gap-5percent header">
   <fa-icon class="main-icon" icon="building" size="3x"></fa-icon>
   <mat-card-title-group>
     <div class="mat-typography">
@@ -19,28 +19,28 @@
 </mat-card-header>
 
 <mat-card-content>
-  <div fxLayout="row wrap" class="content">
-    <div fxFlex="50%" class="mat-body-strong">
+  <div class="layout-row-wrap">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Opened On' | translate }}
     </div>
 
-    <div fxFlex="50%">
+    <div class="flex-50">
       {{ officeData.openingDate | dateFormat }}
     </div>
 
-    <div fxFlex="50%" class="mat-body-strong" *ngIf="officeData.parentName">
+    <div class="flex-50 mat-body-strong" *ngIf="officeData.parentName">
       {{ 'labels.inputs.Parent officeData' | translate }}
     </div>
 
-    <div fxFlex="50%" *ngIf="officeData.parentName">
+    <div class="flex-50" *ngIf="officeData.parentName">
       {{ officeData.parentName }}
     </div>
 
-    <div fxFlex="50%" class="mat-body-strong">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Number of Staff' | translate }}
     </div>
 
-    <div fxFlex="50%">
+    <div class="flex-50">
       {{ employeeData ? employeeData.length : '' }}
     </div>
   </div>

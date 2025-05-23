@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutAlign="space-between center">
-  <mat-form-field fxFlex="50%">
+<div class="layout-row align-between align-items-center">
+  <mat-form-field class="flex-50">
     <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
     <input matInput (keyup)="applyFilter($event.target.value)" />
   </mat-form-field>

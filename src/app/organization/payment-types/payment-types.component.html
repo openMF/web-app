@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_PAYMENTTYPE'">
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Create Payment Type' | translate }}
@@ -6,8 +6,8 @@
 </div>
 
 <div class="container">
-  <div fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex>
+  <div class="layout-row gap-20px">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
@@ -81,12 +81,13 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-        <td mat-cell *matCellDef="let paymentType">
+        <td mat-cell *matCellDef="let paymentType" class="layout-row">
           <button
             mat-button
             [routerLink]="[paymentType.id, 'edit']"
             color="primary"
             *ngIf="!paymentType.isSystemDefined"
+            class="no-wrap"
           >
             <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
           </button>
@@ -95,6 +96,7 @@
             (click)="deletePaymentType(paymentType.id)"
             color="warn"
             *ngIf="!paymentType.isSystemDefined"
+            class="no-wrap"
           >
             <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
           </button>

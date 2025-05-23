@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" class="container m-b-20">
+<div class="layout-row align-end gap-2percent container m-b-20">
   <button
     mat-raised-button
     color="primary"
@@ -22,23 +22,23 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="header">
+      <div class="layout-row-wrap">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Financial Activity' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           ({{ financialActivityAccount?.financialActivityData.id }})
           {{
             'labels.accounting.financialActivity.' + financialActivityAccount?.financialActivityData.name | translate
           }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Account Type' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{
             'labels.inputs.accounting.' + financialActivityAccount?.financialActivityData.mappedGLAccountType
               | translate
@@ -46,7 +46,7 @@
         </div>
 
         <mifosx-gl-account-display
-          fxFlex="100%"
+          class="flex-100"
           [glAccount]="financialActivityAccount?.glAccountData"
           [accountTitle]="'Account Name'"
         >
@@ -54,7 +54,7 @@
       </div>
     </mat-card-content>
 
-    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+    <mat-card-actions class="layout-row align-center gap-5px responsive-column">
       <button type="button" color="primary" mat-raised-button [routerLink]="['../..']">
         {{ 'labels.buttons.Back' | translate }}
       </button>

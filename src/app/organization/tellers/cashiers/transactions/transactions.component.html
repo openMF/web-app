@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutGap="1%" fxLayoutAlign="end" class="container m-b-20">
+<div class="layout-row gap-1percent layout-align-end container m-b-20">
   <button
     mat-raised-button
     color="primary"
@@ -22,47 +22,45 @@
 <div class="container m-b-20" *ngIf="cashierData">
   <mat-card class="mat-elevation-z8">
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+      <div class="layout-row-wrap">
+        <div class="flex-25 header">
           {{ 'labels.inputs.Branch' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
+        <div class="flex-25">
           {{ cashierData.officeName }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-25 header">
           {{ 'labels.inputs.Teller' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
+        <div class="flex-25">
           {{ cashierData.tellerName }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-25 header">
           {{ 'labels.inputs.Cashier' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
+        <div class="flex-25">
           {{ cashierData.cashierName }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-25 header">
           {{ 'labels.inputs.Net Cash' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
-          {{ cashierData.netCash | formatNumber }} [{{ currencySelector.value }}]
-        </div>
+        <div class="flex-25">{{ cashierData.netCash | formatNumber }} [{{ currencySelector.value }}]</div>
       </div>
     </mat-card-content>
   </mat-card>
 </div>
 
 <div class="container">
-  <mat-card fxLayout="column" fxLayoutGap="2%" class="mat-elevation-z8">
-    <div fxLayout="row" fxLayoutGap="2%">
-      <mat-form-field fxFlex>
+  <mat-card class="layout-column gap-2percent mat-elevation-z8">
+    <div class="layout-row gap-2percent">
+      <mat-form-field class="flex-fill">
         <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
         <input matInput (keyup)="applyFilter($event.target.value)" />
       </mat-form-field>

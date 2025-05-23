@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+<div class="container m-b-20 layout-row layout-lt-md-column align-end gap-2percent">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -17,38 +17,41 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap">
+        <div class="flex-100 layout-row m-b-10">
+          <div class="flex-30 mat-body-strong">
+            {{ 'labels.inputs.Name' | translate }}
+          </div>
+
+          <div class="flex-70">
+            {{ delinquencyBucketData.name }}
+          </div>
+        </div>
+
+        <div class="flex-60 mat-body-strong">
+          {{ 'labels.inputs.Classification' | translate }}
           {{ 'labels.inputs.Name' | translate }}
         </div>
 
-        <div fxFlex="50%">
-          {{ delinquencyBucketData.name }}
-        </div>
-
-        <div fxFlex="50%" class="mat-body-strong">
-          {{ 'labels.inputs.Classification' | translate }} {{ 'labels.inputs.Name' | translate }}
-        </div>
-
-        <div fxFlex="25%" class="mat-body-strong">
+        <div class="mat-body-strong flex-20">
           {{ 'labels.inputs.Days From' | translate }}
         </div>
 
-        <div fxFlex="25%" class="mat-body-strong">
+        <div class="mat-body-strong flex-20">
           {{ 'labels.inputs.Days Till' | translate }}
         </div>
       </div>
 
-      <div fxLayout="row wrap" class="content" *ngFor="let range of delinquencyBucketData.ranges">
-        <div fxFlex="50%">
+      <div class="layout-row-wrap bucket-range" *ngFor="let range of delinquencyBucketData.ranges">
+        <div class="flex-60">
           {{ range.classification }}
         </div>
 
-        <div fxFlex="25%">
+        <div class="flex-20 r-value">
           {{ range.minimumAgeDays }}
         </div>
 
-        <div fxFlex="25%">
+        <div class="flex-20 r-value">
           {{ range.maximumAgeDays }}
         </div>
       </div>

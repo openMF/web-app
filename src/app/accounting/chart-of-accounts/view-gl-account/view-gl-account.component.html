@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <span *mifosxHasPermission="'CREATE_GLACCOUNT'">
     <button
       mat-raised-button
@@ -38,68 +38,68 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="header">
+      <div class="layout-row-wrap">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Account Type' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ 'labels.inputs.accounting.' + glAccount.type?.value | translate }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.GL Code' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccount.glCode }}
         </div>
 
-        <div fxFlex="50%" class="header" *ngIf="glAccount.parent">
+        <div class="flex-50 header" *ngIf="glAccount.parent">
           {{ 'labels.inputs.Parent Account Name' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="glAccount.parent">
+        <div class="flex-50" *ngIf="glAccount.parent">
           <a class="tab-link" [routerLink]="['/accounting/chart-of-accounts/gl-accounts/view/' + glAccount.parent.id]">
             <mifosx-gl-account-display [glAccount]="glAccount.parent"></mifosx-gl-account-display>
           </a>
         </div>
 
-        <div fxFlex="50%" class="header" *ngIf="glAccount.tagId.id">
+        <div class="flex-50 header" *ngIf="glAccount.tagId.id">
           {{ 'labels.inputs.Tag' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="glAccount.tagId.id">
+        <div class="flex-50" *ngIf="glAccount.tagId.id">
           {{ glAccount.tagId.name }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Account Usage' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccount.usage?.value }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Manual Entries Allowed' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccount.manualEntriesAllowed | yesNo }}
         </div>
 
-        <div fxFlex="50%" class="header" *ngIf="glAccount.description">
+        <div class="flex-50 header" *ngIf="glAccount.description">
           {{ 'labels.inputs.Description' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="glAccount.description">
+        <div class="flex-50" *ngIf="glAccount.description">
           {{ glAccount.description }}
         </div>
       </div>
     </mat-card-content>
 
-    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+    <mat-card-actions class="layout-row align-center gap-5px responsive-column">
       <button type="button" color="primary" mat-raised-button (click)="goBack()">
         {{ 'labels.buttons.Back' | translate }}
       </button>

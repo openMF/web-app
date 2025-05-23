@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+<div class="container m-b-20 layout-row layout-lt-md-column align-end gap-2percent">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_DELINQUENCY_RANGE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -17,28 +17,28 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Classification' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ delinquencyRangeData.classification }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Days From' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ delinquencyRangeData.minimumAgeDays }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Days Till' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ delinquencyRangeData.maximumAgeDays }}
         </div>
       </div>

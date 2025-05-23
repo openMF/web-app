@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end" fxLayoutGap="2%">
+<div class="container m-b-20 layout-row layout-lt-md-column align-end gap-2percent">
   <button mat-raised-button color="primary" [routerLink]="['/system', 'roles-and-permissions']">
     <fa-icon icon="check" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Permissions' | translate }}
@@ -9,54 +9,54 @@
   </button>
 </div>
 
-<div class="container" fxLayout="column" fxLayoutGap="2%">
+<div class="container layout-column gap-2percent">
   <mat-card>
-    <div fxLayout="row wrap" class="content">
-      <div fxFlex="50%" class="header">
+    <div class="layout-row-wrap">
+      <div class="flex-50 header">
         {{ 'labels.inputs.Tenant Id' | translate }}
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         {{ tenantIdentifier }}
       </div>
 
-      <div fxFlex="50%" class="header">
+      <div class="flex-50 header">
         {{ 'labels.inputs.User Id' | translate }}
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         {{ profileData.userId }}
       </div>
 
-      <div fxFlex="50%" class="header">
+      <div class="flex-50 header">
         {{ 'labels.inputs.User Name' | translate }}
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         {{ profileData.username }}
       </div>
 
-      <div fxFlex="50%" class="header">
+      <div class="flex-50 header">
         {{ 'labels.inputs.Office' | translate }}
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         {{ profileData.officeName }}
       </div>
 
-      <div fxFlex="50%" class="header">
+      <div class="flex-50 header">
         {{ 'labels.inputs.Status' | translate }}
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         {{ profileData.authenticated ? 'Authenticated' : 'Not Authenticated' }}
       </div>
 
-      <div fxFlex="50%" class="header">
+      <div class="flex-50 header">
         {{ 'labels.inputs.Language' | translate }}
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         {{ language }}
       </div>
     </div>

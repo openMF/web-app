@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_FLOATINGRATE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -8,22 +8,22 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content" fxLayout.lt-md="column">
-        <div fxFlex="18%" class="mat-body-strong">{{ 'labels.inputs.Floating Rate Name' | translate }}:</div>
+      <div class="layout-row-wrap layout-lt-md-column">
+        <div class="mat-body-strong flex-18">{{ 'labels.inputs.Floating Rate Name' | translate }}:</div>
 
-        <div fxFlex="18%">
+        <div class="flex-18">
           {{ floatingRateData.name }}
         </div>
 
-        <div fxFlex="20%" class="mat-body-strong">{{ 'labels.inputs.Is Base Lending Rate' | translate }}:</div>
+        <div class="mat-body-strong flex-20">{{ 'labels.inputs.Is Base Lending Rate' | translate }}:</div>
 
-        <div fxFlex="10%">
+        <div class="flex-10">
           {{ floatingRateData.isBaseLendingRate | yesNo }}
         </div>
 
-        <div fxFlex="14%" class="mat-body-strong">{{ 'labels.inputs.Is Active' | translate }}:</div>
+        <div class="mat-body-strong flex-14">{{ 'labels.inputs.Is Active' | translate }}:</div>
 
-        <div fxFlex="10%">
+        <div class="flex-10">
           {{ floatingRateData.isActive | yesNo }}
         </div>
       </div>

@@ -1,6 +1,6 @@
 <form [formGroup]="shareProductDetailsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-form-field fxFlex="48%">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
       <input
         matInput
@@ -14,7 +14,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Short Name' | translate }}</mat-label>
       <input
         matInput
@@ -29,7 +29,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="98%">
+    <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
       <textarea
         matInput
@@ -40,7 +40,7 @@
     </mat-form-field>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious disabled>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

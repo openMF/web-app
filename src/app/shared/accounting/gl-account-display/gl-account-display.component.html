@@ -1,13 +1,13 @@
-<span *ngIf="accountTitle">
-  <div fxFlex="{{ withTitle }}" class="header">
+<span class="layout-row" *ngIf="accountTitle">
+  <div [ngClass]="getWithClass(withTitle)" class="header">
     {{ 'labels.inputs.' + accountTitle | translate }}
   </div>
 
-  <div fxFlex="{{ withAccount }}">
+  <div [ngClass]="getWithClass(withAccount)">
     {{ glAccountValue() }}
   </div>
 </span>
 
-<div fxFlex="100%" *ngIf="!accountTitle">
+<div class="flex-100" *ngIf="!accountTitle">
   {{ glAccountValue() }}
 </div>

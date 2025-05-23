@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { SystemService } from 'app/system/system.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WorkflowJobResolver implements Resolve<boolean> {
+export class WorkflowJobResolver {
   /**
    * @param {SystemService} systemService System service.
    */

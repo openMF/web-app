@@ -1,5 +1,5 @@
 <mat-card class="account-card">
-  <mat-card-header fxLayout="column" class="header">
+  <mat-card-header class="header layout-column">
     <mat-card-title-group class="header-title-group">
       <div class="profile-image-container">
         <div>
@@ -9,7 +9,7 @@
             [src]="clientImage ? clientImage : 'assets/images/user_placeholder.png'"
           />
         </div>
-        <div fxLayoutAlign="center center" class="m-b-5">
+        <div class="m-b-5 flex-center">
           <button
             class="client-image-button"
             mat-raised-button
@@ -43,8 +43,8 @@
       </div>
 
       <div class="mat-typography account-card-title">
-        <mat-card-title fxLayout="row wrap" class="content">
-          <h3 fxFlex="95%">
+        <mat-card-title class="make-flex content">
+          <h3 class="flex-95">
             <i
               class="fa fa-stop"
               [ngClass]="clientViewData.status.code | statusLookup"
@@ -53,7 +53,7 @@
             <b>{{ 'labels.inputs.Client Name' | translate }} :</b
             ><mifosx-entity-name entityName="{{ clientViewData.displayName }}"></mifosx-entity-name>
           </h3>
-          <div fxFlex="5%" fxLayoutAlign="end center">
+          <div class="flex-5 align-end-center">
             <button mat-icon-button [matMenuTriggerFor]="clientMenu" aria-label="Client actions" yPosition="below">
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
@@ -63,8 +63,8 @@
         </mat-card-title>
 
         <mat-card-subtitle>
-          <div fxLayout="row" fxLayout.lt-md="column">
-            <div fxFlex="50%">
+          <div class="layout-row responsive-column">
+            <div class="flex-50">
               <table class="account-overview">
                 <tbody>
                   <tr>
@@ -106,7 +106,7 @@
                 </tbody>
               </table>
             </div>
-            <div fxFlex="50%">
+            <div class="flex-50">
               <table class="account-overview">
                 <tbody>
                   <tr *ngIf="clientViewData.groups.length > 0">
@@ -322,7 +322,7 @@
   </mat-card-header>
 
   <mat-card-content>
-    <nav mat-tab-nav-bar class="navigation-tabs">
+    <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
       <a
         mat-tab-link
         [routerLink]="['./general']"
@@ -393,7 +393,8 @@
         </a>
       </ng-container>
     </nav>
-
-    <router-outlet></router-outlet>
+    <mat-tab-nav-panel #tabPanel>
+      <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
   </mat-card-content>
 </mat-card>

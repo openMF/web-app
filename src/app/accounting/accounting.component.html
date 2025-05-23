@@ -1,152 +1,315 @@
 <div class="container">
   <mat-card>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50%">
+    <div class="layout-row responsive-column gap-20px">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item *mifosxHasPermission="'CREATE_JOURNALENTRY'">
-            <mat-icon matListIcon [routerLink]="['journal-entries/frequent-postings']">
-              <fa-icon icon="sync" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['journal-entries/frequent-postings']">
-              {{ 'labels.heading.Frequent Postings' | translate }}
-            </h4>
-            <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="!arrowBooleans[0]" icon="arrow-down" size="md"></fa-icon>
-            <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
-            <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['journal-entries/frequent-postings']">
-              {{ 'labels.text.These are predefined postings' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['journal-entries/frequent-postings']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="sync" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Frequent Postings' | translate }}
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[0]"
+                    [routerLink]="['journal-entries/frequent-postings']"
+                    class="menu-explanation"
+                  >
+                    {{ 'labels.text.These are predefined postings' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(0)"
+                  *ngIf="!arrowBooleans[0]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <div #createJournalEntries>
             <mat-list-item *mifosxHasPermission="'CREATE_JOURNALENTRY'">
-              <mat-icon matListIcon [routerLink]="['journal-entries/create']">
-                <fa-icon icon="plus" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['journal-entries/create']">
-                {{ 'labels.heading.Create Journal Entries' | translate }}
-              </h4>
-              <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="!arrowBooleans[1]" icon="arrow-down" size="md"></fa-icon>
-              <fa-icon (click)="arrowBooleansToggle(1)" *ngIf="arrowBooleans[1]" icon="arrow-up" size="md"></fa-icon>
-              <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['journal-entries/create']">
-                {{ 'labels.text.Manual journal entry transactions recorded in a journal' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['journal-entries/create']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="plus" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Create Journal Entries' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[1]"
+                      [routerLink]="['journal-entries/create']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.Manual journal entry transactions recorded in a journal' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(1)"
+                    *ngIf="!arrowBooleans[1]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(1)"
+                    *ngIf="arrowBooleans[1]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
 
           <mat-list-item *mifosxHasPermission="'READ_JOURNALENTRY'">
-            <mat-icon matListIcon [routerLink]="['journal-entries']">
-              <fa-icon icon="search" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['journal-entries']">
-              {{ 'labels.heading.Search Journal Entries' | translate }}
-            </h4>
-            <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="!arrowBooleans[2]" icon="arrow-down" size="md"></fa-icon>
-            <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="arrowBooleans[2]" icon="arrow-up" size="md"></fa-icon>
-            <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['journal-entries']">
-              {{ 'labels.text.Advanced search option for journal entries' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['journal-entries']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="search" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Search Journal Entries' | translate }}
+                  <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['journal-entries']" class="menu-explanation">
+                    {{ 'labels.text.Advanced search option for journal entries' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(2)"
+                  *ngIf="!arrowBooleans[2]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="arrowBooleans[2]" icon="arrow-up" size="md"></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <div #accountsLinked>
             <mat-list-item *mifosxHasPermission="'READ_FINANCIALACTIVITYACCOUNT'">
-              <mat-icon matListIcon [routerLink]="['financial-activity-mappings']">
-                <fa-icon icon="link" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['financial-activity-mappings']">
-                {{ 'labels.heading.Accounts Linked to Financial Activities' | translate }}
-              </h4>
-              <fa-icon (click)="arrowBooleansToggle(3)" *ngIf="!arrowBooleans[3]" icon="arrow-down" size="md"></fa-icon>
-              <fa-icon (click)="arrowBooleansToggle(3)" *ngIf="arrowBooleans[3]" icon="arrow-up" size="md"></fa-icon>
-              <p matLine *ngIf="arrowBooleans[3]" [routerLink]="['financial-activity-mappings']">
-                {{ 'labels.text.List of Financial Activities and GL Account Mappings' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['financial-activity-mappings']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="link" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Accounts Linked to Financial Activities' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[3]"
+                      [routerLink]="['financial-activity-mappings']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.List of Financial Activities and GL Account Mappings' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(3)"
+                    *ngIf="!arrowBooleans[3]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(3)"
+                    *ngIf="arrowBooleans[3]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
 
           <div #migrateOpeningBalances>
             <mat-list-item *mifosxHasPermission="'READ_JOURNALENTRY'">
-              <mat-icon matListIcon [routerLink]="['migrate-opening-balances']">
-                <fa-icon icon="hand-holding-usd" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['migrate-opening-balances']">
-                {{ 'labels.heading.Migrate Opening Balances (Office-wise)' | translate }}
-              </h4>
-              <fa-icon (click)="arrowBooleansToggle(4)" *ngIf="!arrowBooleans[4]" icon="arrow-down" size="md"></fa-icon>
-              <fa-icon (click)="arrowBooleansToggle(4)" *ngIf="arrowBooleans[4]" icon="arrow-up" size="md"></fa-icon>
-              <p matLine *ngIf="arrowBooleans[4]" [routerLink]="['migrate-opening-balances']">
-                {{ 'labels.text.Set or update office-level opening balances for GL accounts' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['migrate-opening-balances']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="hand-holding-usd" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Migrate Opening Balances (Office-wise)' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[4]"
+                      [routerLink]="['migrate-opening-balances']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.Set or update office-level opening balances for GL accounts' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(4)"
+                    *ngIf="!arrowBooleans[4]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(4)"
+                    *ngIf="arrowBooleans[4]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
         </mat-nav-list>
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         <mat-nav-list>
           <div #chartofAccounts>
             <mat-list-item *mifosxHasPermission="'READ_GLACCOUNT'">
-              <mat-icon matListIcon [routerLink]="['chart-of-accounts']">
-                <fa-icon icon="sitemap" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['chart-of-accounts']">{{ 'labels.heading.Chart of Accounts' | translate }}</h4>
-              <fa-icon (click)="arrowBooleansToggle(5)" *ngIf="!arrowBooleans[5]" icon="arrow-down" size="md"></fa-icon>
-              <fa-icon (click)="arrowBooleansToggle(5)" *ngIf="arrowBooleans[5]" icon="arrow-up" size="md"></fa-icon>
-              <p matLine *ngIf="arrowBooleans[5]" [routerLink]="['chart-of-accounts']">
-                {{ 'labels.text.List of accounts used by the organization' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['chart-of-accounts']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="sitemap" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Chart of Accounts' | translate }}
+                    <p matLine *ngIf="arrowBooleans[5]" [routerLink]="['chart-of-accounts']" class="menu-explanation">
+                      {{ 'labels.text.List of accounts used by the organization' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(5)"
+                    *ngIf="!arrowBooleans[5]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(5)"
+                    *ngIf="arrowBooleans[5]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
 
           <div #closingEntries>
             <mat-list-item *mifosxHasPermission="'READ_GLCLOSURE'">
-              <mat-icon matListIcon [routerLink]="['closing-entries']">
-                <fa-icon icon="archive" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['closing-entries']">{{ 'labels.heading.Closing Entries' | translate }}</h4>
-              <fa-icon (click)="arrowBooleansToggle(6)" *ngIf="!arrowBooleans[6]" icon="arrow-down" size="md"></fa-icon>
-              <fa-icon (click)="arrowBooleansToggle(6)" *ngIf="arrowBooleans[6]" icon="arrow-up" size="md"></fa-icon>
-              <p matLine *ngIf="arrowBooleans[6]" [routerLink]="['closing-entries']">
-                {{ 'labels.text.Journal entries made at the end of accounting period' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['closing-entries']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="archive" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Closing Entries' | translate }}
+                    <p matLine *ngIf="arrowBooleans[6]" [routerLink]="['closing-entries']" class="menu-explanation">
+                      {{ 'labels.text.Journal entries made at the end of accounting period' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(6)"
+                    *ngIf="!arrowBooleans[6]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(6)"
+                    *ngIf="arrowBooleans[6]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
 
           <mat-list-item *mifosxHasPermission="'READ_ACCOUNTINGRULE'">
-            <mat-icon matListIcon [routerLink]="['accounting-rules']">
-              <fa-icon icon="list" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['accounting-rules']">{{ 'labels.heading.Accounting Rules' | translate }}</h4>
-            <fa-icon (click)="arrowBooleansToggle(7)" *ngIf="!arrowBooleans[7]" icon="arrow-down" size="md"></fa-icon>
-            <fa-icon (click)="arrowBooleansToggle(7)" *ngIf="arrowBooleans[7]" icon="arrow-up" size="md"></fa-icon>
-            <p matLine *ngIf="arrowBooleans[7]" [routerLink]="['accounting-rules']">
-              {{ 'labels.text.List of all accounting rules' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['accounting-rules']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="list" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Accounting Rules' | translate }}
+                  <p matLine *ngIf="arrowBooleans[7]" [routerLink]="['accounting-rules']" class="menu-explanation">
+                    {{ 'labels.text.List of all accounting rules' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(7)"
+                  *ngIf="!arrowBooleans[7]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon (click)="arrowBooleansToggle(7)" *ngIf="arrowBooleans[7]" icon="arrow-up" size="md"></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <mat-list-item *mifosxHasPermission="'EXECUTE_PERIODICACCRUALACCOUNTING'">
-            <mat-icon matListIcon [routerLink]="['periodic-accruals']">
-              <fa-icon icon="calendar" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['periodic-accruals']">{{ 'labels.heading.Accruals' | translate }}</h4>
-            <fa-icon (click)="arrowBooleansToggle(8)" *ngIf="!arrowBooleans[8]" icon="arrow-down" size="md"></fa-icon>
-            <fa-icon (click)="arrowBooleansToggle(8)" *ngIf="arrowBooleans[8]" icon="arrow-up" size="md"></fa-icon>
-            <p matLine *ngIf="arrowBooleans[8]" [routerLink]="['periodic-accruals']">
-              {{ 'labels.text.Accrues income, expenses and liabilities' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['periodic-accruals']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="calendar" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Accruals' | translate }}
+                  <p matLine *ngIf="arrowBooleans[8]" [routerLink]="['periodic-accruals']" class="menu-explanation">
+                    {{ 'labels.text.Accrues income, expenses and liabilities' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(8)"
+                  *ngIf="!arrowBooleans[8]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon (click)="arrowBooleansToggle(8)" *ngIf="arrowBooleans[8]" icon="arrow-up" size="md"></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <mat-list-item *mifosxHasPermission="'VIEW_PROVISIONING_ENTRIES'">
-            <mat-icon matListIcon [routerLink]="['provisioning-entries']">
-              <fa-icon icon="cogs" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['provisioning-entries']">
-              {{ 'labels.heading.Provisioning Entries' | translate }}
-            </h4>
-            <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="!arrowBooleans[9]" icon="arrow-down" size="md"></fa-icon>
-            <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="arrowBooleans[9]" icon="arrow-up" size="md"></fa-icon>
-            <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['provisioning-entries']">
-              {{ 'labels.text.Create provisioning entries' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['provisioning-entries']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="cogs" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Provisioning Entries' | translate }}
+                  <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['provisioning-entries']" class="menu-explanation">
+                    {{ 'labels.text.Create provisioning entries' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(9)"
+                  *ngIf="!arrowBooleans[9]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="arrowBooleans[9]" icon="arrow-up" size="md"></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
         </mat-nav-list>
       </div>
@@ -157,7 +320,7 @@
 <ng-template #templateChartofAccounts let-popover="popover">
   <h2>{{ 'labels.heading.Chart of Accounts' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.The Chart of Accounts - General Ledger Setup' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -173,7 +336,7 @@
 <ng-template #templateAccountsLinked let-popover="popover">
   <h2>{{ 'labels.heading.Accounts Linked to Financial Activities' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Accounts linked to Financial Activities' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -189,7 +352,7 @@
 <ng-template #templateMigrateOpeningBalances let-popover="popover">
   <h2>{{ 'labels.heading.Migrate Opening Balances (Office-wise)' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.GLAccount Balances Application' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -205,7 +368,7 @@
 <ng-template #templateClosingEntries let-popover="popover">
   <h2>{{ 'labels.heading.Closing Entries' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Accounting to journal entries' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -221,7 +384,7 @@
 <ng-template #templateCreateJournalEntries let-popover="popover">
   <h2>{{ 'labels.heading.Create Journal Entries' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Journal Entries Transactions' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

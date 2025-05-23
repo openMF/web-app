@@ -1,5 +1,7 @@
 .actions {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .rg {
@@ -22,4 +24,8 @@
   top: 0; // fix at the top
   background-color: white; // don't see mat-option when scrolling
   box-shadow: 1px -2px 10px 0 grey; // shadow at the bottom
+}
+
+mat-form-field {
+  width: 96%;
 }

@@ -1,11 +1,11 @@
 <form [formGroup]="fixedDepositProductInterestRateChartForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <h4 fxFlex="83%" class="mat-h3">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <h4 class="mat-h3 flex-83">
       {{ 'labels.inputs.Interest Rate Chart' | translate }}
       <i class="fas fa-question" matTooltip="{{ 'tooltips.The interest rate chart' | translate }}"></i>
     </h4>
 
-    <div fxFlex="13%" fxLayout="row" fxLayoutAlign="start center">
+    <div class="flex-13 layout-row align-start-center">
       <button type="button" mat-raised-button color="primary" (click)="addChart()">
         <fa-icon icon="plus" class="m-r-10"></fa-icon>
         {{ 'labels.buttons.Add' | translate }}
@@ -13,16 +13,14 @@
     </div>
 
     <div
-      fxFlexFill
-      fxLayout="row wrap"
-      fxLayout.lt-md="column"
+      class="flex-fill layout-row-wrap responsive-column"
       formArrayName="charts"
       *ngFor="let chart of charts.controls; let chartIndex = index"
     >
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <div fxFlexFill fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column" [formGroupName]="chartIndex">
-        <div fxFlex="98%" fxLayout="row" fxLayoutAlign="end center">
+      <div class="flex-fill layout-row-wrap responsive-column gap-2percent" [formGroupName]="chartIndex">
+        <div class="flex-98 layout-row align-end">
           <button
             type="button"
             mat-icon-button
@@ -35,12 +33,12 @@
           </button>
         </div>
 
-        <mat-form-field fxFlex="32%">
+        <mat-form-field class="flex-fill flex-32">
           <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
           <input matInput formControlName="name" required />
         </mat-form-field>
 
-        <mat-form-field fxFlex="31%" (click)="validFromDatePicker.open()">
+        <mat-form-field class="flex-fill flex-31" (click)="validFromDatePicker.open()">
           <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
           <input
             matInput
@@ -58,38 +56,37 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field fxFlex="31%" (click)="endDatePicker.open()">
+        <mat-form-field class="flex-fill" (click)="endDatePicker.open()">
           <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate" />
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #endDatePicker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field fxFlex="65%">
+        <mat-form-field class="flex-fill">
           <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
           <textarea matInput formControlName="description" required></textarea>
         </mat-form-field>
 
-        <div fxFlex="31%" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="flex-31 layout-row align-between align-items-center">
           <mat-checkbox labelPosition="before" formControlName="isPrimaryGroupingByAmount">
             {{ 'labels.inputs.Is primary grouping by amount?' | translate }}
           </mat-checkbox>
         </div>
 
-        <div fxFlex="100%" class="center">
+        <div class="center flex-100">
           <button type="button" mat-raised-button color="primary" (click)="addChartSlab(chart.controls.chartSlabs)">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add Slab' | translate }}
           </button>
         </div>
 
-        <div fxFlex="100%" *ngIf="chart.value.chartSlabs.length === 0">
+        <div class="flex-100" *ngIf="chart.value.chartSlabs.length === 0">
           <h3 class="mat-h3">{{ 'labels.heading.It is required to add at least one Slab' | translate }}</h3>
         </div>
 
         <table
-          fxFlex="98%"
-          class="mat-elevation-z1"
+          class="flex-98 mat-elevation-z1"
           mat-table
           [dataSource]="chart.value.chartSlabs"
           *ngIf="chart.value.chartSlabs.length !== 0"
@@ -167,17 +164,15 @@
               [attr.colspan]="chartSlabsDisplayedColumns[chartIndex].length"
             >
               <div
-                fxLayout="row wrap"
-                fxFlexFill
-                class="incentives"
+                class="layout-row-wrap flex-fill incentives"
                 [@expandChartSlab]="chartSlabIndex === expandChartSlabIndex[chartIndex] ? 'expanded' : 'collapsed'"
               >
-                <mat-card fxLayout="row wrap" fxFlexFill>
-                  <h4 class="mat-h4" fxFlex="63%">
+                <mat-card class="layout-row-wrap flex-fill">
+                  <h4 class="mat-h4 flex-63">
                     {{ 'labels.heading.Incentives' | translate }}
                   </h4>
 
-                  <div fxFlex="13%">
+                  <div class="flex-13">
                     <button
                       mat-raised-button
                       color="primary"
@@ -189,8 +184,7 @@
                   </div>
 
                   <table
-                    fxFlexFill
-                    class="mat-elevation-z1"
+                    class="mat-elevation-z1 flex-fill"
                     mat-table
                     [dataSource]="chartSlab.incentives"
                     *ngIf="chartSlab.incentives.length"
@@ -282,7 +276,7 @@
     </div>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

@@ -1,11 +1,11 @@
 <div class="tab-container mat-typography" *ngIf="loans && loans.length > 0">
-  <div fxLayout="row" fxLayoutAlign="start center">
-    <div class="search-box" fxFlex="40%">
-      <mat-form-field fxFlex="90%">
+  <div class="layout-row align-start-center">
+    <div class="search-box flex-40">
+      <mat-form-field class="flex-90">
         <input matInput placeholder="Filter by loan Id or error" (keyup)="applyFilter($event.target.value)" />
       </mat-form-field>
     </div>
-    <div fxFlex="60%" *ngIf="allowRunInlineJob">
+    <div class="flex-60" *ngIf="allowRunInlineJob">
       <button mat-raised-button color="success" *mifosxHasPermission="'EXECUTE_INLINE_JOB'" (click)="runInlineCOB()">
         <fa-icon icon="play" class="m-r-10"></fa-icon>{{ 'Start inline COB' | translate }}
       </button>

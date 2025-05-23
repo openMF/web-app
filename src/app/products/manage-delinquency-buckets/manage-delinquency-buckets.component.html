@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50%">
+    <div class="layout-row responsive-column gap-20px">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item [routerLink]="['ranges']" *mifosxHasPermission="'READ_DELINQUENCY_RANGE'">
             <mat-icon matListIcon [routerLink]="['ranges']">
@@ -27,7 +27,7 @@
         </mat-nav-list>
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item [routerLink]="['buckets']" *mifosxHasPermission="'READ_DELINQUENCY_BUCKET'">
             <mat-icon matListIcon [routerLink]="['buckets']">

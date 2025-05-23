@@ -1,28 +1,28 @@
 <div class="container m-b-20">
   <mat-card class="mat-elevation-z8">
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+      <div class="layout-row-wrap">
+        <div class="flex-25 header">
           {{ 'labels.inputs.From Account' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
+        <div class="flex-25">
           {{ listTransactionData.fromAccount.accountNo }}({{ listTransactionData.fromAccountType.value }})
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-25 header">
           {{ 'labels.inputs.To Account' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
+        <div class="flex-25">
           {{ listTransactionData.toAccount.accountNo }}({{ listTransactionData.toAccountType.value }})
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-25 header">
           {{ 'labels.inputs.Destination' | translate }}
         </div>
 
-        <div fxFlex="25%" fxFlex.lt-md="50%">
+        <div class="flex-25">
           {{ listTransactionData.toClient.displayName }}
         </div>
       </div>
@@ -33,7 +33,7 @@
 <div class="mat-elevation-z8 container">
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="transactionDate">
-      <th mat-header-cell *matHeaderCellDef>{{"labels.inputs.Transaction Date | translate}}</th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Transaction Date' | translate }}</th>
       <td mat-cell *matCellDef="let transaction">{{ transaction.transferDate | dateFormat }}</td>
     </ng-container>
 
@@ -43,7 +43,7 @@
     </ng-container>
 
     <ng-container matColumnDef="notes">
-      <th mat-header-cell *matHeaderCellDef>{{"labels.inputs.Notes | translate}}</th>
+      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Notes' | translate }}</th>
       <td mat-cell *matCellDef="let transaction">{{ transaction.transferDescription }}</td>
     </ng-container>
 

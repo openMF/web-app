@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { ClientsService } from '../clients.service';
  * Client Documents resolver.
  */
 @Injectable()
-export class ClientDocumentsResolver implements Resolve<Object> {
+export class ClientDocumentsResolver {
   /**
    * @param {ClientsService} ClientsService Clients service.
    */

@@ -1,3 +1,8 @@
+mifosx-server-selector {
+  padding-left: 5px;
+  width: 300px;
+}
+
 .cover {
   background: url('../../assets/images/cover_image_resized.webp') no-repeat center center;
   background-size: cover;
@@ -25,6 +30,7 @@
     color: #fff;
     text-align: justify;
     z-index: 2;
+    font-size: 1.2rem;
 
     .cover-title {
       border-bottom: 2px solid #fff;
@@ -49,9 +55,51 @@
   box-shadow: 1px 1px 50px #000;
   height: 100vh;
   width: 100%;
-  min-width: 21.5 rem;
+  min-width: 21.5rem;
 
   .img-container {
     max-width: 18rem;
   }
+}
+
+.layout-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-horizontal-list {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem; // space between items
+
+  mat-list-item {
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+
+    [mat-button] {
+      white-space: nowrap;
+    }
+  }
+}
+
+.mat-mdc-form-field-infix {
+  width: 144px !important;
+}
+
+.p-t-10 {
+  padding-top: 0;
+}
+
+::ng-deep .login-container mifosx-footer .divider {
+  margin: 0 !important;
+  width: 14rem !important;
+  margin-top: 2px !important;
+}
+
+::ng-deep .login-container #footer {
+  align-items: unset !important;
 }

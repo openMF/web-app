@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>{{ 'labels.heading.Keyboard Shortcuts' | translate }}</h1>
 
 <div mat-dialog-content>
-  <div fxLayout="column" fxLayoutGap="2%">
+  <div class="layout-column gap-2px">
     <ng-container *ngFor="let item of buttonConfig.buttonCombinations">
       <mat-divider [inset]="true"></mat-divider>
-      <div fxFlexFill fxFlex="50%">
-        <span fxFlex="50%">
+      <div class="flex-fill flex-50">
+        <span class="flex-50">
           <span *ngIf="item.ctrlKey">
             <span class="modifier-key">{{ 'labels.inputs.Ctrl' | translate }}</span> +
           </span>
@@ -19,7 +19,7 @@
             <span class="modifier-key">{{ item.key }}</span></span
           >
         </span>
-        <span fxFlex="50%">{{ item.title }}</span>
+        <span class="flex-50">{{ item.title }}</span>
       </div>
     </ng-container>
   </div>

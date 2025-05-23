@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { SystemService } from 'app/system/system.service';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ShareProductDatatableResolver implements Resolve<boolean> {
+export class ShareProductDatatableResolver {
   /**
    * @param {SystemService} systemService Products service.
    */

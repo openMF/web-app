@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ADHOC'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -12,52 +12,52 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.name' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ adhocQueryData.name }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Query' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ adhocQueryData.query }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Table Affected' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ adhocQueryData.tableName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="adhocQueryData.reportRunFrequency">
+        <div class="flex-50 mat-body-strong" *ngIf="adhocQueryData.reportRunFrequency">
           {{ 'labels.inputs.Report Run Frequency' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="adhocQueryData.reportRunFrequency">
+        <div class="flex-50" *ngIf="adhocQueryData.reportRunFrequency">
           {{ reportRunFrequency }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Status' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ adhocQueryData.isActive === true ? 'Active' : 'Inactive' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Created By' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ adhocQueryData.createdBy }}
         </div>
       </div>

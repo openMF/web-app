@@ -7,47 +7,47 @@
   </div>
   <mat-card *ngIf="!isLoading">
     <mat-card-content>
-      <div fxLayout="row wrap" fxLayout.lt-md="column">
-        <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Transferring From Details' | translate }}</h3>
+      <div class="layout-row-wrap responsive-column">
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Transferring From Details' | translate }}</h3>
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.Applicant' | translate }}</span>
-          <span fxFlex="60%">{{ accountTransferTemplateData.fromClient.displayName }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Applicant' | translate }}</span>
+          <span class="flex-60">{{ accountTransferTemplateData.fromClient.displayName }}</span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.Office' | translate }}</span>
-          <span fxFlex="60%">{{ accountTransferTemplateData.fromOffice.name }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Office' | translate }}</span>
+          <span class="flex-60">{{ accountTransferTemplateData.fromOffice.name }}</span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.From Account' | translate }}</span>
-          <span fxFlex="60%"
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.From Account' | translate }}</span>
+          <span class="flex-60"
             >{{ accountTransferTemplateData.fromAccount.productName }}&nbsp;-&nbsp;#{{
               accountTransferTemplateData.fromAccount.accountNo
             }}</span
           >
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.From Account Type' | translate }}</span>
-          <span fxFlex="60%">{{ accountTransferTemplateData.fromAccountType.value }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.From Account Type' | translate }}</span>
+          <span class="flex-60">{{ accountTransferTemplateData.fromAccountType.value }}</span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="40%">{{ 'labels.inputs.Currency' | translate }}</span>
-          <span fxFlex="60%">{{ accountTransferTemplateData.currency.name }}</span>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Currency' | translate }}</span>
+          <span class="flex-60">{{ accountTransferTemplateData.currency.name }}</span>
         </div>
       </div>
 
       <div *ngIf="interbank">
-        <div fxFlexFill>
-          <h3 class="mat-h3" fxFlex="40%" fxLayoutAlign="start center">
+        <div class="flex-fill">
+          <h3 class="mat-h3 flex-40 align-start-center">
             {{ 'labels.heading.Transferred To' | translate }}
           </h3>
-          <mat-form-field fxFlex="40%">
+          <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Phone Number' | translate }}</mat-label>
             <input
               matInput
@@ -62,13 +62,7 @@
           </mat-form-field>
         </div>
 
-        <mat-card-actions
-          *ngIf="!interbankTransferForm"
-          fxLayout="row"
-          fxLayout.xs="column"
-          fxLayoutAlign="center"
-          fxLayoutGap="5px"
-        >
+        <mat-card-actions *ngIf="!interbankTransferForm" class="layout-row align-center gap-5px responsive-column">
           <button type="button" mat-raised-button [routerLink]="['../..']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
@@ -88,8 +82,8 @@
       <mat-divider [inset]="true"></mat-divider>
 
       <form *ngIf="!interbank" [formGroup]="makeAccountTransferForm">
-        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-          <mat-form-field fxFlex="98%" (click)="transferDatePicker.open()">
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-98" (click)="transferDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
             <input
               matInput
@@ -107,7 +101,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="98%">
+          <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toOfficeType of toOfficeTypeData" [value]="toOfficeType.id">
@@ -120,7 +114,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="98%">
+          <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
             <input matInput formControlName="toClientId" [matAutocomplete]="clientsAutocomplete" />
             <mat-error *ngIf="makeAccountTransferForm.controls.toClientId.hasError('required')">
@@ -135,7 +129,7 @@
             </mat-option>
           </mat-autocomplete>
 
-          <mat-form-field fxFlex="98%">
+          <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
             <mat-select required formControlName="toAccountType" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toAccountType of toAccountTypeData" [value]="toAccountType.id">
@@ -148,7 +142,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="98%">
+          <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
             <mat-select required formControlName="toAccountId" (selectionChange)="changeEvent()">
               <mat-option *ngFor="let toAccount of toAccountData" [value]="toAccount.id">
@@ -161,7 +155,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="98%">
+          <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input type="number" matInput required formControlName="transferAmount" />
             <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
@@ -174,7 +168,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field fxFlex="98%">
+          <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
             <textarea
               matInput
@@ -196,13 +190,7 @@
       ></mifosx-make-account-interbank-transfers>
     </mat-card-content>
 
-    <mat-card-actions
-      *ngIf="!interbank === !interbankTransferForm"
-      fxLayout="row"
-      fxLayout.xs="column"
-      fxLayoutAlign="center"
-      fxLayoutGap="5px"
-    >
+    <mat-card-actions *ngIf="!interbankTransferForm" class="layout-row align-center gap-5px responsive-column">
       <button type="button" mat-raised-button [routerLink]="['../..']">
         {{ 'labels.buttons.Cancel' | translate }}
       </button>

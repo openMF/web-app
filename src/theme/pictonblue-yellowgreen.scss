@@ -1,17 +1,17 @@
 @use '@angular/material' as mat;
 
-$pictonblue-yellowgreen-primary: mat.define-palette(mat.$blue-palette, 400, 200, 600);
-
-$pictonblue-yellowgreen-accent: mat.define-palette(mat.$light-green-palette, 400, 200, 600);
-
-$pictonblue-yellowgreen-warn: mat.define-palette(mat.$red-palette);
+$pictonblue-yellowgreen-color-config: (
+  primary: mat.define-palette(mat.$blue-palette, 400, 200, 600),
+  accent: mat.define-palette(mat.$light-green-palette, 400, 200, 600),
+  warn: mat.define-palette(mat.$red-palette)
+);
 
 $pictonblue-yellowgreen-theme: mat.define-light-theme(
-  $pictonblue-yellowgreen-primary,
-  $pictonblue-yellowgreen-accent,
-  $pictonblue-yellowgreen-warn
+  (
+    color: $pictonblue-yellowgreen-color-config
+  )
 );
 
 .pictonblue-yellowgreen-theme {
-  @include mat.all-component-themes($pictonblue-yellowgreen-theme);
+  @include mat.all-component-colors($pictonblue-yellowgreen-theme);
 }

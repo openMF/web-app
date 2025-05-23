@@ -1,13 +1,13 @@
 <form [formGroup]="fixedDepositAccountSettingsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Lock-in Period' | translate }}</h4>
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Lock-in Period' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="lockinPeriodFrequency" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         <mat-option
@@ -19,9 +19,9 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Minimum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Minimum Deposit Term' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="minDepositTerm" required />
       <mat-error>
@@ -30,7 +30,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
       <mat-select formControlName="minDepositTermTypeId" required>
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -43,14 +43,14 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="inMultiplesOfDepositTerm" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="inMultiplesOfDepositTermTypeId">
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -59,14 +59,14 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.Maximum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.Maximum Deposit Term' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="maxDepositTerm" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="maxDepositTermTypeId">
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -75,15 +75,15 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <h3 fxFlex="23%" class="mat-h3">{{ 'labels.heading.Interest Transfer' | translate }}</h3>
+    <h3 class="mat-h3 flex-23">{{ 'labels.heading.Interest Transfer' | translate }}</h3>
 
-    <mat-checkbox fxFlex="32%" labelPosition="before" formControlName="transferInterestToSavings" class="margin-b">
+    <mat-checkbox class="flex-32 margin-b" labelPosition="before" formControlName="transferInterestToSavings">
       {{ 'labels.inputs.Transfer Interest to Linked Savings Account' | translate }}?
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%" *ngIf="fixedDepositAccountSettingsForm.contains('linkAccountId')" class="margin-b">
+    <mat-form-field *ngIf="fixedDepositAccountSettingsForm.contains('linkAccountId')" class="margin-b flex-48">
       <mat-label>{{ 'labels.inputs.Linked Savings Account' | translate }}</mat-label>
       <mat-select formControlName="linkAccountId" required>
         <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
@@ -96,9 +96,9 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Maturity Instructions' | translate }}</mat-label>
       <mat-select formControlName="maturityInstructionId">
         <mat-option *ngFor="let maturityInstruction of maturityInstructionOptions" [value]="maturityInstruction.id">
@@ -107,11 +107,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field
-      fxFlex="48%"
-      *ngIf="fixedDepositAccountSettingsForm.contains('transferToSavingsId')"
-      class="margin-b"
-    >
+    <mat-form-field class="flex-48 margin-b" *ngIf="fixedDepositAccountSettingsForm.contains('transferToSavingsId')">
       <mat-label>{{ 'labels.inputs.Transfer to savings account' | translate }}</mat-label>
       <mat-select formControlName="transferToSavingsId" required>
         <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
@@ -124,20 +120,20 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <h4 fxFlex="23%" class="mat-h4">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
+    <h4 class="mat-h4 flex-23">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
+    <mat-checkbox class="flex-73 margin-v" labelPosition="before" formControlName="preClosurePenalApplicable">
       {{ 'labels.inputs.Apply Penal Interest (less)' | translate }}
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Penal Interest' | translate }} (%)</mat-label>
       <input type="number" matInput formControlName="preClosurePenalInterest" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
       <mat-select formControlName="preClosurePenalInterestOnTypeId">
         <mat-option
@@ -150,20 +146,20 @@
     </mat-form-field>
 
     <ng-container *ngIf="fixedDepositAccountSettingsForm.controls.withHoldTax">
-      <mat-divider fxFlex="98%"></mat-divider>
+      <mat-divider class="flex-98"></mat-divider>
 
-      <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-p">
+      <mat-checkbox labelPosition="before" formControlName="withHoldTax" class="margin-p flex-48">
         {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}?
       </mat-checkbox>
 
-      <mat-form-field fxFlex="48%" *ngIf="fixedDepositAccountSettingsForm.controls.taxGroupId" class="p-b-25">
+      <mat-form-field *ngIf="fixedDepositAccountSettingsForm.controls.taxGroupId" class="p-b-25 flex-48">
         <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
         <input matInput formControlName="taxGroupId" />
       </mat-form-field>
     </ng-container>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

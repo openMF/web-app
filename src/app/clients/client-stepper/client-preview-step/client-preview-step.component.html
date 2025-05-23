@@ -1,137 +1,138 @@
-<div fxLayout="row wrap" fxLayout.lt-md="column">
-  <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.General' | translate }}</h3>
+<div class="container p-b-20">
+  <h3>{{ 'labels.heading.General' | translate }}</h3>
 
-  <mat-divider fxFlexFill></mat-divider>
+  <mat-divider [inset]="true"></mat-divider>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.name' | translate }}</span>
-    <span fxFlex="60%" *ngIf="client.legalFormId === 2">{{ client.fullname }}</span>
-    <span fxFlex="60%" *ngIf="client.legalFormId === 1"
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.name' | translate }}</span>
+    <span class="flex-60" *ngIf="client.legalFormId === 2">{{ client.fullname }}</span>
+    <span class="flex-60" *ngIf="client.legalFormId === 1"
       >{{ client.firstname }}
       {{ client.middlename ? client.middlename + ' ' + client.lastname : client.lastname }}</span
     >
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Office' | translate }}</span>
-    <span fxFlex="60%">{{ client.officeId | find: clientTemplate.officeOptions : 'id' : 'name' }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Office' | translate }}</span>
+    <span class="flex-60">{{ client.officeId | find: clientTemplate.officeOptions : 'id' : 'name' }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Legal Form' | translate }}</span>
-    <span fxFlex="60%">{{ client.legalFormId | find: clientTemplate.clientLegalFormOptions : 'id' : 'value' }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Legal Form' | translate }}</span>
+    <span class="flex-60">{{ client.legalFormId | find: clientTemplate.clientLegalFormOptions : 'id' : 'value' }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="client.staffId">
-    <span fxFlex="40%">{{ 'labels.inputs.Staff' | translate }}</span>
-    <span fxFlex="60%">{{ client.staffId | find: clientTemplate.staffOptions : 'id' : 'displayName' }}</span>
+  <div class="flex-fill" *ngIf="client.staffId">
+    <span class="flex-40">{{ 'labels.inputs.Staff' | translate }}</span>
+    <span class="flex-60">{{ client.staffId | find: clientTemplate.staffOptions : 'id' : 'displayName' }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="client.dateOfBirth">
-    <span fxFlex="40%">{{ client.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</span>
-    <span fxFlex="60%">{{ client.dateOfBirth | dateFormat }}</span>
+  <div class="flex-fill" *ngIf="client.dateOfBirth">
+    <span class="flex-40">{{ client.legalFormId === 1 ? 'Date of Birth' : 'Incorporation Date' }}</span>
+    <span class="flex-60">{{ client.dateOfBirth | dateFormat }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="client.externalId">
-    <span fxFlex="40%">{{ 'labels.inputs.External Id' | translate }}</span>
-    <span fxFlex="60%">
+  <div class="flex-fill" *ngIf="client.externalId">
+    <span class="flex-40">{{ 'labels.inputs.External Id' | translate }}</span>
+    <span class="flex-60">
       <mifosx-external-identifier externalId="{{ client.externalId }}"></mifosx-external-identifier>
     </span>
   </div>
 
-  <div fxFlexFill *ngIf="client.mobileNo">
-    <span fxFlex="40%">{{ 'labels.inputs.Mobile No' | translate }}</span>
-    <span fxFlex="60%">{{ client.mobileNo }}</span>
+  <div class="flex-fill" *ngIf="client.mobileNo">
+    <span class="flex-40">{{ 'labels.inputs.Mobile No' | translate }}</span>
+    <span class="flex-60">{{ client.mobileNo }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="client.emailAddress">
-    <span fxFlex="40%">{{ 'labels.inputs.Email Address' | translate }}</span>
-    <span fxFlex="60%">{{ client.emailAddress }}</span>
+  <div class="flex-fill" *ngIf="client.emailAddress">
+    <span class="flex-40">{{ 'labels.inputs.Email Address' | translate }}</span>
+    <span class="flex-60">{{ client.emailAddress }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="client.clientTypeId">
-    <span fxFlex="40%">{{ 'labels.inputs.Client Type' | translate }}</span>
-    <span fxFlex="60%">{{ client.clientTypeId | find: clientTemplate.clientTypeOptions : 'id' : 'name' }}</span>
+  <div class="flex-fill" *ngIf="client.clientTypeId">
+    <span class="flex-40">{{ 'labels.inputs.Client Type' | translate }}</span>
+    <span class="flex-60">{{ client.clientTypeId | find: clientTemplate.clientTypeOptions : 'id' : 'name' }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="client.clientClassificationId">
-    <span fxFlex="40%">{{ 'labels.inputs.Client Classification' | translate }}</span>
-    <span fxFlex="60%">{{
+  <div class="flex-fill" *ngIf="client.clientClassificationId">
+    <span class="flex-40">{{ 'labels.inputs.Client Classification' | translate }}</span>
+    <span class="flex-60">{{
       client.clientClassificationId | find: clientTemplate.clientClassificationOptions : 'id' : 'name'
     }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="client.savingsProductId">
-    <span fxFlex="40%">{{ 'labels.inputs.Savings Product' | translate }}</span>
-    <span fxFlex="60%">{{ client.savingsProductId | find: clientTemplate.savingProductOptions : 'id' : 'name' }}</span>
+  <div class="flex-fill" *ngIf="client.savingsProductId">
+    <span class="flex-40">{{ 'labels.inputs.Savings Product' | translate }}</span>
+    <span class="flex-60">{{
+      client.savingsProductId | find: clientTemplate.savingProductOptions : 'id' : 'name'
+    }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="client.submittedOnDate">
-    <span fxFlex="40%">{{ 'labels.inputs.Submitted On Date' | translate }}</span>
-    <span fxFlex="60%">{{ client.submittedOnDate | dateFormat }}</span>
+  <div class="flex-fill" *ngIf="client.submittedOnDate">
+    <span class="flex-40">{{ 'labels.inputs.Submitted On Date' | translate }}</span>
+    <span class="flex-60">{{ client.submittedOnDate | dateFormat }}</span>
   </div>
 
-  <div fxFlexFill>
-    <span fxFlex="40%">{{ 'labels.inputs.Active' | translate }}?</span>
-    <span fxFlex="60%">{{ client.active | yesNo }}</span>
+  <div class="flex-fill">
+    <span class="flex-40">{{ 'labels.inputs.Active' | translate }}?</span>
+    <span class="flex-60">{{ client.active | yesNo }}</span>
   </div>
 
-  <div fxFlexFill *ngIf="client.activationDate">
-    <span fxFlex="40%">{{ 'labels.inputs.Activation Date' | translate }}</span>
-    <span fxFlex="60%">{{ client.activationDate | dateFormat }}</span>
+  <div class="flex-fill" *ngIf="client.activationDate">
+    <span class="flex-40">{{ 'labels.inputs.Activation Date' | translate }}</span>
+    <span class="flex-60">{{ client.activationDate | dateFormat }}</span>
   </div>
 
   <ng-container *ngIf="client.legalFormId === 1">
-    <div fxFlexFill *ngIf="client.genderId">
-      <span fxFlex="40%">{{ 'labels.inputs.Gender' | translate }}</span>
-      <span fxFlex="60%">{{ client.genderId | find: clientTemplate.genderOptions : 'id' : 'name' }}</span>
+    <div class="flex-fill" *ngIf="client.genderId">
+      <span class="flex-40">{{ 'labels.inputs.Gender' | translate }}</span>
+      <span class="flex-60">{{ client.genderId | find: clientTemplate.genderOptions : 'id' : 'name' }}</span>
     </div>
 
-    <div fxFlexFill>
-      <span fxFlex="40%">{{ 'labels.inputs.Is staff' | translate }}?</span>
-      <span fxFlex="60%">{{ client.isStaff | yesNo }}</span>
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Is staff' | translate }}?</span>
+      <span class="flex-60">{{ client.isStaff | yesNo }}</span>
     </div>
   </ng-container>
 
   <ng-container *ngIf="client.legalFormId === 2">
-    <div fxFlexFill *ngIf="client.clientNonPersonDetails.incorpValidityTillDate">
-      <span fxFlex="40%">{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</span>
-      <span fxFlex="60%">{{ client.clientNonPersonDetails.incorpValidityTillDate | dateFormat }}</span>
+    <div class="flex-fill" *ngIf="client.clientNonPersonDetails.incorpValidityTillDate">
+      <span class="flex-40">{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</span>
+      <span class="flex-60">{{ client.clientNonPersonDetails.incorpValidityTillDate | dateFormat }}</span>
     </div>
 
-    <div fxFlexFill>
-      <span fxFlex="40%">{{ 'labels.inputs.Incorportation Number' | translate }}</span>
-      <span fxFlex="60%">{{ client.clientNonPersonDetails.incorpNumber || 'Not Provided' }}</span>
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Incorportation Number' | translate }}</span>
+      <span class="flex-60">{{ client.clientNonPersonDetails.incorpNumber || 'Not Provided' }}</span>
     </div>
 
-    <div fxFlexFill *ngIf="client.clientNonPersonDetails.mainBusinessLineId">
-      <span fxFlex="40%">{{ 'labels.inputs.Main Business Line' | translate }}</span>
-      <span fxFlex="60%">{{
+    <div class="flex-fill" *ngIf="client.clientNonPersonDetails.mainBusinessLineId">
+      <span class="flex-40">{{ 'labels.inputs.Main Business Line' | translate }}</span>
+      <span class="flex-60">{{
         client.clientNonPersonDetails.mainBusinessLineId
           | find: clientTemplate.clientNonPersonMainBusinessLineOptions : 'id' : 'name'
       }}</span>
     </div>
 
-    <div fxFlexFill *ngIf="client.clientNonPersonDetails.constitutionId">
-      <span fxFlex="40%">{{ 'labels.inputs.Constitution' | translate }}</span>
-      <span fxFlex="60%">{{
+    <div class="flex-fill" *ngIf="client.clientNonPersonDetails.constitutionId">
+      <span class="flex-40">{{ 'labels.inputs.Constitution' | translate }}</span>
+      <span class="flex-60">{{
         client.clientNonPersonDetails.constitutionId
           | find: clientTemplate.clientNonPersonConstitutionOptions : 'id' : 'name'
       }}</span>
     </div>
 
-    <div fxFlexFill>
-      <span fxFlex="40%">{{ 'labels.inputs.Remarks' | translate }}</span>
-      <span fxFlex="60%">{{ client.clientNonPersonDetails.remarks || 'N/A' }}</span>
+    <div class="flex-fill">
+      <span class="flex-40">{{ 'labels.inputs.Remarks' | translate }}</span>
+      <span class="flex-60">{{ client.clientNonPersonDetails.remarks || 'N/A' }}</span>
     </div>
   </ng-container>
 
-  <div fxFlexFill *ngIf="client.familyMembers.length" fxLayout="row wrap" fxLayout.lt-md="column" class="m-b-20">
-    <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Family Members' | translate }}</h3>
+  <div *ngIf="client.familyMembers.length" class="layout-row-wrap responsive-column flex-fill m-b-20">
+    <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Family Members' | translate }}</h3>
 
-    <mat-divider fxFlexFill></mat-divider>
-
-    <mat-accordion fxFlexFill class="m-t-5">
+    <mat-divider class="flex-fill"></mat-divider>
+    <mat-accordion class="flex-fill m-t-5">
       <mat-expansion-panel *ngFor="let member of client.familyMembers" class="family-member">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -169,16 +170,13 @@
   </div>
 
   <div
-    fxFlexFill
+    class="flex-fill layout-row-wrap responsive-column"
     *ngIf="clientTemplate.isAddressEnabled && client.address && client.address.length"
-    fxLayout="row wrap"
-    fxLayout.lt-md="column"
   >
-    <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Address' | translate }}</h3>
+    <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Address' | translate }}</h3>
 
-    <mat-divider fxFlexFill></mat-divider>
-
-    <mat-accordion fxFlexFill class="m-t-5">
+    <mat-divider class="flex-fill"></mat-divider>
+    <mat-accordion class="flex-fill m-t-5">
       <mat-expansion-panel *ngFor="let address of client.address" class="address">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -229,7 +227,7 @@
   </div>
 </div>
 
-<div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<div class="layout-row responsive-column align-center gap-2px margin-t">
   <button mat-raised-button matStepperPrevious>
     <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}

@@ -1,4 +1,4 @@
-<mat-card-header fxLayout="row" fxLayoutGap="5%" class="header">
+<mat-card-header class="layout-row gap-5percent header">
   <fa-icon class="main-icon" icon="user" size="3x"></fa-icon>
   <mat-card-title-group>
     <div class="mat-typography">
@@ -23,36 +23,36 @@
 </mat-card-header>
 
 <mat-card-content>
-  <div fxLayout="row wrap" class="content">
-    <div fxFlex="50%" class="mat-body-strong">
+  <div class="layout-row-wrap">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Joined On' | translate }}
     </div>
 
-    <div fxFlex="50%">
+    <div class="flex-50">
       {{ employeeData.joiningDate | dateFormat }}
     </div>
 
-    <div fxFlex="50%" class="mat-body-strong">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Loan Officer' | translate }}
     </div>
 
-    <div fxFlex="50%">
+    <div class="flex-50">
       {{ employeeData.isLoanOfficer | yesNo }}
     </div>
 
-    <div fxFlex="50%" class="mat-body-strong" *ngIf="employeeData.mobileNo">
+    <div class="flex-50 mat-body-strong" *ngIf="employeeData.mobileNo">
       {{ 'labels.inputs.Mobile Number' | translate }}
     </div>
 
-    <div fxFlex="50%" *ngIf="employeeData.mobileNo">
+    <div class="flex-50" *ngIf="employeeData.mobileNo">
       {{ employeeData.mobileNo }}
     </div>
 
-    <div fxFlex="50%" class="mat-body-strong">
+    <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Number of Centers' | translate }}
     </div>
 
-    <div fxFlex="50%">
+    <div class="flex-50">
       {{ centerData ? centerData.length : '' }}
     </div>
   </div>

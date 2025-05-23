@@ -3,17 +3,17 @@
 <div
   mat-dialog-content
   [formGroup]="form"
-  [fxLayout]="layout.columns > 1 ? 'row wrap' : 'column'"
-  fxLayout.lt-md="column"
-  [fxLayoutGap]="(layout.columns > 1 ? layout.gap : 0) + '%'"
-  fxLayoutGap.lt-md="0%"
+  [ngClass]="[
+    layout.columns > 1 ? 'flex flex-wrap gap-' + layout.gap + 'percent' : 'layout-column',
+    'responsive-column'
+  ]"
 >
-  <div *ngFor="let formfield of formfields" [fxFlex]="layout.flex + '%'" fxFlex.lt-md="100%">
-    <mifosx-formfield [formfield]="formfield" [form]="form" fxFlexFill></mifosx-formfield>
+  <div *ngFor="let formfield of formfields" [ngClass]="'flex-' + layout.flex + ' responsive-flex-full'">
+    <mifosx-formfield [formfield]="formfield" [form]="form" class="flex-fill"></mifosx-formfield>
   </div>
 </div>
 
-<mat-dialog-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent" align="end">
   <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.' + layout.cancelButtonText | translate }}</button>
   <button
     mat-raised-button

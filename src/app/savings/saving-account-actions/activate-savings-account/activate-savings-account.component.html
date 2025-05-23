@@ -2,26 +2,28 @@
   <mat-card>
     <form [formGroup]="activateSavingsAccountForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <mat-form-field fxFlex (click)="activatedOnDatePicker.open()">
-          <mat-label>{{ 'labels.inputs.Activated On Date' | translate }}</mat-label>
-          <input
-            matInput
-            [min]="minDate"
-            [max]="maxDate"
-            [matDatepicker]="activatedOnDatePicker"
-            required
-            formControlName="activatedOnDate"
-          />
-          <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-          <mat-error *ngIf="activateSavingsAccountForm.controls.activatedOnDate.hasError('required')">
-            {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        </mat-form-field>
+        <div class="layout-column">
+          <mat-form-field class="flex-fill" (click)="activatedOnDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Activated On Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="activatedOnDatePicker"
+              required
+              formControlName="activatedOnDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #activatedOnDatePicker></mat-datepicker>
+            <mat-error *ngIf="activateSavingsAccountForm.controls.activatedOnDate.hasError('required')">
+              {{ 'labels.inputs.Activated On Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../../transactions']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>

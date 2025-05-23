@@ -1,20 +1,20 @@
 <div class="tab-container mat-typography">
   <ng-container *ngIf="loanDetails.summary">
     <h3>{{ 'labels.heading.Performance History' | translate }}</h3>
-    <div fxLayout="row" fxLayoutGap="32px" class="performance-history-container">
+    <div class="layout-row gap-32px performance-history-container">
       <table>
         <tbody>
           <tr>
-            <td fxFlex="25%">
+            <td class="flex-25">
               <b>{{ 'labels.inputs.Number of Repayments' | translate }} :</b>
             </td>
-            <td fxFlex="25%" class="left">
+            <td class="flex-25 left">
               {{ loanDetails?.numberOfRepayments | formatNumber }}
             </td>
-            <td fxFlex="25%">
+            <td class="flex-25">
               <b>{{ 'labels.inputs.Maturity Date' | translate }} :</b>
             </td>
-            <td fxFlex="25%" class="left">
+            <td class="flex-25 left">
               {{ loanDetails?.timeline.expectedMaturityDate | dateFormat }}
             </td>
           </tr>
@@ -192,46 +192,46 @@
   <div *ngIf="!loanDetails.summary">
     <h3>{{ 'labels.heading.Loan Purpose' | translate }}</h3>
     <div class="container">
-      <div fxLayout="row wrap" fxLayout.lt-md="column">
-        <div fxFlexFill>
-          <span fxFlex="50%">{{ 'labels.inputs.Loan Purpose' | translate }}:</span>
-          <span fxFlex="50%" *ngIf="loanDetails.loanPurposeName">
+      <div class="layout-row-wrap responsive-column">
+        <div class="flex-contents">
+          <span class="flex-50">{{ 'labels.inputs.Loan Purpose' | translate }}:</span>
+          <span class="flex-50" *ngIf="loanDetails.loanPurposeName">
             {{ loanDetails.loanPurposeName }}
           </span>
-          <span fxFlex="50%" *ngIf="!loanDetails.loanPurposeName">
+          <span class="flex-50" *ngIf="!loanDetails.loanPurposeName">
             {{ 'labels.inputs.Not Provided' | translate }}
           </span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="50%">{{ 'labels.inputs.Proposed Amount' | translate }}:</span>
-          <span fxFlex="50%">{{
+        <div class="flex-contents">
+          <span class="flex-50">{{ 'labels.inputs.Proposed Amount' | translate }}:</span>
+          <span class="flex-50">{{
             loanDetails.proposedPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
           }}</span>
         </div>
 
-        <div fxFlexFill *ngIf="showApprovedAmountBasedOnStatus()">
-          <span fxFlex="50%">{{ 'labels.inputs.Approved Amount' | translate }}:</span>
-          <span fxFlex="50%">{{
+        <div class="flex-contents" *ngIf="showApprovedAmountBasedOnStatus()">
+          <span class="flex-50">{{ 'labels.inputs.Approved Amount' | translate }}:</span>
+          <span class="flex-50">{{
             loanDetails.approvedPrincipal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
           }}</span>
         </div>
 
-        <div fxFlexFill *ngIf="showDisbursedAmountBasedOnStatus()">
-          <span fxFlex="50%">{{ 'labels.inputs.Disburse Amount' | translate }}:</span>
-          <span fxFlex="50%">{{ loanDetails.principal | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</span>
+        <div class="flex-contents" *ngIf="showDisbursedAmountBasedOnStatus()">
+          <span class="flex-50">{{ 'labels.inputs.Disburse Amount' | translate }}:</span>
+          <span class="flex-50">{{ loanDetails.principal | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</span>
         </div>
 
-        <div fxFlexFill *ngIf="loanDetails.balloonRepaymentAmount > 0">
-          <span fxFlex="50%">{{ 'labels.inputs.Balloon Repayment Amount' | translate }}:</span>
-          <span fxFlex="50%">{{
+        <div class="flex-contents" *ngIf="loanDetails.balloonRepaymentAmount > 0">
+          <span class="flex-50">{{ 'labels.inputs.Balloon Repayment Amount' | translate }}:</span>
+          <span class="flex-50">{{
             loanDetails.balloonRepaymentAmount | currency: currencyCode : 'symbol-narrow' : '1.2-2'
           }}</span>
         </div>
 
-        <div fxFlexFill>
-          <span fxFlex="50%">{{ 'labels.inputs.Arrears By' | translate }}:</span>
-          <span fxFlex="50%">{{ 'labels.inputs.Not Provided' | translate }}</span>
+        <div class="flex-contents">
+          <span class="flex-50">{{ 'labels.inputs.Arrears By' | translate }}:</span>
+          <span class="flex-50">{{ 'labels.inputs.Not Provided' | translate }}</span>
         </div>
       </div>
     </div>

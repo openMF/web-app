@@ -1,3 +1,20 @@
 .container {
   width: 74rem;
 }
+
+.currency-grid {
+  max-width: 40%;
+  justify-content: left !important;
+}
+
+mat-grid-tile {
+  justify-content: left !important;
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  width: 100%;
+  height: 100%;
+}

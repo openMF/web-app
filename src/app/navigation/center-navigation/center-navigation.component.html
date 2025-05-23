@@ -1,4 +1,4 @@
-<mat-card-header fxLayout="row" fxLayoutGap="5%" class="header">
+<mat-card-header class="layout-row gap-5percent header">
   <fa-icon class="main-icon" icon="building" size="3x"></fa-icon>
   <mat-card-title-group>
     <div class="mat-typography">
@@ -32,98 +32,96 @@
 <mat-card-content>
   <mat-tab-group>
     <mat-tab label="Details">
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Activation Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ centerData.activationDate | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Associated Officer' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ centerData.staffName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50 mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Clients' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50" *ngIf="centerSummaryData">
           {{ centerSummaryData.activeClients }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50 mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Client Loans' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50" *ngIf="centerSummaryData">
           {{ centerSummaryData.activeClientLoans }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50 mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Client Borrowers' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50" *ngIf="centerSummaryData">
           {{ centerSummaryData.activeClientBorrowers }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50 mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Overdue Group Loans' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50" *ngIf="centerSummaryData">
           {{ centerSummaryData.overdueGroupLoans }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="centerSummaryData">
+        <div class="flex-50 mat-body-strong" *ngIf="centerSummaryData">
           {{ 'labels.inputs.Number of Active Overdue Client Loans' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="centerSummaryData">
+        <div class="flex-50" *ngIf="centerSummaryData">
           {{ centerSummaryData.overdueClientLoans }}
         </div>
 
         <div
-          fxFlex="50%"
-          class="mat-body-strong"
+          class="mat-body-strong flex-50"
           *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]"
         >
           {{ 'labels.inputs.Next Meeting Date' | translate }}
         </div>
 
         <div
-          fxFlex="50%"
+          class="flex-50"
           *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]"
         >
           {{ centerSummaryData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat }}
         </div>
 
         <div
-          fxFlex="50%"
-          class="mat-body-strong"
+          class="mat-body-strong flex-50"
           *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable"
         >
           {{ 'labels.inputs.Meeting Frequency' | translate }}
         </div>
 
         <div
-          fxFlex="50%"
+          class="flex-50"
           *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable"
         >
           {{ centerSummaryData.collectionMeetingCalendar.humanReadable }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Number of Groups' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ groupData ? groupData.length : '' }}
         </div>
       </div>

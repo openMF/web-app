@@ -2,7 +2,7 @@
   <mat-card>
     <form [formGroup]="employeeForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div #createEmployeeFormRef fxLayout="column">
+        <div #createEmployeeFormRef class="layout-column">
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="officeId">
@@ -71,7 +71,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
@@ -97,7 +97,7 @@
       'labels.inputs.Manage Employees' | translate
     }}</a>
   </p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

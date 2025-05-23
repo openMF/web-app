@@ -1,4 +1,4 @@
-<mat-tab-group animationDuration="0ms" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+<mat-tab-group animationDuration="0ms" class="layout-row-wrap gap-2percent layout-lt-md-column">
   <mat-tab *ngFor="let advancedPaymentAllocation of advancedPaymentAllocations">
     <ng-template mat-tab-label>
       {{ advancedPaymentAllocation.transaction.value | translateKey: 'catalogs' }}
@@ -23,11 +23,12 @@
     </mifosx-advance-payment-allocation-tab>
   </mat-tab>
 
-  <mat-tab disabled>
+  <mat-tab>
     <ng-template mat-tab-label>
-      <button mat-icon-button (click)="addTransaction()">
+      <button (click)="addTransaction(); $event.stopPropagation()" mat-icon-button type="button">
         <mat-icon><fa-icon icon="plus" size="sm"></fa-icon></mat-icon>
       </button>
     </ng-template>
+    <ng-template matTabContent></ng-template>
   </mat-tab>
 </mat-tab-group>

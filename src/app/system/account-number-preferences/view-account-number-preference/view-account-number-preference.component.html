@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ACCOUNTNUMBERFORMAT'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -13,20 +13,20 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Account Type' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ accountNumberPreferenceData.accountType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="accountNumberPreferenceData.prefixType">
+        <div class="flex-50 mat-body-strong" *ngIf="accountNumberPreferenceData.prefixType">
           {{ 'labels.inputs.Prefix Type' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="accountNumberPreferenceData.prefixType">
+        <div class="flex-50" *ngIf="accountNumberPreferenceData.prefixType">
           {{ accountNumberPreferenceData.prefixType.value }}
         </div>
       </div>

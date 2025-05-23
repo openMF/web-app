@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CRITERIA'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -12,13 +12,13 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <h2 class="mat-h2" fxFlexFill>{{ provisioningData.criteriaName }}</h2>
+      <div class="layout-row-wrap">
+        <h2 class="mat-h2 flex-fill">{{ provisioningData.criteriaName }}</h2>
         <mat-divider [inset]="true"></mat-divider>
 
-        <div fxFlexFill class="loanProduct">
-          <span fxFlex="40%">{{ 'labels.inputs.Loan Product' | translate }}:</span>
-          <span fxFlex="60%">{{ loanProducts }}</span>
+        <div class="loanProduct flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Loan Product' | translate }}:</span>
+          <span class="flex-60">{{ loanProducts }}</span>
         </div>
       </div>
 

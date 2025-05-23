@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_STAFF'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -8,60 +8,60 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.First Name' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ employeeData.firstname }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Last Name' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ employeeData.lastname }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Office' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ employeeData.officeName }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Is Loan Officer' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ employeeData.isLoanOfficer === true | yesNo }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="employeeData.mobileNo">
+        <div class="flex-50 mat-body-strong" *ngIf="employeeData.mobileNo">
           {{ 'labels.inputs.Mobile Number for SMS' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="employeeData.mobileNo">
+        <div class="flex-50" *ngIf="employeeData.mobileNo">
           {{ employeeData.mobileNo }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Status' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ employeeData.isActive === true ? 'Active' : 'Inactive' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Joining Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ employeeData.joiningDate | dateFormat }}
         </div>
       </div>

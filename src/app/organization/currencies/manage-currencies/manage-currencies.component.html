@@ -4,13 +4,10 @@
       <form
         #formRef="ngForm"
         [formGroup]="currencyForm"
-        fxLayout="row"
-        fxLayoutAlign="start baseline"
-        fxLayoutGap="20px"
-        fxFlex="48%"
+        class="layout-row align-start-baseline gap-20px flex-48"
         (ngSubmit)="addCurrency()"
       >
-        <mat-form-field fxFlex="calc(90%-20px)">
+        <mat-form-field class="flex-fill flex-90-minus-20px">
           <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
           <mat-select required formControlName="currency">
             <mat-option>
@@ -32,7 +29,7 @@
 
         <button
           mat-raised-button
-          fxFlex
+          class="flex-fill"
           color="primary"
           [disabled]="!currencyForm.valid"
           *mifosxHasPermission="'UPDATE_CURRENCY'"
@@ -43,18 +40,22 @@
     </div>
 
     <mat-grid-list cols="2" rowHeight="50px">
-      <mat-grid-tile *ngFor="let currency of selectedCurrencies; index as i">
-        <input matInput [value]="currency.name" />
+      <mat-grid-tile class="grid-tile-content" *ngFor="let currency of selectedCurrencies; index as i">
+        <div class="grid-container">
+          <div>
+            <button
+              mat-button
+              color="warn"
+              (click)="deleteCurrency(currency.code, i)"
+              *mifosxHasPermission="'UPDATE_CURRENCY'"
+            >
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </div>
 
-        <div fxLayout="row" fxLayoutAlign="flex-start">
-          <button
-            mat-button
-            color="warn"
-            (click)="deleteCurrency(currency.code, i)"
-            *mifosxHasPermission="'UPDATE_CURRENCY'"
+          <span class="label m-l-10 p-t-5"
+            ><b>{{ currency.name }}</b></span
           >
-            <fa-icon icon="trash"></fa-icon>
-          </button>
         </div>
       </mat-grid-tile>
     </mat-grid-list>
@@ -69,7 +70,7 @@
       'labels.inputs.Currency Configuration' | translate
     }}</a>
   </p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

@@ -2,7 +2,7 @@
   <mat-card>
     <form [formGroup]="jobForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
+        <div class="layout-column">
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Job Name' | translate }}</mat-label>
             <input matInput required formControlName="displayName" />
@@ -26,7 +26,7 @@
           </mat-checkbox>
         </div>
 
-        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <mat-card-actions class="layout-row align-center gap-5px responsive-column">
           <button type="button" mat-raised-button [routerLink]="['../']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>

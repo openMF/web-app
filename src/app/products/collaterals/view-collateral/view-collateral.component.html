@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.heading.Edit' | translate }}
@@ -12,52 +12,52 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Collateral Name' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ collateralData.name }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Type/Quality' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ collateralData.quality }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Base Price' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ collateralData.basePrice }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Base Percentage' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ collateralData.pctToBase }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Unit Type' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ collateralData.unitType }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.heading.Currency' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ collateralData.currency }}
         </div>
       </div>

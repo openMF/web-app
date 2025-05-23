@@ -1,5 +1,5 @@
 <mat-card class="container">
-  <div fxLayout="row" fxLayoutAlign="start center">
+  <div class="layout-row align-start-center">
     <div class="search-box">
       <mat-form-field>
         <input matInput placeholder="Search by Name" [formControl]="name" />
@@ -11,7 +11,7 @@
         {{ 'labels.inputs.Show Closed Centers' | translate }}
       </mat-checkbox>
     </div>
-    <div class="action-button" fxLayoutGap="25px">
+    <div class="action-button gap-25px">
       <button
         mat-raised-button
         color="primary"

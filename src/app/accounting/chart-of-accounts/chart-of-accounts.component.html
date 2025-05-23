@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <div #buttonTreeView>
     <mat-button-toggle-group [formControl]="viewGroup">
       <mat-button-toggle value="listView">
@@ -25,8 +25,8 @@
 <!-- List View -->
 
 <div class="container" [hidden]="viewGroup.value !== 'listView'">
-  <div #filter fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex>
+  <div #filter class="layout-row gap-20px">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
@@ -110,14 +110,14 @@
 <!-- Tree View -->
 
 <div class="container" [hidden]="viewGroup.value !== 'treeView'">
-  <div class="m-b-20" fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px">
+  <div class="m-b-20 layout-row align-start gap-20px">
     <button mat-raised-button (click)="toggleExpandCollapse()">
       {{ (isTreeExpanded ? 'labels.buttons.Collapse All' : 'labels.buttons.Expand All') | translate }}
     </button>
   </div>
 
-  <div fxLayout="row" fxLayoutGap="4%" fxLayout.lt-md="column">
-    <div class="mat-elevation-z8" fxFlex>
+  <div class="layout-row gap-4percent responsive-column">
+    <div class="mat-elevation-z8 flex">
       <mat-tree [dataSource]="nestedTreeDataSource" [treeControl]="nestedTreeControl" class="gl-account-tree">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
           <li class="mat-tree-node">
@@ -151,55 +151,55 @@
       </mat-tree>
     </div>
 
-    <div fxFlex="48%" *ngIf="glAccount">
+    <div class="flex-48" *ngIf="glAccount">
       <mat-card>
         <mat-card-content>
-          <div fxLayout="row wrap" class="content">
-            <div fxFlex="50%" class="header">
+          <div class="layout-row-wrap">
+            <div class="flex-50 header">
               {{ 'labels.inputs.Account Name' | translate }}
             </div>
 
-            <div fxFlex="50%">
+            <div class="flex-50">
               {{ glAccount.name }}
             </div>
 
-            <div fxFlex="50%" class="header">
+            <div class="flex-50 header">
               {{ 'labels.inputs.GL Code' | translate }}
             </div>
 
-            <div fxFlex="50%">
+            <div class="flex-50">
               {{ glAccount.glCode }}
             </div>
 
-            <div fxFlex="50%" class="header">
+            <div class="flex-50 header">
               {{ 'labels.inputs.Account Type' | translate }}
             </div>
 
-            <div fxFlex="50%">
+            <div class="flex-50">
               {{ 'labels.inputs.accounting.' + glAccount.type | translate }}
             </div>
 
-            <div fxFlex="50%" class="header">
+            <div class="flex-50 header">
               {{ 'labels.inputs.Account Usage' | translate }}
             </div>
 
-            <div fxFlex="50%">
+            <div class="flex-50">
               {{ glAccount.usage }}
             </div>
 
-            <div fxFlex="50%" class="header">
+            <div class="flex-50 header">
               {{ 'labels.inputs.Manual Entries Allowed' | translate }}
             </div>
 
-            <div fxFlex="50%">
+            <div class="flex-50">
               {{ glAccount.manualEntriesAllowed }}
             </div>
 
-            <div fxFlex="50%" class="header">
+            <div class="flex-50 header">
               {{ 'labels.inputs.Description' | translate }}
             </div>
 
-            <div fxFlex="50%">
+            <div class="flex-50">
               {{ glAccount.description }}
             </div>
           </div>
@@ -212,7 +212,7 @@
 <ng-template #templateButtonTreeView let-popover="popover">
   <h2>{{ 'labels.heading.Tree View' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Alternative way-Tree view' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -232,7 +232,7 @@
 <ng-template #templateButtonAddAccount let-popover="popover">
   <h2>{{ 'labels.heading.Add Account' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Create New GL Account' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -255,7 +255,7 @@
 
 <ng-template #templateFilter let-popover="popover">
   <h4>{{ 'labels.heading.Search bar to filter GL accounts.' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -280,7 +280,7 @@
   <h4 class="mw300">
     {{ 'labels.heading.List of chart of all the accounts being used by your organization.' | translate }}
   </h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

@@ -1,5 +1,5 @@
 <div class="container">
-  <div fxLayout="row" fxLayoutGap="1%" fxLayoutAlign="flex-end" class="action-buttons m-b-20">
+  <div class="layout-row align-flex-end action-buttons m-b-20 gap-1percent">
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'active'">
       <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SMSCAMPAIGN'" [routerLink]="['edit']">
         <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
@@ -74,7 +74,7 @@
                 {{ 'labels.inputs.Recurrence' | translate }} : {{ smsCampaignData.recurrence }}
               </mat-list-item>
 
-              <div fxLayout="column" fxLayoutGap="10px" class="template-message">
+              <div class="layout-column gap-10px template-message">
                 <h3>{{ 'labels.heading.Template Message' | translate }} :</h3>
                 <textarea matInput disabled>{{ smsCampaignData.campaignMessage }}</textarea>
               </div>
@@ -85,7 +85,7 @@
         <mat-tab *ngFor="let tab of smsTabs" [label]="tab.label">
           <div class="tab-content mat-typography">
             <form [formGroup]="smsForm" (ngSubmit)="search()">
-              <div fxLayout="row" fxLayoutGap="3%" fxLayoutAlign="center">
+              <div class="layout-row layout-align-center gap-3percent">
                 <mat-form-field (click)="fromDatePicker.open()">
                   <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
                   <input

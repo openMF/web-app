@@ -2,10 +2,10 @@
   <mat-card>
     <form [formGroup]="workingDaysForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div #workingDaysFormRef fxLayout="column">
-          <div fxLayout="row" fxLayout.lt-md="column">
-            <mat-label fxFlex="50%" class="mat-h4">{{ 'labels.inputs.Working Days' | translate }}</mat-label>
-            <div fxFlex="50%" fxLayout="column" formArrayName="recurrence">
+        <div #workingDaysFormRef class="layout-column">
+          <div class="layout-row responsive-column">
+            <mat-label class="mat-h4 flex-50">{{ 'labels.inputs.Working Days' | translate }}</mat-label>
+            <div class="flex-50 layout-column" formArrayName="recurrence">
               <div *ngFor="let day of recurrence.controls; let i = index">
                 <mat-checkbox labelPosition="after" [formControlName]="i">
                   {{ weekDays[i].name }}
@@ -32,7 +32,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
         <button mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
         <button
           mat-raised-button
@@ -55,7 +55,7 @@
       'labels.inputs.Working Days' | translate
     }}</a>
   </p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

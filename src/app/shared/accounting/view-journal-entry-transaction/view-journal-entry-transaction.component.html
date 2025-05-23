@@ -1,5 +1,5 @@
 <div *ngIf="isJournalEntryLoaded">
-  <div fxLayout="row" fxLayoutAlign="end" class="container m-b-20" *ngIf="dataSource?.data[0].manualEntry">
+  <div *ngIf="dataSource?.data[0].manualEntry" class="layout-row layout-align-end container m-b-20">
     <button
       mat-raised-button
       color="primary"
@@ -17,36 +17,36 @@
   <div class="container m-b-20" *ngIf="isViewTransaction()">
     <mat-card class="mat-elevation-z8" *ngIf="dataSource">
       <mat-card-content>
-        <div fxLayout="row wrap" class="content">
-          <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+        <div class="layout-row-wrap">
+          <div class="flex-25 header">
             {{ 'labels.inputs.Office' | translate }}
           </div>
 
-          <div fxFlex="25%" fxFlex.lt-md="50%">
+          <div class="flex-25">
             {{ dataSource.data[0].officeName }}
           </div>
 
-          <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          <div class="flex-25 header">
             {{ 'labels.inputs.Transaction Date' | translate }}
           </div>
 
-          <div fxFlex="25%" fxFlex.lt-md="50%">
+          <div class="flex-25">
             {{ dataSource.data[0].transactionDate | dateFormat }}
           </div>
 
-          <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          <div class="flex-25 header">
             {{ 'labels.inputs.Created By' | translate }}
           </div>
 
-          <div fxFlex="25%" fxFlex.lt-md="50%">
+          <div class="flex-25">
             {{ dataSource.data[0].createdByUserName }}
           </div>
 
-          <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+          <div class="flex-25 header">
             {{ 'labels.inputs.Submitted on' | translate }}
           </div>
 
-          <div fxFlex="25%" fxFlex.lt-md="50%">
+          <div class="flex-25">
             {{ dataSource.data[0].submittedOnDate | datetimeFormat }}
           </div>
         </div>
@@ -54,7 +54,7 @@
     </mat-card>
   </div>
 
-  <div class="mat-elevation-z8 container" fxLayoutAlign="center" fxLayout="row wrap">
+  <div class="mat-elevation-z8 container layout-align-center layout-row-wrap">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
         <th mat-header-cell class="center" *matHeaderCellDef mat-sort-header>
@@ -115,7 +115,7 @@
       ></tr>
     </table>
 
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" class="m-t-15 m-b-15">
+    <div class="layout-row layout-align-center m-t-15 m-b-15 gap-5px layout-xs-column">
       <button type="button" color="primary" mat-raised-button (click)="goBack()">
         {{ 'labels.buttons.Back' | translate }}
       </button>
@@ -131,7 +131,7 @@
     </div>
   </div>
 
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" class="m-t-15 m-b-15">
+  <div class="layout-row layout-align-center m-t-15 m-b-15 gap-5px layout-xs-column">
     <button type="button" color="primary" mat-raised-button (click)="goBack()">
       {{ 'labels.buttons.Back' | translate }}
     </button>

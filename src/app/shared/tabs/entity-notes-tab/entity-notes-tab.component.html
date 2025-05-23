@@ -5,12 +5,10 @@
     <form
       #formRef="ngForm"
       [formGroup]="noteForm"
-      fxLayout="row"
-      fxLayoutAlign="start baseline"
-      fxLayoutGap="20px"
+      class="layout-row align-start-baseline gap-20px"
       (ngSubmit)="addNote()"
     >
-      <mat-form-field fxFlex="calc(85%-20px)">
+      <mat-form-field class="flex-85-minus-20px">
         <textarea
           required
           formControlName="note"
@@ -20,7 +18,7 @@
           cdkAutosizeMinRows="2"
         ></textarea>
       </mat-form-field>
-      <button mat-raised-button fxFlex color="primary" [disabled]="!noteForm.valid">
+      <button mat-raised-button class="flex-1" color="primary" [disabled]="!noteForm.valid">
         <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
       </button>
     </form>
@@ -28,23 +26,25 @@
 
   <mat-list>
     <mat-list-item *ngFor="let entityNote of entityNotes; let i = index">
-      <fa-icon icon="sticky-note" matListIcon></fa-icon>
-      <h3 matLine>{{ entityNote.note }}</h3>
-      <p matLine>
-        <span
-          ><b>{{ 'labels.inputs.Created By' | translate }}:</b> {{ entityNote.createdByUsername }}</span
-        ><br />
-        <span
-          ><b>{{ 'labels.inputs.Date' | translate }}:</b> {{ entityNote.createdOn | dateFormat }}</span
-        >
-      </p>
-      <div fxLayout="row" fxLayoutAlign="flex-start">
-        <button mat-button color="primary" (click)="editNote(entityNote.id, entityNote.note, i)">
-          <fa-icon icon="edit"></fa-icon>
-        </button>
-        <button mat-button color="warn" (click)="deleteNote(entityNote.id, i)">
-          <fa-icon icon="trash"></fa-icon>
-        </button>
+      <div class="list-item-content">
+        <div class="left-section">
+          <fa-icon icon="sticky-note" matListIcon></fa-icon>
+          <span>{{ entityNote.note }}</span>
+          <span class="note-details">
+            <b>{{ 'labels.inputs.Created By' | translate }}:</b> {{ entityNote.createdByUsername }}
+            <b>{{ 'labels.inputs.Date' | translate }}:</b> {{ entityNote.createdOn | dateFormat }}
+          </span>
+        </div>
+        <div class="right-section">
+          <div class="layout-row align-start">
+            <button mat-button color="primary" (click)="editNote(entityNote.id, entityNote.note, i)">
+              <fa-icon icon="edit"></fa-icon>
+            </button>
+            <button mat-button color="warn" (click)="deleteNote(entityNote.id, i)">
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </div>
+        </div>
       </div>
     </mat-list-item>
   </mat-list>

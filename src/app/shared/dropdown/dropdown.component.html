@@ -1,11 +1,11 @@
-<mat-form-field fxFlex="28%">
+<mat-form-field class="flex-28">
   <mat-label>{{ getLabelText() }}</mat-label>
   <mat-select placeholder="{{ getPlaceHolderText() }}" formControlName="controlSelect">
     <mat-option *ngFor="let option of selectOptions" [value]="option.id">
       {{ option.value | translateKey: 'catalogs' }}
     </mat-option>
   </mat-select>
-  <button mat-button *ngIf="controlSelect" matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event)">
+  <button *ngIf="controlSelect" matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event)">
     <mat-icon>{{ 'labels.buttons.Close' | translate }}</mat-icon>
   </button>
 </mat-form-field>

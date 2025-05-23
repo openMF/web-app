@@ -1,5 +1,5 @@
 <mat-card class="group-card">
-  <mat-card-header fxLayout="column" class="header">
+  <mat-card-header class="header layout-column">
     <mat-card-title-group class="header-title-group">
       <div class="profile-image-container">
         <div>
@@ -8,8 +8,8 @@
       </div>
 
       <div class="mat-typography group-card-title">
-        <mat-card-title>
-          <h3 fxFlex="95%">
+        <mat-card-title class="make-flex">
+          <h3 class="flex-95">
             <i
               class="fa fa-stop"
               [ngClass]="groupViewData.status.code | statusLookup"
@@ -18,7 +18,7 @@
             {{ 'labels.heading.Group Name' | translate }} : {{ groupViewData.name }}
           </h3>
 
-          <div fxFlex="5%" fxFlex.sm="10%" fxFlex.md="5%" fxFlex.xs="15%">
+          <div class="flex-5 flex-xs-15 flex-sm-10 flex-md-5">
             <button mat-icon-button [matMenuTriggerFor]="groupMenu" aria-label="Group actions" yPosition="below">
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
@@ -27,8 +27,8 @@
           </div>
         </mat-card-title>
 
-        <mat-card-subtitle>
-          <div fxFlex="45%">
+        <mat-card-subtitle class="make-flex">
+          <div class="flex-45">
             <b>{{ 'labels.inputs.Group' | translate }} :</b> {{ groupViewData.name }} |
             <b>{{ 'labels.inputs.Center Name' | translate }}:</b> {{ groupViewData.centerName }} |
             <b>{{ 'labels.inputs.Staff' | translate }}:</b> {{ groupViewData.staffName || 'Unassigned' }}<br />
@@ -40,7 +40,7 @@
               {{ groupViewData.timeline.closedOnDate | dateFormat }}
             </span>
           </div>
-          <div fxFlex="45%" class="group-meeting" fxLayoutAlign="start start">
+          <div class="group-meeting flex-45 align-start-start">
             <div *ngIf="groupViewData.collectionMeetingCalendar; else unassigned">
               <p>
                 {{ 'labels.inputs.Next Meeting on' | translate }}:
@@ -177,7 +177,7 @@
   </mat-card-header>
 
   <mat-card-content>
-    <nav mat-tab-nav-bar class="navigation-tabs">
+    <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
       <a
         mat-tab-link
         [routerLink]="['./general']"
@@ -220,6 +220,8 @@
       </span>
     </nav>
 
-    <router-outlet></router-outlet>
+    <mat-tab-nav-panel #tabPanel>
+      <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
   </mat-card-content>
 </mat-card>

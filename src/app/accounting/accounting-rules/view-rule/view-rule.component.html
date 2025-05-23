@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ACCOUNTINGRULE'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -14,40 +14,40 @@
   </button>
 </div>
 
-<div class="container" fxLayout="row" fxLayoutGap="2%" fxLayout.lt-md="column">
-  <div fxFlex="48%">
+<div class="container layout-row gap-2-percent responsive-column">
+  <div class="flex-48">
     <mat-card>
       <mat-card-content>
-        <div fxLayout="row wrap" class="content">
-          <div fxFlex="50%" class="header">
+        <div class="layout-row-wrap">
+          <div class="flex-50 header">
             {{ 'labels.inputs.Office' | translate }}
           </div>
 
-          <div fxFlex="50%">
+          <div class="flex-50">
             {{ accountingRule.officeName }}
           </div>
 
-          <div fxFlex="50%" class="header" *ngIf="accountingRule.description">
+          <div class="flex-50 header" *ngIf="accountingRule.description">
             {{ 'labels.inputs.Description' | translate }}
           </div>
 
-          <div fxFlex="50%" *ngIf="accountingRule.description">
+          <div class="flex-50" *ngIf="accountingRule.description">
             {{ accountingRule.description }}
           </div>
 
-          <div fxFlex="50%" class="header">
+          <div class="flex-50 header">
             {{ 'labels.inputs.Multiple Debit Entries Allowed' | translate }}
           </div>
 
-          <div fxFlex="50%">
+          <div class="flex-50">
             {{ accountingRule.allowMultipleDebitEntries }}
           </div>
 
-          <div fxFlex="50%" class="header">
+          <div class="flex-50 header">
             {{ 'labels.inputs.Multiple Credit Entries Allowed' | translate }}
           </div>
 
-          <div fxFlex="50%">
+          <div class="flex-50">
             {{ accountingRule.allowMultipleCreditEntries }}
           </div>
         </div>
@@ -55,11 +55,11 @@
     </mat-card>
   </div>
 
-  <div fxFlex>
+  <div class="flex-fill">
     <mat-card>
       <mat-card-content>
-        <div fxLayout="row" class="content">
-          <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.debitTags">
+        <div class="layout-row content">
+          <div class="flex-50 layout-column" *ngIf="accountingRule.debitTags">
             <div class="header">
               {{ 'labels.inputs.Debit Tags' | translate }}
             </div>
@@ -68,7 +68,7 @@
             </div>
           </div>
 
-          <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.debitAccounts">
+          <div class="flex-50 layout-column" *ngIf="accountingRule.debitAccounts">
             <div class="header">
               {{ 'labels.inputs.Debit Account Name' | translate }}
             </div>
@@ -77,7 +77,7 @@
             </div>
           </div>
 
-          <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.creditTags">
+          <div class="flex-50 layout-column" *ngIf="accountingRule.creditTags">
             <div class="header">
               {{ 'labels.inputs.Credit Tags' | translate }}
             </div>
@@ -86,7 +86,7 @@
             </div>
           </div>
 
-          <div fxFlex="50%" fxLayout="column" *ngIf="accountingRule.creditAccounts">
+          <div class="flex-50 layout-column" *ngIf="accountingRule.creditAccounts">
             <div class="header">
               {{ 'labels.inputs.Credit Account Name' | translate }}
             </div>

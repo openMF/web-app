@@ -1,6 +1,5 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,7 +11,7 @@ import { TasksService } from '../tasks.service';
  * Loans data resolver.
  */
 @Injectable()
-export class GetLoansToBeApproved implements Resolve<Object> {
+export class GetLoansToBeApproved {
   /**
    * @param {TasksService} tasksService Tasks service.
    */

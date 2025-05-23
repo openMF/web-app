@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_REPORT'" (click)="onEdit()">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -7,41 +7,41 @@
 
 <div class="container m-b-20">
   <mat-card>
-    <mat-card-header fxLayout="column">
+    <mat-card-header class="layout-column">
       <mat-card-title>{{ 'labels.buttons.Survey' | translate }}</mat-card-title>
       <mat-divider [inset]="true"></mat-divider>
     </mat-card-header>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+      <div class="layout-row-wrap">
+        <div class="flex-40 flex-lt-md-50 header">
           <b>{{ 'labels.inputs.Key' | translate }}:</b>
         </div>
 
-        <div fxFlex="60%" fxFlex.lt-md="50%">
+        <div class="flex-60 flex-lt-md-50">
           {{ surveyData.key }}
         </div>
 
-        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-40 flex-lt-md-50 header">
           <b>{{ 'labels.inputs.Name' | translate }}:</b>
         </div>
 
-        <div fxFlex="60%" fxFlex.lt-md="50%">
+        <div class="flex-60 flex-lt-md-50">
           {{ surveyData.name }}
         </div>
 
-        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-40 flex-lt-md-50 header">
           <b>{{ 'labels.inputs.Country Code' | translate }}:</b>
         </div>
 
-        <div fxFlex="60%" fxFlex.lt-md="50%">
+        <div class="flex-60 flex-lt-md-50">
           {{ surveyData.countryCode }}
         </div>
 
-        <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+        <div class="flex-40 flex-lt-md-50 header">
           <b>{{ 'labels.inputs.Description' | translate }}:</b>
         </div>
 
-        <div fxFlex="60%" fxFlex.lt-md="50%">
+        <div class="flex-60 flex-lt-md-50">
           {{ surveyData.description }}
         </div>
       </div>
@@ -51,7 +51,7 @@
 
 <div class="container m-b-20">
   <mat-card class="questions">
-    <mat-card-header fxLayout="column">
+    <mat-card-header class="layout-column">
       <mat-card-title>{{ 'labels.inputs.Questions' | translate }}</mat-card-title>
       <mat-divider [inset]="true"></mat-divider>
     </mat-card-header>
@@ -60,32 +60,32 @@
         <mat-card>
           <mat-card-content>
             <div>{{ 'labels.heading.Question' | translate }}: {{ i + 1 }}</div>
-            <div fxLayout="row" id="key-text">
-              <div fxFlex="25%" fxFlex.lt-md="50%" class="header">
+            <div class="layout-row" id="key-text">
+              <div class="flex-25 header">
                 <b>{{ 'labels.inputs.Key' | translate }}:</b>
               </div>
 
-              <div fxFlex="40%" fxFlex.lt-md="50%">
+              <div class="flex-40 flex-50-lt-md">
                 {{ questionData.key }}
               </div>
-              <div fxFlex="40%" fxFlex.lt-md="50%" class="header">
+              <div class="flex-40 flex-lt-md-50 header">
                 <b>{{ 'labels.inputs.Text' | translate }}:</b>
               </div>
 
-              <div fxFlex="40%" fxFlex.lt-md="50%">
+              <div class="flex-40 flex-50-lt-md">
                 {{ questionData.text }}
               </div>
             </div>
-            <div fxLayout="row" id="description">
-              <div fxFlex="20%" fxFlex.lt-md="50%" class="header">
+            <div class="layout-row" id="description">
+              <div class="flex-20 flex-50-lt-md header">
                 <b>{{ 'labels.inputs.Description' | translate }}:</b>
               </div>
 
-              <div fxFlex="40%" fxFlex.lt-md="50%">
+              <div class="flex-40 flex-50-lt-md">
                 {{ questionData.description }}
               </div>
             </div>
-            <div fxLayout="column" id="questionaire">
+            <div class="layout-column" id="questionaire">
               <div>
                 <b>{{ 'labels.inputs.Option' | translate }}: </b>
               </div>

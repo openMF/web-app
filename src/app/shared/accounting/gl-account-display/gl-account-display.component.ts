@@ -25,4 +25,8 @@ export class GlAccountDisplayComponent {
     }
     return '';
   }
+
+  getWithClass(value: string): string {
+    return 'flex-' + value.replace('%', '');
+  }
 }

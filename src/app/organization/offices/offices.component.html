@@ -1,4 +1,4 @@
-<div class="container m-b-20" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
+<div class="container m-b-20 layout-row align-end gap-20px">
   <mat-button-toggle-group #buttonTreeView [formControl]="viewGroup">
     <mat-button-toggle value="listView">
       <fa-icon icon="list"></fa-icon>
@@ -29,8 +29,8 @@
 </div>
 
 <div class="container" [hidden]="viewGroup.value !== 'listView'">
-  <div #filter fxLayout="row" fxLayoutGap="20px">
-    <mat-form-field fxFlex>
+  <div #filter class="layout-row gap-20px">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'Filter' | translate }}</mat-label>
       <input matInput (keyup)="applyFilter($event.target.value)" />
     </mat-form-field>
@@ -74,14 +74,14 @@
 
 <!-- Tree View -->
 <div class="container" [hidden]="viewGroup.value !== 'treeView'">
-  <div class="m-b-20" fxLayout="row" fxLayoutAlign="start" fxLayoutGap="20px">
+  <div class="m-b-20 layout-row align-start gap-20px">
     <button mat-raised-button (click)="toggleExpandCollapse()">
       {{ (isTreeExpanded ? 'labels.buttons.Collapse All' : 'labels.buttons.Expand All') | translate }}
     </button>
   </div>
 
-  <div fxLayout="row" fxLayoutGap="4%" fxLayout.lt-md="column">
-    <div fxFlex>
+  <div class="layout-row gap-4percent responsive-column">
+    <div class="flex-fill">
       <mat-card>
         <mat-card-content>
           <mat-tree [dataSource]="nestedTreeDataSource" [treeControl]="nestedTreeControl" class="office-tree">
@@ -117,15 +117,15 @@
       </mat-card>
     </div>
 
-    <div fxFlex="48%" *ngIf="office">
+    <div class="flex-48" *ngIf="office">
       <mat-card>
         <mat-card-content>
-          <div fxLayout="row">
+          <div class="layout-row">
             <mat-card-title>
               {{ office.name }}
             </mat-card-title>
 
-            <div fxFlex fxLayoutAlign="end">
+            <div class="flex align-end">
               <button mat-icon-button (click)="closeOffice()">
                 <fa-icon icon="times"></fa-icon>
               </button>
@@ -134,28 +134,28 @@
 
           <mat-tab-group>
             <mat-tab label="General">
-              <div fxLayout="row wrap" class="content">
-                <div fxFlex="50%" class="mat-body-strong" *ngIf="office.parentId">
+              <div class="layout-row-wrap">
+                <div class="flex-50 mat-body-strong" *ngIf="office.parentId">
                   {{ 'Parent Office' | translate }}
                 </div>
 
-                <div fxFlex="50%" *ngIf="office.parentId">
+                <div class="flex-50" *ngIf="office.parentId">
                   {{ office.parentName }}
                 </div>
 
-                <div fxFlex="50%" class="mat-body-strong">
+                <div class="flex-50 mat-body-strong">
                   {{ ' Opened On' | translate }}
                 </div>
 
-                <div fxFlex="50%">
+                <div class="flex-50">
                   {{ office.openingDate | date }}
                 </div>
 
-                <div fxFlex="50%" class="mat-body-strong" *ngIf="office.externalId">
+                <div class="flex-50 mat-body-strong" *ngIf="office.externalId">
                   {{ 'External Id' | translate }}
                 </div>
 
-                <div fxFlex="50%" *ngIf="office.externalId">
+                <div class="flex-50" *ngIf="office.externalId">
                   <mifosx-external-identifier externalId="{{ office.externalId }}"></mifosx-external-identifier>
                 </div>
               </div>
@@ -172,7 +172,7 @@
 <ng-template #templateButtonTreeView let-popover="popover">
   <h2>{{ 'labels.heading.Tree View' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Launch an alternative view for office hierarchy' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -192,7 +192,7 @@
 <ng-template #templateButtonCreateOffice let-popover="popover">
   <h2>{{ 'labels.heading.Create Office' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Create new offices' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -216,7 +216,7 @@
 <ng-template #templateButtonImportOffices let-popover="popover">
   <h2>{{ 'labels.heading.Import Offices' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Launch the Bulk import/Offices' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -239,7 +239,7 @@
 
 <ng-template #templateFilter let-popover="popover">
   <h4>{{ 'labels.heading.Search bar to filter offices.' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -262,7 +262,7 @@
 
 <ng-template #templateTableOffices let-popover="popover">
   <h4>{{ 'labels.heading.List of offices in the organization.' | translate }}</h4>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

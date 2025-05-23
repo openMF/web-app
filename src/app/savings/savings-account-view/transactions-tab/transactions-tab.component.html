@@ -1,10 +1,7 @@
-<div class="tab-container mat-typography">
+<div class="container">
   <div class="mat-elevation-z1 m-b-25" [hidden]="!accountWithTransactions">
-    <div fxLayout="row" fxLayoutAlign="start">
-      <div class="m-b-10">
-        <h3>{{ 'labels.heading.All Transactions' | translate }}</h3>
-      </div>
-      <div class="action-button m-b-20" fxLayout="row" fxLayoutGap="20px" *ngIf="checkStatus()">
+    <div class="layout-row align-end">
+      <div class="action-button m-b-20 layout-row gap-20px" *ngIf="checkStatus()">
         <mat-checkbox [formControl]="hideReversedParam" (click)="hideReversed()" class="accruals">
           {{ 'labels.inputs.Hide Reversed' | translate }}</mat-checkbox
         >
@@ -121,10 +118,16 @@
               <mat-icon><fa-icon icon="eye" size="sm"></fa-icon></mat-icon>
               <span>{{ 'labels.text.View Transaction' | translate }}</span>
             </button>
-            <button mat-menu-item *mifosxHasPermission="'ADJUST_LOAN'" (click)="undoTransaction(transaction, $event)">
-              <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
-              <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
-            </button>
+            <span *ngIf="!transaction.reversed">
+              <button
+                mat-menu-item
+                *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'"
+                (click)="undoTransaction(transaction, $event)"
+              >
+                <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>
+                <span>{{ 'tooltips.Undo Transaction' | translate }}</span>
+              </button>
+            </span>
             <button
               mat-menu-item
               class="account-action-button"

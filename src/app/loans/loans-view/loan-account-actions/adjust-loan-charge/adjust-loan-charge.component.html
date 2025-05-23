@@ -2,11 +2,11 @@
   <mat-card>
     <form [formGroup]="adjustLoanChargeForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div fxLayout="column">
+        <div class="layout-column">
           <mat-form-field appearance="fill">
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <span matTextSuffix class="m-l-10">{{ loanDetailsData.currency.code }}</span>
-            <span fxFlex="auto"></span>
+            <span class="flex-auto"></span>
             <input type="number" matInput required class="right-input" formControlName="amount" />
             <mat-error *ngIf="adjustLoanChargeForm.controls.amount.hasError('required')">
               {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
@@ -28,8 +28,8 @@
             </mat-select>
           </mat-form-field>
 
-          <div fxFlexFill>
-            <span fxFlex="75%" class="expandcollapsebutton m-l-10 m-t-40" (click)="addPaymentDetails()">
+          <div class="flex-fill">
+            <span class="expandcollapsebutton m-l-10 m-t-40 flex-75" (click)="addPaymentDetails()">
               <mat-slide-toggle>
                 <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
                   <span class="m-l-10">{{ 'labels.inputs.Show Payment Details' | translate }}</span>
@@ -71,7 +71,7 @@
           </mat-form-field>
         </div>
 
-        <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
+        <mat-card-actions class="layout-row align-center gap-5px responsive-column">
           <button type="button" mat-raised-button [routerLink]="['../..']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>

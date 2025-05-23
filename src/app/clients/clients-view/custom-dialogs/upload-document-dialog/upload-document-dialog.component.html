@@ -1,9 +1,9 @@
 <h1 mat-dialog-title>
   {{ 'labels.heading.Upload' | translate }} {{ entityType }} {{ 'labels.heading.Documents' | translate }}
 </h1>
-<div>
-  <form [formGroup]="uploadDocumentForm" fxLayout="column">
-    <mat-form-field fxFlex>
+<div class="m-l-10 m-r-10">
+  <form [formGroup]="uploadDocumentForm" class="layout-column">
+    <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.File Name' | translate }}</mat-label>
       <input formControlName="fileName" required matInput />
       <mat-error *ngIf="uploadDocumentForm.controls.fileName.hasError('required')">
@@ -12,7 +12,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex *ngIf="!documentIdentifier">
+    <mat-form-field class="flex-fill" *ngIf="!documentIdentifier">
       <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
       <input formControlName="description" matInput />
     </mat-form-field>
@@ -27,7 +27,7 @@
         [disabled]="!uploadDocumentForm.valid"
         [mat-dialog-close]="uploadDocumentForm.value"
       >
-        {{ 'labels.buttons.Confirm' | translate }}
+        {{ 'labels.buttons.Upload' | translate }}
       </button>
     </mat-dialog-actions>
   </form>

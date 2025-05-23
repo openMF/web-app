@@ -1,25 +1,20 @@
 <form [formGroup]="recurringDepositProductSettingsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="isMandatoryDeposit" class="margin-v">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <mat-checkbox labelPosition="before" formControlName="isMandatoryDeposit" class="margin-v flex-48">
       {{ 'labels.inputs.Is Mandatory Deposit' | translate }}
     </mat-checkbox>
 
-    <mat-checkbox
-      fxFlex="48%"
-      labelPosition="before"
-      formControlName="adjustAdvanceTowardsFuturePayments"
-      class="margin-v"
-    >
+    <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="adjustAdvanceTowardsFuturePayments">
       {{ 'labels.inputs.Adjust advance payments toward future installments' | translate }}
     </mat-checkbox>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="allowWithdrawal" class="margin-v">
+    <mat-checkbox labelPosition="before" formControlName="allowWithdrawal" class="margin-v flex-48">
       {{ 'labels.inputs.Allow Withdrawals' | translate }}
     </mat-checkbox>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.inputs.Lock-in Period' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Lock-in Period' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input
         type="number"
@@ -29,7 +24,7 @@
       />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         <mat-option
@@ -41,9 +36,9 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.inputs.Minimum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Minimum Deposit Term' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input
         type="number"
@@ -58,7 +53,7 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
       <mat-select formControlName="minDepositTermTypeId" required>
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -71,9 +66,9 @@
       </mat-error>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.heading.And thereafter, in Multiples of' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input
         type="number"
@@ -83,7 +78,7 @@
       />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="inMultiplesOfDepositTermTypeId">
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -92,9 +87,9 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">{{ 'labels.inputs.Maximum Deposit Term' | translate }}</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Maximum Deposit Term' | translate }}</h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input
         type="number"
@@ -104,7 +99,7 @@
       />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="maxDepositTermTypeId">
         <mat-option *ngFor="let periodFrequencyType of periodFrequencyTypeData" [value]="periodFrequencyType.id">
@@ -113,20 +108,20 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <h4 fxFlex="23%" class="mat-h4">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
+    <h4 class="mat-h4 flex-23">{{ 'labels.heading.For Pre-mature closure' | translate }}</h4>
 
-    <mat-checkbox fxFlex="73%" labelPosition="before" formControlName="preClosurePenalApplicable" class="margin-v">
+    <mat-checkbox class="flex-73 margin-v" labelPosition="before" formControlName="preClosurePenalApplicable">
       {{ 'labels.inputs.Apply Penal Interest (less)' | translate }}
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Penal Interest' | translate }} (%)</mat-label>
       <input type="number" matInput formControlName="preClosurePenalInterest" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
       <mat-select formControlName="preClosurePenalInterestOnTypeId">
         <mat-option
@@ -138,13 +133,13 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-divider fxFlex="98%"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-    <mat-checkbox fxFlex="48%" labelPosition="before" formControlName="withHoldTax" class="margin-v">
+    <mat-checkbox labelPosition="before" formControlName="withHoldTax" class="margin-v flex-48">
       {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}
     </mat-checkbox>
 
-    <mat-form-field fxFlex="48%" *ngIf="recurringDepositProductSettingsForm.value.withHoldTax">
+    <mat-form-field class="flex-48" *ngIf="recurringDepositProductSettingsForm.value.withHoldTax">
       <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
       <mat-select formControlName="taxGroupId" required>
         <mat-option *ngFor="let taxGroup of taxGroupData" [value]="taxGroup.id">
@@ -158,7 +153,7 @@
     </mat-form-field>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

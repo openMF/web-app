@@ -1,360 +1,485 @@
 <div class="container">
   <mat-card>
-    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
-      <div fxFlex="50%">
+    <div class="layout-row responsive-column gap-20px">
+      <div class="flex-50">
         <mat-nav-list>
           <div #datatables>
             <mat-list-item [routerLink]="['data-tables']">
-              <mat-icon matListIcon [routerLink]="['data-tables']">
-                <fa-icon icon="table" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['data-tables']">{{ 'labels.heading.Manage Data tables' | translate }}</h4>
-              <fa-icon
-                (click)="arrowBooleansToggle(0); $event.stopPropagation()"
-                *ngIf="!arrowBooleans[0]"
-                icon="arrow-down"
-                size="md"
-              ></fa-icon>
-              <fa-icon
-                (click)="arrowBooleansToggle(0); $event.stopPropagation()"
-                *ngIf="arrowBooleans[0]"
-                icon="arrow-up"
-                size="md"
-              ></fa-icon>
-              <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['data-tables']">
-                {{ 'labels.text.Add new extra fields to any entity' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['data-tables']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="table" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Manage Data tables' | translate }}
+                    <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['data-tables']" class="menu-explanation">
+                      {{ 'labels.text.Add new extra fields to any entity' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(0); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[0]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(0); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[0]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
 
           <div #codes>
             <mat-list-item matListIcon [routerLink]="['codes']">
-              <mat-icon matListIcon [routerLink]="['codes']">
-                <fa-icon icon="list-ul" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['codes']">{{ 'labels.heading.Manage Codes' | translate }}</h4>
-              <fa-icon
-                (click)="arrowBooleansToggle(1); $event.stopPropagation()"
-                *ngIf="!arrowBooleans[1]"
-                icon="arrow-down"
-                size="md"
-              ></fa-icon>
-              <fa-icon
-                (click)="arrowBooleansToggle(1); $event.stopPropagation()"
-                *ngIf="arrowBooleans[1]"
-                icon="arrow-up"
-                size="md"
-              ></fa-icon>
-              <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['codes']">
-                {{ 'labels.text.Codes are used to define drop down values' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['codes']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="list-ul" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div>
+                    {{ 'labels.heading.Manage Codes' | translate }}
+                    <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['codes']" class="menu-explanation">
+                      {{ 'labels.text.Codes are used to define drop down values' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(1); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[1]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(1); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[1]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
 
           <div #rolesandpermission>
             <mat-list-item [routerLink]="['roles-and-permissions']">
-              <mat-icon matListIcon [routerLink]="['roles-and-permissions']">
-                <fa-icon icon="key" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['roles-and-permissions']">
-                {{ 'labels.heading.Manage Roles and Permissions' | translate }}
-              </h4>
-              <fa-icon
-                (click)="arrowBooleansToggle(2); $event.stopPropagation()"
-                *ngIf="!arrowBooleans[2]"
-                icon="arrow-down"
-                size="md"
-              ></fa-icon>
-              <fa-icon
-                (click)="arrowBooleansToggle(2); $event.stopPropagation()"
-                *ngIf="arrowBooleans[2]"
-                icon="arrow-up"
-                size="md"
-              ></fa-icon>
-              <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['roles-and-permissions']">
-                {{ 'labels.text.Define or modify roles and associated permissions' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['roles-and-permissions']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="key" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Manage Roles and Permissions' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[2]"
+                      [routerLink]="['roles-and-permissions']"
+                      class="menu-explanation"
+                    >
+                      {{ 'labels.text.Define or modify roles and associated permissions' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(2); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[2]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(2); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[2]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
 
           <div #makerCheckerTable>
             <mat-list-item [routerLink]="['configure-mc-tasks']">
-              <mat-icon matListIcon [routerLink]="['configure-mc-tasks']">
-                <fa-icon icon="sitemap" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['configure-mc-tasks']">
-                {{ 'labels.heading.Configure Maker Checker Tasks' | translate }}
-              </h4>
-              <fa-icon
-                (click)="arrowBooleansToggle(3); $event.stopPropagation()"
-                *ngIf="!arrowBooleans[3]"
-                icon="arrow-down"
-                size="md"
-              ></fa-icon>
-              <fa-icon
-                (click)="arrowBooleansToggle(3); $event.stopPropagation()"
-                *ngIf="arrowBooleans[3]"
-                icon="arrow-up"
-                size="md"
-              ></fa-icon>
-              <p matLine *ngIf="arrowBooleans[3]" [routerLink]="['configure-mc-tasks']">
-                {{ 'labels.text.Define or modify Maker Checker tasks' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['configure-mc-tasks']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="sitemap" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine [routerLink]="['configure-mc-tasks']">
+                    {{ 'labels.heading.Configure Maker Checker Tasks' | translate }}
+                    <p matLine *ngIf="arrowBooleans[3]" [routerLink]="['configure-mc-tasks']" class="menu-explanation">
+                      {{ 'labels.text.Define or modify Maker Checker tasks' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(3); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[3]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(3); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[3]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
 
           <mat-list-item [routerLink]="['hooks']">
-            <mat-icon matListIcon [routerLink]="['hooks']">
-              <fa-icon icon="anchor" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['hooks']">{{ 'labels.heading.Manage Hooks' | translate }}</h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(4); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[4]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(4); $event.stopPropagation()"
-              *ngIf="arrowBooleans[4]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[4]" [routerLink]="['hooks']">
-              {{ 'labels.text.Define Hooks' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['hooks']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="anchor" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Manage Hooks' | translate }}
+                  <p matLine *ngIf="arrowBooleans[4]" [routerLink]="['hooks']" class="menu-explanation">
+                    {{ 'labels.text.Define Hooks' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(4); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[4]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(4); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[4]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['entity-to-entity-mapping']">
-            <mat-icon matListIcon [routerLink]="['entity-to-entity-mapping']">
-              <fa-icon icon="road" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['entity-to-entity-mapping']">
-              {{ 'labels.heading.Entity to Entity Mapping' | translate }}
-            </h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(5); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[5]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(5); $event.stopPropagation()"
-              *ngIf="arrowBooleans[5]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[5]" [routerLink]="['entity-to-entity-mapping']">
-              {{ 'labels.text.Define or modify entity to entity mappings' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['entity-to-entity-mapping']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="road" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Entity to Entity Mapping' | translate }}
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[5]"
+                    [routerLink]="['entity-to-entity-mapping']"
+                    class="menu-explanation"
+                  >
+                    {{ 'labels.text.Define or modify entity to entity mappings' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(5); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[5]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(5); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[5]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <mat-list-item [ngClass]="{ 'disabled-item': isDisabled }">
-            <mat-icon matListIcon>
-              <fa-icon icon="file-alt" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>{{ 'labels.heading.Manage Surveys' | translate }}</h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(6); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[6]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(6); $event.stopPropagation()"
-              *ngIf="arrowBooleans[6]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[6]" [routerLink]="['surveys']">
-              {{ 'labels.text.Manage Surveys' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section">
+                <mat-icon matListIcon>
+                  <fa-icon icon="file-alt" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Manage Surveys' | translate }}
+                  <p matLine *ngIf="arrowBooleans[6]" class="menu-explanation">
+                    {{ 'labels.text.Manage Surveys' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(6); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[6]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(6); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[6]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['external-events']" *mifosxHasPermission="'READ_EXTERNAL_EVENT_CONFIGURATION'">
-            <mat-icon matListIcon [routerLink]="['external-events']">
-              <fa-icon icon="anchor" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['external-events']">
-              {{ 'labels.heading.Manage External Events' | translate }}
-            </h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(7); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[7]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(7); $event.stopPropagation()"
-              *ngIf="arrowBooleans[7]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[7]" [routerLink]="['external-events']">
-              {{ 'labels.text.External Events configuration, to enable or disable' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['external-events']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="anchor" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Manage External Events' | translate }}
+                  <p matLine *ngIf="arrowBooleans[7]" [routerLink]="['external-events']" class="menu-explanation">
+                    {{ 'labels.text.External Events configuration, to enable or disable' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(7); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[7]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(7); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[7]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
         </mat-nav-list>
       </div>
 
-      <div fxFlex="50%">
+      <div class="flex-50">
         <mat-nav-list>
           <mat-list-item [routerLink]="['audit-trails']">
-            <mat-icon matListIcon [routerLink]="['audit-trails']">
-              <fa-icon icon="money-check" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['audit-trails']">{{ 'labels.heading.Audit Trails' | translate }}</h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(8); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[8]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(8); $event.stopPropagation()"
-              *ngIf="arrowBooleans[8]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[8]" [routerLink]="['audit-trails']">
-              {{ 'labels.text.Audit logs of all the activities' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['audit-trails']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="money-check" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Audit Trails' | translate }}
+                  <p matLine *ngIf="arrowBooleans[8]" [routerLink]="['audit-trails']" class="menu-explanation">
+                    {{ 'labels.text.Audit logs of all the activities' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(8); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[8]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(8); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[8]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <div #manageReports>
             <mat-list-item [routerLink]="['reports']">
-              <mat-icon matListIcon [routerLink]="['reports']">
-                <fa-icon icon="file-word" size="sm"></fa-icon>
-              </mat-icon>
-              <h4 matLine [routerLink]="['reports']">{{ 'labels.heading.Manage Reports' | translate }}</h4>
-              <fa-icon
-                (click)="arrowBooleansToggle(9); $event.stopPropagation()"
-                *ngIf="!arrowBooleans[9]"
-                icon="arrow-down"
-                size="md"
-              ></fa-icon>
-              <fa-icon
-                (click)="arrowBooleansToggle(9); $event.stopPropagation()"
-                *ngIf="arrowBooleans[9]"
-                icon="arrow-up"
-                size="md"
-              ></fa-icon>
-              <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['reports']">
-                {{ 'labels.text.Add new report and classify reports' | translate }}
-              </p>
+              <div class="menu-list-item-content">
+                <div class="menu-left-section" [routerLink]="['reports']">
+                  <mat-icon matListIcon>
+                    <fa-icon icon="file-word" size="sm"></fa-icon>
+                  </mat-icon>
+                  <div matLine>
+                    {{ 'labels.heading.Manage Reports' | translate }}
+                    <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['reports']" class="menu-explanation">
+                      {{ 'labels.text.Add new report and classify reports' | translate }}
+                    </p>
+                  </div>
+                </div>
+                <div class="menu-right-section">
+                  <fa-icon
+                    (click)="arrowBooleansToggle(9); $event.stopPropagation()"
+                    *ngIf="!arrowBooleans[9]"
+                    icon="arrow-down"
+                    size="md"
+                  ></fa-icon>
+                  <fa-icon
+                    (click)="arrowBooleansToggle(9); $event.stopPropagation()"
+                    *ngIf="arrowBooleans[9]"
+                    icon="arrow-up"
+                    size="md"
+                  ></fa-icon>
+                </div>
+              </div>
             </mat-list-item>
           </div>
 
           <mat-list-item [routerLink]="['manage-jobs']">
-            <mat-icon matListIcon [routerLink]="['manage-jobs']">
-              <fa-icon icon="clock" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['manage-jobs']">{{ 'labels.heading.Manage Jobs' | translate }}</h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(10); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[10]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(10); $event.stopPropagation()"
-              *ngIf="arrowBooleans[10]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[10]" [routerLink]="['manage-jobs']">
-              {{ 'labels.text.Manage Schedule and Workflow jobs, modify jobs' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['manage-jobs']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="clock" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Manage Jobs' | translate }}
+                  <p matLine *ngIf="arrowBooleans[10]" [routerLink]="['manage-jobs']" class="menu-explanation">
+                    {{ 'labels.text.Manage Schedule and Workflow jobs, modify jobs' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(10); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[10]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(10); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[10]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['configurations']">
-            <mat-icon matListIcon [routerLink]="['configurations']">
-              <fa-icon icon="cogs" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['configurations']">{{ 'labels.heading.Configurations' | translate }}</h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(11); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[11]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(11); $event.stopPropagation()"
-              *ngIf="arrowBooleans[11]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[11]" [routerLink]="['configurations']">
-              {{ 'labels.text.Global configurations, Cache and Business Date' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['configurations']">
+                <mat-icon>
+                  <fa-icon icon="cogs" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Configurations' | translate }}
+                  <p matLine *ngIf="arrowBooleans[11]" [routerLink]="['configurations']" class="menu-explanation">
+                    {{ 'labels.text.Global configurations, Cache and Business Date' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(11); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[11]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(11); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[11]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['account-number-preferences']">
-            <mat-icon matListIcon [routerLink]="['account-number-preferences']">
-              <fa-icon icon="key" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['account-number-preferences']">
-              {{ 'labels.heading.Account Number Preferences' | translate }}
-            </h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(12); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[12]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(12); $event.stopPropagation()"
-              *ngIf="arrowBooleans[12]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[12]" [routerLink]="['account-number-preferences']">
-              {{ 'labels.text.Preferences for generating account numbers for client' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['account-number-preferences']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="key" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Account Number Preferences' | translate }}
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[12]"
+                    [routerLink]="['account-number-preferences']"
+                    class="menu-explanation"
+                  >
+                    {{ 'labels.text.Preferences for generating account numbers for client' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(12); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[12]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(12); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[12]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <mat-list-item [routerLink]="['external-services']">
-            <mat-icon matListIcon [routerLink]="['external-services']">
-              <fa-icon icon="cog" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine [routerLink]="['external-services']">{{ 'labels.heading.External Services' | translate }}</h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(13); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[13]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(13); $event.stopPropagation()"
-              *ngIf="arrowBooleans[13]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[13]" [routerLink]="['external-services']">
-              {{ 'labels.text.External Services Configuration' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section" [routerLink]="['external-services']">
+                <mat-icon matListIcon>
+                  <fa-icon icon="cog" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.External Services' | translate }}
+                  <p matLine *ngIf="arrowBooleans[13]" [routerLink]="['external-services']" class="menu-explanation">
+                    {{ 'labels.text.External Services Configuration' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(13); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[13]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(13); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[13]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
 
           <mat-list-item [ngClass]="{ 'disabled-item': isDisabled }">
-            <mat-icon matListIcon>
-              <fa-icon icon="key" size="sm"></fa-icon>
-            </mat-icon>
-            <h4 matLine>{{ 'labels.heading.Two-Factor Authentication' | translate }}</h4>
-            <fa-icon
-              (click)="arrowBooleansToggle(14); $event.stopPropagation()"
-              *ngIf="!arrowBooleans[14]"
-              icon="arrow-down"
-              size="md"
-            ></fa-icon>
-            <fa-icon
-              (click)="arrowBooleansToggle(14); $event.stopPropagation()"
-              *ngIf="arrowBooleans[14]"
-              icon="arrow-up"
-              size="md"
-            ></fa-icon>
-            <p matLine *ngIf="arrowBooleans[14]">
-              {{ 'labels.text.Two-factor authentication configuration' | translate }}
-            </p>
+            <div class="menu-list-item-content">
+              <div class="menu-left-section">
+                <mat-icon matListIcon>
+                  <fa-icon icon="key" size="sm"></fa-icon>
+                </mat-icon>
+                <div matLine>
+                  {{ 'labels.heading.Two-Factor Authentication' | translate }}
+                  <p matLine *ngIf="arrowBooleans[14]" class="menu-explanation">
+                    {{ 'labels.text.Two-factor authentication configuration' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="menu-right-section">
+                <fa-icon
+                  (click)="arrowBooleansToggle(14); $event.stopPropagation()"
+                  *ngIf="!arrowBooleans[14]"
+                  icon="arrow-down"
+                  size="md"
+                ></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(14); $event.stopPropagation()"
+                  *ngIf="arrowBooleans[14]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
+              </div>
+            </div>
           </mat-list-item>
         </mat-nav-list>
       </div>
@@ -365,7 +490,7 @@
 <ng-template #templateDatatables let-popover="popover">
   <h2>{{ 'labels.heading.Manage Data Tables' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Mifos X data-tables allow the user to add custom fields' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -381,7 +506,7 @@
 <ng-template #templateCodes let-popover="popover">
   <h2>{{ 'labels.heading.Manage Codes' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Selection you can create new drop-downs and edit' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -397,7 +522,7 @@
 <ng-template #templateRolesandPermission let-popover="popover">
   <h2>{{ 'labels.heading.Manage Roles and Permissions' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Roles and Permissions allow the administrator to control access' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -413,7 +538,7 @@
 <ng-template #templateMakerCheckerTable let-popover="popover">
   <h2>{{ 'labels.heading.Configure Maker-Checker Tasks' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.“Maker-Checker” principle requires every tasks' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -429,7 +554,7 @@
 <ng-template #templateConfigurations let-popover="popover">
   <h2>{{ 'labels.heading.Configuration' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Configurations page allows you to further customize' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -445,7 +570,7 @@
 <ng-template #templateSchedulerJobs let-popover="popover">
   <h2>{{ 'labels.heading.Manage Scheduler Jobs' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Scheduler Jobs can set batch jobs' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
@@ -461,7 +586,7 @@
 <ng-template #templateManageReports let-popover="popover">
   <h2>{{ 'labels.heading.Manage Reports' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Add customized reports and edit core reports' | translate }}</p>
-  <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column">
+  <div class="layout-row align-end gap-2px responsive-column">
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>

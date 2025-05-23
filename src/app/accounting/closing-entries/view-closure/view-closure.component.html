@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -12,60 +12,60 @@
 <div class="container" *ngIf="glAccountClosure">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="header">
+      <div class="layout-row-wrap">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Office' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccountClosure.officeName }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Closure Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccountClosure.closingDate }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Closed By' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccountClosure.createdByUsername }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Updated By' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccountClosure.lastUpdatedByUsername }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Updated On' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccountClosure.lastUpdatedDate }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Closure Creation Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccountClosure.createdDate }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Comments' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ glAccountClosure.comments }}
         </div>
       </div>

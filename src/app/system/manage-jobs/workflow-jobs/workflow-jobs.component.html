@@ -1,5 +1,5 @@
-<div class="container space-top" fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-  <mat-form-field fxFlex="31%">
+<div class="container space-top layout-row-wrap gap-2percent layout-lt-md-column">
+  <mat-form-field class="flex-31">
     <mat-label>{{ 'labels.inputs.Job Name' | translate }}</mat-label>
     <mat-select [formControl]="jobName" (selectionChange)="getWorkflowJobSteps($event.value)">
       <mat-option *ngFor="let job of jobNameOptions" [value]="job">
@@ -8,7 +8,7 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="action-button" fxLayoutGap="25px" *ngIf="jobStepName">
+  <div class="action-button gap-25percent" *ngIf="jobStepName">
     <button mat-raised-button color="primary" (click)="addJobStep()">
       <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Link Job Step' | translate }}
     </button>
@@ -56,11 +56,7 @@
 
   <div
     *ngIf="stepOrderHasChanged"
-    fxLayout="row"
-    class="container margin-t space-top"
-    fxLayout.xs="column"
-    fxLayoutAlign="center"
-    fxLayoutGap="2%"
+    class="container margin-t space-top layout-row gap-2percent layout-align-center layout-column-xs"
   >
     <button mat-raised-button [routerLink]="['../']">
       {{ 'labels.buttons.Cancel' | translate }}

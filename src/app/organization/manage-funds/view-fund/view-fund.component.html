@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_FUND'">
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
@@ -8,20 +8,20 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="mat-body-strong">
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.name' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ fundData.name }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.External Id' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           <mifosx-external-identifier
             externalId="{{ fundData.externalId }}"
             completed="true"
@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div class="layout-row layout-align-center gap-2percent column-on-mobile">
         <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
           {{ 'labels.buttons.Back' | translate }}
         </button>

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoansService } from '../loans.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoanDelinquencyActionsResolver implements Resolve<boolean> {
+export class LoanDelinquencyActionsResolver {
   /**
    * @param {LoansService} LoansService Loans service.
    */

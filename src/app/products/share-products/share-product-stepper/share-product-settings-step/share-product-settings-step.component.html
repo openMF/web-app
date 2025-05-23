@@ -1,6 +1,6 @@
 <form [formGroup]="shareProductSettingsForm">
-  <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
-    <h4 fxFlex="98%" class="mat-h4">
+  <div class="layout-row-wrap gap-2px responsive-column">
+    <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Shares per Client' | translate }}
       <i
         class="fas fa-question"
@@ -10,12 +10,12 @@
       ></i>
     </h4>
 
-    <mat-form-field fxFlex="31%">
+    <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
       <input type="number" matInput formControlName="minimumShares" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="31%">
+    <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
       <input type="number" matInput formControlName="nominalShares" required />
       <mat-error>
@@ -24,12 +24,12 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field fxFlex="31%">
+    <mat-form-field class="flex-31">
       <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
       <input type="number" matInput formControlName="maximumShares" />
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">
+    <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Minimum Active Period' | translate }}
       <i
         class="fas fa-question"
@@ -37,12 +37,12 @@
       ></i>
     </h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="minimumActivePeriodForDividends" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="minimumactiveperiodFrequencyType">
         <mat-option
@@ -54,17 +54,17 @@
       </mat-select>
     </mat-form-field>
 
-    <h4 fxFlex="98%" class="mat-h4">
+    <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Lock-in Period' | translate }}
       <i class="fas fa-question" matTooltip="{{ 'tooltips.Used to indicate the length of time' | translate }}"></i>
     </h4>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="lockinPeriodFrequency" />
     </mat-form-field>
 
-    <mat-form-field fxFlex="48%">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         <mat-option
@@ -77,8 +77,7 @@
     </mat-form-field>
 
     <mat-checkbox
-      fxFlex="98%"
-      class="margin-v"
+      class="flex-98 margin-v"
       labelPosition="before"
       matTooltip="{{
         'tooltips.Indicates whether the dividends can be processed even share account of this share product is inactive'
@@ -90,7 +89,7 @@
     </mat-checkbox>
   </div>
 
-  <div fxLayout="row" class="margin-t" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

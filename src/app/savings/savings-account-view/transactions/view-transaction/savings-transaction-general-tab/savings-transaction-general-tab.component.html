@@ -1,4 +1,4 @@
-<div fxLayoutAlign="end" class="container m-b-20" fxLayoutGap="2%">
+<div class="container transaction-buttons m-b-20 align-end-center gap-2percent" align="end">
   <span
     *ngIf="
       !(
@@ -48,54 +48,54 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="100%" [ngClass]="transactionColor()"></div>
+      <div class="layout-row-wrap card-content">
+        <div class="flex-100" [ngClass]="transactionColor()"></div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Id' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.id }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Transaction Type' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.transactionType.value | translateKey: 'catalogs' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Transaction Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.date | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Currency' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.currency.displayLabel }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong">
+        <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Amount' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
-        <div fxFlex="50%" class="mat-body-strong" *ngIf="transactionData.note">
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.note">
           {{ 'labels.inputs.Note' | translate }}
         </div>
 
-        <div fxFlex="50%" *ngIf="transactionData.note">
+        <div class="flex-50" *ngIf="transactionData.note">
           {{ transactionData.note }}
         </div>
 
@@ -106,7 +106,7 @@
         </mifosx-transaction-payment-detail>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%" fxLayout.lt-md="column">
+      <div class="layout-row layout-align-center gap-2percent column-on-mobile">
         <button type="button" mat-raised-button color="primary" [routerLink]="['../../']">
           {{ 'labels.buttons.Back' | translate }}
         </button>

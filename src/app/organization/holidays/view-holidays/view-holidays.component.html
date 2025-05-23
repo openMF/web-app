@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
+<div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <span *mifosxHasPermission="'ACTIVATE_HOLIDAY'">
     <button mat-raised-button color="accent" (click)="activateHoliday()" *ngIf="holidayData.status.value !== 'Active'">
       <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
@@ -18,44 +18,44 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div fxLayout="row wrap" class="content">
-        <div fxFlex="50%" class="header">
+      <div class="layout-row-wrap">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Name' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ holidayData.name }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.From Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ holidayData.fromDate | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.To Date' | translate }}
         </div>
 
-        <div fxFlex="50%">
+        <div class="flex-50">
           {{ holidayData.toDate | dateFormat }}
         </div>
 
-        <div fxFlex="50%" class="header">
+        <div class="flex-50 header">
           {{ 'labels.inputs.Repayments Scheduled To' | translate }}
         </div>
 
         <div
-          fxFlex="50%"
+          class="flex-50"
           *ngIf="holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null"
         >
           {{ holidayData.repaymentsRescheduledTo | dateFormat }}
         </div>
 
         <div
-          fxFlex="50%"
+          class="flex-50"
           *ngIf="holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null"
         >
           {{ 'labels.inputs.Next Repayment Date' | translate }}
