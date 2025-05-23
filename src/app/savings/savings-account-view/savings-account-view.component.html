@@ -46,7 +46,10 @@
             </span>
           </div>
 
-          <div *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
+          <div
+            class="flex-30"
+            *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval"
+          >
             <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
             <table class="account-overview">
               <tbody>
@@ -70,7 +73,6 @@
             </table>
           </div>
 
-          <span class="flex-auto"></span>
           <div class="flex-5">
             <button
               mat-icon-button

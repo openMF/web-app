@@ -127,11 +127,11 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   hideAccruals() {
-    this.filterTransactions(this.hideReversedParam.value, !this.hideAccrualsParam.value);
+    this.filterTransactions(this.hideReversedParam.value, this.hideAccrualsParam.value);
   }
 
   hideReversed() {
-    this.filterTransactions(!this.hideReversedParam.value, this.hideAccrualsParam.value);
+    this.filterTransactions(this.hideReversedParam.value, this.hideAccrualsParam.value);
   }
 
   filterTransactions(hideReversed: boolean, hideAccrual: boolean): void {

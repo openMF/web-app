@@ -45,8 +45,7 @@
             </mat-form-field>
 
             <div class="flex-fill">
-              <span class="expandcollapsebutton m-l-10 m-t-40 flex-75">
-                (click)="addPaymentDetails()">
+              <span class="expandcollapsebutton m-l-10 m-t-40 flex-75" (click)="addPaymentDetails()">
                 <mat-slide-toggle>
                   <div [className]="showPaymentDetails ? 'enabled' : 'disabled'">
                     <span class="m-l-10">{{ 'labels.inputs.Show Payment Details' | translate }}</span>

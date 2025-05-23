@@ -268,7 +268,9 @@
 }
 
 .flex-40 {
-  flex: 0 0 40%;
+  //flex: 0 0 40%;
+  flex: 1;
+  width: 40%;
 }
 
 .flex-43 {
@@ -310,7 +312,9 @@
 }
 
 .flex-60 {
-  flex: 0 0 60%;
+  // flex: 0 0 60%;
+  flex: 1;
+  width: 60%;
 }
 
 .flex-63 {
@@ -394,9 +398,16 @@
 
 .flex-100 {
   flex: 0 0 100%;
+  width: 100%;
+}
+
+.flex-contents {
+  display: contents;
+  flex: 1;
 }
 
 .flex-fill {
+  display: flex;
   flex: 1 1 auto;
   min-width: 0;
   min-height: 0;
@@ -573,4 +584,9 @@
   display: flex;
   gap: 4px;
   margin-right: 10px;
+}
+
+.content {
+  display: contents;
+  flex: 1;
 }

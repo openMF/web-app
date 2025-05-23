@@ -19,8 +19,7 @@
 
             <!-- Business Date -->
             <div class="flex-fill layout-row-wrap gap-2percent layout-lt-md-column">
-              <div class="flex-50">
-                *ngIf="!isEditInProgress">
+              <div class="flex-50" *ngIf="!isEditInProgress">
                 <span class="date-type flex-40">{{ 'labels.inputs.Business Date' | translate }}: </span>
                 <span class="date-value flex-60">{{ businessDate | dateFormat }}</span>
               </div>
@@ -73,8 +72,7 @@
 
             <!-- COB Date -->
             <div class="flex-fill layout-row-wrap gap-2percent layout-lt-md-column">
-              <div class="flex-50">
-                *ngIf="!isEditInProgress">
+              <div class="flex-50" *ngIf="!isEditInProgress">
                 <span class="date-type">{{ 'labels.inputs.COB Date' | translate }}: </span>
                 <span class="date-value flex-60">{{ cobDate | dateFormat }}</span>
               </div>

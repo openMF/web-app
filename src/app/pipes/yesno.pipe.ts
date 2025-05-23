@@ -12,6 +12,6 @@ export class YesnoPipe implements PipeTransform {
       return null;
     }
     const result = value ? 'Yes' : 'No';
-    return this.translateService.instant('labels.buttons.' + result);
+    return this.translateService.instant('tooltips.' + result);
   }
 }

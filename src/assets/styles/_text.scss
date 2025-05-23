@@ -8,11 +8,25 @@ html {
 }
 
 body {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
   font-weight: 400;
-  font-size: 0.875rem;
+  font-size: 14px;
   color: rgb(0 0 0 / 87%);
   line-height: 1.5;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  letter-spacing: normal;
+}
+
+.mat-h1,
+.mat-headline,
+.mat-typography .mat-h1,
+.mat-typography .mat-headline,
+.mat-typography h1 {
+  font:
+    400 24px/32px Roboto,
+    'Helvetica Neue',
+    sans-serif;
+  letter-spacing: normal;
+  margin: 0 0 16px;
 }
 
 .lh-1 {

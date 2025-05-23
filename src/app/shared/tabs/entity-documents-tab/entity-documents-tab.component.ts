@@ -72,7 +72,8 @@ export class EntityDocumentsTabComponent implements OnInit {
 
   uploadDocument() {
     const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
-      data: { documentIdentifier: false, entityType: '' }
+      data: { documentIdentifier: false, entityType: '' },
+      width: '33rem'
     });
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       if (dialogResponse) {
