@@ -93,14 +93,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mifosx-web-app:build"
+            "buildTarget": "mifosx-web-app:build"
           },
           "configurations": {
             "development": {
-              "browserTarget": "mifosx-web-app:build:development"
+              "buildTarget": "mifosx-web-app:build:development"
             },
             "production": {
-              "browserTarget": "mifosx-web-app:build:production"
+              "buildTarget": "mifosx-web-app:build:production"
             }
           },
           "defaultConfiguration": "development"
@@ -108,7 +108,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mifosx-web-app:build"
+            "buildTarget": "mifosx-web-app:build"
           }
         },
         "test": {
