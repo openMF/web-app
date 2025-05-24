@@ -1,3 +1,12 @@
 .input {
   max-width: 37rem;
 }
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field {
+  width: 100%;
+}
