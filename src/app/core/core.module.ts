@@ -1,6 +1,12 @@
 /** Angular Imports */
-import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { NgModule, Optional, SkipSelf, Injector } from '@angular/core';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpHandler,
+  provideHttpClient,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 /** Translation Imports */
@@ -8,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 /** Custom Services */
 import { AuthenticationService } from './authentication/authentication.service';
-import { HttpService } from './http/http.service';
+import { HttpService, HTTP_DYNAMIC_INTERCEPTORS } from './http/http.service';
 import { HttpCacheService } from './http/http-cache.service';
 import { ProgressBarService } from './progress-bar/progress-bar.service';
 
@@ -67,12 +73,32 @@ import { ContentComponent } from './shell/content/content.component';
       multi: true
     },
     HttpCacheService,
-    ApiPrefixInterceptor,
-    ErrorHandlerInterceptor,
-    CacheInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiPrefixInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptor,
+      multi: true
+    },
     {
       provide: HttpClient,
-      useClass: HttpService
+      useClass: HttpService,
+      deps: [
+        HttpHandler,
+        Injector,
+        [
+          new Optional(),
+          HTTP_DYNAMIC_INTERCEPTORS
+        ]
+      ]
     },
     ProgressBarService,
     {
