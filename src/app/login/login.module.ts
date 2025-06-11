@@ -11,6 +11,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgOptimizedImage } from '@angular/common';
 
 /**
  * Login Module
@@ -21,7 +22,8 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     SharedModule,
     LoginRoutingModule,
-    TranslateModule
+    TranslateModule,
+    NgOptimizedImage
   ],
   declarations: [
     LoginComponent,

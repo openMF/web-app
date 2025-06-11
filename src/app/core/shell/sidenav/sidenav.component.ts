@@ -1,10 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, Input, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 /** Custom Components */
-import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
+import {
+  KeyboardShortcutsDialogComponent
+} from 'app/shared/keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
 
 /** Custom Services */
 import { AuthenticationService } from '../../authentication/authentication.service';
@@ -14,6 +16,16 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 /** Custom Imports */
 import { frequentActivities } from './frequent-activities';
 import { SettingsService } from 'app/settings/settings.service';
+
+export type TooltipPosition =
+  | 'left'
+  | 'right'
+  | 'above'
+  | 'below'
+  | 'before'
+  | 'after';
+
+
 
 /**
  * Sidenav component.
@@ -27,7 +39,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   /** True if sidenav is in collapsed state. */
   @Input() sidenavCollapsed: boolean;
   /** Tooltip position */
-  tooltipPosition = 'after';
+  tooltipPosition: TooltipPosition = 'after';
   /** Username of authenticated user. */
   username: string;
   /** Array of all user activities */
@@ -59,7 +71,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private authenticationService: AuthenticationService,
     private settingsService: SettingsService,
-    private configurationWizardService: ConfigurationWizardService,
+    protected configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService
   ) {
     this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
@@ -93,7 +105,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
    */
   showKeyboardShortcuts() {
     const dialogRef = this.dialog.open(KeyboardShortcutsDialogComponent);
-    dialogRef.afterClosed().subscribe((response: any) => {});
+    dialogRef.afterClosed().subscribe(() => {});
   }
 
   /**
@@ -106,19 +118,18 @@ export class SidenavComponent implements OnInit, AfterViewInit {
       frequencyCounts[this.userActivity[--index]] = (frequencyCounts[this.userActivity[index]] || 0) + 1;
     }
     const frequencyCountsArray = Object.entries(frequencyCounts);
-    const topThreeFrequentActivities = frequencyCountsArray
+    return frequencyCountsArray
       .sort((a: any, b: any) => b[1] - a[1])
       .map((entry: any[]) => entry[0])
       .filter(
         (activity: string) => ![
-            '/',
-            '/login',
-            '/home',
-            '/dashboard'
-          ].includes(activity)
+          '/',
+          '/login',
+          '/home',
+          '/dashboard'
+        ].includes(activity)
       )
       .slice(0, 3);
-    return topThreeFrequentActivities;
   }
 
   /**

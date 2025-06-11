@@ -1,12 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 /** Custom Imports. */
 import { activities } from './activities';
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private configurationWizardService: ConfigurationWizardService,
+    protected configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService
   ) {}
 
