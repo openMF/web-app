@@ -66,11 +66,11 @@
     -->
     <mifosx-login-form *ngIf="!resetPassword && !twoFactorAuthenticationRequired"></mifosx-login-form>
 
-    <div class="layout-row m-t-20">
+    <div class="layout-row">
       <mifosx-reset-password *ngIf="resetPassword"></mifosx-reset-password>
       <mifosx-two-factor-authentication *ngIf="twoFactorAuthenticationRequired"></mifosx-two-factor-authentication>
     </div>
-    <div class="layout-row m-t-20">
+    <div class="layout-row">
       <!-- Contact Information/Resources (hidden on smaller screens) -->
       <mat-list class="information-list align-items-center custom-horizontal-list hide-lt-lg">
         <mat-list-item

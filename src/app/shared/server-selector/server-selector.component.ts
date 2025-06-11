@@ -65,9 +65,13 @@ export class ServerSelectorComponent implements OnInit {
    */
   addNewServer(): void {
     let servers;
-    this.settingsService.setServer(this.form.value.url);
+    let url = this.form.value.url;
+    if (url.endsWith('/')) {
+      url = url.slice(0, -1);
+    }
+    this.settingsService.setServer(url);
     servers = this.settingsService.servers;
-    servers.push(this.form.value.url);
+    servers.push(url);
     this.settingsService.setServers(servers);
     window.location.reload();
   }

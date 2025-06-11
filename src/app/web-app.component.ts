@@ -205,8 +205,10 @@ export class WebAppComponent implements OnInit {
     }
     // Set default max date picker as Today
     this.settingsService.setBusinessDate(this.dateUtils.formatDate(new Date(), SettingsService.businessDateFormat));
-    // Set the server list from the env var FINERACT_API_URLS
-    this.settingsService.setServers(environment.baseApiUrls.split(','));
+    // Set the server list from the env var FINERACT_API_URLS, but avoid overwriting "Add new server" user choice
+    if (!this.settingsService.servers) {
+      this.settingsService.setServers(environment.baseApiUrls.split(','));
+    }
     // Set the Tenant Identifier(s) list from the env var
     if (!localStorage.getItem('mifosXTenantIdentifier')) {
       this.settingsService.setTenantIdentifier(environment.fineractPlatformTenantId || 'default');
