@@ -1,14 +1,31 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable } from '@angular/material/table';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 
 /** Custom Dialogs */
 import { UnassignRoleDialogComponent } from '../custom-dialogs/unassign-role-dialog/unassign-role-dialog.component';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
+import { NgIf } from '@angular/common';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Groups Committee Tab Component
@@ -17,7 +34,25 @@ import { GroupsService } from 'app/groups/groups.service';
   selector: 'mifosx-committee-tab',
   templateUrl: './committee-tab.component.html',
   styleUrls: ['./committee-tab.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    HasPermissionDirective,
+    MatButton,
+    RouterLink,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatTooltip,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class CommitteeTabComponent {
   /** Group Status */

@@ -1,10 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TruncateTextPipe } from '../../pipes/truncate-text.pipe';
 
 @Component({
   selector: 'mifosx-long-text',
   templateUrl: './long-text.component.html',
   styleUrls: ['./long-text.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    FaIconComponent,
+    TruncateTextPipe
+  ]
 })
 export class LongTextComponent implements OnInit {
   @Input() textValue: string;

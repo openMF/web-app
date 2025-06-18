@@ -1,9 +1,26 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
 /**
  * View Audit Component.
@@ -12,7 +29,27 @@ import { MatTableDataSource } from '@angular/material/table';
   selector: 'mifosx-view-audit',
   templateUrl: './view-audit.component.html',
   styleUrls: ['./view-audit.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardContent,
+    NgIf,
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatButton,
+    RouterLink,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewAuditComponent implements OnInit {
   /** Audit Trail Data. */

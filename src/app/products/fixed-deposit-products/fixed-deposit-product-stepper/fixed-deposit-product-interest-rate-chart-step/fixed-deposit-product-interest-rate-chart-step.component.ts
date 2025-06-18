@@ -1,7 +1,13 @@
 /** Angular Imports */
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -16,8 +22,34 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatCard } from '@angular/material/card';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FindPipe } from '../../../../pipes/find.pipe';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-interest-rate-chart-step',
@@ -30,7 +62,43 @@ import { SettingsService } from 'app/settings/settings.service';
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
 
   ],
-  standalone: false
+  imports: [
+    ReactiveFormsModule,
+    MatTooltip,
+    MatButton,
+    FaIconComponent,
+    NgFor,
+    MatDivider,
+    MatIconButton,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatError,
+    MatCheckbox,
+    NgIf,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatCard,
+    NgSwitch,
+    NgSwitchCase,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatStepperPrevious,
+    MatStepperNext,
+    TranslatePipe,
+    FindPipe,
+    NgxTranslatePipe
+  ]
 })
 export class FixedDepositProductInterestRateChartStepComponent implements OnInit {
   @Input() fixedDepositProductsTemplate: any;

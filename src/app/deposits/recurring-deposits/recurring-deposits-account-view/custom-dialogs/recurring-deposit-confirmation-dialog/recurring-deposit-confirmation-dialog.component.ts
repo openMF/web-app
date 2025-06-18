@@ -1,11 +1,31 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-recurring-deposit-confirmation-action',
   templateUrl: './recurring-deposit-confirmation-dialog.component.html',
   styleUrls: ['./recurring-deposit-confirmation-dialog.component.scss'],
-  standalone: false
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class RecurringDepositConfirmationDialogComponent {
   /**

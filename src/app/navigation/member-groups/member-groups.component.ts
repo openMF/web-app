@@ -1,14 +1,49 @@
 /** Angular Imports */
 import { Component, Input, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-member-groups',
   templateUrl: './member-groups.component.html',
   styleUrls: ['./member-groups.component.scss'],
-  standalone: false
+  imports: [
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class MemberGroupsComponent {
   /** Columns to be displayed in the member groups table. */

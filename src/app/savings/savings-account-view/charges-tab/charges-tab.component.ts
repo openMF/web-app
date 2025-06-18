@@ -1,8 +1,20 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -20,6 +32,13 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { NgIf, CurrencyPipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatTooltip } from '@angular/material/tooltip';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
 /**
  * Charges Tab Component
@@ -28,7 +47,27 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'mifosx-charges-tab',
   templateUrl: './charges-tab.component.html',
   styleUrls: ['./charges-tab.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    MatButton,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    HasPermissionDirective,
+    MatTooltip,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    RouterLink,
+    CurrencyPipe,
+    TranslatePipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ChargesTabComponent implements OnInit {
   /** Savings Account Data */

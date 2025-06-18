@@ -1,10 +1,18 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Centers Assign Staff Component
@@ -13,7 +21,23 @@ import { CentersService } from 'app/centers/centers.service';
   selector: 'mifosx-center-assign-staff',
   templateUrl: './center-assign-staff.component.html',
   styleUrls: ['./center-assign-staff.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    ReactiveFormsModule,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    NgFor,
+    MatOption,
+    NgIf,
+    MatError,
+    MatCardActions,
+    MatButton,
+    RouterLink,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class CenterAssignStaffComponent implements OnInit {
   /** Center Assign Staff form. */

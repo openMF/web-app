@@ -12,6 +12,13 @@ import { FixedDepositAccountTermsStepComponent } from '../fixed-deposit-account-
 import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-settings-step/fixed-deposit-account-settings-step.component';
 import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
 import { Dates } from 'app/core/utils/dates';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FixedDepositAccountInterestRateChartStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-interest-rate-chart-step/fixed-deposit-account-interest-rate-chart-step.component';
+import { NgIf } from '@angular/common';
+import { FixedDepositAccountPreviewStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-preview-step/fixed-deposit-account-preview-step.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Create Fixed Deposit Account Component
@@ -20,7 +27,22 @@ import { Dates } from 'app/core/utils/dates';
   selector: 'mifosx-create-fixed-deposit-account',
   templateUrl: './create-fixed-deposit-account.component.html',
   styleUrls: ['./create-fixed-deposit-account.component.scss'],
-  standalone: false
+  imports: [
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    FixedDepositAccountDetailsStepComponent,
+    FixedDepositAccountTermsStepComponent,
+    FixedDepositAccountSettingsStepComponent,
+    FixedDepositAccountInterestRateChartStepComponent,
+    FixedDepositAccountChargesStepComponent,
+    NgIf,
+    FixedDepositAccountPreviewStepComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class CreateFixedDepositAccountComponent {
   /** Fixed Deposits Account Details Step */

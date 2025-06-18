@@ -1,14 +1,23 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf } from '@angular/common';
+import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
+import { YesnoPipe } from '../../../pipes/yesno.pipe';
 
 /**
  * View Charge Component.
@@ -17,7 +26,19 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   selector: 'mifosx-view-charge',
   templateUrl: './view-charge.component.html',
   styleUrls: ['./view-charge.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatCard,
+    MatCardContent,
+    NgIf,
+    GlAccountDisplayComponent,
+    TranslatePipe,
+    YesnoPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewChargeComponent {
   /** Charge data. */

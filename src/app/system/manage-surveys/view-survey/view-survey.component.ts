@@ -5,6 +5,13 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { MatDivider } from '@angular/material/divider';
+import { NgFor, TitleCasePipe } from '@angular/common';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /**
  * View Survey Component.
@@ -13,7 +20,19 @@ import { SystemService } from 'app/system/system.service';
   selector: 'mifosx-view-survey',
   templateUrl: './view-survey.component.html',
   styleUrls: ['./view-survey.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    MatButton,
+    FaIconComponent,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatDivider,
+    MatCardContent,
+    NgFor,
+    TitleCasePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewSurveyComponent {
   /** Survey Data */

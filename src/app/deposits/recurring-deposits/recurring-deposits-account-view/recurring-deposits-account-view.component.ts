@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -15,6 +15,26 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { RecurringDepositConfirmationDialogComponent } from './custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
 import { Currency } from 'app/shared/models/general.model';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import {
+  MatCard,
+  MatCardHeader,
+  MatCardTitleGroup,
+  MatCardMdImage,
+  MatCardTitle,
+  MatCardContent
+} from '@angular/material/card';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, NgIf, NgFor, DecimalPipe, CurrencyPipe } from '@angular/common';
+import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
 
 /**
  * RecurringDeposits Account View Component
@@ -23,7 +43,37 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'mifosx-recurring-deposits-account-view',
   templateUrl: './recurring-deposits-account-view.component.html',
   styleUrls: ['./recurring-deposits-account-view.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardTitleGroup,
+    MatCardMdImage,
+    MatTooltip,
+    MatCardTitle,
+    NgClass,
+    AccountNumberComponent,
+    NgIf,
+    MatIconButton,
+    MatMenuTrigger,
+    MatIcon,
+    FaIconComponent,
+    MatMenu,
+    NgFor,
+    HasPermissionDirective,
+    MatMenuItem,
+    MatCardContent,
+    MatTabNav,
+    MatTabLink,
+    RouterLinkActive,
+    RouterLink,
+    MatTabNavPanel,
+    RouterOutlet,
+    DecimalPipe,
+    CurrencyPipe,
+    TranslatePipe,
+    StatusLookupPipe,
+    NgxTranslatePipe
+  ]
 })
 export class RecurringDepositsAccountViewComponent implements OnInit {
   /** RecurringDeposits Account Data */

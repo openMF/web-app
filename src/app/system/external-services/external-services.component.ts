@@ -1,5 +1,13 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
+import { MatCard } from '@angular/material/card';
+import { MatNavList, MatListItem } from '@angular/material/list';
+import { RouterLink } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatLine } from '@angular/material/grid-list';
+import { NgIf } from '@angular/common';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /**
  * External Services component.
@@ -7,7 +15,17 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'mifosx-external-services',
   templateUrl: './external-services.component.html',
-  standalone: false
+  imports: [
+    MatCard,
+    MatNavList,
+    MatListItem,
+    RouterLink,
+    MatIcon,
+    FaIconComponent,
+    MatLine,
+    NgIf,
+    NgxTranslatePipe
+  ]
 })
 export class ExternalServicesComponent {
   // Initialize an array of 4 boolean values, all set to false

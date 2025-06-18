@@ -1,11 +1,49 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-fixed-deposit-product-settings-step',
   templateUrl: './fixed-deposit-product-settings-step.component.html',
   styleUrls: ['./fixed-deposit-product-settings-step.component.scss'],
-  standalone: false
+  imports: [
+    ReactiveFormsModule,
+    MatTooltip,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatSelect,
+    NgFor,
+    MatOption,
+    MatError,
+    MatDivider,
+    MatCheckbox,
+    NgIf,
+    MatButton,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class FixedDepositProductSettingsStepComponent implements OnInit {
   @Input() fixedDepositProductsTemplate: any;

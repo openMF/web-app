@@ -1,11 +1,19 @@
 import { Component, Input } from '@angular/core';
 import { GLAccount } from 'app/shared/models/general.model';
+import { NgIf, NgClass } from '@angular/common';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-gl-account-display',
   templateUrl: './gl-account-display.component.html',
   styleUrls: ['./gl-account-display.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    NgClass,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class GlAccountDisplayComponent {
   @Input() glAccount: GLAccount | null = null;

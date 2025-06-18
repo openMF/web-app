@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterOutlet, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -8,6 +8,21 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+  MatExpansionPanelDescription
+} from '@angular/material/expansion';
+import { NgFor, NgIf } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { YesnoPipe } from '../../../pipes/yesno.pipe';
 
 /**
  * Client Family Members Tab
@@ -16,7 +31,24 @@ import { ClientsService } from '../../clients.service';
   selector: 'mifosx-family-members-tab',
   templateUrl: './family-members-tab.component.html',
   styleUrls: ['./family-members-tab.component.scss'],
-  standalone: false
+  imports: [
+    RouterOutlet,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatAccordion,
+    NgFor,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription,
+    MatDivider,
+    NgIf,
+    TranslatePipe,
+    DateFormatPipe,
+    YesnoPipe,
+    NgxTranslatePipe
+  ]
 })
 export class FamilyMembersTabComponent {
   /** Client Family Members */

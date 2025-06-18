@@ -13,6 +13,12 @@ import { ClientDatatableStepComponent } from '../client-stepper/client-datatable
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf, NgFor } from '@angular/common';
+import { ClientPreviewStepComponent } from '../client-stepper/client-preview-step/client-preview-step.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Create Client Component.
@@ -21,7 +27,22 @@ import { SettingsService } from 'app/settings/settings.service';
   selector: 'mifosx-create-client',
   templateUrl: './create-client.component.html',
   styleUrls: ['./create-client.component.scss'],
-  standalone: false
+  imports: [
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    ClientGeneralStepComponent,
+    ClientFamilyMembersStepComponent,
+    NgIf,
+    ClientAddressStepComponent,
+    NgFor,
+    ClientDatatableStepComponent,
+    ClientPreviewStepComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class CreateClientComponent {
   /** Client General Step */

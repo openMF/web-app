@@ -15,12 +15,35 @@ import { RecurringDepositProductAccountingStepComponent } from '../recurring-dep
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { RecurringDepositProductPreviewStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-preview-step/recurring-deposit-product-preview-step.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-edit-recurring-deposit-product',
   templateUrl: './edit-recurring-deposit-product.component.html',
   styleUrls: ['./edit-recurring-deposit-product.component.scss'],
-  standalone: false
+  imports: [
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    RecurringDepositProductDetailsStepComponent,
+    RecurringDepositProductCurrencyStepComponent,
+    RecurringDepositProductTermsStepComponent,
+    RecurringDepositProductSettingsStepComponent,
+    RecurringDepositProductInterestRateChartStepComponent,
+    RecurringDepositProductChargesStepComponent,
+    RecurringDepositProductAccountingStepComponent,
+    NgIf,
+    RecurringDepositProductPreviewStepComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class EditRecurringDepositProductComponent {
   @ViewChild(RecurringDepositProductDetailsStepComponent, { static: true })

@@ -1,10 +1,18 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /**
  * Edit Email Configuration Component.
@@ -13,7 +21,24 @@ import { SystemService } from 'app/system/system.service';
   selector: 'mifosx-edit-email',
   templateUrl: './edit-email.component.html',
   styleUrls: ['./edit-email.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    ReactiveFormsModule,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    NgIf,
+    MatError,
+    MatButton,
+    MatIconButton,
+    MatSuffix,
+    FaIconComponent,
+    MatCheckbox,
+    MatCardActions,
+    RouterLink,
+    NgxTranslatePipe
+  ]
 })
 export class EditEmailComponent implements OnInit {
   /** Password input field type. */

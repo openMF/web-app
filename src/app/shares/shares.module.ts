@@ -40,9 +40,7 @@ import { GeneralTabComponent } from './shares-account-view/general-tab/general-t
     SharedModule,
     PipesModule,
     DirectivesModule,
-    SharesRoutingModule
-  ],
-  declarations: [
+    SharesRoutingModule,
     SharesAccountViewComponent,
     TransactionsTabComponent,
     DividendsTabComponent,

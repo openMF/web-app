@@ -1,10 +1,19 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Take Survey Component
@@ -13,7 +22,21 @@ import { AuthenticationService } from '../../../../core/authentication/authentic
   selector: 'mifosx-take-survey',
   templateUrl: './take-survey.component.html',
   styleUrls: ['./take-survey.component.scss'],
-  standalone: false
+  imports: [
+    MatLabel,
+    MatSelect,
+    NgFor,
+    MatOption,
+    NgIf,
+    MatRadioGroup,
+    ReactiveFormsModule,
+    FormsModule,
+    MatRadioButton,
+    MatButton,
+    RouterLink,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class TakeSurveyComponent {
   /** List of all Survey Data */

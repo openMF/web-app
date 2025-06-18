@@ -93,9 +93,7 @@ import { LoansActiveClientMembersComponent } from './loans-account-stepper/loans
     DirectivesModule,
     LoansRoutingModule,
     PipesModule,
-    TranslateModule
-  ],
-  declarations: [
+    TranslateModule,
     AddLoanChargeComponent,
     LoansViewComponent,
     GeneralTabComponent,

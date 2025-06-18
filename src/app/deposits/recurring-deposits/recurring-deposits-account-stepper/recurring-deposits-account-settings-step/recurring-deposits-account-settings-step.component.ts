@@ -1,8 +1,28 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatDivider } from '@angular/material/divider';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /** Custom Services */
 
@@ -13,7 +33,30 @@ import { Currency } from 'app/shared/models/general.model';
   selector: 'mifosx-recurring-deposits-account-settings-step',
   templateUrl: './recurring-deposits-account-settings-step.component.html',
   styleUrls: ['./recurring-deposits-account-settings-step.component.scss'],
-  standalone: false
+  imports: [
+    ReactiveFormsModule,
+    MatCheckbox,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatSelect,
+    NgFor,
+    MatOption,
+    NgIf,
+    InputAmountComponent,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatError,
+    MatDivider,
+    MatButton,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {
   @Input() isNew = true;

@@ -1,12 +1,24 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
+import { NgIf, CurrencyPipe } from '@angular/common';
+import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 
 @Component({
   selector: 'mifosx-general-tab',
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    ExternalIdentifierComponent,
+    CurrencyPipe,
+    TranslatePipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class GeneralTabComponent {
   fixedDepositsAccountData: any;

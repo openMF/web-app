@@ -1,10 +1,15 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from '../../../centers.service';
+import { MatCard } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Staff Assignment History Component
@@ -13,7 +18,14 @@ import { CentersService } from '../../../centers.service';
   selector: 'mifosx-staff-assignment-history',
   templateUrl: './staff-assignment-history.component.html',
   styleUrls: ['./staff-assignment-history.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class StaffAssignmentHistoryComponent implements OnInit {
   /** Staff Assignment History Data */

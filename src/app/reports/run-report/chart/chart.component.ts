@@ -9,6 +9,10 @@ import { ChartData } from '../../common-models/chart-data.model';
 
 /** Charting Imports */
 import Chart from 'chart.js';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { NgStyle } from '@angular/common';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Chart Component
@@ -17,7 +21,13 @@ import Chart from 'chart.js';
   selector: 'mifosx-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
-  standalone: false
+  imports: [
+    MatButtonToggleGroup,
+    MatButtonToggle,
+    NgStyle,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ChartComponent implements OnChanges {
   /** Run Report Data */

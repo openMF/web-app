@@ -1,13 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { NgIf, NgFor } from '@angular/common';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { MatSelect } from '@angular/material/select';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Create Guarantor Action
@@ -16,7 +34,32 @@ import { Dates } from 'app/core/utils/dates';
   selector: 'mifosx-create-guarantor',
   templateUrl: './create-guarantor.component.html',
   styleUrls: ['./create-guarantor.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    ReactiveFormsModule,
+    MatCardContent,
+    MatCheckbox,
+    NgIf,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatAutocompleteTrigger,
+    MatError,
+    MatAutocomplete,
+    NgFor,
+    MatOption,
+    MatSelect,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatCardActions,
+    MatButton,
+    RouterLink,
+    HasPermissionDirective,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class CreateGuarantorComponent implements OnInit, AfterViewInit {
   @Input() dataObject: any;

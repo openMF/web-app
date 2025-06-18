@@ -13,13 +13,11 @@ import { NotificationsPageComponent } from './notifications-page/notifications-p
  * Notifications Module
  */
 @NgModule({
-  declarations: [
-    NotificationsPageComponent
-  ],
   imports: [
     SharedModule,
     PipesModule,
-    NotificationsRoutingModule
+    NotificationsRoutingModule,
+    NotificationsPageComponent
   ]
 })
 export class NotificationsModule {}

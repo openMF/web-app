@@ -1,8 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
@@ -15,6 +15,30 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { Dates } from 'app/core/utils/dates';
+import { MatCard, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { FindPipe } from '../../../../pipes/find.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 
 /**
  * Group Attendance component.
@@ -23,7 +47,38 @@ import { Dates } from 'app/core/utils/dates';
   selector: 'mifosx-group-attendance',
   templateUrl: './group-attendance.component.html',
   styleUrls: ['./group-attendance.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    ReactiveFormsModule,
+    NgFor,
+    MatOption,
+    MatHint,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    NgSwitch,
+    NgSwitchCase,
+    MatIconButton,
+    FaIconComponent,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatCardActions,
+    MatButton,
+    RouterLink,
+    HasPermissionDirective,
+    TranslatePipe,
+    FindPipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class GroupAttendanceComponent implements OnInit {
   /** Members data. */

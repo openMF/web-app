@@ -1,7 +1,18 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { SchedulerJob } from '../models/scheduler-job.model';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 
 interface ErrorJobDataType {
   job: SchedulerJob;
@@ -11,7 +22,17 @@ interface ErrorJobDataType {
   selector: 'mifosx-error-log-popover',
   templateUrl: './error-log-popover.component.html',
   styleUrls: ['./error-log-popover.component.scss'],
-  standalone: false
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    NgIf,
+    MatButton,
+    MatDialogActions,
+    MatDialogClose,
+    DatetimeFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ErrorLogPopoverComponent implements OnInit {
   show = false;

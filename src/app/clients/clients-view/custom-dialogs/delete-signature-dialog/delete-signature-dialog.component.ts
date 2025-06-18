@@ -1,6 +1,18 @@
 /** Angular Imports */
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
+import { NgIf } from '@angular/common';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Delete signature dialog component.
@@ -9,7 +21,17 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   selector: 'mifosx-delete-signature-dialog',
   templateUrl: './delete-signature-dialog.component.html',
   styleUrls: ['./delete-signature-dialog.component.scss'],
-  standalone: false
+  imports: [
+    MatDialogTitle,
+    NgIf,
+    CdkScrollable,
+    MatDialogContent,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class DeleteSignatureDialogComponent {
   /** Id of client signature in documents */

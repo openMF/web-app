@@ -3,8 +3,8 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { UntypedFormControl } from '@angular/forms';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
@@ -15,6 +15,29 @@ import { GroupsService } from './groups.service';
 
 /** Custom Data Source */
 import { GroupsDataSource } from './groups.datasource';
+import { MatCard } from '@angular/material/card';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../directives/has-permission/has-permission.directive';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
 
 /**
  * Groups component.
@@ -23,7 +46,35 @@ import { GroupsDataSource } from './groups.datasource';
   selector: 'mifosx-app-groups',
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatFormField,
+    MatInput,
+    ReactiveFormsModule,
+    MatCheckbox,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    HasPermissionDirective,
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    NgClass,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    AsyncPipe,
+    TranslatePipe,
+    StatusLookupPipe,
+    NgxTranslatePipe
+  ]
 })
 export class GroupsComponent implements OnInit, AfterViewInit {
   @ViewChild('showClosedGroups', { static: true }) showClosedGroups: MatCheckbox;

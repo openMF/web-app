@@ -1,19 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoanProduct } from '../../models/loan-product.model';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { LoanProductSummaryComponent } from '../../common/loan-product-summary/loan-product-summary.component';
 
 @Component({
   selector: 'mifosx-general-tab',
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    MatButton,
+    FaIconComponent,
+    RouterLink,
+    LoanProductSummaryComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class GeneralTabComponent implements OnInit {
   loanProduct: LoanProduct;

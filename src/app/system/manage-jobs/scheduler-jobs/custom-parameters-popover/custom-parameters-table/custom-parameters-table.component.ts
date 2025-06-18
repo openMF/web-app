@@ -1,11 +1,50 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { JobIdAndParameterType, JobParameterType } from '../custom-parameters-popover.component';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-custom-parameters-table',
   templateUrl: './custom-parameters-table.component.html',
   styleUrls: ['./custom-parameters-table.component.scss'],
-  standalone: false
+  imports: [
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatFormField,
+    MatInput,
+    ReactiveFormsModule,
+    FormsModule,
+    MatIconButton,
+    MatTooltip,
+    FaIconComponent,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatButton,
+    NgxTranslatePipe
+  ]
 })
 export class CustomParametersTableComponent implements OnInit {
   /* Job name for table title */

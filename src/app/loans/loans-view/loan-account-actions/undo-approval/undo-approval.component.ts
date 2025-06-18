@@ -1,10 +1,17 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormControl, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 /**
  * Undo Loan component.
  */
@@ -12,7 +19,20 @@ import { LoansService } from 'app/loans/loans.service';
   selector: 'mifosx-undo-approval',
   templateUrl: './undo-approval.component.html',
   styleUrls: ['./undo-approval.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    ReactiveFormsModule,
+    MatCardActions,
+    MatButton,
+    RouterLink,
+    HasPermissionDirective,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class UndoApprovalComponent implements OnInit {
   /** Form Controller. */

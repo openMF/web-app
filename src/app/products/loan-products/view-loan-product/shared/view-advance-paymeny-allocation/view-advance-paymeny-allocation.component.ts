@@ -4,12 +4,24 @@ import {
   CreditAllocation,
   PaymentAllocation
 } from 'app/products/loan-products/loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { NgIf, NgFor } from '@angular/common';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-view-advance-paymeny-allocation',
   templateUrl: './view-advance-paymeny-allocation.component.html',
   styleUrls: ['./view-advance-paymeny-allocation.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    NgFor,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewAdvancePaymenyAllocationComponent {
   @Input() paymentAllocation: PaymentAllocation | null;

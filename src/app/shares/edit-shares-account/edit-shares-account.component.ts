@@ -11,6 +11,11 @@ import { SharesAccountChargesStepComponent } from '../shares-account-stepper/sha
 import { SharesService } from '../shares.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { SharesAccountPreviewStepComponent } from '../shares-account-stepper/shares-account-preview-step/shares-account-preview-step.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /**
  * Edit Shares Account Component
@@ -19,7 +24,19 @@ import { Dates } from 'app/core/utils/dates';
   selector: 'mifosx-edit-shares-account',
   templateUrl: './edit-shares-account.component.html',
   styleUrls: ['./edit-shares-account.component.scss'],
-  standalone: false
+  imports: [
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    SharesAccountDetailsStepComponent,
+    SharesAccountTermsStepComponent,
+    SharesAccountChargesStepComponent,
+    NgIf,
+    SharesAccountPreviewStepComponent,
+    NgxTranslatePipe
+  ]
 })
 export class EditSharesAccountComponent {
   /** Shares Account and Template */

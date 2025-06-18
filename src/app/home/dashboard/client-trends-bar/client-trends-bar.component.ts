@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,6 +13,15 @@ import { HomeService } from '../../home.service';
 /** Charting Imports */
 import { Dates } from 'app/core/utils/dates';
 import Chart from 'chart.js';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgStyle } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Client Trends Bar Chart Component.
@@ -21,7 +30,23 @@ import Chart from 'chart.js';
   selector: 'mifosx-client-trends-bar',
   templateUrl: './client-trends-bar.component.html',
   styleUrls: ['./client-trends-bar.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardHeader,
+    FaIconComponent,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    ReactiveFormsModule,
+    NgFor,
+    MatOption,
+    MatCardContent,
+    NgStyle,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ClientTrendsBarComponent implements OnInit {
   /** Static Form control for office Id */

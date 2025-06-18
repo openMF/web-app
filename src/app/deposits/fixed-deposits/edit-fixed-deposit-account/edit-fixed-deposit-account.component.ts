@@ -13,6 +13,13 @@ import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-accou
 import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FixedDepositAccountInterestRateChartStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-interest-rate-chart-step/fixed-deposit-account-interest-rate-chart-step.component';
+import { NgIf } from '@angular/common';
+import { FixedDepositAccountPreviewStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-preview-step/fixed-deposit-account-preview-step.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Edit Fixed Deposit Account Component
@@ -21,7 +28,22 @@ import { Currency } from 'app/shared/models/general.model';
   selector: 'mifosx-edit-fixed-deposit-account',
   templateUrl: './edit-fixed-deposit-account.component.html',
   styleUrls: ['./edit-fixed-deposit-account.component.scss'],
-  standalone: false
+  imports: [
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    FixedDepositAccountDetailsStepComponent,
+    FixedDepositAccountTermsStepComponent,
+    FixedDepositAccountSettingsStepComponent,
+    FixedDepositAccountInterestRateChartStepComponent,
+    FixedDepositAccountChargesStepComponent,
+    NgIf,
+    FixedDepositAccountPreviewStepComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class EditFixedDepositAccountComponent {
   /** Fixed Deposits Account Details Step */

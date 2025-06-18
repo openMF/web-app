@@ -1,9 +1,21 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
@@ -15,12 +27,44 @@ import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicke
 import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { NgIf, NgFor, KeyValuePipe } from '@angular/common';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
 
 @Component({
   selector: 'mifosx-client-approval',
   templateUrl: './client-approval.component.html',
   styleUrls: ['./client-approval.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    MatFormField,
+    MatInput,
+    HasPermissionDirective,
+    MatButton,
+    FaIconComponent,
+    NgFor,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCheckbox,
+    MatCellDef,
+    MatCell,
+    RouterLink,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    KeyValuePipe,
+    AccountsFilterPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ClientApprovalComponent {
   /** Grouped Clients Data */

@@ -1,11 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { NgIf } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-entity-name',
   templateUrl: './entity-name.component.html',
   styleUrls: ['./entity-name.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    FaIconComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class EntityNameComponent implements OnInit {
   @Input() entityName: string;

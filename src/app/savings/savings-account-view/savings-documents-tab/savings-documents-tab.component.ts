@@ -4,12 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { environment } from 'environments/environment';
+import { EntityDocumentsTabComponent } from '../../../shared/tabs/entity-documents-tab/entity-documents-tab.component';
 
 @Component({
   selector: 'mifosx-savings-documents-tab',
   templateUrl: './savings-documents-tab.component.html',
   styleUrls: ['./savings-documents-tab.component.scss'],
-  standalone: false
+  imports: [EntityDocumentsTabComponent]
 })
 export class SavingsDocumentsTabComponent {
   /** Stores the resolved savings documents data */

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -13,10 +13,34 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
+import { MatDivider } from '@angular/material/divider';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TransactionPaymentDetailComponent } from '../../../../shared/transaction-payment-detail/transaction-payment-detail.component';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 
 /** Custom Dialogs */
 
@@ -28,7 +52,34 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'mifosx-view-transaction',
   templateUrl: './view-transaction.component.html',
   styleUrls: ['./view-transaction.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    HasPermissionDirective,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatCard,
+    MatCardContent,
+    NgClass,
+    ExternalIdentifierComponent,
+    MatDivider,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatTooltip,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    TransactionPaymentDetailComponent,
+    CurrencyPipe,
+    TranslatePipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewTransactionComponent implements OnInit {
   /** Transaction data. */

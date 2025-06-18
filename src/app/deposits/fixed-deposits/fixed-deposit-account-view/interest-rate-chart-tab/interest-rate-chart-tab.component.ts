@@ -2,6 +2,25 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatButton } from '@angular/material/button';
+import { NgIf, NgSwitch, TitleCasePipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard } from '@angular/material/card';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 
 /**
  * Interest Rate Chart Tab
@@ -17,7 +36,27 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
 
   ],
-  standalone: false
+  imports: [
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatButton,
+    NgIf,
+    FaIconComponent,
+    MatCard,
+    NgSwitch,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    TitleCasePipe,
+    TranslatePipe,
+    FormatNumberPipe,
+    NgxTranslatePipe
+  ]
 })
 export class InterestRateChartTabComponent {
   /** Fixed Deposits Account Status */

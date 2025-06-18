@@ -1,5 +1,12 @@
 /** Angular Imports */
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { MatList, MatListItem } from '@angular/material/list';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { FindPipe } from '../../../../pipes/find.pipe';
 
 /**
  * Campaign Preview Step.
@@ -8,7 +15,16 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
   selector: 'mifosx-campaign-preview-step',
   templateUrl: './campaign-preview-step.component.html',
   styleUrls: ['./campaign-preview-step.component.scss'],
-  standalone: false
+  imports: [
+    MatList,
+    MatListItem,
+    MatInput,
+    MatButton,
+    RouterLink,
+    TranslatePipe,
+    FindPipe,
+    NgxTranslatePipe
+  ]
 })
 export class CampaignPreviewStepComponent implements OnInit {
   /** SMS Campaign */

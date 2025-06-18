@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -8,6 +8,13 @@ import { AccountingService } from '../../accounting.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * View accounting rule component.
@@ -16,7 +23,18 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   selector: 'mifosx-view-rule',
   templateUrl: './view-rule.component.html',
   styleUrls: ['./view-rule.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatCard,
+    MatCardContent,
+    NgIf,
+    NgFor,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewRuleComponent {
   /** Accounting rule. */

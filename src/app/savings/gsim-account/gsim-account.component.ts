@@ -1,8 +1,26 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { NgClass, NgIf } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 
 /**
  * GSIM Accounts Overview component.
@@ -11,7 +29,27 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'mifosx-gsim-account',
   templateUrl: './gsim-account.component.html',
   styleUrls: ['./gsim-account.component.scss'],
-  standalone: false
+  imports: [
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    NgClass,
+    MatTooltip,
+    NgIf,
+    MatButton,
+    RouterLink,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    TranslatePipe,
+    StatusLookupPipe,
+    NgxTranslatePipe
+  ]
 })
 export class GsimAccountComponent implements OnInit {
   /** Columns to be displayed in charge overview table. */

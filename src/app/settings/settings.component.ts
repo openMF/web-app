@@ -3,7 +3,22 @@ import { Component, OnInit } from '@angular/core';
 
 /** Custom Service */
 import { SettingsService } from './settings.service';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from '@angular/material/expansion';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { FileUploadComponent } from '../shared/file-upload/file-upload.component';
+import { ThemePickerComponent } from '../shared/theme-picker/theme-picker.component';
+import { MatInput } from '@angular/material/input';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Settings component.
@@ -12,7 +27,23 @@ import { UntypedFormControl } from '@angular/forms';
   selector: 'mifosx-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
-  standalone: false
+  imports: [
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    ReactiveFormsModule,
+    NgFor,
+    MatOption,
+    FileUploadComponent,
+    ThemePickerComponent,
+    MatInput,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class SettingsComponent implements OnInit {
   /** Placeholder for languages. update once translations are set up */

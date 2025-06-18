@@ -1,8 +1,26 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { OptionData } from 'app/shared/models/option-data.model';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Fixed Deposits Account Settings Step
@@ -11,7 +29,25 @@ import { OptionData } from 'app/shared/models/option-data.model';
   selector: 'mifosx-fixed-deposit-account-settings-step',
   templateUrl: './fixed-deposit-account-settings-step.component.html',
   styleUrls: ['./fixed-deposit-account-settings-step.component.scss'],
-  standalone: false
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatSelect,
+    NgFor,
+    MatOption,
+    MatError,
+    MatDivider,
+    MatCheckbox,
+    NgIf,
+    MatButton,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChanges {
   /** Fixed deposits account template */

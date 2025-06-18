@@ -1,12 +1,22 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { MatFormField, MatPrefix, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Login form component.
@@ -15,7 +25,24 @@ import { AuthenticationService } from '../../core/authentication/authentication.
   selector: 'mifosx-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
-  standalone: false
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    MatPrefix,
+    FaIconComponent,
+    MatLabel,
+    MatInput,
+    NgIf,
+    MatError,
+    MatIconButton,
+    MatSuffix,
+    MatCheckbox,
+    MatProgressBar,
+    MatButton,
+    MatProgressSpinner,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class LoginFormComponent implements OnInit {
   /** Login form group. */

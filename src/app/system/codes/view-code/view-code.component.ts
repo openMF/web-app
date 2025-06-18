@@ -1,15 +1,31 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormArray,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf, NgFor } from '@angular/common';
+import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTooltip } from '@angular/material/tooltip';
 
 /**
  * View Code Component.
@@ -18,7 +34,26 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   selector: 'mifosx-view-code',
   templateUrl: './view-code.component.html',
   styleUrls: ['./view-code.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    MatButton,
+    FaIconComponent,
+    NgIf,
+    RouterLink,
+    MatCard,
+    MatCardTitle,
+    ReactiveFormsModule,
+    MatCardContent,
+    NgFor,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatError,
+    MatCheckbox,
+    MatIconButton,
+    MatTooltip,
+    NgxTranslatePipe
+  ]
 })
 export class ViewCodeComponent implements OnInit {
   /** Code Data */

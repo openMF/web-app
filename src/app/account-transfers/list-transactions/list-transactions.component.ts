@@ -2,9 +2,26 @@
 import { Component, ViewChild } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 
 import { ActivatedRoute } from '@angular/router';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { YesnoPipe } from '../../pipes/yesno.pipe';
 
 /**
  * Recurring Deposits Standing Instructions Tab
@@ -13,7 +30,25 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'mifosx-list-transactions',
   templateUrl: './list-transactions.component.html',
   styleUrls: ['./list-transactions.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    TranslatePipe,
+    DateFormatPipe,
+    YesnoPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ListTransactionsComponent {
   /** List Transactions Data */

@@ -1,6 +1,10 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FileUploadComponent } from '../../../../shared/file-upload/file-upload.component';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Upload signature dialog component.
@@ -9,7 +13,15 @@ import { MatDialogRef } from '@angular/material/dialog';
   selector: 'mifosx-upload-signature-dialog',
   templateUrl: './upload-signature-dialog.component.html',
   styleUrls: ['./upload-signature-dialog.component.scss'],
-  standalone: false
+  imports: [
+    MatDialogTitle,
+    FileUploadComponent,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class UploadSignatureDialogComponent {
   /** Client Signature */

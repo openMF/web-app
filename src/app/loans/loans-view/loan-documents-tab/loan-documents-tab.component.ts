@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { EntityDocumentsTabComponent } from '../../../shared/tabs/entity-documents-tab/entity-documents-tab.component';
 
 /**
  * Overdue charges tab component
@@ -14,7 +15,7 @@ import { SettingsService } from 'app/settings/settings.service';
   selector: 'mifosx-loan-documents-tab',
   templateUrl: './loan-documents-tab.component.html',
   styleUrls: ['./loan-documents-tab.component.scss'],
-  standalone: false
+  imports: [EntityDocumentsTabComponent]
 })
 export class LoanDocumentsTabComponent implements OnInit {
   /** Stores the resolved loan documents data */

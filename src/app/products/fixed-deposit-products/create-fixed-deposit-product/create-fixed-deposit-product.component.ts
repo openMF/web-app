@@ -15,12 +15,35 @@ import { FixedDepositProductAccountingStepComponent } from '../fixed-deposit-pro
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { FixedDepositProductPreviewStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-preview-step/fixed-deposit-product-preview-step.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-create-fixed-deposit-product',
   templateUrl: './create-fixed-deposit-product.component.html',
   styleUrls: ['./create-fixed-deposit-product.component.scss'],
-  standalone: false
+  imports: [
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    FixedDepositProductDetailsStepComponent,
+    FixedDepositProductCurrencyStepComponent,
+    FixedDepositProductTermsStepComponent,
+    FixedDepositProductSettingsStepComponent,
+    FixedDepositProductInterestRateChartStepComponent,
+    FixedDepositProductChargesStepComponent,
+    FixedDepositProductAccountingStepComponent,
+    NgIf,
+    FixedDepositProductPreviewStepComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class CreateFixedDepositProductComponent {
   @ViewChild(FixedDepositProductDetailsStepComponent, { static: true })

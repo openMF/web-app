@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -8,6 +8,13 @@ import { AccountingService } from '../../accounting.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { NgIf } from '@angular/common';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * View closure component.
@@ -16,7 +23,17 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   selector: 'mifosx-view-closure',
   templateUrl: './view-closure.component.html',
   styleUrls: ['./view-closure.component.scss'],
-  standalone: false
+  imports: [
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    HasPermissionDirective,
+    NgIf,
+    MatCard,
+    MatCardContent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewClosureComponent {
   /** GL Account closure. */

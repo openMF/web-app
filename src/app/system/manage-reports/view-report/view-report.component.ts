@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -8,6 +8,14 @@ import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { YesnoPipe } from '../../../pipes/yesno.pipe';
 
 /**
  * View Report Component.
@@ -16,7 +24,19 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   selector: 'mifosx-view-report',
   templateUrl: './view-report.component.html',
   styleUrls: ['./view-report.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    NgIf,
+    MatCard,
+    MatCardTitle,
+    MatCardContent,
+    TranslatePipe,
+    YesnoPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewReportComponent {
   /** Report Data. */

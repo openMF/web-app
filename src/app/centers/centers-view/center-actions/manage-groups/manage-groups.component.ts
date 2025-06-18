@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, AfterViewInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Dialogs */
@@ -10,12 +10,41 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { CentersService } from 'app/centers/centers.service';
 import { GroupsService } from 'app/groups/groups.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MatCard } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { NgFor, NgIf } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatListSubheaderCssMatStyler, MatNavList } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-manage-groups',
   templateUrl: './manage-groups.component.html',
   styleUrls: ['./manage-groups.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    ReactiveFormsModule,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    NgFor,
+    MatOption,
+    MatIconButton,
+    FaIconComponent,
+    MatListSubheaderCssMatStyler,
+    NgIf,
+    MatNavList,
+    MatLine,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ManageGroupsComponent implements AfterViewInit {
   /** Center Data */

@@ -1,6 +1,32 @@
 /** Angular Imports */
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { LongTextComponent } from '../../../shared/long-text/long-text.component';
+import { NgIf, CurrencyPipe } from '@angular/common';
+import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
+import { MatDivider } from '@angular/material/divider';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { FindPipe } from '../../../pipes/find.pipe';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { YesnoPipe } from '../../../pipes/yesno.pipe';
 
 /**
  * Create Loans Account Preview Step
@@ -9,7 +35,33 @@ import { MatTableDataSource } from '@angular/material/table';
   selector: 'mifosx-loans-account-preview-step',
   templateUrl: './loans-account-preview-step.component.html',
   styleUrls: ['./loans-account-preview-step.component.scss'],
-  standalone: false
+  imports: [
+    LongTextComponent,
+    NgIf,
+    ExternalIdentifierComponent,
+    MatDivider,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatButton,
+    MatStepperPrevious,
+    FaIconComponent,
+    RouterLink,
+    CurrencyPipe,
+    TranslatePipe,
+    FindPipe,
+    DateFormatPipe,
+    FormatNumberPipe,
+    YesnoPipe,
+    NgxTranslatePipe
+  ]
 })
 export class LoansAccountPreviewStepComponent implements OnChanges {
   /** Loans Account Template */

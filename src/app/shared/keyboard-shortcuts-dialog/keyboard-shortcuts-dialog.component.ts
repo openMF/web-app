@@ -1,7 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
 import { KeyboardShortcutsConfiguration } from '../../keyboards-shortcut-config';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgFor, NgIf } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 /**
  * Delete dialog component.
  */
@@ -9,7 +14,16 @@ import { KeyboardShortcutsConfiguration } from '../../keyboards-shortcut-config'
   selector: 'mifosx-keyboard-shortcuts-dialog',
   templateUrl: './keyboard-shortcuts-dialog.component.html',
   styleUrls: ['./keyboard-shortcuts-dialog.component.scss'],
-  standalone: false
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    NgFor,
+    MatDivider,
+    NgIf,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class KeyboardShortcutsDialogComponent implements OnInit {
   buttonConfig: KeyboardShortcutsConfiguration;

@@ -15,12 +15,35 @@ import { ShareProductAccountingStepComponent } from '../share-product-stepper/sh
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf } from '@angular/common';
+import { ShareProductPreviewStepComponent } from '../share-product-stepper/share-product-preview-step/share-product-preview-step.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-edit-share-product',
   templateUrl: './edit-share-product.component.html',
   styleUrls: ['./edit-share-product.component.scss'],
-  standalone: false
+  imports: [
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    ShareProductDetailsStepComponent,
+    ShareProductCurrencyStepComponent,
+    ShareProductTermsStepComponent,
+    ShareProductSettingsStepComponent,
+    ShareProductMarketPriceStepComponent,
+    ShareProductChargesStepComponent,
+    ShareProductAccountingStepComponent,
+    NgIf,
+    ShareProductPreviewStepComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class EditShareProductComponent {
   @ViewChild(ShareProductDetailsStepComponent, { static: true })

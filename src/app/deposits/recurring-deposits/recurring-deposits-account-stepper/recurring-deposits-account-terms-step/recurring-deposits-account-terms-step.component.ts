@@ -1,7 +1,16 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Recurring Deposits Terms Step
@@ -10,7 +19,21 @@ import { SettingsService } from 'app/settings/settings.service';
   selector: 'mifosx-recurring-deposits-account-terms-step',
   templateUrl: './recurring-deposits-account-terms-step.component.html',
   styleUrls: ['./recurring-deposits-account-terms-step.component.scss'],
-  standalone: false
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    NgFor,
+    MatOption,
+    MatError,
+    MatButton,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnChanges {
   @Input() recurringDepositsAccountTemplate: any;

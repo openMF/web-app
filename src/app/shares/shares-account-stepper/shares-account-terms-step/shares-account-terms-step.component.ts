@@ -1,8 +1,20 @@
 /** Angular Imports */
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Shares Account Terms Step
@@ -11,7 +23,29 @@ import { Currency } from 'app/shared/models/general.model';
   selector: 'mifosx-shares-account-terms-step',
   templateUrl: './shares-account-terms-step.component.html',
   styleUrls: ['./shares-account-terms-step.component.scss'],
-  standalone: false
+  imports: [
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatError,
+    NgIf,
+    MatSelect,
+    NgFor,
+    MatOption,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatCheckbox,
+    MatButton,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    CurrencyPipe,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   /** Shares Account and Product Template */

@@ -19,12 +19,61 @@ import {
 import { LoanProducts } from '../../loan-products';
 import { CodeName, OptionData, StringEnumOptionData } from '../../../../shared/models/option-data.model';
 import { Accounting } from 'app/core/utils/accounting';
+import { NgIf, NgFor, DecimalPipe } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { LongTextComponent } from '../../../../shared/long-text/long-text.component';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatAccordion } from '@angular/material/expansion';
+import { ViewAdvancePaymenyAllocationComponent } from '../../view-loan-product/shared/view-advance-paymeny-allocation/view-advance-paymeny-allocation.component';
+import { GlAccountDisplayComponent } from '../../../../shared/accounting/gl-account-display/gl-account-display.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { ChargesPenaltyFilterPipe } from '../../../../pipes/charges-penalty-filter.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { YesnoPipe } from '../../../../pipes/yesno.pipe';
 
 @Component({
   selector: 'mifosx-loan-product-summary',
   templateUrl: './loan-product-summary.component.html',
   styleUrls: ['./loan-product-summary.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    MatDivider,
+    LongTextComponent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatAccordion,
+    NgFor,
+    ViewAdvancePaymenyAllocationComponent,
+    GlAccountDisplayComponent,
+    DecimalPipe,
+    TranslatePipe,
+    ChargesPenaltyFilterPipe,
+    DateFormatPipe,
+    FormatNumberPipe,
+    YesnoPipe,
+    NgxTranslatePipe
+  ]
 })
 export class LoanProductSummaryComponent implements OnInit, OnChanges {
   @Input() action: string;

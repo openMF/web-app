@@ -65,9 +65,7 @@ import { SavingsActiveClientMembersComponent } from './savings-account-stepper/s
     SharedModule,
     PipesModule,
     DirectivesModule,
-    SavingsRoutingModule
-  ],
-  declarations: [
+    SavingsRoutingModule,
     SavingAccountActionsComponent,
     SavingsAccountTransactionsComponent,
     TransactionsTabComponent,

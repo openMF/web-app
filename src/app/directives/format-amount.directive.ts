@@ -3,10 +3,7 @@ import { formatCurrency } from '@angular/common';
 import { NgControl } from '@angular/forms';
 import { LOCALE_ID } from '@angular/core';
 
-@Directive({
-  selector: '[mifosxFormatAmount]',
-  standalone: false
-})
+@Directive({ selector: '[mifosxFormatAmount]' })
 export class FormatAmountDirective implements OnInit {
   format = 'N0';
   digitsInfo = '1.0-0';

@@ -1,8 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import {
+  MatTableDataSource,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
@@ -13,6 +24,13 @@ import { RejectShareDialogComponent } from './reject-share-dialog/reject-share-d
 /** Custom Serices */
 import { SharesService } from 'app/shares/shares.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { NgClass } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
 /**
  * Reject shares component.
@@ -21,7 +39,28 @@ import { SettingsService } from 'app/settings/settings.service';
   selector: 'mifosx-reject-shares',
   templateUrl: './reject-shares.component.html',
   styleUrls: ['./reject-shares.component.scss'],
-  standalone: false
+  imports: [
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    NgClass,
+    MatTooltip,
+    MatButton,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    TranslatePipe,
+    StatusLookupPipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class RejectSharesComponent implements OnInit {
   /** Shares account data. */

@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services. */
@@ -10,6 +10,14 @@ import { OrganizationService } from 'app/organization/organization.service';
 import { ConfirmationDialogComponent } from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
 /**
  * View Holidays component.
@@ -18,7 +26,18 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'mifosx-view-holidays',
   templateUrl: './view-holidays.component.html',
   styleUrls: ['./view-holidays.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    NgIf,
+    MatButton,
+    FaIconComponent,
+    RouterLink,
+    MatCard,
+    MatCardContent,
+    TranslatePipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewHolidaysComponent {
   /** Holiday data. */

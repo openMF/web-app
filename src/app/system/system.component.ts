@@ -1,16 +1,38 @@
 /** Angular Imports */
 import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
+import { MatCard } from '@angular/material/card';
+import { MatNavList, MatListItem } from '@angular/material/list';
+import { MatIcon } from '@angular/material/icon';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatLine } from '@angular/material/grid-list';
+import { NgIf, NgClass } from '@angular/common';
+import { HasPermissionDirective } from '../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'mifosx-system',
   templateUrl: './system.component.html',
   styleUrls: ['./system.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatNavList,
+    MatListItem,
+    RouterLink,
+    MatIcon,
+    FaIconComponent,
+    MatLine,
+    NgIf,
+    NgClass,
+    HasPermissionDirective,
+    MatButton,
+    NgxTranslatePipe
+  ]
 })
 export class SystemComponent implements AfterViewInit {
   /* Reference of manage datatables */

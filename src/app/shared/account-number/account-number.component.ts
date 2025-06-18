@@ -1,11 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { NgIf } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-account-number',
   templateUrl: './account-number.component.html',
   styleUrls: ['./account-number.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    FaIconComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class AccountNumberComponent implements OnInit {
   @Input() accountNo: string;

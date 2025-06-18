@@ -1,7 +1,30 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { NgClass, NgIf } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { StatusLookupPipe } from '../../../../pipes/status-lookup.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 
 /**
  * View Charge component.
@@ -10,7 +33,34 @@ import { ClientsService } from 'app/clients/clients.service';
   selector: 'mifosx-view-charge',
   templateUrl: './view-charge.component.html',
   styleUrls: ['./view-charge.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatCard,
+    MatCardTitle,
+    NgClass,
+    MatDivider,
+    MatCardContent,
+    NgIf,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatCardActions,
+    TranslatePipe,
+    StatusLookupPipe,
+    DateFormatPipe,
+    FormatNumberPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewChargeComponent {
   /** Charge Data. */

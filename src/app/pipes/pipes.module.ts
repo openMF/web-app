@@ -17,9 +17,7 @@ import { YesnoPipe } from './yesno.pipe';
 
 @NgModule({
   imports: [
-    CommonModule
-  ],
-  declarations: [
+    CommonModule,
     StatusLookupPipe,
     AccountsFilterPipe,
     ChargesFilterPipe,

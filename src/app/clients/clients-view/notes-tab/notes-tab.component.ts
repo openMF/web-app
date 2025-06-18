@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
+import { EntityNotesTabComponent } from '../../../shared/tabs/entity-notes-tab/entity-notes-tab.component';
 
 /**
  * Notes Tab Component
@@ -15,7 +16,7 @@ import { AuthenticationService } from 'app/core/authentication/authentication.se
   selector: 'mifosx-notes-tab',
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss'],
-  standalone: false
+  imports: [EntityNotesTabComponent]
 })
 export class NotesTabComponent implements OnInit {
   /** Client ID */

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -18,6 +18,15 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { Dates } from 'app/core/utils/dates';
+import { NgIf } from '@angular/common';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 
 /**
  * View Charge Component.
@@ -26,7 +35,19 @@ import { Dates } from 'app/core/utils/dates';
   selector: 'mifosx-view-charge',
   templateUrl: './view-charge.component.html',
   styleUrls: ['./view-charge.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    HasPermissionDirective,
+    MatButton,
+    FaIconComponent,
+    MatCard,
+    MatCardContent,
+    RouterLink,
+    TranslatePipe,
+    DateFormatPipe,
+    FormatNumberPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewChargeComponent {
   /** Charge data. */

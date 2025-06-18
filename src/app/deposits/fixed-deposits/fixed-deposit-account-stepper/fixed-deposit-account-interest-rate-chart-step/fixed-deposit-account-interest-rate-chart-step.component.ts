@@ -1,7 +1,27 @@
 /** Angular Imports */
 import { Component, Input, OnChanges, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { NgIf, NgSwitch, TitleCasePipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard } from '@angular/material/card';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 
 /**
  * Fixed Deposits Account Interest Rate Chart Step
@@ -17,7 +37,29 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
 
   ],
-  standalone: false
+  imports: [
+    NgIf,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatButton,
+    FaIconComponent,
+    MatCard,
+    NgSwitch,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatStepperPrevious,
+    MatStepperNext,
+    TitleCasePipe,
+    TranslatePipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class FixedDepositAccountInterestRateChartStepComponent implements OnChanges {
   /** Fixed deposits account template */

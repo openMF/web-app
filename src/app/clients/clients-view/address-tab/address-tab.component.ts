@@ -11,7 +11,21 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { ClientsService } from '../../clients.service';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+  MatExpansionPanelDescription
+} from '@angular/material/expansion';
+import { NgFor, NgIf } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 /**
  * Clients Address Tab Component
@@ -20,7 +34,21 @@ import { ClientsService } from '../../clients.service';
   selector: 'mifosx-address-tab',
   templateUrl: './address-tab.component.html',
   styleUrls: ['./address-tab.component.scss'],
-  standalone: false
+  imports: [
+    MatButton,
+    FaIconComponent,
+    MatAccordion,
+    NgFor,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription,
+    MatDivider,
+    MatSlideToggle,
+    NgIf,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class AddressTabComponent {
   /** Client Address Data */

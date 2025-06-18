@@ -1,8 +1,20 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
 import { CustomParametersTableComponent } from './custom-parameters-table/custom-parameters-table.component';
 import { SystemService } from 'app/system/system.service';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgFor, NgClass } from '@angular/common';
+import { MatList, MatListItem } from '@angular/material/list';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 interface SelectedJobsDataType {
   selectedJobs: SelectionModel<JobDataType>;
@@ -45,8 +57,21 @@ interface JobDataType {
   selector: 'mifosx-custom-parameters-popover',
   templateUrl: './custom-parameters-popover.component.html',
   styleUrls: ['./custom-parameters-popover.component.scss'],
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    NgFor,
+    CustomParametersTableComponent,
+    MatList,
+    MatListItem,
+    NgClass,
+    MatDialogActions,
+    MatButton,
+    FaIconComponent,
+    MatDialogClose,
+    NgxTranslatePipe
+  ]
 })
 export class CustomParametersPopoverComponent implements OnInit {
   /* Job table childer */

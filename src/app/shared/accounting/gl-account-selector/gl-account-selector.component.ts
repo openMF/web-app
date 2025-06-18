@@ -1,15 +1,35 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { GLAccount } from 'app/shared/models/general.model';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @Component({
   selector: 'mifosx-gl-account-selector',
   templateUrl: './gl-account-selector.component.html',
   styleUrls: ['./gl-account-selector.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    ReactiveFormsModule,
+    MatOption,
+    NgxMatSelectSearchModule,
+    NgFor,
+    MatError,
+    AsyncPipe,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy {
   @Input() inputFormControl: UntypedFormControl;

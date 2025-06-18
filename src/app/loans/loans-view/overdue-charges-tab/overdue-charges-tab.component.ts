@@ -1,9 +1,24 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 
 /**
  * Overdue charges tab component
@@ -12,7 +27,24 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'mifosx-overdue-charges-tab',
   templateUrl: './overdue-charges-tab.component.html',
   styleUrls: ['./overdue-charges-tab.component.scss'],
-  standalone: false
+  imports: [
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    TranslatePipe,
+    FormatNumberPipe,
+    NgxTranslatePipe
+  ]
 })
 export class OverdueChargesTabComponent implements OnInit {
   /** Stores the resolved loan data */

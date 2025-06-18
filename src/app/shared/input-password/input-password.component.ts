@@ -9,12 +9,23 @@ import {
 } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'mifosx-input-password',
   templateUrl: './input-password.component.html',
   styleUrls: ['./input-password.component.scss'],
-  standalone: false
+  imports: [
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatIcon,
+    MatSuffix,
+    NgIf,
+    MatError
+  ]
 })
 export class InputPasswordComponent implements ControlValueAccessor, ErrorStateMatcher {
   disabled = false;

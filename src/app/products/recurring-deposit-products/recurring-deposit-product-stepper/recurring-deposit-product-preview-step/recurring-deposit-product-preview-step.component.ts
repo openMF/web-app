@@ -2,6 +2,31 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { Accounting } from 'app/core/utils/accounting';
+import { MatDivider } from '@angular/material/divider';
+import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard } from '@angular/material/card';
+import { ViewSavingsAccountingDetailsComponent } from '../../../../shared/accounting/view-savings-accounting-details/view-savings-accounting-details.component';
+import { MatStepperPrevious } from '@angular/material/stepper';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { FindPipe } from '../../../../pipes/find.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { YesnoPipe } from '../../../../pipes/yesno.pipe';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-preview-step',
@@ -14,7 +39,34 @@ import { Accounting } from 'app/core/utils/accounting';
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
 
   ],
-  standalone: false
+  imports: [
+    MatDivider,
+    NgIf,
+    NgFor,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatButton,
+    FaIconComponent,
+    MatCard,
+    NgSwitch,
+    NgSwitchCase,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    ViewSavingsAccountingDetailsComponent,
+    MatStepperPrevious,
+    RouterLink,
+    FindPipe,
+    DateFormatPipe,
+    FormatNumberPipe,
+    YesnoPipe,
+    NgxTranslatePipe
+  ]
 })
 export class RecurringDepositProductPreviewStepComponent implements OnInit, OnChanges {
   @Input() recurringDepositProductsTemplate: any;

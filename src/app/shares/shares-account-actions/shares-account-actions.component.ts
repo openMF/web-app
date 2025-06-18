@@ -4,6 +4,16 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { SharesService } from '../shares.service';
+import { NgIf } from '@angular/common';
+import { ApproveSharesAccountComponent } from './approve-shares-account/approve-shares-account.component';
+import { RejectSharesAccountComponent } from './reject-shares-account/reject-shares-account.component';
+import { CloseSharesAccountComponent } from './close-shares-account/close-shares-account.component';
+import { ActivateSharesAccountComponent } from './activate-shares-account/activate-shares-account.component';
+import { UndoApprovalSharesAccountComponent } from './undo-approval-shares-account/undo-approval-shares-account.component';
+import { ApplySharesComponent } from './apply-shares/apply-shares.component';
+import { RedeemSharesComponent } from './redeem-shares/redeem-shares.component';
+import { ApproveSharesComponent } from './approve-shares/approve-shares.component';
+import { RejectSharesComponent } from './reject-shares/reject-shares.component';
 
 /**
  * Shares Account Actions Component
@@ -12,7 +22,18 @@ import { SharesService } from '../shares.service';
   selector: 'mifosx-shares-account-actions',
   templateUrl: './shares-account-actions.component.html',
   styleUrls: ['./shares-account-actions.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    ApproveSharesAccountComponent,
+    RejectSharesAccountComponent,
+    CloseSharesAccountComponent,
+    ActivateSharesAccountComponent,
+    UndoApprovalSharesAccountComponent,
+    ApplySharesComponent,
+    RedeemSharesComponent,
+    ApproveSharesComponent,
+    RejectSharesComponent
+  ]
 })
 export class SharesAccountActionsComponent {
   /** Shares Account Data */

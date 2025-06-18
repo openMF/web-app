@@ -43,9 +43,7 @@ import { CenterNotesResolver } from './common-resolvers/center-notes.resolver';
     SharedModule,
     CentersRoutingModule,
     PipesModule,
-    DirectivesModule
-  ],
-  declarations: [
+    DirectivesModule,
     CentersComponent,
     CreateCenterComponent,
     CentersViewComponent,
