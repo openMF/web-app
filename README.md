@@ -9,7 +9,8 @@ Mifos X Web App is a modern single-page application (SPA) built on top of the Mi
 - HTML5, SCSS, and TypeScript
 - Angular framework
 - Angular Material components
-
+- NodeJS
+ 
 ## Quick Links
 
 - [Live Demo](https://sandbox.mifos.community/#/login) (Updated nightly)
