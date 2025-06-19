@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -8,7 +8,15 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { YesnoPipe } from '../../../pipes/yesno.pipe';
 
 /**
  * View gl account component.
@@ -17,7 +25,20 @@ import { Location } from '@angular/common';
   selector: 'mifosx-view-gl-account',
   templateUrl: './view-gl-account.component.html',
   styleUrls: ['./view-gl-account.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    NgIf,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatCard,
+    MatCardContent,
+    GlAccountDisplayComponent,
+    MatCardActions,
+    TranslatePipe,
+    YesnoPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewGlAccountComponent {
   /** GL Account. */

@@ -1,11 +1,20 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UndoTransactionDialogComponent } from 'app/savings/savings-account-view/custom-dialogs/undo-transaction-dialog/undo-transaction-dialog.component';
 import { Dates } from 'app/core/utils/dates';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
+import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { TransactionPaymentDetailComponent } from '../../../../shared/transaction-payment-detail/transaction-payment-detail.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 
 /**
  * View Transaction Component.
@@ -14,7 +23,21 @@ import { SettingsService } from 'app/settings/settings.service';
   selector: 'mifosx-view-transaction',
   templateUrl: './view-transaction.component.html',
   styleUrls: ['./view-transaction.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    HasPermissionDirective,
+    MatButton,
+    FaIconComponent,
+    MatCard,
+    MatCardContent,
+    NgClass,
+    TransactionPaymentDetailComponent,
+    RouterLink,
+    CurrencyPipe,
+    TranslatePipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewTransactionComponent {
   accountId: string;

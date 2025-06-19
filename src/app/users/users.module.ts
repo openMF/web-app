@@ -19,9 +19,7 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 @NgModule({
   imports: [
     SharedModule,
-    UsersRoutingModule
-  ],
-  declarations: [
+    UsersRoutingModule,
     UsersComponent,
     CreateUserComponent,
     ViewUserComponent,

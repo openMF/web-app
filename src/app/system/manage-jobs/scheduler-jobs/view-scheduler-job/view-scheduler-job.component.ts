@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { YesnoPipe } from '../../../../pipes/yesno.pipe';
 
 /**
  * View Scheduler Job component.
@@ -9,7 +14,16 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'mifosx-view-scheduler-job',
   templateUrl: './view-scheduler-job.component.html',
   styleUrls: ['./view-scheduler-job.component.scss'],
-  standalone: false
+  imports: [
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatCard,
+    MatCardContent,
+    MatCardActions,
+    YesnoPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewSchedulerJobComponent {
   /** Job Data. */

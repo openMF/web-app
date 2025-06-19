@@ -1,7 +1,15 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-
+import {
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 /**
  * Undo transaction dialog component.
  */
@@ -9,7 +17,15 @@ import { MatDialogRef } from '@angular/material/dialog';
   selector: 'mifosx-undo-transaction-dialog',
   templateUrl: './undo-transaction-dialog.component.html',
   styleUrls: ['./undo-transaction-dialog.component.scss'],
-  standalone: false
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+    NgxTranslatePipe
+  ]
 })
 export class UndoTransactionDialogComponent {
   /**

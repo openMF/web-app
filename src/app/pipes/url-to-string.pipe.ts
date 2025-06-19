@@ -5,10 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  * URL to String pipe.
  * Transform eg: `self-service/users` :: `Self Service | Users`
  */
-@Pipe({
-  name: 'urlToString',
-  standalone: false
-})
+@Pipe({ name: 'urlToString' })
 export class UrlToStringPipe implements PipeTransform {
   transform(url: string): any {
     url = decodeURIComponent(url);

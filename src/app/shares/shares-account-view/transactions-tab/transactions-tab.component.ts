@@ -1,7 +1,21 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
 /**
  * Transactions Tab Component.
@@ -10,7 +24,20 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'mifosx-transactions-tab',
   templateUrl: './transactions-tab.component.html',
   styleUrls: ['./transactions-tab.component.scss'],
-  standalone: false
+  imports: [
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class TransactionsTabComponent implements OnInit {
   /** Shares Account Data */

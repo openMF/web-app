@@ -66,11 +66,9 @@ import { DatetimePickerStubComponent } from './datetime-picker-stub/datetime-pic
     ReactiveFormsModule,
     TranslateModule,
     PipesModule,
-    DirectivesModule
+    DirectivesModule,
     // NgxMatDatetimePickerModule,
     // NgxMatNativeDateModule
-  ],
-  declarations: [
     FormfieldComponent,
     FormDialogComponent,
     DeleteDialogComponent,
@@ -111,7 +109,6 @@ import { DatetimePickerStubComponent } from './datetime-picker-stub/datetime-pic
     InputAmountComponent,
     InputPasswordComponent,
     DatetimePickerStubComponent // temporarily added stub for datetime picker
-
   ],
   exports: [
     FileUploadComponent,

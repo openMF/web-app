@@ -2,18 +2,74 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 
 /** Custom Services */
 import { environment } from 'environments/environment';
 import { ClientsService } from './clients.service';
+import { MatCard } from '@angular/material/card';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf, NgClass } from '@angular/common';
+import { HasPermissionDirective } from '../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { AccountNumberComponent } from '../shared/account-number/account-number.component';
+import { ExternalIdentifierComponent } from '../shared/external-identifier/external-identifier.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
 
 @Component({
   selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatFormField,
+    MatInput,
+    NgIf,
+    MatCheckbox,
+    HasPermissionDirective,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatProgressBar,
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    AccountNumberComponent,
+    ExternalIdentifierComponent,
+    NgClass,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    TranslatePipe,
+    StatusLookupPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ClientsComponent implements OnInit {
   @ViewChild('showClosedAccounts') showClosedAccounts: MatCheckbox;

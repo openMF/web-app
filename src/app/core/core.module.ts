@@ -47,13 +47,6 @@ import { ContentComponent } from './shell/content/content.component';
  * Main app shell components and singleton services should be here.
  */
 @NgModule({
-  declarations: [
-    ShellComponent,
-    SidenavComponent,
-    ToolbarComponent,
-    BreadcrumbComponent,
-    ContentComponent
-  ],
   exports: [
     SharedModule // TO BE REMOVED: Once all components have replaced the core module import by shared module.
 
@@ -61,7 +54,12 @@ import { ContentComponent } from './shell/content/content.component';
   imports: [
     SharedModule,
     TranslateModule,
-    RouterModule
+    RouterModule,
+    ShellComponent,
+    SidenavComponent,
+    ToolbarComponent,
+    BreadcrumbComponent,
+    ContentComponent
   ],
   providers: [
     AuthenticationService,

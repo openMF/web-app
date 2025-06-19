@@ -12,6 +12,13 @@ import { RecurringDepositsAccountTermsStepComponent } from '../recurring-deposit
 import { RecurringDepositsAccountSettingsStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-settings-step/recurring-deposits-account-settings-step.component';
 import { RecurringDepositsAccountChargesStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-charges-step/recurring-deposits-account-charges-step.component';
 import { Dates } from 'app/core/utils/dates';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { RecurringDepositsAccountInterestRateChartStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-interest-rate-chart-step/recurring-deposits-account-interest-rate-chart-step.component';
+import { NgIf } from '@angular/common';
+import { RecurringDepositsAccountPreviewStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-preview-step/recurring-deposits-account-preview-step.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Edit new recurring deposit account
@@ -20,7 +27,22 @@ import { Dates } from 'app/core/utils/dates';
   selector: 'mifosx-edit-recurring-deposit-account',
   templateUrl: './edit-recurring-deposit-account.component.html',
   styleUrls: ['./edit-recurring-deposit-account.component.scss'],
-  standalone: false
+  imports: [
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    RecurringDepositsAccountDetailsStepComponent,
+    RecurringDepositsAccountTermsStepComponent,
+    RecurringDepositsAccountSettingsStepComponent,
+    RecurringDepositsAccountInterestRateChartStepComponent,
+    RecurringDepositsAccountChargesStepComponent,
+    NgIf,
+    RecurringDepositsAccountPreviewStepComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class EditRecurringDepositAccountComponent {
   /** Imports all the step component */

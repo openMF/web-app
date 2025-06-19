@@ -1,5 +1,12 @@
 /** Angular Imports */
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { MatFormField } from '@angular/material/form-field';
+import { NgStyle } from '@angular/common';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Custom file upload component based on angular material.
@@ -8,7 +15,15 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
   selector: 'mifosx-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
-  standalone: false
+  imports: [
+    MatFormField,
+    NgStyle,
+    MatInput,
+    MatButton,
+    FaIconComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class FileUploadComponent implements OnInit {
   /** Form field flex dimension */

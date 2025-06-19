@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Dialogs */
@@ -15,9 +15,30 @@ import { SavingsService } from '../savings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Currency } from 'app/shared/models/general.model';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /** Environment Configuration */
 import { environment } from 'environments/environment';
+import {
+  MatCard,
+  MatCardHeader,
+  MatCardTitleGroup,
+  MatCardMdImage,
+  MatCardTitle,
+  MatCardContent
+} from '@angular/material/card';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgIf, NgClass, NgFor, CurrencyPipe } from '@angular/common';
+import { LongTextComponent } from '../../shared/long-text/long-text.component';
+import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 
 /**
  * Savings Account View Component
@@ -26,7 +47,37 @@ import { environment } from 'environments/environment';
   selector: 'mifosx-savings-account-view',
   templateUrl: './savings-account-view.component.html',
   styleUrls: ['./savings-account-view.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardTitleGroup,
+    MatCardMdImage,
+    MatTooltip,
+    MatCardTitle,
+    NgIf,
+    NgClass,
+    LongTextComponent,
+    AccountNumberComponent,
+    MatIconButton,
+    MatMenuTrigger,
+    MatIcon,
+    FaIconComponent,
+    MatMenu,
+    NgFor,
+    HasPermissionDirective,
+    MatMenuItem,
+    MatCardContent,
+    MatTabNav,
+    MatTabLink,
+    RouterLinkActive,
+    RouterLink,
+    MatTabNavPanel,
+    RouterOutlet,
+    CurrencyPipe,
+    TranslatePipe,
+    StatusLookupPipe,
+    NgxTranslatePipe
+  ]
 })
 export class SavingsAccountViewComponent implements OnInit {
   /** Savings Account Data */

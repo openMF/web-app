@@ -14,6 +14,21 @@ import { AlertService } from '../core/alert/alert.service';
 /** Environment Imports */
 import { environment } from '../../environments/environment';
 import { SettingsService } from 'app/settings/settings.service';
+import { LanguageSelectorComponent } from '../shared/language-selector/language-selector.component';
+import { ThemeToggleComponent } from '../shared/theme-toggle/theme-toggle.component';
+import { NgIf } from '@angular/common';
+import { ServerSelectorComponent } from '../shared/server-selector/server-selector.component';
+import { TenantSelectorComponent } from '../shared/tenant-selector/tenant-selector.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
+import { MatList, MatListItem } from '@angular/material/list';
+import { MatButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { FooterComponent } from '../shared/footer/footer.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Login component.
@@ -22,7 +37,26 @@ import { SettingsService } from 'app/settings/settings.service';
   selector: 'mifosx-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  standalone: false
+  imports: [
+    LanguageSelectorComponent,
+    ThemeToggleComponent,
+    NgIf,
+    ServerSelectorComponent,
+    TenantSelectorComponent,
+    LoginFormComponent,
+    ResetPasswordComponent,
+    TwoFactorAuthenticationComponent,
+    MatList,
+    MatListItem,
+    MatButton,
+    MatMenuTrigger,
+    FooterComponent,
+    FaIconComponent,
+    MatMenu,
+    MatMenuItem,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   public environment = environment;

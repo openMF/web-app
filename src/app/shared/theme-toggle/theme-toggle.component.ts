@@ -1,12 +1,17 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ThemingService } from './theming.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'mifosx-theme-toggle',
   templateUrl: './theme-toggle.component.html',
   styleUrls: ['./theme-toggle.component.scss'],
-  standalone: false
+  imports: [
+    MatIconButton,
+    MatIcon
+  ]
 })
 export class ThemeToggleComponent implements OnInit, OnChanges {
   darkModeOn: boolean;

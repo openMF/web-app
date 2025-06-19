@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -11,6 +11,15 @@ import { AuthenticationService } from '../../core/authentication/authentication.
 /** Custom Validators */
 import { confirmPasswordValidator } from './confirm-password.validator';
 import { PasswordsUtility } from 'app/core/utils/passwords-utility';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatPrefix, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Reset password component.
@@ -19,7 +28,23 @@ import { PasswordsUtility } from 'app/core/utils/passwords-utility';
   selector: 'mifosx-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
-  standalone: false
+  imports: [
+    MatDivider,
+    ReactiveFormsModule,
+    MatFormField,
+    MatPrefix,
+    FaIconComponent,
+    MatLabel,
+    MatInput,
+    NgIf,
+    MatButton,
+    MatIconButton,
+    MatSuffix,
+    MatError,
+    MatProgressSpinner,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ResetPasswordComponent implements OnInit {
   /** Reset password form group. */

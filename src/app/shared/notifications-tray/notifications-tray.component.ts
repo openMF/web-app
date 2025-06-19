@@ -7,6 +7,14 @@ import { forkJoin } from 'rxjs';
 /** Custom Services */
 import { NotificationsService } from 'app/notifications/notifications.service';
 import { environment } from 'environments/environment';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatBadge } from '@angular/material/badge';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf, NgFor } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /**
  * Notifications Tray Component
@@ -16,7 +24,19 @@ import { environment } from 'environments/environment';
   templateUrl: './notifications-tray.component.html',
   styleUrls: ['./notifications-tray.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  standalone: false
+  imports: [
+    MatIconButton,
+    MatTooltip,
+    MatMenuTrigger,
+    MatBadge,
+    FaIconComponent,
+    MatMenu,
+    NgIf,
+    MatIcon,
+    NgFor,
+    MatMenuItem,
+    NgxTranslatePipe
+  ]
 })
 export class NotificationsTrayComponent implements OnInit, OnDestroy {
   /** Wait time between API status calls 60 seg */

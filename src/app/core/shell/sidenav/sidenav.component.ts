@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 /** Custom Components */
 import { KeyboardShortcutsDialogComponent } from 'app/shared/keyboard-shortcuts-dialog/keyboard-shortcuts-dialog.component';
@@ -14,6 +14,16 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 /** Custom Imports */
 import { frequentActivities } from './frequent-activities';
 import { SettingsService } from 'app/settings/settings.service';
+import { NgClass, NgFor } from '@angular/common';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDivider } from '@angular/material/divider';
+import { MatNavList, MatListItem } from '@angular/material/list';
+import { MatIcon } from '@angular/material/icon';
+import { MatLine } from '@angular/material/grid-list';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Sidenav component.
@@ -22,7 +32,23 @@ import { SettingsService } from 'app/settings/settings.service';
   selector: 'mifosx-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
-  standalone: false
+  imports: [
+    NgClass,
+    RouterLink,
+    MatIconButton,
+    MatTooltip,
+    FaIconComponent,
+    MatDivider,
+    NgFor,
+    MatButton,
+    MatNavList,
+    MatListItem,
+    RouterLinkActive,
+    MatIcon,
+    MatLine,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class SidenavComponent implements OnInit, AfterViewInit {
   /** True if sidenav is in collapsed state. */

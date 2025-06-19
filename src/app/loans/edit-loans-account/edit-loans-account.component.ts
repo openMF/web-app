@@ -8,6 +8,13 @@ import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { LoansAccountScheduleStepComponent } from '../loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
+import { NgIf } from '@angular/common';
+import { LoansAccountPreviewStepComponent } from '../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Edit Loans
@@ -16,7 +23,21 @@ import { Dates } from 'app/core/utils/dates';
   selector: 'mifosx-edit-loans-account',
   templateUrl: './edit-loans-account.component.html',
   styleUrls: ['./edit-loans-account.component.scss'],
-  standalone: false
+  imports: [
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    LoansAccountDetailsStepComponent,
+    LoansAccountTermsStepComponent,
+    LoansAccountChargesStepComponent,
+    LoansAccountScheduleStepComponent,
+    NgIf,
+    LoansAccountPreviewStepComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class EditLoansAccountComponent {
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })

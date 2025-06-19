@@ -4,12 +4,13 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { EntityDocumentsTabComponent } from '../../../shared/tabs/entity-documents-tab/entity-documents-tab.component';
 
 @Component({
   selector: 'mifosx-documents-tab',
   templateUrl: './documents-tab.component.html',
   styleUrls: ['./documents-tab.component.scss'],
-  standalone: false
+  imports: [EntityDocumentsTabComponent]
 })
 export class DocumentsTabComponent {
   entityDocuments: any;

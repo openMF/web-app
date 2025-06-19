@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, ViewChild, ElementRef, AfterViewInit, Renderer2, OnDestroy } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { NgStyle, NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Capture image dialog component
@@ -9,7 +14,17 @@ import { MatDialogRef } from '@angular/material/dialog';
   selector: 'mifosx-capture-image-dialog',
   templateUrl: './capture-image-dialog.component.html',
   styleUrls: ['./capture-image-dialog.component.scss'],
-  standalone: false
+  imports: [
+    MatDialogTitle,
+    NgStyle,
+    NgIf,
+    MatButton,
+    FaIconComponent,
+    MatDialogActions,
+    MatDialogClose,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class CaptureImageDialogComponent implements AfterViewInit, OnDestroy {
   /** Video element reference */

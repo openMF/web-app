@@ -1,7 +1,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./",
+    "paths": {
+      "@pipes/*": ["src/app/pipes/*"],
+      "app/*": ["src/app/*"]
+    },
     "importHelpers": true,
     "module": "es2022",
     "esModuleInterop": true,

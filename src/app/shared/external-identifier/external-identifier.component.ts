@@ -1,12 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AlertService } from 'app/core/alert/alert.service';
+import { NgIf } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ExternalIdentifierPipe } from '../../pipes/external-identifier.pipe';
 
 @Component({
   selector: 'mifosx-external-identifier',
   templateUrl: './external-identifier.component.html',
   styleUrls: ['./external-identifier.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    FaIconComponent,
+    ExternalIdentifierPipe
+  ]
 })
 export class ExternalIdentifierComponent implements OnInit {
   @Input() externalId: string;

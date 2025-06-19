@@ -1,7 +1,18 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable } from '@angular/material/table';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Models */
@@ -16,7 +27,13 @@ import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { ClientsService } from '../../clients.service';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgStyle, NgFor } from '@angular/common';
 
 /**
  * Identities Tab Component
@@ -25,7 +42,25 @@ import { ClientsService } from '../../clients.service';
   selector: 'mifosx-identities-tab',
   templateUrl: './identities-tab.component.html',
   styleUrls: ['./identities-tab.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    MatButton,
+    FaIconComponent,
+    MatTable,
+    NgStyle,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    NgFor,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class IdentitiesTabComponent {
   /** Client Identities */

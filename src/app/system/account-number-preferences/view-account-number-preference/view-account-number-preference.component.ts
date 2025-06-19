@@ -1,14 +1,21 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
+import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf } from '@angular/common';
 
 /**
  * View Account Number Preference Component.
@@ -17,7 +24,17 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
   selector: 'mifosx-view-account-number-preference',
   templateUrl: './view-account-number-preference.component.html',
   styleUrls: ['./view-account-number-preference.component.scss'],
-  standalone: false
+  imports: [
+    HasPermissionDirective,
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatCard,
+    MatCardContent,
+    NgIf,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewAccountNumberPreferenceComponent {
   /** Account Number Preference Data */

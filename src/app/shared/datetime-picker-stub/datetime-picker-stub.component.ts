@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/prefer-standalone */
@@ -8,7 +9,10 @@ import { Component, Input } from '@angular/core';
     <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   `,
-  standalone: false
+  imports: [
+    MatDatepickerToggle,
+    MatDatepicker
+  ]
 })
 export class DatetimePickerStubComponent {
   @Input() enableMeridian: boolean = true;

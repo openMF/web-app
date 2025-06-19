@@ -4,8 +4,24 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog/client-family-member-dialog.component';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+  MatExpansionPanelDescription
+} from '@angular/material/expansion';
+import { NgFor } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FindPipe } from '../../../pipes/find.pipe';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
 /**
  * Client Family Members Step
@@ -14,7 +30,23 @@ import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog
   selector: 'mifosx-client-family-members-step',
   templateUrl: './client-family-members-step.component.html',
   styleUrls: ['./client-family-members-step.component.scss'],
-  standalone: false
+  imports: [
+    MatButton,
+    FaIconComponent,
+    MatAccordion,
+    NgFor,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription,
+    MatDivider,
+    MatStepperPrevious,
+    MatStepperNext,
+    TranslatePipe,
+    FindPipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class ClientFamilyMembersStepComponent {
   /** Cient Template */

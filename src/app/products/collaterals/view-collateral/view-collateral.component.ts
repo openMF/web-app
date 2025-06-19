@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from 'app/products/products.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 /**
  * View Collateral Component
@@ -16,7 +21,15 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
   selector: 'mifosx-view-collateral',
   templateUrl: './view-collateral.component.html',
   styleUrls: ['./view-collateral.component.scss'],
-  standalone: false
+  imports: [
+    MatButton,
+    RouterLink,
+    FaIconComponent,
+    MatCard,
+    MatCardContent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ViewCollateralComponent {
   /** Collateral Data */

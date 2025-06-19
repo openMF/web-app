@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ReportsService } from '../../reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
+import { NgIf } from '@angular/common';
 
 /**
  * Pentaho Component
@@ -14,7 +15,7 @@ import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
   selector: 'mifosx-pentaho',
   templateUrl: './pentaho.component.html',
   styleUrls: ['./pentaho.component.scss'],
-  standalone: false
+  imports: [NgIf]
 })
 export class PentahoComponent implements OnChanges {
   /** Run Report Data */

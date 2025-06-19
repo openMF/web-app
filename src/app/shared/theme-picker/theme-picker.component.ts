@@ -6,6 +6,13 @@ import { Theme } from './theme.model';
 
 /** Custom Services */
 import { ThemeStorageService } from './theme-storage.service';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+import { NgFor, NgIf } from '@angular/common';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /**
  * Theme picker component.
@@ -17,7 +24,19 @@ import { ThemeStorageService } from './theme-storage.service';
   templateUrl: './theme-picker.component.html',
   styleUrls: ['./theme-picker.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  standalone: false
+  imports: [
+    MatIconButton,
+    MatMenuTrigger,
+    MatTooltip,
+    FaIconComponent,
+    MatMenu,
+    MatGridList,
+    NgFor,
+    MatGridTile,
+    MatMenuItem,
+    NgIf,
+    NgxTranslatePipe
+  ]
 })
 export class ThemePickerComponent implements OnInit {
   /** Default theme for the application. */

@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 
 /* Popover Ref */
 import { PopoverRef } from './popover-ref';
+import { PopoverArrowDirective } from './popover-arrow.directive';
 
 /**
  * Internal component that wraps user-provided popover content.
@@ -18,7 +19,10 @@ import { PopoverRef } from './popover-ref';
   selector: 'mifosx-popover',
   templateUrl: './popover.component.html',
   styleUrls: ['./popover.component.scss'],
-  standalone: false
+  imports: [
+    CdkPortalOutlet,
+    PopoverArrowDirective
+  ]
 })
 export class PopoverComponent extends BasePortalOutlet {
   @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet: CdkPortalOutlet;

@@ -1,6 +1,6 @@
 /** Angular Imports  */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
@@ -8,9 +8,17 @@ import { SystemService } from '../../system.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { DisableDialogComponent } from '../../../shared/disable-dialog/disable-dialog.component';
 import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dialog.component';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf, NgFor, NgClass } from '@angular/common';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatList, MatListItem } from '@angular/material/list';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 /**
  * View Role and Permissions Component
@@ -19,7 +27,22 @@ import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dial
   selector: 'mifosx-view-role',
   templateUrl: './view-role.component.html',
   styleUrls: ['./view-role.component.scss'],
-  standalone: false
+  imports: [
+    MatButton,
+    FaIconComponent,
+    NgIf,
+    MatCard,
+    MatCardContent,
+    MatList,
+    NgFor,
+    MatListItem,
+    NgClass,
+    MatDivider,
+    ReactiveFormsModule,
+    MatCheckbox,
+    MatCardActions,
+    NgxTranslatePipe
+  ]
 })
 export class ViewRoleComponent implements OnInit {
   /** Role Permissions Data */

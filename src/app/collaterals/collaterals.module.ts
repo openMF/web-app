@@ -14,16 +14,14 @@ import { ViewCollateralComponent } from './view-collateral/view-collateral.compo
 import { EditCollateralComponent } from './edit-collateral/edit-collateral.component';
 
 @NgModule({
-  declarations: [
-    ViewCollateralComponent,
-    EditCollateralComponent
-  ],
   imports: [
     CommonModule,
     CollateralsRoutingModule,
     SharedModule,
     DirectivesModule,
-    PipesModule
+    PipesModule,
+    ViewCollateralComponent,
+    EditCollateralComponent
   ]
 })
 export class CollateralsModule {}

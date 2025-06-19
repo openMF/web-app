@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { NavigationService } from './navigation.service';
@@ -12,6 +12,13 @@ import { StaffNavigationComponent } from './staff-navigation/staff-navigation.co
 import { CenterNavigationComponent } from './center-navigation/center-navigation.component';
 import { GroupNavigationComponent } from './group-navigation/group-navigation.component';
 import { ClientNavigationComponent } from './client-navigation/client-navigation.component';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Navigation component.
@@ -20,7 +27,24 @@ import { ClientNavigationComponent } from './client-navigation/client-navigation
   selector: 'mifosx-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardContent,
+    NgIf,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    ReactiveFormsModule,
+    NgFor,
+    MatOption,
+    OfficeNavigationComponent,
+    StaffNavigationComponent,
+    CenterNavigationComponent,
+    GroupNavigationComponent,
+    ClientNavigationComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class NavigationComponent implements OnInit {
   /** Navigation Components */

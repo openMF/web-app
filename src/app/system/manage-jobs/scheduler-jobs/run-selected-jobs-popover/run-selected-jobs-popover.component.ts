@@ -1,8 +1,20 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Inject, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
 import { SystemService } from 'app/system/system.service';
 import { RunSelectedJobsTableComponent } from './run-selected-jobs-table/run-selected-jobs-table.component';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatList, MatListItem } from '@angular/material/list';
+import { NgFor } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 interface SelectedJobsDataType {
   selectedJobs: SelectionModel<JobDataType>;
@@ -28,7 +40,20 @@ export interface JobDataType {
   selector: 'mifosx-run-selected-jobs-popover',
   templateUrl: './run-selected-jobs-popover.component.html',
   styleUrls: ['./run-selected-jobs-popover.component.scss'],
-  standalone: false
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    RunSelectedJobsTableComponent,
+    MatList,
+    NgFor,
+    MatListItem,
+    MatDialogActions,
+    MatButton,
+    FaIconComponent,
+    MatDialogClose,
+    NgxTranslatePipe
+  ]
 })
 export class RunSelectedJobsPopoverComponent implements OnInit {
   /** Confirmed jobs event emitter */

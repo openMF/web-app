@@ -8,12 +8,41 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SystemService } from 'app/system/system.service';
+import { NgIf, NgFor, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDivider } from '@angular/material/divider';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatTooltip } from '@angular/material/tooltip';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
 
 @Component({
   selector: 'mifosx-datatable-single-row',
   templateUrl: './datatable-single-row.component.html',
   styleUrls: ['./datatable-single-row.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    MatButton,
+    FaIconComponent,
+    MatDivider,
+    NgFor,
+    NgClass,
+    NgSwitch,
+    NgSwitchCase,
+    CdkTextareaAutosize,
+    NgSwitchDefault,
+    MatIconButton,
+    MatTooltip,
+    DateFormatPipe,
+    DatetimeFormatPipe,
+    FormatNumberPipe,
+    PrettyPrintPipe,
+    NgxTranslatePipe
+  ]
 })
 export class DatatableSingleRowComponent implements OnInit {
   @Input() dataObject: any;

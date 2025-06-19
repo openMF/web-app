@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Rxjs Imports */
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -13,6 +13,18 @@ import { SettingsService } from 'app/settings/settings.service';
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
 import { SelectOption } from 'app/reports/common-models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
+import { MatDivider } from '@angular/material/divider';
+import { NgFor, NgSwitch, NgIf, NgSwitchCase } from '@angular/common';
+import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Edit Business Rule Parameters.
@@ -21,7 +33,30 @@ import { Dates } from 'app/core/utils/dates';
   selector: 'mifosx-edit-business-rule-parameters',
   templateUrl: './edit-business-rule-parameters.component.html',
   styleUrls: ['./edit-business-rule-parameters.component.scss'],
-  standalone: false
+  imports: [
+    MatDivider,
+    ReactiveFormsModule,
+    NgFor,
+    NgSwitch,
+    NgIf,
+    NgSwitchCase,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatError,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatSelect,
+    MatOption,
+    MatButton,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
   /** Run Report Parameters Data */

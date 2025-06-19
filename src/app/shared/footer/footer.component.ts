@@ -11,6 +11,10 @@ import { VersionService } from 'app/system/version.service';
 /** Environment Configuration */
 import { environment } from 'environments/environment';
 import { Subscription } from 'rxjs';
+import { NgIf, NgClass, DatePipe } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  *  Footer component.
@@ -19,7 +23,14 @@ import { Subscription } from 'rxjs';
   selector: 'mifosx-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    NgClass,
+    MatDivider,
+    DatePipe,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class FooterComponent implements OnInit, OnDestroy {
   @Input() styleClass: string = '';

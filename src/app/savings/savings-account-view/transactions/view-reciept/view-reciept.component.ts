@@ -1,7 +1,10 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { MatCard } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 /**
  * View Transaction Reciept Component
@@ -10,7 +13,12 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'mifosx-view-reciept',
   templateUrl: './view-reciept.component.html',
   styleUrls: ['./view-reciept.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatButton,
+    RouterLink,
+    FaIconComponent
+  ]
 })
 export class ViewRecieptComponent implements OnInit {
   /** trusted resource url for pentaho output */

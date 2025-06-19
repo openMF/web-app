@@ -1,6 +1,7 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EntityDatatableTabComponent } from '../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 
 /**
  * Savings Datatable Tabs Component
@@ -9,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'mifosx-datatable-tabs',
   templateUrl: './datatable-tabs.component.html',
   styleUrls: ['./datatable-tabs.component.scss'],
-  standalone: false
+  imports: [EntityDatatableTabComponent]
 })
 export class DatatableTabsComponent {
   entityId: string;

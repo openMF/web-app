@@ -1,13 +1,37 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { CapitalizedIncome } from '../loan-product-payment-strategy-step/payment-allocation-model';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { NgIf, NgFor } from '@angular/common';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-loan-product-capitalized-income-step',
   templateUrl: './loan-product-capitalized-income-step.component.html',
   styleUrls: ['./loan-product-capitalized-income-step.component.scss'],
-  standalone: false
+  imports: [
+    ReactiveFormsModule,
+    MatCheckbox,
+    NgIf,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    NgFor,
+    MatOption,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class LoanProductCapitalizedIncomeStepComponent implements OnChanges {
   @Input() capitalizedIncome: CapitalizedIncome;

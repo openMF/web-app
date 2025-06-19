@@ -1,12 +1,22 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
+import { MatDivider } from '@angular/material/divider';
+import { NgIf, NgFor } from '@angular/common';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatButton } from '@angular/material/button';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatFormField, MatPrefix, MatLabel, MatHint, MatError } from '@angular/material/form-field';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatInput } from '@angular/material/input';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Two factor authentication component.
@@ -15,7 +25,25 @@ import { AuthenticationService } from '../../core/authentication/authentication.
   selector: 'mifosx-two-factor-authentication',
   templateUrl: './two-factor-authentication.component.html',
   styleUrls: ['./two-factor-authentication.component.scss'],
-  standalone: false
+  imports: [
+    MatDivider,
+    NgIf,
+    ReactiveFormsModule,
+    MatRadioGroup,
+    NgFor,
+    MatRadioButton,
+    MatButton,
+    MatProgressSpinner,
+    MatFormField,
+    MatPrefix,
+    FaIconComponent,
+    MatLabel,
+    MatInput,
+    MatHint,
+    MatError,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class TwoFactorAuthenticationComponent implements OnInit {
   /** Available delivery methods to receive OTP. */

@@ -46,9 +46,7 @@ import { PipesModule } from 'app/pipes/pipes.module';
     SharedModule,
     DirectivesModule,
     AccountingRoutingModule,
-    PipesModule
-  ],
-  declarations: [
+    PipesModule,
     AccountingComponent,
     FrequentPostingsComponent,
     CreateJournalEntryComponent,

@@ -9,8 +9,23 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
 /** Custom Dialogs */
 import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf, NgFor } from '@angular/common';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+  MatExpansionPanelDescription
+} from '@angular/material/expansion';
+import { MatDivider } from '@angular/material/divider';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 
 /**
  * Client Address Step Component
@@ -19,7 +34,23 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
   selector: 'mifosx-client-address-step',
   templateUrl: './client-address-step.component.html',
   styleUrls: ['./client-address-step.component.scss'],
-  standalone: false
+  imports: [
+    MatButton,
+    FaIconComponent,
+    NgIf,
+    MatAccordion,
+    NgFor,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription,
+    MatDivider,
+    MatSlideToggle,
+    MatStepperPrevious,
+    MatStepperNext,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class ClientAddressStepComponent {
   /** Client Address Field Config */

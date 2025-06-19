@@ -40,9 +40,7 @@ import { GroupTransferClientsComponent } from './groups-view/group-actions/group
     SharedModule,
     PipesModule,
     DirectivesModule,
-    GroupsRoutingModule
-  ],
-  declarations: [
+    GroupsRoutingModule,
     GroupsComponent,
     GroupsViewComponent,
     GeneralTabComponent,

@@ -49,9 +49,7 @@ import { GeneralTabComponent } from './recurring-deposits-account-view/general-t
     SharedModule,
     PipesModule,
     DirectivesModule,
-    RecurringDepositsRoutingModule
-  ],
-  declarations: [
+    RecurringDepositsRoutingModule,
     RecurringDepositsAccountViewComponent,
     InterestRateChartTabComponent,
     TransactionsTabComponent,

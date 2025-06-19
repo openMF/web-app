@@ -1,10 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
-@Directive({
-  selector: '[mifosxValidateOnFocus]',
-  standalone: false
-})
+@Directive({ selector: '[mifosxValidateOnFocus]' })
 export class ValidateOnFocusDirective {
   constructor(
     private control: NgControl,

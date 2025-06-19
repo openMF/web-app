@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { EntityDatatableTabComponent } from '../../../../shared/tabs/entity-datatable-tab/entity-datatable-tab.component';
 
 @Component({
   selector: 'mifosx-fixed-deposit-datatable-tab',
   templateUrl: './fixed-deposit-datatable-tab.component.html',
   styleUrls: ['./fixed-deposit-datatable-tab.component.scss'],
-  standalone: false
+  imports: [EntityDatatableTabComponent]
 })
 export class FixedDepositDatatableTabComponent {
   entityId: string;

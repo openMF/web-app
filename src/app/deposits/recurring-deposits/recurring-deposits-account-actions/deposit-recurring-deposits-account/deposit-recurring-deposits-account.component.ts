@@ -1,7 +1,13 @@
 /** Angular Imports */
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
@@ -9,6 +15,19 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
 import { TransactionCommand, TransactionTypeFlags } from '../../../transaction.model';
+import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { NgIf, NgFor } from '@angular/common';
+import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/autocomplete';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Deposits Recurring Deposits Account Component
@@ -17,7 +36,31 @@ import { TransactionCommand, TransactionTypeFlags } from '../../../transaction.m
   selector: 'mifosx-deposit-recurring-deposits-account',
   templateUrl: './deposit-recurring-deposits-account.component.html',
   styleUrls: ['./deposit-recurring-deposits-account.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    NgIf,
+    ReactiveFormsModule,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDatepicker,
+    MatError,
+    InputAmountComponent,
+    MatSelect,
+    NgFor,
+    MatOption,
+    MatSlideToggle,
+    CdkTextareaAutosize,
+    MatCardActions,
+    MatButton,
+    RouterLink,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class DepositRecurringDepositsAccountComponent implements OnInit {
   @Input() currency: Currency;

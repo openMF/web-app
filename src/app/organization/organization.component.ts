@@ -1,10 +1,20 @@
 /** Angular Imports */
 import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
+import { MatCard } from '@angular/material/card';
+import { MatNavList, MatListItem } from '@angular/material/list';
+import { HasPermissionDirective } from '../directives/has-permission/has-permission.directive';
+import { MatIcon } from '@angular/material/icon';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatLine } from '@angular/material/grid-list';
+import { NgIf } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Organization component.
@@ -13,7 +23,20 @@ import { PopoverService } from '../configuration-wizard/popover/popover.service'
   selector: 'mifosx-products',
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatNavList,
+    HasPermissionDirective,
+    MatListItem,
+    RouterLink,
+    MatIcon,
+    FaIconComponent,
+    MatLine,
+    NgIf,
+    MatButton,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class OrganizationComponent implements AfterViewInit {
   shouldShowFundMapping = false;

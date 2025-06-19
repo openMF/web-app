@@ -1,11 +1,18 @@
 import { Component, Input } from '@angular/core';
 import { PaymentDetail } from './payment-detail-model';
+import { NgIf } from '@angular/common';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 @Component({
   selector: 'mifosx-transaction-payment-detail',
   templateUrl: './transaction-payment-detail.component.html',
   styleUrls: ['./transaction-payment-detail.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class TransactionPaymentDetailComponent {
   @Input() paymentDetailData: PaymentDetail;

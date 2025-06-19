@@ -1,10 +1,20 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { activities } from '../activities';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { ClientTrendsBarComponent } from './client-trends-bar/client-trends-bar.component';
+import { AmountDisbursedPieComponent } from './amount-disbursed-pie/amount-disbursed-pie.component';
+import { AmountCollectedPieComponent } from './amount-collected-pie/amount-collected-pie.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 /**
  * Dashboard component.
  */
@@ -12,7 +22,25 @@ import { activities } from '../activities';
   selector: 'mifosx-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatAutocompleteTrigger,
+    ReactiveFormsModule,
+    MatAutocomplete,
+    NgFor,
+    MatOption,
+    RouterLink,
+    ClientTrendsBarComponent,
+    AmountDisbursedPieComponent,
+    AmountCollectedPieComponent,
+    AsyncPipe,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class DashboardComponent implements OnInit {
   /** Array of all user activities */

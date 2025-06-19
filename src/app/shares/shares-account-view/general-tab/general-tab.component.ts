@@ -1,11 +1,24 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgIf } from '@angular/common';
+import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
+import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 
 @Component({
   selector: 'mifosx-general-tab',
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    ExternalIdentifierComponent,
+    AccountNumberComponent,
+    DateFormatPipe,
+    FormatNumberPipe,
+    NgxTranslatePipe
+  ]
 })
 export class GeneralTabComponent {
   /** Shares Account Data */

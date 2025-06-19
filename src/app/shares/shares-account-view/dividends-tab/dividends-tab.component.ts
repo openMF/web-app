@@ -1,7 +1,22 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
 /**
  * Dividends Tab Component.
@@ -10,7 +25,21 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'mifosx-dividends-tab',
   templateUrl: './dividends-tab.component.html',
   styleUrls: ['./dividends-tab.component.scss'],
-  standalone: false
+  imports: [
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    CurrencyPipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class DividendsTabComponent implements OnInit {
   /** Shares Account Data */

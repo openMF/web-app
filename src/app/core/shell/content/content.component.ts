@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 /**
  * Content component.
@@ -8,7 +9,7 @@ import { Component } from '@angular/core';
   selector: 'mifosx-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss'],
-  standalone: false
+  imports: [RouterOutlet]
 })
 export class ContentComponent {
   constructor() {}

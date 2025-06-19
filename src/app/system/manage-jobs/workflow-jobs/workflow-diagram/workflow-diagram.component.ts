@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DagreNodesOnlyLayout, Edge, Layout, Node } from '@swimlane/ngx-graph';
+import { DagreNodesOnlyLayout, Edge, Layout, Node, GraphModule } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
+import { NgIf } from '@angular/common';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 export class JobStep {
   id: number;
@@ -13,7 +15,11 @@ export class JobStep {
   selector: 'mifosx-workflow-diagram',
   templateUrl: './workflow-diagram.component.html',
   styleUrls: ['./workflow-diagram.component.scss'],
-  standalone: false
+  imports: [
+    GraphModule,
+    NgIf,
+    TranslatePipe
+  ]
 })
 export class WorkflowDiagramComponent implements OnInit {
   @Input() jobStepsData: JobStep[] = [];

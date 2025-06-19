@@ -28,9 +28,7 @@ import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-
     SharedModule,
     PipesModule,
     HomeRoutingModule,
-    TranslateModule
-  ],
-  declarations: [
+    TranslateModule,
     HomeComponent,
     DashboardComponent,
     AmountCollectedPieComponent,

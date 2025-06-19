@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -8,6 +8,14 @@ import { HomeService } from '../../home.service';
 
 /** Charting Imports */
 import Chart from 'chart.js';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { NgFor, NgStyle, NgIf } from '@angular/common';
+import { MatOption } from '@angular/material/autocomplete';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Amount Collected Pie Chart Component
@@ -16,7 +24,22 @@ import Chart from 'chart.js';
   selector: 'mifosx-amount-collected-pie',
   templateUrl: './amount-collected-pie.component.html',
   styleUrls: ['./amount-collected-pie.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardHeader,
+    FaIconComponent,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    ReactiveFormsModule,
+    NgFor,
+    MatOption,
+    MatCardContent,
+    NgStyle,
+    NgIf,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class AmountCollectedPieComponent implements OnInit {
   /** Static Form control for office Id */

@@ -14,9 +14,7 @@ import { ValidateOnFocusDirective } from './validate-on-focus.directive';
  */
 @NgModule({
   imports: [
-    CommonModule
-  ],
-  declarations: [
+    CommonModule,
     HasPermissionDirective,
     FormatAmountDirective,
     ValidateOnFocusDirective

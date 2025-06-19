@@ -26,9 +26,7 @@ import { MakeAccountInterbankTransfersComponent } from './make-account-interbank
     SharedModule,
     PipesModule,
     DirectivesModule,
-    AccountTransfersRoutingModule
-  ],
-  declarations: [
+    AccountTransfersRoutingModule,
     ViewStandingInstructionsComponent,
     EditStandingInstructionsComponent,
     CreateStandingInstructionsComponent,

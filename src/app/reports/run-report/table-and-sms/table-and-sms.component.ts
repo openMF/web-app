@@ -1,8 +1,20 @@
 /** Angular Imports */
 import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { DecimalPipe } from '@angular/common';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { DecimalPipe, NgIf, NgFor } from '@angular/common';
 
 /** Custom Servies */
 import { ReportsService } from '../../reports.service';
@@ -15,6 +27,11 @@ import { environment } from 'environments/environment';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 
 import * as ExcelJS from 'exceljs';
+import { MatButton } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Table and SMS Component
@@ -23,7 +40,26 @@ import * as ExcelJS from 'exceljs';
   selector: 'mifosx-table-and-sms',
   templateUrl: './table-and-sms.component.html',
   styleUrls: ['./table-and-sms.component.scss'],
-  standalone: false
+  imports: [
+    NgIf,
+    MatButton,
+    MatTable,
+    NgFor,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    RouterLink,
+    FaIconComponent,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class TableAndSmsComponent implements OnChanges {
   /** Run Report Data */

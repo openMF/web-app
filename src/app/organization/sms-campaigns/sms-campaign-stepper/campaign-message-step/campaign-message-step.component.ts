@@ -1,6 +1,14 @@
 /** Angular Imports */
 import { Component, Input, OnChanges } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgFor } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
 
 /**
  * Campaign Message Step
@@ -9,7 +17,19 @@ import { UntypedFormControl } from '@angular/forms';
   selector: 'mifosx-campaign-message-step',
   templateUrl: './campaign-message-step.component.html',
   styleUrls: ['./campaign-message-step.component.scss'],
-  standalone: false
+  imports: [
+    MatFormField,
+    MatLabel,
+    MatInput,
+    ReactiveFormsModule,
+    NgFor,
+    MatButton,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    TranslatePipe,
+    NgxTranslatePipe
+  ]
 })
 export class CampaignMessageStepComponent implements OnChanges {
   /** Column headers */

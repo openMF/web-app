@@ -86,9 +86,7 @@ import { RunSelectedJobsTableComponent } from './manage-jobs/scheduler-jobs/run-
     NgxGraphModule,
     BrowserAnimationsModule,
     DragDropModule,
-    DirectivesModule
-  ],
-  declarations: [
+    DirectivesModule,
     SystemComponent,
     CodesComponent,
     ViewCodeComponent,

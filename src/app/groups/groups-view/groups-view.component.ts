@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Dialogs */
@@ -9,6 +9,27 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
+import {
+  MatCard,
+  MatCardHeader,
+  MatCardTitleGroup,
+  MatCardMdImage,
+  MatCardTitle,
+  MatCardSubtitle,
+  MatCardContent
+} from '@angular/material/card';
+import { NgClass, NgIf, NgFor, LowerCasePipe } from '@angular/common';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe } from '@pipes/translate.pipe';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
+import { DateFormatPipe } from '../../pipes/date-format.pipe';
 
 /**
  * Groups View Component.
@@ -17,7 +38,37 @@ import { GroupsService } from '../groups.service';
   selector: 'mifosx-groups-view',
   templateUrl: './groups-view.component.html',
   styleUrls: ['./groups-view.component.scss'],
-  standalone: false
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardTitleGroup,
+    MatCardMdImage,
+    MatCardTitle,
+    NgClass,
+    MatTooltip,
+    MatIconButton,
+    MatMenuTrigger,
+    MatIcon,
+    FaIconComponent,
+    MatCardSubtitle,
+    NgIf,
+    MatMenu,
+    HasPermissionDirective,
+    MatMenuItem,
+    RouterLink,
+    MatCardContent,
+    MatTabNav,
+    MatTabLink,
+    RouterLinkActive,
+    NgFor,
+    MatTabNavPanel,
+    RouterOutlet,
+    LowerCasePipe,
+    TranslatePipe,
+    StatusLookupPipe,
+    DateFormatPipe,
+    NgxTranslatePipe
+  ]
 })
 export class GroupsViewComponent {
   /** Group view data */
