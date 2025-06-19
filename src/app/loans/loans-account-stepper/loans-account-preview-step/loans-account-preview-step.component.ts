@@ -17,16 +17,13 @@ import { LongTextComponent } from '../../../shared/long-text/long-text.component
 import { NgIf, CurrencyPipe } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { MatDivider } from '@angular/material/divider';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { RouterLink } from '@angular/router';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FindPipe } from '../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Loans Account Preview Step
@@ -36,8 +33,8 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
   templateUrl: './loans-account-preview-step.component.html',
   styleUrls: ['./loans-account-preview-step.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     LongTextComponent,
-    NgIf,
     ExternalIdentifierComponent,
     MatDivider,
     MatTable,
@@ -50,17 +47,13 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    RouterLink,
     CurrencyPipe,
-    TranslatePipe,
     FindPipe,
     DateFormatPipe,
     FormatNumberPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class LoansAccountPreviewStepComponent implements OnChanges {

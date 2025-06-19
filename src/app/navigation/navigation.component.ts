@@ -12,13 +12,7 @@ import { StaffNavigationComponent } from './staff-navigation/staff-navigation.co
 import { CenterNavigationComponent } from './center-navigation/center-navigation.component';
 import { GroupNavigationComponent } from './group-navigation/group-navigation.component';
 import { ClientNavigationComponent } from './client-navigation/client-navigation.component';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { NgIf, NgFor } from '@angular/common';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Navigation component.
@@ -28,22 +22,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
   imports: [
-    MatCard,
-    MatCardContent,
-    NgIf,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    ReactiveFormsModule,
-    NgFor,
-    MatOption,
+    ...STANDALONE_SHARED_IMPORTS,
     OfficeNavigationComponent,
     StaffNavigationComponent,
     CenterNavigationComponent,
     GroupNavigationComponent,
-    ClientNavigationComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    ClientNavigationComponent
   ]
 })
 export class NavigationComponent implements OnInit {

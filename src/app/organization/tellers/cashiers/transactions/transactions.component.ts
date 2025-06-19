@@ -20,19 +20,10 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf, NgFor } from '@angular/common';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Cashier Transactions Component.
@@ -42,20 +33,8 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgIf,
-    MatCard,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatSelect,
-    ReactiveFormsModule,
-    NgFor,
-    MatOption,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -69,10 +48,8 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class TransactionsComponent implements OnInit {

@@ -22,20 +22,10 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { OrganizationService } from '../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { NgIf, NgFor } from '@angular/common';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Standing Instructions History Component.
@@ -45,24 +35,7 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
   templateUrl: './standing-instructions-history.component.html',
   styleUrls: ['./standing-instructions-history.component.scss'],
   imports: [
-    NgIf,
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatSort,
@@ -78,9 +51,7 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class StandingInstructionsHistoryComponent implements OnInit {

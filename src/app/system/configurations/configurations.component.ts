@@ -4,26 +4,21 @@ import { AlertService } from 'app/core/alert/alert.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Subscription } from 'rxjs';
 import { SystemService } from '../system.service';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { GlobalConfigurationsTabComponent } from './global-configurations-tab/global-configurations-tab.component';
-import { NgIf } from '@angular/common';
 import { BusinessDateTabComponent } from './business-date-tab/business-date-tab.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-configurations',
   templateUrl: './configurations.component.html',
   styleUrls: ['./configurations.component.scss'],
   imports: [
-    MatCard,
-    MatCardContent,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTabGroup,
     MatTab,
     GlobalConfigurationsTabComponent,
-    NgIf,
-    BusinessDateTabComponent,
-    NgxTranslatePipe
+    BusinessDateTabComponent
   ]
 })
 export class ConfigurationsComponent implements OnInit {

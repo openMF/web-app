@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-stepper-buttons',
   templateUrl: './stepper-buttons.component.html',
   styleUrls: ['./stepper-buttons.component.scss'],
   imports: [
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext

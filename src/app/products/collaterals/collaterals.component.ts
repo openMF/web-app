@@ -16,26 +16,16 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-collaterals',
   templateUrl: './collaterals.component.html',
   styleUrls: ['./collaterals.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -48,9 +38,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class CollateralsComponent implements OnInit {

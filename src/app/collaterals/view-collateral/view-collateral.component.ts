@@ -5,10 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import {
   MatTable,
   MatColumnDef,
@@ -21,22 +18,17 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-collateral',
   templateUrl: './view-collateral.component.html',
   styleUrls: ['./view-collateral.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -47,10 +39,8 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class ViewCollateralComponent {

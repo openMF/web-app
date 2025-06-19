@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Accounting } from 'app/core/utils/accounting';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
-import { NgIf } from '@angular/common';
 import {
   MatTable,
   MatColumnDef,
@@ -19,22 +16,18 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ViewSavingsAccountingDetailsComponent } from '../../../../shared/accounting/view-savings-accounting-details/view-savings-accounting-details.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-saving-product-general-tab',
   templateUrl: './saving-product-general-tab.component.html',
   styleUrls: ['./saving-product-general-tab.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatDivider,
-    NgIf,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -46,10 +39,8 @@ import { YesnoPipe } from '../../../../pipes/yesno.pipe';
     MatRowDef,
     MatRow,
     ViewSavingsAccountingDetailsComponent,
-    TranslatePipe,
     FormatNumberPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class SavingProductGeneralTabComponent {

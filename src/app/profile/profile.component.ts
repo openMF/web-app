@@ -20,11 +20,8 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Profile Component.
@@ -34,10 +31,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   imports: [
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -47,9 +42,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatRow
   ]
 })
 export class ProfileComponent implements OnInit {

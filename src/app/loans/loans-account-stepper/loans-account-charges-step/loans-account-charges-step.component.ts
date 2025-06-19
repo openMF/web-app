@@ -28,18 +28,13 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Recurring Deposit Account Charges Step
@@ -49,12 +44,7 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
   templateUrl: './loans-account-charges-step.component.html',
   styleUrls: ['./loans-account-charges-step.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -63,7 +53,6 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatCellDef,
     MatCell,
     MatIconButton,
-    NgIf,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
@@ -71,11 +60,8 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatDivider,
     MatStepperPrevious,
     MatStepperNext,
-    RouterLink,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class LoansAccountChargesStepComponent implements OnInit, OnChanges {

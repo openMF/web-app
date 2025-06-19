@@ -3,26 +3,19 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
-import { NgFor } from '@angular/common';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-transaction',
   templateUrl: './view-transaction.component.html',
   styleUrls: ['./view-transaction.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
-    RouterLink,
-    NgFor,
-    HasPermissionDirective,
     MatTabNavPanel,
-    RouterOutlet,
-    TranslatePipe,
-    NgxTranslatePipe
+    RouterOutlet
   ]
 })
 export class ViewTransactionComponent {

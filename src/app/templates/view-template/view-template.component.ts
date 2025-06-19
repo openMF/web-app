@@ -8,11 +8,8 @@ import { TemplatesService } from '../templates.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Template Component.
@@ -22,13 +19,8 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './view-template.component.html',
   styleUrls: ['./view-template.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
-    FaIconComponent,
-    MatCard,
-    MatCardContent,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
   ]
 })
 export class ViewTemplateComponent {

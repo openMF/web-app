@@ -27,21 +27,13 @@ import { appTableData, entitySubTypeData } from '../app-table-data';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ColumnDialogComponent } from '../column-dialog/column-dialog.component';
 import { DatatableColumn } from '../datatable-column.model';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Data Table Component.
@@ -51,18 +43,7 @@ import { HasPermissionDirective } from '../../../directives/has-permission/has-p
   templateUrl: './edit-data-table.component.html',
   styleUrls: ['./edit-data-table.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
-    MatError,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatSort,
@@ -78,12 +59,7 @@ import { HasPermissionDirective } from '../../../directives/has-permission/has-p
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    MatCardActions,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class EditDataTableComponent implements OnInit {

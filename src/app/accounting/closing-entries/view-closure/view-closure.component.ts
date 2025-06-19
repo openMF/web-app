@@ -8,13 +8,8 @@ import { AccountingService } from '../../accounting.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { NgIf } from '@angular/common';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View closure component.
@@ -24,15 +19,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './view-closure.component.html',
   styleUrls: ['./view-closure.component.scss'],
   imports: [
-    MatButton,
-    RouterLink,
-    FaIconComponent,
-    HasPermissionDirective,
-    NgIf,
-    MatCard,
-    MatCardContent,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
   ]
 })
 export class ViewClosureComponent {

@@ -2,7 +2,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Currency } from 'app/shared/models/general.model';
-import { NgIf } from '@angular/common';
 import { ApproveSavingsAccountComponent } from './approve-savings-account/approve-savings-account.component';
 import { RejectSavingsAccountComponent } from './reject-savings-account/reject-savings-account.component';
 import { ActivateSavingsAccountComponent } from './activate-savings-account/activate-savings-account.component';
@@ -16,6 +15,7 @@ import { SavingsAccountTransactionsComponent } from './savings-account-transacti
 import { CloseSavingsAccountComponent } from './close-savings-account/close-savings-account.component';
 import { ApplyAnnualFeesSavingsAccountComponent } from './apply-annual-fees-savings-account/apply-annual-fees-savings-account.component';
 import { ManageSavingsAccountComponent } from './manage-savings-account/manage-savings-account.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Savings account actions component.
@@ -25,7 +25,7 @@ import { ManageSavingsAccountComponent } from './manage-savings-account/manage-s
   templateUrl: './saving-account-actions.component.html',
   styleUrls: ['./saving-account-actions.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     ApproveSavingsAccountComponent,
     RejectSavingsAccountComponent,
     ActivateSavingsAccountComponent,

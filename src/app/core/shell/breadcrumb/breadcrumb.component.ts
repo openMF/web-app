@@ -12,10 +12,7 @@ import { Breadcrumb } from './breadcrumb.model';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { NgIf, NgFor } from '@angular/common';
-import { MatButton } from '@angular/material/button';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Route data property to generate breadcrumb using a static string.
@@ -54,12 +51,7 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss'],
   imports: [
-    NgIf,
-    NgFor,
-    RouterLink,
-    MatButton,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS
   ]
 })
 export class BreadcrumbComponent implements AfterViewInit {

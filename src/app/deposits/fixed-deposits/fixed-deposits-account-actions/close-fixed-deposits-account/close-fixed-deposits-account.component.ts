@@ -13,17 +13,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FixedDepositsService } from '../../fixed-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { NgIf, NgFor } from '@angular/common';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Close On Maturity Fixed Deposits Account Component
@@ -33,27 +24,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './close-fixed-deposits-account.component.html',
   styleUrls: ['./close-fixed-deposits-account.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    NgIf,
-    MatError,
-    MatSelect,
-    NgFor,
-    MatOption,
-    CdkTextareaAutosize,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
   ]
 })
 export class CloseFixedDepositsAccountComponent implements OnInit {

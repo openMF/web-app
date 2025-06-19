@@ -23,14 +23,10 @@ import { SystemService } from '../../system.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { NgIf } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Data Table Component
@@ -40,12 +36,8 @@ import { MatTooltip } from '@angular/material/tooltip';
   templateUrl: './view-data-table.component.html',
   styleUrls: ['./view-data-table.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -54,14 +46,12 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatSortHeader,
     MatCellDef,
     MatCell,
-    NgIf,
     MatTooltip,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class ViewDataTableComponent implements OnInit {

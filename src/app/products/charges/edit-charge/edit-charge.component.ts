@@ -8,19 +8,10 @@ import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.validator';
 import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
 import { ValidateOnFocusDirective } from '../../../directives/validate-on-focus.directive';
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatButton } from '@angular/material/button';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Charge component.
@@ -30,26 +21,10 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './edit-charge.component.html',
   styleUrls: ['./edit-charge.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatInput,
-    NgIf,
-    MatError,
+    ...STANDALONE_SHARED_IMPORTS,
     ValidateOnFocusDirective,
     GlAccountSelectorComponent,
-    MatCheckbox,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatCheckbox
   ]
 })
 export class EditChargeComponent implements OnInit {

@@ -1,16 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AlertService } from 'app/core/alert/alert.service';
-import { NgIf } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ExternalIdentifierPipe } from '../../pipes/external-identifier.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-external-identifier',
   templateUrl: './external-identifier.component.html',
   styleUrls: ['./external-identifier.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     ExternalIdentifierPipe
   ]

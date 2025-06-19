@@ -41,15 +41,9 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 import { TreeControlService } from 'app/shared/common-logic/tree-control.service';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgIf } from '@angular/common';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Chart of accounts component.
@@ -59,16 +53,10 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './chart-of-accounts.component.html',
   styleUrls: ['./chart-of-accounts.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatButtonToggleGroup,
-    ReactiveFormsModule,
     MatButtonToggle,
     FaIconComponent,
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -78,7 +66,6 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatCellDef,
     MatCell,
     MatTooltip,
-    NgIf,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
@@ -90,11 +77,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatTreeNodeToggle,
     MatIconButton,
     MatNestedTreeNode,
-    MatTreeNodeOutlet,
-    MatCard,
-    MatCardContent,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatTreeNodeOutlet
   ]
 })
 export class ChartOfAccountsComponent implements AfterViewInit, OnInit {

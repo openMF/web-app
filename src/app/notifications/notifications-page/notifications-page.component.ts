@@ -17,8 +17,7 @@ import {
   MatNoDataRow
 } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Notifications Page Component
@@ -28,6 +27,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './notifications-page.component.html',
   styleUrls: ['./notifications-page.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -40,11 +40,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    RouterLink,
     MatNoDataRow,
-    MatPaginator,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class NotificationsPageComponent implements OnInit {

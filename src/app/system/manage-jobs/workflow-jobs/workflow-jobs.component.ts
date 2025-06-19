@@ -15,22 +15,16 @@ import {
   MatRow
 } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { SystemService } from 'app/system/system.service';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
-import { RouterLink } from '@angular/router';
 import { WorkflowDiagramComponent } from './workflow-diagram/workflow-diagram.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 export interface JobStep {
   stepName: string;
@@ -43,14 +37,7 @@ export interface JobStep {
   templateUrl: './workflow-jobs.component.html',
   styleUrls: ['./workflow-jobs.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    ReactiveFormsModule,
-    NgFor,
-    MatOption,
-    NgIf,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     CdkDropList,
@@ -66,10 +53,7 @@ export interface JobStep {
     MatRowDef,
     MatRow,
     CdkDrag,
-    RouterLink,
-    WorkflowDiagramComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    WorkflowDiagramComponent
   ]
 })
 export class WorkflowJobsComponent implements OnInit {

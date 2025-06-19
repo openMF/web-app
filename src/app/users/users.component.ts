@@ -23,11 +23,8 @@ import { of } from 'rxjs';
 /** Custom Services */
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Users component.
@@ -37,12 +34,8 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
   imports: [
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -55,8 +48,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class UsersComponent implements OnInit, AfterViewInit {

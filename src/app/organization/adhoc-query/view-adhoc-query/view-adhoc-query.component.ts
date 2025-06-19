@@ -8,13 +8,8 @@ import { OrganizationService } from 'app/organization/organization.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Adhoc Query Component.
@@ -24,15 +19,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './view-adhoc-query.component.html',
   styleUrls: ['./view-adhoc-query.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
-    FaIconComponent,
-    MatCard,
-    MatCardContent,
-    NgIf,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
   ]
 })
 export class ViewAdhocQueryComponent {

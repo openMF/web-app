@@ -4,10 +4,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Undo Approval Shares Account Component
@@ -17,14 +15,8 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './undo-approval-shares-account.component.html',
   styleUrls: ['./undo-approval-shares-account.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    FormsModule,
-    MatCardContent,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FormsModule
   ]
 })
 export class UndoApprovalSharesAccountComponent {

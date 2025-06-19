@@ -16,8 +16,6 @@ import { LoanStatus } from '../models/loan-status.model';
 import { Currency } from 'app/shared/models/general.model';
 import { DelinquencyPausePeriod } from '../models/loan-account.model';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardTitle, MatCardContent } from '@angular/material/card';
@@ -30,18 +28,18 @@ import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loans-view',
   templateUrl: './loans-view.component.html',
   styleUrls: ['./loans-view.component.scss'],
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     MatCardTitleGroup,
     SvgIconComponent,
@@ -50,28 +48,21 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
     NgClass,
     LongTextComponent,
     AccountNumberComponent,
-    NgIf,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
     FaIconComponent,
     MatMenu,
-    NgFor,
-    HasPermissionDirective,
     MatMenuItem,
-    MatCardContent,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
-    RouterLink,
     MatTabNavPanel,
     RouterOutlet,
     CurrencyPipe,
-    TranslatePipe,
     StatusLookupPipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class LoansViewComponent implements OnInit {

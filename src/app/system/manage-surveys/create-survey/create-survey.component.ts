@@ -16,16 +16,12 @@ import { SystemService } from '../../system.service';
 
 /** Custom Components */
 import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dialog.component';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf, NgFor } from '@angular/common';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create survey component.
@@ -35,26 +31,14 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './create-survey.component.html',
   styleUrls: ['./create-survey.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatCard,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
+    ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize,
-    MatButton,
-    RouterLink,
     CdkDropList,
-    NgFor,
     CdkDrag,
     FaIconComponent,
     MatDivider,
     MatIconButton,
-    MatTooltip,
-    MatCardActions,
-    NgxTranslatePipe
+    MatTooltip
   ]
 })
 export class CreateSurveyComponent implements OnInit {

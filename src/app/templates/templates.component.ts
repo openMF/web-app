@@ -16,12 +16,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { HasPermissionDirective } from '../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Templates component.
@@ -31,13 +27,8 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './templates.component.html',
   styleUrls: ['./templates.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -50,8 +41,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class TemplatesComponent implements OnInit {

@@ -9,13 +9,9 @@ import { AccountingService } from '../../accounting.service';
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { Location } from '@angular/common';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View financial activity mapping component.
@@ -25,16 +21,9 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './view-financial-activity-mapping.component.html',
   styleUrls: ['./view-financial-activity-mapping.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
-    GlAccountDisplayComponent,
-    MatCardActions,
-    TranslatePipe,
-    NgxTranslatePipe
+    GlAccountDisplayComponent
   ]
 })
 export class ViewFinancialActivityMappingComponent {

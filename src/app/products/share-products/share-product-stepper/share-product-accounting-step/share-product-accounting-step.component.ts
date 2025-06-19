@@ -7,33 +7,25 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
-import { NgFor, NgIf } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { GlAccountSelectorComponent } from '../../../../shared/accounting/gl-account-selector/gl-account-selector.component';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-share-product-accounting-step',
   templateUrl: './share-product-accounting-step.component.html',
   styleUrls: ['./share-product-accounting-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatRadioGroup,
-    NgFor,
     MatRadioButton,
     MatDivider,
-    NgIf,
     GlAccountSelectorComponent,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class ShareProductAccountingStepComponent implements OnInit {

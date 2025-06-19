@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { trigger, state, transition, animate, style } from '@angular/animations';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import {
@@ -19,11 +17,11 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ViewSavingsAccountingDetailsComponent } from '../../../../shared/accounting/view-savings-accounting-details/view-savings-accounting-details.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { FindPipe } from '../../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-recurring-deposit-general-tab',
@@ -37,13 +35,9 @@ import { YesnoPipe } from '../../../../pipes/yesno.pipe';
 
   ],
   imports: [
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     MatDivider,
-    NgIf,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -60,8 +54,7 @@ import { YesnoPipe } from '../../../../pipes/yesno.pipe';
     FindPipe,
     DateFormatPipe,
     FormatNumberPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class RecurringDepositGeneralTabComponent {

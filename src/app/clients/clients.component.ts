@@ -18,36 +18,23 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { ClientsService } from './clients.service';
-import { MatCard } from '@angular/material/card';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { NgIf, NgClass } from '@angular/common';
-import { HasPermissionDirective } from '../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { AccountNumberComponent } from '../shared/account-number/account-number.component';
 import { ExternalIdentifierComponent } from '../shared/external-identifier/external-identifier.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss'],
   imports: [
-    MatCard,
-    MatFormField,
-    MatInput,
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
     FaIconComponent,
     MatProgressBar,
     MatTable,
@@ -66,9 +53,7 @@ import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
-    StatusLookupPipe,
-    NgxTranslatePipe
+    StatusLookupPipe
   ]
 })
 export class ClientsComponent implements OnInit {

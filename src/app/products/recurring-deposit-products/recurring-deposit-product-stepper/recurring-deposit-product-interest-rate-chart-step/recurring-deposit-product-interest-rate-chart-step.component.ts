@@ -23,16 +23,11 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { MatCheckbox } from '@angular/material/checkbox';
 import {
   MatTable,
@@ -46,9 +41,9 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { MatCard } from '@angular/material/card';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FindPipe } from '../../../../pipes/find.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-interest-rate-chart-step',
@@ -62,30 +57,18 @@ import { FindPipe } from '../../../../pipes/find.pipe';
 
   ],
   imports: [
-    ReactiveFormsModule,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgFor,
     MatDivider,
     MatIconButton,
     MatTooltip,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatError,
     MatCheckbox,
-    NgIf,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    MatCard,
     NgSwitch,
     NgSwitchCase,
     MatHeaderRowDef,
@@ -94,9 +77,7 @@ import { FindPipe } from '../../../../pipes/find.pipe';
     MatRow,
     MatStepperPrevious,
     MatStepperNext,
-    TranslatePipe,
-    FindPipe,
-    NgxTranslatePipe
+    FindPipe
   ]
 })
 export class RecurringDepositProductInterestRateChartStepComponent implements OnInit {

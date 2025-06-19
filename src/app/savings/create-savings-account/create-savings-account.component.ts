@@ -13,10 +13,8 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf } from '@angular/common';
 import { SavingsAccountPreviewStepComponent } from '../savings-account-stepper/savings-account-preview-step/savings-account-preview-step.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Savings Account Component
@@ -26,6 +24,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './create-savings-account.component.html',
   styleUrls: ['./create-savings-account.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepper,
     MatStepperIcon,
     FaIconComponent,
@@ -34,10 +33,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     SavingsAccountDetailsStepComponent,
     SavingsAccountTermsStepComponent,
     SavingsAccountChargesStepComponent,
-    NgIf,
-    SavingsAccountPreviewStepComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    SavingsAccountPreviewStepComponent
   ]
 })
 export class CreateSavingsAccountComponent {

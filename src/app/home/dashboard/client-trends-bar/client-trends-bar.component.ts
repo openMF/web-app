@@ -15,13 +15,9 @@ import { Dates } from 'app/core/utils/dates';
 import Chart from 'chart.js';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
 import { NgFor, NgStyle } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Trends Bar Chart Component.
@@ -31,21 +27,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './client-trends-bar.component.html',
   styleUrls: ['./client-trends-bar.component.scss'],
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    ReactiveFormsModule,
-    NgFor,
-    MatOption,
-    MatCardContent,
     NgStyle,
     MatButtonToggleGroup,
-    MatButtonToggle,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatButtonToggle
   ]
 })
 export class ClientTrendsBarComponent implements OnInit {

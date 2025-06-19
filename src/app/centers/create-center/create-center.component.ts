@@ -14,21 +14,12 @@ import { GroupsService } from 'app/groups/groups.service';
 import { CentersService } from '../centers.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf, NgFor } from '@angular/common';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatNavList, MatListSubheaderCssMatStyler } from '@angular/material/list';
 import { MatLine } from '@angular/material/grid-list';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Center component.
@@ -38,33 +29,13 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './create-center.component.html',
   styleUrls: ['./create-center.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatSelect,
-    NgFor,
-    MatOption,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
     MatIconButton,
     FaIconComponent,
     MatNavList,
     MatListSubheaderCssMatStyler,
-    MatLine,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatLine
   ]
 })
 export class CreateCenterComponent implements OnInit {

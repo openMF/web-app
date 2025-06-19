@@ -20,12 +20,8 @@ import { UnassignRoleDialogComponent } from '../custom-dialogs/unassign-role-dia
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
-import { NgIf } from '@angular/common';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Groups Committee Tab Component
@@ -35,10 +31,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './committee-tab.component.html',
   styleUrls: ['./committee-tab.component.scss'],
   imports: [
-    NgIf,
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -49,9 +42,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatRow
   ]
 })
 export class CommitteeTabComponent {

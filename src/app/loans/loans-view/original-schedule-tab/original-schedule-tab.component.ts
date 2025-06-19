@@ -19,16 +19,16 @@ import {
 } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { CurrencyPipe } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-original-schedule-tab',
   templateUrl: './original-schedule-tab.component.html',
   styleUrls: ['./original-schedule-tab.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -45,10 +45,8 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatFooterRowDef,
     MatFooterRow,
     CurrencyPipe,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class OriginalScheduleTabComponent {

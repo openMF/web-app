@@ -3,13 +3,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
@@ -26,18 +20,14 @@ import {
 } from '@angular/material/table';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { ChargesFilterPipe } from '../../../../pipes/charges-filter.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-charges-step',
   templateUrl: './recurring-deposit-product-charges-step.component.html',
   styleUrls: ['./recurring-deposit-product-charges-step.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -52,9 +42,7 @@ import { ChargesFilterPipe } from '../../../../pipes/charges-filter.pipe';
     MatRow,
     MatStepperPrevious,
     MatStepperNext,
-    TranslatePipe,
-    ChargesFilterPipe,
-    NgxTranslatePipe
+    ChargesFilterPipe
   ]
 })
 export class RecurringDepositProductChargesStepComponent implements OnInit {

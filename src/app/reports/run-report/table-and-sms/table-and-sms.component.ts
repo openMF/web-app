@@ -23,15 +23,12 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { environment } from 'environments/environment';
+import { environment } from '../../../../environments/environment';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 
 import * as ExcelJS from 'exceljs';
-import { MatButton } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Table and SMS Component
@@ -41,10 +38,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './table-and-sms.component.html',
   styleUrls: ['./table-and-sms.component.scss'],
   imports: [
-    NgIf,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
-    NgFor,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
@@ -55,10 +50,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    RouterLink,
-    FaIconComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    FaIconComponent
   ]
 })
 export class TableAndSmsComponent implements OnChanges {

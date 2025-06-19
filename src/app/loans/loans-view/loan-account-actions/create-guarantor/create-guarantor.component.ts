@@ -14,18 +14,9 @@ import { LoansService } from 'app/loans/loans.service';
 import { ClientsService } from 'app/clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { NgIf, NgFor } from '@angular/common';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
-import { MatSelect } from '@angular/material/select';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Guarantor Action
@@ -35,30 +26,10 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './create-guarantor.component.html',
   styleUrls: ['./create-guarantor.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    NgIf,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatAutocompleteTrigger,
-    MatError,
-    MatAutocomplete,
-    NgFor,
-    MatOption,
-    MatSelect,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatAutocomplete
   ]
 })
 export class CreateGuarantorComponent implements OnInit, AfterViewInit {

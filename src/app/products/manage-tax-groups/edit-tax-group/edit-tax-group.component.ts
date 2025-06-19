@@ -10,18 +10,12 @@ import { ProductsService } from '../../products.service';
 
 /** Dialog Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
@@ -37,9 +31,9 @@ import {
   MatRow
 } from '@angular/material/table';
 import { MatTooltip } from '@angular/material/tooltip';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 import { FindPipe } from '../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Tax Group component.
@@ -49,15 +43,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './edit-tax-group.component.html',
   styleUrls: ['./edit-tax-group.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -71,13 +57,8 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatCardActions,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
     FindPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class EditTaxGroupComponent implements OnInit {

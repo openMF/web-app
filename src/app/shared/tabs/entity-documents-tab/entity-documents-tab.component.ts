@@ -21,19 +21,15 @@ import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { Observable } from 'rxjs';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-entity-documents-tab',
   templateUrl: './entity-documents-tab.component.html',
   styleUrls: ['./entity-documents-tab.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatSort,
@@ -47,9 +43,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    NgIf,
-    MatPaginator,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class EntityDocumentsTabComponent implements OnInit {

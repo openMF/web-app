@@ -15,8 +15,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { RecurringDepositConfirmationDialogComponent } from './custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
 import { Currency } from 'app/shared/models/general.model';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import {
   MatCard,
   MatCardHeader,
@@ -32,9 +30,9 @@ import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * RecurringDeposits Account View Component
@@ -44,7 +42,7 @@ import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
   templateUrl: './recurring-deposits-account-view.component.html',
   styleUrls: ['./recurring-deposits-account-view.component.scss'],
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     MatCardTitleGroup,
     MatCardMdImage,
@@ -52,27 +50,20 @@ import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
     MatCardTitle,
     NgClass,
     AccountNumberComponent,
-    NgIf,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
     FaIconComponent,
     MatMenu,
-    NgFor,
-    HasPermissionDirective,
     MatMenuItem,
-    MatCardContent,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
-    RouterLink,
     MatTabNavPanel,
     RouterOutlet,
     DecimalPipe,
     CurrencyPipe,
-    TranslatePipe,
-    StatusLookupPipe,
-    NgxTranslatePipe
+    StatusLookupPipe
   ]
 })
 export class RecurringDepositsAccountViewComponent implements OnInit {

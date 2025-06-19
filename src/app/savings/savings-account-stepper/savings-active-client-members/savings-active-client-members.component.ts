@@ -12,26 +12,23 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { NgIf } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-savings-active-client-members',
   templateUrl: './savings-active-client-members.component.html',
   styleUrls: ['./savings-active-client-members.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCheckbox,
-    ReactiveFormsModule,
     FormsModule,
     MatCellDef,
     MatCell,
@@ -39,11 +36,9 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class SavingsActiveClientMembersComponent implements OnInit {

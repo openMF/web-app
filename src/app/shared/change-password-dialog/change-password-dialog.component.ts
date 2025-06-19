@@ -18,14 +18,10 @@ import {
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PasswordsUtility } from 'app/core/utils/passwords-utility';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { InputPasswordComponent } from '../input-password/input-password.component';
-import { MatError } from '@angular/material/form-field';
-import { NgIf } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Change Password Dialog component.
@@ -35,18 +31,13 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './change-password-dialog.component.html',
   styleUrls: ['./change-password-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
-    ReactiveFormsModule,
     InputPasswordComponent,
-    MatError,
-    NgIf,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class ChangePasswordDialogComponent implements OnInit {

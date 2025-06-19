@@ -15,8 +15,6 @@ import {
   MatRow
 } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import {
   AdvancedCreditAllocation,
@@ -27,20 +25,15 @@ import {
   PaymentAllocationOrder,
   PaymentAllocationTransactionType
 } from '../payment-allocation-model';
-import { NgIf, NgFor } from '@angular/common';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-advance-payment-allocation-tab',
   templateUrl: './advance-payment-allocation-tab.component.html',
   styleUrls: ['./advance-payment-allocation-tab.component.scss'],
   imports: [
-    NgIf,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     CdkDropList,
@@ -53,15 +46,7 @@ import { MatOption } from '@angular/material/autocomplete';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    CdkDrag,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    ReactiveFormsModule,
-    NgFor,
-    MatOption,
-    TranslatePipe,
-    NgxTranslatePipe
+    CdkDrag
   ]
 })
 export class AdvancePaymentAllocationTabComponent implements OnInit {

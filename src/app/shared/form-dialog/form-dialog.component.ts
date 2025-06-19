@@ -15,9 +15,7 @@ import { FormGroupService } from './form-group.service';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { NgClass, NgFor } from '@angular/common';
 import { FormfieldComponent } from './formfield/formfield.component';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 const layoutGap = 2;
 
@@ -26,18 +24,14 @@ const layoutGap = 2;
   templateUrl: './form-dialog.component.html',
   styleUrls: ['./form-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
-    ReactiveFormsModule,
     NgClass,
-    NgFor,
     FormfieldComponent,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class FormDialogComponent implements OnInit {

@@ -7,15 +7,12 @@ import * as _ from 'lodash';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 import { SystemService } from '../system.service';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardActions } from '@angular/material/card';
 import { MatList, MatListItem } from '@angular/material/list';
 import { NgFor, NgClass, NgIf } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 interface Permission {
   code: string;
@@ -43,20 +40,13 @@ interface SubmitPermissionData {
   templateUrl: './configure-maker-checker-tasks.component.html',
   styleUrls: ['./configure-maker-checker-tasks.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
     MatList,
-    NgFor,
     MatListItem,
     NgClass,
     MatDivider,
-    ReactiveFormsModule,
-    MatCheckbox,
-    NgIf,
-    MatCardActions,
-    NgxTranslatePipe
+    MatCheckbox
   ]
 })
 export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewInit {

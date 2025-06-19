@@ -10,11 +10,8 @@ import { LoansService } from 'app/loans/loans.service';
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { LoansAccountViewGuarantorDetailsDialogComponent } from 'app/loans/custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
-import { MatCard } from '@angular/material/card';
-import { NgIf } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
-import { MatButton } from '@angular/material/button';
 import {
   MatTable,
   MatColumnDef,
@@ -27,11 +24,9 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { AccountsFilterPipe } from '../../../../pipes/accounts-filter.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Guarantors Action
@@ -41,26 +36,21 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
   templateUrl: './view-guarantors.component.html',
   styleUrls: ['./view-guarantors.component.scss'],
   imports: [
-    MatCard,
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     ExternalIdentifierComponent,
-    MatButton,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    HasPermissionDirective,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    TranslatePipe,
     AccountsFilterPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class ViewGuarantorsComponent implements OnInit {

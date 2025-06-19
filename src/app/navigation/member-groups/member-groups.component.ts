@@ -15,19 +15,14 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-member-groups',
   templateUrl: './member-groups.component.html',
   styleUrls: ['./member-groups.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatInput,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -40,9 +35,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class MemberGroupsComponent {

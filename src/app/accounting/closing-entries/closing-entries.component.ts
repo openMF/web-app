@@ -24,15 +24,10 @@ import { startWith, map } from 'rxjs/operators';
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { NgFor, AsyncPipe } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Closing entries component.
@@ -42,18 +37,10 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './closing-entries.component.html',
   styleUrls: ['./closing-entries.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    ReactiveFormsModule,
     MatAutocompleteTrigger,
     MatAutocomplete,
-    NgFor,
-    MatOption,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -67,9 +54,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    AsyncPipe,
-    TranslatePipe,
-    NgxTranslatePipe
+    AsyncPipe
   ]
 })
 export class ClosingEntriesComponent implements OnInit, AfterViewInit {

@@ -6,13 +6,8 @@ import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { SystemService } from '../../../system.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Configuration Component
@@ -22,21 +17,8 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './edit-configuration.component.html',
   styleUrls: ['./edit-configuration.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    CdkTextareaAutosize,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
   ]
 })
 export class EditConfigurationComponent implements OnInit {

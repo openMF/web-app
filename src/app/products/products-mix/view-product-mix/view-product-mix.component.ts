@@ -21,13 +21,10 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { ProductsService } from 'app/products/products.service';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgClass } from '@angular/common';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View product mix component.
@@ -37,9 +34,7 @@ import { NgClass } from '@angular/common';
   templateUrl: './view-product-mix.component.html',
   styleUrls: ['./view-product-mix.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatSort,
@@ -54,8 +49,7 @@ import { NgClass } from '@angular/common';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class ViewProductMixComponent implements OnInit {

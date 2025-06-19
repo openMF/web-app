@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgIf } from '@angular/common';
 import { ApproveFixedDepositsAccountComponent } from './approve-fixed-deposits-account/approve-fixed-deposits-account.component';
 import { RejectFixedDepositsAccountComponent } from './reject-fixed-deposits-account/reject-fixed-deposits-account.component';
 import { ActivateFixedDepositsAccountComponent } from './activate-fixed-deposits-account/activate-fixed-deposits-account.component';
@@ -11,6 +10,7 @@ import { AddChargeFixedDepositsAccountComponent } from './add-charge-fixed-depos
 import { PrematureCloseFixedDepositsAccountComponent } from './premature-close-fixed-deposits-account/premature-close-fixed-deposits-account.component';
 import { CloseFixedDepositsAccountComponent } from './close-fixed-deposits-account/close-fixed-deposits-account.component';
 import { FixedDepositsCashTransactionComponent } from './fixed-deposits-cash-transaction/fixed-deposits-cash-transaction.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Fixed deposits account actions component.
@@ -20,7 +20,7 @@ import { FixedDepositsCashTransactionComponent } from './fixed-deposits-cash-tra
   templateUrl: './fixed-deposits-account-actions.component.html',
   styleUrls: ['./fixed-deposits-account-actions.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     ApproveFixedDepositsAccountComponent,
     RejectFixedDepositsAccountComponent,
     ActivateFixedDepositsAccountComponent,

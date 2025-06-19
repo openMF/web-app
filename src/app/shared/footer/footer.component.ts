@@ -9,12 +9,11 @@ import { SystemService } from 'app/system/system.service';
 import { VersionService } from 'app/system/version.service';
 
 /** Environment Configuration */
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
 import { NgIf, NgClass, DatePipe } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  *  Footer component.
@@ -24,12 +23,10 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     NgClass,
     MatDivider,
-    DatePipe,
-    TranslatePipe,
-    NgxTranslatePipe
+    DatePipe
   ]
 })
 export class FooterComponent implements OnInit, OnDestroy {

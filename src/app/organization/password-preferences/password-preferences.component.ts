@@ -5,13 +5,8 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../organization.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
-import { NgFor } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Password preferences component.
@@ -21,18 +16,9 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './password-preferences.component.html',
   styleUrls: ['./password-preferences.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
+    ...STANDALONE_SHARED_IMPORTS,
     MatRadioGroup,
-    NgFor,
-    MatRadioButton,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatRadioButton
   ]
 })
 export class PasswordPreferencesComponent implements OnInit {

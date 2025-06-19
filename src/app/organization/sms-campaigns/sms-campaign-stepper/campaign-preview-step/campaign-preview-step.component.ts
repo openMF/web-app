@@ -1,12 +1,8 @@
 /** Angular Imports */
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatList, MatListItem } from '@angular/material/list';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FindPipe } from '../../../../pipes/find.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Campaign Preview Step.
@@ -16,14 +12,10 @@ import { FindPipe } from '../../../../pipes/find.pipe';
   templateUrl: './campaign-preview-step.component.html',
   styleUrls: ['./campaign-preview-step.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatList,
     MatListItem,
-    MatInput,
-    MatButton,
-    RouterLink,
-    TranslatePipe,
-    FindPipe,
-    NgxTranslatePipe
+    FindPipe
   ]
 })
 export class CampaignPreviewStepComponent implements OnInit {

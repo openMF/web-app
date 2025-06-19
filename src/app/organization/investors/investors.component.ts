@@ -11,11 +11,6 @@ import { ExternalAssetOwner } from 'app/loans/services/external-asset-owner';
 import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.component';
-import { MatCard } from '@angular/material/card';
-import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgIf, NgFor, NgClass } from '@angular/common';
 import {
@@ -27,10 +22,9 @@ import {
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatDivider } from '@angular/material/divider';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-investors',
@@ -44,20 +38,9 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
 
   ],
   imports: [
-    MatCard,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    ReactiveFormsModule,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgIf,
     MatAccordion,
-    NgFor,
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
@@ -66,10 +49,8 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
     MatDivider,
     MatTooltip,
     MatPaginator,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class InvestorsComponent implements OnInit {

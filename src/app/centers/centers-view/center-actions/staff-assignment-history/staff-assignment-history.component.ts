@@ -5,11 +5,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from '../../../centers.service';
-import { MatCard } from '@angular/material/card';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Staff Assignment History Component
@@ -19,12 +16,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './staff-assignment-history.component.html',
   styleUrls: ['./staff-assignment-history.component.scss'],
   imports: [
-    MatCard,
-    MatButton,
-    RouterLink,
-    FaIconComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
   ]
 })
 export class StaffAssignmentHistoryComponent implements OnInit {

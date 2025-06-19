@@ -26,10 +26,9 @@ import { SharesService } from 'app/shares/shares.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Approve shares component.
@@ -39,6 +38,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './approve-shares.component.html',
   styleUrls: ['./approve-shares.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -49,15 +49,13 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatCell,
     NgClass,
     MatTooltip,
-    MatButton,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     MatPaginator,
     StatusLookupPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ApproveSharesComponent implements OnInit {

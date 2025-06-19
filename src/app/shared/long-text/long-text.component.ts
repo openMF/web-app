@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TruncateTextPipe } from '../../pipes/truncate-text.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-long-text',
   templateUrl: './long-text.component.html',
   styleUrls: ['./long-text.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     TruncateTextPipe
   ]

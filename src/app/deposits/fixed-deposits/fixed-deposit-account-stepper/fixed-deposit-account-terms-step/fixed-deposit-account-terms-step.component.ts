@@ -3,18 +3,11 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
-import { NgIf, NgFor } from '@angular/common';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatDivider } from '@angular/material/divider';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Fixed Deposits Terms Step
@@ -24,23 +17,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './fixed-deposit-account-terms-step.component.html',
   styleUrls: ['./fixed-deposit-account-terms-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     InputAmountComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatError,
-    MatSelect,
-    NgFor,
-    MatOption,
     MatDivider,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class FixedDepositAccountTermsStepComponent implements OnInit, OnChanges {

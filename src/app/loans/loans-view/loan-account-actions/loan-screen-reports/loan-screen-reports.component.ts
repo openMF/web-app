@@ -6,15 +6,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Loans Screen Reports Component.
@@ -24,22 +17,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './loan-screen-reports.component.html',
   styleUrls: ['./loan-screen-reports.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
-    MatError,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    FaIconComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
   ]
 })
 export class LoanScreenReportsComponent implements OnInit {

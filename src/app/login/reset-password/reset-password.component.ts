@@ -14,12 +14,9 @@ import { PasswordsUtility } from 'app/core/utils/passwords-utility';
 import { MatDivider } from '@angular/material/divider';
 import { MatFormField, MatPrefix, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Reset password component.
@@ -29,21 +26,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
-    ReactiveFormsModule,
-    MatFormField,
     MatPrefix,
     FaIconComponent,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatButton,
     MatIconButton,
-    MatSuffix,
-    MatError,
-    MatProgressSpinner,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatProgressSpinner
   ]
 })
 export class ResetPasswordComponent implements OnInit {

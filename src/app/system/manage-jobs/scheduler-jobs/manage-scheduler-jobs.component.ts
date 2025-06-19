@@ -35,13 +35,11 @@ import { RunSelectedJobsPopoverComponent } from './run-selected-jobs-popover/run
 import { NgIf, NgClass } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Manage scheduler jobs component.
@@ -51,12 +49,8 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
   templateUrl: './manage-scheduler-jobs.component.html',
   styleUrls: ['./manage-scheduler-jobs.component.scss'],
   imports: [
-    NgIf,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -66,7 +60,6 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
     MatCellDef,
     MatCell,
     MatSortHeader,
-    RouterLink,
     MatTooltip,
     MatIconButton,
     MatHeaderRowDef,
@@ -76,8 +69,7 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
     NgClass,
     MatPaginator,
     DatetimeFormatPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {

@@ -14,16 +14,9 @@ import { ReportsService } from 'app/reports/reports.service';
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf, NgFor } from '@angular/common';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { EditBusinessRuleParametersComponent } from './edit-business-rule-parameters/edit-business-rule-parameters.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit SMS Campaign step.
@@ -33,23 +26,9 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './edit-sms-campaign-step.component.html',
   styleUrls: ['./edit-sms-campaign-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatError,
-    NgIf,
-    MatSelect,
-    NgFor,
-    MatOption,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    EditBusinessRuleParametersComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    EditBusinessRuleParametersComponent
   ]
 })
 export class EditSmsCampaignStepComponent implements OnInit {

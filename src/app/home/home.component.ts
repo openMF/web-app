@@ -19,15 +19,11 @@ import { ConfigurationWizardService } from '../configuration-wizard/configuratio
 
 /** Custom Components */
 import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardImage } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Home component.
@@ -37,26 +33,14 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   imports: [
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
     MatCardHeader,
     MatCardTitle,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatAutocompleteTrigger,
-    ReactiveFormsModule,
     MatAutocomplete,
-    NgFor,
-    MatOption,
     MatCardImage,
-    NgIf,
-    AsyncPipe,
-    TranslatePipe,
-    NgxTranslatePipe
+    AsyncPipe
   ]
 })
 export class HomeComponent implements OnInit, AfterViewInit {

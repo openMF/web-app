@@ -16,17 +16,14 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard } from '@angular/material/card';
 import { ViewSavingsAccountingDetailsComponent } from '../../../../shared/accounting/view-savings-accounting-details/view-savings-accounting-details.component';
 import { MatStepperPrevious } from '@angular/material/stepper';
-import { RouterLink } from '@angular/router';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { FindPipe } from '../../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-preview-step',
@@ -40,18 +37,15 @@ import { YesnoPipe } from '../../../../pipes/yesno.pipe';
 
   ],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
-    NgIf,
-    NgFor,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    MatButton,
     FaIconComponent,
-    MatCard,
     NgSwitch,
     NgSwitchCase,
     MatHeaderRowDef,
@@ -60,12 +54,10 @@ import { YesnoPipe } from '../../../../pipes/yesno.pipe';
     MatRow,
     ViewSavingsAccountingDetailsComponent,
     MatStepperPrevious,
-    RouterLink,
     FindPipe,
     DateFormatPipe,
     FormatNumberPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class RecurringDepositProductPreviewStepComponent implements OnInit, OnChanges {

@@ -7,12 +7,9 @@ import { ProductsService } from 'app/products/products.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Collateral Component
@@ -22,13 +19,8 @@ import { MatCard, MatCardContent } from '@angular/material/card';
   templateUrl: './view-collateral.component.html',
   styleUrls: ['./view-collateral.component.scss'],
   imports: [
-    MatButton,
-    RouterLink,
-    FaIconComponent,
-    MatCard,
-    MatCardContent,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
   ]
 })
 export class ViewCollateralComponent {

@@ -24,7 +24,6 @@ import {
   MatCardSubtitle,
   MatCardContent
 } from '@angular/material/card';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { NgClass, NgIf, NgFor } from '@angular/common';
@@ -35,22 +34,19 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-clients-view',
   templateUrl: './clients-view.component.html',
   styleUrls: ['./clients-view.component.scss'],
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     MatCardTitleGroup,
     MatCardMdImage,
-    HasPermissionDirective,
-    MatButton,
     MatTooltip,
     MatCardTitle,
     NgClass,
@@ -62,21 +58,15 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
     MatCardSubtitle,
     AccountNumberComponent,
     ExternalIdentifierComponent,
-    NgIf,
-    NgFor,
     MatMenu,
     MatMenuItem,
-    RouterLink,
-    MatCardContent,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
     MatTabNavPanel,
     RouterOutlet,
-    TranslatePipe,
     StatusLookupPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ClientsViewComponent implements OnInit {

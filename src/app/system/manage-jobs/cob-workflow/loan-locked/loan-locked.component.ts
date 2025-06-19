@@ -17,31 +17,23 @@ import {
 } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { LoansService } from 'app/loans/loans.service';
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
 import { SystemService } from 'app/system/system.service';
 import { TasksService } from 'app/tasks/tasks.service';
-import { NgIf } from '@angular/common';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-locked',
   templateUrl: './loan-locked.component.html',
   styleUrls: ['./loan-locked.component.scss'],
   imports: [
-    NgIf,
-    MatFormField,
-    MatInput,
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -57,8 +49,7 @@ import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    DatetimeFormatPipe,
-    NgxTranslatePipe
+    DatetimeFormatPipe
   ]
 })
 export class LoanLockedComponent implements OnInit {

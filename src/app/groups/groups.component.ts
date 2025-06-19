@@ -15,13 +15,7 @@ import { GroupsService } from './groups.service';
 
 /** Custom Data Source */
 import { GroupsDataSource } from './groups.datasource';
-import { MatCard } from '@angular/material/card';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../directives/has-permission/has-permission.directive';
 import {
   MatTable,
   MatColumnDef,
@@ -35,9 +29,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { NgClass, AsyncPipe } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Groups component.
@@ -47,15 +40,9 @@ import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
   templateUrl: './groups.component.html',
   styleUrls: ['./groups.component.scss'],
   imports: [
-    MatCard,
-    MatFormField,
-    MatInput,
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    MatButton,
-    RouterLink,
     FaIconComponent,
-    HasPermissionDirective,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -71,9 +58,7 @@ import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
     MatRow,
     MatPaginator,
     AsyncPipe,
-    TranslatePipe,
-    StatusLookupPipe,
-    NgxTranslatePipe
+    StatusLookupPipe
   ]
 })
 export class GroupsComponent implements OnInit, AfterViewInit {

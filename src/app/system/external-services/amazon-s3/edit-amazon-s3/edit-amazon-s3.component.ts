@@ -5,13 +5,9 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Amazon S3 Component.
@@ -21,21 +17,9 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './edit-amazon-s3.component.html',
   styleUrls: ['./edit-amazon-s3.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     MatIconButton,
-    MatSuffix,
-    FaIconComponent,
-    MatCardActions,
-    RouterLink,
-    NgxTranslatePipe
+    FaIconComponent
   ]
 })
 export class EditAmazonS3Component implements OnInit {

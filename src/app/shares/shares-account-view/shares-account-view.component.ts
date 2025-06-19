@@ -27,12 +27,10 @@ import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Shares Account View
@@ -42,7 +40,7 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
   templateUrl: './shares-account-view.component.html',
   styleUrls: ['./shares-account-view.component.scss'],
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     MatCardTitleGroup,
     MatCardMdImage,
@@ -51,26 +49,19 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
     NgClass,
     LongTextComponent,
     AccountNumberComponent,
-    NgIf,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
     FaIconComponent,
     MatMenu,
-    NgFor,
-    HasPermissionDirective,
     MatMenuItem,
-    MatCardContent,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
-    RouterLink,
     MatTabNavPanel,
     RouterOutlet,
-    TranslatePipe,
     StatusLookupPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class SharesAccountViewComponent implements OnInit {

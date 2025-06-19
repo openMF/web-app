@@ -13,14 +13,11 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { ChargeOffReasonToExpenseAccountMapping } from 'app/shared/models/general.model';
 import { CapitalizedIncome } from '../loan-product-payment-strategy-step/payment-allocation-model';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
-import { NgFor, NgIf } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { GlAccountSelectorComponent } from '../../../../shared/accounting/gl-account-selector/gl-account-selector.component';
@@ -40,21 +37,19 @@ import {
 } from '@angular/material/table';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FindPipe } from '../../../../pipes/find.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-product-accounting-step',
   templateUrl: './loan-product-accounting-step.component.html',
   styleUrls: ['./loan-product-accounting-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatRadioGroup,
-    NgFor,
     MatRadioButton,
     MatDivider,
-    NgIf,
     MatCheckbox,
     GlAccountSelectorComponent,
-    MatButton,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -69,9 +64,7 @@ import { FindPipe } from '../../../../pipes/find.pipe';
     MatRow,
     MatStepperPrevious,
     MatStepperNext,
-    TranslatePipe,
-    FindPipe,
-    NgxTranslatePipe
+    FindPipe
   ]
 })
 export class LoanProductAccountingStepComponent implements OnInit, OnChanges {

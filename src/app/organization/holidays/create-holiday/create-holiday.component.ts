@@ -28,19 +28,10 @@ import { OfficeItemNode } from './office-item.class';
 import { OfficeItemFlatNode } from './office-flat-item.class';
 import { ChecklistDatabase } from './checklist-db.class';
 import { CreateHoliday } from './create-holiday.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf, NgFor } from '@angular/common';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatIcon } from '@angular/material/icon';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Holiday component.
@@ -50,21 +41,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './create-holiday.component.html',
   styleUrls: ['./create-holiday.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatSelect,
-    NgFor,
-    MatOption,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTree,
     MatTreeNodeDef,
     MatTreeNode,
@@ -72,13 +49,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatTreeNodePadding,
     MatIconButton,
     MatCheckbox,
-    MatIcon,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatIcon
   ]
 })
 export class CreateHolidayComponent implements OnInit {

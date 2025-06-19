@@ -15,7 +15,7 @@ import {
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Run Selected Jobs Table Component
@@ -25,6 +25,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './run-selected-jobs-table.component.html',
   styleUrls: ['./run-selected-jobs-table.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -37,8 +38,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow,
-    NgxTranslatePipe
+    MatRow
   ]
 })
 export class RunSelectedJobsTableComponent {

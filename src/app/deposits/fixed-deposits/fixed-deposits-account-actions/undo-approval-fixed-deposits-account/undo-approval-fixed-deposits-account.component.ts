@@ -6,13 +6,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
 import { FixedDepositsService } from '../../fixed-deposits.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Undo Approval Fixed Deposits Account Component
@@ -22,18 +17,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './undo-approval-fixed-deposits-account.component.html',
   styleUrls: ['./undo-approval-fixed-deposits-account.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    CdkTextareaAutosize,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
   ]
 })
 export class UndoApprovalFixedDepositsAccountComponent implements OnInit {

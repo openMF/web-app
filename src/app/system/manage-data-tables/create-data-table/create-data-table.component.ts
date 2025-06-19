@@ -33,20 +33,13 @@ import { ColumnDialogComponent } from '../column-dialog/column-dialog.component'
 
 /** Custom Dialog Component */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
 import { DatatableColumn } from '../datatable-column.model';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf, NgFor } from '@angular/common';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Data Table Component.
@@ -56,19 +49,8 @@ import { MatTooltip } from '@angular/material/tooltip';
   templateUrl: './create-data-table.component.html',
   styleUrls: ['./create-data-table.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatSelect,
-    NgFor,
-    MatOption,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    MatButton,
     FaIconComponent,
     MatTable,
     MatSort,
@@ -84,11 +66,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    MatCardActions,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class CreateDataTableComponent implements OnInit, AfterViewInit {

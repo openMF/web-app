@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { MatButton } from '@angular/material/button';
-import { NgIf } from '@angular/common';
 import {
   MatTable,
   MatColumnDef,
@@ -14,18 +12,15 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-collateral-tab',
   templateUrl: './loan-collateral-tab.component.html',
   styleUrls: ['./loan-collateral-tab.component.scss'],
   imports: [
-    MatButton,
-    RouterLink,
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -36,9 +31,7 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    TranslatePipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class LoanCollateralTabComponent implements OnInit {

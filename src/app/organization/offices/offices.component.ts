@@ -39,17 +39,13 @@ import { OfficeTreeService } from './office-tree-service.service';
 import { TreeControlService } from 'app/shared/common-logic/tree-control.service';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { NgIf, NgFor, DatePipe } from '@angular/common';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Offices component.
@@ -59,16 +55,10 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
   templateUrl: './offices.component.html',
   styleUrls: ['./offices.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatButtonToggleGroup,
-    ReactiveFormsModule,
     MatButtonToggle,
     FaIconComponent,
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -82,8 +72,6 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    MatCard,
-    MatCardContent,
     MatTree,
     MatTreeNodeDef,
     MatTreeNode,
@@ -91,16 +79,12 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
     MatIconButton,
     MatNestedTreeNode,
     MatTreeNodeOutlet,
-    NgIf,
     MatCardTitle,
     MatTabGroup,
     MatTab,
     ExternalIdentifierComponent,
-    NgFor,
     DatePipe,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class OfficesComponent implements OnInit, AfterViewInit {

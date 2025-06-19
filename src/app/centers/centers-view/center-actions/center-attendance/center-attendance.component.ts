@@ -13,16 +13,11 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Models */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { MatCard, MatCardActions } from '@angular/material/card';
 import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
 import { NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import {
   MatTable,
   MatColumnDef,
@@ -37,9 +32,9 @@ import {
 } from '@angular/material/table';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
 import { FindPipe } from '../../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Center Attendance component.
@@ -49,13 +44,7 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
   templateUrl: './center-attendance.component.html',
   styleUrls: ['./center-attendance.component.scss'],
   imports: [
-    MatCard,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    ReactiveFormsModule,
-    NgFor,
-    MatOption,
+    ...STANDALONE_SHARED_IMPORTS,
     MatHint,
     MatTable,
     MatColumnDef,
@@ -71,14 +60,8 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
     FindPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class CenterAttendanceComponent implements OnInit {

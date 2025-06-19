@@ -24,21 +24,13 @@ import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ReportParameterDialogComponent } from '../report-parameter-dialog/report-parameter-dialog.component';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf, NgFor } from '@angular/common';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Report Component.
@@ -48,20 +40,9 @@ import { HasPermissionDirective } from '../../../directives/has-permission/has-p
   templateUrl: './create-report.component.html',
   styleUrls: ['./create-report.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatSelect,
-    NgFor,
-    MatOption,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
     CdkTextareaAutosize,
-    MatButton,
     FaIconComponent,
     MatTable,
     MatSort,
@@ -76,12 +57,7 @@ import { HasPermissionDirective } from '../../../directives/has-permission/has-p
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    MatCardActions,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class CreateReportComponent implements OnInit {

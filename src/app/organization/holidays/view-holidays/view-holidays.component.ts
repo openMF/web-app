@@ -10,14 +10,9 @@ import { OrganizationService } from 'app/organization/organization.service';
 import { ConfirmationDialogComponent } from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { NgIf } from '@angular/common';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Holidays component.
@@ -27,16 +22,9 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './view-holidays.component.html',
   styleUrls: ['./view-holidays.component.scss'],
   imports: [
-    HasPermissionDirective,
-    NgIf,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    RouterLink,
-    MatCard,
-    MatCardContent,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ViewHolidaysComponent {

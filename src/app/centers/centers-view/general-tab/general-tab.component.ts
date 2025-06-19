@@ -16,11 +16,9 @@ import {
 } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Center General Tab Component
@@ -30,7 +28,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -44,12 +42,8 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    RouterLink,
-    MatButton,
-    TranslatePipe,
     StatusLookupPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class GeneralTabComponent {

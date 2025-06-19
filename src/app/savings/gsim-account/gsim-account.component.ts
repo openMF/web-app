@@ -17,10 +17,8 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgClass, NgIf } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * GSIM Accounts Overview component.
@@ -30,6 +28,7 @@ import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
   templateUrl: './gsim-account.component.html',
   styleUrls: ['./gsim-account.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -38,17 +37,12 @@ import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
     MatCell,
     NgClass,
     MatTooltip,
-    NgIf,
-    MatButton,
-    RouterLink,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
-    StatusLookupPipe,
-    NgxTranslatePipe
+    StatusLookupPipe
   ]
 })
 export class GsimAccountComponent implements OnInit {

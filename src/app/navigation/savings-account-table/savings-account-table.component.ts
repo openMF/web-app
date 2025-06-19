@@ -18,24 +18,17 @@ import {
 
 /** Custom Pipes */
 import { AccountsFilterPipe } from '../../pipes/accounts-filter.pipe';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-savings-account-table',
   templateUrl: './savings-account-table.component.html',
   styleUrls: ['./savings-account-table.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -51,9 +44,7 @@ import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
-    StatusLookupPipe,
-    NgxTranslatePipe
+    StatusLookupPipe
   ]
 })
 export class SavingsAccountTableComponent {

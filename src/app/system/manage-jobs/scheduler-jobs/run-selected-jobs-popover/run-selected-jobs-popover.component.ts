@@ -11,10 +11,8 @@ import { SystemService } from 'app/system/system.service';
 import { RunSelectedJobsTableComponent } from './run-selected-jobs-table/run-selected-jobs-table.component';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatList, MatListItem } from '@angular/material/list';
-import { NgFor } from '@angular/common';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 interface SelectedJobsDataType {
   selectedJobs: SelectionModel<JobDataType>;
@@ -41,18 +39,16 @@ export interface JobDataType {
   templateUrl: './run-selected-jobs-popover.component.html',
   styleUrls: ['./run-selected-jobs-popover.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
     RunSelectedJobsTableComponent,
     MatList,
-    NgFor,
     MatListItem,
     MatDialogActions,
-    MatButton,
     FaIconComponent,
-    MatDialogClose,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class RunSelectedJobsPopoverComponent implements OnInit {

@@ -4,8 +4,6 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services. */
 import { ClientsService } from 'app/clients/clients.service';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import {
   MatTable,
   MatColumnDef,
@@ -22,12 +20,11 @@ import { NgClass, NgIf } from '@angular/common';
 import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
 import { LongTextComponent } from '../../../shared/long-text/long-text.component';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
 import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * General Tab component.
@@ -37,9 +34,7 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -51,16 +46,13 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    NgIf,
     AccountNumberComponent,
     LongTextComponent,
     MatTooltip,
-    TranslatePipe,
     StatusLookupPipe,
     AccountsFilterPipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class GeneralTabComponent {

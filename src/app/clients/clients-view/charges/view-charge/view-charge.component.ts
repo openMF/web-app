@@ -2,8 +2,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 import { NgClass, NgIf } from '@angular/common';
@@ -20,11 +18,10 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Charge component.
@@ -34,16 +31,11 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
   templateUrl: './view-charge.component.html',
   styleUrls: ['./view-charge.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
     MatCardTitle,
     NgClass,
     MatDivider,
-    MatCardContent,
-    NgIf,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -54,12 +46,9 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatCardActions,
-    TranslatePipe,
     StatusLookupPipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class ViewChargeComponent {

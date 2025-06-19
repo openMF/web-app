@@ -1,14 +1,9 @@
 /** Angular Imports */
 import { Component, Input, OnChanges } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgFor } from '@angular/common';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Campaign Message Step
@@ -18,17 +13,10 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './campaign-message-step.component.html',
   styleUrls: ['./campaign-message-step.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatInput,
-    ReactiveFormsModule,
-    NgFor,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class CampaignMessageStepComponent implements OnChanges {

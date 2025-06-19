@@ -1,7 +1,6 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgIf } from '@angular/common';
 import { LoansAccountCloseComponent } from './loans-account-close/loans-account-close.component';
 import { UndoApprovalComponent } from './undo-approval/undo-approval.component';
 import { AssignLoanOfficerComponent } from './assign-loan-officer/assign-loan-officer.component';
@@ -31,6 +30,7 @@ import { AssetTransferLoanComponent } from './asset-transfer-loan/asset-transfer
 import { LoanReagingComponent } from './loan-reaging/loan-reaging.component';
 import { LoanReamortizeComponent } from './loan-reamortize/loan-reamortize.component';
 import { AddInterestPauseComponent } from './add-interest-pause/add-interest-pause.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Loan Account Actions component.
@@ -40,7 +40,7 @@ import { AddInterestPauseComponent } from './add-interest-pause/add-interest-pau
   templateUrl: './loan-account-actions.component.html',
   styleUrls: ['./loan-account-actions.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     LoansAccountCloseComponent,
     UndoApprovalComponent,
     AssignLoanOfficerComponent,

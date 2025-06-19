@@ -1,29 +1,19 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
-import { NgFor } from '@angular/common';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-saving-product',
   templateUrl: './view-saving-product.component.html',
   styleUrls: ['./view-saving-product.component.scss'],
   imports: [
-    MatCard,
-    MatCardContent,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
-    RouterLink,
-    NgFor,
-    HasPermissionDirective,
     MatTabNavPanel,
-    RouterOutlet,
-    TranslatePipe,
-    NgxTranslatePipe
+    RouterOutlet
   ]
 })
 export class ViewSavingProductComponent {

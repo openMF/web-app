@@ -5,15 +5,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { AuthenticationService } from '../../../../core/authentication/authentication.service';
-import { MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Take Survey Component
@@ -23,19 +17,10 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './take-survey.component.html',
   styleUrls: ['./take-survey.component.scss'],
   imports: [
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatRadioGroup,
-    ReactiveFormsModule,
     FormsModule,
-    MatRadioButton,
-    MatButton,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatRadioButton
   ]
 })
 export class TakeSurveyComponent {

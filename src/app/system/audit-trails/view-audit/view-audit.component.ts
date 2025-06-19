@@ -16,11 +16,8 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { NgIf } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Audit Component.
@@ -30,9 +27,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './view-audit.component.html',
   styleUrls: ['./view-audit.component.scss'],
   imports: [
-    MatCard,
-    MatCardContent,
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -45,10 +40,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton,
-    RouterLink,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ViewAuditComponent implements OnInit {

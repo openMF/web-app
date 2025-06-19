@@ -13,8 +13,7 @@ import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/mate
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { EditSmsCampaignStepComponent } from '../sms-campaign-stepper/edit-sms-campaign-step/edit-sms-campaign-step.component';
 import { CampaignPreviewStepComponent } from '../sms-campaign-stepper/campaign-preview-step/campaign-preview-step.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Campaign Component
@@ -24,6 +23,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './edit-campaign.component.html',
   styleUrls: ['./edit-campaign.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepper,
     MatStepperIcon,
     FaIconComponent,
@@ -31,9 +31,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatStepLabel,
     EditSmsCampaignStepComponent,
     CampaignMessageStepComponent,
-    CampaignPreviewStepComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    CampaignPreviewStepComponent
   ]
 })
 export class EditCampaignComponent {

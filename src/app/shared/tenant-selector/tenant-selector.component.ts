@@ -3,25 +3,16 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatFormField, MatPrefix, MatLabel } from '@angular/material/form-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatSelect } from '@angular/material/select';
-import { NgFor } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-tenant-selector',
   templateUrl: './tenant-selector.component.html',
   styleUrls: ['./tenant-selector.component.scss'],
   imports: [
-    MatFormField,
+    ...STANDALONE_SHARED_IMPORTS,
     MatPrefix,
-    FaIconComponent,
-    MatLabel,
-    MatSelect,
-    ReactiveFormsModule,
-    NgFor,
-    MatOption,
-    NgxTranslatePipe
+    FaIconComponent
   ]
 })
 export class TenantSelectorComponent implements OnInit {

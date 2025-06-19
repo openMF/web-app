@@ -8,7 +8,6 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatAccordion,
@@ -17,12 +16,10 @@ import {
   MatExpansionPanelTitle,
   MatExpansionPanelDescription
 } from '@angular/material/expansion';
-import { NgFor, NgIf } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Family Members Tab
@@ -32,22 +29,17 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
   templateUrl: './family-members-tab.component.html',
   styleUrls: ['./family-members-tab.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     RouterOutlet,
-    MatButton,
-    RouterLink,
     FaIconComponent,
     MatAccordion,
-    NgFor,
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
     MatExpansionPanelDescription,
     MatDivider,
-    NgIf,
-    TranslatePipe,
     DateFormatPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class FamilyMembersTabComponent {

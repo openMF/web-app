@@ -10,10 +10,8 @@ import {
 } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
-import { MatButton } from '@angular/material/button';
 import { MatProgressBar } from '@angular/material/progress-bar';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Configuration Wizard Component.
@@ -23,17 +21,15 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './configuration-wizard.component.html',
   styleUrls: ['./configuration-wizard.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
     MatGridList,
     MatGridTile,
-    MatButton,
     MatDialogClose,
     MatProgressBar,
-    MatDialogActions,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatDialogActions
   ]
 })
 export class ConfigurationWizardComponent {

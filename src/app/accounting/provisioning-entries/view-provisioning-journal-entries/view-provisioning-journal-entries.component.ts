@@ -16,11 +16,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View provisioning journal entries component.
@@ -30,9 +26,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './view-provisioning-journal-entries.component.html',
   styleUrls: ['./view-provisioning-journal-entries.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatInput,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -41,14 +35,11 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatSortHeader,
     MatCellDef,
     MatCell,
-    NgIf,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class ViewProvisioningJournalEntriesComponent implements OnInit {

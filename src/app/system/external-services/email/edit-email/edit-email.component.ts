@@ -5,14 +5,10 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Email Configuration Component.
@@ -22,22 +18,10 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './edit-email.component.html',
   styleUrls: ['./edit-email.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     MatIconButton,
-    MatSuffix,
     FaIconComponent,
-    MatCheckbox,
-    MatCardActions,
-    RouterLink,
-    NgxTranslatePipe
+    MatCheckbox
   ]
 })
 export class EditEmailComponent implements OnInit {

@@ -12,28 +12,24 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-custom-parameters-table',
   templateUrl: './custom-parameters-table.component.html',
   styleUrls: ['./custom-parameters-table.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    MatFormField,
-    MatInput,
-    ReactiveFormsModule,
     FormsModule,
     MatIconButton,
     MatTooltip,
@@ -41,9 +37,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow,
-    MatButton,
-    NgxTranslatePipe
+    MatRow
   ]
 })
 export class CustomParametersTableComponent implements OnInit {

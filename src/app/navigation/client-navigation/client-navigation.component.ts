@@ -16,35 +16,30 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-client-navigation',
   templateUrl: './client-navigation.component.html',
   styleUrls: ['./client-navigation.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     FaIconComponent,
     MatCardTitleGroup,
     MatCardTitle,
     MatTooltip,
     MatCardSubtitle,
-    MatCardContent,
     MatTabGroup,
     MatTab,
-    NgIf,
     LoanAccountTableComponent,
     SavingsAccountTableComponent,
     ShareAccountTableComponent,
     MemberGroupsComponent,
-    TranslatePipe,
     StatusLookupPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ClientNavigationComponent {

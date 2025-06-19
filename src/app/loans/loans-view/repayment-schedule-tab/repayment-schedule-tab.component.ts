@@ -31,18 +31,16 @@ import {
   MatFooterRow
 } from '@angular/material/table';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-repayment-schedule-tab',
   templateUrl: './repayment-schedule-tab.component.html',
   styleUrls: ['./repayment-schedule-tab.component.scss'],
   imports: [
-    NgIf,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -62,10 +60,8 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatIconButton,
     MatTooltip,
     CurrencyPipe,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class RepaymentScheduleTabComponent implements OnInit, OnChanges {

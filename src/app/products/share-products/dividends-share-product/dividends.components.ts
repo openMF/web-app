@@ -22,7 +22,6 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 
 /**
@@ -53,7 +52,6 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
     DateFormatPipe,
     NgxTranslatePipe
   ]

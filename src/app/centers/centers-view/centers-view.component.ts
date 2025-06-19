@@ -10,8 +10,6 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { CentersService } from '../centers.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import {
   MatCard,
   MatCardHeader,
@@ -28,10 +26,10 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /**
  * Create Center View
  */
@@ -40,36 +38,29 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
   templateUrl: './centers-view.component.html',
   styleUrls: ['./centers-view.component.scss'],
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     MatCardTitleGroup,
     MatCardMdImage,
     MatCardTitle,
     MatTooltip,
     NgClass,
-    NgIf,
     MatIconButton,
     MatMenuTrigger,
     MatIcon,
     FaIconComponent,
     MatCardSubtitle,
     ExternalIdentifierComponent,
-    HasPermissionDirective,
     MatMenu,
     MatMenuItem,
-    RouterLink,
-    MatCardContent,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
-    NgFor,
     MatTabNavPanel,
     RouterOutlet,
     LowerCasePipe,
-    TranslatePipe,
     StatusLookupPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class CentersViewComponent implements OnInit {

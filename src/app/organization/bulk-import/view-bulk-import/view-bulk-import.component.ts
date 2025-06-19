@@ -21,18 +21,12 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 /** Custom Imports */
 import { OrganizationService } from '../../organization.service';
 import { BulkImports } from './bulk-imports';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { NgIf, NgFor } from '@angular/common';
 import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FileUploadComponent } from '../../../shared/file-upload/file-upload.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Bulk Imports Component
@@ -42,17 +36,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './view-bulk-import.component.html',
   styleUrls: ['./view-bulk-import.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    NgIf,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FileUploadComponent,
     MatHint,
     MatTable,
@@ -70,9 +54,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ViewBulkImportComponent implements OnInit {

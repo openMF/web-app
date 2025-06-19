@@ -28,27 +28,18 @@ import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { NgIf, NgFor, KeyValuePipe } from '@angular/common';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-client-approval',
   templateUrl: './client-approval.component.html',
   styleUrls: ['./client-approval.component.scss'],
   imports: [
-    NgIf,
-    MatFormField,
-    MatInput,
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgFor,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -56,14 +47,12 @@ import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
     MatCheckbox,
     MatCellDef,
     MatCell,
-    RouterLink,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     KeyValuePipe,
-    AccountsFilterPipe,
-    NgxTranslatePipe
+    AccountsFilterPipe
   ]
 })
 export class ClientApprovalComponent {

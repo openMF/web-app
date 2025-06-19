@@ -24,19 +24,10 @@ import { AccountTransfersService } from '../account-transfers.service';
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatCard } from '@angular/material/card';
-import { NgIf, NgFor } from '@angular/common';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatDivider } from '@angular/material/divider';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Lists all the standing intructions of particular ID
@@ -46,18 +37,8 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
   templateUrl: './list-standing-instructions.component.html',
   styleUrls: ['./list-standing-instructions.component.scss'],
   imports: [
-    MatCard,
-    NgIf,
-    MatFormField,
-    MatInput,
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    HasPermissionDirective,
-    MatButton,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -65,15 +46,12 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
     MatCellDef,
     MatCell,
     MatTooltip,
-    RouterLink,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ListStandingInstructionsComponent {

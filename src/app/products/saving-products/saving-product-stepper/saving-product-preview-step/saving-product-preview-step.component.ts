@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { Accounting } from 'app/core/utils/accounting';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { MatDivider } from '@angular/material/divider';
-import { NgIf } from '@angular/common';
 import {
   MatTable,
   MatColumnDef,
@@ -16,24 +15,20 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ViewSavingsAccountingDetailsComponent } from '../../../../shared/accounting/view-savings-accounting-details/view-savings-accounting-details.component';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { RouterLink } from '@angular/router';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FindPipe } from '../../../../pipes/find.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-saving-product-preview-step',
   templateUrl: './saving-product-preview-step.component.html',
   styleUrls: ['./saving-product-preview-step.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
-    NgIf,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -45,16 +40,11 @@ import { YesnoPipe } from '../../../../pipes/yesno.pipe';
     MatRowDef,
     MatRow,
     ViewSavingsAccountingDetailsComponent,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
     FindPipe,
     FormatNumberPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class SavingProductPreviewStepComponent implements OnInit, OnChanges {

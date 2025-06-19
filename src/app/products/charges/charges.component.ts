@@ -26,18 +26,10 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 import { Charges } from 'app/core/utils/charges';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { Charge } from './models/charge.model';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Charges component.
@@ -47,16 +39,8 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
   templateUrl: './charges.component.html',
   styleUrls: ['./charges.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatSelect,
-    NgFor,
-    MatOption,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -65,16 +49,13 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
     MatSortHeader,
     MatCellDef,
     MatCell,
-    NgIf,
     MatTooltip,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class ChargesComponent implements OnInit, AfterViewInit {

@@ -11,8 +11,7 @@ import { ChartData } from '../../common-models/chart-data.model';
 import Chart from 'chart.js';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { NgStyle } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Chart Component
@@ -22,11 +21,10 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatButtonToggleGroup,
     MatButtonToggle,
-    NgStyle,
-    TranslatePipe,
-    NgxTranslatePipe
+    NgStyle
   ]
 })
 export class ChartComponent implements OnChanges {

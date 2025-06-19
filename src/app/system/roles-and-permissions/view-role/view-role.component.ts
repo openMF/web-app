@@ -8,17 +8,15 @@ import { SystemService } from '../../system.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { DisableDialogComponent } from '../../../shared/disable-dialog/disable-dialog.component';
 import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dialog.component';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgIf, NgFor, NgClass } from '@angular/common';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Role and Permissions Component
@@ -28,20 +26,13 @@ import { MatCheckbox } from '@angular/material/checkbox';
   templateUrl: './view-role.component.html',
   styleUrls: ['./view-role.component.scss'],
   imports: [
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgIf,
-    MatCard,
-    MatCardContent,
     MatList,
-    NgFor,
     MatListItem,
     NgClass,
     MatDivider,
-    ReactiveFormsModule,
-    MatCheckbox,
-    MatCardActions,
-    NgxTranslatePipe
+    MatCheckbox
   ]
 })
 export class ViewRoleComponent implements OnInit {

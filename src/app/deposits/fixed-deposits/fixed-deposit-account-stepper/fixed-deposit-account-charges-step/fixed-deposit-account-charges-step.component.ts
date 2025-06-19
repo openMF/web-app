@@ -13,10 +13,6 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { Dates } from 'app/core/utils/dates';
 import { Charge, Currency } from 'app/shared/models/general.model';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
@@ -32,9 +28,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Fixed Deposit Account Charges Step
@@ -44,12 +39,7 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
   templateUrl: './fixed-deposit-account-charges-step.component.html',
   styleUrls: ['./fixed-deposit-account-charges-step.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -58,16 +48,13 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
     MatCellDef,
     MatCell,
     MatIconButton,
-    NgIf,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     MatStepperPrevious,
     MatStepperNext,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class FixedDepositAccountChargesStepComponent implements OnInit, OnChanges {

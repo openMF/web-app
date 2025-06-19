@@ -25,24 +25,18 @@ import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
-import { NgIf, NgFor } from '@angular/common';
 import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Entity to Entity Mapping Component
@@ -52,37 +46,23 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
   templateUrl: './entity-to-entity-mapping.component.html',
   styleUrls: ['./entity-to-entity-mapping.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    NgIf,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatCard,
-    ReactiveFormsModule,
     MatCardTitle,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    MatOption,
-    NgFor,
-    MatError,
-    MatCardActions,
-    MatButton,
-    HasPermissionDirective,
     MatIconButton,
     MatTooltip,
     FaIconComponent,
     MatPaginator,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class EntityToEntityMappingComponent implements OnInit {

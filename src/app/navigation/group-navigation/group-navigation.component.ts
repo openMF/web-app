@@ -14,33 +14,28 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-group-navigation',
   templateUrl: './group-navigation.component.html',
   styleUrls: ['./group-navigation.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     FaIconComponent,
     MatCardTitleGroup,
     MatCardTitle,
     MatTooltip,
     MatCardSubtitle,
-    MatCardContent,
     MatTabGroup,
     MatTab,
-    NgIf,
     LoanAccountTableComponent,
     SavingsAccountTableComponent,
-    TranslatePipe,
     StatusLookupPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class GroupNavigationComponent {

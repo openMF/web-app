@@ -14,8 +14,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -30,16 +28,11 @@ import { ContinueSetupDialogComponent } from '../../../configuration-wizard/cont
 import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
 import { Currency } from 'app/shared/models/general.model';
-import { MatCard } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Manage Currencies component.
@@ -49,24 +42,12 @@ import { MatGridList, MatGridTile } from '@angular/material/grid-list';
   templateUrl: './manage-currencies.component.html',
   styleUrls: ['./manage-currencies.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    MatOption,
+    ...STANDALONE_SHARED_IMPORTS,
     NgxMatSelectSearchModule,
-    NgFor,
-    NgIf,
-    MatError,
-    HasPermissionDirective,
-    MatButton,
     FaIconComponent,
     MatGridList,
     MatGridTile,
-    AsyncPipe,
-    TranslatePipe,
-    NgxTranslatePipe
+    AsyncPipe
   ]
 })
 export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
