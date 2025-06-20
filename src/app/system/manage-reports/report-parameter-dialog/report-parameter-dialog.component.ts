@@ -10,13 +10,7 @@ import {
 } from '@angular/material/dialog';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Report Parameter Dialog Component.
@@ -26,22 +20,12 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './report-parameter-dialog.component.html',
   styleUrls: ['./report-parameter-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
-    MatError,
-    MatInput,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class ReportParameterDialogComponent implements OnInit {

@@ -29,18 +29,14 @@ import {
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
 import { MatDivider } from '@angular/material/divider';
 import { MatTooltip } from '@angular/material/tooltip';
 import { TransactionPaymentDetailComponent } from '../../../../shared/transaction-payment-detail/transaction-payment-detail.component';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Dialogs */
 
@@ -53,13 +49,8 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
   templateUrl: './view-transaction.component.html',
   styleUrls: ['./view-transaction.component.scss'],
   imports: [
-    NgIf,
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     NgClass,
     ExternalIdentifierComponent,
     MatDivider,
@@ -76,9 +67,7 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
     MatRow,
     TransactionPaymentDetailComponent,
     CurrencyPipe,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ViewTransactionComponent implements OnInit {

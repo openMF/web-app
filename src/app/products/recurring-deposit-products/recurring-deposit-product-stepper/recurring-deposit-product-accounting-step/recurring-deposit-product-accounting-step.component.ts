@@ -16,9 +16,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { Accounting } from 'app/core/utils/accounting';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
-import { NgFor, NgIf } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { GlAccountSelectorComponent } from '../../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -38,21 +36,19 @@ import {
 } from '@angular/material/table';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FindPipe } from '../../../../pipes/find.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-accounting-step',
   templateUrl: './recurring-deposit-product-accounting-step.component.html',
   styleUrls: ['./recurring-deposit-product-accounting-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatRadioGroup,
-    NgFor,
     MatRadioButton,
     MatDivider,
-    NgIf,
     GlAccountSelectorComponent,
     MatCheckbox,
-    MatButton,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -67,8 +63,7 @@ import { FindPipe } from '../../../../pipes/find.pipe';
     MatRow,
     MatStepperPrevious,
     MatStepperNext,
-    FindPipe,
-    NgxTranslatePipe
+    FindPipe
   ]
 })
 export class RecurringDepositProductAccountingStepComponent implements OnInit {

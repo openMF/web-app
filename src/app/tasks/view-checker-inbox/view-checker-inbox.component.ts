@@ -10,30 +10,22 @@ import { TasksService } from '../tasks.service';
 /** Dialog Components */
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 import { NgIf, NgFor, KeyValuePipe } from '@angular/common';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-checker-inbox',
   templateUrl: './view-checker-inbox.component.html',
   styleUrls: ['./view-checker-inbox.component.scss'],
   imports: [
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     MatDivider,
-    NgIf,
-    NgFor,
     KeyValuePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ViewCheckerInboxComponent {

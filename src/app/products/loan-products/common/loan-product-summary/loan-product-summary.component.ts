@@ -37,19 +37,18 @@ import {
 import { MatAccordion } from '@angular/material/expansion';
 import { ViewAdvancePaymenyAllocationComponent } from '../../view-loan-product/shared/view-advance-paymeny-allocation/view-advance-paymeny-allocation.component';
 import { GlAccountDisplayComponent } from '../../../../shared/accounting/gl-account-display/gl-account-display.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { ChargesPenaltyFilterPipe } from '../../../../pipes/charges-penalty-filter.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-product-summary',
   templateUrl: './loan-product-summary.component.html',
   styleUrls: ['./loan-product-summary.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
     LongTextComponent,
     MatTable,
@@ -63,16 +62,13 @@ import { YesnoPipe } from '../../../../pipes/yesno.pipe';
     MatRowDef,
     MatRow,
     MatAccordion,
-    NgFor,
     ViewAdvancePaymenyAllocationComponent,
     GlAccountDisplayComponent,
     DecimalPipe,
-    TranslatePipe,
     ChargesPenaltyFilterPipe,
     DateFormatPipe,
     FormatNumberPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class LoanProductSummaryComponent implements OnInit, OnChanges {

@@ -5,16 +5,11 @@ import { Router, RouterLink } from '@angular/router';
 /** Custom Services */
 import { ConfigurationWizardService } from '../configuration-wizard/configuration-wizard.service';
 import { PopoverService } from '../configuration-wizard/popover/popover.service';
-import { MatCard } from '@angular/material/card';
 import { MatNavList, MatListItem } from '@angular/material/list';
-import { HasPermissionDirective } from '../directives/has-permission/has-permission.directive';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatLine } from '@angular/material/grid-list';
-import { NgIf } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Accounting component.
@@ -24,18 +19,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './accounting.component.html',
   styleUrls: ['./accounting.component.scss'],
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatNavList,
-    HasPermissionDirective,
     MatListItem,
-    RouterLink,
     MatIcon,
     FaIconComponent,
-    MatLine,
-    NgIf,
-    MatButton,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatLine
   ]
 })
 export class AccountingComponent implements AfterViewInit {

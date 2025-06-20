@@ -3,13 +3,7 @@ import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
@@ -29,18 +23,14 @@ import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { ChargesFilterPipe } from '../../../../pipes/charges-filter.pipe';
 import { ChargesPenaltyFilterPipe } from '../../../../pipes/charges-penalty-filter.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-product-charges-step',
   templateUrl: './loan-product-charges-step.component.html',
   styleUrls: ['./loan-product-charges-step.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -56,11 +46,9 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
     MatDivider,
     MatStepperPrevious,
     MatStepperNext,
-    TranslatePipe,
     ChargesFilterPipe,
     ChargesPenaltyFilterPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class LoanProductChargesStepComponent implements OnInit {

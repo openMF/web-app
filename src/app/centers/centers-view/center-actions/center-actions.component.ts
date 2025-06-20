@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgIf } from '@angular/common';
 import { ActivateCenterComponent } from './activate-center/activate-center.component';
 import { CenterAssignStaffComponent } from './center-assign-staff/center-assign-staff.component';
 import { CloseCenterComponent } from './close-center/close-center.component';
@@ -11,6 +10,7 @@ import { EditCenterMeetingComponent } from './edit-center-meeting/edit-center-me
 import { EditCenterMeetingScheduleComponent } from './edit-center-meeting-schedule/edit-center-meeting-schedule.component';
 import { ManageGroupsComponent } from './manage-groups/manage-groups.component';
 import { StaffAssignmentHistoryComponent } from './staff-assignment-history/staff-assignment-history.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Center actions component.
@@ -20,7 +20,7 @@ import { StaffAssignmentHistoryComponent } from './staff-assignment-history/staf
   templateUrl: './center-actions.component.html',
   styleUrls: ['./center-actions.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     ActivateCenterComponent,
     CenterAssignStaffComponent,
     CloseCenterComponent,

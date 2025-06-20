@@ -16,12 +16,10 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { MatCard } from '@angular/material/card';
 import { NgClass } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Charge Overview component.
@@ -31,7 +29,7 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
   templateUrl: './charges-overview.component.html',
   styleUrls: ['./charges-overview.component.scss'],
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -44,10 +42,8 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
     StatusLookupPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ChargesOverviewComponent implements OnInit {

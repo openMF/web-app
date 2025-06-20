@@ -25,17 +25,9 @@ import { of } from 'rxjs';
 import { OrganizationService } from '../organization.service';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { NgFor } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Holidays component.
@@ -45,17 +37,8 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
   templateUrl: './holidays.component.html',
   styleUrls: ['./holidays.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatSelect,
-    ReactiveFormsModule,
-    NgFor,
-    MatOption,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -69,9 +52,7 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class HolidaysComponent implements OnInit, AfterViewInit {

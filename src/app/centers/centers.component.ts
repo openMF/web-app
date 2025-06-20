@@ -16,11 +16,6 @@ import { CentersService } from './centers.service';
 
 /** Custom Data Source */
 import { CentersDataSource } from './centers.datasource';
-import { MatCard } from '@angular/material/card';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { HasPermissionDirective } from '../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTable,
@@ -35,9 +30,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { NgClass, AsyncPipe } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Centers component.
@@ -47,14 +41,8 @@ import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
   templateUrl: './centers.component.html',
   styleUrls: ['./centers.component.scss'],
   imports: [
-    MatCard,
-    MatFormField,
-    MatInput,
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
     FaIconComponent,
     MatTable,
     MatSort,
@@ -71,9 +59,7 @@ import { StatusLookupPipe } from '../pipes/status-lookup.pipe';
     MatRow,
     MatPaginator,
     AsyncPipe,
-    TranslatePipe,
-    StatusLookupPipe,
-    NgxTranslatePipe
+    StatusLookupPipe
   ]
 })
 export class CentersComponent implements OnInit, AfterViewInit {

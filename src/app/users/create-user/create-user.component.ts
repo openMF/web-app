@@ -19,15 +19,8 @@ import { PasswordsUtility } from 'app/core/utils/passwords-utility';
 import { confirmPasswordValidator } from 'app/login/reset-password/confirm-password.validator';
 import { ConfigurationWizardService } from 'app/configuration-wizard/configuration-wizard.service';
 import { ContinueSetupDialogComponent } from 'app/configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf, NgFor } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create user component.
@@ -37,22 +30,8 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatCheckbox,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox
   ]
 })
 export class CreateUserComponent implements OnInit, AfterViewInit {

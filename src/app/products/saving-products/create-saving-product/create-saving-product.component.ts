@@ -16,15 +16,15 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf } from '@angular/common';
 import { SavingProductPreviewStepComponent } from '../saving-product-stepper/saving-product-preview-step/saving-product-preview-step.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-create-saving-product',
   templateUrl: './create-saving-product.component.html',
   styleUrls: ['./create-saving-product.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepper,
     MatStepperIcon,
     FaIconComponent,
@@ -36,9 +36,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     SavingProductSettingsStepComponent,
     SavingProductChargesStepComponent,
     SavingProductAccountingStepComponent,
-    NgIf,
-    SavingProductPreviewStepComponent,
-    NgxTranslatePipe
+    SavingProductPreviewStepComponent
   ]
 })
 export class CreateSavingProductComponent {

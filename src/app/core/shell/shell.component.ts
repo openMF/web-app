@@ -15,6 +15,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { ContentComponent } from './content/content.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Shell component.
@@ -24,13 +25,13 @@ import { FooterComponent } from '../../shared/footer/footer.component';
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatSidenavContainer,
     MatSidenav,
     NgClass,
     SidenavComponent,
     MatSidenavContent,
     ToolbarComponent,
-    NgIf,
     BreadcrumbComponent,
     ContentComponent,
     FooterComponent,

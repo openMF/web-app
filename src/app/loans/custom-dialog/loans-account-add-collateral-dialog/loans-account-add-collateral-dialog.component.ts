@@ -9,37 +9,19 @@ import {
 } from '@angular/material/dialog';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loans-account-add-collateral-dialog',
   templateUrl: './loans-account-add-collateral-dialog.component.html',
   styleUrls: ['./loans-account-add-collateral-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatError,
-    MatInput,
-    NgIf,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class LoansAccountAddCollateralDialogComponent implements OnInit {

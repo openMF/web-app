@@ -2,28 +2,21 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { RepaymentScheduleTabComponent } from '../../loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loans-account-schedule-step',
   templateUrl: './loans-account-schedule-step.component.html',
   styleUrls: ['./loans-account-schedule-step.component.scss'],
   imports: [
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     RepaymentScheduleTabComponent,
     MatStepperPrevious,
-    MatStepperNext,
-    NgIf,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class LoansAccountScheduleStepComponent {

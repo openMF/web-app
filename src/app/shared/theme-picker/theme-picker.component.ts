@@ -11,8 +11,7 @@ import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
-import { NgFor, NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Theme picker component.
@@ -25,17 +24,15 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   styleUrls: ['./theme-picker.component.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatIconButton,
     MatMenuTrigger,
     MatTooltip,
     FaIconComponent,
     MatMenu,
     MatGridList,
-    NgFor,
     MatGridTile,
-    MatMenuItem,
-    NgIf,
-    NgxTranslatePipe
+    MatMenuItem
   ]
 })
 export class ThemePickerComponent implements OnInit {

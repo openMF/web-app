@@ -3,28 +3,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductsService } from 'app/products/products.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { NgFor } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-bucket',
   templateUrl: './view-bucket.component.html',
   styleUrls: ['./view-bucket.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
-    FaIconComponent,
-    MatCard,
-    MatCardContent,
-    NgFor,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
   ]
 })
 export class ViewBucketComponent {

@@ -11,9 +11,7 @@ import {
 import { DialogData } from 'app/core/dialogs/dialog-data.model';
 import { Dialogs } from 'app/core/dialogs/dialogs';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Delete dialog component.
@@ -23,14 +21,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './confirmation-dialog.component.html',
   styleUrls: ['./confirmation-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class ConfirmationDialogComponent implements OnInit {

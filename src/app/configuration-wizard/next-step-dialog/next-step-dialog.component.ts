@@ -10,9 +10,7 @@ import {
 } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatProgressBar } from '@angular/material/progress-bar';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Next Step Dialog Component.
@@ -22,15 +20,13 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './next-step-dialog.component.html',
   styleUrls: ['./next-step-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
     MatProgressBar,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class NextStepDialogComponent {

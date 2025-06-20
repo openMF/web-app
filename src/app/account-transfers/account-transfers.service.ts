@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 /** Environment Configuration */
-import { environment } from 'environments/environment';
+import { environment } from '../../environments/environment';
 import { switchMap } from 'rxjs/operators';
 
 /**

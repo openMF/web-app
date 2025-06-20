@@ -20,27 +20,19 @@ import {
   MatRow
 } from '@angular/material/table';
 import { Location, NgIf } from '@angular/common';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-journal-entry-transaction',
   templateUrl: './view-journal-entry-transaction.component.html',
   styleUrls: ['./view-journal-entry-transaction.component.scss'],
   imports: [
-    NgIf,
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -53,11 +45,9 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    TranslatePipe,
     DateFormatPipe,
     DatetimeFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class ViewJournalEntryTransactionComponent implements OnInit {

@@ -7,33 +7,22 @@ import { UndoTransactionDialogComponent } from 'app/savings/savings-account-view
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
-import { HasPermissionDirective } from '../../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { TransactionPaymentDetailComponent } from '../../../../../shared/transaction-payment-detail/transaction-payment-detail.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-savings-transaction-general-tab',
   templateUrl: './savings-transaction-general-tab.component.html',
   styleUrls: ['./savings-transaction-general-tab.component.scss'],
   imports: [
-    NgIf,
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     NgClass,
     TransactionPaymentDetailComponent,
     CurrencyPipe,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class SavingsTransactionGeneralTabComponent {

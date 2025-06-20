@@ -16,9 +16,7 @@ import {
 } from '@angular/material/table';
 
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * GSIM Accounts Overview component.
@@ -28,8 +26,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './glim-account.component.html',
   styleUrls: ['./glim-account.component.scss'],
   imports: [
-    MatCard,
-    MatCardContent,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -39,10 +36,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatRow
   ]
 })
 export class GlimAccountComponent implements OnInit {

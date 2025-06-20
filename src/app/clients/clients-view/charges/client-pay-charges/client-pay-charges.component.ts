@@ -7,14 +7,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatCard } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Pay Charge component.
@@ -24,21 +17,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './client-pay-charges.component.html',
   styleUrls: ['./client-pay-charges.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatButton,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS
   ]
 })
 export class ClientPayChargesComponent implements OnInit {

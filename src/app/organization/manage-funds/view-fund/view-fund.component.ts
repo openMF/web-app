@@ -1,27 +1,17 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-fund',
   templateUrl: './view-fund.component.html',
   styleUrls: ['./view-fund.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
-    ExternalIdentifierComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    ExternalIdentifierComponent
   ]
 })
 export class ViewFundComponent {

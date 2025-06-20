@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
 import { LoansService } from 'app/loans/loans.service';
@@ -29,20 +27,19 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-delinquency-tags-tab',
   templateUrl: './loan-delinquency-tags-tab.component.html',
   styleUrls: ['./loan-delinquency-tags-tab.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -53,17 +50,13 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    HasPermissionDirective,
-    MatButton,
     FaIconComponent,
     NgClass,
     MatTooltip,
     CurrencyPipe,
-    TranslatePipe,
     DateFormatPipe,
     DatetimeFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class LoanDelinquencyTagsTabComponent implements OnInit {

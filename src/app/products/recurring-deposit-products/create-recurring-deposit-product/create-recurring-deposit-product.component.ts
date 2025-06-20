@@ -17,15 +17,15 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf } from '@angular/common';
 import { RecurringDepositProductPreviewStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-preview-step/recurring-deposit-product-preview-step.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-create-recurring-deposit-product',
   templateUrl: './create-recurring-deposit-product.component.html',
   styleUrls: ['./create-recurring-deposit-product.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepper,
     MatStepperIcon,
     FaIconComponent,
@@ -38,9 +38,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     RecurringDepositProductInterestRateChartStepComponent,
     RecurringDepositProductChargesStepComponent,
     RecurringDepositProductAccountingStepComponent,
-    NgIf,
-    RecurringDepositProductPreviewStepComponent,
-    NgxTranslatePipe
+    RecurringDepositProductPreviewStepComponent
   ]
 })
 export class CreateRecurringDepositProductComponent {

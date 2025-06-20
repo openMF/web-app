@@ -16,16 +16,12 @@ import {
 } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SearchData } from '../search.model';
-import { NgIf } from '@angular/common';
-import { MatCard } from '@angular/material/card';
-import { MatError } from '@angular/material/form-field';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Search Page Component
@@ -35,9 +31,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './search-page.component.html',
   styleUrls: ['./search-page.component.scss'],
   imports: [
-    NgIf,
-    MatCard,
-    MatError,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -53,9 +47,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class SearchPageComponent {

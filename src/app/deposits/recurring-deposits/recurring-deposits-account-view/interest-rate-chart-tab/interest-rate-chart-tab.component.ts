@@ -14,13 +14,10 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { MatButton } from '@angular/material/button';
 import { NgIf, NgSwitch, TitleCasePipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Interest Rate Chart Tab Component.
@@ -37,25 +34,21 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 
   ],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    MatButton,
-    NgIf,
     FaIconComponent,
-    MatCard,
     NgSwitch,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     TitleCasePipe,
-    TranslatePipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class InterestRateChartTabComponent {

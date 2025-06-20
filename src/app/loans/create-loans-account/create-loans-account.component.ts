@@ -14,11 +14,9 @@ import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans
 import { LoansAccountDatatableStepComponent } from '../loans-account-stepper/loans-account-datatable-step/loans-account-datatable-step.component';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf, NgFor } from '@angular/common';
 import { LoansAccountScheduleStepComponent } from '../loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
 import { LoansAccountPreviewStepComponent } from '../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create loans account
@@ -28,6 +26,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './create-loans-account.component.html',
   styleUrls: ['./create-loans-account.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepper,
     MatStepperIcon,
     FaIconComponent,
@@ -36,13 +35,9 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     LoansAccountDetailsStepComponent,
     LoansAccountTermsStepComponent,
     LoansAccountChargesStepComponent,
-    NgIf,
     LoansAccountScheduleStepComponent,
-    NgFor,
     LoansAccountDatatableStepComponent,
-    LoansAccountPreviewStepComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    LoansAccountPreviewStepComponent
   ]
 })
 export class CreateLoansAccountComponent {

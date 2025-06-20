@@ -28,18 +28,10 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatCard } from '@angular/material/card';
 import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf, NgFor } from '@angular/common';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FindPipe } from '../../../pipes/find.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Loan Provisioning Criteria Component.
@@ -49,16 +41,7 @@ import { FindPipe } from '../../../pipes/find.pipe';
   templateUrl: './edit-loan-provisioning-criteria.component.html',
   styleUrls: ['./edit-loan-provisioning-criteria.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatSelect,
-    NgFor,
-    MatOption,
+    ...STANDALONE_SHARED_IMPORTS,
     MatHint,
     MatTable,
     MatColumnDef,
@@ -66,17 +49,12 @@ import { FindPipe } from '../../../pipes/find.pipe';
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    MatButton,
     FaIconComponent,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    FindPipe,
-    NgxTranslatePipe
+    FindPipe
   ]
 })
 export class EditLoanProvisioningCriteriaComponent implements OnInit {

@@ -16,14 +16,10 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Survey component.
@@ -33,12 +29,8 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
   templateUrl: './view-survey.component.html',
   styleUrls: ['./view-survey.component.scss'],
   imports: [
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -52,10 +44,8 @@ import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
     DatetimeFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class ViewSurveyComponent implements OnInit {

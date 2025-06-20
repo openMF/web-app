@@ -6,43 +6,25 @@ import {
   Validators,
   ReactiveFormsModule
 } from '@angular/forms';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDivider } from '@angular/material/divider';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-saving-product-settings-step',
   templateUrl: './saving-product-settings-step.component.html',
   styleUrls: ['./saving-product-settings-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatInput,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTooltip,
-    MatSelect,
-    NgFor,
-    MatOption,
     MatCheckbox,
-    NgIf,
-    MatError,
     MatDivider,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class SavingProductSettingsStepComponent implements OnInit {

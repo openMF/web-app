@@ -7,14 +7,10 @@ import { Dates } from 'app/core/utils/dates';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { TransactionPaymentDetailComponent } from '../../../../shared/transaction-payment-detail/transaction-payment-detail.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Transaction Component.
@@ -24,19 +20,12 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
   templateUrl: './view-transaction.component.html',
   styleUrls: ['./view-transaction.component.scss'],
   imports: [
-    NgIf,
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     NgClass,
     TransactionPaymentDetailComponent,
-    RouterLink,
     CurrencyPipe,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ViewTransactionComponent {

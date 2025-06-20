@@ -14,8 +14,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Transactions Tab Component.
@@ -25,6 +25,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './transactions-tab.component.html',
   styleUrls: ['./transactions-tab.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -35,8 +36,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class TransactionsTabComponent implements OnInit {

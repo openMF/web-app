@@ -8,16 +8,11 @@ import { ProductsService } from 'app/products/products.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { NgIf } from '@angular/common';
 import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Charge Component.
@@ -27,17 +22,10 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
   templateUrl: './view-charge.component.html',
   styleUrls: ['./view-charge.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
-    NgIf,
     GlAccountDisplayComponent,
-    TranslatePipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class ViewChargeComponent {

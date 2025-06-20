@@ -10,15 +10,9 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { FileUploadComponent } from '../shared/file-upload/file-upload.component';
 import { ThemePickerComponent } from '../shared/theme-picker/theme-picker.component';
-import { MatInput } from '@angular/material/input';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Settings component.
@@ -28,21 +22,13 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    ReactiveFormsModule,
-    NgFor,
-    MatOption,
     FileUploadComponent,
-    ThemePickerComponent,
-    MatInput,
-    TranslatePipe,
-    NgxTranslatePipe
+    ThemePickerComponent
   ]
 })
 export class SettingsComponent implements OnInit {

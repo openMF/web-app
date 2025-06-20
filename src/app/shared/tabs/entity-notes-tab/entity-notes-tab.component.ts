@@ -7,32 +7,23 @@ import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatList, MatListItem } from '@angular/material/list';
-import { NgFor } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-entity-notes-tab',
   templateUrl: './entity-notes-tab.component.html',
   styleUrls: ['./entity-notes-tab.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatInput,
+    ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize,
-    MatButton,
     FaIconComponent,
     MatList,
-    NgFor,
     MatListItem,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class EntityNotesTabComponent implements OnInit {

@@ -15,11 +15,8 @@ import { ClientsService } from 'app/clients/clients.service';
 
 /** Node Types */
 import { Buffer } from 'buffer';
-import { NgIf } from '@angular/common';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View signature dialog component.
@@ -29,15 +26,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './view-signature-dialog.component.html',
   styleUrls: ['./view-signature-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
-    NgIf,
     CdkScrollable,
     MatDialogContent,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class ViewSignatureDialogComponent implements OnInit {

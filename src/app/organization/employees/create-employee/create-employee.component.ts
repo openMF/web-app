@@ -13,18 +13,8 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 
 /** Custom Dialog Component */
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create employee component.
@@ -34,28 +24,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './create-employee.component.html',
   styleUrls: ['./create-employee.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
-    MatError,
-    MatInput,
-    MatCheckbox,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox
   ]
 })
 export class CreateEmployeeComponent implements OnInit, AfterViewInit {

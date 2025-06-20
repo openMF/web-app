@@ -15,13 +15,9 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Data Source */
 import { JournalEntriesDataSource } from './journal-entry.datasource';
 import { Dates } from 'app/core/utils/dates';
-import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatAutocompleteTrigger, MatOption, MatAutocomplete } from '@angular/material/autocomplete';
 import { GlAccountSelectorComponent } from '../../shared/accounting/gl-account-selector/gl-account-selector.component';
-import { MatSelect } from '@angular/material/select';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import {
   MatTable,
   MatColumnDef,
@@ -34,11 +30,10 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Search journal entry component.
@@ -48,19 +43,9 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
   templateUrl: './search-journal-entry.component.html',
   styleUrls: ['./search-journal-entry.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatInput,
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatAutocompleteTrigger,
     GlAccountSelectorComponent,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
     MatAutocomplete,
     MatTable,
     MatSort,
@@ -70,19 +55,15 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
     MatSortHeader,
     MatCellDef,
     MatCell,
-    NgIf,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    RouterLink,
     MatPaginator,
     AsyncPipe,
-    TranslatePipe,
     DateFormatPipe,
     DatetimeFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class SearchJournalEntryComponent implements OnInit, AfterViewInit {

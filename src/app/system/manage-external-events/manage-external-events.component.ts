@@ -16,26 +16,16 @@ import {
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { SystemService } from '../system.service';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-manage-external-events',
   templateUrl: './manage-external-events.component.html',
   styleUrls: ['./manage-external-events.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatInput,
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -45,16 +35,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatCellDef,
     MatCell,
     MatSlideToggle,
-    ReactiveFormsModule,
     FormsModule,
-    NgIf,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class ManageExternalEventsComponent implements OnInit {

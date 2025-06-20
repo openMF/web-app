@@ -13,18 +13,9 @@ import { Dates } from 'app/core/utils/dates';
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { MatFormField, MatLabel, MatError, MatSuffix, MatHint } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Group Meetings Component
@@ -34,29 +25,9 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './edit-group-meeting.component.html',
   styleUrls: ['./edit-group-meeting.component.scss'],
   imports: [
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
-    MatError,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatHint,
-    MatCardActions,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatHint
   ]
 })
 export class EditGroupMeetingComponent implements OnInit {

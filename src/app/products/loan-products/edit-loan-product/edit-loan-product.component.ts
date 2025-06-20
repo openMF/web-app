@@ -29,18 +29,17 @@ import { LoanProductCapitalizedIncomeStepComponent } from '../loan-product-stepp
 import { UntypedFormGroup } from '@angular/forms';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf } from '@angular/common';
 import { StepperButtonsComponent } from '../../../shared/steppers/stepper-buttons/stepper-buttons.component';
 import { LoanProductPaymentStrategyStepComponent } from '../loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
 import { LoanProductPreviewStepComponent } from '../loan-product-stepper/loan-product-preview-step/loan-product-preview-step.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-edit-loan-product',
   templateUrl: './edit-loan-product.component.html',
   styleUrls: ['./edit-loan-product.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepper,
     MatStepperIcon,
     FaIconComponent,
@@ -49,7 +48,6 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     LoanProductDetailsStepComponent,
     LoanProductCurrencyStepComponent,
     LoanProductSettingsStepComponent,
-    NgIf,
     LoanProductInterestRefundStepComponent,
     StepperButtonsComponent,
     LoanProductPaymentStrategyStepComponent,
@@ -57,9 +55,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     LoanProductChargesStepComponent,
     LoanProductCapitalizedIncomeStepComponent,
     LoanProductAccountingStepComponent,
-    LoanProductPreviewStepComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    LoanProductPreviewStepComponent
   ]
 })
 export class EditLoanProductComponent implements OnInit {

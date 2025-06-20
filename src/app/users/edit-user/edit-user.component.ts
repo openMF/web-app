@@ -5,15 +5,8 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 
 /** Custom Services */
 import { UsersService } from '../users.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf, NgFor } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit User Component.
@@ -23,22 +16,8 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatCheckbox,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox
   ]
 })
 export class EditUserComponent implements OnInit {

@@ -14,19 +14,18 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
-import { NgIf } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-center-navigation',
   templateUrl: './center-navigation.component.html',
   styleUrls: ['./center-navigation.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     FaIconComponent,
     MatCardTitleGroup,
@@ -34,17 +33,13 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
     MatTooltip,
     MatCardSubtitle,
     AccountNumberComponent,
-    NgIf,
     ExternalIdentifierComponent,
-    MatCardContent,
     MatTabGroup,
     MatTab,
     LoanAccountTableComponent,
     SavingsAccountTableComponent,
-    TranslatePipe,
     StatusLookupPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class CenterNavigationComponent {

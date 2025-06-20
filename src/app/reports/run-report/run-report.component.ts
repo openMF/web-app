@@ -16,20 +16,12 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
 import * as ExcelJS from 'exceljs';
 import { AlertService } from 'app/core/alert/alert.service';
 import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TableAndSmsComponent } from './table-and-sms/table-and-sms.component';
 import { ChartComponent } from './chart/chart.component';
 import { PentahoComponent } from './pentaho/pentaho.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Run report component.
@@ -39,33 +31,14 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './run-report.component.html',
   styleUrls: ['./run-report.component.scss'],
   imports: [
-    NgIf,
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    NgFor,
+    ...STANDALONE_SHARED_IMPORTS,
     NgSwitch,
     NgSwitchCase,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatError,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatSelect,
-    MatOption,
     MatCheckbox,
-    MatCardActions,
-    MatButton,
-    RouterLink,
     FaIconComponent,
     TableAndSmsComponent,
     ChartComponent,
-    PentahoComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    PentahoComponent
   ]
 })
 export class RunReportComponent implements OnInit {

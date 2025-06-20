@@ -6,15 +6,14 @@ import { forkJoin } from 'rxjs';
 
 /** Custom Services */
 import { NotificationsService } from 'app/notifications/notifications.service';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatBadge } from '@angular/material/badge';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf, NgFor } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Notifications Tray Component
@@ -25,17 +24,15 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   styleUrls: ['./notifications-tray.component.scss'],
   encapsulation: ViewEncapsulation.None,
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatIconButton,
     MatTooltip,
     MatMenuTrigger,
     MatBadge,
     FaIconComponent,
     MatMenu,
-    NgIf,
     MatIcon,
-    NgFor,
-    MatMenuItem,
-    NgxTranslatePipe
+    MatMenuItem
   ]
 })
 export class NotificationsTrayComponent implements OnInit, OnDestroy {

@@ -18,23 +18,18 @@ import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIconButton, MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-history-scheduler-job',
   templateUrl: './view-history-scheduler-job.component.html',
   styleUrls: ['./view-history-scheduler-job.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatInput,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -43,7 +38,6 @@ import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
     MatSortHeader,
     MatCellDef,
     MatCell,
-    NgIf,
     FaIconComponent,
     MatTooltip,
     MatIconButton,
@@ -52,10 +46,7 @@ import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    MatButton,
-    RouterLink,
-    DatetimeFormatPipe,
-    NgxTranslatePipe
+    DatetimeFormatPipe
   ]
 })
 export class ViewHistorySchedulerJobComponent implements OnInit {

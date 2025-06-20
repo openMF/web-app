@@ -8,14 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Cashier component.
@@ -25,17 +20,9 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
   templateUrl: './view-cashier.component.html',
   styleUrls: ['./view-cashier.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
-    NgIf,
-    MatCardActions,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ViewCashierComponent {

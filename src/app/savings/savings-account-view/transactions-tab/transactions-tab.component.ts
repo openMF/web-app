@@ -33,11 +33,9 @@ import { ExternalIdentifierComponent } from '../../../shared/external-identifier
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Transactions Tab Component.
@@ -47,11 +45,8 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
   templateUrl: './transactions-tab.component.html',
   styleUrls: ['./transactions-tab.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    ReactiveFormsModule,
-    MatButton,
-    RouterLink,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -68,16 +63,13 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatMenu,
     MatMenuItem,
     FaIconComponent,
-    HasPermissionDirective,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class TransactionsTabComponent implements OnInit {

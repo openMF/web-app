@@ -15,10 +15,8 @@ import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { RecurringDepositsAccountInterestRateChartStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-interest-rate-chart-step/recurring-deposits-account-interest-rate-chart-step.component';
-import { NgIf } from '@angular/common';
 import { RecurringDepositsAccountPreviewStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-preview-step/recurring-deposits-account-preview-step.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit new recurring deposit account
@@ -28,6 +26,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './edit-recurring-deposit-account.component.html',
   styleUrls: ['./edit-recurring-deposit-account.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepper,
     MatStepperIcon,
     FaIconComponent,
@@ -38,10 +37,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     RecurringDepositsAccountSettingsStepComponent,
     RecurringDepositsAccountInterestRateChartStepComponent,
     RecurringDepositsAccountChargesStepComponent,
-    NgIf,
-    RecurringDepositsAccountPreviewStepComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    RecurringDepositsAccountPreviewStepComponent
   ]
 })
 export class EditRecurringDepositAccountComponent {

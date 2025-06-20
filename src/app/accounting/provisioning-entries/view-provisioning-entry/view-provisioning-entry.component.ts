@@ -24,15 +24,9 @@ import { startWith, map, debounceTime, distinctUntilChanged, tap } from 'rxjs/op
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View provisioning entry component.
@@ -42,20 +36,10 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './view-provisioning-entry.component.html',
   styleUrls: ['./view-provisioning-entry.component.scss'],
   imports: [
-    NgIf,
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    ReactiveFormsModule,
     MatAutocompleteTrigger,
     MatAutocomplete,
-    NgFor,
-    MatOption,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -69,9 +53,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    AsyncPipe,
-    TranslatePipe,
-    NgxTranslatePipe
+    AsyncPipe
   ]
 })
 export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {

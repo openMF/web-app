@@ -1,37 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgFor } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-share-product-currency-step',
   templateUrl: './share-product-currency-step.component.html',
   styleUrls: ['./share-product-currency-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTooltip,
-    NgFor,
-    MatOption,
-    MatError,
-    MatInput,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class ShareProductCurrencyStepComponent implements OnInit {

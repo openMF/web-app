@@ -22,8 +22,7 @@ import { MatDivider } from '@angular/material/divider';
 import { MatNavList, MatListItem } from '@angular/material/list';
 import { MatIcon } from '@angular/material/icon';
 import { MatLine } from '@angular/material/grid-list';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Sidenav component.
@@ -33,21 +32,17 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     NgClass,
-    RouterLink,
     MatIconButton,
     MatTooltip,
     FaIconComponent,
     MatDivider,
-    NgFor,
-    MatButton,
     MatNavList,
     MatListItem,
     RouterLinkActive,
     MatIcon,
-    MatLine,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatLine
   ]
 })
 export class SidenavComponent implements OnInit, AfterViewInit {

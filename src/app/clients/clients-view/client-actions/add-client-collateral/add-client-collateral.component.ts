@@ -9,37 +9,14 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-add-client-collateral',
   templateUrl: './add-client-collateral.component.html',
   styleUrls: ['./add-client-collateral.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
-    MatError,
-    MatInput,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS
   ]
 })
 export class AddClientCollateralComponent implements OnInit {

@@ -1,14 +1,10 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf } from '@angular/common';
 import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Office View General Tab
@@ -18,15 +14,10 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgIf,
     ExternalIdentifierComponent,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class GeneralTabComponent {

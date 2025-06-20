@@ -5,14 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators } from '@angular/forms';
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
-import { NgIf, NgFor } from '@angular/common';
 import { MatFormField, MatLabel, MatPrefix, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
 import { MatIcon } from '@angular/material/icon';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
-import { MatOption } from '@angular/material/autocomplete';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Server Selector Component
@@ -22,19 +17,9 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './server-selector.component.html',
   styleUrls: ['./server-selector.component.scss'],
   imports: [
-    NgIf,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatPrefix,
-    MatIcon,
-    MatInput,
-    MatError,
-    MatButton,
-    NgFor,
-    MatOption,
-    NgxTranslatePipe
+    MatIcon
   ]
 })
 export class ServerSelectorComponent implements OnInit {

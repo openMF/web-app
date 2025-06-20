@@ -4,41 +4,16 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { NgIf } from '@angular/common';
-import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-add-interest-pause',
   templateUrl: './add-interest-pause.component.html',
   styleUrls: ['./add-interest-pause.component.scss'],
   imports: [
-    MatCard,
-    NgIf,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatError,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    DateFormatPipe
   ]
 })
 export class AddInterestPauseComponent implements OnInit {

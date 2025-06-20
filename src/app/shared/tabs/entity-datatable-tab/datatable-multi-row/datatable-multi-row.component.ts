@@ -26,23 +26,17 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SystemService } from 'app/system/system.service';
 import * as _ from 'lodash';
-import { HasPermissionDirective } from '../../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-datatable-multi-row',
   templateUrl: './datatable-multi-row.component.html',
   styleUrls: ['./datatable-multi-row.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgIf,
     MatTable,
-    NgFor,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
@@ -53,9 +47,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatRow
   ]
 })
 export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges {

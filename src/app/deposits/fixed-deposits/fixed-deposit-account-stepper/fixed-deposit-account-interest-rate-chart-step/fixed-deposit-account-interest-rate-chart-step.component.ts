@@ -15,13 +15,10 @@ import {
 } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgIf, NgSwitch, TitleCasePipe } from '@angular/common';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard } from '@angular/material/card';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Fixed Deposits Account Interest Rate Chart Step
@@ -38,16 +35,14 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 
   ],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    MatButton,
     FaIconComponent,
-    MatCard,
     NgSwitch,
     MatHeaderRowDef,
     MatHeaderRow,
@@ -56,9 +51,7 @@ import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
     MatStepperPrevious,
     MatStepperNext,
     TitleCasePipe,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class FixedDepositAccountInterestRateChartStepComponent implements OnChanges {

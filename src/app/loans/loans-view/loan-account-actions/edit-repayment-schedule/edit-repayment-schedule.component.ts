@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -12,25 +10,16 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { NgIf } from '@angular/common';
 import { RepaymentScheduleTabComponent } from '../../repayment-schedule-tab/repayment-schedule-tab.component';
-import { MatButton } from '@angular/material/button';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-edit-repayment-schedule',
   templateUrl: './edit-repayment-schedule.component.html',
   styleUrls: ['./edit-repayment-schedule.component.scss'],
   imports: [
-    MatCard,
-    MatCardContent,
-    NgIf,
-    RepaymentScheduleTabComponent,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    RepaymentScheduleTabComponent
   ]
 })
 export class EditRepaymentScheduleComponent implements OnInit {

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/prefer-standalone */
@@ -10,8 +10,7 @@ import { MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker
     <mat-datepicker #picker></mat-datepicker>
   `,
   imports: [
-    MatDatepickerToggle,
-    MatDatepicker
+    ...STANDALONE_SHARED_IMPORTS
   ]
 })
 export class DatetimePickerStubComponent {

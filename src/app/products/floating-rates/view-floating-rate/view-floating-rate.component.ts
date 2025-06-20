@@ -16,17 +16,13 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 import { NgIf, DecimalPipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Floating Rate Component.
@@ -36,12 +32,8 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
   templateUrl: './view-floating-rate.component.html',
   styleUrls: ['./view-floating-rate.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     MatDivider,
     MatTable,
     MatSort,
@@ -51,7 +43,6 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
     MatSortHeader,
     MatCellDef,
     MatCell,
-    NgIf,
     MatTooltip,
     MatHeaderRowDef,
     MatHeaderRow,
@@ -59,10 +50,8 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
     MatRow,
     MatPaginator,
     DecimalPipe,
-    TranslatePipe,
     DateFormatPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class ViewFloatingRateComponent implements OnInit {

@@ -25,21 +25,16 @@ import { ProductsService } from '../../products.service';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FloatingRatePeriodDialogComponent } from '../floating-rate-period-dialog/floating-rate-period-dialog.component';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgIf } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDivider } from '@angular/material/divider';
 import { MatMiniFabButton, MatIconButton, MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Floating Rate Component.
@@ -49,15 +44,8 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './edit-floating-rate.component.html',
   styleUrls: ['./edit-floating-rate.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTooltip,
-    NgIf,
-    MatError,
     MatCheckbox,
     MatDivider,
     MatMiniFabButton,
@@ -76,12 +64,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class EditFloatingRateComponent implements OnInit {

@@ -13,51 +13,33 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgIf, NgFor } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loans-active-client-members',
   templateUrl: './loans-active-client-members.component.html',
   styleUrls: ['./loans-active-client-members.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
     MatHeaderCell,
     MatCheckbox,
-    ReactiveFormsModule,
     FormsModule,
     MatCellDef,
     MatCell,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatInput,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class LoansActiveClientMembersComponent implements OnInit {

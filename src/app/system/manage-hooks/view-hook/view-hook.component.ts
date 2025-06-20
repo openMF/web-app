@@ -8,15 +8,10 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { SystemService } from '../../system.service';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { NgFor, NgIf } from '@angular/common';
-import { MatLabel } from '@angular/material/form-field';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Hook Component.
@@ -26,17 +21,9 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './view-hook.component.html',
   styleUrls: ['./view-hook.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
-    NgFor,
-    MatLabel,
-    NgIf,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ViewHookComponent {

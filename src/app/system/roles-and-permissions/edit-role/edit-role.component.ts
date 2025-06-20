@@ -5,12 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Role Description Component.
@@ -20,18 +15,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './edit-role.component.html',
   styleUrls: ['./edit-role.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS
   ]
 })
 export class EditRoleComponent implements OnInit {

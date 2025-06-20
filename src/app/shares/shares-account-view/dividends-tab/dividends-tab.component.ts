@@ -15,8 +15,8 @@ import {
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Dividends Tab Component.
@@ -26,6 +26,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './dividends-tab.component.html',
   styleUrls: ['./dividends-tab.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -37,8 +38,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatRowDef,
     MatRow,
     CurrencyPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class DividendsTabComponent implements OnInit {

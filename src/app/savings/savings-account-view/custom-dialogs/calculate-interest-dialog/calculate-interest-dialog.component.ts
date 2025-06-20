@@ -8,8 +8,7 @@ import {
   MatDialogClose
 } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Calculate interest dialog component.
@@ -19,13 +18,12 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './calculate-interest-dialog.component.html',
   styleUrls: ['./calculate-interest-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class CalculateInterestDialogComponent {

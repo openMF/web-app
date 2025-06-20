@@ -10,7 +10,6 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
-import { NgIf } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
@@ -26,18 +25,16 @@ import {
   MatRow
 } from '@angular/material/table';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-tranche-details',
   templateUrl: './loan-tranche-details.component.html',
   styleUrls: ['./loan-tranche-details.component.scss'],
   imports: [
-    NgIf,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -51,10 +48,8 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class LoanTrancheDetailsComponent implements OnInit {

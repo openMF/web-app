@@ -25,18 +25,13 @@ import {
   MatRow
 } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { ChargesFilterPipe } from '../../../pipes/charges-filter.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Savings Account Charges Step
@@ -46,14 +41,8 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
   templateUrl: './savings-account-charges-step.component.html',
   styleUrls: ['./savings-account-charges-step.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgIf,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -67,11 +56,9 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatRow,
     MatStepperPrevious,
     MatStepperNext,
-    TranslatePipe,
     ChargesFilterPipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class SavingsAccountChargesStepComponent implements OnInit, OnChanges {

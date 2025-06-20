@@ -19,18 +19,9 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatButton } from '@angular/material/button';
 import { GlAccountDisplayComponent } from '../../shared/accounting/gl-account-display/gl-account-display.component';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Migrate opening balances component.
@@ -40,29 +31,9 @@ import { HasPermissionDirective } from '../../directives/has-permission/has-perm
   templateUrl: './migrate-opening-balances.component.html',
   styleUrls: ['./migrate-opening-balances.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
-    MatError,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     GlAccountDisplayComponent,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatCardActions,
-    RouterLink,
-    HasPermissionDirective,
-    CurrencyPipe,
-    TranslatePipe,
-    NgxTranslatePipe
+    CurrencyPipe
   ]
 })
 export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {

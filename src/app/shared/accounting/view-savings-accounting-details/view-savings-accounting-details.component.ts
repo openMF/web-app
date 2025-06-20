@@ -1,20 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { Accounting } from 'app/core/utils/accounting';
 import { OptionData } from 'app/shared/models/option-data.model';
-import { NgIf } from '@angular/common';
 import { GlAccountDisplayComponent } from '../gl-account-display/gl-account-display.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-savings-accounting-details',
   templateUrl: './view-savings-accounting-details.component.html',
   styleUrls: ['./view-savings-accounting-details.component.scss'],
   imports: [
-    NgIf,
-    GlAccountDisplayComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    GlAccountDisplayComponent
   ]
 })
 export class ViewSavingsAccountingDetailsComponent {

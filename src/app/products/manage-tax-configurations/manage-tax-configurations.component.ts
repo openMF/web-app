@@ -1,15 +1,10 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { MatCard } from '@angular/material/card';
 import { MatNavList, MatListItem } from '@angular/material/list';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatLine } from '@angular/material/grid-list';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Manage Tax Configurations component.
@@ -18,17 +13,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   selector: 'mifosx-manage-tax-configurations',
   templateUrl: './manage-tax-configurations.component.html',
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatNavList,
-    HasPermissionDirective,
     MatListItem,
-    RouterLink,
     MatIcon,
     FaIconComponent,
-    MatLine,
-    NgIf,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatLine
   ]
 })
 export class ManageTaxConfigurationsComponent {

@@ -19,22 +19,14 @@ import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 
 /** Environment Configuration */
-import { environment } from 'environments/environment';
-import { NgIf, NgFor } from '@angular/common';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
+import { environment } from '../../../environments/environment';
 import { MatDivider } from '@angular/material/divider';
 import { MatFormField, MatLabel, MatHint, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatSelect } from '@angular/material/select';
 import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MakeAccountInterbankTransfersComponent } from '../make-account-interbank-transfers/make-account-interbank-transfers.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create account transfers
@@ -44,35 +36,15 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './make-account-transfers.component.html',
   styleUrls: ['./make-account-transfers.component.scss'],
   imports: [
-    NgIf,
-    MatCard,
-    MatCardContent,
+    ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    ReactiveFormsModule,
     FormsModule,
     MatHint,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatError,
-    MatSelect,
-    NgFor,
-    MatOption,
     MatAutocompleteTrigger,
     MatAutocomplete,
     FaIconComponent,
     CdkTextareaAutosize,
-    MakeAccountInterbankTransfersComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    MakeAccountInterbankTransfersComponent
   ]
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {

@@ -9,38 +9,20 @@ import {
 } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-deposit-product-incentive-form-dialog',
   templateUrl: './deposit-product-incentive-form-dialog.component.html',
   styleUrls: ['./deposit-product-incentive-form-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatError,
-    NgIf,
-    MatInput,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class DepositProductIncentiveFormDialogComponent implements OnInit {

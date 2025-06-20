@@ -11,45 +11,27 @@ import { rangeValidator } from 'app/shared/validators/percentage.validator';
 import { GlobalConfiguration } from 'app/system/configurations/global-configurations-tab/configuration.model';
 import { CodeName, OptionData, StringEnumOptionData } from 'app/shared/models/option-data.model';
 import { ProcessingStrategyService } from '../../services/processing-strategy.service';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDivider } from '@angular/material/divider';
-import { MatInput } from '@angular/material/input';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-product-settings-step',
   templateUrl: './loan-product-settings-step.component.html',
   styleUrls: ['./loan-product-settings-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTooltip,
-    NgFor,
-    MatOption,
-    MatError,
     MatCheckbox,
-    NgIf,
     MatDivider,
-    MatInput,
-    MatButton,
     MatIconButton,
-    MatSuffix,
     FaIconComponent,
     MatStepperPrevious,
-    MatStepperNext,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class LoanProductSettingsStepComponent implements OnInit {

@@ -9,14 +9,11 @@ import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from '../../core/authentication/authentication.service';
 import { MatFormField, MatPrefix, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Login form component.
@@ -26,22 +23,13 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
+    ...STANDALONE_SHARED_IMPORTS,
     MatPrefix,
     FaIconComponent,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
     MatIconButton,
-    MatSuffix,
     MatCheckbox,
     MatProgressBar,
-    MatButton,
-    MatProgressSpinner,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatProgressSpinner
   ]
 })
 export class LoginFormComponent implements OnInit {

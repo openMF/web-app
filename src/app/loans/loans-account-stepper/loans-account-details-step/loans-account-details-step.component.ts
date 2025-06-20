@@ -10,27 +10,20 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 
 /** Custom Services */
 import { LoansService } from '../../loans.service';
 import { Commons } from 'app/core/utils/commons';
 import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatOption } from '@angular/material/autocomplete';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Loans Account Details Step
@@ -40,31 +33,15 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   templateUrl: './loans-account-details-step.component.html',
   styleUrls: ['./loans-account-details-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTooltip,
-    MatOption,
     NgxMatSelectSearchModule,
-    NgFor,
-    MatError,
-    NgIf,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
     MatDivider,
     MatCheckbox,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
     MatStepperNext,
-    RouterLink,
-    AsyncPipe,
-    TranslatePipe,
-    NgxTranslatePipe
+    AsyncPipe
   ]
 })
 export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {

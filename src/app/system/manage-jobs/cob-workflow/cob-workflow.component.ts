@@ -1,22 +1,18 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SystemService } from 'app/system/system.service';
-import { environment } from 'environments/environment';
-import { NgIf } from '@angular/common';
-import { MatButton } from '@angular/material/button';
+import { environment } from '../../../../environments/environment';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoanLockedComponent } from './loan-locked/loan-locked.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-cob-workflow',
   templateUrl: './cob-workflow.component.html',
   styleUrls: ['./cob-workflow.component.scss'],
   imports: [
-    NgIf,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    LoanLockedComponent,
-    NgxTranslatePipe
+    LoanLockedComponent
   ]
 })
 export class CobWorkflowComponent implements OnInit, OnDestroy {

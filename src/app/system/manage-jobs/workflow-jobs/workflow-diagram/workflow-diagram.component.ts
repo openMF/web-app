@@ -2,8 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DagreNodesOnlyLayout, Edge, Layout, Node, GraphModule } from '@swimlane/ngx-graph';
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
-import { NgIf } from '@angular/common';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 export class JobStep {
   id: number;
@@ -16,9 +15,8 @@ export class JobStep {
   templateUrl: './workflow-diagram.component.html',
   styleUrls: ['./workflow-diagram.component.scss'],
   imports: [
-    GraphModule,
-    NgIf,
-    TranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    GraphModule
   ]
 })
 export class WorkflowDiagramComponent implements OnInit {

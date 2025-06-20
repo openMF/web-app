@@ -10,40 +10,26 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { CentersService } from 'app/centers/centers.service';
 import { GroupsService } from 'app/groups/groups.service';
 import { MatDialog } from '@angular/material/dialog';
-import { MatCard } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
-import { NgFor, NgIf } from '@angular/common';
 import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatListSubheaderCssMatStyler, MatNavList } from '@angular/material/list';
 import { MatLine } from '@angular/material/grid-list';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-manage-groups',
   templateUrl: './manage-groups.component.html',
   styleUrls: ['./manage-groups.component.scss'],
   imports: [
-    MatCard,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatAutocompleteTrigger,
     MatAutocomplete,
-    NgFor,
-    MatOption,
     MatIconButton,
     FaIconComponent,
     MatListSubheaderCssMatStyler,
-    NgIf,
     MatNavList,
-    MatLine,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatLine
   ]
 })
 export class ManageGroupsComponent implements AfterViewInit {

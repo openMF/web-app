@@ -8,14 +8,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ReportsService } from 'app/reports/reports.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Export Client Loans Transactions Component
@@ -25,21 +19,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './export-transactions.component.html',
   styleUrls: ['./export-transactions.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatError,
-    MatButton,
-    RouterLink,
-    FaIconComponent,
-    NgIf,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
   ]
 })
 export class ExportTransactionsComponent implements OnInit {

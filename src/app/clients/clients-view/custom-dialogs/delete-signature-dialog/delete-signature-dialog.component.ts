@@ -8,11 +8,8 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { NgIf } from '@angular/common';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Delete signature dialog component.
@@ -22,15 +19,12 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './delete-signature-dialog.component.html',
   styleUrls: ['./delete-signature-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
-    NgIf,
     CdkScrollable,
     MatDialogContent,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class DeleteSignatureDialogComponent {

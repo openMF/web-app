@@ -12,15 +12,15 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-floating-interest-rates',
   templateUrl: './floating-interest-rates.component.html',
   styleUrls: ['./floating-interest-rates.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -31,9 +31,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    TranslatePipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class FloatingInterestRatesComponent implements OnInit {

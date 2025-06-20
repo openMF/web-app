@@ -5,18 +5,10 @@ import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { FixedDepositsService } from '../../fixed-deposits.service';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Fixed Deposits Account Details Step
@@ -26,26 +18,11 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './fixed-deposit-account-details-step.component.html',
   styleUrls: ['./fixed-deposit-account-details-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatError,
-    NgIf,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTooltip,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class FixedDepositAccountDetailsStepComponent implements OnInit {

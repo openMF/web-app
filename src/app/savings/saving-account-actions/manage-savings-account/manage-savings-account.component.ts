@@ -7,15 +7,8 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { SystemService } from 'app/system/system.service';
 import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
-import { NgIf, NgFor } from '@angular/common';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { InputAmountComponent } from '../../../shared/input-amount/input-amount.component';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 type TransactionCommandType = 'holdamount' | 'blockaccount' | 'blockdeposit' | 'blockwithdrawal';
 
@@ -31,27 +24,9 @@ interface TransactionType {
   templateUrl: './manage-savings-account.component.html',
   styleUrls: ['./manage-savings-account.component.scss'],
   imports: [
-    MatCard,
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardTitle,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatError,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    InputAmountComponent,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    NgxTranslatePipe
+    InputAmountComponent
   ]
 })
 export class ManageSavingsAccountComponent implements OnInit {

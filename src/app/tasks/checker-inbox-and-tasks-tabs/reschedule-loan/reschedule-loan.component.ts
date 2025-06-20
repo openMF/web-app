@@ -26,15 +26,10 @@ import { TasksService } from '../../tasks.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { NgIf } from '@angular/common';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 interface RescheduleFormData {
   dateFormat: string;
@@ -48,11 +43,7 @@ interface RescheduleFormData {
   templateUrl: './reschedule-loan.component.html',
   styleUrls: ['./reschedule-loan.component.scss'],
   imports: [
-    NgIf,
-    MatFormField,
-    MatInput,
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatColumnDef,
@@ -61,13 +52,11 @@ interface RescheduleFormData {
     MatCheckbox,
     MatCellDef,
     MatCell,
-    RouterLink,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class RescheduleLoanComponent {

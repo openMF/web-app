@@ -17,13 +17,6 @@ import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } 
 
 /** Custom Services */
 import { TemplatesService } from '../templates.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {
@@ -32,7 +25,7 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Template Component.
@@ -42,27 +35,13 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './create-edit-template.component.html',
   styleUrls: ['./create-edit-template.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
-    MatError,
-    MatInput,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     CKEditorModule,
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
-    MatCardActions,
-    RouterLink,
-    NgxTranslatePipe
+    MatExpansionPanelTitle
   ]
 })
 export class CreateEditComponent implements OnInit {

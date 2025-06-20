@@ -27,13 +27,10 @@ import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { ClientsService } from '../../clients.service';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgStyle, NgFor } from '@angular/common';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Identities Tab Component
@@ -43,8 +40,7 @@ import { NgStyle, NgFor } from '@angular/common';
   templateUrl: './identities-tab.component.html',
   styleUrls: ['./identities-tab.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     NgStyle,
@@ -53,13 +49,10 @@ import { NgStyle, NgFor } from '@angular/common';
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    NgFor,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatRow
   ]
 })
 export class IdentitiesTabComponent {

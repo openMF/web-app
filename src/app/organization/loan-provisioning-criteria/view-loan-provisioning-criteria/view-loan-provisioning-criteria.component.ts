@@ -21,13 +21,9 @@ import { OrganizationService } from 'app/organization/organization.service';
 
 /** Dialog Component */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Loan Provisioning
@@ -37,12 +33,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './view-loan-provisioning-criteria.component.html',
   styleUrls: ['./view-loan-provisioning-criteria.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     MatDivider,
     MatTable,
     MatColumnDef,
@@ -53,9 +45,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatRow
   ]
 })
 export class ViewLoanProvisioningCriteriaComponent implements OnInit {

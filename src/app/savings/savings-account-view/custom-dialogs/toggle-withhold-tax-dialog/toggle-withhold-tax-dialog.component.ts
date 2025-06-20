@@ -9,8 +9,7 @@ import {
   MatDialogClose
 } from '@angular/material/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Toggle withhold tax dialog dialog component.
@@ -20,13 +19,12 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './toggle-withhold-tax-dialog.component.html',
   styleUrls: ['./toggle-withhold-tax-dialog.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
     MatDialogActions,
-    MatButton,
-    MatDialogClose,
-    NgxTranslatePipe
+    MatDialogClose
   ]
 })
 export class ToggleWithholdTaxDialogComponent {

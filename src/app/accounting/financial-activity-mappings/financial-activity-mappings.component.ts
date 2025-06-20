@@ -20,11 +20,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Financial activity mappings component.
@@ -34,9 +31,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './financial-activity-mappings.component.html',
   styleUrls: ['./financial-activity-mappings.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatSort,
@@ -50,9 +45,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit {

@@ -4,11 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ClientFamilyMemberDialogComponent } from './client-family-member-dialog/client-family-member-dialog.component';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatAccordion,
@@ -17,11 +14,11 @@ import {
   MatExpansionPanelTitle,
   MatExpansionPanelDescription
 } from '@angular/material/expansion';
-import { NgFor } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FindPipe } from '../../../pipes/find.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Family Members Step
@@ -31,10 +28,9 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './client-family-members-step.component.html',
   styleUrls: ['./client-family-members-step.component.scss'],
   imports: [
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatAccordion,
-    NgFor,
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
@@ -42,10 +38,8 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatDivider,
     MatStepperPrevious,
     MatStepperNext,
-    TranslatePipe,
     FindPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class ClientFamilyMembersStepComponent {

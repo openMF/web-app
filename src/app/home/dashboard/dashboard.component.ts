@@ -5,16 +5,12 @@ import { Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { activities } from '../activities';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { NgFor, AsyncPipe } from '@angular/common';
 import { ClientTrendsBarComponent } from './client-trends-bar/client-trends-bar.component';
 import { AmountDisbursedPieComponent } from './amount-disbursed-pie/amount-disbursed-pie.component';
 import { AmountCollectedPieComponent } from './amount-collected-pie/amount-collected-pie.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /**
  * Dashboard component.
  */
@@ -23,23 +19,13 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   imports: [
-    MatCard,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
+    ...STANDALONE_SHARED_IMPORTS,
     MatAutocompleteTrigger,
-    ReactiveFormsModule,
     MatAutocomplete,
-    NgFor,
-    MatOption,
-    RouterLink,
     ClientTrendsBarComponent,
     AmountDisbursedPieComponent,
     AmountCollectedPieComponent,
-    AsyncPipe,
-    TranslatePipe,
-    NgxTranslatePipe
+    AsyncPipe
   ]
 })
 export class DashboardComponent implements OnInit {

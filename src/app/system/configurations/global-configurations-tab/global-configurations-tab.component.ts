@@ -23,25 +23,19 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SystemService } from '../../system.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-global-configurations-tab',
   templateUrl: './global-configurations-tab.component.html',
   styleUrls: ['./global-configurations-tab.component.scss'],
   imports: [
-    MatFormField,
-    MatLabel,
-    MatInput,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -50,21 +44,16 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatSortHeader,
     MatCellDef,
     MatCell,
-    NgIf,
     FaIconComponent,
     MatTooltip,
     MatSlideToggle,
-    ReactiveFormsModule,
     FormsModule,
-    MatButton,
-    RouterLink,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     MatPaginator,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {

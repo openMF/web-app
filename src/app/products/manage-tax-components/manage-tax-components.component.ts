@@ -19,15 +19,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Manage Tax Components component.
@@ -37,13 +32,8 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
   templateUrl: './manage-tax-components.component.html',
   styleUrls: ['./manage-tax-components.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -57,10 +47,8 @@ import { FormatNumberPipe } from '../../pipes/format-number.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class ManageTaxComponentsComponent implements OnInit {

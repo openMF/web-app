@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgIf } from '@angular/common';
 import { GroupAssignStaffComponent } from './group-assign-staff/group-assign-staff.component';
 import { CloseGroupComponent } from './close-group/close-group.component';
 import { ActivateGroupComponent } from './activate-group/activate-group.component';
@@ -11,6 +10,7 @@ import { ManageGroupMembersComponent } from './manage-group-members/manage-group
 import { EditGroupMeetingComponent } from './edit-group-meeting/edit-group-meeting.component';
 import { EditGroupMeetingScheduleComponent } from './edit-group-meeting-schedule/edit-group-meeting-schedule.component';
 import { GroupTransferClientsComponent } from './group-transfer-clients/group-transfer-clients.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Group actions component.
@@ -20,7 +20,7 @@ import { GroupTransferClientsComponent } from './group-transfer-clients/group-tr
   templateUrl: './group-actions.component.html',
   styleUrls: ['./group-actions.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     GroupAssignStaffComponent,
     CloseGroupComponent,
     ActivateGroupComponent,

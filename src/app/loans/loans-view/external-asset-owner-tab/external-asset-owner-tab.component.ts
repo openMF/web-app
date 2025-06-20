@@ -7,8 +7,6 @@ import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.co
 import { NgIf, NgClass, DecimalPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import {
   MatTable,
   MatColumnDef,
@@ -22,22 +20,19 @@ import {
   MatRow
 } from '@angular/material/table';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-external-asset-owner-tab',
   templateUrl: './external-asset-owner-tab.component.html',
   styleUrls: ['./external-asset-owner-tab.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     NgClass,
     FaIconComponent,
     ExternalIdentifierComponent,
-    HasPermissionDirective,
-    MatButton,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -45,16 +40,13 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatCellDef,
     MatCell,
     MatTooltip,
-    RouterLink,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
     DecimalPipe,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class ExternalAssetOwnerTabComponent implements OnInit {

@@ -24,12 +24,10 @@ import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../directives/has-permission/has-permission.directive';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Groups View Component.
@@ -39,7 +37,7 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
   templateUrl: './groups-view.component.html',
   styleUrls: ['./groups-view.component.scss'],
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCardHeader,
     MatCardTitleGroup,
     MatCardMdImage,
@@ -51,23 +49,16 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
     MatIcon,
     FaIconComponent,
     MatCardSubtitle,
-    NgIf,
     MatMenu,
-    HasPermissionDirective,
     MatMenuItem,
-    RouterLink,
-    MatCardContent,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
-    NgFor,
     MatTabNavPanel,
     RouterOutlet,
     LowerCasePipe,
-    TranslatePipe,
     StatusLookupPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class GroupsViewComponent {

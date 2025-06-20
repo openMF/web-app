@@ -22,8 +22,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { LoanTransactionType } from 'app/loans/models/loan-transaction-type.model';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
@@ -38,20 +36,17 @@ import { ExternalIdentifierComponent } from '../../../shared/external-identifier
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-transactions-tab',
   templateUrl: './transactions-tab.component.html',
   styleUrls: ['./transactions-tab.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    ReactiveFormsModule,
-    MatButton,
-    RouterLink,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -65,7 +60,6 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatMenu,
     MatMenuItem,
     FaIconComponent,
-    HasPermissionDirective,
     MatHeaderCellDef,
     MatHeaderCell,
     MatHeaderRowDef,
@@ -73,10 +67,8 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
     DateFormatPipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class TransactionsTabComponent implements OnInit {

@@ -1,12 +1,8 @@
 /** Angular Imports */
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { MatFormField } from '@angular/material/form-field';
 import { NgStyle } from '@angular/common';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Custom file upload component based on angular material.
@@ -16,13 +12,9 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss'],
   imports: [
-    MatFormField,
+    ...STANDALONE_SHARED_IMPORTS,
     NgStyle,
-    MatInput,
-    MatButton,
-    FaIconComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    FaIconComponent
   ]
 })
 export class FileUploadComponent implements OnInit {

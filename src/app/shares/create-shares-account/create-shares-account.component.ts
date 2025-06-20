@@ -13,9 +13,8 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf } from '@angular/common';
 import { SharesAccountPreviewStepComponent } from '../shares-account-stepper/shares-account-preview-step/shares-account-preview-step.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Shares Account Component
@@ -25,6 +24,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './create-shares-account.component.html',
   styleUrls: ['./create-shares-account.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepper,
     MatStepperIcon,
     FaIconComponent,
@@ -33,9 +33,7 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     SharesAccountDetailsStepComponent,
     SharesAccountTermsStepComponent,
     SharesAccountChargesStepComponent,
-    NgIf,
-    SharesAccountPreviewStepComponent,
-    NgxTranslatePipe
+    SharesAccountPreviewStepComponent
   ]
 })
 export class CreateSharesAccountComponent {

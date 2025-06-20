@@ -9,14 +9,10 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
 import { Location, NgIf } from '@angular/common';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
 import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View gl account component.
@@ -26,18 +22,10 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
   templateUrl: './view-gl-account.component.html',
   styleUrls: ['./view-gl-account.component.scss'],
   imports: [
-    HasPermissionDirective,
-    NgIf,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
     GlAccountDisplayComponent,
-    MatCardActions,
-    TranslatePipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class ViewGlAccountComponent {

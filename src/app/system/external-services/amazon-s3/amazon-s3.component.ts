@@ -15,10 +15,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Amazon S3 Component.
@@ -28,8 +26,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './amazon-s3.component.html',
   styleUrls: ['./amazon-s3.component.scss'],
   imports: [
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatTable,
     MatSort,
@@ -42,9 +39,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatRow
   ]
 })
 export class AmazonS3Component implements OnInit {

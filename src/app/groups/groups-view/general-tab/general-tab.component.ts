@@ -15,12 +15,10 @@ import {
   MatRow
 } from '@angular/material/table';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
 import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Groups View General Tab Component.
@@ -30,7 +28,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
   templateUrl: './general-tab.component.html',
   styleUrls: ['./general-tab.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -39,17 +37,13 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
     MatCell,
     NgClass,
     MatTooltip,
-    MatButton,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    RouterLink,
-    TranslatePipe,
     StatusLookupPipe,
     AccountsFilterPipe,
-    DateFormatPipe,
-    NgxTranslatePipe
+    DateFormatPipe
   ]
 })
 export class GeneralTabComponent {

@@ -1,27 +1,19 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
-import { NgFor } from '@angular/common';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-recurring-deposit-product',
   templateUrl: './view-recurring-deposit-product.component.html',
   styleUrls: ['./view-recurring-deposit-product.component.scss'],
   imports: [
-    MatCard,
-    MatCardContent,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTabNav,
     MatTabLink,
     RouterLinkActive,
-    RouterLink,
-    NgFor,
-    HasPermissionDirective,
     MatTabNavPanel,
-    RouterOutlet,
-    NgxTranslatePipe
+    RouterOutlet
   ]
 })
 export class ViewRecurringDepositProductComponent {

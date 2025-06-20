@@ -30,7 +30,6 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 import { ConfigurationWizardComponent } from '../../../configuration-wizard/configuration-wizard.component';
 import { NotificationsTrayComponent } from 'app/shared/notifications-tray/notifications-tray.component';
 import { MatToolbar } from '@angular/material/toolbar';
-import { NgIf } from '@angular/common';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -40,8 +39,7 @@ import { LanguageSelectorComponent } from '../../../shared/language-selector/lan
 import { MatIcon } from '@angular/material/icon';
 import { NotificationsTrayComponent as NotificationsTrayComponent_1 } from '../../../shared/notifications-tray/notifications-tray.component';
 import { ThemeToggleComponent } from '../../../shared/theme-toggle/theme-toggle.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Toolbar component.
@@ -51,23 +49,19 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatToolbar,
-    NgIf,
     MatIconButton,
     MatTooltip,
     FaIconComponent,
     MatMenuTrigger,
-    RouterLink,
     SearchToolComponent,
     LanguageSelectorComponent,
     MatIcon,
     NotificationsTrayComponent_1,
     ThemeToggleComponent,
     MatMenu,
-    MatMenuItem,
-    MatButton,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatMenuItem
   ]
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChecked {

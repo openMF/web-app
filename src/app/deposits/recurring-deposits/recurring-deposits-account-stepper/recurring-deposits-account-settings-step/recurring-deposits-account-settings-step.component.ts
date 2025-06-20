@@ -10,19 +10,11 @@ import {
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { NgFor, NgIf } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { MatDivider } from '@angular/material/divider';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Services */
 
@@ -34,28 +26,13 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './recurring-deposits-account-settings-step.component.html',
   styleUrls: ['./recurring-deposits-account-settings-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
+    ...STANDALONE_SHARED_IMPORTS,
     MatCheckbox,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatSelect,
-    NgFor,
-    MatOption,
-    NgIf,
     InputAmountComponent,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatError,
     MatDivider,
-    MatButton,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {

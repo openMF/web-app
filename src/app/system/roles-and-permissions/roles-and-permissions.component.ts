@@ -25,11 +25,8 @@ import { PopoverService } from '../../configuration-wizard/popover/popover.servi
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Roles and Permissions component.
@@ -39,12 +36,8 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './roles-and-permissions.component.html',
   styleUrls: ['./roles-and-permissions.component.scss'],
   imports: [
-    RouterLink,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -54,14 +47,12 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
     MatCellDef,
     MatCell,
     MatTooltip,
-    NgIf,
     MatIconButton,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    MatPaginator,
-    NgxTranslatePipe
+    MatPaginator
   ]
 })
 export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {

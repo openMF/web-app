@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClientsService } from '../../clients.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { EntityNotesTabComponent } from '../../../shared/tabs/entity-notes-tab/entity-notes-tab.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Notes Tab Component
@@ -16,7 +17,10 @@ import { EntityNotesTabComponent } from '../../../shared/tabs/entity-notes-tab/e
   selector: 'mifosx-notes-tab',
   templateUrl: './notes-tab.component.html',
   styleUrls: ['./notes-tab.component.scss'],
-  imports: [EntityNotesTabComponent]
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    EntityNotesTabComponent
+  ]
 })
 export class NotesTabComponent implements OnInit {
   /** Client ID */

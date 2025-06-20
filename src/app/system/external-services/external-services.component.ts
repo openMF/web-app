@@ -1,13 +1,10 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { MatCard } from '@angular/material/card';
 import { MatNavList, MatListItem } from '@angular/material/list';
-import { RouterLink } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatLine } from '@angular/material/grid-list';
-import { NgIf } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * External Services component.
@@ -16,15 +13,12 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   selector: 'mifosx-external-services',
   templateUrl: './external-services.component.html',
   imports: [
-    MatCard,
+    ...STANDALONE_SHARED_IMPORTS,
     MatNavList,
     MatListItem,
-    RouterLink,
     MatIcon,
     FaIconComponent,
-    MatLine,
-    NgIf,
-    NgxTranslatePipe
+    MatLine
   ]
 })
 export class ExternalServicesComponent {

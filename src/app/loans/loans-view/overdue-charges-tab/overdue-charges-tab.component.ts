@@ -16,9 +16,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Overdue charges tab component
@@ -28,6 +27,7 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
   templateUrl: './overdue-charges-tab.component.html',
   styleUrls: ['./overdue-charges-tab.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatSort,
     MatColumnDef,
@@ -41,9 +41,7 @@ import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
-    FormatNumberPipe,
-    NgxTranslatePipe
+    FormatNumberPipe
   ]
 })
 export class OverdueChargesTabComponent implements OnInit {

@@ -8,14 +8,10 @@ import { SystemService } from 'app/system/system.service';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf } from '@angular/common';
 import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Report Component.
@@ -25,17 +21,10 @@ import { YesnoPipe } from '../../../pipes/yesno.pipe';
   templateUrl: './view-report.component.html',
   styleUrls: ['./view-report.component.scss'],
   imports: [
-    HasPermissionDirective,
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgIf,
-    MatCard,
     MatCardTitle,
-    MatCardContent,
-    TranslatePipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class ViewReportComponent {

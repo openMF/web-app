@@ -15,10 +15,8 @@ import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { FixedDepositAccountInterestRateChartStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-interest-rate-chart-step/fixed-deposit-account-interest-rate-chart-step.component';
-import { NgIf } from '@angular/common';
 import { FixedDepositAccountPreviewStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-preview-step/fixed-deposit-account-preview-step.component';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Fixed Deposit Account Component
@@ -28,6 +26,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './create-fixed-deposit-account.component.html',
   styleUrls: ['./create-fixed-deposit-account.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepper,
     MatStepperIcon,
     FaIconComponent,
@@ -38,10 +37,7 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     FixedDepositAccountSettingsStepComponent,
     FixedDepositAccountInterestRateChartStepComponent,
     FixedDepositAccountChargesStepComponent,
-    NgIf,
-    FixedDepositAccountPreviewStepComponent,
-    TranslatePipe,
-    NgxTranslatePipe
+    FixedDepositAccountPreviewStepComponent
   ]
 })
 export class CreateFixedDepositAccountComponent {

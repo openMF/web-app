@@ -1,7 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgIf } from '@angular/common';
 import { ClientAssignStaffComponent } from './client-assign-staff/client-assign-staff.component';
 import { CloseClientComponent } from './close-client/close-client.component';
 import { ViewSurveyComponent } from './view-survey/view-survey.component';
@@ -19,6 +18,7 @@ import { AddClientChargeComponent } from './add-client-charge/add-client-charge.
 import { TakeSurveyComponent } from './take-survey/take-survey.component';
 import { ClientScreenReportsComponent } from './client-screen-reports/client-screen-reports.component';
 import { AddClientCollateralComponent } from './add-client-collateral/add-client-collateral.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client actions component.
@@ -28,7 +28,7 @@ import { AddClientCollateralComponent } from './add-client-collateral/add-client
   templateUrl: './client-actions.component.html',
   styleUrls: ['./client-actions.component.scss'],
   imports: [
-    NgIf,
+    ...STANDALONE_SHARED_IMPORTS,
     ClientAssignStaffComponent,
     CloseClientComponent,
     ViewSurveyComponent,

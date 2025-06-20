@@ -14,22 +14,20 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatTooltip } from '@angular/material/tooltip';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-datatable-single-row',
   templateUrl: './datatable-single-row.component.html',
   styleUrls: ['./datatable-single-row.component.scss'],
   imports: [
-    NgIf,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
     MatDivider,
-    NgFor,
     NgClass,
     NgSwitch,
     NgSwitchCase,
@@ -40,8 +38,7 @@ import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
     DateFormatPipe,
     DatetimeFormatPipe,
     FormatNumberPipe,
-    PrettyPrintPipe,
-    NgxTranslatePipe
+    PrettyPrintPipe
   ]
 })
 export class DatatableSingleRowComponent implements OnInit {

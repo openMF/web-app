@@ -9,11 +9,8 @@ import { UsersService } from '../users.service';
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { NgIf, NgFor } from '@angular/common';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View user component.
@@ -24,14 +21,8 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   styleUrls: ['./view-user.component.scss'],
   standalone: true,
   imports: [
-    MatButton,
-    RouterLink,
-    FaIconComponent,
-    MatCard,
-    MatCardContent,
-    NgIf,
-    NgFor,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
   ]
 })
 export class ViewUserComponent {

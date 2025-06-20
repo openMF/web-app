@@ -17,11 +17,9 @@ import {
 } from '@angular/material/table';
 
 import { ActivatedRoute } from '@angular/router';
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { YesnoPipe } from '../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Recurring Deposits Standing Instructions Tab
@@ -31,8 +29,7 @@ import { YesnoPipe } from '../../pipes/yesno.pipe';
   templateUrl: './list-transactions.component.html',
   styleUrls: ['./list-transactions.component.scss'],
   imports: [
-    MatCard,
-    MatCardContent,
+    ...STANDALONE_SHARED_IMPORTS,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,
@@ -44,10 +41,8 @@ import { YesnoPipe } from '../../pipes/yesno.pipe';
     MatRowDef,
     MatRow,
     MatPaginator,
-    TranslatePipe,
     DateFormatPipe,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class ListTransactionsComponent {

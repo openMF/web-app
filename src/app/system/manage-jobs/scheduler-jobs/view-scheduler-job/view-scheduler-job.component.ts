@@ -1,11 +1,9 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Scheduler Job component.
@@ -15,14 +13,9 @@ import { YesnoPipe } from '../../../../pipes/yesno.pipe';
   templateUrl: './view-scheduler-job.component.html',
   styleUrls: ['./view-scheduler-job.component.scss'],
   imports: [
-    MatButton,
-    RouterLink,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    MatCard,
-    MatCardContent,
-    MatCardActions,
-    YesnoPipe,
-    NgxTranslatePipe
+    YesnoPipe
   ]
 })
 export class ViewSchedulerJobComponent {

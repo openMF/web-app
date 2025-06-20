@@ -7,15 +7,8 @@ import { Dates } from 'app/core/utils/dates';
 /** Custom Services */
 import { RecurringDepositsService } from 'app/deposits/recurring-deposits/recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { NgIf } from '@angular/common';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { MatButton } from '@angular/material/button';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /**
  * Withdrawn by Client Recurring Deposits Account Component
  */
@@ -24,24 +17,8 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './withdraw-by-client-recurring-deposits-account.component.html',
   styleUrls: ['./withdraw-by-client-recurring-deposits-account.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    NgIf,
-    MatError,
-    CdkTextareaAutosize,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    TranslatePipe,
-    NgxTranslatePipe
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
   ]
 })
 export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit {

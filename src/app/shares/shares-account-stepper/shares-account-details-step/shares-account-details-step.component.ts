@@ -5,16 +5,9 @@ import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
-import { MatSelect } from '@angular/material/select';
-import { NgFor } from '@angular/common';
-import { MatOption } from '@angular/material/autocomplete';
-import { MatInput } from '@angular/material/input';
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
-import { MatButton } from '@angular/material/button';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Shares Account Details Step
@@ -24,23 +17,10 @@ import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
   templateUrl: './shares-account-details-step.component.html',
   styleUrls: ['./shares-account-details-step.component.scss'],
   imports: [
-    ReactiveFormsModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    NgFor,
-    MatOption,
-    MatError,
-    MatInput,
-    MatDatepickerInput,
-    MatDatepickerToggle,
-    MatSuffix,
-    MatDatepicker,
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     MatStepperPrevious,
     FaIconComponent,
-    MatStepperNext,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class SharesAccountDetailsStepComponent implements OnInit {

@@ -5,16 +5,9 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
-import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { NgIf } from '@angular/common';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatButton } from '@angular/material/button';
-import { HasPermissionDirective } from '../../../directives/has-permission/has-permission.directive';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Payment Type Component.
@@ -24,22 +17,9 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './create-payment-type.component.html',
   styleUrls: ['./create-payment-type.component.scss'],
   imports: [
-    MatCard,
-    ReactiveFormsModule,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    NgIf,
-    MatError,
+    ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize,
-    MatCheckbox,
-    MatCardActions,
-    MatButton,
-    RouterLink,
-    HasPermissionDirective,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatCheckbox
   ]
 })
 export class CreatePaymentTypeComponent implements OnInit {

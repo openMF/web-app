@@ -16,19 +16,16 @@ import { environment } from '../../environments/environment';
 import { SettingsService } from 'app/settings/settings.service';
 import { LanguageSelectorComponent } from '../shared/language-selector/language-selector.component';
 import { ThemeToggleComponent } from '../shared/theme-toggle/theme-toggle.component';
-import { NgIf } from '@angular/common';
 import { ServerSelectorComponent } from '../shared/server-selector/server-selector.component';
 import { TenantSelectorComponent } from '../shared/tenant-selector/tenant-selector.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TwoFactorAuthenticationComponent } from './two-factor-authentication/two-factor-authentication.component';
 import { MatList, MatListItem } from '@angular/material/list';
-import { MatButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Login component.
@@ -38,9 +35,9 @@ import { TranslatePipe } from '@pipes/translate.pipe';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   imports: [
+    ...STANDALONE_SHARED_IMPORTS,
     LanguageSelectorComponent,
     ThemeToggleComponent,
-    NgIf,
     ServerSelectorComponent,
     TenantSelectorComponent,
     LoginFormComponent,
@@ -48,14 +45,11 @@ import { TranslatePipe } from '@pipes/translate.pipe';
     TwoFactorAuthenticationComponent,
     MatList,
     MatListItem,
-    MatButton,
     MatMenuTrigger,
     FooterComponent,
     FaIconComponent,
     MatMenu,
-    MatMenuItem,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatMenuItem
   ]
 })
 export class LoginComponent implements OnInit, OnDestroy {

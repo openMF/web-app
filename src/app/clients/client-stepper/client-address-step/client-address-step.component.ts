@@ -9,13 +9,9 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 
 /** Custom Dialogs */
 import { TranslateService } from '@ngx-translate/core';
-import { TranslatePipe } from '@pipes/translate.pipe';
-import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { MatButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf, NgFor } from '@angular/common';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -26,6 +22,7 @@ import {
 import { MatDivider } from '@angular/material/divider';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Address Step Component
@@ -35,11 +32,9 @@ import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
   templateUrl: './client-address-step.component.html',
   styleUrls: ['./client-address-step.component.scss'],
   imports: [
-    MatButton,
+    ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    NgIf,
     MatAccordion,
-    NgFor,
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
@@ -47,9 +42,7 @@ import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
     MatDivider,
     MatSlideToggle,
     MatStepperPrevious,
-    MatStepperNext,
-    TranslatePipe,
-    NgxTranslatePipe
+    MatStepperNext
   ]
 })
 export class ClientAddressStepComponent {
