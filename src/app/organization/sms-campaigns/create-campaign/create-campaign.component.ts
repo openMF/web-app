@@ -10,6 +10,10 @@ import { CampaignMessageStepComponent } from '../sms-campaign-stepper/campaign-m
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { CampaignPreviewStepComponent } from '../sms-campaign-stepper/campaign-preview-step/campaign-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create SMS Campaign Component
@@ -17,7 +21,18 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-create-campaign',
   templateUrl: './create-campaign.component.html',
-  styleUrls: ['./create-campaign.component.scss']
+  styleUrls: ['./create-campaign.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    SmsCampaignStepComponent,
+    CampaignMessageStepComponent,
+    CampaignPreviewStepComponent
+  ]
 })
 export class CreateCampaignComponent {
   /** SMS Campaign Template */

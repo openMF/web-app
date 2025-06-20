@@ -12,6 +12,11 @@ import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans
 import { LoansAccountTermsStepComponent } from '../loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
 import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans-account-charges-step/loans-account-charges-step.component';
 import { LoansAccountDatatableStepComponent } from '../loans-account-stepper/loans-account-datatable-step/loans-account-datatable-step.component';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { LoansAccountScheduleStepComponent } from '../loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
+import { LoansAccountPreviewStepComponent } from '../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create loans account
@@ -19,7 +24,21 @@ import { LoansAccountDatatableStepComponent } from '../loans-account-stepper/loa
 @Component({
   selector: 'mifosx-create-loans-account',
   templateUrl: './create-loans-account.component.html',
-  styleUrls: ['./create-loans-account.component.scss']
+  styleUrls: ['./create-loans-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    LoansAccountDetailsStepComponent,
+    LoansAccountTermsStepComponent,
+    LoansAccountChargesStepComponent,
+    LoansAccountScheduleStepComponent,
+    LoansAccountDatatableStepComponent,
+    LoansAccountPreviewStepComponent
+  ]
 })
 export class CreateLoansAccountComponent {
   /** Imports all the step component */

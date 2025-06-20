@@ -1,12 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Withdrawn By Applicant Loan Form
@@ -14,7 +16,11 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-withdrawn-by-client',
   templateUrl: './withdrawn-by-client.component.html',
-  styleUrls: ['./withdrawn-by-client.component.scss']
+  styleUrls: ['./withdrawn-by-client.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class WithdrawnByClientComponent implements OnInit {
   @Input() dataObject: any;

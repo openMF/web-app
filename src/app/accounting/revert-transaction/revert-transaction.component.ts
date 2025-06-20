@@ -1,7 +1,16 @@
 /** Angular Imports */
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UntypedFormControl } from '@angular/forms';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Revert transaction dialog component.
@@ -9,7 +18,15 @@ import { UntypedFormControl } from '@angular/forms';
 @Component({
   selector: 'mifosx-revert-transaction',
   templateUrl: './revert-transaction.component.html',
-  styleUrls: ['./revert-transaction.component.scss']
+  styleUrls: ['./revert-transaction.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose
+  ]
 })
 export class RevertTransactionComponent {
   /** Comments input form control. */

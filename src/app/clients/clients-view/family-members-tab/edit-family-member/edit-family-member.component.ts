@@ -1,12 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Family Member Component
@@ -14,7 +16,11 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-edit-family-member',
   templateUrl: './edit-family-member.component.html',
-  styleUrls: ['./edit-family-member.component.scss']
+  styleUrls: ['./edit-family-member.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox
+  ]
 })
 export class EditFamilyMemberComponent implements OnInit {
   /** Maximum Due Date allowed. */

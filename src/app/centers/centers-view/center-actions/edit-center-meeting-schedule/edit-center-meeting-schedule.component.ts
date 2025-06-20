@@ -1,12 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Center Meetings Schedule Component
@@ -14,7 +16,11 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-edit-center-meeting-schedule',
   templateUrl: './edit-center-meeting-schedule.component.html',
-  styleUrls: ['./edit-center-meeting-schedule.component.scss']
+  styleUrls: ['./edit-center-meeting-schedule.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    DateFormatPipe
+  ]
 })
 export class EditCenterMeetingScheduleComponent implements OnInit {
   /** Minimum date allowed. */

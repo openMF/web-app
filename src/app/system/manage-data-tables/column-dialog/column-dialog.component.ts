@@ -1,10 +1,20 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Data Imports */
 import { columnTypeData } from '../column-type-data';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Column Dialog Component.
@@ -12,7 +22,16 @@ import { columnTypeData } from '../column-type-data';
 @Component({
   selector: 'mifosx-column-dialog',
   templateUrl: './column-dialog.component.html',
-  styleUrls: ['./column-dialog.component.scss']
+  styleUrls: ['./column-dialog.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    MatCheckbox,
+    MatDialogActions,
+    MatDialogClose
+  ]
 })
 export class ColumnDialogComponent implements OnInit {
   /** Column Form. */

@@ -1,15 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormArray,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
 
 /** Custom Components */
 import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dialog.component';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDivider } from '@angular/material/divider';
+import { MatTooltip } from '@angular/material/tooltip';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create survey component.
@@ -17,7 +29,17 @@ import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dial
 @Component({
   selector: 'mifosx-create-survey',
   templateUrl: './create-survey.component.html',
-  styleUrls: ['./create-survey.component.scss']
+  styleUrls: ['./create-survey.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize,
+    CdkDropList,
+    CdkDrag,
+    FaIconComponent,
+    MatDivider,
+    MatIconButton,
+    MatTooltip
+  ]
 })
 export class CreateSurveyComponent implements OnInit {
   /** Survey form. */

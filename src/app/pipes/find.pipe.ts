@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'find'
-})
+@Pipe({ name: 'find' })
 export class FindPipe implements PipeTransform {
   transform(value: any, options: any, key: string, property: string): any {
     let optionFound;

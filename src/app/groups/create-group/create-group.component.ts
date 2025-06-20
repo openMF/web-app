@@ -1,13 +1,26 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
 import { ClientsService } from '../../clients/clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatNavList, MatListSubheaderCssMatStyler } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Group component.
@@ -15,7 +28,18 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-create-group',
   templateUrl: './create-group.component.html',
-  styleUrls: ['./create-group.component.scss']
+  styleUrls: ['./create-group.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    MatIconButton,
+    FaIconComponent,
+    MatNavList,
+    MatListSubheaderCssMatStyler,
+    MatLine
+  ]
 })
 export class CreateGroupComponent implements OnInit, AfterViewInit {
   /** Minimum date allowed. */

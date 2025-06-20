@@ -1,14 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-asset-transfer-loan',
   templateUrl: './asset-transfer-loan.component.html',
-  styleUrls: ['./asset-transfer-loan.component.scss']
+  styleUrls: ['./asset-transfer-loan.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class AssetTransferLoanComponent implements OnInit {
   BUYBACK_COMMAND = 'buyback';

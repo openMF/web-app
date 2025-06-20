@@ -8,11 +8,38 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SystemService } from 'app/system/system.service';
+import { NgIf, NgFor, NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDivider } from '@angular/material/divider';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatTooltip } from '@angular/material/tooltip';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { PrettyPrintPipe } from '../../../../pipes/pretty-print.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-datatable-single-row',
   templateUrl: './datatable-single-row.component.html',
-  styleUrls: ['./datatable-single-row.component.scss']
+  styleUrls: ['./datatable-single-row.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatDivider,
+    NgClass,
+    NgSwitch,
+    NgSwitchCase,
+    CdkTextareaAutosize,
+    NgSwitchDefault,
+    MatIconButton,
+    MatTooltip,
+    DateFormatPipe,
+    DatetimeFormatPipe,
+    FormatNumberPipe,
+    PrettyPrintPipe
+  ]
 })
 export class DatatableSingleRowComponent implements OnInit {
   @Input() dataObject: any;

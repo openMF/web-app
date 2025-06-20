@@ -1,11 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Family Members Dialog
@@ -13,7 +21,14 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-client-family-member-dialog',
   templateUrl: './client-family-member-dialog.component.html',
-  styleUrls: ['./client-family-member-dialog.component.scss']
+  styleUrls: ['./client-family-member-dialog.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDialogTitle,
+    MatCheckbox,
+    MatDialogActions,
+    MatDialogClose
+  ]
 })
 export class ClientFamilyMemberDialogComponent implements OnInit {
   /** Maximum Due Date allowed. */

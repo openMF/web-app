@@ -1,6 +1,6 @@
 /** Angular Imports  */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
@@ -11,6 +11,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { DisableDialogComponent } from '../../../shared/disable-dialog/disable-dialog.component';
 import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dialog.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgIf, NgFor, NgClass } from '@angular/common';
+import { MatList, MatListItem } from '@angular/material/list';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Role and Permissions Component
@@ -18,7 +24,16 @@ import { EnableDialogComponent } from '../../../shared/enable-dialog/enable-dial
 @Component({
   selector: 'mifosx-view-role',
   templateUrl: './view-role.component.html',
-  styleUrls: ['./view-role.component.scss']
+  styleUrls: ['./view-role.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatList,
+    MatListItem,
+    NgClass,
+    MatDivider,
+    MatCheckbox
+  ]
 })
 export class ViewRoleComponent implements OnInit {
   /** Role Permissions Data */

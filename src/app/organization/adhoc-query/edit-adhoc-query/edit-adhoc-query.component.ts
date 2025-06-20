@@ -1,10 +1,18 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Adhoc Query component.
@@ -12,7 +20,11 @@ import { OrganizationService } from '../../organization.service';
 @Component({
   selector: 'mifosx-edit-adhoc-query',
   templateUrl: './edit-adhoc-query.component.html',
-  styleUrls: ['./edit-adhoc-query.component.scss']
+  styleUrls: ['./edit-adhoc-query.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox
+  ]
 })
 export class EditAdhocQueryComponent implements OnInit {
   /** Edit Adhoc Query form. */

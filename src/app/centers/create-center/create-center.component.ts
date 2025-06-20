@@ -1,13 +1,25 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { CentersService } from '../centers.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatNavList, MatListSubheaderCssMatStyler } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Center component.
@@ -15,7 +27,16 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-create-center',
   templateUrl: './create-center.component.html',
-  styleUrls: ['./create-center.component.scss']
+  styleUrls: ['./create-center.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox,
+    MatIconButton,
+    FaIconComponent,
+    MatNavList,
+    MatListSubheaderCssMatStyler,
+    MatLine
+  ]
 })
 export class CreateCenterComponent implements OnInit {
   /** Minimum date allowed. */

@@ -1,8 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { OptionData } from 'app/shared/models/option-data.model';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Fixed Deposits Account Settings Step
@@ -10,7 +21,15 @@ import { OptionData } from 'app/shared/models/option-data.model';
 @Component({
   selector: 'mifosx-fixed-deposit-account-settings-step',
   templateUrl: './fixed-deposit-account-settings-step.component.html',
-  styleUrls: ['./fixed-deposit-account-settings-step.component.scss']
+  styleUrls: ['./fixed-deposit-account-settings-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDivider,
+    MatCheckbox,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext
+  ]
 })
 export class FixedDepositAccountSettingsStepComponent implements OnInit, OnChanges {
   /** Fixed deposits account template */

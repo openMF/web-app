@@ -21,9 +21,7 @@ import { PentahoComponent } from './run-report/pentaho/pentaho.component';
 @NgModule({
   imports: [
     SharedModule,
-    ReportsRoutingModule
-  ],
-  declarations: [
+    ReportsRoutingModule,
     ReportsComponent,
     RunReportComponent,
     TableAndSmsComponent,

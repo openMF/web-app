@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientsService } from 'app/clients/clients.service';
 import { GroupsService } from 'app/groups/groups.service';
@@ -7,11 +7,24 @@ import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatList, MatListItem } from '@angular/material/list';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-entity-notes-tab',
   templateUrl: './entity-notes-tab.component.html',
-  styleUrls: ['./entity-notes-tab.component.scss']
+  styleUrls: ['./entity-notes-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize,
+    FaIconComponent,
+    MatList,
+    MatListItem,
+    DateFormatPipe
+  ]
 })
 export class EntityNotesTabComponent implements OnInit {
   @ViewChild('formRef', { static: true }) formRef: any;

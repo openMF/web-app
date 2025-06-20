@@ -2,6 +2,28 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { Accounting } from 'app/core/utils/accounting';
+import { MatDivider } from '@angular/material/divider';
+import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ViewSavingsAccountingDetailsComponent } from '../../../../shared/accounting/view-savings-accounting-details/view-savings-accounting-details.component';
+import { MatStepperPrevious } from '@angular/material/stepper';
+import { FindPipe } from '../../../../pipes/find.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-recurring-deposit-product-preview-step',
@@ -13,6 +35,29 @@ import { Accounting } from 'app/core/utils/accounting';
       state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))])
 
+  ],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDivider,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    FaIconComponent,
+    NgSwitch,
+    NgSwitchCase,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    ViewSavingsAccountingDetailsComponent,
+    MatStepperPrevious,
+    FindPipe,
+    DateFormatPipe,
+    FormatNumberPipe,
+    YesnoPipe
   ]
 })
 export class RecurringDepositProductPreviewStepComponent implements OnInit, OnChanges {

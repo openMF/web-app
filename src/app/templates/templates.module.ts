@@ -22,9 +22,7 @@ import { CreateEditComponent } from './create-edit-template/create-edit-template
     CKEditorModule,
     SharedModule,
     DirectivesModule,
-    TemplatesRoutingModule
-  ],
-  declarations: [
+    TemplatesRoutingModule,
     TemplatesComponent,
     ViewTemplateComponent,
     CreateEditComponent

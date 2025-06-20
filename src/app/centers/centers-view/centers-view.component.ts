@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
@@ -10,13 +10,58 @@ import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/conf
 import { CentersService } from '../centers.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import {
+  MatCard,
+  MatCardHeader,
+  MatCardTitleGroup,
+  MatCardMdImage,
+  MatCardTitle,
+  MatCardSubtitle,
+  MatCardContent
+} from '@angular/material/card';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgClass, NgIf, NgFor, LowerCasePipe } from '@angular/common';
+import { MatIconButton } from '@angular/material/button';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatIcon } from '@angular/material/icon';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
+import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
+import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /**
  * Create Center View
  */
 @Component({
   selector: 'mifosx-centers-view',
   templateUrl: './centers-view.component.html',
-  styleUrls: ['./centers-view.component.scss']
+  styleUrls: ['./centers-view.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCardHeader,
+    MatCardTitleGroup,
+    MatCardMdImage,
+    MatCardTitle,
+    MatTooltip,
+    NgClass,
+    MatIconButton,
+    MatMenuTrigger,
+    MatIcon,
+    FaIconComponent,
+    MatCardSubtitle,
+    ExternalIdentifierComponent,
+    MatMenu,
+    MatMenuItem,
+    MatTabNav,
+    MatTabLink,
+    RouterLinkActive,
+    MatTabNavPanel,
+    RouterOutlet,
+    LowerCasePipe,
+    StatusLookupPipe,
+    DateFormatPipe
+  ]
 })
 export class CentersViewComponent implements OnInit {
   /** Stores Center View Data */

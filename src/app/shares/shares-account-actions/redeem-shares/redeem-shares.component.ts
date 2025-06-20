@@ -1,12 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Redeem Shares Component
@@ -14,7 +15,10 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-redeem-shares',
   templateUrl: './redeem-shares.component.html',
-  styleUrls: ['./redeem-shares.component.scss']
+  styleUrls: ['./redeem-shares.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class RedeemSharesComponent implements OnInit {
   /** Shares account data. */

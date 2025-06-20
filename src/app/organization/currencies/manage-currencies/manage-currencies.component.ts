@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Dialogs */
@@ -28,6 +28,11 @@ import { ContinueSetupDialogComponent } from '../../../configuration-wizard/cont
 import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
 import { Currency } from 'app/shared/models/general.model';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Manage Currencies component.
@@ -35,7 +40,15 @@ import { Currency } from 'app/shared/models/general.model';
 @Component({
   selector: 'mifosx-manage-currencies',
   templateUrl: './manage-currencies.component.html',
-  styleUrls: ['./manage-currencies.component.scss']
+  styleUrls: ['./manage-currencies.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    NgxMatSelectSearchModule,
+    FaIconComponent,
+    MatGridList,
+    MatGridTile,
+    AsyncPipe
+  ]
 })
 export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   //** Defining PlaceHolders for the search bar */

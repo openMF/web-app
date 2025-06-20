@@ -1,12 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from '../../../loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Add Loan Charge component.
@@ -14,7 +21,10 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-add-loan-charge',
   templateUrl: './add-loan-charge.component.html',
-  styleUrls: ['./add-loan-charge.component.scss']
+  styleUrls: ['./add-loan-charge.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class AddLoanChargeComponent implements OnInit {
   /** Minimum Due Date allowed. */

@@ -1,11 +1,15 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Group Transfer Clients component.
@@ -13,7 +17,14 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-group-transfer-clients',
   templateUrl: './group-transfer-clients.component.html',
-  styleUrls: ['./group-transfer-clients.component.scss']
+  styleUrls: ['./group-transfer-clients.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    DateFormatPipe
+  ]
 })
 export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
   /** Transfer Clients form. */

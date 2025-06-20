@@ -1,12 +1,20 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Tax Component component.
@@ -14,7 +22,11 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-create-tax-component',
   templateUrl: './create-tax-component.component.html',
-  styleUrls: ['./create-tax-component.component.scss']
+  styleUrls: ['./create-tax-component.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    GlAccountSelectorComponent
+  ]
 })
 export class CreateTaxComponentComponent implements OnInit {
   /** Minimum start date allowed. */

@@ -1,10 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-entity-name',
   templateUrl: './entity-name.component.html',
-  styleUrls: ['./entity-name.component.scss']
+  styleUrls: ['./entity-name.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
+  ]
 })
 export class EntityNameComponent implements OnInit {
   @Input() entityName: string;

@@ -1,10 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Undo Approval Savings Account Component
@@ -12,7 +14,11 @@ import { SavingsService } from 'app/savings/savings.service';
 @Component({
   selector: 'mifosx-undo-approval-savings-account',
   templateUrl: './undo-approval-savings-account.component.html',
-  styleUrls: ['./undo-approval-savings-account.component.scss']
+  styleUrls: ['./undo-approval-savings-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class UndoApprovalSavingsAccountComponent implements OnInit {
   /** Undo Approval Savings Account form. */

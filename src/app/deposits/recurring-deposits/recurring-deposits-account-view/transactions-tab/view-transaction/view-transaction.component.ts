@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -11,7 +11,11 @@ import { SettingsService } from 'app/settings/settings.service';
 import { RecurringDepositConfirmationDialogComponent } from '../../custom-dialogs/recurring-deposit-confirmation-dialog/recurring-deposit-confirmation-dialog.component';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { Location } from '@angular/common';
+import { Location, NgIf, NgClass, CurrencyPipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TransactionPaymentDetailComponent } from '../../../../../shared/transaction-payment-detail/transaction-payment-detail.component';
+import { DateFormatPipe } from '../../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Transaction Component.
@@ -20,7 +24,15 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'mifosx-view-transaction',
   templateUrl: './view-transaction.component.html',
-  styleUrls: ['./view-transaction.component.scss']
+  styleUrls: ['./view-transaction.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    NgClass,
+    TransactionPaymentDetailComponent,
+    CurrencyPipe,
+    DateFormatPipe
+  ]
 })
 export class ViewTransactionComponent {
   /** Transaction data. */

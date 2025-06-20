@@ -1,6 +1,8 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FileUploadComponent } from '../../../../shared/file-upload/file-upload.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Upload signature dialog component.
@@ -8,7 +10,14 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'mifosx-upload-signature-dialog',
   templateUrl: './upload-signature-dialog.component.html',
-  styleUrls: ['./upload-signature-dialog.component.scss']
+  styleUrls: ['./upload-signature-dialog.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDialogTitle,
+    FileUploadComponent,
+    MatDialogActions,
+    MatDialogClose
+  ]
 })
 export class UploadSignatureDialogComponent {
   /** Client Signature */

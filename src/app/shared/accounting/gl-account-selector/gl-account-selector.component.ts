@@ -1,14 +1,22 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { GLAccount } from 'app/shared/models/general.model';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-gl-account-selector',
   templateUrl: './gl-account-selector.component.html',
-  styleUrls: ['./gl-account-selector.component.scss']
+  styleUrls: ['./gl-account-selector.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    NgxMatSelectSearchModule,
+    AsyncPipe
+  ]
 })
 export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy {
   @Input() inputFormControl: UntypedFormControl;

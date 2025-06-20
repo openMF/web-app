@@ -1,11 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
 import { SystemService } from '../../../system.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Configuration Component
@@ -13,7 +15,11 @@ import { SystemService } from '../../../system.service';
 @Component({
   selector: 'mifosx-edit-configuration',
   templateUrl: './edit-configuration.component.html',
-  styleUrls: ['./edit-configuration.component.scss']
+  styleUrls: ['./edit-configuration.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class EditConfigurationComponent implements OnInit {
   /** Minimum transaction date allowed. */

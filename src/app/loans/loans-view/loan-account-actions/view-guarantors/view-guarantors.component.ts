@@ -10,6 +10,23 @@ import { LoansService } from 'app/loans/loans.service';
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { LoansAccountViewGuarantorDetailsDialogComponent } from 'app/loans/custom-dialog/loans-account-view-guarantor-details-dialog/loans-account-view-guarantor-details-dialog.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ExternalIdentifierComponent } from '../../../../shared/external-identifier/external-identifier.component';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { AccountsFilterPipe } from '../../../../pipes/accounts-filter.pipe';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Guarantors Action
@@ -17,7 +34,24 @@ import { LoansAccountViewGuarantorDetailsDialogComponent } from 'app/loans/custo
 @Component({
   selector: 'mifosx-view-guarantors',
   templateUrl: './view-guarantors.component.html',
-  styleUrls: ['./view-guarantors.component.scss']
+  styleUrls: ['./view-guarantors.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    ExternalIdentifierComponent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    AccountsFilterPipe,
+    FormatNumberPipe
+  ]
 })
 export class ViewGuarantorsComponent implements OnInit {
   @Input() dataObject: any;

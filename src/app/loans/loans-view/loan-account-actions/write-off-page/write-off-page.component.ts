@@ -1,12 +1,14 @@
 /** Angular Imports. */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Write Off component.
@@ -14,7 +16,11 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-write-off-page',
   templateUrl: './write-off-page.component.html',
-  styleUrls: ['./write-off-page.component.scss']
+  styleUrls: ['./write-off-page.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class WriteOffPageComponent implements OnInit {
   @Input() dataObject: any;

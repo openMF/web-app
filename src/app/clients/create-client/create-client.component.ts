@@ -13,6 +13,10 @@ import { ClientDatatableStepComponent } from '../client-stepper/client-datatable
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ClientPreviewStepComponent } from '../client-stepper/client-preview-step/client-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Client Component.
@@ -20,7 +24,20 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-create-client',
   templateUrl: './create-client.component.html',
-  styleUrls: ['./create-client.component.scss']
+  styleUrls: ['./create-client.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    ClientGeneralStepComponent,
+    ClientFamilyMembersStepComponent,
+    ClientAddressStepComponent,
+    ClientDatatableStepComponent,
+    ClientPreviewStepComponent
+  ]
 })
 export class CreateClientComponent {
   /** Client General Step */

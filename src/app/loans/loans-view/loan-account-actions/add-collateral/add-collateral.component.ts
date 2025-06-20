@@ -1,10 +1,12 @@
 /** Angular Imports. */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Add Collateral component.
@@ -12,7 +14,11 @@ import { LoansService } from 'app/loans/loans.service';
 @Component({
   selector: 'mifosx-add-collateral',
   templateUrl: './add-collateral.component.html',
-  styleUrls: ['./add-collateral.component.scss']
+  styleUrls: ['./add-collateral.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class AddCollateralComponent implements OnInit {
   @Input() dataObject: any;

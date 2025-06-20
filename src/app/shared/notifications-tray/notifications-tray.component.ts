@@ -6,7 +6,14 @@ import { forkJoin } from 'rxjs';
 
 /** Custom Services */
 import { NotificationsService } from 'app/notifications/notifications.service';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
+import { MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
+import { MatBadge } from '@angular/material/badge';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatIcon } from '@angular/material/icon';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Notifications Tray Component
@@ -15,7 +22,18 @@ import { environment } from 'environments/environment';
   selector: 'mifosx-notifications-tray',
   templateUrl: './notifications-tray.component.html',
   styleUrls: ['./notifications-tray.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatIconButton,
+    MatTooltip,
+    MatMenuTrigger,
+    MatBadge,
+    FaIconComponent,
+    MatMenu,
+    MatIcon,
+    MatMenuItem
+  ]
 })
 export class NotificationsTrayComponent implements OnInit, OnDestroy {
   /** Wait time between API status calls 60 seg */

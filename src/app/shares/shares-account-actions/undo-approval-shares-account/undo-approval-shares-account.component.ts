@@ -1,9 +1,11 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SharesService } from 'app/shares/shares.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Undo Approval Shares Account Component
@@ -11,7 +13,11 @@ import { SharesService } from 'app/shares/shares.service';
 @Component({
   selector: 'mifosx-undo-approval-shares-account',
   templateUrl: './undo-approval-shares-account.component.html',
-  styleUrls: ['./undo-approval-shares-account.component.scss']
+  styleUrls: ['./undo-approval-shares-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FormsModule
+  ]
 })
 export class UndoApprovalSharesAccountComponent {
   /** Shares Account Id */

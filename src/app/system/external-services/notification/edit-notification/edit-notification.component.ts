@@ -1,10 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Notification Configuration Component.
@@ -12,7 +13,10 @@ import { SystemService } from 'app/system/system.service';
 @Component({
   selector: 'mifosx-edit-notification',
   templateUrl: './edit-notification.component.html',
-  styleUrls: ['./edit-notification.component.scss']
+  styleUrls: ['./edit-notification.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class EditNotificationComponent implements OnInit {
   /** Notification Configuration data */

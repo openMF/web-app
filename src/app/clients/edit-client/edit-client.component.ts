@@ -1,12 +1,22 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { ClientsService } from '../clients.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatDivider } from '@angular/material/divider';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Client Component
@@ -14,7 +24,13 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-edit-client',
   templateUrl: './edit-client.component.html',
-  styleUrls: ['./edit-client.component.scss']
+  styleUrls: ['./edit-client.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDivider,
+    CdkTextareaAutosize,
+    MatCheckbox
+  ]
 })
 export class EditClientComponent implements OnInit {
   /** Minimum date allowed. */

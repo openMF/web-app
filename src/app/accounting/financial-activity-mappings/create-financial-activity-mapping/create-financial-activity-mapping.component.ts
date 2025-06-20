@@ -1,11 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
 import { GLAccount } from 'app/shared/models/general.model';
+import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create financial activity mapping component.
@@ -13,7 +15,11 @@ import { GLAccount } from 'app/shared/models/general.model';
 @Component({
   selector: 'mifosx-create-financial-activity-mapping',
   templateUrl: './create-financial-activity-mapping.component.html',
-  styleUrls: ['./create-financial-activity-mapping.component.scss']
+  styleUrls: ['./create-financial-activity-mapping.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    GlAccountSelectorComponent
+  ]
 })
 export class CreateFinancialActivityMappingComponent implements OnInit {
   /** Financial activity mapping form. */

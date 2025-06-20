@@ -8,6 +8,14 @@ import { map } from 'rxjs/operators';
 
 /** Custom Services */
 import { ProgressBarService } from '../progress-bar/progress-bar.service';
+import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
+import { NgClass, NgIf, AsyncPipe } from '@angular/common';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { ContentComponent } from './content/content.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Shell component.
@@ -15,7 +23,20 @@ import { ProgressBarService } from '../progress-bar/progress-bar.service';
 @Component({
   selector: 'mifosx-shell',
   templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.scss']
+  styleUrls: ['./shell.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatSidenavContainer,
+    MatSidenav,
+    NgClass,
+    SidenavComponent,
+    MatSidenavContent,
+    ToolbarComponent,
+    BreadcrumbComponent,
+    ContentComponent,
+    FooterComponent,
+    AsyncPipe
+  ]
 })
 export class ShellComponent implements OnInit, OnDestroy {
   /** Subscription to breakpoint observer for handset. */

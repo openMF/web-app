@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Dialogs */
@@ -10,6 +10,13 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { GroupsService } from 'app/groups/groups.service';
 import { ClientsService } from 'app/clients/clients.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatListSubheaderCssMatStyler, MatNavList } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
+import { MatTooltip } from '@angular/material/tooltip';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Manage Group Members Component
@@ -17,7 +24,18 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'mifosx-manage-group-members',
   templateUrl: './manage-group-members.component.html',
-  styleUrls: ['./manage-group-members.component.scss']
+  styleUrls: ['./manage-group-members.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    MatIconButton,
+    FaIconComponent,
+    MatListSubheaderCssMatStyler,
+    MatNavList,
+    MatLine,
+    MatTooltip
+  ]
 })
 export class ManageGroupMembersComponent implements AfterViewInit {
   /** Group Data */

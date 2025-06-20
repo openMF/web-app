@@ -1,10 +1,11 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from 'app/settings/settings.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Language selector component.
@@ -15,7 +16,10 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-language-selector',
   templateUrl: './language-selector.component.html',
-  styleUrls: ['./language-selector.component.scss']
+  styleUrls: ['./language-selector.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class LanguageSelectorComponent {
   /** Language selector form control. */

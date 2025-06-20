@@ -1,12 +1,20 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Center Meetings Component
@@ -14,7 +22,11 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-attach-center-meeting',
   templateUrl: './attach-center-meeting.component.html',
-  styleUrls: ['./attach-center-meeting.component.scss']
+  styleUrls: ['./attach-center-meeting.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox
+  ]
 })
 export class AttachCenterMeetingComponent implements OnInit {
   /** Minimum date allowed. */

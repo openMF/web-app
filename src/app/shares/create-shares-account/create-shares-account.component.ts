@@ -11,6 +11,10 @@ import { SharesAccountChargesStepComponent } from '../shares-account-stepper/sha
 import { SharesService } from '../shares.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { SharesAccountPreviewStepComponent } from '../shares-account-stepper/shares-account-preview-step/shares-account-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Shares Account Component
@@ -18,7 +22,19 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-create-shares-account',
   templateUrl: './create-shares-account.component.html',
-  styleUrls: ['./create-shares-account.component.scss']
+  styleUrls: ['./create-shares-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    SharesAccountDetailsStepComponent,
+    SharesAccountTermsStepComponent,
+    SharesAccountChargesStepComponent,
+    SharesAccountPreviewStepComponent
+  ]
 })
 export class CreateSharesAccountComponent {
   /** Shares Account Template */

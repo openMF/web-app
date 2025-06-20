@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services. */
@@ -10,6 +10,9 @@ import { OrganizationService } from 'app/organization/organization.service';
 import { ConfirmationDialogComponent } from '../../../shared/confirmation-dialog/confirmation-dialog.component';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Holidays component.
@@ -17,7 +20,12 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'mifosx-view-holidays',
   templateUrl: './view-holidays.component.html',
-  styleUrls: ['./view-holidays.component.scss']
+  styleUrls: ['./view-holidays.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    DateFormatPipe
+  ]
 })
 export class ViewHolidaysComponent {
   /** Holiday data. */

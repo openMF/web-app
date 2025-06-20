@@ -1,10 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Email Configuration Component.
@@ -12,7 +16,13 @@ import { SystemService } from 'app/system/system.service';
 @Component({
   selector: 'mifosx-edit-email',
   templateUrl: './edit-email.component.html',
-  styleUrls: ['./edit-email.component.scss']
+  styleUrls: ['./edit-email.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatIconButton,
+    FaIconComponent,
+    MatCheckbox
+  ]
 })
 export class EditEmailComponent implements OnInit {
   /** Password input field type. */

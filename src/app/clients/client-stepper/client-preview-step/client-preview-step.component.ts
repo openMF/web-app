@@ -1,5 +1,20 @@
 /** Angular Imports */
 import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { MatDivider } from '@angular/material/divider';
+import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+  MatExpansionPanelDescription
+} from '@angular/material/expansion';
+import { MatStepperPrevious } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FindPipe } from '../../../pipes/find.pipe';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Preview Step Component
@@ -7,7 +22,22 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 @Component({
   selector: 'mifosx-client-preview-step',
   templateUrl: './client-preview-step.component.html',
-  styleUrls: ['./client-preview-step.component.scss']
+  styleUrls: ['./client-preview-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDivider,
+    ExternalIdentifierComponent,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription,
+    MatStepperPrevious,
+    FaIconComponent,
+    FindPipe,
+    DateFormatPipe,
+    YesnoPipe
+  ]
 })
 export class ClientPreviewStepComponent {
   /** Client Address field configuration */

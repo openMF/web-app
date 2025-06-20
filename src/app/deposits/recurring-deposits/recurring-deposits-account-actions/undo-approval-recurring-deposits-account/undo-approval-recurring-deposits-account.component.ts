@@ -1,10 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Undo Approval Recurring Deposits Account Component
@@ -12,7 +14,11 @@ import { RecurringDepositsService } from '../../recurring-deposits.service';
 @Component({
   selector: 'mifosx-undo-approval-recurring-deposits-account',
   templateUrl: './undo-approval-recurring-deposits-account.component.html',
-  styleUrls: ['./undo-approval-recurring-deposits-account.component.scss']
+  styleUrls: ['./undo-approval-recurring-deposits-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class UndoApprovalRecurringDepositsAccountComponent implements OnInit {
   /** Undo Approval Recurring Deposits Account form. */

@@ -7,9 +7,7 @@ import { AuthenticationService } from '../../core/authentication/authentication.
 /**
  * Has Permission Directive
  */
-@Directive({
-  selector: '[mifosxHasPermission]'
-})
+@Directive({ selector: '[mifosxHasPermission]', standalone: true })
 export class HasPermissionDirective {
   /** User Permissions */
   private userPermissions: any[];

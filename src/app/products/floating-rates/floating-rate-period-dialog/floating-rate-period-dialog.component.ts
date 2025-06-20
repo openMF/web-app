@@ -1,8 +1,18 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Floating Rate Period Dialog Component.
@@ -10,7 +20,16 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-floating-rate-period-dialog',
   templateUrl: './floating-rate-period-dialog.component.html',
-  styleUrls: ['./floating-rate-period-dialog.component.scss']
+  styleUrls: ['./floating-rate-period-dialog.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    MatCheckbox,
+    MatDialogActions,
+    MatDialogClose
+  ]
 })
 export class FloatingRatePeriodDialogComponent implements OnInit {
   /** Floating Rate Period Form. */

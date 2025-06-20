@@ -1,9 +1,30 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services. */
 import { ClientsService } from 'app/clients/clients.service';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { NgClass, NgIf } from '@angular/common';
+import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
+import { LongTextComponent } from '../../../shared/long-text/long-text.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
+import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * General Tab component.
@@ -11,7 +32,28 @@ import { ClientsService } from 'app/clients/clients.service';
 @Component({
   selector: 'mifosx-general-tab',
   templateUrl: './general-tab.component.html',
-  styleUrls: ['./general-tab.component.scss']
+  styleUrls: ['./general-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    NgClass,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    AccountNumberComponent,
+    LongTextComponent,
+    MatTooltip,
+    StatusLookupPipe,
+    AccountsFilterPipe,
+    DateFormatPipe,
+    FormatNumberPipe
+  ]
 })
 export class GeneralTabComponent {
   /** Open Loan Accounts Columns */

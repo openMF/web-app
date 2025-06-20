@@ -1,12 +1,18 @@
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import * as _ from 'lodash';
 
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 import { SystemService } from '../system.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatList, MatListItem } from '@angular/material/list';
+import { NgFor, NgClass, NgIf } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 interface Permission {
   code: string;
@@ -32,7 +38,16 @@ interface SubmitPermissionData {
 @Component({
   selector: 'mifosx-configure-maker-checker-tasks',
   templateUrl: './configure-maker-checker-tasks.component.html',
-  styleUrls: ['./configure-maker-checker-tasks.component.scss']
+  styleUrls: ['./configure-maker-checker-tasks.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatList,
+    MatListItem,
+    NgClass,
+    MatDivider,
+    MatCheckbox
+  ]
 })
 export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewInit {
   permissionsData: Permission[] = [];

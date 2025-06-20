@@ -1,10 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
+import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit gl account component.
@@ -12,7 +16,13 @@ import { AccountingService } from '../../accounting.service';
 @Component({
   selector: 'mifosx-edit-gl-account',
   templateUrl: './edit-gl-account.component.html',
-  styleUrls: ['./edit-gl-account.component.scss']
+  styleUrls: ['./edit-gl-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    GlAccountSelectorComponent,
+    MatCheckbox,
+    CdkTextareaAutosize
+  ]
 })
 export class EditGlAccountComponent implements OnInit {
   /** GL account form. */

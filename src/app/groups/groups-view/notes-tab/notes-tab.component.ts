@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 /** Custom Services */
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
 import { GroupsService } from '../../groups.service';
+import { EntityNotesTabComponent } from '../../../shared/tabs/entity-notes-tab/entity-notes-tab.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Dialogs */
 
@@ -14,7 +16,11 @@ import { GroupsService } from '../../groups.service';
 @Component({
   selector: 'mifosx-notes-tab',
   templateUrl: './notes-tab.component.html',
-  styleUrls: ['./notes-tab.component.scss']
+  styleUrls: ['./notes-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    EntityNotesTabComponent
+  ]
 })
 export class NotesTabComponent implements OnInit {
   /** Group ID */

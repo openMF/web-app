@@ -1,12 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Close Recurring Deposits Account Component
@@ -14,7 +16,11 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-close-recurring-deposits-account',
   templateUrl: './close-recurring-deposits-account.component.html',
-  styleUrls: ['./close-recurring-deposits-account.component.scss']
+  styleUrls: ['./close-recurring-deposits-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class CloseRecurringDepositsAccountComponent implements OnInit {
   /** Maturity Amount */

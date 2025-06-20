@@ -1,8 +1,13 @@
 /** Angular Imports */
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
+import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Shares Account Terms Step
@@ -10,7 +15,15 @@ import { Currency } from 'app/shared/models/general.model';
 @Component({
   selector: 'mifosx-shares-account-terms-step',
   templateUrl: './shares-account-terms-step.component.html',
-  styleUrls: ['./shares-account-terms-step.component.scss']
+  styleUrls: ['./shares-account-terms-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    CurrencyPipe
+  ]
 })
 export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   /** Shares Account and Product Template */

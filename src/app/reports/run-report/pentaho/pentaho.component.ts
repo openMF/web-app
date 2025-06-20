@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ReportsService } from '../../reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Pentaho Component
@@ -13,7 +14,10 @@ import { ProgressBarService } from 'app/core/progress-bar/progress-bar.service';
 @Component({
   selector: 'mifosx-pentaho',
   templateUrl: './pentaho.component.html',
-  styleUrls: ['./pentaho.component.scss']
+  styleUrls: ['./pentaho.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class PentahoComponent implements OnChanges {
   /** Run Report Data */

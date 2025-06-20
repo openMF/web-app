@@ -1,11 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
 import { FixedDepositsService } from '../../fixed-deposits.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Undo Approval Fixed Deposits Account Component
@@ -13,7 +15,11 @@ import { FixedDepositsService } from '../../fixed-deposits.service';
 @Component({
   selector: 'mifosx-undo-approval-fixed-deposits-account',
   templateUrl: './undo-approval-fixed-deposits-account.component.html',
-  styleUrls: ['./undo-approval-fixed-deposits-account.component.scss']
+  styleUrls: ['./undo-approval-fixed-deposits-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
   /** Undo Approval Fixed Deposits Account form. */

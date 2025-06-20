@@ -1,11 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { SystemService } from 'app/system/system.service';
+import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { InputAmountComponent } from '../../../shared/input-amount/input-amount.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 type TransactionCommandType = 'holdamount' | 'blockaccount' | 'blockdeposit' | 'blockwithdrawal';
 
@@ -19,7 +22,12 @@ interface TransactionType {
 @Component({
   selector: 'mifosx-manage-savings-account',
   templateUrl: './manage-savings-account.component.html',
-  styleUrls: ['./manage-savings-account.component.scss']
+  styleUrls: ['./manage-savings-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCardTitle,
+    InputAmountComponent
+  ]
 })
 export class ManageSavingsAccountComponent implements OnInit {
   @Input() currency: Currency;

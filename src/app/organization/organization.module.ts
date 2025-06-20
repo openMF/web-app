@@ -88,9 +88,7 @@ import { InvestorsComponent } from './investors/investors.component';
     SharedModule,
     PipesModule,
     DirectivesModule,
-    OrganizationRoutingModule
-  ],
-  declarations: [
+    OrganizationRoutingModule,
     OrganizationComponent,
     LoanProvisioningCriteriaComponent,
     OfficesComponent,

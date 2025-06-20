@@ -1,9 +1,16 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray, Validators, FormControl } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormArray,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
@@ -13,6 +20,12 @@ import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dial
 
 /** Survey Models */
 import { Survey, QuestionData, ResponseData } from './../survey.model';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatDivider } from '@angular/material/divider';
+import { MatTooltip } from '@angular/material/tooltip';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit survey component.
@@ -20,7 +33,17 @@ import { Survey, QuestionData, ResponseData } from './../survey.model';
 @Component({
   selector: 'mifosx-edit-survey',
   templateUrl: './edit-survey.component.html',
-  styleUrls: ['./edit-survey.component.scss']
+  styleUrls: ['./edit-survey.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize,
+    CdkDropList,
+    CdkDrag,
+    FaIconComponent,
+    MatDivider,
+    MatIconButton,
+    MatTooltip
+  ]
 })
 export class EditSurveyComponent {
   /** Survey form. */

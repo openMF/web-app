@@ -1,12 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Add Clients Charge component.
@@ -14,7 +21,10 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-add-client-charge',
   templateUrl: './add-client-charge.component.html',
-  styleUrls: ['./add-client-charge.component.scss']
+  styleUrls: ['./add-client-charge.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class AddClientChargeComponent implements OnInit {
   /** Minimum Due Date allowed. */

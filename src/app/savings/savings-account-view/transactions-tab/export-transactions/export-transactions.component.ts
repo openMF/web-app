@@ -1,13 +1,15 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Export Client Savings Transactions Component
@@ -15,7 +17,11 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-export-transactions',
   templateUrl: './export-transactions.component.html',
-  styleUrls: ['./export-transactions.component.scss']
+  styleUrls: ['./export-transactions.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
+  ]
 })
 export class ExportTransactionsComponent implements OnInit {
   /** Minimum date allowed. */

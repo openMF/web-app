@@ -11,11 +11,58 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 import { jsPDF, jsPDFOptions } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { NgIf, NgClass, CurrencyPipe } from '@angular/common';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatFooterCellDef,
+  MatFooterCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow,
+  MatFooterRowDef,
+  MatFooterRow
+} from '@angular/material/table';
+import { MatTooltip } from '@angular/material/tooltip';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-repayment-schedule-tab',
   templateUrl: './repayment-schedule-tab.component.html',
-  styleUrls: ['./repayment-schedule-tab.component.scss']
+  styleUrls: ['./repayment-schedule-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatFooterCellDef,
+    MatFooterCell,
+    NgClass,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatFooterRowDef,
+    MatFooterRow,
+    MatIconButton,
+    MatTooltip,
+    CurrencyPipe,
+    DateFormatPipe,
+    FormatNumberPipe
+  ]
 })
 export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   /** Currency Code */

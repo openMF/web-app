@@ -65,10 +65,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
-    WebAppComponent,
-    NotFoundComponent
-  ],
+  declarations: [WebAppComponent],
   bootstrap: [WebAppComponent],
   imports: [
     TranslateModule.forRoot({
@@ -109,7 +106,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CollectionsModule,
     TasksModule,
     ConfigurationWizardModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NotFoundComponent
 
   ],
   providers: [

@@ -2,8 +2,24 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { StatusLookupPipe } from '../../../../pipes/status-lookup.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Charge Overview component.
@@ -11,7 +27,24 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'mifosx-charges-overview',
   templateUrl: './charges-overview.component.html',
-  styleUrls: ['./charges-overview.component.scss']
+  styleUrls: ['./charges-overview.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    NgClass,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    StatusLookupPipe,
+    DateFormatPipe
+  ]
 })
 export class ChargesOverviewComponent implements OnInit {
   /** Columns to be displayed in charge overview table. */

@@ -12,6 +12,11 @@ import { FixedDepositAccountTermsStepComponent } from '../fixed-deposit-account-
 import { FixedDepositAccountSettingsStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-settings-step/fixed-deposit-account-settings-step.component';
 import { FixedDepositAccountChargesStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-charges-step/fixed-deposit-account-charges-step.component';
 import { Dates } from 'app/core/utils/dates';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FixedDepositAccountInterestRateChartStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-interest-rate-chart-step/fixed-deposit-account-interest-rate-chart-step.component';
+import { FixedDepositAccountPreviewStepComponent } from '../fixed-deposit-account-stepper/fixed-deposit-account-preview-step/fixed-deposit-account-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Fixed Deposit Account Component
@@ -19,7 +24,21 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-create-fixed-deposit-account',
   templateUrl: './create-fixed-deposit-account.component.html',
-  styleUrls: ['./create-fixed-deposit-account.component.scss']
+  styleUrls: ['./create-fixed-deposit-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    FixedDepositAccountDetailsStepComponent,
+    FixedDepositAccountTermsStepComponent,
+    FixedDepositAccountSettingsStepComponent,
+    FixedDepositAccountInterestRateChartStepComponent,
+    FixedDepositAccountChargesStepComponent,
+    FixedDepositAccountPreviewStepComponent
+  ]
 })
 export class CreateFixedDepositAccountComponent {
   /** Fixed Deposits Account Details Step */

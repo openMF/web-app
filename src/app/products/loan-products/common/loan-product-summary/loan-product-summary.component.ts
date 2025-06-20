@@ -19,11 +19,57 @@ import {
 import { LoanProducts } from '../../loan-products';
 import { CodeName, OptionData, StringEnumOptionData } from '../../../../shared/models/option-data.model';
 import { Accounting } from 'app/core/utils/accounting';
+import { NgIf, NgFor, DecimalPipe } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { LongTextComponent } from '../../../../shared/long-text/long-text.component';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatAccordion } from '@angular/material/expansion';
+import { ViewAdvancePaymenyAllocationComponent } from '../../view-loan-product/shared/view-advance-paymeny-allocation/view-advance-paymeny-allocation.component';
+import { GlAccountDisplayComponent } from '../../../../shared/accounting/gl-account-display/gl-account-display.component';
+import { ChargesPenaltyFilterPipe } from '../../../../pipes/charges-penalty-filter.pipe';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
+import { YesnoPipe } from '../../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-product-summary',
   templateUrl: './loan-product-summary.component.html',
-  styleUrls: ['./loan-product-summary.component.scss']
+  styleUrls: ['./loan-product-summary.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDivider,
+    LongTextComponent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatAccordion,
+    ViewAdvancePaymenyAllocationComponent,
+    GlAccountDisplayComponent,
+    DecimalPipe,
+    ChargesPenaltyFilterPipe,
+    DateFormatPipe,
+    FormatNumberPipe,
+    YesnoPipe
+  ]
 })
 export class LoanProductSummaryComponent implements OnInit, OnChanges {
   @Input() action: string;

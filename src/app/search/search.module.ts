@@ -13,11 +13,11 @@ import { PipesModule } from 'app/pipes/pipes.module';
  * Search Module
  */
 @NgModule({
-  declarations: [SearchPageComponent],
   imports: [
     SharedModule,
     PipesModule,
-    SearchRoutingModule
+    SearchRoutingModule,
+    SearchPageComponent
   ]
 })
 export class SearchModule {}

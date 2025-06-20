@@ -1,12 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Reject Savings Account Component
@@ -14,7 +16,11 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-reject-savings-account',
   templateUrl: './reject-savings-account.component.html',
-  styleUrls: ['./reject-savings-account.component.scss']
+  styleUrls: ['./reject-savings-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class RejectSavingsAccountComponent implements OnInit {
   /** Minimum date allowed. */

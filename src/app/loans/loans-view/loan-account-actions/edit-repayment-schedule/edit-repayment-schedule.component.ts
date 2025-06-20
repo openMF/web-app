@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
@@ -10,11 +10,17 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
+import { RepaymentScheduleTabComponent } from '../../repayment-schedule-tab/repayment-schedule-tab.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-edit-repayment-schedule',
   templateUrl: './edit-repayment-schedule.component.html',
-  styleUrls: ['./edit-repayment-schedule.component.scss']
+  styleUrls: ['./edit-repayment-schedule.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    RepaymentScheduleTabComponent
+  ]
 })
 export class EditRepaymentScheduleComponent implements OnInit {
   /** Loan ID. */

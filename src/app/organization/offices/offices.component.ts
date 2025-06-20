@@ -1,9 +1,21 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
 import { of } from 'rxjs';
@@ -11,12 +23,29 @@ import { of } from 'rxjs';
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { OfficeNode } from './office-node.model';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
+import {
+  MatTreeNestedDataSource,
+  MatTree,
+  MatTreeNodeDef,
+  MatTreeNode,
+  MatTreeNodeToggle,
+  MatNestedTreeNode,
+  MatTreeNodeOutlet
+} from '@angular/material/tree';
 import { OfficeTreeService } from './office-tree-service.service';
 import { TreeControlService } from 'app/shared/common-logic/tree-control.service';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
+import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Offices component.
@@ -24,7 +53,39 @@ import { TreeControlService } from 'app/shared/common-logic/tree-control.service
 @Component({
   selector: 'mifosx-offices',
   templateUrl: './offices.component.html',
-  styleUrls: ['./offices.component.scss']
+  styleUrls: ['./offices.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+    FaIconComponent,
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    MatTree,
+    MatTreeNodeDef,
+    MatTreeNode,
+    MatTreeNodeToggle,
+    MatIconButton,
+    MatNestedTreeNode,
+    MatTreeNodeOutlet,
+    MatCardTitle,
+    MatTabGroup,
+    MatTab,
+    ExternalIdentifierComponent,
+    DatePipe,
+    DateFormatPipe
+  ]
 })
 export class OfficesComponent implements OnInit, AfterViewInit {
   /** Button toggle group form control for type of view. (list/tree) */

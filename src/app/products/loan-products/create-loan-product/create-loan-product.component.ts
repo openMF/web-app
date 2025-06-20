@@ -24,11 +24,36 @@ import { Accounting } from 'app/core/utils/accounting';
 import { StringEnumOptionData } from '../../../shared/models/option-data.model';
 import { LoanProductCapitalizedIncomeStepComponent } from '../loan-product-stepper/loan-product-capitalized-income-step/loan-product-capitalized-income-step.component';
 import { UntypedFormGroup } from '@angular/forms';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { LoanProductPaymentStrategyStepComponent } from '../loan-product-stepper/loan-product-payment-strategy-step/loan-product-payment-strategy-step.component';
+import { StepperButtonsComponent } from '../../../shared/steppers/stepper-buttons/stepper-buttons.component';
+import { LoanProductPreviewStepComponent } from '../loan-product-stepper/loan-product-preview-step/loan-product-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-create-loan-product',
   templateUrl: './create-loan-product.component.html',
-  styleUrls: ['./create-loan-product.component.scss']
+  styleUrls: ['./create-loan-product.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    LoanProductDetailsStepComponent,
+    LoanProductCurrencyStepComponent,
+    LoanProductSettingsStepComponent,
+    LoanProductInterestRefundStepComponent,
+    LoanProductPaymentStrategyStepComponent,
+    StepperButtonsComponent,
+    LoanProductTermsStepComponent,
+    LoanProductChargesStepComponent,
+    LoanProductCapitalizedIncomeStepComponent,
+    LoanProductAccountingStepComponent,
+    LoanProductPreviewStepComponent
+  ]
 })
 export class CreateLoanProductComponent implements OnInit {
   @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;

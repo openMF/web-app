@@ -1,12 +1,19 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SavingsService } from '../../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Add Savings Charge component.
@@ -14,7 +21,10 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-add-charge-savings-account',
   templateUrl: './add-charge-savings-account.component.html',
-  styleUrls: ['./add-charge-savings-account.component.scss']
+  styleUrls: ['./add-charge-savings-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class AddChargeSavingsAccountComponent implements OnInit {
   /** Minimum Due Date allowed. */

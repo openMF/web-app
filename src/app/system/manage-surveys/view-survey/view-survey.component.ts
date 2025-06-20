@@ -5,6 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { MatDivider } from '@angular/material/divider';
+import { NgFor, TitleCasePipe } from '@angular/common';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Survey Component.
@@ -12,7 +17,15 @@ import { SystemService } from 'app/system/system.service';
 @Component({
   selector: 'mifosx-view-survey',
   templateUrl: './view-survey.component.html',
-  styleUrls: ['./view-survey.component.scss']
+  styleUrls: ['./view-survey.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatCardHeader,
+    MatCardTitle,
+    MatDivider,
+    TitleCasePipe
+  ]
 })
 export class ViewSurveyComponent {
   /** Survey Data */

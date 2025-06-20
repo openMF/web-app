@@ -1,16 +1,28 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LoansService } from 'app/loans/loans.service';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-reschedule',
   templateUrl: './loan-reschedule.component.html',
-  styleUrls: ['./loan-reschedule.component.scss']
+  styleUrls: ['./loan-reschedule.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox
+  ]
 })
 export class LoanRescheduleComponent implements OnInit {
   @Input() dataObject: any;

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,6 +13,11 @@ import { HomeService } from '../../home.service';
 /** Charting Imports */
 import { Dates } from 'app/core/utils/dates';
 import Chart from 'chart.js';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgFor, NgStyle } from '@angular/common';
+import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Trends Bar Chart Component.
@@ -20,7 +25,15 @@ import Chart from 'chart.js';
 @Component({
   selector: 'mifosx-client-trends-bar',
   templateUrl: './client-trends-bar.component.html',
-  styleUrls: ['./client-trends-bar.component.scss']
+  styleUrls: ['./client-trends-bar.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCardHeader,
+    FaIconComponent,
+    NgStyle,
+    MatButtonToggleGroup,
+    MatButtonToggle
+  ]
 })
 export class ClientTrendsBarComponent implements OnInit {
   /** Static Form control for office Id */

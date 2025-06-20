@@ -1,10 +1,13 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ClientsService } from '../../../clients.service';
 import { AuthenticationService } from '../../../../core/authentication/authentication.service';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Take Survey Component
@@ -12,7 +15,13 @@ import { AuthenticationService } from '../../../../core/authentication/authentic
 @Component({
   selector: 'mifosx-take-survey',
   templateUrl: './take-survey.component.html',
-  styleUrls: ['./take-survey.component.scss']
+  styleUrls: ['./take-survey.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatRadioGroup,
+    FormsModule,
+    MatRadioButton
+  ]
 })
 export class TakeSurveyComponent {
   /** List of all Survey Data */

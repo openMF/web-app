@@ -1,12 +1,21 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatFormField, MatLabel, MatError, MatSuffix, MatHint } from '@angular/material/form-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Group Meetings Component
@@ -14,7 +23,12 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-edit-group-meeting',
   templateUrl: './edit-group-meeting.component.html',
-  styleUrls: ['./edit-group-meeting.component.scss']
+  styleUrls: ['./edit-group-meeting.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatHint
+  ]
 })
 export class EditGroupMeetingComponent implements OnInit {
   /** Minimum date allowed. */

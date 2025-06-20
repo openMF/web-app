@@ -133,9 +133,7 @@ import { LoanProductCapitalizedIncomeStepComponent } from './loan-products/loan-
     SharedModule,
     ProductsRoutingModule,
     PipesModule,
-    DirectivesModule
-  ],
-  declarations: [
+    DirectivesModule,
     ProductsComponent,
     LoanProductsComponent,
     LoanProductDetailsStepComponent,

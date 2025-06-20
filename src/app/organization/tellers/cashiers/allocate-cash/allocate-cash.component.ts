@@ -1,12 +1,13 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Allocate Cash component.
@@ -14,7 +15,10 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-allocate-cash',
   templateUrl: './allocate-cash.component.html',
-  styleUrls: ['./allocate-cash.component.scss']
+  styleUrls: ['./allocate-cash.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class AllocateCashComponent implements OnInit {
   /** Minimum Date allowed. */

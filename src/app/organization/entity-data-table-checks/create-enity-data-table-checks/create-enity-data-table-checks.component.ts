@@ -1,10 +1,17 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
 import { OrganizationService } from 'app/organization/organization.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Entity Data Table Checks component.
@@ -12,7 +19,10 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Component({
   selector: 'mifosx-create-enity-data-table-checks',
   templateUrl: './create-enity-data-table-checks.component.html',
-  styleUrls: ['./create-enity-data-table-checks.component.scss']
+  styleUrls: ['./create-enity-data-table-checks.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class CreateEnityDataTableChecksComponent implements OnInit {
   /** Create Entity Datatable Checks form. */

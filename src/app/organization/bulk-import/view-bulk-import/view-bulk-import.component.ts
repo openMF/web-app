@@ -2,13 +2,31 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import {
+  MatTableDataSource,
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Imports */
 import { OrganizationService } from '../../organization.service';
 import { BulkImports } from './bulk-imports';
+import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FileUploadComponent } from '../../../shared/file-upload/file-upload.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Bulk Imports Component
@@ -16,7 +34,28 @@ import { BulkImports } from './bulk-imports';
 @Component({
   selector: 'mifosx-view-bulk-import',
   templateUrl: './view-bulk-import.component.html',
-  styleUrls: ['./view-bulk-import.component.scss']
+  styleUrls: ['./view-bulk-import.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FileUploadComponent,
+    MatHint,
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    MatIconButton,
+    FaIconComponent,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    DateFormatPipe
+  ]
 })
 export class ViewBulkImportComponent implements OnInit {
   /** offices Data */

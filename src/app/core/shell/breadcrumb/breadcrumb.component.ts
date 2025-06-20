@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd, Data } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, Data, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
 import { filter } from 'rxjs/operators';
@@ -12,6 +12,7 @@ import { Breadcrumb } from './breadcrumb.model';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 import { TranslateService } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Route data property to generate breadcrumb using a static string.
@@ -48,7 +49,10 @@ const routeAddBreadcrumbLink = 'addBreadcrumbLink';
 @Component({
   selector: 'mifosx-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.scss']
+  styleUrls: ['./breadcrumb.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class BreadcrumbComponent implements AfterViewInit {
   /** Array of breadcrumbs. */

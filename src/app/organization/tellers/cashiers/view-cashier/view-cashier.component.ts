@@ -1,6 +1,6 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -8,6 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View Cashier component.
@@ -15,7 +18,12 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Component({
   selector: 'mifosx-view-cashier',
   templateUrl: './view-cashier.component.html',
-  styleUrls: ['./view-cashier.component.scss']
+  styleUrls: ['./view-cashier.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    DateFormatPipe
+  ]
 })
 export class ViewCashierComponent {
   /** Cashier data. */

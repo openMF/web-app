@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
@@ -15,6 +15,13 @@ import { GlobalConfiguration } from 'app/system/configurations/global-configurat
 
 import * as ExcelJS from 'exceljs';
 import { AlertService } from 'app/core/alert/alert.service';
+import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { TableAndSmsComponent } from './table-and-sms/table-and-sms.component';
+import { ChartComponent } from './chart/chart.component';
+import { PentahoComponent } from './pentaho/pentaho.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Run report component.
@@ -22,7 +29,17 @@ import { AlertService } from 'app/core/alert/alert.service';
 @Component({
   selector: 'mifosx-run-report',
   templateUrl: './run-report.component.html',
-  styleUrls: ['./run-report.component.scss']
+  styleUrls: ['./run-report.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    NgSwitch,
+    NgSwitchCase,
+    MatCheckbox,
+    FaIconComponent,
+    TableAndSmsComponent,
+    ChartComponent,
+    PentahoComponent
+  ]
 })
 export class RunReportComponent implements OnInit {
   /** Minimum date allowed. */

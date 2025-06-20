@@ -1,7 +1,18 @@
 /** Angular Imports */
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTable } from '@angular/material/table';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Models */
@@ -17,6 +28,9 @@ import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
 import { ClientsService } from '../../clients.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgStyle, NgFor } from '@angular/common';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Identities Tab Component
@@ -24,7 +38,22 @@ import { ClientsService } from '../../clients.service';
 @Component({
   selector: 'mifosx-identities-tab',
   templateUrl: './identities-tab.component.html',
-  styleUrls: ['./identities-tab.component.scss']
+  styleUrls: ['./identities-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatTable,
+    NgStyle,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow
+  ]
 })
 export class IdentitiesTabComponent {
   /** Client Identities */

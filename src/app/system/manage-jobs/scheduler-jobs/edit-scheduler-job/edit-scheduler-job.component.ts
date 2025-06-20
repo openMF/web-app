@@ -1,10 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit scheduler job component.
@@ -12,7 +14,11 @@ import { SystemService } from 'app/system/system.service';
 @Component({
   selector: 'mifosx-edit-scheduler-job',
   templateUrl: './edit-scheduler-job.component.html',
-  styleUrls: ['./edit-scheduler-job.component.scss']
+  styleUrls: ['./edit-scheduler-job.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox
+  ]
 })
 export class EditSchedulerJobComponent implements OnInit {
   /** Job Data. */

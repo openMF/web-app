@@ -1,10 +1,16 @@
 import { Component, Input } from '@angular/core';
 import { GLAccount } from 'app/shared/models/general.model';
+import { NgIf, NgClass } from '@angular/common';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-gl-account-display',
   templateUrl: './gl-account-display.component.html',
-  styleUrls: ['./gl-account-display.component.scss']
+  styleUrls: ['./gl-account-display.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    NgClass
+  ]
 })
 export class GlAccountDisplayComponent {
   @Input() glAccount: GLAccount | null = null;

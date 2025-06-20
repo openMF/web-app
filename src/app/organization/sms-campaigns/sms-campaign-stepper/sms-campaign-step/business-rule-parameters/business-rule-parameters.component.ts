@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -10,6 +10,10 @@ import { SettingsService } from 'app/settings/settings.service';
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
 import { SelectOption } from 'app/reports/common-models/select-option.model';
 import { Dates } from 'app/core/utils/dates';
+import { MatDivider } from '@angular/material/divider';
+import { NgFor, NgSwitch, NgIf, NgSwitchCase } from '@angular/common';
+import { MatStepperNext } from '@angular/material/stepper';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Business Rule Parameters Component.
@@ -17,7 +21,14 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-business-rule-parameters',
   templateUrl: './business-rule-parameters.component.html',
-  styleUrls: ['./business-rule-parameters.component.scss']
+  styleUrls: ['./business-rule-parameters.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDivider,
+    NgSwitch,
+    NgSwitchCase,
+    MatStepperNext
+  ]
 })
 export class BusinessRuleParametersComponent implements OnInit, OnChanges {
   /** Run Report Parameters Data */

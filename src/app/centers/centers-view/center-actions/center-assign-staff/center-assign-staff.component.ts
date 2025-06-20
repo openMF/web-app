@@ -1,10 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Centers Assign Staff Component
@@ -12,7 +13,10 @@ import { CentersService } from 'app/centers/centers.service';
 @Component({
   selector: 'mifosx-center-assign-staff',
   templateUrl: './center-assign-staff.component.html',
-  styleUrls: ['./center-assign-staff.component.scss']
+  styleUrls: ['./center-assign-staff.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class CenterAssignStaffComponent implements OnInit {
   /** Center Assign Staff form. */

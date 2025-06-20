@@ -1,10 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Product mix component.
@@ -12,7 +13,10 @@ import { ProductsService } from '../../products.service';
 @Component({
   selector: 'mifosx-edit-product-mix',
   templateUrl: './edit-product-mix.component.html',
-  styleUrls: ['./edit-product-mix.component.scss']
+  styleUrls: ['./edit-product-mix.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class EditProductMixComponent implements OnInit {
   /** Product mix form. */

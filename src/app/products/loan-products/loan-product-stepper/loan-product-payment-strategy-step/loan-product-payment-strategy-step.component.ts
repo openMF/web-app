@@ -13,13 +13,29 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
-import { MatTabGroup } from '@angular/material/tabs';
+import { MatTabGroup, MatTab, MatTabLabel, MatTabContent } from '@angular/material/tabs';
 import { TranslateService } from '@ngx-translate/core';
+import { AdvancePaymentAllocationTabComponent } from './advance-payment-allocation-tab/advance-payment-allocation-tab.component';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-product-payment-strategy-step',
   templateUrl: './loan-product-payment-strategy-step.component.html',
-  styleUrls: ['./loan-product-payment-strategy-step.component.scss']
+  styleUrls: ['./loan-product-payment-strategy-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatTabGroup,
+    MatTab,
+    MatTabLabel,
+    AdvancePaymentAllocationTabComponent,
+    MatIconButton,
+    MatIcon,
+    FaIconComponent,
+    MatTabContent
+  ]
 })
 export class LoanProductPaymentStrategyStepComponent implements OnInit {
   @Input() advancedPaymentAllocations: AdvancedPaymentAllocation[] = [];

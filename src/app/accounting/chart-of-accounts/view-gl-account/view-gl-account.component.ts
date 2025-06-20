@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -8,7 +8,11 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
+import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View gl account component.
@@ -16,7 +20,13 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'mifosx-view-gl-account',
   templateUrl: './view-gl-account.component.html',
-  styleUrls: ['./view-gl-account.component.scss']
+  styleUrls: ['./view-gl-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    GlAccountDisplayComponent,
+    YesnoPipe
+  ]
 })
 export class ViewGlAccountComponent {
   /** GL Account. */

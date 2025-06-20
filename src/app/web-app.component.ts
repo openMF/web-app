@@ -13,7 +13,7 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Environment Configuration */
-import { environment } from 'environments/environment';
+import { environment } from '../environments/environment';
 
 /** Custom Services */
 import { Logger } from './core/logger/logger.service';
@@ -48,6 +48,7 @@ import localeLV from '@angular/common/locales/lv';
 import localeNE from '@angular/common/locales/ne';
 import localePT from '@angular/common/locales/pt';
 import localeSW from '@angular/common/locales/sw';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 registerLocaleData(localeCS);
 registerLocaleData(localeEN);
 registerLocaleData(localeES);
@@ -79,7 +80,10 @@ registerLocaleData(localeSW);
 
     ])
 
-  ]
+  ],
+
+  // eslint-disable-next-line @angular-eslint/prefer-standalone
+  standalone: false
 })
 export class WebAppComponent implements OnInit {
   buttonConfig: KeyboardShortcutsConfiguration;

@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -9,6 +9,8 @@ import { UsersService } from '../users.service';
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog/change-password-dialog.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View user component.
@@ -16,7 +18,12 @@ import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog
 @Component({
   selector: 'mifosx-view-user',
   templateUrl: './view-user.component.html',
-  styleUrls: ['./view-user.component.scss']
+  styleUrls: ['./view-user.component.scss'],
+  standalone: true,
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
+  ]
 })
 export class ViewUserComponent {
   /** User Data. */

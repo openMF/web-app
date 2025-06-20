@@ -1,7 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** CKEditor5 Imports */
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -11,6 +17,15 @@ import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } 
 
 /** Custom Services */
 import { TemplatesService } from '../templates.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from '@angular/material/expansion';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Template Component.
@@ -18,7 +33,16 @@ import { TemplatesService } from '../templates.service';
 @Component({
   selector: 'mifosx-create-edit-template',
   templateUrl: './create-edit-template.component.html',
-  styleUrls: ['./create-edit-template.component.scss']
+  styleUrls: ['./create-edit-template.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    CKEditorModule,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle
+  ]
 })
 export class CreateEditComponent implements OnInit {
   /** CKEditor5 */

@@ -1,7 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
@@ -9,6 +15,11 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { minNumberValueValidator } from 'app/shared/validators/min-number-value.validator';
 import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.validator';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { ValidateOnFocusDirective } from '../../../directives/validate-on-focus.directive';
+import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create charge component.
@@ -16,7 +27,14 @@ import { maxNumberValueValidator } from 'app/shared/validators/max-number-value.
 @Component({
   selector: 'mifosx-create-charge',
   templateUrl: './create-charge.component.html',
-  styleUrls: ['./create-charge.component.scss']
+  styleUrls: ['./create-charge.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDivider,
+    MatCheckbox,
+    ValidateOnFocusDirective,
+    GlAccountSelectorComponent
+  ]
 })
 export class CreateChargeComponent implements OnInit {
   /** Charge form. */

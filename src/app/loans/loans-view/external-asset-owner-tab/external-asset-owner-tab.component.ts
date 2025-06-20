@@ -1,14 +1,53 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ExternalAssetOwner } from 'app/loans/services/external-asset-owner';
 import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-owner.service';
 import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.component';
+import { NgIf, NgClass, DecimalPipe } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { MatTooltip } from '@angular/material/tooltip';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-external-asset-owner-tab',
   templateUrl: './external-asset-owner-tab.component.html',
-  styleUrls: ['./external-asset-owner-tab.component.scss']
+  styleUrls: ['./external-asset-owner-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    NgClass,
+    FaIconComponent,
+    ExternalIdentifierComponent,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatCellDef,
+    MatCell,
+    MatTooltip,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    DecimalPipe,
+    DateFormatPipe,
+    FormatNumberPipe
+  ]
 })
 export class ExternalAssetOwnerTabComponent implements OnInit {
   defaultDate = '9999-12-31';

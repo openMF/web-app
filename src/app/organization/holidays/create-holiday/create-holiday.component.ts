@@ -1,10 +1,24 @@
 /** Angular Imports. */
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import {
+  MatTreeFlatDataSource,
+  MatTreeFlattener,
+  MatTree,
+  MatTreeNodeDef,
+  MatTreeNode,
+  MatTreeNodeToggle,
+  MatTreeNodePadding
+} from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
 
 /** Custom Services. */
@@ -14,6 +28,10 @@ import { OfficeItemNode } from './office-item.class';
 import { OfficeItemFlatNode } from './office-flat-item.class';
 import { ChecklistDatabase } from './checklist-db.class';
 import { CreateHoliday } from './create-holiday.service';
+import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatIcon } from '@angular/material/icon';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Holiday component.
@@ -21,7 +39,18 @@ import { CreateHoliday } from './create-holiday.service';
 @Component({
   selector: 'mifosx-create-holiday',
   templateUrl: './create-holiday.component.html',
-  styleUrls: ['./create-holiday.component.scss']
+  styleUrls: ['./create-holiday.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatTree,
+    MatTreeNodeDef,
+    MatTreeNode,
+    MatTreeNodeToggle,
+    MatTreeNodePadding,
+    MatIconButton,
+    MatCheckbox,
+    MatIcon
+  ]
 })
 export class CreateHolidayComponent implements OnInit {
   /** Create Holiday form. */

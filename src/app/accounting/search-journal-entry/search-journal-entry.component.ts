@@ -1,9 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** rxjs Imports */
 import { merge } from 'rxjs';
@@ -15,6 +15,25 @@ import { SettingsService } from 'app/settings/settings.service';
 /** Custom Data Source */
 import { JournalEntriesDataSource } from './journal-entry.datasource';
 import { Dates } from 'app/core/utils/dates';
+import { MatAutocompleteTrigger, MatOption, MatAutocomplete } from '@angular/material/autocomplete';
+import { GlAccountSelectorComponent } from '../../shared/accounting/gl-account-selector/gl-account-selector.component';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { DatetimeFormatPipe } from '../../pipes/datetime-format.pipe';
+import { FormatNumberPipe } from '../../pipes/format-number.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Search journal entry component.
@@ -22,7 +41,30 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-search-journal-entry',
   templateUrl: './search-journal-entry.component.html',
-  styleUrls: ['./search-journal-entry.component.scss']
+  styleUrls: ['./search-journal-entry.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatAutocompleteTrigger,
+    GlAccountSelectorComponent,
+    MatAutocomplete,
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    AsyncPipe,
+    DateFormatPipe,
+    DatetimeFormatPipe,
+    FormatNumberPipe
+  ]
 })
 export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
   /** Minimum transaction date allowed. */

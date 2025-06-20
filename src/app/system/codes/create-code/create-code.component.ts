@@ -1,18 +1,22 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { PopoverRef } from '../../../configuration-wizard/popover/popover-ref';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-create-code',
   templateUrl: './create-code.component.html',
-  styleUrls: ['./create-code.component.scss']
+  styleUrls: ['./create-code.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class CreateCodeComponent implements OnInit, AfterViewInit {
   /** Code form. */

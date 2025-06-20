@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -9,6 +9,9 @@ import { AccountingService } from '../../accounting.service';
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 import { Location } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View financial activity mapping component.
@@ -16,7 +19,12 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'mifosx-view-financial-activity-mapping',
   templateUrl: './view-financial-activity-mapping.component.html',
-  styleUrls: ['./view-financial-activity-mapping.component.scss']
+  styleUrls: ['./view-financial-activity-mapping.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    GlAccountDisplayComponent
+  ]
 })
 export class ViewFinancialActivityMappingComponent {
   /** Financial activity account ID. */

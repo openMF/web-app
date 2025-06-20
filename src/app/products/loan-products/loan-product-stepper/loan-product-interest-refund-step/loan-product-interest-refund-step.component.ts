@@ -1,11 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { StringEnumOptionData } from '../../../../shared/models/option-data.model';
+import { MatTooltip } from '@angular/material/tooltip';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loan-product-interest-refund-step',
   templateUrl: './loan-product-interest-refund-step.component.html',
-  styleUrls: ['./loan-product-interest-refund-step.component.scss']
+  styleUrls: ['./loan-product-interest-refund-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatTooltip
+  ]
 })
 export class LoanProductInterestRefundStepComponent implements OnInit {
   @Input() loanProductsTemplate: any;

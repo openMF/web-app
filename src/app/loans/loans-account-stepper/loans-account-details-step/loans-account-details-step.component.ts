@@ -1,7 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -10,6 +16,14 @@ import { LoansService } from '../../loans.service';
 import { Commons } from 'app/core/utils/commons';
 import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { MatDivider } from '@angular/material/divider';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Loans Account Details Step
@@ -17,7 +31,18 @@ import { ReplaySubject, Subject } from 'rxjs';
 @Component({
   selector: 'mifosx-loans-account-details-step',
   templateUrl: './loans-account-details-step.component.html',
-  styleUrls: ['./loans-account-details-step.component.scss']
+  styleUrls: ['./loans-account-details-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatTooltip,
+    NgxMatSelectSearchModule,
+    MatDivider,
+    MatCheckbox,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    AsyncPipe
+  ]
 })
 export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
   //** Defining PlaceHolders for the search bar */

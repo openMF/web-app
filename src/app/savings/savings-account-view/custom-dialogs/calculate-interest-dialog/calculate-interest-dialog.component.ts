@@ -1,6 +1,14 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Calculate interest dialog component.
@@ -8,7 +16,15 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'mifosx-calculate-interest-dialog',
   templateUrl: './calculate-interest-dialog.component.html',
-  styleUrls: ['./calculate-interest-dialog.component.scss']
+  styleUrls: ['./calculate-interest-dialog.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose
+  ]
 })
 export class CalculateInterestDialogComponent {
   /**

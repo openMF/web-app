@@ -1,10 +1,27 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UntypedFormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
+import {
+  UntypedFormBuilder,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PasswordsUtility } from 'app/core/utils/passwords-utility';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { InputPasswordComponent } from '../input-password/input-password.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Change Password Dialog component.
@@ -12,7 +29,16 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'mifosx-change-password-dialog',
   templateUrl: './change-password-dialog.component.html',
-  styleUrls: ['./change-password-dialog.component.scss']
+  styleUrls: ['./change-password-dialog.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    InputPasswordComponent,
+    MatDialogActions,
+    MatDialogClose
+  ]
 })
 export class ChangePasswordDialogComponent implements OnInit {
   minPasswordLength: number = environment.minPasswordLength | 12;

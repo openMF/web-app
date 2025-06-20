@@ -1,10 +1,12 @@
 /** Angular Imports */
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormControl, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from '../../../loans.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Undo Disbursal component.
@@ -12,7 +14,11 @@ import { LoansService } from '../../../loans.service';
 @Component({
   selector: 'mifosx-undo-disbursal',
   templateUrl: './undo-disbursal.component.html',
-  styleUrls: ['./undo-disbursal.component.scss']
+  styleUrls: ['./undo-disbursal.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize
+  ]
 })
 export class UndoDisbursalComponent implements OnInit {
   @Input() actionName: string;

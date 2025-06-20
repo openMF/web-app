@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -10,6 +16,10 @@ import { ReportParameter } from 'app/reports/common-models/report-parameter.mode
 
 /** Custom Components */
 import { BusinessRuleParametersComponent } from './business-rule-parameters/business-rule-parameters.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * SMS Campaign Step Component
@@ -17,7 +27,15 @@ import { BusinessRuleParametersComponent } from './business-rule-parameters/busi
 @Component({
   selector: 'mifosx-sms-campaign-step',
   templateUrl: './sms-campaign-step.component.html',
-  styleUrls: ['./sms-campaign-step.component.scss']
+  styleUrls: ['./sms-campaign-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext,
+    BusinessRuleParametersComponent
+  ]
 })
 export class SmsCampaignStepComponent implements OnInit {
   /** SMS Campaign Template */

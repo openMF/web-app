@@ -1,9 +1,9 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
-import { UntypedFormControl } from '@angular/forms';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Data Source */
 import { AuditTrailsDataSource } from './audit-trail.datasource';
@@ -16,6 +16,24 @@ import { SettingsService } from 'app/settings/settings.service';
 import { merge } from 'rxjs';
 import { tap, debounceTime, distinctUntilChanged, startWith, map } from 'rxjs/operators';
 import { Dates } from 'app/core/utils/dates';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import {
+  MatTable,
+  MatColumnDef,
+  MatHeaderCellDef,
+  MatHeaderCell,
+  MatCellDef,
+  MatCell,
+  MatHeaderRowDef,
+  MatHeaderRow,
+  MatRowDef,
+  MatRow
+} from '@angular/material/table';
+import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Audit Trails Component.
@@ -23,7 +41,29 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-audit-trails',
   templateUrl: './audit-trails.component.html',
-  styleUrls: ['./audit-trails.component.scss']
+  styleUrls: ['./audit-trails.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    MatProgressBar,
+    MatTable,
+    MatSort,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatHeaderCell,
+    MatSortHeader,
+    MatCellDef,
+    MatCell,
+    MatHeaderRowDef,
+    MatHeaderRow,
+    MatRowDef,
+    MatRow,
+    MatPaginator,
+    AsyncPipe,
+    DateFormatPipe
+  ]
 })
 export class AuditTrailsComponent implements OnInit, AfterViewInit {
   /** Minimum date allowed. */

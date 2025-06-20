@@ -1,6 +1,16 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GroupAssignStaffComponent } from './group-assign-staff/group-assign-staff.component';
+import { CloseGroupComponent } from './close-group/close-group.component';
+import { ActivateGroupComponent } from './activate-group/activate-group.component';
+import { AttachGroupMeetingComponent } from './attach-group-meeting/attach-group-meeting.component';
+import { GroupAttendanceComponent } from './group-attendance/group-attendance.component';
+import { ManageGroupMembersComponent } from './manage-group-members/manage-group-members.component';
+import { EditGroupMeetingComponent } from './edit-group-meeting/edit-group-meeting.component';
+import { EditGroupMeetingScheduleComponent } from './edit-group-meeting-schedule/edit-group-meeting-schedule.component';
+import { GroupTransferClientsComponent } from './group-transfer-clients/group-transfer-clients.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Group actions component.
@@ -8,7 +18,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'mifosx-group-actions',
   templateUrl: './group-actions.component.html',
-  styleUrls: ['./group-actions.component.scss']
+  styleUrls: ['./group-actions.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    GroupAssignStaffComponent,
+    CloseGroupComponent,
+    ActivateGroupComponent,
+    AttachGroupMeetingComponent,
+    GroupAttendanceComponent,
+    ManageGroupMembersComponent,
+    EditGroupMeetingComponent,
+    EditGroupMeetingScheduleComponent,
+    GroupTransferClientsComponent
+  ]
 })
 export class GroupActionsComponent {
   /** Flag object to store possible actions and render appropriate UI to the user */

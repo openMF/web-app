@@ -1,10 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Groups Assign Staff Component
@@ -12,7 +13,10 @@ import { GroupsService } from 'app/groups/groups.service';
 @Component({
   selector: 'mifosx-group-assign-staff',
   templateUrl: './group-assign-staff.component.html',
-  styleUrls: ['./group-assign-staff.component.scss']
+  styleUrls: ['./group-assign-staff.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class GroupAssignStaffComponent implements OnInit {
   /** Group Assign Staff form. */

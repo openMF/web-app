@@ -1,10 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit SMS Configuration Component.
@@ -12,7 +13,10 @@ import { SystemService } from 'app/system/system.service';
 @Component({
   selector: 'mifosx-edit-sms',
   templateUrl: './edit-sms.component.html',
-  styleUrls: ['./edit-sms.component.scss']
+  styleUrls: ['./edit-sms.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class EditSMSComponent implements OnInit {
   /** SMS Configuration data */

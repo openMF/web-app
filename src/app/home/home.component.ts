@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute, Router, NavigationEnd, RouterLink } from '@angular/router';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
@@ -19,6 +19,11 @@ import { ConfigurationWizardService } from '../configuration-wizard/configuratio
 
 /** Custom Components */
 import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardImage } from '@angular/material/card';
+import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Home component.
@@ -26,7 +31,17 @@ import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialo
 @Component({
   selector: 'mifosx-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatCardHeader,
+    MatCardTitle,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    MatCardImage,
+    AsyncPipe
+  ]
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   /** Username of authenticated user. */

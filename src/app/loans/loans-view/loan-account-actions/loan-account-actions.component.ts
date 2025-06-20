@@ -1,6 +1,36 @@
 /** Angular Imports. */
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoansAccountCloseComponent } from './loans-account-close/loans-account-close.component';
+import { UndoApprovalComponent } from './undo-approval/undo-approval.component';
+import { AssignLoanOfficerComponent } from './assign-loan-officer/assign-loan-officer.component';
+import { ForeclosureComponent } from './foreclosure/foreclosure.component';
+import { PrepayLoanComponent } from './prepay-loan/prepay-loan.component';
+import { MakeRepaymentComponent } from './make-repayment/make-repayment.component';
+import { LoanCreditBalanceRefundComponent } from './loan-credit-balance-refund/loan-credit-balance-refund.component';
+import { WaiveInterestComponent } from './waive-interest/waive-interest.component';
+import { WriteOffPageComponent } from './write-off-page/write-off-page.component';
+import { CloseAsRescheduledComponent } from './close-as-rescheduled/close-as-rescheduled.component';
+import { LoanRescheduleComponent } from './loan-reschedule/loan-reschedule.component';
+import { RecoveryRepaymentComponent } from './recovery-repayment/recovery-repayment.component';
+import { ViewGuarantorsComponent } from './view-guarantors/view-guarantors.component';
+import { CreateGuarantorComponent } from './create-guarantor/create-guarantor.component';
+import { DisburseToSavingsAccountComponent } from './disburse-to-savings-account/disburse-to-savings-account.component';
+import { RejectLoanComponent } from './reject-loan/reject-loan.component';
+import { DisburseComponent } from './disburse/disburse.component';
+import { WithdrawnByClientComponent } from './withdrawn-by-client/withdrawn-by-client.component';
+import { AddCollateralComponent } from './add-collateral/add-collateral.component';
+import { UndoDisbursalComponent } from './undo-disbursal/undo-disbursal.component';
+import { LoanScreenReportsComponent } from './loan-screen-reports/loan-screen-reports.component';
+import { ApproveLoanComponent } from './approve-loan/approve-loan.component';
+import { AddLoanChargeComponent } from './add-loan-charge/add-loan-charge.component';
+import { EditRepaymentScheduleComponent } from './edit-repayment-schedule/edit-repayment-schedule.component';
+import { ChargeOffComponent } from './charge-off/charge-off.component';
+import { AssetTransferLoanComponent } from './asset-transfer-loan/asset-transfer-loan.component';
+import { LoanReagingComponent } from './loan-reaging/loan-reaging.component';
+import { LoanReamortizeComponent } from './loan-reamortize/loan-reamortize.component';
+import { AddInterestPauseComponent } from './add-interest-pause/add-interest-pause.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Loan Account Actions component.
@@ -8,7 +38,39 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'mifosx-loan-account-actions',
   templateUrl: './loan-account-actions.component.html',
-  styleUrls: ['./loan-account-actions.component.scss']
+  styleUrls: ['./loan-account-actions.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    LoansAccountCloseComponent,
+    UndoApprovalComponent,
+    AssignLoanOfficerComponent,
+    ForeclosureComponent,
+    PrepayLoanComponent,
+    MakeRepaymentComponent,
+    LoanCreditBalanceRefundComponent,
+    WaiveInterestComponent,
+    WriteOffPageComponent,
+    CloseAsRescheduledComponent,
+    LoanRescheduleComponent,
+    RecoveryRepaymentComponent,
+    ViewGuarantorsComponent,
+    CreateGuarantorComponent,
+    DisburseToSavingsAccountComponent,
+    RejectLoanComponent,
+    DisburseComponent,
+    WithdrawnByClientComponent,
+    AddCollateralComponent,
+    UndoDisbursalComponent,
+    LoanScreenReportsComponent,
+    ApproveLoanComponent,
+    AddLoanChargeComponent,
+    EditRepaymentScheduleComponent,
+    ChargeOffComponent,
+    AssetTransferLoanComponent,
+    LoanReagingComponent,
+    LoanReamortizeComponent,
+    AddInterestPauseComponent
+  ]
 })
 export class LoanAccountActionsComponent {
   /** Loan Details Data */

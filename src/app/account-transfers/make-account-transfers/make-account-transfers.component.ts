@@ -1,13 +1,15 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   AbstractControl,
   FormGroup,
   UntypedFormBuilder,
   UntypedFormGroup,
   ValidationErrors,
-  Validators
+  Validators,
+  ReactiveFormsModule,
+  FormsModule
 } from '@angular/forms';
 
 /** Custom Services */
@@ -17,7 +19,14 @@ import { ClientsService } from 'app/clients/clients.service';
 import { Dates } from 'app/core/utils/dates';
 
 /** Environment Configuration */
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel, MatHint, MatSuffix, MatError } from '@angular/material/form-field';
+import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MakeAccountInterbankTransfersComponent } from '../make-account-interbank-transfers/make-account-interbank-transfers.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create account transfers
@@ -25,7 +34,18 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'mifosx-make-account-transfers',
   templateUrl: './make-account-transfers.component.html',
-  styleUrls: ['./make-account-transfers.component.scss']
+  styleUrls: ['./make-account-transfers.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDivider,
+    FormsModule,
+    MatHint,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    FaIconComponent,
+    CdkTextareaAutosize,
+    MakeAccountInterbankTransfersComponent
+  ]
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   /** Standing Instructions Data */

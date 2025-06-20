@@ -1,12 +1,20 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
 import { OrganizationService } from '../organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Bulk Loan Reassignment component.
@@ -14,7 +22,11 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-bulk-loan-reassignmnet',
   templateUrl: './bulk-loan-reassignmnet.component.html',
-  styleUrls: ['./bulk-loan-reassignmnet.component.scss']
+  styleUrls: ['./bulk-loan-reassignmnet.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox
+  ]
 })
 export class BulkLoanReassignmnetComponent implements OnInit {
   /** Bulk Loan form. */

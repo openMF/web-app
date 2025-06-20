@@ -3,12 +3,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SavingsService } from 'app/savings/savings.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { environment } from 'environments/environment';
+import { environment } from '../../../../environments/environment';
+import { EntityDocumentsTabComponent } from '../../../shared/tabs/entity-documents-tab/entity-documents-tab.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-savings-documents-tab',
   templateUrl: './savings-documents-tab.component.html',
-  styleUrls: ['./savings-documents-tab.component.scss']
+  styleUrls: ['./savings-documents-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    EntityDocumentsTabComponent
+  ]
 })
 export class SavingsDocumentsTabComponent {
   /** Stores the resolved savings documents data */

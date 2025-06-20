@@ -1,6 +1,13 @@
 /** Angular Imports */
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
@@ -8,6 +15,8 @@ import { ClientsService } from 'app/clients/clients.service';
 
 /** Node Types */
 import { Buffer } from 'buffer';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * View signature dialog component.
@@ -15,7 +24,15 @@ import { Buffer } from 'buffer';
 @Component({
   selector: 'mifosx-view-signature-dialog',
   templateUrl: './view-signature-dialog.component.html',
-  styleUrls: ['./view-signature-dialog.component.scss']
+  styleUrls: ['./view-signature-dialog.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose
+  ]
 })
 export class ViewSignatureDialogComponent implements OnInit {
   /** Id of client signature in documents */

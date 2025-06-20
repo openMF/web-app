@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'statusLookup'
-})
+@Pipe({ name: 'statusLookup' })
 export class StatusLookupPipe implements PipeTransform {
   transform(status: string): string {
     const cssClassNameLookup = {

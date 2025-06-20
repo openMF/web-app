@@ -1,9 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-@Pipe({
-  name: 'yesNo'
-})
+@Pipe({ name: 'yesNo' })
 export class YesnoPipe implements PipeTransform {
   constructor(private translateService: TranslateService) {}
 

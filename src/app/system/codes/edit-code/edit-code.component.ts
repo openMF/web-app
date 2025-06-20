@@ -1,10 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Code Component.
@@ -12,7 +13,10 @@ import { SystemService } from '../../system.service';
 @Component({
   selector: 'mifosx-edit-code',
   templateUrl: './edit-code.component.html',
-  styleUrls: ['./edit-code.component.scss']
+  styleUrls: ['./edit-code.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class EditCodeComponent implements OnInit {
   /** Code Form */

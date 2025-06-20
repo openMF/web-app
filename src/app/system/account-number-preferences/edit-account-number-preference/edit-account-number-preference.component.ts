@@ -1,10 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Account Number Preference Component.
@@ -12,7 +13,10 @@ import { SystemService } from 'app/system/system.service';
 @Component({
   selector: 'mifosx-edit-account-number-preference',
   templateUrl: './edit-account-number-preference.component.html',
-  styleUrls: ['./edit-account-number-preference.component.scss']
+  styleUrls: ['./edit-account-number-preference.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class EditAccountNumberPreferenceComponent implements OnInit {
   /** Account Number Preference Form */

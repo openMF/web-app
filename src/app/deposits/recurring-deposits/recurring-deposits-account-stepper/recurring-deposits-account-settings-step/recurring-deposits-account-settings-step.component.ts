@@ -1,8 +1,20 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
+import { MatDivider } from '@angular/material/divider';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Services */
 
@@ -12,7 +24,16 @@ import { Currency } from 'app/shared/models/general.model';
 @Component({
   selector: 'mifosx-recurring-deposits-account-settings-step',
   templateUrl: './recurring-deposits-account-settings-step.component.html',
-  styleUrls: ['./recurring-deposits-account-settings-step.component.scss']
+  styleUrls: ['./recurring-deposits-account-settings-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox,
+    InputAmountComponent,
+    MatDivider,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext
+  ]
 })
 export class RecurringDepositsAccountSettingsStepComponent implements OnInit, OnChanges {
   @Input() isNew = true;

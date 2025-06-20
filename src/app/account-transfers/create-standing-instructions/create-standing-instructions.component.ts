@@ -1,12 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Standing Instructions
@@ -14,7 +15,10 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-create-standing-instructions',
   templateUrl: './create-standing-instructions.component.html',
-  styleUrls: ['./create-standing-instructions.component.scss']
+  styleUrls: ['./create-standing-instructions.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class CreateStandingInstructionsComponent implements OnInit {
   /** Standing Instructions Data */

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @angular-eslint/prefer-standalone */
@@ -8,7 +9,9 @@ import { Component, Input } from '@angular/core';
     <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   `,
-  standalone: false
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class DatetimePickerStubComponent {
   @Input() enableMeridian: boolean = true;

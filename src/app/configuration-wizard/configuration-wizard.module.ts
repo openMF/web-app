@@ -23,7 +23,12 @@ import { SharedModule } from '../shared/shared.module';
  * Configuration Wizard Module
  */
 @NgModule({
-  declarations: [
+  imports: [
+    SharedModule,
+    CommonModule,
+    OverlayModule,
+    PortalModule,
+    MatDialogModule,
     PopoverComponent,
     PopoverCloseDirective,
     PopoverArrowDirective,
@@ -31,13 +36,6 @@ import { SharedModule } from '../shared/shared.module';
     ContinueSetupDialogComponent,
     NextStepDialogComponent,
     CompletionDialogComponent
-  ],
-  imports: [
-    SharedModule,
-    CommonModule,
-    OverlayModule,
-    PortalModule,
-    MatDialogModule
   ],
   exports: [
     PopoverCloseDirective

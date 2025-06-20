@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
@@ -10,11 +10,23 @@ import { Subscription } from 'rxjs';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-business-date-tab',
   templateUrl: './business-date-tab.component.html',
-  styleUrls: ['./business-date-tab.component.scss']
+  styleUrls: ['./business-date-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatIconButton,
+    MatTooltip,
+    FaIconComponent,
+    DateFormatPipe
+  ]
 })
 export class BusinessDateTabComponent implements OnInit {
   /** Subscription to alerts. */

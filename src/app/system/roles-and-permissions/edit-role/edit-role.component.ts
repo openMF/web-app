@@ -1,10 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SystemService } from '../../system.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Role Description Component.
@@ -12,7 +13,10 @@ import { SystemService } from '../../system.service';
 @Component({
   selector: 'mifosx-edit-role',
   templateUrl: './edit-role.component.html',
-  styleUrls: ['./edit-role.component.scss']
+  styleUrls: ['./edit-role.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class EditRoleComponent implements OnInit {
   /** Role Form */

@@ -1,12 +1,24 @@
 import { Component } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabGroup, MatTab } from '@angular/material/tabs';
 import { SystemService } from '../system.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ManageSchedulerJobsComponent } from './scheduler-jobs/manage-scheduler-jobs.component';
+import { WorkflowJobsComponent } from './workflow-jobs/workflow-jobs.component';
+import { CobWorkflowComponent } from './cob-workflow/cob-workflow.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-manage-jobs',
   templateUrl: './manage-jobs.component.html',
-  styleUrls: ['./manage-jobs.component.scss']
+  styleUrls: ['./manage-jobs.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatTabGroup,
+    MatTab,
+    ManageSchedulerJobsComponent,
+    WorkflowJobsComponent,
+    CobWorkflowComponent
+  ]
 })
 export class ManageJobsComponent {
   /** Process running flag */

@@ -1,10 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from '../../organization.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Payment Type Component.
@@ -12,7 +15,12 @@ import { OrganizationService } from '../../organization.service';
 @Component({
   selector: 'mifosx-create-payment-type',
   templateUrl: './create-payment-type.component.html',
-  styleUrls: ['./create-payment-type.component.scss']
+  styleUrls: ['./create-payment-type.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize,
+    MatCheckbox
+  ]
 })
 export class CreatePaymentTypeComponent implements OnInit {
   /** Payment Type form. */

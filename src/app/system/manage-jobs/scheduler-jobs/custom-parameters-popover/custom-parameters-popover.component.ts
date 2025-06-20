@@ -1,8 +1,19 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
 import { CustomParametersTableComponent } from './custom-parameters-table/custom-parameters-table.component';
 import { SystemService } from 'app/system/system.service';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NgFor, NgClass } from '@angular/common';
+import { MatList, MatListItem } from '@angular/material/list';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 interface SelectedJobsDataType {
   selectedJobs: SelectionModel<JobDataType>;
@@ -44,7 +55,20 @@ interface JobDataType {
 @Component({
   selector: 'mifosx-custom-parameters-popover',
   templateUrl: './custom-parameters-popover.component.html',
-  styleUrls: ['./custom-parameters-popover.component.scss']
+  styleUrls: ['./custom-parameters-popover.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    CustomParametersTableComponent,
+    MatList,
+    MatListItem,
+    NgClass,
+    MatDialogActions,
+    FaIconComponent,
+    MatDialogClose
+  ]
 })
 export class CustomParametersPopoverComponent implements OnInit {
   /* Job table childer */
@@ -65,7 +89,7 @@ export class CustomParametersPopoverComponent implements OnInit {
   ngOnInit(): void {
     this.selectedJobs = this.data.selectedJobs.selected.map((jobJSON) => ({
       ...jobJSON,
-      jobParameters: []
+      jobParameters: [] as JobParameterType[]
     }));
   }
 

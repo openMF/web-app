@@ -1,12 +1,23 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { RepaymentScheduleTabComponent } from '../../loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-loans-account-schedule-step',
   templateUrl: './loans-account-schedule-step.component.html',
-  styleUrls: ['./loans-account-schedule-step.component.scss']
+  styleUrls: ['./loans-account-schedule-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    RepaymentScheduleTabComponent,
+    MatStepperPrevious,
+    MatStepperNext
+  ]
 })
 export class LoansAccountScheduleStepComponent {
   /** Currency Code */

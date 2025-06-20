@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { UntypedFormGroup, Validators, UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  Validators,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -8,6 +14,9 @@ import { ReportsService } from 'app/reports/reports.service';
 /** Custom Models */
 import { ReportParameter } from 'app/reports/common-models/report-parameter.model';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { EditBusinessRuleParametersComponent } from './edit-business-rule-parameters/edit-business-rule-parameters.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit SMS Campaign step.
@@ -15,7 +24,12 @@ import { SettingsService } from 'app/settings/settings.service';
 @Component({
   selector: 'mifosx-edit-sms-campaign-step',
   templateUrl: './edit-sms-campaign-step.component.html',
-  styleUrls: ['./edit-sms-campaign-step.component.scss']
+  styleUrls: ['./edit-sms-campaign-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCheckbox,
+    EditBusinessRuleParametersComponent
+  ]
 })
 export class EditSmsCampaignStepComponent implements OnInit {
   /** SMS Campaign Template */

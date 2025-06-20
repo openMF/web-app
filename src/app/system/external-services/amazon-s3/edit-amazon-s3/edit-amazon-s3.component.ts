@@ -1,10 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
 import { SystemService } from 'app/system/system.service';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Amazon S3 Component.
@@ -12,7 +15,12 @@ import { SystemService } from 'app/system/system.service';
 @Component({
   selector: 'mifosx-edit-amazon-s3',
   templateUrl: './edit-amazon-s3.component.html',
-  styleUrls: ['./edit-amazon-s3.component.scss']
+  styleUrls: ['./edit-amazon-s3.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatIconButton,
+    FaIconComponent
+  ]
 })
 export class EditAmazonS3Component implements OnInit {
   /** Amazon S3 Configuration data */

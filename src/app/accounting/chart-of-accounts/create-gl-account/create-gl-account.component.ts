@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -12,6 +12,10 @@ import { ConfigurationWizardService } from '../../../configuration-wizard/config
 /** Custom Dialog Component */
 import { ContinueSetupDialogComponent } from '../../../configuration-wizard/continue-setup-dialog/continue-setup-dialog.component';
 import { GLAccount } from 'app/shared/models/general.model';
+import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create gl account component.
@@ -19,7 +23,13 @@ import { GLAccount } from 'app/shared/models/general.model';
 @Component({
   selector: 'mifosx-create-gl-account',
   templateUrl: './create-gl-account.component.html',
-  styleUrls: ['./create-gl-account.component.scss']
+  styleUrls: ['./create-gl-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    GlAccountSelectorComponent,
+    MatCheckbox,
+    CdkTextareaAutosize
+  ]
 })
 export class CreateGlAccountComponent implements OnInit, AfterViewInit {
   /** GL account form. */

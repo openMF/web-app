@@ -1,17 +1,21 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormControl, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
 import { LoansService } from 'app/loans/loans.service';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /**
  * Undo Loan component.
  */
 @Component({
   selector: 'mifosx-undo-approval',
   templateUrl: './undo-approval.component.html',
-  styleUrls: ['./undo-approval.component.scss']
+  styleUrls: ['./undo-approval.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class UndoApprovalComponent implements OnInit {
   /** Form Controller. */

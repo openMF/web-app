@@ -15,11 +15,31 @@ import { RecurringDepositProductAccountingStepComponent } from '../recurring-dep
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { RecurringDepositProductPreviewStepComponent } from '../recurring-deposit-product-stepper/recurring-deposit-product-preview-step/recurring-deposit-product-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-edit-recurring-deposit-product',
   templateUrl: './edit-recurring-deposit-product.component.html',
-  styleUrls: ['./edit-recurring-deposit-product.component.scss']
+  styleUrls: ['./edit-recurring-deposit-product.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    RecurringDepositProductDetailsStepComponent,
+    RecurringDepositProductCurrencyStepComponent,
+    RecurringDepositProductTermsStepComponent,
+    RecurringDepositProductSettingsStepComponent,
+    RecurringDepositProductInterestRateChartStepComponent,
+    RecurringDepositProductChargesStepComponent,
+    RecurringDepositProductAccountingStepComponent,
+    RecurringDepositProductPreviewStepComponent
+  ]
 })
 export class EditRecurringDepositProductComponent {
   @ViewChild(RecurringDepositProductDetailsStepComponent, { static: true })

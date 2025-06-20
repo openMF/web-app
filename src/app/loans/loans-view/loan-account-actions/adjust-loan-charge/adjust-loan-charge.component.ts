@@ -1,14 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-adjust-loan-charge',
   templateUrl: './adjust-loan-charge.component.html',
-  styleUrls: ['./adjust-loan-charge.component.scss']
+  styleUrls: ['./adjust-loan-charge.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatSlideToggle,
+    CdkTextareaAutosize
+  ]
 })
 export class AdjustLoanChargeComponent implements OnInit {
   /** Loan Id */

@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'accountsFilter'
-})
+@Pipe({ name: 'accountsFilter' })
 export class AccountsFilterPipe implements PipeTransform {
   transform(accounts: any, type: any, status: any, checkSavings: any): any {
     if (accounts) {

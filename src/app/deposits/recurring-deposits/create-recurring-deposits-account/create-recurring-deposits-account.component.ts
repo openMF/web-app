@@ -12,6 +12,11 @@ import { RecurringDepositsAccountTermsStepComponent } from '../recurring-deposit
 import { RecurringDepositsAccountSettingsStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-settings-step/recurring-deposits-account-settings-step.component';
 import { RecurringDepositsAccountChargesStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-charges-step/recurring-deposits-account-charges-step.component';
 import { Dates } from 'app/core/utils/dates';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { RecurringDepositsAccountInterestRateChartStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-interest-rate-chart-step/recurring-deposits-account-interest-rate-chart-step.component';
+import { RecurringDepositsAccountPreviewStepComponent } from '../recurring-deposits-account-stepper/recurring-deposits-account-preview-step/recurring-deposits-account-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create new recurring deposit account
@@ -19,7 +24,21 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-create-recurring-deposits-account',
   templateUrl: './create-recurring-deposits-account.component.html',
-  styleUrls: ['./create-recurring-deposits-account.component.scss']
+  styleUrls: ['./create-recurring-deposits-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    RecurringDepositsAccountDetailsStepComponent,
+    RecurringDepositsAccountTermsStepComponent,
+    RecurringDepositsAccountSettingsStepComponent,
+    RecurringDepositsAccountInterestRateChartStepComponent,
+    RecurringDepositsAccountChargesStepComponent,
+    RecurringDepositsAccountPreviewStepComponent
+  ]
 })
 export class CreateRecurringDepositsAccountComponent {
   /** Imports all the step component */

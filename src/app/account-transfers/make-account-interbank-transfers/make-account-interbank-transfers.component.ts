@@ -1,10 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-make-account-interbank-transfers',
   templateUrl: './make-account-interbank-transfers.component.html',
-  styleUrls: ['./make-account-interbank-transfers.component.scss']
+  styleUrls: ['./make-account-interbank-transfers.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    CdkTextareaAutosize
+  ]
 })
 export class MakeAccountInterbankTransfersComponent {
   @Input() makeAccountTransferForm: FormGroup;

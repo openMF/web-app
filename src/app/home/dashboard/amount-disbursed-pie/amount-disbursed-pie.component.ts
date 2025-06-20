@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
@@ -8,6 +8,10 @@ import { HomeService } from '../../home.service';
 
 /** Charting Imports */
 import Chart from 'chart.js';
+import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgFor, NgStyle, NgIf } from '@angular/common';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Amount Disbursed Pie Chart Component
@@ -15,7 +19,13 @@ import Chart from 'chart.js';
 @Component({
   selector: 'mifosx-amount-disbursed-pie',
   templateUrl: './amount-disbursed-pie.component.html',
-  styleUrls: ['./amount-disbursed-pie.component.scss']
+  styleUrls: ['./amount-disbursed-pie.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatCardHeader,
+    FaIconComponent,
+    NgStyle
+  ]
 })
 export class AmountDisbursedPieComponent implements OnInit {
   /** Static Form control for office Id */

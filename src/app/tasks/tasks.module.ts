@@ -23,9 +23,7 @@ import { ViewCheckerInboxComponent } from './view-checker-inbox/view-checker-inb
     SharedModule,
     TasksRoutingModule,
     DirectivesModule,
-    PipesModule
-  ],
-  declarations: [
+    PipesModule,
     CheckerInboxAndTasksComponent,
     CheckerInboxComponent,
     ClientApprovalComponent,

@@ -1,10 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { CentersService } from '../../../centers.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Staff Assignment History Component
@@ -12,7 +14,11 @@ import { CentersService } from '../../../centers.service';
 @Component({
   selector: 'mifosx-staff-assignment-history',
   templateUrl: './staff-assignment-history.component.html',
-  styleUrls: ['./staff-assignment-history.component.scss']
+  styleUrls: ['./staff-assignment-history.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent
+  ]
 })
 export class StaffAssignmentHistoryComponent implements OnInit {
   /** Staff Assignment History Data */

@@ -1,12 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from '../../recurring-deposits.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Premature Close Recurring Deposits Account Component
@@ -15,7 +16,10 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-premature-close-recurring-deposit-account',
   templateUrl: './premature-close-recurring-deposit-account.component.html',
-  styleUrls: ['./premature-close-recurring-deposit-account.component.scss']
+  styleUrls: ['./premature-close-recurring-deposit-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
   /** Minimum date allowed. */

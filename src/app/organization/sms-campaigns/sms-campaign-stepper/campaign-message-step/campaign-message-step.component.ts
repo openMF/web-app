@@ -1,6 +1,9 @@
 /** Angular Imports */
 import { Component, Input, OnChanges } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Campaign Message Step
@@ -8,7 +11,13 @@ import { UntypedFormControl } from '@angular/forms';
 @Component({
   selector: 'mifosx-campaign-message-step',
   templateUrl: './campaign-message-step.component.html',
-  styleUrls: ['./campaign-message-step.component.scss']
+  styleUrls: ['./campaign-message-step.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepperPrevious,
+    FaIconComponent,
+    MatStepperNext
+  ]
 })
 export class CampaignMessageStepComponent implements OnChanges {
   /** Column headers */

@@ -9,11 +9,17 @@ import {
 } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatIcon } from '@angular/material/icon';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-input-password',
   templateUrl: './input-password.component.html',
-  styleUrls: ['./input-password.component.scss']
+  styleUrls: ['./input-password.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatIcon
+  ]
 })
 export class InputPasswordComponent implements ControlValueAccessor, ErrorStateMatcher {
   disabled = false;

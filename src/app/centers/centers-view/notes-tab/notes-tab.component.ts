@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 
@@ -11,11 +11,24 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
 import { CentersService } from '../../centers.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MatList, MatListItem } from '@angular/material/list';
+import { MatLine } from '@angular/material/grid-list';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-notes-tab',
   templateUrl: './notes-tab.component.html',
-  styleUrls: ['./notes-tab.component.scss']
+  styleUrls: ['./notes-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    FaIconComponent,
+    MatList,
+    MatListItem,
+    MatLine,
+    DateFormatPipe
+  ]
 })
 export class NotesTabComponent implements OnInit {
   centerId: string;

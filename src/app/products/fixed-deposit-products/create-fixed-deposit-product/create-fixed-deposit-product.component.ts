@@ -15,11 +15,31 @@ import { FixedDepositProductAccountingStepComponent } from '../fixed-deposit-pro
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FixedDepositProductPreviewStepComponent } from '../fixed-deposit-product-stepper/fixed-deposit-product-preview-step/fixed-deposit-product-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-create-fixed-deposit-product',
   templateUrl: './create-fixed-deposit-product.component.html',
-  styleUrls: ['./create-fixed-deposit-product.component.scss']
+  styleUrls: ['./create-fixed-deposit-product.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    FixedDepositProductDetailsStepComponent,
+    FixedDepositProductCurrencyStepComponent,
+    FixedDepositProductTermsStepComponent,
+    FixedDepositProductSettingsStepComponent,
+    FixedDepositProductInterestRateChartStepComponent,
+    FixedDepositProductChargesStepComponent,
+    FixedDepositProductAccountingStepComponent,
+    FixedDepositProductPreviewStepComponent
+  ]
 })
 export class CreateFixedDepositProductComponent {
   @ViewChild(FixedDepositProductDetailsStepComponent, { static: true })

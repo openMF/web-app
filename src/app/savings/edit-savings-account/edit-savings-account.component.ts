@@ -11,6 +11,10 @@ import { SavingsAccountChargesStepComponent } from '../savings-account-stepper/s
 import { SavingsService } from '../savings.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { SavingsAccountPreviewStepComponent } from '../savings-account-stepper/savings-account-preview-step/savings-account-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Savings Account Component
@@ -18,7 +22,19 @@ import { Dates } from 'app/core/utils/dates';
 @Component({
   selector: 'mifosx-edit-savings-account',
   templateUrl: './edit-savings-account.component.html',
-  styleUrls: ['./edit-savings-account.component.scss']
+  styleUrls: ['./edit-savings-account.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    SavingsAccountDetailsStepComponent,
+    SavingsAccountTermsStepComponent,
+    SavingsAccountChargesStepComponent,
+    SavingsAccountPreviewStepComponent
+  ]
 })
 export class EditSavingsAccountComponent {
   /** Savings Account Template */

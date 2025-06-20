@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 import { interval, merge, fromEvent, Observable } from 'rxjs';
 import { takeUntil, repeat, map } from 'rxjs/operators';
 
@@ -27,7 +27,7 @@ export class IdleTimeoutService {
     const $signal = merge(...events.map((eventName) => fromEvent(document, eventName)));
     this.$onSessionTimeout = interval(this.timeoutDelay).pipe(
       takeUntil($signal),
-      map(() => undefined),
+      map((): void => undefined),
       repeat()
     );
   }

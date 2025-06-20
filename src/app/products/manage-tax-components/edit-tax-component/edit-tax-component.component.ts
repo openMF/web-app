@@ -1,13 +1,14 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { ProductsService } from '../../products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit tax component.
@@ -15,7 +16,10 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'mifosx-edit-tax-component',
   templateUrl: './edit-tax-component.component.html',
-  styleUrls: ['./edit-tax-component.component.scss']
+  styleUrls: ['./edit-tax-component.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS
+  ]
 })
 export class EditTaxComponentComponent implements OnInit {
   /** Minimum date allowed. */

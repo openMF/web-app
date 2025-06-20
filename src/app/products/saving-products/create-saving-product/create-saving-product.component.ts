@@ -14,11 +14,30 @@ import { SavingProductAccountingStepComponent } from '../saving-product-stepper/
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Accounting } from 'app/core/utils/accounting';
+import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { SavingProductPreviewStepComponent } from '../saving-product-stepper/saving-product-preview-step/saving-product-preview-step.component';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-create-saving-product',
   templateUrl: './create-saving-product.component.html',
-  styleUrls: ['./create-saving-product.component.scss']
+  styleUrls: ['./create-saving-product.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatStepper,
+    MatStepperIcon,
+    FaIconComponent,
+    MatStep,
+    MatStepLabel,
+    SavingProductDetailsStepComponent,
+    SavingProductCurrencyStepComponent,
+    SavingProductTermsStepComponent,
+    SavingProductSettingsStepComponent,
+    SavingProductChargesStepComponent,
+    SavingProductAccountingStepComponent,
+    SavingProductPreviewStepComponent
+  ]
 })
 export class CreateSavingProductComponent {
   @ViewChild(SavingProductDetailsStepComponent, { static: true })

@@ -4,11 +4,19 @@ import {
   CreditAllocation,
   PaymentAllocation
 } from 'app/products/loan-products/loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
   selector: 'mifosx-view-advance-paymeny-allocation',
   templateUrl: './view-advance-paymeny-allocation.component.html',
-  styleUrls: ['./view-advance-paymeny-allocation.component.scss']
+  styleUrls: ['./view-advance-paymeny-allocation.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle
+  ]
 })
 export class ViewAdvancePaymenyAllocationComponent {
   @Input() paymentAllocation: PaymentAllocation | null;

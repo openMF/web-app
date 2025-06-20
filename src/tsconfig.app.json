@@ -3,7 +3,11 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@pipes/*": ["app/pipes/*"],
+      "app/*": ["app/*"]
+    }
   },
   "angularCompilerOptions": {
     "enableIvy": true,

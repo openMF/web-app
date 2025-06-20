@@ -1,10 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { OrganizationService } from 'app/organization/organization.service';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Edit Payment Type component.
@@ -12,7 +15,12 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Component({
   selector: 'mifosx-edit-payment-type',
   templateUrl: './edit-payment-type.component.html',
-  styleUrls: ['./edit-payment-type.component.scss']
+  styleUrls: ['./edit-payment-type.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    CdkTextareaAutosize,
+    MatCheckbox
+  ]
 })
 export class EditPaymentTypeComponent implements OnInit {
   /** Payment Type form. */

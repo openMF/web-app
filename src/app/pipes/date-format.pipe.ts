@@ -2,9 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { SettingsService } from 'app/settings/settings.service';
 import moment from 'moment';
 
-@Pipe({
-  name: 'dateFormat'
-})
+@Pipe({ name: 'dateFormat' })
 export class DateFormatPipe implements PipeTransform {
   constructor(private settingsService: SettingsService) {}
 

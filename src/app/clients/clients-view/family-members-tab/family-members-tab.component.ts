@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterOutlet, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -8,6 +8,18 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 
 /** Custom Services */
 import { ClientsService } from '../../clients.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+  MatExpansionPanelDescription
+} from '@angular/material/expansion';
+import { MatDivider } from '@angular/material/divider';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { YesnoPipe } from '../../../pipes/yesno.pipe';
+import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Client Family Members Tab
@@ -15,7 +27,20 @@ import { ClientsService } from '../../clients.service';
 @Component({
   selector: 'mifosx-family-members-tab',
   templateUrl: './family-members-tab.component.html',
-  styleUrls: ['./family-members-tab.component.scss']
+  styleUrls: ['./family-members-tab.component.scss'],
+  imports: [
+    ...STANDALONE_SHARED_IMPORTS,
+    RouterOutlet,
+    FaIconComponent,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription,
+    MatDivider,
+    DateFormatPipe,
+    YesnoPipe
+  ]
 })
 export class FamilyMembersTabComponent {
   /** Client Family Members */

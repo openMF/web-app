@@ -1,8 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  name: 'truncateText'
-})
+@Pipe({ name: 'truncateText' })
 export class TruncateTextPipe implements PipeTransform {
   transform(value: string, chars: number): string {
     if (value.length <= 40) {
