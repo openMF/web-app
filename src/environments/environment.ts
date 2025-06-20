@@ -57,6 +57,7 @@ export const environment = {
       idleTimeout: loadedEnv.sessionIdleTimeout || 300000 // 5 minutes
     }
   },
+  httpCacheEnabled: loadedEnv.httpCacheEnabled || false,
 
   vNextApiUrl: window.env?.vNextApiUrl || 'https://apis.flexcore.mx',
   vNextApiProvider: window.env?.vNextApiProvider || '/vnext1',

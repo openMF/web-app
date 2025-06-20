@@ -230,7 +230,8 @@ export class ViewTransactionComponent implements OnInit {
       const data = {
         title: this.translateService.instant('labels.heading.Undo Transaction'),
         layout: { addButtonText: 'Undo' },
-        formfields: formfields
+        formfields: formfields,
+        pristine: false
       };
       const undoTransactionAccountDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
       undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {

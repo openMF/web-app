@@ -257,6 +257,11 @@ export class SavingProductAccountingStepComponent implements OnInit {
             new UntypedFormControl('', Validators.required)
           );
         }
+        if (accountingRule === 2) {
+          this.savingProductAccountingForm.removeControl('feesReceivableAccountId');
+          this.savingProductAccountingForm.removeControl('penaltiesReceivableAccountId');
+          this.savingProductAccountingForm.removeControl('interestPayableAccountId');
+        }
 
         if (this.isDormancyTrackingActive.value) {
           this.savingProductAccountingForm.addControl(

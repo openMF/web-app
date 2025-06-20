@@ -53,6 +53,7 @@ export const environment = {
       idleTimeout: loadedEnv['sessionIdleTimeout'] || 300000 // 5 minutes
     }
   },
+  httpCacheEnabled: loadedEnv.httpCacheEnabled || false,
 
   vNextApiUrl: window['env']['vNextApiUrl'] || 'https://apis.mifos.community',
   vNextApiProvider: window['env']['vNextApiProvider'] || '/vnext1',
