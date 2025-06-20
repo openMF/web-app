@@ -7,6 +7,7 @@ import { Observable, Subscriber } from 'rxjs';
 
 /** Custom Services */
 import { HttpCacheService } from './http-cache.service';
+import { environment } from 'environments/environment';
 
 /**
  * Caches HTTP requests.
@@ -45,7 +46,7 @@ export class CacheInterceptor implements HttpInterceptor {
       } else {
         next.handle(request).subscribe(
           (event) => {
-            if (event instanceof HttpResponse) {
+            if (environment.httpCacheEnabled && event instanceof HttpResponse) {
               this.httpCacheService.setCacheData(request.urlWithParams, event);
             }
             subscriber.next(event);

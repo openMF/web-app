@@ -2,6 +2,12 @@
   padding: 1%;
   margin: 1%;
 
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   h3 {
     margin: 0;
   }

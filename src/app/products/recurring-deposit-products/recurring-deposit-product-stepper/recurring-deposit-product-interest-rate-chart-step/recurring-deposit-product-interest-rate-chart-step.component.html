@@ -16,8 +16,8 @@
     >
       <mat-divider class="flex-98"></mat-divider>
 
-      <div class="flex-fill layout-row-wrap responsive-column gap-2percent" [formGroupName]="chartIndex">
-        <div class="flex-98 layout-row align-end">
+      <div class="flex-fill layout-row-wrap responsive-column" [formGroupName]="chartIndex">
+        <div class="flex-100" align="end">
           <button
             type="button"
             mat-icon-button
@@ -30,18 +30,18 @@
           </button>
         </div>
 
-        <mat-form-field class="flex-fill flex-32">
+        <mat-form-field class="flex-28 m-r-5">
           <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
-          <input
-            matInput
-            formControlName="name"
-            matTooltip="{{ 'tooltips.The name is a unique identifier for the chart' | translate }}"
-            required
-          />
+          <input matInput formControlName="name" required />
         </mat-form-field>
 
-        <mat-form-field class="flex-fill flex-31" (click)="validFromDatePicker.open()">
-          <mat-label>{{ 'labels.inputs.Start Date' | translate }}</mat-label>
+        <mat-form-field class="flex-70">
+          <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+          <textarea matInput formControlName="description" required></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="flex-48 m-r-5" (click)="validFromDatePicker.open()">
+          <mat-label>{{ 'labels.inputs.From Date' | translate }}</mat-label>
           <input
             matInput
             [min]="minDate"
@@ -53,25 +53,16 @@
           <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #validFromDatePicker></mat-datepicker>
           <mat-error>
-            {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
+            {{ 'labels.inputs.From Date' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="flex-fill flex-31" (click)="endDatePicker.open()">
+        <mat-form-field class="flex-48 m-r-5" (click)="endDatePicker.open()">
           <mat-label>{{ 'labels.inputs.End Date' | translate }}</mat-label>
           <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="endDatePicker" formControlName="endDate" />
           <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #endDatePicker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field class="flex-fill flex-65">
-          <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-          <textarea
-            matInput
-            formControlName="description"
-            matTooltip="{{ 'tooltips.The description is used to provide additional information' | translate }}"
-          ></textarea>
         </mat-form-field>
 
         <div class="flex-31 layout-row align-between align-items-center">

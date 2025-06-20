@@ -84,6 +84,7 @@ export class SavingProductPreviewStepComponent implements OnInit, OnChanges {
 
   setCurrentValues(): void {
     this.accountingRule = this.accounting.getAccountingRuleFrom(this.savingProduct.accountingRule);
+
     if (this.isCashOrAccrualAccounting()) {
       const assetAccountData = this.savingProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
       const incomeAccountData = this.savingProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
@@ -142,10 +143,10 @@ export class SavingProductPreviewStepComponent implements OnInit, OnChanges {
   }
 
   isCashOrAccrualAccounting(): boolean {
-    return this.accounting.isAccrualAccountingRuleId(this.savingProduct.accountingRule);
+    return this.accounting.isCashOrAccrualAccounting(this.accountingRule);
   }
 
   isAccrualAccounting(): boolean {
-    return this.accounting.isAccrualAccounting(this.savingProduct.accountingRule);
+    return this.accounting.isAccrualAccounting(this.accountingRule);
   }
 }
