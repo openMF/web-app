@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
@@ -41,16 +41,12 @@ export class LanguageSelectorComponent implements OnInit {
    * Initializes the language selector with the current language.
    */
   ngOnInit() {
-    // Add a small delay to ensure translation service is fully initialized
     setTimeout(() => {
       const currentLang = this.currentLanguage;
       const availableLanguages = this.languages;
-
-      // Only set the value if it exists in the available languages
       if (availableLanguages && availableLanguages.includes(currentLang)) {
         this.languageSelector.setValue(currentLang);
       } else if (availableLanguages && availableLanguages.length > 0) {
-        // Fallback to the first available language if current language is not in the list
         const fallbackLang = availableLanguages.find((lang) => lang.startsWith('en')) || availableLanguages[0];
         this.languageSelector.setValue(fallbackLang);
         this.translateService.use(fallbackLang);
@@ -81,5 +77,30 @@ export class LanguageSelectorComponent implements OnInit {
    */
   get languages(): string[] {
     return this.translateService.getLangs();
+  }
+
+  /**
+   * Returns the display name for a language code.
+   * @param {string} code Language code.
+   * @returns {string} Display name.
+   */
+  getLanguageName(code: string): string {
+    const languageNames: { [key: string]: string } = {
+      en: 'English',
+      'en-US': 'English',
+      'de-DE': 'German',
+      'es-MX': 'Spanish (Mexico)',
+      'fr-FR': 'French',
+      'it-IT': 'Italian',
+      'ko-KO': 'Korean',
+      'cs-CS': 'Czech',
+      'es-CL': 'Spanish (Chile)',
+      'lt-LT': 'Lithuanian',
+      'lv-LV': 'Latvian',
+      'ne-NE': 'Nepali',
+      'pt-PT': 'Portuguese',
+      'sw-SW': 'Swahili'
+    };
+    return languageNames[code] || code;
   }
 }
