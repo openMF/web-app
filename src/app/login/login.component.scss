@@ -1,6 +1,23 @@
 mifosx-server-selector {
   padding-left: 5px;
-  width: 300px;
+  width: 100%;
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+
+  input,
+  span,
+  .mat-select-value {
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+  }
 }
 
 .cover {
@@ -102,4 +119,17 @@ mifosx-server-selector {
 
 ::ng-deep .login-container #footer {
   align-items: unset !important;
+}
+
+.selector-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.justify-end {
+  justify-content: flex-end;
+  margin-right: 10px;
 }
