@@ -2471,7 +2471,13 @@
       "Enable income capitalization": "Aktivieren Sie die Einkommenskapitalisierung",
       "Income capitalization calculation type": "Berechnungsart der Einkommenskapitalisierung",
       "Income capitalization strategy": "Strategie zur Ertragskapitalisierung",
-      "Income capitalization type": "Art der Ertragskapitalisierung"
+      "Income capitalization type": "Art der Ertragskapitalisierung",
+      "DEFERRED INCOME RECOGNITION": "Erfassung abgegrenzter Erträge",
+      "Enable Buy down fee": "Buy-Down-Gebühr aktivieren",
+      "Buy down fee calculation type": "Berechnungsart der Buy-Down-Gebühr",
+      "Buy down fee strategy": "Strategie für Buy-Down-Gebühr",
+      "Buy down fee income type": "Einnahmeart der Buy-Down-Gebühr",
+      "Buy down fees": "Buy-Down-Gebühren"
     },
     "links": {
       "Community": "Gemeinschaft",

@@ -2471,7 +2471,13 @@
       "Enable income capitalization": "Habilitar capitalização de renda",
       "Income capitalization calculation type": "Tipo de cálculo de capitalização de renda",
       "Income capitalization strategy": "Estratégia de capitalização de renda",
-      "Income capitalization type": "Tipo de capitalização de renda"
+      "Income capitalization type": "Tipo de capitalização de renda",
+      "DEFERRED INCOME RECOGNITION": "Reconhecimento de receita diferida",
+      "Enable Buy down fee": "Habilitar taxa de aquisição",
+      "Buy down fee calculation type": "Tipo de cálculo de taxa de aquisição",
+      "Buy down fee strategy": "Estratégia de taxa de aquisição",
+      "Buy down fee income type": "Tipo de receita de taxa de aquisição",
+      "Buy down fees": "Taxas de compra antecipada"
     },
     "links": {
       "Community": "Comunidade",

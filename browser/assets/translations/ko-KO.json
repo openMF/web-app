@@ -2472,7 +2472,13 @@
       "Enable income capitalization": "소득 자본화 활성화",
       "Income capitalization calculation type": "소득 자본화 계산 유형",
       "Income capitalization strategy": "소득 자본화 전략",
-      "Income capitalization type": "소득 자본화 유형"
+      "Income capitalization type": "소득 자본화 유형",
+      "DEFERRED INCOME RECOGNITION": "이연수익 인식",
+      "Enable Buy down fee": "매수 수수료 활성화",
+      "Buy down fee calculation type": "매수 수수료 계산 유형",
+      "Buy down fee strategy": "매수 수수료 전략",
+      "Buy down fee income type": "매수 수수료 수익 유형",
+      "Buy down fees": "매수 수수료"
     },
     "links": {
       "Community": "지역 사회",

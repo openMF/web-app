@@ -2471,7 +2471,13 @@
       "Enable income capitalization": "Activer la capitalisation des revenus",
       "Income capitalization calculation type": "Type de calcul de capitalisation des revenus",
       "Income capitalization strategy": "Stratégie de capitalisation des revenus",
-      "Income capitalization type": "Type de capitalisation des revenus"
+      "Income capitalization type": "Type de capitalisation des revenus",
+      "DEFERRED INCOME RECOGNITION": "Comptabilisation des produits différés",
+      "Enable Buy down fee": "Activer les frais de rachat",
+      "Buy down fee calculation type": "Type de calcul des frais de rachat",
+      "Buy down fee strategy": "Stratégie des frais de rachat",
+      "Buy down fee income type": "Type de revenu des frais de rachat",
+      "Buy down fees": "Frais d'achat"
     },
     "links": {
       "Community": "Communauté",

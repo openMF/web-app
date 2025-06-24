@@ -2471,7 +2471,13 @@
       "Enable income capitalization": "Povolit kapitalizaci příjmu",
       "Income capitalization calculation type": "Typ výpočtu kapitalizace příjmu",
       "Income capitalization strategy": "Strategie kapitalizace příjmu",
-      "Income capitalization type": "Typ kapitalizace příjmu"
+      "Income capitalization type": "Typ kapitalizace příjmu",
+      "DEFERRED INCOME RECOGNITION": "Vykazování odložených výnosů",
+      "Enable Buy down fee": "Povolit poplatek za odkup",
+      "Buy down fee calculation type": "Typ výpočtu poplatku za odkup",
+      "Buy down fee strategy": "Strategie poplatku za odkup",
+      "Buy down fee income type": "Typ příjmu z poplatku za odkup",
+      "Buy down fees": "Poplatky za odkup"
     },
     "links": {
       "Community": "Společenství",

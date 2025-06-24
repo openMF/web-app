@@ -2471,7 +2471,13 @@
       "Enable income capitalization": "Iespējot ienākumu kapitalizāciju",
       "Income capitalization calculation type": "Ienākumu kapitalizācijas aprēķina veids",
       "Income capitalization strategy": "Ienākumu kapitalizācijas stratēģija",
-      "Income capitalization type": "Ienākumu kapitalizācijas veids"
+      "Income capitalization type": "Ienākumu kapitalizācijas veids",
+      "DEFERRED INCOME RECOGNITION": "Atliktā ienākuma atzīšana",
+      "Enable Buy down fee": "Iespējot atpirkšanas maksu",
+      "Buy down fee calculation type": "Atpirkšanas maksas aprēķina veids",
+      "Buy down fee strategy": "Atpirkšanas maksas stratēģija",
+      "Buy down fee income type": "Atpirkšanas maksas ienākumu veids",
+      "Buy down fees": "Iepirkuma maksas"
     },
     "links": {
       "Community": "kopiena",
