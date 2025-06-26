@@ -2478,7 +2478,9 @@
       "Buy down fee calculation type": "매수 수수료 계산 유형",
       "Buy down fee strategy": "매수 수수료 전략",
       "Buy down fee income type": "매수 수수료 수익 유형",
-      "Buy down fees": "매수 수수료"
+      "Buy down fees": "매수 수수료",
+      "Income from Buy down fees": "매입 수수료 수입",
+      "Buy down fee Expense": "매입 수수료 비용"
     },
     "links": {
       "Community": "지역 사회",

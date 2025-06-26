@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "Berechnungsart der Buy-Down-Gebühr",
       "Buy down fee strategy": "Strategie für Buy-Down-Gebühr",
       "Buy down fee income type": "Einnahmeart der Buy-Down-Gebühr",
-      "Buy down fees": "Buy-Down-Gebühren"
+      "Buy down fees": "Buy-Down-Gebühren",
+      "Income from Buy down fees": "Einnahmen aus Buy-Down-Gebühren",
+      "Buy down fee Expense": "Aufwendungen aus Buy-Down-Gebühren"
     },
     "links": {
       "Community": "Gemeinschaft",

@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "Tipo de cálculo de comisión de compra anticipada",
       "Buy down fee strategy": "Estrategia de comisión de compra anticipada",
       "Buy down fee income type": "Tipo de ingreso de comisión de compra anticipada",
-      "Buy down fees": "Tarifas de compra anticipada"
+      "Buy down fees": "Tarifas de compra anticipada",
+      "Income from Buy down fees": "Ingresos por comisiones de compra inicial",
+      "Buy down fee Expense": "Gastos por comisiones de compra inicial"
     },
     "links": {
       "Community": "Comunidad",

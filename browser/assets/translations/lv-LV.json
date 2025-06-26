@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "Atpirkšanas maksas aprēķina veids",
       "Buy down fee strategy": "Atpirkšanas maksas stratēģija",
       "Buy down fee income type": "Atpirkšanas maksas ienākumu veids",
-      "Buy down fees": "Iepirkuma maksas"
+      "Buy down fees": "Iepirkuma maksas",
+      "Income from Buy down fees": "Ienākumi no akciju izpirkšanas komisijas maksām",
+      "Buy down fee Expense": "Akciju izpirkšanas komisijas izdevumi"
     },
     "links": {
       "Community": "kopiena",

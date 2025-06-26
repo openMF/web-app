@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "Type de calcul des frais de rachat",
       "Buy down fee strategy": "Stratégie des frais de rachat",
       "Buy down fee income type": "Type de revenu des frais de rachat",
-      "Buy down fees": "Frais d'achat"
+      "Buy down fees": "Frais d'achat",
+      "Income from Buy down fees": "Revenus des commissions de rachat",
+      "Buy down fee Expense": "Charges des commissions de rachat"
     },
     "links": {
       "Community": "Communauté",

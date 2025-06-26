@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "बाइ डाउन शुल्क गणना प्रकार",
       "Buy down fee strategy": "बाइ डाउन शुल्क रणनीति",
       "Buy down fee income type": "बाइ डाउन शुल्क आय प्रकार",
-      "Buy down fees": "खरिद शुल्क"
+      "Buy down fees": "खरिद शुल्क",
+      "Income from Buy down fees": "खरिद शुल्कबाट हुने आम्दानी",
+      "Buy down fee Expense": "खरीद शुल्क खर्च"
     },
     "links": {
       "Community": "समुदाय",

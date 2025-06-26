@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "Nunua aina ya hesabu ya ada ya chini",
       "Buy down fee strategy": "Nunua mkakati wa ada ya chini",
       "Buy down fee income type": "Nunua aina ya mapato ya chini",
-      "Buy down fees": "Nunua ada za chini"
+      "Buy down fees": "Nunua ada za chini",
+      "Income from Buy down fees": "Mapato kutoka kwa ada ya Kununua",
+      "Buy down fee Expense": "Kununua ada ya chini Gharama"
     },
     "links": {
       "Community": "Jumuiya",

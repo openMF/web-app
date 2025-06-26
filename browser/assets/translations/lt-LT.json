@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "Supirkimo mokesčio skaičiavimo tipas",
       "Buy down fee strategy": "Supirkimo mokesčio strategija",
       "Buy down fee income type": "Supirkimo mokesčio pajamų tipas",
-      "Buy down fees": "Išpirkimo mokesčiai"
+      "Buy down fees": "Išpirkimo mokesčiai",
+      "Income from Buy down fees": "Pajamos iš supirkimo mokesčių",
+      "Buy down fee Expense": "Supirkimo mokesčio išlaidos"
     },
     "links": {
       "Community": "bendruomenė",

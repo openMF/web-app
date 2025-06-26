@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "Tipo di calcolo della commissione di buy down",
       "Buy down fee strategy": "Strategia per la commissione di buy down",
       "Buy down fee income type": "Tipo di ricavo da commissione di buy down",
-      "Buy down fees": "Commissioni di acquisto"
+      "Buy down fees": "Commissioni di acquisto",
+      "Income from Buy down fees": "Proventi da commissioni di buy down",
+      "Buy down fee Expense": "Spese da commissioni di buy down"
     },
     "links": {
       "Community": "Comunità",

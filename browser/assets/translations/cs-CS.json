@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "Typ výpočtu poplatku za odkup",
       "Buy down fee strategy": "Strategie poplatku za odkup",
       "Buy down fee income type": "Typ příjmu z poplatku za odkup",
-      "Buy down fees": "Poplatky za odkup"
+      "Buy down fees": "Poplatky za odkup",
+      "Income from Buy down fees": "Příjmy z poplatků za odkup",
+      "Buy down fee Expense": "Náklady na poplatek za odkup"
     },
     "links": {
       "Community": "Společenství",

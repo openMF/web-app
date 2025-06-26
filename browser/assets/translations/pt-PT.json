@@ -2477,7 +2477,9 @@
       "Buy down fee calculation type": "Tipo de cálculo de taxa de aquisição",
       "Buy down fee strategy": "Estratégia de taxa de aquisição",
       "Buy down fee income type": "Tipo de receita de taxa de aquisição",
-      "Buy down fees": "Taxas de compra antecipada"
+      "Buy down fees": "Taxas de compra antecipada",
+      "Income from Buy down fees": "Receita com taxas de recompra",
+      "Buy down fee Expense": "Despesa com taxas de recompra"
     },
     "links": {
       "Community": "Comunidade",
