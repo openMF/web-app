@@ -59,3 +59,13 @@ cypress/
 
 src/assets/env.js
 src/environments/.env.ts
+
+# Ignore OpenAPI generated client code
+/packages/fineract-clients
+
+# Node and build artifacts
+/node_modules
+/dist
+/out-tsc
+/openapitools.json
+
