@@ -127,9 +127,12 @@ When using the development server with basic authentication:
 ## Development Commands
 
 - **Serve application:** `ng serve`
+- **Generate / update Fineract API client:** `npm run generate:fineract-client`
 - **Generate new component:** `ng generate component component-name`
 - **Build for production:** `ng build --configuration production` or `npm run build:prod`
 - **Get Angular CLI help:** `ng help`
+
+**Note:** `The script generate:fineract-client will regenerate the OpenAPI‑based TypeScript client under packages/fineract-clients    using the fineract.yaml definition. Run it whenever the backend API changes.`
 
 ## Configuration Options
 

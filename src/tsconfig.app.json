@@ -6,7 +6,8 @@
     "types": ["node"],
     "paths": {
       "@pipes/*": ["app/pipes/*"],
-      "app/*": ["app/*"]
+      "app/*": ["app/*"],
+      "@fineract/client": ["../packages/fineract-clients"]
     }
   },
   "angularCompilerOptions": {

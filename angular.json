@@ -21,6 +21,7 @@
           "builder": "@angular/build:application",
           "options": {
             "aot": true,
+            "preserveSymlinks": true,
             "outputPath": {
               "base": "dist/web-app"
             },
