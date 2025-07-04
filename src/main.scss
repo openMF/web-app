@@ -1,3 +1,5 @@
+// Test Version 1
+
 /*
  * Entry point of global application style.
  * Component-specific style should not go here and be included directly as part of the components.
@@ -268,7 +270,6 @@
 }
 
 .flex-40 {
-  //flex: 0 0 40%;
   flex: 1;
   width: 40%;
 }
@@ -313,7 +314,6 @@
 }
 
 .flex-60 {
-  // flex: 0 0 60%;
   flex: 1;
   width: 60%;
 }
@@ -590,4 +590,24 @@
 .content {
   display: contents;
   flex: 1;
+}
+
+//New!
+.type-field {
+  position: absolute;
+  left: 1px;
+  top: 20px;
+}
+
+//New!
+.Account-Id-field {
+  position: absolute;
+  left: 490px;
+  top: 20px;
+}
+
+//New!
+.Client-Name {
+  position: absolute;
+  left: 490px;
 }
