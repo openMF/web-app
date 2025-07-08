@@ -1,3 +1,5 @@
+@use 'assets/styles/colours' as *;
+
 table {
   width: 100%;
 }
@@ -23,4 +25,10 @@ mat-divider {
 
 .margin-t {
   margin-top: 1em;
+}
+
+.mat-h3 {
+  margin-top: 10px !important;
+  font-weight: 300;
+  color: $status-approved;
 }

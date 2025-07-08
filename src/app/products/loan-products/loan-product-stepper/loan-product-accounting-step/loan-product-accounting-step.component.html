@@ -264,7 +264,10 @@
       </mifosx-gl-account-selector>
 
       <mifosx-gl-account-selector
-        *ngIf="deferredIncomeRecognition?.capitalizedIncome?.enableIncomeCapitalization"
+        *ngIf="
+          deferredIncomeRecognition?.capitalizedIncome?.enableIncomeCapitalization ||
+          deferredIncomeRecognition?.buyDownFee?.enableBuyDownFee
+        "
         class="flex-48"
         [inputFormControl]="loanProductAccountingForm.controls.deferredIncomeLiabilityAccountId"
         [glAccountList]="liabilityAccountData"
@@ -512,7 +515,7 @@
     </div>
   </div>
 
-  <div class="layout-row align-center margin-t responsive-column">
+  <div class="layout-row align-center margin-t responsive-column gap-2percent">
     <button mat-raised-button matStepperPrevious>
       <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Previous' | translate }}

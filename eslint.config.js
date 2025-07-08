@@ -55,7 +55,8 @@ module.exports = [
     }
   },
 
-  // HTML files configuration
+  // HTML files configurationNN
+
   {
     files: ['**/*.html'],
     languageOptions: {

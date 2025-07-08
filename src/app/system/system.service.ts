@@ -13,6 +13,8 @@ import { RunJobWithParamPayloadType } from './manage-jobs/scheduler-jobs/custom-
   providedIn: 'root'
 })
 export class SystemService {
+  public static CONFIG_ASSET_EXTERNALIZATION = 'asset-externalization-of-non-active-loans';
+
   emptyPayload: any = {};
 
   /**

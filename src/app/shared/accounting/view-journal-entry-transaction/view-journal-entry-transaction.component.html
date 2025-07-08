@@ -15,7 +15,7 @@
   </div>
 
   <div class="container m-b-20" *ngIf="isViewTransaction()">
-    <mat-card class="mat-elevation-z8" *ngIf="dataSource">
+    <mat-card class="mat-elevation-z8" ngClass="{{ journalEntryColor() }}" *ngIf="dataSource">
       <mat-card-content>
         <div class="layout-row-wrap">
           <div class="flex-25 header">
@@ -48,6 +48,22 @@
 
           <div class="flex-25">
             {{ dataSource.data[0].submittedOnDate | datetimeFormat }}
+          </div>
+
+          <div class="flex-25 header">
+            {{ 'labels.inputs.Manual Journal Entry' | translate }}
+          </div>
+
+          <div class="flex-25">
+            {{ dataSource.data[0].manualEntry | yesNo }}
+          </div>
+
+          <div class="flex-25 header" *ngIf="dataSource.data[0].externalAssetOwner">
+            {{ 'labels.inputs.External Asset Owner' | translate }}
+          </div>
+
+          <div class="flex-25" *ngIf="dataSource.data[0].externalAssetOwner">
+            {{ dataSource.data[0].externalAssetOwner }}
           </div>
         </div>
       </mat-card-content>

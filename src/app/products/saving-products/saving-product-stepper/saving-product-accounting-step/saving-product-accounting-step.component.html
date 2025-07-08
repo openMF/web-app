@@ -52,6 +52,16 @@
       >
       </mifosx-gl-account-selector>
 
+      <mifosx-gl-account-selector
+        class="flex-48"
+        *ngIf="isAccrualAccounting()"
+        [inputFormControl]="savingProductAccountingForm.controls.interestReceivableAccountId"
+        [glAccountList]="assetAccountData"
+        [required]="true"
+        [inputLabel]="'Interest Receivable'"
+      >
+      </mifosx-gl-account-selector>
+
       <mat-divider class="flex-98"></mat-divider>
 
       <h4 class="mat-h4 flex-98">{{ 'labels.heading.Liabilities' | translate }}</h4>
@@ -153,7 +163,7 @@
 
       <div
         *ngIf="savingProductAccountingForm.value.advancedAccountingRules"
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
+        class="flex-fill layout-row-wrap gap-1percent responsive-column"
       >
         <div class="layout-row flex-100">
           <h4 class="mat-h4 flex-63">
@@ -215,7 +225,7 @@
           </table>
         </div>
 
-        <div class="flex-100" *ngIf="existCharges()">
+        <div class="flex-100 layout-row-wrap gap-0percent responsive-column" *ngIf="existCharges()">
           <h4 class="mat-h4 flex-63">{{ 'labels.heading.Map Fees to Specific Income Accounts' | translate }}</h4>
 
           <div class="flex-33" *ngIf="existCharges()">
@@ -267,7 +277,7 @@
           </table>
         </div>
 
-        <div class="flex-100" *ngIf="existCharges()">
+        <div class="flex-100 layout-row-wrap gap-0percent responsive-column" *ngIf="existCharges()">
           <h4 class="mat-h4 flex-63">
             {{ 'labels.heading.Map Penalties to Specific Income Accounts' | translate }}
           </h4>

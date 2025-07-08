@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  UntypedFormControl
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -35,6 +41,8 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
   accountId: string;
   /** Show payment details */
   showPaymentDetails = false;
+  /** Savings Account Data */
+  savingsAccountsData: any;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -59,6 +67,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
+      this.savingsAccountsData = data.recurringDepositsAccountActionData.savingsAccounts;
       this.maturityAmount = data.recurringDepositsAccountActionData.maturityAmount;
       this.onAccountClosureOptions = data.recurringDepositsAccountActionData.onAccountClosureOptions;
       this.paymentTypes = data.recurringDepositsAccountActionData.paymentTypeOptions;
@@ -74,6 +83,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createcloseRecurringDepositForm();
+    this.addTransferDetails();
   }
 
   /**
@@ -95,7 +105,7 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
         Validators.required
       ],
       accountNumber: '',
-      chequeNumber: '',
+      checkNumber: '',
       routingCode: '',
       receiptNumber: '',
       bankNumber: '',
@@ -108,6 +118,20 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
    */
   toggleDisplay() {
     this.showPaymentDetails = !this.showPaymentDetails;
+  }
+  addTransferDetails() {
+    this.closeRecurringDepositForm.get('onAccountClosureId').valueChanges.subscribe((id: any) => {
+      if (id === 200) {
+        this.closeRecurringDepositForm.addControl(
+          'toSavingsAccountId',
+          new UntypedFormControl('', Validators.required)
+        );
+        this.closeRecurringDepositForm.addControl('transferDescription', new UntypedFormControl(''));
+      } else {
+        this.closeRecurringDepositForm.removeControl('toSavingsAccountId');
+        this.closeRecurringDepositForm.removeControl('transferDescription');
+      }
+    });
   }
 
   /**

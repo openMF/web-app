@@ -339,7 +339,7 @@ const routes: Routes = [
         {
           path: 'fund-mapping',
           component: FundMappingComponent,
-          data: { title: 'Advance Search', breadcrumb: 'Advance Search' },
+          data: { title: 'Fund Mapping', breadcrumb: 'Fund Mapping' },
           resolve: {
             advanceSearchTemplate: AdvanceSearchTemplateResolver
           }

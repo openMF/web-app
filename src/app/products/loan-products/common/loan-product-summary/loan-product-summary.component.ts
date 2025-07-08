@@ -19,9 +19,8 @@ import {
 import { LoanProducts } from '../../loan-products';
 import { CodeName, OptionData, StringEnumOptionData } from '../../../../shared/models/option-data.model';
 import { Accounting } from 'app/core/utils/accounting';
-import { NgIf, NgFor, DecimalPipe } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
-import { LongTextComponent } from '../../../../shared/long-text/long-text.component';
 import {
   MatTable,
   MatColumnDef,
@@ -50,7 +49,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     MatDivider,
-    LongTextComponent,
     MatTable,
     MatColumnDef,
     MatHeaderCellDef,

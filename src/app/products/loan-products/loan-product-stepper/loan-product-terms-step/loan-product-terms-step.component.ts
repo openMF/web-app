@@ -202,6 +202,8 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       maxNumberOfRepayments: [''],
       isLinkedToFloatingInterestRates: [false],
       allowApprovedDisbursedAmountsOverApplied: [false],
+      overAppliedCalculationType: [{ value: null, disabled: true }],
+      overAppliedNumber: [{ value: null, disabled: true }],
       minInterestRatePerPeriod: [''],
       interestRatePerPeriod: [
         '',
@@ -236,12 +238,14 @@ export class LoanProductTermsStepComponent implements OnInit, OnChanges {
       .get('allowApprovedDisbursedAmountsOverApplied')
       .valueChanges.subscribe((allowApprovedDisbursedAmountsOverApplied) => {
         if (allowApprovedDisbursedAmountsOverApplied) {
-          this.loanProductTermsForm.addControl('overAppliedCalculationType', new UntypedFormControl(''));
-          this.loanProductTermsForm.addControl('overAppliedNumber', new UntypedFormControl(''));
+          this.loanProductTermsForm.get('overAppliedCalculationType').enable();
+          this.loanProductTermsForm.get('overAppliedNumber').enable();
           this.loanProductTermsForm.addControl('disallowExpectedDisbursements', new UntypedFormControl('true'));
         } else {
-          this.loanProductTermsForm.removeControl('overAppliedCalculationType');
-          this.loanProductTermsForm.removeControl('overAppliedNumber');
+          this.loanProductTermsForm.get('overAppliedCalculationType').disable();
+          this.loanProductTermsForm.get('overAppliedCalculationType').patchValue(null);
+          this.loanProductTermsForm.get('overAppliedNumber').disable();
+          this.loanProductTermsForm.get('overAppliedNumber').patchValue(null);
           this.loanProductTermsForm.removeControl('disallowExpectedDisbursements');
         }
       });

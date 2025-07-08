@@ -93,7 +93,8 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     'officeName',
     'madeOnDate',
     'checker',
-    'checkedOnDate'
+    'checkedOnDate',
+    'clientIp'
   ];
   /** Data source for audit trails table. */
   dataSource: AuditTrailsDataSource;

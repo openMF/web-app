@@ -16,7 +16,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="flex-48">
+          <mat-form-field class="flex-24">
             <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currencyCode">
               <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
@@ -27,6 +27,11 @@
               {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="flex-24" *ngIf="assetExternalizationEnabled">
+            <mat-label>{{ 'labels.inputs.External Asset Owner' | translate }}</mat-label>
+            <input matInput formControlName="externalAssetOwner" />
           </mat-form-field>
 
           <div

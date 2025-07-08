@@ -157,6 +157,7 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
           }
           if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {
             this.loanProductAccountingForm.patchValue({
+              deferredIncomeLiabilityAccountId: accountingMappings.deferredIncomeLiabilityAccount.id,
               buyDownExpenseAccountId: accountingMappings.buyDownExpenseAccount.id,
               incomeFromBuyDownAccountId: accountingMappings.incomeFromBuyDownAccount.id
             });
@@ -600,17 +601,23 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
   setDeferredIncomeRecognitionControls() {
     if (this.isAccountingAccrualBased) {
       if (this.deferredIncomeRecognition) {
-        if (this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization) {
+        if (
+          this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization ||
+          this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee
+        ) {
           this.loanProductAccountingForm.addControl(
             'deferredIncomeLiabilityAccountId',
             new UntypedFormControl('', Validators.required)
           );
+        } else {
+          this.loanProductAccountingForm.removeControl('deferredIncomeLiabilityAccountId');
+        }
+        if (this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization) {
           this.loanProductAccountingForm.addControl(
             'incomeFromCapitalizationAccountId',
             new UntypedFormControl('', Validators.required)
           );
         } else {
-          this.loanProductAccountingForm.removeControl('deferredIncomeLiabilityAccountId');
           this.loanProductAccountingForm.removeControl('incomeFromCapitalizationAccountId');
         }
         if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {

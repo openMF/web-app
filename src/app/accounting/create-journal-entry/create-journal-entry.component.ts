@@ -1,13 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormArray,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -54,6 +48,9 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
   paymentTypeData: any;
   /** Gl Account data. */
   glAccountData: any;
+  /** Asset Externalization */
+  assetExternalizationConfig: any;
+  assetExternalizationEnabled = false;
 
   /* Reference of create journal form */
   @ViewChild('createJournalFormRef') createJournalFormRef: ElementRef<any>;
@@ -81,12 +78,16 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
     private configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService
   ) {
-    this.route.data.subscribe((data: { offices: any; currencies: any; paymentTypes: any; glAccounts: any }) => {
-      this.officeData = data.offices;
-      this.currencyData = data.currencies.selectedCurrencyOptions;
-      this.paymentTypeData = data.paymentTypes;
-      this.glAccountData = data.glAccounts;
-    });
+    this.assetExternalizationEnabled = false;
+    this.route.data.subscribe(
+      (data: { offices: any; currencies: any; paymentTypes: any; glAccounts: any; globalConfig: any }) => {
+        this.officeData = data.offices;
+        this.currencyData = data.currencies.selectedCurrencyOptions;
+        this.paymentTypeData = data.paymentTypes;
+        this.glAccountData = data.glAccounts;
+        this.assetExternalizationConfig = data.globalConfig;
+      }
+    );
   }
 
   /**
@@ -192,6 +193,9 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
         this.settingsService.dateFormat
       );
     }
+    if (!journalEntry['externalAssetOwner']) {
+      delete journalEntry['externalAssetOwner'];
+    }
     this.accountingService.createJournalEntry(journalEntry).subscribe((response) => {
       this.router.navigate(
         [
@@ -227,6 +231,10 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
       setTimeout(() => {
         this.showPopover(this.templateCreateJournalFormRef, this.createJournalFormRef.nativeElement, 'top', true);
       });
+    }
+    this.assetExternalizationEnabled = this.assetExternalizationConfig.enabled;
+    if (this.assetExternalizationEnabled) {
+      this.journalEntryForm.addControl('externalAssetOwner', new UntypedFormControl());
     }
   }
 
