@@ -1,13 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
@@ -77,6 +71,8 @@ export class MakeRepaymentComponent implements OnInit {
    */
   ngOnInit() {
     this.command = this.dataObject.type.code.split('.')[1];
+    console.log(this.command);
+    console.log(this.dataObject.type);
     this.maxDate = this.settingsService.businessDate;
     this.createRepaymentLoanForm();
     this.setRepaymentLoanDetails();

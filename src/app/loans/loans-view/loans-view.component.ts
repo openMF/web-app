@@ -183,16 +183,18 @@ export class LoansViewComponent implements OnInit {
         taskPermissionName: 'DISBURSE_LOAN'
       });
     } else if (this.status === 'Active') {
-      this.buttonConfig.addButton({
-        name: 'Buy Down Fee',
-        icon: 'plus',
-        taskPermissionName: 'BUY_DOWN_FEE_LOAN'
-      });
+      if (this.loanDetailsData.enableBuyDownFee) {
+        this.buttonConfig.addButton({
+          name: 'Buy Down Fee',
+          icon: 'plus',
+          taskPermissionName: 'BUYDOWNFEE_LOAN'
+        });
+      }
       if (this.loanDetailsData.enableIncomeCapitalization) {
         this.buttonConfig.addButton({
           name: 'Capitalized Income',
           icon: 'coins',
-          taskPermissionName: 'CAPITALIZED_INCOME_LOAN'
+          taskPermissionName: 'CAPITALIZEDINCOME_LOAN'
         });
       }
 
@@ -283,6 +285,14 @@ export class LoansViewComponent implements OnInit {
           name: 'Undo Re-Amortize',
           icon: 'undo',
           taskPermissionName: 'UNDO_REAMORTIZE_LOAN'
+        });
+      }
+    } else if (this.status === 'Closed (obligations met)' || this.status === 'Overpaid') {
+      if (this.loanDetailsData.multiDisburseLoan) {
+        this.buttonConfig.addButton({
+          name: 'Disburse',
+          icon: 'hand-holding-usd',
+          taskPermissionName: 'DISBURSE_LOAN'
         });
       }
     }

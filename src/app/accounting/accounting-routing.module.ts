@@ -62,6 +62,7 @@ import { ProvisioningJournalEntriesResolver } from './provisioning-entries/view-
 import { ViewJournalEntryTransactionComponent } from 'app/shared/accounting/view-journal-entry-transaction/view-journal-entry-transaction.component';
 import { JournalEntryTransactionResolver } from './common-resolvers/journal-entry-transaction.resolver';
 import { ExternalAssetOwnerJournalEntryResolver } from 'app/loans/common-resolvers/external-asset-owner-journal-entry.resolver';
+import { ExternalAssetConfigurationResolver } from './common-resolvers/external-asset-configuration.resolver';
 
 /** Accounting Routes */
 const routes: Routes = [
@@ -105,7 +106,8 @@ const routes: Routes = [
                 offices: OfficesResolver,
                 currencies: CurrenciesResolver,
                 paymentTypes: PaymentTypesResolver,
-                glAccounts: GlAccountsResolver
+                glAccounts: GlAccountsResolver,
+                globalConfig: ExternalAssetConfigurationResolver
               }
             },
             {
@@ -419,7 +421,8 @@ const routes: Routes = [
     ProvisioningEntryEntriesResolver,
     LoanProductsResolver,
     ProvisioningCategoriesResolver,
-    ProvisioningJournalEntriesResolver
+    ProvisioningJournalEntriesResolver,
+    ExternalAssetConfigurationResolver
   ]
 })
 export class AccountingRoutingModule {}

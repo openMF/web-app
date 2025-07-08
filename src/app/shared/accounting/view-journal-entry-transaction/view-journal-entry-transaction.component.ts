@@ -25,6 +25,7 @@ import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { YesnoPipe } from '@pipes/yesno.pipe';
 
 @Component({
   selector: 'mifosx-view-journal-entry-transaction',
@@ -47,7 +48,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     DateFormatPipe,
     DatetimeFormatPipe,
-    FormatNumberPipe
+    FormatNumberPipe,
+    YesnoPipe
   ]
 })
 export class ViewJournalEntryTransactionComponent implements OnInit {
@@ -76,6 +78,8 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
 
   isJournalEntryLoaded = false;
 
+  isManualJournalEntry = false;
+
   /**
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
@@ -102,6 +106,7 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
         if (data.transaction.pageItems.length > 0) {
           this.isJournalEntryLoaded = true;
           this.transactionId = data.transaction.pageItems[0].transactionId;
+          this.isManualJournalEntry = data.transaction.pageItems[0].manualEntry;
         }
       } else if (this.isViewTransfer()) {
         this.journalEntriesData = data.transferJournalEntryData.journalEntryData.content;
@@ -184,5 +189,12 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  journalEntryColor(): string {
+    if (this.isManualJournalEntry) {
+      return 'manual-entry';
+    }
+    return '';
   }
 }

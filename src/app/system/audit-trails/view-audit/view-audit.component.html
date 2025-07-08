@@ -84,6 +84,14 @@
               {{ auditTrailData.groupLevelName }}
             </div>
           </div>
+
+          <div fxFlex="50%" class="mat-body-strong" *ngIf="auditTrailData.ip">
+            {{ 'labels.inputs.Client Ip' | translate }}
+          </div>
+
+          <div fxFlex="50%" *ngIf="auditTrailData.ip">
+            {{ auditTrailData.ip }}
+          </div>
         </div>
 
         <div class="flex-46 command">

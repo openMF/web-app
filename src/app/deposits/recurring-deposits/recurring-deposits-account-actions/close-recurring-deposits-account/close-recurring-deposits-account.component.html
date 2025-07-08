@@ -48,6 +48,24 @@
             </mat-error>
           </mat-form-field>
 
+          <mat-form-field *ngIf="closeRecurringDepositForm.contains('toSavingsAccountId')">
+            <mat-label>{{ 'labels.inputs.Transfer to Savings' | translate }}</mat-label>
+            <mat-select required formControlName="toSavingsAccountId">
+              <mat-option *ngFor="let account of savingsAccountsData" [value]="account.id">
+                {{ account.accountNo }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="closeRecurringDepositForm.controls.toSavingsAccountId.hasError('required')">
+              {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="closeRecurringDepositForm.contains('transferDescription')">
+            <mat-label>{{ 'labels.inputs.Transfer Description' | translate }}</mat-label>
+            <input matInput formControlName="transferDescription" />
+          </mat-form-field>
+
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Payment Type Id' | translate }}</mat-label>
             <mat-select formControlName="paymentTypeId" required>

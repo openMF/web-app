@@ -45,97 +45,105 @@
           [withTitle]="'40%'"
         >
         </mifosx-gl-account-display>
-      </div>
-
-      <h4 class="mat-h4 flex-100">{{ 'labels.heading.Liabilities' | translate }}</h4>
-      <div class="flex-100 layout-row-wrap responsive-column">
         <mifosx-gl-account-display
           class="flex-100"
-          [accountTitle]="'Saving control'"
-          [glAccount]="accountingMappings.savingsControlAccount"
-          [withTitle]="'40%'"
-        >
-        </mifosx-gl-account-display>
-      </div>
-      <div class="flex-100 layout-row-wrap responsive-column">
-        <mifosx-gl-account-display
-          class="flex-100"
-          [accountTitle]="'Savings transfers in suspense'"
-          [glAccount]="accountingMappings.transfersInSuspenseAccount"
-          [withTitle]="'40%'"
-        >
-        </mifosx-gl-account-display>
-      </div>
-      <div class="flex-100 layout-row-wrap responsive-column">
-        <mifosx-gl-account-display
-          class="flex-100"
-          [accountTitle]="'Interest Payable'"
+          [accountTitle]="'Interest Receivable'"
           *ngIf="isAccrualAccounting()"
-          [glAccount]="accountingMappings.interestPayableAccount"
+          [glAccount]="accountingMappings.interestReceivableAccount"
           [withTitle]="'40%'"
         >
         </mifosx-gl-account-display>
-      </div>
-      <div class="flex-100 layout-row-wrap responsive-column">
-        <mifosx-gl-account-display
-          class="flex-100"
-          [accountTitle]="'Escheat liability'"
-          *ngIf="accountingMappings.escheatLiabilityAccount"
-          [glAccount]="accountingMappings.escheatLiabilityAccount"
-          [withTitle]="'40%'"
-        >
-        </mifosx-gl-account-display>
-      </div>
 
-      <h4 class="mat-h4 flex-100">{{ 'labels.heading.Income' | translate }}</h4>
-      <div class="flex-100 layout-row-wrap responsive-column">
-        <mifosx-gl-account-display
-          class="flex-100"
-          [accountTitle]="'Income from fees'"
-          [glAccount]="accountingMappings.incomeFromFeeAccount"
-          [withTitle]="'40%'"
-        >
-        </mifosx-gl-account-display>
-      </div>
-      <div class="flex-100 layout-row-wrap responsive-column">
-        <mifosx-gl-account-display
-          class="flex-100"
-          [accountTitle]="'Income from penalties'"
-          [glAccount]="accountingMappings.incomeFromPenaltyAccount"
-          [withTitle]="'40%'"
-        >
-        </mifosx-gl-account-display>
-      </div>
-      <div class="flex-100 layout-row-wrap responsive-column">
-        <mifosx-gl-account-display
-          class="flex-100"
-          [accountTitle]="'Income from Interest'"
-          *ngIf="accountingMappings.incomeFromInterest"
-          [glAccount]="accountingMappings.incomeFromInterest"
-          [withTitle]="'40%'"
-        >
-        </mifosx-gl-account-display>
-      </div>
+        <h4 class="mat-h4 flex-100">{{ 'labels.heading.Liabilities' | translate }}</h4>
+        <div class="flex-100 layout-row-wrap responsive-column">
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Saving control'"
+            [glAccount]="accountingMappings.savingsControlAccount"
+            [withTitle]="'40%'"
+          >
+          </mifosx-gl-account-display>
+        </div>
+        <div class="flex-100 layout-row-wrap responsive-column">
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Savings transfers in suspense'"
+            [glAccount]="accountingMappings.transfersInSuspenseAccount"
+            [withTitle]="'40%'"
+          >
+          </mifosx-gl-account-display>
+        </div>
+        <div class="flex-100 layout-row-wrap responsive-column">
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Interest Payable'"
+            *ngIf="isAccrualAccounting()"
+            [glAccount]="accountingMappings.interestPayableAccount"
+            [withTitle]="'40%'"
+          >
+          </mifosx-gl-account-display>
+        </div>
+        <div class="flex-100 layout-row-wrap responsive-column">
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Escheat liability'"
+            *ngIf="accountingMappings.escheatLiabilityAccount"
+            [glAccount]="accountingMappings.escheatLiabilityAccount"
+            [withTitle]="'40%'"
+          >
+          </mifosx-gl-account-display>
+        </div>
 
-      <h4 class="mat-h4 flex-100">{{ 'labels.heading.Expenses' | translate }}</h4>
-      <div class="flex-100 layout-row-wrap responsive-column">
-        <mifosx-gl-account-display
-          class="flex-100"
-          [accountTitle]="'Interest on savings'"
-          [glAccount]="accountingMappings.interestOnSavingsAccount"
-          [withTitle]="'40%'"
-        >
-        </mifosx-gl-account-display>
-      </div>
-      <div class="flex-100 layout-row-wrap responsive-column">
-        <mifosx-gl-account-display
-          class="flex-100"
-          [accountTitle]="'Write-off'"
-          *ngIf="accountingMappings.writeOffAccount"
-          [glAccount]="accountingMappings.writeOffAccount"
-          [withTitle]="'40%'"
-        >
-        </mifosx-gl-account-display>
+        <h4 class="mat-h4 flex-100">{{ 'labels.heading.Income' | translate }}</h4>
+        <div class="flex-100 layout-row-wrap responsive-column">
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Income from fees'"
+            [glAccount]="accountingMappings.incomeFromFeeAccount"
+            [withTitle]="'40%'"
+          >
+          </mifosx-gl-account-display>
+        </div>
+        <div class="flex-100 layout-row-wrap responsive-column">
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Income from penalties'"
+            [glAccount]="accountingMappings.incomeFromPenaltyAccount"
+            [withTitle]="'40%'"
+          >
+          </mifosx-gl-account-display>
+        </div>
+        <div class="flex-100 layout-row-wrap responsive-column">
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Income from Interest'"
+            *ngIf="accountingMappings.incomeFromInterest"
+            [glAccount]="accountingMappings.incomeFromInterest"
+            [withTitle]="'40%'"
+          >
+          </mifosx-gl-account-display>
+        </div>
+
+        <h4 class="mat-h4 flex-100">{{ 'labels.heading.Expenses' | translate }}</h4>
+        <div class="flex-100 layout-row-wrap responsive-column">
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Interest on savings'"
+            [glAccount]="accountingMappings.interestOnSavingsAccount"
+            [withTitle]="'40%'"
+          >
+          </mifosx-gl-account-display>
+        </div>
+        <div class="flex-100 layout-row-wrap responsive-column">
+          <mifosx-gl-account-display
+            class="flex-100"
+            [accountTitle]="'Write-off'"
+            *ngIf="accountingMappings.writeOffAccount"
+            [glAccount]="accountingMappings.writeOffAccount"
+            [withTitle]="'40%'"
+          >
+          </mifosx-gl-account-display>
+        </div>
       </div>
     </div>
   </div>

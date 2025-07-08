@@ -1,7 +1,14 @@
+@use 'assets/styles/helper';
+@use 'assets/styles/colours' as *;
+
 table {
   width: 100%;
 
   .select-row:hover {
     cursor: pointer;
   }
+}
+
+.manual-entry {
+  background-color: $manual-entry;
 }

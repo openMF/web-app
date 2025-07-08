@@ -157,6 +157,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
         this.savingProductAccountingForm.patchValue({
           feesReceivableAccountId: this.savingProductsTemplate.accountingMappings.feeReceivableAccount.id,
           penaltiesReceivableAccountId: this.savingProductsTemplate.accountingMappings.penaltyReceivableAccount.id,
+          interestReceivableAccountId:
+            this.savingProductsTemplate.accountingMappings.interestReceivableAccount == null || undefined
+              ? ''
+              : this.savingProductsTemplate.accountingMappings.interestReceivableAccount.id,
           interestPayableAccountId: this.savingProductsTemplate.accountingMappings.interestPayableAccount.id
         });
       }
@@ -253,6 +257,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
             new UntypedFormControl('', Validators.required)
           );
           this.savingProductAccountingForm.addControl(
+            'interestReceivableAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
             'interestPayableAccountId',
             new UntypedFormControl('', Validators.required)
           );
@@ -311,6 +319,7 @@ export class SavingProductAccountingStepComponent implements OnInit {
         this.savingProductAccountingForm.removeControl('escheatLiabilityId');
         this.savingProductAccountingForm.removeControl('feesReceivableAccountId');
         this.savingProductAccountingForm.removeControl('penaltiesReceivableAccountId');
+        this.savingProductAccountingForm.removeControl('interestReceivableAccountId');
         this.savingProductAccountingForm.removeControl('interestPayableAccountId');
       }
     });

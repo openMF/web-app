@@ -1,225 +1,229 @@
 <mat-card class="container">
-  <div class="layout-row-wrap gap-2px responsive-column">
-    <mat-form-field class="flex-fill flex-18">
-      <mat-label>{{ 'labels.text.Search by Text' | translate }}</mat-label>
-      <input matInput [formControl]="searchText" />
-    </mat-form-field>
+  <mat-card-content>
+    <div class="layout-row-wrap gap-2px responsive-column">
+      <mat-form-field class="flex-18">
+        <mat-label>{{ 'labels.text.Search by Text' | translate }}</mat-label>
+        <input matInput [formControl]="searchText" />
+      </mat-form-field>
 
-    <mat-form-field class="flex-fill flex-18" (click)="effectiveFromDatePicker.open()">
-      <mat-label>{{ 'labels.text.Effective Date From' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="effectiveFromDatePicker"
-        [formControl]="effectiveFromDate"
-      />
-      <mat-datepicker-toggle matSuffix [for]="effectiveFromDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #effectiveFromDatePicker></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="flex-18" (click)="effectiveFromDatePicker.open()">
+        <mat-label>{{ 'labels.text.Effective Date From' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="effectiveFromDatePicker"
+          [formControl]="effectiveFromDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="effectiveFromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #effectiveFromDatePicker></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field class="flex-fill flex-18" (click)="effectiveToDatePicker.open()">
-      <mat-label>{{ 'labels.text.Effective Date To' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="effectiveToDatePicker"
-        [formControl]="effectiveToDate"
-      />
-      <mat-datepicker-toggle matSuffix [for]="effectiveToDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #effectiveToDatePicker></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="flex-18" (click)="effectiveToDatePicker.open()">
+        <mat-label>{{ 'labels.text.Effective Date To' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="effectiveToDatePicker"
+          [formControl]="effectiveToDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="effectiveToDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #effectiveToDatePicker></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field class="flex-fill flex-18" (click)="settlementFromDatePicker.open()">
-      <mat-label>{{ 'labels.text.Settlement Date From' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="settlementFromDatePicker"
-        [formControl]="settlementFromDate"
-      />
-      <mat-datepicker-toggle matSuffix [for]="settlementFromDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #settlementFromDatePicker></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="flex-18" (click)="settlementFromDatePicker.open()">
+        <mat-label>{{ 'labels.text.Settlement Date From' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="settlementFromDatePicker"
+          [formControl]="settlementFromDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="settlementFromDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #settlementFromDatePicker></mat-datepicker>
+      </mat-form-field>
 
-    <mat-form-field class="flex-fill flex-18" (click)="settlementToDatePicker.open()">
-      <mat-label>{{ 'labels.text.Settlement Date To' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="settlementToDatePicker"
-        [formControl]="settlementToDate"
-      />
-      <mat-datepicker-toggle matSuffix [for]="settlementToDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #settlementToDatePicker></mat-datepicker>
-    </mat-form-field>
+      <mat-form-field class="flex-18" (click)="settlementToDatePicker.open()">
+        <mat-label>{{ 'labels.text.Settlement Date To' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="settlementToDatePicker"
+          [formControl]="settlementToDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="settlementToDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #settlementToDatePicker></mat-datepicker>
+      </mat-form-field>
 
-    <div class="center m-t-15 flex-98">
-      <button mat-raised-button color="primary" (click)="searchEAO()">
-        <fa-icon icon="search" class="m-r-10"></fa-icon> {{ 'labels.buttons.Search' | translate }}
-      </button>
+      <div class="center m-t-15 flex-98">
+        <button mat-raised-button color="primary" (click)="searchEAO()">
+          <fa-icon icon="search" class="m-r-10"></fa-icon> {{ 'labels.buttons.Search' | translate }}
+        </button>
+      </div>
     </div>
-  </div>
 
-  <div class="mat-elevation-z8 container m-t-20">
-    <div *ngIf="isLoading" class="loader">
-      <div class="loading"></div>
-    </div>
-    <mat-accordion *ngIf="existsDataToFilter">
-      <mat-expansion-panel *ngFor="let record of searchResults; index as i" class="record">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
+    <div class="mat-elevation-z8 container m-t-20">
+      <div *ngIf="isLoading" class="loader">
+        <div class="loading"></div>
+      </div>
+      <mat-accordion *ngIf="existsDataToFilter">
+        <mat-expansion-panel *ngFor="let record of searchResults; index as i" class="record">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <table>
+                <tr>
+                  <td>
+                    <div [ngClass]="itemStatus(record.status)" class="m-r-20">
+                      <fa-icon icon="stop"></fa-icon>
+                      <span class="m-l-10 status">{{ record.status }}</span>
+                    </div>
+                  </td>
+                  <td class="field-name">{{ 'labels.inputs.Owner External Id' | translate }}</td>
+                  <td>
+                    <mifosx-external-identifier externalId="{{ record.owner.externalId }}"></mifosx-external-identifier>
+                  </td>
+                  <td class="field-name">{{ 'labels.inputs.Transfer External Id' | translate }}</td>
+                  <td>
+                    <mifosx-external-identifier
+                      externalId="{{ record.transferExternalId }}"
+                    ></mifosx-external-identifier>
+                  </td>
+                  <td class="field-name">{{ 'labels.inputs.Effective From' | translate }}</td>
+                  <td>{{ record.effectiveFrom | dateFormat }}</td>
+                </tr>
+              </table>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="external-asset-transfer">
             <table>
-              <tr>
-                <td>
-                  <div [ngClass]="itemStatus(record.status)" class="m-r-20">
-                    <fa-icon icon="stop"></fa-icon>
-                    <span class="m-l-10 status">{{ record.status }}</span>
-                  </div>
-                </td>
-                <td class="field-name">{{ 'labels.inputs.Owner External Id' | translate }}</td>
-                <td>
-                  <mifosx-external-identifier externalId="{{ record.owner.externalId }}"></mifosx-external-identifier>
-                </td>
-                <td class="field-name">{{ 'labels.inputs.Transfer External Id' | translate }}</td>
-                <td>
-                  <mifosx-external-identifier externalId="{{ record.transferExternalId }}"></mifosx-external-identifier>
-                </td>
-                <td class="field-name">{{ 'labels.inputs.Effective From' | translate }}</td>
-                <td>{{ record.effectiveFrom | dateFormat }}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td class="m-l-5 flex-25">
+                    <b>{{ 'labels.inputs.Status' | translate }} :</b>
+                  </td>
+                  <td class="flex-25 m-l-5 left">
+                    <div [ngClass]="itemStatus(record.status)">
+                      <fa-icon icon="stop"></fa-icon>
+                      <span class="m-l-5 status">{{ record.status }}</span>
+                    </div>
+                  </td>
+                  <td class="m-l-5 flex-25">
+                    <b>{{ 'labels.inputs.Owner External Id' | translate }} :</b>
+                  </td>
+                  <td class="flex-25 m-l-5 left">
+                    <mifosx-external-identifier
+                      externalId="{{ record.owner.externalId }}"
+                      completed="true"
+                    ></mifosx-external-identifier>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="m-l-5 flex-25">
+                    <b>{{ 'labels.inputs.Settlement Date' | translate }} :</b>
+                  </td>
+                  <td class="m-l-5 flex-25">
+                    {{ record.settlementDate | dateFormat }}
+                  </td>
+                  <td class="m-l-5 flex-25">
+                    <b>{{ 'labels.inputs.Effective Date' | translate }} :</b>
+                  </td>
+                  <td class="m-l-5 flex-25">
+                    {{ record.effectiveFrom | dateFormat }}
+                  </td>
+                </tr>
+                <tr *ngIf="record.details">
+                  <td class="m-l-5 flex-25">
+                    <b>{{ 'labels.inputs.Details' | translate }} :</b>
+                  </td>
+                  <td class="flex-75 left">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td class="flex-50 m-l-5">
+                            <b>{{ 'labels.inputs.Principal Outstanding' | translate }} :</b>
+                          </td>
+                          <td class="flex-50 r-amount">
+                            {{ record.details.totalPrincipalOutstanding | formatNumber }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="flex-50 m-l-5">
+                            <b>{{ 'labels.inputs.Interest Outstanding' | translate }} :</b>
+                          </td>
+                          <td class="flex-50 r-amount">
+                            {{ record.details.totalInterestOutstanding | formatNumber }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="flex-50 m-l-5">
+                            <b>{{ 'labels.inputs.Fees Outstanding' | translate }} :</b>
+                          </td>
+                          <td class="flex-50 r-amount">
+                            {{ record.details.totalFeeChargesOutstanding | formatNumber }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="flex-50 m-l-5">
+                            <b>{{ 'labels.inputs.Penalties Outstanding' | translate }} :</b>
+                          </td>
+                          <td class="flex-50 r-amount">
+                            {{ record.details.totalPenaltyChargesOutstanding | formatNumber }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="flex-50 m-l-5">
+                            <b>{{ 'labels.inputs.Outstanding' | translate }} :</b>
+                          </td>
+                          <td class="flex-50 r-amount">{{ record.details.totalOutstanding | formatNumber }}</td>
+                        </tr>
+                        <tr>
+                          <td class="flex-50 m-l-5">
+                            <b>{{ 'labels.inputs.Overpaid' | translate }} :</b>
+                          </td>
+                          <td class="flex-50 r-amount">{{ record.details.totalOverpaid | formatNumber }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
             </table>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+          </div>
 
-        <div class="external-asset-transfer">
-          <table>
-            <tbody>
-              <tr>
-                <td class="m-l-5 flex-25">
-                  <b>{{ 'labels.inputs.Status' | translate }} :</b>
-                </td>
-                <td class="flex-25 m-l-5 left">
-                  <div [ngClass]="itemStatus(record.status)">
-                    <fa-icon icon="stop"></fa-icon>
-                    <span class="m-l-5 status">{{ record.status }}</span>
-                  </div>
-                </td>
-                <td class="m-l-5 flex-25">
-                  <b>{{ 'labels.inputs.Owner External Id' | translate }} :</b>
-                </td>
-                <td class="flex-25 m-l-5 left">
-                  <mifosx-external-identifier
-                    externalId="{{ record.owner.externalId }}"
-                    completed="true"
-                  ></mifosx-external-identifier>
-                </td>
-              </tr>
-              <tr>
-                <td class="m-l-5 flex-25">
-                  <b>{{ 'labels.inputs.Settlement Date' | translate }} :</b>
-                </td>
-                <td class="m-l-5 flex-25">
-                  {{ record.settlementDate | dateFormat }}
-                </td>
-                <td class="m-l-5 flex-25">
-                  <b>{{ 'labels.inputs.Effective Date' | translate }} :</b>
-                </td>
-                <td class="m-l-5 flex-25">
-                  {{ record.effectiveFrom | dateFormat }}
-                </td>
-              </tr>
-              <tr *ngIf="record.details">
-                <td class="m-l-5 flex-25">
-                  <b>{{ 'labels.inputs.Details' | translate }} :</b>
-                </td>
-                <td class="flex-75 left">
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td class="flex-50 m-l-5">
-                          <b>{{ 'labels.inputs.Principal Outstanding' | translate }} :</b>
-                        </td>
-                        <td class="flex-50 r-amount">
-                          {{ record.details.totalPrincipalOutstanding | formatNumber }}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="flex-50 m-l-5">
-                          <b>{{ 'labels.inputs.Interest Outstanding' | translate }} :</b>
-                        </td>
-                        <td class="flex-50 r-amount">
-                          {{ record.details.totalInterestOutstanding | formatNumber }}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="flex-50 m-l-5">
-                          <b>{{ 'labels.inputs.Fees Outstanding' | translate }} :</b>
-                        </td>
-                        <td class="flex-50 r-amount">
-                          {{ record.details.totalFeeChargesOutstanding | formatNumber }}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="flex-50 m-l-5">
-                          <b>{{ 'labels.inputs.Penalties Outstanding' | translate }} :</b>
-                        </td>
-                        <td class="flex-50 r-amount">
-                          {{ record.details.totalPenaltyChargesOutstanding | formatNumber }}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="flex-50 m-l-5">
-                          <b>{{ 'labels.inputs.Outstanding' | translate }} :</b>
-                        </td>
-                        <td class="flex-50 r-amount">{{ record.details.totalOutstanding | formatNumber }}</td>
-                      </tr>
-                      <tr>
-                        <td class="flex-50 m-l-5">
-                          <b>{{ 'labels.inputs.Overpaid' | translate }} :</b>
-                        </td>
-                        <td class="flex-50 r-amount">{{ record.details.totalOverpaid | formatNumber }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <mat-divider [inset]="true"></mat-divider>
 
-        <mat-divider [inset]="true"></mat-divider>
+          <div class="record-actions layout-row align-flex-end" *ngIf="canBeCancelled(record)">
+            <button
+              mat-button
+              color="warn"
+              (click)="cancelPendingSale(record)"
+              matTooltip="{{ 'labels.text.Cancel Pending Sale' | translate }}"
+            >
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
 
-        <div class="record-actions layout-row align-flex-end" *ngIf="canBeCancelled(record)">
-          <button
-            mat-button
-            color="warn"
-            (click)="cancelPendingSale(record)"
-            matTooltip="{{ 'labels.text.Cancel Pending Sale' | translate }}"
-          >
-            <fa-icon icon="trash"></fa-icon>
-          </button>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-
-    <mat-paginator
-      [pageSize]="pageSize"
-      [pageSizeOptions]="[50, 100, 200]"
-      [length]="totalRows"
-      (page)="pageChanged($event)"
-      showFirstLastButtons
-      *ngIf="existsDataToFilter"
-    ></mat-paginator>
-  </div>
-
-  <div class="alert" *ngIf="!existsDataToFilter">
-    <div class="message">
-      <i class="fa fa-exclamation-circle alert-check"></i>
-      {{ 'labels.text.No data found' | translate }}
+      <mat-paginator
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[50, 100, 200]"
+        [length]="totalRows"
+        (page)="pageChanged($event)"
+        showFirstLastButtons
+        *ngIf="existsDataToFilter"
+      ></mat-paginator>
     </div>
-  </div>
+
+    <div class="alert" *ngIf="!existsDataToFilter">
+      <div class="message">
+        <i class="fa fa-exclamation-circle alert-check"></i>
+        {{ 'labels.text.No data found' | translate }}
+      </div>
+    </div>
+  </mat-card-content>
 </mat-card>
