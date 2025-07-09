@@ -11,7 +11,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from 'app/loans/loans.service';
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -64,7 +64,7 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private clientsService: ClientsService,
+    private clientsService: ClientService,
     private settingsService: SettingsService
   ) {
     this.loanId = this.route.snapshot.params['loanId'];
@@ -142,9 +142,16 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     if (this.newGuarantorForm.value.existingClient) {
       this.newGuarantorForm.get('name').valueChanges.subscribe((value: string) => {
         if (value.length >= 2) {
-          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
-            this.clientsData = data.pageItems;
-          });
+          this.clientsService
+            .retrieveAll21({
+              displayName: value,
+              orphansOnly: true,
+              orderBy: 'displayName',
+              sortOrder: 'ASC'
+            })
+            .subscribe((data: any) => {
+              this.clientsData = data.pageItems;
+            });
         }
       });
     }

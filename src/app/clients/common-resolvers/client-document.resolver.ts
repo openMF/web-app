@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { DocumentsService } from '@fineract/client';
 
 /**
  * Client Documents resolver.
@@ -14,9 +14,9 @@ import { ClientsService } from '../clients.service';
 @Injectable()
 export class ClientDocumentsResolver {
   /**
-   * @param {ClientsService} ClientsService Clients service.
+   * @param {DocumentsService} documentsService Documents service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private documentsService: DocumentsService) {}
 
   /**
    * Returns the Client's Documents data.
@@ -24,6 +24,9 @@ export class ClientDocumentsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getClientDocuments(clientId);
+    return this.documentsService.retrieveAllDocuments({
+      entityType: 'clients',
+      entityId: Number(clientId)
+    });
   }
 }

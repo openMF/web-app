@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from '../../../clients.service';
+import { ClientFamilyMemberService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -47,7 +47,7 @@ export class AddFamilyMemberComponent implements OnInit {
     private dateUtils: Dates,
     private router: Router,
     private route: ActivatedRoute,
-    private clientsService: ClientsService,
+    private clientFamilyMemberService: ClientFamilyMemberService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { clientTemplate: any }) => {
@@ -114,7 +114,7 @@ export class AddFamilyMemberComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.clientsService.addFamilyMember(this.clientId, data).subscribe((res) => {
+    this.clientFamilyMemberService.addClientFamilyMembers(this.clientId, data).subscribe((res) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

@@ -36,6 +36,8 @@ import { TasksModule } from './tasks/tasks.module';
 import { ConfigurationWizardModule } from './configuration-wizard/configuration-wizard.module';
 import { PortalModule } from '@angular/cdk/portal';
 import { ApiModule } from '@fineract/client';
+import { BASE_PATH } from '@fineract/client';
+import { SettingsService } from './settings/settings.service';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
@@ -114,6 +116,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     DatePipe,
-    provideHttpClient(withInterceptorsFromDi())]
+    {
+      provide: BASE_PATH,
+      useFactory: (settingsService: SettingsService) => settingsService.baseServerUrl,
+      deps: [SettingsService]
+    },
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 })
 export class AppModule {}

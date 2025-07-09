@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientCollateralManagementService } from '@fineract/client';
 
 /**
  * Client Charges data resolver.
@@ -16,7 +16,7 @@ export class ClientCollateralResolver {
   /**
    * @param {ClientsService} clientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientCollateralService: ClientCollateralManagementService) {}
 
   /**
    * Returns the Client Collateral data.
@@ -24,6 +24,6 @@ export class ClientCollateralResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getCollateralTemplate(clientId);
+    return this.clientCollateralService.getClientCollateralTemplate({ clientId: +clientId });
   }
 }

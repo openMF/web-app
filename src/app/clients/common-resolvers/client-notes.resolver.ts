@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { NotesService } from '@fineract/client';
 
 /**
  * Client Notes resolver.
@@ -16,7 +16,7 @@ export class ClientNotesResolver {
   /**
    * @param {ClientsService} ClientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientsService: NotesService) {}
 
   /**
    * Returns the Client's Notes.
@@ -24,6 +24,6 @@ export class ClientNotesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getClientNotes(clientId);
+    return this.clientsService.retrieveNotesByResource({ resourceType: 'clients', resourceId: +clientId });
   }
 }

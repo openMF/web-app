@@ -4,7 +4,7 @@ import { UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/fo
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientChargesService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -37,7 +37,7 @@ export class ClientPayChargesComponent implements OnInit {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(
-    private clientsService: ClientsService,
+    private clientChargesService: ClientChargesService,
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -85,14 +85,21 @@ export class ClientPayChargesComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, data).subscribe(() => {
-      this.router.navigate(
-        [
-          '../../..',
-          'general'
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.clientChargesService
+      .payOrWaiveClientCharge({
+        clientId: Number(this.transactionData.clientId),
+        chargeId: Number(this.transactionData.id),
+        postClientsClientIdChargesChargeIdRequest: data,
+        command: 'paycharge'
+      })
+      .subscribe(() => {
+        this.router.navigate(
+          [
+            '../../..',
+            'general'
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

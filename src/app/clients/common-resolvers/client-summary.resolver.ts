@@ -1,12 +1,14 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { RunReportsService } from '@fineract/client';
 
 /**
  * Client Summary resolver.
@@ -14,9 +16,9 @@ import { ClientsService } from '../clients.service';
 @Injectable()
 export class ClientSummaryResolver {
   /**
-   * @param {ClientsService} ClientsService Clients service.
+   * @param {RunReportsService} runReportsService Reports service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private runReportsService: RunReportsService) {}
 
   /**
    * Returns the Client Summary data.
@@ -24,6 +26,8 @@ export class ClientSummaryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getClientSummary(clientId);
+    return this.runReportsService.runReport({
+      reportName: `ClientSummary?R_clientId=${clientId}&genericResultSet=false`
+    });
   }
 }

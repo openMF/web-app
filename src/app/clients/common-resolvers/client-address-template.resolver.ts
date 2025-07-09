@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientsAddressService } from '@fineract/client';
 
 /**
  * Client Address Field Configuration resolver.
@@ -15,13 +15,13 @@ export class ClientAddressTemplateResolver {
   /**
    * @param {ClientsService} ClientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientsService: ClientsAddressService) {}
 
   /**
    * Returns the Client Address Field Configuration.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.clientsService.getClientAddressTemplate();
+    return this.clientsService.getAddressesTemplate();
   }
 }

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 /** Custom Services */
 import { LoansService } from '../loans.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { ClientsService } from 'app/clients/clients.service';
+import { CollateralManagementService } from '@fineract/client';
 
 /** Step Components */
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -77,7 +77,7 @@ export class CreateLoansAccountComponent {
     private router: Router,
     private loansService: LoansService,
     private settingsService: SettingsService,
-    private clientService: ClientsService
+    private collateralManagementService: CollateralManagementService
   ) {
     this.route.data.subscribe((data: { loansAccountTemplate: any }) => {
       this.loansAccountTemplate = data.loansAccountTemplate;
@@ -93,7 +93,9 @@ export class CreateLoansAccountComponent {
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
     const clientId = this.loansAccountTemplate.clientId;
     if (!!clientId) {
-      this.clientService.getCollateralTemplate(clientId).subscribe((response: any) => {
+      // Use CollateralManagementService from OpenAPI client
+      // Assuming you have injected collateralManagementService: CollateralManagementService
+      this.collateralManagementService.getCollateralTemplate().subscribe((response: any) => {
         this.collateralOptions = response;
       });
     } else {

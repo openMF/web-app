@@ -16,7 +16,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { UploadDocumentDialogComponent } from 'app/clients/clients-view/custom-dialogs/upload-document-dialog/upload-document-dialog.component';
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientService } from '@fineract/client';
 import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -88,7 +88,7 @@ export class EntityDocumentsTabComponent implements OnInit {
     public dialog: MatDialog,
     private savingsService: SavingsService,
     private loansService: LoansService,
-    private clientsService: ClientsService
+    private clientsService: ClientService
   ) {}
 
   ngOnInit() {

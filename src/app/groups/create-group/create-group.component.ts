@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from '../groups.service';
-import { ClientsService } from '../../clients/clients.service';
+import { ClientService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
@@ -73,7 +73,7 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private clientsService: ClientsService,
+    private clientsService: ClientService,
     private groupService: GroupsService,
     private dateUtils: Dates,
     private settingsService: SettingsService
@@ -98,7 +98,13 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.clientChoice.valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
         this.clientsService
-          .getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
+          .retrieveAll21({
+            displayName: value,
+            orphansOnly: true,
+            orderBy: 'displayName',
+            sortOrder: 'ASC',
+            officeId: this.groupForm.get('officeId').value
+          })
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });

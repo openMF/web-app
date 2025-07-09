@@ -11,7 +11,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
-import { ClientsService } from 'app/clients/clients.service';
+import { DocumentsService } from '@fineract/client';
 
 /** Node Types */
 import { Buffer } from 'buffer';
@@ -48,7 +48,7 @@ export class ViewSignatureDialogComponent implements OnInit {
    */
   constructor(
     public dialogRef: MatDialogRef<ViewSignatureDialogComponent>,
-    private clientsService: ClientsService,
+    private documentsService: DocumentsService,
     private sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: { documents: any[]; id: string }
   ) {
@@ -59,13 +59,19 @@ export class ViewSignatureDialogComponent implements OnInit {
 
   ngOnInit() {
     if (this.signatureId) {
-      this.clientsService.getClientSignatureImage(this.clientId, this.signatureId).subscribe(
-        async (blob: any) => {
-          const buffer = Buffer.from(await blob.arrayBuffer());
-          this.signatureImage = 'data:' + blob.type + ';base64,' + buffer.toString('base64');
-        },
-        (error: any) => {}
-      );
+      this.documentsService
+        .downloadFile({
+          entityType: 'clients',
+          entityId: Number(this.clientId),
+          documentId: Number(this.signatureId)
+        })
+        .subscribe(
+          async (blob: any) => {
+            const buffer = Buffer.from(await blob.arrayBuffer());
+            this.signatureImage = 'data:' + blob.type + ';base64,' + buffer.toString('base64');
+          },
+          (error: any) => {}
+        );
     }
   }
 }

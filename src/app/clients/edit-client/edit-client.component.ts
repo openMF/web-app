@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatDivider } from '@angular/material/divider';
@@ -74,7 +74,7 @@ export class EditClientComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private clientsService: ClientsService,
+    private clientsService: ClientService,
     private dateUtils: Dates,
     private settingsService: SettingsService
   ) {
@@ -242,8 +242,13 @@ export class EditClientComponent implements OnInit {
     } else {
       clientData.clientNonPersonDetails = {};
     }
-    this.clientsService.updateClient(this.clientDataAndTemplate.id, clientData).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.clientsService
+      .update10({
+        clientId: this.clientDataAndTemplate.id,
+        putClientsClientIdRequest: clientData
+      })
+      .subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

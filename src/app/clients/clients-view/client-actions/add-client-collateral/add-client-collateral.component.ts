@@ -6,7 +6,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 /**
  * Custom Services
  */
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientCollateralManagementService } from '@fineract/client';
 import { ProductsService } from 'app/products/products.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -41,7 +41,7 @@ export class AddClientCollateralComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productsService: ProductsService,
-    private clientsService: ClientsService,
+    private clientCollateralManagementService: ClientCollateralManagementService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
@@ -114,8 +114,13 @@ export class AddClientCollateralComponent implements OnInit {
       quantity,
       locale
     };
-    this.clientsService.createClientCollateral(this.clientId, clientCollateral).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.clientCollateralManagementService
+      .addCollateral({
+        clientId: Number(this.clientId),
+        clientCollateralRequest: clientCollateral
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

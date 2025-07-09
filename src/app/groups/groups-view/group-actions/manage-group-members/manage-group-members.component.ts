@@ -8,7 +8,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 /** Custom Services */
 import { GroupsService } from 'app/groups/groups.service';
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientService } from '@fineract/client';
 import { MatDialog } from '@angular/material/dialog';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { MatIconButton } from '@angular/material/button';
@@ -57,7 +57,7 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private groupsService: GroupsService,
-    private clientsService: ClientsService,
+    private clientsService: ClientService,
     public dialog: MatDialog
   ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
@@ -73,7 +73,13 @@ export class ManageGroupMembersComponent implements AfterViewInit {
     this.clientChoice.valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
         this.clientsService
-          .getFilteredClients('displayName', 'ASC', true, value, this.groupData.officeId)
+          .retrieveAll21({
+            displayName: value,
+            orphansOnly: true,
+            orderBy: 'displayName',
+            sortOrder: 'ASC',
+            officeId: this.groupData.officeId
+          })
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });

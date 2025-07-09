@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { ClientsService } from '../../clients.service';
+import { ClientFamilyMemberService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatAccordion,
@@ -53,7 +53,7 @@ export class FamilyMembersTabComponent {
    */
   constructor(
     private route: ActivatedRoute,
-    private clientsService: ClientsService,
+    private clientfamilymemberService: ClientFamilyMemberService,
     public dialog: MatDialog
   ) {
     this.route.data.subscribe((data: { clientFamilyMembers: any }) => {
@@ -70,9 +70,14 @@ export class FamilyMembersTabComponent {
     });
     deleteFamilyMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.clientsService.deleteFamilyMember(clientId, id).subscribe(() => {
-          this.clientFamilyMembers.splice(index, 1);
-        });
+        this.clientfamilymemberService
+          .deleteClientFamilyMembers({
+            clientId: Number(clientId),
+            familyMemberId: Number(id)
+          })
+          .subscribe(() => {
+            this.clientFamilyMembers.splice(index, 1);
+          });
       }
     });
   }

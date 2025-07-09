@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from 'app/clients/clients.service';
+import { ChargesService, ClientChargesService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -54,7 +54,8 @@ export class AddClientChargeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private clientsService: ClientsService,
+    private chargesService: ChargesService,
+    private clientChargesService: ClientChargesService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { clientActionData: any }) => {
@@ -74,7 +75,7 @@ export class AddClientChargeComponent implements OnInit {
    */
   buildDependencies() {
     this.clientChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.clientsService.getChargeAndTemplate(chargeId).subscribe((data: any) => {
+      this.chargesService.retrieveCharge(chargeId).subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
@@ -154,8 +155,13 @@ export class AddClientChargeComponent implements OnInit {
         }
       }
     }
-    this.clientsService.createClientCharge(this.clientId, clientCharge).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.clientChargesService
+      .applyClientCharge({
+        clientId: Number(this.clientId),
+        postClientsClientIdChargesRequest: clientCharge
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

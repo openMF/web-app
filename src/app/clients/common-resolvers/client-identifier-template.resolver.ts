@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientIdentifierService } from '@fineract/client';
 
 /**
  * Client Identifier Template resolver.
@@ -14,15 +14,18 @@ import { ClientsService } from '../clients.service';
 @Injectable()
 export class ClientIdentifierTemplateResolver {
   /**
-   * @param {ClientsService} ClientsService Clients service.
+   * @param {ClientIdentifierService} clientIdentifierService Client Identifier service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientIdentifierService: ClientIdentifierService) {}
+
   /**
    * Returns the Client Identities data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getClientIdentifierTemplate(clientId);
+    return this.clientIdentifierService.newClientIdentifierDetails({
+      clientId: Number(clientId)
+    });
   }
 }

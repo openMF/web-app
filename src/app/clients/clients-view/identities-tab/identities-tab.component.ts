@@ -27,7 +27,7 @@ import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
-import { ClientsService } from '../../clients.service';
+import { DocumentsService, ClientIdentifierService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgStyle, NgFor } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -84,7 +84,8 @@ export class IdentitiesTabComponent {
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private clientService: ClientsService,
+    private documentsService: DocumentsService,
+    private clientIdentifierService: ClientIdentifierService,
     private translateService: TranslateService
   ) {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
@@ -100,10 +101,16 @@ export class IdentitiesTabComponent {
    * @param {string} documentId Document ID
    */
   download(parentEntityId: string, documentId: string) {
-    this.clientService.downloadClientIdentificationDocument(parentEntityId, documentId).subscribe((res) => {
-      const url = window.URL.createObjectURL(res);
-      window.open(url);
-    });
+    this.documentsService
+      .downloadFile({
+        entityType: 'client_identifiers',
+        entityId: Number(parentEntityId),
+        documentId: Number(documentId)
+      })
+      .subscribe((res) => {
+        const url = window.URL.createObjectURL(res);
+        window.open(url);
+      });
   }
 
   /**
@@ -163,23 +170,34 @@ export class IdentitiesTabComponent {
     const addIdentifierDialogRef = this.dialog.open(FormDialogComponent, { data });
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        this.clientService.addClientIdentifier(this.clientId, response.data.value).subscribe((res: any) => {
-          this.clientIdentities.push({
-            id: res.resourceId,
-            description: response.data.value.description,
-            documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter(
-              (doc: any) => doc.id === response.data.value.documentTypeId
-            )[0],
-            documentKey: response.data.value.documentKey,
-            documents: [],
-            clientId: this.clientId,
-            status:
-              response.data.value.status === 'Active'
-                ? 'clientIdentifierStatusType.active'
-                : 'clientIdentifierStatusType.inactive'
+        const request = {
+          documentTypeId: response.data.value.documentTypeId,
+          documentKey: response.data.value.documentKey,
+          status: response.data.value.status,
+          description: response.data.value.description
+        };
+        this.clientIdentifierService
+          .createClientIdentifier({
+            clientId: Number(this.clientId),
+            postClientsClientIdIdentifiersRequest: request
+          })
+          .subscribe((res: any) => {
+            this.clientIdentities.push({
+              id: res.resourceId,
+              description: response.data.value.description,
+              documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter(
+                (doc: any) => doc.id === response.data.value.documentTypeId
+              )[0],
+              documentKey: response.data.value.documentKey,
+              documents: [],
+              clientId: this.clientId,
+              status:
+                response.data.value.status === 'Active'
+                  ? 'clientIdentifierStatusType.active'
+                  : 'clientIdentifierStatusType.inactive'
+            });
+            this.identifiersTable.renderRows();
           });
-          this.identifiersTable.renderRows();
-        });
       }
     });
   }
@@ -192,14 +210,22 @@ export class IdentitiesTabComponent {
    */
   deleteIdentifier(clientId: string, identifierId: string, index: number) {
     const deleteIdentifierDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `${this.translateService.instant('labels.heading.identifier id')} : ${identifierId}` }
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.delete') + ' ' + this.translateService.instant('labels.identifier')
+      }
     });
     deleteIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.clientService.deleteClientIdentifier(clientId, identifierId).subscribe((res) => {
-          this.clientIdentities.splice(index, 1);
-          this.identifiersTable.renderRows();
-        });
+        this.clientIdentifierService
+          .deleteClientIdentifier({
+            clientId: Number(clientId),
+            identifierId: Number(identifierId)
+          })
+          .subscribe(() => {
+            this.clientIdentities.splice(index, 1);
+            this.identifiersTable.renderRows();
+          });
       }
     });
   }
@@ -210,24 +236,64 @@ export class IdentitiesTabComponent {
    * @param {string} identifierId Identifier Id
    */
   uploadDocument(index: number, identifierId: string) {
-    const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent, {
-      data: { documentIdentifier: true }
-    });
+    const uploadDocumentDialogRef = this.dialog.open(UploadDocumentDialogComponent);
     uploadDocumentDialogRef.afterClosed().subscribe((dialogResponse: any) => {
       if (dialogResponse) {
         const formData: FormData = new FormData();
         formData.append('name', dialogResponse.fileName);
         formData.append('file', dialogResponse.file);
-        this.clientService.uploadClientIdentifierDocument(identifierId, formData).subscribe((res: any) => {
-          this.clientIdentities[index].documents.push({
-            id: res.resourceId,
-            parentEntityType: 'client_identifiers',
-            parentEntityId: identifierId,
+        this.documentsService
+          .createDocument({
+            entityType: 'client_identifiers',
+            entityId: Number(identifierId),
             name: dialogResponse.fileName,
-            fileName: dialogResponse.file.name
+            description: '',
+            uploadedInputStream: dialogResponse.file
+          })
+          .subscribe((res: any) => {
+            this.clientIdentities[index].documents.push({
+              id: res.resourceId,
+              parentEntityType: 'client_identifiers',
+              parentEntityId: identifierId,
+              name: dialogResponse.fileName,
+              fileName: dialogResponse.file.name
+            });
+            this.identifiersTable.renderRows();
           });
-          this.identifiersTable.renderRows();
-        });
+      }
+    });
+  }
+
+  /**
+   * Delete Document
+   * @param {string} parentEntityId Parent Entity Id
+   * @param {string} documentId Document ID
+   * @param {number} index Index
+   */
+  deleteDocument(parentEntityId: string, documentId: string, index: number) {
+    const deleteDocumentDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.delete') + ' ' + this.translateService.instant('labels.document')
+      }
+    });
+    deleteDocumentDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.documentsService
+          .deleteDocument({
+            entityType: 'client_identifiers',
+            entityId: Number(parentEntityId),
+            documentId: Number(documentId)
+          })
+          .subscribe(() => {
+            this.clientIdentities = this.clientIdentities.map((item: any) => {
+              if (item.id === parentEntityId) {
+                item.documents.splice(index, 1);
+              }
+              return item;
+            });
+            this.identifiersTable.renderRows();
+          });
       }
     });
   }

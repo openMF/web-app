@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientService } from '@fineract/client';
 
 /**
  * Client Template resolver.
@@ -16,13 +16,13 @@ export class ClientTemplateResolver {
   /**
    * @param {ClientsService} ClientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientsService: ClientService) {}
 
   /**
    * Returns the Client Template data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    return this.clientsService.getClientTemplate();
+    return this.clientsService.retrieveTemplate5();
   }
 }

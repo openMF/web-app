@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ClientsService } from 'app/clients/clients.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ClientService, ClientChargesService, ClientTransactionService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 import { NgClass, NgIf } from '@angular/common';
@@ -72,7 +72,9 @@ export class ViewChargeComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private clientService: ClientsService
+    private clientService: ClientService,
+    private clientChargesService: ClientChargesService,
+    private clientTransactionService: ClientTransactionService
   ) {
     this.route.data.subscribe((data: { clientChargeData: any }) => {
       this.chargeData = data.clientChargeData;
@@ -83,8 +85,18 @@ export class ViewChargeComponent {
    * Waive Charge.
    */
   waiveCharge() {
-    const waiveChargeObj = { clientId: this.chargeData.clientId, resourceType: this.chargeData.id };
-    this.clientService.waiveClientCharge(waiveChargeObj).subscribe(() => {
+    const waiveChargeObj = {
+      clientId: this.chargeData.clientId,
+      chargeId: this.chargeData.id,
+      postClientsClientIdChargesChargeIdRequest: {
+        // Add any required fields for the waive action here, e.g.:
+        // transactionDate: new Date().toISOString().split('T')[0],
+        // locale: 'en',
+        // dateFormat: 'yyyy-MM-dd'
+      },
+      command: 'waive'
+    };
+    this.clientChargesService.payOrWaiveClientCharge(waiveChargeObj).subscribe(() => {
       this.getChargeData();
     });
   }
@@ -93,31 +105,46 @@ export class ViewChargeComponent {
    * Undo Transaction.
    */
   undoTransaction(transactionId: any) {
-    const transactionData = { clientId: this.chargeData.clientId.toString(), transactionId: transactionId };
-    this.clientService.undoTransaction(transactionData).subscribe(() => {
-      this.getChargeData();
-    });
+    this.clientTransactionService
+      .undoClientTransaction({
+        clientId: this.chargeData.clientId,
+        transactionId: transactionId,
+        command: 'undo'
+      })
+      .subscribe(() => {
+        this.getChargeData();
+      });
   }
 
   /**
    * Get Charge Data.
    */
   getChargeData() {
-    this.clientService.getSelectedChargeData(this.chargeData.clientId, this.chargeData.id).subscribe((data: any) => {
-      this.chargeData = data;
-    });
+    this.clientChargesService
+      .retrieveClientCharge({
+        clientId: this.chargeData.clientId,
+        chargeId: this.chargeData.id
+      })
+      .subscribe((data: any) => {
+        this.chargeData = data;
+      });
   }
 
   /**
    * Delete Charge.
    */
   deleteCharge() {
-    this.clientService.deleteCharge(this.chargeData.clientId, this.chargeData.id).subscribe(() => {
-      this.router.navigate([
-        '../../clients',
-        this.chargeData.clientId,
-        'general'
-      ]);
-    });
+    this.clientChargesService
+      .deleteClientCharge({
+        clientId: this.chargeData.clientId,
+        chargeId: this.chargeData.id
+      })
+      .subscribe(() => {
+        this.router.navigate([
+          '../../clients',
+          this.chargeData.clientId,
+          'general'
+        ]);
+      });
   }
 }

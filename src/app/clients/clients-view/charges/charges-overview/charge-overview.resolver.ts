@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../../../clients.service';
+import { SelfClientService } from '@fineract/client';
 
 /**
  * Client Charges data resolver.
@@ -16,7 +16,7 @@ export class ClientChargeOverviewResolver {
   /**
    * @param {ClientsService} ClientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private selfClientService: SelfClientService) {}
 
   /**
    * Returns the Client Charge data.
@@ -24,6 +24,6 @@ export class ClientChargeOverviewResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.params.clientId;
-    return this.clientsService.getAllClientCharges(clientId);
+    return this.selfClientService.retrieveAllClientCharges1(clientId);
   }
 }

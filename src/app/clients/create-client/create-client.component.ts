@@ -3,7 +3,7 @@ import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientService } from '@fineract/client';
 
 /** Custom Components */
 import { ClientGeneralStepComponent } from '../client-stepper/client-general-step/client-general-step.component';
@@ -67,7 +67,7 @@ export class CreateClientComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private clientsService: ClientsService,
+    private clientsService: ClientService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { clientTemplate: any; clientAddressFieldConfig: any }) => {
@@ -156,7 +156,7 @@ export class CreateClientComponent {
       clientData['datatables'] = datatables;
     }
 
-    this.clientsService.createClient(clientData).subscribe((response: any) => {
+    this.clientsService.create6({ postClientsRequest: clientData }).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

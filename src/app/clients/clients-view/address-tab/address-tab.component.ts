@@ -11,7 +11,7 @@ import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.componen
 
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
-import { ClientsService } from '../../clients.service';
+import { ClientsAddressService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatAccordion,
@@ -61,7 +61,7 @@ export class AddressTabComponent {
    */
   constructor(
     private route: ActivatedRoute,
-    private clientService: ClientsService,
+    private clientsAddressService: ClientsAddressService,
     private dialog: MatDialog,
     private translateService: TranslateService
   ) {
@@ -91,8 +91,12 @@ export class AddressTabComponent {
     const addAddressDialogRef = this.dialog.open(FormDialogComponent, { data });
     addAddressDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        this.clientService
-          .createClientAddress(this.clientId, response.data.value.addressType, response.data.value)
+        this.clientsAddressService
+          .addClientAddress({
+            clientid: Number(this.clientId),
+            clientAddressRequest: response.data.value,
+            type: response.data.value.addressType
+          })
           .subscribe((res: any) => {
             const addressData = response.data.value;
             addressData.addressId = res.resourceId;
@@ -126,8 +130,11 @@ export class AddressTabComponent {
         const addressData = response.data.value;
         addressData.addressId = address.addressId;
         addressData.isActive = address.isActive;
-        this.clientService
-          .editClientAddress(this.clientId, address.addressTypeId, addressData)
+        this.clientsAddressService
+          .updateClientAddress({
+            clientid: Number(this.clientId),
+            clientAddressRequest: addressData
+          })
           .subscribe((res: any) => {
             addressData.addressTypeId = address.addressTypeId;
             addressData.addressType = address.addressType;
@@ -146,9 +153,14 @@ export class AddressTabComponent {
       addressId: address.addressId,
       isActive: address.isActive ? false : true
     };
-    this.clientService.editClientAddress(this.clientId, address.addressTypeId, addressData).subscribe(() => {
-      address.isActive = address.isActive ? false : true;
-    });
+    this.clientsAddressService
+      .updateClientAddress({
+        clientid: Number(this.clientId),
+        clientAddressRequest: addressData
+      })
+      .subscribe(() => {
+        address.isActive = address.isActive ? false : true;
+      });
   }
 
   /**

@@ -15,7 +15,7 @@ import {
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 
 /** Environment Configuration */
@@ -98,7 +98,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     private accountTransfersService: AccountTransfersService,
     private dateUtils: Dates,
     private settingsService: SettingsService,
-    private clientsService: ClientsService
+    private clientsService: ClientService
   ) {
     this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
@@ -264,9 +264,16 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     if (!this.interbank) {
       this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: string) => {
         if (value.length >= 2) {
-          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
-            this.clientsData = data.pageItems;
-          });
+          this.clientsService
+            .retrieveAll21({
+              displayName: value,
+              orphansOnly: true,
+              orderBy: 'displayName',
+              sortOrder: 'ASC'
+            })
+            .subscribe((data: any) => {
+              this.clientsData = data.pageItems;
+            });
           this.changeEvent();
         }
       });
