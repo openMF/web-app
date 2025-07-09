@@ -611,3 +611,23 @@ mifosx-notifications-page td {
   justify-content: flex-start;
   width: 100%;
 }
+
+//New!
+.type-field {
+  position: absolute;
+  left: 1px;
+  top: 20px;
+}
+
+//New!
+.Account-Id-field {
+  position: absolute;
+  left: 490px;
+  top: 20px;
+}
+
+//New!
+.Client-Name {
+  position: absolute;
+  left: 490px;
+}
