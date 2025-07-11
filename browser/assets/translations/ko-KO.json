@@ -2488,7 +2488,8 @@
       "Buy down fee income type": "매수 수수료 수익 유형",
       "Buy down fees": "매수 수수료",
       "Income from Buy down fees": "매입 수수료 수입",
-      "Buy down fee Expense": "매입 수수료 비용"
+      "Buy down fee Expense": "매입 수수료 비용",
+      "Skip Interest Refund Transaction Posting": "이자 환불 거래 게시 건너뛰기"
     },
     "links": {
       "Community": "지역 사회",

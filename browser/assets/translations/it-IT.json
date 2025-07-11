@@ -2487,7 +2487,8 @@
       "Buy down fee income type": "Tipo di ricavo da commissione di buy down",
       "Buy down fees": "Commissioni di acquisto",
       "Income from Buy down fees": "Proventi da commissioni di buy down",
-      "Buy down fee Expense": "Spese da commissioni di buy down"
+      "Buy down fee Expense": "Spese da commissioni di buy down",
+      "Skip Interest Refund Transaction Posting": "Salta la registrazione del rimborso degli interessi"
     },
     "links": {
       "Community": "Comunità",

@@ -2494,7 +2494,8 @@
       "Buy down fee income type": "Buy down fee income type",
       "Buy down fees": "Buy down fees",
       "Income from Buy down fees": "Income from Buy down fees",
-      "Buy down fee Expense": "Buy down fee Expense"
+      "Buy down fee Expense": "Buy down fee Expense",
+      "Skip Interest Refund Transaction Posting": "Skip Interest Refund Transaction Posting"
     },
     "links": {
       "Community": "Community",
