@@ -7,7 +7,7 @@ import {
   UntypedFormControl,
   ReactiveFormsModule
 } from '@angular/forms';
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
@@ -78,7 +78,7 @@ export class ClientGeneralStepComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private dateUtils: Dates,
     private settingsService: SettingsService,
-    private clientService: ClientsService
+    private clientService: ClientService
   ) {
     this.setClientForm();
   }
@@ -202,9 +202,11 @@ export class ClientGeneralStepComponent implements OnInit {
       }
     });
     this.createClientForm.get('officeId').valueChanges.subscribe((officeId: number) => {
-      this.clientService.getClientWithOfficeTemplate(officeId).subscribe((clientTemplate: any) => {
-        this.staffOptions = clientTemplate.staffOptions;
-      });
+      this.clientService
+        .retrieveTemplate5({ officeId, staffInSelectedOfficeOnly: true })
+        .subscribe((clientTemplate: any) => {
+          this.staffOptions = clientTemplate.staffOptions;
+        });
     });
   }
 

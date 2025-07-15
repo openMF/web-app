@@ -6,6 +6,7 @@
           matInput
           placeholder="Search by client name, external Id, mobile"
           class="search-box"
+          (input)="search($event.target.value)"
           (keydown.enter)="search($event.target.value)"
         />
       </mat-form-field>

@@ -19,7 +19,7 @@ import {
 
 /** Custom Services */
 import { environment } from '../../environments/environment';
-import { ClientsService } from './clients.service';
+import { ClientSearchV2Service, SortOrder } from '@fineract/client';
 import { NgIf, NgClass } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatProgressBar } from '@angular/material/progress-bar';
@@ -84,7 +84,7 @@ export class ClientsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private clientService: ClientsService) {}
+  constructor(private clientSearchV2Service: ClientSearchV2Service) {}
 
   ngOnInit() {
     if (environment.preloadClients) {
@@ -103,8 +103,25 @@ export class ClientsComponent implements OnInit {
 
   private getClients() {
     this.isLoading = true;
-    this.clientService
-      .searchByText(this.filterText, this.currentPage, this.pageSize, this.sortAttribute, this.sortDirection)
+    this.clientSearchV2Service
+      .searchByText({
+        pagedRequestClientTextSearch: {
+          page: this.currentPage,
+          size: this.pageSize,
+          request: {
+            text: this.filterText
+          },
+          sorts:
+            this.sortAttribute && this.sortDirection
+              ? [
+                  {
+                    property: this.sortAttribute,
+                    direction: this.sortDirection === 'asc' ? SortOrder.DirectionEnum.Asc : SortOrder.DirectionEnum.Desc
+                  }
+                ]
+              : undefined
+        }
+      })
       .subscribe(
         (data: any) => {
           this.dataSource.data = data.content;

@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientService } from '@fineract/client';
 
 /**
  * Clients data and template resolver.
@@ -16,7 +16,7 @@ export class ClientDataAndTemplateResolver {
   /**
    * @param {ClientsService} ClientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientsService: ClientService) {}
 
   /**
    * Returns the Clients data and template.
@@ -24,6 +24,8 @@ export class ClientDataAndTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.paramMap.get('clientId');
-    return this.clientsService.getClientDataAndTemplate(clientId);
+    return this.clientsService.retrieveOne11({
+      clientId: Number(clientId)
+    });
   }
 }

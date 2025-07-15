@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientFamilyMemberService } from '@fineract/client';
 
 /**
  * Client Family Member resolver.
@@ -14,9 +14,9 @@ import { ClientsService } from '../clients.service';
 @Injectable()
 export class ClientFamilyMemberResolver {
   /**
-   * @param {ClientsService} ClientsService Clients service.
+   * @param {ClientFamilyMemberService} clientFamilyMemberService Client Family Member service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientFamilyMemberService: ClientFamilyMemberService) {}
 
   /**
    * Returns the Clients data.
@@ -25,6 +25,9 @@ export class ClientFamilyMemberResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.parent.parent.paramMap.get('clientId');
     const familyMemberId = route.parent.paramMap.get('familyMemberId');
-    return this.clientsService.getClientFamilyMember(clientId, familyMemberId);
+    return this.clientFamilyMemberService.getFamilyMember({
+      clientId: Number(clientId),
+      familyMemberId: Number(familyMemberId)
+    });
   }
 }

@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientsAddressService } from '@fineract/client';
 
 /**
  * Client Address data resolver.
@@ -16,7 +16,7 @@ export class ClientAddressResolver {
   /**
    * @param {ClientsService} ClientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientsAddressService: ClientsAddressService) {}
 
   /**
    * Returns the Client Address data.
@@ -24,6 +24,8 @@ export class ClientAddressResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.paramMap.get('clientId');
-    return this.clientsService.getClientAddressData(clientId);
+    return this.clientsAddressService.getAddresses1({
+      clientid: Number(clientId)
+    });
   }
 }

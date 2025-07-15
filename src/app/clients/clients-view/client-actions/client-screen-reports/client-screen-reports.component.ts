@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from 'app/clients/clients.service';
+import { UserGeneratedDocumentsService } from '@fineract/client';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -44,7 +44,7 @@ export class ClientScreenReportsComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private clientsService: ClientsService,
+    private usergeneratedDocumentsService: UserGeneratedDocumentsService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private renderer: Renderer2
@@ -89,7 +89,7 @@ export class ClientScreenReportsComponent implements OnInit {
    */
   generate() {
     const templateId = this.clientScreenReportForm.get('templateId').value;
-    this.clientsService.retrieveClientReportTemplate(templateId, this.clientId).subscribe((response: any) => {
+    this.usergeneratedDocumentsService.mergeTemplate(templateId, this.clientId).subscribe((response: any) => {
       this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
     });

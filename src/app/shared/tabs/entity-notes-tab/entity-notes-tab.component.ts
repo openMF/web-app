@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientService } from '@fineract/client';
 import { GroupsService } from 'app/groups/groups.service';
 import { LoansService } from 'app/loans/loans.service';
 import { SavingsService } from 'app/savings/savings.service';
@@ -42,7 +42,7 @@ export class EntityNotesTabComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private savingsService: SavingsService,
     private loansService: LoansService,
-    private clientsService: ClientsService,
+    private clientsService: ClientService,
     private groupsService: GroupsService,
     private dialog: MatDialog
   ) {}

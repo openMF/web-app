@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
  * Client datatables resolver.
@@ -15,13 +15,13 @@ export class ClientDatatablesResolver {
   /**
    * @param {ClientsService} ClientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
    * Returns the Client datatables.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.clientsService.getClientDatatables();
+    return this.dataTablesService.getDatatable({ datatable: 'm_client' });
   }
 }

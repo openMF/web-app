@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientChargesService } from '@fineract/client';
 import {
   MatTable,
   MatColumnDef,
@@ -161,7 +161,7 @@ export class GeneralTabComponent {
    */
   constructor(
     private route: ActivatedRoute,
-    private clientService: ClientsService,
+    private clientChargesService: ClientChargesService,
     private router: Router
   ) {
     this.route.data.subscribe(
@@ -219,10 +219,16 @@ export class GeneralTabComponent {
    * @param clientId Selected Client Id.
    */
   waiveCharge(chargeId: string, clientId: string) {
-    const charge = { clientId: clientId.toString(), resourceType: chargeId };
-    this.clientService.waiveClientCharge(charge).subscribe(() => {
-      this.getChargeData(clientId);
-    });
+    this.clientChargesService
+      .payOrWaiveClientCharge({
+        clientId: Number(clientId),
+        chargeId: Number(chargeId),
+        command: 'waive',
+        postClientsClientIdChargesChargeIdRequest: {}
+      })
+      .subscribe(() => {
+        this.getChargeData(clientId);
+      });
   }
 
   /**
@@ -230,9 +236,14 @@ export class GeneralTabComponent {
    * @param clientId Selected Client Id.
    */
   getChargeData(clientId: string) {
-    this.clientService.getClientChargesData(clientId).subscribe((data: any) => {
-      this.upcomingCharges = data.pageItems;
-    });
+    this.clientChargesService
+      .retrieveAllClientCharges({
+        clientId: Number(clientId),
+        pendingPayment: true
+      })
+      .subscribe((data: any) => {
+        this.upcomingCharges = data.pageItems;
+      });
   }
 
   /**

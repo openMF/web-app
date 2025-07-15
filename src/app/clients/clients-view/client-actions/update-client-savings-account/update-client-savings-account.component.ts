@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -35,7 +35,7 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private clientsService: ClientsService,
+    private clientService: ClientService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -62,8 +62,12 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
    * Submits the form and update savings account for the client.
    */
   submit() {
-    this.clientsService
-      .executeClientCommand(this.clientData.id, 'updateSavingsAccount', this.clientSavingsAccountForm.value)
+    this.clientService
+      .activate1({
+        clientId: this.clientData.id,
+        command: 'updateSavingsAccount',
+        postClientsClientIdRequest: this.clientSavingsAccountForm.value
+      })
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });

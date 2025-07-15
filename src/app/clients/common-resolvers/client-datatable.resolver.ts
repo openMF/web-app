@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
  * Client datatable resolver.
@@ -16,7 +16,7 @@ export class ClientDatatableResolver {
   /**
    * @param {ClientsService} ClientsService Clients service.
    */
-  constructor(private clientsService: ClientsService) {}
+  constructor(private clientsService: DataTablesService) {}
 
   /**
    * Returns the Client datatables.
@@ -25,6 +25,6 @@ export class ClientDatatableResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const clientId = route.parent.parent.paramMap.get('clientId');
     const datatableName = route.paramMap.get('datatableName');
-    return this.clientsService.getClientDatatable(clientId, datatableName);
+    return this.clientsService.getDatatable1({ datatable: datatableName, apptableId: +clientId });
   }
 }

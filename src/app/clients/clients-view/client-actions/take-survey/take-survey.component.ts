@@ -3,7 +3,9 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from '../../../clients.service';
+import { ScoreCardService } from '@fineract/client';
+import { ScorecardData } from '@fineract/client';
+import { ScorecardValue } from '@fineract/client';
 import { AuthenticationService } from '../../../../core/authentication/authentication.service';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -35,15 +37,7 @@ export class TakeSurveyComponent {
   /** Client ID */
   clientId: any;
   /** Stores the value to send to the API */
-  formData: {
-    userId: Number;
-    clientId: Number;
-    surveyId: Number;
-    scorecardValues: { questionId: Number; responseId: Number; value: String }[];
-    surveyName: String;
-    username: String;
-    id: Number;
-  };
+  formData: ScorecardData;
 
   /**
    * Retrieves the survey data from `resolve`.
@@ -54,7 +48,7 @@ export class TakeSurveyComponent {
    */
   constructor(
     private route: ActivatedRoute,
-    private clientsService: ClientsService,
+    private scoreCardService: ScoreCardService,
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
@@ -122,18 +116,23 @@ export class TakeSurveyComponent {
 
     this.surveyData.questionDatas.forEach((elem: any) => {
       if (elem.answer) {
-        const tmp = {
+        const tmp: ScorecardValue = {
           questionId: elem.id,
           responseId: elem.answer.id,
-          value: elem.answer.value,
-          createdOn: new Date().getTime()
+          value: Number(elem.answer.value),
+          createdOn: new Date().toISOString()
         };
         this.formData.scorecardValues.push(tmp);
       }
     });
 
-    this.clientsService.createNewSurvey(this.surveyData.id, this.formData).subscribe(() => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.scoreCardService
+      .createScorecard1({
+        surveyId: this.surveyData.id,
+        scorecardData: this.formData
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

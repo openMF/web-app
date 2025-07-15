@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { ClientsService } from 'app/clients/clients.service';
+import { ClientService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -40,7 +40,7 @@ export class AcceptClientTransferComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private clientsService: ClientsService,
+    private clientsService: ClientService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -83,8 +83,14 @@ export class AcceptClientTransferComponent implements OnInit {
     const data = {
       ...acceptClientTransferFormData
     };
-    this.clientsService.executeClientCommand(this.clientId, 'acceptTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.clientsService
+      .activate1({
+        clientId: this.clientId,
+        postClientsClientIdRequest: data,
+        command: 'acceptTransfer'
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

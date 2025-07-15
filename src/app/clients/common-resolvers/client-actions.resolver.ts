@@ -6,7 +6,14 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import {
+  ClientService,
+  SelfScoreCardService,
+  SelfSpmService,
+  OfficesService,
+  ClientChargesService,
+  UserGeneratedDocumentsService
+} from '@fineract/client';
 import { ProductsService } from 'app/products/products.service';
 
 /**
@@ -19,7 +26,12 @@ export class ClientActionsResolver {
    * @param {ProductsService} productsService Products Service
    */
   constructor(
-    private clientsService: ClientsService,
+    private clientsService: ClientService,
+    private selfScoreCardService: SelfScoreCardService,
+    private selfSpmService: SelfSpmService,
+    private officesService: OfficesService,
+    private clientChargesService: ClientChargesService,
+    private userGeneratedDocumentsService: UserGeneratedDocumentsService,
     private productsService: ProductsService
   ) {}
 
@@ -33,30 +45,30 @@ export class ClientActionsResolver {
     const clientId = route.paramMap.get('clientId') || route.parent.parent.paramMap.get('clientId');
     switch (actionName) {
       case 'Survey':
-        return this.clientsService.getSurveys(clientId);
+        return this.selfScoreCardService.findByClient({ clientId: Number(clientId) });
       case 'Take Survey':
-        return this.clientsService.getAllSurveysType();
+        return this.selfSpmService.fetchAllSurveys();
       case 'Close':
-        return this.clientsService.getClientCommandTemplate('close');
+        return this.clientsService.retrieveTemplate5({ commandParam: 'close' });
       case 'Reject':
-        return this.clientsService.getClientCommandTemplate('reject');
+        return this.clientsService.retrieveTemplate5({ commandParam: 'reject' });
       case 'Withdraw':
-        return this.clientsService.getClientCommandTemplate('withdraw');
+        return this.clientsService.retrieveTemplate5({ commandParam: 'withdraw' });
       case 'Transfer Client':
-        return this.clientsService.getOffices();
+        return this.officesService.retrieveOffices();
       case 'Add Charge':
-        return this.clientsService.getClientChargeTemplate(clientId);
+        return this.clientChargesService.retrieveTemplate4({ clientId: Number(clientId) });
       case 'Create Collateral':
         return this.productsService.getCollaterals();
       case 'Client Screen Reports':
-        return this.clientsService.getClientReportTemplates();
+        return this.userGeneratedDocumentsService.retrieveAll40();
       case 'Assign Staff':
       case 'Update Default Savings':
-        return this.clientsService.getClientDataAndTemplate(clientId);
+        return this.clientsService.retrieveOne11({ clientId: Number(clientId) });
       case 'Undo Transfer':
       case 'Accept Transfer':
       case 'Reject Transfer':
-        return this.clientsService.getClientTransferProposalDate(clientId);
+        return this.clientsService.retrieveTransferTemplate({ clientId: Number(clientId) });
       default:
         return undefined;
     }
