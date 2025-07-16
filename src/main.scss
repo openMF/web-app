@@ -592,22 +592,22 @@
   flex: 1;
 }
 
-//New!
+//Re-positions the account type field on List Standing Instructions page.
 .type-field {
   position: absolute;
   left: 1px;
   top: 20px;
 }
 
-//New!
-.Account-Id-field {
+//Re-positions the account Id field on List Standing Instructions page.
+.account-Id-field {
   position: absolute;
   left: 490px;
   top: 20px;
 }
 
-//New!
-.Client-Name {
+//Re-positions the client name label on the List Standing Instructions page.
+.client-Name {
   position: absolute;
   left: 490px;
 }
