@@ -100,6 +100,10 @@ export class LoansService {
     return this.http.post(`/loans/${loanId}/delinquency-actions`, delinquencyActions);
   }
 
+  getDeferredIncomeData(loanId: string) {
+    return this.http.get(`/loans/${loanId}/deferredincome`);
+  }
+
   /**
    * Returns the loan template data with specific condition
    * @param loanId Loan Id
