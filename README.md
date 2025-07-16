@@ -31,9 +31,7 @@ Mifos X Web App is a modern single-page application (SPA) built on top of the Mi
 Before installing the web app, you need to set up the Fineract backend server:
 
 1. **Choose ONE of these backend options:**
-
    - **Option A: Use existing remote server**
-
      - Use the sandbox at `https://sandbox.mifos.community`
      - Use the demo at `https://demo.mifos.community`
      - Configure to your server by updating API URLs in environment files
@@ -77,11 +75,15 @@ Choose ONE of the following methods to install the web app:
    ```
    npm install
    ```
-6. Start the development server:
+6. Generate the Fineract API client from the OpenAPI spec:
+   ```
+   npm run generate:fineract-client
+   ```
+7. Start the development server:
    ```
    ng serve
    ```
-7. Access the application at `http://localhost:4200/`
+8. Access the application at `http://localhost:4200/`
 
 #### Method 2: Docker Container Only
 
