@@ -2487,7 +2487,8 @@
       "Buy down fee income type": "Typ příjmu z poplatku za odkup",
       "Buy down fees": "Poplatky za odkup",
       "Income from Buy down fees": "Příjmy z poplatků za odkup",
-      "Buy down fee Expense": "Náklady na poplatek za odkup"
+      "Buy down fee Expense": "Náklady na poplatek za odkup",
+      "Skip Interest Refund Transaction Posting": "Přeskočit zaúčtování vrácení úroků"
     },
     "links": {
       "Community": "Společenství",

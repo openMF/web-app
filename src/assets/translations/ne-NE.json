@@ -2487,7 +2487,8 @@
       "Buy down fee income type": "बाइ डाउन शुल्क आय प्रकार",
       "Buy down fees": "खरिद शुल्क",
       "Income from Buy down fees": "खरिद शुल्कबाट हुने आम्दानी",
-      "Buy down fee Expense": "खरीद शुल्क खर्च"
+      "Buy down fee Expense": "खरीद शुल्क खर्च",
+      "Skip Interest Refund Transaction Posting": "ब्याज फिर्ता पोस्टिङ्ग छोड्नुहोस्"
     },
     "links": {
       "Community": "समुदाय",

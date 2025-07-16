@@ -2487,7 +2487,8 @@
       "Buy down fee income type": "Nunua aina ya mapato ya chini",
       "Buy down fees": "Nunua ada za chini",
       "Income from Buy down fees": "Mapato kutoka kwa ada ya Kununua",
-      "Buy down fee Expense": "Kununua ada ya chini Gharama"
+      "Buy down fee Expense": "Kununua ada ya chini Gharama",
+      "Skip Interest Refund Transaction Posting": "Ruka uchapishaji wa muamala wa kurejesha riba"
     },
     "links": {
       "Community": "Jumuiya",

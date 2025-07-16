@@ -2487,7 +2487,8 @@
       "Buy down fee income type": "Tipo de ingreso de comisión de compra anticipada",
       "Buy down fees": "Tarifas de compra anticipada",
       "Income from Buy down fees": "Ingresos por comisiones de compra inicial",
-      "Buy down fee Expense": "Gastos por comisiones de compra inicial"
+      "Buy down fee Expense": "Gastos por comisiones de compra inicial",
+      "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses"
     },
     "links": {
       "Community": "Comunidad",

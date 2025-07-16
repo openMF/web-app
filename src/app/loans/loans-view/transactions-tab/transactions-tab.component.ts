@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {
@@ -29,9 +29,9 @@ import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { AlertService } from 'app/core/alert/alert.service';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { ExternalIdentifierComponent } from '../../../shared/external-identifier/external-identifier.component';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';
 import { MatIcon } from '@angular/material/icon';
@@ -472,8 +472,11 @@ export class TransactionsTabComponent implements OnInit {
               value: transactionAmount,
               type: 'number',
               required: true,
-              max: transactionAmount,
               min: 0.001,
+              max: transactionAmount,
+              validators: [
+                Validators.min(0.001),
+                Validators.max(transactionAmount)],
               order: 2
             })
 
@@ -481,7 +484,8 @@ export class TransactionsTabComponent implements OnInit {
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
             layout: { addButtonText: 'Adjustment' },
-            formfields: formfields
+            formfields: formfields,
+            pristine: false
           };
           const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
           chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {
@@ -544,8 +548,11 @@ export class TransactionsTabComponent implements OnInit {
               value: transactionAmount,
               type: 'number',
               required: true,
-              max: transactionAmount,
               min: 0.001,
+              max: transactionAmount,
+              validators: [
+                Validators.min(0.001),
+                Validators.max(transactionAmount)],
               order: 2
             })
 
@@ -553,7 +560,8 @@ export class TransactionsTabComponent implements OnInit {
           const data = {
             title: `Adjustment ${transaction.type.value} Transaction`,
             layout: { addButtonText: 'Adjustment' },
-            formfields: formfields
+            formfields: formfields,
+            pristine: false
           };
           const chargebackDialogRef = this.dialog.open(FormDialogComponent, { data });
           chargebackDialogRef.afterClosed().subscribe((response: { data: any }) => {

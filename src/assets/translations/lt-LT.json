@@ -2487,7 +2487,8 @@
       "Buy down fee income type": "Supirkimo mokesčio pajamų tipas",
       "Buy down fees": "Išpirkimo mokesčiai",
       "Income from Buy down fees": "Pajamos iš supirkimo mokesčių",
-      "Buy down fee Expense": "Supirkimo mokesčio išlaidos"
+      "Buy down fee Expense": "Supirkimo mokesčio išlaidos",
+      "Skip Interest Refund Transaction Posting": "Praleisti palūkanų grąžinimo įrašą"
     },
     "links": {
       "Community": "bendruomenė",

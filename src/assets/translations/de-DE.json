@@ -2487,7 +2487,8 @@
       "Buy down fee income type": "Einnahmeart der Buy-Down-Gebühr",
       "Buy down fees": "Buy-Down-Gebühren",
       "Income from Buy down fees": "Einnahmen aus Buy-Down-Gebühren",
-      "Buy down fee Expense": "Aufwendungen aus Buy-Down-Gebühren"
+      "Buy down fee Expense": "Aufwendungen aus Buy-Down-Gebühren",
+      "Skip Interest Refund Transaction Posting": "Buchung der Zinsrückerstattung überspringen"
     },
     "links": {
       "Community": "Gemeinschaft",
