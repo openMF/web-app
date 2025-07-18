@@ -369,6 +369,7 @@
       "Create Group": "Vytvořit skupinu",
       "Create Holiday": "Vytvořte dovolenou",
       "Create Hook": "Vytvořte háček",
+      "Create Interest Refund": "Vytvořit vrácení úroků",
       "Create Journal Entries": "Vytvářejte záznamy deníku",
       "Create Loan Product": "Vytvořte produkt půjčky",
       "Create Office": "Vytvořit Office",
@@ -3517,6 +3518,7 @@
     "Yes": "Ano",
     "loan product will be active and available to clients": "Datum, kdy bude úvěrový produkt aktivní a dostupný klientům. Pokud nevyplníte, bude úvěrový produkt aktivní, jakmile bude vytvořen.",
     "loan product will become inactive and unavailable to clients": "Datum, kdy se úvěrový produkt stane neaktivním a nedostupným pro klienty. Pokud je prázdné, produkt zatížení se nikdy nestane neaktivním.",
-    "Refund transactions where interest refund will automatically be calculated": "Transakce s vrácením peněz, kde bude automaticky vypočítána refundace úroků"
+    "Refund transactions where interest refund will automatically be calculated": "Transakce s vrácením peněz, kde bude automaticky vypočítána refundace úroků",
+    "Create Interest Refund": "Vytvořit vrácení úroků"
   }
 }

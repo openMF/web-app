@@ -369,6 +369,7 @@
       "Create Group": "Sukurti grupę",
       "Create Holiday": "Sukurkite šventę",
       "Create Hook": "Sukurti kabliuką",
+      "Create Interest Refund": "Sukurti palūkanų grąžinimą",
       "Create Journal Entries": "Kurti žurnalo įrašus",
       "Create Loan Product": "Sukurti paskolos produktą",
       "Create Office": "Sukurkite biurą",
@@ -3517,6 +3518,7 @@
     "Yes": "Taip",
     "loan product will be active and available to clients": "Data, kada paskolos produktas bus aktyvus ir bus prieinamas klientams. Jei tuščia, paskolos produktas bus aktyvus, kai tik bus sukurtas.",
     "loan product will become inactive and unavailable to clients": "Data, kai paskolos produktas taps neaktyvus ir nepasiekiamas klientams. Jei tuščia, įkėlimo produktas niekada netaps neaktyvus.",
-    "Refund transactions where interest refund will automatically be calculated": "Atmaksas darījumi, kuros procentu atmaksa tiks aprēķināta automātiski"
+    "Refund transactions where interest refund will automatically be calculated": "Atmaksas darījumi, kuros procentu atmaksa tiks aprēķināta automātiski",
+    "Create Interest Refund": "Sukurti palūkanų grąžinimą"
   }
 }

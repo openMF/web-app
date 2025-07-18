@@ -369,6 +369,7 @@
       "Create Group": "समूह सिर्जना गर्नुहोस्",
       "Create Holiday": "छुट्टी सिर्जना गर्नुहोस्",
       "Create Hook": "हुक सिर्जना गर्नुहोस्",
+      "Create Interest Refund": "ब्याज फिर्ता सिर्जना गर्नुहोस्",
       "Create Journal Entries": "जर्नल प्रविष्टिहरू सिर्जना गर्नुहोस्",
       "Create Loan Product": "ऋण उत्पादन सिर्जना गर्नुहोस्",
       "Create Office": "कार्यालय सिर्जना गर्नुहोस्",
@@ -3517,6 +3518,7 @@
     "Yes": "हो",
     "loan product will be active and available to clients": "ऋण उत्पादन सक्रिय र ग्राहकहरूको लागि उपलब्ध हुने मिति। खाली भएमा, ऋण उत्पादन सिर्जना हुने बित्तिकै सक्रिय हुनेछ।",
     "loan product will become inactive and unavailable to clients": "ऋण उत्पादन निष्क्रिय र ग्राहकहरु को लागी अनुपलब्ध हुने मिति। यदि खाली छ भने, लोड उत्पादन कहिल्यै निष्क्रिय हुनेछैन।",
-    "Refund transactions where interest refund will automatically be calculated": "फिर्ता लेनदेन जहाँ ब्याज फिर्ता स्वतः गणना हुनेछ"
+    "Refund transactions where interest refund will automatically be calculated": "फिर्ता लेनदेन जहाँ ब्याज फिर्ता स्वतः गणना हुनेछ",
+    "Create Interest Refund": "ब्याज फिर्ता सिर्जना गर्नुहोस्"
   }
 }

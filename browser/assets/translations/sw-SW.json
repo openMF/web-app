@@ -369,6 +369,7 @@
       "Create Group": "Unda Kikundi",
       "Create Holiday": "Unda Likizo",
       "Create Hook": "Unda Hook",
+      "Create Interest Refund": "Unda Marejesho ya Riba",
       "Create Journal Entries": "Unda Maingizo ya Jarida",
       "Create Loan Product": "Tengeneza Bidhaa ya Mkopo",
       "Create Office": "Unda Ofisi",
@@ -3517,6 +3518,7 @@
     "Yes": "Ndiyo",
     "loan product will be active and available to clients": "Tarehe ambayo bidhaa ya mkopo itaanza kutumika na inapatikana kwa wateja. Ikiwa tupu, bidhaa ya mkopo itaanza kutumika mara tu itakapoundwa.",
     "loan product will become inactive and unavailable to clients": "Tarehe ambayo bidhaa ya mkopo itaacha kutumika na haitapatikana kwa wateja. Ikiwa tupu, bidhaa ya kupakia haitafanya kazi kamwe.",
-    "Refund transactions where interest refund will automatically be calculated": "Shughuli za kurejesha pesa ambapo urejeshaji wa riba utahesabiwa kiotomatiki"
+    "Refund transactions where interest refund will automatically be calculated": "Shughuli za kurejesha pesa ambapo urejeshaji wa riba utahesabiwa kiotomatiki",
+    "Create Interest Refund": "Unda Marejesho ya Riba"
   }
 }

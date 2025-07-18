@@ -370,6 +370,7 @@
       "Create Group": "Create Group",
       "Create Holiday": "Create Holiday",
       "Create Hook": "Create Hook",
+      "Create Interest Refund": "Create Interest Refund",
       "Create Journal Entries": "Create Journal Entries",
       "Create Loan Product": "Create Loan Product",
       "Create Office": "Create Office",
@@ -3622,6 +3623,7 @@
     "Yes": "Yes",
     "loan product will be active and available to clients": "The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created.",
     "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
-    "Refund transactions where interest refund will automatically be calculated": "Refund transactions where interest refund will automatically be calculated"
+    "Refund transactions where interest refund will automatically be calculated": "Refund transactions where interest refund will automatically be calculated",
+    "Create Interest Refund": "Create Interest Refund"
   }
 }

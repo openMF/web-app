@@ -369,6 +369,7 @@
       "Create Group": "Crea un Grupo",
       "Create Holiday": "Crear Festivo",
       "Create Hook": "Crear gancho",
+      "Create Interest Refund": "Crear reembolso de intereses",
       "Create Journal Entries": "Crear entradas de diario",
       "Create Loan Product": "Crear producto de Crédito",
       "Create Office": "Crear Oficina",
@@ -3517,6 +3518,7 @@
     "Yes": "Sí",
     "loan product will be active and available to clients": "La fecha en que el producto de Crédito estará activo y disponible para los clientes. Si está en blanco, el producto de Crédito estará activo tan pronto como se cree.",
     "loan product will become inactive and unavailable to clients": "La fecha en que el producto de Crédito quedará inactivo y no estará disponible para los clientes. Si está en blanco, el producto de carga nunca quedará inactivo.",
-    "Refund transactions where interest refund will automatically be calculated": "Transacciones de reembolso en las que el reembolso de intereses se calculará automáticamente"
+    "Refund transactions where interest refund will automatically be calculated": "Transacciones de reembolso en las que el reembolso de intereses se calculará automáticamente",
+    "Create Interest Refund": "Crear reembolso de intereses"
   }
 }

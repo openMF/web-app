@@ -369,6 +369,7 @@
       "Create Group": "Gruppe erstellen",
       "Create Holiday": "Urlaub erstellen",
       "Create Hook": "Hook erstellen",
+      "Create Interest Refund": "Zinsrückerstattung erstellen",
       "Create Journal Entries": "Erstellen Sie Journaleinträge",
       "Create Loan Product": "Darlehensprodukt erstellen",
       "Create Office": "Büro erstellen",
@@ -3516,6 +3517,7 @@
     "Yes": "Ja",
     "loan product will be active and available to clients": "Das Datum, an dem das Kreditprodukt aktiv und für Kunden verfügbar sein wird. Wenn das Feld leer ist, ist das Kreditprodukt aktiv, sobald es erstellt wird.",
     "loan product will become inactive and unavailable to clients": "Das Datum, an dem das Kreditprodukt inaktiv wird und für Kunden nicht mehr verfügbar ist. Wenn es leer ist, wird das Ladeprodukt niemals inaktiv.",
-    "Refund transactions where interest refund will automatically be calculated": "Rückerstattungstransaktionen, bei denen die Zinsrückerstattung automatisch berechnet wird"
+    "Refund transactions where interest refund will automatically be calculated": "Rückerstattungstransaktionen, bei denen die Zinsrückerstattung automatisch berechnet wird",
+    "Create Interest Refund": "Zinsrückerstattung erstellen"
   }
 }
