@@ -18,7 +18,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { ProvisioningEntriesService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -76,7 +76,7 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(
-    private accountingService: AccountingService,
+    private provisioningEntriesService: ProvisioningEntriesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -115,15 +115,17 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {string} provisioningEntryId Provisioning entry id.
    */
   recreateProvisioning($event: Event, provisioningEntryId: string) {
-    this.accountingService.recreateProvisioningEntries(provisioningEntryId).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          'view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.provisioningEntriesService
+      .modifyProvisioningEntry({ entryId: Number(provisioningEntryId), command: 'recreateprovisioningentry' })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            'view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
     $event.stopPropagation();
   }
 

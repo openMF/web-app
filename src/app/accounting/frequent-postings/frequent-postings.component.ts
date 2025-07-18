@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { JournalEntriesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatIconButton, MatButton } from '@angular/material/button';
@@ -65,7 +65,7 @@ export class FrequentPostingsComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private journalEntriesService: JournalEntriesService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -208,7 +208,7 @@ export class FrequentPostingsComponent implements OnInit {
         this.settingsService.dateFormat
       );
     }
-    this.accountingService.createJournalEntry(journalEntry).subscribe((response) => {
+    this.journalEntriesService.createGLJournalEntry({ journalEntryCommand: journalEntry }).subscribe((response) => {
       this.router.navigate(
         [
           '../transactions/view',

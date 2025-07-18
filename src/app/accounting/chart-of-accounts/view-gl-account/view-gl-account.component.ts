@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { GeneralLedgerAccountService } from '@fineract/client';
 import { Location, NgIf } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { GlAccountDisplayComponent } from '../../../shared/accounting/gl-account-display/gl-account-display.component';
@@ -34,13 +34,13 @@ export class ViewGlAccountComponent {
 
   /**
    * Retrieves the gl account data from `resolve`.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {GeneralLedgerAccountService} generalLedgerAccountService General Ledger Account Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
-    private accountingService: AccountingService,
+    private generalLedgerAccountService: GeneralLedgerAccountService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
@@ -60,7 +60,7 @@ export class ViewGlAccountComponent {
     });
     deleteGlAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteGlAccount(this.glAccount.id).subscribe(() => {
+        this.generalLedgerAccountService.deleteGLAccount1({ glAccountId: this.glAccount.id }).subscribe(() => {
           this.router.navigate(['/accounting/chart-of-accounts']);
         });
       }
@@ -71,8 +71,11 @@ export class ViewGlAccountComponent {
    * Changes state of gl account. (enabled/disabled)
    */
   changeGlAccountState() {
-    this.accountingService
-      .updateGlAccount(this.glAccount.id, { disabled: !this.glAccount.disabled })
+    this.generalLedgerAccountService
+      .updateGLAccount1({
+        glAccountId: this.glAccount.id,
+        putGLAccountsRequest: { disabled: !this.glAccount.disabled }
+      })
       .subscribe((response: any) => {
         this.glAccount.disabled = response.changes.disabled;
       });

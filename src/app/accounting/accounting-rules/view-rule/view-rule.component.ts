@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { AccountingRulesService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -29,13 +29,13 @@ export class ViewRuleComponent {
 
   /**
    * Retrieves the accounting rule data from `resolve`.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {AccountingRulesService} accountingRulesService Accounting Rules Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
-    private accountingService: AccountingService,
+    private accountingRulesService: AccountingRulesService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog
@@ -54,7 +54,7 @@ export class ViewRuleComponent {
     });
     deleteAccountingRuleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteAccountingRule(this.accountingRule.id).subscribe(() => {
+        this.accountingRulesService.deleteAccountingRule({ accountingRuleId: this.accountingRule.id }).subscribe(() => {
           this.router.navigate(['/accounting/accounting-rules']);
         });
       }

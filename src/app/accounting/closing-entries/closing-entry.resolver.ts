@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { AccountingClosureService } from '@fineract/client';
 
 /**
  * Closing entry data resolver.
@@ -14,9 +14,9 @@ import { AccountingService } from '../accounting.service';
 @Injectable()
 export class ClosingEntryResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {AccountingClosureService} accountingClosureService Accounting closure service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private accountingClosureService: AccountingClosureService) {}
 
   /**
    * Returns the gl account closure data.
@@ -24,6 +24,6 @@ export class ClosingEntryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const glAccountClosureId = route.paramMap.get('id');
-    return this.accountingService.getAccountingClosure(glAccountClosureId);
+    return this.accountingClosureService.retreiveClosure({ glClosureId: parseInt(glAccountClosureId, 10) });
   }
 }

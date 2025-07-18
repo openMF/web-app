@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { OfficesService } from '@fineract/client';
 
 /**
  * Offices data resolver.
@@ -15,13 +15,13 @@ export class OfficesResolver {
   /**
    * @param {AccountingService} accountingService Accounting service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private officesService: OfficesService) {}
 
   /**
    * Returns the offices data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getOffices();
+    return this.officesService.retrieveOffices({ orderBy: 'id' });
   }
 }

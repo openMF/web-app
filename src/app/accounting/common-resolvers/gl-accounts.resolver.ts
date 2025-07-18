@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { GeneralLedgerAccountService } from '@fineract/client';
 
 /**
  * GL accounts data resolver.
@@ -13,15 +13,19 @@ import { AccountingService } from '../accounting.service';
 @Injectable()
 export class GlAccountsResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {GeneralLedgerAccountService} generalLedgerAccountService General Ledger Account service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private generalLedgerAccountService: GeneralLedgerAccountService) {}
 
   /**
    * Returns the gl accounts data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getGlAccounts();
+    return this.generalLedgerAccountService.retrieveAllAccounts({
+      manualEntriesAllowed: true,
+      usage: 1,
+      disabled: false
+    });
   }
 }

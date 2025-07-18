@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ViewJournalEntryComponent } from '../view-journal-entry/view-journal-entry.component';
 import { RevertTransactionComponent } from 'app/accounting/revert-transaction/revert-transaction.component';
-import { AccountingService } from 'app/accounting/accounting.service';
+import { JournalEntriesService } from '@fineract/client';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -81,13 +81,13 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
   isManualJournalEntry = false;
 
   /**
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {JournalEntriesService} journalEntriesService Journal Entries Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
-    private accountingService: AccountingService,
+    private journalEntriesService: JournalEntriesService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
@@ -169,8 +169,12 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
     });
     revertTransactionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.revert) {
-        this.accountingService
-          .revertTransaction(this.transactionId, response.comments)
+        this.journalEntriesService
+          .createReversalJournalEntry({
+            transactionId: this.transactionId,
+            command: 'reverse',
+            postJournalEntriesTransactionIdRequest: {}
+          })
           .subscribe((reversedTransaction: any) => {
             this.dataSource.data[0].reversed = true;
             this.revertTransaction(reversedTransaction.transactionId);

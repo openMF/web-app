@@ -10,7 +10,7 @@ import { merge } from 'rxjs';
 import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { JournalEntriesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 /** Custom Data Source */
 import { JournalEntriesDataSource } from './journal-entry.datasource';
@@ -186,7 +186,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(
-    private accountingService: AccountingService,
+    private journalEntriesService: JournalEntriesService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute
@@ -383,7 +383,7 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * Initializes the data source for journal entries table and loads the first page.
    */
   getJournalEntries() {
-    this.dataSource = new JournalEntriesDataSource(this.accountingService);
+    this.dataSource = new JournalEntriesDataSource(this.journalEntriesService);
     this.dataSource.getJournalEntries(
       this.filterJournalEntriesBy,
       this.sort.active,

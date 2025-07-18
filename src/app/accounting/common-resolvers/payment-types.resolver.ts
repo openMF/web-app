@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { PaymentTypeService } from '@fineract/client';
 
 /**
  * Payment types data resolver.
@@ -13,15 +13,15 @@ import { AccountingService } from '../accounting.service';
 @Injectable()
 export class PaymentTypesResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {PaymentTypeService} paymentTypeService Payment type service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private paymentTypeService: PaymentTypeService) {}
 
   /**
    * Returns the payment types data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getPaymentTypes();
+    return this.paymentTypeService.getAllPaymentTypes();
   }
 }

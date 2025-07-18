@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { MappingFinancialActivitiesToAccountsService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -34,13 +34,13 @@ export class ViewFinancialActivityMappingComponent {
 
   /**
    * Retrieves the financial activity account data from `resolve`.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {MappingFinancialActivitiesToAccountsService} mappingFinancialActivitiesToAccountsService Mapping Financial Activities to Accounts Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
-    private accountingService: AccountingService,
+    private mappingFinancialActivitiesToAccountsService: MappingFinancialActivitiesToAccountsService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
@@ -61,9 +61,11 @@ export class ViewFinancialActivityMappingComponent {
     });
     deleteFinancialActivityAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteFinancialActivityAccount(this.financialActivityAccountId).subscribe(() => {
-          this.router.navigate(['/accounting/financial-activity-mappings']);
-        });
+        this.mappingFinancialActivitiesToAccountsService
+          .deleteGLAccount({ mappingId: this.financialActivityAccountId })
+          .subscribe(() => {
+            this.router.navigate(['/accounting/financial-activity-mappings']);
+          });
       }
     });
   }

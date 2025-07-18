@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { MappingFinancialActivitiesToAccountsService } from '@fineract/client';
 
 /**
  * Financial activity mappings template data resolver.
@@ -13,15 +13,15 @@ import { AccountingService } from '../../accounting.service';
 @Injectable()
 export class FinancialActivityMappingsTemplateResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {MappingFinancialActivitiesToAccountsService} mappingFinancialActivitiesToAccountsService Mapping Financial Activities to Accounts service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private mappingFinancialActivitiesToAccountsService: MappingFinancialActivitiesToAccountsService) {}
 
   /**
    * Returns the financial activity mappings template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getFinancialActivityAccountsTemplate();
+    return this.mappingFinancialActivitiesToAccountsService.retrieveTemplate();
   }
 }

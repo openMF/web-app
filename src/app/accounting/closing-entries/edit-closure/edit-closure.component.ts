@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { AccountingClosureService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -31,13 +31,13 @@ export class EditClosureComponent implements OnInit {
   /**
    * Retrieves the gl account closure data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {AccountingClosureService} accountingClosureService Accounting Closure Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private accountingClosureService: AccountingClosureService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -86,8 +86,11 @@ export class EditClosureComponent implements OnInit {
    * if successful redirects to view updated closure.
    */
   submit() {
-    this.accountingService
-      .updateAccountingClosure(this.glAccountClosure.id, { comments: this.accountingClosureForm.value.comments })
+    this.accountingClosureService
+      .updateGLClosure({
+        glClosureId: this.glAccountClosure.id,
+        putGlClosuresRequest: { comments: this.accountingClosureForm.value.comments }
+      })
       .subscribe((response: any) => {
         this.router.navigate(
           [

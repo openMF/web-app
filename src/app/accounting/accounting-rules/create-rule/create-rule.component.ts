@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { AccountingRulesService } from '@fineract/client';
 
 /** Custom Validators */
 import { oneOfTheFieldsIsRequiredValidator } from '../one-of-the-fields-is-required.validator';
@@ -43,13 +43,13 @@ export class CreateRuleComponent implements OnInit {
   /**
    * Retrieves the offices, gl accounts, debit tags and credit tags data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {AccountingRulesService} accountingRulesService Accounting Rules Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private accountingRulesService: AccountingRulesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -141,14 +141,16 @@ export class CreateRuleComponent implements OnInit {
     }
     delete accountingRule.debitRuleType;
     delete accountingRule.creditRuleType;
-    this.accountingService.createAccountingRule(accountingRule).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.accountingRulesService
+      .createAccountingRule({ accountRuleRequest: accountingRule })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

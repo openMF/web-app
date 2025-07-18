@@ -5,7 +5,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { GeneralLedgerAccountService } from '@fineract/client';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
@@ -59,7 +59,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the chart of accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {GeneralLedgerAccountService} generalLedgerAccountService General Ledger Account Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
@@ -68,7 +68,7 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private generalLedgerAccountService: GeneralLedgerAccountService,
     private route: ActivatedRoute,
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
@@ -163,20 +163,22 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created account.
    */
   submit() {
-    this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
-      if (this.configurationWizardService.showChartofAccounts === true) {
-        this.configurationWizardService.showChartofAccounts = false;
-        this.openDialog();
-      } else {
-        this.router.navigate(
-          [
-            '../view',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      }
-    });
+    this.generalLedgerAccountService
+      .createGLAccount1({ postGLAccountsRequest: this.glAccountForm.value })
+      .subscribe((response: any) => {
+        if (this.configurationWizardService.showChartofAccounts === true) {
+          this.configurationWizardService.showChartofAccounts = false;
+          this.openDialog();
+        } else {
+          this.router.navigate(
+            [
+              '../view',
+              response.resourceId
+            ],
+            { relativeTo: this.route }
+          );
+        }
+      });
   }
 
   /**

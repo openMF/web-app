@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { ProvisioningEntriesService } from '@fineract/client';
 
 /**
  * Provisioning entries data resolver.
@@ -13,15 +13,15 @@ import { AccountingService } from '../accounting.service';
 @Injectable()
 export class ProvisioningEntriesResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {ProvisioningEntriesService} provisioningEntriesService Provisioning entries service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private provisioningEntriesService: ProvisioningEntriesService) {}
 
   /**
    * Returns the provisioning entries data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getProvisioningEntries();
+    return this.provisioningEntriesService.retrieveAllProvisioningEntries();
   }
 }
