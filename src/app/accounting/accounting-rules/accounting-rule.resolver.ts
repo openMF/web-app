@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { AccountingRulesService } from '@fineract/client';
 
 /**
  * Accounting rule data resolver.
@@ -14,9 +14,9 @@ import { AccountingService } from '../accounting.service';
 @Injectable()
 export class AccountingRuleResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {AccountingRulesService} accountingService Accounting service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private accountingService: AccountingRulesService) {}
 
   /**
    * Returns the accounting rule data.
@@ -24,6 +24,6 @@ export class AccountingRuleResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const id = route.paramMap.get('id');
-    return this.accountingService.getAccountingRule(id);
+    return this.accountingService.retreiveAccountingRule({ accountingRuleId: parseInt(id, 10) });
   }
 }

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { GeneralLedgerAccountService } from '@fineract/client';
 
 /**
  * GL Account and chart of accounts template data resolver.
@@ -15,9 +15,9 @@ import { AccountingService } from '../accounting.service';
 @Injectable()
 export class GlAccountAndChartOfAccountsTemplateResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {GeneralLedgerAccountService} generalLedgerAccountService General Ledger Account service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private generalLedgerAccountService: GeneralLedgerAccountService) {}
 
   /**
    * Returns the gl account and chart of accounts template data.
@@ -26,7 +26,7 @@ export class GlAccountAndChartOfAccountsTemplateResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const id = route.paramMap.get('id');
 
-    return this.accountingService.getGlAccount(id, true).pipe(
+    return this.generalLedgerAccountService.retreiveAccount({ glAccountId: Number(id) }).pipe(
       map((glAccountData: any) => {
         let accountOptions = [];
         switch (glAccountData.type.value) {

@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { ProvisioningEntriesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -31,14 +31,14 @@ export class CreateProvisioningEntryComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {ProvisioningEntriesService} provisioningEntriesService Provisioning Entries Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private provisioningEntriesService: ProvisioningEntriesService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -78,14 +78,16 @@ export class CreateProvisioningEntryComponent implements OnInit {
     if (provisioningEntry.date instanceof Date) {
       provisioningEntry.date = this.dateUtils.formatDate(provisioningEntry.date, this.settingsService.dateFormat);
     }
-    this.accountingService.createProvisioningEntry(provisioningEntry).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.provisioningEntriesService
+      .createProvisioningEntries({ provisionEntryRequest: provisioningEntry })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

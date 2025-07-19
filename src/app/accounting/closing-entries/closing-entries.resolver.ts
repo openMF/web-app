@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { AccountingClosureService } from '@fineract/client';
 
 /**
  * Closing entries data resolver.
@@ -13,15 +13,15 @@ import { AccountingService } from '../accounting.service';
 @Injectable()
 export class ClosingEntriesResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {AccountingClosureService} accountingClosureService Accounting closure service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private accountingClosureService: AccountingClosureService) {}
 
   /**
    * Returns the gl account closures data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getAccountingClosures();
+    return this.accountingClosureService.retrieveAllClosures();
   }
 }

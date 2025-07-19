@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { ProvisioningEntriesService } from '@fineract/client';
 
 /**
  * Provisioning entry data resolver.
@@ -14,9 +14,9 @@ import { AccountingService } from '../../accounting.service';
 @Injectable()
 export class ProvisioningEntryResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {ProvisioningEntriesService} provisioningEntriesService Provisioning Entries service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private provisioningEntriesService: ProvisioningEntriesService) {}
 
   /**
    * Returns the provisioning entry data.
@@ -24,6 +24,6 @@ export class ProvisioningEntryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const provisioningEntryId = route.paramMap.get('id');
-    return this.accountingService.getProvisioningEntry(provisioningEntryId);
+    return this.provisioningEntriesService.retrieveProvisioningEntry({ entryId: Number(provisioningEntryId) });
   }
 }

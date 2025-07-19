@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { AccountingClosureService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -34,14 +34,14 @@ export class CreateClosureComponent implements OnInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {AccountingClosureService} accountingClosureService Accounting Closure Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private accountingClosureService: AccountingClosureService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -92,14 +92,16 @@ export class CreateClosureComponent implements OnInit {
         this.settingsService.dateFormat
       );
     }
-    this.accountingService.createAccountingClosure(accountingClosure).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.accountingClosureService
+      .createGLClosure({ postGlClosuresRequest: accountingClosure })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

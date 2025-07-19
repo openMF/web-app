@@ -5,7 +5,7 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { JournalEntriesService } from '@fineract/client';
 
 /**
  * Journal entries custom data source to implement server side filtering, pagination and sorting.
@@ -21,7 +21,7 @@ export class JournalEntriesDataSource implements DataSource<any> {
   /**
    * @param {AccountingService} accountingService Accounting Service
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private journalEntriesService: JournalEntriesService) {}
 
   /**
    * Gets journal entries on the basis of provided parameters and emits the value.
@@ -40,12 +40,26 @@ export class JournalEntriesDataSource implements DataSource<any> {
   ) {
     this.journalEntriesSubject.next([]);
     orderBy = orderBy === 'debit' || orderBy === 'credit' ? 'amount' : orderBy;
-    this.accountingService
-      .getJournalEntries(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
-      .subscribe((journalEntries: any) => {
-        this.recordsSubject.next(journalEntries.totalFilteredRecords);
-        this.journalEntriesSubject.next(journalEntries.pageItems);
-      });
+
+    // Build parameters from filterBy array
+    const params: any = {
+      offset: pageIndex * limit,
+      limit: limit,
+      orderBy: orderBy,
+      sortOrder: sortOrder
+    };
+
+    // Add filter parameters
+    filterBy.forEach(function (filter: any) {
+      if (filter.value) {
+        params[filter.type] = filter.value;
+      }
+    });
+
+    this.journalEntriesService.retrieveAll1(params).subscribe((journalEntries: any) => {
+      this.recordsSubject.next(journalEntries.totalFilteredRecords);
+      this.journalEntriesSubject.next(journalEntries.pageItems);
+    });
   }
 
   /**

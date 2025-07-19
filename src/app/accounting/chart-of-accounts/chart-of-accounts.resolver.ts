@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { GeneralLedgerAccountService } from '@fineract/client';
 
 /**
  * Chart of acocunts data resolver.
@@ -15,13 +15,13 @@ export class ChartOfAccountsResolver {
   /**
    * @param {AccountingService} accountingService Accounting service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private generalLedgerAccountService: GeneralLedgerAccountService) {}
 
   /**
    * Returns the chart of accounts data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getChartOfAccounts();
+    return this.generalLedgerAccountService.retrieveAllAccounts();
   }
 }

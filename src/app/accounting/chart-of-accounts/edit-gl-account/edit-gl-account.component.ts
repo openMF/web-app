@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { GeneralLedgerAccountService } from '@fineract/client';
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -41,13 +41,13 @@ export class EditGlAccountComponent implements OnInit {
   /**
    * Retrieves the chart of accounts data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {GeneralLedgerAccountService} generalLedgerAccountService General Ledger Account Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private generalLedgerAccountService: GeneralLedgerAccountService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -134,14 +134,19 @@ export class EditGlAccountComponent implements OnInit {
    * if successful redirects to view updated account.
    */
   submit() {
-    this.accountingService.updateGlAccount(this.glAccount.id, this.glAccountForm.value).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.generalLedgerAccountService
+      .updateGLAccount1({
+        glAccountId: this.glAccount.id,
+        putGLAccountsRequest: this.glAccountForm.value
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

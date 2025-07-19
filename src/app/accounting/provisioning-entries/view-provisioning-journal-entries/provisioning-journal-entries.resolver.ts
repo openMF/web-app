@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { JournalEntriesService } from '@fineract/client';
 
 /**
  * Provisioning journal entries data resolver.
@@ -14,9 +14,9 @@ import { AccountingService } from '../../accounting.service';
 @Injectable()
 export class ProvisioningJournalEntriesResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {JournalEntriesService} journalEntriesService Journal Entries service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private journalEntriesService: JournalEntriesService) {}
 
   /**
    * Returns the provisioning journal entries data.
@@ -24,6 +24,6 @@ export class ProvisioningJournalEntriesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const id = route.paramMap.get('id');
-    return this.accountingService.getProvisioningJournalEntries(id);
+    return this.journalEntriesService.retrieveJournalEntries({ entryId: Number(id) });
   }
 }

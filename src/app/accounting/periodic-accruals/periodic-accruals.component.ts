@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { PeriodicAccrualAccountingService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -38,7 +38,7 @@ export class PeriodicAccrualsComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private periodicAccrualAccountingService: PeriodicAccrualAccountingService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -77,8 +77,10 @@ export class PeriodicAccrualsComponent implements OnInit {
     if (periodicAccruals.tillDate instanceof Date) {
       periodicAccruals.tillDate = this.dateUtils.formatDate(periodicAccruals.tillDate, this.settingsService.dateFormat);
     }
-    this.accountingService.executePeriodicAccruals(periodicAccruals).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.periodicAccrualAccountingService
+      .executePeriodicAccrualAccounting({ postRunaccrualsRequest: periodicAccruals })
+      .subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

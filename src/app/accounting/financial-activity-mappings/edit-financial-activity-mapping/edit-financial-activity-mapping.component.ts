@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { MappingFinancialActivitiesToAccountsService } from '@fineract/client';
 import { GLAccount } from 'app/shared/models/general.model';
 import { GlAccountSelectorComponent } from '../../../shared/accounting/gl-account-selector/gl-account-selector.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -40,13 +40,13 @@ export class EditFinancialActivityMappingComponent implements OnInit {
   /**
    * Retrieves the gl account options, financial activity and financial activity account data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {MappingFinancialActivitiesToAccountsService} mappingFinancialActivitiesToAccountsService Mapping Financial Activities to Accounts Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
-    private formBuider: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private formBuilder: UntypedFormBuilder,
+    private mappingFinancialActivitiesToAccountsService: MappingFinancialActivitiesToAccountsService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -73,7 +73,7 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * Creates the financial activity mapping form.
    */
   createFinancialActivityMappingForm() {
-    this.financialActivityMappingForm = this.formBuider.group({
+    this.financialActivityMappingForm = this.formBuilder.group({
       financialActivityId: [
         '',
         Validators.required
@@ -113,8 +113,11 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * if successful redirects to view updated account.
    */
   submit() {
-    this.accountingService
-      .updateFinancialActivityAccount(this.financialActivityAccountId, this.financialActivityMappingForm.value)
+    this.mappingFinancialActivitiesToAccountsService
+      .updateGLAccount({
+        mappingId: Number(this.financialActivityAccountId),
+        postFinancialActivityAccountsRequest: this.financialActivityMappingForm.value
+      })
       .subscribe((response: any) => {
         this.router.navigate(
           [

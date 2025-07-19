@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { MappingFinancialActivitiesToAccountsService } from '@fineract/client';
 
 /**
  * Financial activity mapping data resolver.
@@ -14,9 +14,9 @@ import { AccountingService } from '../../accounting.service';
 @Injectable()
 export class FinancialActivityMappingResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {MappingFinancialActivitiesToAccountsService} mappingFinancialActivitiesToAccountsService Mapping Financial Activities to Accounts service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private mappingFinancialActivitiesToAccountsService: MappingFinancialActivitiesToAccountsService) {}
 
   /**
    * Returns the financial activity mapping data.
@@ -24,6 +24,6 @@ export class FinancialActivityMappingResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const financialActivityAccountId = route.paramMap.get('id');
-    return this.accountingService.getFinancialActivityAccount(financialActivityAccountId, false);
+    return this.mappingFinancialActivitiesToAccountsService.retreive({ mappingId: Number(financialActivityAccountId) });
   }
 }

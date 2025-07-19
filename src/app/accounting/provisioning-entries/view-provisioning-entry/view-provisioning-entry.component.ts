@@ -22,7 +22,7 @@ import {
 import { startWith, map, debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 /** Custom Services */
-import { AccountingService } from '../../accounting.service';
+import { ProvisioningEntriesService } from '@fineract/client';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
@@ -108,12 +108,12 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the provisioning entry, provisioning entry entries, offices,
    * loan products, provisioning categories data from `resolve`.
-   * @param {AccountingService} accountingService Accounting Service.
+   * @param {ProvisioningEntriesService} provisioningEntriesService Provisioning Entries Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
-    private accountingService: AccountingService,
+    private provisioningEntriesService: ProvisioningEntriesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -296,14 +296,19 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
    * and redirects to created entries.
    */
   createProvisioningJournalEntries() {
-    this.accountingService.createProvisioningJournalEntries(this.provisioningEntryId).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../journal-entries/view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.provisioningEntriesService
+      .modifyProvisioningEntry({
+        entryId: Number(this.provisioningEntryId),
+        command: 'createjournalentry'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../journal-entries/view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

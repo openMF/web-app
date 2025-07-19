@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { JournalEntriesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
@@ -69,7 +69,7 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private journalEntriesService: JournalEntriesService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -196,15 +196,17 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
     if (!journalEntry['externalAssetOwner']) {
       delete journalEntry['externalAssetOwner'];
     }
-    this.accountingService.createJournalEntry(journalEntry).subscribe((response) => {
-      this.router.navigate(
-        [
-          '../transactions/view',
-          response.transactionId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.journalEntriesService
+      .createGLJournalEntry({ journalEntryCommand: journalEntry })
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../transactions/view',
+            response.transactionId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 
   /**

@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { JournalEntriesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
@@ -72,7 +72,7 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private accountingService: AccountingService,
+    private journalEntriesService: JournalEntriesService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -148,8 +148,8 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
    * Retrieves gl accounts on the basis of specified office.
    */
   retrieveOpeningBalances() {
-    this.accountingService
-      .retrieveOpeningBalances(this.openingBalancesForm.value.officeId)
+    this.journalEntriesService
+      .retrieveOpeningBalance({ officeId: parseInt(this.openingBalancesForm.value.officeId) })
       .subscribe((openingBalancesData: any) => {
         const entry = this.openingBalancesForm.get('glAccountEntries') as UntypedFormArray;
 
@@ -203,12 +203,17 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
         }
       });
       delete openingBalances.glAccountEntries;
-      this.accountingService.defineOpeningBalances(openingBalances).subscribe((response: any) => {
-        this.router.navigate([
-          '/accounting/journal-entries/transactions/view',
-          response.transactionId
-        ]);
-      });
+      this.journalEntriesService
+        .createGLJournalEntry({
+          command: 'defineOpeningBalance',
+          journalEntryCommand: openingBalances
+        })
+        .subscribe((response: any) => {
+          this.router.navigate([
+            '/accounting/journal-entries/transactions/view',
+            response.transactionId
+          ]);
+        });
     }
   }
 

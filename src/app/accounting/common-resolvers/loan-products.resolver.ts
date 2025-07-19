@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountingService } from '../accounting.service';
+import { LoanProductsService } from '@fineract/client';
 
 /**
  * Loan products data resolver.
@@ -13,15 +13,15 @@ import { AccountingService } from '../accounting.service';
 @Injectable()
 export class LoanProductsResolver {
   /**
-   * @param {AccountingService} accountingService Accounting service.
+   * @param {LoanProductsService} loanProductsService Loan Products service.
    */
-  constructor(private accountingService: AccountingService) {}
+  constructor(private loanProductsService: LoanProductsService) {}
 
   /**
    * Returns the loan products data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.accountingService.getLoanProducts();
+    return this.loanProductsService.retrieveAllLoanProducts();
   }
 }
