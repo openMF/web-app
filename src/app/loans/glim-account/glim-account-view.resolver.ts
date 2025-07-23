@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoansService } from '@fineract/client';
 
 /**
  * GLIM Account data resolver.
@@ -26,6 +26,9 @@ export class GLIMViewResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const groupId = route.paramMap.get('groupId');
     const glimId = route.paramMap.get('glimId');
-    return this.loansService.getGLIMAccountData(glimId, groupId);
+    return this.loansService.retrieveLoan({
+      loanId: Number(glimId),
+      associations: 'all'
+    });
   }
 }

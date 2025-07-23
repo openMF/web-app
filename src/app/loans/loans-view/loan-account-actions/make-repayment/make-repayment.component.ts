@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } 
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { LoanTransactionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { Currency } from 'app/shared/models/general.model';
@@ -49,14 +49,14 @@ export class MakeRepaymentComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} loanService Loan Service.
+   * @param {LoanTransactionsService} loanTransactions Loan Transactions Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private loanService: LoansService,
+    private loanTransactions: LoanTransactionsService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -182,8 +182,14 @@ export class MakeRepaymentComponent implements OnInit {
       data.interestRefundCalculation = false;
     }
     delete data.skipInterestRefund;
-    this.loanService.submitLoanActionButton(this.loanId, data, this.command).subscribe((response: any) => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.loanTransactions
+      .executeLoanTransaction({
+        loanId: Number(this.loanId),
+        command: this.command,
+        ...data
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

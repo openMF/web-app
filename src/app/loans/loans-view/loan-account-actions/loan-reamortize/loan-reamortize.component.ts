@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -41,8 +41,10 @@ export class LoanReamortizeComponent implements OnInit {
 
   submit(): void {
     const data = this.reamortizeLoanForm.value;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'reAmortize').subscribe((response: any) => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({ loanId: Number(this.loanId), command: 'reAmortize', postLoansLoanIdRequest: data })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

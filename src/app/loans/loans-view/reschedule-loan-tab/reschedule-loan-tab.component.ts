@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { RescheduleLoansService } from '@fineract/client';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
 import { LoanStatus } from 'app/loans/models/loan-status.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -65,7 +65,7 @@ export class RescheduleLoanTabComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private loansServices: LoansService,
+    private rescheduleLoansService: RescheduleLoansService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private translateService: TranslateService,
@@ -106,8 +106,12 @@ export class RescheduleLoanTabComponent {
         } else {
           payload['rejectedOnDate'] = this.dateUtils.formatDate(this.settingsService.businessDate, dateFormat);
         }
-        this.loansServices
-          .applyCommandLoanRescheduleRequests(request.id, command.toLowerCase(), payload)
+        this.rescheduleLoansService
+          .updateLoanRescheduleRequest({
+            scheduleId: Number(request.id),
+            command: command.toLowerCase(),
+            postUpdateRescheduleLoansRequest: payload
+          })
           .subscribe((result: any) => {
             this.reload();
           });

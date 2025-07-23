@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -105,8 +105,10 @@ export class DisburseToSavingsAccountComponent implements OnInit {
     };
     const loanId = this.route.snapshot.params['loanId'];
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.loanActionButtons(loanId, 'disbursetosavings', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({ loanId: Number(loanId), command: 'disbursetosavings', postLoansLoanIdRequest: data })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

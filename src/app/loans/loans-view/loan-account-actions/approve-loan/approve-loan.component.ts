@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -64,12 +64,17 @@ export class ApproveLoanComponent implements OnInit {
 
   ngOnInit() {
     this.setApproveLoanForm();
-    this.loanService.getApproveAssociationsDetails(this.loanId).subscribe((response: any) => {
-      this.associationData = response;
-      this.approveLoanForm.patchValue({
-        expectedDisbursementDate: new Date(response.timeline.expectedDisbursementDate)
+    this.loanService
+      .retrieveLoan({
+        loanId: Number(this.loanId),
+        associations: 'multiDisburseDetails'
+      })
+      .subscribe((response: any) => {
+        this.associationData = response;
+        this.approveLoanForm.patchValue({
+          expectedDisbursementDate: new Date(response.timeline.expectedDisbursementDate)
+        });
       });
-    });
   }
 
   /**
@@ -110,8 +115,14 @@ export class ApproveLoanComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.loanActionButtons(this.loanId, 'approve', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: 'approve'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

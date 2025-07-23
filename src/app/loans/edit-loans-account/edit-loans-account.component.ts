@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoansService } from '../loans.service';
+import { LoansService } from '@fineract/client';
 import { LoansAccountDetailsStepComponent } from '../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
 import { LoansAccountTermsStepComponent } from '../loans-account-stepper/loans-account-terms-step/loans-account-terms-step.component';
 import { LoansAccountChargesStepComponent } from '../loans-account-stepper/loans-account-charges-step/loans-account-charges-step.component';
@@ -81,11 +81,9 @@ export class EditLoansAccountComponent {
     this.loansAccountProductTemplate = $event;
     this.currencyCode = this.loansAccountProductTemplate.currency.code;
     if (this.loansAccountProductTemplate.loanProductId) {
-      this.loansService
-        .getLoansCollateralTemplateResource(this.loansAccountProductTemplate.loanProductId)
-        .subscribe((response: any) => {
-          this.collateralOptions = response.loanCollateralOptions;
-        });
+      this.loansService.template10(this.loansAccountProductTemplate.loanProductId).subscribe((response: any) => {
+        this.collateralOptions = response.loanCollateralOptions;
+      });
     }
   }
 
@@ -185,8 +183,13 @@ export class EditLoansAccountComponent {
     loansAccountData.allowPartialPeriodInterestCalcualtion = loansAccountData.allowPartialPeriodInterestCalculation;
     delete loansAccountData.allowPartialPeriodInterestCalculation;
 
-    this.loansService.updateLoansAccount(this.loanId, loansAccountData).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.loansService
+      .modifyLoanApplication({
+        loanId: Number(this.loanId),
+        putLoansLoanIdRequest: loansAccountData
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

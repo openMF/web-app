@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { LoanInterestPauseService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -36,13 +36,14 @@ export class AddInterestPauseComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} loanService Loan Service.
+   * @param {LoanInterestPauseService} loanInterestPauseService Loan Interest Pause Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private loanService: LoansService,
+    private loanInterestPauseService: LoanInterestPauseService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -99,8 +100,13 @@ export class AddInterestPauseComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.addInterestPauseToLoan(this.loanId, data).subscribe((response: any) => {
-      this.router.navigate(['../../term-variations'], { relativeTo: this.route });
-    });
+    this.loanInterestPauseService
+      .createInterestPause({
+        loanId: Number(this.loanId),
+        interestPauseRequestDto: data
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../term-variations'], { relativeTo: this.route });
+      });
   }
 }

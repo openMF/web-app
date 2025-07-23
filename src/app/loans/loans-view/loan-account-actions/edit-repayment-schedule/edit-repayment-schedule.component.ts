@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { LoanReschedulingService } from '@fineract/client';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -38,6 +39,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
 
   /**
    * @param {LoansService} systemService Loan Service.
+   * @param {LoanReschedulingService} loanReschedulingService Loan Rescheduling Service.
    * @param {Router} router Router for navigation.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Confirmation Dialogs.
@@ -46,6 +48,7 @@ export class EditRepaymentScheduleComponent implements OnInit {
    */
   constructor(
     private loansService: LoansService,
+    private loanReschedulingService: LoanReschedulingService,
     private router: Router,
     private route: ActivatedRoute,
     private dialog: MatDialog,
@@ -62,9 +65,14 @@ export class EditRepaymentScheduleComponent implements OnInit {
   }
 
   getRepaymentSchedule(): void {
-    this.loansService.getLoanAccountResource(this.loanId, 'repaymentSchedule').subscribe((response: any) => {
-      this.repaymentScheduleDetails = response.repaymentSchedule;
-    });
+    this.loansService
+      .retrieveLoan({
+        loanId: Number(this.loanId),
+        associations: 'repaymentSchedule'
+      })
+      .subscribe((response: any) => {
+        this.repaymentScheduleDetails = response.repaymentSchedule;
+      });
   }
 
   applyPattern(): void {
@@ -140,8 +148,12 @@ export class EditRepaymentScheduleComponent implements OnInit {
     });
     recoverScheduleDialogRef.afterClosed().subscribe((responseConfirmation: any) => {
       if (responseConfirmation.confirm) {
-        this.loansService
-          .applyCommandLoanScheduleVariations(this.loanId, 'deleteVariations', {})
+        this.loanReschedulingService
+          .calculateLoanScheduleOrSubmitVariableSchedule({
+            loanId: Number(this.loanId),
+            command: 'deleteVariations',
+            body: {}
+          })
           .subscribe((response: any) => {
             this.getRepaymentSchedule();
             this.wasChanged = false;
@@ -151,9 +163,26 @@ export class EditRepaymentScheduleComponent implements OnInit {
     });
   }
 
+  preview() {
+    this.loanReschedulingService
+      .calculateLoanScheduleOrSubmitVariableSchedule({
+        loanId: Number(this.loanId),
+        command: 'calculateLoanSchedule',
+        body: this.getPayload()
+      })
+      .subscribe((response: any) => {
+        // Handle preview response similar to validate method
+        this.wasValidated = true;
+      });
+  }
+
   validate(): void {
-    this.loansService
-      .applyCommandLoanScheduleVariations(this.loanId, 'calculateLoanSchedule', this.getPayload())
+    this.loanReschedulingService
+      .calculateLoanScheduleOrSubmitVariableSchedule({
+        loanId: Number(this.loanId),
+        command: 'calculateLoanSchedule',
+        body: this.getPayload()
+      })
       .subscribe((response: any) => {
         this.repaymentScheduleDetails['periods'] = [];
         response['periods'].forEach((period: any) => {
@@ -165,8 +194,12 @@ export class EditRepaymentScheduleComponent implements OnInit {
   }
 
   submit(): void {
-    this.loansService
-      .applyCommandLoanScheduleVariations(this.loanId, 'addVariations', this.getPayload())
+    this.loanReschedulingService
+      .calculateLoanScheduleOrSubmitVariableSchedule({
+        loanId: Number(this.loanId),
+        command: 'addVariations',
+        body: this.getPayload()
+      })
       .subscribe((response: any) => {
         this.router.navigate(['../../repayment-schedule'], { relativeTo: this.route });
       });

@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
@@ -95,8 +95,14 @@ export class WaiveInterestComponent implements OnInit {
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
     const loanId = this.route.snapshot.params['loanId'];
-    this.loanService.submitLoanActionButton(loanId, data, 'waiveinterest').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(loanId),
+        postLoansLoanIdRequest: data,
+        command: 'waiveinterest'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

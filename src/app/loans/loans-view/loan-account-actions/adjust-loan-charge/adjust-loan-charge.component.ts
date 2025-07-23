@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService, LoanChargesService } from '@fineract/client';
 import { OrganizationService } from 'app/organization/organization.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -53,6 +53,7 @@ export class AdjustLoanChargeComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
+    private loanChargesService: LoanChargesService,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
@@ -126,8 +127,13 @@ export class AdjustLoanChargeComponent implements OnInit {
       locale
     };
     const command = 'adjustment';
-    this.loanService
-      .executeLoansAccountChargesCommand(this.loanId, command, data, this.chargeId)
+    this.loanChargesService
+      .executeLoanCharge2({
+        loanId: Number(this.loanId),
+        loanChargeId: Number(this.chargeId),
+        postLoansLoanIdChargesChargeIdRequest: data,
+        command: command
+      })
       .subscribe((response: any) => {
         this.router.navigate(['../..'], { relativeTo: this.route });
       });

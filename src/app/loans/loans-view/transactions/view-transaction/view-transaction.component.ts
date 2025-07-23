@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService, LoanTransactionsService } from '@fineract/client';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
@@ -99,6 +99,7 @@ export class ViewTransactionComponent implements OnInit {
   /**
    * Retrieves the Transaction data from `resolve`.
    * @param {LoansService} loansService Loans Service
+   * @param {LoanTransactionsService} loanTransactionsService Loan Transactions Service
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
@@ -108,6 +109,7 @@ export class ViewTransactionComponent implements OnInit {
    */
   constructor(
     private loansService: LoansService,
+    private loanTransactionsService: LoanTransactionsService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
@@ -240,9 +242,15 @@ export class ViewTransactionComponent implements OnInit {
             reversalExternalId: response.data.value.reversalExternalId
           };
 
-          this.loansService.loanActionButtons(accountId, 'undoContractTermination', payload).subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
-          });
+          this.loansService
+            .stateTransitions({
+              loanId: Number(accountId),
+              command: 'undoContractTermination',
+              postLoansLoanIdRequest: payload
+            })
+            .subscribe(() => {
+              this.router.navigate(['../'], { relativeTo: this.route });
+            });
         }
       });
     } else {
@@ -267,8 +275,13 @@ export class ViewTransactionComponent implements OnInit {
             dateFormat,
             locale
           };
-          this.loansService
-            .executeLoansAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id)
+          this.loanTransactionsService
+            .adjustLoanTransaction({
+              loanId: parseInt(accountId, 10),
+              transactionId: this.transactionData.id,
+              postLoansLoanIdTransactionsTransactionIdRequest: data,
+              command: 'undo'
+            })
             .subscribe(() => {
               this.router.navigate(['../'], { relativeTo: this.route });
             });
@@ -314,8 +327,13 @@ export class ViewTransactionComponent implements OnInit {
             paymentTypeId: response.data.value.paymentTypeId,
             locale
           };
-          this.loansService
-            .executeLoansAccountTransactionsCommand(accountId, 'chargeback', payload, this.transactionData.id)
+          this.loanTransactionsService
+            .adjustLoanTransaction({
+              loanId: parseInt(accountId, 10),
+              transactionId: this.transactionData.id,
+              postLoansLoanIdTransactionsTransactionIdRequest: payload,
+              command: 'chargeback'
+            })
             .subscribe(() => {
               this.router.navigate(['../'], { relativeTo: this.route });
             });

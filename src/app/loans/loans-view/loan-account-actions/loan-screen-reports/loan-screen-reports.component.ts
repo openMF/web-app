@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { UserGeneratedDocumentsService } from '@fineract/client';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -45,7 +45,7 @@ export class LoanScreenReportsComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private loansService: LoansService,
+    private userGeneratedDocumentsService: UserGeneratedDocumentsService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private renderer: Renderer2
@@ -88,7 +88,7 @@ export class LoanScreenReportsComponent implements OnInit {
    */
   generate() {
     const templateId = this.loanScreenReportForm.get('templateId').value;
-    this.loansService.getTemplateData(templateId, this.loanId).subscribe((response: any) => {
+    this.userGeneratedDocumentsService.mergeTemplate(templateId, this.loanId).subscribe((response: any) => {
       this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
       this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
     });

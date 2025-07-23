@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
+import { LoanInterestPauseService } from '@fineract/client';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
@@ -83,8 +83,8 @@ export class LoanTermVariationsTabComponent {
     private router: Router,
     private dates: Dates,
     private settingsService: SettingsService,
-    private loansService: LoansService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private loanInterestPauseService: LoanInterestPauseService
   ) {
     this.interestPausesData = [];
     this.clientId = this.route.parent.parent.snapshot.paramMap.get('clientId');
@@ -216,9 +216,14 @@ export class LoanTermVariationsTabComponent {
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteInterestPause(this.loanId, variation.id).subscribe((response: any) => {
-          this.reload();
-        });
+        this.loanInterestPauseService
+          .deleteInterestPause({
+            loanId: Number(this.loanId),
+            variationId: Number(variation.id)
+          })
+          .subscribe((response: any) => {
+            this.reload();
+          });
       }
     });
   }
@@ -261,9 +266,15 @@ export class LoanTermVariationsTabComponent {
             locale,
             dateFormat
           };
-          this.loansService.updateInterestPause(this.loanId, variation.id, payload).subscribe((response: any) => {
-            this.reload();
-          });
+          this.loanInterestPauseService
+            .updateInterestPause({
+              loanId: Number(this.loanId),
+              variationId: Number(variation.id),
+              interestPauseRequestDto: payload
+            })
+            .subscribe((response: any) => {
+              this.reload();
+            });
         }
       }
     });

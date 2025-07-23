@@ -4,7 +4,7 @@ import { UntypedFormControl, UntypedFormBuilder, ReactiveFormsModule } from '@an
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /**
  * Undo Loan component.
@@ -42,8 +42,14 @@ export class UndoApprovalComponent implements OnInit {
    */
   submit() {
     const loanId = this.route.snapshot.params['loanId'];
-    this.loanService.loanActionButtons(loanId, 'undoapproval', { note: this.note.value }).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(loanId),
+        postLoansLoanIdRequest: { note: this.note.value },
+        command: 'undoapproval'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

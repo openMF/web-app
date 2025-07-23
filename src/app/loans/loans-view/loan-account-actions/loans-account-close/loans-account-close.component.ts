@@ -2,7 +2,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -87,8 +87,14 @@ export class LoansAccountCloseComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.submitLoanActionButton(this.loanId, data, 'close').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: 'close'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

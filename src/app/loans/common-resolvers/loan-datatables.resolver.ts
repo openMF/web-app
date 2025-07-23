@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
  * loan datatables resolver.
@@ -13,15 +13,17 @@ import { LoansService } from '../loans.service';
 @Injectable()
 export class LoanDatatablesResolver {
   /**
-   * @param {loansService} loansService loans service.
+   * @param {DataTablesService} dataTablesService DataTables service.
    */
-  constructor(private loansService: LoansService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
    * Returns the loan datatables.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.loansService.getLoanDataTables();
+    return this.dataTablesService.getDatatables({
+      apptable: 'm_loan'
+    });
   }
 }

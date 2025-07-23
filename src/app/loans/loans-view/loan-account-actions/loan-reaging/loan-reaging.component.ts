@@ -3,7 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { DropdownOptions } from 'app/core/utils/dropdownOptions';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -84,8 +84,10 @@ export class LoanReagingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.submitLoanActionButton(this.loanId, data, 'reAge').subscribe((response: any) => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({ loanId: Number(this.loanId), command: 'reAge', postLoansLoanIdRequest: data })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

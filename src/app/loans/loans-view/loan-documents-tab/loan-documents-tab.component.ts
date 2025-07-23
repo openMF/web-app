@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { environment } from '../../../../environments/environment';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService as CustomLoansService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { EntityDocumentsTabComponent } from '../../../shared/tabs/entity-documents-tab/entity-documents-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -34,7 +34,7 @@ export class LoanDocumentsTabComponent implements OnInit {
    */
   constructor(
     private route: ActivatedRoute,
-    private loansService: LoansService,
+    private customLoansService: CustomLoansService,
     private settingsService: SettingsService
   ) {
     this.entityId = this.route.parent.snapshot.params['loanId'];
@@ -78,18 +78,18 @@ export class LoanDocumentsTabComponent implements OnInit {
     this.entityDocuments = data;
   }
 
-  downloadDocument(documentId: string) {
-    this.loansService.downloadLoanDocument(this.entityId, documentId).subscribe((res) => {
+  downloadDocument = (documentId: string) => {
+    this.customLoansService.downloadLoanDocument(this.entityId, documentId).subscribe((res) => {
       const url = window.URL.createObjectURL(res);
       window.open(url);
     });
-  }
+  };
 
-  uploadDocument(formData: FormData): any {
-    return this.loansService.loadLoanDocument(this.entityId, formData);
-  }
+  uploadDocument = (formData: FormData): any => {
+    return this.customLoansService.loadLoanDocument(this.entityId, formData);
+  };
 
-  deleteDocument(documentId: any) {
-    this.loansService.deleteLoanDocument(this.entityId, documentId).subscribe((res: any) => {});
-  }
+  deleteDocument = (documentId: any) => {
+    this.customLoansService.deleteLoanDocument(this.entityId, documentId).subscribe((res: any) => {});
+  };
 }

@@ -17,7 +17,7 @@ import {
 } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { ErrorDialogComponent } from 'app/shared/error-dialog/error-dialog.component';
 import { SystemService } from 'app/system/system.service';
 import { TasksService } from 'app/tasks/tasks.service';
@@ -169,7 +169,7 @@ export class LoanLockedComponent implements OnInit {
 
   viewLoanAccount(loan: any) {
     const loanId = loan.loanId;
-    this.loansService.getLoanAccountDetails(loanId).subscribe((loanData: any) => {
+    this.loansService.retrieveLoan({ loanId: Number(loanId) }).subscribe((loanData: any) => {
       const clientId = loanData.clientId;
       this.router.navigateByUrl(`/clients/${clientId}/loans-accounts/${loanId}/general`);
     });

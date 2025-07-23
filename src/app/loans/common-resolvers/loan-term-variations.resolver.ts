@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoanInterestPauseService } from '@fineract/client';
 
 /**
  * Clients data resolver.
@@ -14,9 +14,9 @@ import { LoansService } from '../loans.service';
 @Injectable()
 export class LoanTermVariationsResolver {
   /**
-   * @param {LoansService} LoansService Loans service.
+   * @param {LoanInterestPauseService} loanInterestPauseService Loan Interest Pause service.
    */
-  constructor(private loansService: LoansService) {}
+  constructor(private loanInterestPauseService: LoanInterestPauseService) {}
 
   /**
    * Returns the Loans with Association data.
@@ -25,7 +25,9 @@ export class LoanTermVariationsResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
     if (!isNaN(+loanId)) {
-      return this.loansService.getInterestPausesOfLoan(loanId);
+      return this.loanInterestPauseService.retrieveInterestPauses({
+        loanId: Number(loanId)
+      });
     }
   }
 }

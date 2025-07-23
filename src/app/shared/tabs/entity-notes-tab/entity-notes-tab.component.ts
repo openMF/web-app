@@ -3,7 +3,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule }
 import { MatDialog } from '@angular/material/dialog';
 import { ClientService } from '@fineract/client';
 import { GroupsService } from 'app/groups/groups.service';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';

@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { GuarantorsService } from '@fineract/client';
 import { ClientService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
@@ -57,10 +57,11 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
+   * @param {GuarantorsService} guarantorsService Guarantors Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private loanService: LoansService,
+    private guarantorsService: GuarantorsService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -159,9 +160,14 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
   clientSelected(clientDetails: any) {
     this.accountOptions = [];
-    this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response: any) => {
-      this.accountOptions = response.accountLinkingOptions;
-    });
+    this.guarantorsService
+      .accountsTemplate({
+        loanId: Number(this.loanId),
+        clientId: clientDetails.id
+      })
+      .subscribe((response: any) => {
+        this.accountOptions = response.accountLinkingOptions;
+      });
   }
 
   /**
@@ -201,8 +207,13 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     delete data.existingClient;
     delete data.name;
 
-    this.loanService.createNewGuarantor(this.loanId, data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.guarantorsService
+      .createGuarantor({
+        loanId: Number(this.loanId),
+        guarantorsRequest: data
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

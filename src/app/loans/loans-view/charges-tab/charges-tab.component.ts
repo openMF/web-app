@@ -19,7 +19,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { LoanChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -100,7 +100,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
-    private loansService: LoansService,
+    private loanChargesService: LoanChargesService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
@@ -182,8 +182,13 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.loansService
-          .executeLoansAccountChargesCommand(this.loanDetails.id, 'pay', dataObject, chargeId)
+        this.loanChargesService
+          .executeLoanCharge2({
+            loanId: Number(this.loanDetails.id),
+            loanChargeId: Number(chargeId),
+            postLoansLoanIdChargesChargeIdRequest: dataObject,
+            command: 'pay'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -207,8 +212,13 @@ export class ChargesTabComponent implements OnInit {
     });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loansService
-          .executeLoansAccountChargesCommand(this.loanDetails.id, 'waive', {}, chargeId)
+        this.loanChargesService
+          .executeLoanCharge2({
+            loanId: Number(this.loanDetails.id),
+            loanChargeId: Number(chargeId),
+            postLoansLoanIdChargesChargeIdRequest: {},
+            command: 'waive'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -246,9 +256,15 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.loansService.editLoansAccountCharge(this.loanDetails.id, dataObject, charge.id).subscribe(() => {
-          this.reload();
-        });
+        this.loanChargesService
+          .updateLoanCharge({
+            loanId: Number(this.loanDetails.id),
+            loanChargeId: Number(charge.id),
+            putLoansLoanIdChargesChargeIdRequest: dataObject
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -263,9 +279,14 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoansAccountCharge(this.loanDetails.id, chargeId).subscribe(() => {
-          this.reload();
-        });
+        this.loanChargesService
+          .deleteLoanCharge({
+            loanId: Number(this.loanDetails.id),
+            loanChargeId: Number(chargeId)
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }

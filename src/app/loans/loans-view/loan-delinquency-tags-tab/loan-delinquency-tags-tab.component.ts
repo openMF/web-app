@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoanDelinquencyActionDialogComponent } from 'app/loans/custom-dialog/loan-delinquency-action-dialog/loan-delinquency-action-dialog.component';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import {
   DelinquentData,
   InstallmentLevelDelinquency,
@@ -183,14 +183,16 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
       };
     }
 
-    this.loansServices.createDelinquencyActions(this.loanId, payload).subscribe((result: any) => {
-      this.loansServices
-        .getDelinquencyActions(this.loanId)
-        .subscribe((loanDelinquencyActions: LoanDelinquencyAction[]) => {
-          this.loanDelinquencyActions = loanDelinquencyActions;
-          this.validateDelinquencyActions();
-        });
-    });
+    this.loansServices
+      .createLoanDelinquencyAction({ loanId: Number(this.loanId), postLoansDelinquencyActionRequest: payload })
+      .subscribe((result: any) => {
+        this.loansServices
+          .getLoanDelinquencyActions({ loanId: Number(this.loanId) })
+          .subscribe((loanDelinquencyActions: any) => {
+            this.loanDelinquencyActions = loanDelinquencyActions;
+            this.validateDelinquencyActions();
+          });
+      });
   }
 
   isCurrentAndPauseAction(item: LoanDelinquencyAction): boolean {
