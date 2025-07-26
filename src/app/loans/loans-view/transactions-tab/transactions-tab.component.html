@@ -159,6 +159,12 @@
               <span>{{ 'labels.text.View Transaction' | translate }}</span>
             </button>
           </span>
+          <span *ngIf="canCreateInterestRefund(transaction)">
+            <button mat-menu-item (click)="openInterestRefundDialog(transaction)">
+              <mat-icon><fa-icon icon="plus" size="sm"></fa-icon></mat-icon>
+              <span>{{ 'tooltips.Create Interest Refund' | translate }}</span>
+            </button>
+          </span>
           <span *ngIf="allowUndoTransaction(transaction)">
             <button mat-menu-item *mifosxHasPermission="'ADJUST_LOAN'" (click)="undoTransaction(transaction, $event)">
               <mat-icon><fa-icon icon="undo" size="sm"></fa-icon></mat-icon>

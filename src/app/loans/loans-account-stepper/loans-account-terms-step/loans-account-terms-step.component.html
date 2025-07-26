@@ -45,9 +45,9 @@
       loansAccountTermsForm.value.loanTermFrequencyType | find: termFrequencyTypeData : 'id' : 'value'
     }}</span>
 
-    <h4 class="mat-h4 flex-98">Repayments</h4>
+    <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Repayments' | translate }}</h4>
 
-    <mat-form-field class="flex-48">
+    <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Number of repayments' | translate }}</mat-label>
       <input
         type="number"
@@ -59,6 +59,11 @@
         {{ 'labels.inputs.Number of repayments' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="flex-fill flex-23" *ngIf="loansAccountTermsData?.canDefineInstallmentAmount">
+      <mat-label>{{ 'labels.inputs.Installment Amount' | translate }}</mat-label>
+      <input type="number" matInput formControlName="fixedEmiAmount" />
     </mat-form-field>
 
     <mat-form-field class="flex-fill flex-23" (click)="repaymentsPicker.open()">
@@ -220,7 +225,7 @@
     </ng-container>
 
     <ng-container *ngIf="loansAccountTermsData?.isLoanProductLinkedToFloatingRate">
-      <div class="flex-48 layout-row-wrap gap-2percent layout-xs-column">
+      <div class="flex-48 layout-row layout-xs-column">
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Interest Method' | translate }}</mat-label>
           <mat-select formControlName="interestType">
@@ -256,12 +261,14 @@
     <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Loan Schedule' | translate }}</h4>
 
     <div class="flex-48" *ngIf="loanScheduleType">
-      <span class="flex-40"
-        ><p>{{ 'labels.inputs.Loan Schedule Type' | translate }}</p></span
-      >
-      <span class="flex-60"
-        ><p>{{ loanScheduleType.value | translateKey: 'catalogs' }}</p></span
-      >
+      <div class="layout-row">
+        <span class="flex-40"
+          ><p>{{ 'labels.inputs.Loan Schedule Type' | translate }}</p></span
+        >
+        <span class="flex-60"
+          ><p>{{ loanScheduleType.value | translateKey: 'catalogs' }}</p></span
+        >
+      </div>
     </div>
 
     <mat-form-field class="flex-48">
@@ -284,14 +291,9 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-48" *ngIf="loansAccountTermsData?.canDefineInstallmentAmount">
-      <mat-label>{{ 'labels.inputs.Installment Amount' | translate }}</mat-label>
-      <input type="number" matInput formControlName="fixedEmiAmount" />
-    </mat-form-field>
-
     <h4 class="mat-h4 flex-98">{{ 'labels.heading.Interest Calculations' | translate }}</h4>
 
-    <mat-form-field class="flex-40">
+    <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Interest calculation period' | translate }}</mat-label>
       <mat-select
         formControlName="interestCalculationPeriodType"
@@ -307,15 +309,15 @@
     </mat-form-field>
 
     <mat-checkbox
-      class="flex-48"
+      class="flex-98"
       formControlName="allowPartialPeriodInterestCalculation"
       matTooltip="{{ 'tooltips.To be used with SAME AS REPAYMENT PERIOD' | translate }}"
     >
       <p>{{ 'labels.inputs.Calculate interest for exact days in partial period' | translate }}</p>
     </mat-checkbox>
 
-    <ng-container *ngIf="isProgressive">
-      <mat-checkbox formControlName="interestRecognitionOnDisbursementDate" class="flex-48">
+    <ng-container class="flex-98" *ngIf="isProgressive">
+      <mat-checkbox formControlName="interestRecognitionOnDisbursementDate" class="flex-98">
         <p>{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}</p>
       </mat-checkbox>
     </ng-container>
@@ -473,6 +475,13 @@
       <span class="flex-40">{{ enableIncomeCapitalization | yesNo }}</span>
     </div>
 
+    <div class="flex-100 layout-row">
+      <span class="flex-40"
+        ><b>{{ 'labels.inputs.Enable Buy down fee' | translate }}</b></span
+      >
+      <span class="flex-40">{{ enableBuyDownFee | yesNo }}</span>
+    </div>
+
     <ng-container *ngIf="multiDisburseLoan">
       <mat-divider class="flex-98"></mat-divider>
       <div class="flex-100 layout-row" *ngIf="allowAddDisbursementDetails()">
@@ -481,7 +490,11 @@
       <div class="flex-100 layout-row">
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Maximum allowed outstanding balance' | translate }}</mat-label>
-          <input matInput required formControlName="maxOutstandingLoanBalance" />
+          <input matInput type="number" formControlName="maxOutstandingLoanBalance" />
+          <mat-error *ngIf="loansAccountTermsForm.controls.maxOutstandingLoanBalance.hasError('required')">
+            {{ 'labels.inputs.Maximum allowed outstanding balance' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
         </mat-form-field>
         <span class="flex-48">
           <button

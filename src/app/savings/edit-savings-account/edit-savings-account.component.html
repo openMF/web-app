@@ -1,5 +1,11 @@
 <div class="container">
-  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #savingProductStepper>
+  <mat-stepper
+    orientation="vertical"
+    [linear]="false"
+    class="mat-elevation-z8"
+    labelPosition="bottom"
+    #savingProductStepper
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -62,5 +68,5 @@
       >
       </mifosx-savings-account-preview-step>
     </mat-step>
-  </mat-horizontal-stepper>
+  </mat-stepper>
 </div>

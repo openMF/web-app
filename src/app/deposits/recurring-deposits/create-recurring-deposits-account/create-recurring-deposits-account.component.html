@@ -1,5 +1,11 @@
 <div class="container">
-  <mat-horizontal-stepper class="mat-elevation-z8" labelPosition="bottom" #recurringDepositAccountStepper>
+  <mat-stepper
+    orientation="vertical"
+    [linear]="false"
+    class="mat-elevation-z8"
+    labelPosition="bottom"
+    #recurringDepositAccountStepper
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -82,5 +88,5 @@
       >
       </mifosx-recurring-deposits-account-preview-step>
     </mat-step>
-  </mat-horizontal-stepper>
+  </mat-stepper>
 </div>

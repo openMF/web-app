@@ -370,6 +370,7 @@
       "Create Group": "Create Group",
       "Create Holiday": "Create Holiday",
       "Create Hook": "Create Hook",
+      "Create Interest Refund": "Create Interest Refund",
       "Create Journal Entries": "Create Journal Entries",
       "Create Loan Product": "Create Loan Product",
       "Create Office": "Create Office",
@@ -799,7 +800,7 @@
       "required and cannot be negative": "required and cannot be negative",
       "should": "should",
       "on": "on",
-      "Password validation": "Password should contain minimum {{minchar}} characters, that should income 1 uppercase, lowercase and special character and should not consists of repeated characters or white-spaces"
+      "Password validation": "The password should contain a minimum of {{minchar}} characters, including 1 uppercase, 1 lowercase and a special character and should not include repeated characters or spaces."
     },
     "heading": {
       "Account Linked Financial": "List of accounts linked to different financial activities. To know more click:",
@@ -1226,6 +1227,7 @@
       "Address Type": "Address Type",
       "Adjust advance payments toward future installments": "Adjust advance payments toward future installments",
       "Adjust interest rates for remainder of loan": "Adjust interest rates for remainder of loan",
+      "Adjustment Amount": "Adjustment Amount",
       "Advance payments adjustment type": "Advance payments adjustment type",
       "Advanced Payment Allocation Transactions": "Advanced Payment Allocation Transactions",
       "Advanced Payment Allocation Transaction Type": "Advanced Payment Allocation Transaction Type",
@@ -1249,6 +1251,7 @@
       "Alt": "Alt",
       "Amortization": "Amortization",
       "Amortization Type": "Amortization Type",
+      "Amortized Amount": "Amortized Amount",
       "Amount": "Amount",
       "Amount Collected": "Amount Collected",
       "Amount Paid": "Amount Paid",
@@ -2388,6 +2391,7 @@
       "Type/Quality": "Type/Quality",
       "Unassigned": "Unassigned",
       "Unassignment Date": "Unassignment Date",
+      "Unrecognized Amount": "Unrecognized Amount",
       "Unique": "Unique",
       "Unit Type": "Unit Type",
       "Updated By": "Updated By",
@@ -2487,14 +2491,15 @@
       "Income capitalization calculation type": "Income capitalization calculation type",
       "Income capitalization strategy": "Income capitalization strategy",
       "Income capitalization type": "Income capitalization type",
-      "DEFERRED INCOME RECOGNITION": "Deferred income recognition",
+      "DEFERRED INCOME RECOGNITION": "DEFERRED INCOME RECOGNITION",
       "Enable Buy down fee": "Enable Buy down fee",
       "Buy down fee calculation type": "Buy down fee calculation type",
       "Buy down fee strategy": "Buy down fee strategy",
       "Buy down fee income type": "Buy down fee income type",
       "Buy down fees": "Buy down fees",
       "Income from Buy down fees": "Income from Buy down fees",
-      "Buy down fee Expense": "Buy down fee Expense"
+      "Buy down fee Expense": "Buy down fee Expense",
+      "Skip Interest Refund Transaction Posting": "Skip Interest Refund Transaction Posting"
     },
     "links": {
       "Community": "Community",
@@ -3621,6 +3626,7 @@
     "Yes": "Yes",
     "loan product will be active and available to clients": "The date that the loan product will be active and available to clients. If blank, the loan product will be active as soon as it is created.",
     "loan product will become inactive and unavailable to clients": "The date that the loan product will become inactive and unavailable to clients. If blank, the load product will never become inactive.",
-    "Refund transactions where interest refund will automatically be calculated": "Refund transactions where interest refund will automatically be calculated"
+    "Refund transactions where interest refund will automatically be calculated": "Refund transactions where interest refund will automatically be calculated",
+    "Create Interest Refund": "Create Interest Refund"
   }
 }

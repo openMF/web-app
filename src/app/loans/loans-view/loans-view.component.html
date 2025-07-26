@@ -208,6 +208,17 @@
           {{ 'labels.inputs.Transactions' | translate }}
         </a>
       </ng-container>
+      <ng-container *ngIf="loanDetailsData.enableIncomeCapitalization">
+        <a
+          mat-tab-link
+          [routerLink]="['./deferred-income']"
+          routerLinkActive
+          #deferredIncome="routerLinkActive"
+          [active]="deferredIncome.isActive"
+        >
+          {{ 'labels.inputs.Deferred income' | translate }}
+        </a>
+      </ng-container>
       <ng-container *ngIf="loanDetailsData.status.active">
         <a
           mat-tab-link

@@ -12,6 +12,7 @@ import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { MatButton } from '@angular/material/button';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { DateFormatPipe } from '@pipes/date-format.pipe';
 import { TranslatePipe as NgxTranslatePipe } from '@ngx-translate/core';
 import { TranslatePipe } from '@pipes/translate.pipe';
@@ -39,6 +40,7 @@ export const STANDALONE_SHARED_IMPORTS = [
   MatDatepickerToggle,
   MatDatepicker,
   MatButton,
+  MatCheckbox,
   DateFormatPipe,
   HasPermissionDirective,
 

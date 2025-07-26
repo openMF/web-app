@@ -122,3 +122,14 @@ export interface DisbursementData {
   principal: number;
   id?: number;
 }
+
+export interface LoanDeferredIncomeData {
+  capitalizedIncomeData: LoanCapitalizedIncomeData[];
+}
+
+export interface LoanCapitalizedIncomeData {
+  amount: number;
+  amortizedAmount?: number;
+  unrecognizedAmount?: number;
+  amountAdjustment?: number;
+}

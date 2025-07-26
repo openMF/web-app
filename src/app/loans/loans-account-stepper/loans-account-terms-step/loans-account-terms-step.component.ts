@@ -1,15 +1,8 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  FormArray,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LoansAccountAddCollateralDialogComponent } from 'app/loans/custom-dialog/loans-account-add-collateral-dialog/loans-account-add-collateral-dialog.component';
 import { LoanProducts } from 'app/products/loan-products/loan-products';
 import { LoanProduct } from 'app/products/loan-products/models/loan-product.model';
@@ -25,7 +18,7 @@ import { InputAmountComponent } from '../../../shared/input-amount/input-amount.
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatDivider } from '@angular/material/divider';
-import { MatIconButton, MatButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTable,
@@ -161,6 +154,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
 
   productEnableDownPayment = false;
   enableIncomeCapitalization = false;
+  enableBuyDownFee = false;
   isProgressive = false;
 
   /**
@@ -190,6 +184,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
       }
       this.productEnableDownPayment = this.loansAccountTermsData.product.enableDownPayment;
       this.enableIncomeCapitalization = this.loansAccountTermsData.product.enableIncomeCapitalization;
+      this.enableBuyDownFee = this.loansAccountTermsData.product.enableBuyDownFee;
       this.isProgressive =
         this.loansAccountTermsData.loanScheduleType.code == LoanProducts.LOAN_SCHEDULE_TYPE_PROGRESSIVE;
       if (this.loansAccountTermsData.product) {
@@ -291,6 +286,19 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         this.loansAccountTermsForm.controls.graceOnArrearsAgeing.disable();
       }
       this.setOptions();
+
+      this.loansAccountTermsForm.removeControl('maxOutstandingLoanBalance');
+      if (this.allowAddDisbursementDetails()) {
+        this.loansAccountTermsForm.addControl(
+          'maxOutstandingLoanBalance',
+          new UntypedFormControl(this.loansAccountTermsData.maxOutstandingLoanBalance, Validators.required)
+        );
+      } else {
+        this.loansAccountTermsForm.addControl(
+          'maxOutstandingLoanBalance',
+          new UntypedFormControl(this.loansAccountTermsData.maxOutstandingLoanBalance)
+        );
+      }
     }
   }
 
@@ -344,11 +352,26 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     this.setAdvancedPaymentStrategyControls();
     // this.setCustomValidators();
     this.setLoanTermListener();
+
+    this.loansAccountTermsForm.removeControl('maxOutstandingLoanBalance');
+    if (this.allowAddDisbursementDetails()) {
+      this.loansAccountTermsForm.removeControl('maxOutstandingLoanBalance');
+      this.loansAccountTermsForm.addControl(
+        'maxOutstandingLoanBalance',
+        new UntypedFormControl(this.loansAccountTermsData.maxOutstandingLoanBalance, Validators.required)
+      );
+    } else {
+      this.loansAccountTermsForm.addControl(
+        'maxOutstandingLoanBalance',
+        new UntypedFormControl(this.loansAccountTermsData.maxOutstandingLoanBalance)
+      );
+    }
   }
 
   allowAddDisbursementDetails() {
     return this.multiDisburseLoan && !this.loansAccountTermsData.disallowExpectedDisbursements;
   }
+
   formatDateToDDMMYYYY(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');

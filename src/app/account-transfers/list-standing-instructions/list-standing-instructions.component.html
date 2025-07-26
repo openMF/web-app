@@ -1,10 +1,12 @@
+<!-- Version 1 -->
+
 <mat-card class="container">
   <div class="layout-row-wrap gap-2px responsive-column">
     <div class="flex-fill" *ngIf="isFromClient">
       <span class="flex-40">
         <h3 class="mat-h3">{{ 'labels.heading.Client Type' | translate }}</h3>
       </span>
-      <span class="flex-60">
+      <span class="client-Name">
         <h3 class="mat-h3">{{ clientName }}</h3>
       </span>
     </div>
@@ -20,7 +22,7 @@
 
     <mat-divider [inset]="true"></mat-divider>
 
-    <mat-form-field class="flex-30">
+    <mat-form-field class="type-field">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select [formControl]="transferType">
         <mat-option *ngFor="let transferTypeData of transferTypeDatas" [value]="transferTypeData.id">
@@ -29,7 +31,7 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field class="flex-30">
+    <mat-form-field class="account-Id-field">
       <input matInput placeholder="From Account Id" [formControl]="fromAccountId" />
     </mat-form-field>
 
@@ -40,7 +42,7 @@
       (click)="filterStandingInstructions()"
       class="filter-button"
     >
-      &nbsp;&nbsp;{{ 'labels.buttons.Filter' | translate }}
+      {{ 'labels.buttons.Filter' | translate | titlecase }}
     </button>
   </div>
 

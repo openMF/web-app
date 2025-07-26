@@ -4,6 +4,6 @@ export class SelectOption {
   name: string;
 
   constructor(options: any[]) {
-    (this.id = options[0]), (this.name = options[1]);
+    ((this.id = options[0]), (this.name = options[1]));
   }
 }

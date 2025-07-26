@@ -204,7 +204,6 @@ export class ViewTransactionComponent implements OnInit {
    * Undo the loans transaction
    */
   undoTransaction() {
-    console.log(this.transactionData);
     const accountId = this.route.snapshot.params['loanId'];
 
     if (this.transactionType.contractTermination) {

@@ -92,7 +92,8 @@ export class MakeRepaymentComponent implements OnInit {
       ],
       externalId: '',
       paymentTypeId: '',
-      note: ''
+      note: '',
+      skipInterestRefund: [false]
     });
 
     if (this.isCapitalizedIncome()) {
@@ -157,6 +158,11 @@ export class MakeRepaymentComponent implements OnInit {
     ].includes(this.command);
   }
 
+  showInterestRefundCheckbox(): boolean {
+    const code = this.dataObject?.type?.code?.toLowerCase() || '';
+    return code.includes('merchantissuedrefund') || code.includes('payoutrefund');
+  }
+
   /** Submits the repayment form */
   submit() {
     const repaymentLoanFormData = this.repaymentLoanForm.value;
@@ -166,12 +172,16 @@ export class MakeRepaymentComponent implements OnInit {
     if (repaymentLoanFormData.transactionDate instanceof Date) {
       repaymentLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
     }
-    const data = {
+    const data: any = {
       ...repaymentLoanFormData,
       dateFormat,
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
+    if (repaymentLoanFormData.skipInterestRefund) {
+      data.interestRefundCalculation = false;
+    }
+    delete data.skipInterestRefund;
     this.loanService.submitLoanActionButton(this.loanId, data, this.command).subscribe((response: any) => {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });

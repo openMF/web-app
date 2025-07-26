@@ -1,6 +1,6 @@
 mifosx-server-selector {
   padding-left: 5px;
-  width: 300px;
+  width: 40%;
 }
 
 .cover {
@@ -21,6 +21,10 @@ mifosx-server-selector {
     display: block;
     z-index: 1;
     position: absolute;
+  }
+
+  .width-40 {
+    width: 40%;
   }
 
   .cover-content {
@@ -92,6 +96,10 @@ mifosx-server-selector {
 
 .p-t-10 {
   padding-top: 0;
+}
+
+.p-r-10 {
+  padding-right: 10px;
 }
 
 ::ng-deep .login-container mifosx-footer .divider {

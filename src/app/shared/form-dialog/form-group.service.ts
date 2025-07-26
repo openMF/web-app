@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 import { FormfieldBase } from './formfield/model/formfield-base';
 
@@ -14,10 +14,21 @@ export class FormGroupService {
 
     formfields.forEach((formfield) => {
       group[formfield.controlName] = formfield.required
-        ? new UntypedFormControl(formfield.value, Validators.required)
-        : new UntypedFormControl(formfield.value);
+        ? new UntypedFormControl(formfield.value, this.buildValidators(formfield))
+        : new UntypedFormControl(formfield.value, this.buildValidators(formfield));
     });
 
     return new UntypedFormGroup(group);
+  }
+
+  buildValidators(formfield: FormfieldBase): ValidatorFn[] {
+    let validators: ValidatorFn[] = [];
+    if (formfield.required) {
+      validators.push(Validators.required);
+    }
+    if (formfield.validators) {
+      formfield.validators.forEach((validator: ValidatorFn) => validators.push(validator));
+    }
+    return validators;
   }
 }
