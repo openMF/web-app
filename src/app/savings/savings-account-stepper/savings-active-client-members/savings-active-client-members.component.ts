@@ -54,7 +54,6 @@ export class SavingsActiveClientMembersComponent implements OnInit {
 
   dataSource: any;
   ngOnInit(): void {
-    console.log('Active Client Members in LoansActiveClientMembersComponent:', this.activeClientMembers);
     this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
   }
   get selectedClientMembers() {

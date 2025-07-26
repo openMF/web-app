@@ -1,13 +1,16 @@
 <mat-form-field id="server-selector" *ngIf="existMoreThanOneServer">
   <mat-label>{{ 'labels.inputs.Server' | translate }}</mat-label>
-  <mat-select [formControl]="serverSelector" (selectionChange)="setServer()" panelClass="server-panel">
+  <mat-select
+    [formControl]="serverSelector"
+    (selectionChange)="setServer()"
+    panelClass="server-panel"
+    panelWidth="null"
+  >
     <div class="sticky">
       <form [formGroup]="form" (ngSubmit)="addNewServer()">
         <div class="actions">
           <mat-form-field class="ml align-start">
-            <span matPrefix
-              ><mat-icon>{{ 'labels.inputs.language' | translate }}</mat-icon></span
-            >
+            <span matPrefix><mat-icon>language</mat-icon></span>
             <mat-label>{{ 'labels.placeholders.Add new server' | translate }}</mat-label>
             <input matInput type="text" autocomplete="off" formControlName="url" />
             <mat-error *ngIf="form.controls.url.hasError('required')">

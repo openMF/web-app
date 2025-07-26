@@ -369,6 +369,7 @@
       "Create Group": "Créer un groupe",
       "Create Holiday": "Créer des vacances",
       "Create Hook": "Créer un crochet",
+      "Create Interest Refund": "Créer un remboursement d’intérêts",
       "Create Journal Entries": "Créer des entrées de journal",
       "Create Loan Product": "Créer un produit de prêt",
       "Create Office": "Créer un bureau",
@@ -1222,6 +1223,7 @@
       "Address Type": "Type d'adresse",
       "Adjust advance payments toward future installments": "Ajuster les paiements anticipés aux versements futurs",
       "Adjust interest rates for remainder of loan": "Ajuster les taux d’intérêt pour le reste du prêt",
+      "Adjustment Amount": "Montant de l'ajustement",
       "Advance payments adjustment type": "Type d'ajustement des acomptes",
       "Advanced Payment Allocation Transactions": "Opérations de répartition des paiements anticipés",
       "Advanced Payment Allocation Transaction Type": "Type de transaction d'allocation de paiement avancé",
@@ -1245,6 +1247,7 @@
       "Alt": "Alt",
       "Amortization": "Amortissement",
       "Amortization Type": "Type d'amortissement",
+      "Amortized Amount": "Montant amorti",
       "Amount": "Montant",
       "Amount Collected": "Montant collecté",
       "Amount Paid": "Le montant payé",
@@ -2383,6 +2386,7 @@
       "Unassignment Date": "Date de désaffectation",
       "Unique": "Unique",
       "Unit Type": "Type d'unité",
+      "Unrecognized Amount": "Montant non reconnu",
       "Updated By": "Mis à jour par",
       "Updated on": "Mis à jour le",
       "Url": "URL",
@@ -2487,7 +2491,8 @@
       "Buy down fee income type": "Type de revenu des frais de rachat",
       "Buy down fees": "Frais d'achat",
       "Income from Buy down fees": "Revenus des commissions de rachat",
-      "Buy down fee Expense": "Charges des commissions de rachat"
+      "Buy down fee Expense": "Charges des commissions de rachat",
+      "Skip Interest Refund Transaction Posting": "Ignorer la comptabilisation du remboursement des intérêts"
     },
     "links": {
       "Community": "Communauté",
@@ -3515,6 +3520,7 @@
     "Yes": "Oui",
     "loan product will be active and available to clients": "La date à laquelle le produit de prêt sera actif et disponible pour les clients. Si ce champ est vide, le produit de prêt sera actif dès sa création.",
     "loan product will become inactive and unavailable to clients": "Date à laquelle le produit de prêt deviendra inactif et indisponible pour les clients. S'il est vide, le produit chargé ne deviendra jamais inactif.",
-    "Refund transactions where interest refund will automatically be calculated": "Opérations de remboursement pour lesquelles le remboursement des intérêts sera automatiquement calculé"
+    "Refund transactions where interest refund will automatically be calculated": "Opérations de remboursement pour lesquelles le remboursement des intérêts sera automatiquement calculé",
+    "Create Interest Refund": "Créer un remboursement d’intérêts"
   }
 }

@@ -40,9 +40,9 @@
 
   <div class="layout-column flex-gt-sm-30 login-container">
     <!-- Language Selector to the extreme right -->
-    <div class="layout-row-reverse flex-auto">
-      <mifosx-language-selector class="p-r-10 p-t-10"></mifosx-language-selector>
-      <mifosx-theme-toggle class="p-r-10 p-t-10"></mifosx-theme-toggle>
+    <div class="layout-row-reverse">
+      <mifosx-language-selector class="p-t-10 p-r-10 width-40"></mifosx-language-selector>
+      <mifosx-theme-toggle class="p-t-10"></mifosx-theme-toggle>
       <mifosx-server-selector
         class="p-t-10"
         *ngIf="!environment.production && environment.allowServerSwitch"

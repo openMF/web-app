@@ -120,7 +120,6 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.id = this.route.snapshot.queryParams['savingsId'];
         this.interbank = this.route.snapshot.queryParams['interbank'] === 'true';
         this.balance = this.router.getCurrentNavigation().extras.state.balance;
-        console.log('is interbank?', this.interbank);
         break;
       default:
         this.accountTypeId = '0';

@@ -1,3 +1,5 @@
+// Version 1
+
 /*
  * Entry point of global application style.
  * Component-specific style should not go here and be included directly as part of the components.
@@ -610,4 +612,24 @@ mifosx-notifications-page td {
   display: flex;
   justify-content: flex-start;
   width: 100%;
+}
+
+//Re-positions account type field on list standing instructions page
+.type-field {
+  position: absolute;
+  left: 1px;
+  top: 20px;
+}
+
+//Re-positions account id field on list standing instructions page
+.account-Id-field {
+  position: absolute;
+  left: 490px;
+  top: 20px;
+}
+
+//Re-positions client name label on list standing instructions page
+.client-Name {
+  position: absolute;
+  left: 490px;
 }

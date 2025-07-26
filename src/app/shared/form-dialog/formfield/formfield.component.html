@@ -10,6 +10,12 @@
         [formControlName]="formfield.controlName"
         [required]="formfield.required"
       />
+      <mat-error *ngIf="form.controls[formfield.controlName].hasError('max')">
+        <strong>{{ 'labels.commons.Maximum Value must be' | translate }} {{ formfield.max }}</strong>
+      </mat-error>
+      <mat-error *ngIf="form.controls[formfield.controlName].hasError('min')">
+        <strong>{{ 'labels.commons.Minimum Value must be' | translate }} {{ formfield.min }}</strong>
+      </mat-error>
 
       <mat-select
         *ngIf="formfield.controlType === 'select'"

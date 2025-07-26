@@ -62,6 +62,8 @@ import { LoanDelinquencyDataResolver } from './common-resolvers/loan-delinquency
 import { LoanDelinquencyActionsResolver } from './common-resolvers/loan-delinquency-actions.resolver';
 import { LoanTermVariationsTabComponent } from './loans-view/loan-term-variations-tab/loan-term-variations-tab.component';
 import { LoanTermVariationsResolver } from './common-resolvers/loan-term-variations.resolver';
+import { LoanDeferredIncomeTabComponent } from './loans-view/loan-deferred-income-tab/loan-deferred-income-tab.component';
+import { LoanDeferredIncomeDataResolver } from './common-resolvers/loan-deferred-income-data.resolver';
 
 /** Loans Route. */
 const routes: Routes = [
@@ -127,6 +129,19 @@ const routes: Routes = [
               {
                 path: 'export',
                 component: ExportTransactionsComponent
+              }
+            ]
+          },
+          {
+            path: 'deferred-income',
+            data: { title: 'Loans Deferred Income', breadcrumb: 'Deferred income', routeParamBreadcrumb: false },
+            resolve: {
+              loanDeferredIncomeData: LoanDeferredIncomeDataResolver
+            },
+            children: [
+              {
+                path: '',
+                component: LoanDeferredIncomeTabComponent
               }
             ]
           },
@@ -391,7 +406,8 @@ const routes: Routes = [
     GLIMLoanTemplateResolver,
     ExternalAssetOwnerResolver,
     LoanDelinquencyDataResolver,
-    LoanTermVariationsResolver
+    LoanTermVariationsResolver,
+    LoanDeferredIncomeDataResolver
   ]
 })
 export class LoansRoutingModule {}

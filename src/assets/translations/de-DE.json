@@ -369,6 +369,7 @@
       "Create Group": "Gruppe erstellen",
       "Create Holiday": "Urlaub erstellen",
       "Create Hook": "Hook erstellen",
+      "Create Interest Refund": "Zinsrückerstattung erstellen",
       "Create Journal Entries": "Erstellen Sie Journaleinträge",
       "Create Loan Product": "Darlehensprodukt erstellen",
       "Create Office": "Büro erstellen",
@@ -1222,6 +1223,7 @@
       "Address Type": "Adresstyp",
       "Adjust advance payments toward future installments": "Passen Sie Vorauszahlungen an zukünftige Raten an",
       "Adjust interest rates for remainder of loan": "Passen Sie die Zinssätze für die Restlaufzeit des Darlehens an",
+      "Adjustment Amount": "Anpassungsbetrag",
       "Advance payments adjustment type": "Art der Anpassung der Vorauszahlungen",
       "Advanced Payment Allocation Transactions": "Erweiterte Zahlungszuordnungstransaktionen",
       "Advanced Payment Allocation Transaction Type": "Fortgeschrittene Zahlungszuweisungstransaktionstyp",
@@ -1245,6 +1247,7 @@
       "Alt": "Alt",
       "Amortization": "Amortisation",
       "Amortization Type": "Amortisationsart",
+      "Amortized Amount": "Amortisierter Betrag",
       "Amount": "Menge",
       "Amount Collected": "Eingezogener Betrag",
       "Amount Paid": "Bezahlter Betrag",
@@ -2383,6 +2386,7 @@
       "Unassignment Date": "Datum der Aufhebung der Zuweisung",
       "Unique": "Einzigartig",
       "Unit Type": "Gerätetyp",
+      "Unrecognized Amount": "Nicht erfasster Betrag",
       "Updated By": "Aktualisiert von",
       "Updated on": "Aktualisiert am",
       "Url": "URL",
@@ -2487,7 +2491,8 @@
       "Buy down fee income type": "Einnahmeart der Buy-Down-Gebühr",
       "Buy down fees": "Buy-Down-Gebühren",
       "Income from Buy down fees": "Einnahmen aus Buy-Down-Gebühren",
-      "Buy down fee Expense": "Aufwendungen aus Buy-Down-Gebühren"
+      "Buy down fee Expense": "Aufwendungen aus Buy-Down-Gebühren",
+      "Skip Interest Refund Transaction Posting": "Buchung der Zinsrückerstattung überspringen"
     },
     "links": {
       "Community": "Gemeinschaft",
@@ -3515,6 +3520,7 @@
     "Yes": "Ja",
     "loan product will be active and available to clients": "Das Datum, an dem das Kreditprodukt aktiv und für Kunden verfügbar sein wird. Wenn das Feld leer ist, ist das Kreditprodukt aktiv, sobald es erstellt wird.",
     "loan product will become inactive and unavailable to clients": "Das Datum, an dem das Kreditprodukt inaktiv wird und für Kunden nicht mehr verfügbar ist. Wenn es leer ist, wird das Ladeprodukt niemals inaktiv.",
-    "Refund transactions where interest refund will automatically be calculated": "Rückerstattungstransaktionen, bei denen die Zinsrückerstattung automatisch berechnet wird"
+    "Refund transactions where interest refund will automatically be calculated": "Rückerstattungstransaktionen, bei denen die Zinsrückerstattung automatisch berechnet wird",
+    "Create Interest Refund": "Zinsrückerstattung erstellen"
   }
 }

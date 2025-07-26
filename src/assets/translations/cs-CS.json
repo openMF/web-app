@@ -369,6 +369,7 @@
       "Create Group": "Vytvořit skupinu",
       "Create Holiday": "Vytvořte dovolenou",
       "Create Hook": "Vytvořte háček",
+      "Create Interest Refund": "Vytvořit vrácení úroků",
       "Create Journal Entries": "Vytvářejte záznamy deníku",
       "Create Loan Product": "Vytvořte produkt půjčky",
       "Create Office": "Vytvořit Office",
@@ -1222,6 +1223,7 @@
       "Address Type": "Typ adresy",
       "Adjust advance payments toward future installments": "Upravte zálohové platby směrem k budoucím splátkám",
       "Adjust interest rates for remainder of loan": "Upravte úrokové sazby pro zbytek půjčky",
+      "Adjustment Amount": "Částka úpravy",
       "Advance payments adjustment type": "Typ úpravy záloh",
       "Advanced Payment Allocation Transactions": "Pokročilé transakce alokace plateb",
       "Advanced Payment Allocation Transaction Type": "Typ transakce pro pokročilé přidělování plateb",
@@ -1245,6 +1247,7 @@
       "Alt": "Alt",
       "Amortization": "Amortizace",
       "Amortization Type": "Typ amortizace",
+      "Amortized Amount": "Amortizovaná částka",
       "Amount": "Množství",
       "Amount Collected": "Vybraná částka",
       "Amount Paid": "Částka vyplacená",
@@ -2383,6 +2386,7 @@
       "Unassignment Date": "Datum vyřazení",
       "Unique": "Unikátní",
       "Unit Type": "Typ jednotky",
+      "Unrecognized Amount": "Nerozpoznaná částka",
       "Updated By": "Aktualizováno uživatelem",
       "Updated on": "Aktualizováno dne",
       "Url": "URL",
@@ -2487,7 +2491,8 @@
       "Buy down fee income type": "Typ příjmu z poplatku za odkup",
       "Buy down fees": "Poplatky za odkup",
       "Income from Buy down fees": "Příjmy z poplatků za odkup",
-      "Buy down fee Expense": "Náklady na poplatek za odkup"
+      "Buy down fee Expense": "Náklady na poplatek za odkup",
+      "Skip Interest Refund Transaction Posting": "Přeskočit zaúčtování vrácení úroků"
     },
     "links": {
       "Community": "Společenství",
@@ -3516,6 +3521,7 @@
     "Yes": "Ano",
     "loan product will be active and available to clients": "Datum, kdy bude úvěrový produkt aktivní a dostupný klientům. Pokud nevyplníte, bude úvěrový produkt aktivní, jakmile bude vytvořen.",
     "loan product will become inactive and unavailable to clients": "Datum, kdy se úvěrový produkt stane neaktivním a nedostupným pro klienty. Pokud je prázdné, produkt zatížení se nikdy nestane neaktivním.",
-    "Refund transactions where interest refund will automatically be calculated": "Transakce s vrácením peněz, kde bude automaticky vypočítána refundace úroků"
+    "Refund transactions where interest refund will automatically be calculated": "Transakce s vrácením peněz, kde bude automaticky vypočítána refundace úroků",
+    "Create Interest Refund": "Vytvořit vrácení úroků"
   }
 }

@@ -369,6 +369,7 @@
       "Create Group": "समूह सिर्जना गर्नुहोस्",
       "Create Holiday": "छुट्टी सिर्जना गर्नुहोस्",
       "Create Hook": "हुक सिर्जना गर्नुहोस्",
+      "Create Interest Refund": "ब्याज फिर्ता सिर्जना गर्नुहोस्",
       "Create Journal Entries": "जर्नल प्रविष्टिहरू सिर्जना गर्नुहोस्",
       "Create Loan Product": "ऋण उत्पादन सिर्जना गर्नुहोस्",
       "Create Office": "कार्यालय सिर्जना गर्नुहोस्",
@@ -1222,6 +1223,7 @@
       "Address Type": "ठेगानाको प्रकार",
       "Adjust advance payments toward future installments": "भविष्यका किस्ताहरूमा अग्रिम भुक्तानीहरू समायोजन गर्नुहोस्",
       "Adjust interest rates for remainder of loan": "बाँकी ऋणको लागि ब्याज दर समायोजन गर्नुहोस्",
+      "Adjustment Amount": "समायोजन रकम",
       "Advance payments adjustment type": "अग्रिम भुक्तानी समायोजन प्रकार",
       "Advanced Payment Allocation Transactions": "उन्नत भुक्तानी आवंटन लेनदेन",
       "Advanced Payment Allocation Transaction Type": "उन्नत भुक्तानी सम्झौता लेनदेन प्रकार",
@@ -1245,6 +1247,7 @@
       "Alt": "Alt",
       "Amortization": "परिशोधन",
       "Amortization Type": "परिशोधन प्रकार",
+      "Amortized Amount": "परिशोधित रकम",
       "Amount": "रकम",
       "Amount Collected": "जम्मा भएको रकम",
       "Amount Paid": "तिरीएको रकम",
@@ -2383,6 +2386,7 @@
       "Unassignment Date": "असाइनमेन्ट मिति",
       "Unique": "अद्वितीय",
       "Unit Type": "एकाइ प्रकार",
+      "Unrecognized Amount": "अपरिचित रकम",
       "Updated By": "द्वारा अपडेट गरिएको",
       "Updated on": "मा अद्यावधिक गरियो",
       "Url": "Url",
@@ -2487,7 +2491,8 @@
       "Buy down fee income type": "बाइ डाउन शुल्क आय प्रकार",
       "Buy down fees": "खरिद शुल्क",
       "Income from Buy down fees": "खरिद शुल्कबाट हुने आम्दानी",
-      "Buy down fee Expense": "खरीद शुल्क खर्च"
+      "Buy down fee Expense": "खरीद शुल्क खर्च",
+      "Skip Interest Refund Transaction Posting": "ब्याज फिर्ता पोस्टिङ्ग छोड्नुहोस्"
     },
     "links": {
       "Community": "समुदाय",
@@ -3516,6 +3521,7 @@
     "Yes": "हो",
     "loan product will be active and available to clients": "ऋण उत्पादन सक्रिय र ग्राहकहरूको लागि उपलब्ध हुने मिति। खाली भएमा, ऋण उत्पादन सिर्जना हुने बित्तिकै सक्रिय हुनेछ।",
     "loan product will become inactive and unavailable to clients": "ऋण उत्पादन निष्क्रिय र ग्राहकहरु को लागी अनुपलब्ध हुने मिति। यदि खाली छ भने, लोड उत्पादन कहिल्यै निष्क्रिय हुनेछैन।",
-    "Refund transactions where interest refund will automatically be calculated": "फिर्ता लेनदेन जहाँ ब्याज फिर्ता स्वतः गणना हुनेछ"
+    "Refund transactions where interest refund will automatically be calculated": "फिर्ता लेनदेन जहाँ ब्याज फिर्ता स्वतः गणना हुनेछ",
+    "Create Interest Refund": "ब्याज फिर्ता सिर्जना गर्नुहोस्"
   }
 }

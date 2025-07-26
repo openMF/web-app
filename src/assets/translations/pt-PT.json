@@ -369,6 +369,7 @@
       "Create Group": "Criar grupo",
       "Create Holiday": "Criar feriado",
       "Create Hook": "Criar gancho",
+      "Create Interest Refund": "Criar reembolso de juros",
       "Create Journal Entries": "Criar lançamentos contábeis manuais",
       "Create Loan Product": "Criar produto de empréstimo",
       "Create Office": "Criar escritório",
@@ -1222,6 +1223,7 @@
       "Address Type": "tipo de endereço",
       "Adjust advance payments toward future installments": "Ajustar pagamentos antecipados para parcelas futuras",
       "Adjust interest rates for remainder of loan": "Ajustar as taxas de juros para o restante do empréstimo",
+      "Adjustment Amount": "Valor do ajuste",
       "Advance payments adjustment type": "Tipo de ajuste de adiantamento",
       "Advanced Payment Allocation Transactions": "Transações de alocação de pagamento avançado",
       "Advanced Payment Allocation Transaction Type": "Tipo de transação de alocação avançada de pagamento",
@@ -1245,6 +1247,7 @@
       "Alt": "Alt.",
       "Amortization": "Amortização",
       "Amortization Type": "Tipo de Amortização",
+      "Amortized Amount": "Valor Amortizado",
       "Amount": "Quantia",
       "Amount Collected": "Valor arrecadado",
       "Amount Paid": "Quantia paga",
@@ -2383,6 +2386,7 @@
       "Unassignment Date": "Data de cancelamento de atribuição",
       "Unique": "Exclusivo",
       "Unit Type": "Tipo de unidade",
+      "Unrecognized Amount": "Valor não reconhecido",
       "Updated By": "Atualizado por",
       "Updated on": "Atualizado em",
       "Url": "URL",
@@ -2487,7 +2491,8 @@
       "Buy down fee income type": "Tipo de receita de taxa de aquisição",
       "Buy down fees": "Taxas de compra antecipada",
       "Income from Buy down fees": "Receita com taxas de recompra",
-      "Buy down fee Expense": "Despesa com taxas de recompra"
+      "Buy down fee Expense": "Despesa com taxas de recompra",
+      "Skip Interest Refund Transaction Posting": "Ignorar o lançamento do reembolso de juros"
     },
     "links": {
       "Community": "Comunidade",
@@ -3516,6 +3521,7 @@
     "Yes": "Sim",
     "loan product will be active and available to clients": "A data em que o produto de empréstimo estará ativo e disponível para os clientes. Se estiver em branco, o produto de empréstimo estará ativo assim que for criado.",
     "loan product will become inactive and unavailable to clients": "A data em que o produto de empréstimo ficará inativo e indisponível para os clientes. Se estiver em branco, o produto de carregamento nunca ficará inativo.",
-    "Refund transactions where interest refund will automatically be calculated": "Transações de reembolso em que o reembolso de juros será calculado automaticamente"
+    "Refund transactions where interest refund will automatically be calculated": "Transações de reembolso em que o reembolso de juros será calculado automaticamente",
+    "Create Interest Refund": "Criar reembolso de juros"
   }
 }

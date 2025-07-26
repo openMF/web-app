@@ -369,6 +369,7 @@
       "Create Group": "Sukurti grupę",
       "Create Holiday": "Sukurkite šventę",
       "Create Hook": "Sukurti kabliuką",
+      "Create Interest Refund": "Sukurti palūkanų grąžinimą",
       "Create Journal Entries": "Kurti žurnalo įrašus",
       "Create Loan Product": "Sukurti paskolos produktą",
       "Create Office": "Sukurkite biurą",
@@ -1222,6 +1223,7 @@
       "Address Type": "adreso tipas",
       "Adjust advance payments toward future installments": "Koreguokite išankstinius mokėjimus būsimoms įmokoms",
       "Adjust interest rates for remainder of loan": "Pakoreguokite palūkanų normas likusiai paskolos daliai",
+      "Adjustment Amount": "Koregavimo suma",
       "Advance payments adjustment type": "Avansinių mokėjimų koregavimo tipas",
       "Advanced Payment Allocation Transactions": "Išplėstinės mokėjimo paskirstymo operacijos",
       "Advanced Payment Allocation Transaction Type": "Išplėstinės mokėjimo paskirstymo operacijos tipas",
@@ -1245,6 +1247,7 @@
       "Alt": "Alt",
       "Amortization": "Amortizacija",
       "Amortization Type": "Amortizacijos tipas",
+      "Amortized Amount": "Amortizuota suma",
       "Amount": "Suma",
       "Amount Collected": "Surinkta suma",
       "Amount Paid": "Sumokėta suma",
@@ -2383,6 +2386,7 @@
       "Unassignment Date": "Atšaukimo data",
       "Unique": "Unikalus",
       "Unit Type": "Vieneto tipas",
+      "Unrecognized Amount": "Neatpažinta suma",
       "Updated By": "Atnaujino",
       "Updated on": "Atnaujinta",
       "Url": "URL",
@@ -2487,7 +2491,8 @@
       "Buy down fee income type": "Supirkimo mokesčio pajamų tipas",
       "Buy down fees": "Išpirkimo mokesčiai",
       "Income from Buy down fees": "Pajamos iš supirkimo mokesčių",
-      "Buy down fee Expense": "Supirkimo mokesčio išlaidos"
+      "Buy down fee Expense": "Supirkimo mokesčio išlaidos",
+      "Skip Interest Refund Transaction Posting": "Praleisti palūkanų grąžinimo įrašą"
     },
     "links": {
       "Community": "bendruomenė",
@@ -3516,6 +3521,7 @@
     "Yes": "Taip",
     "loan product will be active and available to clients": "Data, kada paskolos produktas bus aktyvus ir bus prieinamas klientams. Jei tuščia, paskolos produktas bus aktyvus, kai tik bus sukurtas.",
     "loan product will become inactive and unavailable to clients": "Data, kai paskolos produktas taps neaktyvus ir nepasiekiamas klientams. Jei tuščia, įkėlimo produktas niekada netaps neaktyvus.",
-    "Refund transactions where interest refund will automatically be calculated": "Atmaksas darījumi, kuros procentu atmaksa tiks aprēķināta automātiski"
+    "Refund transactions where interest refund will automatically be calculated": "Atmaksas darījumi, kuros procentu atmaksa tiks aprēķināta automātiski",
+    "Create Interest Refund": "Sukurti palūkanų grąžinimą"
   }
 }

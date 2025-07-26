@@ -369,6 +369,7 @@
       "Create Group": "Izveidot grupu",
       "Create Holiday": "Izveidojiet svētkus",
       "Create Hook": "Izveidojiet āķi",
+      "Create Interest Refund": "Izveidot procentu atmaksu",
       "Create Journal Entries": "Izveidojiet žurnāla ierakstus",
       "Create Loan Product": "Izveidojiet aizdevuma produktu",
       "Create Office": "Izveidojiet biroju",
@@ -1222,6 +1223,7 @@
       "Address Type": "Adreses veids",
       "Adjust advance payments toward future installments": "Pielāgojiet avansa maksājumus turpmākajām iemaksām",
       "Adjust interest rates for remainder of loan": "Pielāgojiet procentu likmes atlikušajai aizdevuma daļai",
+      "Adjustment Amount": "Korekcijas summa",
       "Advance payments adjustment type": "Avansa maksājumu korekcijas veids",
       "Advanced Payment Allocation Transactions": "Papildu maksājumu piešķiršanas darījumi",
       "Advanced Payment Allocation Transaction Type": "Papildu maksājuma sadales darījuma veids",
@@ -1245,6 +1247,7 @@
       "Alt": "Alt",
       "Amortization": "Amortizācija",
       "Amortization Type": "Amortizācijas veids",
+      "Amortized Amount": "Amortizētā summa",
       "Amount": "Summa",
       "Amount Collected": "Iekasētā summa",
       "Amount Paid": "Samaksātā summa",
@@ -2383,6 +2386,7 @@
       "Unassignment Date": "Atcelšanas datums",
       "Unique": "Unikāls",
       "Unit Type": "Vienības veids",
+      "Unrecognized Amount": "Neatpazīta summa",
       "Updated By": "Atjaunināja",
       "Updated on": "Atjaunināts",
       "Url": "URL",
@@ -2487,7 +2491,8 @@
       "Buy down fee income type": "Atpirkšanas maksas ienākumu veids",
       "Buy down fees": "Iepirkuma maksas",
       "Income from Buy down fees": "Ienākumi no akciju izpirkšanas komisijas maksām",
-      "Buy down fee Expense": "Akciju izpirkšanas komisijas izdevumi"
+      "Buy down fee Expense": "Akciju izpirkšanas komisijas izdevumi",
+      "Skip Interest Refund Transaction Posting": "Izlaist procentu atmaksas ierakstu"
     },
     "links": {
       "Community": "kopiena",
@@ -3516,6 +3521,7 @@
     "Yes": "Jā",
     "loan product will be active and available to clients": "Datums, kad aizdevuma produkts būs aktīvs un pieejams klientiem. Ja lauks ir tukšs, aizdevuma produkts būs aktīvs, tiklīdz tas tiks izveidots.",
     "loan product will become inactive and unavailable to clients": "Datums, kad aizdevuma produkts kļūs neaktīvs un klientiem nebūs pieejams. Ja lauks ir tukšs, ielādes produkts nekad nekļūs neaktīvs.",
-    "Refund transactions where interest refund will automatically be calculated": "Grąžinimo operacijos, kai palūkanų grąžinimas bus skaičiuojamas automatiškai"
+    "Refund transactions where interest refund will automatically be calculated": "Grąžinimo operacijos, kai palūkanų grąžinimas bus skaičiuojamas automatiškai",
+    "Create Interest Refund": "Izveidot procentu atmaksu"
   }
 }
