@@ -1164,7 +1164,14 @@
       "Grace On Principal": "Gracia al director",
       "Insert Installment": "Insertar cuota",
       "Interest Rate": "Tasa de interés",
-      "Principal Amount": "Monto principal"
+      "Principal Amount": "Monto principal",
+      "Buy Down Fees": "Tarifas de compra",
+      "Fee Amount": "Importe de la tarifa",
+      "Amortized Amount": "Importe amortizado",
+      "Not Yet Amortized Amount": "Monto aun no amortizado",
+      "Adjusted Amount": "Importe ajustado",
+      "Charged Off Amount": "Importe cancelado",
+      "Date": "Fecha"
     },
     "inputs": {
       "accounting": {
@@ -3303,12 +3310,16 @@
       "Mandatory": "Obligatorio",
       "Voluntary": "Voluntario",
       "Write a note": "Escribe una nota",
-      "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa."
+      "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
+      "Buy Down Fees": "Tarifas de compra"
     },
     "titles": {
       "Dashboard": "Tableros",
       "Home": "Inicio",
       "Login": "Acceso"
+    },
+    "messages": {
+      "No Data Found": "No se encontraron datos"
     }
   },
   "languages": {

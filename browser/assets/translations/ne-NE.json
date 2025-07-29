@@ -1165,7 +1165,14 @@
       "Grace On Principal": "प्रिन्सिपलमा अनुग्रह",
       "Insert Installment": "किस्ता घुसाउनुहोस्",
       "Interest Rate": "ब्याज दर",
-      "Principal Amount": "मूल रकम"
+      "Principal Amount": "मूल रकम",
+      "Buy Down Fees": "खरीद शुल्क",
+      "Fee Amount": "शुल्क रकम",
+      "Amortized Amount": "परिशोधित रकम",
+      "Not Yet Amortized Amount": "Not Yet Amortized Amount",
+      "Adjusted Amount": "समायोजित रकम",
+      "Charged Off Amount": "चार्ज गरिएको रकम",
+      "Date": "मिति"
     },
     "inputs": {
       "accounting": {
@@ -3303,12 +3310,16 @@
       "Mandatory": "अनिवार्य",
       "Voluntary": "स्वैच्छिक",
       "Write a note": "नोट लेख्नुहोस्",
-      "“Maker-Checker” principle requires every tasks": "\"मेकर-चेकर\" सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।"
+      "“Maker-Checker” principle requires every tasks": "\"मेकर-चेकर\" सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।",
+      "Buy Down Fees": "खरीद शुल्क"
     },
     "titles": {
       "Dashboard": "ड्यासबोर्ड",
       "Home": "घर",
       "Login": "लग - इन"
+    },
+    "messages": {
+      "No Data Found": "कुनै डाटा फेला परेन"
     }
   },
   "languages": {

@@ -1165,7 +1165,14 @@
       "Grace On Principal": "Grace sul preside",
       "Insert Installment": "Inserisci rata",
       "Interest Rate": "Tasso di interesse",
-      "Principal Amount": "Importo principale"
+      "Principal Amount": "Importo principale",
+      "Buy Down Fees": "Commissioni di acquisto",
+      "Fee Amount": "Importo commissione",
+      "Amortized Amount": "Importo ammortizzato",
+      "Not Yet Amortized Amount": "Importo non ancora ammortizzato",
+      "Adjusted Amount": "Importo rettificato",
+      "Charged Off Amount": "Importo stornato",
+      "Date": "Data"
     },
     "inputs": {
       "accounting": {
@@ -3303,12 +3310,16 @@
       "Mandatory": "Obbligatorio",
       "Voluntary": "Volontario",
       "Write a note": "Scrivi una nota",
-      "“Maker-Checker” principle requires every tasks": "Il principio “Maker-Checker” richiede che ogni attività venga completata da due persone per ridurre la possibilità di errori e usi impropri. Una persona avvia il processo e la seconda lo completa."
+      "“Maker-Checker” principle requires every tasks": "Il principio “Maker-Checker” richiede che ogni attività venga completata da due persone per ridurre la possibilità di errori e usi impropri. Una persona avvia il processo e la seconda lo completa.",
+      "Buy Down Fees": "Commissioni di acquisto"
     },
     "titles": {
       "Dashboard": "Pannello di controllo",
       "Home": "Casa",
       "Login": "Login"
+    },
+    "messages": {
+      "No Data Found": "Nessun dato trovato"
     }
   },
   "languages": {

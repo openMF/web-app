@@ -1166,7 +1166,14 @@
       "Grace On Principal": "그레이스 온 교장",
       "Insert Installment": "할부 삽입",
       "Interest Rate": "이자율",
-      "Principal Amount": "원금"
+      "Principal Amount": "원금",
+      "Buy Down Fees": "매입 수수료",
+      "Fee Amount": "수수료 금액",
+      "Amortized Amount": "상각 금액",
+      "Not Yet Amortized Amount": "Not Yet Amortized Amount",
+      "Adjusted Amount": "조정된 금액",
+      "Charged Off Amount": "상각 금액",
+      "Date": "날짜"
     },
     "inputs": {
       "accounting": {
@@ -3303,12 +3310,16 @@
       "Mandatory": "필수적인",
       "Voluntary": "자발적인",
       "Write a note": "메모 쓰기",
-      "“Maker-Checker” principle requires every tasks": "\"Maker-Checker\" 원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다."
+      "“Maker-Checker” principle requires every tasks": "\"Maker-Checker\" 원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다.",
+      "Buy Down Fees": "매입 수수료"
     },
     "titles": {
       "Dashboard": "계기반",
       "Home": "집",
       "Login": "로그인"
+    },
+    "messages": {
+      "No Data Found": "데이터를 찾을 수 없음"
     }
   },
   "languages": {

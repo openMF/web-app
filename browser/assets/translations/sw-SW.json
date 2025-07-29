@@ -1165,7 +1165,14 @@
       "Grace On Principal": "Grace On Principal",
       "Insert Installment": "Weka Ufungaji",
       "Interest Rate": "Kiwango cha Riba",
-      "Principal Amount": "Kiasi cha Mkuu"
+      "Principal Amount": "Kiasi cha Mkuu",
+      "Buy Down Fees": "Ada za Ununuzi",
+      "Fee Amount": "Kiasi cha Ada",
+      "Amortized Amount": "Kiasi Kilichoondolewa",
+      "Not Yet Amortized Amount": "Kiasi Bado Kijaondolewa",
+      "Adjusted Amount": "Kiasi Kilichorekebishwa",
+      "Charged Off Amount": "Kiasi Kilichofutwa",
+      "Date": "Tarehe"
     },
     "inputs": {
       "accounting": {
@@ -3303,12 +3310,16 @@
       "Mandatory": "Lazima",
       "Voluntary": "Kwa hiari",
       "Write a note": "Andika dokezo",
-      "“Maker-Checker” principle requires every tasks": "Kanuni ya \"Mtengenezaji-Kikagua\" inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha."
+      "“Maker-Checker” principle requires every tasks": "Kanuni ya \"Mtengenezaji-Kikagua\" inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha.",
+      "Buy Down Fees": "Ada za Ununuzi"
     },
     "titles": {
       "Dashboard": "Dashibodi",
       "Home": "Nyumbani",
       "Login": "Ingia"
+    },
+    "messages": {
+      "No Data Found": "Hakuna Data Imepatikana"
     }
   },
   "languages": {

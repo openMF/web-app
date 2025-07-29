@@ -1165,7 +1165,14 @@
       "Grace On Principal": "Grace On Principal",
       "Insert Installment": "Ievietojiet iemaksu",
       "Interest Rate": "Procentu likme",
-      "Principal Amount": "Pamatsumma"
+      "Principal Amount": "Pamatsumma",
+      "Buy Down Fees": "Izpirkšanas maksas",
+      "Fee Amount": "Maksas summa",
+      "Amortized Amount": "Amortizētā summa",
+      "Not Yet Amortized Amount": "Vel nav amortizeta summa",
+      "Adjusted Amount": "Koriģētā summa",
+      "Charged Off Amount": "Norakstītā summa",
+      "Date": "Datums"
     },
     "inputs": {
       "accounting": {
@@ -3303,12 +3310,16 @@
       "Mandatory": "Obligāts",
       "Voluntary": "Brīvprātīgi",
       "Write a note": "Uzrakstiet piezīmi",
-      "“Maker-Checker” principle requires every tasks": "“Maker-Checker” princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz."
+      "“Maker-Checker” principle requires every tasks": "“Maker-Checker” princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz.",
+      "Buy Down Fees": "Izpirkšanas maksas"
     },
     "titles": {
       "Dashboard": "Mērinstrumentu panelis",
       "Home": "Mājas",
       "Login": "Pieslēgties"
+    },
+    "messages": {
+      "No Data Found": "Dati nav atrasti"
     }
   },
   "languages": {

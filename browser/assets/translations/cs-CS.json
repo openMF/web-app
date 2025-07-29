@@ -1164,7 +1164,14 @@
       "Grace On Principal": "Grace na ředitelce",
       "Insert Installment": "Vložit splátku",
       "Interest Rate": "Úroková sazba",
-      "Principal Amount": "Částka jistiny"
+      "Principal Amount": "Částka jistiny",
+      "Buy Down Fees": "Poplatky za odkup",
+      "Fee Amount": "Částka poplatku",
+      "Amortized Amount": "Amortizovaná částka",
+      "Not Yet Amortized Amount": "Dosud neamortizovana castka",
+      "Adjusted Amount": "Upravená částka",
+      "Charged Off Amount": "Odepsaná částka",
+      "Date": "Datum"
     },
     "inputs": {
       "accounting": {
@@ -3303,12 +3310,16 @@
       "Mandatory": "Povinné",
       "Voluntary": "Dobrovolný",
       "Write a note": "Napište poznámku",
-      "“Maker-Checker” principle requires every tasks": "Princip „Maker-Checker“ vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí."
+      "“Maker-Checker” principle requires every tasks": "Princip „Maker-Checker“ vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí.",
+      "Buy Down Fees": "Poplatky za odkup"
     },
     "titles": {
       "Dashboard": "Přístrojová deska",
       "Home": "Domov",
       "Login": "Přihlásit se"
+    },
+    "messages": {
+      "No Data Found": "Nebyla nalezena žádná data"
     }
   },
   "languages": {
