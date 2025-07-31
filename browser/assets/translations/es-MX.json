@@ -920,7 +920,7 @@
       "External Asset Owner": "Propietario de activos externos",
       "External Services": "Servicios externos",
       "Family Member": "Miembro de la familia",
-      "Family Members": "Miembros de la familia",
+      "Family Members": "Referencias Personales y Familiares",
       "Fees to Specific Income Accounts": "Tarifas a cuentas de ingresos específicas",
       "Filter holidays": "Barra de búsqueda para filtrar días festivos según diferentes oficinas.",
       "Filter reports by name": "Barra de búsqueda para filtrar reportes por nombre.",
@@ -1613,7 +1613,7 @@
       "External Id": "Id externo",
       "External id": "Id externo",
       "event with entity name of": "evento con nombre de entidad de",
-      "FAMILY MEMBERS": "MIEMBROS DE LA FAMILIA",
+      "FAMILY MEMBERS": "REFERENCIAS PERSONALES Y FAMILIARES",
       "FCM End Point": "Punto final FCM",
       "Failure Count": "Número de Fallos",
       "Family Members": "Miembros de la familia",
@@ -2499,7 +2499,8 @@
       "Buy down fees": "Tarifas de compra anticipada",
       "Income from Buy down fees": "Ingresos por comisiones de compra inicial",
       "Buy down fee Expense": "Gastos por comisiones de compra inicial",
-      "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses"
+      "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses",
+      "Incorporation Date": "Fecha de Constitución"
     },
     "links": {
       "Community": "Comunidad",
