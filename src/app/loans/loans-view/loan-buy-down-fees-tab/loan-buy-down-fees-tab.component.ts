@@ -44,7 +44,7 @@ export class LoanBuyDownFeesTabComponent implements OnInit {
   isLoading = true;
 
   buyDownFeeColumns: string[] = [
-    'date',
+    'buyDownFeeDate',
     'buyDownFeeAmount',
     'amortizedAmount',
     'notYetAmortizedAmount',

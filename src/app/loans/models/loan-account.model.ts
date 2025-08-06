@@ -138,7 +138,7 @@ export interface BuyDownFeeAmortizationDetails {
   id: number;
   loanId: number;
   transactionId: number;
-  date: string;
+  buyDownFeeDate: string;
   buyDownFeeAmount: number;
   amortizedAmount: number;
   notYetAmortizedAmount: number;
