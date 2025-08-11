@@ -36,6 +36,14 @@ export class AuthenticationInterceptor implements HttpInterceptor {
     if (this.settingsService.tenantIdentifier) {
       httpOptions.headers['Fineract-Platform-TenantId'] = this.settingsService.tenantIdentifier;
     }
+    if (
+      environment.oauth.enabled &&
+      (request.url.includes(`${environment.oauth.serverUrl}/token`) ||
+        request.url.includes(`${environment.oauth.serverUrl}/logout`))
+    ) {
+      // If the request is for OAuth token, we do not set the tenant identifier.
+      delete httpOptions.headers[authorizationTenantHeader];
+    }
     request = request.clone({ setHeaders: httpOptions.headers });
     return next.handle(request);
   }
