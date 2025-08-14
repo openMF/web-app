@@ -1,0 +1,1 @@
+import{C as r,F as c,Hf as a}from"./chunk-4JZCV75L.js";var f=(()=>{class t{constructor(i){this.savingsService=i}resolve(i){let e=i.paramMap.get("savingAccountId");return this.savingsService.getSavingsAccountData(e)}static{this.\u0275fac=function(e){return new(e||t)(c(a))}}static{this.\u0275prov=r({token:t,factory:t.\u0275fac})}}return t})();export{f as a};
