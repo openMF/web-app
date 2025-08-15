@@ -112,6 +112,10 @@
     <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Loan Accounts' | translate }}</h3>
+        <!-- No Loan Accounts Message -->
+        <div class="no-account-message" *ngIf="!loanAccounts">
+          <h1>There are no Loan Accounts found.</h1>
+        </div>
       </div>
     </div>
     <div class="layout-column flex-50">
@@ -304,6 +308,10 @@
         <h3>{{ 'labels.heading.Saving Accounts' | translate }}</h3>
       </div>
     </div>
+    <!-- No Saving Account message   -->
+    <div class="no-account-message" *ngIf="!(savingAccounts | accountsFilter: 'saving' : 'open' : 'isSavings')">
+      <h1>There are no Saving Accounts found.</h1>
+    </div>
     <div class="layout-column flex-50">
       <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" (click)="toggleSavingAccountsOverview()">
@@ -446,6 +454,10 @@
         <h3>{{ 'labels.heading.Fixed Deposit Accounts' | translate }}</h3>
       </div>
     </div>
+    <!-- No Fixed Deposit accounts message -->
+    <div class="no-account-message" *ngIf="!(savingAccounts | accountsFilter: 'saving' : 'open' : 'isFixed')">
+      <h1>There are no Fixed Deposit accounts found.</h1>
+    </div>
     <div class="layout-column flex-50">
       <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" (click)="toggleFixedAccountsOverview()">
@@ -567,6 +579,11 @@
         <h3>{{ 'labels.heading.Recurring Deposit Accounts' | translate }}</h3>
       </div>
     </div>
+    <!-- No Recurring Deposit Accounts message -->
+    <div class="no-account-message" *ngIf="!(savingAccounts | accountsFilter: 'saving' : 'open' : 'isRecurring')">
+      <h1>There are no Recurring Deposit Accounts found.</h1>
+    </div>
+
     <div class="layout-column flex-50">
       <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" (click)="toggleRecurringAccountsOverview()">
@@ -696,6 +713,11 @@
         <h3>{{ 'labels.inputs.Shares Accounts' | translate }}</h3>
       </div>
     </div>
+    <!-- No shares account message -->
+    <div class="no-account-message" *ngIf="!shareAccounts">
+      <h1>There are no Shares Accounts found.</h1>
+    </div>
+
     <div class="layout-column flex-50">
       <div class="layout-row align-flex-end">
         <button mat-raised-button class="f-right" color="primary" (click)="toggleShareAccountsOverview()">
