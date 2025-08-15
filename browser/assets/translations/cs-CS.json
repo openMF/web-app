@@ -2493,6 +2493,7 @@
       "Income capitalization type": "Typ kapitalizace příjmu",
       "DEFERRED INCOME RECOGNITION": "Vykazování odložených výnosů",
       "Enable Buy down fee": "Povolit poplatek za odkup",
+      "Merchant Buy down fee": "Poplatek za odkup obchodníka",
       "Buy down fee calculation type": "Typ výpočtu poplatku za odkup",
       "Buy down fee strategy": "Strategie poplatku za odkup",
       "Buy down fee income type": "Typ příjmu z poplatku za odkup",
