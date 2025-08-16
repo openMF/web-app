@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CollateralsService } from '../collaterals.service';
+import { ClientCollateralManagementService } from '@fineract/client';
 
 /**
  * Client Collateral data resolver.
@@ -14,17 +14,17 @@ import { CollateralsService } from '../collaterals.service';
 @Injectable()
 export class ClientCollateralResolver {
   /**
-   * @param {CollateralsService} collateralsService Collaterals service.
+   * @param {ClientCollateralManagementService} clientCollateralManagementService Collaterals service.
    */
-  constructor(private collateralsService: CollateralsService) {}
+  constructor(private clientCollateralManagementService: ClientCollateralManagementService) {}
 
   /**
    * Returns the Client Collateral data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const clientId = route.parent.paramMap.get('clientId');
-    const collateralId = route.parent.paramMap.get('collateralId');
-    return this.collateralsService.getClientCollateral(clientId, collateralId);
+    const clientId = Number(route.parent.paramMap.get('clientId'));
+    const clientCollateralId = Number(route.parent.paramMap.get('collateralId'));
+    return this.clientCollateralManagementService.getClientCollateralData({ clientId, clientCollateralId });
   }
 }

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
-import { CollateralsService } from '../collaterals.service';
+import { ClientCollateralManagementService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -32,14 +32,14 @@ export class EditCollateralComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router.
    * @param {SettingsService} settingsService Settings Service
-   * @param {CollateralsService} collateralService Collateral Service
+   * @param {ClientCollateralManagementService} clientCollateralManagementService Collateral Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
-    private collateralService: CollateralsService
+    private clientCollateralManagementService: ClientCollateralManagementService
   ) {
     this.route.data.subscribe((data: { clientCollateralData: any }) => {
       this.collateralDetails = data.clientCollateralData;
@@ -79,12 +79,18 @@ export class EditCollateralComponent implements OnInit {
     const collateralId = this.collateralDetails.id;
     const quantity = this.clientCollateralForm.value.quantity;
     const locale = this.settingsService.language.code;
-    const clientCollateralData = {
+    const updateClientCollateralRequest = {
       quantity,
       locale
     };
-    this.collateralService.updateClientCollateral(this.clientId, collateralId, clientCollateralData).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.clientCollateralManagementService
+      .updateCollateral1({
+        clientId: Number(this.clientId),
+        collateralId: Number(collateralId),
+        updateClientCollateralRequest
+      })
+      .subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }
