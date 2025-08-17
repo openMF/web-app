@@ -4,8 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "@pipes/*": ["src/app/pipes/*"],
-      "app/*": ["src/app/*"],
-      "@fineract/client": ["packages/fineract-clients"]
+      "app/*": ["src/app/*"]
     },
     "importHelpers": true,
     "module": "es2022",
