@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CollateralsService } from '../collaterals.service';
+import { ClientCollateralManagementService } from '@fineract/client';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Components */
@@ -55,7 +55,7 @@ export class ViewCollateralComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private collateralsService: CollateralsService,
+    private clientCollateralManagementService: ClientCollateralManagementService,
     private router: Router,
     private dialog: MatDialog
   ) {
@@ -73,8 +73,8 @@ export class ViewCollateralComponent {
     });
     deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.collateralsService
-          .deleteCollateral(this.clientCollateralData.clientId, this.clientCollateralData.id)
+        this.clientCollateralManagementService
+          .deleteCollateral1(this.clientCollateralData.clientId, this.clientCollateralData.id)
           .subscribe(() => {
             this.router.navigate(['../../'], { relativeTo: this.route });
           });
