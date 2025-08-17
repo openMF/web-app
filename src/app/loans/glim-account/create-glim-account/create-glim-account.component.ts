@@ -3,7 +3,7 @@ import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from '../../loans.service';
+import { LoansService, BatchAPIService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CollateralManagementService } from '@fineract/client';
@@ -81,6 +81,7 @@ export class CreateGlimAccountComponent {
     private route: ActivatedRoute,
     private router: Router,
     private loansService: LoansService,
+    private batchAPIService: BatchAPIService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private collateralManagementService: CollateralManagementService
@@ -116,9 +117,18 @@ export class CreateGlimAccountComponent {
       : this.loansAccountTemplate.group.id;
     const isGroup = this.loansAccountTemplate.clientId ? false : true;
     const productId = this.loansAccountProductTemplate.loanProductId;
-    this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
-      this.multiDisburseLoan = response.multiDisburseLoan;
-    });
+    this.loansService
+      .template10({
+        clientId: isGroup ? undefined : entityId,
+        groupId: isGroup ? entityId : undefined,
+        productId: productId,
+        templateType: isGroup ? 'group' : 'individual',
+        staffInSelectedOfficeOnly: true,
+        activeOnly: true
+      })
+      .subscribe((response: any) => {
+        this.multiDisburseLoan = response.multiDisburseLoan;
+      });
     this.setDatatables();
   }
 
@@ -240,20 +250,25 @@ export class CreateGlimAccountComponent {
    */
   submit() {
     const data = this.buildRequestData();
-    this.loansService.createGlimAccount(data).subscribe((response: any) => {
-      const body = JSON.parse(response[0].body);
-      if (body.glimId) {
-        this.router.navigate(
-          [
-            '../',
-            body.glimId
-          ],
-          { relativeTo: this.route }
-        );
-      } else {
-        this.notify(body, data);
-      }
-    });
+    this.batchAPIService
+      .handleBatchRequests({
+        batchRequest: data,
+        enclosingTransaction: true
+      })
+      .subscribe((response: any) => {
+        const body = JSON.parse(response[0].body);
+        if (body.glimId) {
+          this.router.navigate(
+            [
+              '../',
+              body.glimId
+            ],
+            { relativeTo: this.route }
+          );
+        } else {
+          this.notify(body, data);
+        }
+      });
   }
 
   notify(body: any, data: any) {

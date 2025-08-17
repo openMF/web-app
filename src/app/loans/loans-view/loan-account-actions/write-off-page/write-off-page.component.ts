@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -88,8 +88,14 @@ export class WriteOffPageComponent implements OnInit {
     };
     const loanId = this.route.snapshot.params['loanId'];
     delete data.amount;
-    this.loanService.submitLoanActionButton(loanId, data, 'writeoff').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(loanId),
+        postLoansLoanIdRequest: data,
+        command: 'writeoff'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

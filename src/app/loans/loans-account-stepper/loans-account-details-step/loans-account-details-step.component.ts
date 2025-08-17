@@ -12,7 +12,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Services */
-import { LoansService } from '../../loans.service';
+import { LoansService } from '@fineract/client';
 import { Commons } from 'app/core/utils/commons';
 import { takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
@@ -186,7 +186,20 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
       : this.loansAccountTemplate.group.id;
     const isGroup = this.loansAccountTemplate.clientId ? false : true;
     this.loansAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
+      const params: any = {
+        activeOnly: true,
+        staffInSelectedOfficeOnly: true,
+        templateType: isGroup ? 'group' : 'individual',
+        productId: Number(productId)
+      };
+
+      if (isGroup) {
+        params.groupId = Number(entityId);
+      } else {
+        params.clientId = Number(entityId);
+      }
+
+      this.loansService.template10(params).subscribe((response: any) => {
         this.loansAccountProductTemplate.emit(response);
         this.loanOfficerOptions = response.loanOfficerOptions;
         this.loanPurposeOptions = response.loanPurposeOptions;

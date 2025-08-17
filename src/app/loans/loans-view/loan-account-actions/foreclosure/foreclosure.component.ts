@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService, LoanTransactionsService } from '@fineract/client';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -32,6 +32,7 @@ export class ForeclosureComponent implements OnInit {
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} systemService Loan Service.
+   * @param {LoanTransactionsService} loanTransactionsService Loan Transactions Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
@@ -39,6 +40,7 @@ export class ForeclosureComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private loanService: LoansService,
+    private loanTransactionsService: LoanTransactionsService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -78,24 +80,21 @@ export class ForeclosureComponent implements OnInit {
   }
 
   retrieveLoanForeclosureTemplate(val: any) {
-    const dateFormat = this.settingsService.dateFormat;
-    const transactionDateFormatted = this.dateUtils.formatDate(val, dateFormat);
-    const data = {
-      command: 'foreclosure',
-      dateFormat: this.settingsService.dateFormat,
-      locale: this.settingsService.language.code,
-      transactionDate: transactionDateFormatted
-    };
-    this.loanService.getForeclosureData(this.loanId, data).subscribe((response: any) => {
-      this.foreclosuredata = response;
+    this.loanTransactionsService
+      .retrieveTransactionTemplate({
+        loanId: parseInt(this.loanId, 10),
+        command: 'foreclosure'
+      })
+      .subscribe((response: any) => {
+        this.foreclosuredata = response;
 
-      this.foreclosureForm.patchValue({
-        outstandingPrincipalPortion: this.foreclosuredata.principalPortion,
-        outstandingInterestPortion: this.foreclosuredata.interestPortion,
-        outstandingFeeChargesPortion: this.foreclosuredata.feeChargesPortion,
-        outstandingPenaltyChargesPortion: this.foreclosuredata.penaltyChargesPortion
+        this.foreclosureForm.patchValue({
+          outstandingPrincipalPortion: this.foreclosuredata.principalPortion,
+          outstandingInterestPortion: this.foreclosuredata.interestPortion,
+          outstandingFeeChargesPortion: this.foreclosuredata.feeChargesPortion,
+          outstandingPenaltyChargesPortion: this.foreclosuredata.penaltyChargesPortion
+        });
       });
-    });
   }
 
   submit() {
@@ -112,8 +111,14 @@ export class ForeclosureComponent implements OnInit {
       locale
     };
 
-    this.loanService.loanForclosureData(this.loanId, data).subscribe((response: any) => {
-      this.router.navigate([`../../general`], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: 'foreclosure'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate([`../../general`], { relativeTo: this.route });
+      });
   }
 }

@@ -1,12 +1,10 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { LoanChargesService } from '@fineract/client';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
-
-/** Custom Services */
-import { LoansService } from '../loans.service';
 
 /**
  * Loans Account Charge data resolver.
@@ -14,9 +12,9 @@ import { LoansService } from '../loans.service';
 @Injectable()
 export class LoansAccountChargeResolver {
   /**
-   * @param {LoansService} LoansService Loans service.
+   * @param {LoanChargesService} loanChargesService Loan charges service.
    */
-  constructor(private loansService: LoansService) {}
+  constructor(private loanChargesService: LoanChargesService) {}
 
   /**
    * Returns the Loans Account Charge data.
@@ -26,6 +24,9 @@ export class LoansAccountChargeResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId');
     const chargeId = route.paramMap.get('id');
-    return this.loansService.getLoansAccountCharge(loanId, chargeId);
+    return this.loanChargesService.retrieveLoanCharge({
+      loanId: Number(loanId),
+      loanChargeId: Number(chargeId)
+    });
   }
 }

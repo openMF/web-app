@@ -213,7 +213,10 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
         graceOnArrearsAgeing: this.loansAccountTermsData.graceOnArrearsAgeing,
         graceOnInterestCharged: this.loansAccountTermsData.graceOnInterestCharged,
         fixedEmiAmount: this.loansAccountTermsData.fixedEmiAmount,
-        maxOutstandingLoanBalance: this.loansAccountTermsData.maxOutstandingLoanBalance,
+        maxOutstandingLoanBalance:
+          this.loansAccountTermsData && this.loansAccountTermsData.maxOutstandingLoanBalance != null
+            ? this.loansAccountTermsData.maxOutstandingLoanBalance
+            : '',
         transactionProcessingStrategyCode: this.loansAccountTermsData.transactionProcessingStrategyCode,
         interestRateDifferential: this.loansAccountTermsData.interestRateDifferential,
         multiDisburseLoan: this.loansAccountTermsData.multiDisburseLoan,
@@ -354,16 +357,20 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     this.setLoanTermListener();
 
     this.loansAccountTermsForm.removeControl('maxOutstandingLoanBalance');
+    const maxOutstandingLoanBalance =
+      this.loansAccountTermsData && this.loansAccountTermsData.maxOutstandingLoanBalance != null
+        ? this.loansAccountTermsData.maxOutstandingLoanBalance
+        : '';
     if (this.allowAddDisbursementDetails()) {
       this.loansAccountTermsForm.removeControl('maxOutstandingLoanBalance');
       this.loansAccountTermsForm.addControl(
         'maxOutstandingLoanBalance',
-        new UntypedFormControl(this.loansAccountTermsData.maxOutstandingLoanBalance, Validators.required)
+        new UntypedFormControl(maxOutstandingLoanBalance, Validators.required)
       );
     } else {
       this.loansAccountTermsForm.addControl(
         'maxOutstandingLoanBalance',
-        new UntypedFormControl(this.loansAccountTermsData.maxOutstandingLoanBalance)
+        new UntypedFormControl(maxOutstandingLoanBalance)
       );
     }
   }
@@ -430,7 +437,7 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     if (this.loansAccountTermsData) {
       this.loansAccountTermsForm.removeControl('interestRatePerPeriod');
       this.loansAccountTermsForm.removeControl('fixedLength');
-      if (this.loansAccountTermsData.product.fixedLength) {
+      if (this.loansAccountTermsData.product && this.loansAccountTermsData.product.fixedLength) {
         this.loansAccountTermsForm.addControl(
           'interestRatePerPeriod',
           new UntypedFormControl({ value: 0, disabled: true }, Validators.required)

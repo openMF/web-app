@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoanDisbursementDetailsService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
 import { DisbursementData } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -85,7 +85,7 @@ export class LoanTrancheDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
-    private loanServices: LoansService,
+    private loanDisbursementDetailsService: LoanDisbursementDetailsService,
     private settingsService: SettingsService,
     private dateUtils: Dates
   ) {
@@ -100,7 +100,8 @@ export class LoanTrancheDetailsComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.maxFutureDate;
     this.status = this.loanDetails.status.value;
-    this.disbursementDataSource = this.loanServices.getLoanDisbursementDetailsData();
+    // this.disbursementDataSource = this.loanServices.getLoanDisbursementDetailsData();
+    this.disbursementDataSource = []; // TODO: Replace with proper data source
     this.disbursementDataSource.forEach((data: DisbursementData) => {
       if (!data.id) {
         this.pristine = false;
@@ -199,7 +200,8 @@ export class LoanTrancheDetailsComponent implements OnInit {
         const principal = response.data.value.principal * 1;
         if (this.totalMultiDisbursed + principal <= this.currentPrincipalAmount) {
           this.disbursementDataSource = this.disbursementDataSource.concat(response.data.value);
-          this.loanServices.saveLoanDisbursementDetailsData(this.disbursementDataSource);
+          // this.loanServices.saveLoanDisbursementDetailsData(this.disbursementDataSource);
+          // TODO: Replace with proper data persistence
           this.pristine = false;
         }
       }
@@ -266,10 +268,12 @@ export class LoanTrancheDetailsComponent implements OnInit {
       dateFormat: this.settingsService.dateFormat,
       locale: this.settingsService.language.code
     };
-    this.loanServices
-      .editDisbursements(this.loanId, payload)
-      .toPromise()
-      .then((result) => {
+    this.loanDisbursementDetailsService
+      .addAndDeleteDisbursementDetail({
+        loanId: Number(this.loanId),
+        postAddAndDeleteDisbursementDetailRequest: payload
+      })
+      .subscribe((result: any) => {
         this.reload();
         this.pristine = true;
       });

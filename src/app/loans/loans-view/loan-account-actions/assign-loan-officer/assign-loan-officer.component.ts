@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
@@ -85,8 +85,14 @@ export class AssignLoanOfficerComponent implements OnInit {
       locale
     };
     data.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
-    this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', data).subscribe((response: any) => {
-      this.router.navigate([`../../general`], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: 'assignLoanOfficer'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate([`../../general`], { relativeTo: this.route });
+      });
   }
 }

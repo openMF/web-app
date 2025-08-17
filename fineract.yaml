@@ -12,7 +12,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: Apache Fineract REST API
-  version: 1.12.0-SNAPSHOT
+  version: 1.13.1-SNAPSHOT
 servers:
   - url: /fineract-provider/api
   - url: https://demo.fineract.dev/fineract-provider/api
@@ -95,12 +95,14 @@ tags:
   - description: "Business date management enables you to set up, fetch and adjust organisation\
       \ business dates"
     name: Business Date Management
-  - description: |-
+  - description: |
       The following settings are possible for cache:
 
       No Caching: caching turned off
-      Single node: caching on for single instance deployments of platorm (works for multiple tenants but only one tomcat)
-      By default caching is set to No Caching. Switching between caches results in the cache been clear e.g. from Single node to No cache and back again would clear down the single node cache.
+
+      Single node: caching on for single instance deployments of platorm (works for multiple tenants but only one tomcat).
+      By default caching is set to No Caching. Switching between caches results in the cache been clear e.g. from single
+      node to no cache and back again would clear down the single node cache.
     name: Cache
   - description: |-
       Code and code values: Codes represent a specific category of data, their code values are a specific instance of that category.
@@ -312,6 +314,9 @@ tags:
 
       Loan Charges are instances of Charges and represent either fees and penalties for loan products. Refer Charges for documentation of the various properties of a charge, Only additional properties ( specific to the context of a Charge being associated with a Loan) are described here
     name: Loan Charges
+  - description: Loan deferred income like Capitalized Income to fetch the Deferred
+      Income related informations
+    name: Loan Deferred Income data
   - description: "Loan Term Variations provides the ability to change due dates, amounts\
       \ and number of instalments before loan approval."
     name: Loan Rescheduling
@@ -2071,26 +2076,30 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BusinessDateData'
+                  $ref: '#/components/schemas/BusinessDateResponse'
           description: default response
       summary: List all business dates
       tags:
         - Business Date Management
     post:
       operationId: updateBusinessDate
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BusinessDateRequest'
-        required: true
+              $ref: '#/components/schemas/BusinessDateUpdateRequest'
       responses:
-        '200':
+        default:
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/BusinessDateResponse'
-          description: OK
+          description: default response
       summary: Update Business Date
       tags:
         - Business Date Management
@@ -2109,14 +2118,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BusinessDateData'
+                $ref: '#/components/schemas/BusinessDateResponse'
           description: default response
       summary: Retrieve a specific Business date
       tags:
         - Business Date Management
   /v1/caches:
     get:
-      description: |-
+      description: |
         Returns the list of caches.
 
         Example Requests:
@@ -2142,15 +2151,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CacheRequest'
-        required: true
+              $ref: '#/components/schemas/CacheSwitchRequest'
       responses:
-        '200':
+        default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutCachesResponse'
-          description: OK
+                $ref: '#/components/schemas/CacheSwitchResponse'
+          description: default response
       summary: Switch Cache
       tags:
         - Cache
@@ -5369,14 +5377,12 @@ paths:
           description: default response
   /v1/currencies:
     get:
-      description: |-
+      description: |
         Returns the list of currencies permitted for use AND the list of currencies not selected (but available for selection).
 
         Example Requests:
 
         currencies
-
-
         currencies?fields=selectedCurrencyOptions
       operationId: retrieveCurrencies
       responses:
@@ -5384,7 +5390,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationCurrencyConfigurationData'
+                $ref: '#/components/schemas/CurrencyConfigurationData'
           description: default response
       summary: Retrieve Currency Configuration
       tags:
@@ -5396,15 +5402,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CurrencyRequest'
-        required: true
+              $ref: '#/components/schemas/CurrencyUpdateRequest'
       responses:
-        '200':
+        default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PutCurrenciesResponse'
-          description: OK
+                $ref: '#/components/schemas/CurrencyUpdateResponse'
+          description: default response
       summary: Update Currency Configuration
       tags:
         - Currency
@@ -7140,31 +7145,35 @@ paths:
         - External Asset Owners
   /v1/externalevents/configuration:
     get:
-      operationId: retrieveExternalEventConfiguration
+      operationId: getExternalEventConfigurations
       responses:
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExternalEventConfigurationData'
+                $ref: '#/components/schemas/ExternalEventConfigurationResponse'
           description: default response
       summary: List all external event configurations
       tags:
         - External event configuration
     put:
-      operationId: updateExternalEventConfigurationsDetails
+      operationId: updateExternalEventConfigurations
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExternalEventConfigurationCommand'
-        required: true
+              $ref: '#/components/schemas/ExternalEventConfigurationUpdateRequest'
       responses:
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommandProcessingResult'
+                $ref: '#/components/schemas/ExternalEventConfigurationUpdateResponse'
           description: default response
       summary: Enable/Disable external events posting
       tags:
@@ -9998,7 +10007,7 @@ paths:
       responses:
         default:
           content:
-            '*/*': {}
+            application/json: {}
           description: default response
     get:
       operationId: getAllExternalEvents
@@ -10025,7 +10034,9 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExternalEventResponse'
           description: default response
   /v1/internal/loan/progressive/{loanId}/model:
     get:
@@ -11578,7 +11589,7 @@ paths:
 
         Mandatory Fields: name, shortName, currencyCode, digitsAfterDecimal, inMultiplesOf, principal, numberOfRepayments, repaymentEvery, repaymentFrequencyType, interestRatePerPeriod, interestRateFrequencyType, amortizationType, interestType, interestCalculationPeriodType, transactionProcessingStrategyCode, accountingRule, isInterestRecalculationEnabled, daysInYearType, daysInMonthType
 
-        Optional Fields: inArrearsTolerance, graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, graceOnArrearsAgeing, charges, paymentChannelToFundSourceMappings, feeToIncomeAccountMappings, penaltyToIncomeAccountMappings, chargeOffReasonToExpenseAccountMappings, includeInBorrowerCycle, useBorrowerCycle,principalVariationsForBorrowerCycle, numberOfRepaymentVariationsForBorrowerCycle, interestRateVariationsForBorrowerCycle, multiDisburseLoan,maxTrancheCount, outstandingLoanBalance,overdueDaysForNPA,holdGuaranteeFunds, principalThresholdForLastInstalment, accountMovesOutOfNPAOnlyOnArrearsCompletion, canDefineInstallmentAmount, installmentAmountInMultiplesOf, allowAttributeOverrides, allowPartialPeriodInterestCalcualtion,dueDaysForRepaymentEvent,overDueDaysForRepaymentEvent,enableDownPayment,disbursedAmountPercentageDownPayment,enableAutoRepaymentForDownPayment,repaymentStartDateType
+        Optional Fields: inArrearsTolerance, graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, graceOnArrearsAgeing, charges, paymentChannelToFundSourceMappings, feeToIncomeAccountMappings, penaltyToIncomeAccountMappings, chargeOffReasonToExpenseAccountMappings, includeInBorrowerCycle, useBorrowerCycle,principalVariationsForBorrowerCycle, numberOfRepaymentVariationsForBorrowerCycle, interestRateVariationsForBorrowerCycle, multiDisburseLoan,maxTrancheCount, outstandingLoanBalance,overdueDaysForNPA,holdGuaranteeFunds, principalThresholdForLastInstalment, accountMovesOutOfNPAOnlyOnArrearsCompletion, canDefineInstallmentAmount, installmentAmountInMultiplesOf, allowAttributeOverrides, allowPartialPeriodInterestCalcualtion,dueDaysForRepaymentEvent,overDueDaysForRepaymentEvent,enableDownPayment,disbursedAmountPercentageDownPayment,enableAutoRepaymentForDownPayment,repaymentStartDateType,enableBuyDownFee
 
         Additional Mandatory Fields for Cash(2) based accounting: fundSourceAccountId, loanPortfolioAccountId, interestOnLoanAccountId, incomeFromFeeAccountId, incomeFromPenaltyAccountId, writeOffAccountId, transfersInSuspenseAccountId, overpaymentLiabilityAccountId
 
@@ -14238,6 +14249,27 @@ paths:
       summary: Update a Collateral
       tags:
         - Loan Collateral
+  /v1/loans/{loanId}/deferredincome:
+    get:
+      operationId: fetchDeferredIncomeDetails
+      parameters:
+        - description: loanId
+          in: path
+          name: loanId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanDeferredIncomeData'
+          description: default response
+      summary: Fetch the Capitalized Income related informations
+      tags:
+        - Loan Deferred Income data
   /v1/loans/{loanId}/delinquency-actions:
     get:
       operationId: getLoanDelinquencyActions
@@ -25869,17 +25901,6 @@ components:
           format: int32
         selfServiceUser:
           type: boolean
-    ApplicationCurrencyConfigurationData:
-      type: object
-      properties:
-        currencyOptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/CurrencyData'
-        selectedCurrencyOptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/CurrencyData'
     AuditData:
       type: object
       properties:
@@ -25983,9 +26004,14 @@ components:
           $ref: '#/components/schemas/MultiPart'
         providers:
           $ref: '#/components/schemas/Providers'
-    BusinessDateData:
+    BusinessDateResponse:
       type: object
       properties:
+        changes:
+          type: object
+          additionalProperties:
+            type: string
+            format: date
         date:
           type: string
           format: date
@@ -25993,7 +26019,10 @@ components:
           type: string
         type:
           type: string
-    BusinessDateRequest:
+          enum:
+            - BUSINESS_DATE
+            - COB_DATE
+    BusinessDateUpdateRequest:
       type: object
       properties:
         date:
@@ -26004,18 +26033,14 @@ components:
           type: string
         type:
           type: string
-    BusinessDateResponse:
-      type: object
-      description: BusinessDateResponse
-      properties:
-        changes:
-          type: object
-          additionalProperties:
-            type: object
-        commandId:
-          type: integer
-          format: int64
-          example: 1
+          enum:
+            - BUSINESS_DATE
+            - COB_DATE
+      required:
+        - date
+        - dateFormat
+        - locale
+        - type
     BusinessStep:
       type: object
       properties:
@@ -26045,12 +26070,24 @@ components:
           $ref: '#/components/schemas/EnumOptionData'
         enabled:
           type: boolean
-    CacheRequest:
+    CacheSwitchRequest:
       type: object
       properties:
         cacheType:
           type: integer
-          format: int64
+          format: int32
+      required:
+        - cacheType
+    CacheSwitchResponse:
+      type: object
+      properties:
+        cacheType:
+          type: integer
+          format: int32
+        changes:
+          type: object
+          additionalProperties:
+            type: object
     CalculateFixedDepositInterestResponse:
       type: object
       description: CalculateFixedDepositInterestResponse
@@ -26213,6 +26250,19 @@ components:
         totalNumberOfMessages:
           type: integer
           format: int32
+    CapitalizedIncomeDetails:
+      type: object
+      properties:
+        amortizedAmount:
+          type: number
+        amount:
+          type: number
+        amountAdjustment:
+          type: number
+        chargedOffAmount:
+          type: number
+        unrecognizedAmount:
+          type: number
     CashierData:
       type: object
       properties:
@@ -27811,6 +27861,17 @@ components:
         glAccountId:
           type: integer
           format: int64
+    CurrencyConfigurationData:
+      type: object
+      properties:
+        currencyOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrencyData'
+        selectedCurrencyOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrencyData'
     CurrencyData:
       type: object
       properties:
@@ -27856,13 +27917,37 @@ components:
         nameCode:
           type: string
           example: currency.USD
-    CurrencyRequest:
+    CurrencyUpdateRequest:
       type: object
       properties:
         currencies:
           type: array
           items:
             type: string
+      required:
+        - currencies
+    CurrencyUpdateResponse:
+      type: object
+      properties:
+        changes:
+          type: object
+          additionalProperties:
+            type: object
+        currencies:
+          type: array
+          example:
+            - KES
+            - BND
+            - LBP
+            - GHC
+            - USD
+            - XOF
+            - AED
+            - AMD
+          items:
+            type: string
+            example: "[\"KES\",\"BND\",\"LBP\",\"GHC\",\"USD\",\"XOF\",\"AED\",\"\
+              AMD\"]"
     DatatableCheckStatusData:
       type: object
     DatatableChecksData:
@@ -28700,25 +28785,59 @@ components:
         transferExternalId:
           type: string
           example: 36efeb06-d835-48a1-99eb-09bd1d348c1e
-    ExternalEventConfigurationCommand:
+    ExternalEventConfigurationItemResponse:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        type:
+          type: string
+    ExternalEventConfigurationResponse:
+      type: object
+      properties:
+        externalEventConfiguration:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalEventConfigurationItemResponse'
+    ExternalEventConfigurationUpdateRequest:
       type: object
       properties:
         externalEventConfigurations:
           type: object
           additionalProperties:
             type: boolean
-    ExternalEventConfigurationData:
+      required:
+        - externalEventConfigurations
+    ExternalEventConfigurationUpdateResponse:
       type: object
       properties:
-        externalEventConfiguration:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalEventConfigurationItemData'
-    ExternalEventConfigurationItemData:
+        changes:
+          type: object
+          additionalProperties:
+            type: object
+    ExternalEventResponse:
       type: object
       properties:
-        enabled:
-          type: boolean
+        aggregateRootId:
+          type: integer
+          format: int64
+        businessDate:
+          type: string
+          format: date
+        category:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        eventId:
+          type: integer
+          format: int64
+        payLoad:
+          type: object
+          additionalProperties:
+            type: object
+        schema:
+          type: string
         type:
           type: string
     ExternalId:
@@ -34305,6 +34424,8 @@ components:
     GetLoanAccountingMappings:
       type: object
       properties:
+        buyDownExpenseAccount:
+          $ref: '#/components/schemas/GetGlAccountMapping'
         chargeOffExpenseAccount:
           $ref: '#/components/schemas/GetGlAccountMapping'
         chargeOffFraudExpenseAccount:
@@ -34314,6 +34435,8 @@ components:
         fundSourceAccount:
           $ref: '#/components/schemas/GetGlAccountMapping'
         goodwillCreditAccount:
+          $ref: '#/components/schemas/GetGlAccountMapping'
+        incomeFromBuyDownAccount:
           $ref: '#/components/schemas/GetGlAccountMapping'
         incomeFromCapitalizationAccount:
           $ref: '#/components/schemas/GetGlAccountMapping'
@@ -35127,6 +35250,24 @@ components:
           type: number
           format: double
           example: 60.0
+        buyDownFeeCalculationType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeCalculationTypeOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeIncomeType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeIncomeTypeOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeStrategy:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeStrategyOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringEnumOptionData'
         canDefineInstallmentAmount:
           type: boolean
           example: false
@@ -35165,8 +35306,7 @@ components:
           type: array
           example: []
           items:
-            type: integer
-            format: int32
+            $ref: '#/components/schemas/LoanProductChargeData'
         creditAllocation:
           type: array
           example: []
@@ -35203,6 +35343,9 @@ components:
           type: boolean
           example: false
         enableAutoRepaymentForDownPayment:
+          type: boolean
+          example: false
+        enableBuyDownFee:
           type: boolean
           example: false
         enableDownPayment:
@@ -35455,6 +35598,12 @@ components:
           type: number
           format: double
           example: 15.0
+        buyDownFeeCalculationType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeIncomeType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeStrategy:
+          $ref: '#/components/schemas/StringEnumOptionData'
         capitalizedIncomeCalculationType:
           $ref: '#/components/schemas/StringEnumOptionData'
         capitalizedIncomeStrategy:
@@ -35471,6 +35620,9 @@ components:
           $ref: '#/components/schemas/GetLoanProductsDaysInYearCustomStrategy'
         daysInYearType:
           $ref: '#/components/schemas/GetLoanProductsDaysInYearType'
+        enableBuyDownFee:
+          type: boolean
+          example: false
         enableIncomeCapitalization:
           type: boolean
           example: false
@@ -35646,6 +35798,24 @@ components:
           items:
             $ref: '#/components/schemas/GetLoanProductsAmortizationType'
           uniqueItems: true
+        buyDownFeeCalculationType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeCalculationTypeOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeIncomeType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeIncomeTypeOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeStrategy:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeStrategyOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringEnumOptionData'
         capitalizedIncomeCalculationType:
           $ref: '#/components/schemas/StringEnumOptionData'
         capitalizedIncomeCalculationTypeOptions:
@@ -35715,6 +35885,9 @@ components:
           items:
             $ref: '#/components/schemas/GetLoanProductsInterestTemplateType'
           uniqueItems: true
+        enableBuyDownFee:
+          type: boolean
+          example: false
         enableIncomeCapitalization:
           type: boolean
           example: false
@@ -36638,6 +36811,18 @@ components:
         approveTransfer:
           type: boolean
           example: false
+        buyDownFee:
+          type: boolean
+          example: false
+        buyDownFeeAdjustment:
+          type: boolean
+          example: false
+        buyDownFeeAmortization:
+          type: boolean
+          example: false
+        buyDownFeeAmortizationAdjustment:
+          type: boolean
+          example: false
         capitalizedIncome:
           type: boolean
           example: false
@@ -36660,6 +36845,9 @@ components:
           type: string
           example: loanTransactionType.repayment
         contra:
+          type: boolean
+          example: false
+        contractTermination:
           type: boolean
           example: false
         creditBalanceRefund:
@@ -37039,6 +37227,12 @@ components:
         approvedPrincipal:
           type: number
           example: 1000.0
+        buyDownFeeCalculationType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeIncomeType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeStrategy:
+          $ref: '#/components/schemas/StringEnumOptionData'
         capitalizedIncomeCalculationType:
           $ref: '#/components/schemas/StringEnumOptionData'
         capitalizedIncomeStrategy:
@@ -37093,6 +37287,9 @@ components:
           items:
             $ref: '#/components/schemas/GetLoansLoanIdLoanTermVariations'
         enableAutoRepaymentForDownPayment:
+          type: boolean
+          example: false
+        enableBuyDownFee:
           type: boolean
           example: false
         enableDownPayment:
@@ -46243,6 +46440,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SingleDebitOrCreditEntryCommand'
+        externalAssetOwner:
+          type: string
         locale:
           type: string
         officeId:
@@ -46302,6 +46501,8 @@ components:
           $ref: '#/components/schemas/EnumOptionData'
         entryType:
           $ref: '#/components/schemas/EnumOptionData'
+        externalAssetOwner:
+          type: string
         glAccountCode:
           type: string
         glAccountId:
@@ -46386,6 +46587,9 @@ components:
           $ref: '#/components/schemas/EnumOptionType'
         entryType:
           $ref: '#/components/schemas/EnumOptionType'
+        externalAssetOwner:
+          type: string
+          example: qwerty1234
         glAccountCode:
           type: string
           example: 0123-4567
@@ -46481,6 +46685,24 @@ components:
         page:
           type: integer
           format: int32
+    LoanArrearsData:
+      type: object
+      properties:
+        feeOverdue:
+          type: number
+        interestOverdue:
+          type: number
+        overDueSince:
+          type: string
+          format: date
+        overdue:
+          type: boolean
+        penaltyOverdue:
+          type: number
+        principalOverdue:
+          type: number
+        totalOverdue:
+          type: number
     LoanChargePaidByData:
       type: object
       properties:
@@ -46529,6 +46751,13 @@ components:
           type: number
         quantity:
           type: number
+    LoanDeferredIncomeData:
+      type: object
+      properties:
+        capitalizedIncomeData:
+          type: array
+          items:
+            $ref: '#/components/schemas/CapitalizedIncomeDetails'
     LoanFeeData:
       type: object
       properties:
@@ -46579,6 +46808,8 @@ components:
       properties:
         accountNo:
           type: string
+        arrears:
+          $ref: '#/components/schemas/LoanArrearsData'
         clientAccountNo:
           type: string
         clientDisplayName:
@@ -46867,6 +47098,9 @@ components:
       type: object
       description: LoanProductChargeData
       properties:
+        amount:
+          type: number
+          example: 60.0
         id:
           type: integer
           format: int64
@@ -47018,6 +47252,24 @@ components:
             $ref: '#/components/schemas/EnumOptionData'
         annualInterestRate:
           type: number
+        buyDownFeeCalculationType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeCalculationTypeOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeIncomeType:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeIncomeTypeOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeStrategy:
+          $ref: '#/components/schemas/StringEnumOptionData'
+        buyDownFeeStrategyOptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringEnumOptionData'
         canDefineInstallmentAmount:
           type: boolean
         canUseForTopup:
@@ -47123,6 +47375,8 @@ components:
         enableAccrualActivityPosting:
           type: boolean
         enableAutoRepaymentForDownPayment:
+          type: boolean
+        enableBuyDownFee:
           type: boolean
         enableDownPayment:
           type: boolean
@@ -47605,6 +47859,87 @@ components:
           format: int32
         minPrincipal:
           type: number
+    LoanProductMinimumRepaymentScheduleRelatedDetail:
+      type: object
+      properties:
+        allowPartialPeriodInterestCalculation:
+          type: boolean
+        amortizationMethod:
+          type: string
+          enum:
+            - EQUAL_PRINCIPAL
+            - EQUAL_INSTALLMENTS
+            - INVALID
+        annualNominalInterestRate:
+          type: number
+        currencyData:
+          $ref: '#/components/schemas/CurrencyData'
+        daysInMonthType:
+          type: integer
+          format: int32
+        daysInYearCustomStrategy:
+          type: string
+          enum:
+            - FULL_LEAP_YEAR
+            - FEB_29_PERIOD_ONLY
+        daysInYearType:
+          type: integer
+          format: int32
+        graceOnArrearsAgeing:
+          type: integer
+          format: int32
+        graceOnInterestCharged:
+          type: integer
+          format: int32
+        graceOnInterestPayment:
+          type: integer
+          format: int32
+        graceOnPrincipalPayment:
+          type: integer
+          format: int32
+        interestCalculationPeriodMethod:
+          type: string
+          enum:
+            - DAILY
+            - SAME_AS_REPAYMENT_PERIOD
+            - INVALID
+        interestMethod:
+          type: string
+          enum:
+            - DECLINING_BALANCE
+            - FLAT
+            - INVALID
+        interestPeriodFrequencyType:
+          type: string
+          enum:
+            - DAYS
+            - WEEKS
+            - MONTHS
+            - YEARS
+            - WHOLE_TERM
+            - INVALID
+        interestRecognitionOnDisbursementDate:
+          type: boolean
+        nominalInterestRatePerPeriod:
+          type: number
+        numberOfRepayments:
+          type: integer
+          format: int32
+        recurringMoratoriumOnPrincipalPeriods:
+          type: integer
+          format: int32
+        repayEvery:
+          type: integer
+          format: int32
+        repaymentPeriodFrequencyType:
+          type: string
+          enum:
+            - DAYS
+            - WEEKS
+            - MONTHS
+            - YEARS
+            - WHOLE_TERM
+            - INVALID
     LoanProductPaymentAllocationRule:
       type: object
       properties:
@@ -47725,7 +48060,7 @@ components:
     LoanProductRelatedDetail:
       type: object
       properties:
-        allowPartialPeriodInterestCalcualtion:
+        allowPartialPeriodInterestCalculation:
           type: boolean
         amortizationMethod:
           type: string
@@ -47735,6 +48070,19 @@ components:
             - INVALID
         annualNominalInterestRate:
           type: number
+        buyDownFeeCalculationType:
+          type: string
+          enum:
+            - FLAT
+        buyDownFeeIncomeType:
+          type: string
+          enum:
+            - FEE
+            - INTEREST
+        buyDownFeeStrategy:
+          type: string
+          enum:
+            - EQUAL_AMORTIZATION
         capitalizedIncomeCalculationType:
           type: string
           enum:
@@ -47774,6 +48122,8 @@ components:
         enableAccrualActivityPosting:
           type: boolean
         enableAutoRepaymentForDownPayment:
+          type: boolean
+        enableBuyDownFee:
           type: boolean
         enableDownPayment:
           type: boolean
@@ -48126,6 +48476,14 @@ components:
           type: boolean
         approveTransfer:
           type: boolean
+        buyDownFee:
+          type: boolean
+        buyDownFeeAdjustment:
+          type: boolean
+        buyDownFeeAmortization:
+          type: boolean
+        buyDownFeeAmortizationAdjustment:
+          type: boolean
         capitalizedIncome:
           type: boolean
         capitalizedIncomeAdjustment:
@@ -48147,6 +48505,8 @@ components:
         code:
           type: string
         contra:
+          type: boolean
+        contractTermination:
           type: boolean
         creditBalanceRefund:
           type: boolean
@@ -48324,10 +48684,12 @@ components:
       properties:
         code:
           type: string
-        currencyInMultiplesOf:
+        currencyData:
+          $ref: '#/components/schemas/CurrencyData'
+        digitsAfterDecimal:
           type: integer
           format: int32
-        digitsAfterDecimal:
+        inMultiplesOf:
           type: integer
           format: int32
     Money:
@@ -50595,6 +50957,26 @@ components:
           type: integer
           format: int32
           example: 1
+        buyDownExpenseAccountId:
+          type: integer
+          format: int64
+          example: 27
+        buyDownFeeCalculationType:
+          type: string
+          enum:
+            - FLAT
+          example: FLAT
+        buyDownFeeIncomeType:
+          type: string
+          enum:
+            - FEE
+            - INTEREST
+          example: FEE
+        buyDownFeeStrategy:
+          type: string
+          enum:
+            - EQUAL_AMORTIZATION
+          example: EQUAL_AMORTIZATION
         canDefineInstallmentAmount:
           type: boolean
           example: true
@@ -50694,6 +51076,9 @@ components:
         enableAutoRepaymentForDownPayment:
           type: boolean
           example: false
+        enableBuyDownFee:
+          type: boolean
+          example: false
         enableDownPayment:
           type: boolean
           example: false
@@ -50755,6 +51140,10 @@ components:
         includeInBorrowerCycle:
           type: boolean
           example: false
+        incomeFromBuyDownAccountId:
+          type: integer
+          format: int64
+          example: 38
         incomeFromCapitalizationAccountId:
           type: integer
           format: int64
@@ -51509,6 +51898,12 @@ components:
         frequencyType:
           type: string
           example: frequencyType
+        interestRefundCalculation:
+          type: boolean
+          description: "Optional. Controls whether Interest Refund transaction should\
+            \ be created for this refund. If not provided, loan product config is\
+            \ used."
+          example: false
         loanChargeId:
           type: integer
           format: int64
@@ -51692,6 +52087,22 @@ components:
           type: integer
           format: int32
           example: 1
+        buyDownFeeCalculationType:
+          type: string
+          enum:
+            - FLAT
+          example: FLAT
+        buyDownFeeIncomeType:
+          type: string
+          enum:
+            - FEE
+            - INTEREST
+          example: FEE
+        buyDownFeeStrategy:
+          type: string
+          enum:
+            - EQUAL_AMORTIZATION
+          example: EQUAL_AMORTIZATION
         capitalizedIncomeCalculationType:
           type: string
           enum:
@@ -51740,6 +52151,9 @@ components:
           items:
             $ref: '#/components/schemas/PostLoansDisbursementData'
         enableAutoRepaymentForDownPayment:
+          type: boolean
+          example: false
+        enableBuyDownFee:
           type: boolean
           example: false
         enableDownPayment:
@@ -52858,11 +53272,13 @@ components:
           type: integer
           format: int32
           example: 1
+        allowOverdraft:
+          type: boolean
+          example: false
         charges:
           type: array
           items:
             $ref: '#/components/schemas/PostSavingsCharges'
-          uniqueItems: true
         currencyCode:
           type: string
           example: USD
@@ -52874,6 +53290,9 @@ components:
           type: integer
           format: int32
           example: 2
+        enforceMinRequiredBalance:
+          type: boolean
+          example: false
         inMultiplesOf:
           type: integer
           format: int32
@@ -52894,6 +53313,9 @@ components:
           type: integer
           format: int32
           example: 4
+        isDormancyTrackingActive:
+          type: boolean
+          example: false
         locale:
           type: string
           example: en
@@ -52907,6 +53329,12 @@ components:
         shortName:
           type: string
           example: PBSV
+        withHoldTax:
+          type: boolean
+          example: false
+        withdrawalFeeForTransfers:
+          type: boolean
+          example: false
     PostSavingsProductsResponse:
       type: object
       description: PostSavingsProductsResponse
@@ -53955,19 +54383,6 @@ components:
           type: integer
           format: int64
           example: 1
-    PutCachechangesSwagger:
-      type: object
-      properties:
-        cacheType:
-          type: integer
-          format: int64
-          example: 2
-    PutCachesResponse:
-      type: object
-      description: PutCachesResponse
-      properties:
-        cacheType:
-          $ref: '#/components/schemas/PutCachechangesSwagger'
     PutCentersCenterIdRequest:
       type: object
       description: PutCentersCenterIdRequest
@@ -54314,25 +54729,6 @@ components:
           type: integer
           format: int64
           example: 12
-    PutCurrenciesResponse:
-      type: object
-      description: PutCurrenciesResponse
-      properties:
-        currencies:
-          type: array
-          example:
-            - KES
-            - BND
-            - LBP
-            - GHC
-            - USD
-            - XOF
-            - AED
-            - AMD
-          items:
-            type: string
-            example: "[\"KES\",\"BND\",\"LBP\",\"GHC\",\"USD\",\"XOF\",\"AED\",\"\
-              AMD\"]"
     PutDataTablesAppTableIdDatatableIdResponse:
       type: object
       description: 'PutDataTablesAppTableIdDatatableIdResponse '
@@ -54968,6 +55364,26 @@ components:
           type: integer
           format: int32
           example: 1
+        buyDownExpenseAccountId:
+          type: integer
+          format: int64
+          example: 27
+        buyDownFeeCalculationType:
+          type: string
+          enum:
+            - FLAT
+          example: FLAT
+        buyDownFeeIncomeType:
+          type: string
+          enum:
+            - FEE
+            - INTEREST
+          example: FEE
+        buyDownFeeStrategy:
+          type: string
+          enum:
+            - EQUAL_AMORTIZATION
+          example: EQUAL_AMORTIZATION
         canDefineInstallmentAmount:
           type: boolean
           example: true
@@ -55068,6 +55484,9 @@ components:
         enableAutoRepaymentForDownPayment:
           type: boolean
           example: false
+        enableBuyDownFee:
+          type: boolean
+          example: false
         enableDownPayment:
           type: boolean
           example: false
@@ -55125,6 +55544,10 @@ components:
         includeInBorrowerCycle:
           type: boolean
           example: false
+        incomeFromBuyDownAccountId:
+          type: integer
+          format: int64
+          example: 38
         incomeFromCapitalizationAccountId:
           type: integer
           format: int64
@@ -56878,7 +57301,7 @@ components:
           $ref: '#/components/schemas/Money'
         emi:
           $ref: '#/components/schemas/Money'
-        emiPlusCreditedAmounts:
+        emiPlusCreditedAmountsPlusFutureUnrecognizedInterest:
           $ref: '#/components/schemas/Money'
         firstInterestPeriod:
           $ref: '#/components/schemas/InterestPeriod'
@@ -56889,14 +57312,20 @@ components:
           format: date
         fullyPaid:
           type: boolean
+        futureUnrecognizedInterest:
+          $ref: '#/components/schemas/Money'
         initialBalanceForEmiRecalculation:
           $ref: '#/components/schemas/Money'
+        interestMoved:
+          type: boolean
         interestPeriods:
           type: array
           items:
             $ref: '#/components/schemas/InterestPeriod'
         lastInterestPeriod:
           $ref: '#/components/schemas/InterestPeriod'
+        loanProductRelatedDetail:
+          $ref: '#/components/schemas/LoanProductMinimumRepaymentScheduleRelatedDetail'
         originalEmi:
           $ref: '#/components/schemas/Money'
         outstandingLoanBalance:
@@ -56913,6 +57342,8 @@ components:
           type: number
         totalCreditedAmount:
           $ref: '#/components/schemas/Money'
+        totalDisbursedAmount:
+          type: number
         totalPaidAmount:
           $ref: '#/components/schemas/Money'
         unrecognizedInterest:
@@ -59494,6 +59925,8 @@ components:
         - capitalizedIncomeAdjustment
         - contractTermination
         - capitalizedIncomeAmortizationAdjustment
+        - buyDownFeeAmortization
+        - buyDownFeeAmortizationAdjustment
     TransactionTypeEnumData:
       type: object
       properties:

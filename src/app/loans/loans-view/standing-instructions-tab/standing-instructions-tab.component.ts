@@ -17,7 +17,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { StandingInstructionsService } from '@fineract/client';
 import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -78,7 +78,7 @@ export class StandingInstructionsTabComponent implements OnInit {
    */
   constructor(
     private route: ActivatedRoute,
-    private loansService: LoansService,
+    private standingInstructionsService: StandingInstructionsService,
     private dialog: MatDialog,
     private accountTransfersService: AccountTransfersService,
     private settingsService: SettingsService
@@ -101,8 +101,15 @@ export class StandingInstructionsTabComponent implements OnInit {
     const accountId = this.loanDetailsData.id;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.loansService
-      .getStandingInstructions(clientId, clientName, accountId, locale, dateFormat)
+    this.standingInstructionsService
+      .retrieveAll19({
+        clientId: Number(clientId),
+        clientName: clientName,
+        fromAccountId: Number(accountId),
+        fromAccountType: 1,
+        limit: 14,
+        offset: 0
+      })
       .subscribe((response: any) => {
         this.instructionsData = response.pageItems;
         this.dataSource.data = this.instructionsData;

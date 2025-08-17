@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 /** Custom Components */
 
 /** Custom Services */
-import { LoansService } from '../../loans.service';
+import { LoansService as CustomLoansService } from 'app/customApis.service';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
 import { EntityNotesTabComponent } from '../../../shared/tabs/entity-notes-tab/entity-notes-tab.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -25,7 +25,7 @@ export class NotesTabComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private loansService: LoansService,
+    private customLoansService: CustomLoansService,
     private authenticationService: AuthenticationService
   ) {
     const savedCredentials = this.authenticationService.getCredentials();
@@ -42,8 +42,8 @@ export class NotesTabComponent implements OnInit {
     });
   }
 
-  addNote(noteContent: any) {
-    this.loansService.createLoanNote(this.entityId, noteContent).subscribe((response: any) => {
+  addNote = (noteContent: any) => {
+    this.customLoansService.createLoanNote(this.entityId, noteContent).subscribe((response: any) => {
       this.entityNotes.push({
         id: response.resourceId,
         createdByUsername: this.username,
@@ -51,17 +51,17 @@ export class NotesTabComponent implements OnInit {
         note: noteContent.note
       });
     });
-  }
+  };
 
-  editNote(noteId: string, noteContent: any, index: number) {
-    this.loansService.editLoanNote(this.entityId, noteId, noteContent).subscribe(() => {
+  editNote = (noteId: string, noteContent: any, index: number) => {
+    this.customLoansService.editLoanNote(this.entityId, noteId, noteContent).subscribe(() => {
       this.entityNotes[index].note = noteContent.note;
     });
-  }
+  };
 
-  deleteNote(noteId: string, index: number) {
-    this.loansService.deleteLoanNote(this.entityId, noteId).subscribe(() => {
+  deleteNote = (noteId: string, index: number) => {
+    this.customLoansService.deleteLoanNote(this.entityId, noteId).subscribe(() => {
       this.entityNotes.splice(index, 1);
     });
-  }
+  };
 }

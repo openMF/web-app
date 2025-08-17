@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from '../../../loans.service';
+import { LoansService, LoanChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -66,6 +66,7 @@ export class AddLoanChargeComponent implements OnInit {
     private router: Router,
     private dateUtils: Dates,
     private loansService: LoansService,
+    private loanChargesService: LoanChargesService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { actionButtonData: any }) => {
@@ -128,8 +129,13 @@ export class AddLoanChargeComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loansService.createLoanCharge(this.loanId, 'charges', data).subscribe((res) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanChargesService
+      .executeLoanCharge({
+        loanId: parseInt(this.loanId, 10),
+        postLoansLoanIdChargesRequest: data
+      })
+      .subscribe((res: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

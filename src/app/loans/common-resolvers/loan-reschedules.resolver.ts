@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { LoansService } from '../loans.service';
+import { RescheduleLoansService } from '@fineract/client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoanReschedulesResolver {
   /**
-   * @param {LoansService} LoansService Loans service.
+   * @param {RescheduleLoansService} rescheduleLoansService Reschedule loans service.
    */
-  constructor(private loansService: LoansService) {}
+  constructor(private rescheduleLoansService: RescheduleLoansService) {}
 
   /**
    * Returns the Loans data.
@@ -18,6 +18,8 @@ export class LoanReschedulesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loansService.loanRescheduleRequests(loanId);
+    return this.rescheduleLoansService.retrieveAllRescheduleRequest({
+      loanId: Number(loanId)
+    });
   }
 }

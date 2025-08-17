@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationExtras, Router, RouterLinkActive, RouterLink,
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoansService, LoanTransactionsService } from '@fineract/client';
 
 /** Custom Buttons Configuration */
 import { LoansAccountButtonConfiguration } from './loan-accounts-button-config';
@@ -97,6 +97,7 @@ export class LoansViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public loansService: LoansService,
+    public loanTransactionsService: LoanTransactionsService,
     private translateService: TranslateService,
     public dialog: MatDialog
   ) {
@@ -108,7 +109,7 @@ export class LoansViewComponent implements OnInit {
         this.loanStatus = this.loanDetailsData.status;
         this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
         this.currency = this.loanDetailsData.currency;
-        loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
+        //loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails); there is no such method in the openapi service
         if (this.loanStatus.active) {
           this.loanDetailsData.transactions.forEach((lt: LoanTransaction) => {
             if (!lt.manuallyReversed) {
@@ -354,9 +355,15 @@ export class LoansViewComponent implements OnInit {
     });
     recoverFromGuarantorDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loansService.loanActionButtons(this.loanId, 'recoverGuarantees').subscribe(() => {
-          this.reload();
-        });
+        this.loansService
+          .stateTransitions({
+            loanId: this.loanId,
+            postLoansLoanIdRequest: {},
+            command: 'recoverGuarantees'
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -397,9 +404,15 @@ export class LoansViewComponent implements OnInit {
             undoCommand = 'undo-charge-off';
             break;
         }
-        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
-          this.reload();
-        });
+        this.loanTransactionsService
+          .executeLoanTransaction({
+            loanId: this.loanId,
+            command: undoCommand,
+            postLoansLoanIdTransactionsRequest: {}
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -443,7 +456,7 @@ export class LoansViewComponent implements OnInit {
     });
     deleteGuarantorDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoanAccount(this.loanId).subscribe(() => {
+        this.loansService.deleteLoanApplication({ loanId: this.loanId }).subscribe(() => {
           this.router.navigate(['../../'], { relativeTo: this.route });
         });
       }

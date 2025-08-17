@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
  * Loans notes data resolver.
@@ -14,9 +14,9 @@ import { LoansService } from '../loans.service';
 @Injectable()
 export class LoanDatatableResolver {
   /**
-   * @param {LoansService} LoansService Loans service.
+   * @param {DataTablesService} dataTablesService DataTables service.
    */
-  constructor(private loansService: LoansService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
    * Returns the Loans Notes Data.
@@ -25,6 +25,9 @@ export class LoanDatatableResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.parent.paramMap.get('loanId');
     const datatableName = route.paramMap.get('datatableName');
-    return this.loansService.getLoanDatatable(loanId, datatableName);
+    return this.dataTablesService.getDatatable1({
+      datatable: datatableName,
+      apptableId: Number(loanId)
+    });
   }
 }

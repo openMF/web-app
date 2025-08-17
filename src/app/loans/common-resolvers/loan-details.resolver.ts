@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoansService } from '@fineract/client';
 
 /**
  * Clients data resolver.
@@ -25,7 +25,11 @@ export class LoanDetailsResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
     if (!isNaN(+loanId)) {
-      return this.loansService.getLoanAccountAssociationDetails(loanId);
+      return this.loansService.retrieveLoan({
+        loanId: Number(loanId),
+        associations: 'all',
+        exclude: 'guarantors,futureSchedule'
+      });
     }
   }
 }

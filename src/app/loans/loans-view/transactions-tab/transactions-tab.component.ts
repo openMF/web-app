@@ -17,7 +17,8 @@ import {
   MatRow
 } from '@angular/material/table';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
+import { LoanTransactionsService, LoansService } from '@fineract/client';
+import { LoansService as CustomLoansService } from 'app/customApis.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -132,7 +133,9 @@ export class TransactionsTabComponent implements OnInit {
     private dateUtils: Dates,
     private router: Router,
     private dialog: MatDialog,
+    private loanTransactionsService: LoanTransactionsService,
     private loansService: LoansService,
+    private customLoansService: CustomLoansService,
     private translateService: TranslateService,
     private settingsService: SettingsService,
     private alertService: AlertService
@@ -360,7 +363,11 @@ export class TransactionsTabComponent implements OnInit {
           transactionId = null;
         }
         this.loansService
-          .executeLoansAccountTransactionsCommand(loanId, command, payload, transactionId)
+          .stateTransitions({
+            loanId: parseInt(loanId, 10),
+            postLoansLoanIdRequest: payload,
+            command: command
+          })
           .subscribe((responseCmd: any) => {
             transaction.manuallyReversed = true;
             this.reload();
@@ -383,9 +390,15 @@ export class TransactionsTabComponent implements OnInit {
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
-        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
-          this.reload();
-        });
+        this.loansService
+          .stateTransitions({
+            loanId: this.loanId,
+            postLoansLoanIdRequest: {},
+            command: undoCommand
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -448,8 +461,12 @@ export class TransactionsTabComponent implements OnInit {
 
   openInterestRefundDialog(transaction: LoanTransaction) {
     const loanId = this.loanId;
-    this.loansService
-      .getLoanTransactionActionTemplate(String(loanId), 'interest-refund', String(transaction.id))
+    this.loanTransactionsService
+      .retrieveTransactionTemplate({
+        loanId: loanId,
+        command: 'interest-refund',
+        transactionId: transaction.id
+      })
       .subscribe((template: any) => {
         const paymentTypeField = new FormfieldBase({
           controlType: 'select',
@@ -508,7 +525,7 @@ export class TransactionsTabComponent implements OnInit {
               locale: this.settingsService.language.code,
               dateFormat: this.settingsService.dateFormat
             };
-            this.loansService
+            this.customLoansService
               .executeLoansAccountTransactionsCommand(
                 String(loanId),
                 'interest-refund',
@@ -538,8 +555,12 @@ export class TransactionsTabComponent implements OnInit {
 
   capitalizedIncomeAdjustmentTransaction(transaction: LoanTransaction) {
     const accountId = `${this.loanId}`;
-    this.loansService
-      .getLoanTransactionActionTemplate(accountId, 'capitalizedIncomeAdjustment', `${transaction.id}`)
+    this.loanTransactionsService
+      .retrieveTransactionTemplate({
+        loanId: Number(accountId),
+        command: 'capitalizedIncomeAdjustment',
+        transactionId: Number(transaction.id)
+      })
       .subscribe((response: any) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
@@ -591,12 +612,11 @@ export class TransactionsTabComponent implements OnInit {
                   dateFormat
                 };
                 this.loansService
-                  .executeLoansAccountTransactionsCommand(
-                    accountId,
-                    'capitalizedIncomeAdjustment',
-                    payload,
-                    transaction.id
-                  )
+                  .stateTransitions({
+                    loanId: parseInt(accountId, 10),
+                    postLoansLoanIdRequest: payload,
+                    command: 'capitalizedIncomeAdjustment'
+                  })
                   .subscribe(() => {
                     this.reload();
                   });
@@ -614,8 +634,12 @@ export class TransactionsTabComponent implements OnInit {
 
   buyDownFeeAdjustmentTransaction(transaction: LoanTransaction) {
     const accountId = `${this.loanId}`;
-    this.loansService
-      .getLoanTransactionActionTemplate(accountId, 'buyDownFeeAdjustment', `${transaction.id}`)
+    this.loanTransactionsService
+      .retrieveTransactionTemplate({
+        loanId: Number(accountId),
+        command: 'buyDownFeeAdjustment',
+        transactionId: Number(transaction.id)
+      })
       .subscribe((response: any) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
@@ -667,7 +691,11 @@ export class TransactionsTabComponent implements OnInit {
                   dateFormat
                 };
                 this.loansService
-                  .executeLoansAccountTransactionsCommand(accountId, 'buyDownFeeAdjustment', payload, transaction.id)
+                  .stateTransitions({
+                    loanId: parseInt(accountId, 10),
+                    postLoansLoanIdRequest: payload,
+                    command: 'buyDownFeeAdjustment'
+                  })
                   .subscribe(() => {
                     this.reload();
                   });

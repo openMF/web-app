@@ -1,12 +1,10 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { LoanTransactionsService } from '@fineract/client';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
-
-/** Custom Services */
-import { LoansService } from '../loans.service';
 
 /**
  * Loans Account Transaction Template data resolver.
@@ -14,9 +12,9 @@ import { LoansService } from '../loans.service';
 @Injectable()
 export class LoansAccountTransactionTemplateResolver {
   /**
-   * @param {LoansService} LoansService Loans service.
+   * @param {LoanTransactionsService} loanTransactionsService Loan transactions service.
    */
-  constructor(private loansService: LoansService) {}
+  constructor(private loanTransactionsService: LoanTransactionsService) {}
 
   /**
    * Returns the Loans Account Transaction Template data.
@@ -26,6 +24,9 @@ export class LoansAccountTransactionTemplateResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId');
     const transactionId = route.paramMap.get('id');
-    return this.loansService.getLoansAccountTransactionTemplate(loanId, transactionId);
+    return this.loanTransactionsService.retrieveTransactionTemplate({
+      loanId: Number(loanId),
+      transactionId: Number(transactionId)
+    });
   }
 }

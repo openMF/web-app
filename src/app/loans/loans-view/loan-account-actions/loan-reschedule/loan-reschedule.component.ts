@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { LoansService } from 'app/loans/loans.service';
+import { RescheduleLoansService } from '@fineract/client';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -42,14 +42,14 @@ export class LoanRescheduleComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {LoansService} systemService Loan Service.
+   * @param {RescheduleLoansService} rescheduleLoansService Reschedule Loans Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private loanService: LoansService,
+    private rescheduleLoansService: RescheduleLoansService,
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
@@ -109,11 +109,15 @@ export class LoanRescheduleComponent implements OnInit {
       locale
     };
     data.loanId = this.loanId;
-    this.loanService.submitRescheduleData(data).subscribe((response: any) => {
-      // TODO: needs to be updated
-      // mentioned in Community App:
-      // location.path('/loans-accounts/' + scope.loanId + '/viewreschedulerequest/'+ data.resourceId);
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.rescheduleLoansService
+      .createLoanRescheduleRequest({
+        postCreateRescheduleLoansRequest: data
+      })
+      .subscribe((response: any) => {
+        // TODO: needs to be updated
+        // mentioned in Community App:
+        // location.path('/loans-accounts/' + scope.loanId + '/viewreschedulerequest/'+ data.resourceId);
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { NotesService } from '@fineract/client';
 
 /**
  * Loans notes resolver.
@@ -14,9 +14,9 @@ import { LoansService } from '../loans.service';
 @Injectable()
 export class LoanNotesResolver {
   /**
-   * @param {LoansService} LoansService Loans service.
+   * @param {NotesService} notesService Notes service.
    */
-  constructor(private loansService: LoansService) {}
+  constructor(private notesService: NotesService) {}
 
   /**
    * Returns the Loans data.
@@ -24,6 +24,9 @@ export class LoanNotesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loansService.getLoanNotes(loanId);
+    return this.notesService.retrieveNotesByResource({
+      resourceType: 'loans',
+      resourceId: Number(loanId)
+    });
   }
 }

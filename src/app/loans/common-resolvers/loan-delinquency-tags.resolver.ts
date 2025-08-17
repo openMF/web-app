@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoansService } from '@fineract/client';
 
 /**
  * Clients data resolver.
@@ -24,6 +24,8 @@ export class LoanDelinquencyTagsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const loanId = route.paramMap.get('loanId') || route.parent.paramMap.get('loanId');
-    return this.loansService.getDelinquencyTags(loanId);
+    return this.loansService.getDelinquencyTagHistory({
+      loanId: Number(loanId)
+    });
   }
 }

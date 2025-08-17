@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { LoansService } from 'app/loans/loans.service';
+import { LoanCollateralService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -33,13 +33,13 @@ export class AddCollateralComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {Router} router Router.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {LoansService} LoansService loans service.
+   * @param {LoanCollateralService} loanCollateralService loan collateral service.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private loanService: LoansService
+    private loanCollateralService: LoanCollateralService
   ) {}
 
   ngOnInit() {
@@ -74,8 +74,13 @@ export class AddCollateralComponent implements OnInit {
     const loanId = this.route.snapshot.params['loanId'];
     const collateralForm = this.collateralForm.value;
     collateralForm.locale = 'en';
-    this.loanService.createLoanCollateral(loanId, collateralForm).subscribe((response: any) => {
-      this.router.navigate(['../../loan-collateral'], { relativeTo: this.route });
-    });
+    this.loanCollateralService
+      .createCollateral({
+        loanId: Number(loanId),
+        loansLoanIdCollateralsRequest: collateralForm
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../loan-collateral'], { relativeTo: this.route });
+      });
   }
 }

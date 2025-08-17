@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, Reactive
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -87,8 +87,14 @@ export class WithdrawnByClientComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: 'withdrawnByApplicant'
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

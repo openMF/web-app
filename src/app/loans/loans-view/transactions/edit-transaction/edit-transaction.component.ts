@@ -8,10 +8,10 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { LoanTransactionsService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
@@ -58,6 +58,7 @@ export class EditTransactionComponent implements OnInit {
    * Retrieves the Loan Account transaction template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} loansService Loans Service.
+   * @param {LoanTransactionsService} loanTransactionsService Loan Transactions Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
    * @param {Router} router Router for navigation.
@@ -68,7 +69,7 @@ export class EditTransactionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private loansService: LoansService,
+    private loanTransactionsService: LoanTransactionsService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { loansAccountTransactionTemplate: any }) => {
@@ -150,8 +151,12 @@ export class EditTransactionComponent implements OnInit {
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loansService
-      .executeLoansAccountTransactionsCommand(this.loanAccountId, 'modify', data, this.transactionTemplateData.id)
+    this.loanTransactionsService
+      .adjustLoanTransaction({
+        loanId: Number(this.loanAccountId),
+        transactionId: Number(this.transactionTemplateData.id),
+        postLoansLoanIdTransactionsTransactionIdRequest: data
+      })
       .subscribe((res: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { LoansService } from 'app/loans/loans.service';
+import { LoanChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -48,16 +48,16 @@ export class ViewChargeComponent {
   allowWaive = true;
 
   /**
-   * Retrieves the Charge data from `resolve`.
-   * @param {LoansService} loansService Loans Service
+   * Retrieves the loan charge data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {LoanChargesService} loanChargesService Loan Charges Service.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
-    private loansService: LoansService,
+    private loanChargesService: LoanChargesService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
@@ -103,8 +103,13 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.loansService
-          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'pay', dataObject, this.chargeData.id)
+        this.loanChargesService
+          .executeLoanCharge2({
+            loanId: Number(this.chargeData.loanId),
+            loanChargeId: Number(this.chargeData.id),
+            command: 'pay',
+            postLoansLoanIdChargesChargeIdRequest: dataObject
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -127,8 +132,13 @@ export class ViewChargeComponent {
     });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.loansService
-          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'waive', {}, this.chargeData.id)
+        this.loanChargesService
+          .executeLoanCharge2({
+            loanId: Number(this.chargeData.loanId),
+            loanChargeId: Number(this.chargeData.id),
+            command: 'waive',
+            postLoansLoanIdChargesChargeIdRequest: {}
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -176,8 +186,12 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.loansService
-          .editLoansAccountCharge(this.loansAccountData.id, dataObject, this.chargeData.id)
+        this.loanChargesService
+          .updateLoanCharge({
+            loanId: Number(this.loansAccountData.id),
+            loanChargeId: Number(this.chargeData.id),
+            putLoansLoanIdChargesChargeIdRequest: dataObject
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -194,9 +208,14 @@ export class ViewChargeComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoansAccountCharge(this.loansAccountData.id, this.chargeData.id).subscribe(() => {
-          this.reload();
-        });
+        this.loanChargesService
+          .deleteLoanCharge({
+            loanId: Number(this.loansAccountData.id),
+            loanChargeId: Number(this.chargeData.id)
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }

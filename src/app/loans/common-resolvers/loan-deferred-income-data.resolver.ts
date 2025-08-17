@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { LoansService } from '../loans.service';
+import { LoansService } from 'app/customApis.service';
 
 /**
  * Loan Delinquency data resolver.

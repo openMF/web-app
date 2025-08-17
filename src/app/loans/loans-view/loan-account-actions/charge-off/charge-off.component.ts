@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -91,8 +91,14 @@ export class ChargeOffComponent implements OnInit {
       locale
     };
     const command = 'charge-off';
-    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        postLoansLoanIdRequest: data,
+        command: command
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

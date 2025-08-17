@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -86,8 +86,10 @@ export class CloseAsRescheduledComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.loanService.submitLoanActionButton(this.loanId, data, 'close-rescheduled').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .stateTransitions({ loanId: Number(this.loanId), command: 'close-rescheduled', postLoansLoanIdRequest: data })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { LoansService } from 'app/loans/loans.service';
+import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { RepaymentScheduleTabComponent } from '../../loans-view/repayment-schedule-tab/repayment-schedule-tab.component';
@@ -43,6 +43,8 @@ export class LoansAccountScheduleStepComponent {
 
   showRepaymentInfo(): void {
     this.repaymentScheduleDetails = { periods: [] };
+    // TODO: Re-implement loan schedule calculation with @fineract/client
+    /*
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const payload = this.loansService.buildLoanRequestPayload(
@@ -58,5 +60,6 @@ export class LoansAccountScheduleStepComponent {
     this.loansService.calculateLoanSchedule(payload).subscribe((response: any) => {
       this.repaymentScheduleDetails = response;
     });
+    */
   }
 }

@@ -4,7 +4,7 @@ import { UntypedFormControl, UntypedFormBuilder, Validators, ReactiveFormsModule
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { LoansService } from '../../../loans.service';
+import { LoansService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -58,8 +58,14 @@ export class UndoDisbursalComponent implements OnInit {
     if (this.actionName === 'Undo Last Disbursal') {
       command = 'undolastdisbursal';
     }
-    this.loansService.loanActionButtons(this.loanId, command, { note: this.note.value }).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loansService
+      .stateTransitions({
+        loanId: Number(this.loanId),
+        command: command,
+        postLoansLoanIdRequest: { note: this.note.value }
+      })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }
