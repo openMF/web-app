@@ -20,7 +20,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Services Import */
-import { CollectionsService } from '../collections.service';
+import { StaffService, CollectionSheetService } from '@fineract/client';
 
 /** Custom Dialogs */
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -126,7 +126,8 @@ export class IndividualCollectionSheetComponent implements OnInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} collectionsService Organization Service.
+   * @param {CollectionSheetService} collectionSheetService Collection Sheet Service.
+   * @param {StaffService} staffService Staff Service.
    * @param {Route} route Route.
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {Dialog} dialog Dialog component.
@@ -135,7 +136,8 @@ export class IndividualCollectionSheetComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private collectionsService: CollectionsService,
+    private collectionSheetService: CollectionSheetService,
+    private staffService: StaffService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     public dialog: MatDialog,
@@ -182,7 +184,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
    */
   buildDependencies() {
     this.collectionSheetForm.get('officeId').valueChanges.subscribe((value: any) => {
-      this.collectionsService.getStaffs(value).subscribe((response: any) => {
+      this.staffService.retrieveAll16(value).subscribe((response: any) => {
         this.loanOfficerData = response;
       });
     });
@@ -373,7 +375,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
     if (collectionSheet.staffId === '') {
       delete collectionSheet.staffId;
     }
-    this.collectionsService.retrieveCollectionSheetData(collectionSheet).subscribe((response: any) => {
+    this.collectionSheetService.generateCollectionSheet(collectionSheet).subscribe((response: any) => {
       if (response.clients.length > 0) {
         this.collectionSheetData = response;
         this.organizeData(response);
@@ -402,7 +404,7 @@ export class IndividualCollectionSheetComponent implements OnInit {
       transactionDate: this.dateUtils.formatDate(this.collectionSheetForm.value.transactionDate, dateFormat),
       bulkDisbursementTransactions: this.bulkDisbursementTransactionsData
     };
-    this.collectionsService.executeSaveCollectionSheet(finalSubmitData).subscribe(() => {
+    this.collectionSheetService.generateCollectionSheet({ collectionSheetRequest: finalSubmitData }).subscribe(() => {
       this.reload();
       localStorage.setItem('Success', 'true');
     });
