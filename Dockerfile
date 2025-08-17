@@ -32,7 +32,7 @@ RUN npm cache clear --force
 RUN npm config set fetch-retry-maxtimeout 120000
 RUN npm config set registry $NPM_REGISTRY_URL --location=global
 
-RUN npm install && npm ci
+RUN npm ci
 
 RUN sh -c "ng build --output-path=/dist $BUILD_ENVIRONMENT_OPTIONS"
 
