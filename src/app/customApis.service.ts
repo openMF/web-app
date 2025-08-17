@@ -83,3 +83,37 @@ export class LoansService {
     return this.http.delete(`/loans/${loanId}/notes/${noteId}`);
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RunReportsService {
+  constructor(private http: HttpClient) {}
+
+  /**
+   * @param {number} staffId Staff Id to get centers from.
+   * @returns {Observable<any>} Centers
+   */
+  getCentersFromStaffId(staffId: number): Observable<any> {
+    const httpParams = new HttpParams().set('R_staffId', staffId.toString()).set('genericResultSet', false.toString());
+    return this.http.get('/runreports/GroupNamesByStaff', { params: httpParams });
+  }
+
+  /**
+   * @param {number} centerId Center ID of center
+   * @returns {Observable<any>} Center
+   */
+  getCenter(centerId: number): Observable<any> {
+    const httpParams = new HttpParams().set('associations', 'groupMembers');
+    return this.http.get(`/centers/${centerId}`, { params: httpParams });
+  }
+
+  /**
+   * @param {number} centerId Center ID of center to retrieve summary of
+   * @returns {Observable<any>} Center Accounts
+   */
+  getCenterSummary(centerId: number): Observable<any> {
+    const httpParams = new HttpParams().set('R_groupId', centerId.toString()).set('genericResultSet', false.toString());
+    return this.http.get('/runreports/GroupSummaryCounts', { params: httpParams });
+  }
+}
