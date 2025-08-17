@@ -14,7 +14,6 @@ import { CenterNavigationComponent } from './center-navigation/center-navigation
 import { GroupNavigationComponent } from './group-navigation/group-navigation.component';
 import { ClientNavigationComponent } from './client-navigation/client-navigation.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { C } from '@angular/cdk/portal-directives.d-BoG39gYN';
 
 /**
  * Navigation component.
