@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { NavigationService } from './navigation.service';
+import { OfficesService } from '@fineract/client';
 
 /**
  * Offices data resolver.
@@ -13,15 +13,15 @@ import { NavigationService } from './navigation.service';
 @Injectable()
 export class OfficesResolver {
   /**
-   * @param {NavigationService} navigationService Navigation service.
+   * @param {OfficesService} officesService Offices service.
    */
-  constructor(private navigationService: NavigationService) {}
+  constructor(private officesService: OfficesService) {}
 
   /**
    * Returns the Offices data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.navigationService.getOffices();
+    return this.officesService.retrieveOffices();
   }
 }
