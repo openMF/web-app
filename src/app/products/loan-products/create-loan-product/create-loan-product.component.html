@@ -99,7 +99,7 @@
       </mifosx-loan-product-charges-step>
     </mat-step>
 
-    <mat-step *ngIf="isAdvancedPaymentStrategy" [stepControl]="loanDeferredIncomeRecognitionForm" completed>
+    <mat-step *ngIf="isAdvancedPaymentStrategy">
       <ng-template matStepLabel>{{ 'labels.inputs.DEFERRED INCOME RECOGNITION' | translate }}</ng-template>
 
       <mifosx-loan-product-capitalized-income-step
@@ -113,6 +113,7 @@
         (setViewChildForm)="setViewChildForm($event)"
       >
       </mifosx-loan-product-capitalized-income-step>
+      <mifosx-stepper-buttons></mifosx-stepper-buttons>
     </mat-step>
 
     <mat-step [stepControl]="loanProductAccountingForm">

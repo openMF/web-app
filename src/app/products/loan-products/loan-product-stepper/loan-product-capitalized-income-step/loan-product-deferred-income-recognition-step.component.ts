@@ -1,20 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
-import {
-  DeferredIncomeRecognition,
-  CapitalizedIncome,
-  BuyDownFee
-} from '../loan-product-payment-strategy-step/payment-allocation-model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { DeferredIncomeRecognition } from '../loan-product-payment-strategy-step/payment-allocation-model';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'mifosx-loan-product-capitalized-income-step',
@@ -22,8 +11,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   styleUrls: ['./loan-product-deferred-income-recognition-step.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    MatCheckbox,
-    FaIconComponent
+    MatCheckbox
   ]
 })
 export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit {

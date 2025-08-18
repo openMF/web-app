@@ -1,8 +1,10 @@
 <div class="flex-fill layout-row layout-align-center margin-t gap-2percent layout-xs-column">
-  <button matButton="elevated" matStepperPrevious [disabled]="disablePrevious">
+  <button mat-raised-button matStepperPrevious [disabled]="disablePrevious">
+    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Previous' | translate }}
   </button>
-  <button matButton="elevated" matStepperNext [disabled]="disableNext">
+  <button mat-raised-button matStepperNext [disabled]="disableNext">
     {{ 'labels.buttons.Next' | translate }}
+    <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
 </div>
