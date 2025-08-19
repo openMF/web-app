@@ -104,6 +104,7 @@ export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit
         merchantBuyDownFee: this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee
       });
     }
+    this.setViewChildForm.emit(this.loanDeferredIncomeRecognitionForm);
   }
 
   setConditionalControls() {
