@@ -21,7 +21,8 @@
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
       <input type="number" matInput formControlName="principal" required />
       <mat-error>
-        {{ 'labels.inputs.Default Principal' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Principal' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -107,7 +108,8 @@
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
       <input type="number" matInput formControlName="numberOfRepayments" required />
       <mat-error>
-        {{ 'labels.inputs.Default number of repayments' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Number of repayments' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -188,7 +190,8 @@
           [attr.disabled]="isZeroInterest()"
         />
         <mat-error>
-          {{ 'labels.inputs.Default nominal interest rate' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Nominal interest rate' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -280,7 +283,8 @@
         <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
         <input type="number" matInput formControlName="defaultDifferentialLendingRate" required />
         <mat-error>
-          {{ 'labels.inputs.Default interest rate' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Interest rate' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -561,7 +565,8 @@
       <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
       <input type="number" matInput formControlName="repaymentEvery" required />
       <mat-error>
-        {{ 'labels.inputs.Repaid every frequency' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Repaid every' | translate }} {{ 'labels.inputs.Frequency' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>

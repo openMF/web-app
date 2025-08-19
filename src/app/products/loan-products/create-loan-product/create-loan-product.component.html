@@ -99,7 +99,7 @@
       </mifosx-loan-product-charges-step>
     </mat-step>
 
-    <mat-step *ngIf="isAdvancedPaymentStrategy">
+    <mat-step *ngIf="isAdvancedPaymentStrategy" [stepControl]="loanIncomeCapitalizationForm">
       <ng-template matStepLabel>{{ 'labels.inputs.DEFERRED INCOME RECOGNITION' | translate }}</ng-template>
 
       <mifosx-loan-product-capitalized-income-step
