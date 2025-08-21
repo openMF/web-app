@@ -1,0 +1,96 @@
+<div class="container m-b-20 layout-row layout-lt-md-column align-end gap-2percent">
+  <button mat-raised-button color="primary" [routerLink]="['edit']">
+    <fa-icon icon="edit" class="m-r-10"></fa-icon>
+    {{ 'labels.buttons.Edit' | translate }}
+  </button>
+  <button mat-raised-button color="warn" (click)="delete()">
+    <fa-icon icon="trash" class="m-r-10"></fa-icon>
+    {{ 'labels.buttons.Delete' | translate }}
+  </button>
+  <div
+    *ngIf="userData.isSelfServiceUser === 'USER_STATE_ACTIVE' || userData.isSelfServiceUser === 'USER_STATE_INACTIVE'"
+  >
+    <button mat-raised-button color="primary" (click)="changeUserPassword(userData.id)">
+      <fa-icon icon="cog" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Change Password' | translate }}
+    </button>
+  </div>
+  <div [ngSwitch]="userData.isSelfServiceUser">
+    <button *ngSwitchCase="'USER_STATE_ACTIVE'" mat-raised-button color="warn" (click)="desactiveUser(userData.id)">
+      <fa-icon icon="ban" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Disable' | translate }}
+    </button>
+    <button *ngSwitchCase="'USER_STATE_INACTIVE'" mat-raised-button color="primary" (click)="activeUser(userData.id)">
+      <fa-icon icon="check" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Reactivate' | translate }}
+    </button>
+    <button *ngSwitchDefault mat-raised-button color="primary" disabled>
+      <fa-icon icon="ban" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Validate' | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="container">
+  <mat-card>
+    <mat-card-content>
+      <div class="layout-row-wrap">
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.Login Name' | translate }}
+        </div>
+
+        <div class="flex-50">
+          {{ userData.username }}
+        </div>
+
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.First Name' | translate }}
+        </div>
+
+        <div class="flex-50">
+          {{ userData.firstname }}
+        </div>
+
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.Last Name' | translate }}
+        </div>
+
+        <div class="flex-50">
+          {{ userData.lastname }}
+        </div>
+
+        <div class="flex-50 mat-body-strong" *ngIf="userData.email">
+          {{ 'labels.inputs.Email' | translate }}
+        </div>
+
+        <div class="flex-50" *ngIf="userData.email">
+          {{ userData.email }}
+        </div>
+
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.Office' | translate }}
+        </div>
+
+        <div class="flex-50">
+          {{ userData.officeName }}
+        </div>
+
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.Roles' | translate }}
+        </div>
+
+        <div class="flex-50">
+          <span *ngFor="let role of userData.selectedRoles">
+            {{ role.name }}
+          </span>
+        </div>
+      </div>
+
+      <div class="layout-row layout-align-center gap-2percent column-on-mobile">
+        <button type="button" mat-raised-button color="primary" [routerLink]="['../../']">
+          {{ 'labels.buttons.Back' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

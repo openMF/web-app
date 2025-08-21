@@ -7,7 +7,7 @@ import { Observable, Subscriber } from 'rxjs';
 
 /** Custom Services */
 import { HttpCacheService } from './http-cache.service';
-import { environment } from 'environments/environment';
+import { environment } from '../../../environments/environment';
 
 /**
  * Caches HTTP requests.

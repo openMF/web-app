@@ -1,55 +1,72 @@
-<form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
-  <mat-form-field class="login-input flex-align-center">
-    <span matPrefix class="m-r-10">
-      <fa-icon icon="user-circle" size="lg"></fa-icon>
-    </span>
-    <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
-    <input matInput type="text" autocomplete="off" formControlName="username" />
-    <mat-error *ngIf="loginForm.controls.username.hasError('required')">
-      {{ 'labels.inputs.Username' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
+<div *ngIf="!oidcServerEnabled">
+  <form class="layout-column" [formGroup]="loginForm" (ngSubmit)="login()" id="login-form">
+    <mat-form-field class="login-input flex-align-center">
+      <span matPrefix class="m-r-10">
+        <fa-icon icon="user-circle" size="lg"></fa-icon>
+      </span>
+      <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
+      <input matInput type="text" autocomplete="off" formControlName="username" />
+      <mat-error *ngIf="loginForm.controls.username.hasError('required')">
+        {{ 'labels.inputs.Username' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="login-input flex-align-center">
-    <span matPrefix class="m-r-10">
-      <fa-icon icon="lock" size="lg"></fa-icon>
-    </span>
-    <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
-    <input matInput type="{{ passwordInputType }}" formControlName="password" />
+    <mat-form-field class="login-input flex-align-center">
+      <span matPrefix class="m-r-10">
+        <fa-icon icon="lock" size="lg"></fa-icon>
+      </span>
+      <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
+      <input matInput type="{{ passwordInputType }}" formControlName="password" />
+      <button
+        type="button"
+        matSuffix
+        *ngIf="loginForm.controls.password.value && !loading"
+        mat-icon-button
+        (mousedown)="togglePasswordVisibility()"
+        (mouseup)="togglePasswordVisibility()"
+      >
+        <fa-icon *ngIf="passwordInputType === 'password'" icon="eye"></fa-icon>
+        <fa-icon *ngIf="passwordInputType === 'text'" icon="eye-slash"></fa-icon>
+      </button>
+      <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+        {{ 'labels.inputs.Password' | translate }} <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="remember" class="m-t-10 flex-align-center">{{
+      'labels.inputs.Remember me' | translate
+    }}</mat-checkbox>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <button mat-raised-button color="primary" class="login-button flex-align-center" [disabled]="!loginForm.valid">
+      {{ 'labels.buttons.Login' | translate }}
+      <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
+    </button>
+
     <button
       type="button"
-      matSuffix
-      *ngIf="loginForm.controls.password.value && !loading"
-      mat-icon-button
-      (mousedown)="togglePasswordVisibility()"
-      (mouseup)="togglePasswordVisibility()"
+      mat-button
+      class="login-button flex-align-center"
+      (click)="forgotPassword()"
+      [disabled]="loading"
     >
-      <fa-icon *ngIf="passwordInputType === 'password'" icon="eye"></fa-icon>
-      <fa-icon *ngIf="passwordInputType === 'text'" icon="eye-slash"></fa-icon>
+      {{ 'labels.links.Forgot Password?' | translate }}
     </button>
-    <mat-error *ngIf="loginForm.controls.password.hasError('required')">
-      {{ 'labels.inputs.Password' | translate }} <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
+  </form>
+</div>
 
-  <mat-checkbox formControlName="remember" class="m-t-10 flex-align-center">{{
-    'labels.inputs.Remember me' | translate
-  }}</mat-checkbox>
-
-  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-
-  <button mat-raised-button color="primary" class="login-button flex-align-center" [disabled]="!loginForm.valid">
-    {{ 'labels.buttons.Login' | translate }}
-    <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
-  </button>
-
-  <button
-    type="button"
-    mat-button
-    class="login-button flex-align-center"
-    (click)="forgotPassword()"
-    [disabled]="loading"
-  >
-    {{ 'labels.links.Forgot Password?' | translate }}
-  </button>
-</form>
+<div *ngIf="oidcServerEnabled" class="container container-margin">
+  <div *ngIf="!isLoggedIn">
+    <button mat-raised-button color="primary" class="login-button-z" (click)="loginOIDC()">
+      {{ 'labels.buttons.Login' | translate }}
+      <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
+    </button>
+  </div>
+  <div *ngIf="isLoggedIn">
+    <p>Welcome! You are logged in.</p>
+    <button (click)="logout()">Logout</button>
+    <button (click)="loadProtectedData()">Load Protected Data</button>
+    <pre>{{ protectedData | json }}</pre>
+  </div>
+</div>
