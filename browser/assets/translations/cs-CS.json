@@ -2500,7 +2500,8 @@
       "Buy down fees": "Poplatky za odkup",
       "Income from Buy down fees": "Příjmy z poplatků za odkup",
       "Buy down fee Expense": "Náklady na poplatek za odkup",
-      "Skip Interest Refund Transaction Posting": "Přeskočit zaúčtování vrácení úroků"
+      "Skip Interest Refund Transaction Posting": "Přeskočit zaúčtování vrácení úroků",
+      "Available Disbursement Amount (with Over Applied)": "Dostupná částka k výplatě (s přeplatkem)"
     },
     "links": {
       "Community": "Společenství",

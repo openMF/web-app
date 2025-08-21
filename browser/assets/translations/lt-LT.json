@@ -2500,7 +2500,8 @@
       "Buy down fees": "Išpirkimo mokesčiai",
       "Income from Buy down fees": "Pajamos iš supirkimo mokesčių",
       "Buy down fee Expense": "Supirkimo mokesčio išlaidos",
-      "Skip Interest Refund Transaction Posting": "Praleisti palūkanų grąžinimo įrašą"
+      "Skip Interest Refund Transaction Posting": "Praleisti palūkanų grąžinimo įrašą",
+      "Available Disbursement Amount (with Over Applied)": "Galimas išmokėjimo kiekis (su pertekliumi)"
     },
     "links": {
       "Community": "bendruomenė",
