@@ -2,7 +2,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpBackend, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+  HTTP_INTERCEPTORS
+} from '@angular/common/http';
 
 /** Environment Configuration */
 
@@ -46,6 +52,11 @@ import {
   MissingTranslationHandlerParams
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+import { AuthenticationInterceptor as TokenInterceptor } from './core/authentication/authentication.interceptor';
+import { TokenInterceptor as ZitadelTokenInterceptor } from './zitadel/token.interceptor';
+import { AuthService } from './zitadel/auth.service';
+import { environment } from '../environments/environment';
 
 export class CustomMissingTranslationHandler implements MissingTranslationHandler {
   handle(params: MissingTranslationHandlerParams): string {
@@ -112,6 +123,21 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     DatePipe,
-    provideHttpClient(withInterceptorsFromDi())]
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: !(
+        environment.OIDC.oidcServerEnabled === false ||
+        environment.OIDC.oidcServerEnabled === 'false' ||
+        environment.OIDC.oidcServerEnabled === 0 ||
+        environment.OIDC.oidcServerEnabled === '0' ||
+        environment.OIDC.oidcServerEnabled === null ||
+        environment.OIDC.oidcServerEnabled === undefined
+      )
+        ? TokenInterceptor
+        : ZitadelTokenInterceptor,
+      multi: true
+    }
+  ]
 })
 export class AppModule {}

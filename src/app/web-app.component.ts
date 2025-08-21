@@ -32,6 +32,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemingService } from './shared/theme-toggle/theming.service';
 
+import { AuthService } from './zitadel/auth.service';
+
 /** Initialize Logger */
 const log = new Logger('MifosX');
 
@@ -90,6 +92,17 @@ export class WebAppComponent implements OnInit {
 
   i18nService: I18nService;
 
+  oidcServerEnabled = !(
+    (window as any)?.env?.oidcServerEnabled === false ||
+    (window as any)?.env?.oidcServerEnabled === 'false' ||
+    (window as any)?.env?.oidcServerEnabled === 0 ||
+    (window as any)?.env?.oidcServerEnabled === '0' ||
+    (window as any)?.env?.oidcServerEnabled === null ||
+    (window as any)?.env?.oidcServerEnabled === undefined
+  );
+
+  isLoggedIn = false;
+
   /**
    * @param {Router} router Router for navigation.
    * @param {ActivatedRoute} activatedRoute Activated Route.
@@ -117,7 +130,8 @@ export class WebAppComponent implements OnInit {
     private themingService: ThemingService,
     private dateUtils: Dates,
     private idle: IdleTimeoutService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
   ) {}
 
   @HostBinding('class') public cssClass: string;
@@ -133,7 +147,20 @@ export class WebAppComponent implements OnInit {
    *
    * 4) Alerts
    */
+
+  login() {
+    this.authService.login();
+  }
+
   ngOnInit() {
+    let code = localStorage.getItem('auth_code');
+
+    if (code) {
+      const codeVerifier = localStorage.getItem('code_verifier');
+      this.authService.exchangeCodeForTokens(code, codeVerifier);
+      this.isLoggedIn = !this.isLoggedIn;
+    }
+
     this.themingService.theme.subscribe((value: string) => {
       this.cssClass = value;
     });
@@ -222,14 +249,18 @@ export class WebAppComponent implements OnInit {
     // Subscribe to session timeout If IdleTimeout is higher than 0 (zero)
     if (environment.session.timeout.idleTimeout > 0) {
       this.idle.$onSessionTimeout.subscribe(() => {
-        if (this.authenticationService.getUserLoggedIn()) {
-          this.alertService.alert({
-            type: 'Session timeout',
-            message: this.translateService.instant('labels.text.Session timed out')
-          });
-          this.dialog.open(SessionTimeoutDialogComponent);
-          this.logout();
-        }
+        this.alertService.alert({
+          type: 'Session timeout',
+          message: this.translateService.instant('labels.text.Session timed out')
+        });
+        this.dialog.open(SessionTimeoutDialogComponent);
+        setTimeout(() => {
+          if (this.oidcServerEnabled) {
+            this.logout();
+          } else {
+            this.authService.logout();
+          }
+        }, 1000);
       });
     }
   }

@@ -7,6 +7,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SystemService } from '../../system.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Custom Service Zitadel */
+import { AuthService } from 'app/zitadel/auth.service';
+
 /**
  * Edit Role Description Component.
  */
@@ -35,7 +38,8 @@ export class EditRoleComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private systemService: SystemService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.route.data.subscribe((data: { role: any }) => {
       this.roleData = data.role;
@@ -71,6 +75,7 @@ export class EditRoleComponent implements OnInit {
    */
   submit() {
     this.systemService.updateRole(this.roleForm.value, this.roleData.id).subscribe(() => {
+      this.authService.updateRole(this.roleData.id, this.roleForm.get('name')?.value, this.roleForm.value.description);
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

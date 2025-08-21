@@ -15,6 +15,10 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Ruta de seguridad Zitadel*/
+import { AuthService } from '../../zitadel/auth.service';
+import { environment } from '../../../environments/environment';
+
 /**
  * Login form component.
  */
@@ -40,13 +44,24 @@ export class LoginFormComponent implements OnInit {
   /** True if loading. */
   loading = false;
 
+  public environment = environment;
+  oidcServerEnabled = !(
+    (window as any)?.env?.oidcServerEnabled === false ||
+    (window as any)?.env?.oidcServerEnabled === 'false' ||
+    (window as any)?.env?.oidcServerEnabled === 0 ||
+    (window as any)?.env?.oidcServerEnabled === '0' ||
+    (window as any)?.env?.oidcServerEnabled === null ||
+    (window as any)?.env?.oidcServerEnabled === undefined
+  );
+
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
   constructor(
     private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private authService: AuthService
   ) {}
 
   /**
@@ -76,6 +91,22 @@ export class LoginFormComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  /**
+   * Authenticates the user if the credentials are valid to Zitadel.
+   */
+
+  loginOIDC() {
+    this.authService.login();
+  }
+
+  getUsers() {
+    this.authService.getUsers();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   /**
