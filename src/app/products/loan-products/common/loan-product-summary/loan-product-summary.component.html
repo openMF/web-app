@@ -930,6 +930,11 @@
       <span class="flex-40">{{ 'labels.inputs.Buy down fee income type' | translate }}:</span>
       <span class="flex-60">{{ loanProduct.buyDownFeeIncomeType?.value | translateKey: 'catalogs' }}</span>
     </div>
+
+    <div class="flex-100 layout-row">
+      <span class="flex-40">{{ 'labels.inputs.Merchant Buy down fee' | translate }}:</span>
+      <span class="flex-60">{{ loanProduct.merchantBuyDownFee | yesNo }}</span>
+    </div>
   </div>
 
   <h3 class="mat-h3 flex-100">{{ 'labels.heading.Accounting' | translate }}</h3>

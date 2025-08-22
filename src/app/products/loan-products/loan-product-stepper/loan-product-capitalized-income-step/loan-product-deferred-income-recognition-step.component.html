@@ -70,5 +70,20 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-checkbox class="flex-48" *ngIf="enableBuyDownFee" labelPosition="before" formControlName="merchantBuyDownFee">
+      {{ 'labels.inputs.Merchant Buy down fee' | translate }}
+    </mat-checkbox>
+  </div>
+
+  <div class="layout-row responsive-column align-center gap-2px margin-t">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Previous' | translate }}
+    </button>
+    <button mat-raised-button matStepperNext>
+      {{ 'labels.buttons.Next' | translate }}
+      <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+    </button>
   </div>
 </form>

@@ -690,12 +690,8 @@ export class TransactionsTabComponent implements OnInit {
                   locale,
                   dateFormat
                 };
-                this.loansService
-                  .stateTransitions({
-                    loanId: parseInt(accountId, 10),
-                    postLoansLoanIdRequest: payload,
-                    command: 'buyDownFeeAdjustment'
-                  })
+                this.customLoansService
+                  .executeLoansAccountTransactionsCommand(accountId, 'buyDownFeeAdjustment', payload, transaction.id)
                   .subscribe(() => {
                     this.reload();
                   });

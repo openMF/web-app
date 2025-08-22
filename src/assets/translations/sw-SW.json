@@ -1165,7 +1165,14 @@
       "Grace On Principal": "Grace On Principal",
       "Insert Installment": "Weka Ufungaji",
       "Interest Rate": "Kiwango cha Riba",
-      "Principal Amount": "Kiasi cha Mkuu"
+      "Principal Amount": "Kiasi cha Mkuu",
+      "Buy Down Fees": "Ada za Ununuzi",
+      "Fee Amount": "Kiasi cha Ada",
+      "Amortized Amount": "Kiasi Kilichoondolewa",
+      "Not Yet Amortized Amount": "Kiasi Bado Kijaondolewa",
+      "Adjusted Amount": "Kiasi Kilichorekebishwa",
+      "Charged Off Amount": "Kiasi Kilichofutwa",
+      "Date": "Tarehe"
     },
     "inputs": {
       "accounting": {
@@ -2486,6 +2493,7 @@
       "Income capitalization type": "Aina ya mtaji wa mapato",
       "DEFERRED INCOME RECOGNITION": "Utambuzi wa mapato ulioahirishwa",
       "Enable Buy down fee": "Washa ada ya Kununua chini",
+      "Merchant Buy down fee": "Mfanyabiashara Nunua ada ya chini",
       "Buy down fee calculation type": "Nunua aina ya hesabu ya ada ya chini",
       "Buy down fee strategy": "Nunua mkakati wa ada ya chini",
       "Buy down fee income type": "Nunua aina ya mapato ya chini",
@@ -3303,12 +3311,16 @@
       "Mandatory": "Lazima",
       "Voluntary": "Kwa hiari",
       "Write a note": "Andika dokezo",
-      "“Maker-Checker” principle requires every tasks": "Kanuni ya \"Mtengenezaji-Kikagua\" inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha."
+      "“Maker-Checker” principle requires every tasks": "Kanuni ya \"Mtengenezaji-Kikagua\" inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha.",
+      "Buy Down Fees": "Ada za Ununuzi"
     },
     "titles": {
       "Dashboard": "Dashibodi",
       "Home": "Nyumbani",
       "Login": "Ingia"
+    },
+    "messages": {
+      "No Data Found": "Hakuna Data Imepatikana"
     }
   },
   "languages": {

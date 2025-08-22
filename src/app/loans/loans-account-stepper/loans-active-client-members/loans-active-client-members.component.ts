@@ -65,13 +65,10 @@ export class LoansActiveClientMembersComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    // console.log("Active Client Members in LoansActiveClientMembersComponent:", this.activeClientMembers);
-
     this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
   }
 
   get isValid() {
-    // console.log("LoansActiveClientMembersComponent isValid:", this.selectedClientMembers?.selectedMembers?.reduce((acc: any, cur: any) => acc + (cur.principal ?? 0), 0) > 0);
     return (
       !this.activeClientMembers ||
       this.selectedClientMembers?.selectedMembers?.reduce((acc: any, cur: any) => acc + (cur.principal ?? 0), 0) > 0

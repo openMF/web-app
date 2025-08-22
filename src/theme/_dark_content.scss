@@ -8,6 +8,17 @@
     .login-container {
       background-color: #424242;
       box-shadow: 1px 1px 50px white;
+
+      .img-container {
+        max-width: 20rem;
+        padding: 0;
+        margin: 0;
+        content: url('../assets/images/white-mifos.png');
+      }
+
+      .logo-section {
+        margin: 4rem 0 3rem !important;
+      }
     }
 
     .cover {
@@ -238,7 +249,22 @@ body.dark-theme {
     }
   }
 
+  .copy-label {
+    color: white !important;
+
+    p {
+      color: white !important;
+    }
+  }
+
   .external-asset-owner-status {
     color: white;
+  }
+
+  // Home page logo styling for dark mode
+  mifosx-home {
+    [src*='mifos_lg-logo.png'] {
+      content: url('../assets/images/white-mifos.png');
+    }
   }
 }

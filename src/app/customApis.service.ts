@@ -82,6 +82,10 @@ export class LoansService {
   deleteLoanNote(loanId: string, noteId: string) {
     return this.http.delete(`/loans/${loanId}/notes/${noteId}`);
   }
+
+  getBuyDownFeeData(loanId: string): Observable<any> {
+    return this.http.get(`/loans/${loanId}/buydown-fees`);
+  }
 }
 
 @Injectable({

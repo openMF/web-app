@@ -54,6 +54,7 @@ export interface BuyDownFee {
   buyDownFeeCalculationType?: string;
   buyDownFeeStrategy?: string;
   buyDownFeeIncomeType?: string;
+  merchantBuyDownFee?: boolean;
 }
 
 export interface DeferredIncomeRecognition {

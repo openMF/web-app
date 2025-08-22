@@ -3,30 +3,30 @@
 
   <table mat-table [dataSource]="capitalizedIncomeData" *ngIf="capitalizedIncomeData.length > 0">
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-      <td mat-cell *matCellDef="let item">
+      <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+      <td mat-cell class="r-amount" *matCellDef="let item">
         {{ item.amount | formatNumber }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="amortizedAmount">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amortized Amount' | translate }}</th>
-      <td mat-cell *matCellDef="let item">
-        {{ item.amortizedAmount | formatNumber: '0.00' }}
+      <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Amortized Amount' | translate }}</th>
+      <td mat-cell class="r-amount" *matCellDef="let item">
+        {{ item.amortizedAmount | formatNumber }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="unrecognizedAmount">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Unrecognized Amount' | translate }}</th>
-      <td mat-cell *matCellDef="let item">
-        {{ item.unrecognizedAmount | formatNumber: '0.00' }}
+      <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Unrecognized Amount' | translate }}</th>
+      <td mat-cell class="r-amount" *matCellDef="let item">
+        {{ item.unrecognizedAmount | formatNumber }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="amountAdjustment">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Adjustment Amount' | translate }}</th>
-      <td mat-cell *matCellDef="let item">
-        {{ item.amountAdjustment | formatNumber: '0.00' }}
+      <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Adjustment Amount' | translate }}</th>
+      <td mat-cell class="r-amount" *matCellDef="let item">
+        {{ item.amountAdjustment | formatNumber: '-' }}
       </td>
     </ng-container>
 

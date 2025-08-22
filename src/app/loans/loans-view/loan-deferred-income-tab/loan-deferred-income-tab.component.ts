@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   MatCell,
@@ -51,16 +50,16 @@ export class LoanDeferredIncomeTabComponent {
   constructor(private route: ActivatedRoute) {
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
 
-    let capitalizedIncomeData: LoanCapitalizedIncomeData[] = [];
+    this.capitalizedIncomeData = [];
     this.route.parent.data.subscribe((data: { loanDeferredIncomeData: LoanDeferredIncomeData }) => {
-      capitalizedIncomeData = data.loanDeferredIncomeData.capitalizedIncomeData || [];
-      capitalizedIncomeData.forEach((item: LoanCapitalizedIncomeData) => {
-        item.amortizedAmount = item.amortizedAmount | 0;
-        item.unrecognizedAmount = item.unrecognizedAmount | 0;
-        item.amountAdjustment = item.amountAdjustment | 0;
-        this.capitalizedIncomeData.push(item);
+      data.loanDeferredIncomeData.capitalizedIncomeData.forEach((item: LoanCapitalizedIncomeData) => {
+        this.capitalizedIncomeData.push({
+          amount: item.amount,
+          amortizedAmount: item.amortizedAmount ?? 0,
+          unrecognizedAmount: item.unrecognizedAmount ?? 0,
+          amountAdjustment: item.amountAdjustment ?? 0
+        });
       });
-      console.log(this.capitalizedIncomeData);
     });
   }
 }

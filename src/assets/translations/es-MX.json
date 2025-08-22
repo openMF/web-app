@@ -920,7 +920,7 @@
       "External Asset Owner": "Propietario de activos externos",
       "External Services": "Servicios externos",
       "Family Member": "Miembro de la familia",
-      "Family Members": "Miembros de la familia",
+      "Family Members": "Referencias Personales y Familiares",
       "Fees to Specific Income Accounts": "Tarifas a cuentas de ingresos específicas",
       "Filter holidays": "Barra de búsqueda para filtrar días festivos según diferentes oficinas.",
       "Filter reports by name": "Barra de búsqueda para filtrar reportes por nombre.",
@@ -1164,7 +1164,14 @@
       "Grace On Principal": "Gracia al director",
       "Insert Installment": "Insertar cuota",
       "Interest Rate": "Tasa de interés",
-      "Principal Amount": "Monto principal"
+      "Principal Amount": "Monto principal",
+      "Buy Down Fees": "Tarifas de compra",
+      "Fee Amount": "Importe de la tarifa",
+      "Amortized Amount": "Importe amortizado",
+      "Not Yet Amortized Amount": "Monto aun no amortizado",
+      "Adjusted Amount": "Importe ajustado",
+      "Charged Off Amount": "Importe cancelado",
+      "Date": "Fecha"
     },
     "inputs": {
       "accounting": {
@@ -1606,7 +1613,7 @@
       "External Id": "Id externo",
       "External id": "Id externo",
       "event with entity name of": "evento con nombre de entidad de",
-      "FAMILY MEMBERS": "MIEMBROS DE LA FAMILIA",
+      "FAMILY MEMBERS": "REFERENCIAS PERSONALES Y FAMILIARES",
       "FCM End Point": "Punto final FCM",
       "Failure Count": "Número de Fallos",
       "Family Members": "Miembros de la familia",
@@ -2486,13 +2493,15 @@
       "Income capitalization type": "Tipo de capitalización de ingresos",
       "DEFERRED INCOME RECOGNITION": "INGRESOS DIFERIDOS",
       "Enable Buy down fee": "Habilitar comisión de compra anticipada",
+      "Merchant Buy down fee": "Tarifa de compra inicial del comerciante",
       "Buy down fee calculation type": "Tipo de cálculo de comisión de compra anticipada",
       "Buy down fee strategy": "Estrategia de comisión de compra anticipada",
       "Buy down fee income type": "Tipo de ingreso de comisión de compra anticipada",
       "Buy down fees": "Tarifas de compra anticipada",
       "Income from Buy down fees": "Ingresos por comisiones de compra inicial",
       "Buy down fee Expense": "Gastos por comisiones de compra inicial",
-      "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses"
+      "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses",
+      "Incorporation Date": "Fecha de Constitución"
     },
     "links": {
       "Community": "Comunidad",
@@ -3303,12 +3312,16 @@
       "Mandatory": "Obligatorio",
       "Voluntary": "Voluntario",
       "Write a note": "Escribe una nota",
-      "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa."
+      "“Maker-Checker” principle requires every tasks": "El principio \"Maker-Checker\" requiere que dos personas completen cada tarea para reducir la posibilidad de errores y uso indebido. Una persona inicia el proceso y la segunda lo completa.",
+      "Buy Down Fees": "Tarifas de compra"
     },
     "titles": {
       "Dashboard": "Tableros",
       "Home": "Inicio",
       "Login": "Acceso"
+    },
+    "messages": {
+      "No Data Found": "No se encontraron datos"
     }
   },
   "languages": {

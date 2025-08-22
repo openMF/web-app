@@ -303,7 +303,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(filterValue, 'checkerId');
+          this.applyFilter(filterValue.id, 'checkerId');
         })
       )
       .subscribe();
