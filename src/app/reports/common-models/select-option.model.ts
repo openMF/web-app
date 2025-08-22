@@ -3,7 +3,8 @@ export class SelectOption {
   id: number;
   name: string;
 
-  constructor(options: any[]) {
-    (this.id = options[0]), (this.name = options[1]);
+  constructor({ id, name }: { id: number; name: string }) {
+    this.id = id;
+    this.name = name;
   }
 }
