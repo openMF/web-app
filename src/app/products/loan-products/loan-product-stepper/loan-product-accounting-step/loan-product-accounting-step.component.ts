@@ -1,12 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import {
-  UntypedFormArray,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -21,7 +14,7 @@ import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { GlAccountSelectorComponent } from '../../../../shared/accounting/gl-account-selector/gl-account-selector.component';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTable,
@@ -158,9 +151,13 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
           if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {
             this.loanProductAccountingForm.patchValue({
               deferredIncomeLiabilityAccountId: accountingMappings.deferredIncomeLiabilityAccount.id,
-              buyDownExpenseAccountId: accountingMappings.buyDownExpenseAccount.id,
               incomeFromBuyDownAccountId: accountingMappings.incomeFromBuyDownAccount.id
             });
+            if (this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee) {
+              this.loanProductAccountingForm.patchValue({
+                buyDownExpenseAccountId: accountingMappings.buyDownExpenseAccount?.id
+              });
+            }
           }
         }
       /* falls through */
@@ -621,10 +618,12 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
           this.loanProductAccountingForm.removeControl('incomeFromCapitalizationAccountId');
         }
         if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {
-          this.loanProductAccountingForm.addControl(
-            'buyDownExpenseAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
+          if (this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee) {
+            this.loanProductAccountingForm.addControl(
+              'buyDownExpenseAccountId',
+              new UntypedFormControl('', Validators.required)
+            );
+          }
           this.loanProductAccountingForm.addControl(
             'incomeFromBuyDownAccountId',
             new UntypedFormControl('', Validators.required)

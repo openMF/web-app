@@ -219,6 +219,17 @@
           {{ 'labels.inputs.Deferred income' | translate }}
         </a>
       </ng-container>
+      <ng-container *ngIf="loanDetailsData.enableBuyDownFee">
+        <a
+          mat-tab-link
+          [routerLink]="['./buy-down-fees']"
+          routerLinkActive
+          #buyDownFees="routerLinkActive"
+          [active]="buyDownFees.isActive"
+        >
+          {{ 'labels.heading.Buy Down Fees' | translate }}
+        </a>
+      </ng-container>
       <ng-container *ngIf="loanDetailsData.status.active">
         <a
           mat-tab-link

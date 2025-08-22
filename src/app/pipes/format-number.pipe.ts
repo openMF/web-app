@@ -10,7 +10,7 @@ export class FormatNumberPipe implements PipeTransform {
   ) {}
 
   transform(value: string | number, defaultValue: any): string {
-    if (!value) {
+    if (value === undefined) {
       return defaultValue ? defaultValue : '';
     }
     const decimals = this.settingsService.decimals;

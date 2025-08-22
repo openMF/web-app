@@ -1,0 +1,60 @@
+<div class="container">
+  <h3>{{ 'labels.heading.Buy Down Fees' | translate }}</h3>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    <mat-spinner diameter="30"></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <div *ngIf="buyDownFeeData.length === 0" class="no-data">
+      {{ 'labels.messages.No Data Found' | translate }}
+    </div>
+
+    <table mat-table [dataSource]="buyDownFeeData" *ngIf="buyDownFeeData.length > 0">
+      <ng-container matColumnDef="buyDownFeeDate">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Date' | translate }}</th>
+        <td mat-cell *matCellDef="let item">
+          {{ item.buyDownFeeDate | dateFormat }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="buyDownFeeAmount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Fee Amount' | translate }}</th>
+        <td mat-cell class="r-amount" *matCellDef="let item">
+          {{ item.buyDownFeeAmount | formatNumber: '0.00' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amortizedAmount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Amortized Amount' | translate }}</th>
+        <td mat-cell class="r-amount" *matCellDef="let item">
+          {{ item.amortizedAmount | formatNumber: '0.00' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="notYetAmortizedAmount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Not Yet Amortized Amount' | translate }}</th>
+        <td mat-cell class="r-amount" *matCellDef="let item">
+          {{ item.notYetAmortizedAmount | formatNumber: '0.00' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="adjustedAmount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Adjusted Amount' | translate }}</th>
+        <td mat-cell class="r-amount" *matCellDef="let item">
+          {{ item.adjustedAmount | formatNumber: '0.00' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="chargedOffAmount">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Charged Off Amount' | translate }}</th>
+        <td mat-cell class="r-amount" *matCellDef="let item">
+          {{ item.chargedOffAmount | formatNumber: '0.00' }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="buyDownFeeColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: buyDownFeeColumns"></tr>
+    </table>
+  </div>
+</div>

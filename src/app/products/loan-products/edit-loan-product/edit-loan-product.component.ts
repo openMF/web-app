@@ -20,7 +20,9 @@ import {
   AdvancedPaymentStrategy,
   DeferredIncomeRecognition,
   CreditAllocation,
-  PaymentAllocation
+  PaymentAllocation,
+  CapitalizedIncome,
+  BuyDownFee
 } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { Accounting } from 'app/core/utils/accounting';
 import { LoanProductInterestRefundStepComponent } from '../loan-product-stepper/loan-product-interest-refund-step/loan-product-interest-refund-step.component';
@@ -119,13 +121,13 @@ export class EditLoanProductComponent implements OnInit {
     this.accountingRuleData = this.accounting.getAccountingRulesForLoans();
     this.buildAdvancedPaymentAllocation();
     this.advancePaymentStrategy(this.loanProductAndTemplate.transactionProcessingStrategyCode);
+    if (this.deferredIncomeRecognition == null) {
+      this.deferredIncomeRecognition = {};
+    }
     if (this.isAdvancedPaymentStrategy) {
       this.paymentAllocation = this.loanProductAndTemplate.paymentAllocation;
       this.creditAllocation = this.loanProductAndTemplate.creditAllocation;
       this.supportedInterestRefundTypes = this.loanProductAndTemplate.supportedInterestRefundTypes;
-      if (this.deferredIncomeRecognition == null) {
-        this.deferredIncomeRecognition = {};
-      }
       if (this.loanProductAndTemplate.enableIncomeCapitalization) {
         this.deferredIncomeRecognition.capitalizedIncome = {
           enableIncomeCapitalization: true,
@@ -143,7 +145,8 @@ export class EditLoanProductComponent implements OnInit {
           enableBuyDownFee: true,
           buyDownFeeCalculationType: this.loanProductAndTemplate.buyDownFeeCalculationType.id,
           buyDownFeeStrategy: this.loanProductAndTemplate.buyDownFeeStrategy.id,
-          buyDownFeeIncomeType: this.loanProductAndTemplate.buyDownFeeIncomeType.id
+          buyDownFeeIncomeType: this.loanProductAndTemplate.buyDownFeeIncomeType.id,
+          merchantBuyDownFee: this.loanProductAndTemplate.merchantBuyDownFee
         };
       } else {
         this.deferredIncomeRecognition.buyDownFee = {
@@ -177,6 +180,28 @@ export class EditLoanProductComponent implements OnInit {
 
   setViewChildForm(viewChildForm: UntypedFormGroup): void {
     this.loanIncomeCapitalizationForm = viewChildForm;
+    const formValues: any = this.loanIncomeCapitalizationForm.getRawValue();
+    const capitalizedIncome: CapitalizedIncome = formValues.enableIncomeCapitalization
+      ? {
+          enableIncomeCapitalization: true,
+          capitalizedIncomeCalculationType: formValues.capitalizedIncomeCalculationType,
+          capitalizedIncomeStrategy: formValues.capitalizedIncomeStrategy,
+          capitalizedIncomeType: formValues.capitalizedIncomeType
+        }
+      : { enableIncomeCapitalization: false };
+    const buyDownFee: BuyDownFee = formValues.enableBuyDownFee
+      ? {
+          enableBuyDownFee: true,
+          buyDownFeeCalculationType: formValues.buyDownFeeCalculationType,
+          buyDownFeeStrategy: formValues.buyDownFeeStrategy,
+          buyDownFeeIncomeType: formValues.buyDownFeeIncomeType,
+          merchantBuyDownFee: formValues.merchantBuyDownFee
+        }
+      : { enableBuyDownFee: false };
+    this.setDeferredIncomeRecognition({
+      capitalizedIncome: capitalizedIncome,
+      buyDownFee: buyDownFee
+    });
   }
 
   advancePaymentStrategy(value: string): void {
@@ -294,6 +319,7 @@ export class EditLoanProductComponent implements OnInit {
               this.deferredIncomeRecognition.buyDownFee.buyDownFeeCalculationType;
             loanProduct['buyDownFeeStrategy'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeStrategy;
             loanProduct['buyDownFeeIncomeType'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeIncomeType;
+            loanProduct['merchantBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee;
           }
         }
       }

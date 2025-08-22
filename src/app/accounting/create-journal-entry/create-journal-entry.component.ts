@@ -196,17 +196,15 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
     if (!journalEntry['externalAssetOwner']) {
       delete journalEntry['externalAssetOwner'];
     }
-    this.journalEntriesService
-      .createGLJournalEntry({ journalEntryCommand: journalEntry })
-      .subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../transactions/view',
-            response.transactionId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+    this.journalEntriesService.createGLJournalEntry(journalEntry).subscribe((response) => {
+      this.router.navigate(
+        [
+          '../transactions/view',
+          response.transactionId
+        ],
+        { relativeTo: this.route }
+      );
+    });
   }
 
   /**

@@ -1169,7 +1169,14 @@
       "Grace On Principal": "Grace On Principal",
       "Insert Installment": "Insert Installment",
       "Interest Rate": "Interest Rate",
-      "Principal Amount": "Principal Amount"
+      "Principal Amount": "Principal Amount",
+      "Buy Down Fees": "Buy Down Fees",
+      "Fee Amount": "Fee Amount",
+      "Amortized Amount": "Amortized Amount",
+      "Not Yet Amortized Amount": "Not Yet Amortized Amount",
+      "Adjusted Amount": "Adjusted Amount",
+      "Charged Off Amount": "Charged Off Amount",
+      "Date": "Date"
     },
     "inputs": {
       "accounting": {
@@ -2493,6 +2500,7 @@
       "Income capitalization type": "Income capitalization type",
       "DEFERRED INCOME RECOGNITION": "DEFERRED INCOME RECOGNITION",
       "Enable Buy down fee": "Enable Buy down fee",
+      "Merchant Buy down fee": "Merchant Buy down fee",
       "Buy down fee calculation type": "Buy down fee calculation type",
       "Buy down fee strategy": "Buy down fee strategy",
       "Buy down fee income type": "Buy down fee income type",
@@ -3408,12 +3416,16 @@
       "Mandatory": "Mandatory",
       "Voluntary": "Voluntary",
       "Write a note": "Write a note",
-      "“Maker-Checker” principle requires every tasks": "The “Maker-Checker” principle requires every tasks to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it."
+      "“Maker-Checker” principle requires every tasks": "The “Maker-Checker” principle requires every tasks to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.",
+      "Buy Down Fees": "Buy Down Fees"
     },
     "titles": {
       "Dashboard": "Dashboard",
       "Home": "Home",
       "Login": "Login"
+    },
+    "messages": {
+      "No Data Found": "No Data Found"
     }
   },
   "languages": {

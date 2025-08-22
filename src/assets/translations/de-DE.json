@@ -1165,7 +1165,14 @@
       "Grace On Principal": "Grace On Principal",
       "Insert Installment": "Ratenzahlung einfügen",
       "Interest Rate": "Zinssatz",
-      "Principal Amount": "Hauptbetrag"
+      "Principal Amount": "Hauptbetrag",
+      "Buy Down Fees": "Kaufgebühren",
+      "Fee Amount": "Gebührenbetrag",
+      "Amortized Amount": "Amortisierter Betrag",
+      "Not Yet Amortized Amount": "Noch nicht amortisierter Betrag",
+      "Adjusted Amount": "Angepasster Betrag",
+      "Charged Off Amount": "Abgeschriebener Betrag",
+      "Date": "Datum"
     },
     "inputs": {
       "accounting": {
@@ -2486,6 +2493,7 @@
       "Income capitalization type": "Art der Ertragskapitalisierung",
       "DEFERRED INCOME RECOGNITION": "Erfassung abgegrenzter Erträge",
       "Enable Buy down fee": "Buy-Down-Gebühr aktivieren",
+      "Merchant Buy down fee": "Händler-Buy-Down-Gebühr",
       "Buy down fee calculation type": "Berechnungsart der Buy-Down-Gebühr",
       "Buy down fee strategy": "Strategie für Buy-Down-Gebühr",
       "Buy down fee income type": "Einnahmeart der Buy-Down-Gebühr",
@@ -3302,12 +3310,16 @@
       "Mandatory": "Obligatorisch",
       "Voluntary": "Freiwillig",
       "Write a note": "Schreib eine Notitz",
-      "“Maker-Checker” principle requires every tasks": "Das „Maker-Checker“-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab."
+      "“Maker-Checker” principle requires every tasks": "Das „Maker-Checker“-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab.",
+      "Buy Down Fees": "Kaufgebühren"
     },
     "titles": {
       "Dashboard": "Armaturenbrett",
       "Home": "Heim",
       "Login": "Anmeldung"
+    },
+    "messages": {
+      "No Data Found": "Keine Daten gefunden"
     }
   },
   "languages": {

@@ -357,20 +357,16 @@ export class LoansAccountTermsStepComponent implements OnInit, OnChanges {
     this.setLoanTermListener();
 
     this.loansAccountTermsForm.removeControl('maxOutstandingLoanBalance');
-    const maxOutstandingLoanBalance =
-      this.loansAccountTermsData && this.loansAccountTermsData.maxOutstandingLoanBalance != null
-        ? this.loansAccountTermsData.maxOutstandingLoanBalance
-        : '';
     if (this.allowAddDisbursementDetails()) {
       this.loansAccountTermsForm.removeControl('maxOutstandingLoanBalance');
       this.loansAccountTermsForm.addControl(
         'maxOutstandingLoanBalance',
-        new UntypedFormControl(maxOutstandingLoanBalance, Validators.required)
+        new UntypedFormControl(this.loansAccountTermsData.maxOutstandingLoanBalance, Validators.required)
       );
     } else {
       this.loansAccountTermsForm.addControl(
         'maxOutstandingLoanBalance',
-        new UntypedFormControl(maxOutstandingLoanBalance)
+        new UntypedFormControl(this.loansAccountTermsData.maxOutstandingLoanBalance)
       );
     }
   }

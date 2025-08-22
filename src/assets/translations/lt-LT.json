@@ -1165,7 +1165,14 @@
       "Grace On Principal": "Grace On Principal",
       "Insert Installment": "Įdėkite įmoką",
       "Interest Rate": "Palūkanų norma",
-      "Principal Amount": "Pagrindinė suma"
+      "Principal Amount": "Pagrindinė suma",
+      "Buy Down Fees": "Išpirkimo mokesčiai",
+      "Fee Amount": "Mokesčio suma",
+      "Amortized Amount": "Amortizuota suma",
+      "Not Yet Amortized Amount": "Dar neamortizuota suma",
+      "Adjusted Amount": "Koreguota suma",
+      "Charged Off Amount": "Nurašyta suma",
+      "Date": "Data"
     },
     "inputs": {
       "accounting": {
@@ -2486,6 +2493,7 @@
       "Income capitalization type": "Pajamų kapitalizacijos tipas",
       "DEFERRED INCOME RECOGNITION": "Atidėtųjų pajamų pripažinimas",
       "Enable Buy down fee": "Įjungti supirkimo mokestį",
+      "Merchant Buy down fee": "Prekybininko pirkimo mokestis",
       "Buy down fee calculation type": "Supirkimo mokesčio skaičiavimo tipas",
       "Buy down fee strategy": "Supirkimo mokesčio strategija",
       "Buy down fee income type": "Supirkimo mokesčio pajamų tipas",
@@ -3303,12 +3311,16 @@
       "Mandatory": "Privaloma",
       "Voluntary": "Savanoriškas",
       "Write a note": "Parašykite pastabą",
-      "“Maker-Checker” principle requires every tasks": "„Maker-Checker“ principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia."
+      "“Maker-Checker” principle requires every tasks": "„Maker-Checker“ principas reikalauja, kad kiekvieną užduotį atliktų du žmonės, kad būtų sumažinta klaidų ir netinkamo naudojimo galimybė. Vienas asmuo pradeda procesą, o antrasis jį užbaigia.",
+      "Buy Down Fees": "Išpirkimo mokesčiai"
     },
     "titles": {
       "Dashboard": "Prietaisų skydelis",
       "Home": "Namai",
       "Login": "Prisijungti"
+    },
+    "messages": {
+      "No Data Found": "Duomenų nerasta"
     }
   },
   "languages": {

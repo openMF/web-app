@@ -17,6 +17,8 @@ import { LoanProducts } from '../loan-products';
 import {
   AdvancedPaymentAllocation,
   AdvancedPaymentStrategy,
+  BuyDownFee,
+  CapitalizedIncome,
   DeferredIncomeRecognition,
   PaymentAllocation
 } from '../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
@@ -159,7 +161,8 @@ export class CreateLoanProductComponent implements OnInit {
           enableBuyDownFee: true,
           buyDownFeeCalculationType: this.loanProductsTemplate.buyDownFeeCalculationTypeOptions[0],
           buyDownFeeStrategy: this.loanProductsTemplate.buyDownFeeStrategyOptions[0],
-          buyDownFeeIncomeType: this.loanProductsTemplate.buyDownFeeIncomeTypeOptions[0]
+          buyDownFeeIncomeType: this.loanProductsTemplate.buyDownFeeIncomeTypeOptions[0],
+          merchantBuyDownFee: true
         };
       } else {
         this.deferredIncomeRecognition.buyDownFee = {
@@ -195,6 +198,28 @@ export class CreateLoanProductComponent implements OnInit {
 
   setViewChildForm(viewChildForm: UntypedFormGroup): void {
     this.loanDeferredIncomeRecognitionForm = viewChildForm;
+    const formValues: any = this.loanDeferredIncomeRecognitionForm.getRawValue();
+    const capitalizedIncome: CapitalizedIncome = formValues.enableIncomeCapitalization
+      ? {
+          enableIncomeCapitalization: true,
+          capitalizedIncomeCalculationType: formValues.capitalizedIncomeCalculationType,
+          capitalizedIncomeStrategy: formValues.capitalizedIncomeStrategy,
+          capitalizedIncomeType: formValues.capitalizedIncomeType
+        }
+      : { enableIncomeCapitalization: false };
+    const buyDownFee: BuyDownFee = formValues.enableBuyDownFee
+      ? {
+          enableBuyDownFee: true,
+          buyDownFeeCalculationType: formValues.buyDownFeeCalculationType,
+          buyDownFeeStrategy: formValues.buyDownFeeStrategy,
+          buyDownFeeIncomeType: formValues.buyDownFeeIncomeType,
+          merchantBuyDownFee: formValues.merchantBuyDownFee
+        }
+      : { enableBuyDownFee: false };
+    this.setDeferredIncomeRecognition({
+      capitalizedIncome: capitalizedIncome,
+      buyDownFee: buyDownFee
+    });
   }
 
   get loanProductSettingsForm() {
@@ -257,6 +282,7 @@ export class CreateLoanProductComponent implements OnInit {
             this.deferredIncomeRecognition.buyDownFee.buyDownFeeCalculationType;
           loanProduct['buyDownFeeStrategy'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeStrategy;
           loanProduct['buyDownFeeIncomeType'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeIncomeType;
+          loanProduct['merchantBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee;
         }
       }
     }

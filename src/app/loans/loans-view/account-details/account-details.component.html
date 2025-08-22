@@ -123,6 +123,11 @@
       <span class="flex-50"> {{ loanDetails.buyDownFeeIncomeType?.value | translateKey: 'catalogs' }} </span>
     </div>
 
+    <div class="flex-fill layout-row" *ngIf="loanDetails.enableBuyDownFee">
+      <span class="flex-50"> {{ 'labels.inputs.Merchant Buy down fee' | translate }}</span>
+      <span class="flex-50"> {{ loanDetails.merchantBuyDownFee | yesNo }} </span>
+    </div>
+
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Grace: On Principal Payment' | translate }}</span>
       <span class="flex-50"> {{ loanDetails.graceOnPrincipalPayment }} </span>
