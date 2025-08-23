@@ -5,7 +5,7 @@ import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { forkJoin } from 'rxjs';
 
 /** Custom Services */
-import { NotificationsService } from 'app/notifications/notifications.service';
+import { NotificationService } from '@fineract/client';
 import { environment } from '../../../environments/environment';
 import { MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -65,12 +65,13 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
   };
 
   /**
-   * @param {NotificationsService} notificationsService Notifications Service
+   * @param {NotificationService} notificationService Notifications Service
    */
-  constructor(public notificationsService: NotificationsService) {
+  constructor(public notificationService: NotificationService) {
     forkJoin([
-      this.notificationsService.getNotifications(true, 9),
-      this.notificationsService.getNotifications(false, 9)]).subscribe((response: any[]) => {
+      this.notificationService.getAllNotifications({ isRead: true, limit: 9 }),
+      this.notificationService.getAllNotifications({ isRead: false, limit: 9 })
+    ]).subscribe((response: any[]) => {
       this.readNotifications = response[0].pageItems;
       this.unreadNotifications = response[1].pageItems;
       this.setNotifications();
@@ -101,7 +102,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * Recursively fetch unread notifications.
    */
   fetchUnreadNotifications() {
-    this.notificationsService.getNotifications(false, 9).subscribe((response: any) => {
+    this.notificationService.getAllNotifications({ isRead: false, limit: 9 }).subscribe((response: any) => {
       this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
       this.setNotifications();
     });
@@ -116,7 +117,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    */
   menuClosed() {
     // Update the server for read notifications.
-    this.notificationsService.updateNotifications().subscribe(() => {});
+    this.notificationService.getAllNotifications({ isRead: true }).subscribe(() => {});
     // Update locally for read notifications.
     this.readNotifications = this.unreadNotifications.concat(this.readNotifications);
     this.unreadNotifications = [];
@@ -127,7 +128,7 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * Function to test notifications in case of faulty backend.
    */
   mockNotifications() {
-    this.notificationsService.getMockUnreadNotification().subscribe((response: any) => {
+    this.notificationService.getAllNotifications({ isRead: false, limit: 9 }).subscribe((response: any) => {
       this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
       this.setNotifications();
     });

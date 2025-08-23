@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { NotificationsService } from './notifications.service';
+import { NotificationService } from '@fineract/client';
 
 /**
  * Notifications data resolver.
@@ -13,15 +13,18 @@ import { NotificationsService } from './notifications.service';
 @Injectable()
 export class NotificationsResolver {
   /**
-   * @param {NotificationsService} notificationsService Notifications service.
+   * @param {NotificationService} notificationService Notifications service.
    */
-  constructor(private notificationsService: NotificationsService) {}
+  constructor(private notificationService: NotificationService) {}
 
   /**
    * Returns the Notifications data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.notificationsService.getNotifications(true, 50);
+    return this.notificationService.getAllNotifications({
+      isRead: true,
+      limit: 50
+    });
   }
 }
