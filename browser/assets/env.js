@@ -35,20 +35,13 @@
   // Time in milliseconds for Session idle timeout, default 300000 seconds
   window['env']['sessionIdleTimeout'] = '0';
 
-  // OAuth Server Enabled
+  // OAuth Server Enabled  
   window['env']['oauthServerEnabled'] = '';
 
-  // OAuth Server URL
+  // OAuth Server URL  
   window['env']['oauthServerUrl'] = '';
 
-  // OAuth Client Id
+  // OAuth Client Id  
   window['env']['oauthAppId'] = '';
-
-  // OIDC Plugin Environment variables
-  window['env']['oidcServerEnabled'] = $FINERACT_PLUGIN_OIDC_ENABLED;
-  window['env']['oidcBaseUrl']       = $FINERACT_PLUGIN_OIDC_BASE_URL;
-  window['env']['oidcClientId']      = $FINERACT_PLUGIN_OIDC_CLIENT_ID;
-  window['env']['oidcApiUrl']        = $FINERACT_PLUGIN_OIDC_API_URL;
-  window['env']['oidcFrontUrl']      = $FINERACT_PLUGIN_OIDC_FRONTEND_URL;
 
 })(this);
