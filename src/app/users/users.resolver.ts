@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { UsersService } from './users.service';
+import { UsersService } from '@fineract/client';
 
 /**
  * Users data resolver.
@@ -22,6 +22,6 @@ export class UsersResolver {
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.usersService.getUsers();
+    return this.usersService.retrieveAll41();
   }
 }

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { UsersService } from '../users.service';
+import { UsersService, StaffService } from '@fineract/client';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -36,12 +36,14 @@ export class EditUserComponent implements OnInit {
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {UsersService} UsersService Users Service.
+   * @param {StaffService} staffService Staff Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private usersService: UsersService,
+    private staffService: StaffService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -105,7 +107,7 @@ export class EditUserComponent implements OnInit {
    */
   officeChanged(officeId: number) {
     this.staffData = [];
-    this.usersService.getStaff(officeId).subscribe((staff: any) => {
+    this.staffService.retrieveAll16({ officeId }).subscribe((staff: any) => {
       this.staffData = staff;
     });
   }
@@ -116,7 +118,7 @@ export class EditUserComponent implements OnInit {
    */
   submit() {
     const editedUser = this.editUserForm.value;
-    this.usersService.editUser(this.userData.id, editedUser).subscribe((response: any) => {
+    this.usersService.update26(this.userData.id, editedUser).subscribe((response: any) => {
       this.router.navigate(
         [
           '../../',
