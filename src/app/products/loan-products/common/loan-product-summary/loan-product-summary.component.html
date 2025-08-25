@@ -931,7 +931,7 @@
       <span class="flex-60">{{ loanProduct.buyDownFeeIncomeType?.value | translateKey: 'catalogs' }}</span>
     </div>
 
-    <div class="flex-100 layout-row">
+    <div class="flex-100 layout-row" *ngIf="loanProduct.enableBuyDownFee">
       <span class="flex-40">{{ 'labels.inputs.Merchant Buy down fee' | translate }}:</span>
       <span class="flex-60">{{ loanProduct.merchantBuyDownFee | yesNo }}</span>
     </div>

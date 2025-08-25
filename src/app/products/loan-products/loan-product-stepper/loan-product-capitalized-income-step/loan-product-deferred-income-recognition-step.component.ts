@@ -1,16 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
-import {
-  DeferredIncomeRecognition,
-  CapitalizedIncome,
-  BuyDownFee
-} from '../loan-product-payment-strategy-step/payment-allocation-model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { DeferredIncomeRecognition } from '../loan-product-payment-strategy-step/payment-allocation-model';
 import { StringEnumOptionData } from 'app/shared/models/option-data.model';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -93,7 +83,7 @@ export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit
 
   ngOnInit(): void {
     this.enableIncomeCapitalization = this.deferredIncomeRecognition.capitalizedIncome
-      ? this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization
+      ? this.deferredIncomeRecognition.capitalizedIncome?.enableIncomeCapitalization
       : false;
     this.enableBuyDownFee = this.deferredIncomeRecognition.buyDownFee
       ? this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee
@@ -102,9 +92,9 @@ export class LoanProductDeferredIncomeRecognitionStepComponent implements OnInit
       this.loanDeferredIncomeRecognitionForm.patchValue({
         enableIncomeCapitalization: this.enableIncomeCapitalization,
         capitalizedIncomeCalculationType:
-          this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType,
-        capitalizedIncomeStrategy: this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy,
-        capitalizedIncomeType: this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType
+          this.deferredIncomeRecognition.capitalizedIncome?.capitalizedIncomeCalculationType,
+        capitalizedIncomeStrategy: this.deferredIncomeRecognition.capitalizedIncome?.capitalizedIncomeStrategy,
+        capitalizedIncomeType: this.deferredIncomeRecognition.capitalizedIncome?.capitalizedIncomeType
       });
     }
     if (this.enableBuyDownFee) {

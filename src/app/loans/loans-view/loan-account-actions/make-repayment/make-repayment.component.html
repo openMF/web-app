@@ -68,6 +68,15 @@
             <input matInput formControlName="externalId" />
           </mat-form-field>
 
+          <mat-form-field *ngIf="isCapitalizedIncome()">
+            <mat-label>{{ 'labels.inputs.Classification' | translate }}</mat-label>
+            <mat-select formControlName="classificationId">
+              <mat-option *ngFor="let classificationOption of classificationOptions" [value]="classificationOption.id">
+                {{ classificationOption.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Payment Type' | translate }}</mat-label>
             <mat-select formControlName="paymentTypeId">

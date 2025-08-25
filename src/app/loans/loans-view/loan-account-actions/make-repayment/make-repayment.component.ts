@@ -47,6 +47,8 @@ export class MakeRepaymentComponent implements OnInit {
 
   command: string | null = null;
 
+  classificationOptions: any[] = [];
+
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoanTransactionsService} loanTransactions Loan Transactions Service.
@@ -104,6 +106,7 @@ export class MakeRepaymentComponent implements OnInit {
           Validators.min(0.001),
           Validators.max(this.dataObject.amount)])
       );
+      this.repaymentLoanForm.addControl('classificationId', new UntypedFormControl(''));
     } else {
       this.repaymentLoanForm.addControl(
         'transactionAmount',
@@ -116,6 +119,7 @@ export class MakeRepaymentComponent implements OnInit {
 
   setRepaymentLoanDetails() {
     this.paymentTypes = this.dataObject.paymentTypeOptions;
+    this.classificationOptions = this.dataObject.classificationOptions;
     this.repaymentLoanForm.patchValue({
       transactionAmount: this.dataObject.amount
     });

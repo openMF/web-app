@@ -33,6 +33,12 @@
         </span></span
       >
     </div>
+    <div class="flex-fill" *ngIf="data.loanData?.delinquent?.availableDisbursementAmountWithOverApplied !== undefined">
+      <span class="flex-50">{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}:</span>
+      <span class="flex-50">{{
+        data.loanData.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
+      }}</span>
+    </div>
   </div>
 </div>
 

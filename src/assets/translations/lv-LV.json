@@ -2500,7 +2500,8 @@
       "Buy down fees": "Iepirkuma maksas",
       "Income from Buy down fees": "Ienākumi no akciju izpirkšanas komisijas maksām",
       "Buy down fee Expense": "Akciju izpirkšanas komisijas izdevumi",
-      "Skip Interest Refund Transaction Posting": "Izlaist procentu atmaksas ierakstu"
+      "Skip Interest Refund Transaction Posting": "Izlaist procentu atmaksas ierakstu",
+      "Available Disbursement Amount (with Over Applied)": "Pieejamā izmaksas summa (ar pārsniegumu)"
     },
     "links": {
       "Community": "kopiena",

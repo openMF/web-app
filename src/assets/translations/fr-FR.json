@@ -2500,7 +2500,8 @@
       "Buy down fees": "Frais d'achat",
       "Income from Buy down fees": "Revenus des commissions de rachat",
       "Buy down fee Expense": "Charges des commissions de rachat",
-      "Skip Interest Refund Transaction Posting": "Ignorer la comptabilisation du remboursement des intérêts"
+      "Skip Interest Refund Transaction Posting": "Ignorer la comptabilisation du remboursement des intérêts",
+      "Available Disbursement Amount (with Over Applied)": "Montant de décaissement disponible (avec sur-application)"
     },
     "links": {
       "Community": "Communauté",

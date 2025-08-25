@@ -2500,7 +2500,8 @@
       "Buy down fees": "Tarifas de compra anticipada",
       "Income from Buy down fees": "Ingresos por comisiones de compra inicial",
       "Buy down fee Expense": "Gastos por comisiones de compra inicial",
-      "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses"
+      "Skip Interest Refund Transaction Posting": "Omitir el registro de la devolución de intereses",
+      "Available Disbursement Amount (with Over Applied)": "Monto disponible para desembolso (con sobreaplicación)"
     },
     "links": {
       "Community": "Comunidad",
