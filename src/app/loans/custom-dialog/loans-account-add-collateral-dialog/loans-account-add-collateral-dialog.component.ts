@@ -7,7 +7,12 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -80,7 +85,8 @@ export class LoansAccountAddCollateralDialogComponent implements OnInit {
     this.addCollateralForm.controls.quantity.valueChanges.subscribe((quantity: any) => {
       this.addCollateralForm.patchValue({
         totalValue: this.collateralData.basePrice * quantity,
-        totalCollateralValue: (this.collateralData.basePrice * this.collateralData.pctToBase * quantity) / 100
+        totalCollateralValue:
+          (this.collateralData.basePrice * this.collateralData.pctToBase * quantity) / 100
       });
     });
   }

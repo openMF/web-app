@@ -90,7 +90,10 @@ export class ExportTransactionsComponent implements OnInit {
         this.transactionsReportForm.value.fromDate,
         this.settingsService.dateFormat
       ),
-      R_endDate: this.dateUtils.formatDate(this.transactionsReportForm.value.toDate, this.settingsService.dateFormat),
+      R_endDate: this.dateUtils.formatDate(
+        this.transactionsReportForm.value.toDate,
+        this.settingsService.dateFormat
+      ),
       R_savingsAccountId: this.savingsAccountId
     };
     this.reportsService

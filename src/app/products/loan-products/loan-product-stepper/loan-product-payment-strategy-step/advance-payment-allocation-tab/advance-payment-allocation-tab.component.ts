@@ -138,7 +138,9 @@ export class AdvancePaymentAllocationTabComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
         deleteContext:
-          this.translateService.instant('labels.dialogContext.the Transaction Type') + ' ' + transaction.value
+          this.translateService.instant('labels.dialogContext.the Transaction Type') +
+          ' ' +
+          transaction.value
       }
     });
     dialogRef.afterClosed().subscribe((response: any) => {

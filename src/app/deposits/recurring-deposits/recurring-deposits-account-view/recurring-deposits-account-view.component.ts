@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLinkActive,
+  RouterLink,
+  RouterOutlet
+} from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -94,22 +100,24 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     public dialog: MatDialog,
     private translateService: TranslateService
   ) {
-    this.route.data.subscribe((data: { recurringDepositsAccountData: any; savingsDatatables: any }) => {
-      this.recurringDepositsAccountData = data.recurringDepositsAccountData;
-      this.charges = this.recurringDepositsAccountData.charges;
-      this.savingsDatatables = data.savingsDatatables;
-      this.currency = this.recurringDepositsAccountData.currency;
-      this.isprematureAllowed = data.recurringDepositsAccountData.maturityDate != null;
-      if (this.router.url.includes('clients')) {
-        this.entityType = 'Client';
-      } else if (this.router.url.includes('groups')) {
-        this.entityType = 'Group';
-      } else if (this.router.url.includes('centers')) {
-        this.entityType = 'Center';
+    this.route.data.subscribe(
+      (data: { recurringDepositsAccountData: any; savingsDatatables: any }) => {
+        this.recurringDepositsAccountData = data.recurringDepositsAccountData;
+        this.charges = this.recurringDepositsAccountData.charges;
+        this.savingsDatatables = data.savingsDatatables;
+        this.currency = this.recurringDepositsAccountData.currency;
+        this.isprematureAllowed = data.recurringDepositsAccountData.maturityDate != null;
+        if (this.router.url.includes('clients')) {
+          this.entityType = 'Client';
+        } else if (this.router.url.includes('groups')) {
+          this.entityType = 'Group';
+        } else if (this.router.url.includes('centers')) {
+          this.entityType = 'Center';
+        }
+        const status: any = data.recurringDepositsAccountData.status;
+        this.showTransactions = status.id >= 300;
       }
-      const status: any = data.recurringDepositsAccountData.status;
-      this.showTransactions = status.id >= 300;
-    });
+    );
   }
 
   ngOnInit() {
@@ -122,14 +130,20 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
   setConditionalButtons() {
     const status = this.recurringDepositsAccountData.status.value;
     this.buttonConfig = new RecurringDepositsButtonsConfiguration(status);
-    if (this.recurringDepositsAccountData.clientId && this.recurringDepositsAccountData.status.value === 'Matured') {
+    if (
+      this.recurringDepositsAccountData.clientId &&
+      this.recurringDepositsAccountData.status.value === 'Matured'
+    ) {
       this.buttonConfig.addOption({
         name: 'Transfer Funds',
         taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
       });
     }
 
-    if (this.recurringDepositsAccountData.charges && this.recurringDepositsAccountData.status.value === 'Matured') {
+    if (
+      this.recurringDepositsAccountData.charges &&
+      this.recurringDepositsAccountData.status.value === 'Matured'
+    ) {
       this.charges.forEach((element: any) => {
         if (element.name === 'Annual fee - INR') {
           this.buttonConfig.addOption({
@@ -140,7 +154,10 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
       });
     }
 
-    if (this.recurringDepositsAccountData.clientId && this.recurringDepositsAccountData.status.value === 'Active') {
+    if (
+      this.recurringDepositsAccountData.clientId &&
+      this.recurringDepositsAccountData.status.value === 'Active'
+    ) {
       if (this.recurringDepositsAccountData.allowWithdrawal === true) {
         this.buttonConfig.addOption({
           name: 'Withdrawal',
@@ -190,7 +207,9 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
     const clientId = this.recurringDepositsAccountData.clientId;
     const url: string = this.router.url;
     this.router
-      .navigateByUrl(`/clients/${clientId}/recurring-deposits-accounts`, { skipLocationChange: true })
+      .navigateByUrl(`/clients/${clientId}/recurring-deposits-accounts`, {
+        skipLocationChange: true
+      })
       .then(() => this.router.navigate([url]));
   }
 
@@ -239,7 +258,9 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    */
   private deleteRecurringDepositsAccount() {
     const deleteRecurringDepositsAccountDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `Recurring deposit account with id: ${this.recurringDepositsAccountData.id}` }
+      data: {
+        deleteContext: `Recurring deposit account with id: ${this.recurringDepositsAccountData.id}`
+      }
     });
     deleteRecurringDepositsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -256,18 +277,25 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    * Calculates savings account's interest
    */
   private calculateInterest() {
-    const calculateInterestAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
-      data: {
-        heading: this.translateService.instant('labels.heading.Calculate Interest'),
-        dialogContext: this.translateService.instant(
-          `labels.dialogContext.Are you sure you want to calculate interest ?`
-        )
+    const calculateInterestAccountDialogRef = this.dialog.open(
+      RecurringDepositConfirmationDialogComponent,
+      {
+        data: {
+          heading: this.translateService.instant('labels.heading.Calculate Interest'),
+          dialogContext: this.translateService.instant(
+            `labels.dialogContext.Are you sure you want to calculate interest ?`
+          )
+        }
       }
-    });
+    );
     calculateInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.recurringDepositsService
-          .executeRecurringDepositsAccountCommand(this.recurringDepositsAccountData.id, 'calculateInterest', {})
+          .executeRecurringDepositsAccountCommand(
+            this.recurringDepositsAccountData.id,
+            'calculateInterest',
+            {}
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -279,16 +307,25 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    * Posts savings account's interest
    */
   private postInterest() {
-    const postInterestAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
-      data: {
-        heading: this.translateService.instant('labels.heading.Post Interest'),
-        dialogContext: this.translateService.instant('labels.text.Are you sure you want to post interest') + ' ?'
+    const postInterestAccountDialogRef = this.dialog.open(
+      RecurringDepositConfirmationDialogComponent,
+      {
+        data: {
+          heading: this.translateService.instant('labels.heading.Post Interest'),
+          dialogContext:
+            this.translateService.instant('labels.text.Are you sure you want to post interest') +
+            ' ?'
+        }
       }
-    });
+    );
     postInterestAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.recurringDepositsService
-          .executeRecurringDepositsAccountCommand(this.recurringDepositsAccountData.id, 'postInterest', {})
+          .executeRecurringDepositsAccountCommand(
+            this.recurringDepositsAccountData.id,
+            'postInterest',
+            {}
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -301,18 +338,27 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    * Recurring deposits endpoint is not supported so using Savings endpoint.
    */
   private enableWithHoldTax() {
-    const deleteSavingsAccountDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
-      data: {
-        heading: this.translateService.instant('labels.heading.Enable Withhold Tax'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Enable withhold tax for this account ?')
+    const deleteSavingsAccountDialogRef = this.dialog.open(
+      RecurringDepositConfirmationDialogComponent,
+      {
+        data: {
+          heading: this.translateService.instant('labels.heading.Enable Withhold Tax'),
+          dialogContext: this.translateService.instant(
+            'labels.dialogContext.Enable withhold tax for this account ?'
+          )
+        }
       }
-    });
+    );
     deleteSavingsAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService
-          .executeSavingsAccountUpdateCommand(this.recurringDepositsAccountData.id, 'updateWithHoldTax', {
-            withHoldTax: true
-          })
+          .executeSavingsAccountUpdateCommand(
+            this.recurringDepositsAccountData.id,
+            'updateWithHoldTax',
+            {
+              withHoldTax: true
+            }
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -325,18 +371,27 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    * Recurring deposits endpoint is not supported so using Savings endpoint.
    */
   private disableWithHoldTax() {
-    const disableWithHoldTaxDialogRef = this.dialog.open(RecurringDepositConfirmationDialogComponent, {
-      data: {
-        heading: this.translateService.instant('labels.heading.Disable Withhold Tax'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Disable withhold tax for this account ?')
+    const disableWithHoldTaxDialogRef = this.dialog.open(
+      RecurringDepositConfirmationDialogComponent,
+      {
+        data: {
+          heading: this.translateService.instant('labels.heading.Disable Withhold Tax'),
+          dialogContext: this.translateService.instant(
+            'labels.dialogContext.Disable withhold tax for this account ?'
+          )
+        }
       }
-    });
+    );
     disableWithHoldTaxDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService
-          .executeSavingsAccountUpdateCommand(this.recurringDepositsAccountData.id, 'updateWithHoldTax', {
-            withHoldTax: false
-          })
+          .executeSavingsAccountUpdateCommand(
+            this.recurringDepositsAccountData.id,
+            'updateWithHoldTax',
+            {
+              withHoldTax: false
+            }
+          )
           .subscribe(() => {
             this.reload();
           });

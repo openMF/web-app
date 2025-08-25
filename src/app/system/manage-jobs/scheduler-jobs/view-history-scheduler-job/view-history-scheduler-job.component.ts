@@ -130,7 +130,8 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
   openError(version: any) {
     const openErrorLogDialog = this.dialog.open(ErrorDialogComponent, {
       width: '400px',
-      data: this.jobHistoryData.pageItems.filter((data: any) => data.version === version)[0].jobRunErrorLog
+      data: this.jobHistoryData.pageItems.filter((data: any) => data.version === version)[0]
+        .jobRunErrorLog
     });
     openErrorLogDialog.afterClosed().subscribe((response: any) => {
       this.router.navigate(['']);

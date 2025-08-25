@@ -9,7 +9,12 @@
   </mat-button-toggle-group>
 
   <div #buttonCreateOffice class="in-block">
-    <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_OFFICE'">
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['create']"
+      *mifosxHasPermission="'CREATE_OFFICE'"
+    >
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Create Office' | translate }}
     </button>
@@ -50,7 +55,9 @@
       </ng-container>
 
       <ng-container matColumnDef="parentName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ' Parent Office ' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ ' Parent Office ' | translate }}
+        </th>
         <td mat-cell *matCellDef="let offices">{{ offices.parentName }}</td>
       </ng-container>
 
@@ -76,7 +83,9 @@
 <div class="container" [hidden]="viewGroup.value !== 'treeView'">
   <div class="m-b-20 layout-row align-start gap-20px">
     <button mat-raised-button (click)="toggleExpandCollapse()">
-      {{ (isTreeExpanded ? 'labels.buttons.Collapse All' : 'labels.buttons.Expand All') | translate }}
+      {{
+        (isTreeExpanded ? 'labels.buttons.Collapse All' : 'labels.buttons.Expand All') | translate
+      }}
     </button>
   </div>
 
@@ -84,7 +93,11 @@
     <div class="flex-fill">
       <mat-card>
         <mat-card-content>
-          <mat-tree [dataSource]="nestedTreeDataSource" [treeControl]="nestedTreeControl" class="office-tree">
+          <mat-tree
+            [dataSource]="nestedTreeDataSource"
+            [treeControl]="nestedTreeControl"
+            class="office-tree"
+          >
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
               <li class="mat-tree-node">
                 <button mat-icon-button disabled></button>
@@ -97,10 +110,16 @@
             <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
               <li>
                 <div class="mat-tree-node">
-                  <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                  <button
+                    mat-icon-button
+                    matTreeNodeToggle
+                    [attr.aria-label]="'toggle ' + node.name"
+                  >
                     <fa-icon
                       class="mat-icon-rtl-mirror"
-                      icon="{{ nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right' }}"
+                      icon="{{
+                        nestedTreeControl.isExpanded(node) ? 'chevron-down' : 'chevron-right'
+                      }}"
                     ></fa-icon>
                   </button>
                   <span (click)="viewOfficeNode(node)" class="m-r-10">
@@ -156,12 +175,17 @@
                 </div>
 
                 <div class="flex-50" *ngIf="office.externalId">
-                  <mifosx-external-identifier externalId="{{ office.externalId }}"></mifosx-external-identifier>
+                  <mifosx-external-identifier
+                    externalId="{{ office.externalId }}"
+                  ></mifosx-external-identifier>
                 </div>
               </div>
             </mat-tab>
 
-            <mat-tab *ngFor="let dataTable of dataTablesData" label="{{ dataTable.registeredTableName }}"></mat-tab>
+            <mat-tab
+              *ngFor="let dataTable of dataTablesData"
+              label="{{ dataTable.registeredTableName }}"
+            ></mat-tab>
           </mat-tab-group>
         </mat-card-content>
       </mat-card>
@@ -171,9 +195,15 @@
 
 <ng-template #templateButtonTreeView let-popover="popover">
   <h2>{{ 'labels.heading.Tree View' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Launch an alternative view for office hierarchy' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Launch an alternative view for office hierarchy' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
@@ -182,7 +212,9 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)"
+      (click)="
+        popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)
+      "
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>
@@ -193,7 +225,11 @@
   <h2>{{ 'labels.heading.Create Office' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Create new offices' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -206,7 +242,10 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)"
+      (click)="
+        popover.close();
+        showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)
+      "
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>
@@ -217,13 +256,19 @@
   <h2>{{ 'labels.heading.Import Offices' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Launch the Bulk import/Offices' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)"
+      (click)="
+        popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)
+      "
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>
@@ -240,13 +285,20 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>{{ 'labels.heading.Search bar to filter offices.' | translate }}</h4>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)"
+      (click)="
+        popover.close();
+        showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)
+      "
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>
@@ -263,7 +315,11 @@
 <ng-template #templateTableOffices let-popover="popover">
   <h4>{{ 'labels.heading.List of offices in the organization.' | translate }}</h4>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button

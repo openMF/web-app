@@ -1,7 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from '../reports.service';
@@ -99,28 +104,30 @@ export class RunReportComponent implements OnInit {
       this.report.type = queryParams.type;
       this.report.id = queryParams.id;
     });
-    this.route.data.subscribe((data: { reportParameters: ReportParameter[]; configurations: any }) => {
-      this.paramData = data.reportParameters;
-      if (this.isTableReport()) {
-        const amazonS3Config = data.configurations.globalConfiguration.find(
-          (config: GlobalConfiguration) => config.name === 'amazon-s3'
-        );
-        const reportExportS3Config = data.configurations.globalConfiguration.find(
-          (config: GlobalConfiguration) => config.name === 'report-export-s3-folder-name'
-        );
+    this.route.data.subscribe(
+      (data: { reportParameters: ReportParameter[]; configurations: any }) => {
+        this.paramData = data.reportParameters;
+        if (this.isTableReport()) {
+          const amazonS3Config = data.configurations.globalConfiguration.find(
+            (config: GlobalConfiguration) => config.name === 'amazon-s3'
+          );
+          const reportExportS3Config = data.configurations.globalConfiguration.find(
+            (config: GlobalConfiguration) => config.name === 'report-export-s3-folder-name'
+          );
 
-        if (
-          amazonS3Config &&
-          amazonS3Config.enabled &&
-          reportExportS3Config &&
-          reportExportS3Config.enabled &&
-          reportExportS3Config.stringValue
-        ) {
-          this.exportToS3Allowed = true;
-          this.exportToS3Repository = reportExportS3Config.stringValue;
+          if (
+            amazonS3Config &&
+            amazonS3Config.enabled &&
+            reportExportS3Config &&
+            reportExportS3Config.enabled &&
+            reportExportS3Config.stringValue
+          ) {
+            this.exportToS3Allowed = true;
+            this.exportToS3Repository = reportExportS3Config.stringValue;
+          }
         }
       }
-    });
+    );
   }
 
   isTableReport(): boolean {
@@ -153,7 +160,9 @@ export class RunReportComponent implements OnInit {
         }
       } else {
         // Child Parameter
-        const parent: ReportParameter = this.paramData.find((entry: any) => entry.name === param.parentParameterName);
+        const parent: ReportParameter = this.paramData.find(
+          (entry: any) => entry.name === param.parentParameterName
+        );
         if (parent != null) {
           parent.childParameters.push(param);
           this.updateParentParameters(parent);
@@ -200,7 +209,9 @@ export class RunReportComponent implements OnInit {
   mapPentahoParams() {
     this.reportsService.getPentahoParams(this.report.id).subscribe((data: any) => {
       data.forEach((entry: any) => {
-        const param: ReportParameter = this.paramData.find((_entry: any) => _entry.name === entry.parameterName);
+        const param: ReportParameter = this.paramData.find(
+          (_entry: any) => _entry.name === entry.parameterName
+        );
         param.pentahoName = `R_${entry.reportParameterName}`;
       });
     });
@@ -274,7 +285,10 @@ export class RunReportComponent implements OnInit {
           if (this.isTableReport()) {
             formattedResponse[newKey] = this.dateUtils.formatDate(value, Dates.DEFAULT_DATEFORMAT);
           } else {
-            formattedResponse[newKey] = this.dateUtils.formatDate(value, this.settingsService.dateFormat);
+            formattedResponse[newKey] = this.dateUtils.formatDate(
+              value,
+              this.settingsService.dateFormat
+            );
           }
           this.reportUsesDates = true;
           break;
@@ -341,7 +355,10 @@ export class RunReportComponent implements OnInit {
     };
     this.reportsService.getRunReportData(reportName, payload).subscribe((res: any) => {
       if (res.data.length > 0) {
-        this.alertService.alert({ type: 'Report generation', message: `Report: ${reportName} data generated` });
+        this.alertService.alert({
+          type: 'Report generation',
+          message: `Report: ${reportName} data generated`
+        });
 
         const displayedColumns: string[] = [];
         res.columnHeaders.forEach((header: any) => {
@@ -350,7 +367,10 @@ export class RunReportComponent implements OnInit {
 
         this.exportToXLS(reportName, res.data, displayedColumns);
       } else {
-        this.alertService.alert({ type: 'Report generation', message: `Report: ${reportName} without data generated` });
+        this.alertService.alert({
+          type: 'Report generation',
+          message: `Report: ${reportName} without data generated`
+        });
       }
       this.isProcessing = false;
     });

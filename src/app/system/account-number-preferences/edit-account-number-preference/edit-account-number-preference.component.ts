@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -41,10 +46,12 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
     private systemService: SystemService,
     private router: Router
   ) {
-    this.route.data.subscribe((data: { accountNumberPreference: any; accountNumberPreferencesTemplate: any }) => {
-      this.accountNumberPreferenceData = data.accountNumberPreference;
-      this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;
-    });
+    this.route.data.subscribe(
+      (data: { accountNumberPreference: any; accountNumberPreferencesTemplate: any }) => {
+        this.accountNumberPreferenceData = data.accountNumberPreference;
+        this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;
+      }
+    );
   }
 
   /**
@@ -53,7 +60,9 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
    */
   ngOnInit() {
     this.prefixTypeData =
-      this.accountNumberPreferencesTemplateData.prefixTypeOptions[this.accountNumberPreferenceData.accountType.code];
+      this.accountNumberPreferencesTemplateData.prefixTypeOptions[
+        this.accountNumberPreferenceData.accountType.code
+      ];
     this.createAccountNumberPreferenceForm();
   }
 
@@ -66,7 +75,11 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
         { value: this.accountNumberPreferenceData.accountType.id, disabled: true },
         Validators.required
       ],
-      prefixType: [this.accountNumberPreferenceData.prefixType ? this.accountNumberPreferenceData.prefixType.id : 0]
+      prefixType: [
+        this.accountNumberPreferenceData.prefixType
+          ? this.accountNumberPreferenceData.prefixType.id
+          : 0
+      ]
     });
   }
 
@@ -80,7 +93,10 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
       accountNumberPreferenceValue.prefixType = undefined;
     }
     this.systemService
-      .updateAccountNumberPreference(this.accountNumberPreferenceData.id, accountNumberPreferenceValue)
+      .updateAccountNumberPreference(
+        this.accountNumberPreferenceData.id,
+        accountNumberPreferenceValue
+      )
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

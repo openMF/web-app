@@ -15,7 +15,11 @@
       <ng-container matColumnDef="savingsAccount">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Saving Account' | translate }}</th>
         <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup" [matTooltip]="element.status.value"></i>
+          <i
+            class="fa fa-stop"
+            [ngClass]="element.status.code | statusLookup"
+            [matTooltip]="element.status.value"
+          ></i>
           {{ element.accountNo }}
         </td>
       </ng-container>

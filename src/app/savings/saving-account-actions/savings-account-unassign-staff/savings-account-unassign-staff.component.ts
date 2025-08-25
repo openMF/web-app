@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -79,15 +84,20 @@ export class SavingsAccountUnassignStaffComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevUnassignmentDate: Date = this.savingsUnassignStaffForm.value.unassignedDate;
     if (savingsUnassignStaffFormData.unassignedDate instanceof Date) {
-      savingsUnassignStaffFormData.unassignedDate = this.dateUtils.formatDate(prevUnassignmentDate, dateFormat);
+      savingsUnassignStaffFormData.unassignedDate = this.dateUtils.formatDate(
+        prevUnassignmentDate,
+        dateFormat
+      );
     }
     const data = {
       ...savingsUnassignStaffFormData,
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'unassignSavingsOfficer', data).subscribe(() => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountCommand(this.accountId, 'unassignSavingsOfficer', data)
+      .subscribe(() => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

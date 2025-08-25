@@ -52,7 +52,10 @@ export class ViewCollateralComponent {
    */
   deleteCollateral() {
     const deleteCollateralDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.text.Collateral') + ' ' + this.collateralData.id }
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.text.Collateral') + ' ' + this.collateralData.id
+      }
     });
     deleteCollateralDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

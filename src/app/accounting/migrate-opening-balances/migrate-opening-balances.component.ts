@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -234,7 +241,12 @@ export class MigrateOpeningBalancesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showMigrateOpeningBalances === true) {
       setTimeout(() => {
-        this.showPopover(this.templateSearchFormRef, this.searchFormRef.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateSearchFormRef,
+          this.searchFormRef.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
   }

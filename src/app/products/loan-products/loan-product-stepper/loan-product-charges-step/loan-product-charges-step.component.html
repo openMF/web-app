@@ -4,7 +4,8 @@
     <mat-select #charge>
       <mat-option
         *ngFor="
-          let charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value : multiDisburseLoan.value
+          let charge of chargeData
+            | chargesFilter: chargesDataSource : currencyCode.value : multiDisburseLoan.value
         "
         [value]="charge"
       >
@@ -14,7 +15,13 @@
   </mat-form-field>
 
   <div class="flex-48 align-center">
-    <button type="button" mat-raised-button color="primary" (click)="addCharge(charge)" [disabled]="!charge.value">
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      (click)="addCharge(charge)"
+      [disabled]="!charge.value"
+    >
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Add' | translate }}
     </button>
@@ -78,7 +85,10 @@
     <mat-label>{{ 'labels.inputs.Overdue Charge' | translate }}</mat-label>
     <mat-select #overdueCharge>
       <mat-option
-        *ngFor="let overdueCharge of overdueChargeData | chargesFilter: chargesDataSource : currencyCode.value"
+        *ngFor="
+          let overdueCharge of overdueChargeData
+            | chargesFilter: chargesDataSource : currencyCode.value
+        "
         [value]="overdueCharge"
       >
         {{ overdueCharge.name }}

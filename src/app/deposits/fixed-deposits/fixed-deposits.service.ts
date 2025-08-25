@@ -40,7 +40,11 @@ export class FixedDepositsService {
    * @param {any} data Data
    * @returns {Observable<any>}
    */
-  executeFixedDepositsAccountCommand(accountId: string, command: string, data: any): Observable<any> {
+  executeFixedDepositsAccountCommand(
+    accountId: string,
+    command: string,
+    data: any
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     return this.http.post(`/fixeddepositaccounts/${accountId}`, data, { params: httpParams });
   }
@@ -68,9 +72,13 @@ export class FixedDepositsService {
     transactionId?: any
   ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/fixeddepositaccounts/${accountId}/transactions/${transactionId}`, data, {
-      params: httpParams
-    });
+    return this.http.post(
+      `/fixeddepositaccounts/${accountId}/transactions/${transactionId}`,
+      data,
+      {
+        params: httpParams
+      }
+    );
   }
 
   /**
@@ -105,7 +113,9 @@ export class FixedDepositsService {
    * @returns {Observable<any>}
    */
   getFixedDepositsAccountAndTemplate(accountId: any) {
-    const httpParams = new HttpParams().set('associations', 'charges,+linkedAccount').set('template', 'true');
+    const httpParams = new HttpParams()
+      .set('associations', 'charges,+linkedAccount')
+      .set('template', 'true');
     return this.http.get(`/fixeddepositaccounts/${accountId}`, { params: httpParams });
   }
 

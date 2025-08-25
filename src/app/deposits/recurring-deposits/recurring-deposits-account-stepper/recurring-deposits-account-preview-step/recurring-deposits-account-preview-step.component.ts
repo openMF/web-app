@@ -105,7 +105,8 @@ export class RecurringDepositsAccountPreviewStepComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.recurringDepositsAccountProductTemplate) {
-      this.interestRateChartData = this.recurringDepositsAccountProductTemplate.accountChart.chartSlabs;
+      this.interestRateChartData =
+        this.recurringDepositsAccountProductTemplate.accountChart.chartSlabs;
     }
   }
 }

@@ -102,8 +102,12 @@ export class AdhocQueryComponent implements OnInit {
   setReportRunFrequency() {
     for (let i = 0; i < this.adhocQueriesData.length; i++) {
       for (let j = 0; j < this.adhocQueriesData[i].reportRunFrequencies.length; j++) {
-        if (this.adhocQueriesData[i].reportRunFrequencies[j].id === this.adhocQueriesData[i].reportRunFrequency) {
-          this.adhocQueriesData[i].reportRunFrequency = this.adhocQueriesData[i].reportRunFrequencies[j].value;
+        if (
+          this.adhocQueriesData[i].reportRunFrequencies[j].id ===
+          this.adhocQueriesData[i].reportRunFrequency
+        ) {
+          this.adhocQueriesData[i].reportRunFrequency =
+            this.adhocQueriesData[i].reportRunFrequencies[j].value;
         }
       }
     }

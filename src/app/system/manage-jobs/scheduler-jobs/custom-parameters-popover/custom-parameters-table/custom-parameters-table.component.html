@@ -10,7 +10,9 @@
           <input
             matInput
             type="text"
-            [placeholder]="('labels.inputs.Parameter' | translate) + ' ' + ('labels.inputs.Name' | translate)"
+            [placeholder]="
+              ('labels.inputs.Parameter' | translate) + ' ' + ('labels.inputs.Name' | translate)
+            "
             [(ngModel)]="element.parameterName"
           />
         </mat-form-field>
@@ -26,7 +28,9 @@
           <input
             matInput
             type="text"
-            [placeholder]="('labels.inputs.Parameter' | translate) + ' ' + ('labels.inputs.Value' | translate)"
+            [placeholder]="
+              ('labels.inputs.Parameter' | translate) + ' ' + ('labels.inputs.Value' | translate)
+            "
             [(ngModel)]="element.parameterValue"
           />
         </mat-form-field>

@@ -57,7 +57,12 @@ export class SavingsTransactionGeneralTabComponent {
       if (response.confirm) {
         const data = {};
         this.savingsService
-          .executeSavingsAccountTransactionsCommand(this.accountId, 'releaseAmount', data, this.transactionData.id)
+          .executeSavingsAccountTransactionsCommand(
+            this.accountId,
+            'releaseAmount',
+            data,
+            this.transactionData.id
+          )
           .subscribe(() => {
             this.router.navigate(['../..'], { relativeTo: this.route });
           });
@@ -81,7 +86,12 @@ export class SavingsTransactionGeneralTabComponent {
           locale
         };
         this.savingsService
-          .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id)
+          .executeSavingsAccountTransactionsCommand(
+            this.accountId,
+            'undo',
+            data,
+            this.transactionData.id
+          )
           .subscribe(() => {
             this.router.navigate(['../..'], { relativeTo: this.route });
           });

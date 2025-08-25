@@ -123,7 +123,9 @@ export class ViewDataTableComponent implements OnInit {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
         deleteContext:
-          this.translateService.instant('labels.inputs.Data Table') + ' ' + this.dataTableData.registeredTableName
+          this.translateService.instant('labels.inputs.Data Table') +
+          ' ' +
+          this.dataTableData.registeredTableName
       }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {

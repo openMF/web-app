@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -82,15 +87,20 @@ export class ApproveSharesAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedDate: Date = this.approveSharesAccountForm.value.approvedDate;
     if (approveSharesAccountFormData.approvedDate instanceof Date) {
-      approveSharesAccountFormData.approvedDate = this.dateUtils.formatDate(prevApprovedDate, dateFormat);
+      approveSharesAccountFormData.approvedDate = this.dateUtils.formatDate(
+        prevApprovedDate,
+        dateFormat
+      );
     }
     const data = {
       ...approveSharesAccountFormData,
       dateFormat,
       locale
     };
-    this.sharesService.executeSharesAccountCommand(this.accountId, 'approve', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.sharesService
+      .executeSharesAccountCommand(this.accountId, 'approve', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

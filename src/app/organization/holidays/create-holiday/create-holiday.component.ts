@@ -119,7 +119,12 @@ export class CreateHolidayComponent implements OnInit {
       // Updates data in the CheckListDatabase
       _database.initialize(this.officesTrie);
     });
-    this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
+    this.treeFlattener = new MatTreeFlattener(
+      this.transformer,
+      this.getLevel,
+      this.isExpandable,
+      this.getChildren
+    );
     this.treeControl = new FlatTreeControl<OfficeItemFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
@@ -183,7 +188,8 @@ export class CreateHolidayComponent implements OnInit {
    */
   transformer = (node: OfficeItemNode, level: number) => {
     const existingNode = this.nestedNodeMap.get(node);
-    const flatNode = existingNode && existingNode.item === node.item ? existingNode : new OfficeItemFlatNode();
+    const flatNode =
+      existingNode && existingNode.item === node.item ? existingNode : new OfficeItemFlatNode();
     flatNode.item = node.item;
     flatNode.level = level;
     flatNode.expandable = !!node.children?.length;
@@ -316,7 +322,10 @@ export class CreateHolidayComponent implements OnInit {
   buildDependencies() {
     this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
       if (option === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl('', Validators.required));
+        this.holidayForm.addControl(
+          'repaymentsRescheduledTo',
+          new UntypedFormControl('', Validators.required)
+        );
       } else {
         this.holidayForm.removeControl('repaymentsRescheduledTo');
       }
@@ -336,7 +345,10 @@ export class CreateHolidayComponent implements OnInit {
     holidayFormData.toDate = this.dateUtils.formatDate(prevToDate, dateFormat);
     if (this.holidayForm.contains('repaymentsRescheduledTo')) {
       const prevRepaymentsRescheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
-      holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(prevRepaymentsRescheduledTo, dateFormat);
+      holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(
+        prevRepaymentsRescheduledTo,
+        dateFormat
+      );
     }
     const offices = this.holidayForm.value.offices.map((office: string) => {
       return { officeId: Number.parseInt(office, 10) };

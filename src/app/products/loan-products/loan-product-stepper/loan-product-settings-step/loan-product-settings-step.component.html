@@ -7,12 +7,16 @@
         matTooltip="{{ 'tooltips.The Amortization value' | translate }}"
         required
       >
-        <mat-option *ngFor="let amortizationType of amortizationTypeData" [value]="amortizationType.id">
+        <mat-option
+          *ngFor="let amortizationType of amortizationTypeData"
+          [value]="amortizationType.id"
+        >
           {{ 'labels.inputs.products.loan.amortizationType.' + amortizationType.value | translate }}
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.products.loan.Amortization' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.products.loan.Amortization' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -49,7 +53,8 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Interest calculation period' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Interest calculation period' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -75,7 +80,10 @@
     <mat-form-field class="flex-30">
       <mat-label>{{ 'labels.inputs.Loan Schedule Type' | translate }}</mat-label>
       <mat-select formControlName="loanScheduleType" required>
-        <mat-option *ngFor="let loanScheduleType of loanScheduleTypeData" [value]="loanScheduleType.code">
+        <mat-option
+          *ngFor="let loanScheduleType of loanScheduleTypeData"
+          [value]="loanScheduleType.code"
+        >
           {{ loanScheduleType.value | translateKey: 'catalogs' }}
         </mat-option>
       </mat-select>
@@ -139,7 +147,8 @@
           required
         />
         <mat-error *ngIf="loanProductSettingsForm.controls.maxTrancheCount.hasError('required')">
-          {{ 'labels.inputs.Maximum Tranche count' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Maximum Tranche count' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -154,7 +163,11 @@
         />
       </mat-form-field>
 
-      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="disallowExpectedDisbursements">
+      <mat-checkbox
+        class="flex-48 margin-v"
+        labelPosition="before"
+        formControlName="disallowExpectedDisbursements"
+      >
         {{ 'labels.inputs.Disallow Expected Disbursements' | translate }}
       </mat-checkbox>
     </div>
@@ -175,23 +188,36 @@
       class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
       <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }} (%)</mat-label>
+        <mat-label
+          >{{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }} (%)</mat-label
+        >
         <input
           type="number"
           matInput
-          matTooltip="{{ 'tooltips.The percentage of disbursements amount for Down Payment' | translate }}"
+          matTooltip="{{
+            'tooltips.The percentage of disbursements amount for Down Payment' | translate
+          }}"
           formControlName="disbursedAmountPercentageForDownPayment"
           required
           [min]="0"
           [max]="100"
         />
         <mat-error
-          *ngIf="loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.hasError('required')"
+          *ngIf="
+            loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.hasError(
+              'required'
+            )
+          "
         >
           {{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }}
-          {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
+          {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
-        <mat-error *ngIf="loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.errors?.range">
+        <mat-error
+          *ngIf="
+            loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.errors?.range
+          "
+        >
           {{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }}
           {{ 'labels.commons.is' | translate }} {{ 'labels.text.out' | translate }}
           <strong>{{ 'labels.text.percentage range' | translate }}</strong>
@@ -202,7 +228,9 @@
         class="flex-48 margin-v"
         labelPosition="before"
         formControlName="enableAutoRepaymentForDownPayment"
-        matTooltip="{{ 'tooltips.Enable or disable the auto repayment of down-payment.' | translate }}"
+        matTooltip="{{
+          'tooltips.Enable or disable the auto repayment of down-payment.' | translate
+        }}"
       >
         {{ 'labels.inputs.Enable Auto Repayment for Down Payment' | translate }}
       </mat-checkbox>
@@ -219,7 +247,10 @@
         <mat-form-field class="flex-30">
           <mat-label>{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}</mat-label>
           <mat-select formControlName="chargeOffBehaviour" required>
-            <mat-option *ngFor="let chargeOffBehaviour of chargeOffBehaviourData" [value]="chargeOffBehaviour.id">
+            <mat-option
+              *ngFor="let chargeOffBehaviour of chargeOffBehaviourData"
+              [value]="chargeOffBehaviour.id"
+            >
               {{ chargeOffBehaviour.value | translateKey: 'catalogs' }}
             </mat-option>
           </mat-select>
@@ -229,7 +260,10 @@
 
     <h4 class="mat-h4 m-r-10 flex-98">
       {{ 'labels.inputs.Moratorium' | translate }}
-      <i class="fas fa-question" matTooltip="{{ 'tooltips.The moratorium information' | translate }}"></i>
+      <i
+        class="fas fa-question"
+        matTooltip="{{ 'tooltips.The moratorium information' | translate }}"
+      ></i>
     </h4>
 
     <mat-form-field class="flex-48">
@@ -247,7 +281,10 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Delinquency Bucket' | translate }}</mat-label>
       <mat-select formControlName="delinquencyBucketId">
-        <mat-option *ngFor="let delinquencyBucket of delinquencyBucketData" [value]="delinquencyBucket.id">
+        <mat-option
+          *ngFor="let delinquencyBucket of delinquencyBucketData"
+          [value]="delinquencyBucket.id"
+        >
           {{ delinquencyBucket.name }}
         </mat-option>
       </mat-select>
@@ -332,7 +369,10 @@
         formControlName="daysInMonthType"
         required
       >
-        <mat-option *ngFor="let daysInMonthType of daysInMonthTypeData" [value]="daysInMonthType.id">
+        <mat-option
+          *ngFor="let daysInMonthType of daysInMonthTypeData"
+          [value]="daysInMonthType.id"
+        >
           {{ daysInMonthType.value | translateKey: 'catalogs' }}
         </mat-option>
       </mat-select>
@@ -342,12 +382,18 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-checkbox labelPosition="before" formControlName="canDefineInstallmentAmount" class="margin-v flex-98">
+    <mat-checkbox
+      labelPosition="before"
+      formControlName="canDefineInstallmentAmount"
+      class="margin-v flex-98"
+    >
       {{ 'labels.inputs.Allow fixing of the installment amount' | translate }}
     </mat-checkbox>
 
     <h4 class="flex-48">
-      {{ 'labels.inputs.Number of days a loan may be overdue before moving into arrears' | translate }}
+      {{
+        'labels.inputs.Number of days a loan may be overdue before moving into arrears' | translate
+      }}
       <i
         class="fas fa-question"
         matTooltip="{{ 'tooltips.A loan is in arrears once the number of days' | translate }}"
@@ -380,11 +426,16 @@
       labelPosition="before"
       formControlName="accountMovesOutOfNPAOnlyOnArrearsCompletion"
     >
-      {{ 'labels.inputs.Account moves out of NPA only after all arrears have been cleared' | translate }}
+      {{
+        'labels.inputs.Account moves out of NPA only after all arrears have been cleared'
+          | translate
+      }}
     </mat-checkbox>
 
     <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Principal Threshold (%) for Last Instalment' | translate }}</mat-label>
+      <mat-label>{{
+        'labels.inputs.Principal Threshold (%) for Last Instalment' | translate
+      }}</mat-label>
       <input type="number" matInput formControlName="principalThresholdForLastInstallment" />
     </mat-form-field>
 
@@ -407,7 +458,8 @@
         <mat-label>{{ 'labels.inputs.Minimum gap between Installments' | translate }}</mat-label>
         <input type="number" matInput formControlName="minimumGap" required />
         <mat-error>
-          {{ 'labels.inputs.Minimum gap between Installments' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Minimum gap between Installments' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -416,7 +468,8 @@
         <mat-label>{{ 'labels.inputs.Maximum gap between Installments' | translate }}</mat-label>
         <input type="number" matInput formControlName="maximumGap" required />
         <mat-error>
-          {{ 'labels.inputs.Maximum gap between Installments' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Maximum gap between Installments' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -435,7 +488,11 @@
 
     <h3 class="mat-h3 flex-96">{{ 'labels.heading.Interest Recalculation' | translate }}</h3>
 
-    <mat-checkbox class="flex-73 margin-b" labelPosition="before" formControlName="isInterestRecalculationEnabled">
+    <mat-checkbox
+      class="flex-73 margin-b"
+      labelPosition="before"
+      formControlName="isInterestRecalculationEnabled"
+    >
       {{ 'labels.inputs.Recalculate Interest' | translate }}
     </mat-checkbox>
 
@@ -444,24 +501,33 @@
       class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
       <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Pre-closure interest calculation rule' | translate }}</mat-label>
+        <mat-label>{{
+          'labels.inputs.Pre-closure interest calculation rule' | translate
+        }}</mat-label>
         <mat-select formControlName="preClosureInterestCalculationStrategy" required>
           <mat-option
-            *ngFor="let preClosureInterestCalculationStrategy of preClosureInterestCalculationStrategyData"
+            *ngFor="
+              let preClosureInterestCalculationStrategy of preClosureInterestCalculationStrategyData
+            "
             [value]="preClosureInterestCalculationStrategy.id"
           >
             {{ preClosureInterestCalculationStrategy.value | translateKey: 'catalogs' }}
           </mat-option>
         </mat-select>
         <mat-error>
-          {{ 'labels.inputs.Pre-closure interest calculation rule' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Pre-closure interest calculation rule' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Advance payments adjustment type' | translate }}</mat-label>
-        <mat-select formControlName="rescheduleStrategyMethod" required [disabled]="rescheduleStrategyTypeDisabled">
+        <mat-select
+          formControlName="rescheduleStrategyMethod"
+          required
+          [disabled]="rescheduleStrategyTypeDisabled"
+        >
           <mat-option
             *ngFor="let rescheduleStrategyType of rescheduleStrategyTypeData"
             [value]="rescheduleStrategyType.id"
@@ -470,23 +536,29 @@
           </mat-option>
         </mat-select>
         <mat-error>
-          {{ 'labels.inputs.Advance payments adjustment type' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Advance payments adjustment type' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Interest recalculation compounding on' | translate }}</mat-label>
+        <mat-label>{{
+          'labels.inputs.Interest recalculation compounding on' | translate
+        }}</mat-label>
         <mat-select formControlName="interestRecalculationCompoundingMethod" required>
           <mat-option
-            *ngFor="let interestRecalculationCompoundingType of interestRecalculationCompoundingTypeData"
+            *ngFor="
+              let interestRecalculationCompoundingType of interestRecalculationCompoundingTypeData
+            "
             [value]="interestRecalculationCompoundingType.id"
           >
             {{ interestRecalculationCompoundingType.value | translateKey: 'catalogs' }}
           </mat-option>
         </mat-select>
         <mat-error>
-          {{ 'labels.inputs.Interest recalculation compounding on' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Interest recalculation compounding on' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -501,20 +573,39 @@
             loanProductSettingsForm.value.recalculationCompoundingFrequencyType !== 1
           "
         >
-          <mat-label>{{ 'labels.inputs.Frequency Interval for compounding' | translate }}</mat-label>
-          <input type="number" matInput formControlName="recalculationCompoundingFrequencyInterval" required />
+          <mat-label>{{
+            'labels.inputs.Frequency Interval for compounding' | translate
+          }}</mat-label>
+          <input
+            type="number"
+            matInput
+            formControlName="recalculationCompoundingFrequencyInterval"
+            required
+          />
           <mat-error>
-            {{ 'labels.inputs.Frequency Interval for compounding' | translate }} {{ 'labels.commons.is' | translate }}
+            {{ 'labels.inputs.Frequency Interval for compounding' | translate }}
+            {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="flex-48" *ngIf="loanProductSettingsForm.value.recalculationRestFrequencyType !== 1">
-          <mat-label>{{ 'labels.inputs.Frequency Interval for recalculation' | translate }}</mat-label>
-          <input type="number" matInput formControlName="recalculationRestFrequencyInterval" required />
+        <mat-form-field
+          class="flex-48"
+          *ngIf="loanProductSettingsForm.value.recalculationRestFrequencyType !== 1"
+        >
+          <mat-label>{{
+            'labels.inputs.Frequency Interval for recalculation' | translate
+          }}</mat-label>
+          <input
+            type="number"
+            matInput
+            formControlName="recalculationRestFrequencyInterval"
+            required
+          />
           <mat-error>
             {{ 'labels.inputs.Frequency Interval for recalculation' | translate }}
-            {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
+            {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
       </div>
@@ -527,7 +618,9 @@
           <mat-label>{{ 'labels.inputs.Frequency for compounding' | translate }}</mat-label>
           <mat-select formControlName="recalculationCompoundingFrequencyType" required>
             <mat-option
-              *ngFor="let interestRecalculationFrequencyType of interestRecalculationFrequencyTypeData"
+              *ngFor="
+                let interestRecalculationFrequencyType of interestRecalculationFrequencyTypeData
+              "
               [value]="interestRecalculationFrequencyType.id"
             >
               {{ interestRecalculationFrequencyType.value }}
@@ -562,7 +655,9 @@
           <mat-form-field class="flex-fill">
             <mat-select formControlName="recalculationCompoundingFrequencyDayOfWeekType">
               <mat-option
-                *ngFor="let interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData"
+                *ngFor="
+                  let interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData
+                "
                 [value]="interestRecalculationDayOfWeekType.id"
               >
                 {{ interestRecalculationDayOfWeekType.value | translateKey: 'catalogs' }}
@@ -592,10 +687,14 @@
       </div>
 
       <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}</mat-label>
+        <mat-label>{{
+          'labels.inputs.Frequency for recalculate Outstanding Principal' | translate
+        }}</mat-label>
         <mat-select formControlName="recalculationRestFrequencyType" required>
           <mat-option
-            *ngFor="let interestRecalculationFrequencyType of interestRecalculationFrequencyTypeData"
+            *ngFor="
+              let interestRecalculationFrequencyType of interestRecalculationFrequencyTypeData
+            "
             [value]="interestRecalculationFrequencyType.id"
           >
             {{ interestRecalculationFrequencyType.value | translateKey: 'catalogs' }}
@@ -603,7 +702,8 @@
         </mat-select>
         <mat-error>
           {{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}
-          {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
+          {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
@@ -634,7 +734,9 @@
         <mat-form-field class="flex-fill">
           <mat-select formControlName="recalculationRestFrequencyDayOfWeekType">
             <mat-option
-              *ngFor="let interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData"
+              *ngFor="
+                let interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData
+              "
               [value]="interestRecalculationDayOfWeekType.id"
             >
               {{ interestRecalculationDayOfWeekType.value | translateKey: 'catalogs' }}
@@ -662,7 +764,11 @@
         </mat-form-field>
       </div>
 
-      <mat-checkbox class="flex-98 margin-v" labelPosition="before" formControlName="isArrearsBasedOnOriginalSchedule">
+      <mat-checkbox
+        class="flex-98 margin-v"
+        labelPosition="before"
+        formControlName="isArrearsBasedOnOriginalSchedule"
+      >
         {{ 'labels.inputs.Is Arrears recognization based on original schedule' | translate }}?
       </mat-checkbox>
 
@@ -680,7 +786,11 @@
 
     <h3 class="mat-h3 flex-23">{{ 'labels.heading.Guarantee Requirements' | translate }}</h3>
 
-    <mat-checkbox class="flex-73 margin-b" labelPosition="before" formControlName="holdGuaranteeFunds">
+    <mat-checkbox
+      class="flex-73 margin-b"
+      labelPosition="before"
+      formControlName="holdGuaranteeFunds"
+    >
       {{ 'labels.inputs.Place Guarantee Funds On-Hold' | translate }}
     </mat-checkbox>
 
@@ -692,7 +802,8 @@
         <mat-label>{{ 'labels.inputs.Mandatory Guarantee(%)' | translate }}</mat-label>
         <input type="number" matInput formControlName="mandatoryGuarantee" required />
         <mat-error>
-          {{ 'labels.inputs.Mandatory Guarantee' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Mandatory Guarantee' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -703,7 +814,9 @@
       </mat-form-field>
 
       <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Minimum Guarantee from Guarantor Funds(%)' | translate }}</mat-label>
+        <mat-label>{{
+          'labels.inputs.Minimum Guarantee from Guarantor Funds(%)' | translate
+        }}</mat-label>
         <input type="number" matInput formControlName="minimumGuaranteeFromGuarantor" />
       </mat-form-field>
     </div>
@@ -724,7 +837,10 @@
       formControlName="useDueForRepaymentsConfigurations"
       matTooltip="{{ 'tooltips.Use or not the Global Configurations' | translate }}"
     >
-      {{ 'labels.inputs.Use the Global Configurations values to the Repayment Event (notifications)' | translate }}
+      {{
+        'labels.inputs.Use the Global Configurations values to the Repayment Event (notifications)'
+          | translate
+      }}
     </mat-checkbox>
 
     <div
@@ -754,9 +870,15 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <h3 class="mat-h3 flex-43">{{ 'labels.inputs.Configurable Terms and Settings' | translate }}</h3>
+    <h3 class="mat-h3 flex-43">
+      {{ 'labels.inputs.Configurable Terms and Settings' | translate }}
+    </h3>
 
-    <mat-checkbox labelPosition="before" formControlName="allowAttributeConfiguration" class="margin-b flex-53">
+    <mat-checkbox
+      labelPosition="before"
+      formControlName="allowAttributeConfiguration"
+      class="margin-b flex-53"
+    >
       {{ 'labels.inputs.Allow overriding select terms and settings in loan accounts' | translate }}
     </mat-checkbox>
 
@@ -765,7 +887,11 @@
       formGroupName="allowAttributeOverrides"
       class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
-      <mat-checkbox labelPosition="before" formControlName="amortizationType" class="margin-v flex-48">
+      <mat-checkbox
+        labelPosition="before"
+        formControlName="amortizationType"
+        class="margin-v flex-48"
+      >
         {{ 'labels.inputs.Amortization' | translate }}
       </mat-checkbox>
 
@@ -773,19 +899,35 @@
         {{ 'labels.inputs.Interest method' | translate }}
       </mat-checkbox>
 
-      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="transactionProcessingStrategyCode">
+      <mat-checkbox
+        class="flex-48 margin-v"
+        labelPosition="before"
+        formControlName="transactionProcessingStrategyCode"
+      >
         {{ 'labels.inputs.Repayment strategy' | translate }}
       </mat-checkbox>
 
-      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="interestCalculationPeriodType">
+      <mat-checkbox
+        class="flex-48 margin-v"
+        labelPosition="before"
+        formControlName="interestCalculationPeriodType"
+      >
         {{ 'labels.inputs.Interest calculation period' | translate }}
       </mat-checkbox>
 
-      <mat-checkbox labelPosition="before" formControlName="inArrearsTolerance" class="margin-v flex-48">
+      <mat-checkbox
+        labelPosition="before"
+        formControlName="inArrearsTolerance"
+        class="margin-v flex-48"
+      >
         {{ 'labels.inputs.Arrears tolerance' | translate }}
       </mat-checkbox>
 
-      <mat-checkbox labelPosition="before" formControlName="repaymentEvery" class="margin-v flex-48">
+      <mat-checkbox
+        labelPosition="before"
+        formControlName="repaymentEvery"
+        class="margin-v flex-48"
+      >
         {{ 'labels.inputs.Repaid every' | translate }}
       </mat-checkbox>
 
@@ -797,8 +939,15 @@
         {{ 'labels.inputs.Moratorium' | translate }}
       </mat-checkbox>
 
-      <mat-checkbox labelPosition="before" formControlName="graceOnArrearsAgeing" class="margin-v flex-48">
-        {{ 'labels.inputs.Number of days a loan may be overdue before moving into arrears' | translate }}
+      <mat-checkbox
+        labelPosition="before"
+        formControlName="graceOnArrearsAgeing"
+        class="margin-v flex-48"
+      >
+        {{
+          'labels.inputs.Number of days a loan may be overdue before moving into arrears'
+            | translate
+        }}
       </mat-checkbox>
     </div>
   </div>

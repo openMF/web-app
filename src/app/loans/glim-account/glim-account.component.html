@@ -21,17 +21,23 @@
       </ng-container>
 
       <ng-container matColumnDef="loanAccountNumber">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Loan Account Number' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Loan Account Number' | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">{{ element.childLoanAccountNo }}</td>
       </ng-container>
 
       <ng-container matColumnDef="clientPrincipalLoan">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Principal Loan' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Client Principal Loan' | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">{{ element.childPrincipalAmount }}</td>
       </ng-container>
 
       <ng-container matColumnDef="groupPrincipalLoan">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Group Principal Loan' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Group Principal Loan' | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">{{ element.parentPrincipalAmount }}</td>
       </ng-container>
 

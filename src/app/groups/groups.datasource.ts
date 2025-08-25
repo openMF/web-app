@@ -41,11 +41,15 @@ export class GroupsDataSource implements DataSource<any> {
     groupActive: boolean = true
   ) {
     this.groupsSubject.next([]);
-    this.groupsService.getGroups(filterBy, orderBy, sortOrder, pageIndex * limit, limit).subscribe((groups: any) => {
-      groups.pageItems = groupActive ? groups.pageItems.filter((group: any) => group.active) : groups.pageItems;
-      this.recordsSubject.next(groups.totalFilteredRecords);
-      this.groupsSubject.next(groups.pageItems);
-    });
+    this.groupsService
+      .getGroups(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
+      .subscribe((groups: any) => {
+        groups.pageItems = groupActive
+          ? groups.pageItems.filter((group: any) => group.active)
+          : groups.pageItems;
+        this.recordsSubject.next(groups.totalFilteredRecords);
+        this.groupsSubject.next(groups.pageItems);
+      });
   }
 
   /**

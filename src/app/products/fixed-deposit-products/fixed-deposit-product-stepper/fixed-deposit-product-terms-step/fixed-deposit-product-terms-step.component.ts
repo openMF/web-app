@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -34,13 +39,19 @@ export class FixedDepositProductTermsStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.interestCompoundingPeriodTypeData = this.fixedDepositProductsTemplate.interestCompoundingPeriodTypeOptions;
-    this.interestPostingPeriodTypeData = this.fixedDepositProductsTemplate.interestPostingPeriodTypeOptions;
-    this.interestCalculationTypeData = this.fixedDepositProductsTemplate.interestCalculationTypeOptions;
+    this.interestCompoundingPeriodTypeData =
+      this.fixedDepositProductsTemplate.interestCompoundingPeriodTypeOptions;
+    this.interestPostingPeriodTypeData =
+      this.fixedDepositProductsTemplate.interestPostingPeriodTypeOptions;
+    this.interestCalculationTypeData =
+      this.fixedDepositProductsTemplate.interestCalculationTypeOptions;
     this.interestCalculationDaysInYearTypeData =
       this.fixedDepositProductsTemplate.interestCalculationDaysInYearTypeOptions;
 
-    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+    if (
+      !(this.fixedDepositProductsTemplate === undefined) &&
+      this.fixedDepositProductsTemplate.id
+    ) {
       this.fixedDepositProductTermsForm.patchValue({
         minDepositAmount: this.fixedDepositProductsTemplate.minDepositAmount,
         depositAmount: this.fixedDepositProductsTemplate.depositAmount,
@@ -49,10 +60,12 @@ export class FixedDepositProductTermsStepComponent implements OnInit {
     }
 
     this.fixedDepositProductTermsForm.patchValue({
-      interestCompoundingPeriodType: this.fixedDepositProductsTemplate.interestCompoundingPeriodType.id,
+      interestCompoundingPeriodType:
+        this.fixedDepositProductsTemplate.interestCompoundingPeriodType.id,
       interestPostingPeriodType: this.fixedDepositProductsTemplate.interestPostingPeriodType.id,
       interestCalculationType: this.fixedDepositProductsTemplate.interestCalculationType.id,
-      interestCalculationDaysInYearType: this.fixedDepositProductsTemplate.interestCalculationDaysInYearType.id
+      interestCalculationDaysInYearType:
+        this.fixedDepositProductsTemplate.interestCalculationDaysInYearType.id
     });
   }
 

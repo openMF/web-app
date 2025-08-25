@@ -96,17 +96,24 @@
     </mat-tab>
 
     <mat-tab label="Loan Accounts" *ngIf="clientAccountsData && clientAccountsData.loanAccounts">
-      <mifosx-loan-account-table [loanAccountData]="clientAccountsData.loanAccounts"></mifosx-loan-account-table>
+      <mifosx-loan-account-table
+        [loanAccountData]="clientAccountsData.loanAccounts"
+      ></mifosx-loan-account-table>
     </mat-tab>
 
-    <mat-tab label="Savings Accounts" *ngIf="clientAccountsData && clientAccountsData.savingsAccounts">
+    <mat-tab
+      label="Savings Accounts"
+      *ngIf="clientAccountsData && clientAccountsData.savingsAccounts"
+    >
       <mifosx-savings-account-table
         [savingsAccountData]="clientAccountsData.savingsAccounts"
       ></mifosx-savings-account-table>
     </mat-tab>
 
     <mat-tab label="Share Accounts" *ngIf="clientAccountsData && clientAccountsData.shareAccounts">
-      <mifosx-share-account-table [shareAccountData]="clientAccountsData.shareAccounts"></mifosx-share-account-table>
+      <mifosx-share-account-table
+        [shareAccountData]="clientAccountsData.shareAccounts"
+      ></mifosx-share-account-table>
     </mat-tab>
 
     <mat-tab label="Group Members" *ngIf="clientData.groups && clientData.groups.length !== 0">

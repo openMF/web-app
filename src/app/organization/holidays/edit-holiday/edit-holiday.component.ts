@@ -90,11 +90,17 @@ export class EditHolidayComponent implements OnInit {
     if (!this.isActiveHoliday) {
       this.holidayForm.addControl(
         'fromDate',
-        new UntypedFormControl(this.holidayData.fromDate && new Date(this.holidayData.fromDate), Validators.required)
+        new UntypedFormControl(
+          this.holidayData.fromDate && new Date(this.holidayData.fromDate),
+          Validators.required
+        )
       );
       this.holidayForm.addControl(
         'toDate',
-        new UntypedFormControl(this.holidayData.toDate && new Date(this.holidayData.toDate), Validators.required)
+        new UntypedFormControl(
+          this.holidayData.toDate && new Date(this.holidayData.toDate),
+          Validators.required
+        )
       );
       this.holidayForm.addControl(
         'reschedulingType',
@@ -104,7 +110,8 @@ export class EditHolidayComponent implements OnInit {
         this.holidayForm.addControl(
           'repaymentsRescheduledTo',
           new UntypedFormControl(
-            this.holidayData.repaymentsRescheduledTo && new Date(this.holidayData.repaymentsRescheduledTo),
+            this.holidayData.repaymentsRescheduledTo &&
+              new Date(this.holidayData.repaymentsRescheduledTo),
             Validators.required
           )
         );
@@ -119,7 +126,10 @@ export class EditHolidayComponent implements OnInit {
     this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
       this.reSchedulingType = option;
       if (option === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl(new Date(), Validators.required));
+        this.holidayForm.addControl(
+          'repaymentsRescheduledTo',
+          new UntypedFormControl(new Date(), Validators.required)
+        );
       } else {
         this.holidayForm.removeControl('repaymentsRescheduledTo');
       }
@@ -136,7 +146,10 @@ export class EditHolidayComponent implements OnInit {
     if (!this.isActiveHoliday) {
       if (this.reSchedulingType === 2) {
         const repaymentScheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
-        holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(repaymentScheduledTo, dateFormat);
+        holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(
+          repaymentScheduledTo,
+          dateFormat
+        );
       }
       const prevFromDate: Date = this.holidayForm.value.fromDate;
       const prevToDate: Date = this.holidayForm.value.toDate;

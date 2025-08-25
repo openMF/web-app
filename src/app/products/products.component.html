@@ -4,7 +4,10 @@
       <div class="flex-50">
         <mat-nav-list>
           <div #loanProducts>
-            <mat-list-item [routerLink]="['loan-products']" *mifosxHasPermission="'READ_LOANPRODUCT'">
+            <mat-list-item
+              [routerLink]="['loan-products']"
+              *mifosxHasPermission="'READ_LOANPRODUCT'"
+            >
               <div class="menu-list-item-content">
                 <div class="menu-left-section" [routerLink]="['loan-products']">
                   <mat-icon matListIcon>
@@ -12,8 +15,16 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Loan Products' | translate }}
-                    <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['loan-products']" class="menu-explanation">
-                      {{ 'labels.text.Add new loan product or modify or inactivate loan product' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[0]"
+                      [routerLink]="['loan-products']"
+                      class="menu-explanation"
+                    >
+                      {{
+                        'labels.text.Add new loan product or modify or inactivate loan product'
+                          | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -36,7 +47,10 @@
           </div>
 
           <div #savingsProducts>
-            <mat-list-item [routerLink]="['saving-products']" *mifosxHasPermission="'READ_SAVINGSPRODUCT'">
+            <mat-list-item
+              [routerLink]="['saving-products']"
+              *mifosxHasPermission="'READ_SAVINGSPRODUCT'"
+            >
               <div class="menu-list-item-content">
                 <div class="menu-left-section" [routerLink]="['saving-products']">
                   <mat-icon matListIcon>
@@ -44,8 +58,16 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Savings Products' | translate }}
-                    <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['saving-products']" class="menu-explanation">
-                      {{ 'labels.text.Add new savings product or modify or inactivate savings product' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[1]"
+                      [routerLink]="['saving-products']"
+                      class="menu-explanation"
+                    >
+                      {{
+                        'labels.text.Add new savings product or modify or inactivate savings product'
+                          | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -68,7 +90,10 @@
           </div>
 
           <div #shareProducts>
-            <mat-list-item [routerLink]="['share-products']" *mifosxHasPermission="'READ_SHAREPRODUCT'">
+            <mat-list-item
+              [routerLink]="['share-products']"
+              *mifosxHasPermission="'READ_SHAREPRODUCT'"
+            >
               <div class="menu-list-item-content">
                 <div class="menu-left-section" [routerLink]="['share-products']">
                   <mat-icon matListIcon>
@@ -76,8 +101,16 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Share Products' | translate }}
-                    <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['share-products']" class="menu-explanation">
-                      {{ 'labels.text.Add new share product or modify or inactivate share product' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[2]"
+                      [routerLink]="['share-products']"
+                      class="menu-explanation"
+                    >
+                      {{
+                        'labels.text.Add new share product or modify or inactivate share product'
+                          | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -108,7 +141,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Charges' | translate }}
-                    <p matLine *ngIf="arrowBooleans[3]" [routerLink]="['charges']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[3]"
+                      [routerLink]="['charges']"
+                      class="menu-explanation"
+                    >
                       {{
                         'labels.text.Define charges/penalties for loan products, savings and deposit products'
                           | translate
@@ -142,7 +180,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Collateral Management' | translate }}
-                  <p matLine *ngIf="arrowBooleans[4]" [routerLink]="['collaterals']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[4]"
+                    [routerLink]="['collaterals']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Define collaterals for Collateral Management' | translate }}
                   </p>
                 </div>
@@ -181,7 +224,10 @@
                     [routerLink]="['delinquency-bucket-configurations']"
                     class="menu-explanation"
                   >
-                    {{ 'labels.text.Define delinquency day ranges and bucket set for loan products' | translate }}
+                    {{
+                      'labels.text.Define delinquency day ranges and bucket set for loan products'
+                        | translate
+                    }}
                   </p>
                 </div>
               </div>
@@ -214,7 +260,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Products Mix' | translate }}
-                  <p matLine *ngIf="arrowBooleans[6]" [routerLink]="['products-mix']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[6]"
+                    [routerLink]="['products-mix']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Defines rules for taking multiple rules' | translate }}
                   </p>
                 </div>
@@ -237,7 +288,10 @@
           </mat-list-item>
 
           <div #fixedDepositProducts>
-            <mat-list-item [routerLink]="['fixed-deposit-products']" *mifosxHasPermission="'READ_FIXEDDEPOSITPRODUCT'">
+            <mat-list-item
+              [routerLink]="['fixed-deposit-products']"
+              *mifosxHasPermission="'READ_FIXEDDEPOSITPRODUCT'"
+            >
               <div class="menu-list-item-content">
                 <div class="menu-left-section" [routerLink]="['fixed-deposit-products']">
                   <mat-icon matListIcon>
@@ -251,7 +305,9 @@
                       [routerLink]="['fixed-deposit-products']"
                       class="menu-explanation"
                     >
-                      {{ 'labels.text.Add, modify or inactivate a Fixed deposit product' | translate }}
+                      {{
+                        'labels.text.Add, modify or inactivate a Fixed deposit product' | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -291,7 +347,10 @@
                       [routerLink]="['recurring-deposit-products']"
                       class="menu-explanation"
                     >
-                      {{ 'labels.text.Add, modify or inactivate a Recurring Deposit product' | translate }}
+                      {{
+                        'labels.text.Add, modify or inactivate a Recurring Deposit product'
+                          | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -313,7 +372,10 @@
             </mat-list-item>
           </div>
 
-          <mat-list-item [routerLink]="['tax-configurations']" *mifosxHasPermission="'READ_TAXGROUP'">
+          <mat-list-item
+            [routerLink]="['tax-configurations']"
+            *mifosxHasPermission="'READ_TAXGROUP'"
+          >
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['tax-configurations']">
                 <mat-icon matListIcon>
@@ -321,7 +383,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Manage Tax Configurations' | translate }}
-                  <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['tax-configurations']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[9]"
+                    [routerLink]="['tax-configurations']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Define Tax components and Tax groups' | translate }}
                   </p>
                 </div>
@@ -343,7 +410,10 @@
             </div>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['floating-rates']" *mifosxHasPermission="'READ_FLOATINGRATE'">
+          <mat-list-item
+            [routerLink]="['floating-rates']"
+            *mifosxHasPermission="'READ_FLOATINGRATE'"
+          >
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['floating-rates']">
                 <mat-icon matListIcon>
@@ -382,7 +452,11 @@
   <h2>{{ 'labels.heading.Charges' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Two types of charges—fees and penalties' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       Close
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepCharges()">
@@ -396,9 +470,15 @@
 
 <ng-template #templateLoanProducts let-popover="popover">
   <h2>{{ 'labels.heading.Loan Products' | translate }}</h2>
-  <p class="mw400">{{ 'labels.text.Loan products define the rules, default settings' | translate }}</p>
+  <p class="mw400">
+    {{ 'labels.text.Loan products define the rules, default settings' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepLoanProducts()">
@@ -412,12 +492,22 @@
 
 <ng-template #templateSavingsProducts let-popover="popover">
   <h2>{{ 'labels.heading.Savings Products' | translate }}</h2>
-  <p class="mw400">{{ 'labels.text.Savings products define the rules, default settings' | translate }}</p>
+  <p class="mw400">
+    {{ 'labels.text.Savings products define the rules, default settings' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepSavingsProducts()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepSavingsProducts()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStepSavingsProducts()">
@@ -428,12 +518,22 @@
 
 <ng-template #templateShareProducts let-popover="popover">
   <h2>{{ 'labels.heading.Share Products' | translate }}</h2>
-  <p class="mw400">{{ 'labels.text.Share products define the rules, default settings' | translate }}</p>
+  <p class="mw400">
+    {{ 'labels.text.Share products define the rules, default settings' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepShareProducts()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepShareProducts()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStepShareProducts()">
@@ -444,15 +544,29 @@
 
 <ng-template #templateFixedDepositProducts let-popover="popover">
   <h2>{{ 'labels.heading.Fixed Deposit Products' | translate }}</h2>
-  <p class="mw400">{{ 'labels.text.Fixed Deposit Products defines the rules, default settings' | translate }}</p>
+  <p class="mw400">
+    {{ 'labels.text.Fixed Deposit Products defines the rules, default settings' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepFixedDepositProducts()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepFixedDepositProducts()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStepFixedDepositProducts()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); nextStepFixedDepositProducts()"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -460,15 +574,29 @@
 
 <ng-template #templateRecurringDepositProducts let-popover="popover">
   <h2>{{ 'labels.heading.Recurring Deposit Products' | translate }}</h2>
-  <p class="mw400">{{ 'labels.text.Recurring Deposit products define the rules, default settings' | translate }}</p>
+  <p class="mw400">
+    {{ 'labels.text.Recurring Deposit products define the rules, default settings' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepRecurringDepositProducts()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepRecurringDepositProducts()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStepRecurringDepositProducts()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); nextStepRecurringDepositProducts()"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>

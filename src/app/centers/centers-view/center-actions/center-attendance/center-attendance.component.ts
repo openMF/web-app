@@ -117,7 +117,10 @@ export class CenterAttendanceComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     if (this.membersData !== undefined && this.membersData !== null) {
-      this.dataSource = this.membersData.map((member: any) => ({ clientId: member.id, attendanceType: 1 }));
+      this.dataSource = this.membersData.map((member: any) => ({
+        clientId: member.id,
+        attendanceType: 1
+      }));
     }
     this.meetingDates = this.centerData.collectionMeetingCalendar.recurringDates.filter(
       (date: any) => new Date(date).getTime() < new Date().getTime()
@@ -185,7 +188,11 @@ export class CenterAttendanceComponent implements OnInit {
       locale
     };
     this.centersService
-      .assignCenterAttendance(this.centerData.id, this.centerData.collectionMeetingCalendar.id, data)
+      .assignCenterAttendance(
+        this.centerData.id,
+        this.centerData.collectionMeetingCalendar.id,
+        data
+      )
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });

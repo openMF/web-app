@@ -191,7 +191,9 @@ export class TableAndSmsComponent implements OnChanges {
     });
 
     workbook.xlsx.writeBuffer().then((buffer: any) => {
-      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const blob = new Blob([buffer], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

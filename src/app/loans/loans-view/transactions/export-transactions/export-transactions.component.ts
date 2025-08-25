@@ -87,7 +87,10 @@ export class ExportTransactionsComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const data = {
       'output-type': 'PDF',
-      R_startDate: this.dateUtils.formatDate(this.transactionsReportForm.value.fromDate, dateFormat),
+      R_startDate: this.dateUtils.formatDate(
+        this.transactionsReportForm.value.fromDate,
+        dateFormat
+      ),
       R_endDate: this.dateUtils.formatDate(this.transactionsReportForm.value.toDate, dateFormat),
       R_selectLoan: this.loansAccountId
     };

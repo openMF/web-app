@@ -2,7 +2,10 @@
   <div class="add-option">
     <h4 class="mat-h4">
       {{ 'labels.inputs.Market Price Period' | translate }}
-      <i class="fas fa-question" matTooltip="{{ 'tooltips.Add future share value with date range' | translate }}"></i>
+      <i
+        class="fas fa-question"
+        matTooltip="{{ 'tooltips.Add future share value with date range' | translate }}"
+      ></i>
     </h4>
 
     <div class="">
@@ -27,7 +30,9 @@
     </ng-container>
 
     <ng-container matColumnDef="shareValue">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Nominal/Unit Price' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'labels.inputs.Nominal/Unit Price' | translate }}
+      </th>
       <td mat-cell *matCellDef="let marketPricePeriod">
         {{ marketPricePeriod.shareValue }}
       </td>

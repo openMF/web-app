@@ -148,7 +148,8 @@ export class ListStandingInstructionsComponent {
     const locale = this.settingsService.language.code;
     const searchData = {
       clientId: this.standingIntructionsTemplateData.fromClient.id || this.fromClientId.value,
-      clientName: this.standingIntructionsTemplateData.fromClient.displayName || this.clientNameControl.value,
+      clientName:
+        this.standingIntructionsTemplateData.fromClient.displayName || this.clientNameControl.value,
       locale,
       dateFormat,
       limit: 14,

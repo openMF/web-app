@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -12,7 +17,13 @@ import { AuthenticationService } from '../../core/authentication/authentication.
 import { confirmPasswordValidator } from './confirm-password.validator';
 import { PasswordsUtility } from 'app/core/utils/passwords-utility';
 import { MatDivider } from '@angular/material/divider';
-import { MatFormField, MatPrefix, MatLabel, MatSuffix, MatError } from '@angular/material/form-field';
+import {
+  MatFormField,
+  MatPrefix,
+  MatLabel,
+  MatSuffix,
+  MatError
+} from '@angular/material/form-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';

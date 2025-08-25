@@ -33,7 +33,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="centerMeetingForm.controls.frequency.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Repetition Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Repetition Frequency' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -46,7 +47,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="centerMeetingForm.controls.interval.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Repetition Interval' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Repetition Interval' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -59,7 +61,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="centerMeetingForm.controls.repeatsOnDay.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.At least' | translate }} <strong>{{ 'labels.inputs.one' | translate }}</strong>
+              {{ 'labels.inputs.At least' | translate }}
+              <strong>{{ 'labels.inputs.one' | translate }}</strong>
               {{ 'labels.inputs.day must be selected' | translate }}
             </mat-error>
           </mat-form-field>
@@ -70,7 +73,12 @@
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!centerMeetingForm.valid" (click)="submit()">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!centerMeetingForm.valid"
+          (click)="submit()"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

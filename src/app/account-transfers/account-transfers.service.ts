@@ -33,7 +33,9 @@ export class AccountTransfersService {
 
   updateStandingInstructionsData(standinginstructionsId: any, data: any): Observable<any> {
     const httpParams = new HttpParams().set('command', 'update');
-    return this.http.put(`/standinginstructions/${standinginstructionsId}`, data, { params: httpParams });
+    return this.http.put(`/standinginstructions/${standinginstructionsId}`, data, {
+      params: httpParams
+    });
   }
 
   getStandingInstructionsTemplate(
@@ -61,7 +63,9 @@ export class AccountTransfersService {
   }
 
   newAccountTranferResource(id: any, accountTypeId: any, formValue?: any): Observable<any> {
-    let httpParams = new HttpParams().set('fromAccountId', id).set('fromAccountType', accountTypeId);
+    let httpParams = new HttpParams()
+      .set('fromAccountId', id)
+      .set('fromAccountType', accountTypeId);
     if (formValue) {
       const propNames = Object.getOwnPropertyNames(formValue);
       for (let i = 0; i < propNames.length; i++) {
@@ -89,7 +93,13 @@ export class AccountTransfersService {
     const propNames = Object.getOwnPropertyNames(searchData);
     for (let i = 0; i < propNames.length; i++) {
       const propName = propNames[i];
-      if (!(searchData[propName] === '' || searchData[propName] === undefined || searchData[propName] === null)) {
+      if (
+        !(
+          searchData[propName] === '' ||
+          searchData[propName] === undefined ||
+          searchData[propName] === null
+        )
+      ) {
         httpParams = httpParams.set(propName, searchData[propName]);
       }
     }

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -82,15 +87,20 @@ export class RejectSavingsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevRejectedOnDate: Date = this.rejectSavingsAccountForm.value.rejectedOnDate;
     if (rejectSavingsAccountFormData.rejectedOnDate instanceof Date) {
-      rejectSavingsAccountFormData.rejectedOnDate = this.dateUtils.formatDate(prevRejectedOnDate, dateFormat);
+      rejectSavingsAccountFormData.rejectedOnDate = this.dateUtils.formatDate(
+        prevRejectedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...rejectSavingsAccountFormData,
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'reject', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountCommand(this.accountId, 'reject', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

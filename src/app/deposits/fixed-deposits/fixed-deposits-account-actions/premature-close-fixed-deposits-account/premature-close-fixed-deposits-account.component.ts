@@ -136,7 +136,10 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
           'toSavingsAccountId',
           new UntypedFormControl('', Validators.required)
         );
-        this.prematureCloseAccountForm.addControl('transferDescription', new UntypedFormControl(''));
+        this.prematureCloseAccountForm.addControl(
+          'transferDescription',
+          new UntypedFormControl('')
+        );
       } else {
         this.prematureCloseAccountForm.removeControl('toSavingsAccountId');
         this.prematureCloseAccountForm.removeControl('transferDescription');
@@ -155,7 +158,10 @@ export class PrematureCloseFixedDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.prematureCloseAccountForm.value.closedOnDate;
     if (prematureCloseAccountFormData.closedOnDate instanceof Date) {
-      prematureCloseAccountFormData.closedOnDate = this.dateUtils.formatDate(prevClosedDate, dateFormat);
+      prematureCloseAccountFormData.closedOnDate = this.dateUtils.formatDate(
+        prevClosedDate,
+        dateFormat
+      );
     }
     const data = {
       ...prematureCloseAccountFormData,

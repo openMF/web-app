@@ -144,7 +144,10 @@ export class RescheduleLoanComponent {
 
   bulkLoanRescheduleRequest(command: string) {
     const dateFormat = this.settingsService.dateFormat;
-    const transactionDate = this.dateUtils.formatDate(this.settingsService.businessDate, dateFormat);
+    const transactionDate = this.dateUtils.formatDate(
+      this.settingsService.businessDate,
+      dateFormat
+    );
     const locale = this.settingsService.language.code;
     const formData: RescheduleFormData = {
       dateFormat,

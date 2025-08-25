@@ -6,14 +6,20 @@
   <div class="layout-row gap-32px summary-details-container">
     <p>
       {{ 'labels.inputs.Active Clients' | translate }}: {{ centerSummaryData.activeClients }}<br />
-      {{ 'labels.inputs.Active Group Loans' | translate }}: {{ centerSummaryData.activeGroupLoans }}<br />
-      {{ 'labels.inputs.Active Client Loans' | translate }}: {{ centerSummaryData.activeClientLoans }}<br />
-      {{ 'labels.inputs.Active Overdue Group Loans' | translate }}: {{ centerSummaryData.overdueGroupLoans }}<br />
+      {{ 'labels.inputs.Active Group Loans' | translate }}: {{ centerSummaryData.activeGroupLoans
+      }}<br />
+      {{ 'labels.inputs.Active Client Loans' | translate }}: {{ centerSummaryData.activeClientLoans
+      }}<br />
+      {{ 'labels.inputs.Active Overdue Group Loans' | translate }}:
+      {{ centerSummaryData.overdueGroupLoans }}<br />
     </p>
     <p>
-      {{ 'labels.inputs.Active Group Borrowers' | translate }}: {{ centerSummaryData.activeGroupBorrowers }}<br />
-      {{ 'labels.inputs.Active Client Borrowers' | translate }}: {{ centerSummaryData.activeClientBorrowers }}<br />
-      {{ 'labels.inputs.Active Overdue Client Loans' | translate }}: {{ centerSummaryData.overdueClientLoans }}<br />
+      {{ 'labels.inputs.Active Group Borrowers' | translate }}:
+      {{ centerSummaryData.activeGroupBorrowers }}<br />
+      {{ 'labels.inputs.Active Client Borrowers' | translate }}:
+      {{ centerSummaryData.activeClientBorrowers }}<br />
+      {{ 'labels.inputs.Active Overdue Client Loans' | translate }}:
+      {{ centerSummaryData.overdueClientLoans }}<br />
     </p>
   </div>
 
@@ -46,11 +52,17 @@
 
       <ng-container matColumnDef="Submitted On">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Submitted On' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.timeline.submittedOnDate | dateFormat }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.timeline.submittedOnDate | dateFormat }}
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="groupsColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: groupsColumns" [routerLink]="['/groups', row.id, 'general']"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: groupsColumns"
+        [routerLink]="['/groups', row.id, 'general']"
+      ></tr>
     </table>
   </ng-container>
 
@@ -138,7 +150,9 @@
                 <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
               </button>
             </ng-container>
-            <ng-container *ngIf="!element.status.submittedAndPendingApproval && !element.status.active">
+            <ng-container
+              *ngIf="!element.status.submittedAndPendingApproval && !element.status.active"
+            >
               <button
                 class="account-action-button"
                 mat-raised-button

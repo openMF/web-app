@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -74,7 +79,10 @@ export class EditOfficeComponent implements OnInit {
       externalId: [this.officeData.externalId]
     });
     if (this.officeData.allowedParents.length) {
-      this.officeForm.addControl('parentId', this.formBuilder.control(this.officeData.parentId, Validators.required));
+      this.officeForm.addControl(
+        'parentId',
+        this.formBuilder.control(this.officeData.parentId, Validators.required)
+      );
     }
   }
 

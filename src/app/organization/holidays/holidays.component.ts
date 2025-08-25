@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -167,7 +174,12 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showHolidayPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonCreateHoliday, this.buttonCreateHoliday.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonCreateHoliday,
+          this.buttonCreateHoliday.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
 

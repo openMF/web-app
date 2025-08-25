@@ -29,7 +29,10 @@
 
     <mat-form-field *ngIf="createClientForm.contains('fullname')" class="flex-48">
       <mat-label>
-        {{ 'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Name', 'Entity Name']) | translate }}
+        {{
+          'labels.inputs.' +
+            getDateLabel(createClientForm.value.legalFormId, ['Name', 'Entity Name']) | translate
+        }}
       </mat-label>
       <input matInput required formControlName="fullname" />
       <mat-error *ngIf="createClientForm.controls.fullname.hasError('required')">
@@ -37,7 +40,8 @@
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
       <mat-error *ngIf="createClientForm.controls.fullname.hasError('pattern')">
-        {{ 'labels.inputs.Client name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+        {{ 'labels.inputs.Client name' | translate }}
+        <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
         {{ 'labels.commons.begin with a special character or number' | translate }}
       </mat-error>
     </mat-form-field>
@@ -50,7 +54,8 @@
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
       <mat-error *ngIf="createClientForm.controls.firstname.hasError('pattern')">
-        {{ 'labels.inputs.Client first name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+        {{ 'labels.inputs.Client first name' | translate }}
+        <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
         {{ 'labels.commons.begin with a special character or number' | translate }}
       </mat-error>
     </mat-form-field>
@@ -59,7 +64,8 @@
       <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
       <input matInput formControlName="middlename" />
       <mat-error *ngIf="createClientForm.controls.middlename.hasError('pattern')">
-        {{ 'labels.inputs.Client middle name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+        {{ 'labels.inputs.Client middle name' | translate }}
+        <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
         {{ 'labels.commons.begin with a special character or number' | translate }}
       </mat-error>
     </mat-form-field>
@@ -72,7 +78,8 @@
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
       <mat-error *ngIf="createClientForm.controls.lastname.hasError('pattern')">
-        {{ 'labels.inputs.Client last name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+        {{ 'labels.inputs.Client last name' | translate }}
+        <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
         {{ 'labels.commons.begin with a special character or number' | translate }}
       </mat-error>
     </mat-form-field>
@@ -82,11 +89,19 @@
     <mat-form-field class="flex-48" (click)="dateOfBirthDatePicker.open()">
       <mat-label>
         {{
-          'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Date of Birth', 'Incorporation Date'])
-            | translate
+          'labels.inputs.' +
+            getDateLabel(createClientForm.value.legalFormId, [
+              'Date of Birth',
+              'Incorporation Date'
+            ]) | translate
         }}
       </mat-label>
-      <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth" />
+      <input
+        matInput
+        [max]="maxDate"
+        [matDatepicker]="dateOfBirthDatePicker"
+        formControlName="dateOfBirth"
+      />
       <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
     </mat-form-field>
@@ -123,7 +138,10 @@
           [matDatepicker]="incorpValidityTillDateDatePicker"
           formControlName="incorpValidityTillDate"
         />
-        <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="incorpValidityTillDateDatePicker"
+        ></mat-datepicker-toggle>
         <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
       </mat-form-field>
 
@@ -134,7 +152,12 @@
 
       <mat-form-field class="flex-98">
         <mat-label>{{ 'labels.inputs.Remarks' | translate }}</mat-label>
-        <textarea matInput formControlName="remarks" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+        <textarea
+          matInput
+          formControlName="remarks"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="2"
+        ></textarea>
       </mat-form-field>
     </div>
 

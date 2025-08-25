@@ -17,7 +17,9 @@
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.External Id' | translate }}</span>
     <span class="flex-60" *ngIf="sharesAccount.externalId">
-      <mifosx-external-identifier externalId="{{ sharesAccount.externalId }}"></mifosx-external-identifier>
+      <mifosx-external-identifier
+        externalId="{{ sharesAccount.externalId }}"
+      ></mifosx-external-identifier>
     </span>
     <span class="flex-60" *ngIf="!sharesAccount.externalId">
       {{ 'labels.inputs.Unassigned' | translate }}
@@ -55,7 +57,8 @@
   <div class="flex-fill">
     <span class="flex-40">{{ 'labels.inputs.Default Savings Account' | translate }}</span>
     <span class="flex-60">{{
-      sharesAccount.savingsAccountId | find: sharesAccountProductTemplate.clientSavingsAccounts : 'id' : 'accountNo'
+      sharesAccount.savingsAccountId
+        | find: sharesAccountProductTemplate.clientSavingsAccounts : 'id' : 'accountNo'
     }}</span>
   </div>
 
@@ -64,7 +67,10 @@
     <span class="flex-60"
       >{{ sharesAccount.minimumActivePeriod }}&nbsp;{{
         sharesAccount.minimumActivePeriodFrequencyType
-          | find: sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions : 'id' : 'value'
+          | find
+            : sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions
+            : 'id'
+            : 'value'
           | translateKey: 'catalogs'
       }}</span
     >
@@ -87,8 +93,12 @@
   </div>
 
   <div class="flex-fill">
-    <span class="flex-40">{{ 'labels.inputs.Allow dividends for inactive clients' | translate }}</span>
-    <span class="flex-60">{{ sharesAccount.allowDividendCalculationForInactiveClients | yesNo }}</span>
+    <span class="flex-40">{{
+      'labels.inputs.Allow dividends for inactive clients' | translate
+    }}</span>
+    <span class="flex-60">{{
+      sharesAccount.allowDividendCalculationForInactiveClients | yesNo
+    }}</span>
   </div>
 
   <div *ngIf="sharesAccount.charges.length" class="layout-row-wrap responsive-column flex-fill">

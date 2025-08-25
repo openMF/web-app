@@ -12,7 +12,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Offices' | translate }}
-                    <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['offices']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[0]"
+                      [routerLink]="['offices']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Add new office or modify or deactivate office' | translate }}
                     </p>
                   </div>
@@ -44,7 +49,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Holidays' | translate }}
-                    <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['holidays']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[1]"
+                      [routerLink]="['holidays']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Define holidays for office' | translate }}
                     </p>
                   </div>
@@ -76,7 +86,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Employees' | translate }}
-                    <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['employees']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[2]"
+                      [routerLink]="['employees']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Employee represents loan officers' | translate }}
                     </p>
                   </div>
@@ -145,8 +160,16 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.text.Investors' | translate }}
-                    <p matLine *ngIf="arrowBooleans[4]" [routerLink]="['investors']" class="menu-explanation">
-                      {{ 'labels.text.View the loan account details associated with the investors' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[4]"
+                      [routerLink]="['investors']"
+                      class="menu-explanation"
+                    >
+                      {{
+                        'labels.text.View the loan account details associated with the investors'
+                          | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -177,7 +200,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Fund Mapping' | translate }}
-                    <p matLine *ngIf="arrowBooleans[5]" [routerLink]="['fund-mapping']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[5]"
+                      [routerLink]="['fund-mapping']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Bulk entry screen for mapping' | translate }}
                     </p>
                   </div>
@@ -324,7 +352,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Currency Configuration' | translate }}
-                    <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['currencies']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[9]"
+                      [routerLink]="['currencies']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Currencies available across organization' | translate }}
                     </p>
                   </div>
@@ -356,7 +389,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Funds' | translate }}
-                    <p matLine *ngIf="arrowBooleans[10]" [routerLink]="['manage-funds']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[10]"
+                      [routerLink]="['manage-funds']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Funds are associated with loans' | translate }}
                     </p>
                   </div>
@@ -388,7 +426,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Bulk Loan Reassignment' | translate }}
-                    <p matLine *ngIf="arrowBooleans[11]" [routerLink]="['bulkloan']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[11]"
+                      [routerLink]="['bulkloan']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Easy way to reassign all the loan' | translate }}
                     </p>
                   </div>
@@ -420,7 +463,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Teller / Cashier Management' | translate }}
-                    <p matLine *ngIf="arrowBooleans[12]" [routerLink]="['tellers']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[12]"
+                      [routerLink]="['tellers']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Manage Tellers / Cashiers' | translate }}
                     </p>
                   </div>
@@ -452,8 +500,15 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Working Days' | translate }}
-                    <p matLine *ngIf="arrowBooleans[13]" [routerLink]="['working-days']" class="menu-explanation">
-                      {{ 'labels.text.Working days and configure behaviour of payments' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[13]"
+                      [routerLink]="['working-days']"
+                      class="menu-explanation"
+                    >
+                      {{
+                        'labels.text.Working days and configure behaviour of payments' | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -484,7 +539,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Payment Type' | translate }}
-                    <p matLine *ngIf="arrowBooleans[14]" [routerLink]="['payment-types']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[14]"
+                      [routerLink]="['payment-types']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Manage payment types' | translate }}
                     </p>
                   </div>
@@ -516,7 +576,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.SMS Campaigns' | translate }}
-                    <p matLine *ngIf="arrowBooleans[15]" [routerLink]="['sms-campaigns']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[15]"
+                      [routerLink]="['sms-campaigns']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Define SMS Campaigns for Organization' | translate }}
                     </p>
                   </div>
@@ -548,7 +613,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.AdHocQuery' | translate }}
-                    <p matLine *ngIf="arrowBooleans[16]" [routerLink]="['adhoc-query']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[16]"
+                      [routerLink]="['adhoc-query']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Define AdHocQuery for Organization' | translate }}
                     </p>
                   </div>
@@ -580,8 +650,15 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Bulk Import' | translate }}
-                    <p matLine *ngIf="arrowBooleans[17]" [routerLink]="['bulk-import']" class="menu-explanation">
-                      {{ 'labels.text.Bulk data import using excel spreadsheet templates' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[17]"
+                      [routerLink]="['bulk-import']"
+                      class="menu-explanation"
+                    >
+                      {{
+                        'labels.text.Bulk data import using excel spreadsheet templates' | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -610,9 +687,15 @@
 
 <ng-template #templateOffice let-popover="popover">
   <h2>{{ 'labels.heading.Manage Offices' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Manage Offices page allows you to create, edit' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Manage Offices page allows you to create, edit' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepOffice()">
@@ -626,12 +709,22 @@
 
 <ng-template #templateAddEditCurrency let-popover="popover">
   <h2>{{ 'labels.heading.Currency Configuration' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Define what currencies interactions within the Mifos X system' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Define what currencies interactions within the Mifos X system' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepAddEditCurrency()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepAddEditCurrency()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStepAddEditCurrency()">
@@ -642,9 +735,15 @@
 
 <ng-template #templateHolidays let-popover="popover">
   <h2>{{ 'labels.heading.Manage Holidays' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Ability to manage holidays for individual offices' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Ability to manage holidays for individual offices' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepHolidays()">
@@ -658,9 +757,15 @@
 
 <ng-template #templateEmployee let-popover="popover">
   <h2>{{ 'labels.heading.Manage Employees' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.View, edit and delete employees of your organization' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.View, edit and delete employees of your organization' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepEmployee()">
@@ -674,9 +779,15 @@
 
 <ng-template #templateWorkingDays let-popover="popover">
   <h2>{{ 'labels.heading.Working Days' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Working days page allows you to define which days' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Working days page allows you to define which days' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepWorkingDays()">
@@ -690,9 +801,15 @@
 
 <ng-template #templateManageFunds let-popover="popover">
   <h2>{{ 'labels.heading.Manage Funds' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.This allows you to manage funds associated with loans.' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.This allows you to manage funds associated with loans.' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepManageFunds()">

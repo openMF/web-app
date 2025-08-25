@@ -11,7 +11,12 @@
           <button type="button" mat-raised-button [routerLink]="['../../general']">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
-          <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'APPROVALUNDO_LOAN'">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="submit()"
+            *mifosxHasPermission="'APPROVALUNDO_LOAN'"
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

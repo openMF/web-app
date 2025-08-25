@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormGroup, FormBuilder, UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  UntypedFormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Dialogs */
@@ -87,7 +93,9 @@ export class ManageGroupMembersComponent implements AfterViewInit {
   addClient() {
     if (!this.clientMembers.includes(this.clientChoice.value)) {
       this.groupsService
-        .executeGroupCommand(this.groupData.id, 'associateClients', { clientMembers: [this.clientChoice.value.id] })
+        .executeGroupCommand(this.groupData.id, 'associateClients', {
+          clientMembers: [this.clientChoice.value.id]
+        })
         .subscribe(() => {
           this.clientMembers.push(this.clientChoice.value);
         });
@@ -106,7 +114,9 @@ export class ManageGroupMembersComponent implements AfterViewInit {
     removeMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.groupsService
-          .executeGroupCommand(this.groupData.id, 'disassociateClients', { clientMembers: [client.id] })
+          .executeGroupCommand(this.groupData.id, 'disassociateClients', {
+            clientMembers: [client.id]
+          })
           .subscribe(() => {
             this.clientMembers.splice(index, 1);
           });

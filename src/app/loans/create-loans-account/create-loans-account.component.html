@@ -80,7 +80,10 @@
     <mat-step *ngFor="let datatable of datatables">
       <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
 
-      <mifosx-loans-account-datatable-step [datatableData]="datatable" #dtloan></mifosx-loans-account-datatable-step>
+      <mifosx-loans-account-datatable-step
+        [datatableData]="datatable"
+        #dtloan
+      ></mifosx-loans-account-datatable-step>
     </mat-step>
 
     <mat-step state="preview" *ngIf="loansAccountFormValid" completed>

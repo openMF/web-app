@@ -16,7 +16,9 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="surveyName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="surveyName">{{ 'labels.inputs.Survey' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="surveyName">
+          {{ 'labels.inputs.Survey' | translate }}
+        </th>
         <td mat-cell *matCellDef="let survey">{{ survey.surveyName }}</td>
       </ng-container>
 
@@ -28,12 +30,16 @@
       </ng-container>
 
       <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.DateTime' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.DateTime' | translate }}
+        </th>
         <td mat-cell *matCellDef="let survey">{{ survey.date | datetimeFormat }}</td>
       </ng-container>
 
       <ng-container matColumnDef="score">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Score' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Score' | translate }}
+        </th>
         <td mat-cell *matCellDef="let survey">{{ survey.score | formatNumber }}</td>
       </ng-container>
 

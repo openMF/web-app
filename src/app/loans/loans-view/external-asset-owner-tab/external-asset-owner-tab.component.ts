@@ -76,7 +76,8 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
     this.route.data.subscribe((data: { loanTransfersData: any; activeTransferData: any }) => {
       this.loanTransfersData = data.loanTransfersData.empty ? [] : data.loanTransfersData.content;
       this.activeTransferData = data.activeTransferData || null;
-      this.existActiveTransfer = data.activeTransferData && data.activeTransferData.transferId != null;
+      this.existActiveTransfer =
+        data.activeTransferData && data.activeTransferData.transferId != null;
     });
   }
 
@@ -125,7 +126,9 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
 
   cancelSaleLoan(): void {
     const deleteDataTableDialogRef = this.dialog.open(CancelDialogComponent, {
-      data: { cancelContext: `the Asset Transfer with the Owner External Id ${this.currentItem.owner.externalId} ` }
+      data: {
+        cancelContext: `the Asset Transfer with the Owner External Id ${this.currentItem.owner.externalId} `
+      }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.cancel) {
@@ -151,6 +154,8 @@ export class ExternalAssetOwnerTabComponent implements OnInit {
 
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(`/`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 }

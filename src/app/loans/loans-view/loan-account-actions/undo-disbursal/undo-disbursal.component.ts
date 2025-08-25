@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -58,8 +63,10 @@ export class UndoDisbursalComponent implements OnInit {
     if (this.actionName === 'Undo Last Disbursal') {
       command = 'undolastdisbursal';
     }
-    this.loansService.loanActionButtons(this.loanId, command, { note: this.note.value }).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loansService
+      .loanActionButtons(this.loanId, command, { note: this.note.value })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

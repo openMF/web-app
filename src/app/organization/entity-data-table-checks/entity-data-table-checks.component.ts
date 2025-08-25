@@ -164,12 +164,14 @@ export class EntityDataTableChecksComponent implements OnInit {
     });
     deleteEntityDataTableCheckDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteEntityDataTableCheck(entityDataTableCheckId).subscribe(() => {
-          this.entityDataTableChecksData = this.entityDataTableChecksData.filter(
-            (entityDataTableChecks: any) => entityDataTableChecks.id !== entityDataTableCheckId
-          );
-          this.dataSource.data = this.entityDataTableChecksData;
-        });
+        this.organizationService
+          .deleteEntityDataTableCheck(entityDataTableCheckId)
+          .subscribe(() => {
+            this.entityDataTableChecksData = this.entityDataTableChecksData.filter(
+              (entityDataTableChecks: any) => entityDataTableChecks.id !== entityDataTableCheckId
+            );
+            this.dataSource.data = this.entityDataTableChecksData;
+          });
       }
     });
   }

@@ -1,6 +1,19 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormArray, UntypedFormControl } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormArray,
+  UntypedFormControl
+} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -80,7 +93,13 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
   ) {
     this.assetExternalizationEnabled = false;
     this.route.data.subscribe(
-      (data: { offices: any; currencies: any; paymentTypes: any; glAccounts: any; globalConfig: any }) => {
+      (data: {
+        offices: any;
+        currencies: any;
+        paymentTypes: any;
+        glAccounts: any;
+        globalConfig: any;
+      }) => {
         this.officeData = data.offices;
         this.currencyData = data.currencies.selectedCurrencyOptions;
         this.paymentTypeData = data.paymentTypes;
@@ -229,7 +248,12 @@ export class CreateJournalEntryComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showCreateJournalEntries === true) {
       setTimeout(() => {
-        this.showPopover(this.templateCreateJournalFormRef, this.createJournalFormRef.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateCreateJournalFormRef,
+          this.createJournalFormRef.nativeElement,
+          'top',
+          true
+        );
       });
     }
     this.assetExternalizationEnabled = this.assetExternalizationConfig.enabled;

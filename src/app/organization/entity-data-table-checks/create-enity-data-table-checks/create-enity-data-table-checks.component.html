@@ -45,7 +45,10 @@
           <mat-form-field *ngIf="entityType === 'm_loan'">
             <mat-label>{{ 'labels.inputs.Products' | translate }}</mat-label>
             <mat-select required formControlName="productId">
-              <mat-option *ngFor="let loanProducts of createEntityData.loanProductDatas" [value]="loanProducts.id">
+              <mat-option
+                *ngFor="let loanProducts of createEntityData.loanProductDatas"
+                [value]="loanProducts.id"
+              >
                 {{ loanProducts.name }}
               </mat-option>
             </mat-select>

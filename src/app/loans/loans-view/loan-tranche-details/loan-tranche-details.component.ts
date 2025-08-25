@@ -226,7 +226,8 @@ export class LoanTrancheDetailsComponent implements OnInit {
         const newPrincipal = response.data.value.principal * 1;
         if (this.totalMultiDisbursed - principal + newPrincipal <= this.currentPrincipalAmount) {
           this.disbursementDataSource[index]['principal'] = newPrincipal;
-          this.disbursementDataSource[index]['expectedDisbursementDate'] = response.data.value.expectedDisbursementDate;
+          this.disbursementDataSource[index]['expectedDisbursementDate'] =
+            response.data.value.expectedDisbursementDate;
           this.pristine = false;
         }
       }
@@ -277,6 +278,8 @@ export class LoanTrancheDetailsComponent implements OnInit {
 
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(`/clients`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 }

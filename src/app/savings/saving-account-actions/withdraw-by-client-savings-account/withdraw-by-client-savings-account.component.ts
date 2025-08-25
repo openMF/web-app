@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -82,15 +87,20 @@ export class WithdrawByClientSavingsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawnOnDate: Date = this.withdrawSavingsAccountForm.value.withdrawnOnDate;
     if (withdrawSavingsAccountFormData.withdrawnOnDate instanceof Date) {
-      withdrawSavingsAccountFormData.withdrawnOnDate = this.dateUtils.formatDate(prevWithdrawnOnDate, dateFormat);
+      withdrawSavingsAccountFormData.withdrawnOnDate = this.dateUtils.formatDate(
+        prevWithdrawnOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...withdrawSavingsAccountFormData,
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'withdrawnByApplicant', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountCommand(this.accountId, 'withdrawnByApplicant', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

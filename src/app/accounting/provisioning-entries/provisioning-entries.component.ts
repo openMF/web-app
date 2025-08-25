@@ -115,15 +115,17 @@ export class ProvisioningEntriesComponent implements OnInit {
    * @param {string} provisioningEntryId Provisioning entry id.
    */
   recreateProvisioning($event: Event, provisioningEntryId: string) {
-    this.accountingService.recreateProvisioningEntries(provisioningEntryId).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          'view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.accountingService
+      .recreateProvisioningEntries(provisioningEntryId)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            'view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
     $event.stopPropagation();
   }
 

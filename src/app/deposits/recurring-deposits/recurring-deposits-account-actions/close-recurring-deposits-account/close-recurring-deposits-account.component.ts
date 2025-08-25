@@ -69,7 +69,8 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
     this.route.data.subscribe((data: { recurringDepositsAccountActionData: any }) => {
       this.savingsAccountsData = data.recurringDepositsAccountActionData.savingsAccounts;
       this.maturityAmount = data.recurringDepositsAccountActionData.maturityAmount;
-      this.onAccountClosureOptions = data.recurringDepositsAccountActionData.onAccountClosureOptions;
+      this.onAccountClosureOptions =
+        data.recurringDepositsAccountActionData.onAccountClosureOptions;
       this.paymentTypes = data.recurringDepositsAccountActionData.paymentTypeOptions;
       if (data.recurringDepositsAccountActionData.maturityAmount) {
         this.title = 'Recurring Deposit Closure on Maturity';
@@ -126,7 +127,10 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
           'toSavingsAccountId',
           new UntypedFormControl('', Validators.required)
         );
-        this.closeRecurringDepositForm.addControl('transferDescription', new UntypedFormControl(''));
+        this.closeRecurringDepositForm.addControl(
+          'transferDescription',
+          new UntypedFormControl('')
+        );
       } else {
         this.closeRecurringDepositForm.removeControl('toSavingsAccountId');
         this.closeRecurringDepositForm.removeControl('transferDescription');
@@ -143,7 +147,10 @@ export class CloseRecurringDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
     if (closeRecurringDepositFormData.closedOnDate instanceof Date) {
-      closeRecurringDepositFormData.closedOnDate = this.dateUtils.formatDate(closedOnDate, dateFormat);
+      closeRecurringDepositFormData.closedOnDate = this.dateUtils.formatDate(
+        closedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...closeRecurringDepositFormData,

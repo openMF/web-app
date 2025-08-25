@@ -25,7 +25,8 @@
             <mat-label>{{ 'labels.inputs.Insert into table' | translate }}</mat-label>
             <input matInput required formControlName="tableName" />
             <mat-error *ngIf="adhocQueryForm.controls.tableName.hasError('required')">
-              {{ 'labels.inputs.Insert into table' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Insert into table' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -51,17 +52,23 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Report Run Frequency' | translate }}</mat-label>
             <mat-select formControlName="reportRunFrequency">
-              <mat-option *ngFor="let reportRunFrequency of reportRunFrequencyData" [value]="reportRunFrequency.id">
+              <mat-option
+                *ngFor="let reportRunFrequency of reportRunFrequencyData"
+                [value]="reportRunFrequency.id"
+              >
                 {{ reportRunFrequency.value }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field *ngIf="adhocQueryForm.controls.reportRunFrequency.value === 5">
-            <mat-label>{{ 'labels.inputs.Custom Report Run Frequency (Days)' | translate }}</mat-label>
+            <mat-label>{{
+              'labels.inputs.Custom Report Run Frequency (Days)' | translate
+            }}</mat-label>
             <input type="number" matInput required formControlName="reportRunEvery" />
             <mat-error *ngIf="adhocQueryForm.controls.reportRunEvery.hasError('required')">
-              {{ 'labels.inputs.Custom Report Run Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Custom Report Run Frequency' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="adhocQueryForm.controls.reportRunEvery.hasError('min')">

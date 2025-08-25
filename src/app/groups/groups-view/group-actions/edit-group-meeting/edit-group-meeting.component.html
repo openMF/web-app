@@ -18,7 +18,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupEditMeetingForm.controls.frequency.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Repetition Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Repetition Frequency' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -31,7 +32,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupEditMeetingForm.controls.interval.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Repeition Interval' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Repeition Interval' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -44,13 +46,16 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupEditMeetingForm.controls.repeatsOnDay.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.At least' | translate }} <strong>{{ 'labels.inputs.one' | translate }}</strong>
+              {{ 'labels.inputs.At least' | translate }}
+              <strong>{{ 'labels.inputs.one' | translate }}</strong>
               {{ 'labels.inputs.day must be selected' | translate }}
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="m-b-5" (click)="startDatePicker.open()">
-            <mat-label>{{ 'labels.inputs.Above Changes are Effective from' | translate }}</mat-label>
+            <mat-label>{{
+              'labels.inputs.Above Changes are Effective from' | translate
+            }}</mat-label>
             <input
               matInput
               [min]="minDate"
@@ -62,7 +67,8 @@
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             <mat-error *ngIf="groupEditMeetingForm.controls.startDate.hasError('required')">
-              {{ 'labels.inputs.Changes Affection Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Changes Affection Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-hint>

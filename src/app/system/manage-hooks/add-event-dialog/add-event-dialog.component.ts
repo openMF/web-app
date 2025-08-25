@@ -8,7 +8,12 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -74,7 +79,9 @@ export class AddEventDialogComponent implements OnInit {
    */
   setGroupingListener() {
     this.eventForm.get('grouping').valueChanges.subscribe((changedGrouping) => {
-      this.entityData = this.data.groupings.find((grouping: any) => grouping.name === changedGrouping).entities;
+      this.entityData = this.data.groupings.find(
+        (grouping: any) => grouping.name === changedGrouping
+      ).entities;
     });
   }
 
@@ -83,7 +90,9 @@ export class AddEventDialogComponent implements OnInit {
    */
   setEntityListener() {
     this.eventForm.get('entity').valueChanges.subscribe((changedEntity) => {
-      this.actionData = this.entityData.find((entity: any) => entity.name === changedEntity).actions;
+      this.actionData = this.entityData.find(
+        (entity: any) => entity.name === changedEntity
+      ).actions;
     });
   }
 

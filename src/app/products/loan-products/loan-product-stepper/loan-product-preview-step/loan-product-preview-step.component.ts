@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { LoanProducts } from '../../loan-products';
 import { LoanProductSummaryComponent } from '../../common/loan-product-summary/loan-product-summary.component';
 import { MatStepperPrevious } from '@angular/material/stepper';

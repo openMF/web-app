@@ -112,7 +112,9 @@ export class ManageGroupsComponent implements AfterViewInit {
     removeMemberDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.centersService
-          .executeCenterActionCommand(this.centerData.id, 'disassociateGroups', { groupMembers: [group.id] })
+          .executeCenterActionCommand(this.centerData.id, 'disassociateGroups', {
+            groupMembers: [group.id]
+          })
           .subscribe(() => {
             this.groupMembers.splice(index, 1);
           });

@@ -28,7 +28,11 @@
   <div class="layout-row-wrap layout-lt-md-column gap-2percent" *ngIf="loanProductSelected">
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.External id' | translate }}</mat-label>
-      <input matInput formControlName="externalId" matTooltip="{{ 'tooltips.Provides an external id' | translate }}" />
+      <input
+        matInput
+        formControlName="externalId"
+        matTooltip="{{ 'tooltips.Provides an external id' | translate }}"
+      />
     </mat-form-field>
 
     <mat-form-field class="flex-48" *ngIf="loanProductSelected">
@@ -45,7 +49,10 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Loan Purpose' | translate }}</mat-label>
-      <mat-select formControlName="loanPurposeId" matTooltip="{{ 'tooltips.Provides an indication' | translate }}">
+      <mat-select
+        formControlName="loanPurposeId"
+        matTooltip="{{ 'tooltips.Provides an indication' | translate }}"
+      >
         <mat-option *ngFor="let loanPurpose of loanPurposeOptions" [value]="loanPurpose.id">
           {{ loanPurpose.name }}
         </mat-option>

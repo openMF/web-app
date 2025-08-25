@@ -52,7 +52,8 @@ export class ViewSignatureDialogComponent implements OnInit {
     private sanitizer: DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data: { documents: any[]; id: string }
   ) {
-    const signature = this.data.documents.find((document: any) => document.name === 'clientSignature') || {};
+    const signature =
+      this.data.documents.find((document: any) => document.name === 'clientSignature') || {};
     this.signatureId = signature.id;
     this.clientId = this.data.id;
   }

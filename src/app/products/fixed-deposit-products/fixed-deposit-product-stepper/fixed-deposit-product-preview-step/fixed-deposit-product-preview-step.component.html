@@ -21,7 +21,8 @@
   <div class="layout-row flex-100">
     <span class="flex-40">{{ 'labels.inputs.Currency' | translate }}:</span>
     <span class="flex-60">{{
-      fixedDepositProduct.currencyCode | find: fixedDepositProductsTemplate.currencyOptions : 'code' : 'name'
+      fixedDepositProduct.currencyCode
+        | find: fixedDepositProductsTemplate.currencyOptions : 'code' : 'name'
     }}</span>
   </div>
 
@@ -82,7 +83,10 @@
     <span class="flex-40">{{ 'labels.inputs.Days in Year' | translate }}:</span>
     <span class="flex-60">{{
       fixedDepositProduct.interestCalculationDaysInYearType
-        | find: fixedDepositProductsTemplate.interestCalculationDaysInYearTypeOptions : 'id' : 'value'
+        | find
+          : fixedDepositProductsTemplate.interestCalculationDaysInYearTypeOptions
+          : 'id'
+          : 'value'
     }}</span>
   </div>
 
@@ -140,7 +144,10 @@
       fixedDepositProduct.preClosurePenalInterest +
         '% (' +
         (fixedDepositProduct.preClosurePenalInterestOnTypeId
-          | find: fixedDepositProductsTemplate.preClosurePenalInterestOnTypeOptions : 'id' : 'value') +
+          | find
+            : fixedDepositProductsTemplate.preClosurePenalInterestOnTypeOptions
+            : 'id'
+            : 'value') +
         ')'
     }}</span>
   </div>
@@ -153,11 +160,15 @@
   <div class="layout-row flex-100" *ngIf="fixedDepositProduct.withHoldTax">
     <span class="flex-40">{{ 'labels.inputs.Tax Group' | translate }}:</span>
     <span class="flex-60">{{
-      fixedDepositProduct.taxGroupId | find: fixedDepositProductsTemplate.taxGroupOptions : 'id' : 'name'
+      fixedDepositProduct.taxGroupId
+        | find: fixedDepositProductsTemplate.taxGroupOptions : 'id' : 'name'
     }}</span>
   </div>
 
-  <div class="layout-row-wrap responsive-column flex-100" *ngIf="fixedDepositProduct.charts.length !== 0">
+  <div
+    class="layout-row-wrap responsive-column flex-100"
+    *ngIf="fixedDepositProduct.charts.length !== 0"
+  >
     <h3 class="mat-h3 flex-100">{{ 'labels.heading.Interest Rate Charts' | translate }}</h3>
 
     <mat-divider class="flex-100"></mat-divider>
@@ -205,7 +216,8 @@
                 ' - ' +
                 chartSlab.toPeriod +
                 ' ' +
-                (chartSlab.periodType | find: fixedDepositProductsTemplate.chartTemplate.periodTypes : 'id' : 'value')
+                (chartSlab.periodType
+                  | find: fixedDepositProductsTemplate.chartTemplate.periodTypes : 'id' : 'value')
             }}
           </td>
         </ng-container>
@@ -263,75 +275,114 @@
           >
             <div
               class="layout-row-wrap flex-100 incentives"
-              [@expandChartSlab]="chartSlabIndex === expandChartSlabIndex[chartIndex] ? 'expanded' : 'collapsed'"
+              [@expandChartSlab]="
+                chartSlabIndex === expandChartSlabIndex[chartIndex] ? 'expanded' : 'collapsed'
+              "
             >
               <mat-card class="layout-row-wrap flex-100">
                 <h4 class="mat-h4 flex-23">
                   {{ 'labels.heading.Incentives' | translate }}
                 </h4>
 
-                <table class="flex-100 mat-elevation-z1" mat-table [dataSource]="chartSlab.incentives">
+                <table
+                  class="flex-100 mat-elevation-z1"
+                  mat-table
+                  [dataSource]="chartSlab.incentives"
+                >
                   <ng-container matColumnDef="entityType">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Entity Type' | translate }}</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ 'labels.inputs.Entity Type' | translate }}
+                    </th>
                     <td mat-cell *matCellDef="let incentive">
                       {{
                         incentive.entityType
-                          | find: fixedDepositProductsTemplate.chartTemplate.entityTypeOptions : 'id' : 'value'
+                          | find
+                            : fixedDepositProductsTemplate.chartTemplate.entityTypeOptions
+                            : 'id'
+                            : 'value'
                       }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="attributeName">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Attribute Name' | translate }}</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ 'labels.inputs.Attribute Name' | translate }}
+                    </th>
                     <td mat-cell *matCellDef="let incentive">
                       {{
                         incentive.attributeName
-                          | find: fixedDepositProductsTemplate.chartTemplate.attributeNameOptions : 'id' : 'value'
+                          | find
+                            : fixedDepositProductsTemplate.chartTemplate.attributeNameOptions
+                            : 'id'
+                            : 'value'
                       }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="conditionType">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Condition Type' | translate }}</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ 'labels.inputs.Condition Type' | translate }}
+                    </th>
                     <td mat-cell *matCellDef="let incentive">
                       {{
                         incentive.conditionType
-                          | find: fixedDepositProductsTemplate.chartTemplate.conditionTypeOptions : 'id' : 'value'
+                          | find
+                            : fixedDepositProductsTemplate.chartTemplate.conditionTypeOptions
+                            : 'id'
+                            : 'value'
                       }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="attributeValue">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Attribute Value' | translate }}</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ 'labels.inputs.Attribute Value' | translate }}
+                    </th>
                     <td mat-cell *matCellDef="let incentive" [ngSwitch]="incentive.attributeName">
                       <span *ngSwitchCase="2">{{
                         incentive.attributeValue
-                          | find: fixedDepositProductsTemplate.chartTemplate.genderOptions : 'id' : 'name'
+                          | find
+                            : fixedDepositProductsTemplate.chartTemplate.genderOptions
+                            : 'id'
+                            : 'name'
                       }}</span>
                       <span *ngSwitchCase="3">{{ incentive.attributeValue }}</span>
                       <span *ngSwitchCase="4">{{
                         incentive.attributeValue
-                          | find: fixedDepositProductsTemplate.chartTemplate.clientTypeOptions : 'id' : 'name'
+                          | find
+                            : fixedDepositProductsTemplate.chartTemplate.clientTypeOptions
+                            : 'id'
+                            : 'name'
                       }}</span>
                       <span *ngSwitchCase="5">{{
                         incentive.attributeValue
-                          | find: fixedDepositProductsTemplate.chartTemplate.clientClassificationOptions : 'id' : 'name'
+                          | find
+                            : fixedDepositProductsTemplate.chartTemplate.clientClassificationOptions
+                            : 'id'
+                            : 'name'
                       }}</span>
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="incentiveType">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Incentive Type' | translate }}</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ 'labels.inputs.Incentive Type' | translate }}
+                    </th>
                     <td mat-cell *matCellDef="let incentive">
                       {{
                         incentive.incentiveType
-                          | find: fixedDepositProductsTemplate.chartTemplate.incentiveTypeOptions : 'id' : 'value'
+                          | find
+                            : fixedDepositProductsTemplate.chartTemplate.incentiveTypeOptions
+                            : 'id'
+                            : 'value'
                       }}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="amount">
-                    <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ 'labels.inputs.Amount' | translate }}
+                    </th>
                     <td mat-cell *matCellDef="let incentive">
                       {{ incentive.amount | formatNumber }}
                     </td>
@@ -347,14 +398,21 @@
 
         <tr mat-header-row *matHeaderRowDef="chartSlabsDisplayedColumns[chartIndex]"></tr>
         <tr mat-row *matRowDef="let row; columns: chartSlabsDisplayedColumns[chartIndex]"></tr>
-        <tr mat-row *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns" class="incentives-row"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns"
+          class="incentives-row"
+        ></tr>
       </table>
 
       <mat-divider class="flex-100"></mat-divider>
     </div>
   </div>
 
-  <div *ngIf="fixedDepositProduct.charges.length" class="layout-row-wrap responsive-column flex-100">
+  <div
+    *ngIf="fixedDepositProduct.charges.length"
+    class="layout-row-wrap responsive-column flex-100"
+  >
     <h3 class="mat-h3 flex-100">{{ 'labels.heading.Charges' | translate }}</h3>
 
     <mat-divider class="flex-100"></mat-divider>
@@ -418,7 +476,9 @@
       *ngIf="fixedDepositProduct.paymentChannelToFundSourceMappings?.length"
       class="flex-100 layout-row-wrap responsive-column"
     >
-      <h4 class="mat-h4 flex-100">{{ 'labels.heading.Fund Sources for Payment Channels' | translate }}</h4>
+      <h4 class="mat-h4 flex-100">
+        {{ 'labels.heading.Fund Sources for Payment Channels' | translate }}
+      </h4>
       <table
         class="mat-elevation-z1 flex-100"
         mat-table
@@ -428,7 +488,8 @@
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Type' | translate }}</th>
           <td mat-cell *matCellDef="let paymentFundSource">
             {{
-              paymentFundSource.paymentTypeId | find: fixedDepositProductsTemplate.paymentTypeOptions : 'id' : 'name'
+              paymentFundSource.paymentTypeId
+                | find: fixedDepositProductsTemplate.paymentTypeOptions : 'id' : 'name'
             }}
           </td>
         </ng-container>
@@ -438,7 +499,10 @@
           <td mat-cell *matCellDef="let paymentFundSource">
             {{
               paymentFundSource.fundSourceAccountId
-                | find: fixedDepositProductsTemplate.accountingMappingOptions.assetAccountOptions : 'id' : 'name'
+                | find
+                  : fixedDepositProductsTemplate.accountingMappingOptions.assetAccountOptions
+                  : 'id'
+                  : 'name'
             }}
           </td>
         </ng-container>
@@ -452,22 +516,35 @@
       *ngIf="fixedDepositProduct.feeToIncomeAccountMappings?.length"
       class="flex-100 layout-row-wrap responsive-column"
     >
-      <h4 class="mat-h4 flex-100">{{ 'labels.heading.Fees to Specific Income Accounts' | translate }}</h4>
+      <h4 class="mat-h4 flex-100">
+        {{ 'labels.heading.Fees to Specific Income Accounts' | translate }}
+      </h4>
 
-      <table class="mat-elevation-z1 flex-100" mat-table [dataSource]="fixedDepositProduct.feeToIncomeAccountMappings">
+      <table
+        class="mat-elevation-z1 flex-100"
+        mat-table
+        [dataSource]="fixedDepositProduct.feeToIncomeAccountMappings"
+      >
         <ng-container matColumnDef="chargeId">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fees' | translate }}</th>
           <td mat-cell *matCellDef="let feesIncome">
-            {{ feesIncome.chargeId | find: fixedDepositProductsTemplate.chargeOptions : 'id' : 'name' }}
+            {{
+              feesIncome.chargeId | find: fixedDepositProductsTemplate.chargeOptions : 'id' : 'name'
+            }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="incomeAccountId">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'labels.inputs.Income Account' | translate }}
+          </th>
           <td mat-cell *matCellDef="let feesIncome">
             {{
               feesIncome.incomeAccountId
-                | find: fixedDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
+                | find
+                  : fixedDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions
+                  : 'id'
+                  : 'name'
             }}
           </td>
         </ng-container>
@@ -481,7 +558,9 @@
       *ngIf="fixedDepositProduct.penaltyToIncomeAccountMappings?.length"
       class="flex-100 layout-row-wrap responsive-column"
     >
-      <h4 class="mat-h4 flex-100">{{ 'labels.heading.Penalties to Specific Income Accounts' | translate }}</h4>
+      <h4 class="mat-h4 flex-100">
+        {{ 'labels.heading.Penalties to Specific Income Accounts' | translate }}
+      </h4>
 
       <table
         class="mat-elevation-z1 flex-100"
@@ -491,16 +570,24 @@
         <ng-container matColumnDef="chargeId">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Penalty' | translate }}</th>
           <td mat-cell *matCellDef="let penaltyIncome">
-            {{ penaltyIncome.chargeId | find: fixedDepositProductsTemplate.penaltyOptions : 'id' : 'name' }}
+            {{
+              penaltyIncome.chargeId
+                | find: fixedDepositProductsTemplate.penaltyOptions : 'id' : 'name'
+            }}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="incomeAccountId">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'labels.inputs.Income Account' | translate }}
+          </th>
           <td mat-cell *matCellDef="let penaltyIncome">
             {{
               penaltyIncome.incomeAccountId
-                | find: fixedDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
+                | find
+                  : fixedDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions
+                  : 'id'
+                  : 'name'
             }}
           </td>
         </ng-container>

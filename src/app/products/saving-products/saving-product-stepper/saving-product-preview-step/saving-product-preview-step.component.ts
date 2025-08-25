@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { Accounting } from 'app/core/utils/accounting';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { MatDivider } from '@angular/material/divider';
@@ -86,10 +94,14 @@ export class SavingProductPreviewStepComponent implements OnInit, OnChanges {
     this.accountingRule = this.accounting.getAccountingRuleFrom(this.savingProduct.accountingRule);
 
     if (this.isCashOrAccrualAccounting()) {
-      const assetAccountData = this.savingProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
-      const incomeAccountData = this.savingProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
-      const expenseAccountData = this.savingProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
-      const liabilityAccountData = this.savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+      const assetAccountData =
+        this.savingProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+      const incomeAccountData =
+        this.savingProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
+      const expenseAccountData =
+        this.savingProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
+      const liabilityAccountData =
+        this.savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
 
       this.accountingMappings = {
         savingsReferenceAccount: this.accounting.glAccountLookUp(
@@ -108,12 +120,18 @@ export class SavingProductPreviewStepComponent implements OnInit, OnChanges {
           this.savingProduct.transfersInSuspenseAccountId,
           liabilityAccountData
         ),
-        escheatLiability: this.accounting.glAccountLookUp(this.savingProduct.escheatLiabilityId, liabilityAccountData),
+        escheatLiability: this.accounting.glAccountLookUp(
+          this.savingProduct.escheatLiabilityId,
+          liabilityAccountData
+        ),
         interestOnSavingsAccount: this.accounting.glAccountLookUp(
           this.savingProduct.interestOnSavingsAccountId,
           expenseAccountData
         ),
-        writeOffAccount: this.accounting.glAccountLookUp(this.savingProduct.writeOffAccountId, expenseAccountData),
+        writeOffAccount: this.accounting.glAccountLookUp(
+          this.savingProduct.writeOffAccountId,
+          expenseAccountData
+        ),
         incomeFromFeeAccount: this.accounting.glAccountLookUp(
           this.savingProduct.incomeFromFeeAccountId,
           incomeAccountData
@@ -122,7 +140,10 @@ export class SavingProductPreviewStepComponent implements OnInit, OnChanges {
           this.savingProduct.incomeFromPenaltyAccountId,
           incomeAccountData
         ),
-        incomeFromInterest: this.accounting.glAccountLookUp(this.savingProduct.incomeFromInterestId, incomeAccountData)
+        incomeFromInterest: this.accounting.glAccountLookUp(
+          this.savingProduct.incomeFromInterestId,
+          incomeAccountData
+        )
       };
 
       if (this.isAccrualAccounting()) {

@@ -27,7 +27,8 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.supportedInterestRefundTypesOptions = this.loanProductsTemplate.supportedInterestRefundTypesOptions;
+    this.supportedInterestRefundTypesOptions =
+      this.loanProductsTemplate.supportedInterestRefundTypesOptions;
     const values: StringEnumOptionData[] = this.loanProductsTemplate.supportedInterestRefundTypes;
     const supportedInterestRefundTypes: string[] = this.mapStringEnumOptionToIdList(values);
     this.loanProductInterestRefundForm.patchValue({
@@ -43,11 +44,16 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.loanProductInterestRefundForm.get('supportedInterestRefundTypes').valueChanges.subscribe((value) => {
-      this.supportedInterestRefundTypes.emit(
-        this.mapIdToStringEnumOptionList(value, this.loanProductsTemplate.supportedInterestRefundTypesOptions)
-      );
-    });
+    this.loanProductInterestRefundForm
+      .get('supportedInterestRefundTypes')
+      .valueChanges.subscribe((value) => {
+        this.supportedInterestRefundTypes.emit(
+          this.mapIdToStringEnumOptionList(
+            value,
+            this.loanProductsTemplate.supportedInterestRefundTypesOptions
+          )
+        );
+      });
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {
@@ -57,7 +63,10 @@ export class LoanProductInterestRefundStepComponent implements OnInit {
     return incomingValues.map((v) => v.id);
   }
 
-  mapIdToStringEnumOptionList(incomingValues: string[], options: StringEnumOptionData[]): StringEnumOptionData[] {
+  mapIdToStringEnumOptionList(
+    incomingValues: string[],
+    options: StringEnumOptionData[]
+  ): StringEnumOptionData[] {
     return options.filter((v) => incomingValues.includes(v.id));
   }
 }

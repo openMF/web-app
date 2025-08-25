@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -83,8 +88,10 @@ export class EditCollateralComponent implements OnInit {
       quantity,
       locale
     };
-    this.collateralService.updateClientCollateral(this.clientId, collateralId, clientCollateralData).subscribe(() => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.collateralService
+      .updateClientCollateral(this.clientId, collateralId, clientCollateralData)
+      .subscribe(() => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

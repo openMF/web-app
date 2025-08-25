@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -78,16 +84,17 @@ export class CreateProductMixComponent implements OnInit {
     this.productMixForm.get('productId').valueChanges.subscribe((productId) => {
       this.productData = undefined;
       this.productMixForm.get('restrictedProducts').reset();
-      this.productsService.getProductMixTemplate(productId).subscribe((productMixTemplateData: any) => {
-        const restrictedProductsData = productMixTemplateData.restrictedProducts;
-        this.productData = [
-          ...restrictedProductsData,
-          ...productMixTemplateData.allowedProducts
-        ];
-        this.productMixForm
-          .get('restrictedProducts')
-          .setValue([...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
-      });
+      this.productsService
+        .getProductMixTemplate(productId)
+        .subscribe((productMixTemplateData: any) => {
+          const restrictedProductsData = productMixTemplateData.restrictedProducts;
+          this.productData = [
+            ...restrictedProductsData,
+            ...productMixTemplateData.allowedProducts
+          ];
+          this.productMixForm.get('restrictedProducts').setValue([
+            ...restrictedProductsData.map((restrictedProduct: any) => restrictedProduct.id)]);
+        });
     });
   }
 

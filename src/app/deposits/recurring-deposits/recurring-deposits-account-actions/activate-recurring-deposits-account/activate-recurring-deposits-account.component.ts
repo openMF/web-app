@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -74,10 +79,12 @@ export class ActivateRecurringDepositsAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
-    const activateRecurringDepositsAccountFormData = this.activateRecurringDepositsAccountForm.value;
+    const activateRecurringDepositsAccountFormData =
+      this.activateRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevActivatedOnDate: Date = this.activateRecurringDepositsAccountForm.value.activatedOnDate;
+    const prevActivatedOnDate: Date =
+      this.activateRecurringDepositsAccountForm.value.activatedOnDate;
     if (activateRecurringDepositsAccountFormData.activatedOnDate instanceof Date) {
       activateRecurringDepositsAccountFormData.activatedOnDate = this.dateUtils.formatDate(
         prevActivatedOnDate,

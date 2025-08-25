@@ -12,4 +12,10 @@
   </span>
 </div>
 
-<input type="file" #uploadFile accept="{{ acceptFilter }}" (change)="onFileSelect($event)" [style.display]="'none'" />
+<input
+  type="file"
+  #uploadFile
+  accept="{{ acceptFilter }}"
+  (change)="onFileSelect($event)"
+  [style.display]="'none'"
+/>

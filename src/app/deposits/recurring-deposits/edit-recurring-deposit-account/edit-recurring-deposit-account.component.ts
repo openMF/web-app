@@ -144,7 +144,10 @@ export class EditRecurringDepositAccountComponent {
       isCalendarInherited: this.recurringDepositAccount.recurringDepositAccount
         ? this.recurringDepositAccount.recurringDepositAccount
         : false,
-      submittedOnDate: this.dateUtils.formatDate(this.recurringDepositAccount.submittedOnDate, dateFormat),
+      submittedOnDate: this.dateUtils.formatDate(
+        this.recurringDepositAccount.submittedOnDate,
+        dateFormat
+      ),
       expectedFirstDepositOnDate: this.dateUtils.formatDate(
         this.recurringDepositAccount.expectedFirstDepositOnDate,
         dateFormat
@@ -155,7 +158,10 @@ export class EditRecurringDepositAccountComponent {
     };
 
     this.recurringDepositsService
-      .updateRecurringDepositAccount(this.recurringDepositsAccountAndTemplate.id, recurringDepositAccount)
+      .updateRecurringDepositAccount(
+        this.recurringDepositsAccountAndTemplate.id,
+        recurringDepositAccount
+      )
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

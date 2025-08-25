@@ -1,5 +1,10 @@
 <div class="layout-row align-end container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_PRODUCTMIX'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['create']"
+    *mifosxHasPermission="'CREATE_PRODUCTMIX'"
+  >
     <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
   </button>
 </div>
@@ -15,7 +20,9 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="productName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Product Name' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Product Name' | translate }}
+        </th>
         <td mat-cell *matCellDef="let productMix">{{ productMix.productName }}</td>
       </ng-container>
 

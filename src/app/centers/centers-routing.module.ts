@@ -93,7 +93,11 @@ const routes: Routes = [
             },
             {
               path: 'actions/:action',
-              data: { title: 'Center Actions', breadcrumb: 'action', routeParamBreadcrumb: 'action' },
+              data: {
+                title: 'Center Actions',
+                breadcrumb: 'action',
+                routeParamBreadcrumb: 'action'
+              },
               component: CenterActionsComponent,
               resolve: {
                 centersActionData: CenterActionsResolver

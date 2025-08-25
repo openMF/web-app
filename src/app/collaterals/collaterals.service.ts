@@ -44,8 +44,15 @@ export class CollateralsService {
   /**
    * @returns {Observable<any>} Collaterals data
    */
-  updateClientCollateral(clientId: any, clientCollateralId: any, clientCollateralData: any): Observable<any> {
-    return this.http.put(`/clients/${clientId}/collaterals/${clientCollateralId}`, clientCollateralData);
+  updateClientCollateral(
+    clientId: any,
+    clientCollateralId: any,
+    clientCollateralData: any
+  ): Observable<any> {
+    return this.http.put(
+      `/clients/${clientId}/collaterals/${clientCollateralId}`,
+      clientCollateralData
+    );
   }
 
   /**

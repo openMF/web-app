@@ -46,7 +46,10 @@
       mat-raised-button
       matStepperNext
       [disabled]="
-        !(sharesAccountDetailsForm.get('productId')?.value && sharesAccountDetailsForm.get('submittedDate')?.value)
+        !(
+          sharesAccountDetailsForm.get('productId')?.value &&
+          sharesAccountDetailsForm.get('submittedDate')?.value
+        )
       "
     >
       {{ 'labels.buttons.Next' | translate }}

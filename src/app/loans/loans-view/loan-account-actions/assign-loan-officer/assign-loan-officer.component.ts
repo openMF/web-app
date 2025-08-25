@@ -1,7 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -85,8 +90,10 @@ export class AssignLoanOfficerComponent implements OnInit {
       locale
     };
     data.fromLoanOfficerId = this.dataObject.loanOfficerId || '';
-    this.loanService.loanActionButtons(this.loanId, 'assignLoanOfficer', data).subscribe((response: any) => {
-      this.router.navigate([`../../general`], { relativeTo: this.route });
-    });
+    this.loanService
+      .loanActionButtons(this.loanId, 'assignLoanOfficer', data)
+      .subscribe((response: any) => {
+        this.router.navigate([`../../general`], { relativeTo: this.route });
+      });
   }
 }

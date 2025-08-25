@@ -68,7 +68,9 @@ export class ClientsService {
   }
 
   getClientDataAndTemplate(clientId: string) {
-    const httpParams = new HttpParams().set('template', 'true').set('staffInSelectedOfficeOnly', 'true');
+    const httpParams = new HttpParams()
+      .set('template', 'true')
+      .set('staffInSelectedOfficeOnly', 'true');
     return this.http.get(`/clients/${clientId}`, { params: httpParams });
   }
 
@@ -116,9 +118,13 @@ export class ClientsService {
    */
   waiveClientCharge(chargeData: any) {
     const httpParams = new HttpParams().set('command', 'waive');
-    return this.http.post(`/clients/${chargeData.clientId}/charges/${chargeData.resourceType}`, chargeData, {
-      params: httpParams
-    });
+    return this.http.post(
+      `/clients/${chargeData.clientId}/charges/${chargeData.resourceType}`,
+      chargeData,
+      {
+        params: httpParams
+      }
+    );
   }
 
   getAllClientCharges(clientId: string) {
@@ -164,7 +170,9 @@ export class ClientsService {
   }
 
   getClientSummary(clientId: string) {
-    const httpParams = new HttpParams().set('R_clientId', clientId).set('genericResultSet', 'false');
+    const httpParams = new HttpParams()
+      .set('R_clientId', clientId)
+      .set('genericResultSet', 'false');
     return this.http.get(`/runreports/ClientSummary`, { params: httpParams });
   }
 
@@ -199,7 +207,9 @@ export class ClientsService {
   }
 
   getClientSignatureImage(clientId: string, documentId: string) {
-    return this.http.get(`/clients/${clientId}/documents/${documentId}/attachment`, { responseType: 'blob' });
+    return this.http.get(`/clients/${clientId}/documents/${documentId}/attachment`, {
+      responseType: 'blob'
+    });
   }
 
   getClientFamilyMembers(clientId: string) {
@@ -243,9 +253,12 @@ export class ClientsService {
   }
 
   downloadClientIdentificationDocument(parentEntityId: string, documentId: string) {
-    return this.http.get(`/client_identifiers/${parentEntityId}/documents/${documentId}/attachment`, {
-      responseType: 'blob'
-    });
+    return this.http.get(
+      `/client_identifiers/${parentEntityId}/documents/${documentId}/attachment`,
+      {
+        responseType: 'blob'
+      }
+    );
   }
 
   uploadClientIdentifierDocument(identifierId: string, documentData: any) {
@@ -257,7 +270,9 @@ export class ClientsService {
   }
 
   downloadClientDocument(parentEntityId: string, documentId: string) {
-    return this.http.get(`/clients/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
+    return this.http.get(`/clients/${parentEntityId}/documents/${documentId}/attachment`, {
+      responseType: 'blob'
+    });
   }
 
   uploadClientDocument(clientId: string, documentData: any) {
@@ -338,7 +353,11 @@ export class ClientsService {
 
   retrieveClientReportTemplate(templateId: string, clientId: string) {
     const httpParams = new HttpParams().set('clientId', clientId);
-    return this.http.post(`/templates/${templateId}`, {}, { params: httpParams, responseType: 'text' });
+    return this.http.post(
+      `/templates/${templateId}`,
+      {},
+      { params: httpParams, responseType: 'text' }
+    );
   }
 
   /**
@@ -394,7 +413,13 @@ export class ClientsService {
     return this.http.get(`/clients/${clientId}/collaterals/template`);
   }
 
-  searchByText(text: string, page: number, pageSize: number, sortAttribute: string = '', sortDirection: string = '') {
+  searchByText(
+    text: string,
+    page: number,
+    pageSize: number,
+    sortAttribute: string = '',
+    sortDirection: string = ''
+  ) {
     let request: any = {
       request: {
         text

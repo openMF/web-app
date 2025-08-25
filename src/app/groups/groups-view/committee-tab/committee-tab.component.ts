@@ -91,7 +91,9 @@ export class CommitteeTabComponent {
     });
     unAssignRoleDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        const clientIndex = this.groupRolesData.findIndex((client: any) => client.clientId === clientId);
+        const clientIndex = this.groupRolesData.findIndex(
+          (client: any) => client.clientId === clientId
+        );
         this.groupRolesData.splice(clientIndex, 1);
         this.rolesTableRef.renderRows();
         this.groupsService.unAssignRoleCommand(this.groupViewData.id, roleId).subscribe(() => {});

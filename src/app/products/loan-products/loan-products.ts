@@ -75,7 +75,8 @@ export class LoanProducts {
 
     // In Fineract, the POST and PUT endpoints for /v1/loanproducts have a typo in the field
     // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loanProduct.allowPartialPeriodInterestCalcualtion = loanProduct.allowPartialPeriodInterestCalculation;
+    loanProduct.allowPartialPeriodInterestCalcualtion =
+      loanProduct.allowPartialPeriodInterestCalculation;
     delete loanProduct.allowPartialPeriodInterestCalculation;
 
     // Set Default values If they were not set

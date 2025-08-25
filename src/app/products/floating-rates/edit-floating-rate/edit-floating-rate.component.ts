@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -118,7 +123,9 @@ export class EditFloatingRateComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { floatingRate: any }) => {
       this.floatingRateData = data.floatingRate;
-      this.floatingRatePeriodsData = data.floatingRate.ratePeriods ? data.floatingRate.ratePeriods : [];
+      this.floatingRatePeriodsData = data.floatingRate.ratePeriods
+        ? data.floatingRate.ratePeriods
+        : [];
     });
   }
 
@@ -238,7 +245,10 @@ export class EditFloatingRateComponent implements OnInit {
       floatingRatePeriod.isActive = undefined;
       floatingRatePeriod.locale = this.settingsService.language.code;
       floatingRatePeriod.dateFormat = this.dateFormat;
-      floatingRatePeriod.fromDate = this.dateUtils.formatDate(floatingRatePeriod.fromDate, this.dateFormat);
+      floatingRatePeriod.fromDate = this.dateUtils.formatDate(
+        floatingRatePeriod.fromDate,
+        this.dateFormat
+      );
     });
     this.floatingRateForm.value.ratePeriods =
       this.floatingRatePeriodsData.length > 0 ? this.floatingRatePeriodsData : undefined;

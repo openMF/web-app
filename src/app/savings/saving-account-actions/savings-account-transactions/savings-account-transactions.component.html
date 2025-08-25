@@ -22,8 +22,11 @@
             />
             <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
-            <mat-error *ngIf="savingAccountTransactionForm.controls.transactionDate.hasError('required')">
-              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="savingAccountTransactionForm.controls.transactionDate.hasError('required')"
+            >
+              {{ 'labels.inputs.Transaction Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -82,14 +85,23 @@
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Notes' | translate }}</mat-label>
-            <textarea formControlName="note" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea
+              formControlName="note"
+              matInput
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
           </mat-form-field>
 
           <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">
             <button type="button" mat-raised-button [routerLink]="['../../transactions']">
               {{ 'labels.buttons.Cancel' | translate }}
             </button>
-            <button mat-raised-button color="primary" [disabled]="!savingAccountTransactionForm.valid">
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="!savingAccountTransactionForm.valid"
+            >
               {{ 'labels.buttons.Submit' | translate }}
             </button>
           </mat-card-actions>

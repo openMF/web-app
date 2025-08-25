@@ -125,7 +125,9 @@ export class PaymentTypesComponent implements OnInit {
     deletePaymentTypeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.organizationService.deletePaymentType(paymentTypeId).subscribe(() => {
-          this.paymentTypesData = this.paymentTypesData.filter((paymentType: any) => paymentType.id !== paymentTypeId);
+          this.paymentTypesData = this.paymentTypesData.filter(
+            (paymentType: any) => paymentType.id !== paymentTypeId
+          );
           this.setPaymentTypes();
         });
       }

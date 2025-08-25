@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  Validators,
+  UntypedFormGroup,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { ReportsService } from 'app/reports/reports.service';
@@ -95,7 +100,9 @@ export class BusinessRuleParametersComponent implements OnInit, OnChanges {
         }
       } else {
         // Child Parameter
-        const parent: ReportParameter = this.paramData.find((entry: any) => entry.name === param.parentParameterName);
+        const parent: ReportParameter = this.paramData.find(
+          (entry: any) => entry.name === param.parentParameterName
+        );
         parent.childParameters.push(param);
         this.updateParentParameters(parent);
       }

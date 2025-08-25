@@ -189,7 +189,10 @@ export class SettingsService {
    * Returns current Business date server
    */
   get businessDate(): Date {
-    return this.dateUtils.convertToDate(localStorage.getItem('mifosXServerDate'), SettingsService.businessDateFormat);
+    return this.dateUtils.convertToDate(
+      localStorage.getItem('mifosXServerDate'),
+      SettingsService.businessDateFormat
+    );
   }
 
   /**
@@ -245,7 +248,9 @@ export class SettingsService {
     businessDateData.some((data: any) => {
       if (data.type === dateType) {
         const dateVal = new Date(data.date);
-        this.setBusinessDate(this.dateUtils.formatDate(dateVal, SettingsService.businessDateFormat));
+        this.setBusinessDate(
+          this.dateUtils.formatDate(dateVal, SettingsService.businessDateFormat)
+        );
         this.alertService.alert({
           type: dateType + ' Set',
           message: this.dateUtils.formatDate(dateVal, this.dateFormat())

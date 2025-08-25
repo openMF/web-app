@@ -7,7 +7,13 @@
     <button mat-raised-button color="primary" (click)="edit()" *ngIf="dataObject.data[0]">
       <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
     </button>
-    <button class="delete-button" mat-raised-button color="warn" (click)="delete()" *ngIf="dataObject.data[0]">
+    <button
+      class="delete-button"
+      mat-raised-button
+      color="warn"
+      (click)="delete()"
+      *ngIf="dataObject.data[0]"
+    >
       <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
     </button>
   </div>
@@ -25,7 +31,10 @@
         {{ getInputName(columnHeader.columnName) }}
       </div>
 
-      <div [ngSwitch]="getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)" class="right flex-60">
+      <div
+        [ngSwitch]="getColumnType(columnHeader.columnDisplayType, columnHeader.columnType)"
+        class="right flex-60"
+      >
         <span *ngSwitchCase="'DATE'">
           {{ dataObject.data[0].row[i] | dateFormat }}
         </span>

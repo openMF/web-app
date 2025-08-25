@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet
+} from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Dialogs */
@@ -103,7 +109,10 @@ export class GroupsViewComponent {
         break;
       case 'Edit Meeting':
         const queryParams: any = { calendarId: this.groupViewData.collectionMeetingCalendar.id };
-        this.router.navigate([`actions/${name}`], { relativeTo: this.route, queryParams: queryParams });
+        this.router.navigate([`actions/${name}`], {
+          relativeTo: this.route,
+          queryParams: queryParams
+        });
         break;
       case 'Edit':
         this.router.navigate(['edit'], { relativeTo: this.route });
@@ -123,7 +132,10 @@ export class GroupsViewComponent {
   get editMeeting() {
     if (this.groupViewData.collectionMeetingCalendar) {
       const entityType = this.groupViewData.collectionMeetingCalendar.entityType.value;
-      if (entityType === 'GROUPS' && this.groupViewData.hierarchy === '.' + this.groupViewData.id + '.') {
+      if (
+        entityType === 'GROUPS' &&
+        this.groupViewData.hierarchy === '.' + this.groupViewData.id + '.'
+      ) {
         return true;
       }
     }
@@ -136,7 +148,9 @@ export class GroupsViewComponent {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/groups`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(`/groups`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 
   /**
@@ -147,7 +161,9 @@ export class GroupsViewComponent {
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         this.groupsService
-          .executeGroupCommand(this.groupViewData.id, 'unassignStaff', { staffId: this.groupViewData.staffId })
+          .executeGroupCommand(this.groupViewData.id, 'unassignStaff', {
+            staffId: this.groupViewData.staffId
+          })
           .subscribe(() => {
             this.reload();
           });

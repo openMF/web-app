@@ -11,7 +11,11 @@
 </div>
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-  <button mat-raised-button color="{{ data.isEnable ? 'accent' : 'warn' }}" [mat-dialog-close]="{ confirm: true }">
+  <button
+    mat-raised-button
+    color="{{ data.isEnable ? 'accent' : 'warn' }}"
+    [mat-dialog-close]="{ confirm: true }"
+  >
     {{ 'labels.buttons.Confirm' | translate }}
   </button>
 </mat-dialog-actions>

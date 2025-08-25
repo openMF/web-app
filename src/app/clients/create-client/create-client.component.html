@@ -1,5 +1,11 @@
 <div class="container">
-  <mat-stepper orientation="vertical" [linear]="false" class="mat-elevation-z8" labelPosition="bottom" #clientStepper>
+  <mat-stepper
+    orientation="vertical"
+    [linear]="false"
+    class="mat-elevation-z8"
+    labelPosition="bottom"
+    #clientStepper
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -52,7 +58,10 @@
     <mat-step *ngFor="let datatable of datatables">
       <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
 
-      <mifosx-client-datatable-step [datatableData]="datatable" #dtclient></mifosx-client-datatable-step>
+      <mifosx-client-datatable-step
+        [datatableData]="datatable"
+        #dtclient
+      ></mifosx-client-datatable-step>
     </mat-step>
 
     <mat-step *ngIf="areFormvalids()" completed>

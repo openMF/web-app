@@ -44,7 +44,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class CenterNavigationComponent {
   @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
-  @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
+  @ViewChild(SavingsAccountTableComponent)
+  savingsAccountTableComponent: SavingsAccountTableComponent;
 
   @Input() centerData: any;
   @Input() centerAccountsData: any;

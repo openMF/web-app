@@ -9,7 +9,8 @@ export function passwordValidator(): ValidatorFn {
     const errors: ValidationErrors = {};
 
     if (value.length < environment.minPasswordLength) {
-      errors['minLength'] = 'Password must be at least ' + environment.minPasswordLength + ' characters long';
+      errors['minLength'] =
+        'Password must be at least ' + environment.minPasswordLength + ' characters long';
     }
     if (value.length > 50) {
       errors['maxLength'] = 'Password must be maximum 50 characters long';

@@ -340,15 +340,22 @@ export class SystemService {
    * @returns {Observable<any>}
    */
   runSelectedJob(jobId: string): Promise<any> {
-    return this.http.post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload, { observe: 'response' }).toPromise();
+    return this.http
+      .post(`/jobs/${jobId}?command=executeJob`, this.emptyPayload, { observe: 'response' })
+      .toPromise();
   }
 
   /**
    * @param {string} jobId Job Id on which jobs to run
    * @returns {Observable<any>}
    */
-  runSelectedJobWithParameters(jobId: string, jobParameters: RunJobWithParamPayloadType): Promise<any> {
-    return this.http.post(`/jobs/${jobId}?command=executeJob`, jobParameters, { observe: 'response' }).toPromise();
+  runSelectedJobWithParameters(
+    jobId: string,
+    jobParameters: RunJobWithParamPayloadType
+  ): Promise<any> {
+    return this.http
+      .post(`/jobs/${jobId}?command=executeJob`, jobParameters, { observe: 'response' })
+      .toPromise();
   }
 
   /*
@@ -467,7 +474,10 @@ export class SystemService {
    * @param {any} externalConfiguration External Configuration.
    * @returns {Observable<any>}
    */
-  updateExternalConfiguration(externalConfigurationName: string, externalConfiguration: any): Observable<any> {
+  updateExternalConfiguration(
+    externalConfigurationName: string,
+    externalConfiguration: any
+  ): Observable<any> {
     return this.http.put(`/externalservice/${externalConfigurationName}`, externalConfiguration);
   }
 
@@ -518,7 +528,10 @@ export class SystemService {
     accountNumberPreferenceId: string,
     accountNumberPreferenceChanges: any
   ): Observable<any> {
-    return this.http.put(`/accountnumberformats/${accountNumberPreferenceId}`, accountNumberPreferenceChanges);
+    return this.http.put(
+      `/accountnumberformats/${accountNumberPreferenceId}`,
+      accountNumberPreferenceChanges
+    );
   }
 
   /**
@@ -576,7 +589,13 @@ export class SystemService {
    * @param {number} limit Number of entries within the page.
    * @returns {Observable<any>} Audit Trails.
    */
-  getAuditTrails(filterBy: any, orderBy: string, sortOrder: string, offset: number, limit: number): Observable<any> {
+  getAuditTrails(
+    filterBy: any,
+    orderBy: string,
+    sortOrder: string,
+    offset: number,
+    limit: number
+  ): Observable<any> {
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
@@ -747,7 +766,9 @@ export class SystemService {
 
   deleteDatatableEntry(entityId: string, rowId: string, datatableName: string) {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
-    return this.http.delete(`/datatables/${datatableName}/${entityId}/${rowId}`, { params: httpParams });
+    return this.http.delete(`/datatables/${datatableName}/${entityId}/${rowId}`, {
+      params: httpParams
+    });
   }
 
   getCOBCatchUpStatus() {

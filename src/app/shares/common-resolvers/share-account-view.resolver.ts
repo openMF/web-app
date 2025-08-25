@@ -24,7 +24,8 @@ export class SharesAccountViewResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const shareAccountId = route.paramMap.get('shareAccountId') || route.parent.paramMap.get('shareAccountId');
+    const shareAccountId =
+      route.paramMap.get('shareAccountId') || route.parent.paramMap.get('shareAccountId');
     return this.sharesService.getSharesAccountData(shareAccountId, false);
   }
 }

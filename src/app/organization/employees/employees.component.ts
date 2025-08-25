@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -144,12 +151,22 @@ export class EmployeesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showEmployeeList === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonImportEmployees, this.buttonImportEmployees.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonImportEmployees,
+          this.buttonImportEmployees.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showEmployeeTable === true) {
       setTimeout(() => {
-        this.showPopover(this.templateTableEmployees, this.tableEmployees.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateTableEmployees,
+          this.tableEmployees.nativeElement,
+          'top',
+          true
+        );
       });
     }
   }

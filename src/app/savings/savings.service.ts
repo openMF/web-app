@@ -34,7 +34,11 @@ export class SavingsService {
    * @param {any} savingsCharge to apply on a savings Account.
    * @returns {Observable<any>}
    */
-  createSavingsCharge(savingAccountId: string, resourceType: string, savingsCharge: any): Observable<any> {
+  createSavingsCharge(
+    savingAccountId: string,
+    resourceType: string,
+    savingsCharge: any
+  ): Observable<any> {
     return this.http.post(`/savingsaccounts/${savingAccountId}/${resourceType}`, savingsCharge);
   }
 
@@ -61,7 +65,9 @@ export class SavingsService {
    * @returns {Observable<any>} Savings account and template.
    */
   getSavingsAccountAndTemplate(accountId: string, template: boolean): Observable<any> {
-    const httpParams = new HttpParams().set('template', template.toString()).set('associations', 'charges');
+    const httpParams = new HttpParams()
+      .set('template', template.toString())
+      .set('associations', 'charges');
     return this.http.get(`/savingsaccounts/${accountId}`, { params: httpParams });
   }
 
@@ -134,7 +140,9 @@ export class SavingsService {
    */
   addSavingsDatatableEntry(accountId: string, datatableName: string, data: any): Observable<any> {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
-    return this.http.post(`/datatables/${datatableName}/${accountId}`, data, { params: httpParams });
+    return this.http.post(`/datatables/${datatableName}/${accountId}`, data, {
+      params: httpParams
+    });
   }
 
   /**
@@ -162,7 +170,11 @@ export class SavingsService {
    * @param entityId Entity Id assosciated with savings account.
    * @returns {Observable<any>} Savings account template.
    */
-  getSavingsAccountTemplate(entityId: string, productId?: string, isGroup?: boolean): Observable<any> {
+  getSavingsAccountTemplate(
+    entityId: string,
+    productId?: string,
+    isGroup?: boolean
+  ): Observable<any> {
     let httpParams = new HttpParams().set(isGroup ? 'groupId' : 'clientId', entityId);
     httpParams = productId ? httpParams.set('productId', productId) : httpParams;
     return this.http.get('/savingsaccounts/template', { params: httpParams });
@@ -209,7 +221,11 @@ export class SavingsService {
    * @param {any} data Data
    * @returns {Observable<any>}
    */
-  executeSavingsAccountUpdateCommand(accountId: string, command: string, data: any): Observable<any> {
+  executeSavingsAccountUpdateCommand(
+    accountId: string,
+    command: string,
+    data: any
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     return this.http.put(`/savingsaccounts/${accountId}`, data, { params: httpParams });
   }
@@ -230,7 +246,9 @@ export class SavingsService {
    */
   getSavingsAccountTransactionTemplate(accountId: string, transactionId: string): Observable<any> {
     const httpParams = new HttpParams().set('template', 'true');
-    return this.http.get(`/savingsaccounts/${accountId}/transactions/${transactionId}`, { params: httpParams });
+    return this.http.get(`/savingsaccounts/${accountId}/transactions/${transactionId}`, {
+      params: httpParams
+    });
   }
 
   /**
@@ -252,7 +270,9 @@ export class SavingsService {
         params: httpParams
       });
     }
-    return this.http.post(`/savingsaccounts/${accountId}/transactions`, data, { params: httpParams });
+    return this.http.post(`/savingsaccounts/${accountId}/transactions`, data, {
+      params: httpParams
+    });
   }
 
   /**
@@ -271,9 +291,16 @@ export class SavingsService {
    * @param {string} chargeId Charge Id
    * @returns {Observable<any>}
    */
-  executeSavingsAccountChargesCommand(accountId: string, command: string, data: any, chargeId: any): Observable<any> {
+  executeSavingsAccountChargesCommand(
+    accountId: string,
+    command: string,
+    data: any,
+    chargeId: any
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`/savingsaccounts/${accountId}/charges/${chargeId}`, data, { params: httpParams });
+    return this.http.post(`/savingsaccounts/${accountId}/charges/${chargeId}`, data, {
+      params: httpParams
+    });
   }
 
   /**
@@ -358,7 +385,9 @@ export class SavingsService {
   }
 
   downloadSavingsDocument(parentEntityId: string, documentId: string) {
-    return this.http.get(`/savings/${parentEntityId}/documents/${documentId}/attachment`, { responseType: 'blob' });
+    return this.http.get(`/savings/${parentEntityId}/documents/${documentId}/attachment`, {
+      responseType: 'blob'
+    });
   }
 
   deleteSavingsDocument(savingAccountId: any, documentId: any): Observable<any> {

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -76,7 +81,10 @@ export class ActivateGroupComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevactivationDate: Date = this.activateGroupForm.value.activationDate;
     if (activateGroupFormData.activationDate instanceof Date) {
-      activateGroupFormData.activationDate = this.dateUtils.formatDate(prevactivationDate, dateFormat);
+      activateGroupFormData.activationDate = this.dateUtils.formatDate(
+        prevactivationDate,
+        dateFormat
+      );
     }
     const data = {
       ...activateGroupFormData,

@@ -1,6 +1,8 @@
 <div class="container mat-elevation-z8">
   <mat-card>
-    <mat-card-title *ngIf="transactionType.holdamount">{{ 'labels.heading.Hold Amount' | translate }}</mat-card-title>
+    <mat-card-title *ngIf="transactionType.holdamount">{{
+      'labels.heading.Hold Amount' | translate
+    }}</mat-card-title>
     <mat-card-title *ngIf="transactionType.blockaccount">{{
       'labels.heading.Block Savings Account' | translate
     }}</mat-card-title>
@@ -20,7 +22,11 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="flex-100" (click)="transactionDatePicker.open()" *ngIf="transactionType.holdamount">
+        <mat-form-field
+          class="flex-100"
+          (click)="transactionDatePicker.open()"
+          *ngIf="transactionType.holdamount"
+        >
           <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
           <input
             matInput

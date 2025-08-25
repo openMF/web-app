@@ -51,7 +51,10 @@ export class SavingsAccountTransactionsComponent implements OnInit {
   /** Flag to enable payment details fields. */
   addPaymentDetailsFlag: Boolean = false;
   /** transaction type flag to render required UI */
-  transactionType: { deposit: boolean; withdrawal: boolean } = { deposit: false, withdrawal: false };
+  transactionType: { deposit: boolean; withdrawal: boolean } = {
+    deposit: false,
+    withdrawal: false
+  };
   /** transaction command for submit request */
   transactionCommand: string;
   /** saving account's Id */
@@ -141,7 +144,10 @@ export class SavingsAccountTransactionsComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.savingAccountTransactionForm.value.transactionDate;
     if (savingAccountTransactionFormData.transactionDate instanceof Date) {
-      savingAccountTransactionFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      savingAccountTransactionFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...savingAccountTransactionFormData,

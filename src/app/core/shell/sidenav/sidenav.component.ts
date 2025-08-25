@@ -1,5 +1,13 @@
 /** Angular Imports */
-import { Component, OnInit, Input, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -100,14 +108,19 @@ export class SidenavComponent implements OnInit, AfterViewInit {
    * Logs out the authenticated user and redirects to login page.
    */
   logout() {
-    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService
+      .logout()
+      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   /**
    * Opens Mifos JIRA Wiki page.
    */
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open(
+      'https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual',
+      '_blank'
+    );
   }
 
   /**
@@ -125,7 +138,8 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     const frequencyCounts: any = {};
     let index = this.userActivity?.length;
     while (index) {
-      frequencyCounts[this.userActivity[--index]] = (frequencyCounts[this.userActivity[index]] || 0) + 1;
+      frequencyCounts[this.userActivity[--index]] =
+        (frequencyCounts[this.userActivity[index]] || 0) + 1;
     }
     const frequencyCountsArray = Object.entries(frequencyCounts);
     const topThreeFrequentActivities = frequencyCountsArray
@@ -212,7 +226,12 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     }
     if (this.configurationWizardService.showSideNavChartofAccounts === true) {
       setTimeout(() => {
-        this.showPopover(this.templateChartOfAccounts, this.chartOfAccounts.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateChartOfAccounts,
+          this.chartOfAccounts.nativeElement,
+          'top',
+          true
+        );
       });
     }
   }

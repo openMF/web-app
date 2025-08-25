@@ -63,7 +63,11 @@ export class UpdateClientSavingsAccountComponent implements OnInit {
    */
   submit() {
     this.clientsService
-      .executeClientCommand(this.clientData.id, 'updateSavingsAccount', this.clientSavingsAccountForm.value)
+      .executeClientCommand(
+        this.clientData.id,
+        'updateSavingsAccount',
+        this.clientSavingsAccountForm.value
+      )
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });

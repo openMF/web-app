@@ -8,7 +8,9 @@
         type="number"
         matInput
         formControlName="minDepositAmount"
-        matTooltip="{{ 'tooltips.The minimum deposit amount required to open a fixed deposit' | translate }}"
+        matTooltip="{{
+          'tooltips.The minimum deposit amount required to open a fixed deposit' | translate
+        }}"
       />
     </mat-form-field>
 
@@ -22,7 +24,8 @@
         required
       />
       <mat-error>
-        {{ 'labels.inputs.Default Deposit Amount' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Default Deposit Amount' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -34,7 +37,9 @@
         type="number"
         matInput
         formControlName="maxDepositAmount"
-        matTooltip="{{ 'tooltips.The maximum deposit amount allowed when a fixed deposit' | translate }}"
+        matTooltip="{{
+          'tooltips.The maximum deposit amount allowed when a fixed deposit' | translate
+        }}"
       />
     </mat-form-field>
 
@@ -55,7 +60,8 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Interest Compounding Period' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Interest Compounding Period' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -64,7 +70,9 @@
       <mat-label>{{ 'labels.inputs.Interest Posting Period' | translate }}</mat-label>
       <mat-select
         formControlName="interestPostingPeriodType"
-        matTooltip="{{ 'tooltips.The period at which interest rate is posted or credited' | translate }}"
+        matTooltip="{{
+          'tooltips.The period at which interest rate is posted or credited' | translate
+        }}"
         required
       >
         <mat-option
@@ -75,7 +83,8 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Interest Posting Period' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Interest Posting Period' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -95,7 +104,8 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Interest Calculated using' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Interest Calculated using' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>

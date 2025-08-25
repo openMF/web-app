@@ -16,7 +16,8 @@
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="prematureCloseAccountForm.controls.closedOnDate.hasError('required')">
-              {{ 'labels.inputs.Premature Close Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Premature Close Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -29,11 +30,16 @@
           <mat-form-field *ngIf="prematureCloseAccountForm.contains('onAccountClosureId')">
             <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
             <mat-select required formControlName="onAccountClosureId">
-              <mat-option *ngFor="let closureOption of onAccountClosureOptions" [value]="closureOption.id">
+              <mat-option
+                *ngFor="let closureOption of onAccountClosureOptions"
+                [value]="closureOption.id"
+              >
                 {{ closureOption.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="prematureCloseAccountForm.controls.onAccountClosureId.hasError('required')">
+            <mat-error
+              *ngIf="prematureCloseAccountForm.controls.onAccountClosureId.hasError('required')"
+            >
               {{ 'labels.inputs.Account action' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -46,8 +52,11 @@
                 {{ account.accountNo }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="prematureCloseAccountForm.controls.toSavingsAccountId.hasError('required')">
-              {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="prematureCloseAccountForm.controls.toSavingsAccountId.hasError('required')"
+            >
+              {{ 'labels.inputs.Transfer to savings account' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -59,7 +68,12 @@
 
           <mat-form-field *ngIf="prematureCloseAccountForm.contains('note')">
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
-            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea
+              matInput
+              formControlName="note"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
           </mat-form-field>
         </div>
       </mat-card-content>

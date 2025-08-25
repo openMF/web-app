@@ -30,7 +30,8 @@
         <div class="flex-50">
           ({{ financialActivityAccount?.financialActivityData.id }})
           {{
-            'labels.accounting.financialActivity.' + financialActivityAccount?.financialActivityData.name | translate
+            'labels.accounting.financialActivity.' +
+              financialActivityAccount?.financialActivityData.name | translate
           }}
         </div>
 
@@ -40,8 +41,8 @@
 
         <div class="flex-50">
           {{
-            'labels.inputs.accounting.' + financialActivityAccount?.financialActivityData.mappedGLAccountType
-              | translate
+            'labels.inputs.accounting.' +
+              financialActivityAccount?.financialActivityData.mappedGLAccountType | translate
           }}
         </div>
 

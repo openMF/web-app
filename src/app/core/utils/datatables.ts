@@ -46,7 +46,10 @@ export class Datatables {
             controlName: column.columnName,
             label: column.columnName,
             value: '',
-            type: column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL' ? 'number' : 'text',
+            type:
+              column.columnDisplayType === 'INTEGER' || column.columnDisplayType === 'DECIMAL'
+                ? 'number'
+                : 'text',
             required: column.isColumnNullable ? false : true
           });
         case 'BOOLEAN':
@@ -145,14 +148,22 @@ export class Datatables {
     return columnType === expectedType;
   }
 
-  public buildPayload(datatableInputs: any, datatableDataValues: any, dateFormat: string, output: any): any {
+  public buildPayload(
+    datatableInputs: any,
+    datatableDataValues: any,
+    dateFormat: string,
+    output: any
+  ): any {
     let existDate = false;
     datatableInputs.forEach((input: any) => {
       const controlName = this.getInputName(input);
       if (this.isNumeric(input.columnDisplayType)) {
         output[input.columnName] = datatableDataValues[controlName] * 1;
       } else if (this.isDate(input.columnDisplayType)) {
-        output[input.columnName] = this.dateUtils.formatDate(datatableDataValues[controlName], dateFormat);
+        output[input.columnName] = this.dateUtils.formatDate(
+          datatableDataValues[controlName],
+          dateFormat
+        );
         existDate = true;
       } else {
         output[input.columnName] = datatableDataValues[controlName];

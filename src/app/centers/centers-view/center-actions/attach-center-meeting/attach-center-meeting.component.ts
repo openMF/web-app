@@ -114,7 +114,10 @@ export class AttachCenterMeetingComponent implements OnInit {
                 '2',
                 '3'
               ];
-              this.centerMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
+              this.centerMeetingForm.addControl(
+                'repeatsOnDay',
+                new UntypedFormControl('', Validators.required)
+              );
               break;
             case 3: // Monthly
               this.repetitionIntervals = [

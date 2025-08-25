@@ -104,7 +104,13 @@ export class ClientsComponent implements OnInit {
   private getClients() {
     this.isLoading = true;
     this.clientService
-      .searchByText(this.filterText, this.currentPage, this.pageSize, this.sortAttribute, this.sortDirection)
+      .searchByText(
+        this.filterText,
+        this.currentPage,
+        this.pageSize,
+        this.sortAttribute,
+        this.sortDirection
+      )
       .subscribe(
         (data: any) => {
           this.dataSource.data = data.content;

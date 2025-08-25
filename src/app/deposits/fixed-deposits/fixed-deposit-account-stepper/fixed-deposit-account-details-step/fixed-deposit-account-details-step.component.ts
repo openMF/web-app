@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
@@ -101,21 +106,25 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
    */
   buildDependencies() {
     const clientId = this.fixedDepositsAccountTemplate.clientId;
-    this.fixedDepositAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.fixedDepositsService.getFixedDepositsAccountTemplate(clientId, productId).subscribe((response: any) => {
-        this.fixedDepositsAccountProductTemplate.emit(response);
-        this.isProductSelected = true;
-        this.fieldOfficerData = response.fieldOfficerOptions;
-        if (!this.isFieldOfficerPatched && this.fixedDepositsAccountTemplate.fieldOfficerId) {
-          this.fixedDepositAccountDetailsForm
-            .get('fieldOfficerId')
-            .patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
-          this.isFieldOfficerPatched = true;
-        } else {
-          this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
-        }
+    this.fixedDepositAccountDetailsForm
+      .get('productId')
+      .valueChanges.subscribe((productId: string) => {
+        this.fixedDepositsService
+          .getFixedDepositsAccountTemplate(clientId, productId)
+          .subscribe((response: any) => {
+            this.fixedDepositsAccountProductTemplate.emit(response);
+            this.isProductSelected = true;
+            this.fieldOfficerData = response.fieldOfficerOptions;
+            if (!this.isFieldOfficerPatched && this.fixedDepositsAccountTemplate.fieldOfficerId) {
+              this.fixedDepositAccountDetailsForm
+                .get('fieldOfficerId')
+                .patchValue(this.fixedDepositsAccountTemplate.fieldOfficerId);
+              this.isFieldOfficerPatched = true;
+            } else {
+              this.fixedDepositAccountDetailsForm.get('fieldOfficerId').patchValue('');
+            }
+          });
       });
-    });
   }
 
   /**

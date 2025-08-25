@@ -65,7 +65,10 @@ export class ViewChargeComponent {
    */
   deleteCharge() {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + this.chargeData.id }
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.inputs.Charge') + ' ' + this.chargeData.id
+      }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

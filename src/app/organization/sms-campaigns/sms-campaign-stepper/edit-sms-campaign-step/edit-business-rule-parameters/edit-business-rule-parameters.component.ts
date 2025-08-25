@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnChanges, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Validators, UntypedFormGroup, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  Validators,
+  UntypedFormGroup,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Rxjs Imports */
 import { distinctUntilChanged } from 'rxjs/operators';
@@ -104,7 +109,9 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
         }
       } else {
         // Child Parameter
-        const parent: ReportParameter = this.paramData.find((entry: any) => entry.name === param.parentParameterName);
+        const parent: ReportParameter = this.paramData.find(
+          (entry: any) => entry.name === param.parentParameterName
+        );
         parent.childParameters.push(param);
         this.updateParentParameters(parent);
       }

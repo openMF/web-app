@@ -10,7 +10,8 @@
         required
       />
       <mat-error>
-        {{ 'labels.inputs.Nominal Annual Interest' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Nominal Annual Interest' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -32,7 +33,8 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Interest Compounding Period' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Interest Compounding Period' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -41,7 +43,9 @@
       <mat-label>{{ 'labels.inputs.Interest Posting Period' | translate }}</mat-label>
       <mat-select
         formControlName="interestPostingPeriodType"
-        matTooltip="{{ 'tooltips.Interest rate is posted or credited to a saving account' | translate }}"
+        matTooltip="{{
+          'tooltips.Interest rate is posted or credited to a saving account' | translate
+        }}"
         required
       >
         <mat-option
@@ -52,7 +56,8 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Interest Posting Period' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Interest Posting Period' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -72,7 +77,8 @@
         </mat-option>
       </mat-select>
       <mat-error>
-        {{ 'labels.inputs.Interest Calculated using' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Interest Calculated using' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>

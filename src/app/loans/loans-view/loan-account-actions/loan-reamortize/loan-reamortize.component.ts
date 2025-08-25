@@ -41,8 +41,10 @@ export class LoanReamortizeComponent implements OnInit {
 
   submit(): void {
     const data = this.reamortizeLoanForm.value;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'reAmortize').subscribe((response: any) => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.loanService
+      .submitLoanActionButton(this.loanId, data, 'reAmortize')
+      .subscribe((response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

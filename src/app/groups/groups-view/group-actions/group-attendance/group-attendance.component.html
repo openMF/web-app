@@ -9,14 +9,18 @@
       </mat-select>
       <mat-hint
         >{{ 'labels.inputs.Next Meeting on' | translate }}:
-        {{ this.groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat }}</mat-hint
+        {{
+          this.groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat
+        }}</mat-hint
       >
     </mat-form-field>
 
     <table class="mat-elevation-z1" mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-        <td mat-cell *matCellDef="let member">{{ member.clientId | find: membersData : 'id' : 'displayName' }}</td>
+        <td mat-cell *matCellDef="let member">
+          {{ member.clientId | find: membersData : 'id' : 'displayName' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="attendance">

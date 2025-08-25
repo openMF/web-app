@@ -13,7 +13,10 @@
 
   <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
-    <mat-select [formControl]="processingResult" (selectionChange)="applyFilter($event.value, 'processingResult')">
+    <mat-select
+      [formControl]="processingResult"
+      (selectionChange)="applyFilter($event.value, 'processingResult')"
+    >
       <mat-option
         *ngFor="let processingResult of auditTrailSearchTemplateData.processingResults"
         [value]="processingResult.id"
@@ -45,14 +48,26 @@
 
   <mat-form-field class="flex-48" (click)="fromDatePicker.open()">
     <mat-label>{{ 'labels.inputs.Maker From Date' | translate }}</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fromDatePicker" [formControl]="fromDate" />
+    <input
+      matInput
+      [min]="minDate"
+      [max]="maxDate"
+      [matDatepicker]="fromDatePicker"
+      [formControl]="fromDate"
+    />
     <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #fromDatePicker></mat-datepicker>
   </mat-form-field>
 
   <mat-form-field class="flex-48" (click)="toDatePicker.open()">
     <mat-label>{{ 'labels.inputs.Maker To Date' | translate }}</mat-label>
-    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="toDatePicker" [formControl]="toDate" />
+    <input
+      matInput
+      [min]="minDate"
+      [max]="maxDate"
+      [matDatepicker]="toDatePicker"
+      [formControl]="toDate"
+    />
     <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #toDatePicker></mat-datepicker>
   </mat-form-field>
@@ -85,26 +100,48 @@
 </div>
 
 <!-- Autocomplete data -->
-<mat-autocomplete autoActiveFirstOption #userNameAutocomplete="matAutocomplete" [displayWith]="displayUserName">
-  <mat-option *ngFor="let user of filteredUserData | async" [value]="{ id: user.id, name: user.username }">
+<mat-autocomplete
+  autoActiveFirstOption
+  #userNameAutocomplete="matAutocomplete"
+  [displayWith]="displayUserName"
+>
+  <mat-option
+    *ngFor="let user of filteredUserData | async"
+    [value]="{ id: user.id, name: user.username }"
+  >
     {{ user.username }}
   </mat-option>
 </mat-autocomplete>
 
-<mat-autocomplete autoActiveFirstOption #actionNameAutocomplete="matAutocomplete" [displayWith]="displayActionName">
+<mat-autocomplete
+  autoActiveFirstOption
+  #actionNameAutocomplete="matAutocomplete"
+  [displayWith]="displayActionName"
+>
   <mat-option *ngFor="let action of filteredActionData | async" [value]="action">
     {{ action }}
   </mat-option>
 </mat-autocomplete>
 
-<mat-autocomplete autoActiveFirstOption #entityNameAutocomplete="matAutocomplete" [displayWith]="displayEntityName">
+<mat-autocomplete
+  autoActiveFirstOption
+  #entityNameAutocomplete="matAutocomplete"
+  [displayWith]="displayEntityName"
+>
   <mat-option *ngFor="let entity of filteredEntityData | async" [value]="entity">
     {{ entity }}
   </mat-option>
 </mat-autocomplete>
 
-<mat-autocomplete autoActiveFirstOption #checkerAutocomplete="matAutocomplete" [displayWith]="displayUserName">
-  <mat-option *ngFor="let user of filteredCheckerData | async" [value]="{ id: user.id, name: user.username }">
+<mat-autocomplete
+  autoActiveFirstOption
+  #checkerAutocomplete="matAutocomplete"
+  [displayWith]="displayUserName"
+>
+  <mat-option
+    *ngFor="let user of filteredCheckerData | async"
+    [value]="{ id: user.id, name: user.username }"
+  >
     {{ user.username }}
   </mat-option>
 </mat-autocomplete>
@@ -115,62 +152,89 @@
   </div>
   <table *ngIf="!isLoading" mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Trail ID' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Trail ID' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.id }}</td>
     </ng-container>
 
     <ng-container matColumnDef="resourceId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Resource ID' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Resource ID' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.resourceId }}</td>
     </ng-container>
 
     <ng-container matColumnDef="processingResult">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Status' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.processingResult }}</td>
     </ng-container>
 
     <ng-container matColumnDef="maker">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Made By' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Made By' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.maker }}</td>
     </ng-container>
 
     <ng-container matColumnDef="actionName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Action' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Action' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.actionName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="entityName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Entity' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Entity' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.entityName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Office' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.officeName }}</td>
     </ng-container>
 
     <ng-container matColumnDef="madeOnDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Made Date' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Made Date' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.madeOnDate | dateFormat }}</td>
     </ng-container>
 
     <ng-container matColumnDef="checker">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Checker' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Checker' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.checker }}</td>
     </ng-container>
 
     <ng-container matColumnDef="checkedOnDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Checked Date' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Checked Date' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.checkedOnDate | dateFormat }}</td>
     </ng-container>
 
     <ng-container matColumnDef="clientIp">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Client Ip' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Client Ip' | translate }}
+      </th>
       <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.ip }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      [routerLink]="[row.id]"
+      class="select-row"
+    ></tr>
   </table>
 
   <mat-paginator

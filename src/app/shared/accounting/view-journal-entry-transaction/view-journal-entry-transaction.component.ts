@@ -98,22 +98,24 @@ export class ViewJournalEntryTransactionComponent implements OnInit {
    * Retrieves the transaction data from `resolve` and sets the transaction table.
    */
   ngOnInit() {
-    this.route.data.subscribe((data: { title: string; transaction: any; transferJournalEntryData: any }) => {
-      this.title = data.title;
-      this.isJournalEntryLoaded = false;
-      if (this.isViewTransaction()) {
-        this.transaction = data.transaction;
-        if (data.transaction.pageItems.length > 0) {
+    this.route.data.subscribe(
+      (data: { title: string; transaction: any; transferJournalEntryData: any }) => {
+        this.title = data.title;
+        this.isJournalEntryLoaded = false;
+        if (this.isViewTransaction()) {
+          this.transaction = data.transaction;
+          if (data.transaction.pageItems.length > 0) {
+            this.isJournalEntryLoaded = true;
+            this.transactionId = data.transaction.pageItems[0].transactionId;
+            this.isManualJournalEntry = data.transaction.pageItems[0].manualEntry;
+          }
+        } else if (this.isViewTransfer()) {
+          this.journalEntriesData = data.transferJournalEntryData.journalEntryData.content;
           this.isJournalEntryLoaded = true;
-          this.transactionId = data.transaction.pageItems[0].transactionId;
-          this.isManualJournalEntry = data.transaction.pageItems[0].manualEntry;
         }
-      } else if (this.isViewTransfer()) {
-        this.journalEntriesData = data.transferJournalEntryData.journalEntryData.content;
-        this.isJournalEntryLoaded = true;
+        this.setTransaction();
       }
-      this.setTransaction();
-    });
+    );
   }
 
   isViewTransaction(): boolean {

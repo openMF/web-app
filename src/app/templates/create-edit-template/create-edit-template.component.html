@@ -59,7 +59,13 @@
           <input matInput [formControl]="mapper.mappersvalue" />
         </mat-form-field>
 
-        <button *ngIf="i === 0" class="mapper-button flex-8" mat-raised-button color="primary" (click)="addMapper()">
+        <button
+          *ngIf="i === 0"
+          class="mapper-button flex-8"
+          mat-raised-button
+          color="primary"
+          (click)="addMapper()"
+        >
           <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
         </button>
         <button
@@ -151,7 +157,9 @@
     </div>
 
     <mat-card-actions class="m-b-20 layout-row layout-xs-column layout-align-center gap-5px">
-      <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
+      <button type="button" mat-raised-button [routerLink]="['../']">
+        {{ 'labels.buttons.Cancel' | translate }}
+      </button>
       <button mat-raised-button color="primary" (click)="submit()" [disabled]="!templateForm.valid">
         {{ 'labels.buttons.Submit' | translate }}
       </button>

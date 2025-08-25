@@ -105,8 +105,10 @@ export class DisburseToSavingsAccountComponent implements OnInit {
     };
     const loanId = this.route.snapshot.params['loanId'];
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.loanActionButtons(loanId, 'disbursetosavings', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .loanActionButtons(loanId, 'disbursetosavings', data)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

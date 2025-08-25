@@ -146,23 +146,29 @@ export class CreateFixedDepositAccountComponent {
         amount: charge.amount,
         dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat),
         feeOnMonthDay:
-          charge.feeOnMonthDay && this.dateUtils.formatDate([2000].concat(charge.feeOnMonthDay), monthDayFormat),
+          charge.feeOnMonthDay &&
+          this.dateUtils.formatDate([2000].concat(charge.feeOnMonthDay), monthDayFormat),
         feeInterval: charge.feeInterval
       })),
-      submittedOnDate: this.dateUtils.formatDate(this.fixedDepositAccount.submittedOnDate, dateFormat),
+      submittedOnDate: this.dateUtils.formatDate(
+        this.fixedDepositAccount.submittedOnDate,
+        dateFormat
+      ),
       charts: [{ chartSlabs: this.fixedDepositsAccountProductTemplate.accountChart.chartSlabs }],
       dateFormat,
       monthDayFormat,
       locale
     };
-    this.fixedDepositsService.createFixedDepositAccount(fixedDepositAccount).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.fixedDepositsService
+      .createFixedDepositAccount(fixedDepositAccount)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

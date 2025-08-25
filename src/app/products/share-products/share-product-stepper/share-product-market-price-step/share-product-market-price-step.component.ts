@@ -122,7 +122,10 @@ export class ShareProductMarketPriceStepComponent implements OnInit {
   }
 
   editMarketPricePeriod(index: number) {
-    const data = { ...this.getData(this.marketPricePeriods.at(index).value), layout: { addButtonText: 'Edit' } };
+    const data = {
+      ...this.getData(this.marketPricePeriods.at(index).value),
+      layout: { addButtonText: 'Edit' }
+    };
     const addMarketPricePeriodDialogRef = this.dialog.open(FormDialogComponent, { data });
     addMarketPricePeriodDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {

@@ -3,7 +3,12 @@
     <button
       mat-raised-button
       color="primary"
-      *ngIf="!(transactionData.transactionType.value === 'Transfer' || transactionData.reversed === 'true')"
+      *ngIf="
+        !(
+          transactionData.transactionType.value === 'Transfer' ||
+          transactionData.reversed === 'true'
+        )
+      "
       [routerLink]="'edit'"
     >
       <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
@@ -62,7 +67,10 @@
         </div>
 
         <div class="flex-50">
-          {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
+          {{
+            transactionData.amount
+              | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2'
+          }}
         </div>
 
         <div class="flex-50 mat-body-strong" *ngIf="transactionData.note">

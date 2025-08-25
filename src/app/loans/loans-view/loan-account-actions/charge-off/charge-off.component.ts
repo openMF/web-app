@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
@@ -83,7 +88,10 @@ export class ChargeOffComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.chargeoffLoanForm.value.transactionDate;
     if (chargeoffLoanFormData.transactionDate instanceof Date) {
-      chargeoffLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      chargeoffLoanFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...chargeoffLoanFormData,
@@ -91,8 +99,10 @@ export class ChargeOffComponent implements OnInit {
       locale
     };
     const command = 'charge-off';
-    this.loanService.submitLoanActionButton(this.loanId, data, command).subscribe((response: any) => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.loanService
+      .submitLoanActionButton(this.loanId, data, command)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

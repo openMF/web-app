@@ -16,7 +16,12 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Services Import */
@@ -366,25 +371,30 @@ export class IndividualCollectionSheetComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const collectionSheet = {
       ...this.collectionSheetForm.value,
-      transactionDate: this.dateUtils.formatDate(this.collectionSheetForm.value.transactionDate, dateFormat),
+      transactionDate: this.dateUtils.formatDate(
+        this.collectionSheetForm.value.transactionDate,
+        dateFormat
+      ),
       dateFormat,
       locale
     };
     if (collectionSheet.staffId === '') {
       delete collectionSheet.staffId;
     }
-    this.collectionsService.retrieveCollectionSheetData(collectionSheet).subscribe((response: any) => {
-      if (response.clients.length > 0) {
-        this.collectionSheetData = response;
-        this.organizeData(response);
-        this.isCollapsed = true;
-      } else {
-        this.noData = true;
-        setTimeout(() => {
-          this.noData = false;
-        }, 3000);
-      }
-    });
+    this.collectionsService
+      .retrieveCollectionSheetData(collectionSheet)
+      .subscribe((response: any) => {
+        if (response.clients.length > 0) {
+          this.collectionSheetData = response;
+          this.organizeData(response);
+          this.isCollapsed = true;
+        } else {
+          this.noData = true;
+          setTimeout(() => {
+            this.noData = false;
+          }, 3000);
+        }
+      });
   }
 
   /**
@@ -393,13 +403,21 @@ export class IndividualCollectionSheetComponent implements OnInit {
   submit() {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    this.bulkDisbursementTransactionsData['bulkRepaymentTransactions'] = this.bulkRepaymentTransactions;
-    this.bulkDisbursementTransactionsData['bulkSavingsDueTransactions'] = this.bulkSavingsDueTransactions;
+    this.bulkDisbursementTransactionsData['bulkRepaymentTransactions'] =
+      this.bulkRepaymentTransactions;
+    this.bulkDisbursementTransactionsData['bulkSavingsDueTransactions'] =
+      this.bulkSavingsDueTransactions;
     const finalSubmitData = {
       dateFormat,
       locale,
-      actualDisbursementDate: this.dateUtils.formatDate(this.collectionSheetForm.value.transactionDate, dateFormat),
-      transactionDate: this.dateUtils.formatDate(this.collectionSheetForm.value.transactionDate, dateFormat),
+      actualDisbursementDate: this.dateUtils.formatDate(
+        this.collectionSheetForm.value.transactionDate,
+        dateFormat
+      ),
+      transactionDate: this.dateUtils.formatDate(
+        this.collectionSheetForm.value.transactionDate,
+        dateFormat
+      ),
       bulkDisbursementTransactions: this.bulkDisbursementTransactionsData
     };
     this.collectionsService.executeSaveCollectionSheet(finalSubmitData).subscribe(() => {
@@ -414,6 +432,8 @@ export class IndividualCollectionSheetComponent implements OnInit {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/collections`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(`/collections`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 }

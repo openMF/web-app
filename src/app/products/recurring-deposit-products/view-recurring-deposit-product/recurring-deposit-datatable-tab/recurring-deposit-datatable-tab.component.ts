@@ -22,7 +22,8 @@ export class RecurringDepositDatatableTabComponent {
 
     this.route.data.subscribe((data: { recurringDepositDatatable: any }) => {
       this.entityDatatable = data.recurringDepositDatatable;
-      this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+      this.multiRowDatatableFlag =
+        this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
 }

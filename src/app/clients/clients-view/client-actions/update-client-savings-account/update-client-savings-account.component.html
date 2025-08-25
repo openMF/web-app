@@ -10,7 +10,9 @@
                 {{ account.accountNo }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="clientSavingsAccountForm.controls.savingsAccountId.hasError('required')">
+            <mat-error
+              *ngIf="clientSavingsAccountForm.controls.savingsAccountId.hasError('required')"
+            >
               {{ 'labels.inputs.Account' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>

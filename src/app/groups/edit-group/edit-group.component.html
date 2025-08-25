@@ -11,7 +11,8 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editGroupForm.controls.name.hasError('pattern')">
-              {{ 'labels.inputs.Group Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.Group Name' | translate }}
+              <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
               {{ 'labels.commons.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
@@ -38,12 +39,16 @@
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="editGroupForm.controls.submittedOnDate.hasError('required')">
-              {{ 'labels.inputs.Submission Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Submission Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="this.editGroupForm.contains('activationDate')" (click)="activationDatePicker.open()">
+          <mat-form-field
+            *ngIf="this.editGroupForm.contains('activationDate')"
+            (click)="activationDatePicker.open()"
+          >
             <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
             <input
               matInput
@@ -56,7 +61,8 @@
             <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activationDatePicker></mat-datepicker>
             <mat-error *ngIf="editGroupForm.controls.activationDate.hasError('required')">
-              {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Activation Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -72,7 +78,12 @@
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!editGroupForm.valid" (click)="submit()">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!editGroupForm.valid"
+          (click)="submit()"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

@@ -60,7 +60,11 @@
 
       <h4>{{ 'labels.heading.Select Excel File' | translate }}</h4>
 
-      <mifosx-file-upload flex="75%" (change)="onFileSelect($event)" acceptFilter=".xls,.xlsx"></mifosx-file-upload>
+      <mifosx-file-upload
+        flex="75%"
+        (change)="onFileSelect($event)"
+        acceptFilter=".xls,.xlsx"
+      ></mifosx-file-upload>
 
       <mat-hint *ngIf="bulkImport.name === 'Clients'">{{
         'labels.text.Please retain the value Entity/Person in the filename.' | translate
@@ -92,42 +96,58 @@
     <div class="imports-table mat-elevation-z1">
       <table #importsTable mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.name' | translate }}
+          </th>
           <td mat-cell *matCellDef="let import">{{ import.name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="importTime">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Import Time' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Import Time' | translate }}
+          </th>
           <td mat-cell *matCellDef="let import">{{ import.importTime | dateFormat }}</td>
         </ng-container>
 
         <ng-container matColumnDef="endTime">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.End Time' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.End Time' | translate }}
+          </th>
           <td mat-cell *matCellDef="let import">{{ import.endTime | dateFormat }}</td>
         </ng-container>
 
         <ng-container matColumnDef="completed">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Completed' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Completed' | translate }}
+          </th>
           <td mat-cell *matCellDef="let import">{{ import.completed }}</td>
         </ng-container>
 
         <ng-container matColumnDef="totalRecords">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Total Records' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Total Records' | translate }}
+          </th>
           <td mat-cell *matCellDef="let import">{{ import.totalRecords }}</td>
         </ng-container>
 
         <ng-container matColumnDef="successCount">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Success Count' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Success Count' | translate }}
+          </th>
           <td mat-cell *matCellDef="let import">{{ import.successCount }}</td>
         </ng-container>
 
         <ng-container matColumnDef="failureCount">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Failure Count' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Failure Count' | translate }}
+          </th>
           <td mat-cell *matCellDef="let import">{{ import.failureCount }}</td>
         </ng-container>
 
         <ng-container matColumnDef="download">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Download' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'labels.inputs.Download' | translate }}
+          </th>
           <td mat-cell *matCellDef="let import">
             <button
               mat-icon-button

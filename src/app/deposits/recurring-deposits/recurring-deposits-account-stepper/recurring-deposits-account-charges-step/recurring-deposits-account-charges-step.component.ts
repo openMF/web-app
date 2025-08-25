@@ -97,7 +97,10 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
     this.chargesDataSource = [];
     if (this.recurringDepositsAccountTemplate.id && this.recurringDepositsAccountTemplate.charges) {
       this.chargesDataSource =
-        this.recurringDepositsAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+        this.recurringDepositsAccountTemplate.charges.map((charge: any) => ({
+          ...charge,
+          id: charge.chargeId
+        })) || [];
     }
   }
 

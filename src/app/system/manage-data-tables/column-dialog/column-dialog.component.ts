@@ -8,7 +8,12 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Data Imports */
 import { columnTypeData } from '../column-type-data';
@@ -74,19 +79,27 @@ export class ColumnDialogComponent implements OnInit {
       length: [
         {
           value: this.data ? +this.data.columnLength : '',
-          disabled: this.getColumnType(this.data.columnDisplayType) !== 'String' || this.data.type === 'existing'
+          disabled:
+            this.getColumnType(this.data.columnDisplayType) !== 'String' ||
+            this.data.type === 'existing'
         },
         Validators.required
 
       ],
       mandatory: [{ value: this.data.isColumnNullable, disabled: this.data.type === 'existing' }],
       unique: [
-        { value: this.data.isColumnUnique, disabled: this.data.isColumnNullable || this.data.type === 'existing' }],
+        {
+          value: this.data.isColumnUnique,
+          disabled: this.data.isColumnNullable || this.data.type === 'existing'
+        }
+      ],
       indexed: [{ value: this.data.isColumnIndexed, disabled: this.data.type === 'existing' }],
       code: [
         {
           value: this.data ? this.data.columnCode : '',
-          disabled: this.getColumnType(this.data.columnDisplayType) !== 'Dropdown' || this.data.type === 'existing'
+          disabled:
+            this.getColumnType(this.data.columnDisplayType) !== 'Dropdown' ||
+            this.data.type === 'existing'
         },
         Validators.required
 

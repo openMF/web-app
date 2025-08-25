@@ -22,7 +22,8 @@ export class DatatableTabComponent {
 
     this.route.data.subscribe((data: { clientDatatable: any }) => {
       this.entityDatatable = data.clientDatatable;
-      this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+      this.multiRowDatatableFlag =
+        this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
 }

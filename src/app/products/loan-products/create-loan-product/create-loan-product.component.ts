@@ -58,17 +58,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateLoanProductComponent implements OnInit {
-  @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
+  @ViewChild(LoanProductDetailsStepComponent, { static: true })
+  loanProductDetailsStep: LoanProductDetailsStepComponent;
   @ViewChild(LoanProductCurrencyStepComponent, { static: true })
   loanProductCurrencyStep: LoanProductCurrencyStepComponent;
   @ViewChild(LoanProductInterestRefundStepComponent, { static: true })
   loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
   @ViewChild(LoanProductDeferredIncomeRecognitionStepComponent, { static: true })
   loanProductDeferredIncomeRecognitionStep: LoanProductDeferredIncomeRecognitionStepComponent;
-  @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
+  @ViewChild(LoanProductTermsStepComponent, { static: true })
+  loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true })
   loanProductSettingsStep: LoanProductSettingsStepComponent;
-  @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
+  @ViewChild(LoanProductChargesStepComponent, { static: true })
+  loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent, { static: true })
   loanProductAccountingStep: LoanProductAccountingStepComponent;
 
@@ -102,14 +105,19 @@ export class CreateLoanProductComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { loanProductsTemplate: any; configurations: any }) => {
       this.loanProductsTemplate = data.loanProductsTemplate;
-      const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
-      const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+      const assetAccountData =
+        this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+      const liabilityAccountData =
+        this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
       this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions =
         assetAccountData.concat(liabilityAccountData);
 
       this.itemsByDefault = loanProducts.setItemsByDefault(data.configurations);
       this.loanProductsTemplate['itemsByDefault'] = this.itemsByDefault;
-      this.loanProductsTemplate = loanProducts.updateLoanProductDefaults(this.loanProductsTemplate, false);
+      this.loanProductsTemplate = loanProducts.updateLoanProductDefaults(
+        this.loanProductsTemplate,
+        false
+      );
     });
   }
 
@@ -147,7 +155,8 @@ export class CreateLoanProductComponent implements OnInit {
       if (this.loanProductsTemplate.enableIncomeCapitalization) {
         this.deferredIncomeRecognition.capitalizedIncome = {
           enableIncomeCapitalization: true,
-          capitalizedIncomeCalculationType: this.loanProductsTemplate.capitalizedIncomeCalculationTypeOptions[0],
+          capitalizedIncomeCalculationType:
+            this.loanProductsTemplate.capitalizedIncomeCalculationTypeOptions[0],
           capitalizedIncomeStrategy: this.loanProductsTemplate.capitalizedIncomeStrategyOptions[0],
           capitalizedIncomeType: this.loanProductsTemplate.capitalizedIncomeTypeOptions[0]
         };
@@ -173,9 +182,8 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   buildAdvancedPaymentAllocation(): void {
-    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(
-      this.loanProductsTemplate
-    );
+    this.advancedPaymentAllocations =
+      this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(this.loanProductsTemplate);
   }
 
   setPaymentAllocation(paymentAllocation: PaymentAllocation[]): void {
@@ -272,17 +280,22 @@ export class CreateLoanProductComponent implements OnInit {
             this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeCalculationType;
           loanProduct['capitalizedIncomeStrategy'] =
             this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeStrategy;
-          loanProduct['capitalizedIncomeType'] = this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType;
+          loanProduct['capitalizedIncomeType'] =
+            this.deferredIncomeRecognition.capitalizedIncome.capitalizedIncomeType;
         }
       }
       if (this.deferredIncomeRecognition.buyDownFee != null) {
-        loanProduct['enableBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee;
+        loanProduct['enableBuyDownFee'] =
+          this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee;
         if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {
           loanProduct['buyDownFeeCalculationType'] =
             this.deferredIncomeRecognition.buyDownFee.buyDownFeeCalculationType;
-          loanProduct['buyDownFeeStrategy'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeStrategy;
-          loanProduct['buyDownFeeIncomeType'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeIncomeType;
-          loanProduct['merchantBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee;
+          loanProduct['buyDownFeeStrategy'] =
+            this.deferredIncomeRecognition.buyDownFee.buyDownFeeStrategy;
+          loanProduct['buyDownFeeIncomeType'] =
+            this.deferredIncomeRecognition.buyDownFee.buyDownFeeIncomeType;
+          loanProduct['merchantBuyDownFee'] =
+            this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee;
         }
       }
     }

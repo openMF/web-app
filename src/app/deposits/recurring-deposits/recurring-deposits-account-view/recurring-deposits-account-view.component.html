@@ -24,11 +24,16 @@
                 ></i>
                 {{ 'labels.inputs.Recurring Deposit' | translate }} :
                 {{ recurringDepositsAccountData.depositProductName }}
-                <mifosx-account-number accountNo="{{ recurringDepositsAccountData.accountNo }}"></mifosx-account-number>
+                <mifosx-account-number
+                  accountNo="{{ recurringDepositsAccountData.accountNo }}"
+                ></mifosx-account-number>
               </h3>
               <span class="account-overview">
-                {{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }}:
-                {{ recurringDepositsAccountData.clientName || recurringDepositsAccountData.groupName }}
+                {{ 'labels.text.' + entityType | translate }}
+                {{ 'labels.inputs.name' | translate }}:
+                {{
+                  recurringDepositsAccountData.clientName || recurringDepositsAccountData.groupName
+                }}
                 <span class="m-l-10" *ngIf="recurringDepositsAccountData.clientAccountNo">
                   <mifosx-account-number
                     accountNo="{{ recurringDepositsAccountData.clientAccountNo }}"
@@ -60,13 +65,16 @@
                     <td>{{ 'labels.inputs.Deposit Amount' | translate }}</td>
                     <td class="r-amount">
                       {{
-                        recurringDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                        recurringDepositsAccountData.depositAmount
+                          | currency: currency.code : 'symbol-narrow' : '1.2-2'
                       }}
                     </td>
                   </tr>
                   <tr>
                     <td>{{ 'labels.inputs.Deposit Period' | translate }}</td>
-                    <td class="r-amount">{{ recurringDepositsAccountData.depositPeriod | number }}</td>
+                    <td class="r-amount">
+                      {{ recurringDepositsAccountData.depositPeriod | number }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -90,16 +98,26 @@
 
       <mat-menu #accountMenu="matMenu">
         <ng-container *ngFor="let item of buttonConfig.singleButtons">
-          <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
+          <button
+            mat-menu-item
+            *mifosxHasPermission="item.taskPermissionName"
+            (click)="doAction(item.name)"
+          >
             <i ngClass="{{ item.icon }}"></i> {{ 'labels.menus.' + item.name | translate }}
           </button>
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.options.length">
-          <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
+          <button mat-menu-item [matMenuTriggerFor]="More">
+            {{ 'labels.menus.More' | translate }}
+          </button>
           <mat-menu #More="matMenu">
             <span *ngFor="let option of buttonConfig.options">
-              <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">
+              <button
+                mat-menu-item
+                *mifosxHasPermission="option.taskPermissionName"
+                (click)="doAction(option.name)"
+              >
                 {{ 'labels.menus.' + option.name | translate }}
               </button>
             </span>

@@ -157,7 +157,9 @@ export class WebAppComponent implements OnInit {
     this.i18nService = new I18nService(this.translateService);
 
     // Change page title on navigation or language change, based on route data
-    const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
+    const onNavigationEnd = this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd)
+    );
     merge(this.translateService.onLangChange, onNavigationEnd)
       .pipe(
         map(() => {
@@ -208,7 +210,9 @@ export class WebAppComponent implements OnInit {
       this.settingsService.setDateFormat('dd MMMM yyyy');
     }
     // Set default max date picker as Today
-    this.settingsService.setBusinessDate(this.dateUtils.formatDate(new Date(), SettingsService.businessDateFormat));
+    this.settingsService.setBusinessDate(
+      this.dateUtils.formatDate(new Date(), SettingsService.businessDateFormat)
+    );
     // Set the server list from the env var FINERACT_API_URLS, but avoid overwriting "Add new server" user choice
     if (!this.settingsService.servers) {
       this.settingsService.setServers(environment.baseApiUrls.split(','));
@@ -235,11 +239,16 @@ export class WebAppComponent implements OnInit {
   }
 
   logout() {
-    this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    this.authenticationService
+      .logout()
+      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
   }
 
   help() {
-    window.open('https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual', '_blank');
+    window.open(
+      'https://mifosforge.jira.com/wiki/spaces/docs/pages/52035622/User+Manual',
+      '_blank'
+    );
   }
 
   // Monitor all keyboard events and excute keyboard shortcuts
@@ -247,7 +256,10 @@ export class WebAppComponent implements OnInit {
   onKeydownHandler(event: KeyboardEvent) {
     const routeD = this.buttonConfig.buttonCombinations.find(
       (x) =>
-        x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key
+        x.ctrlKey === event.ctrlKey &&
+        x.shiftKey === event.shiftKey &&
+        x.altKey === event.altKey &&
+        x.key === event.key
     );
     if (!(routeD === undefined)) {
       switch (routeD.id) {
@@ -262,18 +274,24 @@ export class WebAppComponent implements OnInit {
           break;
         case 'cancel':
           const cancelButtons = document.querySelectorAll('button');
-          const filteredcancelButtons = Array.prototype.filter.call(cancelButtons, function (el: any) {
-            return el.textContent.trim() === 'Cancel';
-          });
+          const filteredcancelButtons = Array.prototype.filter.call(
+            cancelButtons,
+            function (el: any) {
+              return el.textContent.trim() === 'Cancel';
+            }
+          );
           if (filteredcancelButtons.length > 0) {
             filteredcancelButtons[0].click();
           }
           break;
         case 'submit':
           const submitButton = document.querySelectorAll('button');
-          const filteredSubmitButton = Array.prototype.filter.call(submitButton, function (el: any) {
-            return el.textContent.trim() === 'Submit';
-          });
+          const filteredSubmitButton = Array.prototype.filter.call(
+            submitButton,
+            function (el: any) {
+              return el.textContent.trim() === 'Submit';
+            }
+          );
           if (filteredSubmitButton.length > 0) {
             filteredSubmitButton[0].click();
           }

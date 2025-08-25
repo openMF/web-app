@@ -24,7 +24,8 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="employeeForm.controls.firstname.hasError('pattern')">
-              {{ 'labels.inputs.First Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.First Name' | translate }}
+              <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
               {{ 'labels.inputs.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
@@ -37,7 +38,8 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="employeeForm.controls.lastname.hasError('pattern')">
-              {{ 'labels.inputs.Last Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.Last Name' | translate }}
+              <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
               {{ 'labels.inputs.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
@@ -93,12 +95,18 @@
   <p class="mw400">
     {{ 'labels.text.Start filling the details' | translate }} <br />
     {{ 'labels.text.For more details click' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141732/Manage+Employees" target="_blank">{{
-      'labels.inputs.Manage Employees' | translate
-    }}</a>
+    <a
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141732/Manage+Employees"
+      target="_blank"
+      >{{ 'labels.inputs.Manage Employees' | translate }}</a
+    >
   </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close()">

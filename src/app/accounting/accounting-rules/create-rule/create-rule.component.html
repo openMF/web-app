@@ -7,7 +7,8 @@
             <mat-label>{{ 'labels.inputs.Accounting Rule Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
             <mat-error *ngIf="accountingRuleForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Accounting Rule Name' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Accounting Rule Name' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -33,14 +34,19 @@
               class="flex-50 layout-row gap-5percent radio-group-spacing"
               formControlName="debitRuleType"
             >
-              <mat-radio-button value="fixedAccount">{{ 'labels.inputs.Fixed Account' | translate }}</mat-radio-button>
+              <mat-radio-button value="fixedAccount">{{
+                'labels.inputs.Fixed Account' | translate
+              }}</mat-radio-button>
               <mat-radio-button value="listOfAccounts">{{
                 'labels.inputs.List of Accounts' | translate
               }}</mat-radio-button>
             </mat-radio-group>
           </div>
 
-          <mat-form-field class="flex-48" *ngIf="accountingRuleForm.controls.debitRuleType.value === 'fixedAccount'">
+          <mat-form-field
+            class="flex-48"
+            *ngIf="accountingRuleForm.controls.debitRuleType.value === 'fixedAccount'"
+          >
             <mat-label>{{ 'labels.inputs.Account to Debit' | translate }}</mat-label>
             <mat-select formControlName="accountToDebit">
               <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
@@ -63,7 +69,11 @@
             </mat-form-field>
 
             <div class="flex-50" ngClass.gt-md="entries-wrapper">
-              <mat-checkbox labelPosition="before" formControlName="allowMultipleDebitEntries" class="entries">
+              <mat-checkbox
+                labelPosition="before"
+                formControlName="allowMultipleDebitEntries"
+                class="entries"
+              >
                 {{ 'labels.inputs.Multiple Debit Entries Allowed' | translate }}
               </mat-checkbox>
             </div>
@@ -77,14 +87,19 @@
               class="flex-50 layout-row gap-5-percent radio-group-spacing"
               formControlName="creditRuleType"
             >
-              <mat-radio-button value="fixedAccount">{{ 'labels.inputs.Fixed Account' | translate }}</mat-radio-button>
+              <mat-radio-button value="fixedAccount">{{
+                'labels.inputs.Fixed Account' | translate
+              }}</mat-radio-button>
               <mat-radio-button value="listOfAccounts">{{
                 'labels.inputs.List of Accounts' | translate
               }}</mat-radio-button>
             </mat-radio-group>
           </div>
 
-          <mat-form-field class="flex-48" *ngIf="accountingRuleForm.controls.creditRuleType.value === 'fixedAccount'">
+          <mat-form-field
+            class="flex-48"
+            *ngIf="accountingRuleForm.controls.creditRuleType.value === 'fixedAccount'"
+          >
             <mat-label>{{ 'labels.inputs.Account to Credit' | translate }}</mat-label>
             <mat-select formControlName="accountToCredit">
               <mat-option *ngFor="let glAccount of glAccountData" [value]="glAccount.id">
@@ -107,7 +122,11 @@
             </mat-form-field>
 
             <div class="flex-50" ngClass.gt-md="entries-wrapper">
-              <mat-checkbox labelPosition="before" formControlName="allowMultipleCreditEntries" class="entries">
+              <mat-checkbox
+                labelPosition="before"
+                formControlName="allowMultipleCreditEntries"
+                class="entries"
+              >
                 {{ 'labels.inputs.Multiple Credit Entries Allowed' | translate }}
               </mat-checkbox>
             </div>
@@ -115,7 +134,12 @@
 
           <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-            <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea
+              matInput
+              formControlName="description"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
           </mat-form-field>
         </div>
       </mat-card-content>

@@ -47,7 +47,9 @@
 
       <mifosx-loan-product-settings-step
         [loanProductsTemplate]="loanProductsTemplate"
-        [isLinkedToFloatingInterestRates]="loanProductTermsForm.get('isLinkedToFloatingInterestRates')"
+        [isLinkedToFloatingInterestRates]="
+          loanProductTermsForm.get('isLinkedToFloatingInterestRates')
+        "
         (advancePaymentStrategy)="advancePaymentStrategy($event)"
       >
       </mifosx-loan-product-settings-step>
@@ -70,9 +72,13 @@
       <mifosx-loan-product-payment-strategy-step
         [advancedPaymentAllocations]="advancedPaymentAllocations"
         [advancedCreditAllocations]="advancedCreditAllocations"
-        [advancedPaymentAllocationTransactionTypes]="loanProductsTemplate.advancedPaymentAllocationTransactionTypes"
+        [advancedPaymentAllocationTransactionTypes]="
+          loanProductsTemplate.advancedPaymentAllocationTransactionTypes
+        "
         [paymentAllocationOrderDefault]="loanProductsTemplate.advancedPaymentAllocationTypes"
-        [advancedCreditAllocationTransactionTypes]="loanProductsTemplate.creditAllocationTransactionTypes"
+        [advancedCreditAllocationTransactionTypes]="
+          loanProductsTemplate.creditAllocationTransactionTypes
+        "
         [creditAllocationOrderDefault]="loanProductsTemplate.creditAllocationAllocationTypes"
         (setPaymentAllocation)="setPaymentAllocation($event)"
         (setCreditAllocation)="setCreditAllocation($event)"
@@ -85,7 +91,9 @@
     <mat-step [stepControl]="loanProductTermsForm">
       <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
-      <mifosx-loan-product-terms-step [loanProductsTemplate]="loanProductsTemplate"></mifosx-loan-product-terms-step>
+      <mifosx-loan-product-terms-step
+        [loanProductsTemplate]="loanProductsTemplate"
+      ></mifosx-loan-product-terms-step>
     </mat-step>
 
     <mat-step>
@@ -100,11 +108,15 @@
     </mat-step>
 
     <mat-step *ngIf="isAdvancedPaymentStrategy" [stepControl]="loanIncomeCapitalizationForm">
-      <ng-template matStepLabel>{{ 'labels.inputs.DEFERRED INCOME RECOGNITION' | translate }}</ng-template>
+      <ng-template matStepLabel>{{
+        'labels.inputs.DEFERRED INCOME RECOGNITION' | translate
+      }}</ng-template>
 
       <mifosx-loan-product-capitalized-income-step
         [deferredIncomeRecognition]="deferredIncomeRecognition"
-        [capitalizedIncomeCalculationTypeOptions]="loanProductsTemplate.capitalizedIncomeCalculationTypeOptions"
+        [capitalizedIncomeCalculationTypeOptions]="
+          loanProductsTemplate.capitalizedIncomeCalculationTypeOptions
+        "
         [capitalizedIncomeStrategyOptions]="loanProductsTemplate.capitalizedIncomeStrategyOptions"
         [capitalizedIncomeTypeOptions]="loanProductsTemplate.capitalizedIncomeTypeOptions"
         [buyDownFeeCalculationTypeOptions]="loanProductsTemplate.buyDownFeeCalculationTypeOptions"

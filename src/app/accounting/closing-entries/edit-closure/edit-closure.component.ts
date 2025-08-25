@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -75,9 +80,12 @@ export class EditClosureComponent implements OnInit {
    * Sets accounting closure form.
    */
   setAccountingClosure() {
-    this.officeData = [{ id: this.glAccountClosure.officeId, name: this.glAccountClosure.officeName }];
+    this.officeData = [
+      { id: this.glAccountClosure.officeId, name: this.glAccountClosure.officeName }];
     this.accountingClosureForm.get('officeId').setValue(this.glAccountClosure.officeId);
-    this.accountingClosureForm.get('closingDate').setValue(new Date(this.glAccountClosure.closingDate));
+    this.accountingClosureForm
+      .get('closingDate')
+      .setValue(new Date(this.glAccountClosure.closingDate));
     this.accountingClosureForm.get('comments').setValue(this.glAccountClosure.comments);
   }
 
@@ -87,7 +95,9 @@ export class EditClosureComponent implements OnInit {
    */
   submit() {
     this.accountingService
-      .updateAccountingClosure(this.glAccountClosure.id, { comments: this.accountingClosureForm.value.comments })
+      .updateAccountingClosure(this.glAccountClosure.id, {
+        comments: this.accountingClosureForm.value.comments
+      })
       .subscribe((response: any) => {
         this.router.navigate(
           [

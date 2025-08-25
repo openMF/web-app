@@ -17,7 +17,11 @@
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="row">
         <th mat-header-cell *matHeaderCellDef>#</th>
-        <td mat-cell *matCellDef="let transaction; let idx = index" (click)="showTransactions(transaction)">
+        <td
+          mat-cell
+          *matCellDef="let transaction; let idx = index"
+          (click)="showTransactions(transaction)"
+        >
           {{ idx + 1 }}
         </td>
       </ng-container>
@@ -35,7 +39,9 @@
       </ng-container>
 
       <ng-container matColumnDef="transactionDate">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Transaction Date' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Transaction Date' | translate }}
+        </th>
         <td
           mat-cell
           *matCellDef="let transaction"
@@ -47,7 +53,9 @@
       </ng-container>
 
       <ng-container matColumnDef="transactionType">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Transaction Type' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Transaction Type' | translate }}
+        </th>
         <td
           mat-cell
           *matCellDef="let transaction"
@@ -59,7 +67,9 @@
       </ng-container>
 
       <ng-container matColumnDef="debit">
-        <th mat-header-cell *matHeaderCellDef class="center">{{ 'labels.inputs.Debit' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef class="center">
+          {{ 'labels.inputs.Debit' | translate }}
+        </th>
         <td
           mat-cell
           *matCellDef="let transaction"
@@ -72,7 +82,9 @@
       </ng-container>
 
       <ng-container matColumnDef="credit">
-        <th mat-header-cell *matHeaderCellDef class="center">{{ 'labels.inputs.Credit' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef class="center">
+          {{ 'labels.inputs.Credit' | translate }}
+        </th>
         <td
           mat-cell
           *matCellDef="let transaction"
@@ -85,7 +97,9 @@
       </ng-container>
 
       <ng-container matColumnDef="balance">
-        <th mat-header-cell *matHeaderCellDef class="center">{{ 'labels.inputs.Balance' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef class="center">
+          {{ 'labels.inputs.Balance' | translate }}
+        </th>
         <td
           mat-cell
           *matCellDef="let transaction"
@@ -100,7 +114,12 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell class="center" *matCellDef="let transaction">
-          <button mat-icon-button [matMenuTriggerFor]="transactionMenu" aria-label="" class="action-button">
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="transactionMenu"
+            aria-label=""
+            class="action-button"
+          >
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #transactionMenu="matMenu">

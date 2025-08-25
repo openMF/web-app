@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnChanges, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { Currency } from 'app/shared/models/general.model';
 import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
@@ -72,7 +77,9 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
       this.setOptions();
       if (this.sharesAccountTemplate) {
         if (!this.isSavingsPatched && this.sharesAccountTemplate.savingsAccountId) {
-          this.sharesAccountTermsForm.get('savingsAccountId').patchValue(this.sharesAccountTemplate.savingsAccountId);
+          this.sharesAccountTermsForm
+            .get('savingsAccountId')
+            .patchValue(this.sharesAccountTemplate.savingsAccountId);
           this.isSavingsPatched = true;
         }
       }
@@ -86,10 +93,12 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
         requestedShares: this.sharesAccountTemplate.summary.totalPendingForApprovalShares,
         minimumActivePeriod: this.sharesAccountTemplate.minimumActivePeriod,
         minimumActivePeriodFrequencyType:
-          this.sharesAccountTemplate.minimumActivePeriod && this.sharesAccountTemplate.minimumActivePeriodTypeEnum.id,
+          this.sharesAccountTemplate.minimumActivePeriod &&
+          this.sharesAccountTemplate.minimumActivePeriodTypeEnum.id,
         lockinPeriodFrequency: this.sharesAccountTemplate.lockinPeriod,
         lockinPeriodFrequencyType:
-          this.sharesAccountTemplate.lockinPeriod && this.sharesAccountTemplate.lockPeriodTypeEnum.id,
+          this.sharesAccountTemplate.lockinPeriod &&
+          this.sharesAccountTemplate.lockPeriodTypeEnum.id,
         applicationDate:
           this.sharesAccountTemplate.purchasedShares[0].purchasedDate &&
           new Date(this.sharesAccountTemplate.purchasedShares[0].purchasedDate),
@@ -134,7 +143,8 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   setOptions() {
     this.minimumActivePeriodFrequencyTypeData =
       this.sharesAccountProductTemplate.minimumActivePeriodFrequencyTypeOptions;
-    this.lockinPeriodFrequencyTypeData = this.sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions;
+    this.lockinPeriodFrequencyTypeData =
+      this.sharesAccountProductTemplate.lockinPeriodFrequencyTypeOptions;
     this.savingsAccountsData = this.sharesAccountProductTemplate.clientSavingsAccounts;
   }
 
@@ -146,8 +156,14 @@ export class SharesAccountTermsStepComponent implements OnChanges, OnInit {
   }
 
   calculateCurrenValue(): number {
-    if (this.sharesAccountTermsForm.value.requestedShares && this.sharesAccountProductTemplate.currentMarketPrice) {
-      return this.sharesAccountProductTemplate.currentMarketPrice * this.sharesAccountTermsForm.value.requestedShares;
+    if (
+      this.sharesAccountTermsForm.value.requestedShares &&
+      this.sharesAccountProductTemplate.currentMarketPrice
+    ) {
+      return (
+        this.sharesAccountProductTemplate.currentMarketPrice *
+        this.sharesAccountTermsForm.value.requestedShares
+      );
     }
     return 0;
   }

@@ -1,6 +1,18 @@
 /** Angular Imports */
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -234,7 +246,9 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     });
     editColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response !== '') {
-        this.columnData[this.columnData.findIndex((newColumn) => newColumn.columnName === column.name)] = {
+        this.columnData[
+          this.columnData.findIndex((newColumn) => newColumn.columnName === column.name)
+        ] = {
           columnName: response.name,
           columnDisplayType: response.type,
           isColumnNullable: !response.mandatory,
@@ -255,7 +269,9 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
    */
   deleteColumn(column: any) {
     const deleteColumnDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Column') + ' ' + column.name }
+      data: {
+        deleteContext: this.translateService.instant('labels.inputs.Column') + ' ' + column.name
+      }
     });
     deleteColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -284,7 +300,10 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
     });
     this.dataTableForm.value.columns = columns;
     const payload = this.dataTableForm.value;
-    if (this.dataTableForm.value.entitySubType == null || this.dataTableForm.value.entitySubType === '') {
+    if (
+      this.dataTableForm.value.entitySubType == null ||
+      this.dataTableForm.value.entitySubType === ''
+    ) {
       delete payload.entitySubType;
     }
     this.systemService.createDataTable(payload).subscribe((response: any) => {
@@ -325,7 +344,12 @@ export class CreateDataTableComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showDatatablesForm === true) {
       setTimeout(() => {
-        this.showPopover(this.templateDataTableFormRef, this.dataTableFormRef.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateDataTableFormRef,
+          this.dataTableFormRef.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
   }

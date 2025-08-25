@@ -82,7 +82,8 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
         data.recurringDepositsAccountActionData.outstandingChargeAmount &&
         data.recurringDepositsAccountActionData.outstandingChargeAmount > 0
       ) {
-        this.outstandingChargeAmount = data.recurringDepositsAccountActionData.outstandingChargeAmount;
+        this.outstandingChargeAmount =
+          data.recurringDepositsAccountActionData.outstandingChargeAmount;
         this.transactionAmount += this.outstandingChargeAmount;
       }
     });
@@ -160,7 +161,10 @@ export class DepositRecurringDepositsAccountComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const prevTransactionDate = this.depositRecurringDepositForm.value.transactionDate;
     if (depositRecurringDepositFormData.transactionDate instanceof Date) {
-      depositRecurringDepositFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      depositRecurringDepositFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...depositRecurringDepositFormData,

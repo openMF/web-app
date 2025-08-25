@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent
+} from '@angular/material/dialog';
 import { KeyboardShortcutsConfiguration } from '../../keyboards-shortcut-config';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatDivider } from '@angular/material/divider';

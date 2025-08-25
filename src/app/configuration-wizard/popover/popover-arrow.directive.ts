@@ -1,5 +1,12 @@
 /* Angular Imports */
-import { Directive, Renderer2, ElementRef, HostBinding, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  Directive,
+  Renderer2,
+  ElementRef,
+  HostBinding,
+  ChangeDetectorRef,
+  OnDestroy
+} from '@angular/core';
 
 /* rxjs Imports */
 import { Subscription } from 'rxjs';

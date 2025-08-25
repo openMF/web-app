@@ -1,15 +1,30 @@
 <div class="layout-row align-end gap-2px responsive-column container m-b-20">
   <span *mifosxHasPermission="'ACTIVATE_HOLIDAY'">
-    <button mat-raised-button color="accent" (click)="activateHoliday()" *ngIf="holidayData.status.value !== 'Active'">
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="activateHoliday()"
+      *ngIf="holidayData.status.value !== 'Active'"
+    >
       <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Activate' | translate }}
     </button>
   </span>
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_HOLIDAY'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['edit']"
+    *mifosxHasPermission="'UPDATE_HOLIDAY'"
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
   </button>
-  <button mat-raised-button color="warn" (click)="deleteHoliday()" *mifosxHasPermission="'DELETE_HOLIDAY'">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="deleteHoliday()"
+    *mifosxHasPermission="'DELETE_HOLIDAY'"
+  >
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Delete' | translate }}
   </button>
@@ -49,14 +64,20 @@
 
         <div
           class="flex-50"
-          *ngIf="holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null"
+          *ngIf="
+            holidayData.repaymentsRescheduledTo !== undefined &&
+            holidayData.repaymentsRescheduledTo !== null
+          "
         >
           {{ holidayData.repaymentsRescheduledTo | dateFormat }}
         </div>
 
         <div
           class="flex-50"
-          *ngIf="holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null"
+          *ngIf="
+            holidayData.repaymentsRescheduledTo === undefined ||
+            holidayData.repaymentsRescheduledTo === null
+          "
         >
           {{ 'labels.inputs.Next Repayment Date' | translate }}
         </div>

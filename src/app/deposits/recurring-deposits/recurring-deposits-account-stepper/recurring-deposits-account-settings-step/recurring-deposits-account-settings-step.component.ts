@@ -76,7 +76,8 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
       this.currency = recurringDepositsAccount.currency;
       this.recurringDepositAccountSettingsForm.patchValue({
         isMandatoryDeposit: recurringDepositsAccount.isMandatoryDeposit,
-        adjustAdvanceTowardsFuturePayments: recurringDepositsAccount.adjustAdvanceTowardsFuturePayments,
+        adjustAdvanceTowardsFuturePayments:
+          recurringDepositsAccount.adjustAdvanceTowardsFuturePayments,
         allowWithdrawal: recurringDepositsAccount.allowWithdrawal,
         lockinPeriodFrequency: recurringDepositsAccount.lockinPeriodFrequency,
         lockinPeriodFrequencyType: recurringDepositsAccount.lockinPeriodFrequencyType
@@ -111,20 +112,27 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
           : ''
       });
       if (recurringDepositsAccount.withHoldTax) {
-        this.recurringDepositAccountSettingsForm.addControl('withHoldTax', new UntypedFormControl(false));
-        this.recurringDepositAccountSettingsForm.get('withHoldTax').valueChanges.subscribe((value: boolean) => {
-          if (value) {
-            this.recurringDepositAccountSettingsForm.addControl(
-              'taxGroupId',
-              new UntypedFormControl({ value: '', disabled: true })
-            );
-            this.recurringDepositAccountSettingsForm
-              .get('taxGroupId')
-              .patchValue(recurringDepositsAccount.taxGroup && recurringDepositsAccount.taxGroup.name);
-          } else {
-            this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
-          }
-        });
+        this.recurringDepositAccountSettingsForm.addControl(
+          'withHoldTax',
+          new UntypedFormControl(false)
+        );
+        this.recurringDepositAccountSettingsForm
+          .get('withHoldTax')
+          .valueChanges.subscribe((value: boolean) => {
+            if (value) {
+              this.recurringDepositAccountSettingsForm.addControl(
+                'taxGroupId',
+                new UntypedFormControl({ value: '', disabled: true })
+              );
+              this.recurringDepositAccountSettingsForm
+                .get('taxGroupId')
+                .patchValue(
+                  recurringDepositsAccount.taxGroup && recurringDepositsAccount.taxGroup.name
+                );
+            } else {
+              this.recurringDepositAccountSettingsForm.removeControl('taxGroupId');
+            }
+          });
         this.recurringDepositAccountSettingsForm
           .get('withHoldTax')
           .patchValue(this.recurringDepositsAccountTemplate.withHoldTax);
@@ -144,7 +152,8 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
         lockinPeriodFrequencyType:
           this.recurringDepositsAccountTemplate.lockinPeriodFrequencyType &&
           this.recurringDepositsAccountTemplate.lockinPeriodFrequencyType.id,
-        mandatoryRecommendedDepositAmount: this.recurringDepositsAccountTemplate.mandatoryRecommendedDepositAmount
+        mandatoryRecommendedDepositAmount:
+          this.recurringDepositsAccountTemplate.mandatoryRecommendedDepositAmount
       });
     }
   }
@@ -200,7 +209,8 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
   setOptions(recurringDepositsAccount: any) {
     this.lockinPeriodFrequencyTypeData = recurringDepositsAccount.lockinPeriodFrequencyTypeOptions;
     this.periodFrequencyTypeData = recurringDepositsAccount.periodFrequencyTypeOptions;
-    this.preClosurePenalInterestOnTypeData = recurringDepositsAccount.preClosurePenalInterestOnTypeOptions;
+    this.preClosurePenalInterestOnTypeData =
+      recurringDepositsAccount.preClosurePenalInterestOnTypeOptions;
   }
 
   /**
@@ -215,9 +225,18 @@ export class RecurringDepositsAccountSettingsStepComponent implements OnInit, On
           this.recurringDepositAccountSettingsForm.removeControl('recurringFrequency');
           this.recurringDepositAccountSettingsForm.removeControl('recurringFrequencyType');
         } else {
-          this.recurringDepositAccountSettingsForm.addControl('expectedFirstDepositOnDate', new UntypedFormControl());
-          this.recurringDepositAccountSettingsForm.addControl('recurringFrequency', new UntypedFormControl(''));
-          this.recurringDepositAccountSettingsForm.addControl('recurringFrequencyType', new UntypedFormControl(''));
+          this.recurringDepositAccountSettingsForm.addControl(
+            'expectedFirstDepositOnDate',
+            new UntypedFormControl()
+          );
+          this.recurringDepositAccountSettingsForm.addControl(
+            'recurringFrequency',
+            new UntypedFormControl('')
+          );
+          this.recurringDepositAccountSettingsForm.addControl(
+            'recurringFrequencyType',
+            new UntypedFormControl('')
+          );
         }
       });
   }

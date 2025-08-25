@@ -154,7 +154,9 @@ export class ClientTrendsBarComponent implements OnInit {
         while (labelsArray.length < 12) {
           date.setDate(date.getDate() - 7);
           /** Gets current week number */
-          const weekNumber = Math.ceil(((date.getTime() - onejan.getTime()) / 86400000 + onejan.getDay() + 1) / 7);
+          const weekNumber = Math.ceil(
+            ((date.getTime() - onejan.getTime()) / 86400000 + onejan.getDay() + 1) / 7
+          );
           labelsArray.push(weekNumber);
         }
         break;

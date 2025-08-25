@@ -93,9 +93,11 @@ export class RecurringDepositGeneralTabComponent {
   ];
 
   constructor(private route: ActivatedRoute) {
-    this.route.data.subscribe((data: { recurringDepositProduct: any; recurringDepositProductsTemplate: any }) => {
-      this.recurringDepositProduct = data.recurringDepositProduct;
-      this.recurringDepositProductTemplate = data.recurringDepositProductsTemplate;
-    });
+    this.route.data.subscribe(
+      (data: { recurringDepositProduct: any; recurringDepositProductsTemplate: any }) => {
+        this.recurringDepositProduct = data.recurringDepositProduct;
+        this.recurringDepositProductTemplate = data.recurringDepositProductsTemplate;
+      }
+    );
   }
 }

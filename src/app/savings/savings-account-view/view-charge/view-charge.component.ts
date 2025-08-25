@@ -106,7 +106,12 @@ export class ViewChargeComponent {
           locale
         };
         this.savingsService
-          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'pay', dataObject, this.chargeData.id)
+          .executeSavingsAccountChargesCommand(
+            this.chargeData.accountId,
+            'pay',
+            dataObject,
+            this.chargeData.id
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -118,11 +123,18 @@ export class ViewChargeComponent {
    * Waive's the charge
    */
   waiveCharge() {
-    const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: this.chargeData.id } });
+    const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, {
+      data: { id: this.chargeData.id }
+    });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService
-          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
+          .executeSavingsAccountChargesCommand(
+            this.chargeData.accountId,
+            'waive',
+            {},
+            this.chargeData.id
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -140,7 +152,12 @@ export class ViewChargeComponent {
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService
-          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'inactivate', {}, this.chargeData.id)
+          .executeSavingsAccountChargesCommand(
+            this.chargeData.accountId,
+            'inactivate',
+            {},
+            this.chargeData.id
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -195,9 +212,11 @@ export class ViewChargeComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id).subscribe(() => {
-          this.reload();
-        });
+        this.savingsService
+          .deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id)
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -207,7 +226,11 @@ export class ViewChargeComponent {
    */
   isRecurringCharge() {
     const chargeTimeType = this.chargeData.chargeTimeType.value;
-    return chargeTimeType === 'Monthly Fee' || chargeTimeType === 'Annual Fee' || chargeTimeType === 'Weekly Fee';
+    return (
+      chargeTimeType === 'Monthly Fee' ||
+      chargeTimeType === 'Annual Fee' ||
+      chargeTimeType === 'Weekly Fee'
+    );
   }
 
   /**
@@ -220,6 +243,8 @@ export class ViewChargeComponent {
       0,
       this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length
     );
-    this.router.navigateByUrl(refreshUrl, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(refreshUrl, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 }

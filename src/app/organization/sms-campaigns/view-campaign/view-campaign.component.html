@@ -1,7 +1,12 @@
 <div class="container">
   <div class="layout-row align-flex-end action-buttons m-b-20 gap-1percent">
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'active'">
-      <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SMSCAMPAIGN'" [routerLink]="['edit']">
+      <button
+        mat-raised-button
+        color="primary"
+        *mifosxHasPermission="'UPDATE_SMSCAMPAIGN'"
+        [routerLink]="['edit']"
+      >
         <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
       </button>
     </span>
@@ -13,18 +18,27 @@
         *mifosxHasPermission="'ACTIVATE_SMSCAMPAIGN'"
         (click)="activateCampaign()"
       >
-        <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{ 'labels.buttons.Activate' | translate }}
+        <fa-icon icon="lock-open" class="m-r-10"></fa-icon
+        >{{ 'labels.buttons.Activate' | translate }}
       </button>
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value !== 'closed'">
-      <button mat-raised-button color="warn" *mifosxHasPermission="'CLOSE_SMSCAMPAIGN'" (click)="closeCampaign()">
+      <button
+        mat-raised-button
+        color="warn"
+        *mifosxHasPermission="'CLOSE_SMSCAMPAIGN'"
+        (click)="closeCampaign()"
+      >
         <fa-icon icon="times" class="m-r-10"></fa-icon>{{ 'labels.buttons.Close' | translate }}
       </button>
     </span>
 
     <span
-      *ngIf="smsCampaignData.campaignStatus.value !== 'Pending' && smsCampaignData.campaignStatus.value !== 'active'"
+      *ngIf="
+        smsCampaignData.campaignStatus.value !== 'Pending' &&
+        smsCampaignData.campaignStatus.value !== 'active'
+      "
     >
       <button
         mat-raised-button
@@ -37,7 +51,12 @@
     </span>
 
     <span *ngIf="smsCampaignData.campaignStatus.value === 'closed'">
-      <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SMSCAMPAIGN'" (click)="deleteCampaign()">
+      <button
+        mat-raised-button
+        color="warn"
+        *mifosxHasPermission="'DELETE_SMSCAMPAIGN'"
+        (click)="deleteCampaign()"
+      >
         <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
       </button>
     </span>
@@ -58,11 +77,13 @@
               </mat-list-item>
 
               <mat-list-item>
-                {{ 'labels.inputs.Status' | translate }} : {{ smsCampaignData.campaignStatus.value }}
+                {{ 'labels.inputs.Status' | translate }} :
+                {{ smsCampaignData.campaignStatus.value }}
               </mat-list-item>
 
               <mat-list-item>
-                {{ 'labels.inputs.Trigger Type' | translate }} : {{ smsCampaignData.triggerType.value }}
+                {{ 'labels.inputs.Trigger Type' | translate }} :
+                {{ smsCampaignData.triggerType.value }}
               </mat-list-item>
 
               <mat-list-item>
@@ -114,13 +135,19 @@
 
                 <div class="search-button">
                   <button mat-raised-button color="primary">
-                    <fa-icon icon="search" class="m-r-10"></fa-icon>{{ 'labels.buttons.Search' | translate }}
+                    <fa-icon icon="search" class="m-r-10"></fa-icon
+                    >{{ 'labels.buttons.Search' | translate }}
                   </button>
                 </div>
               </div>
             </form>
 
-            <table #messageTable mat-table [dataSource]="dataSource" class="mat-elevation-z1 m-b-25">
+            <table
+              #messageTable
+              mat-table
+              [dataSource]="dataSource"
+              class="mat-elevation-z1 m-b-25"
+            >
               <ng-container matColumnDef="Message">
                 <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Message' | translate }}</th>
                 <td mat-cell *matCellDef="let sms">{{ sms.message }}</td>
@@ -132,12 +159,16 @@
               </ng-container>
 
               <ng-container matColumnDef="Mobile No.">
-                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Mobile No' | translate }}.</th>
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'labels.inputs.Mobile No' | translate }}.
+                </th>
                 <td mat-cell *matCellDef="let sms">{{ sms.mobileNo }}</td>
               </ng-container>
 
               <ng-container matColumnDef="Campaign Name">
-                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Campaign Name' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'labels.inputs.Campaign Name' | translate }}
+                </th>
                 <td mat-cell *matCellDef="let sms">{{ sms.campaignName }}</td>
               </ng-container>
 

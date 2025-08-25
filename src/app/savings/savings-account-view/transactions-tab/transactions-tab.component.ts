@@ -147,7 +147,9 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   isAccrual(transactionType: SavingsAccountTransactionType): boolean {
-    return transactionType.accrual || transactionType.code === 'savingsAccountTransactionType.accrual';
+    return (
+      transactionType.accrual || transactionType.code === 'savingsAccountTransactionType.accrual'
+    );
   }
 
   /**
@@ -173,9 +175,12 @@ export class TransactionsTabComponent implements OnInit {
    */
   showTransactions(transactionsData: SavingsAccountTransaction) {
     if (transactionsData.transfer) {
-      this.router.navigate([`../transfer-funds/account-transfers/${transactionsData.transfer.id}`], {
-        relativeTo: this.route
-      });
+      this.router.navigate(
+        [`../transfer-funds/account-transfers/${transactionsData.transfer.id}`],
+        {
+          relativeTo: this.route
+        }
+      );
     } else {
       this.router.navigate(
         [
@@ -241,7 +246,12 @@ export class TransactionsTabComponent implements OnInit {
           locale
         };
         this.savingsService
-          .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, transactionData.id)
+          .executeSavingsAccountTransactionsCommand(
+            this.accountId,
+            'undo',
+            data,
+            transactionData.id
+          )
           .subscribe(() => {
             this.reload();
           });

@@ -25,7 +25,9 @@ export class DropdownComponent {
   constructor(private translateService: TranslateService) {}
 
   getPlaceHolderText(): string {
-    return this.placeHolderText ? this.translateService.instant('labels.inputs.' + this.placeHolderText) : '';
+    return this.placeHolderText
+      ? this.translateService.instant('labels.inputs.' + this.placeHolderText)
+      : '';
   }
 
   getLabelText(): string {

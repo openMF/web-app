@@ -8,7 +8,12 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -71,7 +76,11 @@ export class FloatingRatePeriodDialogComponent implements OnInit {
         Validators.required
       ],
       isDifferentialToBaseLendingRate: [
-        { value: this.data ? this.data.isDifferentialToBaseLendingRate : false, disabled: rowDisabled }]
+        {
+          value: this.data ? this.data.isDifferentialToBaseLendingRate : false,
+          disabled: rowDisabled
+        }
+      ]
     });
   }
 

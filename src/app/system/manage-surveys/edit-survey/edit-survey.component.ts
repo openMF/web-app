@@ -92,14 +92,22 @@ export class EditSurveyComponent {
       questionForm.get('text').setValue(questionData.text);
       questionForm.get('description').setValue(questionData.description);
       // questionForm.get('responseDatas').setValue([]);
-      this.prepareResponseDatas(<UntypedFormArray>questionForm.get('responseDatas'), questionData.responseDatas, idx);
+      this.prepareResponseDatas(
+        <UntypedFormArray>questionForm.get('responseDatas'),
+        questionData.responseDatas,
+        idx
+      );
     });
   }
 
   /**
    * Fills all the response forms.
    */
-  prepareResponseDatas(responseForms: UntypedFormArray, responseDatas: Array<ResponseData>, questionIdx: number) {
+  prepareResponseDatas(
+    responseForms: UntypedFormArray,
+    responseDatas: Array<ResponseData>,
+    questionIdx: number
+  ) {
     responseDatas.forEach((responseData, idx) => {
       if (idx) {
         this.addResponse(questionIdx);
@@ -241,7 +249,11 @@ export class EditSurveyComponent {
         .at(questionIndex)
         .get('sequenceNo')
         .setValue(questionIndex + 1);
-      for (let responseIndex = 0; responseIndex < this.getResponseDatas(questionIndex).length; responseIndex++) {
+      for (
+        let responseIndex = 0;
+        responseIndex < this.getResponseDatas(questionIndex).length;
+        responseIndex++
+      ) {
         this.getResponseDatas(questionIndex)
           .at(responseIndex)
           .get('sequenceNo')
@@ -274,7 +286,11 @@ export class EditSurveyComponent {
    * Reorders the response order according to the user drop
    */
   dropResponse(event: CdkDragDrop<string[]>, questionIndex: number) {
-    moveItemInArray(this.getResponseDatas(questionIndex).controls, event.previousIndex, event.currentIndex);
+    moveItemInArray(
+      this.getResponseDatas(questionIndex).controls,
+      event.previousIndex,
+      event.currentIndex
+    );
     this.updateSequenceNumber();
   }
 

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
   MatTableDataSource,
@@ -254,7 +259,10 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
       locale
     };
     this.organizationService
-      .updateProvisioningCriteria(this.loanProvisioningCriteriaAndTemplate.criteriaId, loanProvisioningCriteria)
+      .updateProvisioningCriteria(
+        this.loanProvisioningCriteriaAndTemplate.criteriaId,
+        loanProvisioningCriteria
+      )
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

@@ -287,7 +287,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditDataTableComponent,
-                  data: { title: 'Edit Data table', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Data table',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     dataTable: DataTableResolver,
                     columnCodes: CodesResolver
@@ -382,7 +386,10 @@ const routes: Routes = [
         },
         {
           path: 'configure-mc-tasks',
-          data: { title: 'Configure Maker Checker Tasks', breadcrumb: 'Configure Maker Checker Tasks' },
+          data: {
+            title: 'Configure Maker Checker Tasks',
+            breadcrumb: 'Configure Maker Checker Tasks'
+          },
           component: ConfigureMakerCheckerTasksComponent,
           resolve: {
             permissions: MakerCheckerTasksResolver
@@ -429,7 +436,10 @@ const routes: Routes = [
         },
         {
           path: 'manage-jobs',
-          data: { title: 'Manage Scheduler and COB Jobs', breadcrumb: 'Manage Scheduler and COB Jobs' },
+          data: {
+            title: 'Manage Scheduler and COB Jobs',
+            breadcrumb: 'Manage Scheduler and COB Jobs'
+          },
           children: [
             {
               path: '',
@@ -450,7 +460,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditSchedulerJobComponent,
-                  data: { title: 'Edit Scheduler Job', routeParamBreadcrumb: false, breadcrumb: 'Edit' },
+                  data: {
+                    title: 'Edit Scheduler Job',
+                    routeParamBreadcrumb: false,
+                    breadcrumb: 'Edit'
+                  },
                   resolve: {
                     jobSelected: ManageSchedulerJobResolver
                   }
@@ -521,7 +535,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditAccountNumberPreferenceComponent,
-                  data: { title: 'Edit Account Number Preference', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Account Number Preference',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     accountNumberPreference: AccountNumberPreferenceResolver,
                     accountNumberPreferencesTemplate: AccountNumberPreferencesTemplateResolver

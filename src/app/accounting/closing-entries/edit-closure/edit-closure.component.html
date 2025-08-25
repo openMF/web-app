@@ -14,14 +14,24 @@
 
           <mat-form-field (click)="closingDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Closing Date' | translate }}</mat-label>
-            <input matInput [matDatepicker]="closingDatePicker" required formControlName="closingDate" />
+            <input
+              matInput
+              [matDatepicker]="closingDatePicker"
+              required
+              formControlName="closingDate"
+            />
             <mat-datepicker-toggle matSuffix [for]="closingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closingDatePicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Comments' | translate }}</mat-label>
-            <textarea matInput formControlName="comments" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea
+              matInput
+              formControlName="comments"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
           </mat-form-field>
         </div>
       </mat-card-content>

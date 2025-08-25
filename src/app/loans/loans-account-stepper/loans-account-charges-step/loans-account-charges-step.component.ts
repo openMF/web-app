@@ -140,7 +140,10 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.loansAccountTemplate && this.loansAccountTemplate.charges) {
       this.chargesDataSource =
-        this.loansAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+        this.loansAccountTemplate.charges.map((charge: any) => ({
+          ...charge,
+          id: charge.chargeId
+        })) || [];
     }
     this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
   }
@@ -167,7 +170,10 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
         this.chargesDataSource.length === 0
       ) {
         this.chargesDataSource =
-          this.loansAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+          this.loansAccountProductTemplate.charges.map((charge: any) => ({
+            ...charge,
+            id: charge.chargeId
+          })) || [];
       }
     }
   }
@@ -332,6 +338,8 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   toggleSelect() {
     const len = this.activeClientMembers.length;
     this.selectAllItems =
-      len === 0 ? false : this.activeClientMembers.filter((item: any) => item.selected).length === len;
+      len === 0
+        ? false
+        : this.activeClientMembers.filter((item: any) => item.selected).length === len;
   }
 }

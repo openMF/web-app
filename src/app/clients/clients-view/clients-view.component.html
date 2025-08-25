@@ -39,7 +39,9 @@
           </button>
           <br />
         </div>
-        <p (click)="doAction('View Signature')" class="signature">{{ 'labels.inputs.View Signature' | translate }}</p>
+        <p (click)="doAction('View Signature')" class="signature">
+          {{ 'labels.inputs.View Signature' | translate }}
+        </p>
       </div>
 
       <div class="mat-typography account-card-title">
@@ -54,7 +56,12 @@
             ><mifosx-entity-name entityName="{{ clientViewData.displayName }}"></mifosx-entity-name>
           </h3>
           <div class="flex-5 align-end-center">
-            <button mat-icon-button [matMenuTriggerFor]="clientMenu" aria-label="Client actions" yPosition="below">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="clientMenu"
+              aria-label="Client actions"
+              yPosition="below"
+            >
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
               </mat-icon>
@@ -71,13 +78,21 @@
                     <td>
                       <b>{{ 'labels.inputs.Office' | translate }}</b>
                     </td>
-                    <td><mifosx-entity-name entityName="{{ clientViewData.officeName }}"></mifosx-entity-name></td>
+                    <td>
+                      <mifosx-entity-name
+                        entityName="{{ clientViewData.officeName }}"
+                      ></mifosx-entity-name>
+                    </td>
                   </tr>
                   <tr>
                     <td>
                       <b>{{ 'labels.inputs.Client' | translate }}</b>
                     </td>
-                    <td><mifosx-account-number accountNo="{{ clientViewData.accountNo }}"></mifosx-account-number></td>
+                    <td>
+                      <mifosx-account-number
+                        accountNo="{{ clientViewData.accountNo }}"
+                      ></mifosx-account-number>
+                    </td>
                   </tr>
                   <tr>
                     <td>
@@ -101,7 +116,9 @@
                       <b>{{ 'labels.inputs.Staff' | translate }}</b>
                     </td>
                     <td *ngIf="clientViewData.staffName">{{ clientViewData.staffName }}</td>
-                    <td *ngIf="!clientViewData.staffName">{{ 'labels.inputs.Unassigned' | translate }}</td>
+                    <td *ngIf="!clientViewData.staffName">
+                      {{ 'labels.inputs.Unassigned' | translate }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -184,7 +201,11 @@
         </button>
 
         <span *ngIf="clientViewData.staffId">
-          <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_CLIENT'" (click)="doAction('Unassign Staff')">
+          <button
+            mat-menu-item
+            *mifosxHasPermission="'UNASSIGNSTAFF_CLIENT'"
+            (click)="doAction('Unassign Staff')"
+          >
             <mat-icon matListIcon>
               <fa-icon icon="user-tie" size="sm"></fa-icon>
             </mat-icon>
@@ -192,11 +213,17 @@
           </button>
         </span>
 
-        <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>
+        <button mat-menu-item [matMenuTriggerFor]="More">
+          {{ 'labels.buttons.More' | translate }}
+        </button>
       </mat-menu>
 
       <mat-menu #accountApplications="matMenu">
-        <button mat-menu-item *mifosxHasPermission="'CREATE_LOAN'" [routerLink]="['loans-accounts', 'create']">
+        <button
+          mat-menu-item
+          *mifosxHasPermission="'CREATE_LOAN'"
+          [routerLink]="['loans-accounts', 'create']"
+        >
           {{ 'labels.buttons.New Loan Account' | translate }}
         </button>
         <button
@@ -206,7 +233,11 @@
         >
           {{ 'labels.buttons.New Savings Account' | translate }}
         </button>
-        <button mat-menu-item *mifosxHasPermission="'CREATE_SHAREACCOUNT'" [routerLink]="['shares-accounts', 'create']">
+        <button
+          mat-menu-item
+          *mifosxHasPermission="'CREATE_SHAREACCOUNT'"
+          [routerLink]="['shares-accounts', 'create']"
+        >
           {{ 'labels.buttons.New Share Account' | translate }}
         </button>
         <button
@@ -226,7 +257,9 @@
       </mat-menu>
 
       <mat-menu #Actions="matMenu">
-        <button mat-menu-item (click)="doAction('Close')">{{ 'labels.buttons.Close' | translate }}</button>
+        <button mat-menu-item (click)="doAction('Close')">
+          {{ 'labels.buttons.Close' | translate }}
+        </button>
         <button mat-menu-item (click)="doAction('Transfer Client')">
           {{ 'labels.buttons.Transfer Client' | translate }}
         </button>
@@ -241,10 +274,16 @@
           </button></span
         >
         <span *ngIf="clientViewData.status.value === 'Pending'"
-          ><button mat-menu-item (click)="doAction('Reject')">{{ 'labels.buttons.Reject' | translate }}</button></span
+          ><button mat-menu-item (click)="doAction('Reject')">
+            {{ 'labels.buttons.Reject' | translate }}
+          </button></span
         >
         <span *ngIf="clientViewData.status.value === 'Pending'"
-          ><button mat-menu-item *mifosxHasPermission="'DELETE_CLIENT'" (click)="doAction('Delete')">
+          ><button
+            mat-menu-item
+            *mifosxHasPermission="'DELETE_CLIENT'"
+            (click)="doAction('Delete')"
+          >
             {{ 'labels.buttons.Delete' | translate }}
           </button></span
         >
@@ -276,7 +315,11 @@
       </mat-menu>
 
       <mat-menu #More="matMenu">
-        <button mat-menu-item (click)="doAction('Add Charge')" *mifosxHasPermission="'CREATE_CLIENTCHARGE'">
+        <button
+          mat-menu-item
+          (click)="doAction('Add Charge')"
+          *mifosxHasPermission="'CREATE_CLIENTCHARGE'"
+        >
           {{ 'labels.buttons.Add Charge' | translate }}
         </button>
         <button mat-menu-item (click)="doAction('Create Collateral')">
@@ -292,10 +335,18 @@
         >
           {{ 'labels.buttons.Update Default Savings' | translate }}
         </button>
-        <button mat-menu-item (click)="doAction('Upload Signature')" *mifosxHasPermission="'CREATE_CLIENTIMAGE'">
+        <button
+          mat-menu-item
+          (click)="doAction('Upload Signature')"
+          *mifosxHasPermission="'CREATE_CLIENTIMAGE'"
+        >
           {{ 'labels.buttons.Upload Signature' | translate }}
         </button>
-        <button mat-menu-item (click)="doAction('Delete Signature')" *mifosxHasPermission="'DELETE_CLIENTIMAGE'">
+        <button
+          mat-menu-item
+          (click)="doAction('Delete Signature')"
+          *mifosxHasPermission="'DELETE_CLIENTIMAGE'"
+        >
           {{ 'labels.buttons.Delete Signature' | translate }}
         </button>
         <button mat-menu-item (click)="doAction('Client Screen Reports')">

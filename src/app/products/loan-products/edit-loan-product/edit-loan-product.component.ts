@@ -61,17 +61,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditLoanProductComponent implements OnInit {
-  @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
+  @ViewChild(LoanProductDetailsStepComponent, { static: true })
+  loanProductDetailsStep: LoanProductDetailsStepComponent;
   @ViewChild(LoanProductCurrencyStepComponent, { static: true })
   loanProductCurrencyStep: LoanProductCurrencyStepComponent;
   @ViewChild(LoanProductInterestRefundStepComponent, { static: true })
   loanProductInterestRefundStep: LoanProductInterestRefundStepComponent;
   @ViewChild(LoanProductDeferredIncomeRecognitionStepComponent, { static: true })
   loanProductCapitalizedIncomeStep: LoanProductDeferredIncomeRecognitionStepComponent;
-  @ViewChild(LoanProductTermsStepComponent, { static: true }) loanProductTermsStep: LoanProductTermsStepComponent;
+  @ViewChild(LoanProductTermsStepComponent, { static: true })
+  loanProductTermsStep: LoanProductTermsStepComponent;
   @ViewChild(LoanProductSettingsStepComponent, { static: true })
   loanProductSettingsStep: LoanProductSettingsStepComponent;
-  @ViewChild(LoanProductChargesStepComponent, { static: true }) loanProductChargesStep: LoanProductChargesStepComponent;
+  @ViewChild(LoanProductChargesStepComponent, { static: true })
+  loanProductChargesStep: LoanProductChargesStepComponent;
   @ViewChild(LoanProductAccountingStepComponent, { static: true })
   loanProductAccountingStep: LoanProductAccountingStepComponent;
 
@@ -107,8 +110,10 @@ export class EditLoanProductComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { loanProductAndTemplate: any; configurations: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
-      const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
-      const liabilityAccountData = this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+      const assetAccountData =
+        this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];
+      const liabilityAccountData =
+        this.loanProductAndTemplate.accountingMappingOptions.liabilityAccountOptions || [];
       this.loanProductAndTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions =
         assetAccountData.concat(liabilityAccountData);
 
@@ -131,7 +136,8 @@ export class EditLoanProductComponent implements OnInit {
       if (this.loanProductAndTemplate.enableIncomeCapitalization) {
         this.deferredIncomeRecognition.capitalizedIncome = {
           enableIncomeCapitalization: true,
-          capitalizedIncomeCalculationType: this.loanProductAndTemplate.capitalizedIncomeCalculationType.id,
+          capitalizedIncomeCalculationType:
+            this.loanProductAndTemplate.capitalizedIncomeCalculationType.id,
           capitalizedIncomeStrategy: this.loanProductAndTemplate.capitalizedIncomeStrategy.id,
           capitalizedIncomeType: this.loanProductAndTemplate.capitalizedIncomeType.id
         };
@@ -209,9 +215,8 @@ export class EditLoanProductComponent implements OnInit {
   }
 
   buildAdvancedPaymentAllocation(): void {
-    this.advancedPaymentAllocations = this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(
-      this.loanProductAndTemplate
-    );
+    this.advancedPaymentAllocations =
+      this.advancedPaymentStrategy.buildAdvancedPaymentAllocationList(this.loanProductAndTemplate);
     this.advancedCreditAllocations = this.advancedPaymentStrategy.buildAdvancedCreditAllocationList(
       this.loanProductAndTemplate
     );
@@ -313,13 +318,17 @@ export class EditLoanProductComponent implements OnInit {
           }
         }
         if (this.deferredIncomeRecognition.buyDownFee != null) {
-          loanProduct['enableBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee;
+          loanProduct['enableBuyDownFee'] =
+            this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee;
           if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {
             loanProduct['buyDownFeeCalculationType'] =
               this.deferredIncomeRecognition.buyDownFee.buyDownFeeCalculationType;
-            loanProduct['buyDownFeeStrategy'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeStrategy;
-            loanProduct['buyDownFeeIncomeType'] = this.deferredIncomeRecognition.buyDownFee.buyDownFeeIncomeType;
-            loanProduct['merchantBuyDownFee'] = this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee;
+            loanProduct['buyDownFeeStrategy'] =
+              this.deferredIncomeRecognition.buyDownFee.buyDownFeeStrategy;
+            loanProduct['buyDownFeeIncomeType'] =
+              this.deferredIncomeRecognition.buyDownFee.buyDownFeeIncomeType;
+            loanProduct['merchantBuyDownFee'] =
+              this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee;
           }
         }
       }
@@ -343,15 +352,17 @@ export class EditLoanProductComponent implements OnInit {
     }
     delete loanProduct['useDueForRepaymentsConfigurations'];
 
-    this.productsService.updateLoanProduct(this.loanProductAndTemplate.id, loanProduct).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.productsService
+      .updateLoanProduct(this.loanProductAndTemplate.id, loanProduct)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 
   mapStringEnumOptionToIdList(incomingValues: StringEnumOptionData[]): string[] {

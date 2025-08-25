@@ -86,7 +86,14 @@
         <div class="flex-fill">
           <span class="flex-40">{{ 'labels.inputs.Account No' | translate }}:</span>
           <span class="flex-60"
-            ><a [href]="transferToAccount(viewAccountTransferData.toClient, viewAccountTransferData.toAccount)">
+            ><a
+              [href]="
+                transferToAccount(
+                  viewAccountTransferData.toClient,
+                  viewAccountTransferData.toAccount
+                )
+              "
+            >
               {{ viewAccountTransferData.toAccount.accountNo }}</a
             >
           </span>

@@ -90,7 +90,9 @@ export class SavingsAccountPreviewStepComponent implements OnChanges {
 
   ngOnChanges(): void {
     if (this.activeClientMembers?.length > 0) {
-      this.dataSource = new MatTableDataSource<any>(this.activeClientMembers.filter((member: any) => member.selected));
+      this.dataSource = new MatTableDataSource<any>(
+        this.activeClientMembers.filter((member: any) => member.selected)
+      );
     }
   }
 

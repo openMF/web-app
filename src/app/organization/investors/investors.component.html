@@ -83,7 +83,9 @@
                   </td>
                   <td class="field-name">{{ 'labels.inputs.Owner External Id' | translate }}</td>
                   <td>
-                    <mifosx-external-identifier externalId="{{ record.owner.externalId }}"></mifosx-external-identifier>
+                    <mifosx-external-identifier
+                      externalId="{{ record.owner.externalId }}"
+                    ></mifosx-external-identifier>
                   </td>
                   <td class="field-name">{{ 'labels.inputs.Transfer External Id' | translate }}</td>
                   <td>
@@ -178,13 +180,17 @@
                           <td class="flex-50 m-l-5">
                             <b>{{ 'labels.inputs.Outstanding' | translate }} :</b>
                           </td>
-                          <td class="flex-50 r-amount">{{ record.details.totalOutstanding | formatNumber }}</td>
+                          <td class="flex-50 r-amount">
+                            {{ record.details.totalOutstanding | formatNumber }}
+                          </td>
                         </tr>
                         <tr>
                           <td class="flex-50 m-l-5">
                             <b>{{ 'labels.inputs.Overpaid' | translate }} :</b>
                           </td>
-                          <td class="flex-50 r-amount">{{ record.details.totalOverpaid | formatNumber }}</td>
+                          <td class="flex-50 r-amount">
+                            {{ record.details.totalOverpaid | formatNumber }}
+                          </td>
                         </tr>
                       </tbody>
                     </table>

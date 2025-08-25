@@ -1,5 +1,10 @@
 <div class="container m-b-20 layout-row align-end gap-20px">
-  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CHARGE'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['create']"
+    *mifosxHasPermission="'CREATE_CHARGE'"
+  >
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
     {{ 'labels.text.Create Collateral' | translate }}
   </button>
@@ -15,32 +20,47 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Name' | translate }}
+        </th>
         <td mat-cell *matCellDef="let collateral">{{ collateral.name }}</td>
       </ng-container>
 
       <ng-container matColumnDef="quality">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Type/Quality' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Type/Quality' | translate }}
+        </th>
         <td mat-cell *matCellDef="let collateral">{{ collateral.quality }}</td>
       </ng-container>
 
       <ng-container matColumnDef="basePrice">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Base Price' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Base Price' | translate }}
+        </th>
         <td mat-cell *matCellDef="let collateral">{{ collateral.basePrice }}</td>
       </ng-container>
 
       <ng-container matColumnDef="basePercentage">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Base Percentage' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Base Percentage' | translate }}
+        </th>
         <td mat-cell *matCellDef="let collateral">{{ collateral.pctToBase }}</td>
       </ng-container>
 
       <ng-container matColumnDef="unitType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Unit Type' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Unit Type' | translate }}
+        </th>
         <td mat-cell *matCellDef="let collateral">{{ collateral.unitType }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [routerLink]="[row.id]"
+        class="select-row"
+      ></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>

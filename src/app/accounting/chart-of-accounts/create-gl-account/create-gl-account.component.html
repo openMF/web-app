@@ -66,14 +66,23 @@
           </mat-form-field>
 
           <div class="manual-entries-allowed-wrapper flex-18">
-            <mat-checkbox labelPosition="before" formControlName="manualEntriesAllowed" class="manual-entries-allowed">
+            <mat-checkbox
+              labelPosition="before"
+              formControlName="manualEntriesAllowed"
+              class="manual-entries-allowed"
+            >
               {{ 'labels.inputs.Manual Entries Allowed' | translate }}
             </mat-checkbox>
           </div>
 
           <mat-form-field class="flex-98">
             <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-            <textarea matInput formControlName="description" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea
+              matInput
+              formControlName="description"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
           </mat-form-field>
         </div>
       </mat-card-content>
@@ -106,7 +115,11 @@
     >
   </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close()">

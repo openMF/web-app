@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -78,7 +83,10 @@ export class UndoClientRejectionComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevReopenedDate: Date = this.undoClientRejectionForm.value.reopenedDate;
     if (undoClientRejectionFormData.reopenedDate instanceof Date) {
-      undoClientRejectionFormData.reopenedDate = this.dateUtils.formatDate(prevReopenedDate, dateFormat);
+      undoClientRejectionFormData.reopenedDate = this.dateUtils.formatDate(
+        prevReopenedDate,
+        dateFormat
+      );
     }
     const data = {
       ...undoClientRejectionFormData,

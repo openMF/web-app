@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Inject, Injectable, InjectionToken, Injector, Optional } from '@angular/core';
-import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest
+} from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -63,7 +69,9 @@ class HttpInterceptorHandler implements HttpHandler {
  * For static interceptors that should always be enabled (like ApiPrefixInterceptor), use the standard
  * HTTP_INTERCEPTORS token.
  */
-export const HTTP_DYNAMIC_INTERCEPTORS = new InjectionToken<HttpInterceptor>('HTTP_DYNAMIC_INTERCEPTORS');
+export const HTTP_DYNAMIC_INTERCEPTORS = new InjectionToken<HttpInterceptor>(
+  'HTTP_DYNAMIC_INTERCEPTORS'
+);
 
 /**
  * Extends HttpClient with per request configuration using dynamic interceptors.
@@ -118,6 +126,10 @@ export class HttpService extends HttpClient {
   }
 
   private addInterceptor(interceptor: HttpInterceptor): HttpService {
-    return new HttpService(this.httpHandler, this.injector, this.interceptors.concat([interceptor]));
+    return new HttpService(
+      this.httpHandler,
+      this.injector,
+      this.interceptors.concat([interceptor])
+    );
   }
 }

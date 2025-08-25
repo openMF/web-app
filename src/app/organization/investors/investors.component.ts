@@ -168,25 +168,39 @@ export class InvestorsComponent implements OnInit {
       request['text'] = this.searchText.value;
     }
     if (this.effectiveFromDate.value) {
-      request['effectiveFromDate'] = this.dateUtils.formatDate(this.effectiveFromDate.value, dateFormat);
+      request['effectiveFromDate'] = this.dateUtils.formatDate(
+        this.effectiveFromDate.value,
+        dateFormat
+      );
     }
     if (this.effectiveToDate.value) {
-      request['effectiveToDate'] = this.dateUtils.formatDate(this.effectiveToDate.value, dateFormat);
+      request['effectiveToDate'] = this.dateUtils.formatDate(
+        this.effectiveToDate.value,
+        dateFormat
+      );
     }
     if (this.settlementFromDate.value) {
-      request['settlementFromDate'] = this.dateUtils.formatDate(this.settlementFromDate.value, dateFormat);
+      request['settlementFromDate'] = this.dateUtils.formatDate(
+        this.settlementFromDate.value,
+        dateFormat
+      );
     }
     if (this.settlementToDate.value) {
-      request['settlementToDate'] = this.dateUtils.formatDate(this.settlementToDate.value, dateFormat);
+      request['settlementToDate'] = this.dateUtils.formatDate(
+        this.settlementToDate.value,
+        dateFormat
+      );
     }
     payload['request'] = request;
-    this.externalAssetOwnerService.searchExternalAssetOwnerTransfer(payload).subscribe((response: any) => {
-      this.totalRows = response.totalElements;
-      this.existsDataToFilter = response.totalElements > 0;
-      this.dataSource.data = response.content;
-      this.searchResults = response.content;
-      this.isLoading = false;
-    });
+    this.externalAssetOwnerService
+      .searchExternalAssetOwnerTransfer(payload)
+      .subscribe((response: any) => {
+        this.totalRows = response.totalElements;
+        this.existsDataToFilter = response.totalElements > 0;
+        this.dataSource.data = response.content;
+        this.searchResults = response.content;
+        this.isLoading = false;
+      });
   }
 
   transform(data: any): any {
@@ -201,7 +215,9 @@ export class InvestorsComponent implements OnInit {
 
   cancelPendingSale(transfer: any): void {
     const deleteDataTableDialogRef = this.dialog.open(CancelDialogComponent, {
-      data: { cancelContext: `the Asset Transfer with the Owner External Id ${transfer.owner.externalId} ` }
+      data: {
+        cancelContext: `the Asset Transfer with the Owner External Id ${transfer.owner.externalId} `
+      }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.cancel) {
@@ -219,7 +235,9 @@ export class InvestorsComponent implements OnInit {
 
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(`/`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 
   private resetPaginator() {

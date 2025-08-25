@@ -23,7 +23,8 @@ export class DatatableTransactionTabComponent {
     this.entityId = this.route.parent.parent.snapshot.paramMap.get('id');
     this.route.data.subscribe((data: { transactionDatatable: any }) => {
       this.entityDatatable = data.transactionDatatable;
-      this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+      this.multiRowDatatableFlag =
+        this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
 }

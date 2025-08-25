@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -30,7 +35,10 @@ export class RecurringDepositProductCurrencyStepComponent implements OnInit {
 
   ngOnInit() {
     this.currencyData = this.recurringDepositProductsTemplate.currencyOptions;
-    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+    if (
+      !(this.recurringDepositProductsTemplate === undefined) &&
+      this.recurringDepositProductsTemplate.id
+    ) {
       this.recurringDepositProductCurrencyForm.patchValue({
         currencyCode: this.recurringDepositProductsTemplate.currency.code,
         digitsAfterDecimal: this.recurringDepositProductsTemplate.currency.decimalPlaces,

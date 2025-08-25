@@ -15,7 +15,13 @@
             />
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="prematureCloseRecurringDepositsAccountForm.controls.closedOnDate.hasError('required')">
+            <mat-error
+              *ngIf="
+                prematureCloseRecurringDepositsAccountForm.controls.closedOnDate.hasError(
+                  'required'
+                )
+              "
+            >
               {{ 'labels.inputs.Closed On Date' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -27,7 +33,11 @@
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!prematureCloseRecurringDepositsAccountForm">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!prematureCloseRecurringDepositsAccountForm"
+        >
           {{ 'labels.buttons.Confirm' | translate }}
         </button>
       </mat-card-actions>

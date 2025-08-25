@@ -7,7 +7,12 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { SettingsService } from 'app/settings/settings.service';
@@ -117,7 +122,10 @@ export class ClientFamilyMemberDialogComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     if (familyMemberFormData.dateOfBirth instanceof Date) {
-      familyMemberFormData.dateOfBirth = this.dateUtils.formatDate(familyMemberFormData.dateOfBirth, dateFormat);
+      familyMemberFormData.dateOfBirth = this.dateUtils.formatDate(
+        familyMemberFormData.dateOfBirth,
+        dateFormat
+      );
     }
     const familyMember = {
       ...familyMemberFormData,

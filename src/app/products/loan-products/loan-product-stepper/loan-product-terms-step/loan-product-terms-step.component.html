@@ -4,7 +4,10 @@
       {{ 'labels.inputs.Principal' | translate
       }}<i
         class="m-l-10 fas fa-question"
-        matTooltip="{{ 'tooltips.Fields are used to define the minimum, default, and maximum principal' | translate }}"
+        matTooltip="{{
+          'tooltips.Fields are used to define the minimum, default, and maximum principal'
+            | translate
+        }}"
       ></i>
     </h4>
 
@@ -38,7 +41,11 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-checkbox class="flex-60" labelPosition="before" formControlName="allowApprovedDisbursedAmountsOverApplied">
+    <mat-checkbox
+      class="flex-60"
+      labelPosition="before"
+      formControlName="allowApprovedDisbursedAmountsOverApplied"
+    >
       {{ 'labels.inputs.Allow approval / disbursal above loan applied amount' | translate }}
     </mat-checkbox>
 
@@ -90,7 +97,8 @@
       <i
         class="fas fa-question"
         matTooltip="{{
-          'tooltips.Fields are used to define the minimum, default, and maximum number of repayments' | translate
+          'tooltips.Fields are used to define the minimum, default, and maximum number of repayments'
+            | translate
         }}"
       ></i>
     </h4>
@@ -108,7 +116,8 @@
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
       <input type="number" matInput formControlName="numberOfRepayments" required />
       <mat-error>
-        {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Number of repayments' | translate }}
+        {{ 'labels.catalogs.Default' | translate }}
+        {{ 'labels.inputs.Number of repayments' | translate }}
         {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
@@ -127,7 +136,11 @@
 
     <mat-divider class="flex-98"></mat-divider>
 
-    <mat-checkbox class="flex-96" labelPosition="before" formControlName="interestRecognitionOnDisbursementDate">
+    <mat-checkbox
+      class="flex-96"
+      labelPosition="before"
+      formControlName="interestRecognitionOnDisbursementDate"
+    >
       {{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}
     </mat-checkbox>
 
@@ -160,7 +173,8 @@
         <i
           class="fas fa-question"
           matTooltip="{{
-            'tooltips.Define the minimum, default, maximum, and period for the nominal interest rate' | translate
+            'tooltips.Define the minimum, default, maximum, and period for the nominal interest rate'
+              | translate
           }}"
         ></i>
       </h4>
@@ -190,7 +204,8 @@
           [attr.disabled]="isZeroInterest()"
         />
         <mat-error>
-          {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Nominal interest rate' | translate }}
+          {{ 'labels.catalogs.Default' | translate }}
+          {{ 'labels.inputs.Nominal interest rate' | translate }}
           {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
@@ -215,7 +230,11 @@
 
       <mat-form-field class="flex-fill flex-23">
         <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
-        <mat-select formControlName="interestRateFrequencyType" required [disabled]="isZeroInterest()">
+        <mat-select
+          formControlName="interestRateFrequencyType"
+          required
+          [disabled]="isZeroInterest()"
+        >
           <mat-option
             *ngFor="let interestRateFrequencyType of interestRateFrequencyTypeData"
             [value]="interestRateFrequencyType.id"
@@ -224,7 +243,8 @@
           </mat-option>
         </mat-select>
         <mat-error>
-          {{ 'labels.inputs.Nominal interest rate frequency' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Nominal interest rate frequency' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -239,7 +259,8 @@
         <i
           class="fas fa-question"
           matTooltip="{{
-            'tooltips.Define the minimum, default, maximum, and period for the floating interest rate' | translate
+            'tooltips.Define the minimum, default, maximum, and period for the floating interest rate'
+              | translate
           }}"
         ></i>
       </h4>
@@ -266,15 +287,26 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-checkbox class="flex-31" labelPosition="before" formControlName="isFloatingInterestRateCalculationAllowed">
+      <mat-checkbox
+        class="flex-31"
+        labelPosition="before"
+        formControlName="isFloatingInterestRateCalculationAllowed"
+      >
         {{ 'labels.inputs.Is Floating calculation allowed?' | translate }}
       </mat-checkbox>
 
       <mat-form-field class="flex-31">
         <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
-        <input type="number" matInput formControlName="minDifferentialLendingRate" [min]="0" required />
+        <input
+          type="number"
+          matInput
+          formControlName="minDifferentialLendingRate"
+          [min]="0"
+          required
+        />
         <mat-error>
-          {{ 'labels.inputs.Minimum interest rate' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Minimum interest rate' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -283,7 +315,8 @@
         <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
         <input type="number" matInput formControlName="defaultDifferentialLendingRate" required />
         <mat-error>
-          {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Interest rate' | translate }}
+          {{ 'labels.catalogs.Default' | translate }}
+          {{ 'labels.inputs.Interest rate' | translate }}
           {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
@@ -293,7 +326,8 @@
         <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
         <input type="number" matInput formControlName="maxDifferentialLendingRate" required />
         <mat-error>
-          {{ 'labels.inputs.Maximum interest rate' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Maximum interest rate' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -372,7 +406,9 @@
             <button
               mat-icon-button
               color="primary"
-              (click)="editVariationsForBorrowerCycle('Principal', principalVariationsForBorrowerCycle, i)"
+              (click)="
+                editVariationsForBorrowerCycle('Principal', principalVariationsForBorrowerCycle, i)
+              "
             >
               <fa-icon icon="edit"></fa-icon>
             </button>
@@ -390,14 +426,21 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
-      <h4 class="mat-h4 flex-73">{{ 'labels.inputs.Number of repayments by loan cycle' | translate }}</h4>
+      <h4 class="mat-h4 flex-73">
+        {{ 'labels.inputs.Number of repayments by loan cycle' | translate }}
+      </h4>
 
       <div class="flex-23">
         <button
           type="button"
           mat-raised-button
           color="primary"
-          (click)="addVariationsForBorrowerCycle('NumberOfRepayments', numberOfRepaymentVariationsForBorrowerCycle)"
+          (click)="
+            addVariationsForBorrowerCycle(
+              'NumberOfRepayments',
+              numberOfRepaymentVariationsForBorrowerCycle
+            )
+          "
         >
           <fa-icon icon="plus" class="m-r-10"></fa-icon>
           {{ 'labels.buttons.Add' | translate }}
@@ -452,7 +495,11 @@
               mat-icon-button
               color="primary"
               (click)="
-                editVariationsForBorrowerCycle('NumberOfRepayments', numberOfRepaymentVariationsForBorrowerCycle, i)
+                editVariationsForBorrowerCycle(
+                  'NumberOfRepayments',
+                  numberOfRepaymentVariationsForBorrowerCycle,
+                  i
+                )
               "
             >
               <fa-icon icon="edit"></fa-icon>
@@ -460,7 +507,9 @@
             <button
               mat-icon-button
               color="warn"
-              (click)="deleteVariationsForBorrowerCycle(numberOfRepaymentVariationsForBorrowerCycle, i)"
+              (click)="
+                deleteVariationsForBorrowerCycle(numberOfRepaymentVariationsForBorrowerCycle, i)
+              "
             >
               <fa-icon icon="trash"></fa-icon>
             </button>
@@ -471,14 +520,21 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
 
-      <h4 class="mat-h4 flex-73">{{ 'labels.inputs.Nominal interest rate by loan cycle' | translate }}</h4>
+      <h4 class="mat-h4 flex-73">
+        {{ 'labels.inputs.Nominal interest rate by loan cycle' | translate }}
+      </h4>
 
       <div class="flex-23">
         <button
           type="button"
           mat-raised-button
           color="primary"
-          (click)="addVariationsForBorrowerCycle('NominalInterestRate', interestRateVariationsForBorrowerCycle)"
+          (click)="
+            addVariationsForBorrowerCycle(
+              'NominalInterestRate',
+              interestRateVariationsForBorrowerCycle
+            )
+          "
         >
           <fa-icon icon="plus" class="m-r-10"></fa-icon>
           {{ 'labels.buttons.Add' | translate }}
@@ -532,7 +588,13 @@
             <button
               mat-icon-button
               color="primary"
-              (click)="editVariationsForBorrowerCycle('NominalInterestRate', interestRateVariationsForBorrowerCycle, i)"
+              (click)="
+                editVariationsForBorrowerCycle(
+                  'NominalInterestRate',
+                  interestRateVariationsForBorrowerCycle,
+                  i
+                )
+              "
             >
               <fa-icon icon="edit"></fa-icon>
             </button>
@@ -557,7 +619,9 @@
       {{ 'labels.inputs.Repaid every' | translate }}
       <i
         class="fas fa-question"
-        matTooltip="{{ 'tooltips.Fields are input to calculating the repayment schedule' | translate }}"
+        matTooltip="{{
+          'tooltips.Fields are input to calculating the repayment schedule' | translate
+        }}"
       ></i>
     </h4>
 
@@ -606,8 +670,14 @@
     }}</span>
 
     <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Minimum days between disbursal and first repayment date' | translate }}</mat-label>
-      <input type="number" matInput formControlName="minimumDaysBetweenDisbursalAndFirstRepayment" />
+      <mat-label>{{
+        'labels.inputs.Minimum days between disbursal and first repayment date' | translate
+      }}</mat-label>
+      <input
+        type="number"
+        matInput
+        formControlName="minimumDaysBetweenDisbursalAndFirstRepayment"
+      />
     </mat-form-field>
   </div>
 

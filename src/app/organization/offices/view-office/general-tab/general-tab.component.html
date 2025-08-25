@@ -25,7 +25,9 @@
 
     <div class="flex-45 mat-body-strong left">{{ 'labels.inputs.External Id' | translate }}</div>
     <div class="flex-50 right" *ngIf="officeData.externalId">
-      <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
+      <mifosx-external-identifier
+        externalId="{{ officeData.externalId }}"
+      ></mifosx-external-identifier>
     </div>
     <div class="flex-50 right" *ngIf="!officeData.externalId">
       {{ 'labels.inputs.Unassigned' | translate }}

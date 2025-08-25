@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  OnChanges
+} from '@angular/core';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { Accounting } from 'app/core/utils/accounting';
 import { OptionData } from 'app/shared/models/option-data.model';
@@ -108,11 +116,16 @@ export class FixedDepositProductPreviewStepComponent implements OnInit, OnChange
 
   setCurrentValues(): void {
     if (this.isCashOrAccrualAccounting()) {
-      this.accountingRule = this.accounting.getAccountingRuleFrom(this.fixedDepositProduct.accountingRule);
+      this.accountingRule = this.accounting.getAccountingRuleFrom(
+        this.fixedDepositProduct.accountingRule
+      );
 
-      const assetAccountData = this.fixedDepositProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
-      const incomeAccountData = this.fixedDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
-      const expenseAccountData = this.fixedDepositProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
+      const assetAccountData =
+        this.fixedDepositProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+      const incomeAccountData =
+        this.fixedDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
+      const expenseAccountData =
+        this.fixedDepositProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
       const liabilityAccountData =
         this.fixedDepositProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
 

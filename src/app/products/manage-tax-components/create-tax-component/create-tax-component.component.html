@@ -25,7 +25,8 @@
                 taxComponentForm.controls.percentage.hasError('max')
               "
             >
-              {{ 'labels.inputs.Percentage' | translate }} <strong>{{ 'labels.commons.should' | translate }}</strong>
+              {{ 'labels.inputs.Percentage' | translate }}
+              <strong>{{ 'labels.commons.should' | translate }}</strong>
               {{ 'labels.commons.be larger than 0 and at most 100' | translate }}
             </mat-error>
           </mat-form-field>
@@ -33,7 +34,10 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Debit Account Type' | translate }}</mat-label>
             <mat-select formControlName="debitAccountType">
-              <mat-option *ngFor="let debitAccountType of debitAccountTypeData" [value]="debitAccountType.id">
+              <mat-option
+                *ngFor="let debitAccountType of debitAccountTypeData"
+                [value]="debitAccountType.id"
+              >
                 {{ debitAccountType.value | translateKey: 'inputs.accounting' }}
               </mat-option>
             </mat-select>
@@ -51,7 +55,10 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Credit Account Type' | translate }}</mat-label>
             <mat-select formControlName="creditAccountType">
-              <mat-option *ngFor="let creditAccountType of creditAccountTypeData" [value]="creditAccountType.id">
+              <mat-option
+                *ngFor="let creditAccountType of creditAccountTypeData"
+                [value]="creditAccountType.id"
+              >
                 {{ creditAccountType.value | translateKey: 'inputs.accounting' }}
               </mat-option>
             </mat-select>

@@ -113,7 +113,9 @@ export class ChargesTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    const activeCharges = this.chargesData ? this.chargesData.filter((charge) => charge.isActive) : [];
+    const activeCharges = this.chargesData
+      ? this.chargesData.filter((charge) => charge.isActive)
+      : [];
     this.dataSource = new MatTableDataSource(activeCharges);
   }
 
@@ -171,7 +173,12 @@ export class ChargesTabComponent implements OnInit {
           locale
         };
         this.savingsService
-          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'paycharge', dataObject, chargeId)
+          .executeSavingsAccountChargesCommand(
+            this.savingsAccountData.id,
+            'paycharge',
+            dataObject,
+            chargeId
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -184,7 +191,9 @@ export class ChargesTabComponent implements OnInit {
    * @param {any} chargeId Charge Id
    */
   waiveCharge(chargeId: any) {
-    const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: chargeId } });
+    const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, {
+      data: { id: chargeId }
+    });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService
@@ -201,11 +210,18 @@ export class ChargesTabComponent implements OnInit {
    * @param {any} chargeId Charge Id
    */
   inactivateCharge(chargeId: any) {
-    const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, { data: { id: chargeId } });
+    const inactivateChargeDialogRef = this.dialog.open(InactivateChargeDialogComponent, {
+      data: { id: chargeId }
+    });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService
-          .executeSavingsAccountChargesCommand(this.savingsAccountData.id, 'inactivate', {}, chargeId)
+          .executeSavingsAccountChargesCommand(
+            this.savingsAccountData.id,
+            'inactivate',
+            {},
+            chargeId
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -262,9 +278,11 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId).subscribe(() => {
-          this.reload();
-        });
+        this.savingsService
+          .deleteSavingsAccountCharge(this.savingsAccountData.id, chargeId)
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -299,7 +317,9 @@ export class ChargesTabComponent implements OnInit {
       0,
       this.router.url.indexOf('savings-accounts') + 'savings-accounts'.length
     );
-    this.router.navigateByUrl(refreshUrl, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(refreshUrl, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 
   viewAllChargeButtons(text: string): string {

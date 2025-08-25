@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 
@@ -67,15 +72,17 @@ export class NotesTabComponent implements OnInit {
   }
 
   submit() {
-    this.centersService.createCenterNote(this.centerId, this.noteForm.value).subscribe((response: any) => {
-      this.centerNotes.push({
-        id: response.resourceId,
-        createdByUsername: this.username,
-        createdOn: new Date(),
-        note: this.noteForm.value.note
+    this.centersService
+      .createCenterNote(this.centerId, this.noteForm.value)
+      .subscribe((response: any) => {
+        this.centerNotes.push({
+          id: response.resourceId,
+          createdByUsername: this.username,
+          createdOn: new Date(),
+          note: this.noteForm.value.note
+        });
+        this.formRef.resetForm();
       });
-      this.formRef.resetForm();
-    });
   }
 
   editNote(noteId: string, noteContent: string, index: number) {
@@ -99,9 +106,11 @@ export class NotesTabComponent implements OnInit {
     });
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        this.centersService.editCenterNote(this.centerId, noteId, response.data.value).subscribe(() => {
-          this.centerNotes[index].note = response.data.value.note;
-        });
+        this.centersService
+          .editCenterNote(this.centerId, noteId, response.data.value)
+          .subscribe(() => {
+            this.centerNotes[index].note = response.data.value.note;
+          });
       }
     });
   }

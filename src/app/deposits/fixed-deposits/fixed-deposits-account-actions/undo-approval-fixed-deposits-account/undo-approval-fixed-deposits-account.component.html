@@ -4,7 +4,12 @@
       <mat-card-content>
         <mat-form-field class="flex-100">
           <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
-          <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+          <textarea
+            matInput
+            formControlName="note"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="2"
+          ></textarea>
         </mat-form-field>
       </mat-card-content>
 
@@ -12,7 +17,11 @@
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="warn" [disabled]="!undoApprovalFixedDepositsAccountForm.valid">
+        <button
+          mat-raised-button
+          color="warn"
+          [disabled]="!undoApprovalFixedDepositsAccountForm.valid"
+        >
           {{ 'labels.buttons.Confirm' | translate }}
         </button>
       </mat-card-actions>

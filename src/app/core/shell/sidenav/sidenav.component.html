@@ -26,7 +26,12 @@
         >
           <fa-icon icon="cog"></fa-icon>
         </button>
-        <button class="xs-button" mat-icon-button matTooltip="{{ 'tooltips.Sign Out' | translate }}" (click)="logout()">
+        <button
+          class="xs-button"
+          mat-icon-button
+          matTooltip="{{ 'tooltips.Sign Out' | translate }}"
+          (click)="logout()"
+        >
           <fa-icon icon="sign-out-alt"></fa-icon>
         </button>
       </div>
@@ -36,7 +41,9 @@
       <div #frequentlyAccessed>
         <div class="mt-1 mb-1 nav-item-sep">
           <mat-divider></mat-divider>
-          <span class="text-muted icon-menu-title">{{ 'labels.menus.Frequently Accessed' | translate }}</span>
+          <span class="text-muted icon-menu-title">{{
+            'labels.menus.Frequently Accessed' | translate
+          }}</span>
         </div>
       </div>
       <div class="icon-menu">
@@ -164,7 +171,10 @@
           </mat-icon>
           <a matLine>{{ 'labels.menus.Keyboard Shortcuts' | translate }}</a>
         </mat-list-item>
-        <mat-list-item [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Help' | translate }}">
+        <mat-list-item
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'tooltips.Help' | translate }}"
+        >
           <mat-icon matListIcon (click)="help()">
             <fa-icon icon="question-circle" size="sm"></fa-icon>
           </mat-icon>
@@ -179,7 +189,11 @@
   <h2>{{ 'labels.text.Home' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Welcome page logo from anywhere' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
@@ -199,7 +213,11 @@
   <h2>{{ 'labels.menus.User Panel' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Section Buttons' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -212,7 +230,9 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)"
+      (click)="
+        popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)
+      "
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>
@@ -221,9 +241,15 @@
 
 <ng-template #templateFrequentlyAccessed let-popover="popover">
   <h2>{{ 'labels.menus.Frequently Accessed' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Shortcut to the frequently accessed components' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Shortcut to the frequently accessed components' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -247,13 +273,19 @@
   <h2>{{ 'labels.menus.Dashboard' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.User Dashboard Component' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)"
+      (click)="
+        popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)
+      "
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>
@@ -271,7 +303,11 @@
   <h2>{{ 'labels.menus.Navigation' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.User Entity navigation screen' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -284,7 +320,9 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateFrequentPostings, frequentPostings, 'top', true)"
+      (click)="
+        popover.close(); showPopover(templateFrequentPostings, frequentPostings, 'top', true)
+      "
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>
@@ -295,7 +333,11 @@
   <h2>{{ 'labels.menus.Frequent Postings' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Shortcut accounting rules' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -308,7 +350,9 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateCreateJournalEntry, createJournalEntry, 'top', true)"
+      (click)="
+        popover.close(); showPopover(templateCreateJournalEntry, createJournalEntry, 'top', true)
+      "
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>
@@ -319,13 +363,19 @@
   <h2>{{ 'labels.menus.Create Journal Entry' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Shortcut entry screen' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateFrequentPostings, frequentPostings, 'top', true)"
+      (click)="
+        popover.close(); showPopover(templateFrequentPostings, frequentPostings, 'top', true)
+      "
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>
@@ -343,13 +393,19 @@
   <h2>{{ 'labels.menus.Chart of Accounts' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Shortcut accounts screen' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateCreateJournalEntry, createJournalEntry, 'top', true)"
+      (click)="
+        popover.close(); showPopover(templateCreateJournalEntry, createJournalEntry, 'top', true)
+      "
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>

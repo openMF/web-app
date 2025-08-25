@@ -6,7 +6,10 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Product' | translate }}</mat-label>
             <mat-select required formControlName="productId">
-              <mat-option *ngFor="let productOption of productOptionData" [value]="productOption.id">
+              <mat-option
+                *ngFor="let productOption of productOptionData"
+                [value]="productOption.id"
+              >
                 {{ productOption.name }}
               </mat-option>
             </mat-select>

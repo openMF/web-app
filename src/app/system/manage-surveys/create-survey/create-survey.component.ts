@@ -197,7 +197,11 @@ export class CreateSurveyComponent implements OnInit {
         .at(questionIndex)
         .get('sequenceNo')
         .setValue(questionIndex + 1);
-      for (let responseIndex = 0; responseIndex < this.getResponseDatas(questionIndex).length; responseIndex++) {
+      for (
+        let responseIndex = 0;
+        responseIndex < this.getResponseDatas(questionIndex).length;
+        responseIndex++
+      ) {
         this.getResponseDatas(questionIndex)
           .at(responseIndex)
           .get('sequenceNo')
@@ -230,7 +234,11 @@ export class CreateSurveyComponent implements OnInit {
    * Reorders the response order according to the user drop
    */
   dropResponse(event: CdkDragDrop<string[]>, questionIndex: number) {
-    moveItemInArray(this.getResponseDatas(questionIndex).controls, event.previousIndex, event.currentIndex);
+    moveItemInArray(
+      this.getResponseDatas(questionIndex).controls,
+      event.previousIndex,
+      event.currentIndex
+    );
     this.updateSequenceNumber();
   }
 

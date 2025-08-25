@@ -23,7 +23,12 @@
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!fundForm.valid" *mifosxHasPermission="'UPDATE_FUND'">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!fundForm.valid"
+          *mifosxHasPermission="'UPDATE_FUND'"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

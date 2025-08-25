@@ -2,7 +2,8 @@
   <div class="mat-elevation-z8">
     <div *ngIf="!isBusinessDateEnabled">
       <p>
-        {{ 'labels.text.Business Date functionality is not enabled' | translate }}: <code>{{ configurationName }}</code>
+        {{ 'labels.text.Business Date functionality is not enabled' | translate }}:
+        <code>{{ configurationName }}</code>
       </p>
     </div>
 
@@ -12,7 +13,9 @@
           <mat-card-content>
             <div class="flex-100 layout-row layout-lt-md-column space">
               <div class="flex-50">
-                <span class="date-type flex-40">{{ 'labels.inputs.User date format' | translate }}: </span>
+                <span class="date-type flex-40"
+                  >{{ 'labels.inputs.User date format' | translate }}:
+                </span>
                 <span class="date-value flex-60 m-l-30">{{ userDateFormat }}</span>
               </div>
             </div>
@@ -20,11 +23,16 @@
             <!-- Business Date -->
             <div class="flex-100 layout-row layout-lt-md-column">
               <div class="flex-50 table-row" *ngIf="!isEditInProgress">
-                <span class="date-type flex-40">{{ 'labels.inputs.Business Date' | translate }}: </span>
+                <span class="date-type flex-40"
+                  >{{ 'labels.inputs.Business Date' | translate }}:
+                </span>
                 <span class="date-value flex-60 m-l-40">{{ businessDate | dateFormat }}</span>
               </div>
 
-              <mat-form-field (click)="businessDatePicker.open()" *ngIf="isEditInProgress && dateIndex === 0">
+              <mat-form-field
+                (click)="businessDatePicker.open()"
+                *ngIf="isEditInProgress && dateIndex === 0"
+              >
                 <mat-label>{{ 'labels.inputs.Business Date' | translate }}</mat-label>
                 <input
                   matInput
@@ -33,10 +41,12 @@
                   [matDatepicker]="businessDatePicker"
                   formControlName="businessDate"
                 />
-                <mat-datepicker-toggle matSuffix [for]="businessDatePicker"> </mat-datepicker-toggle>
+                <mat-datepicker-toggle matSuffix [for]="businessDatePicker">
+                </mat-datepicker-toggle>
                 <mat-datepicker #businessDatePicker></mat-datepicker>
                 <mat-error *ngIf="businessDateForm.controls.businessDate.hasError('required')">
-                  {{ 'labels.inputs.Business Date' | translate }} {{ 'labels.commons.is' | translate }}
+                  {{ 'labels.inputs.Business Date' | translate }}
+                  {{ 'labels.commons.is' | translate }}
                   <strong>{{ 'labels.commons.required' | translate }}</strong>
                 </mat-error>
               </mat-form-field>
@@ -77,7 +87,10 @@
                 <span class="date-value flex-60 m-l-80">{{ cobDate | dateFormat }}</span>
               </div>
 
-              <mat-form-field (click)="cobDatePicker.open()" *ngIf="isEditInProgress && dateIndex === 1">
+              <mat-form-field
+                (click)="cobDatePicker.open()"
+                *ngIf="isEditInProgress && dateIndex === 1"
+              >
                 <mat-label>{{ 'labels.inputs.COB Date' | translate }}</mat-label>
                 <input
                   matInput
@@ -106,7 +119,11 @@
                     {{ 'labels.buttons.Submit' | translate }}
                   </button>
                 </span>
-                <button mat-button *ngIf="isEditInProgress && dateIndex === 1" (click)="editInProgressToggle(1)">
+                <button
+                  mat-button
+                  *ngIf="isEditInProgress && dateIndex === 1"
+                  (click)="editInProgressToggle(1)"
+                >
                   {{ 'labels.buttons.Cancel' | translate }}
                 </button>
                 <button

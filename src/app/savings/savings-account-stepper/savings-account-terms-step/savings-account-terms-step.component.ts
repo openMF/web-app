@@ -70,18 +70,23 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
       this.savingsAccountTermsForm.patchValue({
         currencyCode: this.savingsAccountProductTemplate.currency.code,
         decimal: this.savingsAccountProductTemplate.currency.decimalPlaces,
-        minBalanceForInterestCalculation: this.savingsAccountProductTemplate.minBalanceForInterestCalculation,
+        minBalanceForInterestCalculation:
+          this.savingsAccountProductTemplate.minBalanceForInterestCalculation,
         nominalAnnualInterestRate: this.savingsAccountProductTemplate.nominalAnnualInterestRate,
-        interestCompoundingPeriodType: this.savingsAccountProductTemplate.interestCompoundingPeriodType.id,
+        interestCompoundingPeriodType:
+          this.savingsAccountProductTemplate.interestCompoundingPeriodType.id,
         interestPostingPeriodType: this.savingsAccountProductTemplate.interestPostingPeriodType.id,
         interestCalculationType: this.savingsAccountProductTemplate.interestCalculationType.id,
-        interestCalculationDaysInYearType: this.savingsAccountProductTemplate.interestCalculationDaysInYearType.id,
+        interestCalculationDaysInYearType:
+          this.savingsAccountProductTemplate.interestCalculationDaysInYearType.id,
         minRequiredOpeningBalance: this.savingsAccountProductTemplate.minRequiredOpeningBalance,
         allowOverdraft: this.savingsAccountProductTemplate.allowOverdraft,
         overdraftLimit: this.savingsAccountProductTemplate.overdraftLimit,
         enforceMinRequiredBalance: this.savingsAccountProductTemplate.enforceMinRequiredBalance,
-        minOverdraftForInterestCalculation: this.savingsAccountProductTemplate.minOverdraftForInterestCalculation,
-        nominalAnnualInterestRateOverdraft: this.savingsAccountProductTemplate.nominalAnnualInterestRateOverdraft,
+        minOverdraftForInterestCalculation:
+          this.savingsAccountProductTemplate.minOverdraftForInterestCalculation,
+        nominalAnnualInterestRateOverdraft:
+          this.savingsAccountProductTemplate.nominalAnnualInterestRateOverdraft,
         minRequiredBalance: this.savingsAccountProductTemplate.minRequiredBalance,
         withdrawalFeeForTransfers: this.savingsAccountProductTemplate.withdrawalFeeForTransfers
       });
@@ -97,7 +102,8 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
         interestCompoundingPeriodType: this.savingsAccountTemplate.interestCompoundingPeriodType.id,
         interestPostingPeriodType: this.savingsAccountTemplate.interestPostingPeriodType.id,
         interestCalculationType: this.savingsAccountTemplate.interestCalculationType.id,
-        interestCalculationDaysInYearType: this.savingsAccountTemplate.interestCalculationDaysInYearType.id,
+        interestCalculationDaysInYearType:
+          this.savingsAccountTemplate.interestCalculationDaysInYearType.id,
         minRequiredOpeningBalance: this.savingsAccountTemplate.minRequiredOpeningBalance,
         withdrawalFeeForTransfers: this.savingsAccountTemplate.withdrawalFeeForTransfers,
         lockinPeriodFrequency: this.savingsAccountTemplate.lockinPeriodFrequency,
@@ -153,10 +159,14 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
    * Sets all select dropdown options.
    */
   setOptions() {
-    this.lockinPeriodFrequencyTypeData = this.savingsAccountProductTemplate.lockinPeriodFrequencyTypeOptions;
-    this.interestCompoundingPeriodTypeData = this.savingsAccountProductTemplate.interestCompoundingPeriodTypeOptions;
-    this.interestPostingPeriodTypeData = this.savingsAccountProductTemplate.interestPostingPeriodTypeOptions;
-    this.interestCalculationTypeData = this.savingsAccountProductTemplate.interestCalculationTypeOptions;
+    this.lockinPeriodFrequencyTypeData =
+      this.savingsAccountProductTemplate.lockinPeriodFrequencyTypeOptions;
+    this.interestCompoundingPeriodTypeData =
+      this.savingsAccountProductTemplate.interestCompoundingPeriodTypeOptions;
+    this.interestPostingPeriodTypeData =
+      this.savingsAccountProductTemplate.interestPostingPeriodTypeOptions;
+    this.interestCalculationTypeData =
+      this.savingsAccountProductTemplate.interestCalculationTypeOptions;
     this.interestCalculationDaysInYearTypeData =
       this.savingsAccountProductTemplate.interestCalculationDaysInYearTypeOptions;
   }
@@ -165,17 +175,25 @@ export class SavingsAccountTermsStepComponent implements OnChanges, OnInit {
    * Subscribes to value changes and sets new form controls accordingly.
    */
   buildDependencies() {
-    this.savingsAccountTermsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft: any) => {
-      if (allowOverdraft) {
-        this.savingsAccountTermsForm.addControl('minOverdraftForInterestCalculation', new UntypedFormControl(''));
-        this.savingsAccountTermsForm.addControl('nominalAnnualInterestRateOverdraft', new UntypedFormControl(''));
-        this.savingsAccountTermsForm.addControl('overdraftLimit', new UntypedFormControl(''));
-      } else {
-        this.savingsAccountTermsForm.removeControl('minOverdraftForInterestCalculation');
-        this.savingsAccountTermsForm.removeControl('nominalAnnualInterestRateOverdraft');
-        this.savingsAccountTermsForm.removeControl('overdraftLimit');
-      }
-    });
+    this.savingsAccountTermsForm
+      .get('allowOverdraft')
+      .valueChanges.subscribe((allowOverdraft: any) => {
+        if (allowOverdraft) {
+          this.savingsAccountTermsForm.addControl(
+            'minOverdraftForInterestCalculation',
+            new UntypedFormControl('')
+          );
+          this.savingsAccountTermsForm.addControl(
+            'nominalAnnualInterestRateOverdraft',
+            new UntypedFormControl('')
+          );
+          this.savingsAccountTermsForm.addControl('overdraftLimit', new UntypedFormControl(''));
+        } else {
+          this.savingsAccountTermsForm.removeControl('minOverdraftForInterestCalculation');
+          this.savingsAccountTermsForm.removeControl('nominalAnnualInterestRateOverdraft');
+          this.savingsAccountTermsForm.removeControl('overdraftLimit');
+        }
+      });
   }
 
   /**

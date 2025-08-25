@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -75,7 +80,10 @@ export class PeriodicAccrualsComponent implements OnInit {
     periodicAccruals.locale = this.settingsService.language.code;
     periodicAccruals.dateFormat = this.settingsService.dateFormat;
     if (periodicAccruals.tillDate instanceof Date) {
-      periodicAccruals.tillDate = this.dateUtils.formatDate(periodicAccruals.tillDate, this.settingsService.dateFormat);
+      periodicAccruals.tillDate = this.dateUtils.formatDate(
+        periodicAccruals.tillDate,
+        this.settingsService.dateFormat
+      );
     }
     this.accountingService.executePeriodicAccruals(periodicAccruals).subscribe(() => {
       this.router.navigate(['../'], { relativeTo: this.route });

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -63,7 +68,9 @@ export class ApplySharesComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createApplySharesAccountForm();
-    this.applySharesForm.get('unitPrice').patchValue(this.sharesAccountData.currentMarketPrice || '');
+    this.applySharesForm
+      .get('unitPrice')
+      .patchValue(this.sharesAccountData.currentMarketPrice || '');
   }
 
   /**
@@ -101,8 +108,10 @@ export class ApplySharesComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.sharesService.executeSharesAccountCommand(this.accountId, 'applyadditionalshares', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.sharesService
+      .executeSharesAccountCommand(this.accountId, 'applyadditionalshares', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

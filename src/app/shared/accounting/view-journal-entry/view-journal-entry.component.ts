@@ -44,6 +44,7 @@ export class ViewJournalEntryComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.existsPaymentDetails =
-      data.journalEntry.transactionDetails != null && data.journalEntry.transactionDetails.paymentDetails != null;
+      data.journalEntry.transactionDetails != null &&
+      data.journalEntry.transactionDetails.paymentDetails != null;
   }
 }

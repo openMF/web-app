@@ -4,7 +4,9 @@
       <mat-card-content>
         <div class="layout-column">
           <mat-form-field>
-            <mat-label>{{ 'labels.inputs.Select Client Members for Transfer' | translate }}</mat-label>
+            <mat-label>{{
+              'labels.inputs.Select Client Members for Transfer' | translate
+            }}</mat-label>
             <mat-select required formControlName="clients" multiple>
               <mat-option *ngFor="let member of clientMembers" [value]="{ id: member.id }">
                 {{ member.displayName }}
@@ -22,15 +24,24 @@
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Destination Group' | translate }}</mat-label>
-            <input matInput formControlName="destinationGroupId" [matAutocomplete]="groupsAutocomplete" />
+            <input
+              matInput
+              formControlName="destinationGroupId"
+              [matAutocomplete]="groupsAutocomplete"
+            />
             <mat-error *ngIf="transferClientsForm.controls.destinationGroupId.hasError('required')">
-              {{ 'labels.inputs.Destination Group' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Destination Group' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
         </div>
 
-        <mat-autocomplete autoActiveFirstOption #groupsAutocomplete="matAutocomplete" [displayWith]="displayGroup">
+        <mat-autocomplete
+          autoActiveFirstOption
+          #groupsAutocomplete="matAutocomplete"
+          [displayWith]="displayGroup"
+        >
           <mat-option *ngFor="let group of groupsData" [value]="group">
             {{ group.name }}
           </mat-option>
@@ -38,11 +49,15 @@
 
         <div class="mat-table" *ngIf="transferClientsForm.get('destinationGroupId').value?.id">
           <div class="mat-header-row">
-            <div class="mat-header-cell">{{ 'labels.inputs.Destination Group Details' | translate }}</div>
+            <div class="mat-header-cell">
+              {{ 'labels.inputs.Destination Group Details' | translate }}
+            </div>
           </div>
           <div class="mat-row">
             <div class="mat-cell">{{ 'labels.inputs.name' | translate }}</div>
-            <div class="mat-cell">{{ transferClientsForm.get('destinationGroupId').value.name }}</div>
+            <div class="mat-cell">
+              {{ transferClientsForm.get('destinationGroupId').value.name }}
+            </div>
           </div>
           <div class="mat-row">
             <div class="mat-cell">{{ 'labels.inputs.Id' | translate }}</div>
@@ -51,7 +66,10 @@
           <div class="mat-row">
             <div class="mat-cell">{{ 'labels.inputs.Activation Date' | translate }}</div>
             <div class="mat-cell">
-              {{ (transferClientsForm.get('destinationGroupId').value.activationDate | dateFormat) || 'Not Activated' }}
+              {{
+                (transferClientsForm.get('destinationGroupId').value.activationDate | dateFormat) ||
+                  'Not Activated'
+              }}
             </div>
           </div>
           <div class="mat-row">

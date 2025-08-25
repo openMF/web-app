@@ -29,28 +29,36 @@
     <mat-step [stepControl]="fixedDepositProductDetailsForm">
       <ng-template matStepLabel>{{ 'labels.inputs.DETAILS' | translate }}</ng-template>
 
-      <mifosx-fixed-deposit-product-details-step [fixedDepositProductsTemplate]="fixedDepositProductsTemplate">
+      <mifosx-fixed-deposit-product-details-step
+        [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
+      >
       </mifosx-fixed-deposit-product-details-step>
     </mat-step>
 
     <mat-step [stepControl]="fixedDepositProductCurrencyForm">
       <ng-template matStepLabel>{{ 'labels.inputs.CURRENCY' | translate }}</ng-template>
 
-      <mifosx-fixed-deposit-product-currency-step [fixedDepositProductsTemplate]="fixedDepositProductsTemplate">
+      <mifosx-fixed-deposit-product-currency-step
+        [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
+      >
       </mifosx-fixed-deposit-product-currency-step>
     </mat-step>
 
     <mat-step [stepControl]="fixedDepositProductTermsForm">
       <ng-template matStepLabel>{{ 'labels.inputs.TERMS' | translate }}</ng-template>
 
-      <mifosx-fixed-deposit-product-terms-step [fixedDepositProductsTemplate]="fixedDepositProductsTemplate">
+      <mifosx-fixed-deposit-product-terms-step
+        [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
+      >
       </mifosx-fixed-deposit-product-terms-step>
     </mat-step>
 
     <mat-step [stepControl]="fixedDepositProductSettingsForm">
       <ng-template matStepLabel>{{ 'labels.inputs.SETTINGS' | translate }}</ng-template>
 
-      <mifosx-fixed-deposit-product-settings-step [fixedDepositProductsTemplate]="fixedDepositProductsTemplate">
+      <mifosx-fixed-deposit-product-settings-step
+        [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
+      >
       </mifosx-fixed-deposit-product-settings-step>
     </mat-step>
 
@@ -89,7 +97,9 @@
 
       <mifosx-fixed-deposit-product-preview-step
         [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
-        [chartSlabsDisplayedColumns]="fixedDepositProductInterestRateChartStep.chartSlabsDisplayedColumns"
+        [chartSlabsDisplayedColumns]="
+          fixedDepositProductInterestRateChartStep.chartSlabsDisplayedColumns
+        "
         [accountingRuleData]="accountingRuleData"
         [fixedDepositProduct]="fixedDepositProduct"
         (submitEvent)="submit()"

@@ -98,7 +98,10 @@ export class BulkLoanReassignmnetComponent implements OnInit {
     this.organizationSevice.getOfficeTemplate(officeId).subscribe((response: any) => {
       this.officeTemplate = response;
       this.fromLoanOfficers = this.officeTemplate.loanOfficerOptions;
-      this.bulkLoanForm.addControl('fromLoanOfficerId', new UntypedFormControl('', Validators.required));
+      this.bulkLoanForm.addControl(
+        'fromLoanOfficerId',
+        new UntypedFormControl('', Validators.required)
+      );
     });
   }
 
@@ -108,9 +111,11 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    */
   getFromOfficers(officerId: any) {
     this.toLoanOfficers = this.fromLoanOfficers.filter((officer: any) => officer.id !== officerId);
-    this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.id).subscribe((response: any) => {
-      this.officerTemplate = response;
-    });
+    this.organizationSevice
+      .getOfficerTemplate(officerId, this.officeTemplate.id)
+      .subscribe((response: any) => {
+        this.officerTemplate = response;
+      });
   }
 
   /**

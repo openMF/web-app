@@ -33,7 +33,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupMeetingForm.controls.frequency.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Repetition Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Repetition Frequency' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -46,7 +47,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupMeetingForm.controls.interval.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Repeition Interval' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Repeition Interval' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -59,7 +61,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="groupMeetingForm.controls.repeatsOnDay.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.At least' | translate }} <strong>{{ 'labels.inputs.one' | translate }}</strong>
+              {{ 'labels.inputs.At least' | translate }}
+              <strong>{{ 'labels.inputs.one' | translate }}</strong>
               {{ 'labels.inputs.day must be selected' | translate }}
             </mat-error>
           </mat-form-field>

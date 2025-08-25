@@ -92,7 +92,11 @@ export class LoanTermVariationsTabComponent {
       this.loanId = data.loanDetailsData.id;
       this.loanTermVariationsData = [];
       data.loanDetailsData.loanTermVariations?.forEach((item: any) => {
-        item.days = dates.calculateDiff(new Date(item.termVariationApplicableFrom), new Date(item.dateValue)) + 1;
+        item.days =
+          dates.calculateDiff(
+            new Date(item.termVariationApplicableFrom),
+            new Date(item.dateValue)
+          ) + 1;
         switch (item.termType.value) {
           case 'emiAmount':
             this.emiAmountData.push(item);
@@ -216,9 +220,11 @@ export class LoanTermVariationsTabComponent {
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteInterestPause(this.loanId, variation.id).subscribe((response: any) => {
-          this.reload();
-        });
+        this.loansService
+          .deleteInterestPause(this.loanId, variation.id)
+          .subscribe((response: any) => {
+            this.reload();
+          });
       }
     });
   }
@@ -261,9 +267,11 @@ export class LoanTermVariationsTabComponent {
             locale,
             dateFormat
           };
-          this.loansService.updateInterestPause(this.loanId, variation.id, payload).subscribe((response: any) => {
-            this.reload();
-          });
+          this.loansService
+            .updateInterestPause(this.loanId, variation.id, payload)
+            .subscribe((response: any) => {
+              this.reload();
+            });
         }
       }
     });

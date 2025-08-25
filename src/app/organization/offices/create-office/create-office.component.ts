@@ -1,6 +1,18 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -170,7 +182,12 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showOfficeForm === true) {
       setTimeout(() => {
-        this.showPopover(this.templateCreateOfficeForm, this.createOfficeFormRef.nativeElement, 'right', true);
+        this.showPopover(
+          this.templateCreateOfficeForm,
+          this.createOfficeFormRef.nativeElement,
+          'right',
+          true
+        );
       });
     }
   }

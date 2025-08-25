@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -80,15 +85,20 @@ export class ActivateFixedDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevActivatedOnDate: Date = this.activateFixedDepositsAccountForm.value.activatedOnDate;
     if (activateFixedDepositsAccountFormData.activatedOnDate instanceof Date) {
-      activateFixedDepositsAccountFormData.activatedOnDate = this.dateUtils.formatDate(prevActivatedOnDate, dateFormat);
+      activateFixedDepositsAccountFormData.activatedOnDate = this.dateUtils.formatDate(
+        prevActivatedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...activateFixedDepositsAccountFormData,
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'activate', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountCommand(this.accountId, 'activate', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

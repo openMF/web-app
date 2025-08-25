@@ -8,12 +8,18 @@
 <div class="container mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
-      <td mat-cell *matCellDef="let configuration">{{ configuration.name | translateKey: 'text' }}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.name' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let configuration">
+        {{ configuration.name | translateKey: 'text' }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Value' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Value' | translate }}
+      </th>
       <td mat-cell *matCellDef="let configuration">{{ configuration.value }}</td>
     </ng-container>
 

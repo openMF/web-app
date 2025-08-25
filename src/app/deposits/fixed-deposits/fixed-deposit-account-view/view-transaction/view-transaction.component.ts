@@ -77,7 +77,12 @@ export class ViewTransactionComponent {
           locale
         };
         this.savingsService
-          .executeSavingsAccountTransactionsCommand(this.accountId, 'undo', data, this.transactionData.id)
+          .executeSavingsAccountTransactionsCommand(
+            this.accountId,
+            'undo',
+            data,
+            this.transactionData.id
+          )
           .subscribe(() => {
             this.router.navigate(['../'], { relativeTo: this.route });
           });

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -84,7 +89,10 @@ export class WithdrawClientComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawalDate: Date = this.withdrawClientForm.value.withdrawalDate;
     if (withdrawClientFormData.withdrawalDate instanceof Date) {
-      withdrawClientFormData.withdrawalDate = this.dateUtils.formatDate(prevWithdrawalDate, dateFormat);
+      withdrawClientFormData.withdrawalDate = this.dateUtils.formatDate(
+        prevWithdrawalDate,
+        dateFormat
+      );
     }
     const data = {
       ...withdrawClientFormData,

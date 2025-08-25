@@ -16,7 +16,11 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="flex-48" *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
+          <mat-form-field
+            class="flex-48"
+            *ngSwitchCase="'date'"
+            (click)="runReportDatePicker.open()"
+          >
             <mat-label>{{ param.label }}</mat-label>
             <input
               matInput

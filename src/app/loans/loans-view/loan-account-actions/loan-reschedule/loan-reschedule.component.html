@@ -15,7 +15,8 @@
             <mat-datepicker-toggle matSuffix [for]="rescheduleDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rescheduleDatePicker></mat-datepicker>
             <mat-error *ngIf="rescheduleLoanForm.controls.rescheduleFromDate.hasError('required')">
-              {{ 'labels.inputs.Reschedule Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Reschedule Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -23,12 +24,16 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reason for Rescheduling' | translate }}</mat-label>
             <mat-select formControlName="rescheduleReasonId">
-              <mat-option *ngFor="let rescheduleReasonCode of codes" [value]="rescheduleReasonCode.id">
+              <mat-option
+                *ngFor="let rescheduleReasonCode of codes"
+                [value]="rescheduleReasonCode.id"
+              >
                 {{ rescheduleReasonCode.name }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="rescheduleLoanForm.controls.rescheduleReasonId.hasError('required')">
-              {{ 'labels.inputs.Reason for Rescheduling' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Reason for Rescheduling' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -45,7 +50,8 @@
             <mat-datepicker-toggle matSuffix [for]="submittedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedDatePicker></mat-datepicker>
             <mat-error *ngIf="rescheduleLoanForm.controls.submittedOnDate.hasError('required')">
-              {{ 'labels.inputs.Submitted On Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Submitted On Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -68,7 +74,10 @@
                 [matDatepicker]="installmentrescheduledDatePicker"
                 formControlName="adjustedDueDate"
               />
-              <mat-datepicker-toggle matSuffix [for]="installmentrescheduledDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="installmentrescheduledDatePicker"
+              ></mat-datepicker-toggle>
               <mat-datepicker #installmentrescheduledDatePicker></mat-datepicker>
             </mat-form-field>
           </ng-container>

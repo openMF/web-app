@@ -135,7 +135,10 @@ export class RecoveryRepaymentComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.recoveryRepaymentLoanForm.value.transactionDate;
     if (recoveryRepaymentLoanFormData.transactionDate instanceof Date) {
-      recoveryRepaymentLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      recoveryRepaymentLoanFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...recoveryRepaymentLoanFormData,
@@ -143,8 +146,10 @@ export class RecoveryRepaymentComponent implements OnInit {
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'recoverypayment').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .submitLoanActionButton(this.loanId, data, 'recoverypayment')
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

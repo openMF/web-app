@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  FormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -69,9 +75,11 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.transferClientsForm.get('destinationGroupId').valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
-        this.groupsService.getFilteredGroups('name', 'ASC', value, this.groupData.officeId).subscribe((data: any) => {
-          this.groupsData = data;
-        });
+        this.groupsService
+          .getFilteredGroups('name', 'ASC', value, this.groupData.officeId)
+          .subscribe((data: any) => {
+            this.groupsData = data;
+          });
       }
     });
   }
@@ -113,8 +121,10 @@ export class GroupTransferClientsComponent implements OnInit, AfterViewInit {
       destinationGroupId: this.transferClientsForm.get('destinationGroupId').value.id,
       locale
     };
-    this.groupsService.executeGroupCommand(this.groupData.id, 'transferClients', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.groupsService
+      .executeGroupCommand(this.groupData.id, 'transferClients', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

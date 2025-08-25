@@ -44,7 +44,10 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
             <mat-select required formControlName="currencyCode">
-              <mat-option *ngFor="let currency of cashierData.currencyOptions" [value]="currency.code">
+              <mat-option
+                *ngFor="let currency of cashierData.currencyOptions"
+                [value]="currency.code"
+              >
                 {{ currency.name }}
               </mat-option>
             </mat-select>

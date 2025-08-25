@@ -27,7 +27,13 @@ export class TasksService {
       const propNames = Object.getOwnPropertyNames(searchData);
       for (let i = 0; i < propNames.length; i++) {
         const propName = propNames[i];
-        if (!(searchData[propName] === '' || searchData[propName] === undefined || searchData[propName] === null)) {
+        if (
+          !(
+            searchData[propName] === '' ||
+            searchData[propName] === undefined ||
+            searchData[propName] === null
+          )
+        ) {
           httpParams = httpParams.set(propName, searchData[propName]);
         }
       }

@@ -5,7 +5,8 @@
       <i
         class="fas fa-question"
         matTooltip="{{
-          'tooltips.These fields are used to define the minimum, default, maximum shares per customer' | translate
+          'tooltips.These fields are used to define the minimum, default, maximum shares per customer'
+            | translate
         }}"
       ></i>
     </h4>
@@ -19,7 +20,8 @@
       <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
       <input type="number" matInput formControlName="nominalShares" required />
       <mat-error>
-        {{ 'labels.inputs.Default Shares per Client' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Default Shares per Client' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>
@@ -33,7 +35,9 @@
       {{ 'labels.inputs.Minimum Active Period' | translate }}
       <i
         class="fas fa-question"
-        matTooltip="{{ 'tooltips.Minimum active period to consider for dividend calculations' | translate }}"
+        matTooltip="{{
+          'tooltips.Minimum active period to consider for dividend calculations' | translate
+        }}"
       ></i>
     </h4>
 
@@ -56,7 +60,10 @@
 
     <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Lock-in Period' | translate }}
-      <i class="fas fa-question" matTooltip="{{ 'tooltips.Used to indicate the length of time' | translate }}"></i>
+      <i
+        class="fas fa-question"
+        matTooltip="{{ 'tooltips.Used to indicate the length of time' | translate }}"
+      ></i>
     </h4>
 
     <mat-form-field class="flex-48">

@@ -38,7 +38,9 @@ export class NavigationService {
    * @returns {Observable<any>} Centers
    */
   getCentersFromStaffId(staffId: number): Observable<any> {
-    const httpParams = new HttpParams().set('R_staffId', staffId.toString()).set('genericResultSet', false.toString());
+    const httpParams = new HttpParams()
+      .set('R_staffId', staffId.toString())
+      .set('genericResultSet', false.toString());
     return this.http.get('/runreports/GroupNamesByStaff', { params: httpParams });
   }
 
@@ -64,7 +66,9 @@ export class NavigationService {
    * @returns {Observable<any>} Center Accounts
    */
   getCenterSummary(centerId: number): Observable<any> {
-    const httpParams = new HttpParams().set('R_groupId', centerId.toString()).set('genericResultSet', false.toString());
+    const httpParams = new HttpParams()
+      .set('R_groupId', centerId.toString())
+      .set('genericResultSet', false.toString());
     return this.http.get('/runreports/GroupSummaryCounts', { params: httpParams });
   }
 

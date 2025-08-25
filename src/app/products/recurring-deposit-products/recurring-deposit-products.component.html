@@ -30,17 +30,30 @@
   <div #recurringProductsTable class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
-        <td mat-cell *matCellDef="let recurringDepositProduct">{{ recurringDepositProduct.name }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Name' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let recurringDepositProduct">
+          {{ recurringDepositProduct.name }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="shortName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Short Name' | translate }}</th>
-        <td mat-cell *matCellDef="let recurringDepositProduct">{{ recurringDepositProduct.shortName }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Short Name' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let recurringDepositProduct">
+          {{ recurringDepositProduct.shortName }}
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [routerLink]="[row.id]"
+        class="select-row"
+      ></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
@@ -49,9 +62,15 @@
 
 <ng-template #templateButtonCreateRecurringProduct let-popover="popover">
   <h2>{{ 'labels.heading.Create recurring deposit product' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.This option allows you to create new recurring product.' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.This option allows you to create new recurring product.' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
@@ -70,14 +89,24 @@
 <ng-template #templateFilter let-popover="popover">
   <h4>{{ 'labels.heading.Search bar to filter recurring deposit products.' | translate }}</h4>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="
-        popover.close(); showPopover(templateButtonCreateRecurringProduct, buttonCreateRecurringProduct, 'bottom', true)
+        popover.close();
+        showPopover(
+          templateButtonCreateRecurringProduct,
+          buttonCreateRecurringProduct,
+          'bottom',
+          true
+        )
       "
     >
       {{ 'labels.buttons.Back' | translate }}
@@ -85,7 +114,10 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateRecurringProductsTable, recurringProductsTable, 'top', true)"
+      (click)="
+        popover.close();
+        showPopover(templateRecurringProductsTable, recurringProductsTable, 'top', true)
+      "
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>
@@ -95,12 +127,18 @@
 <ng-template #templateRecurringProductsTable let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.List of recurring deposit products in the organization' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629552/Recurring+Deposit" target="_blank">{{
-      'labels.heading.Recurring Deposit Products' | translate
-    }}</a>
+    <a
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/102629552/Recurring+Deposit"
+      target="_blank"
+      >{{ 'labels.heading.Recurring Deposit Products' | translate }}</a
+    >
   </h4>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button

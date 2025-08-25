@@ -59,7 +59,10 @@ export class HasPermissionDirective {
     if (this.userPermissions.includes('ALL_FUNCTIONS')) {
       return true;
     } else if (permission !== '') {
-      if (permission.substring(0, 5) === 'READ_' && this.userPermissions.includes('ALL_FUNCTIONS_READ')) {
+      if (
+        permission.substring(0, 5) === 'READ_' &&
+        this.userPermissions.includes('ALL_FUNCTIONS_READ')
+      ) {
         return true;
       } else if (this.userPermissions.includes(permission)) {
         return true;

@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -176,7 +183,12 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showDefineWorkingDays === true) {
       setTimeout(() => {
-        this.showPopover(this.templateWorkingDaysFormRef, this.workingDaysFormRef.nativeElement, 'right', true);
+        this.showPopover(
+          this.templateWorkingDaysFormRef,
+          this.workingDaysFormRef.nativeElement,
+          'right',
+          true
+        );
       });
     }
   }

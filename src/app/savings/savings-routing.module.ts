@@ -74,7 +74,11 @@ const routes: Routes = [
           },
           {
             path: 'general',
-            data: { title: 'Savings Account Details', breadcrumb: 'General', routeParamBreadcrumb: false },
+            data: {
+              title: 'Savings Account Details',
+              breadcrumb: 'General',
+              routeParamBreadcrumb: false
+            },
             children: [
               {
                 path: '',
@@ -84,7 +88,11 @@ const routes: Routes = [
           },
           {
             path: 'transactions',
-            data: { title: 'Savings Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+            data: {
+              title: 'Savings Account Transactions',
+              breadcrumb: 'Transactions',
+              routeParamBreadcrumb: false
+            },
             children: [
               {
                 path: '',
@@ -99,17 +107,29 @@ const routes: Routes = [
           {
             path: 'charges',
             component: ChargesTabComponent,
-            data: { title: 'Savings Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false }
+            data: {
+              title: 'Savings Account Charges',
+              breadcrumb: 'Charges',
+              routeParamBreadcrumb: false
+            }
           },
           {
             path: 'standing-instructions',
             component: StandingInstructionsTabComponent,
-            data: { title: 'Savings Account SIH', breadcrumb: 'Standing Instructions', routeParamBreadcrumb: false }
+            data: {
+              title: 'Savings Account SIH',
+              breadcrumb: 'Standing Instructions',
+              routeParamBreadcrumb: false
+            }
           },
           {
             path: 'notes',
             component: NotesTabComponent,
-            data: { title: 'Savings Account Notes', breadcrumb: 'Notes', routeParamBreadcrumb: false },
+            data: {
+              title: 'Savings Account Notes',
+              breadcrumb: 'Notes',
+              routeParamBreadcrumb: false
+            },
             resolve: {
               savingAccountNotes: SavingNotesResolver
             }
@@ -117,7 +137,11 @@ const routes: Routes = [
           {
             path: 'documents',
             component: SavingsDocumentsTabComponent,
-            data: { title: 'Savings Account Documents', breadcrumb: 'Documents', routeParamBreadcrumb: false },
+            data: {
+              title: 'Savings Account Documents',
+              breadcrumb: 'Documents',
+              routeParamBreadcrumb: false
+            },
             resolve: {
               savingsDocuments: SavingDocumentsResolver
             }
@@ -147,7 +171,11 @@ const routes: Routes = [
       },
       {
         path: ':savingAccountId/transactions/:id',
-        data: { title: 'Savings Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false },
+        data: {
+          title: 'Savings Account Transactions',
+          breadcrumb: 'Transactions',
+          routeParamBreadcrumb: false
+        },
         children: [
           {
             path: '',
@@ -203,7 +231,11 @@ const routes: Routes = [
       },
       {
         path: ':savingAccountId/charges',
-        data: { title: 'Savings Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false },
+        data: {
+          title: 'Savings Account Charges',
+          breadcrumb: 'Charges',
+          routeParamBreadcrumb: false
+        },
         children: [
           {
             path: '',
@@ -223,7 +255,11 @@ const routes: Routes = [
       },
       {
         path: ':savingAccountId/actions/:name',
-        data: { title: 'Savings Account Actions', breadcrumb: 'Savings Account Actions', routeParamBreadcrumb: 'name' },
+        data: {
+          title: 'Savings Account Actions',
+          breadcrumb: 'Savings Account Actions',
+          routeParamBreadcrumb: 'name'
+        },
         component: SavingAccountActionsComponent,
         resolve: {
           savingsAccountActionData: SavingsAccountActionsResolver
@@ -232,7 +268,9 @@ const routes: Routes = [
       {
         path: ':savingAccountId/transfer-funds',
         loadChildren: () =>
-          import('../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
+          import('../account-transfers/account-transfers.module').then(
+            (m) => m.AccountTransfersModule
+          )
       },
       {
         path: 'gsim-account',

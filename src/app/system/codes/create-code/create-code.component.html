@@ -18,7 +18,12 @@
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!codeForm.valid" *mifosxHasPermission="'CREATE_CODE'">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!codeForm.valid"
+          *mifosxHasPermission="'CREATE_CODE'"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>
@@ -31,12 +36,18 @@
   <p class="mw400">
     {{ 'labels.text.To create code,create' | translate }}<br />
     {{ 'labels.text.For more details click' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895350/Manage+Codes" target="_blank">{{
-      'labels.inputs.Manage Codes' | translate
-    }}</a>
+    <a
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895350/Manage+Codes"
+      target="_blank"
+      >{{ 'labels.inputs.Manage Codes' | translate }}</a
+    >
   </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close()">

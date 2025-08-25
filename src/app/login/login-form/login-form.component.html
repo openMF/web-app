@@ -6,7 +6,8 @@
     <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
     <input matInput type="text" autocomplete="off" formControlName="username" />
     <mat-error *ngIf="loginForm.controls.username.hasError('required')">
-      {{ 'labels.inputs.Username' | translate }} <strong>{{ 'labels.commons.is required' | translate }}</strong>
+      {{ 'labels.inputs.Username' | translate }}
+      <strong>{{ 'labels.commons.is required' | translate }}</strong>
     </mat-error>
   </mat-form-field>
 
@@ -28,7 +29,8 @@
       <fa-icon *ngIf="passwordInputType === 'text'" icon="eye-slash"></fa-icon>
     </button>
     <mat-error *ngIf="loginForm.controls.password.hasError('required')">
-      {{ 'labels.inputs.Password' | translate }} <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
+      {{ 'labels.inputs.Password' | translate }}
+      <strong>{{ 'labels.commons.pass is required' | translate }}</strong>
     </mat-error>
   </mat-form-field>
 
@@ -38,7 +40,12 @@
 
   <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
-  <button mat-raised-button color="primary" class="login-button flex-align-center" [disabled]="!loginForm.valid">
+  <button
+    mat-raised-button
+    color="primary"
+    class="login-button flex-align-center"
+    [disabled]="!loginForm.valid"
+  >
     {{ 'labels.buttons.Login' | translate }}
     <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
   </button>

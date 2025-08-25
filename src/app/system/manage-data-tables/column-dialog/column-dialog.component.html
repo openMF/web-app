@@ -61,7 +61,12 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-  <button mat-raised-button color="primary" [disabled]="!columnForm.valid || columnForm.pristine" (click)="submit()">
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!columnForm.valid || columnForm.pristine"
+    (click)="submit()"
+  >
     {{ 'labels.buttons.Submit' | translate }}
   </button>
 </mat-dialog-actions>

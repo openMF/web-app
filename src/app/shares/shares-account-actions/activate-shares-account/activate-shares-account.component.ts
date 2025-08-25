@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -79,15 +84,20 @@ export class ActivateSharesAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevActivatedDate: Date = this.activateSharesAccountForm.value.activatedDate;
     if (activateSharesAccountFormData.activatedDate instanceof Date) {
-      activateSharesAccountFormData.activatedDate = this.dateUtils.formatDate(prevActivatedDate, dateFormat);
+      activateSharesAccountFormData.activatedDate = this.dateUtils.formatDate(
+        prevActivatedDate,
+        dateFormat
+      );
     }
     const data = {
       ...activateSharesAccountFormData,
       dateFormat,
       locale
     };
-    this.sharesService.executeSharesAccountCommand(this.accountId, 'activate', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.sharesService
+      .executeSharesAccountCommand(this.accountId, 'activate', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

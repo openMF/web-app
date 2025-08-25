@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -140,13 +147,23 @@ export class CurrenciesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showCurrencyPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonAddEdit, this.buttonAddEdit.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonAddEdit,
+          this.buttonAddEdit.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
 
     if (this.configurationWizardService.showCurrencyList === true) {
       setTimeout(() => {
-        this.showPopover(this.templateTableCurrencies, this.tableCurrencies.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateTableCurrencies,
+          this.tableCurrencies.nativeElement,
+          'top',
+          true
+        );
       });
     }
   }

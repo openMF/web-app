@@ -98,7 +98,13 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     this.clientChoice.valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
         this.clientsService
-          .getFilteredClients('displayName', 'ASC', true, value, this.groupForm.get('officeId').value)
+          .getFilteredClients(
+            'displayName',
+            'ASC',
+            true,
+            value,
+            this.groupForm.get('officeId').value
+          )
           .subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
@@ -149,7 +155,10 @@ export class CreateGroupComponent implements OnInit, AfterViewInit {
     });
     this.groupForm.get('active').valueChanges.subscribe((bool: boolean) => {
       if (bool) {
-        this.groupForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
+        this.groupForm.addControl(
+          'activationDate',
+          new UntypedFormControl('', Validators.required)
+        );
       } else {
         this.groupForm.removeControl('activationDate');
       }

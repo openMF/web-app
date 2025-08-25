@@ -111,7 +111,10 @@ export class LoansAccountDatatableStepComponent implements OnInit {
       if (this.isNumeric(input.columnDisplayType)) {
         data[input.columnName] = datatableDataValues[controlName] * 1;
       } else if (this.isDate(input.columnDisplayType)) {
-        data[input.columnName] = this.dateUtils.formatDate(datatableDataValues[controlName], dateFormat);
+        data[input.columnName] = this.dateUtils.formatDate(
+          datatableDataValues[controlName],
+          dateFormat
+        );
         existDate = true;
       } else {
         data[input.columnName] = datatableDataValues[controlName];

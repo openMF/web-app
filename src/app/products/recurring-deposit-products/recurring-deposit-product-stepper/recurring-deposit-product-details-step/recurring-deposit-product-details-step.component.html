@@ -35,12 +35,15 @@
         matInput
         formControlName="description"
         matTooltip="{{
-          'tooltips.Description is used to provide additional information regarding the purpose' | translate
+          'tooltips.Description is used to provide additional information regarding the purpose'
+            | translate
         }}"
         cdkTextareaAutosize
         cdkAutosizeMinRows="2"
       ></textarea>
-      <mat-error *ngIf="recurringDepositProductDetailsForm.controls.description.hasError('required')">
+      <mat-error
+        *ngIf="recurringDepositProductDetailsForm.controls.description.hasError('required')"
+      >
         {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>

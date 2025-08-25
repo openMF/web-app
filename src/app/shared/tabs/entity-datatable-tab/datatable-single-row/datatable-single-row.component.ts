@@ -97,9 +97,11 @@ export class DatatableSingleRowComponent implements OnInit {
         this.systemService
           .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
           .subscribe(() => {
-            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-              this.dataObject = dataObject;
-            });
+            this.systemService
+              .getEntityDatatable(this.entityId, this.datatableName)
+              .subscribe((dataObject: any) => {
+                this.dataObject = dataObject;
+              });
           });
       }
     });
@@ -150,9 +152,11 @@ export class DatatableSingleRowComponent implements OnInit {
         this.systemService
           .editEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
           .subscribe(() => {
-            this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-              this.dataObject = dataObject;
-            });
+            this.systemService
+              .getEntityDatatable(this.entityId, this.datatableName)
+              .subscribe((dataObject: any) => {
+                this.dataObject = dataObject;
+              });
           });
       }
     });
@@ -164,11 +168,15 @@ export class DatatableSingleRowComponent implements OnInit {
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
-          this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-            this.dataObject = dataObject;
+        this.systemService
+          .deleteDatatableContent(this.entityId, this.datatableName)
+          .subscribe(() => {
+            this.systemService
+              .getEntityDatatable(this.entityId, this.datatableName)
+              .subscribe((dataObject: any) => {
+                this.dataObject = dataObject;
+              });
           });
-        });
       }
     });
   }

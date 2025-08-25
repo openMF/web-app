@@ -143,15 +143,20 @@ export class CloseSavingsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedOnDate: Date = this.closeSavingsAccountForm.value.closedOnDate;
     if (closeSavingsAccountFormData.closedOnDate instanceof Date) {
-      closeSavingsAccountFormData.closedOnDate = this.dateUtils.formatDate(prevClosedOnDate, dateFormat);
+      closeSavingsAccountFormData.closedOnDate = this.dateUtils.formatDate(
+        prevClosedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...closeSavingsAccountFormData,
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'close', data).subscribe(() => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountCommand(this.accountId, 'close', data)
+      .subscribe(() => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

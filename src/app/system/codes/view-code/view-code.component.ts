@@ -162,8 +162,12 @@ export class ViewCodeComponent implements OnInit {
    * @param {number} index Index of the row.
    */
   updateCodeValue(index: number) {
-    const updatedCodeValue: { name: string; description: string; position: number; isActive: boolean } =
-      this.codeValues.at(index).value;
+    const updatedCodeValue: {
+      name: string;
+      description: string;
+      position: number;
+      isActive: boolean;
+    } = this.codeValues.at(index).value;
     this.systemService
       .updateCodeValue(this.codeData.id, this.codeValuesData[index].id, updatedCodeValue)
       .subscribe((response: any) => {
@@ -178,7 +182,10 @@ export class ViewCodeComponent implements OnInit {
    */
   delete() {
     const deleteCodeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Code') + ' ' + this.codeData.name }
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.inputs.Code') + ' ' + this.codeData.name
+      }
     });
     deleteCodeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -210,18 +217,20 @@ export class ViewCodeComponent implements OnInit {
   addCodeValue(index: number) {
     const newCodeValue: { name: string; description: string; position: string; isActive: boolean } =
       this.codeValues.at(index).value;
-    this.systemService.createCodeValue(this.codeData.id, newCodeValue).subscribe((response: any) => {
-      this.codeValues.at(index).disable();
-      this.codeValueRowStatus[index] = 'disabled';
-      this.codeValuesData.push({
-        id: response.subResourceId,
-        name: this.codeValues.at(index).get('name').value,
-        description: this.codeValues.at(index).get('description').value,
-        position: this.codeValues.at(index).get('position').value,
-        isActive: this.codeValues.at(index).get('isActive').value
+    this.systemService
+      .createCodeValue(this.codeData.id, newCodeValue)
+      .subscribe((response: any) => {
+        this.codeValues.at(index).disable();
+        this.codeValueRowStatus[index] = 'disabled';
+        this.codeValuesData.push({
+          id: response.subResourceId,
+          name: this.codeValues.at(index).get('name').value,
+          description: this.codeValues.at(index).get('description').value,
+          position: this.codeValues.at(index).get('position').value,
+          isActive: this.codeValues.at(index).get('isActive').value
+        });
+        this.codeValues.at(index).markAsPristine();
       });
-      this.codeValues.at(index).markAsPristine();
-    });
   }
 
   /**

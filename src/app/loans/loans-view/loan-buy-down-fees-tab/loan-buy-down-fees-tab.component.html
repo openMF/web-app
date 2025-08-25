@@ -26,28 +26,36 @@
       </ng-container>
 
       <ng-container matColumnDef="amortizedAmount">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Amortized Amount' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.heading.Amortized Amount' | translate }}
+        </th>
         <td mat-cell class="r-amount" *matCellDef="let item">
           {{ item.amortizedAmount | formatNumber: '0.00' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="notYetAmortizedAmount">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Not Yet Amortized Amount' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.heading.Not Yet Amortized Amount' | translate }}
+        </th>
         <td mat-cell class="r-amount" *matCellDef="let item">
           {{ item.notYetAmortizedAmount | formatNumber: '0.00' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="adjustedAmount">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Adjusted Amount' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.heading.Adjusted Amount' | translate }}
+        </th>
         <td mat-cell class="r-amount" *matCellDef="let item">
           {{ item.adjustedAmount | formatNumber: '0.00' }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="chargedOffAmount">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.heading.Charged Off Amount' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.heading.Charged Off Amount' | translate }}
+        </th>
         <td mat-cell class="r-amount" *matCellDef="let item">
           {{ item.chargedOffAmount | formatNumber: '0.00' }}
         </td>

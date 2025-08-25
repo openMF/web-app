@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -79,7 +84,10 @@ export class ActivateClientComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevActivationDate: Date = this.activateClientForm.value.activationDate;
     if (activateClientFormData.activationDate instanceof Date) {
-      activateClientFormData.activationDate = this.dateUtils.formatDate(prevActivationDate, dateFormat);
+      activateClientFormData.activationDate = this.dateUtils.formatDate(
+        prevActivationDate,
+        dateFormat
+      );
     }
     const data = {
       ...activateClientFormData,

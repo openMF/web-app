@@ -103,27 +103,52 @@ export class SystemComponent implements AfterViewInit {
     }
     if (this.configurationWizardService.showRolesandPermission === true) {
       setTimeout(() => {
-        this.showPopover(this.templateRolesandPermission, this.rolesandpermission.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateRolesandPermission,
+          this.rolesandpermission.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showMakerCheckerTable === true) {
       setTimeout(() => {
-        this.showPopover(this.templateMakerCheckerTable, this.makerCheckerTable.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateMakerCheckerTable,
+          this.makerCheckerTable.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showConfigurations === true) {
       setTimeout(() => {
-        this.showPopover(this.templateConfigurations, this.configurations.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateConfigurations,
+          this.configurations.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showSchedulerJobs === true) {
       setTimeout(() => {
-        this.showPopover(this.templateSchedulerJobs, this.schedulerJobs.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateSchedulerJobs,
+          this.schedulerJobs.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showManageReports === true) {
       setTimeout(() => {
-        this.showPopover(this.templateManageReports, this.manageReports.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateManageReports,
+          this.manageReports.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
   }

@@ -98,7 +98,9 @@ export class LoanProductChargesStepComponent implements OnInit {
 
   deleteCharge(charge: any) {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name }
+      data: {
+        deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name
+      }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

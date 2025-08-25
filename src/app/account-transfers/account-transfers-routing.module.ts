@@ -38,7 +38,11 @@ const routes: Routes = [
       },
       {
         path: 'make-account-transfer',
-        data: { title: 'Account Transfer', breadcrumb: 'Account Transfer', routeParamBreadcrumb: 'Account Transfer' },
+        data: {
+          title: 'Account Transfer',
+          breadcrumb: 'Account Transfer',
+          routeParamBreadcrumb: 'Account Transfer'
+        },
         component: MakeAccountTransfersComponent,
         resolve: {
           accountTransferTemplate: MakeAccountTransferTemplateResolver
@@ -58,7 +62,11 @@ const routes: Routes = [
       },
       {
         path: 'account-transfers',
-        data: { title: 'View Account Transfer', breadcrumb: 'Account Transfers', routeParamBreadcrumb: false },
+        data: {
+          title: 'View Account Transfer',
+          breadcrumb: 'Account Transfers',
+          routeParamBreadcrumb: false
+        },
         children: [
           {
             path: ':transferid',
@@ -76,7 +84,11 @@ const routes: Routes = [
         children: [
           {
             path: 'view',
-            data: { title: 'View Standing Instructions', breadcrumb: 'view', routeParamBreadcrumb: false },
+            data: {
+              title: 'View Standing Instructions',
+              breadcrumb: 'view',
+              routeParamBreadcrumb: false
+            },
             component: ViewStandingInstructionsComponent,
             resolve: {
               standingInstructionsData: ViewStandingInstructionsResolver
@@ -84,7 +96,11 @@ const routes: Routes = [
           },
           {
             path: 'edit',
-            data: { title: 'Edit Standing Instructions', breadcrumb: 'edit', routeParamBreadcrumb: false },
+            data: {
+              title: 'Edit Standing Instructions',
+              breadcrumb: 'edit',
+              routeParamBreadcrumb: false
+            },
             component: EditStandingInstructionsComponent,
             resolve: {
               standingInstructionsDataAndTemplate: StandingInstructionsDataAndTemplateResolver

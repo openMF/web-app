@@ -83,9 +83,11 @@ export class UndoApprovalFixedDepositsAccountComponent implements OnInit {
           this.router.navigate(['../../'], { relativeTo: this.route });
         });
     } else {
-      this.savingsService.executeSavingsAccountCommand(this.accountId, this.undoCommand, data).subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+      this.savingsService
+        .executeSavingsAccountCommand(this.accountId, this.undoCommand, data)
+        .subscribe(() => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
     }
   }
 }

@@ -1,7 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { AccountingService } from '../../accounting.service';
@@ -134,14 +139,16 @@ export class EditGlAccountComponent implements OnInit {
    * if successful redirects to view updated account.
    */
   submit() {
-    this.accountingService.updateGlAccount(this.glAccount.id, this.glAccountForm.value).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.accountingService
+      .updateGlAccount(this.glAccount.id, this.glAccountForm.value)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

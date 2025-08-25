@@ -111,7 +111,9 @@ export class ViewProductMixComponent implements OnInit {
    * Initializes the data source, paginator and sorter for the restricted products table.
    */
   setRestrictedProducts() {
-    this.restrictedProductsDatasource = new MatTableDataSource(this.productMixData.restrictedProducts);
+    this.restrictedProductsDatasource = new MatTableDataSource(
+      this.productMixData.restrictedProducts
+    );
     this.restrictedProductsDatasource.paginator = this.restrictedPaginator;
     this.restrictedProductsDatasource.sort = this.restrictedSort;
   }

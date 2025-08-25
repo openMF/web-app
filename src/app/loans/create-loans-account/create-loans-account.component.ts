@@ -44,7 +44,8 @@ export class CreateLoansAccountComponent {
   /** Imports all the step component */
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
-  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
+  @ViewChild(LoansAccountTermsStepComponent, { static: true })
+  loansAccountTermsStep: LoansAccountTermsStepComponent;
   @ViewChild(LoansAccountChargesStepComponent, { static: true })
   loansAccountChargesStep: LoansAccountChargesStepComponent;
   /** Get handle on dtloan tags in the template */
@@ -107,9 +108,11 @@ export class CreateLoansAccountComponent {
       : this.loansAccountTemplate.group.id;
     const isGroup = this.loansAccountTemplate.clientId ? false : true;
     const productId = this.loansAccountProductTemplate.loanProductId;
-    this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
-      this.multiDisburseLoan = response.multiDisburseLoan;
-    });
+    this.loansService
+      .getLoansAccountTemplateResource(entityId, isGroup, productId)
+      .subscribe((response: any) => {
+        this.multiDisburseLoan = response.multiDisburseLoan;
+      });
     this.setDatatables();
   }
 
@@ -172,7 +175,10 @@ export class CreateLoansAccountComponent {
       dateFormat
     );
 
-    if (this.loansAccountProductTemplate.datatables && this.loansAccountProductTemplate.datatables.length > 0) {
+    if (
+      this.loansAccountProductTemplate.datatables &&
+      this.loansAccountProductTemplate.datatables.length > 0
+    ) {
       const datatables: any[] = [];
       this.loanDatatables.forEach((loanDatatable: LoansAccountDatatableStepComponent) => {
         datatables.push(loanDatatable.payload);

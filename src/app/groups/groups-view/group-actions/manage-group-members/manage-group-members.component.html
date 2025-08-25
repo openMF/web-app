@@ -5,7 +5,11 @@
       <input matInput [formControl]="clientChoice" [matAutocomplete]="clientsAutocomplete" />
     </mat-form-field>
 
-    <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+    <mat-autocomplete
+      autoActiveFirstOption
+      #clientsAutocomplete="matAutocomplete"
+      [displayWith]="displayClient"
+    >
       <mat-option *ngFor="let client of clientsData" [value]="client">
         {{ client.displayName }}
       </mat-option>

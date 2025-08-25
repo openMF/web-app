@@ -9,7 +9,9 @@
   <div #configurationsTable class="mat-elevation-z8 m-b-10">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.name' | translate }}
+        </th>
         <td mat-cell *matCellDef="let configuration">
           <span class="m-r-10">{{ configuration.name }}</span>
           <fa-icon
@@ -22,7 +24,9 @@
       </ng-container>
 
       <ng-container matColumnDef="enabled">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Status' | translate }}
+        </th>
         <td mat-cell *matCellDef="let configuration">
           <mat-slide-toggle
             [(ngModel)]="configuration.enabled"
@@ -38,17 +42,23 @@
       </ng-container>
 
       <ng-container matColumnDef="value">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Value' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Value' | translate }}
+        </th>
         <td mat-cell *matCellDef="let configuration">{{ configuration.value }}</td>
       </ng-container>
 
       <ng-container matColumnDef="stringValue">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.String Value' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.String Value' | translate }}
+        </th>
         <td mat-cell *matCellDef="let configuration">{{ configuration.stringValue }}</td>
       </ng-container>
 
       <ng-container matColumnDef="dateValue">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Date Value' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Date Value' | translate }}
+        </th>
         <td mat-cell *matCellDef="let configuration">{{ configuration.dateValue | dateFormat }}</td>
       </ng-container>
 
@@ -72,7 +82,11 @@
 <ng-template #templateFilter let-data let-popover="popover">
   <h4>{{ 'labels.heading.Search bar to filter configurations' | translate }}</h4>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
@@ -81,7 +95,9 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateConfigurationsTable, configurationsTable, 'top', true)"
+      (click)="
+        popover.close(); showPopover(templateConfigurationsTable, configurationsTable, 'top', true)
+      "
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>
@@ -91,12 +107,18 @@
 <ng-template #templateConfigurationsTable let-data let-popover="popover">
   <h4 class="mw300">
     {{ 'labels.heading.Global Configuration options' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895362/Global+Configuration" target="_blank">{{
-      'labels.inputs.Global Configurations' | translate
-    }}</a>
+    <a
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895362/Global+Configuration"
+      target="_blank"
+      >{{ 'labels.inputs.Global Configurations' | translate }}</a
+    >
   </h4>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button

@@ -21,7 +21,9 @@
       <mat-label>{{ 'labels.inputs.Decimal Places' | translate }}</mat-label>
       <input
         type="number"
-        matTooltip="{{ 'tooltips.Number of decimal places to be used to track and report' | translate }}"
+        matTooltip="{{
+          'tooltips.Number of decimal places to be used to track and report' | translate
+        }}"
         matInput
         formControlName="digitsAfterDecimal"
         required

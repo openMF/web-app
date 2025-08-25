@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -95,10 +101,16 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
     const prevOldDate: Date = new Date(this.groupEditMeetingScheduleForm.value.presentMeetingDate);
     const prevNewDate: Date = this.groupEditMeetingScheduleForm.value.newMeetingDate;
     if (groupEditMeetingScheduleFormData.presentMeetingDate instanceof Date) {
-      groupEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(prevOldDate, dateFormat);
+      groupEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(
+        prevOldDate,
+        dateFormat
+      );
     }
     if (groupEditMeetingScheduleFormData.newMeetingDate instanceof Date) {
-      groupEditMeetingScheduleFormData.newMeetingDate = this.dateUtils.formatDate(prevNewDate, dateFormat);
+      groupEditMeetingScheduleFormData.newMeetingDate = this.dateUtils.formatDate(
+        prevNewDate,
+        dateFormat
+      );
     }
     const data = {
       ...groupEditMeetingScheduleFormData,
@@ -106,8 +118,10 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService.updateGroupMeeting(this.groupId, data, this.calendarId).subscribe((response: any) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.groupsService
+      .updateGroupMeeting(this.groupId, data, this.calendarId)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

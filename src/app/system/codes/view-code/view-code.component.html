@@ -1,18 +1,33 @@
 <div class="container m-b-20 layout-row align-end layout-xs-column gap-20px">
-  <button mat-raised-button color="primary" (click)="addCodeValueRow()" *mifosxHasPermission="'CREATE_CODEVALUE'">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="addCodeValueRow()"
+    *mifosxHasPermission="'CREATE_CODEVALUE'"
+  >
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Add Code Value' | translate }}
   </button>
 
   <span *ngIf="!codeData.systemDefined">
-    <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CODE'">
+    <button
+      mat-raised-button
+      color="primary"
+      [routerLink]="['edit']"
+      *mifosxHasPermission="'UPDATE_CODE'"
+    >
       <fa-icon icon="edit" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Edit Code' | translate }}
     </button>
   </span>
 
   <span *ngIf="!codeData.systemDefined">
-    <button mat-raised-button color="warn" (click)="delete()" *mifosxHasPermission="'DELETE_CODEVALUE'">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="delete()"
+      *mifosxHasPermission="'DELETE_CODEVALUE'"
+    >
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Delete Code' | translate }}
     </button>
@@ -27,7 +42,10 @@
 
     <form [formGroup]="codeValuesForm">
       <mat-card-content>
-        <div formArrayName="codeValues" *ngFor="let codeValue of codeValues.controls; let i = index">
+        <div
+          formArrayName="codeValues"
+          *ngFor="let codeValue of codeValues.controls; let i = index"
+        >
           <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
             <mat-form-field class="flex-fill flex-20">
               <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
@@ -102,7 +120,9 @@
                 matTooltip="{{ 'tooltips.Delete' | translate }}"
                 *mifosxHasPermission="'DELETE_CODEVALUE'"
                 matTooltipPosition="above"
-                (click)="codeValueRowStatus[i] === 'new' ? removeNewCodeValue(i) : deleteCodeValue(i)"
+                (click)="
+                  codeValueRowStatus[i] === 'new' ? removeNewCodeValue(i) : deleteCodeValue(i)
+                "
               >
                 <fa-icon icon="trash" size="lg"></fa-icon>
               </button>

@@ -41,7 +41,8 @@ export class SavingProductSettingsStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.lockinPeriodFrequencyTypeData = this.savingProductsTemplate.lockinPeriodFrequencyTypeOptions;
+    this.lockinPeriodFrequencyTypeData =
+      this.savingProductsTemplate.lockinPeriodFrequencyTypeOptions;
     this.taxGroupData = this.savingProductsTemplate.taxGroupOptions;
 
     this.savingProductSettingsForm.patchValue({
@@ -51,12 +52,15 @@ export class SavingProductSettingsStepComponent implements OnInit {
         this.savingProductsTemplate.lockinPeriodFrequencyType &&
         this.savingProductsTemplate.lockinPeriodFrequencyType.id,
       withdrawalFeeForTransfers: this.savingProductsTemplate.withdrawalFeeForTransfers,
-      minBalanceForInterestCalculation: this.savingProductsTemplate.minBalanceForInterestCalculation,
+      minBalanceForInterestCalculation:
+        this.savingProductsTemplate.minBalanceForInterestCalculation,
       enforceMinRequiredBalance: this.savingProductsTemplate.enforceMinRequiredBalance,
       minRequiredBalance: this.savingProductsTemplate.minRequiredBalance,
       allowOverdraft: this.savingProductsTemplate.allowOverdraft,
-      minOverdraftForInterestCalculation: this.savingProductsTemplate.minOverdraftForInterestCalculation,
-      nominalAnnualInterestRateOverdraft: this.savingProductsTemplate.nominalAnnualInterestRateOverdraft,
+      minOverdraftForInterestCalculation:
+        this.savingProductsTemplate.minOverdraftForInterestCalculation,
+      nominalAnnualInterestRateOverdraft:
+        this.savingProductsTemplate.nominalAnnualInterestRateOverdraft,
       overdraftLimit: this.savingProductsTemplate.overdraftLimit,
       withHoldTax: this.savingProductsTemplate.withHoldTax,
       taxGroupId: this.savingProductsTemplate.taxGroup && this.savingProductsTemplate.taxGroup.id,
@@ -83,21 +87,32 @@ export class SavingProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.savingProductSettingsForm.get('allowOverdraft').valueChanges.subscribe((allowOverdraft: any) => {
-      if (allowOverdraft) {
-        this.savingProductSettingsForm.addControl('minOverdraftForInterestCalculation', new UntypedFormControl(''));
-        this.savingProductSettingsForm.addControl('nominalAnnualInterestRateOverdraft', new UntypedFormControl(''));
-        this.savingProductSettingsForm.addControl('overdraftLimit', new UntypedFormControl(''));
-      } else {
-        this.savingProductSettingsForm.removeControl('minOverdraftForInterestCalculation');
-        this.savingProductSettingsForm.removeControl('nominalAnnualInterestRateOverdraft');
-        this.savingProductSettingsForm.removeControl('overdraftLimit');
-      }
-    });
+    this.savingProductSettingsForm
+      .get('allowOverdraft')
+      .valueChanges.subscribe((allowOverdraft: any) => {
+        if (allowOverdraft) {
+          this.savingProductSettingsForm.addControl(
+            'minOverdraftForInterestCalculation',
+            new UntypedFormControl('')
+          );
+          this.savingProductSettingsForm.addControl(
+            'nominalAnnualInterestRateOverdraft',
+            new UntypedFormControl('')
+          );
+          this.savingProductSettingsForm.addControl('overdraftLimit', new UntypedFormControl(''));
+        } else {
+          this.savingProductSettingsForm.removeControl('minOverdraftForInterestCalculation');
+          this.savingProductSettingsForm.removeControl('nominalAnnualInterestRateOverdraft');
+          this.savingProductSettingsForm.removeControl('overdraftLimit');
+        }
+      });
 
     this.savingProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
       if (withHoldTax) {
-        this.savingProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
+        this.savingProductSettingsForm.addControl(
+          'taxGroupId',
+          new UntypedFormControl('', Validators.required)
+        );
       } else {
         this.savingProductSettingsForm.removeControl('taxGroupId');
       }
@@ -107,9 +122,18 @@ export class SavingProductSettingsStepComponent implements OnInit {
       .get('isDormancyTrackingActive')
       .valueChanges.subscribe((isDormancyTrackingActive: any) => {
         if (isDormancyTrackingActive) {
-          this.savingProductSettingsForm.addControl('daysToInactive', new UntypedFormControl('', Validators.required));
-          this.savingProductSettingsForm.addControl('daysToDormancy', new UntypedFormControl('', Validators.required));
-          this.savingProductSettingsForm.addControl('daysToEscheat', new UntypedFormControl('', Validators.required));
+          this.savingProductSettingsForm.addControl(
+            'daysToInactive',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductSettingsForm.addControl(
+            'daysToDormancy',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductSettingsForm.addControl(
+            'daysToEscheat',
+            new UntypedFormControl('', Validators.required)
+          );
         } else {
           this.savingProductSettingsForm.removeControl('daysToInactive');
           this.savingProductSettingsForm.removeControl('daysToDormancy');

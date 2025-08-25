@@ -106,7 +106,10 @@ export class EditCenterComponent implements OnInit {
     if (this.centerData.status.value === 'Pending') {
       const prevactivationDate: Date = this.editCenterForm.value.activationDate;
       if (editCenterFormData.activationDate instanceof Date) {
-        editCenterFormData.activationDate = this.dateUtils.formatDate(prevactivationDate, dateFormat);
+        editCenterFormData.activationDate = this.dateUtils.formatDate(
+          prevactivationDate,
+          dateFormat
+        );
       }
     }
     const data = {

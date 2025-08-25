@@ -172,9 +172,12 @@ export class TransactionsTabComponent implements OnInit {
    */
   showTransactions(transactionsData: SavingsAccountTransaction) {
     if (transactionsData.transfer) {
-      this.router.navigate([`../transfer-funds/account-transfers/${transactionsData.transfer.id}`], {
-        relativeTo: this.route
-      });
+      this.router.navigate(
+        [`../transfer-funds/account-transfers/${transactionsData.transfer.id}`],
+        {
+          relativeTo: this.route
+        }
+      );
     } else {
       this.router.navigate([transactionsData.id], { relativeTo: this.route });
     }

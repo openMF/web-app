@@ -5,7 +5,8 @@
   <div class="layout-row flex-100">
     <span class="flex-40">{{ 'labels.inputs.Product' | translate }}</span>
     <span class="flex-60">{{
-      recurringDepositAccountData.productId | find: recurringDepositsAccountTemplate.productOptions : 'id' : 'name'
+      recurringDepositAccountData.productId
+        | find: recurringDepositsAccountTemplate.productOptions : 'id' : 'name'
     }}</span>
   </div>
 
@@ -32,12 +33,16 @@
 
   <div class="layout-row flex-100">
     <span class="flex-40">{{ 'labels.inputs.Decimal Places' | translate }}</span>
-    <span class="flex-60">{{ recurringDepositsAccountProductTemplate.currency.decimalPlaces }}</span>
+    <span class="flex-60">{{
+      recurringDepositsAccountProductTemplate.currency.decimalPlaces
+    }}</span>
   </div>
 
   <div class="layout-row flex-100">
     <span class="flex-40">{{ 'labels.inputs.Currency In Multiples Of' | translate }}</span>
-    <span class="flex-60">{{ recurringDepositsAccountProductTemplate.currency.inMultiplesOf }}</span>
+    <span class="flex-60">{{
+      recurringDepositsAccountProductTemplate.currency.inMultiplesOf
+    }}</span>
   </div>
 
   <h3 class="mat-h3 flex-100">{{ 'labels.heading.Terms' | translate }}</h3>
@@ -46,7 +51,10 @@
     <span class="flex-40">{{ 'labels.inputs.Interest Compounding Period' | translate }}:</span>
     <span class="flex-60">{{
       recurringDepositAccountData.interestCompoundingPeriodType
-        | find: recurringDepositsAccountProductTemplate.interestCompoundingPeriodTypeOptions : 'id' : 'value'
+        | find
+          : recurringDepositsAccountProductTemplate.interestCompoundingPeriodTypeOptions
+          : 'id'
+          : 'value'
         | translateKey: 'catalogs'
     }}</span>
   </div>
@@ -55,7 +63,10 @@
     <span class="flex-40">{{ 'labels.inputs.Interest Posting Period' | translate }}:</span>
     <span class="flex-60">{{
       recurringDepositAccountData.interestPostingPeriodType
-        | find: recurringDepositsAccountProductTemplate.interestPostingPeriodTypeOptions : 'id' : 'value'
+        | find
+          : recurringDepositsAccountProductTemplate.interestPostingPeriodTypeOptions
+          : 'id'
+          : 'value'
         | translateKey: 'catalogs'
     }}</span>
   </div>
@@ -64,7 +75,10 @@
     <span class="flex-40">{{ 'labels.inputs.Interest Calculated using' | translate }}:</span>
     <span class="flex-60">{{
       recurringDepositAccountData.interestCalculationType
-        | find: recurringDepositsAccountProductTemplate.interestCalculationTypeOptions : 'id' : 'value'
+        | find
+          : recurringDepositsAccountProductTemplate.interestCalculationTypeOptions
+          : 'id'
+          : 'value'
         | translateKey: 'catalogs'
     }}</span>
   </div>
@@ -73,7 +87,10 @@
     <span class="flex-40">{{ 'labels.inputs.Days in Year' | translate }}:</span>
     <span class="flex-60">{{
       recurringDepositAccountData.interestCalculationDaysInYearType
-        | find: recurringDepositsAccountProductTemplate.interestCalculationDaysInYearTypeOptions : 'id' : 'value'
+        | find
+          : recurringDepositsAccountProductTemplate.interestCalculationDaysInYearTypeOptions
+          : 'id'
+          : 'value'
         | translateKey: 'catalogs'
     }}</span>
   </div>
@@ -87,15 +104,23 @@
       >{{ recurringDepositAccountData.lockinPeriodFrequency }}
       {{
         recurringDepositAccountData.lockinPeriodFrequencyType
-          | find: recurringDepositsAccountProductTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value'
+          | find
+            : recurringDepositsAccountProductTemplate.lockinPeriodFrequencyTypeOptions
+            : 'id'
+            : 'value'
           | translateKey: 'catalogs'
       }}</span
     >
   </div>
 
-  <div class="layout-row flex-100" *ngIf="recurringDepositAccountData.mandatoryRecommendedDepositAmount">
+  <div
+    class="layout-row flex-100"
+    *ngIf="recurringDepositAccountData.mandatoryRecommendedDepositAmount"
+  >
     <span class="flex-40">{{ 'labels.inputs.Recurring Deposit Amount' | translate }}:</span>
-    <span class="flex-60">{{ recurringDepositAccountData.mandatoryRecommendedDepositAmount | formatNumber }}</span>
+    <span class="flex-60">{{
+      recurringDepositAccountData.mandatoryRecommendedDepositAmount | formatNumber
+    }}</span>
   </div>
 
   <div class="layout-row flex-100">
@@ -104,21 +129,30 @@
       >{{ recurringDepositAccountData.depositPeriod }}
       {{
         recurringDepositAccountData.depositPeriodFrequencyId
-          | find: recurringDepositsAccountProductTemplate.periodFrequencyTypeOptions : 'id' : 'value'
+          | find
+            : recurringDepositsAccountProductTemplate.periodFrequencyTypeOptions
+            : 'id'
+            : 'value'
           | translateKey: 'catalogs'
       }}</span
     >
   </div>
 
   <div class="layout-row flex-100">
-    <span class="flex-40">{{ 'labels.inputs.Deposit Frequency Same as Group/Center meeting' | translate }}:</span>
-    <span class="flex-60">{{ recurringDepositsAccountProductTemplate.isCalendarInherited | yesNo }}</span>
+    <span class="flex-40"
+      >{{ 'labels.inputs.Deposit Frequency Same as Group/Center meeting' | translate }}:</span
+    >
+    <span class="flex-60">{{
+      recurringDepositsAccountProductTemplate.isCalendarInherited | yesNo
+    }}</span>
   </div>
 
   <ng-container *ngIf="!recurringDepositsAccountProductTemplate.isCalendarInherited">
     <div class="layout-row flex-100">
       <span class="flex-40">{{ 'labels.inputs.Deposit Start Date' | translate }}:</span>
-      <span class="flex-60">{{ recurringDepositAccountData.expectedFirstDepositOnDate | dateFormat }}</span>
+      <span class="flex-60">{{
+        recurringDepositAccountData.expectedFirstDepositOnDate | dateFormat
+      }}</span>
     </div>
 
     <div class="layout-row flex-100">
@@ -127,7 +161,10 @@
         >{{ recurringDepositAccountData.recurringFrequency }}
         {{
           recurringDepositAccountData.recurringFrequencyType
-            | find: recurringDepositsAccountProductTemplate.periodFrequencyTypeOptions : 'id' : 'value'
+            | find
+              : recurringDepositsAccountProductTemplate.periodFrequencyTypeOptions
+              : 'id'
+              : 'value'
             | translateKey: 'catalogs'
         }}</span
       >
@@ -188,24 +225,39 @@
   <h3 class="mat-h3 flex-100">{{ 'labels.inputs.Interest Rate Chart' | translate }}</h3>
 
   <mat-divider class="flex-100"></mat-divider>
-  <div class="layout-row flex-100" *ngIf="recurringDepositsAccountProductTemplate?.accountChart.name">
+  <div
+    class="layout-row flex-100"
+    *ngIf="recurringDepositsAccountProductTemplate?.accountChart.name"
+  >
     <span class="flex-40">{{ 'labels.inputs.name' | translate }}:</span>
     <span class="flex-60">{{ recurringDepositsAccountProductTemplate?.accountChart.name }}</span>
   </div>
 
   <div class="layout-row flex-100">
     <span class="flex-40">{{ 'labels.inputs.Valid from Date' | translate }}:</span>
-    <span class="flex-60">{{ recurringDepositsAccountProductTemplate?.accountChart.fromDate | dateFormat }}</span>
+    <span class="flex-60">{{
+      recurringDepositsAccountProductTemplate?.accountChart.fromDate | dateFormat
+    }}</span>
   </div>
 
-  <div class="layout-row flex-100" *ngIf="recurringDepositsAccountProductTemplate?.accountChart.endDate">
+  <div
+    class="layout-row flex-100"
+    *ngIf="recurringDepositsAccountProductTemplate?.accountChart.endDate"
+  >
     <span class="flex-40">{{ 'labels.inputs.End Date' | translate }}:</span>
-    <span class="flex-60">{{ recurringDepositsAccountProductTemplate?.accountChart.endDate | dateFormat }}</span>
+    <span class="flex-60">{{
+      recurringDepositsAccountProductTemplate?.accountChart.endDate | dateFormat
+    }}</span>
   </div>
 
-  <div class="layout-row flex-100" *ngIf="recurringDepositsAccountProductTemplate?.accountChart.description">
+  <div
+    class="layout-row flex-100"
+    *ngIf="recurringDepositsAccountProductTemplate?.accountChart.description"
+  >
     <span class="flex-40">{{ 'labels.inputs.Description' | translate }}:</span>
-    <span class="flex-60">{{ recurringDepositsAccountProductTemplate?.accountChart.description }}</span>
+    <span class="flex-60">{{
+      recurringDepositsAccountProductTemplate?.accountChart.description
+    }}</span>
   </div>
 
   <div class="layout-row flex-100">
@@ -215,7 +267,12 @@
     }}</span>
   </div>
 
-  <table class="mat-elevation-z1 irc-table" mat-table [dataSource]="interestRateChartData" multiTemplateDataRows>
+  <table
+    class="mat-elevation-z1 irc-table"
+    mat-table
+    [dataSource]="interestRateChartData"
+    multiTemplateDataRows
+  >
     <ng-container matColumnDef="period">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Period' | translate }}</th>
       <td mat-cell *matCellDef="let chartSlab">
@@ -228,13 +285,16 @@
     <ng-container matColumnDef="amountRange">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount Range' | translate }}</th>
       <td mat-cell *matCellDef="let chartSlab">
-        {{ chartSlab.amountRangeFrom | formatNumber }} - {{ chartSlab.amountRangeTo | formatNumber }}
+        {{ chartSlab.amountRangeFrom | formatNumber }} -
+        {{ chartSlab.amountRangeTo | formatNumber }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="interest">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Interest' | translate }}</th>
-      <td mat-cell *matCellDef="let chartSlab">{{ chartSlab.annualInterestRate | formatNumber }} %</td>
+      <td mat-cell *matCellDef="let chartSlab">
+        {{ chartSlab.annualInterestRate | formatNumber }} %
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="description">
@@ -248,7 +308,9 @@
         <button
           mat-button
           color="primary"
-          (click)="expandChartSlabIndex = expandChartSlabIndex === chartSlabIndex ? null : chartSlabIndex"
+          (click)="
+            expandChartSlabIndex = expandChartSlabIndex === chartSlabIndex ? null : chartSlabIndex
+          "
         >
           <span *ngIf="expandChartSlabIndex !== chartSlabIndex">
             <fa-icon icon="eye" class="m-r-10"></fa-icon>
@@ -284,42 +346,54 @@
               *ngIf="chartSlab.incentives.length"
             >
               <ng-container matColumnDef="entityType">
-                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Entity Type' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'labels.inputs.Entity Type' | translate }}
+                </th>
                 <td mat-cell *matCellDef="let incentive">
                   {{ incentive.entityType.value }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="attributeName">
-                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Attribute Name' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'labels.inputs.Attribute Name' | translate }}
+                </th>
                 <td mat-cell *matCellDef="let incentive">
                   {{ incentive.attributeName.value }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="conditionType">
-                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Condition Type' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'labels.inputs.Condition Type' | translate }}
+                </th>
                 <td mat-cell *matCellDef="let incentive">
                   {{ incentive.conditionType.value | titlecase }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="attributeValue">
-                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Attribute Value' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'labels.inputs.Attribute Value' | translate }}
+                </th>
                 <td mat-cell *matCellDef="let incentive" [ngSwitch]="incentive.attributeName">
                   {{ incentive.attributeValueDesc }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="incentiveType">
-                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Incentive Type' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'labels.inputs.Incentive Type' | translate }}
+                </th>
                 <td mat-cell *matCellDef="let incentive">
                   {{ incentive.incentiveType.value }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Interest' | translate }}</th>
+                <th mat-header-cell *matHeaderCellDef>
+                  {{ 'labels.inputs.Interest' | translate }}
+                </th>
                 <td mat-cell *matCellDef="let incentive">
                   {{ incentive.amount }}
                 </td>
@@ -335,14 +409,25 @@
 
     <tr mat-header-row *matHeaderRowDef="chartSlabsDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: chartSlabsDisplayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns" class="incentives-row"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: chartSlabsIncentivesDisplayedColumns"
+      class="incentives-row"
+    ></tr>
   </table>
 
-  <div *ngIf="recurringDepositAccountData.charges.length" class="layout-row-wrap responsive-column flex-100">
+  <div
+    *ngIf="recurringDepositAccountData.charges.length"
+    class="layout-row-wrap responsive-column flex-100"
+  >
     <h3 class="mat-h3 flex-100">{{ 'labels.heading.Charges' | translate }}</h3>
 
     <mat-divider class="flex-100"></mat-divider>
-    <table class="flex-100 mat-elevation-z1" mat-table [dataSource]="recurringDepositAccountData.charges">
+    <table
+      class="flex-100 mat-elevation-z1"
+      mat-table
+      [dataSource]="recurringDepositAccountData.charges"
+    >
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
@@ -368,11 +453,19 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           <span
-            *ngIf="charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee'"
+            *ngIf="
+              charge.chargeTimeType.value === 'Specified due date' ||
+              charge.chargeTimeType.value === 'Weekly Fee'
+            "
           >
             {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
           </span>
-          <span *ngIf="charge.chargeTimeType.value === 'Monthly Fee' || charge.chargeTimeType.value === 'Annual Fee'">
+          <span
+            *ngIf="
+              charge.chargeTimeType.value === 'Monthly Fee' ||
+              charge.chargeTimeType.value === 'Annual Fee'
+            "
+          >
             {{ (charge.feeOnMonthDay | dateFormat) || 'Unassigned' }}
           </span>
           <span
@@ -391,7 +484,9 @@
       </ng-container>
 
       <ng-container matColumnDef="repaymentsEvery">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Repayments Every' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Repayments Every' | translate }}
+        </th>
         <td mat-cell *matCellDef="let charge">
           {{ charge.feeInterval || 'Not Provided' }}
         </td>

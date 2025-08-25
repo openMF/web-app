@@ -90,7 +90,9 @@
 
       <mifosx-fixed-deposit-product-preview-step
         [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
-        [chartSlabsDisplayedColumns]="fixedDepositProductInterestRateChartStep.chartSlabsDisplayedColumns"
+        [chartSlabsDisplayedColumns]="
+          fixedDepositProductInterestRateChartStep.chartSlabsDisplayedColumns
+        "
         [accountingRuleData]="accountingRuleData"
         [fixedDepositProduct]="fixedDepositProduct"
         (submitEvent)="submit()"

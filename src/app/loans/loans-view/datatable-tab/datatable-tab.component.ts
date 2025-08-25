@@ -28,7 +28,8 @@ export class DatatableTabComponent implements OnInit {
     this.entityDatatable = null;
     this.route.data.subscribe((data: { loanDatatable: any }) => {
       this.entityDatatable = data.loanDatatable;
-      this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+      this.multiRowDatatableFlag =
+        this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
 

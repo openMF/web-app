@@ -64,14 +64,18 @@ export class ViewCheckerInboxComponent {
     const approveCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Approve Checker'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to approve checker')
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to approve checker'
+        )
       }
     });
     approveCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.tasksService.executeMakerCheckerAction(this.checkerInboxDetail.id, 'approve').subscribe((res: any) => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        });
+        this.tasksService
+          .executeMakerCheckerAction(this.checkerInboxDetail.id, 'approve')
+          .subscribe((res: any) => {
+            this.router.navigate(['../../'], { relativeTo: this.route });
+          });
       }
     });
   }
@@ -83,14 +87,18 @@ export class ViewCheckerInboxComponent {
     const rejectCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Reject Checker'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to reject checker')
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to reject checker'
+        )
       }
     });
     rejectCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.tasksService.executeMakerCheckerAction(this.checkerInboxDetail.id, 'reject').subscribe((res: any) => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        });
+        this.tasksService
+          .executeMakerCheckerAction(this.checkerInboxDetail.id, 'reject')
+          .subscribe((res: any) => {
+            this.router.navigate(['../../'], { relativeTo: this.route });
+          });
       }
     });
   }
@@ -102,7 +110,9 @@ export class ViewCheckerInboxComponent {
     const deleteCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Delete Checker'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to delete checker')
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to delete checker'
+        )
       }
     });
     deleteCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {

@@ -122,8 +122,13 @@ export class EditGroupMeetingComponent implements OnInit {
             '2',
             '3'
           ];
-          this.groupEditMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
-          this.groupEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
+          this.groupEditMeetingForm.addControl(
+            'repeatsOnDay',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.groupEditMeetingForm
+            .get('repeatsOnDay')
+            .patchValue(this.calendarTemplate.repeatsOnDay.id);
           break;
         case 3: // Monthly
           this.repetitionIntervals = [
@@ -163,7 +168,10 @@ export class EditGroupMeetingComponent implements OnInit {
    */
   editSchedule() {
     const queryParams: any = { calendarId: this.calendarId };
-    this.router.navigate([`../Edit Meeting Schedule`], { relativeTo: this.route, queryParams: queryParams });
+    this.router.navigate([`../Edit Meeting Schedule`], {
+      relativeTo: this.route,
+      queryParams: queryParams
+    });
   }
 
   /**
@@ -187,8 +195,10 @@ export class EditGroupMeetingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService.updateGroupMeeting(this.groupId, data, this.calendarId).subscribe((response: any) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.groupsService
+      .updateGroupMeeting(this.groupId, data, this.calendarId)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

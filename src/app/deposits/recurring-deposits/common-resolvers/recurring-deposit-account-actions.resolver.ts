@@ -31,7 +31,8 @@ export class RecurringDepositsAccountActionsResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName: string = route.paramMap.get('name');
     const recurringDepositAccountId =
-      route.paramMap.get('recurringDepositAccountId') || route.parent.parent.paramMap.get('recurringDepositAccountId');
+      route.paramMap.get('recurringDepositAccountId') ||
+      route.parent.parent.paramMap.get('recurringDepositAccountId');
     switch (actionName) {
       case 'Add Charge':
         return this.savingsService.getSavingsChargeTemplateResource(recurringDepositAccountId);

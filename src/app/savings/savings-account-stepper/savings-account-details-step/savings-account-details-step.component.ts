@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { SavingsService } from 'app/savings/savings.service';
@@ -105,13 +110,19 @@ export class SavingsAccountDetailsStepComponent implements OnInit {
     const entityId = this.savingsAccountTemplate.groupId || this.savingsAccountTemplate.clientId;
     this.savingsAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
       this.savingsService
-        .getSavingsAccountTemplate(entityId, productId, this.savingsAccountTemplate.groupId ? true : false)
+        .getSavingsAccountTemplate(
+          entityId,
+          productId,
+          this.savingsAccountTemplate.groupId ? true : false
+        )
         .subscribe((response: any) => {
           this.savingsAccountProductTemplate.emit(response);
           this.fieldOfficerData = response.fieldOfficerOptions;
           this.savingsProductSelected = true;
           if (!this.isFieldOfficerPatched && this.savingsAccountTemplate.fieldOfficerId) {
-            this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue(this.savingsAccountTemplate.fieldOfficerId);
+            this.savingsAccountDetailsForm
+              .get('fieldOfficerId')
+              .patchValue(this.savingsAccountTemplate.fieldOfficerId);
             this.isFieldOfficerPatched = true;
           } else {
             this.savingsAccountDetailsForm.get('fieldOfficerId').patchValue('');

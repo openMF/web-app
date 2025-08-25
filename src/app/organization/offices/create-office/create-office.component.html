@@ -54,7 +54,12 @@
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!officeForm.valid" *mifosxHasPermission="'CREATE_OFFICE'">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!officeForm.valid"
+          *mifosxHasPermission="'CREATE_OFFICE'"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>
@@ -66,12 +71,18 @@
   <h2>{{ 'labels.heading.Create Office' | translate }}</h2>
   <p class="mw400">
     {{ 'labels.text.Filling Details' | translate }}
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141727/Manage+Offices" target="_blank">{{
-      'labels.inputs.Manage Offices' | translate
-    }}</a>
+    <a
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141727/Manage+Offices"
+      target="_blank"
+      >{{ 'labels.inputs.Manage Offices' | translate }}</a
+    >
   </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close()">

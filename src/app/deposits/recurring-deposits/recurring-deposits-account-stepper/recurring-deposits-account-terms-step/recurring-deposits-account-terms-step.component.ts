@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -60,10 +66,13 @@ export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnCha
     this.maxDate = this.settingsService.businessDate;
     if (this.recurringDepositsAccountTemplate.id) {
       this.recurringDepositAccountTermsForm.patchValue({
-        interestCompoundingPeriodType: this.recurringDepositsAccountTemplate.interestCompoundingPeriodType.id,
-        interestPostingPeriodType: this.recurringDepositsAccountTemplate.interestPostingPeriodType.id,
+        interestCompoundingPeriodType:
+          this.recurringDepositsAccountTemplate.interestCompoundingPeriodType.id,
+        interestPostingPeriodType:
+          this.recurringDepositsAccountTemplate.interestPostingPeriodType.id,
         interestCalculationType: this.recurringDepositsAccountTemplate.interestCalculationType.id,
-        interestCalculationDaysInYearType: this.recurringDepositsAccountTemplate.interestCalculationDaysInYearType.id
+        interestCalculationDaysInYearType:
+          this.recurringDepositsAccountTemplate.interestCalculationDaysInYearType.id
       });
     }
   }
@@ -98,15 +107,20 @@ export class RecurringDepositsAccountTermsStepComponent implements OnInit, OnCha
   setOptions() {
     this.interestCompoundingPeriodTypeData =
       this.recurringDepositsAccountProductTemplate.interestCompoundingPeriodTypeOptions;
-    this.interestPostingPeriodTypeData = this.recurringDepositsAccountProductTemplate.interestPostingPeriodTypeOptions;
-    this.interestCalculationTypeData = this.recurringDepositsAccountProductTemplate.interestCalculationTypeOptions;
+    this.interestPostingPeriodTypeData =
+      this.recurringDepositsAccountProductTemplate.interestPostingPeriodTypeOptions;
+    this.interestCalculationTypeData =
+      this.recurringDepositsAccountProductTemplate.interestCalculationTypeOptions;
     this.interestCalculationDaysInYearTypeData =
       this.recurringDepositsAccountProductTemplate.interestCalculationDaysInYearTypeOptions;
     if (!this.recurringDepositsAccountTemplate.id) {
       this.recurringDepositAccountTermsForm.patchValue({
-        interestCompoundingPeriodType: this.recurringDepositsAccountProductTemplate.interestCompoundingPeriodType.id,
-        interestPostingPeriodType: this.recurringDepositsAccountProductTemplate.interestPostingPeriodType.id,
-        interestCalculationType: this.recurringDepositsAccountProductTemplate.interestCalculationType.id,
+        interestCompoundingPeriodType:
+          this.recurringDepositsAccountProductTemplate.interestCompoundingPeriodType.id,
+        interestPostingPeriodType:
+          this.recurringDepositsAccountProductTemplate.interestPostingPeriodType.id,
+        interestCalculationType:
+          this.recurringDepositsAccountProductTemplate.interestCalculationType.id,
         interestCalculationDaysInYearType:
           this.recurringDepositsAccountProductTemplate.interestCalculationDaysInYearType.id
       });

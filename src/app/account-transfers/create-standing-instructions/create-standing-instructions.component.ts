@@ -1,7 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
@@ -231,26 +237,28 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * Changes the value on change of destination value
    */
   buildDependencies() {
-    this.createStandingInstructionsForm.get('destination').valueChanges.subscribe((destination: any) => {
-      if (destination === 1) {
-        this.allowclientedit = false;
-        this.createStandingInstructionsForm.patchValue({
-          toOfficeId: this.officeId,
-          toClientId: this.clientId
-        });
-        this.ToOfficeId = true;
-        this.ToClientId = true;
-        this.changeEvent();
-      } else {
-        this.allowclientedit = true;
-        this.createStandingInstructionsForm.patchValue({
-          toOfficeId: '',
-          toClientId: ''
-        });
-        this.createStandingInstructionsForm.controls['toOfficeId'].enable();
-        this.createStandingInstructionsForm.controls['toClientId'].enable();
-      }
-    });
+    this.createStandingInstructionsForm
+      .get('destination')
+      .valueChanges.subscribe((destination: any) => {
+        if (destination === 1) {
+          this.allowclientedit = false;
+          this.createStandingInstructionsForm.patchValue({
+            toOfficeId: this.officeId,
+            toClientId: this.clientId
+          });
+          this.ToOfficeId = true;
+          this.ToClientId = true;
+          this.changeEvent();
+        } else {
+          this.allowclientedit = true;
+          this.createStandingInstructionsForm.patchValue({
+            toOfficeId: '',
+            toClientId: ''
+          });
+          this.createStandingInstructionsForm.controls['toOfficeId'].enable();
+          this.createStandingInstructionsForm.controls['toClientId'].enable();
+        }
+      });
   }
 
   /** Executes on change of various select options */
@@ -271,7 +279,11 @@ export class CreateStandingInstructionsComponent implements OnInit {
     const propNames = Object.getOwnPropertyNames(dataObj);
     for (let i = 0; i < propNames.length; i++) {
       const propName = propNames[i];
-      if (dataObj[propName] === null || dataObj[propName] === undefined || dataObj[propName] === '') {
+      if (
+        dataObj[propName] === null ||
+        dataObj[propName] === undefined ||
+        dataObj[propName] === ''
+      ) {
         delete dataObj[propName];
       }
     }
@@ -291,8 +303,14 @@ export class CreateStandingInstructionsComponent implements OnInit {
       monthDayFormat: 'dd MMMM',
       fromClientId: this.clientId,
       fromOfficeId: this.officeId,
-      validFrom: this.dateUtils.formatDate(this.createStandingInstructionsForm.value.validFrom, dateFormat),
-      validTill: this.dateUtils.formatDate(this.createStandingInstructionsForm.value.validTill, dateFormat),
+      validFrom: this.dateUtils.formatDate(
+        this.createStandingInstructionsForm.value.validFrom,
+        dateFormat
+      ),
+      validTill: this.dateUtils.formatDate(
+        this.createStandingInstructionsForm.value.validTill,
+        dateFormat
+      ),
       recurrenceOnMonthDay: this.dateUtils.formatDate(
         this.createStandingInstructionsForm.value.recurrenceOnMonthDay,
         'dd MMMM'
@@ -300,8 +318,10 @@ export class CreateStandingInstructionsComponent implements OnInit {
     };
     delete standingInstructionData['destination'];
     delete standingInstructionData['applicant'];
-    this.accountTransfersService.createStandingInstructions(standingInstructionData).subscribe((response: any) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.accountTransfersService
+      .createStandingInstructions(standingInstructionData)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

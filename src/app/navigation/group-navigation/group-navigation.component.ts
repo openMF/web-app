@@ -40,7 +40,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class GroupNavigationComponent {
   @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
-  @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
+  @ViewChild(SavingsAccountTableComponent)
+  savingsAccountTableComponent: SavingsAccountTableComponent;
 
   @Input() groupData: any;
   @Input() groupAccountsData: any;

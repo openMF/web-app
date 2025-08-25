@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /**
@@ -74,7 +79,8 @@ export class AddClientCollateralComponent implements OnInit {
     this.clientCollateralForm.controls.quantity.valueChanges.subscribe((quantity: any) => {
       this.clientCollateralForm.patchValue({
         totalValue: this.collateralDetails.basePrice * quantity,
-        totalCollateralValue: (this.collateralDetails.basePrice * this.collateralDetails.pctToBase * quantity) / 100
+        totalCollateralValue:
+          (this.collateralDetails.basePrice * this.collateralDetails.pctToBase * quantity) / 100
       });
     });
   }

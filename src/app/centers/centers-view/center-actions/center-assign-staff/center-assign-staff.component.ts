@@ -66,7 +66,11 @@ export class CenterAssignStaffComponent implements OnInit {
    */
   submit() {
     this.centersService
-      .executeGroupActionCommand(this.centerData.id, 'assignStaff', this.centerAssignStaffForm.value)
+      .executeGroupActionCommand(
+        this.centerData.id,
+        'assignStaff',
+        this.centerAssignStaffForm.value
+      )
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });

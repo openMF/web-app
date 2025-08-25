@@ -7,7 +7,12 @@ import {
   MatDialogActions,
   MatDialogClose
 } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -80,13 +85,15 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.depositProductIncentiveForm.get('attributeName').valueChanges.subscribe((attributeName: any) => {
-      this.depositProductIncentiveForm.patchValue({ attributeValue: '' });
-      this.attributeValueData =
-        this.data.chartTemplate[
-          `${this.attributeNameData.find((option: any) => option.id === attributeName).code.split('.')[1]}Options`
-        ];
-    });
+    this.depositProductIncentiveForm
+      .get('attributeName')
+      .valueChanges.subscribe((attributeName: any) => {
+        this.depositProductIncentiveForm.patchValue({ attributeValue: '' });
+        this.attributeValueData =
+          this.data.chartTemplate[
+            `${this.attributeNameData.find((option: any) => option.id === attributeName).code.split('.')[1]}Options`
+          ];
+      });
   }
 
   createDepositProductIncentiveForm() {

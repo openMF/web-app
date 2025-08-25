@@ -24,7 +24,9 @@
                 {{ transferType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.transferType.hasError('required')">
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.transferType.hasError('required')"
+            >
               {{ 'labels.inputs.Transfer Type' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.inputs.required' | translate }}</strong>
             </mat-error>
@@ -37,7 +39,9 @@
                 {{ priorityType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.priority.hasError('required')">
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.priority.hasError('required')"
+            >
               {{ 'labels.inputs.Priority' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -58,13 +62,23 @@
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.From Account Type' | translate }}</mat-label>
-            <mat-select required formControlName="fromAccountType" (selectionChange)="changeEvent()">
-              <mat-option *ngFor="let fromAccountType of fromAccountTypeData" [value]="fromAccountType.id">
+            <mat-select
+              required
+              formControlName="fromAccountType"
+              (selectionChange)="changeEvent()"
+            >
+              <mat-option
+                *ngFor="let fromAccountType of fromAccountTypeData"
+                [value]="fromAccountType.id"
+              >
                 {{ fromAccountType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.fromAccountType.hasError('required')">
-              {{ 'labels.inputs.From Account Type' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.fromAccountType.hasError('required')"
+            >
+              {{ 'labels.inputs.From Account Type' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -76,7 +90,9 @@
                 {{ fromAccount.productName }} - {{ fromAccount.accountNo }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.fromAccountId.hasError('required')">
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.fromAccountId.hasError('required')"
+            >
               {{ 'labels.inputs.From Account' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -85,11 +101,16 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Destination' | translate }}</mat-label>
             <mat-select required formControlName="destination">
-              <mat-option *ngFor="let destinationType of destinationTypeData" [value]="destinationType.id">
+              <mat-option
+                *ngFor="let destinationType of destinationTypeData"
+                [value]="destinationType.id"
+              >
                 {{ destinationType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.destination.hasError('required')">
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.destination.hasError('required')"
+            >
               {{ 'labels.inputs.Destination' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -97,12 +118,19 @@
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.To Office' | translate }}</mat-label>
-            <mat-select [disabled]="ToOfficeId" required formControlName="toOfficeId" (selectionChange)="changeEvent()">
+            <mat-select
+              [disabled]="ToOfficeId"
+              required
+              formControlName="toOfficeId"
+              (selectionChange)="changeEvent()"
+            >
               <mat-option *ngFor="let toOfficeType of toOfficeTypeData" [value]="toOfficeType.id">
                 {{ toOfficeType.name }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.toOfficeId.hasError('required')">
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.toOfficeId.hasError('required')"
+            >
               {{ 'labels.inputs.To Office' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -110,12 +138,19 @@
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Beneficiary' | translate }}</mat-label>
-            <mat-select [disabled]="ToClientId" required formControlName="toClientId" (selectionChange)="changeEvent()">
+            <mat-select
+              [disabled]="ToClientId"
+              required
+              formControlName="toClientId"
+              (selectionChange)="changeEvent()"
+            >
               <mat-option *ngFor="let toClientType of toClientTypeData" [value]="toClientType.id">
                 {{ toClientType.displayName }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.toClientId.hasError('required')">
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.toClientId.hasError('required')"
+            >
               {{ 'labels.inputs.Beneficiary' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -124,12 +159,18 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.To Account Type' | translate }}</mat-label>
             <mat-select required formControlName="toAccountType" (selectionChange)="changeEvent()">
-              <mat-option *ngFor="let toAccountType of toAccountTypeData" [value]="toAccountType.id">
+              <mat-option
+                *ngFor="let toAccountType of toAccountTypeData"
+                [value]="toAccountType.id"
+              >
                 {{ toAccountType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.toAccountType.hasError('required')">
-              {{ 'labels.inputs.To Account Type' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.toAccountType.hasError('required')"
+            >
+              {{ 'labels.inputs.To Account Type' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -141,7 +182,9 @@
                 {{ toAccount.productName }} - {{ toAccount.accountNo }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.toAccountId.hasError('required')">
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.toAccountId.hasError('required')"
+            >
               {{ 'labels.inputs.To Account' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -150,12 +193,18 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Standing Instruction Type' | translate }}</mat-label>
             <mat-select formControlName="instructionType">
-              <mat-option *ngFor="let instructionsType of instructionTypeData" [value]="instructionsType.id">
+              <mat-option
+                *ngFor="let instructionsType of instructionTypeData"
+                [value]="instructionsType.id"
+              >
                 {{ instructionsType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.instructionType.hasError('required')">
-              {{ 'labels.inputs.Standing Instruction Type' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.instructionType.hasError('required')"
+            >
+              {{ 'labels.inputs.Standing Instruction Type' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -181,8 +230,11 @@
             />
             <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validFromDatePicker></mat-datepicker>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.validFrom.hasError('required')">
-              {{ 'labels.inputs.Valid From Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.validFrom.hasError('required')"
+            >
+              {{ 'labels.inputs.Valid From Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -199,8 +251,11 @@
             />
             <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validTillDatePicker></mat-datepicker>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.validTill.hasError('required')">
-              {{ 'labels.inputs.Valid Till Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.validTill.hasError('required')"
+            >
+              {{ 'labels.inputs.Valid Till Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -208,12 +263,18 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Recurrence Type' | translate }}</mat-label>
             <mat-select required formControlName="recurrenceType">
-              <mat-option *ngFor="let recurrenceType of recurrenceTypeData" [value]="recurrenceType.id">
+              <mat-option
+                *ngFor="let recurrenceType of recurrenceTypeData"
+                [value]="recurrenceType.id"
+              >
                 {{ recurrenceType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceType.hasError('required')">
-              {{ 'labels.inputs.Recurrence Type' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="createStandingInstructionsForm.controls.recurrenceType.hasError('required')"
+            >
+              {{ 'labels.inputs.Recurrence Type' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -221,8 +282,13 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Interval' | translate }}</mat-label>
             <input type="number" matInput required formControlName="recurrenceInterval" />
-            <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')">
-              {{ 'labels.inputs.Recurrence Interval' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="
+                createStandingInstructionsForm.controls.recurrenceInterval.hasError('required')
+              "
+            >
+              {{ 'labels.inputs.Recurrence Interval' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -237,8 +303,13 @@
                 {{ recurrenceFrequencyType.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceFrequency.hasError('required')">
-              {{ 'labels.inputs.Recurrence Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="
+                createStandingInstructionsForm.controls.recurrenceFrequency.hasError('required')
+              "
+            >
+              {{ 'labels.inputs.Recurrence Frequency' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -253,9 +324,16 @@
               [matDatepicker]="recurrenceOnMonthDayDatePicker"
               formControlName="recurrenceOnMonthDay"
             />
-            <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="recurrenceOnMonthDayDatePicker"
+            ></mat-datepicker-toggle>
             <mat-datepicker #recurrenceOnMonthDayDatePicker></mat-datepicker>
-            <mat-error *ngIf="createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')">
+            <mat-error
+              *ngIf="
+                createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')
+              "
+            >
               {{ 'labels.inputs.On Month Day' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>

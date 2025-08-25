@@ -38,7 +38,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class EditLoansAccountComponent {
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
-  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
+  @ViewChild(LoansAccountTermsStepComponent, { static: true })
+  loansAccountTermsStep: LoansAccountTermsStepComponent;
   @ViewChild(LoansAccountChargesStepComponent, { static: true })
   loansAccountChargesStep: LoansAccountChargesStepComponent;
 
@@ -143,13 +144,25 @@ export class EditLoansAccountComponent {
         description: collateralEle.description
       })),
       disbursementData: this.loansAccount.disbursementData.map((item: any) => ({
-        expectedDisbursementDate: this.dateUtils.formatDate(item.expectedDisbursementDate, dateFormat),
+        expectedDisbursementDate: this.dateUtils.formatDate(
+          item.expectedDisbursementDate,
+          dateFormat
+        ),
         principal: item.principal
       })),
-      interestChargedFromDate: this.dateUtils.formatDate(this.loansAccount.interestChargedFromDate, dateFormat),
-      repaymentsStartingFromDate: this.dateUtils.formatDate(this.loansAccount.repaymentsStartingFromDate, dateFormat),
+      interestChargedFromDate: this.dateUtils.formatDate(
+        this.loansAccount.interestChargedFromDate,
+        dateFormat
+      ),
+      repaymentsStartingFromDate: this.dateUtils.formatDate(
+        this.loansAccount.repaymentsStartingFromDate,
+        dateFormat
+      ),
       submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
-      expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
+      expectedDisbursementDate: this.dateUtils.formatDate(
+        this.loansAccount.expectedDisbursementDate,
+        dateFormat
+      ),
       dateFormat,
       locale,
       loanType
@@ -182,11 +195,14 @@ export class EditLoansAccountComponent {
 
     // In Fineract, the POST and PUT endpoints for /v1/loans have a typo in the field
     // allowPartialPeriodInterestCalculation. Until that is fixed, we need to replace the field name in the payload.
-    loansAccountData.allowPartialPeriodInterestCalcualtion = loansAccountData.allowPartialPeriodInterestCalculation;
+    loansAccountData.allowPartialPeriodInterestCalcualtion =
+      loansAccountData.allowPartialPeriodInterestCalculation;
     delete loansAccountData.allowPartialPeriodInterestCalculation;
 
-    this.loansService.updateLoansAccount(this.loanId, loansAccountData).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.loansService
+      .updateLoansAccount(this.loanId, loansAccountData)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

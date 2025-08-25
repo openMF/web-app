@@ -1,5 +1,13 @@
 /** Angular Imports */
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  ElementRef,
+  SecurityContext,
+  Input
+} from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 

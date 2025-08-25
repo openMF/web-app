@@ -71,6 +71,8 @@ export class SavingsActiveClientMembersComponent implements OnInit {
   toggleSelect() {
     const len = this.activeClientMembers.length;
     this.selectAllItems =
-      len === 0 ? false : this.activeClientMembers.filter((item: any) => item.selected).length === len;
+      len === 0
+        ? false
+        : this.activeClientMembers.filter((item: any) => item.selected).length === len;
   }
 }

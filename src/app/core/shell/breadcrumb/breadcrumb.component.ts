@@ -83,7 +83,9 @@ export class BreadcrumbComponent implements AfterViewInit {
    * Generates the array of breadcrumbs for the visited route.
    */
   generateBreadcrumbs() {
-    const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
+    const onNavigationEnd = this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd)
+    );
 
     onNavigationEnd.subscribe(() => {
       this.breadcrumbs = [];
@@ -125,7 +127,9 @@ export class BreadcrumbComponent implements AfterViewInit {
               route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) &&
               route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])
             ) {
-              breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]);
+              breadcrumbLabel = route.snapshot.paramMap.get(
+                route.snapshot.data[routeParamBreadcrumb]
+              );
               const routeData: Data = route.snapshot.data;
               if (routeData.breadcrumb === 'Clients') {
                 breadcrumbLabel = this.printableValue(routeData.clientViewData.displayName);

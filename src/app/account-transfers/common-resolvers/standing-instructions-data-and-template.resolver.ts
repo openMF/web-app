@@ -25,6 +25,8 @@ export class StandingInstructionsDataAndTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const standingInstructionsId = route.parent.paramMap.get('standingInstructionsId');
-    return this.accountTransfersService.getStandingInstructionsDataAndTemplate(standingInstructionsId);
+    return this.accountTransfersService.getStandingInstructionsDataAndTemplate(
+      standingInstructionsId
+    );
   }
 }

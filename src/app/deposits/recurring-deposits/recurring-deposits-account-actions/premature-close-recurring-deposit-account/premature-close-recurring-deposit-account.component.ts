@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -75,10 +80,12 @@ export class PrematureCloseRecurringDepositAccountComponent implements OnInit {
    * if successful redirects to the recurring deposit account.
    */
   submit() {
-    const prematureCloseRecurringDepositsAccountFormData = this.prematureCloseRecurringDepositsAccountForm.value;
+    const prematureCloseRecurringDepositsAccountFormData =
+      this.prematureCloseRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevClosedOnDate: Date = this.prematureCloseRecurringDepositsAccountForm.value.closedOnDate;
+    const prevClosedOnDate: Date =
+      this.prematureCloseRecurringDepositsAccountForm.value.closedOnDate;
     if (prematureCloseRecurringDepositsAccountFormData.closedOnDate instanceof Date) {
       prematureCloseRecurringDepositsAccountFormData.closedOnDate = this.dateUtils.formatDate(
         prevClosedOnDate,

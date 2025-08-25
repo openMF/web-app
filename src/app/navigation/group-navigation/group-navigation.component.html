@@ -55,28 +55,38 @@
 
         <div
           class="mat-body-strong flex-50"
-          *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]"
+          *ngIf="
+            groupData.collectionMeetingCalendar &&
+            groupData.collectionMeetingCalendar.nextTenRecurringDates[0]
+          "
         >
           {{ 'labels.inputs.Next Meeting Date' | translate }}
         </div>
 
         <div
           class="flex-50"
-          *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]"
+          *ngIf="
+            groupData.collectionMeetingCalendar &&
+            groupData.collectionMeetingCalendar.nextTenRecurringDates[0]
+          "
         >
           {{ groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat }}
         </div>
 
         <div
           class="mat-body-strong flex-50"
-          *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable"
+          *ngIf="
+            groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable
+          "
         >
           {{ 'labels.inputs.Meeting Frequency' | translate }}
         </div>
 
         <div
           class="flex-50"
-          *ngIf="groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable"
+          *ngIf="
+            groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable
+          "
         >
           {{ groupData.collectionMeetingCalendar.humanReadable }}
         </div>
@@ -92,10 +102,15 @@
     </mat-tab>
 
     <mat-tab label="Loan Accounts" *ngIf="groupAccountsData && groupAccountsData.loanAccounts">
-      <mifosx-loan-account-table [loanAccountData]="groupAccountsData.loanAccounts"></mifosx-loan-account-table>
+      <mifosx-loan-account-table
+        [loanAccountData]="groupAccountsData.loanAccounts"
+      ></mifosx-loan-account-table>
     </mat-tab>
 
-    <mat-tab label="Savings Accounts" *ngIf="groupAccountsData && groupAccountsData.savingsAccounts">
+    <mat-tab
+      label="Savings Accounts"
+      *ngIf="groupAccountsData && groupAccountsData.savingsAccounts"
+    >
       <mifosx-savings-account-table
         [savingsAccountData]="groupAccountsData.savingsAccounts"
       ></mifosx-savings-account-table>

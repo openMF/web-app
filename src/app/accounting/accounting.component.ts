@@ -85,12 +85,22 @@ export class AccountingComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showChartofAccounts === true) {
       setTimeout(() => {
-        this.showPopover(this.templateChartofAccounts, this.chartofAccounts.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateChartofAccounts,
+          this.chartofAccounts.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showAccountsLinked === true) {
       setTimeout(() => {
-        this.showPopover(this.templateAccountsLinked, this.accountsLinked.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateAccountsLinked,
+          this.accountsLinked.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showMigrateOpeningBalances === true) {
@@ -105,12 +115,22 @@ export class AccountingComponent implements AfterViewInit {
     }
     if (this.configurationWizardService.showClosingEntries === true) {
       setTimeout(() => {
-        this.showPopover(this.templateClosingEntries, this.closingEntries.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateClosingEntries,
+          this.closingEntries.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showCreateJournalEntries === true) {
       setTimeout(() => {
-        this.showPopover(this.templateCreateJournalEntries, this.createJournalEntries.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateCreateJournalEntries,
+          this.createJournalEntries.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
   }

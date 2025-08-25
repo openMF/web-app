@@ -4,7 +4,9 @@
       <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
       <mat-select
         formControlName="currencyCode"
-        matTooltip="{{ 'tooltips.The currency in which the deposit will be disbursed' | translate }}"
+        matTooltip="{{
+          'tooltips.The currency in which the deposit will be disbursed' | translate
+        }}"
         required
       >
         <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
@@ -41,7 +43,8 @@
         matTooltip="{{ 'tooltips.Enter multiples of currency value' | translate }}"
       />
       <mat-error>
-        {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
+        {{ 'labels.inputs.Currency in multiples of' | translate }}
+        {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
       </mat-error>
     </mat-form-field>

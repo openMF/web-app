@@ -134,8 +134,14 @@ export class CheckerInboxComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const makerCheckerSearchParams = {
       ...this.makerCheckerSearchForm.value,
-      makerDateTimeFrom: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeFrom, dateFormat),
-      makerDateTimeto: this.dateUtils.formatDate(this.makerCheckerSearchForm.value.makerDateTimeto, dateFormat)
+      makerDateTimeFrom: this.dateUtils.formatDate(
+        this.makerCheckerSearchForm.value.makerDateTimeFrom,
+        dateFormat
+      ),
+      makerDateTimeto: this.dateUtils.formatDate(
+        this.makerCheckerSearchForm.value.makerDateTimeto,
+        dateFormat
+      )
     };
     this.tasksService.getMakerCheckerData(makerCheckerSearchParams).subscribe((response: any) => {
       this.searchData = response;
@@ -175,7 +181,9 @@ export class CheckerInboxComponent implements OnInit {
     const approveCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Approve Checker'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to approve checker')
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to approve checker'
+        )
       }
     });
     approveCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
@@ -189,7 +197,9 @@ export class CheckerInboxComponent implements OnInit {
     const rejectCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Reject Checker'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to reject checker')
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to reject checker'
+        )
       }
     });
     rejectCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
@@ -203,7 +213,9 @@ export class CheckerInboxComponent implements OnInit {
     const deleteCheckerDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Delete Checker'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to delete checker')
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to delete checker'
+        )
       }
     });
     deleteCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {

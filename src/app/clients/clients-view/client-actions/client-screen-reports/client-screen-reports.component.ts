@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, Renderer2, ViewChild, ElementRef, SecurityContext } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  ElementRef,
+  SecurityContext
+} from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -89,9 +96,11 @@ export class ClientScreenReportsComponent implements OnInit {
    */
   generate() {
     const templateId = this.clientScreenReportForm.get('templateId').value;
-    this.clientsService.retrieveClientReportTemplate(templateId, this.clientId).subscribe((response: any) => {
-      this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
-      this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
-    });
+    this.clientsService
+      .retrieveClientReportTemplate(templateId, this.clientId)
+      .subscribe((response: any) => {
+        this.template = this.sanitizer.sanitize(SecurityContext.HTML, response);
+        this.renderer.setProperty(this.screenReportRef.nativeElement, 'innerHTML', this.template);
+      });
   }
 }

@@ -56,9 +56,11 @@ export class ViewCashierComponent {
     });
     deleteCashierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteCashier(this.cashierData.tellerId, this.cashierData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.organizationService
+          .deleteCashier(this.cashierData.tellerId, this.cashierData.id)
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }

@@ -97,7 +97,9 @@
 
       <mifosx-recurring-deposit-product-preview-step
         [recurringDepositProductsTemplate]="recurringDepositProductsTemplate"
-        [chartSlabsDisplayedColumns]="recurringDepositProductInterestRateChartStep.chartSlabsDisplayedColumns"
+        [chartSlabsDisplayedColumns]="
+          recurringDepositProductInterestRateChartStep.chartSlabsDisplayedColumns
+        "
         [accountingRuleData]="accountingRuleData"
         [recurringDepositProduct]="recurringDepositProduct"
         (submitEvent)="submit()"

@@ -41,11 +41,15 @@ export class CentersDataSource implements DataSource<any> {
     centerActive: boolean = true
   ) {
     this.centersSubject.next([]);
-    this.centersService.getCenters(filterBy, orderBy, sortOrder, pageIndex * limit, limit).subscribe((centers: any) => {
-      centers.pageItems = centerActive ? centers.pageItems.filter((center: any) => center.active) : centers.pageItems;
-      this.recordsSubject.next(centers.totalFilteredRecords);
-      this.centersSubject.next(centers.pageItems);
-    });
+    this.centersService
+      .getCenters(filterBy, orderBy, sortOrder, pageIndex * limit, limit)
+      .subscribe((centers: any) => {
+        centers.pageItems = centerActive
+          ? centers.pageItems.filter((center: any) => center.active)
+          : centers.pageItems;
+        this.recordsSubject.next(centers.totalFilteredRecords);
+        this.centersSubject.next(centers.pageItems);
+      });
   }
 
   /**

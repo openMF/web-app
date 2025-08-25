@@ -1,5 +1,9 @@
 /** Angular Imports */
-import { OverlayRef, FlexibleConnectedPositionStrategy, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import {
+  OverlayRef,
+  FlexibleConnectedPositionStrategy,
+  ConnectedOverlayPositionChange
+} from '@angular/cdk/overlay';
 import { Observable, Subject } from 'rxjs';
 
 /** rxjs Imports */

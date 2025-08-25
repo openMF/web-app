@@ -66,7 +66,11 @@ export class AddressTabComponent {
     private translateService: TranslateService
   ) {
     this.route.data.subscribe(
-      (data: { clientAddressData: any; clientAddressFieldConfig: any; clientAddressTemplateData: any }) => {
+      (data: {
+        clientAddressData: any;
+        clientAddressFieldConfig: any;
+        clientAddressTemplateData: any;
+      }) => {
         this.clientAddressData = data.clientAddressData;
         this.clientAddressFieldConfig = data.clientAddressFieldConfig;
         this.clientAddressTemplate = data.clientAddressTemplateData;
@@ -96,7 +100,10 @@ export class AddressTabComponent {
           .subscribe((res: any) => {
             const addressData = response.data.value;
             addressData.addressId = res.resourceId;
-            addressData.addressType = this.getSelectedValue('addressTypeIdOptions', addressData.addressType).name;
+            addressData.addressType = this.getSelectedValue(
+              'addressTypeIdOptions',
+              addressData.addressType
+            ).name;
             addressData.isActive = false;
             this.clientAddressData.push(addressData);
           });
@@ -146,9 +153,11 @@ export class AddressTabComponent {
       addressId: address.addressId,
       isActive: address.isActive ? false : true
     };
-    this.clientService.editClientAddress(this.clientId, address.addressTypeId, addressData).subscribe(() => {
-      address.isActive = address.isActive ? false : true;
-    });
+    this.clientService
+      .editClientAddress(this.clientId, address.addressTypeId, addressData)
+      .subscribe(() => {
+        address.isActive = address.isActive ? false : true;
+      });
   }
 
   /**
@@ -156,7 +165,8 @@ export class AddressTabComponent {
    * @param {any} fieldName Field Name
    */
   isFieldEnabled(fieldName: any) {
-    return this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)?.isEnabled;
+    return this.clientAddressFieldConfig.find((fieldObj: any) => fieldObj.field === fieldName)
+      ?.isEnabled;
   }
 
   /**
@@ -189,7 +199,11 @@ export class AddressTabComponent {
               controlName: 'addressType',
               label: this.translateService.instant('labels.inputs.Address Type'),
               value: address ? address.addressType : '',
-              options: { label: 'name', value: 'id', data: this.clientAddressTemplate.addressTypeIdOptions },
+              options: {
+                label: 'name',
+                value: 'id',
+                data: this.clientAddressTemplate.addressTypeIdOptions
+              },
               order: 1
             })
           : null
@@ -268,7 +282,11 @@ export class AddressTabComponent {
             controlName: 'stateProvinceId',
             label: this.translateService.instant('labels.inputs.State / Province'),
             value: address ? address.stateProvinceId : '',
-            options: { label: 'name', value: 'id', data: this.clientAddressTemplate.stateProvinceIdOptions },
+            options: {
+              label: 'name',
+              value: 'id',
+              data: this.clientAddressTemplate.stateProvinceIdOptions
+            },
             order: 8
           })
         : null
@@ -290,7 +308,11 @@ export class AddressTabComponent {
             controlName: 'countryId',
             label: this.translateService.instant('labels.inputs.Country'),
             value: address ? address.countryId : '',
-            options: { label: 'name', value: 'id', data: this.clientAddressTemplate.countryIdOptions },
+            options: {
+              label: 'name',
+              value: 'id',
+              data: this.clientAddressTemplate.countryIdOptions
+            },
             order: 10
           })
         : null

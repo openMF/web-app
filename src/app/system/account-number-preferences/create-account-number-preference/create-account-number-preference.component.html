@@ -13,7 +13,9 @@
                 {{ accountType.value | translateKey: 'catalogs' }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="accountNumberPreferenceForm.controls.accountType.hasError('required')">
+            <mat-error
+              *ngIf="accountNumberPreferenceForm.controls.accountType.hasError('required')"
+            >
               {{ 'labels.inputs.Account Type' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>

@@ -122,8 +122,13 @@ export class EditCenterMeetingComponent implements OnInit {
             '2',
             '3'
           ];
-          this.centerEditMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
-          this.centerEditMeetingForm.get('repeatsOnDay').patchValue(this.calendarTemplate.repeatsOnDay.id);
+          this.centerEditMeetingForm.addControl(
+            'repeatsOnDay',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.centerEditMeetingForm
+            .get('repeatsOnDay')
+            .patchValue(this.calendarTemplate.repeatsOnDay.id);
           break;
         case 3: // Monthly
           this.repetitionIntervals = [
@@ -163,7 +168,10 @@ export class EditCenterMeetingComponent implements OnInit {
    */
   editSchedule() {
     const queryParams: any = { calendarId: this.calendarId };
-    this.router.navigate([`../Edit Meeting Schedule`], { relativeTo: this.route, queryParams: queryParams });
+    this.router.navigate([`../Edit Meeting Schedule`], {
+      relativeTo: this.route,
+      queryParams: queryParams
+    });
   }
 
   /**
@@ -187,8 +195,10 @@ export class EditCenterMeetingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.updateCenterMeeting(this.centerId, data, this.calendarId).subscribe((response: any) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.centersService
+      .updateCenterMeeting(this.centerId, data, this.calendarId)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

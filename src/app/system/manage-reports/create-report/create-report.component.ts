@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -66,11 +71,12 @@ export class CreateReportComponent implements OnInit {
   /** Report Template Data. */
   reportTemplateData: any;
   /** Data passed to dialog. */
-  dataForDialog: { allowedParameters: any[]; parameterName: string; reportParameterName: string } = {
-    allowedParameters: undefined,
-    parameterName: undefined,
-    reportParameterName: undefined
-  };
+  dataForDialog: { allowedParameters: any[]; parameterName: string; reportParameterName: string } =
+    {
+      allowedParameters: undefined,
+      parameterName: undefined,
+      reportParameterName: undefined
+    };
   /** Columns to be displayed in report parameters table. */
   displayedColumns: string[] = [
     'parameterName',
@@ -217,7 +223,9 @@ export class CreateReportComponent implements OnInit {
     const deleteReportDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: {
         deleteContext:
-          this.translateServices.instant('labels.heading.Report Parameter') + ' ' + reportParameter.parameterName
+          this.translateServices.instant('labels.heading.Report Parameter') +
+          ' ' +
+          reportParameter.parameterName
       }
     });
     deleteReportDialogRef.afterClosed().subscribe((response: any) => {
@@ -254,7 +262,9 @@ export class CreateReportComponent implements OnInit {
    * if successful redirects to view created report.
    */
   submit() {
-    this.reportForm.value.reportParameters = this.reportParametersData.map(function (reportParameter: any) {
+    this.reportForm.value.reportParameters = this.reportParametersData.map(function (
+      reportParameter: any
+    ) {
       reportParameter.parameterName = undefined;
       return reportParameter;
     });

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
@@ -59,8 +64,10 @@ export class LoanProductDetailsStepComponent implements OnInit {
       description: this.loanProductsTemplate.description,
       externalId: this.loanProductsTemplate.externalId,
       fundId: this.loanProductsTemplate.fundId,
-      startDate: this.loanProductsTemplate.startDate && new Date(this.loanProductsTemplate.startDate),
-      closeDate: this.loanProductsTemplate.closeDate && new Date(this.loanProductsTemplate.closeDate),
+      startDate:
+        this.loanProductsTemplate.startDate && new Date(this.loanProductsTemplate.startDate),
+      closeDate:
+        this.loanProductsTemplate.closeDate && new Date(this.loanProductsTemplate.closeDate),
       includeInBorrowerCycle: this.loanProductsTemplate.includeInBorrowerCycle
     });
   }
@@ -90,10 +97,12 @@ export class LoanProductDetailsStepComponent implements OnInit {
     const prevCloseDate: Date = this.loanProductDetailsForm.value.closeDate;
     const dateFormat = this.settingsService.dateFormat;
     if (loanProductDetailsFormData.startDate instanceof Date) {
-      loanProductDetailsFormData.startDate = this.dateUtils.formatDate(prevStartDate, dateFormat) || '';
+      loanProductDetailsFormData.startDate =
+        this.dateUtils.formatDate(prevStartDate, dateFormat) || '';
     }
     if (loanProductDetailsFormData.closeDate instanceof Date) {
-      loanProductDetailsFormData.closeDate = this.dateUtils.formatDate(prevCloseDate, dateFormat) || '';
+      loanProductDetailsFormData.closeDate =
+        this.dateUtils.formatDate(prevCloseDate, dateFormat) || '';
     }
     return loanProductDetailsFormData;
   }

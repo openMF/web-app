@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -80,15 +86,20 @@ export class WithdrawnByClientComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.withdrawnByClientLoanForm.value.withdrawnOnDate;
     if (withdrawnByClientLoanFormData.withdrawnOnDate instanceof Date) {
-      withdrawnByClientLoanFormData.withdrawnOnDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      withdrawnByClientLoanFormData.withdrawnOnDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...withdrawnByClientLoanFormData,
       dateFormat,
       locale
     };
-    this.loanService.loanActionButtons(this.loanId, 'withdrawnByApplicant', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .loanActionButtons(this.loanId, 'withdrawnByApplicant', data)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

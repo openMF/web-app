@@ -65,8 +65,10 @@ export class UndoApprovalSavingsAccountComponent implements OnInit {
     const data = {
       ...this.undoApprovalSavingsAccountForm.value
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'undoapproval', data).subscribe(() => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountCommand(this.accountId, 'undoapproval', data)
+      .subscribe(() => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

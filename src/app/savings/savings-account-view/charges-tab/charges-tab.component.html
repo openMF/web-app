@@ -26,12 +26,16 @@
 
       <ng-container matColumnDef="feeOrPenalty">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Charge Type' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.penalty ? 'Penalty' : ('Fee' | translateKey: 'catalogs') }}</td>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.penalty ? 'Penalty' : ('Fee' | translateKey: 'catalogs') }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="paymentDueAt">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Due At' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value | translateKey: 'catalogs' }}</td>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="dueAsOf">
@@ -40,13 +44,21 @@
       </ng-container>
 
       <ng-container matColumnDef="repeatsOn">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Repeats On (M/d)' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.feeOnMonthDay ? charge.feeOnMonthDay.join('/') : '' }}</td>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Repeats On (M/d)' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.feeOnMonthDay ? charge.feeOnMonthDay.join('/') : '' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="calculationType">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Calculation Type' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}</td>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Calculation Type' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="due">
@@ -73,7 +85,9 @@
       <ng-container matColumnDef="outstanding">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Outstanding' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.amountOutstanding | currency: charge.currency.code : 'symbol-narrow' : '1.2-2' }}
+          {{
+            charge.amountOutstanding | currency: charge.currency.code : 'symbol-narrow' : '1.2-2'
+          }}
         </td>
       </ng-container>
 
@@ -102,7 +116,9 @@
               <i class="fa fa-trash"></i>
             </button>
           </span>
-          <span *ngIf="savingsAccountData.status.value === 'Active' && charge.amountOutstanding !== 0">
+          <span
+            *ngIf="savingsAccountData.status.value === 'Active' && charge.amountOutstanding !== 0"
+          >
             <button
               class="account-action-button"
               mat-raised-button
@@ -140,7 +156,12 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns" class="select-row" [routerLink]="[row.id]"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        class="select-row"
+        [routerLink]="[row.id]"
+      ></tr>
     </table>
   </div>
 </div>

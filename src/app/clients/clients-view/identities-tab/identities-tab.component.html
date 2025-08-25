@@ -13,7 +13,12 @@
     </button>
   </div>
 
-  <table mat-table #identifiersTable [dataSource]="clientIdentities" [ngStyle]="{ 'margin-top': '3%' }">
+  <table
+    mat-table
+    #identifiersTable
+    [dataSource]="clientIdentities"
+    [ngStyle]="{ 'margin-top': '3%' }"
+  >
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Id' | translate }}</th>
       <td mat-cell *matCellDef="let identity">{{ identity.id }}</td>
@@ -35,7 +40,9 @@
     </ng-container>
 
     <ng-container matColumnDef="documents">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Identity Documents' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'labels.inputs.Identity Documents' | translate }}
+      </th>
       <td mat-cell *matCellDef="let identity">
         <div *ngFor="let document of identity.documents">
           {{ document.name }}

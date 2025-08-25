@@ -59,7 +59,11 @@ const routes: Routes = [
         },
         {
           path: 'create',
-          data: { title: 'Create Client', breadcrumb: 'Create Client', routeParamBreadcrumb: false },
+          data: {
+            title: 'Create Client',
+            breadcrumb: 'Create Client',
+            routeParamBreadcrumb: false
+          },
           component: CreateClientComponent,
           resolve: {
             clientAddressFieldConfig: ClientAddressFieldConfigurationResolver,
@@ -103,7 +107,11 @@ const routes: Routes = [
             },
             {
               path: 'family-members',
-              data: { title: 'Family Members', breadcrumb: 'Family Members', routeParamBreadcrumb: false },
+              data: {
+                title: 'Family Members',
+                breadcrumb: 'Family Members',
+                routeParamBreadcrumb: false
+              },
               children: [
                 {
                   path: '',
@@ -245,12 +253,15 @@ const routes: Routes = [
             },
             {
               path: 'client-collateral',
-              loadChildren: () => import('../collaterals/collaterals.module').then((m) => m.CollateralsModule)
+              loadChildren: () =>
+                import('../collaterals/collaterals.module').then((m) => m.CollateralsModule)
             },
             {
               path: 'fixed-deposits-accounts',
               loadChildren: () =>
-                import('../deposits/fixed-deposits/fixed-deposits.module').then((m) => m.FixedDepositsModule)
+                import('../deposits/fixed-deposits/fixed-deposits.module').then(
+                  (m) => m.FixedDepositsModule
+                )
             },
             {
               path: 'savings-accounts',
@@ -270,7 +281,9 @@ const routes: Routes = [
             {
               path: 'standing-instructions',
               loadChildren: () =>
-                import('../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
+                import('../account-transfers/account-transfers.module').then(
+                  (m) => m.AccountTransfersModule
+                )
             }
           ]
         }

@@ -164,7 +164,11 @@ const routes: Routes = [
               resolve: {
                 loanProductDatatables: LoanProductDatatablesResolver
               },
-              data: { title: 'View Loan Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: {
+                title: 'View Loan Product',
+                breadcrumb: 'productId',
+                routeParamBreadcrumb: 'productId'
+              },
               children: [
                 {
                   path: '',
@@ -195,7 +199,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditLoanProductComponent,
-                  data: { title: 'Edit Loan Product', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Loan Product',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     loanProductAndTemplate: LoanProductAndTemplateResolver,
                     configurations: GlobalConfigurationsResolver
@@ -226,7 +234,11 @@ const routes: Routes = [
             },
             {
               path: ':productId',
-              data: { title: 'View Saving Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: {
+                title: 'View Saving Product',
+                breadcrumb: 'productId',
+                routeParamBreadcrumb: 'productId'
+              },
               resolve: {
                 savingProductDatatables: SavingProductDatatablesResolver
               },
@@ -242,7 +254,11 @@ const routes: Routes = [
                     },
                     {
                       path: 'general',
-                      data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
+                      data: {
+                        title: 'General',
+                        breadcrumb: 'General',
+                        routeParamBreadcrumb: false
+                      },
                       component: SavingProductGeneralTabComponent,
                       resolve: {
                         savingProduct: SavingProductResolver
@@ -266,7 +282,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditSavingProductComponent,
-                  data: { title: 'Edit Saving Product', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Saving Product',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     savingProductAndTemplate: SavingProductAndTemplateResolver
                   }
@@ -296,7 +316,11 @@ const routes: Routes = [
             },
             {
               path: ':productId',
-              data: { title: 'View Share Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: {
+                title: 'View Share Product',
+                breadcrumb: 'productId',
+                routeParamBreadcrumb: 'productId'
+              },
               resolve: {
                 shareProductDatatables: ShareProductDatatablesResolver
               },
@@ -312,7 +336,11 @@ const routes: Routes = [
                     },
                     {
                       path: 'general',
-                      data: { title: 'General', breadcrumb: 'General', routeParamBreadcrumb: false },
+                      data: {
+                        title: 'General',
+                        breadcrumb: 'General',
+                        routeParamBreadcrumb: false
+                      },
                       component: ShareProductGeneralTabComponent,
                       resolve: {
                         shareProduct: ShareProductResolver
@@ -336,14 +364,22 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditShareProductComponent,
-                  data: { title: 'Edit Share Product', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Share Product',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     shareProductAndTemplate: ShareProductAndTemplateResolver
                   }
                 },
                 {
                   path: 'dividends',
-                  data: { title: 'Share Products Dividends', breadcrumb: 'Dividends', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Share Products Dividends',
+                    breadcrumb: 'Dividends',
+                    routeParamBreadcrumb: false
+                  },
                   children: [
                     {
                       path: '',
@@ -355,7 +391,11 @@ const routes: Routes = [
                     {
                       path: 'create',
                       component: CreateDividendComponent,
-                      data: { title: 'Create Dividend', breadcrumb: 'Create', routeParamBreadcrumb: false },
+                      data: {
+                        title: 'Create Dividend',
+                        breadcrumb: 'Create',
+                        routeParamBreadcrumb: false
+                      },
                       resolve: {
                         shareProduct: ShareProductResolver
                       }
@@ -417,7 +457,11 @@ const routes: Routes = [
                     },
                     {
                       path: 'edit',
-                      data: { title: 'Edit Tax Component', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      data: {
+                        title: 'Edit Tax Component',
+                        breadcrumb: 'Edit',
+                        routeParamBreadcrumb: false
+                      },
                       component: EditTaxComponentComponent,
                       resolve: {
                         taxComponent: TaxComponentResolver
@@ -462,7 +506,11 @@ const routes: Routes = [
                     },
                     {
                       path: 'edit',
-                      data: { title: 'Edit Tax Group', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      data: {
+                        title: 'Edit Tax Group',
+                        breadcrumb: 'Edit',
+                        routeParamBreadcrumb: false
+                      },
                       component: EditTaxGroupComponent,
                       resolve: {
                         taxGroup: EditTaxGroupResolver
@@ -517,7 +565,11 @@ const routes: Routes = [
                     },
                     {
                       path: 'edit',
-                      data: { title: 'Edit Delinquency Range', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      data: {
+                        title: 'Edit Delinquency Range',
+                        breadcrumb: 'Edit',
+                        routeParamBreadcrumb: false
+                      },
                       component: EditRangeComponent,
                       resolve: {
                         delinquencyRange: DelinquencyRangeComponentsResolver
@@ -562,7 +614,11 @@ const routes: Routes = [
                     },
                     {
                       path: 'edit',
-                      data: { title: 'Edit Delinquency Bucket', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                      data: {
+                        title: 'Edit Delinquency Bucket',
+                        breadcrumb: 'Edit',
+                        routeParamBreadcrumb: false
+                      },
                       component: EditBucketComponent,
                       resolve: {
                         delinquencyBucket: DelinquencyBucketComponentsResolver,
@@ -633,7 +689,11 @@ const routes: Routes = [
                 },
                 {
                   path: 'edit',
-                  data: { title: 'Edit Recurring Deposit Product', breadcrumb: 'edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Recurring Deposit Product',
+                    breadcrumb: 'edit',
+                    routeParamBreadcrumb: false
+                  },
                   component: EditRecurringDepositProductComponent,
                   resolve: {
                     recurringDepositProductAndTemplate: RecurringDepositProductAndTemplateResolver
@@ -664,7 +724,11 @@ const routes: Routes = [
             },
             {
               path: ':productId',
-              data: { title: 'View Fixed Deposit Product', breadcrumb: 'productId', routeParamBreadcrumb: 'productId' },
+              data: {
+                title: 'View Fixed Deposit Product',
+                breadcrumb: 'productId',
+                routeParamBreadcrumb: 'productId'
+              },
               component: ViewFixedDepositProductComponent,
               resolve: {
                 fixedDepositDatatables: SavingProductDatatablesResolver
@@ -697,7 +761,11 @@ const routes: Routes = [
                 },
                 {
                   path: 'edit',
-                  data: { title: 'Edit Fixed Deposit Product', breadcrumb: 'edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Fixed Deposit Product',
+                    breadcrumb: 'edit',
+                    routeParamBreadcrumb: false
+                  },
                   component: EditFixedDepositProductComponent,
                   resolve: {
                     fixedDepositProductAndTemplate: FixedDepositProductAndTemplateResolver
@@ -742,7 +810,11 @@ const routes: Routes = [
                 },
                 {
                   path: 'edit',
-                  data: { title: 'Edit Product Mix', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Product Mix',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   component: EditProductMixComponent,
                   resolve: {
                     productMix: ViewProductMixResolver
@@ -785,7 +857,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditFloatingRateComponent,
-                  data: { title: 'Edit Floating Rate', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Floating Rate',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     floatingRate: FloatingRateResolver
                   }
@@ -875,7 +951,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditCollateralComponent,
-                  data: { title: 'Edit Collateral', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Collateral',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     collateralTemplate: CollateralTemplateResolver,
                     collateral: CollateralResolver

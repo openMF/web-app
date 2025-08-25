@@ -53,7 +53,12 @@
         <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" (click)="submit()" *mifosxHasPermission="'UPDATE_PERMISSION'">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="submit()"
+          *mifosxHasPermission="'UPDATE_PERMISSION'"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>
@@ -63,9 +68,15 @@
 
 <ng-template #templateButtonEdit let-popover="popover">
   <h2>{{ 'labels.heading.Edit' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.To add or remove a task from the Maker-Checker list' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.To add or remove a task from the Maker-Checker list' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
@@ -91,7 +102,11 @@
     >
   </h4>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button

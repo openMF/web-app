@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -82,7 +87,10 @@ export class WithdrawByClientFixedDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevWithdrawnOnDate: Date = this.withdrawFixedDepositsAccountForm.value.withdrawnOnDate;
     if (withdrawFixedDepositsAccountFormData.withdrawnOnDate instanceof Date) {
-      withdrawFixedDepositsAccountFormData.withdrawnOnDate = this.dateUtils.formatDate(prevWithdrawnOnDate, dateFormat);
+      withdrawFixedDepositsAccountFormData.withdrawnOnDate = this.dateUtils.formatDate(
+        prevWithdrawnOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...withdrawFixedDepositsAccountFormData,

@@ -101,7 +101,9 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     }
   ];
   /** Transaction date from form control. */
-  transactionDateFrom = new UntypedFormControl(new Date(new Date().setMonth(new Date().getMonth() - 1)));
+  transactionDateFrom = new UntypedFormControl(
+    new Date(new Date().setMonth(new Date().getMonth() - 1))
+  );
   /** Transaction date to form control. */
   transactionDateTo = new UntypedFormControl(new Date());
   /** Transaction ID form control. */
@@ -250,7 +252,10 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'fromDate');
+          this.applyFilter(
+            this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat),
+            'fromDate'
+          );
         })
       )
       .subscribe();
@@ -260,7 +265,10 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat), 'toDate');
+          this.applyFilter(
+            this.dateUtils.formatDate(filterValue, this.settingsService.dateFormat),
+            'toDate'
+          );
         })
       )
       .subscribe();
@@ -342,7 +350,9 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
     this.filteredOfficeData = this.officeName.valueChanges.pipe(
       startWith(''),
       map((office: any) => (typeof office === 'string' ? office : office.name)),
-      map((officeName: string) => (officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData))
+      map((officeName: string) =>
+        officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData
+      )
     );
   }
 
@@ -355,7 +365,9 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
       map((glAccount: any) =>
         typeof glAccount === 'string' ? glAccount : glAccount.name + ' (' + glAccount.glCode + ')'
       ),
-      map((glAccount: string) => (glAccount ? this.filterGLAccountAutocompleteData(glAccount) : this.glAccountData))
+      map((glAccount: string) =>
+        glAccount ? this.filterGLAccountAutocompleteData(glAccount) : this.glAccountData
+      )
     );
   }
 
@@ -365,7 +377,9 @@ export class SearchJournalEntryComponent implements OnInit, AfterViewInit {
    * @returns {any} Filtered offices.
    */
   private filterOfficeAutocompleteData(officeName: string): any {
-    return this.officeData.filter((office: any) => office.name.toLowerCase().includes(officeName.toLowerCase()));
+    return this.officeData.filter((office: any) =>
+      office.name.toLowerCase().includes(officeName.toLowerCase())
+    );
   }
 
   /**

@@ -30,7 +30,9 @@
               ></i>
               <span class="m-r-5">{{ 'labels.inputs.Savings Product' | translate }} :</span>
               <span class="m-r-5"
-                ><mifosx-long-text textValue="{{ savingsAccountData.savingsProductName }}"></mifosx-long-text
+                ><mifosx-long-text
+                  textValue="{{ savingsAccountData.savingsProductName }}"
+                ></mifosx-long-text
               ></span>
               <mifosx-account-number
                 accountNo="{{ savingsAccountData.accountNo }}"
@@ -41,14 +43,19 @@
               {{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }}:
               {{ savingsAccountData.clientName || savingsAccountData.groupName }}
               <span class="m-l-10" *ngIf="savingsAccountData.clientAccountNo">
-                <mifosx-account-number accountNo="{{ savingsAccountData.clientAccountNo }}"></mifosx-account-number>
+                <mifosx-account-number
+                  accountNo="{{ savingsAccountData.clientAccountNo }}"
+                ></mifosx-account-number>
               </span>
             </span>
           </div>
 
           <div
             class="flex-30"
-            *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval"
+            *ngIf="
+              !savingsAccountData.status.rejected &&
+              !savingsAccountData.status.submittedAndPendingApproval
+            "
           >
             <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
             <table class="account-overview">
@@ -57,7 +64,8 @@
                   <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
                   <td class="r-amount">
                     {{
-                      savingsAccountData.summary.accountBalance | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                      savingsAccountData.summary.accountBalance
+                        | currency: currency.code : 'symbol-narrow' : '1.2-2'
                     }}
                   </td>
                 </tr>
@@ -65,7 +73,8 @@
                   <td>{{ 'labels.inputs.Available Balance' | translate }}</td>
                   <td class="r-amount">
                     {{
-                      savingsAccountData.summary.availableBalance | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                      savingsAccountData.summary.availableBalance
+                        | currency: currency.code : 'symbol-narrow' : '1.2-2'
                     }}
                   </td>
                 </tr>
@@ -90,7 +99,11 @@
 
       <mat-menu #accountMenu="matMenu">
         <ng-container *ngFor="let item of buttonConfig.singleButtons">
-          <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
+          <button
+            mat-menu-item
+            *mifosxHasPermission="item.taskPermissionName"
+            (click)="doAction(item.name)"
+          >
             <mat-icon matListIcon>
               <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
             </mat-icon>
@@ -99,10 +112,16 @@
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.options && !savingsAccountData.subStatus.block">
-          <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
+          <button mat-menu-item [matMenuTriggerFor]="More">
+            {{ 'labels.menus.More' | translate }}
+          </button>
           <mat-menu #More="matMenu">
             <span *ngFor="let option of buttonConfig.options">
-              <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">
+              <button
+                mat-menu-item
+                *mifosxHasPermission="option.taskPermissionName"
+                (click)="doAction(option.name)"
+              >
                 {{ 'labels.menus.' + option.name | translate }}
               </button>
             </span>

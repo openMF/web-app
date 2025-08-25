@@ -77,22 +77,42 @@ export class ProductsComponent implements AfterViewInit {
     }
     if (this.configurationWizardService.showLoanProducts === true) {
       setTimeout(() => {
-        this.showPopover(this.templateLoanProducts, this.loanProducts.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateLoanProducts,
+          this.loanProducts.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showSavingsProducts === true) {
       setTimeout(() => {
-        this.showPopover(this.templateSavingsProducts, this.savingsProducts.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateSavingsProducts,
+          this.savingsProducts.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showShareProducts === true) {
       setTimeout(() => {
-        this.showPopover(this.templateShareProducts, this.shareProducts.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateShareProducts,
+          this.shareProducts.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showFixedDepositProducts === true) {
       setTimeout(() => {
-        this.showPopover(this.templateFixedDepositProducts, this.fixedDepositProducts.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateFixedDepositProducts,
+          this.fixedDepositProducts.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showRecurringDepositProducts === true) {

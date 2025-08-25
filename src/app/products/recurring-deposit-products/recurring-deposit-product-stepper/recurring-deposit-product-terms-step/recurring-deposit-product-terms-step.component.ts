@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDivider } from '@angular/material/divider';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -32,12 +37,18 @@ export class RecurringDepositProductTermsStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.interestCompoundingPeriodTypeData = this.recurringDepositProductsTemplate.interestCompoundingPeriodTypeOptions;
-    this.interestPostingPeriodTypeData = this.recurringDepositProductsTemplate.interestPostingPeriodTypeOptions;
-    this.interestCalculationTypeData = this.recurringDepositProductsTemplate.interestCalculationTypeOptions;
+    this.interestCompoundingPeriodTypeData =
+      this.recurringDepositProductsTemplate.interestCompoundingPeriodTypeOptions;
+    this.interestPostingPeriodTypeData =
+      this.recurringDepositProductsTemplate.interestPostingPeriodTypeOptions;
+    this.interestCalculationTypeData =
+      this.recurringDepositProductsTemplate.interestCalculationTypeOptions;
     this.interestCalculationDaysInYearTypeData =
       this.recurringDepositProductsTemplate.interestCalculationDaysInYearTypeOptions;
-    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+    if (
+      !(this.recurringDepositProductsTemplate === undefined) &&
+      this.recurringDepositProductsTemplate.id
+    ) {
       this.recurringDepositProductTermsForm.patchValue({
         minDepositAmount: this.recurringDepositProductsTemplate.minDepositAmount,
         depositAmount: this.recurringDepositProductsTemplate.depositAmount,
@@ -45,10 +56,12 @@ export class RecurringDepositProductTermsStepComponent implements OnInit {
       });
     }
     this.recurringDepositProductTermsForm.patchValue({
-      interestCompoundingPeriodType: this.recurringDepositProductsTemplate.interestCompoundingPeriodType.id,
+      interestCompoundingPeriodType:
+        this.recurringDepositProductsTemplate.interestCompoundingPeriodType.id,
       interestPostingPeriodType: this.recurringDepositProductsTemplate.interestPostingPeriodType.id,
       interestCalculationType: this.recurringDepositProductsTemplate.interestCalculationType.id,
-      interestCalculationDaysInYearType: this.recurringDepositProductsTemplate.interestCalculationDaysInYearType.id
+      interestCalculationDaysInYearType:
+        this.recurringDepositProductsTemplate.interestCalculationDaysInYearType.id
     });
   }
 

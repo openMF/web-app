@@ -1,6 +1,18 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -201,7 +213,12 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showChartofAccountsForm === true) {
       setTimeout(() => {
-        this.showPopover(this.templateAccountFormRef, this.accountFormRef.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateAccountFormRef,
+          this.accountFormRef.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
   }

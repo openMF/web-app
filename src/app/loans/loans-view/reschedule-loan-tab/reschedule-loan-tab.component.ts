@@ -102,9 +102,15 @@ export class RescheduleLoanTabComponent {
           locale
         };
         if (command === 'Approve') {
-          payload['approvedOnDate'] = this.dateUtils.formatDate(this.settingsService.businessDate, dateFormat);
+          payload['approvedOnDate'] = this.dateUtils.formatDate(
+            this.settingsService.businessDate,
+            dateFormat
+          );
         } else {
-          payload['rejectedOnDate'] = this.dateUtils.formatDate(this.settingsService.businessDate, dateFormat);
+          payload['rejectedOnDate'] = this.dateUtils.formatDate(
+            this.settingsService.businessDate,
+            dateFormat
+          );
         }
         this.loansServices
           .applyCommandLoanRescheduleRequests(request.id, command.toLowerCase(), payload)

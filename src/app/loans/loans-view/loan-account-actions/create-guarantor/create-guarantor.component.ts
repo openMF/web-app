@@ -142,9 +142,11 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
     if (this.newGuarantorForm.value.existingClient) {
       this.newGuarantorForm.get('name').valueChanges.subscribe((value: string) => {
         if (value.length >= 2) {
-          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
-            this.clientsData = data.pageItems;
-          });
+          this.clientsService
+            .getFilteredClients('displayName', 'ASC', true, value)
+            .subscribe((data: any) => {
+              this.clientsData = data.pageItems;
+            });
         }
       });
     }
@@ -152,9 +154,11 @@ export class CreateGuarantorComponent implements OnInit, AfterViewInit {
 
   clientSelected(clientDetails: any) {
     this.accountOptions = [];
-    this.loanService.guarantorAccountResource(this.loanId, clientDetails.id).subscribe((response: any) => {
-      this.accountOptions = response.accountLinkingOptions;
-    });
+    this.loanService
+      .guarantorAccountResource(this.loanId, clientDetails.id)
+      .subscribe((response: any) => {
+        this.accountOptions = response.accountLinkingOptions;
+      });
   }
 
   /**

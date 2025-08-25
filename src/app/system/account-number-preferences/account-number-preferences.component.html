@@ -1,5 +1,10 @@
 <div class="container m-b-20 layout-row align-end gap-20px">
-  <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'ADD_PREFERENCES'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['create']"
+    *mifosxHasPermission="'ADD_PREFERENCES'"
+  >
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Create Preference' | translate }}
   </button>
@@ -25,7 +30,12 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id]" class="select-row"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        [routerLink]="[row.id]"
+        class="select-row"
+      ></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>

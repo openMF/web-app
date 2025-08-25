@@ -67,7 +67,10 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
 
   ngOnInit() {
     this.chargeData = this.recurringDepositProductsTemplate.chargeOptions;
-    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+    if (
+      !(this.recurringDepositProductsTemplate === undefined) &&
+      this.recurringDepositProductsTemplate.id
+    ) {
       this.chargesDataSource = this.recurringDepositProductsTemplate.charges;
     } else {
       this.chargesDataSource = [];
@@ -82,7 +85,9 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
 
   deleteCharge(charge: any) {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name }
+      data: {
+        deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name
+      }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

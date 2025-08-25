@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -79,7 +84,10 @@ export class PostInterestAsOnSavingsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.postInterestSavingsAccountForm.value.transactionDate;
     if (postInterestSavingsAccountFormData.transactionDate instanceof Date) {
-      postInterestSavingsAccountFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      postInterestSavingsAccountFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...postInterestSavingsAccountFormData,

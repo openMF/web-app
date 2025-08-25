@@ -58,10 +58,14 @@
               required
               formControlName="transactionDate"
             />
-            <mat-datepicker-toggle matSuffix [for]="openingBalancesDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="openingBalancesDatePicker"
+            ></mat-datepicker-toggle>
             <mat-datepicker #openingBalancesDatePicker></mat-datepicker>
             <mat-error *ngIf="openingBalancesForm.controls.transactionDate.hasError('required')">
-              {{ 'labels.inputs.Opening Balances Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Opening Balances Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -96,7 +100,10 @@
             formArrayName="glAccountEntries"
             *ngFor="let credit of glAccountEntries.controls; let i = index"
           >
-            <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
+            <div
+              class="flex-fill layout-row-wrap gap-2percent responsive-column"
+              [formGroupName]="i"
+            >
               <div class="flex-8">
                 {{
                   openingBalancesData.glAccounts[i].glAccountType.value !==
@@ -132,7 +139,10 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions class="layout-row gap-5px align-center responsive-column" *ngIf="openingBalancesData">
+      <mat-card-actions
+        class="layout-row gap-5px align-center responsive-column"
+        *ngIf="openingBalancesData"
+      >
         <button type="button" mat-raised-button [routerLink]="['../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
@@ -160,13 +170,25 @@
     >
   </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); popover.close(); previousStep()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); popover.close(); previousStep()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); popover.close(); nextStep()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); popover.close(); nextStep()"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>

@@ -13,9 +13,14 @@
               required
               formControlName="actualDisbursementDate"
             />
-            <mat-datepicker-toggle matSuffix [for]="actualDisbursementDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="actualDisbursementDatePicker"
+            ></mat-datepicker-toggle>
             <mat-datepicker #actualDisbursementDatePicker></mat-datepicker>
-            <mat-error *ngIf="disbursementLoanForm.controls.actualDisbursementDate.hasError('required')">
+            <mat-error
+              *ngIf="disbursementLoanForm.controls.actualDisbursementDate.hasError('required')"
+            >
               {{ 'labels.inputs.Disbursed On Date' | translate
               }}<strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -82,7 +87,12 @@
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
-            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea
+              matInput
+              formControlName="note"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
           </mat-form-field>
         </div>
 

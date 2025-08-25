@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpResponse
+} from '@angular/common/http';
 
 /** rxjs Imports */
 import { Observable, Subscriber } from 'rxjs';
@@ -38,7 +44,9 @@ export class CacheInterceptor implements HttpInterceptor {
     }
 
     return new Observable((subscriber: Subscriber<HttpEvent<any>>) => {
-      const cachedData = this.forceUpdate ? null : this.httpCacheService.getCacheData(request.urlWithParams);
+      const cachedData = this.forceUpdate
+        ? null
+        : this.httpCacheService.getCacheData(request.urlWithParams);
       if (cachedData !== null) {
         // Create new response to avoid side-effects
         subscriber.next(new HttpResponse(cachedData as Object));

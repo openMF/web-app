@@ -17,7 +17,11 @@ import {
   PaymentAllocation
 } from '../../loan-product-stepper/loan-product-payment-strategy-step/payment-allocation-model';
 import { LoanProducts } from '../../loan-products';
-import { CodeName, OptionData, StringEnumOptionData } from '../../../../shared/models/option-data.model';
+import {
+  CodeName,
+  OptionData,
+  StringEnumOptionData
+} from '../../../../shared/models/option-data.model';
 import { Accounting } from 'app/core/utils/accounting';
 import { DecimalPipe } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
@@ -141,10 +145,12 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
 
     if (this.action === 'view') {
       this.accountingMappings = this.loanProduct.accountingMappings;
-      this.paymentChannelToFundSourceMappings = this.loanProduct.paymentChannelToFundSourceMappings || [];
+      this.paymentChannelToFundSourceMappings =
+        this.loanProduct.paymentChannelToFundSourceMappings || [];
       this.feeToIncomeAccountMappings = this.loanProduct.feeToIncomeAccountMappings || [];
       this.penaltyToIncomeAccountMappings = this.loanProduct.penaltyToIncomeAccountMappings || [];
-      this.chargeOffReasonToExpenseAccountMappings = this.loanProduct.chargeOffReasonToExpenseAccountMappings || [];
+      this.chargeOffReasonToExpenseAccountMappings =
+        this.loanProduct.chargeOffReasonToExpenseAccountMappings || [];
     } else {
       this.accountingMappings = {};
 
@@ -152,30 +158,52 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         (this.loanProduct.accountingRule && this.loanProduct.accountingRule > 1) ||
         this.loanProductsTemplate.accountingRule.value !== 'NONE'
       ) {
-        const assetAccountData = this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
-        const incomeAccountData = this.loanProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
-        const expenseAccountData = this.loanProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
-        const liabilityAccountData = this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+        const assetAccountData =
+          this.loanProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+        const incomeAccountData =
+          this.loanProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
+        const expenseAccountData =
+          this.loanProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
+        const liabilityAccountData =
+          this.loanProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
         const assetAndLiabilityAccountData =
           this.loanProductsTemplate.accountingMappingOptions.assetAndLiabilityAccountOptions || [];
         const chargeOffReasonOptions: any = this.loanProductsTemplate.chargeOffReasonOptions || [];
 
         this.accountingMappings = {
-          fundSourceAccount: this.glAccountLookUp(this.loanProduct.fundSourceAccountId, assetAndLiabilityAccountData),
-          loanPortfolioAccount: this.glAccountLookUp(this.loanProduct.loanPortfolioAccountId, assetAccountData),
+          fundSourceAccount: this.glAccountLookUp(
+            this.loanProduct.fundSourceAccountId,
+            assetAndLiabilityAccountData
+          ),
+          loanPortfolioAccount: this.glAccountLookUp(
+            this.loanProduct.loanPortfolioAccountId,
+            assetAccountData
+          ),
           receivableInterestAccount: this.glAccountLookUp(
             this.loanProduct.receivableInterestAccountId,
             assetAccountData
           ),
-          receivableFeeAccount: this.glAccountLookUp(this.loanProduct.receivableFeeAccountId, assetAccountData),
-          receivablePenaltyAccount: this.glAccountLookUp(this.loanProduct.receivablePenaltyAccountId, assetAccountData),
+          receivableFeeAccount: this.glAccountLookUp(
+            this.loanProduct.receivableFeeAccountId,
+            assetAccountData
+          ),
+          receivablePenaltyAccount: this.glAccountLookUp(
+            this.loanProduct.receivablePenaltyAccountId,
+            assetAccountData
+          ),
           transfersInSuspenseAccount: this.glAccountLookUp(
             this.loanProduct.transfersInSuspenseAccountId,
             assetAccountData
           ),
 
-          interestOnLoanAccount: this.glAccountLookUp(this.loanProduct.interestOnLoanAccountId, incomeAccountData),
-          incomeFromFeeAccount: this.glAccountLookUp(this.loanProduct.incomeFromFeeAccountId, incomeAccountData),
+          interestOnLoanAccount: this.glAccountLookUp(
+            this.loanProduct.interestOnLoanAccountId,
+            incomeAccountData
+          ),
+          incomeFromFeeAccount: this.glAccountLookUp(
+            this.loanProduct.incomeFromFeeAccountId,
+            incomeAccountData
+          ),
           incomeFromPenaltyAccount: this.glAccountLookUp(
             this.loanProduct.incomeFromPenaltyAccountId,
             incomeAccountData
@@ -205,11 +233,26 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
             incomeAccountData
           ),
 
-          writeOffAccount: this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
-          goodwillCreditAccount: this.glAccountLookUp(this.loanProduct.goodwillCreditAccountId, expenseAccountData),
-          chargeOffExpenseAccount: this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
-          chargeOffFraudExpenseAccount: this.glAccountLookUp(this.loanProduct.writeOffAccountId, expenseAccountData),
-          buyDownExpenseAccount: this.glAccountLookUp(this.loanProduct.buyDownExpenseAccountId, expenseAccountData),
+          writeOffAccount: this.glAccountLookUp(
+            this.loanProduct.writeOffAccountId,
+            expenseAccountData
+          ),
+          goodwillCreditAccount: this.glAccountLookUp(
+            this.loanProduct.goodwillCreditAccountId,
+            expenseAccountData
+          ),
+          chargeOffExpenseAccount: this.glAccountLookUp(
+            this.loanProduct.writeOffAccountId,
+            expenseAccountData
+          ),
+          chargeOffFraudExpenseAccount: this.glAccountLookUp(
+            this.loanProduct.writeOffAccountId,
+            expenseAccountData
+          ),
+          buyDownExpenseAccount: this.glAccountLookUp(
+            this.loanProduct.buyDownExpenseAccountId,
+            expenseAccountData
+          ),
 
           overpaymentLiabilityAccount: this.glAccountLookUp(
             this.loanProduct.overpaymentLiabilityAccountId,
@@ -226,7 +269,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
           const paymentTypesData = this.loanProductsTemplate.paymentTypeOptions || [];
           this.loanProduct.paymentChannelToFundSourceMappings.forEach((m: any) => {
             this.paymentChannelToFundSourceMappings.push({
-              fundSourceAccount: this.glAccountLookUp(m.fundSourceAccountId, assetAndLiabilityAccountData),
+              fundSourceAccount: this.glAccountLookUp(
+                m.fundSourceAccountId,
+                assetAndLiabilityAccountData
+              ),
               paymentType: this.paymentTypeLookUp(m.paymentTypeId, paymentTypesData)
             });
           });
@@ -256,7 +302,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         if (this.loanProduct.chargeOffReasonToExpenseAccountMappings?.length > 0) {
           this.loanProduct.chargeOffReasonToExpenseAccountMappings.forEach(
             (m: ChargeOffReasonToExpenseAccountMapping) => {
-              let optionData = this.optionDataLookUp(m.chargeOffReasonCodeValueId, chargeOffReasonOptions);
+              let optionData = this.optionDataLookUp(
+                m.chargeOffReasonCodeValueId,
+                chargeOffReasonOptions
+              );
               this.chargeOffReasonToExpenseAccountMappings.push({
                 expenseAccount: this.glAccountLookUp(m.expenseAccountId, expenseAccountData),
                 chargeOffReasonCodeValue: {
@@ -293,9 +342,11 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
           ),
           allowCompoundingOnEod: this.loanProduct.allowCompoundingOnEod,
           isArrearsBasedOnOriginalSchedule: this.loanProduct.isArrearsBasedOnOriginalSchedule,
-          isCompoundingToBePostedAsTransaction: this.loanProduct.isCompoundingToBePostedAsTransaction,
+          isCompoundingToBePostedAsTransaction:
+            this.loanProduct.isCompoundingToBePostedAsTransaction,
           recalculationRestFrequencyInterval: this.loanProduct.recalculationRestFrequencyInterval,
-          disallowInterestCalculationOnPastDue: this.loanProduct.disallowInterestCalculationOnPastDue
+          disallowInterestCalculationOnPastDue:
+            this.loanProduct.disallowInterestCalculationOnPastDue
         };
       }
 
@@ -305,7 +356,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       );
       this.loanProduct.amortizationType = optionValue;
 
-      optionValue = this.optionDataLookUp(this.loanProduct.interestType, this.loanProductsTemplate.interestTypeOptions);
+      optionValue = this.optionDataLookUp(
+        this.loanProduct.interestType,
+        this.loanProductsTemplate.interestTypeOptions
+      );
       this.loanProduct.interestType = optionValue;
 
       optionValue = this.optionDataLookUp(
@@ -314,7 +368,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       );
       this.loanProduct.interestCalculationPeriodType = optionValue;
 
-      if (!this.loanProduct.repaymentFrequencyType || !this.loanProduct.repaymentFrequencyType.value) {
+      if (
+        !this.loanProduct.repaymentFrequencyType ||
+        !this.loanProduct.repaymentFrequencyType.value
+      ) {
         optionValue = this.optionDataLookUp(
           this.loanProduct.repaymentFrequencyType,
           this.loanProductsTemplate.repaymentFrequencyTypeOptions
@@ -406,7 +463,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
       }
 
       if (this.isAdvancedPaymentAllocation) {
-        if (!this.loanProduct.loanScheduleProcessingType || !this.loanProduct.loanScheduleProcessingType.value) {
+        if (
+          !this.loanProduct.loanScheduleProcessingType ||
+          !this.loanProduct.loanScheduleProcessingType.value
+        ) {
           this.loanProduct.loanScheduleProcessingType = this.optionDataLookUpByCode(
             this.loanProduct.loanScheduleProcessingType,
             this.loanProductsTemplate.loanScheduleProcessingTypeOptions
@@ -426,13 +486,15 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
         this.loanProduct.advancedPaymentAllocationTransactionTypes.concat(
           this.loanProduct.creditAllocationTransactionTypes
         );
-      const advancedPaymentAllocationTypes: OptionData[] = this.loanProduct.advancedPaymentAllocationTypes.concat(
-        this.loanProduct.creditAllocationAllocationTypes
-      );
+      const advancedPaymentAllocationTypes: OptionData[] =
+        this.loanProduct.advancedPaymentAllocationTypes.concat(
+          this.loanProduct.creditAllocationAllocationTypes
+        );
       this.advancePaymentAllocationData = {
         transactionTypes: advancedAllocationTransactionTypes,
         allocationTypes: advancedPaymentAllocationTypes,
-        futureInstallmentAllocationRules: this.loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules
+        futureInstallmentAllocationRules:
+          this.loanProduct.advancedPaymentAllocationFutureInstallmentAllocationRules
       };
     } else {
       const advancedAllocationTransactionTypes: OptionData[] =
@@ -547,7 +609,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
     return paymentType;
   }
 
-  delinquencyBucketLookUp(delinquencyBucketId: any, delinquencyBuckets: DelinquencyBucket[]): DelinquencyBucket {
+  delinquencyBucketLookUp(
+    delinquencyBucketId: any,
+    delinquencyBuckets: DelinquencyBucket[]
+  ): DelinquencyBucket {
     let delinquencyBucketData: DelinquencyBucket | null = null;
     if (delinquencyBucketId) {
       delinquencyBuckets.some((delinquencyBucket: DelinquencyBucket) => {
@@ -560,7 +625,9 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   }
 
   accountingRule(): number {
-    return this.loanProduct.accountingRule.id ? this.loanProduct.accountingRule.id : this.loanProduct.accountingRule;
+    return this.loanProduct.accountingRule.id
+      ? this.loanProduct.accountingRule.id
+      : this.loanProduct.accountingRule;
   }
 
   get isAccountingAccrualBased(): boolean {
@@ -584,7 +651,9 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
     return this.accounting.getAccountRuleName(value.toUpperCase());
   }
 
-  mapHumanReadableValueStringEnumOptionDataList(incomingParameter: StringEnumOptionData[]): string[] {
+  mapHumanReadableValueStringEnumOptionDataList(
+    incomingParameter: StringEnumOptionData[]
+  ): string[] {
     return incomingParameter.map((v) => v.value);
   }
 }

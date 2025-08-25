@@ -138,13 +138,15 @@ export class RejectSharesComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.sharesService.executeSharesAccountCommand(this.accountId, 'rejectadditionalshares', data).subscribe(() => {
-          const share = this.sharesData.find((element) => element.id === id);
-          const index = this.sharesData.indexOf(share);
-          this.sharesData.splice(index, 1);
-          this.dataSource.data = this.sharesData;
-          this.sharesTableRef.renderRows();
-        });
+        this.sharesService
+          .executeSharesAccountCommand(this.accountId, 'rejectadditionalshares', data)
+          .subscribe(() => {
+            const share = this.sharesData.find((element) => element.id === id);
+            const index = this.sharesData.indexOf(share);
+            this.sharesData.splice(index, 1);
+            this.dataSource.data = this.sharesData;
+            this.sharesTableRef.renderRows();
+          });
       }
     });
   }

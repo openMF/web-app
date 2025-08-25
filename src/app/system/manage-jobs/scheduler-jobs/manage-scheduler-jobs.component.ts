@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -154,7 +161,9 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * Selects all rows if they are not all selected; otherwise clear selection.
    */
   masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach((row) => this.selection.select(row));
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach((row) => this.selection.select(row));
   }
 
   /**
@@ -259,7 +268,12 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showSchedulerJobsPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateSchedulerStatus, this.schedulerStatus.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateSchedulerStatus,
+          this.schedulerStatus.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showSchedulerJobsList === true) {

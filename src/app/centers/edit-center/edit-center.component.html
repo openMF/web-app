@@ -11,7 +11,8 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="editCenterForm.controls.name.hasError('pattern')">
-              {{ 'labels.inputs.Center Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.Center Name' | translate }}
+              <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
               {{ 'labels.inputs.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
@@ -30,7 +31,10 @@
             <input matInput formControlName="externalId" />
           </mat-form-field>
 
-          <ng-container *ngIf="centerData.status.value === 'Pending'" (click)="activatedOnDatePicker.open()">
+          <ng-container
+            *ngIf="centerData.status.value === 'Pending'"
+            (click)="activatedOnDatePicker.open()"
+          >
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
               <input
@@ -41,10 +45,14 @@
                 required
                 formControlName="activationDate"
               />
-              <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="activatedOnDatePicker"
+              ></mat-datepicker-toggle>
               <mat-datepicker #activatedOnDatePicker></mat-datepicker>
               <mat-error *ngIf="editCenterForm.controls.activationDate.hasError('required')">
-                {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
+                {{ 'labels.inputs.Activation Date' | translate }}
+                {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>

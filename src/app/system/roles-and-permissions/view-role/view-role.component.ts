@@ -1,6 +1,12 @@
 /** Angular Imports  */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  FormArray,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
@@ -113,7 +119,9 @@ export class ViewRoleComponent implements OnInit {
   createForm() {
     this.formGroup = this.formBuilder.group({
       roster: this.formBuilder.array(
-        this.rolePermissionService.permissionUsageData.map((elem: any) => this.createMemberGroup(elem))
+        this.rolePermissionService.permissionUsageData.map((elem: any) =>
+          this.createMemberGroup(elem)
+        )
       )
     });
   }
@@ -244,7 +252,9 @@ export class ViewRoleComponent implements OnInit {
     this.formGroup.controls.roster.disable();
     this.checkboxesChanged = false;
     this.isDisabled = true;
-    this.systemService.updateRolePermission(this.roleId, permissionData).subscribe((response: any) => {});
+    this.systemService
+      .updateRolePermission(this.roleId, permissionData)
+      .subscribe((response: any) => {});
   }
 
   /**
@@ -276,7 +286,9 @@ export class ViewRoleComponent implements OnInit {
    */
   deleteRole() {
     const deleteRoleDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId }
+      data: {
+        deleteContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId
+      }
     });
     deleteRoleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -293,7 +305,9 @@ export class ViewRoleComponent implements OnInit {
    */
   enableRolesConfirmation() {
     const enableRoleDialogRef = this.dialog.open(EnableDialogComponent, {
-      data: { enableContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId }
+      data: {
+        enableContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId
+      }
     });
     enableRoleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.enable) {
@@ -310,7 +324,9 @@ export class ViewRoleComponent implements OnInit {
    */
   disableRolesConfirmation() {
     const deleteRoleDialogRef = this.dialog.open(DisableDialogComponent, {
-      data: { disableContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId }
+      data: {
+        disableContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId
+      }
     });
     deleteRoleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.disable) {

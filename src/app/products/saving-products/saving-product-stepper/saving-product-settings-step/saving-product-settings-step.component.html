@@ -43,7 +43,9 @@
     </mat-checkbox>
 
     <mat-form-field class="flex-48">
-      <mat-label>{{ 'labels.inputs.Balance Required for Interest Calculation' | translate }}</mat-label>
+      <mat-label>{{
+        'labels.inputs.Balance Required for Interest Calculation' | translate
+      }}</mat-label>
       <input
         type="number"
         matInput
@@ -66,7 +68,9 @@
       <input
         type="number"
         matInput
-        matTooltip="{{ 'tooltips.Sets the minimum balance allowed for a saving account' | translate }}"
+        matTooltip="{{
+          'tooltips.Sets the minimum balance allowed for a saving account' | translate
+        }}"
         formControlName="minRequiredBalance"
       />
     </mat-form-field>
@@ -100,7 +104,9 @@
     <mat-checkbox
       class="flex-73 margin-b"
       labelPosition="before"
-      matTooltip="{{ 'tooltips.Indicates whether saving accounts based on this saving product' | translate }}"
+      matTooltip="{{
+        'tooltips.Indicates whether saving accounts based on this saving product' | translate
+      }}"
       formControlName="allowOverdraft"
     >
       {{ 'labels.inputs.Is Overdraft Allowed' | translate }}
@@ -111,17 +117,23 @@
       class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
       <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</mat-label>
+        <mat-label>{{
+          'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate
+        }}</mat-label>
         <input
           type="number"
           matInput
-          matTooltip="{{ 'tooltips.Sets the overdraft required for interest calculation' | translate }}"
+          matTooltip="{{
+            'tooltips.Sets the overdraft required for interest calculation' | translate
+          }}"
           formControlName="minOverdraftForInterestCalculation"
         />
       </mat-form-field>
 
       <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}</mat-label>
+        <mat-label>{{
+          'labels.inputs.Nominal Annual Interest for Overdraft' | translate
+        }}</mat-label>
         <input
           type="number"
           matInput
@@ -148,7 +160,9 @@
     <mat-checkbox
       class="flex-73 margin-b"
       labelPosition="before"
-      matTooltip="{{ 'tooltips.Enables definition and tracking inactive Savings Accounts' | translate }}"
+      matTooltip="{{
+        'tooltips.Enables definition and tracking inactive Savings Accounts' | translate
+      }}"
       formControlName="isDormancyTrackingActive"
     >
       {{ 'labels.inputs.Enable Dormancy Tracking' | translate }}
@@ -159,7 +173,9 @@
       class="flex-fill layout-row-wrap gap-2percent responsive-column"
     >
       <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}</mat-label>
+        <mat-label>{{
+          'labels.inputs.Number of Days to Inactive sub-status' | translate
+        }}</mat-label>
         <input
           type="number"
           matInput
@@ -168,13 +184,16 @@
           required
         />
         <mat-error>
-          {{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
 
       <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }}</mat-label>
+        <mat-label>{{
+          'labels.inputs.Number of Days to Dormant sub-status' | translate
+        }}</mat-label>
         <input
           type="number"
           matInput
@@ -183,7 +202,8 @@
           required
         />
         <mat-error>
-          {{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>
@@ -198,7 +218,8 @@
           required
         />
         <mat-error>
-          {{ 'labels.inputs.Number of Days to Escheat' | translate }} {{ 'labels.commons.is' | translate }}
+          {{ 'labels.inputs.Number of Days to Escheat' | translate }}
+          {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
         </mat-error>
       </mat-form-field>

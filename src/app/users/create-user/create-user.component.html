@@ -14,7 +14,11 @@
 
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
-            <input matInput [required]="userForm.controls.sendPasswordToEmail.value" formControlName="email" />
+            <input
+              matInput
+              [required]="userForm.controls.sendPasswordToEmail.value"
+              formControlName="email"
+            />
             <mat-error *ngIf="userForm.controls.email.hasError('email')">
               {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{"labels.commons.invalid' | translate}}</strong>
@@ -30,7 +34,9 @@
             <input matInput required formControlName="firstname" />
             <mat-error *ngIf="userForm.controls.firstname.hasError('pattern')">
               {{ 'labels.inputs.First Name' | translate }}
-              <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
+              <strong>{{
+                'labels.commons.cannot begin with a special character or number' | translate
+              }}</strong>
             </mat-error>
             <mat-error *ngIf="userForm.controls.firstname.hasError('required')">
               {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -43,7 +49,9 @@
             <input matInput required formControlName="lastname" />
             <mat-error *ngIf="userForm.controls.lastname.hasError('pattern')">
               {{ 'labels.inputs.Last Name' | translate }}
-              <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
+              <strong>{{
+                'labels.commons.cannot begin with a special character or number' | translate
+              }}</strong>
             </mat-error>
             <mat-error *ngIf="userForm.controls.lastname.hasError('required')">
               {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -81,11 +89,15 @@
             <mat-error
               *ngIf="
                 userForm.controls.password.hasError('pattern') &&
-                !(userForm.controls.password.hasError('minlength') || userForm.controls.password.hasError('maxlength'))
+                !(
+                  userForm.controls.password.hasError('minlength') ||
+                  userForm.controls.password.hasError('maxlength')
+                )
               "
             >
               {{ 'labels.commons.Password should include a' | translate }}
-              <strong>{{ 'labels.commons.numeral' | translate }}</strong> {{ 'labels.commons.and at' | translate }}
+              <strong>{{ 'labels.commons.numeral' | translate }}</strong>
+              {{ 'labels.commons.and at' | translate }}
               <strong>{{ 'labels.commons.least one uppercase' | translate }}</strong> ,<strong>{{
                 'labels.commons.lowercase and special character' | translate
               }}</strong>
@@ -109,7 +121,8 @@
               !userForm.controls.repeatPassword.hasError('required')
             "
           >
-            {{ 'labels.inputs.Passwords' | translate }} <strong>{{ 'labels.commons.do not match' | translate }}</strong>
+            {{ 'labels.inputs.Passwords' | translate }}
+            <strong>{{ 'labels.commons.do not match' | translate }}</strong>
           </p>
 
           <mat-form-field class="flex-48">
@@ -170,7 +183,11 @@
     }}</a>
   </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close()">

@@ -61,9 +61,11 @@ export class ViewFinancialActivityMappingComponent {
     });
     deleteFinancialActivityAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountingService.deleteFinancialActivityAccount(this.financialActivityAccountId).subscribe(() => {
-          this.router.navigate(['/accounting/financial-activity-mappings']);
-        });
+        this.accountingService
+          .deleteFinancialActivityAccount(this.financialActivityAccountId)
+          .subscribe(() => {
+            this.router.navigate(['/accounting/financial-activity-mappings']);
+          });
       }
     });
   }

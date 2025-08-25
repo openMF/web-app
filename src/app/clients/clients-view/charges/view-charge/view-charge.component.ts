@@ -93,7 +93,10 @@ export class ViewChargeComponent {
    * Undo Transaction.
    */
   undoTransaction(transactionId: any) {
-    const transactionData = { clientId: this.chargeData.clientId.toString(), transactionId: transactionId };
+    const transactionData = {
+      clientId: this.chargeData.clientId.toString(),
+      transactionId: transactionId
+    };
     this.clientService.undoTransaction(transactionData).subscribe(() => {
       this.getChargeData();
     });
@@ -103,9 +106,11 @@ export class ViewChargeComponent {
    * Get Charge Data.
    */
   getChargeData() {
-    this.clientService.getSelectedChargeData(this.chargeData.clientId, this.chargeData.id).subscribe((data: any) => {
-      this.chargeData = data;
-    });
+    this.clientService
+      .getSelectedChargeData(this.chargeData.clientId, this.chargeData.id)
+      .subscribe((data: any) => {
+        this.chargeData = data;
+      });
   }
 
   /**

@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -144,26 +151,31 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * Sets the conditional controls of the user form
    */
   setConditionalControls() {
-    this.userForm.get('sendPasswordToEmail').valueChanges.subscribe((sendPasswordToEmail: boolean) => {
-      if (sendPasswordToEmail) {
-        this.userForm.removeControl('password');
-        this.userForm.removeControl('repeatPassword');
-        this.userForm.get('email').setValidators([
-          Validators.required,
-          Validators.email
-        ]);
-      } else {
-        this.userForm.addControl('password', new UntypedFormControl('', this.passwordsUtility.getPasswordValidators()));
-        this.userForm.addControl(
-          'repeatPassword',
-          new UntypedFormControl('', [
+    this.userForm
+      .get('sendPasswordToEmail')
+      .valueChanges.subscribe((sendPasswordToEmail: boolean) => {
+        if (sendPasswordToEmail) {
+          this.userForm.removeControl('password');
+          this.userForm.removeControl('repeatPassword');
+          this.userForm.get('email').setValidators([
             Validators.required,
-            this.passwordsUtility.confirmPassword('password')])
-        );
-        this.userForm.get('email').setValidators([Validators.email]);
-      }
-      this.userForm.get('email').updateValueAndValidity();
-    });
+            Validators.email
+          ]);
+        } else {
+          this.userForm.addControl(
+            'password',
+            new UntypedFormControl('', this.passwordsUtility.getPasswordValidators())
+          );
+          this.userForm.addControl(
+            'repeatPassword',
+            new UntypedFormControl('', [
+              Validators.required,
+              this.passwordsUtility.confirmPassword('password')])
+          );
+          this.userForm.get('email').setValidators([Validators.email]);
+        }
+        this.userForm.get('email').updateValueAndValidity();
+      });
   }
 
   /**

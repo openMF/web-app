@@ -29,7 +29,11 @@
 
   <mat-form-field *ngIf="depositProductIncentiveForm.value.attributeName">
     <mat-label>{{ 'labels.inputs.Value' | translate }}</mat-label>
-    <mat-select formControlName="attributeValue" *ngIf="depositProductIncentiveForm.value.attributeName !== 3" required>
+    <mat-select
+      formControlName="attributeValue"
+      *ngIf="depositProductIncentiveForm.value.attributeName !== 3"
+      required
+    >
       <mat-option *ngFor="let attributeValue of attributeValueData" [value]="attributeValue.id">
         {{ attributeValue.name }}
       </mat-option>

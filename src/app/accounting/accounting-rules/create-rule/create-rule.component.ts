@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -110,15 +115,17 @@ export class CreateRuleComponent implements OnInit {
         this.accountingRuleForm.get('allowMultipleDebitEntries').setValue(false);
       }
     });
-    this.accountingRuleForm.get('creditRuleType').valueChanges.subscribe((creditRuleType: string) => {
-      if (creditRuleType === 'fixedAccount') {
-        this.accountingRuleForm.get('creditTags').reset();
-        this.accountingRuleForm.get('allowMultipleCreditEntries').reset();
-      } else {
-        this.accountingRuleForm.get('accountToCredit').reset();
-        this.accountingRuleForm.get('allowMultipleCreditEntries').setValue(false);
-      }
-    });
+    this.accountingRuleForm
+      .get('creditRuleType')
+      .valueChanges.subscribe((creditRuleType: string) => {
+        if (creditRuleType === 'fixedAccount') {
+          this.accountingRuleForm.get('creditTags').reset();
+          this.accountingRuleForm.get('allowMultipleCreditEntries').reset();
+        } else {
+          this.accountingRuleForm.get('accountToCredit').reset();
+          this.accountingRuleForm.get('allowMultipleCreditEntries').setValue(false);
+        }
+      });
   }
 
   /**

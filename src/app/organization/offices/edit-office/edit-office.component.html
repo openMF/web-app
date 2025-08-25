@@ -54,7 +54,12 @@
         <button type="button" mat-raised-button [routerLink]="['../general']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!officeForm.valid" *mifosxHasPermission="'UPDATE_OFFICE'">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!officeForm.valid"
+          *mifosxHasPermission="'UPDATE_OFFICE'"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

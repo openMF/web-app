@@ -42,8 +42,10 @@ export class UndoApprovalComponent implements OnInit {
    */
   submit() {
     const loanId = this.route.snapshot.params['loanId'];
-    this.loanService.loanActionButtons(loanId, 'undoapproval', { note: this.note.value }).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .loanActionButtons(loanId, 'undoapproval', { note: this.note.value })
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component } from '@angular/core';
-import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogActions,
+  MatDialogClose
+} from '@angular/material/dialog';
 import { FileUploadComponent } from '../../../../shared/file-upload/file-upload.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 

@@ -139,7 +139,10 @@ export class CreateCenterComponent implements OnInit {
     });
     this.centerForm.get('active').valueChanges.subscribe((bool: boolean) => {
       if (bool) {
-        this.centerForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
+        this.centerForm.addControl(
+          'activationDate',
+          new UntypedFormControl('', Validators.required)
+        );
       } else {
         this.centerForm.removeControl('activationDate');
       }

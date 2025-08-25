@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -82,7 +87,10 @@ export class RejectSharesAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevRejectedDate: Date = this.rejectSharesAccountForm.value.rejectedDate;
     if (rejectSharesAccountFormData.rejectedDate instanceof Date) {
-      rejectSharesAccountFormData.rejectedDate = this.dateUtils.formatDate(prevRejectedDate, dateFormat);
+      rejectSharesAccountFormData.rejectedDate = this.dateUtils.formatDate(
+        prevRejectedDate,
+        dateFormat
+      );
     }
     const data = {
       ...rejectSharesAccountFormData,

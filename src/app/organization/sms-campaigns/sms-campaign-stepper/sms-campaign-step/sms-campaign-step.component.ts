@@ -41,7 +41,8 @@ export class SmsCampaignStepComponent implements OnInit {
   /** SMS Campaign Template */
   @Input() smsCampaignTemplate: any;
   /** Business Rule Parameters Component */
-  @ViewChild(BusinessRuleParametersComponent) businessRuleParametersComponent: BusinessRuleParametersComponent;
+  @ViewChild(BusinessRuleParametersComponent)
+  businessRuleParametersComponent: BusinessRuleParametersComponent;
 
   /** Min. Date */
   minDate = new Date();
@@ -163,9 +164,11 @@ export class SmsCampaignStepComponent implements OnInit {
     this.smsCampaignDetailsForm.get('runReportId').valueChanges.subscribe((value: number) => {
       if (value) {
         const report = this.businessRules.find((rule: any) => rule.reportId === value);
-        this.reportService.getReportParams(report.reportName).subscribe((response: ReportParameter[]) => {
-          this.paramData = { response, reportName: report.reportName };
-        });
+        this.reportService
+          .getReportParams(report.reportName)
+          .subscribe((response: ReportParameter[]) => {
+            this.paramData = { response, reportName: report.reportName };
+          });
       }
     });
     this.smsCampaignDetailsForm.get('triggerType').valueChanges.subscribe((value: number) => {
@@ -175,14 +178,27 @@ export class SmsCampaignStepComponent implements OnInit {
         this.smsCampaignDetailsForm.get('runReportId').patchValue('');
       }
       if (value === 3) {
-        this.businessRules = this.businessRules.filter((rule: any) => rule.reportSubType === 'Triggered');
+        this.businessRules = this.businessRules.filter(
+          (rule: any) => rule.reportSubType === 'Triggered'
+        );
       } else {
-        this.businessRules = this.businessRules.filter((rule: any) => rule.reportSubType !== 'Triggered');
+        this.businessRules = this.businessRules.filter(
+          (rule: any) => rule.reportSubType !== 'Triggered'
+        );
       }
       if (value === 2) {
-        this.smsCampaignDetailsForm.addControl('recurrenceStartDate', new UntypedFormControl('', Validators.required));
-        this.smsCampaignDetailsForm.addControl('frequency', new UntypedFormControl('', Validators.required));
-        this.smsCampaignDetailsForm.addControl('interval', new UntypedFormControl('', Validators.required));
+        this.smsCampaignDetailsForm.addControl(
+          'recurrenceStartDate',
+          new UntypedFormControl('', Validators.required)
+        );
+        this.smsCampaignDetailsForm.addControl(
+          'frequency',
+          new UntypedFormControl('', Validators.required)
+        );
+        this.smsCampaignDetailsForm.addControl(
+          'interval',
+          new UntypedFormControl('', Validators.required)
+        );
         this.smsCampaignDetailsForm.get('frequency').valueChanges.subscribe((frequency: number) => {
           this.smsCampaignDetailsForm.removeControl('repeatsOnDay');
           switch (frequency) {
@@ -199,7 +215,10 @@ export class SmsCampaignStepComponent implements OnInit {
                 '2',
                 '3'
               ];
-              this.smsCampaignDetailsForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
+              this.smsCampaignDetailsForm.addControl(
+                'repeatsOnDay',
+                new UntypedFormControl('', Validators.required)
+              );
               break;
             case 3: // Monthly
               this.repetitionIntervals = [

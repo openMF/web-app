@@ -108,9 +108,11 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
     });
     deleteCriteriaDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteProvisioningCriteria(this.provisioningData.criteriaId).subscribe(() => {
-          this.router.navigate(['/organization/provisioningcriteria']);
-        });
+        this.organizationService
+          .deleteProvisioningCriteria(this.provisioningData.criteriaId)
+          .subscribe(() => {
+            this.router.navigate(['/organization/provisioningcriteria']);
+          });
       }
     });
   }

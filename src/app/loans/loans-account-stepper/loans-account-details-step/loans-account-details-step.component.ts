@@ -107,7 +107,9 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
     this.maxDate = this.settingsService.maxFutureDate;
     this.buildDependencies();
     if (this.loansAccountTemplate) {
-      this.productList = this.loansAccountTemplate.productOptions.sort(this.commons.dynamicSort('name'));
+      this.productList = this.loansAccountTemplate.productOptions.sort(
+        this.commons.dynamicSort('name')
+      );
       if (this.loansAccountTemplate.loanProductId) {
         this.loansAccountDetailsForm.patchValue({
           productId: this.loansAccountTemplate.loanProductId,
@@ -186,19 +188,21 @@ export class LoansAccountDetailsStepComponent implements OnInit, OnDestroy {
       : this.loansAccountTemplate.group.id;
     const isGroup = this.loansAccountTemplate.clientId ? false : true;
     this.loansAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
-        this.loansAccountProductTemplate.emit(response);
-        this.loanOfficerOptions = response.loanOfficerOptions;
-        this.loanPurposeOptions = response.loanPurposeOptions;
-        this.fundOptions = response.fundOptions;
-        this.accountLinkingOptions = response.accountLinkingOptions;
-        this.loanProductSelected = true;
-        if (response.createStandingInstructionAtDisbursement) {
-          this.loansAccountDetailsForm
-            .get('createStandingInstructionAtDisbursement')
-            .patchValue(response.createStandingInstructionAtDisbursement);
-        }
-      });
+      this.loansService
+        .getLoansAccountTemplateResource(entityId, isGroup, productId)
+        .subscribe((response: any) => {
+          this.loansAccountProductTemplate.emit(response);
+          this.loanOfficerOptions = response.loanOfficerOptions;
+          this.loanPurposeOptions = response.loanPurposeOptions;
+          this.fundOptions = response.fundOptions;
+          this.accountLinkingOptions = response.accountLinkingOptions;
+          this.loanProductSelected = true;
+          if (response.createStandingInstructionAtDisbursement) {
+            this.loansAccountDetailsForm
+              .get('createStandingInstructionAtDisbursement')
+              .patchValue(response.createStandingInstructionAtDisbursement);
+          }
+        });
     });
   }
 

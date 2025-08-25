@@ -11,7 +11,8 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error *ngIf="centerForm.controls.name.hasError('pattern')">
-              {{ 'labels.inputs.Center Name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+              {{ 'labels.inputs.Center Name' | translate }}
+              <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
               {{ 'labels.inputs.begin with a special character or number' | translate }}
             </mat-error>
           </mat-form-field>
@@ -42,7 +43,10 @@
             {{ 'labels.inputs.Active' | translate }}
           </mat-checkbox>
 
-          <mat-form-field *ngIf="this.centerForm.controls.active.value" (click)="activationDatePicker.open()">
+          <mat-form-field
+            *ngIf="this.centerForm.controls.active.value"
+            (click)="activationDatePicker.open()"
+          >
             <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
             <input
               matInput
@@ -55,7 +59,8 @@
             <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activationDatePicker></mat-datepicker>
             <mat-error *ngIf="centerForm.controls.activationDate.hasError('required')">
-              {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Activation Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -78,7 +83,8 @@
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
             <mat-error *ngIf="centerForm.controls.submittedOnDate.hasError('required')">
-              {{ 'labels.inputs.Submission Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Submission Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>

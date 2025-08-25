@@ -105,7 +105,9 @@ export class ChargesTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    const activeCharges = this.chargesData ? this.chargesData.filter((charge) => charge.isActive) : [];
+    const activeCharges = this.chargesData
+      ? this.chargesData.filter((charge) => charge.isActive)
+      : [];
     this.dataSource = new MatTableDataSource(activeCharges);
   }
 
@@ -148,7 +150,12 @@ export class ChargesTabComponent implements OnInit {
           locale
         };
         this.savingsService
-          .executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'paycharge', dataObject, chargeId)
+          .executeSavingsAccountChargesCommand(
+            this.recurringDepositsAccountData.id,
+            'paycharge',
+            dataObject,
+            chargeId
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -165,14 +172,20 @@ export class ChargesTabComponent implements OnInit {
       data: {
         heading: this.translateService.instant('labels.heading.Waive Charge'),
         dialogContext:
-          this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id: ') +
-          `${chargeId} ?`
+          this.translateService.instant(
+            'labels.dialogContext.Are you sure you want to waive charge with id: '
+          ) + `${chargeId} ?`
       }
     });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.savingsService
-          .executeSavingsAccountChargesCommand(this.recurringDepositsAccountData.id, 'waive', {}, chargeId)
+          .executeSavingsAccountChargesCommand(
+            this.recurringDepositsAccountData.id,
+            'waive',
+            {},
+            chargeId
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -229,9 +242,11 @@ export class ChargesTabComponent implements OnInit {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.recurringDepositsAccountData.id, chargeId).subscribe(() => {
-          this.reload();
-        });
+        this.savingsService
+          .deleteSavingsAccountCharge(this.recurringDepositsAccountData.id, chargeId)
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -252,7 +267,9 @@ export class ChargesTabComponent implements OnInit {
     const clientId = this.recurringDepositsAccountData.clientId;
     const url: string = this.router.url;
     this.router
-      .navigateByUrl(`/clients/${clientId}/recurring-deposits-accounts`, { skipLocationChange: true })
+      .navigateByUrl(`/clients/${clientId}/recurring-deposits-accounts`, {
+        skipLocationChange: true
+      })
       .then(() => this.router.navigate([url]));
   }
 }

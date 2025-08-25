@@ -43,15 +43,22 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.lockinPeriodFrequencyTypeData = this.fixedDepositProductsTemplate.lockinPeriodFrequencyTypeOptions;
-    this.periodFrequencyTypeData = this.fixedDepositProductsTemplate.periodFrequencyTypeOptions.slice(0, -1);
-    this.preClosurePenalInterestOnTypeData = this.fixedDepositProductsTemplate.preClosurePenalInterestOnTypeOptions;
+    this.lockinPeriodFrequencyTypeData =
+      this.fixedDepositProductsTemplate.lockinPeriodFrequencyTypeOptions;
+    this.periodFrequencyTypeData =
+      this.fixedDepositProductsTemplate.periodFrequencyTypeOptions.slice(0, -1);
+    this.preClosurePenalInterestOnTypeData =
+      this.fixedDepositProductsTemplate.preClosurePenalInterestOnTypeOptions;
     this.taxGroupData = this.fixedDepositProductsTemplate.taxGroupOptions;
 
-    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+    if (
+      !(this.fixedDepositProductsTemplate === undefined) &&
+      this.fixedDepositProductsTemplate.id
+    ) {
       this.fixedDepositProductSettingsForm.patchValue({
         isMandatoryDeposit: this.fixedDepositProductsTemplate.isMandatoryDeposit,
-        adjustAdvanceTowardsFuturePayments: this.fixedDepositProductsTemplate.adjustAdvanceTowardsFuturePayments,
+        adjustAdvanceTowardsFuturePayments:
+          this.fixedDepositProductsTemplate.adjustAdvanceTowardsFuturePayments,
         allowWithdrawal: this.fixedDepositProductsTemplate.allowWithdrawal,
         lockinPeriodFrequency: this.fixedDepositProductsTemplate.lockinPeriodFrequency,
         lockinPeriodFrequencyType: this.fixedDepositProductsTemplate.lockinPeriodFrequencyType
@@ -62,7 +69,8 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
           ? this.fixedDepositProductsTemplate.minDepositTermType.id
           : '',
         inMultiplesOfDepositTerm: this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm,
-        inMultiplesOfDepositTermTypeId: this.fixedDepositProductsTemplate.inMultiplesOfDepositTermType
+        inMultiplesOfDepositTermTypeId: this.fixedDepositProductsTemplate
+          .inMultiplesOfDepositTermType
           ? this.fixedDepositProductsTemplate.inMultiplesOfDepositTerm.id
           : '',
         maxDepositTerm: this.fixedDepositProductsTemplate.maxDepositTerm,
@@ -71,7 +79,8 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
           : '',
         preClosurePenalApplicable: this.fixedDepositProductsTemplate.preClosurePenalApplicable,
         preClosurePenalInterest: this.fixedDepositProductsTemplate.preClosurePenalInterest,
-        preClosurePenalInterestOnTypeId: this.fixedDepositProductsTemplate.preClosurePenalInterestOnType
+        preClosurePenalInterestOnTypeId: this.fixedDepositProductsTemplate
+          .preClosurePenalInterestOnType
           ? this.fixedDepositProductsTemplate.preClosurePenalInterestOnType.id
           : '',
         withHoldTax: this.fixedDepositProductsTemplate.withHoldTax
@@ -80,7 +89,9 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
 
     if (this.fixedDepositProductsTemplate.withHoldTax) {
       this.fixedDepositProductSettingsForm.patchValue({
-        taxGroupId: this.fixedDepositProductsTemplate.taxGroup ? this.fixedDepositProductsTemplate.taxGroup.id : ''
+        taxGroupId: this.fixedDepositProductsTemplate.taxGroup
+          ? this.fixedDepositProductsTemplate.taxGroup.id
+          : ''
       });
     }
   }
@@ -109,13 +120,18 @@ export class FixedDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.fixedDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
-      if (withHoldTax) {
-        this.fixedDepositProductSettingsForm.addControl('taxGroupId', new UntypedFormControl('', Validators.required));
-      } else {
-        this.fixedDepositProductSettingsForm.removeControl('taxGroupId');
-      }
-    });
+    this.fixedDepositProductSettingsForm
+      .get('withHoldTax')
+      .valueChanges.subscribe((withHoldTax: any) => {
+        if (withHoldTax) {
+          this.fixedDepositProductSettingsForm.addControl(
+            'taxGroupId',
+            new UntypedFormControl('', Validators.required)
+          );
+        } else {
+          this.fixedDepositProductSettingsForm.removeControl('taxGroupId');
+        }
+      });
   }
 
   get fixedDepositProductSettings() {

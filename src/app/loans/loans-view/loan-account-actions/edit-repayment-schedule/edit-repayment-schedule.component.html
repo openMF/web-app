@@ -15,14 +15,28 @@
         <button type="button" mat-raised-button [routerLink]="['../../general']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button type="button" mat-raised-button (click)="reset()">{{ 'labels.buttons.Reset' | translate }}</button>
+        <button type="button" mat-raised-button (click)="reset()">
+          {{ 'labels.buttons.Reset' | translate }}
+        </button>
         <button type="button" color="primary" mat-raised-button (click)="applyPattern()">
           {{ 'labels.buttons.Pattern' | translate }}
         </button>
-        <button type="button" color="primary" mat-raised-button [disabled]="!wasChanged" (click)="validate()">
+        <button
+          type="button"
+          color="primary"
+          mat-raised-button
+          [disabled]="!wasChanged"
+          (click)="validate()"
+        >
           {{ 'labels.buttons.Validate' | translate }}
         </button>
-        <button type="button" color="primary" mat-raised-button [disabled]="!wasValidated" (click)="submit()">
+        <button
+          type="button"
+          color="primary"
+          mat-raised-button
+          [disabled]="!wasValidated"
+          (click)="submit()"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

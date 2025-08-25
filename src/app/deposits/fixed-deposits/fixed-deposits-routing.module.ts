@@ -27,7 +27,11 @@ import { GeneralTabComponent } from './fixed-deposit-account-view/general-tab/ge
 const routes: Routes = [
   {
     path: '',
-    data: { title: 'All Fixed Deposits', breadcrumb: 'Fixed Deposits', routeParamBreadcrumb: false },
+    data: {
+      title: 'All Fixed Deposits',
+      breadcrumb: 'Fixed Deposits',
+      routeParamBreadcrumb: false
+    },
     children: [
       {
         path: 'create',
@@ -39,7 +43,10 @@ const routes: Routes = [
       },
       {
         path: ':fixedDepositAccountId',
-        data: { title: 'Fixed Deposit Account View', routeParamBreadcrumb: 'fixedDepositAccountId' },
+        data: {
+          title: 'Fixed Deposit Account View',
+          routeParamBreadcrumb: 'fixedDepositAccountId'
+        },
         resolve: {
           fixedDepositsAccountData: FixedDepositsAccountViewResolver
         },
@@ -60,7 +67,11 @@ const routes: Routes = [
               {
                 path: 'general',
                 component: GeneralTabComponent,
-                data: { title: 'Fixed Deposit Account Details', breadcrumb: 'General', routeParamBreadcrumb: false }
+                data: {
+                  title: 'Fixed Deposit Account Details',
+                  breadcrumb: 'General',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'interest-rate-chart',
@@ -83,7 +94,11 @@ const routes: Routes = [
               {
                 path: 'charges',
                 component: ChargesTabComponent,
-                data: { title: 'Fixed Deposit Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false }
+                data: {
+                  title: 'Fixed Deposit Account Charges',
+                  breadcrumb: 'Charges',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'standing-instructions',
@@ -111,7 +126,11 @@ const routes: Routes = [
           },
           {
             path: 'edit',
-            data: { title: 'Edit Fixed Deposit Account', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            data: {
+              title: 'Edit Fixed Deposit Account',
+              breadcrumb: 'Edit',
+              routeParamBreadcrumb: false
+            },
             component: EditFixedDepositAccountComponent,
             resolve: {
               fixedDepositsAccountAndTemplate: FixedDepositsAccountAndTemplateResolver
@@ -133,7 +152,9 @@ const routes: Routes = [
               {
                 path: 'account-transfers',
                 loadChildren: () =>
-                  import('../../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
+                  import('../../account-transfers/account-transfers.module').then(
+                    (m) => m.AccountTransfersModule
+                  )
               },
               {
                 path: ':id',

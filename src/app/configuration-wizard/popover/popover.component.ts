@@ -1,6 +1,17 @@
 /** Angular Imports */
-import { BasePortalOutlet, CdkPortalOutlet, ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { Component, ComponentRef, EmbeddedViewRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import {
+  BasePortalOutlet,
+  CdkPortalOutlet,
+  ComponentPortal,
+  TemplatePortal
+} from '@angular/cdk/portal';
+import {
+  Component,
+  ComponentRef,
+  EmbeddedViewRef,
+  ViewChild,
+  ChangeDetectorRef
+} from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { PortalModule } from '@angular/cdk/portal';
 

@@ -25,7 +25,8 @@ export class ShareAccountActionsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
-    const shareAccountId = route.paramMap.get('shareAccountId') || route.parent.parent.paramMap.get('shareAccountId');
+    const shareAccountId =
+      route.paramMap.get('shareAccountId') || route.parent.parent.paramMap.get('shareAccountId');
     switch (actionName) {
       case 'Apply Additional Shares':
       case 'Redeem Shares':

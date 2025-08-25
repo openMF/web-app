@@ -121,10 +121,15 @@ export class ViewTransactionComponent implements OnInit {
       this.transactionData = data.loansAccountTransaction;
       this.transactionType = this.transactionData.type;
       this.allowEdition =
-        !this.transactionData.manuallyReversed && !this.allowTransactionEdition(this.transactionData.type.id);
-      this.allowUndo = this.allowUndoTransaction(this.transactionData.manuallyReversed, this.transactionType);
+        !this.transactionData.manuallyReversed &&
+        !this.allowTransactionEdition(this.transactionData.type.id);
+      this.allowUndo = this.allowUndoTransaction(
+        this.transactionData.manuallyReversed,
+        this.transactionType
+      );
       this.allowChargeback =
-        this.allowChargebackTransaction(this.transactionType) && !this.transactionData.manuallyReversed;
+        this.allowChargebackTransaction(this.transactionType) &&
+        !this.transactionData.manuallyReversed;
       let transactionsChargebackRelated = false;
       if (this.transactionData.transactionRelations) {
         this.transactionRelations.data = this.transactionData.transactionRelations;
@@ -138,7 +143,8 @@ export class ViewTransactionComponent implements OnInit {
         });
         this.amountRelationsAllowed = this.transactionData.amount - amountRelations;
         this.isFullRelated = this.amountRelationsAllowed === 0;
-        this.allowChargeback = this.allowChargebackTransaction(this.transactionType) && !this.isFullRelated;
+        this.allowChargeback =
+          this.allowChargebackTransaction(this.transactionType) && !this.isFullRelated;
       }
       if (!this.allowChargeback) {
         this.allowEdition = false;
@@ -232,7 +238,10 @@ export class ViewTransactionComponent implements OnInit {
         formfields: formfields,
         pristine: false
       };
-      const undoTransactionAccountDialogRef = this.dialog.open(FormDialogComponent, { data, width: '50rem' });
+      const undoTransactionAccountDialogRef = this.dialog.open(FormDialogComponent, {
+        data,
+        width: '50rem'
+      });
       undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
         if (response.data) {
           const payload = {
@@ -240,9 +249,11 @@ export class ViewTransactionComponent implements OnInit {
             reversalExternalId: response.data.value.reversalExternalId
           };
 
-          this.loansService.loanActionButtons(accountId, 'undoContractTermination', payload).subscribe(() => {
-            this.router.navigate(['../'], { relativeTo: this.route });
-          });
+          this.loansService
+            .loanActionButtons(accountId, 'undoContractTermination', payload)
+            .subscribe(() => {
+              this.router.navigate(['../'], { relativeTo: this.route });
+            });
         }
       });
     } else {
@@ -250,8 +261,9 @@ export class ViewTransactionComponent implements OnInit {
         data: {
           heading: this.translateService.instant('labels.heading.Undo Transaction'),
           dialogContext:
-            this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction') +
-            `${this.transactionData.id}`
+            this.translateService.instant(
+              'labels.dialogContext.Are you sure you want undo the transaction'
+            ) + `${this.transactionData.id}`
         }
       });
       undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
@@ -268,7 +280,12 @@ export class ViewTransactionComponent implements OnInit {
             locale
           };
           this.loansService
-            .executeLoansAccountTransactionsCommand(accountId, 'undo', data, this.transactionData.id)
+            .executeLoansAccountTransactionsCommand(
+              accountId,
+              'undo',
+              data,
+              this.transactionData.id
+            )
             .subscribe(() => {
               this.router.navigate(['../'], { relativeTo: this.route });
             });
@@ -315,7 +332,12 @@ export class ViewTransactionComponent implements OnInit {
             locale
           };
           this.loansService
-            .executeLoansAccountTransactionsCommand(accountId, 'chargeback', payload, this.transactionData.id)
+            .executeLoansAccountTransactionsCommand(
+              accountId,
+              'chargeback',
+              payload,
+              this.transactionData.id
+            )
             .subscribe(() => {
               this.router.navigate(['../'], { relativeTo: this.route });
             });

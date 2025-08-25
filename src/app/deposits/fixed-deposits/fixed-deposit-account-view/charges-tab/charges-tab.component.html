@@ -20,13 +20,19 @@
       <ng-container matColumnDef="feeOrPenalty">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fee/Penalty' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.penalty === true ? ('Penalty' | translateKey: 'catalogs') : ('Fee' | translateKey: 'catalogs') }}
+          {{
+            charge.penalty === true
+              ? ('Penalty' | translateKey: 'catalogs')
+              : ('Fee' | translateKey: 'catalogs')
+          }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="paymentDueAt">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Due At' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.chargeTimeType.value | translateKey: 'catalogs' }}</td>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.chargeTimeType.value | translateKey: 'catalogs' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="dueAsOf">
@@ -46,8 +52,12 @@
       </ng-container>
 
       <ng-container matColumnDef="calculationType">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Calculation Type' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}</td>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Calculation Type' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.chargeCalculationType.value | translateKey: 'catalogs' }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="due">
@@ -103,7 +113,11 @@
               <i class="fa fa-trash"></i>
             </button>
           </span>
-          <span *ngIf="fixedDepositsAccountData.status.value === 'Active' && charge.amountOutstanding !== 0">
+          <span
+            *ngIf="
+              fixedDepositsAccountData.status.value === 'Active' && charge.amountOutstanding !== 0
+            "
+          >
             <button
               class="account-action-button"
               mat-raised-button

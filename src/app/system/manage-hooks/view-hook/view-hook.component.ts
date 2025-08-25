@@ -55,7 +55,9 @@ export class ViewHookComponent {
    */
   delete() {
     const deleteHookDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.hook') + ' ' + this.hookData.id }
+      data: {
+        deleteContext: this.translateService.instant('labels.inputs.hook') + ' ' + this.hookData.id
+      }
     });
     deleteHookDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

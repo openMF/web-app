@@ -3,14 +3,20 @@
 
   <div class="layout-row gap-32px group-details-container m-b-30">
     <p>
-      {{ 'labels.inputs.Active Client Loans' | translate }}: {{ groupSummary?.activeClientLoans }}<br />
-      {{ 'labels.inputs.Active Client Borrowers' | translate }}: {{ groupSummary?.activeClientBorrowers }}<br />
-      {{ 'labels.inputs.Active Overdue Client Loans' | translate }}: {{ groupSummary?.overdueClientLoans }}<br />
+      {{ 'labels.inputs.Active Client Loans' | translate }}: {{ groupSummary?.activeClientLoans
+      }}<br />
+      {{ 'labels.inputs.Active Client Borrowers' | translate }}:
+      {{ groupSummary?.activeClientBorrowers }}<br />
+      {{ 'labels.inputs.Active Overdue Client Loans' | translate }}:
+      {{ groupSummary?.overdueClientLoans }}<br />
     </p>
     <p>
-      {{ 'labels.inputs.Active Group Loans' | translate }}: {{ groupSummary?.activeGroupLoans }}<br />
-      {{ 'labels.inputs.Active Group Borrowers' | translate }}: {{ groupSummary?.activeGroupBorrowers }}<br />
-      {{ 'labels.inputs.Active Overdue Group Loans' | translate }}: {{ groupSummary?.overdueGroupLoans }}<br />
+      {{ 'labels.inputs.Active Group Loans' | translate }}: {{ groupSummary?.activeGroupLoans
+      }}<br />
+      {{ 'labels.inputs.Active Group Borrowers' | translate }}:
+      {{ groupSummary?.activeGroupBorrowers }}<br />
+      {{ 'labels.inputs.Active Overdue Group Loans' | translate }}:
+      {{ groupSummary?.overdueGroupLoans }}<br />
     </p>
     <p>{{ 'labels.inputs.Active Clients' | translate }}: {{ groupSummary?.activeClients }}<br /></p>
   </div>
@@ -23,7 +29,11 @@
       <ng-container matColumnDef="Name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
         <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup" [matTooltip]="element.status.value"></i>
+          <i
+            class="fa fa-stop"
+            [ngClass]="element.status.code | statusLookup"
+            [matTooltip]="element.status.value"
+          ></i>
           {{ element.displayName }}
         </td>
       </ng-container>
@@ -39,11 +49,16 @@
       </ng-container>
 
       <ng-container matColumnDef="JLG Loan Application">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.JLG Loan Application' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.JLG Loan Application' | translate }}
+        </th>
         <td mat-cell *matCellDef="let element">
           <div class="m-l-30" *ngIf="element.status.code !== 'clientStatusType.closed'">
             <button class="account-action-button" mat-raised-button color="primary" disabled>
-              <i class="fa fa-plus" matTooltip="{{ 'tooltips.New Loan Application' | translate }}"></i>
+              <i
+                class="fa fa-plus"
+                matTooltip="{{ 'tooltips.New Loan Application' | translate }}"
+              ></i>
             </button>
           </div>
         </td>
@@ -64,8 +79,16 @@
       <div class="m-b-10">
         <h3>{{ 'labels.heading.Loan Accounts' | translate }}</h3>
       </div>
-      <div *ngIf="(loanAccounts | accountsFilter: 'loan' : 'closed').length" class="action-button m-b-10">
-        <button mat-raised-button class="f-right" color="primary" (click)="toggleLoanAccountsOverview()">
+      <div
+        *ngIf="(loanAccounts | accountsFilter: 'loan' : 'closed').length"
+        class="action-button m-b-10"
+      >
+        <button
+          mat-raised-button
+          class="f-right"
+          color="primary"
+          (click)="toggleLoanAccountsOverview()"
+        >
           {{ showClosedLoanAccounts ? 'View Active Accounts' : 'View Closed Accounts' }}
         </button>
       </div>
@@ -83,7 +106,9 @@
         <td mat-cell *matCellDef="let element">
           <i
             class="fa fa-stop"
-            [ngClass]="element.inArrears ? 'status-active-overdue' : (element.status.code | statusLookup)"
+            [ngClass]="
+              element.inArrears ? 'status-active-overdue' : (element.status.code | statusLookup)
+            "
             [matTooltip]="element.inArrears ? 'Active Overdue' : element.status.value"
           ></i>
           {{ element.accountNo }}
@@ -124,7 +149,12 @@
       <ng-container matColumnDef="Actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let element">
-          <button *ngIf="element.status.active" class="account-action-button" mat-raised-button color="primary">
+          <button
+            *ngIf="element.status.active"
+            class="account-action-button"
+            mat-raised-button
+            color="primary"
+          >
             <i class="fa fa-dollar" matTooltip="{{ 'tooltips.Make Repayment' | translate }}"></i>
           </button>
           <button
@@ -136,7 +166,9 @@
             <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
           </button>
           <button
-            *ngIf="!element.status.pendingApproval && !element.status.active && !element.status.overpaid"
+            *ngIf="
+              !element.status.pendingApproval && !element.status.active && !element.status.overpaid
+            "
             class="account-action-button"
             mat-raised-button
             color="primary"
@@ -144,7 +176,9 @@
             <i class="fa fa-flag" matTooltip="{{ 'tooltips.Disburse' | translate }}"></i>
           </button>
           <button
-            *ngIf="!element.status.pendingApproval && !element.status.active && element.status.overpaid"
+            *ngIf="
+              !element.status.pendingApproval && !element.status.active && element.status.overpaid
+            "
             class="account-action-button"
             mat-raised-button
             color="primary"
@@ -174,7 +208,9 @@
         <td mat-cell *matCellDef="let element">
           <i
             class="fa fa-stop"
-            [ngClass]="element.inArrears ? 'status-active-overdue' : (element.status.code | statusLookup)"
+            [ngClass]="
+              element.inArrears ? 'status-active-overdue' : (element.status.code | statusLookup)
+            "
             [matTooltip]="element.inArrears ? 'Active Overdue' : element.status.value"
           ></i>
           {{ element.accountNo }}
@@ -188,7 +224,9 @@
 
       <ng-container matColumnDef="Original Loan">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Original Loan' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.lastActiveTransactionDate | dateFormat }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.lastActiveTransactionDate | dateFormat }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="Loan Balance">
@@ -344,7 +382,11 @@
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}.</th>
         <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup" [matTooltip]="element.status.value"></i>
+          <i
+            class="fa fa-stop"
+            [ngClass]="element.status.code | statusLookup"
+            [matTooltip]="element.status.value"
+          ></i>
           {{ element.accountNo }}
         </td>
       </ng-container>
@@ -356,7 +398,9 @@
 
       <ng-container matColumnDef="Last Active">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Last Active' | translate }}</th>
-        <td mat-cell *matCellDef="let element">{{ element.lastActiveTransactionDate | dateFormat }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.lastActiveTransactionDate | dateFormat }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="Balance">
@@ -438,7 +482,11 @@
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}.</th>
         <td mat-cell *matCellDef="let element">
-          <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup" [matTooltip]="element.status.value"></i>
+          <i
+            class="fa fa-stop"
+            [ngClass]="element.status.code | statusLookup"
+            [matTooltip]="element.status.value"
+          ></i>
           {{ element.accountNo }}
         </td>
       </ng-container>

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -99,9 +104,11 @@ export class EditConfigurationComponent implements OnInit {
         delete payload.dateValue;
       }
 
-      this.systemService.updateConfiguration(this.configuration.id, payload).subscribe((response: any) => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+      this.systemService
+        .updateConfiguration(this.configuration.id, payload)
+        .subscribe((response: any) => {
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        });
     }
   }
 }

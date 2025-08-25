@@ -197,7 +197,11 @@ export class CreateTaxGroupComponent implements OnInit {
     taxComponentDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const updatedMemeber = { ...taxComponent, ...response.data.value };
-        this.taxComponentsDataSource.splice(this.taxComponentsDataSource.indexOf(taxComponent), 1, updatedMemeber);
+        this.taxComponentsDataSource.splice(
+          this.taxComponentsDataSource.indexOf(taxComponent),
+          1,
+          updatedMemeber
+        );
         this.taxComponentsDataSource = this.taxComponentsDataSource.concat([]);
       }
     });

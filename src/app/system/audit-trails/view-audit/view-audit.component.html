@@ -97,12 +97,16 @@
         <div class="flex-46 command">
           <table mat-table [dataSource]="dataSource" class="command-table" matSort>
             <ng-container matColumnDef="command">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Command' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ 'labels.inputs.Command' | translate }}
+              </th>
               <td mat-cell *matCellDef="let auditTrailCommand">{{ auditTrailCommand.command }}</td>
             </ng-container>
 
             <ng-container matColumnDef="commandValue">
-              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Command Value' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef>
+                {{ 'labels.inputs.Command Value' | translate }}
+              </th>
               <td mat-cell *matCellDef="let auditTrailCommand" class="column-value-wrapper">
                 {{ auditTrailCommand.commandValue }}
               </td>

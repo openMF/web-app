@@ -22,7 +22,9 @@
         </p>
         <p *ngIf="centerData.externalId">
           {{ 'labels.inputs.External Id' | translate }}:
-          <mifosx-external-identifier externalId="{{ centerData.externalId }}"></mifosx-external-identifier>
+          <mifosx-external-identifier
+            externalId="{{ centerData.externalId }}"
+          ></mifosx-external-identifier>
         </p>
       </mat-card-subtitle>
     </div>
@@ -91,28 +93,40 @@
 
         <div
           class="mat-body-strong flex-50"
-          *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]"
+          *ngIf="
+            centerData.collectionMeetingCalendar &&
+            centerData.collectionMeetingCalendar.nextTenRecurringDates[0]
+          "
         >
           {{ 'labels.inputs.Next Meeting Date' | translate }}
         </div>
 
         <div
           class="flex-50"
-          *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.nextTenRecurringDates[0]"
+          *ngIf="
+            centerData.collectionMeetingCalendar &&
+            centerData.collectionMeetingCalendar.nextTenRecurringDates[0]
+          "
         >
           {{ centerSummaryData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat }}
         </div>
 
         <div
           class="mat-body-strong flex-50"
-          *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable"
+          *ngIf="
+            centerData.collectionMeetingCalendar &&
+            centerData.collectionMeetingCalendar.humanReadable
+          "
         >
           {{ 'labels.inputs.Meeting Frequency' | translate }}
         </div>
 
         <div
           class="flex-50"
-          *ngIf="centerData.collectionMeetingCalendar && centerData.collectionMeetingCalendar.humanReadable"
+          *ngIf="
+            centerData.collectionMeetingCalendar &&
+            centerData.collectionMeetingCalendar.humanReadable
+          "
         >
           {{ centerSummaryData.collectionMeetingCalendar.humanReadable }}
         </div>
@@ -128,10 +142,15 @@
     </mat-tab>
 
     <mat-tab label="Loan Accounts" *ngIf="centerAccountsData && centerAccountsData.loanAccounts">
-      <mifosx-loan-account-table [loanAccountData]="centerAccountsData.loanAccounts"></mifosx-loan-account-table>
+      <mifosx-loan-account-table
+        [loanAccountData]="centerAccountsData.loanAccounts"
+      ></mifosx-loan-account-table>
     </mat-tab>
 
-    <mat-tab label="Savings Accounts" *ngIf="centerAccountsData && centerAccountsData.savingsAccounts">
+    <mat-tab
+      label="Savings Accounts"
+      *ngIf="centerAccountsData && centerAccountsData.savingsAccounts"
+    >
       <mifosx-savings-account-table
         [savingsAccountData]="centerAccountsData.savingsAccounts"
       ></mifosx-savings-account-table>

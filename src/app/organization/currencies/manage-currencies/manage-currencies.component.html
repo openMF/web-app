@@ -40,7 +40,10 @@
     </div>
 
     <mat-grid-list cols="2" rowHeight="50px">
-      <mat-grid-tile class="grid-tile-content" *ngFor="let currency of selectedCurrencies; index as i">
+      <mat-grid-tile
+        class="grid-tile-content"
+        *ngFor="let currency of selectedCurrencies; index as i"
+      >
         <div class="grid-container">
           <div>
             <button
@@ -66,12 +69,18 @@
   <h4>{{ 'labels.heading.Add Currency Form' | translate }}</h4>
   <p class="mw400">
     {{ 'labels.text.Used to add currency' | translate }}:
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">{{
-      'labels.inputs.Currency Configuration' | translate
-    }}</a>
+    <a
+      href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration"
+      target="_blank"
+      >{{ 'labels.inputs.Currency Configuration' | translate }}</a
+    >
   </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close()">

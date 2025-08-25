@@ -325,7 +325,13 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     const pageIndex: number = this.paginator ? this.paginator.pageIndex : 0;
     const pageSize: any = this.paginator ? this.paginator.pageSize : 20;
 
-    this.dataSource.getAuditTrails(this.filterAuditTrailsBy, isActive, direction, pageIndex, pageSize);
+    this.dataSource.getAuditTrails(
+      this.filterAuditTrailsBy,
+      isActive,
+      direction,
+      pageIndex,
+      pageSize
+    );
     this.isLoading = false;
   }
 
@@ -386,7 +392,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       startWith(''),
       map((user: any) => (typeof user === 'string' ? user : user.name)),
       map((userName: string) =>
-        userName ? this.filterUserAutocompleteData(userName) : this.auditTrailSearchTemplateData.appUsers
+        userName
+          ? this.filterUserAutocompleteData(userName)
+          : this.auditTrailSearchTemplateData.appUsers
       )
     );
   }
@@ -399,7 +407,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       startWith(''),
       map((user: any) => (typeof user === 'string' ? user : user.name)),
       map((userName: string) =>
-        userName ? this.filterUserAutocompleteData(userName) : this.auditTrailSearchTemplateData.appUsers
+        userName
+          ? this.filterUserAutocompleteData(userName)
+          : this.auditTrailSearchTemplateData.appUsers
       )
     );
   }
@@ -412,7 +422,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       startWith(''),
       map((action: any) => (typeof action === 'string' ? action : '')),
       map((actionName: string) =>
-        actionName ? this.filterActionAutocompleteData(actionName) : this.auditTrailSearchTemplateData.actionNames
+        actionName
+          ? this.filterActionAutocompleteData(actionName)
+          : this.auditTrailSearchTemplateData.actionNames
       )
     );
   }
@@ -425,7 +437,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       startWith(''),
       map((entity: any) => (typeof entity === 'string' ? entity : '')),
       map((entityName: string) =>
-        entityName ? this.filterEntityAutocompleteData(entityName) : this.auditTrailSearchTemplateData.entityNames
+        entityName
+          ? this.filterEntityAutocompleteData(entityName)
+          : this.auditTrailSearchTemplateData.entityNames
       )
     );
   }
@@ -496,7 +510,13 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       'clientName'
     ];
     this.systemService
-      .getAuditTrails(this.filterAuditTrailsBy, this.sort.active ? this.sort.active : '', this.sort.direction, 0, -1)
+      .getAuditTrails(
+        this.filterAuditTrailsBy,
+        this.sort.active ? this.sort.active : '',
+        this.sort.direction,
+        0,
+        -1
+      )
       .subscribe((response: any) => {
         if (response !== undefined) {
           let csv = response.pageItems.map((row: any) =>

@@ -100,27 +100,38 @@ export class IdentitiesTabComponent {
    * @param {string} documentId Document ID
    */
   download(parentEntityId: string, documentId: string) {
-    this.clientService.downloadClientIdentificationDocument(parentEntityId, documentId).subscribe((res) => {
-      const url = window.URL.createObjectURL(res);
-      window.open(url);
-    });
+    this.clientService
+      .downloadClientIdentificationDocument(parentEntityId, documentId)
+      .subscribe((res) => {
+        const url = window.URL.createObjectURL(res);
+        window.open(url);
+      });
   }
 
   /**
    * Add Client Identifier
    */
   addIdentifier() {
-    for (let index = 0; index < this.clientIdentifierTemplate.allowedDocumentTypes.length; index++) {
-      this.clientIdentifierTemplate.allowedDocumentTypes[index].name = this.translateService.instant(
-        `labels.catalogs.${this.clientIdentifierTemplate.allowedDocumentTypes[index].name}`
-      );
+    for (
+      let index = 0;
+      index < this.clientIdentifierTemplate.allowedDocumentTypes.length;
+      index++
+    ) {
+      this.clientIdentifierTemplate.allowedDocumentTypes[index].name =
+        this.translateService.instant(
+          `labels.catalogs.${this.clientIdentifierTemplate.allowedDocumentTypes[index].name}`
+        );
     }
     const formfields: FormfieldBase[] = [
       new SelectBase({
         controlName: 'documentTypeId',
         label: this.translateService.instant('labels.inputs.Document Type'),
         value: '',
-        options: { label: 'name', value: 'id', data: this.clientIdentifierTemplate.allowedDocumentTypes },
+        options: {
+          label: 'name',
+          value: 'id',
+          data: this.clientIdentifierTemplate.allowedDocumentTypes
+        },
         required: true,
         order: 1
       }),
@@ -163,23 +174,25 @@ export class IdentitiesTabComponent {
     const addIdentifierDialogRef = this.dialog.open(FormDialogComponent, { data });
     addIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        this.clientService.addClientIdentifier(this.clientId, response.data.value).subscribe((res: any) => {
-          this.clientIdentities.push({
-            id: res.resourceId,
-            description: response.data.value.description,
-            documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter(
-              (doc: any) => doc.id === response.data.value.documentTypeId
-            )[0],
-            documentKey: response.data.value.documentKey,
-            documents: [],
-            clientId: this.clientId,
-            status:
-              response.data.value.status === 'Active'
-                ? 'clientIdentifierStatusType.active'
-                : 'clientIdentifierStatusType.inactive'
+        this.clientService
+          .addClientIdentifier(this.clientId, response.data.value)
+          .subscribe((res: any) => {
+            this.clientIdentities.push({
+              id: res.resourceId,
+              description: response.data.value.description,
+              documentType: this.clientIdentifierTemplate.allowedDocumentTypes.filter(
+                (doc: any) => doc.id === response.data.value.documentTypeId
+              )[0],
+              documentKey: response.data.value.documentKey,
+              documents: [],
+              clientId: this.clientId,
+              status:
+                response.data.value.status === 'Active'
+                  ? 'clientIdentifierStatusType.active'
+                  : 'clientIdentifierStatusType.inactive'
+            });
+            this.identifiersTable.renderRows();
           });
-          this.identifiersTable.renderRows();
-        });
       }
     });
   }
@@ -192,7 +205,9 @@ export class IdentitiesTabComponent {
    */
   deleteIdentifier(clientId: string, identifierId: string, index: number) {
     const deleteIdentifierDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `${this.translateService.instant('labels.heading.identifier id')} : ${identifierId}` }
+      data: {
+        deleteContext: `${this.translateService.instant('labels.heading.identifier id')} : ${identifierId}`
+      }
     });
     deleteIdentifierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -218,16 +233,18 @@ export class IdentitiesTabComponent {
         const formData: FormData = new FormData();
         formData.append('name', dialogResponse.fileName);
         formData.append('file', dialogResponse.file);
-        this.clientService.uploadClientIdentifierDocument(identifierId, formData).subscribe((res: any) => {
-          this.clientIdentities[index].documents.push({
-            id: res.resourceId,
-            parentEntityType: 'client_identifiers',
-            parentEntityId: identifierId,
-            name: dialogResponse.fileName,
-            fileName: dialogResponse.file.name
+        this.clientService
+          .uploadClientIdentifierDocument(identifierId, formData)
+          .subscribe((res: any) => {
+            this.clientIdentities[index].documents.push({
+              id: res.resourceId,
+              parentEntityType: 'client_identifiers',
+              parentEntityId: identifierId,
+              name: dialogResponse.fileName,
+              fileName: dialogResponse.file.name
+            });
+            this.identifiersTable.renderRows();
           });
-          this.identifiersTable.renderRows();
-        });
       }
     });
   }

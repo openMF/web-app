@@ -71,7 +71,10 @@ export class LoansActiveClientMembersComponent implements OnInit {
   get isValid() {
     return (
       !this.activeClientMembers ||
-      this.selectedClientMembers?.selectedMembers?.reduce((acc: any, cur: any) => acc + (cur.principal ?? 0), 0) > 0
+      this.selectedClientMembers?.selectedMembers?.reduce(
+        (acc: any, cur: any) => acc + (cur.principal ?? 0),
+        0
+      ) > 0
     );
   }
   get selectedClientMembers() {
@@ -89,6 +92,8 @@ export class LoansActiveClientMembersComponent implements OnInit {
   toggleSelect() {
     const len = this.activeClientMembers.length;
     this.selectAllItems =
-      len === 0 ? false : this.activeClientMembers.filter((item: any) => item.selected).length === len;
+      len === 0
+        ? false
+        : this.activeClientMembers.filter((item: any) => item.selected).length === len;
   }
 }

@@ -15,7 +15,8 @@ export class ThemingService {
 
   constructor(private ref: ApplicationRef) {
     // Initially check if dark mode is enabled on system
-    this.darkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    this.darkModeOn =
+      window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     // If dark mode is enabled then directly switch to the dark-theme
     this.setDarkMode(this.darkModeOn);
@@ -31,7 +32,8 @@ export class ThemingService {
   }
 
   isDarkMode(): boolean {
-    this.darkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    this.darkModeOn =
+      window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     return this.darkModeOn;
   }
 

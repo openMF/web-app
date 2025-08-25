@@ -43,7 +43,8 @@ export class CreateCampaignComponent {
   /** SMS Campaign Step */
   @ViewChild(SmsCampaignStepComponent, { static: true }) smsCampaignStep: SmsCampaignStepComponent;
   /** Campaign Message Step */
-  @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep: CampaignMessageStepComponent;
+  @ViewChild(CampaignMessageStepComponent, { static: true })
+  campaignMessageStep: CampaignMessageStepComponent;
 
   /**
    * Fetches campaign template from `resolve`
@@ -108,7 +109,10 @@ export class CreateCampaignComponent {
     };
     if (this.smsCampaign.triggerType === 2) {
       const prevRecurrenceDate: Date = smsCampaign.recurrenceStartDate;
-      smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(prevRecurrenceDate, dateTimeFormat);
+      smsCampaign.recurrenceStartDate = this.dateUtils.formatDate(
+        prevRecurrenceDate,
+        dateTimeFormat
+      );
     }
     this.organizationService.createSmsCampaign(smsCampaign).subscribe((response: any) => {
       this.router.navigate(

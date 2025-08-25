@@ -4,7 +4,9 @@
   <div class="responsive-column">
     <div class="flex-fill layout-row">
       <span class="flex-50">{{ 'labels.inputs.Repayment Strategy' | translate }}</span>
-      <span class="flex-50">{{ loanDetails.transactionProcessingStrategyName | translateKey: 'catalogs' }}</span>
+      <span class="flex-50">{{
+        loanDetails.transactionProcessingStrategyName | translateKey: 'catalogs'
+      }}</span>
     </div>
 
     <div class="flex-fill layout-row">
@@ -35,18 +37,25 @@
     <div class="flex-fill layout-row" *ngIf="loanDetails.fixedLength">
       <span class="flex-50"> {{ 'labels.inputs.Fixed Length' | translate }} </span>
       <span class="flex-50">
-        {{ loanDetails.fixedLength }} {{ loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
+        {{ loanDetails.fixedLength }}
+        {{ loanDetails.repaymentFrequencyType.value | translateKey: 'catalogs' }}</span
       >
     </div>
 
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Amortization' | translate }} </span>
-      <span class="flex-50"> {{ loanDetails.amortizationType.value | translateKey: 'catalogs' }} </span>
+      <span class="flex-50">
+        {{ loanDetails.amortizationType.value | translateKey: 'catalogs' }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.fixedPrincipalPercentagePerInstallment">
-      <span class="flex-50"> {{ 'labels.inputs.Principal Percentage Per Installment' | translate }} </span>
-      <span class="flex-50"> {{ loanDetails.fixedPrincipalPercentagePerInstallment | formatNumber }} %</span>
+      <span class="flex-50">
+        {{ 'labels.inputs.Principal Percentage Per Installment' | translate }}
+      </span>
+      <span class="flex-50">
+        {{ loanDetails.fixedPrincipalPercentagePerInstallment | formatNumber }} %</span
+      >
     </div>
 
     <div class="flex-fill layout-row">
@@ -57,16 +66,17 @@
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Interest' | translate }} </span>
       <span class="flex-50">
-        {{ loanDetails.annualInterestRate | formatNumber }} % {{ 'labels.text.per annum' | translate }} ({{
-          loanDetails.interestRatePerPeriod
-        }}
-        %&nbsp; {{ loanDetails.interestRateFrequencyType.value | translateKey: 'catalogs' }})
+        {{ loanDetails.annualInterestRate | formatNumber }} %
+        {{ 'labels.text.per annum' | translate }} ({{ loanDetails.interestRatePerPeriod }} %&nbsp;
+        {{ loanDetails.interestRateFrequencyType.value | translateKey: 'catalogs' }})
       </span>
     </div>
 
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Interest Type' | translate }} </span>
-      <span class="flex-50"> {{ 'labels.text.' + loanDetails.interestType.value | translate }} </span>
+      <span class="flex-50">
+        {{ 'labels.text.' + loanDetails.interestType.value | translate }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row">
@@ -76,7 +86,9 @@
 
     <div class="flex-fill layout-row">
       <span class="flex-50">{{ 'labels.inputs.Loan Charge-off behaviour' | translate }}:</span>
-      <span class="flex-50">{{ loanDetails.chargeOffBehaviour.value | translateKey: 'catalogs' }}</span>
+      <span class="flex-50">{{
+        loanDetails.chargeOffBehaviour.value | translateKey: 'catalogs'
+      }}</span>
     </div>
 
     <div class="flex-fill layout-row">
@@ -85,7 +97,9 @@
     </div>
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.enableIncomeCapitalization">
-      <span class="flex-50"> {{ 'labels.inputs.Income capitalization calculation type' | translate }}</span>
+      <span class="flex-50">
+        {{ 'labels.inputs.Income capitalization calculation type' | translate }}</span
+      >
       <span class="flex-50">
         {{ loanDetails.capitalizedIncomeCalculationType?.value | translateKey: 'catalogs' }}
       </span>
@@ -93,12 +107,16 @@
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.enableIncomeCapitalization">
       <span class="flex-50"> {{ 'labels.inputs.Income capitalization strategy' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }} </span>
+      <span class="flex-50">
+        {{ loanDetails.capitalizedIncomeStrategy?.value | translateKey: 'catalogs' }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.enableIncomeCapitalization">
       <span class="flex-50"> {{ 'labels.inputs.Income capitalization type' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.capitalizedIncomeType?.value | translateKey: 'catalogs' }} </span>
+      <span class="flex-50">
+        {{ loanDetails.capitalizedIncomeType?.value | translateKey: 'catalogs' }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row">
@@ -115,12 +133,16 @@
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.enableBuyDownFee">
       <span class="flex-50"> {{ 'labels.inputs.Buy down fee strategy' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.buyDownFeeStrategy?.value | translateKey: 'catalogs' }} </span>
+      <span class="flex-50">
+        {{ loanDetails.buyDownFeeStrategy?.value | translateKey: 'catalogs' }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.enableBuyDownFee">
       <span class="flex-50"> {{ 'labels.inputs.Buy down fee income type' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.buyDownFeeIncomeType?.value | translateKey: 'catalogs' }} </span>
+      <span class="flex-50">
+        {{ loanDetails.buyDownFeeIncomeType?.value | translateKey: 'catalogs' }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.enableBuyDownFee">
@@ -144,14 +166,18 @@
     </div>
 
     <div class="flex-fill layout-row">
-      <span class="flex-50"> {{ 'labels.inputs.Enable installment level Delinquency' | translate }} </span>
+      <span class="flex-50">
+        {{ 'labels.inputs.Enable installment level Delinquency' | translate }}
+      </span>
       <span class="flex-50"> {{ loanDetails.enableInstallmentLevelDelinquency | yesNo }} </span>
     </div>
 
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Fund Source' | translate }} </span>
       <span class="flex-50" *ngIf="loanDetails.fundName"> {{ loanDetails.fundName }} </span>
-      <span class="flex-50" *ngIf="!loanDetails.fundName"> {{ 'labels.inputs.Unassigned' | translate }} </span>
+      <span class="flex-50" *ngIf="!loanDetails.fundName">
+        {{ 'labels.inputs.Unassigned' | translate }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row">
@@ -161,18 +187,24 @@
 
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Interest Calculation Period' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.interestCalculationPeriodType.value | translateKey: 'catalogs' }} </span>
+      <span class="flex-50">
+        {{ loanDetails.interestCalculationPeriodType.value | translateKey: 'catalogs' }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row">
       <span class="flex-50">
-        {{ 'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate }}</span
+        {{
+          'labels.inputs.Allow Partial Interest Calculation with same as repayment' | translate
+        }}</span
       >
       <span class="flex-50"> {{ loanDetails.allowPartialPeriodInterestCalculation | yesNo }} </span>
     </div>
 
     <div class="flex-fill layout-row">
-      <span class="flex-50">{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span>
+      <span class="flex-50"
+        >{{ 'labels.inputs.Is interest recognition on disbursement date?' | translate }}:</span
+      >
       <span class="flex-50">{{ loanDetails.interestRecognitionOnDisbursementDate | yesNo }}</span>
     </div>
 
@@ -219,39 +251,57 @@
     </div>
 
     <div class="flex-fill layout-row">
-      <span class="flex-50"> {{ 'labels.inputs.Recalculate Interest based on new terms' | translate }}</span>
+      <span class="flex-50">
+        {{ 'labels.inputs.Recalculate Interest based on new terms' | translate }}</span
+      >
       <span class="flex-50"> {{ loanDetails.isInterestRecalculationEnabled | yesNo }} </span>
     </div>
 
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Days in year' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.daysInYearType.value | translateKey: 'catalogs' }} </span>
+      <span class="flex-50">
+        {{ loanDetails.daysInYearType.value | translateKey: 'catalogs' }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row">
       <span class="flex-50"> {{ 'labels.inputs.Days in month' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.daysInMonthType.value | translateKey: 'catalogs' }} </span>
+      <span class="flex-50">
+        {{ loanDetails.daysInMonthType.value | translateKey: 'catalogs' }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.isInterestRecalculationEnabled">
-      <span class="flex-50"> {{ 'labels.inputs.Interest recalculation compounding on' | translate }}</span>
+      <span class="flex-50">
+        {{ 'labels.inputs.Interest recalculation compounding on' | translate }}</span
+      >
       <span class="flex-50">
         {{
-          loanDetails.interestRecalculationData.interestRecalculationCompoundingType.value | translateKey: 'catalogs'
+          loanDetails.interestRecalculationData.interestRecalculationCompoundingType.value
+            | translateKey: 'catalogs'
         }}
       </span>
     </div>
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.isInterestRecalculationEnabled">
-      <span class="flex-50"> {{ 'labels.inputs.Advance payments adjustment type' | translate }}</span>
       <span class="flex-50">
-        {{ loanDetails.interestRecalculationData.rescheduleStrategyType.value | translateKey: 'catalogs' }}
+        {{ 'labels.inputs.Advance payments adjustment type' | translate }}</span
+      >
+      <span class="flex-50">
+        {{
+          loanDetails.interestRecalculationData.rescheduleStrategyType.value
+            | translateKey: 'catalogs'
+        }}
       </span>
     </div>
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.isInterestRecalculationEnabled">
-      <span class="flex-50"> {{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.interestRecalculationData.calendarData.humanReadable }} </span>
+      <span class="flex-50">
+        {{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}</span
+      >
+      <span class="flex-50">
+        {{ loanDetails.interestRecalculationData.calendarData.humanReadable }}
+      </span>
     </div>
 
     <div
@@ -262,7 +312,9 @@
       "
     >
       <span class="flex-50"> {{ 'labels.inputs.Frequency for compounding' | translate }}</span>
-      <span class="flex-50"> {{ loanDetails.interestRecalculationData.compoundingCalendarData.humanReadable }} </span>
+      <span class="flex-50">
+        {{ loanDetails.interestRecalculationData.compoundingCalendarData.humanReadable }}
+      </span>
     </div>
 
     <div class="flex-fill layout-row" *ngIf="loanDetails.isVariableInstallmentsAllowed">
@@ -273,9 +325,8 @@
     <div class="flex-fill layout-row" *ngIf="loanDetails.isVariableInstallmentsAllowed">
       <span class="flex-50"> {{ 'labels.inputs.Gap between Installments' | translate }}</span>
       <span class="flex-50">
-        {{ loanDetails.minimumGap | formatNumber }}&nbsp;{{ 'labels.text.Days' | translate }}&nbsp;, Max:{{
-          loanDetails.maximumGap | formatNumber
-        }}&nbsp;{{ 'labels.text.Days' | translate }}
+        {{ loanDetails.minimumGap | formatNumber }}&nbsp;{{ 'labels.text.Days' | translate }}&nbsp;,
+        Max:{{ loanDetails.maximumGap | formatNumber }}&nbsp;{{ 'labels.text.Days' | translate }}
       </span>
     </div>
   </div>

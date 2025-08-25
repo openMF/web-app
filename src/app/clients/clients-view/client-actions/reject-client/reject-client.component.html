@@ -29,7 +29,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="rejectClientForm.controls.rejectionReasonId.hasError('required')">
-              {{ 'labels.inputs.Rejection Reason' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Rejection Reason' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>

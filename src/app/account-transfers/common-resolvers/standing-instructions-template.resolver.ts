@@ -39,6 +39,10 @@ export class StandingInstructionsTemplateResolver {
       default:
         this.accountTypeId = '0';
     }
-    return this.accountTransfersService.getStandingInstructionsTemplate(clientId, officeId, this.accountTypeId);
+    return this.accountTransfersService.getStandingInstructionsTemplate(
+      clientId,
+      officeId,
+      this.accountTypeId
+    );
   }
 }

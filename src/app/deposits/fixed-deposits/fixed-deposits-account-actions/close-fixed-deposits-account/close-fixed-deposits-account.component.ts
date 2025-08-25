@@ -106,7 +106,10 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
           'toSavingsAccountId',
           new UntypedFormControl('', Validators.required)
         );
-        this.closeOnMaturityAccountForm.addControl('transferDescription', new UntypedFormControl(''));
+        this.closeOnMaturityAccountForm.addControl(
+          'transferDescription',
+          new UntypedFormControl('')
+        );
       } else {
         this.closeOnMaturityAccountForm.removeControl('toSavingsAccountId');
         this.closeOnMaturityAccountForm.removeControl('transferDescription');
@@ -124,15 +127,20 @@ export class CloseFixedDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevClosedDate: Date = this.closeOnMaturityAccountForm.value.closedOnDate;
     if (closeOnMaturityAccountFormData.closedOnDate instanceof Date) {
-      closeOnMaturityAccountFormData.closedOnDate = this.dateUtils.formatDate(prevClosedDate, dateFormat);
+      closeOnMaturityAccountFormData.closedOnDate = this.dateUtils.formatDate(
+        prevClosedDate,
+        dateFormat
+      );
     }
     const data = {
       ...closeOnMaturityAccountFormData,
       dateFormat,
       locale
     };
-    this.fixedDepositsService.executeFixedDepositsAccountCommand(this.accountId, 'close', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.fixedDepositsService
+      .executeFixedDepositsAccountCommand(this.accountId, 'close', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

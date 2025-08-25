@@ -8,13 +8,21 @@
     'responsive-column'
   ]"
 >
-  <div *ngFor="let formfield of formfields" [ngClass]="'flex-' + layout.flex + ' responsive-flex-full'">
+  <div
+    *ngFor="let formfield of formfields"
+    [ngClass]="'flex-' + layout.flex + ' responsive-flex-full'"
+  >
     <mifosx-formfield [formfield]="formfield" [form]="form" class="flex-fill"></mifosx-formfield>
   </div>
 </div>
 
-<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent" align="end">
-  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.' + layout.cancelButtonText | translate }}</button>
+<mat-dialog-actions
+  class="layout-row layout-xs-column layout-align-center gap-2percent"
+  align="end"
+>
+  <button mat-raised-button mat-dialog-close>
+    {{ 'labels.buttons.' + layout.cancelButtonText | translate }}
+  </button>
   <button
     mat-raised-button
     color="primary"

@@ -69,7 +69,10 @@ export class FixedDepositProductChargesStepComponent implements OnInit {
 
   ngOnInit() {
     this.chargeData = this.fixedDepositProductsTemplate.chargeOptions;
-    if (!(this.fixedDepositProductsTemplate === undefined) && this.fixedDepositProductsTemplate.id) {
+    if (
+      !(this.fixedDepositProductsTemplate === undefined) &&
+      this.fixedDepositProductsTemplate.id
+    ) {
       this.chargesDataSource = this.fixedDepositProductsTemplate.charges;
     } else {
       this.chargesDataSource = [];
@@ -84,7 +87,9 @@ export class FixedDepositProductChargesStepComponent implements OnInit {
 
   deleteCharge(charge: any) {
     const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name }
+      data: {
+        deleteContext: this.translateService.instant('labels.inputs.Charge') + ' ' + charge.name
+      }
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {

@@ -10,7 +10,15 @@
   [center$]="center$"
 >
   <ng-template #defsTemplate>
-    <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+    <svg:marker
+      id="arrow"
+      viewBox="0 -5 10 10"
+      refX="8"
+      refY="0"
+      markerWidth="4"
+      markerHeight="4"
+      orient="auto"
+    >
       <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
     </svg:marker>
   </ng-template>
@@ -46,7 +54,9 @@
       [attr.transform]="'translate(' + link.midPoint.x + ',' + link.midPoint.y + ')'"
     >
       <ellipse rx="30" ry="10" />
-      <svg:text alignment-baseline="central">{{ link.data.linkText | translateKey: 'text' }}</svg:text>
+      <svg:text alignment-baseline="central">
+        {{ link.data.linkText | translateKey: 'text' }}
+      </svg:text>
     </svg:g>
   </ng-template>
 </ngx-graph>

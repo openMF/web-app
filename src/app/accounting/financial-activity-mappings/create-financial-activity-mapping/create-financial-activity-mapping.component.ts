@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -78,23 +83,25 @@ export class CreateFinancialActivityMappingComponent implements OnInit {
    * Sets the gl account data on the basis of selected financial activity.
    */
   setGlAccountData() {
-    this.financialActivityMappingForm.get('financialActivityId').valueChanges.subscribe((financialActivityId) => {
-      switch (financialActivityId) {
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-          this.glAccountData = this.glAccountOptions.assetAccountOptions;
-          break;
-        case 200:
-        case 201:
-          this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
-          break;
-        case 300:
-          this.glAccountData = this.glAccountOptions.equityAccountOptions;
-          break;
-      }
-    });
+    this.financialActivityMappingForm
+      .get('financialActivityId')
+      .valueChanges.subscribe((financialActivityId) => {
+        switch (financialActivityId) {
+          case 100:
+          case 101:
+          case 102:
+          case 103:
+            this.glAccountData = this.glAccountOptions.assetAccountOptions;
+            break;
+          case 200:
+          case 201:
+            this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
+            break;
+          case 300:
+            this.glAccountData = this.glAccountOptions.equityAccountOptions;
+            break;
+        }
+      });
   }
 
   /**

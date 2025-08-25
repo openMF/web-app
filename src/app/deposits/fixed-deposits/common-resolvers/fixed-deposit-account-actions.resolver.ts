@@ -31,14 +31,19 @@ export class FixedDepositsAccountActionsResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const actionName = route.paramMap.get('name');
     const fixedDepositAccountId =
-      route.paramMap.get('fixedDepositAccountId') || route.parent.parent.paramMap.get('fixedDepositAccountId');
+      route.paramMap.get('fixedDepositAccountId') ||
+      route.parent.parent.paramMap.get('fixedDepositAccountId');
     switch (actionName) {
       case 'Add Charge':
         return this.savingsService.getSavingsChargeTemplateResource(fixedDepositAccountId);
       case 'Close':
-        return this.fixedDepositsService.getFixedDepositsAccountClosureTemplate(fixedDepositAccountId);
+        return this.fixedDepositsService.getFixedDepositsAccountClosureTemplate(
+          fixedDepositAccountId
+        );
       case 'Withdrawal':
-        return this.fixedDepositsService.getFixedDepositsAccountTransactionTemplate(fixedDepositAccountId);
+        return this.fixedDepositsService.getFixedDepositsAccountTransactionTemplate(
+          fixedDepositAccountId
+        );
       default:
         return undefined;
     }

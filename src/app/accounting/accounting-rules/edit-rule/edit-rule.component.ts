@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -125,18 +130,24 @@ export class EditRuleComponent implements OnInit {
 
     if (this.accountingRule.debitAccounts) {
       this.accountingRuleForm.get('debitRuleType').setValue('fixedAccount');
-      this.accountingRuleForm.get('accountToDebit').setValue(this.accountingRule.debitAccounts[0].id);
+      this.accountingRuleForm
+        .get('accountToDebit')
+        .setValue(this.accountingRule.debitAccounts[0].id);
     } else {
       this.accountingRuleForm.get('debitRuleType').setValue('listOfAccounts');
       this.accountingRuleForm
         .get('debitTags')
         .setValue(this.accountingRule.debitTags.map((debitTag: any) => debitTag.tag.id));
-      this.accountingRuleForm.get('allowMultipleDebitEntries').setValue(this.accountingRule.allowMultipleDebitEntries);
+      this.accountingRuleForm
+        .get('allowMultipleDebitEntries')
+        .setValue(this.accountingRule.allowMultipleDebitEntries);
     }
 
     if (this.accountingRule.creditAccounts) {
       this.accountingRuleForm.get('creditRuleType').setValue('fixedAccount');
-      this.accountingRuleForm.get('accountToCredit').setValue(this.accountingRule.creditAccounts[0].id);
+      this.accountingRuleForm
+        .get('accountToCredit')
+        .setValue(this.accountingRule.creditAccounts[0].id);
     } else {
       this.accountingRuleForm.get('creditRuleType').setValue('listOfAccounts');
       this.accountingRuleForm
@@ -168,14 +179,16 @@ export class EditRuleComponent implements OnInit {
     }
     delete accountingRule.debitRuleType;
     delete accountingRule.creditRuleType;
-    this.accountingService.updateAccountingRule(this.accountingRule.id, accountingRule).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.accountingService
+      .updateAccountingRule(this.accountingRule.id, accountingRule)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

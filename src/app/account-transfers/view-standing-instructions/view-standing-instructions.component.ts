@@ -30,7 +30,9 @@ export class ViewStandingInstructionsComponent {
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((data: { standingInstructionsData: any }) => {
       this.standingInstructionsData = data.standingInstructionsData;
-      if (this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id) {
+      if (
+        this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id
+      ) {
         this.allowclientedit = false;
       }
     });

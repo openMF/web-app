@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -143,13 +150,23 @@ export class FinancialActivityMappingsComponent implements OnInit, AfterViewInit
   ngAfterViewInit() {
     if (this.configurationWizardService.showAccountsLinkedPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonDefineMapping, this.buttonDefineMapping.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonDefineMapping,
+          this.buttonDefineMapping.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
 
     if (this.configurationWizardService.showAccountsLinkedList === true) {
       setTimeout(() => {
-        this.showPopover(this.templateActivitiesTable, this.activitiesTable.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateActivitiesTable,
+          this.activitiesTable.nativeElement,
+          'top',
+          true
+        );
       });
     }
   }

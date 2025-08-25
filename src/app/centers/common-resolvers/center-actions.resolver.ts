@@ -30,7 +30,10 @@ export class CenterActionsResolver {
       case 'Assign Staff':
         return this.centersService.getGroupStaffData(centerId);
       case 'Attendance':
-        return this.centersService.getCentersData(centerId, 'groupMembers,collectionMeetingCalendar');
+        return this.centersService.getCentersData(
+          centerId,
+          'groupMembers,collectionMeetingCalendar'
+        );
       case 'Manage Groups':
         return this.centersService.getCentersData(centerId, 'groupMembers', 'true');
       case 'Attach Meeting':
@@ -40,7 +43,12 @@ export class CenterActionsResolver {
         const calendarId = route.queryParamMap.get('calendarId');
         return this.centersService.getCalendarAndTemplate(centerId, calendarId);
       case 'Staff Assignment History':
-        return this.centersService.getStaffAssignmentHistoryData('Staff Assignment History', centerId, 'default', 'en');
+        return this.centersService.getStaffAssignmentHistoryData(
+          'Staff Assignment History',
+          centerId,
+          'default',
+          'en'
+        );
       default:
         return undefined;
     }

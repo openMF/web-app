@@ -128,14 +128,19 @@ export class PrepayLoanComponent implements OnInit {
       transactionAmount: this.dataObject.amount
     });
     this.prepayLoanForm.get('transactionDate').valueChanges.subscribe((transactionDate: string) => {
-      const prepayDate = this.dateUtils.formatDate(transactionDate, this.settingsService.dateFormat);
+      const prepayDate = this.dateUtils.formatDate(
+        transactionDate,
+        this.settingsService.dateFormat
+      );
 
-      this.loanService.getLoanPrepayLoanActionTemplate(this.loanId, prepayDate).subscribe((response: any) => {
-        this.prepayData = response;
-        this.prepayLoanForm.patchValue({
-          transactionAmount: this.prepayData.amount
+      this.loanService
+        .getLoanPrepayLoanActionTemplate(this.loanId, prepayDate)
+        .subscribe((response: any) => {
+          this.prepayData = response;
+          this.prepayLoanForm.patchValue({
+            transactionAmount: this.prepayData.amount
+          });
         });
-      });
     });
   }
 
@@ -168,7 +173,10 @@ export class PrepayLoanComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.prepayLoanForm.value.transactionDate;
     if (prepayLoanFormData.transactionDate instanceof Date) {
-      prepayLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      prepayLoanFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...prepayLoanFormData,
@@ -176,18 +184,22 @@ export class PrepayLoanComponent implements OnInit {
       locale
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
-    this.loanService.submitLoanActionButton(this.loanId, data, 'repayment').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .submitLoanActionButton(this.loanId, data, 'repayment')
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 
   submitContractTermination() {
     const data = {
       ...this.prepayLoanForm.value
     };
-    this.loanService.loanActionButtons(this.loanId, 'contractTermination', data).subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .loanActionButtons(this.loanId, 'contractTermination', data)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 
   submit() {

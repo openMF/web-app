@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -55,7 +60,8 @@ export class EditFinancialActivityMappingComponent implements OnInit {
       this.financialActivityId = data.financialActivityAccountAndTemplate.financialActivityData.id;
       this.glAccountId = data.financialActivityAccountAndTemplate.glAccountData.id;
       this.glAccountOptions = data.financialActivityAccountAndTemplate.glAccountOptions;
-      this.financialActivityData = data.financialActivityAccountAndTemplate.financialActivityOptions;
+      this.financialActivityData =
+        data.financialActivityAccountAndTemplate.financialActivityOptions;
     });
   }
 
@@ -89,23 +95,25 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    * Sets the gl account data on the basis of selected financial activity.
    */
   setGLAccountData() {
-    this.financialActivityMappingForm.get('financialActivityId').valueChanges.subscribe((financialActivityId) => {
-      switch (financialActivityId) {
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-          this.glAccountData = this.glAccountOptions.assetAccountOptions;
-          break;
-        case 200:
-        case 201:
-          this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
-          break;
-        case 300:
-          this.glAccountData = this.glAccountOptions.equityAccountOptions;
-          break;
-      }
-    });
+    this.financialActivityMappingForm
+      .get('financialActivityId')
+      .valueChanges.subscribe((financialActivityId) => {
+        switch (financialActivityId) {
+          case 100:
+          case 101:
+          case 102:
+          case 103:
+            this.glAccountData = this.glAccountOptions.assetAccountOptions;
+            break;
+          case 200:
+          case 201:
+            this.glAccountData = this.glAccountOptions.liabilityAccountOptions;
+            break;
+          case 300:
+            this.glAccountData = this.glAccountOptions.equityAccountOptions;
+            break;
+        }
+      });
   }
 
   /**
@@ -114,7 +122,10 @@ export class EditFinancialActivityMappingComponent implements OnInit {
    */
   submit() {
     this.accountingService
-      .updateFinancialActivityAccount(this.financialActivityAccountId, this.financialActivityMappingForm.value)
+      .updateFinancialActivityAccount(
+        this.financialActivityAccountId,
+        this.financialActivityMappingForm.value
+      )
       .subscribe((response: any) => {
         this.router.navigate(
           [

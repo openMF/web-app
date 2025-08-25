@@ -44,7 +44,8 @@ export class CreateGlimAccountComponent {
   /** Imports all the step component */
   @ViewChild(LoansAccountDetailsStepComponent, { static: true })
   loansAccountDetailsStep: LoansAccountDetailsStepComponent;
-  @ViewChild(LoansAccountTermsStepComponent, { static: true }) loansAccountTermsStep: LoansAccountTermsStepComponent;
+  @ViewChild(LoansAccountTermsStepComponent, { static: true })
+  loansAccountTermsStep: LoansAccountTermsStepComponent;
   @ViewChild(LoansAccountChargesStepComponent, { static: true })
   loansAccountChargesStep: LoansAccountChargesStepComponent;
   @ViewChild(LoansActiveClientMembersComponent, { static: true })
@@ -115,9 +116,11 @@ export class CreateGlimAccountComponent {
       : this.loansAccountTemplate.group.id;
     const isGroup = this.loansAccountTemplate.clientId ? false : true;
     const productId = this.loansAccountProductTemplate.loanProductId;
-    this.loansService.getLoansAccountTemplateResource(entityId, isGroup, productId).subscribe((response: any) => {
-      this.multiDisburseLoan = response.multiDisburseLoan;
-    });
+    this.loansService
+      .getLoansAccountTemplateResource(entityId, isGroup, productId)
+      .subscribe((response: any) => {
+        this.multiDisburseLoan = response.multiDisburseLoan;
+      });
     this.setDatatables();
   }
 
@@ -192,7 +195,10 @@ export class CreateGlimAccountComponent {
       isParentAccount: true,
       principal: client.principal,
       syncDisbursementWithMeeting: false,
-      expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
+      expectedDisbursementDate: this.dateUtils.formatDate(
+        this.loansAccount.expectedDisbursementDate,
+        dateFormat
+      ),
       submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
       dateFormat,
       // monthDayFormat,

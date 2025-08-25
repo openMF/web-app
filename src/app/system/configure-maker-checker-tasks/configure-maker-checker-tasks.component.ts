@@ -1,6 +1,18 @@
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import * as _ from 'lodash';
 
 /** Custom Services */
@@ -107,7 +119,9 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    */
   createForm() {
     this.formGroup = this.formBuilder.group({
-      roster: this.formBuilder.array(this.permissionsData.map((elem: any) => this.createMemberGroup(elem)))
+      roster: this.formBuilder.array(
+        this.permissionsData.map((elem: any) => this.createMemberGroup(elem))
+      )
     });
   }
 
@@ -227,7 +241,9 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
     this.formGroup.get('roster')?.disable();
     this.checkboxesChanged = false;
     this.isDisabled = true;
-    this.systemService.updateMakerCheckerPermission(permissionData).subscribe((response: any) => {});
+    this.systemService
+      .updateMakerCheckerPermission(permissionData)
+      .subscribe((response: any) => {});
   }
 
   /**

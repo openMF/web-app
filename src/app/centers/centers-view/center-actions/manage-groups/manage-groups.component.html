@@ -5,7 +5,11 @@
       <input matInput [formControl]="groupChoice" [matAutocomplete]="groupsAutocomplete" />
     </mat-form-field>
 
-    <mat-autocomplete autoActiveFirstOption #groupsAutocomplete="matAutocomplete" [displayWith]="displayGroup">
+    <mat-autocomplete
+      autoActiveFirstOption
+      #groupsAutocomplete="matAutocomplete"
+      [displayWith]="displayGroup"
+    >
       <mat-option *ngFor="let group of groupsData" [value]="group">
         {{ group.name }}
       </mat-option>

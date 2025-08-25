@@ -26,7 +26,9 @@
                 ></i>
                 <span class="m-r-5">{{ 'labels.heading.Loan Product' | translate }} :</span>
                 <span class="m-r-5"
-                  ><mifosx-long-text textValue="{{ loanDetailsData.loanProductName }}"></mifosx-long-text
+                  ><mifosx-long-text
+                    textValue="{{ loanDetailsData.loanProductName }}"
+                  ></mifosx-long-text
                 ></span>
                 <mifosx-account-number
                   accountNo="{{ loanDetailsData.accountNo }}"
@@ -35,10 +37,12 @@
               </h3>
               <span class="loans-overview">
                 <span class="m-r-10"
-                  >{{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }} :</span
+                  >{{ 'labels.text.' + entityType | translate }}
+                  {{ 'labels.inputs.name' | translate }} :</span
                 >
                 {{ loanDetailsData.clientName || loanDetailsData.group.name
-                }}<span class="m-l-5">({{ loanDetailsData.clientAccountNo || loanDetailsData.group.accountNo }})</span
+                }}<span class="m-l-5"
+                  >({{ loanDetailsData.clientAccountNo || loanDetailsData.group.accountNo }})</span
                 ><br />
               </span>
               <div *ngIf="loanDisplayArrearsDelinquency !== 1">
@@ -47,11 +51,17 @@
                     <tr *ngIf="loanDetailsData.delinquencyRange">
                       <td>{{ 'labels.inputs.Delinquency Classification' | translate }} :</td>
                       <td>
-                        <span class="m-r-3"><i [ngClass]="loanDelinquencyClassificationStyle"></i></span>
+                        <span class="m-r-3"
+                          ><i [ngClass]="loanDelinquencyClassificationStyle"></i
+                        ></span>
                         {{ loanDetailsData?.delinquencyRange.classification }}
                       </td>
                     </tr>
-                    <tr *ngIf="loanDetailsData.delinquent && loanDetailsData.delinquent.pastDueDays > 0">
+                    <tr
+                      *ngIf="
+                        loanDetailsData.delinquent && loanDetailsData.delinquent.pastDueDays > 0
+                      "
+                    >
                       <td>{{ 'labels.inputs.Past Due Days' | translate }} :</td>
                       <td>{{ loanDetailsData?.delinquent.pastDueDays | formatNumber }}</td>
                     </tr>
@@ -59,7 +69,8 @@
                       *ngIf="
                         loanDetailsData.delinquent &&
                         loanDetailsData.delinquent.delinquentDays > 0 &&
-                        loanDetailsData.delinquent.pastDueDays !== loanDetailsData.delinquent.delinquentDays
+                        loanDetailsData.delinquent.pastDueDays !==
+                          loanDetailsData.delinquent.delinquentDays
                       "
                     >
                       <td>{{ 'labels.inputs.Delinquent Days' | translate }} :</td>
@@ -78,14 +89,18 @@
                     <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
                     <td class="r-amount">
                       {{
-                        loanDetailsData.summary.totalOutstanding | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                        loanDetailsData.summary.totalOutstanding
+                          | currency: currency.code : 'symbol-narrow' : '1.2-2'
                       }}
                     </td>
                   </tr>
                   <tr *ngIf="loanDisplayArrearsDelinquency < 2">
                     <td>{{ 'labels.inputs.Arrears By' | translate }}</td>
                     <td class="r-amount" *ngIf="loanDetailsData.summary.totalOverdue >= 0">
-                      {{ loanDetailsData.summary.totalOverdue | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                      {{
+                        loanDetailsData.summary.totalOverdue
+                          | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                      }}
                     </td>
                     <td *ngIf="!(loanDetailsData.summary.totalOverdue >= 0)">
                       {{ 'labels.inputs.Not Provided' | translate }}
@@ -98,7 +113,10 @@
                   <tr *ngIf="loanDetailsData.totalOverpaid && loanDetailsData.totalOverpaid > 0">
                     <td>{{ 'labels.inputs.Overpaid By' | translate }}</td>
                     <td class="r-amount">
-                      {{ loanDetailsData.totalOverpaid | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                      {{
+                        loanDetailsData.totalOverpaid
+                          | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                      }}
                     </td>
                   </tr>
                 </tbody>
@@ -124,7 +142,11 @@
 
       <mat-menu #accountMenu="matMenu">
         <ng-container *ngFor="let item of buttonConfig.singleButtons">
-          <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
+          <button
+            mat-menu-item
+            *mifosxHasPermission="item.taskPermissionName"
+            (click)="loanAction(item.name)"
+          >
             <mat-icon matListIcon>
               <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
             </mat-icon>
@@ -133,10 +155,16 @@
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.optionsPayment.length" class="loan-span">
-          <button mat-menu-item [matMenuTriggerFor]="Payments">{{ 'labels.menus.Payments' | translate }}</button>
+          <button mat-menu-item [matMenuTriggerFor]="Payments">
+            {{ 'labels.menus.Payments' | translate }}
+          </button>
           <mat-menu #Payments="matMenu">
             <span *ngFor="let item of buttonConfig.optionsPayment">
-              <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
+              <button
+                mat-menu-item
+                *mifosxHasPermission="item.taskPermissionName"
+                (click)="loanAction(item.name)"
+              >
                 {{ 'labels.menus.' + item.name | translate }}
               </button>
             </span>
@@ -144,10 +172,16 @@
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.options.length" class="loan-span">
-          <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
+          <button mat-menu-item [matMenuTriggerFor]="More">
+            {{ 'labels.menus.More' | translate }}
+          </button>
           <mat-menu #More="matMenu">
             <span *ngFor="let item of buttonConfig.options">
-              <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="loanAction(item.name)">
+              <button
+                mat-menu-item
+                *mifosxHasPermission="item.taskPermissionName"
+                (click)="loanAction(item.name)"
+              >
                 {{ 'labels.menus.' + item.name | translate }}
               </button>
             </span>

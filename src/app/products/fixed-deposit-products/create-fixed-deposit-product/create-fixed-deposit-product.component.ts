@@ -135,14 +135,16 @@ export class CreateFixedDepositProductComponent {
       locale: this.settingsService.language.code // locale required for depositAmount
     };
     delete fixedDepositProduct.advancedAccountingRules;
-    this.productsService.createFixedDepositProduct(fixedDepositProduct).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.productsService
+      .createFixedDepositProduct(fixedDepositProduct)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

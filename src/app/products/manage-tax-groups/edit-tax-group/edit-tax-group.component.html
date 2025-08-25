@@ -20,7 +20,11 @@
             </button>
           </div>
 
-          <table mat-table [dataSource]="taxComponentsDataSource" [hidden]="taxComponentsDataSource.length === 0">
+          <table
+            mat-table
+            [dataSource]="taxComponentsDataSource"
+            [hidden]="taxComponentsDataSource.length === 0"
+          >
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
               <td mat-cell *matCellDef="let taxComponent">
@@ -29,8 +33,12 @@
             </ng-container>
 
             <ng-container matColumnDef="startDate">
-              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Start Date' | translate }}</th>
-              <td mat-cell *matCellDef="let taxComponent">{{ taxComponent.startDate | dateFormat }}</td>
+              <th mat-header-cell *matHeaderCellDef>
+                {{ 'labels.inputs.Start Date' | translate }}
+              </th>
+              <td mat-cell *matCellDef="let taxComponent">
+                {{ taxComponent.startDate | dateFormat }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="endDate">

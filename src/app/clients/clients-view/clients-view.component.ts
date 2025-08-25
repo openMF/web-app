@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet
+} from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -82,11 +88,13 @@ export class ClientsViewComponent implements OnInit {
     private _sanitizer: DomSanitizer,
     public dialog: MatDialog
   ) {
-    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
-      this.clientViewData = data.clientViewData;
-      this.clientDatatables = data.clientDatatables;
-      this.clientTemplateData = data.clientTemplateData;
-    });
+    this.route.data.subscribe(
+      (data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
+        this.clientViewData = data.clientViewData;
+        this.clientDatatables = data.clientDatatables;
+        this.clientTemplateData = data.clientTemplateData;
+      }
+    );
   }
 
   ngOnInit() {
@@ -179,7 +187,9 @@ export class ClientsViewComponent implements OnInit {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(`/clients`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 
   /**
@@ -206,7 +216,9 @@ export class ClientsViewComponent implements OnInit {
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         this.clientsService
-          .executeClientCommand(this.clientViewData.id, 'unassignStaff', { staffId: this.clientViewData.staffId })
+          .executeClientCommand(this.clientViewData.id, 'unassignStaff', {
+            staffId: this.clientViewData.staffId
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -242,9 +254,11 @@ export class ClientsViewComponent implements OnInit {
     const uploadSignatureDialogRef = this.dialog.open(UploadSignatureDialogComponent);
     uploadSignatureDialogRef.afterClosed().subscribe((signature: File) => {
       if (signature) {
-        this.clientsService.uploadClientSignatureImage(this.clientViewData.id, signature).subscribe(() => {
-          this.reload();
-        });
+        this.clientsService
+          .uploadClientSignatureImage(this.clientViewData.id, signature)
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -259,9 +273,11 @@ export class ClientsViewComponent implements OnInit {
       });
       deleteSignatureDialogRef.afterClosed().subscribe((response: any) => {
         if (response.delete) {
-          this.clientsService.deleteClientDocument(this.clientViewData.id, response.id).subscribe(() => {
-            this.reload();
-          });
+          this.clientsService
+            .deleteClientDocument(this.clientViewData.id, response.id)
+            .subscribe(() => {
+              this.reload();
+            });
         } else if (response.upload) {
           this.uploadSignature();
         }
@@ -276,9 +292,11 @@ export class ClientsViewComponent implements OnInit {
     const captureImageDialogRef = this.dialog.open(CaptureImageDialogComponent);
     captureImageDialogRef.afterClosed().subscribe((imageURL: string) => {
       if (imageURL) {
-        this.clientsService.uploadCapturedClientProfileImage(this.clientViewData.id, imageURL).subscribe(() => {
-          this.reload();
-        });
+        this.clientsService
+          .uploadCapturedClientProfileImage(this.clientViewData.id, imageURL)
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -290,9 +308,11 @@ export class ClientsViewComponent implements OnInit {
     const uploadImageDialogRef = this.dialog.open(UploadImageDialogComponent);
     uploadImageDialogRef.afterClosed().subscribe((image: File) => {
       if (image) {
-        this.clientsService.uploadClientProfileImage(this.clientViewData.id, image).subscribe(() => {
-          this.reload();
-        });
+        this.clientsService
+          .uploadClientProfileImage(this.clientViewData.id, image)
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }

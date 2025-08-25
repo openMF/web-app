@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -76,10 +81,12 @@ export class WithdrawByClientRecurringDepositsAccountComponent implements OnInit
    * if successful redirects to the recurring deposit account.
    */
   submit() {
-    const withdrawRecurringDepositsAccountFormData = this.withdrawRecurringDepositsAccountForm.value;
+    const withdrawRecurringDepositsAccountFormData =
+      this.withdrawRecurringDepositsAccountForm.value;
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevWithdrawnOnDate: Date = this.withdrawRecurringDepositsAccountForm.value.withdrawnOnDate;
+    const prevWithdrawnOnDate: Date =
+      this.withdrawRecurringDepositsAccountForm.value.withdrawnOnDate;
     if (withdrawRecurringDepositsAccountFormData.withdrawnOnDate instanceof Date) {
       withdrawRecurringDepositsAccountFormData.withdrawnOnDate = this.dateUtils.formatDate(
         prevWithdrawnOnDate,

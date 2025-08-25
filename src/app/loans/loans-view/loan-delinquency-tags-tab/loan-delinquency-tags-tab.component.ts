@@ -108,7 +108,8 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
         this.loanDelinquencyTags = data.loanDelinquencyTagsData;
         this.loanDelinquencyActions = data.loanDelinquencyActions || [];
         this.validateDelinquencyActions();
-        const loanDelinquencyData: DelinquentData | null = data.loanDelinquencyData.delinquent || null;
+        const loanDelinquencyData: DelinquentData | null =
+          data.loanDelinquencyData.delinquent || null;
         this.currency = data.loanDelinquencyData.currency;
         this.installmentLevelDelinquency = [];
         if (loanDelinquencyData != null) {
@@ -128,7 +129,8 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
   validateDelinquencyActions(): void {
     if (this.loanDelinquencyActions.length > 0) {
       const businessDate: Date = this.settingsService.businessDate;
-      this.currentLoanDelinquencyAction = this.loanDelinquencyActions[this.loanDelinquencyActions.length - 1];
+      this.currentLoanDelinquencyAction =
+        this.loanDelinquencyActions[this.loanDelinquencyActions.length - 1];
       this.allowPause = this.currentLoanDelinquencyAction.action === 'RESUME';
     }
   }

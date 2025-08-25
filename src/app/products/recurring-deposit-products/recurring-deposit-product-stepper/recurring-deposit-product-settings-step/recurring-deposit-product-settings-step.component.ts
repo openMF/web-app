@@ -43,15 +43,22 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.lockinPeriodFrequencyTypeData = this.recurringDepositProductsTemplate.lockinPeriodFrequencyTypeOptions;
-    this.periodFrequencyTypeData = this.recurringDepositProductsTemplate.periodFrequencyTypeOptions.slice(0, -1);
-    this.preClosurePenalInterestOnTypeData = this.recurringDepositProductsTemplate.preClosurePenalInterestOnTypeOptions;
+    this.lockinPeriodFrequencyTypeData =
+      this.recurringDepositProductsTemplate.lockinPeriodFrequencyTypeOptions;
+    this.periodFrequencyTypeData =
+      this.recurringDepositProductsTemplate.periodFrequencyTypeOptions.slice(0, -1);
+    this.preClosurePenalInterestOnTypeData =
+      this.recurringDepositProductsTemplate.preClosurePenalInterestOnTypeOptions;
     this.taxGroupData = this.recurringDepositProductsTemplate.taxGroupOptions;
 
-    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+    if (
+      !(this.recurringDepositProductsTemplate === undefined) &&
+      this.recurringDepositProductsTemplate.id
+    ) {
       this.recurringDepositProductSettingsForm.patchValue({
         isMandatoryDeposit: this.recurringDepositProductsTemplate.isMandatoryDeposit,
-        adjustAdvanceTowardsFuturePayments: this.recurringDepositProductsTemplate.adjustAdvanceTowardsFuturePayments,
+        adjustAdvanceTowardsFuturePayments:
+          this.recurringDepositProductsTemplate.adjustAdvanceTowardsFuturePayments,
         allowWithdrawal: this.recurringDepositProductsTemplate.allowWithdrawal,
         lockinPeriodFrequency: this.recurringDepositProductsTemplate.lockinPeriodFrequency,
         lockinPeriodFrequencyType: this.recurringDepositProductsTemplate.lockinPeriodFrequencyType
@@ -62,7 +69,8 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
           ? this.recurringDepositProductsTemplate.minDepositTermType.id
           : '',
         inMultiplesOfDepositTerm: this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm,
-        inMultiplesOfDepositTermTypeId: this.recurringDepositProductsTemplate.inMultiplesOfDepositTermType
+        inMultiplesOfDepositTermTypeId: this.recurringDepositProductsTemplate
+          .inMultiplesOfDepositTermType
           ? this.recurringDepositProductsTemplate.inMultiplesOfDepositTerm.id
           : '',
         maxDepositTerm: this.recurringDepositProductsTemplate.maxDepositTerm,
@@ -71,7 +79,8 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
           : '',
         preClosurePenalApplicable: this.recurringDepositProductsTemplate.preClosurePenalApplicable,
         preClosurePenalInterest: this.recurringDepositProductsTemplate.preClosurePenalInterest,
-        preClosurePenalInterestOnTypeId: this.recurringDepositProductsTemplate.preClosurePenalInterestOnType
+        preClosurePenalInterestOnTypeId: this.recurringDepositProductsTemplate
+          .preClosurePenalInterestOnType
           ? this.recurringDepositProductsTemplate.preClosurePenalInterestOnType.id
           : '',
         withHoldTax: this.recurringDepositProductsTemplate.withHoldTax
@@ -114,16 +123,18 @@ export class RecurringDepositProductSettingsStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.recurringDepositProductSettingsForm.get('withHoldTax').valueChanges.subscribe((withHoldTax: any) => {
-      if (withHoldTax) {
-        this.recurringDepositProductSettingsForm.addControl(
-          'taxGroupId',
-          new UntypedFormControl('', Validators.required)
-        );
-      } else {
-        this.recurringDepositProductSettingsForm.removeControl('taxGroupId');
-      }
-    });
+    this.recurringDepositProductSettingsForm
+      .get('withHoldTax')
+      .valueChanges.subscribe((withHoldTax: any) => {
+        if (withHoldTax) {
+          this.recurringDepositProductSettingsForm.addControl(
+            'taxGroupId',
+            new UntypedFormControl('', Validators.required)
+          );
+        } else {
+          this.recurringDepositProductSettingsForm.removeControl('taxGroupId');
+        }
+      });
   }
 
   get recurringDepositProductSettings() {

@@ -45,7 +45,10 @@
       <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Relationship' | translate }}</mat-label>
         <mat-select formControlName="relationshipId" required>
-          <mat-option *ngFor="let relation of addFamilyMemberTemplate.relationshipIdOptions" [value]="relation.id">
+          <mat-option
+            *ngFor="let relation of addFamilyMemberTemplate.relationshipIdOptions"
+            [value]="relation.id"
+          >
             {{ relation.name | translateKey: 'catalogs' }}
           </mat-option>
         </mat-select>
@@ -58,7 +61,10 @@
       <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
         <mat-select formControlName="genderId" required>
-          <mat-option *ngFor="let gender of addFamilyMemberTemplate.genderIdOptions" [value]="gender.id">
+          <mat-option
+            *ngFor="let gender of addFamilyMemberTemplate.genderIdOptions"
+            [value]="gender.id"
+          >
             {{ gender.name | translateKey: 'catalogs' }}
           </mat-option>
         </mat-select>
@@ -71,7 +77,10 @@
       <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Profession' | translate }}</mat-label>
         <mat-select formControlName="professionId">
-          <mat-option *ngFor="let profession of addFamilyMemberTemplate.professionIdOptions" [value]="profession.id">
+          <mat-option
+            *ngFor="let profession of addFamilyMemberTemplate.professionIdOptions"
+            [value]="profession.id"
+          >
             {{ profession.name | translateKey: 'catalogs' }}
           </mat-option>
         </mat-select>
@@ -91,7 +100,13 @@
 
       <mat-form-field class="flex-fill" (click)="dueDatePicker.open()">
         <mat-label>{{ 'labels.inputs.Date Of Birth' | translate }}</mat-label>
-        <input formControlName="dateOfBirth" matInput [max]="maxDate" [matDatepicker]="dueDatePicker" required />
+        <input
+          formControlName="dateOfBirth"
+          matInput
+          [max]="maxDate"
+          [matDatepicker]="dueDatePicker"
+          required
+        />
         <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #dueDatePicker></mat-datepicker>
         <mat-error *ngIf="editFamilyMemberForm.controls.dateOfBirth.hasError('required')">

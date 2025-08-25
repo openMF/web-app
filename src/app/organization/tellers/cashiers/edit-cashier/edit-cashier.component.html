@@ -16,7 +16,10 @@
           <mat-form-field class="flex-48" *ngIf="isStaffId">
             <mat-label>{{ 'labels.inputs.Cashier' | translate }}</mat-label>
             <mat-select formControlName="staffId">
-              <mat-option *ngFor="let staff of cashierData.template.staffOptions" [value]="staff.id">
+              <mat-option
+                *ngFor="let staff of cashierData.template.staffOptions"
+                [value]="staff.id"
+              >
                 {{ staff.displayName }}
               </mat-option>
             </mat-select>

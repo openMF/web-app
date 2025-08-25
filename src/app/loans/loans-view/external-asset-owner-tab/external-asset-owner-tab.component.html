@@ -11,7 +11,9 @@
             <td class="flex-25 left">
               <div [ngClass]="itemStatus(activeTransferData.status)">
                 <fa-icon icon="stop"></fa-icon>
-                <span class="m-l-10 external-asset-owner-status">{{ activeTransferData.status }}</span>
+                <span class="m-l-10 external-asset-owner-status">{{
+                  activeTransferData.status
+                }}</span>
               </div>
             </td>
             <td class="flex-25">
@@ -89,7 +91,9 @@
                     <td class="flex-50">
                       <b>{{ 'labels.inputs.Overpaid' | translate }} :</b>
                     </td>
-                    <td class="flex-50 r-amount">{{ activeTransferData.details.totalOverpaid | formatNumber }}</td>
+                    <td class="flex-50 r-amount">
+                      {{ activeTransferData.details.totalOverpaid | formatNumber }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -104,8 +108,15 @@
     <h3 class="flex-90">{{ 'labels.heading.External Asset Owner' | translate }}</h3>
 
     <div class="flex-10" *ngIf="canBeSold()">
-      <button mat-raised-button class="f-right" color="primary" (click)="saleLoan()" *mifosxHasPermission="'SALE_LOAN'">
-        <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>{{ 'labels.buttons.Sell Loan' | translate }}
+      <button
+        mat-raised-button
+        class="f-right"
+        color="primary"
+        (click)="saleLoan()"
+        *mifosxHasPermission="'SALE_LOAN'"
+      >
+        <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon
+        >{{ 'labels.buttons.Sell Loan' | translate }}
       </button>
     </div>
 
@@ -117,7 +128,8 @@
         (click)="cancelSaleLoan()"
         *mifosxHasPermission="'SALE_LOAN'"
       >
-        <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Cancel Sell Loan' | translate }}
+        <fa-icon icon="trash" class="m-r-10"></fa-icon
+        >{{ 'labels.buttons.Cancel Sell Loan' | translate }}
       </button>
     </div>
 
@@ -129,7 +141,8 @@
         (click)="buyBackLoan()"
         *mifosxHasPermission="'SALE_LOAN'"
       >
-        <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>{{ 'labels.buttons.Buy Back Loan' | translate }}
+        <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon
+        >{{ 'labels.buttons.Buy Back Loan' | translate }}
       </button>
     </div>
   </div>
@@ -155,14 +168,20 @@
     <ng-container matColumnDef="ownerExternalId">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Owner External Id' | translate }}</th>
       <td mat-cell *matCellDef="let item">
-        <mifosx-external-identifier externalId="{{ item.owner.externalId }}"></mifosx-external-identifier>
+        <mifosx-external-identifier
+          externalId="{{ item.owner.externalId }}"
+        ></mifosx-external-identifier>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="transferExternalId">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Transfer External Id' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'labels.inputs.Transfer External Id' | translate }}
+      </th>
       <td mat-cell *matCellDef="let item">
-        <mifosx-external-identifier externalId="{{ item.transferExternalId }}"></mifosx-external-identifier>
+        <mifosx-external-identifier
+          externalId="{{ item.transferExternalId }}"
+        ></mifosx-external-identifier>
       </td>
     </ng-container>
 
@@ -172,12 +191,16 @@
     </ng-container>
 
     <ng-container matColumnDef="purchasePriceRatio">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Purchase Price Ratio' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'labels.inputs.Purchase Price Ratio' | translate }}
+      </th>
       <td mat-cell *matCellDef="let item">{{ item.purchasePriceRatio | number }}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell class="center" *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
+      <th mat-header-cell class="center" *matHeaderCellDef>
+        {{ 'labels.inputs.Actions' | translate }}
+      </th>
       <td mat-cell *matCellDef="let item" class="center td-min-space">
         <button
           class="account-action-button"

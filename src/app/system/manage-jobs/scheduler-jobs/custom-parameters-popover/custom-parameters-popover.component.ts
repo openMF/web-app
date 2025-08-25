@@ -72,7 +72,8 @@ interface JobDataType {
 })
 export class CustomParametersPopoverComponent implements OnInit {
   /* Job table childer */
-  @ViewChildren(CustomParametersTableComponent) tableComponents: QueryList<CustomParametersTableComponent>;
+  @ViewChildren(CustomParametersTableComponent)
+  tableComponents: QueryList<CustomParametersTableComponent>;
 
   /* Initialize Selected Jobs */
   selectedJobs: JobDataType[] = [];

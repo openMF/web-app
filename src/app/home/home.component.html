@@ -10,7 +10,9 @@
 <div class="container">
   <mat-card>
     <mat-card-header>
-      <mat-card-title class="title"> {{ 'labels.text.Welcome' | translate }}, {{ username }}! </mat-card-title>
+      <mat-card-title class="title">
+        {{ 'labels.text.Welcome' | translate }}, {{ username }}!
+      </mat-card-title>
     </mat-card-header>
 
     <mat-card-content #searchActivity>
@@ -22,7 +24,10 @@
       </div>
 
       <mat-autocomplete #activitySearch="matAutocomplete">
-        <mat-option *ngFor="let activity of filteredActivities | async" [routerLink]="activity.path">
+        <mat-option
+          *ngFor="let activity of filteredActivities | async"
+          [routerLink]="activity.path"
+        >
           <span>{{ activity.activity }}</span>
         </mat-option>
       </mat-autocomplete>
@@ -34,7 +39,11 @@
 
 <ng-template #popoverButtons let-popover="popover" let-prev="prev" let-next="next">
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -58,9 +67,15 @@
 
 <ng-template #templateButtonDashboard let-popover="popover">
   <h2>{{ 'labels.heading.Dashboard' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.This will navigate the user to the dashboard component.' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.This will navigate the user to the dashboard component.' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
@@ -78,15 +93,23 @@
 
 <ng-template #templateSearchActivity let-popover="popover">
   <h2>{{ 'labels.heading.Search Activity' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.This will navigate the user to the searched activity.' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.This will navigate the user to the searched activity.' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
-      (click)="popover.close(); showPopover(templateButtonDashboard, buttonDashboard, 'bottom', true)"
+      (click)="
+        popover.close(); showPopover(templateButtonDashboard, buttonDashboard, 'bottom', true)
+      "
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>

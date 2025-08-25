@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet
+} from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Dialog Imports */
@@ -102,7 +108,10 @@ export class CentersViewComponent implements OnInit {
   get editMeeting() {
     if (this.centerViewData.collectionMeetingCalendar) {
       const entityType = this.centerViewData.collectionMeetingCalendar.entityType.value;
-      if (entityType === 'CENTERS' && this.centerViewData.hierarchy === '.' + this.centerViewData.id + '.') {
+      if (
+        entityType === 'CENTERS' &&
+        this.centerViewData.hierarchy === '.' + this.centerViewData.id + '.'
+      ) {
         return true;
       }
     }
@@ -126,7 +135,10 @@ export class CentersViewComponent implements OnInit {
         break;
       case 'Edit Meeting':
         const queryParams: any = { calendarId: this.centerViewData.collectionMeetingCalendar.id };
-        this.router.navigate([`actions/${name}`], { relativeTo: this.route, queryParams: queryParams });
+        this.router.navigate([`actions/${name}`], {
+          relativeTo: this.route,
+          queryParams: queryParams
+        });
         break;
       case 'Unassign Staff':
         this.centersUnassignStaff();
@@ -146,13 +158,17 @@ export class CentersViewComponent implements OnInit {
     const unAssignStaffDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Unassign Staff'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want Unassign Staff')
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want Unassign Staff'
+        )
       }
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         this.centersService
-          .executeGroupActionCommand(this.centerViewData.id, 'unassignStaff', { staffId: this.centerViewData.staffId })
+          .executeGroupActionCommand(this.centerViewData.id, 'unassignStaff', {
+            staffId: this.centerViewData.staffId
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -182,6 +198,8 @@ export class CentersViewComponent implements OnInit {
    */
   reload() {
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/centers`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(`/centers`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 }

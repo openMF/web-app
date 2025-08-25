@@ -37,14 +37,15 @@ export class GeneralTabComponent implements OnInit {
     this.route.data.subscribe((data: { loanProduct: any }) => {
       this.loanProduct = data.loanProduct;
       this.useDueForRepaymentsConfigurations =
-        !this.loanProduct.dueDaysForRepaymentEvent && !this.loanProduct.overDueDaysForRepaymentEvent;
+        !this.loanProduct.dueDaysForRepaymentEvent &&
+        !this.loanProduct.overDueDaysForRepaymentEvent;
     });
   }
 
   ngOnInit() {
-    this.loanProduct.allowAttributeConfiguration = Object.values(this.loanProduct.allowAttributeOverrides).some(
-      (attribute: boolean) => attribute
-    );
+    this.loanProduct.allowAttributeConfiguration = Object.values(
+      this.loanProduct.allowAttributeOverrides
+    ).some((attribute: boolean) => attribute);
   }
 
   exportDefinition(): void {
@@ -52,7 +53,10 @@ export class GeneralTabComponent implements OnInit {
     delete product['id'];
     const fileName: string = product.name.replace(' ', '_') + '.json';
     const link = document.createElement('a');
-    link.setAttribute('href', 'data:text/plain;charset=utf-u,' + encodeURIComponent(JSON.stringify(product, null, 2)));
+    link.setAttribute(
+      'href',
+      'data:text/plain;charset=utf-u,' + encodeURIComponent(JSON.stringify(product, null, 2))
+    );
     link.setAttribute('download', fileName);
     document.body.appendChild(link);
     link.click();
@@ -95,10 +99,14 @@ export class GeneralTabComponent implements OnInit {
         productCopy['delinquencyBucketId'] = productCopy['delinquencyBucket']
           ? productCopy['delinquencyBucket']['id']
           : null;
-        productCopy['currencyCode'] = productCopy['currency'] ? productCopy['currency']['code'] : null;
+        productCopy['currencyCode'] = productCopy['currency']
+          ? productCopy['currency']['code']
+          : null;
         productCopy['interestRatePerPeriod'] = productCopy['annualInterestRate'];
-        productCopy['transactionProcessingStrategyCode'] = productCopy['transactionProcessingStrategyName'];
-        productCopy['allowPartialPeriodInterestCalculation'] = productCopy['allowPartialPeriodInterestCalculation'];
+        productCopy['transactionProcessingStrategyCode'] =
+          productCopy['transactionProcessingStrategyName'];
+        productCopy['allowPartialPeriodInterestCalculation'] =
+          productCopy['allowPartialPeriodInterestCalculation'];
         productCopy['locale'] = this.settingsService.language.code;
 
         let valueTmp: any = productCopy['daysInMonthType']['value'];

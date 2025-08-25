@@ -6,7 +6,10 @@
           <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Hook Template' | translate }}</mat-label>
             <mat-select required formControlName="name">
-              <mat-option *ngFor="let hookTemplate of hooksTemplateData.templates" [value]="hookTemplate.name">
+              <mat-option
+                *ngFor="let hookTemplate of hooksTemplateData.templates"
+                [value]="hookTemplate.name"
+              >
                 {{ hookTemplate.name | translateKey: 'text' }}
               </mat-option>
             </mat-select>
@@ -26,7 +29,11 @@
           </mat-form-field>
 
           <div class="is-active-wrapper">
-            <mat-checkbox class="is-active flex-10" labelPosition="before" formControlName="isActive">
+            <mat-checkbox
+              class="is-active flex-10"
+              labelPosition="before"
+              formControlName="isActive"
+            >
               {{ 'labels.inputs.Is Active' | translate }}?
             </mat-checkbox>
           </div>
@@ -49,9 +56,19 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field class="flex-fill flex-40" *ngIf="hookForm.controls.name.value === 'SMS Bridge'">
+          <mat-form-field
+            class="flex-fill flex-40"
+            *ngIf="hookForm.controls.name.value === 'SMS Bridge'"
+          >
             <mat-label>{{ 'labels.inputs.Phone Number' | translate }}</mat-label>
-            <input matInput type="tel" #input maxlength="10" required formControlName="phoneNumber" />
+            <input
+              matInput
+              type="tel"
+              #input
+              maxlength="10"
+              required
+              formControlName="phoneNumber"
+            />
             <mat-hint align="end">{{ input.value?.length || 0 }}/10</mat-hint>
             <mat-error *ngIf="hookForm.controls.phoneNumber.hasError('required')">
               {{ 'labels.inputs.Payload URL' | translate }} {{ 'labels.commons.is' | translate }}
@@ -86,7 +103,8 @@
             <mat-label>{{ 'labels.inputs.SMS Provider Account ID' | translate }}</mat-label>
             <input matInput required formControlName="smsProviderAccountId" />
             <mat-error *ngIf="hookForm.controls.smsProviderAccountId.hasError('required')">
-              {{ 'labels.inputs.SMS Provider Account ID' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.SMS Provider Account ID' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -95,7 +113,8 @@
             <mat-label>{{ 'labels.inputs.SMS Provider Token' | translate }}</mat-label>
             <input matInput required formControlName="smsProviderToken" />
             <mat-error *ngIf="hookForm.controls.smsProviderToken.hasError('required')">
-              {{ 'labels.inputs.SMS Provider Token' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.SMS Provider Token' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -108,9 +127,17 @@
         <br />
 
         <div class="layout-row-wrap responsive-column">
-          <p class="mat-title flex-20">{{ 'labels.inputs.Events' | translate }} <span class="red">*</span></p>
+          <p class="mat-title flex-20">
+            {{ 'labels.inputs.Events' | translate }} <span class="red">*</span>
+          </p>
 
-          <button mat-raised-button class="AddEventButton flex-20" type="button" color="primary" (click)="addEvent()">
+          <button
+            mat-raised-button
+            class="AddEventButton flex-20"
+            type="button"
+            color="primary"
+            (click)="addEvent()"
+          >
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Events' | translate }}
           </button>
@@ -118,7 +145,9 @@
 
         <table mat-table [dataSource]="dataSource" matSort>
           <ng-container matColumnDef="entityName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Entity Name' | translate }}</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'labels.inputs.Entity Name' | translate }}
+            </th>
             <td mat-cell *matCellDef="let event">{{ event.entityName }}</td>
           </ng-container>
 

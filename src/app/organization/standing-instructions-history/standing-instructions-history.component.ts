@@ -15,7 +15,12 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */

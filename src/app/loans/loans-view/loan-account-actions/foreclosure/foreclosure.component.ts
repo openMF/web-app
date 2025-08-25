@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { LoansService } from 'app/loans/loans.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -59,10 +64,13 @@ export class ForeclosureComponent implements OnInit {
         this.dataObject.date && new Date(this.dataObject.date),
         Validators.required
       ],
-      outstandingPrincipalPortion: [{ value: this.dataObject.principalPortion || 0, disabled: true }],
+      outstandingPrincipalPortion: [
+        { value: this.dataObject.principalPortion || 0, disabled: true }],
       outstandingInterestPortion: [{ value: this.dataObject.interestPortion || 0, disabled: true }],
-      outstandingFeeChargesPortion: [{ value: this.dataObject.feeChargesPortion || 0, disabled: true }],
-      outstandingPenaltyChargesPortion: [{ value: this.dataObject.penaltyChargesPortion || 0, disabled: true }],
+      outstandingFeeChargesPortion: [
+        { value: this.dataObject.feeChargesPortion || 0, disabled: true }],
+      outstandingPenaltyChargesPortion: [
+        { value: this.dataObject.penaltyChargesPortion || 0, disabled: true }],
       transactionAmount: [{ value: this.dataObject.amount, disabled: true }],
       note: [
         '',
@@ -104,7 +112,10 @@ export class ForeclosureComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate = this.foreclosureForm.value.transactionDate;
     if (foreclosureFormData.transactionDate instanceof Date) {
-      foreclosureFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      foreclosureFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...foreclosureFormData,

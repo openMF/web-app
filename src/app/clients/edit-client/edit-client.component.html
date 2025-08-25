@@ -50,7 +50,8 @@
             <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
             <input matInput required formControlName="firstname" />
             <mat-error *ngIf="editClientForm.controls.firstname.hasError('required')">
-              {{ 'labels.inputs.Client first name' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Client first name' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -64,7 +65,8 @@
             <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
             <input matInput required formControlName="lastname" />
             <mat-error *ngIf="editClientForm.controls.lastname.hasError('required')">
-              {{ 'labels.inputs.Client last name' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Client last name' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -73,9 +75,15 @@
 
           <mat-form-field class="flex-48" (click)="dateOfBirthDatePicker.open()">
             <mat-label>{{
-              'labels.inputs.' + getDateLabel(legalFormId, ['Date of Birth', 'Incorporation Date']) | translate
+              'labels.inputs.' + getDateLabel(legalFormId, ['Date of Birth', 'Incorporation Date'])
+                | translate
             }}</mat-label>
-            <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth" />
+            <input
+              matInput
+              [max]="maxDate"
+              [matDatepicker]="dateOfBirthDatePicker"
+              formControlName="dateOfBirth"
+            />
             <mat-datepicker-toggle matSuffix [for]="dateOfBirthDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
           </mat-form-field>
@@ -106,7 +114,10 @@
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
               <mat-select formControlName="constitutionId" required>
-                <mat-option *ngFor="let constitution of constitutionOptions" [value]="constitution.id">
+                <mat-option
+                  *ngFor="let constitution of constitutionOptions"
+                  [value]="constitution.id"
+                >
                   {{ constitution.name }}
                 </mat-option>
               </mat-select>
@@ -122,7 +133,9 @@
             </mat-form-field>
 
             <mat-form-field class="flex-48" (click)="incorpValidityTillDateDatePicker.open()">
-              <mat-label>{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</mat-label>
+              <mat-label>{{
+                'labels.inputs.Incorporation Validity Till Date' | translate
+              }}</mat-label>
               <input
                 matInput
                 [min]="minDate"
@@ -130,7 +143,10 @@
                 [matDatepicker]="incorpValidityTillDateDatePicker"
                 formControlName="incorpValidityTillDate"
               />
-              <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="incorpValidityTillDateDatePicker"
+              ></mat-datepicker-toggle>
               <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
             </mat-form-field>
 
@@ -141,7 +157,12 @@
 
             <mat-form-field class="flex-98">
               <mat-label>{{ 'labels.inputs.Remarks' | translate }}</mat-label>
-              <textarea matInput formControlName="remarks" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+              <textarea
+                matInput
+                formControlName="remarks"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="2"
+              ></textarea>
             </mat-form-field>
           </div>
 
@@ -162,7 +183,9 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Email Address' | translate }}</mat-label>
             <input matInput formControlName="emailAddress" />
-            <mat-error *ngIf="editClientForm.controls.emailAddress.errors?.email"> Email not valid </mat-error>
+            <mat-error *ngIf="editClientForm.controls.emailAddress.errors?.email">
+              Email not valid
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field class="flex-48">
@@ -223,7 +246,12 @@
         <button type="button" mat-raised-button [routerLink]="['../general']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!editClientForm.valid" (click)="submit()">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!editClientForm.valid"
+          (click)="submit()"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

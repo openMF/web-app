@@ -7,7 +7,8 @@ export class ExternalIdentifierPipe implements PipeTransform {
     if (!externalId) {
       return '';
     } else {
-      const regexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+      const regexExp =
+        /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
 
       if (regexExp.test(externalId)) {
         const values = externalId.split('-');

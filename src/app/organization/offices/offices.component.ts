@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -232,7 +239,12 @@ export class OfficesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showOfficeList === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonTreeView, this.buttonTreeView.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonTreeView,
+          this.buttonTreeView.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showOfficeTable === true) {
@@ -266,6 +278,9 @@ export class OfficesComponent implements OnInit, AfterViewInit {
    * Expand and Collapse the tree
    */
   toggleExpandCollapse() {
-    this.isTreeExpanded = this.treeControlService.toggleExpandCollapse(this.nestedTreeControl, this.isTreeExpanded);
+    this.isTreeExpanded = this.treeControlService.toggleExpandCollapse(
+      this.nestedTreeControl,
+      this.isTreeExpanded
+    );
   }
 }

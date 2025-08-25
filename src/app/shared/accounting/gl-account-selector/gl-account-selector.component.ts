@@ -68,7 +68,10 @@ export class GlAccountSelectorComponent implements OnInit, OnChanges, OnDestroy 
       } else {
         this.glAccountData.next(
           this.glAccountList.filter((option: GLAccount) => {
-            return option.name.toLowerCase().indexOf(search) >= 0 || option.glCode.toLowerCase().indexOf(search) >= 0;
+            return (
+              option.name.toLowerCase().indexOf(search) >= 0 ||
+              option.glCode.toLowerCase().indexOf(search) >= 0
+            );
           })
         );
       }

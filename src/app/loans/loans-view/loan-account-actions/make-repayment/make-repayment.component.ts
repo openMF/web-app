@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  UntypedFormControl
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -168,7 +173,10 @@ export class MakeRepaymentComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.repaymentLoanForm.value.transactionDate;
     if (repaymentLoanFormData.transactionDate instanceof Date) {
-      repaymentLoanFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      repaymentLoanFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data: any = {
       ...repaymentLoanFormData,
@@ -180,8 +188,10 @@ export class MakeRepaymentComponent implements OnInit {
       data.interestRefundCalculation = false;
     }
     delete data.skipInterestRefund;
-    this.loanService.submitLoanActionButton(this.loanId, data, this.command).subscribe((response: any) => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.loanService
+      .submitLoanActionButton(this.loanId, data, this.command)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

@@ -44,7 +44,8 @@ export class EditSavingProductComponent {
   savingProductDetailsStep: SavingProductDetailsStepComponent;
   @ViewChild(SavingProductCurrencyStepComponent, { static: true })
   savingProductCurrencyStep: SavingProductCurrencyStepComponent;
-  @ViewChild(SavingProductTermsStepComponent, { static: true }) savingProductTermsStep: SavingProductTermsStepComponent;
+  @ViewChild(SavingProductTermsStepComponent, { static: true })
+  savingProductTermsStep: SavingProductTermsStepComponent;
   @ViewChild(SavingProductSettingsStepComponent, { static: true })
   savingProductSettingsStep: SavingProductSettingsStepComponent;
   @ViewChild(SavingProductChargesStepComponent, { static: true })

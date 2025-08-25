@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -82,15 +87,20 @@ export class RejectFixedDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevRejectedOnDate: Date = this.rejectFixedDepositsAccountForm.value.rejectedOnDate;
     if (rejectFixedDepositsAccountFormData.rejectedOnDate instanceof Date) {
-      rejectFixedDepositsAccountFormData.rejectedOnDate = this.dateUtils.formatDate(prevRejectedOnDate, dateFormat);
+      rejectFixedDepositsAccountFormData.rejectedOnDate = this.dateUtils.formatDate(
+        prevRejectedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...rejectFixedDepositsAccountFormData,
       dateFormat,
       locale
     };
-    this.fixedDepositsService.executeFixedDepositsAccountCommand(this.accountId, 'reject', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.fixedDepositsService
+      .executeFixedDepositsAccountCommand(this.accountId, 'reject', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

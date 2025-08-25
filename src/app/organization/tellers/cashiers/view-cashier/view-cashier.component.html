@@ -1,9 +1,19 @@
 <div class="layout-row align-end gap-2px responsive-column container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CASHIER'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['edit']"
+    *mifosxHasPermission="'UPDATE_CASHIER'"
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
   </button>
-  <button mat-raised-button color="warn" (click)="deleteCashier()" *mifosxHasPermission="'DELETECASHIER_TELLER'">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="deleteCashier()"
+    *mifosxHasPermission="'DELETECASHIER_TELLER'"
+  >
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Delete' | translate }}
   </button>

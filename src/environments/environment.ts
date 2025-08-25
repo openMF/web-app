@@ -19,11 +19,14 @@ export const environment = {
   // For connecting to others servers running elsewhere update the base API URL
   baseApiUrls:
     loadedEnv.fineractApiUrls ||
-    'https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443,' + window.location.origin,
+    'https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443,' +
+      window.location.origin,
   // For connecting to server running elsewhere set the base API URL
   baseApiUrl:
     loadedEnv.fineractApiUrl ||
-    (loadedEnv.fineractApiUrls?.length > 0 ? loadedEnv.fineractApiUrls.split(',')[0] : window.location.origin),
+    (loadedEnv.fineractApiUrls?.length > 0
+      ? loadedEnv.fineractApiUrls.split(',')[0]
+      : window.location.origin),
   allowServerSwitch: env.allow_switching_backend_instance,
   apiProvider: loadedEnv.apiProvider || '/fineract-provider/api',
   apiVersion: loadedEnv.apiVersion || '/v1',
@@ -41,7 +44,8 @@ export const environment = {
   },
   defaultLanguage: loadedEnv.defaultLanguage || 'en-US',
   supportedLanguages:
-    loadedEnv.supportedLanguages || 'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
+    loadedEnv.supportedLanguages ||
+    'cs-CS,de-DE,en-US,es-MX,fr-FR,it-IT,ko-KO,lt-LT,lv-LV,ne-NE,pt-PT,sw-SW',
   preloadClients: loadedEnv['preloadClients'] || true,
 
   defaultCharDelimiter: loadedEnv.defaultCharDelimiter || ',',

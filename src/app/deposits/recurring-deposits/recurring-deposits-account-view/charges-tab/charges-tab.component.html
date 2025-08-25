@@ -30,28 +30,40 @@
       <ng-container matColumnDef="repeatsOn">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Repeats On' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
-          {{ charge.feeOnMonthDay ? ([2000].concat(charge.feeOnMonthDay) | dateFormat: 'dd MMMM') : 'Unassigned' }}
+          {{
+            charge.feeOnMonthDay
+              ? ([2000].concat(charge.feeOnMonthDay) | dateFormat: 'dd MMMM')
+              : 'Unassigned'
+          }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="calculationType">
-        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Calculation Type' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef>
+          {{ 'labels.inputs.Calculation Type' | translate }}
+        </th>
         <td mat-cell *matCellDef="let charge">{{ charge.chargeCalculationType.value }}</td>
       </ng-container>
 
       <ng-container matColumnDef="due">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Due' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.currency.displaySymbol }}&nbsp;{{ charge.amount }}</td>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.currency.displaySymbol }}&nbsp;{{ charge.amount }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="paid">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Paid' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.currency.displaySymbol }}&nbsp;{{ charge.amountPaid }}</td>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.currency.displaySymbol }}&nbsp;{{ charge.amountPaid }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="waived">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Waived' | translate }}</th>
-        <td mat-cell *matCellDef="let charge">{{ charge.currency.displaySymbol }}&nbsp;{{ charge.amountWaived }}</td>
+        <td mat-cell *matCellDef="let charge">
+          {{ charge.currency.displaySymbol }}&nbsp;{{ charge.amountWaived }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="outstanding">
@@ -64,7 +76,9 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
-          <span *ngIf="recurringDepositsAccountData.status.value === 'Submitted and pending approval'">
+          <span
+            *ngIf="recurringDepositsAccountData.status.value === 'Submitted and pending approval'"
+          >
             <button
               class="account-action-button"
               mat-raised-button

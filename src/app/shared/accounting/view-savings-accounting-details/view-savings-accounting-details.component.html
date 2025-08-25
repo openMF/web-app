@@ -1,7 +1,9 @@
 <div class="layout-row-wrap responsive-column">
   <div *ngIf="accountingRule" class="layout-row responsive-column flex-100">
     <span class="flex-40">{{ 'labels.inputs.Type' | translate }}:</span>
-    <span class="flex-60">{{ 'labels.accounting.' + getAccountingRuleName(accountingRule.value) | translate }}</span>
+    <span class="flex-60">{{
+      'labels.accounting.' + getAccountingRuleName(accountingRule.value) | translate
+    }}</span>
   </div>
 
   <div class="layout-row-wrap responsive-column flex-100">

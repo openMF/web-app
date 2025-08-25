@@ -86,7 +86,8 @@ export class DashboardComponent implements OnInit {
     const frequencyCounts: any = {};
     let index = this.userActivity?.length;
     while (index) {
-      frequencyCounts[this.userActivity[--index]] = (frequencyCounts[this.userActivity[index]] || 0) + 1;
+      frequencyCounts[this.userActivity[--index]] =
+        (frequencyCounts[this.userActivity[index]] || 0) + 1;
     }
     const frequencyCountsArray = Object.entries(frequencyCounts);
     const topEigthFrequentActivities = frequencyCountsArray
@@ -117,7 +118,9 @@ export class DashboardComponent implements OnInit {
   setFilteredActivities() {
     this.filteredActivities = this.searchText.valueChanges.pipe(
       map((activity: any) => (typeof activity === 'string' ? activity : activity.activity)),
-      map((activityName: string) => (activityName ? this.filterActivity(activityName) : this.allActivities))
+      map((activityName: string) =>
+        activityName ? this.filterActivity(activityName) : this.allActivities
+      )
     );
   }
 
@@ -128,6 +131,8 @@ export class DashboardComponent implements OnInit {
    */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
-    return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
+    return this.allActivities.filter(
+      (activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0
+    );
   }
 }

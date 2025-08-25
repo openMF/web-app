@@ -12,7 +12,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Data tables' | translate }}
-                    <p matLine *ngIf="arrowBooleans[0]" [routerLink]="['data-tables']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[0]"
+                      [routerLink]="['data-tables']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Add new extra fields to any entity' | translate }}
                     </p>
                   </div>
@@ -44,7 +49,12 @@
                   </mat-icon>
                   <div>
                     {{ 'labels.heading.Manage Codes' | translate }}
-                    <p matLine *ngIf="arrowBooleans[1]" [routerLink]="['codes']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[1]"
+                      [routerLink]="['codes']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Codes are used to define drop down values' | translate }}
                     </p>
                   </div>
@@ -82,7 +92,9 @@
                       [routerLink]="['roles-and-permissions']"
                       class="menu-explanation"
                     >
-                      {{ 'labels.text.Define or modify roles and associated permissions' | translate }}
+                      {{
+                        'labels.text.Define or modify roles and associated permissions' | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -113,7 +125,12 @@
                   </mat-icon>
                   <div matLine [routerLink]="['configure-mc-tasks']">
                     {{ 'labels.heading.Configure Maker Checker Tasks' | translate }}
-                    <p matLine *ngIf="arrowBooleans[3]" [routerLink]="['configure-mc-tasks']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[3]"
+                      [routerLink]="['configure-mc-tasks']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Define or modify Maker Checker tasks' | translate }}
                     </p>
                   </div>
@@ -144,7 +161,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Manage Hooks' | translate }}
-                  <p matLine *ngIf="arrowBooleans[4]" [routerLink]="['hooks']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[4]"
+                    [routerLink]="['hooks']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Define Hooks' | translate }}
                   </p>
                 </div>
@@ -231,7 +253,10 @@
             </div>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['external-events']" *mifosxHasPermission="'READ_EXTERNAL_EVENT_CONFIGURATION'">
+          <mat-list-item
+            [routerLink]="['external-events']"
+            *mifosxHasPermission="'READ_EXTERNAL_EVENT_CONFIGURATION'"
+          >
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['external-events']">
                 <mat-icon matListIcon>
@@ -239,8 +264,15 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Manage External Events' | translate }}
-                  <p matLine *ngIf="arrowBooleans[7]" [routerLink]="['external-events']" class="menu-explanation">
-                    {{ 'labels.text.External Events configuration, to enable or disable' | translate }}
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[7]"
+                    [routerLink]="['external-events']"
+                    class="menu-explanation"
+                  >
+                    {{
+                      'labels.text.External Events configuration, to enable or disable' | translate
+                    }}
                   </p>
                 </div>
               </div>
@@ -273,7 +305,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Audit Trails' | translate }}
-                  <p matLine *ngIf="arrowBooleans[8]" [routerLink]="['audit-trails']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[8]"
+                    [routerLink]="['audit-trails']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Audit logs of all the activities' | translate }}
                   </p>
                 </div>
@@ -304,7 +341,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Manage Reports' | translate }}
-                    <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['reports']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[9]"
+                      [routerLink]="['reports']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.Add new report and classify reports' | translate }}
                     </p>
                   </div>
@@ -335,7 +377,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Manage Jobs' | translate }}
-                  <p matLine *ngIf="arrowBooleans[10]" [routerLink]="['manage-jobs']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[10]"
+                    [routerLink]="['manage-jobs']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Manage Schedule and Workflow jobs, modify jobs' | translate }}
                   </p>
                 </div>
@@ -365,7 +412,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Configurations' | translate }}
-                  <p matLine *ngIf="arrowBooleans[11]" [routerLink]="['configurations']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[11]"
+                    [routerLink]="['configurations']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Global configurations, Cache and Business Date' | translate }}
                   </p>
                 </div>
@@ -401,7 +453,10 @@
                     [routerLink]="['account-number-preferences']"
                     class="menu-explanation"
                   >
-                    {{ 'labels.text.Preferences for generating account numbers for client' | translate }}
+                    {{
+                      'labels.text.Preferences for generating account numbers for client'
+                        | translate
+                    }}
                   </p>
                 </div>
               </div>
@@ -430,7 +485,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.External Services' | translate }}
-                  <p matLine *ngIf="arrowBooleans[13]" [routerLink]="['external-services']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[13]"
+                    [routerLink]="['external-services']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.External Services Configuration' | translate }}
                   </p>
                 </div>
@@ -489,9 +549,15 @@
 
 <ng-template #templateDatatables let-popover="popover">
   <h2>{{ 'labels.heading.Manage Data Tables' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Mifos X data-tables allow the user to add custom fields' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Mifos X data-tables allow the user to add custom fields' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepDatatables()">
@@ -505,9 +571,15 @@
 
 <ng-template #templateCodes let-popover="popover">
   <h2>{{ 'labels.heading.Manage Codes' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Selection you can create new drop-downs and edit' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Selection you can create new drop-downs and edit' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); previousStepCodes()">
@@ -521,15 +593,29 @@
 
 <ng-template #templateRolesandPermission let-popover="popover">
   <h2>{{ 'labels.heading.Manage Roles and Permissions' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Roles and Permissions allow the administrator to control access' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Roles and Permissions allow the administrator to control access' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepRolesandPermission()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepRolesandPermission()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStepRolesandPermission()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); nextStepRolesandPermission()"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -537,15 +623,29 @@
 
 <ng-template #templateMakerCheckerTable let-popover="popover">
   <h2>{{ 'labels.heading.Configure Maker-Checker Tasks' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.“Maker-Checker” principle requires every tasks' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.“Maker-Checker” principle requires every tasks' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepMakerCheckerTable()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepMakerCheckerTable()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStepMakerCheckerTable()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); nextStepMakerCheckerTable()"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -553,12 +653,22 @@
 
 <ng-template #templateConfigurations let-popover="popover">
   <h2>{{ 'labels.heading.Configuration' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Configurations page allows you to further customize' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Configurations page allows you to further customize' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepConfigurations()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepConfigurations()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStepConfigurations()">
@@ -571,10 +681,18 @@
   <h2>{{ 'labels.heading.Manage Scheduler Jobs' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Scheduler Jobs can set batch jobs' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepSchedulerJobs()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepSchedulerJobs()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStepSchedulerJobs()">
@@ -587,10 +705,18 @@
   <h2>{{ 'labels.heading.Manage Reports' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Add customized reports and edit core reports' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepManageReports()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepManageReports()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStepManageReports()">

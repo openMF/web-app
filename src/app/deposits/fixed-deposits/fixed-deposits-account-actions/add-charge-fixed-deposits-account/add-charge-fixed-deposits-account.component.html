@@ -6,7 +6,10 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
             <mat-select required formControlName="chargeId">
-              <mat-option *ngFor="let savingsCharge of savingsChargeOptions" [value]="savingsCharge.id">
+              <mat-option
+                *ngFor="let savingsCharge of savingsChargeOptions"
+                [value]="savingsCharge.id"
+              >
                 {{ savingsCharge.name + ' (' + savingsCharge.currency.name + ')' }}
               </mat-option>
             </mat-select>
@@ -41,13 +44,19 @@
             <mat-form-field>
               <mat-label>{{ 'labels.inputs.Charge time type' | translate }}</mat-label>
               <mat-select formControlName="chargeTimeType">
-                <mat-option *ngFor="let chargeTime of chargeDetails.chargeTimeTypeOptions" [value]="chargeTime.id">
+                <mat-option
+                  *ngFor="let chargeTime of chargeDetails.chargeTimeTypeOptions"
+                  [value]="chargeTime.id"
+                >
                   {{ chargeTime.value }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field *ngIf="fixedDepositsChargeForm.contains('dueDate')" (click)="dueDatePicker.open()">
+            <mat-form-field
+              *ngIf="fixedDepositsChargeForm.contains('dueDate')"
+              (click)="dueDatePicker.open()"
+            >
               <mat-label>{{ 'labels.inputs.Due for collection on' | translate }}</mat-label>
               <input
                 matInput
@@ -60,7 +69,8 @@
               <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #dueDatePicker></mat-datepicker>
               <mat-error *ngIf="fixedDepositsChargeForm.controls.dueDate.hasError('required')">
-                {{ 'labels.inputs.Due for collection on' | translate }} {{ 'labels.commons.is' | translate }}
+                {{ 'labels.inputs.Due for collection on' | translate }}
+                {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
@@ -80,7 +90,9 @@
               />
               <mat-datepicker-toggle matSuffix [for]="feeOnMonthDayPicker"></mat-datepicker-toggle>
               <mat-datepicker #feeOnMonthDayPicker></mat-datepicker>
-              <mat-error *ngIf="fixedDepositsChargeForm.controls.feeOnMonthDay.hasError('required')">
+              <mat-error
+                *ngIf="fixedDepositsChargeForm.controls.feeOnMonthDay.hasError('required')"
+              >
                 {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>

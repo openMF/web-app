@@ -46,10 +46,14 @@ export class ShareProductAccountingStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.assetAccountData = this.shareProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
-    this.incomeAccountData = this.shareProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
-    this.equityAccountData = this.shareProductsTemplate.accountingMappingOptions.equityAccountOptions || [];
-    this.liabilityAccountData = this.shareProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+    this.assetAccountData =
+      this.shareProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+    this.incomeAccountData =
+      this.shareProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
+    this.equityAccountData =
+      this.shareProductsTemplate.accountingMappingOptions.equityAccountOptions || [];
+    this.liabilityAccountData =
+      this.shareProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
 
     if (this.shareProductsTemplate.accountingRule) {
       this.shareProductAccountingForm.patchValue({
@@ -61,7 +65,8 @@ export class ShareProductAccountingStepComponent implements OnInit {
           shareReferenceId: this.shareProductsTemplate.accountingMappings.shareReferenceId.id,
           shareSuspenseId: this.shareProductsTemplate.accountingMappings.shareSuspenseId.id,
           shareEquityId: this.shareProductsTemplate.accountingMappings.shareEquityId.id,
-          incomeFromFeeAccountId: this.shareProductsTemplate.accountingMappings.incomeFromFeeAccountId.id
+          incomeFromFeeAccountId:
+            this.shareProductsTemplate.accountingMappings.incomeFromFeeAccountId.id
         });
       }
     }
@@ -74,22 +79,33 @@ export class ShareProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.shareProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
-      if (accountingRule === 2) {
-        this.shareProductAccountingForm.addControl('shareReferenceId', new UntypedFormControl('', Validators.required));
-        this.shareProductAccountingForm.addControl('shareSuspenseId', new UntypedFormControl('', Validators.required));
-        this.shareProductAccountingForm.addControl('shareEquityId', new UntypedFormControl('', Validators.required));
-        this.shareProductAccountingForm.addControl(
-          'incomeFromFeeAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-      } else {
-        this.shareProductAccountingForm.removeControl('shareReferenceId');
-        this.shareProductAccountingForm.removeControl('shareSuspenseId');
-        this.shareProductAccountingForm.removeControl('shareEquityId');
-        this.shareProductAccountingForm.removeControl('incomeFromFeeAccountId');
-      }
-    });
+    this.shareProductAccountingForm
+      .get('accountingRule')
+      .valueChanges.subscribe((accountingRule: any) => {
+        if (accountingRule === 2) {
+          this.shareProductAccountingForm.addControl(
+            'shareReferenceId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.shareProductAccountingForm.addControl(
+            'shareSuspenseId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.shareProductAccountingForm.addControl(
+            'shareEquityId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.shareProductAccountingForm.addControl(
+            'incomeFromFeeAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+        } else {
+          this.shareProductAccountingForm.removeControl('shareReferenceId');
+          this.shareProductAccountingForm.removeControl('shareSuspenseId');
+          this.shareProductAccountingForm.removeControl('shareEquityId');
+          this.shareProductAccountingForm.removeControl('incomeFromFeeAccountId');
+        }
+      });
   }
 
   get shareProductAccounting() {

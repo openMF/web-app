@@ -88,7 +88,8 @@ export class EditTransactionComponent implements OnInit {
     this.maxDate = this.settingsService.businessDate;
     this.createEditTransactionForm();
     this.editTransactionForm.patchValue({
-      transactionDate: this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),
+      transactionDate:
+        this.transactionTemplateData.date && new Date(this.transactionTemplateData.date),
       transactionAmount: this.transactionTemplateData.amount,
       externalId: this.transactionTemplateData.externalId,
       paymentTypeId: this.transactionTemplateData.paymentTypeId
@@ -142,7 +143,10 @@ export class EditTransactionComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.editTransactionForm.value.transactionDate;
     if (editTransactionFormData.transactionDate instanceof Date) {
-      editTransactionFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      editTransactionFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...editTransactionFormData,
@@ -151,7 +155,12 @@ export class EditTransactionComponent implements OnInit {
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
     this.loansService
-      .executeLoansAccountTransactionsCommand(this.loanAccountId, 'modify', data, this.transactionTemplateData.id)
+      .executeLoansAccountTransactionsCommand(
+        this.loanAccountId,
+        'modify',
+        data,
+        this.transactionTemplateData.id
+      )
       .subscribe((res: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

@@ -101,7 +101,10 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
     this.chargesDataSource = [];
     if (this.fixedDepositsAccountTemplate.id && this.fixedDepositsAccountTemplate.charges) {
       this.chargesDataSource =
-        this.fixedDepositsAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+        this.fixedDepositsAccountTemplate.charges.map((charge: any) => ({
+          ...charge,
+          id: charge.chargeId
+        })) || [];
     }
   }
 
@@ -109,7 +112,10 @@ export class FixedDepositAccountChargesStepComponent implements OnInit, OnChange
     if (this.currency == null) {
       if (this.fixedDepositsAccountTemplate.currency) {
         this.currency = this.fixedDepositsAccountTemplate.currency;
-      } else if (this.fixedDepositsAccountProductTemplate && this.fixedDepositsAccountProductTemplate.currency) {
+      } else if (
+        this.fixedDepositsAccountProductTemplate &&
+        this.fixedDepositsAccountProductTemplate.currency
+      ) {
         this.currency = this.fixedDepositsAccountProductTemplate.currency;
       }
     }

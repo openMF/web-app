@@ -77,19 +77,37 @@ export class AddClientChargeComponent implements OnInit {
       this.clientsService.getChargeAndTemplate(chargeId).subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
-        if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
+        if (
+          data.chargeTimeType.value === 'Withdrawal Fee' ||
+          data.chargeTimeType.value === 'Saving No Activity Fee'
+        ) {
           this.chargeDetails.dueDateNotRequired = true;
         }
-        if (data.chargeTimeType.value === 'Annual Fee' || data.chargeTimeType.value === 'Monthly Fee') {
+        if (
+          data.chargeTimeType.value === 'Annual Fee' ||
+          data.chargeTimeType.value === 'Monthly Fee'
+        ) {
           this.chargeDetails.chargeTimeTypeAnnualOrMonth = true;
         }
-        if (!this.chargeDetails.dueDateNotRequired && !this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.clientChargeForm.addControl('dueDate', new UntypedFormControl('', Validators.required));
+        if (
+          !this.chargeDetails.dueDateNotRequired &&
+          !this.chargeDetails.chargeTimeTypeAnnualOrMonth
+        ) {
+          this.clientChargeForm.addControl(
+            'dueDate',
+            new UntypedFormControl('', Validators.required)
+          );
         } else {
           this.clientChargeForm.removeControl('dueDate');
         }
-        if (!this.chargeDetails.dueDateNotRequired && this.chargeDetails.chargeTimeTypeAnnualOrMonth) {
-          this.clientChargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
+        if (
+          !this.chargeDetails.dueDateNotRequired &&
+          this.chargeDetails.chargeTimeTypeAnnualOrMonth
+        ) {
+          this.clientChargeForm.addControl(
+            'feeOnMonthDay',
+            new UntypedFormControl('', Validators.required)
+          );
         } else {
           this.clientChargeForm.removeControl('feeOnMonthDay');
         }

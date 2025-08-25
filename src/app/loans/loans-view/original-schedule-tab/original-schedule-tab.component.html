@@ -15,57 +15,94 @@
     </ng-container>
 
     <ng-container matColumnDef="balanceOfLoan">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Balance Of Loan' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let ele">{{ ele.principalLoanBalanceOutstanding | formatNumber }}</td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>
+        {{ 'labels.inputs.Balance Of Loan' | translate }}
+      </th>
+      <td mat-cell class="r-amount" *matCellDef="let ele">
+        {{ ele.principalLoanBalanceOutstanding | formatNumber }}
+      </td>
       <td mat-footer-cell *matFooterCellDef>&nbsp;</td>
     </ng-container>
 
     <ng-container matColumnDef="principalDue">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Principal Due' | translate }}</th>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>
+        {{ 'labels.inputs.Principal Due' | translate }}
+      </th>
       <td mat-cell class="r-amount" *matCellDef="let ele">{{ ele.principalDue | formatNumber }}</td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
         <b>
-          {{ originalScheduleDetails.totalPrincipalExpected | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          {{
+            originalScheduleDetails.totalPrincipalExpected
+              | currency: currency.code : 'symbol-narrow' : '1.2-2'
+          }}
         </b>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="interest">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Interest' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let ele">{{ ele.interestOriginalDue | formatNumber }}</td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>
+        {{ 'labels.inputs.Interest' | translate }}
+      </th>
+      <td mat-cell class="r-amount" *matCellDef="let ele">
+        {{ ele.interestOriginalDue | formatNumber }}
+      </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
         <b>
-          {{ originalScheduleDetails.totalInterestCharged | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          {{
+            originalScheduleDetails.totalInterestCharged
+              | currency: currency.code : 'symbol-narrow' : '1.2-2'
+          }}
         </b>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="fees">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Fees' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let ele">{{ ele.feeChargesDue | formatNumber }}</td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>
+        {{ 'labels.inputs.Fees' | translate }}
+      </th>
+      <td mat-cell class="r-amount" *matCellDef="let ele">
+        {{ ele.feeChargesDue | formatNumber }}
+      </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
         <b>
-          {{ originalScheduleDetails.totalFeeChargesCharged | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          {{
+            originalScheduleDetails.totalFeeChargesCharged
+              | currency: currency.code : 'symbol-narrow' : '1.2-2'
+          }}
         </b>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="penalties">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Penalties' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let ele">{{ ele.penaltyChargesDue | formatNumber }}</td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>
+        {{ 'labels.inputs.Penalties' | translate }}
+      </th>
+      <td mat-cell class="r-amount" *matCellDef="let ele">
+        {{ ele.penaltyChargesDue | formatNumber }}
+      </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
         <b>
-          {{ originalScheduleDetails.totalPenaltyChargesCharged | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          {{
+            originalScheduleDetails.totalPenaltyChargesCharged
+              | currency: currency.code : 'symbol-narrow' : '1.2-2'
+          }}
         </b>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="outstanding">
-      <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Outstanding' | translate }}</th>
-      <td mat-cell class="r-amount" *matCellDef="let ele">{{ ele.totalOutstandingForPeriod | formatNumber }}</td>
+      <th mat-header-cell class="r-amount" *matHeaderCellDef>
+        {{ 'labels.inputs.Outstanding' | translate }}
+      </th>
+      <td mat-cell class="r-amount" *matCellDef="let ele">
+        {{ ele.totalOutstandingForPeriod | formatNumber }}
+      </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
         <b>
-          {{ originalScheduleDetails.totalRepaymentExpected | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+          {{
+            originalScheduleDetails.totalRepaymentExpected
+              | currency: currency.code : 'symbol-narrow' : '1.2-2'
+          }}
         </b>
       </td>
     </ng-container>
@@ -96,7 +133,12 @@
 
     <tr
       mat-header-row
-      *matHeaderRowDef="['header', 'header-amount', 'header-total-cost', 'header-installment-totals']"
+      *matHeaderRowDef="[
+        'header',
+        'header-amount',
+        'header-total-cost',
+        'header-installment-totals'
+      ]"
     ></tr>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

@@ -74,13 +74,18 @@ export class RejectClientTransferComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransferDate: Date = this.rejectClientTransferForm.value.transferDate;
     if (rejectClientTransferFormData.transferDate instanceof Date) {
-      rejectClientTransferFormData.transferDate = this.dateUtils.formatDate(prevTransferDate, dateFormat);
+      rejectClientTransferFormData.transferDate = this.dateUtils.formatDate(
+        prevTransferDate,
+        dateFormat
+      );
     }
     const data = {
       ...rejectClientTransferFormData
     };
-    this.clientsService.executeClientCommand(this.clientId, 'rejectTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.clientsService
+      .executeClientCommand(this.clientId, 'rejectTransfer', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

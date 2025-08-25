@@ -115,9 +115,11 @@ export class ChargesTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.systemService.getConfigurationByName('charge-accrual-date').subscribe((config: GlobalConfiguration) => {
-      this.useDueDate = config.stringValue === 'due-date';
-    });
+    this.systemService
+      .getConfigurationByName('charge-accrual-date')
+      .subscribe((config: GlobalConfiguration) => {
+        this.useDueDate = config.stringValue === 'due-date';
+      });
     this.chargesData = this.loanDetails.charges;
     this.status = this.loanDetails.status.value;
     let actionFlag;
@@ -200,8 +202,9 @@ export class ChargesTabComponent implements OnInit {
       data: {
         heading: this.translateService.instant('labels.heading.Waive Charge'),
         dialogContext:
-          this.translateService.instant('labels.dialogContext.Are you sure you want to waive charge with id') +
-          `${chargeId} ?`,
+          this.translateService.instant(
+            'labels.dialogContext.Are you sure you want to waive charge with id'
+          ) + `${chargeId} ?`,
         type: 'Basic'
       }
     });
@@ -246,9 +249,11 @@ export class ChargesTabComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.loansService.editLoansAccountCharge(this.loanDetails.id, dataObject, charge.id).subscribe(() => {
-          this.reload();
-        });
+        this.loansService
+          .editLoansAccountCharge(this.loanDetails.id, dataObject, charge.id)
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }

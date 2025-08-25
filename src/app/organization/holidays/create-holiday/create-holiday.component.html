@@ -51,17 +51,24 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Repayment Scheduling Type' | translate }}</mat-label>
             <mat-select required formControlName="reschedulingType">
-              <mat-option *ngFor="let repayments of repaymentSchedulingTypes" [value]="repayments.id">
+              <mat-option
+                *ngFor="let repayments of repaymentSchedulingTypes"
+                [value]="repayments.id"
+              >
                 {{ repayments.value }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="holidayForm.controls.reschedulingType.hasError('required')">
-              {{ 'labels.inputs.Repayment Scheduling Type' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Repayment Scheduling Type' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="holidayForm.contains('repaymentsRescheduledTo')" (click)="repaymentDatePicker.open()">
+          <mat-form-field
+            *ngIf="holidayForm.contains('repaymentsRescheduledTo')"
+            (click)="repaymentDatePicker.open()"
+          >
             <mat-label>{{ 'labels.inputs.Repayment scheduled to' | translate }}</mat-label>
             <input
               matInput
@@ -74,7 +81,8 @@
             <mat-datepicker-toggle matSuffix [for]="repaymentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #repaymentDatePicker></mat-datepicker>
             <mat-error *ngIf="holidayForm.controls.repaymentsRescheduledTo.hasError('required')">
-              {{ 'labels.inputs.Repayment scheduled to' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Repayment scheduled to' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -98,14 +106,21 @@
             </mat-tree-node>
 
             <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-              <button type="button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+              <button
+                type="button"
+                mat-icon-button
+                matTreeNodeToggle
+                [attr.aria-label]="'toggle ' + node.filename"
+              >
                 <mat-icon class="mat-icon-rtl-mirror">
                   {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
                 </mat-icon>
               </button>
-              <mat-checkbox [checked]="descendantsAllSelected(node)" (change)="officeItemSelectionToggle(node)">{{
-                officesDict[node.item].name
-              }}</mat-checkbox>
+              <mat-checkbox
+                [checked]="descendantsAllSelected(node)"
+                (change)="officeItemSelectionToggle(node)"
+                >{{ officesDict[node.item].name }}</mat-checkbox
+              >
             </mat-tree-node>
           </mat-tree>
         </div>

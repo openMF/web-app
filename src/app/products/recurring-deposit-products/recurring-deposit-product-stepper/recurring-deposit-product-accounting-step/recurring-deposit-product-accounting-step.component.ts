@@ -106,13 +106,18 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     this.chargeData = this.recurringDepositProductsTemplate.chargeOptions || [];
     this.penaltyData = this.recurringDepositProductsTemplate.penaltyOptions || [];
     this.paymentTypeData = this.recurringDepositProductsTemplate.paymentTypeOptions || [];
-    this.assetAccountData = this.recurringDepositProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
-    this.incomeAccountData = this.recurringDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
+    this.assetAccountData =
+      this.recurringDepositProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+    this.incomeAccountData =
+      this.recurringDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
     this.expenseAccountData =
       this.recurringDepositProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
     this.liabilityAccountData =
       this.recurringDepositProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
-    if (!(this.recurringDepositProductsTemplate === undefined) && this.recurringDepositProductsTemplate.id) {
+    if (
+      !(this.recurringDepositProductsTemplate === undefined) &&
+      this.recurringDepositProductsTemplate.id
+    ) {
       this.assignAccountingStepData();
     }
   }
@@ -123,22 +128,28 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     });
     if (this.isCashOrAccrualAccounting()) {
       this.recurringDepositProductAccountingForm.patchValue({
-        savingsReferenceAccountId: this.recurringDepositProductsTemplate.accountingMappings.savingsReferenceAccount.id,
-        savingsControlAccountId: this.recurringDepositProductsTemplate.accountingMappings.savingsControlAccount.id,
+        savingsReferenceAccountId:
+          this.recurringDepositProductsTemplate.accountingMappings.savingsReferenceAccount.id,
+        savingsControlAccountId:
+          this.recurringDepositProductsTemplate.accountingMappings.savingsControlAccount.id,
         transfersInSuspenseAccountId:
           this.recurringDepositProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
-        incomeFromFeeAccountId: this.recurringDepositProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
+        incomeFromFeeAccountId:
+          this.recurringDepositProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
         incomeFromPenaltyAccountId:
           this.recurringDepositProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
-        interestOnSavingsAccountId: this.recurringDepositProductsTemplate.accountingMappings.interestOnSavingsAccount.id
+        interestOnSavingsAccountId:
+          this.recurringDepositProductsTemplate.accountingMappings.interestOnSavingsAccount.id
       });
 
       if (this.isAccrualAccounting()) {
         this.recurringDepositProductAccountingForm.patchValue({
-          feesReceivableAccountId: this.recurringDepositProductsTemplate.accountingMappings.feeReceivableAccount.id,
+          feesReceivableAccountId:
+            this.recurringDepositProductsTemplate.accountingMappings.feeReceivableAccount.id,
           penaltiesReceivableAccountId:
             this.recurringDepositProductsTemplate.accountingMappings.penaltyReceivableAccount.id,
-          interestPayableAccountId: this.recurringDepositProductsTemplate.accountingMappings.interestPayableAccount.id
+          interestPayableAccountId:
+            this.recurringDepositProductsTemplate.accountingMappings.interestPayableAccount.id
         });
       }
 
@@ -172,22 +183,24 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
         );
       }
       if (this.recurringDepositProductsTemplate.feeToIncomeAccountMappings) {
-        this.recurringDepositProductsTemplate.feeToIncomeAccountMappings.forEach((feeToIncomeAccountMapping: any) => {
-          const feeToIncomeAccountMappingData = this.formBuilder.group({
-            chargeId: [
-              feeToIncomeAccountMapping.charge.id,
-              Validators.required
-            ],
-            incomeAccountId: [
-              feeToIncomeAccountMapping.incomeAccount.id,
-              Validators.required
-            ]
-          });
-          const formArray = this.recurringDepositProductAccountingForm.controls[
-            'feeToIncomeAccountMappings'
-          ] as UntypedFormArray;
-          formArray.push(feeToIncomeAccountMappingData);
-        });
+        this.recurringDepositProductsTemplate.feeToIncomeAccountMappings.forEach(
+          (feeToIncomeAccountMapping: any) => {
+            const feeToIncomeAccountMappingData = this.formBuilder.group({
+              chargeId: [
+                feeToIncomeAccountMapping.charge.id,
+                Validators.required
+              ],
+              incomeAccountId: [
+                feeToIncomeAccountMapping.incomeAccount.id,
+                Validators.required
+              ]
+            });
+            const formArray = this.recurringDepositProductAccountingForm.controls[
+              'feeToIncomeAccountMappings'
+            ] as UntypedFormArray;
+            formArray.push(feeToIncomeAccountMappingData);
+          }
+        );
       }
       if (this.recurringDepositProductsTemplate.penaltyToIncomeAccountMappings) {
         this.recurringDepositProductsTemplate.penaltyToIncomeAccountMappings.forEach(
@@ -223,100 +236,117 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.recurringDepositProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
-      if (accountingRule === 2 || accountingRule === 3) {
-        this.recurringDepositProductAccountingForm.addControl(
-          'savingsReferenceAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.recurringDepositProductAccountingForm.addControl(
-          'savingsControlAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.recurringDepositProductAccountingForm.addControl(
-          'transfersInSuspenseAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.recurringDepositProductAccountingForm.addControl(
-          'interestOnSavingsAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.recurringDepositProductAccountingForm.addControl(
-          'incomeFromFeeAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.recurringDepositProductAccountingForm.addControl(
-          'incomeFromPenaltyAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.recurringDepositProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
+    this.recurringDepositProductAccountingForm
+      .get('accountingRule')
+      .valueChanges.subscribe((accountingRule: any) => {
+        if (accountingRule === 2 || accountingRule === 3) {
+          this.recurringDepositProductAccountingForm.addControl(
+            'savingsReferenceAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.recurringDepositProductAccountingForm.addControl(
+            'savingsControlAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.recurringDepositProductAccountingForm.addControl(
+            'transfersInSuspenseAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.recurringDepositProductAccountingForm.addControl(
+            'interestOnSavingsAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.recurringDepositProductAccountingForm.addControl(
+            'incomeFromFeeAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.recurringDepositProductAccountingForm.addControl(
+            'incomeFromPenaltyAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.recurringDepositProductAccountingForm.addControl(
+            'advancedAccountingRules',
+            new UntypedFormControl(false)
+          );
 
-        if (accountingRule === 3) {
-          this.recurringDepositProductAccountingForm.addControl(
-            'feesReceivableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.recurringDepositProductAccountingForm.addControl(
-            'penaltiesReceivableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.recurringDepositProductAccountingForm.addControl(
-            'interestPayableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
+          if (accountingRule === 3) {
+            this.recurringDepositProductAccountingForm.addControl(
+              'feesReceivableAccountId',
+              new UntypedFormControl('', Validators.required)
+            );
+            this.recurringDepositProductAccountingForm.addControl(
+              'penaltiesReceivableAccountId',
+              new UntypedFormControl('', Validators.required)
+            );
+            this.recurringDepositProductAccountingForm.addControl(
+              'interestPayableAccountId',
+              new UntypedFormControl('', Validators.required)
+            );
+          }
+
+          this.recurringDepositProductAccountingForm
+            .get('advancedAccountingRules')
+            .valueChanges.subscribe((advancedAccountingRules: boolean) => {
+              if (advancedAccountingRules) {
+                this.recurringDepositProductAccountingForm.addControl(
+                  'paymentChannelToFundSourceMappings',
+                  this.formBuilder.array([])
+                );
+                this.recurringDepositProductAccountingForm.addControl(
+                  'feeToIncomeAccountMappings',
+                  this.formBuilder.array([])
+                );
+                this.recurringDepositProductAccountingForm.addControl(
+                  'penaltyToIncomeAccountMappings',
+                  this.formBuilder.array([])
+                );
+              } else {
+                this.recurringDepositProductAccountingForm.removeControl(
+                  'paymentChannelToFundSourceMappings'
+                );
+                this.recurringDepositProductAccountingForm.removeControl(
+                  'feeToIncomeAccountMappings'
+                );
+                this.recurringDepositProductAccountingForm.removeControl(
+                  'penaltyToIncomeAccountMappings'
+                );
+              }
+            });
+        } else {
+          this.recurringDepositProductAccountingForm.removeControl('savingsReferenceAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('overdraftPortfolioControlId');
+          this.recurringDepositProductAccountingForm.removeControl('savingsControlAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('transfersInSuspenseAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('interestOnSavingsAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('writeOffAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('incomeFromFeeAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('incomeFromPenaltyAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('incomeFromInterestId');
+          this.recurringDepositProductAccountingForm.removeControl('advancedAccountingRules');
+          this.recurringDepositProductAccountingForm.removeControl('escheatLiabilityId');
+          this.recurringDepositProductAccountingForm.removeControl('feesReceivableAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('penaltiesReceivableAccountId');
+          this.recurringDepositProductAccountingForm.removeControl('interestPayableAccountId');
         }
-
-        this.recurringDepositProductAccountingForm
-          .get('advancedAccountingRules')
-          .valueChanges.subscribe((advancedAccountingRules: boolean) => {
-            if (advancedAccountingRules) {
-              this.recurringDepositProductAccountingForm.addControl(
-                'paymentChannelToFundSourceMappings',
-                this.formBuilder.array([])
-              );
-              this.recurringDepositProductAccountingForm.addControl(
-                'feeToIncomeAccountMappings',
-                this.formBuilder.array([])
-              );
-              this.recurringDepositProductAccountingForm.addControl(
-                'penaltyToIncomeAccountMappings',
-                this.formBuilder.array([])
-              );
-            } else {
-              this.recurringDepositProductAccountingForm.removeControl('paymentChannelToFundSourceMappings');
-              this.recurringDepositProductAccountingForm.removeControl('feeToIncomeAccountMappings');
-              this.recurringDepositProductAccountingForm.removeControl('penaltyToIncomeAccountMappings');
-            }
-          });
-      } else {
-        this.recurringDepositProductAccountingForm.removeControl('savingsReferenceAccountId');
-        this.recurringDepositProductAccountingForm.removeControl('overdraftPortfolioControlId');
-        this.recurringDepositProductAccountingForm.removeControl('savingsControlAccountId');
-        this.recurringDepositProductAccountingForm.removeControl('transfersInSuspenseAccountId');
-        this.recurringDepositProductAccountingForm.removeControl('interestOnSavingsAccountId');
-        this.recurringDepositProductAccountingForm.removeControl('writeOffAccountId');
-        this.recurringDepositProductAccountingForm.removeControl('incomeFromFeeAccountId');
-        this.recurringDepositProductAccountingForm.removeControl('incomeFromPenaltyAccountId');
-        this.recurringDepositProductAccountingForm.removeControl('incomeFromInterestId');
-        this.recurringDepositProductAccountingForm.removeControl('advancedAccountingRules');
-        this.recurringDepositProductAccountingForm.removeControl('escheatLiabilityId');
-        this.recurringDepositProductAccountingForm.removeControl('feesReceivableAccountId');
-        this.recurringDepositProductAccountingForm.removeControl('penaltiesReceivableAccountId');
-        this.recurringDepositProductAccountingForm.removeControl('interestPayableAccountId');
-      }
-    });
+      });
   }
 
   get paymentChannelToFundSourceMappings(): UntypedFormArray {
-    return this.recurringDepositProductAccountingForm.get('paymentChannelToFundSourceMappings') as UntypedFormArray;
+    return this.recurringDepositProductAccountingForm.get(
+      'paymentChannelToFundSourceMappings'
+    ) as UntypedFormArray;
   }
 
   get feeToIncomeAccountMappings(): UntypedFormArray {
-    return this.recurringDepositProductAccountingForm.get('feeToIncomeAccountMappings') as UntypedFormArray;
+    return this.recurringDepositProductAccountingForm.get(
+      'feeToIncomeAccountMappings'
+    ) as UntypedFormArray;
   }
 
   get penaltyToIncomeAccountMappings(): UntypedFormArray {
-    return this.recurringDepositProductAccountingForm.get('penaltyToIncomeAccountMappings') as UntypedFormArray;
+    return this.recurringDepositProductAccountingForm.get(
+      'penaltyToIncomeAccountMappings'
+    ) as UntypedFormArray;
   }
 
   add(formType: string, formArray: UntypedFormArray) {
@@ -330,7 +360,10 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   }
 
   edit(formType: string, formArray: UntypedFormArray, index: number) {
-    const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
+    const data = {
+      ...this.getData(formType, formArray.at(index).value),
+      layout: { addButtonText: 'Edit' }
+    };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -354,17 +387,23 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
     switch (formType) {
       case 'PaymentFundSource':
         return {
-          title: this.translateService.instant('labels.heading.Configure Fund Sources for Payment Channels'),
+          title: this.translateService.instant(
+            'labels.heading.Configure Fund Sources for Payment Channels'
+          ),
           formfields: this.getPaymentFundSourceFormfields(values)
         };
       case 'FeesIncome':
         return {
-          title: this.translateService.instant('labels.heading.Map Fees to Specific Income Accounts'),
+          title: this.translateService.instant(
+            'labels.heading.Map Fees to Specific Income Accounts'
+          ),
           formfields: this.getFeesIncomeFormfields(values)
         };
       case 'PenaltyIncome':
         return {
-          title: this.translateService.instant('labels.heading.Map Penalties to Specific Income Accounts'),
+          title: this.translateService.instant(
+            'labels.heading.Map Penalties to Specific Income Accounts'
+          ),
           formfields: this.getPenaltyIncomeFormfields(values)
         };
     }
@@ -450,6 +489,8 @@ export class RecurringDepositProductAccountingStepComponent implements OnInit {
   }
 
   isAccrualAccounting(): boolean {
-    return this.accounting.isAccrualAccountingRuleId(this.recurringDepositProductAccountingForm.value.accountingRule);
+    return this.accounting.isAccrualAccountingRuleId(
+      this.recurringDepositProductAccountingForm.value.accountingRule
+    );
   }
 }

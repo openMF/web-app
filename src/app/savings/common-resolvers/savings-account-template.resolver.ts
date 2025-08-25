@@ -24,7 +24,10 @@ export class SavingsAccountTemplateResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const entityId = route.paramMap.get('clientId') || route.paramMap.get('groupId') || route.paramMap.get('centerId');
+    const entityId =
+      route.paramMap.get('clientId') ||
+      route.paramMap.get('groupId') ||
+      route.paramMap.get('centerId');
     const isGroup = route.paramMap.get('groupId') || route.paramMap.get('centerId') ? true : false;
     return this.savingsService.getSavingsAccountTemplate(entityId, undefined, isGroup);
   }

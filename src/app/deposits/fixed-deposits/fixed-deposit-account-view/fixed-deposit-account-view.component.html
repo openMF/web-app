@@ -24,7 +24,9 @@
                 ></i>
                 {{ 'labels.inputs.Fixed Deposit Product' | translate }} :
                 {{ fixedDepositsAccountData.depositProductName }}
-                <mifosx-account-number accountNo="{{ fixedDepositsAccountData.accountNo }}"></mifosx-account-number>
+                <mifosx-account-number
+                  accountNo="{{ fixedDepositsAccountData.accountNo }}"
+                ></mifosx-account-number>
               </h3>
               <span class="account-overview">
                 <span class="m-r-10">{{ 'labels.text.' + entityType | translate }} :</span>
@@ -59,7 +61,10 @@
                   <tr>
                     <td class="flex-70">{{ 'labels.inputs.Deposit Amount' | translate }}</td>
                     <td class="r-amount flex-30">
-                      {{ fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                      {{
+                        fixedDepositsAccountData.depositAmount
+                          | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                      }}
                     </td>
                   </tr>
                 </tbody>
@@ -90,10 +95,14 @@
         </ng-container>
 
         <ng-container *ngIf="buttonConfig.options.length">
-          <button mat-menu-item [matMenuTriggerFor]="More">{{ 'More' | translateKey: 'menus' }}</button>
+          <button mat-menu-item [matMenuTriggerFor]="More">
+            {{ 'More' | translateKey: 'menus' }}
+          </button>
           <mat-menu #More="matMenu">
             <span *ngFor="let option of buttonConfig.options">
-              <button mat-menu-item (click)="doAction(option.name)">{{ option.name | translateKey: 'menus' }}</button>
+              <button mat-menu-item (click)="doAction(option.name)">
+                {{ option.name | translateKey: 'menus' }}
+              </button>
             </span>
           </mat-menu>
         </ng-container>

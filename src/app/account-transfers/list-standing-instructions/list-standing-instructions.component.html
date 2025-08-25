@@ -25,7 +25,10 @@
     <mat-form-field class="type-field">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select [formControl]="transferType">
-        <mat-option *ngFor="let transferTypeData of transferTypeDatas" [value]="transferTypeData.id">
+        <mat-option
+          *ngFor="let transferTypeData of transferTypeDatas"
+          [value]="transferTypeData.id"
+        >
           {{ transferTypeData.value }}
         </mat-option>
       </mat-select>
@@ -75,7 +78,9 @@
 
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Amount' | translate }}</th>
-      <td mat-cell *matCellDef="let instruction">{{ instruction.instructionType.value }}/{{ instruction.amount }}</td>
+      <td mat-cell *matCellDef="let instruction">
+        {{ instruction.instructionType.value }}/{{ instruction.amount }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="validity">
@@ -129,5 +134,9 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    showFirstLastButtons
+  ></mat-paginator>
 </mat-card>

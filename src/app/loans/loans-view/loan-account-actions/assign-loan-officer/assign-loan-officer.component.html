@@ -29,7 +29,8 @@
             <mat-datepicker-toggle matSuffix [for]="assignOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignOnDatePicker></mat-datepicker>
             <mat-error *ngIf="assignOfficerForm.controls.assignmentDate.hasError('required')">
-              {{ 'labels.inputs.Assignment Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Assignment Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>

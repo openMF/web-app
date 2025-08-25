@@ -25,7 +25,13 @@ export class CentersService {
    * @param {number} limit Number of entries within the page.
    * @returns {Observable<any>} Centers.
    */
-  getCenters(filterBy: any, orderBy: string, sortOrder: string, offset: number, limit: number): Observable<any> {
+  getCenters(
+    filterBy: any,
+    orderBy: string,
+    sortOrder: string,
+    offset: number,
+    limit: number
+  ): Observable<any> {
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
@@ -54,7 +60,9 @@ export class CentersService {
    * @returns {Observable<any>}
    */
   getStaff(officeId: number): Observable<any> {
-    const httpParams = new HttpParams().set('officeId', officeId.toString()).set('staffInSelectedOfficeOnly', 'true');
+    const httpParams = new HttpParams()
+      .set('officeId', officeId.toString())
+      .set('staffInSelectedOfficeOnly', 'true');
     return this.http.get('/centers/template', { params: httpParams });
   }
 
@@ -63,7 +71,10 @@ export class CentersService {
    * @returns {Observable<any>} Group Data for Center
    */
   getCenterData(centerId: string): Observable<any> {
-    const httpParams = new HttpParams().set('associations', 'groupMembers,collectionMeetingCalendar');
+    const httpParams = new HttpParams().set(
+      'associations',
+      'groupMembers,collectionMeetingCalendar'
+    );
     return this.http.get(`/centers/${centerId}`, { params: httpParams });
   }
 
@@ -270,7 +281,9 @@ export class CentersService {
    * @returns {Observable<any>} Center data and template.
    */
   getCenterAndTemplateData(centerId: string): Observable<any> {
-    const httpParams = new HttpParams().set('staffInSelectedOfficeOnly', 'true').set('template', 'true');
+    const httpParams = new HttpParams()
+      .set('staffInSelectedOfficeOnly', 'true')
+      .set('template', 'true');
     return this.http.get(`/centers/${centerId}`, { params: httpParams });
   }
 

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -68,7 +73,9 @@ export class EditTaxComponentComponent implements OnInit {
    */
   editTaxComponent() {
     const creditAccountTypeValue = this.taxComponentData?.creditAccountType?.value
-      ? this.translateService.instant(`labels.inputs.accounting.${this.taxComponentData.creditAccountType.value}`)
+      ? this.translateService.instant(
+          `labels.inputs.accounting.${this.taxComponentData.creditAccountType.value}`
+        )
       : null;
 
     const creditAccountName = this.taxComponentData?.creditAccount?.name ?? null;
@@ -113,14 +120,16 @@ export class EditTaxComponentComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.productsService.updateTaxComponent(this.taxComponentData.id, data).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.productsService
+      .updateTaxComponent(this.taxComponentData.id, data)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

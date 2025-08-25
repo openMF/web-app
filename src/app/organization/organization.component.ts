@@ -97,7 +97,12 @@ export class OrganizationComponent implements AfterViewInit {
     }
     if (this.configurationWizardService.showAddEditCurrency === true) {
       setTimeout(() => {
-        this.showPopover(this.templateAddEditCurrency, this.addEditCurrency.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateAddEditCurrency,
+          this.addEditCurrency.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showCreateHoliday === true) {

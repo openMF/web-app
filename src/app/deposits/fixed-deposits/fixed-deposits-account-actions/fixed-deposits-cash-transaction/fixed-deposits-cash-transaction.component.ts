@@ -136,7 +136,10 @@ export class FixedDepositsCashTransactionComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate: Date = this.accountTransactionForm.value.transactionDate;
     if (savingAccountTransactionFormData.transactionDate instanceof Date) {
-      savingAccountTransactionFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      savingAccountTransactionFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...savingAccountTransactionFormData,

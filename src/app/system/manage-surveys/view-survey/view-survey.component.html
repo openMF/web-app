@@ -1,5 +1,10 @@
 <div class="layout-row align-end gap-2px responsive-column container m-b-20">
-  <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_REPORT'" (click)="onEdit()">
+  <button
+    mat-raised-button
+    color="primary"
+    *mifosxHasPermission="'UPDATE_REPORT'"
+    (click)="onEdit()"
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
   </button>
@@ -56,7 +61,10 @@
       <mat-divider [inset]="true"></mat-divider>
     </mat-card-header>
     <mat-card-content>
-      <div class="survey-questions" *ngFor="let questionData of surveyData.questionDatas; index as i">
+      <div
+        class="survey-questions"
+        *ngFor="let questionData of surveyData.questionDatas; index as i"
+      >
         <mat-card>
           <mat-card-content>
             <div>{{ 'labels.heading.Question' | translate }}: {{ i + 1 }}</div>

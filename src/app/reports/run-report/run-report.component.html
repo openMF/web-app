@@ -13,7 +13,11 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="form-field" *ngSwitchCase="'date'" (click)="runReportDatePicker.open()">
+            <mat-form-field
+              class="form-field"
+              *ngSwitchCase="'date'"
+              (click)="runReportDatePicker.open()"
+            >
               <mat-label>{{ param.label }}</mat-label>
               <input
                 matInput
@@ -72,7 +76,9 @@
 
         <div class="flex-98" *ngIf="exportToS3Allowed">
           <mat-checkbox labelPosition="after" formControlName="exportOutputToS3">
-            {{ 'labels.text.Export output data to S3 repository' | translate }} [{{ exportToS3Repository }}]
+            {{ 'labels.text.Export output data to S3 repository' | translate }} [{{
+              exportToS3Repository
+            }}]
           </mat-checkbox>
         </div>
       </mat-card-content>

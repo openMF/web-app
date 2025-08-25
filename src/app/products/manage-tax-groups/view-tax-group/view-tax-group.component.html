@@ -1,5 +1,10 @@
 <div class="container m-b-20 layout-row layout-lt-md-column align-end gap-2percent">
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_TAXGROUP'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['edit']"
+    *mifosxHasPermission="'UPDATE_TAXGROUP'"
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
   </button>
@@ -40,7 +45,10 @@
           {{ taxcomponent.startDate | dateFormat }}
         </div>
 
-        <div class="flex-33" *ngIf="taxcomponent.endDate !== undefined || taxcomponent.endDate !== null">
+        <div
+          class="flex-33"
+          *ngIf="taxcomponent.endDate !== undefined || taxcomponent.endDate !== null"
+        >
           {{ taxcomponent.endDate | dateFormat }}
         </div>
       </div>

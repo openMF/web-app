@@ -95,13 +95,22 @@ export class LoanRescheduleComponent implements OnInit {
     const prevAdjustedDueDate = this.rescheduleLoanForm.value.adjustedDueDate;
     const prevSubmittedOnDate = this.rescheduleLoanForm.value.submittedOnDate;
     if (prevRescheduleFromDate instanceof Date) {
-      rescheduleLoanFormData.rescheduleFromDate = this.dateUtils.formatDate(prevRescheduleFromDate, dateFormat);
+      rescheduleLoanFormData.rescheduleFromDate = this.dateUtils.formatDate(
+        prevRescheduleFromDate,
+        dateFormat
+      );
     }
     if (prevAdjustedDueDate instanceof Date) {
-      rescheduleLoanFormData.adjustedDueDate = this.dateUtils.formatDate(prevAdjustedDueDate, dateFormat);
+      rescheduleLoanFormData.adjustedDueDate = this.dateUtils.formatDate(
+        prevAdjustedDueDate,
+        dateFormat
+      );
     }
     if (prevSubmittedOnDate instanceof Date) {
-      rescheduleLoanFormData.submittedOnDate = this.dateUtils.formatDate(prevSubmittedOnDate, dateFormat);
+      rescheduleLoanFormData.submittedOnDate = this.dateUtils.formatDate(
+        prevSubmittedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...rescheduleLoanFormData,

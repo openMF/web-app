@@ -61,7 +61,10 @@
         </ng-container>
 
         <ng-container *ngIf="selectedItem.itemType === 'employee'">
-          <mifosx-staff-navigation [employeeData]="selectedItem" [centerData]="centerData"></mifosx-staff-navigation>
+          <mifosx-staff-navigation
+            [employeeData]="selectedItem"
+            [centerData]="centerData"
+          ></mifosx-staff-navigation>
         </ng-container>
 
         <ng-container *ngIf="selectedItem.itemType === 'center'">

@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -141,12 +148,22 @@ export class ManageDataTablesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showDatatablesPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateCreateDatatableRef, this.createDatatableRef.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateCreateDatatableRef,
+          this.createDatatableRef.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showDatatablesList === true) {
       setTimeout(() => {
-        this.showPopover(this.templateDatatablesList, this.datatablesList.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateDatatablesList,
+          this.datatablesList.nativeElement,
+          'top',
+          true
+        );
       });
     }
   }

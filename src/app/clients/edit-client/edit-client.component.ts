@@ -100,10 +100,13 @@ export class EditClientComponent implements OnInit {
       active: this.clientDataAndTemplate.active,
       mobileNo: this.clientDataAndTemplate.mobileNo,
       emailAddress: this.clientDataAndTemplate.emailAddress,
-      dateOfBirth: this.clientDataAndTemplate.dateOfBirth && new Date(this.clientDataAndTemplate.dateOfBirth),
-      clientTypeId: this.clientDataAndTemplate.clientType && this.clientDataAndTemplate.clientType.id,
+      dateOfBirth:
+        this.clientDataAndTemplate.dateOfBirth && new Date(this.clientDataAndTemplate.dateOfBirth),
+      clientTypeId:
+        this.clientDataAndTemplate.clientType && this.clientDataAndTemplate.clientType.id,
       clientClassificationId:
-        this.clientDataAndTemplate.clientClassification && this.clientDataAndTemplate.clientClassification.id,
+        this.clientDataAndTemplate.clientClassification &&
+        this.clientDataAndTemplate.clientClassification.id,
       submittedOnDate:
         this.clientDataAndTemplate.timeline.submittedOnDate &&
         new Date(this.clientDataAndTemplate.timeline.submittedOnDate),
@@ -171,7 +174,10 @@ export class EditClientComponent implements OnInit {
           'firstname',
           new UntypedFormControl(this.clientDataAndTemplate.firstname, Validators.required)
         );
-        this.editClientForm.addControl('middlename', new UntypedFormControl(this.clientDataAndTemplate.middlename));
+        this.editClientForm.addControl(
+          'middlename',
+          new UntypedFormControl(this.clientDataAndTemplate.middlename)
+        );
         this.editClientForm.addControl(
           'lastname',
           new UntypedFormControl(this.clientDataAndTemplate.lastname, Validators.required)
@@ -221,7 +227,8 @@ export class EditClientComponent implements OnInit {
     const clientData = {
       ...editClientFormValue,
       dateOfBirth:
-        editClientFormValue.dateOfBirth && this.dateUtils.formatDate(editClientFormValue.dateOfBirth, dateFormat),
+        editClientFormValue.dateOfBirth &&
+        this.dateUtils.formatDate(editClientFormValue.dateOfBirth, dateFormat),
       submittedOnDate:
         editClientFormValue.submittedOnDate &&
         this.dateUtils.formatDate(editClientFormValue.submittedOnDate, dateFormat),
@@ -235,7 +242,10 @@ export class EditClientComponent implements OnInit {
         ...editClientFormValue.clientNonPersonDetails,
         incorpValidityTillDate:
           editClientFormValue.clientNonPersonDetails.incorpValidityTillDate &&
-          this.dateUtils.formatDate(editClientFormValue.clientNonPersonDetails.incorpValidityTillDate, dateFormat),
+          this.dateUtils.formatDate(
+            editClientFormValue.clientNonPersonDetails.incorpValidityTillDate,
+            dateFormat
+          ),
         dateFormat,
         locale
       };

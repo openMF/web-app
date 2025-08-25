@@ -1,6 +1,12 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -94,11 +100,17 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
     const reschedulebasedOnMeetingDates = true;
     const prevOldDate: Date = new Date(this.centerEditMeetingScheduleForm.value.presentMeetingDate);
     if (centerEditMeetingScheduleFormData.startDate instanceof Date) {
-      centerEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(prevOldDate, dateFormat);
+      centerEditMeetingScheduleFormData.presentMeetingDate = this.dateUtils.formatDate(
+        prevOldDate,
+        dateFormat
+      );
     }
     const prevNewDate: Date = this.centerEditMeetingScheduleForm.value.newMeetingDate;
     if (centerEditMeetingScheduleFormData.newMeetingDate instanceof Date) {
-      centerEditMeetingScheduleFormData.newMeetingDate = this.dateUtils.formatDate(prevNewDate, dateFormat);
+      centerEditMeetingScheduleFormData.newMeetingDate = this.dateUtils.formatDate(
+        prevNewDate,
+        dateFormat
+      );
     }
     const data = {
       ...centerEditMeetingScheduleFormData,
@@ -106,8 +118,10 @@ export class EditCenterMeetingScheduleComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.updateCenterMeeting(this.centerId, data, this.calendarId).subscribe((response: any) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.centersService
+      .updateCenterMeeting(this.centerId, data, this.calendarId)
+      .subscribe((response: any) => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

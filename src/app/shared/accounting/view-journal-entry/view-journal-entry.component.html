@@ -39,10 +39,16 @@
 
     <tr>
       <th>
-        <span *ngIf="data.journalEntry.entryType.value === 'CREDIT'">{{ 'labels.inputs.Credit' | translate }}</span>
-        <span *ngIf="data.journalEntry.entryType.value === 'DEBIT'">{{ 'labels.inputs.Debit' | translate }}</span>
+        <span *ngIf="data.journalEntry.entryType.value === 'CREDIT'">{{
+          'labels.inputs.Credit' | translate
+        }}</span>
+        <span *ngIf="data.journalEntry.entryType.value === 'DEBIT'">{{
+          'labels.inputs.Debit' | translate
+        }}</span>
       </th>
-      <td>{{ data.journalEntry.currency.displaySymbol }} {{ data.journalEntry.amount | formatNumber }}</td>
+      <td>
+        {{ data.journalEntry.currency.displaySymbol }} {{ data.journalEntry.amount | formatNumber }}
+      </td>
     </tr>
 
     <tr>
@@ -64,32 +70,56 @@
       <th colspan="2" class="header">{{ 'labels.inputs.Payment Details' | translate }}</th>
     </tr>
 
-    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.paymentType">
+    <tr
+      *ngIf="
+        existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.paymentType
+      "
+    >
       <th>{{ 'labels.inputs.Payment Type' | translate }}</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.paymentType.name }}</td>
     </tr>
 
-    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.accountNumber">
+    <tr
+      *ngIf="
+        existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.accountNumber
+      "
+    >
       <th>{{ 'labels.inputs.Account Number' | translate }}</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.accountNumber }}</td>
     </tr>
 
-    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.checkNumber">
+    <tr
+      *ngIf="
+        existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.checkNumber
+      "
+    >
       <th>{{ 'labels.inputs.Cheque Number' | translate }}</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.checkNumber }}</td>
     </tr>
 
-    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.routingCode">
+    <tr
+      *ngIf="
+        existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.routingCode
+      "
+    >
       <th>{{ 'labels.inputs.Routing Code' | translate }}</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.routingCode }}</td>
     </tr>
 
-    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.receiptNumber">
+    <tr
+      *ngIf="
+        existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.receiptNumber
+      "
+    >
       <th>{{ 'labels.inputs.Receipt Number' | translate }}</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.receiptNumber }}</td>
     </tr>
 
-    <tr *ngIf="existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.bankNumber">
+    <tr
+      *ngIf="
+        existsPaymentDetails && data.journalEntry.transactionDetails.paymentDetails?.bankNumber
+      "
+    >
       <th>{{ 'labels.inputs.Bank Number' | translate }}</th>
       <td>{{ data.journalEntry.transactionDetails.paymentDetails.bankNumber }}</td>
     </tr>

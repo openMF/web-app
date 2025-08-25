@@ -140,7 +140,10 @@ export class CreateRecurringDepositsAccountComponent {
       isCalendarInherited: this.recurringDepositAccount.recurringDepositAccount
         ? this.recurringDepositAccount.recurringDepositAccount
         : false,
-      submittedOnDate: this.dateUtils.formatDate(this.recurringDepositAccount.submittedOnDate, dateFormat),
+      submittedOnDate: this.dateUtils.formatDate(
+        this.recurringDepositAccount.submittedOnDate,
+        dateFormat
+      ),
       expectedFirstDepositOnDate: this.dateUtils.formatDate(
         this.recurringDepositAccount.expectedFirstDepositOnDate,
         dateFormat
@@ -150,14 +153,16 @@ export class CreateRecurringDepositsAccountComponent {
       locale
     };
 
-    this.recurringDepositsService.createRecurringDepositAccount(recurringDepositAccount).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.recurringDepositsService
+      .createRecurringDepositAccount(recurringDepositAccount)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

@@ -137,7 +137,11 @@ const routes: Routes = [
             },
             {
               path: 'actions/:action',
-              data: { title: 'Group Actions', breadcrumb: 'action', routeParamBreadcrumb: 'action' },
+              data: {
+                title: 'Group Actions',
+                breadcrumb: 'action',
+                routeParamBreadcrumb: 'action'
+              },
               component: GroupActionsComponent,
               resolve: {
                 groupActionData: GroupActionsResolver

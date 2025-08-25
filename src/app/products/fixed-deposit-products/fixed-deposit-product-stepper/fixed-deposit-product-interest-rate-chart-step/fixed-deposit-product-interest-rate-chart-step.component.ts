@@ -138,7 +138,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     this.conditionTypeData = this.fixedDepositProductsTemplate.chartTemplate.conditionTypeOptions;
     this.genderData = this.fixedDepositProductsTemplate.chartTemplate.genderOptions;
     this.clientTypeData = this.fixedDepositProductsTemplate.chartTemplate.clientTypeOptions;
-    this.clientClassificationData = this.fixedDepositProductsTemplate.chartTemplate.clientClassificationOptions;
+    this.clientClassificationData =
+      this.fixedDepositProductsTemplate.chartTemplate.clientClassificationOptions;
     this.incentiveTypeData = this.fixedDepositProductsTemplate.chartTemplate.incentiveTypeOptions;
 
     if (this.fixedDepositProductsTemplate) {
@@ -195,7 +196,9 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
         formArray.push(chartSlabInfo);
 
         // Iterate for every slab in chartSlab
-        const chartIncentiveControl = (chartDetailControl.controls['chartSlabs'] as UntypedFormArray).controls[j];
+        const chartIncentiveControl = (
+          chartDetailControl.controls['chartSlabs'] as UntypedFormArray
+        ).controls[j];
 
         // Iterate to input all the incentive for particular chart slab
         this.chartsDetail[i].chartSlabs[j].incentives.forEach((chartIncentiveDetail: any) => {
@@ -225,7 +228,9 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
               Validators.required
             ]
           });
-          const newFormArray = (chartIncentiveControl as UntypedFormGroup).controls['incentives'] as UntypedFormArray;
+          const newFormArray = (chartIncentiveControl as UntypedFormGroup).controls[
+            'incentives'
+          ] as UntypedFormArray;
           newFormArray.push(incentiveInfo);
         });
       });
@@ -365,7 +370,11 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
               'period',
               'amountRange'
             ];
-        this.chartSlabsDisplayedColumns[chartIndex].push('annualInterestRate', 'description', 'actions');
+        this.chartSlabsDisplayedColumns[chartIndex].push(
+          'annualInterestRate',
+          'description',
+          'actions'
+        );
       });
   }
 
@@ -506,7 +515,8 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
     // TODO: Update once language and date settings are setup
     const locale = this.settingsService.language.code;
     const dateFormat = 'YYYY-MM-DD';
-    const fixedDepositProductInterestRateChart = this.fixedDepositProductInterestRateChartForm.value;
+    const fixedDepositProductInterestRateChart =
+      this.fixedDepositProductInterestRateChartForm.value;
     for (const chart of fixedDepositProductInterestRateChart.charts) {
       chart.locale = locale;
       chart.dateFormat = 'yyyy-MM-dd';

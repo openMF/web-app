@@ -4,10 +4,20 @@
     <fa-icon icon="copy" class="m-r-10"></fa-icon>{{'labels.buttons.Create' | translate}} {{'labels.text.Copy' | translate}}
   </button>
   -->
-  <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_LOANPRODUCT'" (click)="exportDefinition()">
+  <button
+    mat-raised-button
+    color="primary"
+    *mifosxHasPermission="'UPDATE_LOANPRODUCT'"
+    (click)="exportDefinition()"
+  >
     <fa-icon icon="download" class="m-r-10"></fa-icon>{{ 'labels.buttons.Export' | translate }}
   </button>
-  <button mat-raised-button color="primary" [routerLink]="['../edit']" *mifosxHasPermission="'UPDATE_LOANPRODUCT'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['../edit']"
+    *mifosxHasPermission="'UPDATE_LOANPRODUCT'"
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
   </button>
 </div>

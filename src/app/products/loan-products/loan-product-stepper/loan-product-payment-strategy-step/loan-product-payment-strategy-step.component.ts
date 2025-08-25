@@ -65,7 +65,9 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
     this.setPaymentAllocation.emit(
       this.advancedPaymentStrategy.buildPaymentAllocations(this.advancedPaymentAllocations)
     );
-    this.setCreditAllocation.emit(this.advancedPaymentStrategy.buildCreditAllocations(this.advancedCreditAllocations));
+    this.setCreditAllocation.emit(
+      this.advancedPaymentStrategy.buildCreditAllocations(this.advancedCreditAllocations)
+    );
   }
 
   allocationChanged(changed: boolean): void {
@@ -83,20 +85,27 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
     });
 
     const transactionTypesOptions: PaymentAllocationTransactionType[] = [];
-    this.advancedPaymentAllocationTransactionTypes.forEach((option: PaymentAllocationTransactionType) => {
-      if (!this.advancedPaymentStrategy.isDefault(option) && transactionTypesCurrent.indexOf(option.code) < 0) {
-        option.credit = false;
-        option.value = this.translateService.instant('labels.catalogs.' + option.value);
-        transactionTypesOptions.push(option);
+    this.advancedPaymentAllocationTransactionTypes.forEach(
+      (option: PaymentAllocationTransactionType) => {
+        if (
+          !this.advancedPaymentStrategy.isDefault(option) &&
+          transactionTypesCurrent.indexOf(option.code) < 0
+        ) {
+          option.credit = false;
+          option.value = this.translateService.instant('labels.catalogs.' + option.value);
+          transactionTypesOptions.push(option);
+        }
       }
-    });
-    this.advancedCreditAllocationTransactionTypes.forEach((option: PaymentAllocationTransactionType) => {
-      if (transactionTypesCurrent.indexOf(option.code) < 0) {
-        option.credit = true;
-        option.value = this.translateService.instant('labels.catalogs.' + option.value);
-        transactionTypesOptions.push(option);
+    );
+    this.advancedCreditAllocationTransactionTypes.forEach(
+      (option: PaymentAllocationTransactionType) => {
+        if (transactionTypesCurrent.indexOf(option.code) < 0) {
+          option.credit = true;
+          option.value = this.translateService.instant('labels.catalogs.' + option.value);
+          transactionTypesOptions.push(option);
+        }
       }
-    });
+    );
 
     const formfields: FormfieldBase[] = [
       new SelectBase({
@@ -108,7 +117,9 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
 
     ];
     const data = {
-      title: this.translateService.instant('labels.inputs.Advanced Payment Allocation Transaction Type'),
+      title: this.translateService.instant(
+        'labels.inputs.Advanced Payment Allocation Transaction Type'
+      ),
       layout: {
         addButtonText: this.translateService.instant('labels.buttons.Add'),
         cancelButtonText: this.translateService.instant('labels.buttons.Cancel')
@@ -118,7 +129,8 @@ export class LoanProductPaymentStrategyStepComponent implements OnInit {
     const transactionTypeDialogRef = this.dialog.open(FormDialogComponent, { data });
     transactionTypeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        const defaultPaymentAllocation: AdvancedPaymentAllocation = this.advancedPaymentAllocations[0];
+        const defaultPaymentAllocation: AdvancedPaymentAllocation =
+          this.advancedPaymentAllocations[0];
         transactionTypesOptions.forEach((transactionType: PaymentAllocationTransactionType) => {
           if (transactionType.code === response.data.value.code) {
             if (!transactionType.credit) {

@@ -46,7 +46,8 @@ export class EditShareProductComponent {
   shareProductDetailsStep: ShareProductDetailsStepComponent;
   @ViewChild(ShareProductCurrencyStepComponent, { static: true })
   shareProductCurrencyStep: ShareProductCurrencyStepComponent;
-  @ViewChild(ShareProductTermsStepComponent, { static: true }) shareProductTermsStep: ShareProductTermsStepComponent;
+  @ViewChild(ShareProductTermsStepComponent, { static: true })
+  shareProductTermsStep: ShareProductTermsStepComponent;
   @ViewChild(ShareProductSettingsStepComponent, { static: true })
   shareProductSettingsStep: ShareProductSettingsStepComponent;
   @ViewChild(ShareProductMarketPriceStepComponent, { static: true })

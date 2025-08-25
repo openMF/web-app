@@ -39,7 +39,8 @@
             <mat-label>{{ 'labels.inputs.Percentage to Base' | translate }}</mat-label>
             <input matInput required formControlName="pctToBase" />
             <mat-error *ngIf="collateralForm.controls.pctToBase.hasError('required')">
-              {{ 'labels.inputs.Percentage to Base' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Percentage to Base' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>

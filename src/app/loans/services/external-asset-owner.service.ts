@@ -16,9 +16,15 @@ export class ExternalAssetOwnerService {
    * @param {any} data Data
    * @returns {Observable<any>}
    */
-  executeExternalAssetOwnerLoanCommand(loanId: string, data: any, command: string): Observable<any> {
+  executeExternalAssetOwnerLoanCommand(
+    loanId: string,
+    data: any,
+    command: string
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
-    return this.http.post(`${this.basePath}/transfers/loans/${loanId}`, data, { params: httpParams });
+    return this.http.post(`${this.basePath}/transfers/loans/${loanId}`, data, {
+      params: httpParams
+    });
   }
 
   /**
@@ -27,7 +33,11 @@ export class ExternalAssetOwnerService {
    * @param {any} data Data
    * @returns {Observable<any>}
    */
-  executeExternalAssetOwnerTransferCommand(transferId: string, data: any, command: string): Observable<any> {
+  executeExternalAssetOwnerTransferCommand(
+    transferId: string,
+    data: any,
+    command: string
+  ): Observable<any> {
     const httpParams = new HttpParams().set('command', command);
     return this.http.post(`${this.basePath}/transfers/${transferId}`, data, { params: httpParams });
   }

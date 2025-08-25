@@ -28,7 +28,12 @@
                   icon="arrow-down"
                   size="md"
                 ></fa-icon>
-                <fa-icon (click)="arrowBooleansToggle(0)" *ngIf="arrowBooleans[0]" icon="arrow-up" size="md"></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(0)"
+                  *ngIf="arrowBooleans[0]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>
@@ -48,7 +53,10 @@
                       [routerLink]="['journal-entries/create']"
                       class="menu-explanation"
                     >
-                      {{ 'labels.text.Manual journal entry transactions recorded in a journal' | translate }}
+                      {{
+                        'labels.text.Manual journal entry transactions recorded in a journal'
+                          | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -78,7 +86,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Search Journal Entries' | translate }}
-                  <p matLine *ngIf="arrowBooleans[2]" [routerLink]="['journal-entries']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[2]"
+                    [routerLink]="['journal-entries']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Advanced search option for journal entries' | translate }}
                   </p>
                 </div>
@@ -90,7 +103,12 @@
                   icon="arrow-down"
                   size="md"
                 ></fa-icon>
-                <fa-icon (click)="arrowBooleansToggle(2)" *ngIf="arrowBooleans[2]" icon="arrow-up" size="md"></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(2)"
+                  *ngIf="arrowBooleans[2]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>
@@ -110,7 +128,10 @@
                       [routerLink]="['financial-activity-mappings']"
                       class="menu-explanation"
                     >
-                      {{ 'labels.text.List of Financial Activities and GL Account Mappings' | translate }}
+                      {{
+                        'labels.text.List of Financial Activities and GL Account Mappings'
+                          | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -147,7 +168,10 @@
                       [routerLink]="['migrate-opening-balances']"
                       class="menu-explanation"
                     >
-                      {{ 'labels.text.Set or update office-level opening balances for GL accounts' | translate }}
+                      {{
+                        'labels.text.Set or update office-level opening balances for GL accounts'
+                          | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -182,7 +206,12 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Chart of Accounts' | translate }}
-                    <p matLine *ngIf="arrowBooleans[5]" [routerLink]="['chart-of-accounts']" class="menu-explanation">
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[5]"
+                      [routerLink]="['chart-of-accounts']"
+                      class="menu-explanation"
+                    >
                       {{ 'labels.text.List of accounts used by the organization' | translate }}
                     </p>
                   </div>
@@ -214,8 +243,16 @@
                   </mat-icon>
                   <div matLine>
                     {{ 'labels.heading.Closing Entries' | translate }}
-                    <p matLine *ngIf="arrowBooleans[6]" [routerLink]="['closing-entries']" class="menu-explanation">
-                      {{ 'labels.text.Journal entries made at the end of accounting period' | translate }}
+                    <p
+                      matLine
+                      *ngIf="arrowBooleans[6]"
+                      [routerLink]="['closing-entries']"
+                      class="menu-explanation"
+                    >
+                      {{
+                        'labels.text.Journal entries made at the end of accounting period'
+                          | translate
+                      }}
                     </p>
                   </div>
                 </div>
@@ -245,7 +282,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Accounting Rules' | translate }}
-                  <p matLine *ngIf="arrowBooleans[7]" [routerLink]="['accounting-rules']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[7]"
+                    [routerLink]="['accounting-rules']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.List of all accounting rules' | translate }}
                   </p>
                 </div>
@@ -257,7 +299,12 @@
                   icon="arrow-down"
                   size="md"
                 ></fa-icon>
-                <fa-icon (click)="arrowBooleansToggle(7)" *ngIf="arrowBooleans[7]" icon="arrow-up" size="md"></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(7)"
+                  *ngIf="arrowBooleans[7]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>
@@ -270,7 +317,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Accruals' | translate }}
-                  <p matLine *ngIf="arrowBooleans[8]" [routerLink]="['periodic-accruals']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[8]"
+                    [routerLink]="['periodic-accruals']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Accrues income, expenses and liabilities' | translate }}
                   </p>
                 </div>
@@ -282,7 +334,12 @@
                   icon="arrow-down"
                   size="md"
                 ></fa-icon>
-                <fa-icon (click)="arrowBooleansToggle(8)" *ngIf="arrowBooleans[8]" icon="arrow-up" size="md"></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(8)"
+                  *ngIf="arrowBooleans[8]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>
@@ -295,7 +352,12 @@
                 </mat-icon>
                 <div matLine>
                   {{ 'labels.heading.Provisioning Entries' | translate }}
-                  <p matLine *ngIf="arrowBooleans[9]" [routerLink]="['provisioning-entries']" class="menu-explanation">
+                  <p
+                    matLine
+                    *ngIf="arrowBooleans[9]"
+                    [routerLink]="['provisioning-entries']"
+                    class="menu-explanation"
+                  >
                     {{ 'labels.text.Create provisioning entries' | translate }}
                   </p>
                 </div>
@@ -307,7 +369,12 @@
                   icon="arrow-down"
                   size="md"
                 ></fa-icon>
-                <fa-icon (click)="arrowBooleansToggle(9)" *ngIf="arrowBooleans[9]" icon="arrow-up" size="md"></fa-icon>
+                <fa-icon
+                  (click)="arrowBooleansToggle(9)"
+                  *ngIf="arrowBooleans[9]"
+                  icon="arrow-up"
+                  size="md"
+                ></fa-icon>
               </div>
             </div>
           </mat-list-item>
@@ -321,10 +388,18 @@
   <h2>{{ 'labels.heading.Chart of Accounts' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.The Chart of Accounts - General Ledger Setup' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepChartofAccounts()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepChartofAccounts()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStepChartofAccounts()">
@@ -337,10 +412,18 @@
   <h2>{{ 'labels.heading.Accounts Linked to Financial Activities' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.Accounts linked to Financial Activities' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepAccountsLinked()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepAccountsLinked()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStepAccountsLinked()">
@@ -353,13 +436,25 @@
   <h2>{{ 'labels.heading.Migrate Opening Balances (Office-wise)' | translate }}</h2>
   <p class="mw400">{{ 'labels.text.GLAccount Balances Application' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepMigrateOpeningBalances()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepMigrateOpeningBalances()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStepMigrateOpeningBalances()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); nextStepMigrateOpeningBalances()"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -369,10 +464,18 @@
   <h2>{{ 'labels.heading.Closing Entries' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Accounting to journal entries' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepClosingEntries()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepClosingEntries()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStepClosingEntries()">
@@ -385,13 +488,25 @@
   <h2>{{ 'labels.heading.Create Journal Entries' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Journal Entries Transactions' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStepCreateJournalEntries()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); previousStepCreateJournalEntries()"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStepCreateJournalEntries()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); nextStepCreateJournalEntries()"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>

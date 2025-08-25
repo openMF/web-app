@@ -47,7 +47,9 @@ export class ExternalAssetOwner {
     return [
         '',
         'CANCELLED'
-      ].includes(item.status) || (item.status === 'BUYBACK' && item.effectiveTo !== this.defaultDate);
+      ].includes(
+        item.status
+      ) || (item.status === 'BUYBACK' && item.effectiveTo !== this.defaultDate);
   }
 
   canBeBuyed(item: any): boolean {

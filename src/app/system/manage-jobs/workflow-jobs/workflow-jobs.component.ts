@@ -143,7 +143,10 @@ export class WorkflowJobsComponent implements OnInit {
         .getAvailablesJobSteps(jobDatas[0])
         .toPromise()
         .then((jobData) => {
-          this.jobAvailableStepsData = jobData.availableBusinessSteps.sort(function (a: any, b: any) {
+          this.jobAvailableStepsData = jobData.availableBusinessSteps.sort(function (
+            a: any,
+            b: any
+          ) {
             return a.stepName - b.stepName;
           });
 
@@ -168,7 +171,11 @@ export class WorkflowJobsComponent implements OnInit {
               new SelectBase({
                 controlName: 'stepName',
                 label: this.translateService.instant('labels.text.Step'),
-                options: { label: 'stepDescription', value: 'stepName', data: this.jobAvailableStepsData },
+                options: {
+                  label: 'stepDescription',
+                  value: 'stepName',
+                  data: this.jobAvailableStepsData
+                },
                 order: 1
               })
 

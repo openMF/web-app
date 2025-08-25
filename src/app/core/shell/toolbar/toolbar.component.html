@@ -38,11 +38,23 @@
         <fa-icon class="mr-05" icon="money-bill-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Accounting' | translate }}
       </a>
-      <a #reports class="tab-link" [matMenuTriggerFor]="reportsMenu" #reportsMenuTrigger="matMenuTrigger" tabindex="0">
+      <a
+        #reports
+        class="tab-link"
+        [matMenuTriggerFor]="reportsMenu"
+        #reportsMenuTrigger="matMenuTrigger"
+        tabindex="0"
+      >
         <fa-icon class="mr-05" icon="chart-bar" size="lg"></fa-icon>
         {{ 'labels.menus.Reports' | translate }}
       </a>
-      <a #admin class="tab-link" [matMenuTriggerFor]="adminMenu" #adminMenuTrigger="matMenuTrigger" tabindex="0">
+      <a
+        #admin
+        class="tab-link"
+        [matMenuTriggerFor]="adminMenu"
+        #adminMenuTrigger="matMenuTrigger"
+        tabindex="0"
+      >
         <fa-icon class="mr-05" icon="shield-alt" size="lg"></fa-icon>
         {{ 'labels.menus.Admin' | translate }}
       </a>
@@ -60,7 +72,10 @@
   </div>
 
   <div #languageSelector class="white-text-language">
-    <mifosx-language-selector class="ml-1 language hide-lt-md" tabindex="0"></mifosx-language-selector>
+    <mifosx-language-selector
+      class="ml-1 language hide-lt-md"
+      tabindex="0"
+    ></mifosx-language-selector>
   </div>
 
   <button mat-icon-button [matMenuTriggerFor]="languageMenu" tabindex="0">
@@ -68,7 +83,11 @@
   </button>
 
   <div #notifications>
-    <mifosx-notifications-tray #notificationsTray class="hide-lt-md" tabindex="0"></mifosx-notifications-tray>
+    <mifosx-notifications-tray
+      #notificationsTray
+      class="hide-lt-md"
+      tabindex="0"
+    ></mifosx-notifications-tray>
   </div>
 
   <div #themeToggle>
@@ -76,8 +95,16 @@
   </div>
 
   <div #appMenu>
-    <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu" tabindex="0">
-      <img src="assets/images/user_placeholder.png" [alt]="'labels.headings.User Profile' | translate" />
+    <button
+      mat-icon-button
+      class="ml-1 img-button"
+      [matMenuTriggerFor]="applicationMenu"
+      tabindex="0"
+    >
+      <img
+        src="assets/images/user_placeholder.png"
+        [alt]="'labels.headings.User Profile' | translate"
+      />
     </button>
   </div>
 </mat-toolbar>
@@ -88,9 +115,15 @@
 </mat-menu>
 
 <mat-menu #institutionMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item routerLink="/clients" tabindex="0">{{ 'labels.menus.Clients' | translate }}</button>
-  <button mat-menu-item routerLink="/groups" tabindex="0">{{ 'labels.menus.Groups' | translate }}</button>
-  <button mat-menu-item routerLink="/centers" tabindex="0">{{ 'labels.menus.Centers' | translate }}</button>
+  <button mat-menu-item routerLink="/clients" tabindex="0">
+    {{ 'labels.menus.Clients' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/groups" tabindex="0">
+    {{ 'labels.menus.Groups' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/centers" tabindex="0">
+    {{ 'labels.menus.Centers' | translate }}
+  </button>
   <span class="hide-lt-md">
     <button mat-menu-item [routerLink]="['/accounting']" tabindex="0">
       {{ 'labels.menus.Accounting' | translate }}
@@ -98,34 +131,50 @@
     <button mat-menu-item [matMenuTriggerFor]="reportsMenu" tabindex="0">
       {{ 'labels.menus.Reports' | translate }}
     </button>
-    <button mat-menu-item [matMenuTriggerFor]="adminMenu" tabindex="0">{{ 'labels.menus.Admin' | translate }}</button>
+    <button mat-menu-item [matMenuTriggerFor]="adminMenu" tabindex="0">
+      {{ 'labels.menus.Admin' | translate }}
+    </button>
   </span>
 </mat-menu>
 
 <!-- Toolbar Menus -->
 <mat-menu #reportsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="['/reports']" tabindex="0">{{ 'labels.menus.All' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports']" tabindex="0">
+    {{ 'labels.menus.All' | translate }}
+  </button>
   <button mat-menu-item [routerLink]="['/reports', 'Client']" tabindex="0">
     {{ 'labels.menus.Clients' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Loan']" tabindex="0">{{ 'labels.menus.Loans' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Loan']" tabindex="0">
+    {{ 'labels.menus.Loans' | translate }}
+  </button>
   <button mat-menu-item [routerLink]="['/reports', 'Savings']" tabindex="0">
     {{ 'labels.menus.Savings' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/reports', 'Fund']" tabindex="0">{{ 'labels.menus.Funds' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/reports', 'Fund']" tabindex="0">
+    {{ 'labels.menus.Funds' | translate }}
+  </button>
   <button mat-menu-item [routerLink]="['/reports', 'Accounting']" tabindex="0">
     {{ 'labels.menus.Accounting' | translate }}
   </button>
 </mat-menu>
 
 <mat-menu #adminMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item (click)="navigateMenu('/appusers')" tabindex="0">{{ 'labels.menus.Users' | translate }}</button>
+  <button mat-menu-item (click)="navigateMenu('/appusers')" tabindex="0">
+    {{ 'labels.menus.Users' | translate }}
+  </button>
   <button mat-menu-item [routerLink]="['/organization']" tabindex="0">
     {{ 'labels.menus.Organization' | translate }}
   </button>
-  <button mat-menu-item [routerLink]="['/system']" tabindex="0">{{ 'labels.menus.System' | translate }}</button>
-  <button mat-menu-item [routerLink]="['/products']" tabindex="0">{{ 'labels.menus.Products' | translate }}</button>
-  <button mat-menu-item routerLink="/templates" tabindex="0">{{ 'labels.menus.Templates' | translate }}</button>
+  <button mat-menu-item [routerLink]="['/system']" tabindex="0">
+    {{ 'labels.menus.System' | translate }}
+  </button>
+  <button mat-menu-item [routerLink]="['/products']" tabindex="0">
+    {{ 'labels.menus.Products' | translate }}
+  </button>
+  <button mat-menu-item routerLink="/templates" tabindex="0">
+    {{ 'labels.menus.Templates' | translate }}
+  </button>
 </mat-menu>
 
 <!-- Application User Help Menu -->
@@ -160,10 +209,18 @@
   <h2>{{ 'labels.menus.Institution' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Button for individual account' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAccounting, accounting)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateAccounting, accounting)"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -173,13 +230,25 @@
   <h2>{{ 'labels.menus.Accounting' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Button for accounting department' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateInstitution, institution)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateInstitution, institution)"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateReports, reports)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateReports, reports)"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -189,13 +258,25 @@
   <h2>{{ 'labels.menus.Reports' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Dropdown system reports' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAccounting, accounting)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateAccounting, accounting)"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAdmin, admin)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateAdmin, admin)"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -205,13 +286,25 @@
   <h2>{{ 'labels.menus.Admin' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Setup organization including users' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateReports, reports)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateReports, reports)"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateSelfService, selfService)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateSelfService, selfService)"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -219,10 +312,18 @@
 
 <ng-template #templateSelfService let-popover="popover">
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAdmin, admin)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateAdmin, admin)"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
@@ -239,10 +340,18 @@
   <h2>{{ 'labels.menus.Configuration Wizard' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Initial setup and application tour' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateSelfService, selfService)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateSelfService, selfService)"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
@@ -259,7 +368,11 @@
   <h2>{{ 'labels.menus.Global Search' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Navigate system selecting entity' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -283,7 +396,11 @@
   <h2>{{ 'labels.menus.Language Selector' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.Organization available languages' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -307,7 +424,11 @@
   <h2>{{ 'labels.menus.Notifications' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.This shows all the notifications.' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -317,7 +438,11 @@
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themeToggle)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateThemePicker, themeToggle)"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -325,9 +450,15 @@
 
 <ng-template #templateThemePicker let-popover="popover">
   <h2>{{ 'labels.menus.Theme Picker' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Choose to work with a dark or bright background' | translate }}</p>
+  <p class="mw300">
+    {{ 'labels.text.Choose to work with a dark or bright background' | translate }}
+  </p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
     <button
@@ -337,7 +468,11 @@
     >
       {{ 'labels.buttons.Back' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAppMenu, appMenu)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateAppMenu, appMenu)"
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -347,10 +482,18 @@
   <h2>{{ 'labels.menus.Application Menu' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.User settings and sign out button' | translate }}</p>
   <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="popover.close(); configurationWizardService.closeConfigWizard()"
+    >
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themeToggle)">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateThemePicker, themeToggle)"
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

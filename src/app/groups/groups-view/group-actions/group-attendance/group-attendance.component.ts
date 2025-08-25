@@ -109,7 +109,10 @@ export class GroupAttendanceComponent implements OnInit {
    * Sets the members table.
    */
   ngOnInit() {
-    this.dataSource = this.membersData.map((member: any) => ({ clientId: member.id, attendanceType: 1 }));
+    this.dataSource = this.membersData.map((member: any) => ({
+      clientId: member.id,
+      attendanceType: 1
+    }));
     this.meetingDates = this.groupData.collectionMeetingCalendar.recurringDates.filter(
       (date: any) => new Date(date).getTime() < new Date().getTime()
     );

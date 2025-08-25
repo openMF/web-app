@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -82,7 +87,10 @@ export class RejectRecurringDepositsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevRejectedOnDate: Date = this.rejectRecurringDepositsAccountForm.value.rejectedOnDate;
     if (rejectRecurringDepositsAccountFormData.rejectedOnDate instanceof Date) {
-      rejectRecurringDepositsAccountFormData.rejectedOnDate = this.dateUtils.formatDate(prevRejectedOnDate, dateFormat);
+      rejectRecurringDepositsAccountFormData.rejectedOnDate = this.dateUtils.formatDate(
+        prevRejectedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...rejectRecurringDepositsAccountFormData,

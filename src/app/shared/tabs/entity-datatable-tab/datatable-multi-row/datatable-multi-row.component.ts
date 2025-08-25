@@ -1,6 +1,14 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { DecimalPipe, NgIf, NgFor, NgClass } from '@angular/common';
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { MatCheckboxChange as MatCheckboxChange, MatCheckbox } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -139,15 +147,17 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
 
   getData() {
     this.isLoading = true;
-    this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
-      this.dataObject.data = dataObject.data;
-      this.showDeleteBotton = false;
-      if (this.dataTableRef) {
-        this.setData();
-      }
-      this.isSelected = false;
-      this.isLoading = false;
-    });
+    this.systemService
+      .getEntityDatatable(this.entityId, this.datatableName)
+      .subscribe((dataObject: any) => {
+        this.dataObject.data = dataObject.data;
+        this.showDeleteBotton = false;
+        if (this.dataTableRef) {
+          this.setData();
+        }
+        this.isSelected = false;
+        this.isLoading = false;
+      });
   }
 
   /**
@@ -194,9 +204,11 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
-          this.getData();
-        });
+        this.systemService
+          .deleteDatatableContent(this.entityId, this.datatableName)
+          .subscribe(() => {
+            this.getData();
+          });
       }
     });
   }
@@ -206,22 +218,26 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
    */
   deleteSelected() {
     const deleteDataTableDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: `the ${this.selection.selected.length} items selected of ${this.datatableName}` }
+      data: {
+        deleteContext: `the ${this.selection.selected.length} items selected of ${this.datatableName}`
+      }
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.isSelected = false;
         this.selection.selected.forEach((data) => {
-          this.systemService.deleteDatatableEntry(this.entityId, data.row[0], this.datatableName).subscribe(() => {
-            this.datatableData.forEach((item: any, index: any) => {
-              if (item.row[0] === data.row[0]) {
-                this.datatableData.splice(index, 1);
-                this.dataTableRef.renderRows();
-                this.selection = new SelectionModel(true, []);
-                this.isSelected = this.selection.selected.length > 0;
-              }
+          this.systemService
+            .deleteDatatableEntry(this.entityId, data.row[0], this.datatableName)
+            .subscribe(() => {
+              this.datatableData.forEach((item: any, index: any) => {
+                if (item.row[0] === data.row[0]) {
+                  this.datatableData.splice(index, 1);
+                  this.dataTableRef.renderRows();
+                  this.selection = new SelectionModel(true, []);
+                  this.isSelected = this.selection.selected.length > 0;
+                }
+              });
             });
-          });
         });
       } else {
         this.selection = new SelectionModel(true, []);

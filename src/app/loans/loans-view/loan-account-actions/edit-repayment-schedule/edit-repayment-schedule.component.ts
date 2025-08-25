@@ -62,9 +62,11 @@ export class EditRepaymentScheduleComponent implements OnInit {
   }
 
   getRepaymentSchedule(): void {
-    this.loansService.getLoanAccountResource(this.loanId, 'repaymentSchedule').subscribe((response: any) => {
-      this.repaymentScheduleDetails = response.repaymentSchedule;
-    });
+    this.loansService
+      .getLoanAccountResource(this.loanId, 'repaymentSchedule')
+      .subscribe((response: any) => {
+        this.repaymentScheduleDetails = response.repaymentSchedule;
+      });
   }
 
   applyPattern(): void {
@@ -113,11 +115,17 @@ export class EditRepaymentScheduleComponent implements OnInit {
         const amount = response.data.value.amount;
         const periodsVariation: any = [];
         this.repaymentScheduleDetails['periods'].forEach((period: any) => {
-          const dueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
+          const dueDate = this.dateUtils.formatDate(
+            period.dueDate,
+            this.settingsService.dateFormat
+          );
           if (period.period && fromPeriod <= period.period && toPeriod >= period.period) {
             if (period.totalDueForPeriod !== amount) {
               period.totalDueForPeriod = amount;
-              this.repaymentScheduleChanges[dueDate] = { dueDate: dueDate, installmentAmount: amount };
+              this.repaymentScheduleChanges[dueDate] = {
+                dueDate: dueDate,
+                installmentAmount: amount
+              };
               this.wasChanged = true;
               period['changed'] = true;
             }

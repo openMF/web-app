@@ -110,7 +110,8 @@ export class LoansAccountPreviewStepComponent implements OnChanges {
           .filter((member: any) => member.selected)
           .map((member: any) => ({
             ...member,
-            purpose: this.loanPurposeOptions.find((option) => option.id === member.loanPurposeId)?.name
+            purpose: this.loanPurposeOptions.find((option) => option.id === member.loanPurposeId)
+              ?.name
           }))
       );
       this.loansAccount.principalAmount = this.activeClientMembers

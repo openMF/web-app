@@ -1,6 +1,11 @@
 /** Angular Imports. */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services. */
@@ -86,7 +91,10 @@ export class WaiveInterestComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate = this.loanInterestForm.value.transactionDate;
     if (loanInterestFormData.transactionDate instanceof Date) {
-      loanInterestFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      loanInterestFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...loanInterestFormData,
@@ -95,8 +103,10 @@ export class WaiveInterestComponent implements OnInit {
     };
     data['transactionAmount'] = data['transactionAmount'] * 1;
     const loanId = this.route.snapshot.params['loanId'];
-    this.loanService.submitLoanActionButton(loanId, data, 'waiveinterest').subscribe((response: any) => {
-      this.router.navigate(['../../general'], { relativeTo: this.route });
-    });
+    this.loanService
+      .submitLoanActionButton(loanId, data, 'waiveinterest')
+      .subscribe((response: any) => {
+        this.router.navigate(['../../general'], { relativeTo: this.route });
+      });
   }
 }

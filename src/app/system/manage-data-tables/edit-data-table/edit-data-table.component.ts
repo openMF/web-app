@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -194,7 +199,9 @@ export class EditDataTableComponent implements OnInit {
     this.dataTableChangesData.apptableName = this.dataTableData.applicationTableName;
     this.dataTableChangesData.entitySubType = this.dataTableData.entitySubType;
     for (let index = 0; index < this.columnData.length; index++) {
-      this.columnData[index].columnDisplayType = this.getColumnType(this.columnData[index].columnDisplayType);
+      this.columnData[index].columnDisplayType = this.getColumnType(
+        this.columnData[index].columnDisplayType
+      );
       this.columnData[index].type = 'existing';
     }
     this.showEntitySubType = this.dataTableData.applicationTableName === 'm_client';
@@ -367,7 +374,10 @@ export class EditDataTableComponent implements OnInit {
    */
   deleteColumn(column: any) {
     const deleteColumnDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Column') + ' ' + column.columnName }
+      data: {
+        deleteContext:
+          this.translateService.instant('labels.inputs.Column') + ' ' + column.columnName
+      }
     });
     deleteColumnDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
@@ -417,13 +427,22 @@ export class EditDataTableComponent implements OnInit {
    * if successful redirects to view updated data table.
    */
   submit() {
-    if (!this.dataTableChangesData.addColumns || this.dataTableChangesData.addColumns.length === 0) {
+    if (
+      !this.dataTableChangesData.addColumns ||
+      this.dataTableChangesData.addColumns.length === 0
+    ) {
       this.dataTableChangesData.addColumns = undefined;
     }
-    if (!this.dataTableChangesData.changeColumns || this.dataTableChangesData.changeColumns.length === 0) {
+    if (
+      !this.dataTableChangesData.changeColumns ||
+      this.dataTableChangesData.changeColumns.length === 0
+    ) {
       this.dataTableChangesData.changeColumns = undefined;
     }
-    if (!this.dataTableChangesData.dropColumns || this.dataTableChangesData.dropColumns.length === 0) {
+    if (
+      !this.dataTableChangesData.dropColumns ||
+      this.dataTableChangesData.dropColumns.length === 0
+    ) {
       this.dataTableChangesData.dropColumns = undefined;
     }
     this.systemService

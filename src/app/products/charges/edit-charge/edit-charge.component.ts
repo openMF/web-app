@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -161,7 +166,10 @@ export class EditChargeComponent implements OnInit {
         this.addFeeFrequency = false;
         this.chargeForm.addControl(
           'incomeAccountId',
-          this.formBuilder.control(this.chargeData.incomeOrLiabilityAccount?.id, Validators.required)
+          this.formBuilder.control(
+            this.chargeData.incomeOrLiabilityAccount?.id,
+            Validators.required
+          )
         );
         break;
       }
@@ -205,8 +213,10 @@ export class EditChargeComponent implements OnInit {
     if (!charges.maxCap) {
       delete charges.maxCap;
     }
-    this.productsService.updateCharge(this.chargeData.id.toString(), charges).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.productsService
+      .updateCharge(this.chargeData.id.toString(), charges)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

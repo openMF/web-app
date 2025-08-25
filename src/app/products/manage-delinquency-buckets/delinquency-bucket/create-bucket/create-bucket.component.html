@@ -23,7 +23,9 @@
 
           <table mat-table [dataSource]="rangesDataSource" [hidden]="rangesDataSource.length === 0">
             <ng-container matColumnDef="classification">
-              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Classification' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef>
+                {{ 'labels.inputs.Classification' | translate }}
+              </th>
               <td mat-cell *matCellDef="let row">
                 {{ row.rangeId | find: delinquencyRangesData : 'id' : 'classification' }}
               </td>

@@ -13,7 +13,11 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 /** Custom Imports */
-import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } from '../template-parameter-labels';
+import {
+  clientParameterLabels,
+  loanParameterLabels,
+  repaymentParameterLabels
+} from '../template-parameter-labels';
 
 /** Custom Services */
 import { TemplatesService } from '../templates.service';
@@ -125,11 +129,14 @@ export class CreateEditComponent implements OnInit {
     } else {
       this.templateForm = this.formBuilder.group({
         entity: [
-          this.templateData.entities.find((entity: any) => entity.name === this.templateData.template.entity).id,
+          this.templateData.entities.find(
+            (entity: any) => entity.name === this.templateData.template.entity
+          ).id,
           Validators.required
         ],
         type: [
-          this.templateData.types.find((type: any) => type.name === this.templateData.template.type).id,
+          this.templateData.types.find((type: any) => type.name === this.templateData.template.type)
+            .id,
           Validators.required
         ],
         name: [
@@ -155,14 +162,18 @@ export class CreateEditComponent implements OnInit {
         this.mappers.splice(0, 1, {
           mappersorder: 0,
           mapperskey: new UntypedFormControl('client'),
-          mappersvalue: new UntypedFormControl('clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier)
+          mappersvalue: new UntypedFormControl(
+            'clients/{{clientId}}?tenantIdentifier=' + tenantIdentifier
+          )
         });
       } else {
         // loan
         this.mappers.splice(0, 1, {
           mappersorder: 0,
           mapperskey: new UntypedFormControl('loan'),
-          mappersvalue: new UntypedFormControl('loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier)
+          mappersvalue: new UntypedFormControl(
+            'loans/{{loanId}}?associations=all&tenantIdentifier=' + tenantIdentifier
+          )
         });
       }
       this.setEditorContent('');
@@ -198,7 +209,8 @@ export class CreateEditComponent implements OnInit {
   addText(label: string) {
     if (this.ckEditor && this.ckEditor.editorInstance) {
       this.ckEditor.editorInstance.model.change((writer: any) => {
-        const insertPosition = this.ckEditor.editorInstance.model.document.selection.getFirstPosition();
+        const insertPosition =
+          this.ckEditor.editorInstance.model.document.selection.getFirstPosition();
         writer.insertText(label, insertPosition);
       });
     }

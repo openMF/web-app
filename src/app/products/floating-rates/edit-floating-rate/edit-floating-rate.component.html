@@ -12,7 +12,8 @@
               formControlName="name"
             />
             <mat-error *ngIf="floatingRateForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Floating Rate Name' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Floating Rate Name' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -52,7 +53,8 @@
             <i
               class="fas fa-question"
               matTooltip="{{
-                'tooltips.Floating interest rate and start date for this floating rate scheme' | translate
+                'tooltips.Floating interest rate and start date for this floating rate scheme'
+                  | translate
               }}"
             ></i>
           </p>
@@ -72,7 +74,9 @@
             >
               {{ 'labels.inputs.From Date' | translate }}
             </th>
-            <td mat-cell *matCellDef="let floatingRatePeriod">{{ floatingRatePeriod.fromDate | dateFormat }}</td>
+            <td mat-cell *matCellDef="let floatingRatePeriod">
+              {{ floatingRatePeriod.fromDate | dateFormat }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="interestRate">
@@ -84,14 +88,18 @@
             >
               {{ 'labels.inputs.Interest Rate' | translate }}
             </th>
-            <td mat-cell *matCellDef="let floatingRatePeriod">{{ floatingRatePeriod.interestRate }}</td>
+            <td mat-cell *matCellDef="let floatingRatePeriod">
+              {{ floatingRatePeriod.interestRate }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="isDifferential">
             <th
               mat-header-cell
               *matHeaderCellDef
-              matTooltip="{{ 'tooltips.Interest rate mentioned is added to base lending rate' | translate }}"
+              matTooltip="{{
+                'tooltips.Interest rate mentioned is added to base lending rate' | translate
+              }}"
               mat-sort-header
             >
               {{ 'labels.inputs.Is Differential' | translate }}?
@@ -127,7 +135,12 @@
               >
                 <fa-icon icon="edit" size="lg"></fa-icon>
               </button>
-              <button type="button" color="warn" mat-icon-button (click)="deleteFloatingRatePeriod(floatingRatePeriod)">
+              <button
+                type="button"
+                color="warn"
+                mat-icon-button
+                (click)="deleteFloatingRatePeriod(floatingRatePeriod)"
+              >
                 <fa-icon icon="trash" size="lg"></fa-icon>
               </button>
             </td>
@@ -148,7 +161,9 @@
           mat-raised-button
           type="submit"
           color="primary"
-          [disabled]="!floatingRateForm.valid || (floatingRateForm.pristine && isFloatingRateFormPristine)"
+          [disabled]="
+            !floatingRateForm.valid || (floatingRateForm.pristine && isFloatingRateFormPristine)
+          "
         >
           {{ 'labels.buttons.Submit' | translate }}
         </button>

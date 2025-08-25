@@ -133,12 +133,16 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   ngOnInit() {
     this.periodTypeData = this.recurringDepositProductsTemplate.chartTemplate.periodTypes;
     this.entityTypeData = this.recurringDepositProductsTemplate.chartTemplate.entityTypeOptions;
-    this.attributeNameData = this.recurringDepositProductsTemplate.chartTemplate.attributeNameOptions;
-    this.conditionTypeData = this.recurringDepositProductsTemplate.chartTemplate.conditionTypeOptions;
+    this.attributeNameData =
+      this.recurringDepositProductsTemplate.chartTemplate.attributeNameOptions;
+    this.conditionTypeData =
+      this.recurringDepositProductsTemplate.chartTemplate.conditionTypeOptions;
     this.genderData = this.recurringDepositProductsTemplate.chartTemplate.genderOptions;
     this.clientTypeData = this.recurringDepositProductsTemplate.chartTemplate.clientTypeOptions;
-    this.clientClassificationData = this.recurringDepositProductsTemplate.chartTemplate.clientClassificationOptions;
-    this.incentiveTypeData = this.recurringDepositProductsTemplate.chartTemplate.incentiveTypeOptions;
+    this.clientClassificationData =
+      this.recurringDepositProductsTemplate.chartTemplate.clientClassificationOptions;
+    this.incentiveTypeData =
+      this.recurringDepositProductsTemplate.chartTemplate.incentiveTypeOptions;
 
     if (!(this.recurringDepositProductsTemplate === undefined)) {
       this.assignFormData();
@@ -195,7 +199,9 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
         formArray.push(chartSlabInfo);
 
         // Iterate for every slab in chartSlab
-        const chartIncentiveControl = (chartDetailControl.controls['chartSlabs'] as UntypedFormArray).controls[j];
+        const chartIncentiveControl = (
+          chartDetailControl.controls['chartSlabs'] as UntypedFormArray
+        ).controls[j];
 
         // Iterate to input all the incentive for particular chart slab
         this.chartsDetail[i].chartSlabs[j].incentives.forEach((chartIncentiveDetail: any) => {
@@ -225,7 +231,9 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
               Validators.required
             ]
           });
-          const newFormArray = (chartIncentiveControl as UntypedFormGroup).controls['incentives'] as UntypedFormArray;
+          const newFormArray = (chartIncentiveControl as UntypedFormGroup).controls[
+            'incentives'
+          ] as UntypedFormArray;
           newFormArray.push(incentiveInfo);
         });
       });
@@ -371,7 +379,11 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
               'period',
               'amountRange'
             ];
-        this.chartSlabsDisplayedColumns[chartIndex].push('annualInterestRate', 'description', 'actions');
+        this.chartSlabsDisplayedColumns[chartIndex].push(
+          'annualInterestRate',
+          'description',
+          'actions'
+        );
       });
   }
 
@@ -401,7 +413,10 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
   }
 
   editChartSlab(chartSlabs: UntypedFormArray, chartSlabIndex: number) {
-    const data = { ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value), layout: { addButtonText: 'Edit' } };
+    const data = {
+      ...this.getData('Slab', chartSlabs.at(chartSlabIndex).value),
+      layout: { addButtonText: 'Edit' }
+    };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -509,7 +524,8 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
     // TODO: Update once language and date settings are setup
     const dateFormat = 'YYYY-MM-DD';
     const locale = this.settingsService.language.code;
-    const recurringDepositProductInterestRateChart = this.recurringDepositProductInterestRateChartForm.value;
+    const recurringDepositProductInterestRateChart =
+      this.recurringDepositProductInterestRateChartForm.value;
     for (const chart of recurringDepositProductInterestRateChart.charts) {
       chart.locale = locale;
       chart.dateFormat = 'yyyy-MM-dd';

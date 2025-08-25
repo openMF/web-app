@@ -4,7 +4,10 @@
       class="flex-98 layout-row gap-5percent layout-column.lt-md radio-group-spacing"
       formControlName="accountingRule"
     >
-      <mat-radio-button *ngFor="let accountingRule of accountingRuleData; let i = index" [value]="i + 1">
+      <mat-radio-button
+        *ngFor="let accountingRule of accountingRuleData; let i = index"
+        [value]="i + 1"
+      >
         {{ 'labels.accounting.' + accountingRule | translate }}
       </mat-radio-button>
     </mat-radio-group>

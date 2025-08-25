@@ -114,7 +114,10 @@ export class AttachGroupMeetingComponent implements OnInit {
                 '2',
                 '3'
               ];
-              this.groupMeetingForm.addControl('repeatsOnDay', new UntypedFormControl('', Validators.required));
+              this.groupMeetingForm.addControl(
+                'repeatsOnDay',
+                new UntypedFormControl('', Validators.required)
+              );
               break;
             case 3: // Monthly
               this.repetitionIntervals = [

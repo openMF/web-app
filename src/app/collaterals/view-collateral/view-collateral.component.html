@@ -31,13 +31,18 @@
           {{ 'labels.inputs.name' | translate }}: {{ clientCollateralData.name }}<br />
           {{ 'labels.inputs.Quantity' | translate }}: {{ clientCollateralData.quantity }}<br />
           {{ 'labels.inputs.Total Value' | translate }}: {{ clientCollateralData.total }}<br />
-          {{ 'labels.inputs.Total Collateral Value' | translate }}: {{ clientCollateralData.totalCollateral }}<br />
+          {{ 'labels.inputs.Total Collateral Value' | translate }}:
+          {{ clientCollateralData.totalCollateral }}<br />
         </p>
       </div>
 
       <h3>{{ 'labels.heading.Transaction Details' | translate }}</h3>
 
-      <table mat-table [dataSource]="clientCollateralData.loanTransactionData" class="mat-elevation-z1 m-b-30">
+      <table
+        mat-table
+        [dataSource]="clientCollateralData.loanTransactionData"
+        class="mat-elevation-z1 m-b-30"
+      >
         <ng-container matColumnDef="ID">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.ID' | translate }}</th>
           <td mat-cell *matCellDef="let element">
@@ -46,17 +51,23 @@
         </ng-container>
 
         <ng-container matColumnDef="Last Repayment">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Last Repayment' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'labels.inputs.Last Repayment' | translate }}
+          </th>
           <td mat-cell *matCellDef="let element">{{ element.lastRepayment }}</td>
         </ng-container>
 
         <ng-container matColumnDef="Remaining Amount">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Remaining Amount' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'labels.inputs.Remaining Amount' | translate }}
+          </th>
           <td mat-cell *matCellDef="let element">{{ element.remainingAmount | formatNumber }}</td>
         </ng-container>
 
         <ng-container matColumnDef="Last Repayment Date">
-          <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Last Repayment Date' | translate }}</th>
+          <th mat-header-cell *matHeaderCellDef>
+            {{ 'labels.inputs.Last Repayment Date' | translate }}
+          </th>
           <td mat-cell *matCellDef="let element">{{ element.lastRepaymentDate | dateFormat }}</td>
         </ng-container>
 

@@ -12,7 +12,12 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { UntypedFormBuilder, UntypedFormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 /** Custom Dialogs */
@@ -139,7 +144,10 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
       } else {
         this.currencyData.next(
           this.currencyList.filter((option: Currency) => {
-            return option.name.toLowerCase().indexOf(search) >= 0 || option.code.toLowerCase().indexOf(search) >= 0;
+            return (
+              option.name.toLowerCase().indexOf(search) >= 0 ||
+              option.code.toLowerCase().indexOf(search) >= 0
+            );
           })
         );
       }
@@ -154,14 +162,16 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
     const selectedCurrencyCodes: any[] = this.selectedCurrencies.map((currency) => currency.code);
     if (!selectedCurrencyCodes.includes(newCurrency.code)) {
       selectedCurrencyCodes.push(newCurrency.code);
-      this.organizationservice.updateCurrencies(selectedCurrencyCodes).subscribe((response: any) => {
-        this.selectedCurrencies.push(newCurrency);
-        this.formRef.resetForm();
-        if (this.configurationWizardService.showCurrencyForm === true) {
-          this.configurationWizardService.showCurrencyForm = false;
-          this.openDialog();
-        }
-      });
+      this.organizationservice
+        .updateCurrencies(selectedCurrencyCodes)
+        .subscribe((response: any) => {
+          this.selectedCurrencies.push(newCurrency);
+          this.formRef.resetForm();
+          if (this.configurationWizardService.showCurrencyForm === true) {
+            this.configurationWizardService.showCurrencyForm = false;
+            this.openDialog();
+          }
+        });
     }
   }
 
@@ -198,7 +208,12 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
   ngAfterViewInit() {
     if (this.configurationWizardService.showCurrencyForm === true) {
       setTimeout(() => {
-        this.showPopover(this.templateCurrencyFormRef, this.currencyFormRef.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateCurrencyFormRef,
+          this.currencyFormRef.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
   }

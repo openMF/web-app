@@ -25,7 +25,13 @@ export class GroupsService {
    * @param {number} limit Number of entries within the page.
    * @returns {Observable<any>} Groups.
    */
-  getGroups(filterBy: any, orderBy: string, sortOrder: string, offset?: number, limit?: number): Observable<any> {
+  getGroups(
+    filterBy: any,
+    orderBy: string,
+    sortOrder: string,
+    offset?: number,
+    limit?: number
+  ): Observable<any> {
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
@@ -56,7 +62,10 @@ export class GroupsService {
     officeId?: any,
     orphansOnly?: any
   ): Observable<any> {
-    let httpParams = new HttpParams().set('name', name).set('sortOrder', sortOrder).set('orderBy', orderBy);
+    let httpParams = new HttpParams()
+      .set('name', name)
+      .set('sortOrder', sortOrder)
+      .set('orderBy', orderBy);
     if (officeId) {
       httpParams = httpParams.set('officeId', officeId);
     }
@@ -305,7 +314,9 @@ export class GroupsService {
    * @returns {Observable<any>} Staff Data for group.
    */
   getStaff(id: number): Observable<any> {
-    const httpParams = new HttpParams().set('officeId', id.toString()).set('staffInSelectedOfficeOnly', 'true');
+    const httpParams = new HttpParams()
+      .set('officeId', id.toString())
+      .set('staffInSelectedOfficeOnly', 'true');
     return this.http.get('/groups/template', { params: httpParams });
   }
 

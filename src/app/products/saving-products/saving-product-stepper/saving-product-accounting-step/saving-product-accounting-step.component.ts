@@ -107,10 +107,14 @@ export class SavingProductAccountingStepComponent implements OnInit {
     this.chargeData = this.savingProductsTemplate.chargeOptions || [];
     this.penaltyData = this.savingProductsTemplate.penaltyOptions || [];
     this.paymentTypeData = this.savingProductsTemplate.paymentTypeOptions || [];
-    this.assetAccountData = this.savingProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
-    this.incomeAccountData = this.savingProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
-    this.expenseAccountData = this.savingProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
-    this.liabilityAccountData = this.savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+    this.assetAccountData =
+      this.savingProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+    this.incomeAccountData =
+      this.savingProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
+    this.expenseAccountData =
+      this.savingProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
+    this.liabilityAccountData =
+      this.savingProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
     this.combinedAccountData = [
       ...this.assetAccountData,
       ...this.incomeAccountData,
@@ -135,14 +139,21 @@ export class SavingProductAccountingStepComponent implements OnInit {
 
     if (this.isCashOrAccrualAccounting()) {
       this.savingProductAccountingForm.patchValue({
-        savingsReferenceAccountId: this.savingProductsTemplate.accountingMappings.savingsReferenceAccount.id,
-        overdraftPortfolioControlId: this.savingProductsTemplate.accountingMappings.overdraftPortfolioControl.id,
-        savingsControlAccountId: this.savingProductsTemplate.accountingMappings.savingsControlAccount.id,
-        transfersInSuspenseAccountId: this.savingProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
-        interestOnSavingsAccountId: this.savingProductsTemplate.accountingMappings.interestOnSavingsAccount.id,
+        savingsReferenceAccountId:
+          this.savingProductsTemplate.accountingMappings.savingsReferenceAccount.id,
+        overdraftPortfolioControlId:
+          this.savingProductsTemplate.accountingMappings.overdraftPortfolioControl.id,
+        savingsControlAccountId:
+          this.savingProductsTemplate.accountingMappings.savingsControlAccount.id,
+        transfersInSuspenseAccountId:
+          this.savingProductsTemplate.accountingMappings.transfersInSuspenseAccount.id,
+        interestOnSavingsAccountId:
+          this.savingProductsTemplate.accountingMappings.interestOnSavingsAccount.id,
         writeOffAccountId: this.savingProductsTemplate.accountingMappings.writeOffAccount.id,
-        incomeFromFeeAccountId: this.savingProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
-        incomeFromPenaltyAccountId: this.savingProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
+        incomeFromFeeAccountId:
+          this.savingProductsTemplate.accountingMappings.incomeFromFeeAccount.id,
+        incomeFromPenaltyAccountId:
+          this.savingProductsTemplate.accountingMappings.incomeFromPenaltyAccount.id,
         incomeFromInterestId: this.savingProductsTemplate.accountingMappings.incomeFromInterest.id,
         advancedAccountingRules:
           this.savingProductsTemplate.paymentChannelToFundSourceMappings ||
@@ -155,28 +166,35 @@ export class SavingProductAccountingStepComponent implements OnInit {
 
       if (this.isAccrualAccounting()) {
         this.savingProductAccountingForm.patchValue({
-          feesReceivableAccountId: this.savingProductsTemplate.accountingMappings.feeReceivableAccount.id,
-          penaltiesReceivableAccountId: this.savingProductsTemplate.accountingMappings.penaltyReceivableAccount.id,
+          feesReceivableAccountId:
+            this.savingProductsTemplate.accountingMappings.feeReceivableAccount.id,
+          penaltiesReceivableAccountId:
+            this.savingProductsTemplate.accountingMappings.penaltyReceivableAccount.id,
           interestReceivableAccountId:
-            this.savingProductsTemplate.accountingMappings.interestReceivableAccount == null || undefined
+            this.savingProductsTemplate.accountingMappings.interestReceivableAccount == null ||
+            undefined
               ? ''
               : this.savingProductsTemplate.accountingMappings.interestReceivableAccount.id,
-          interestPayableAccountId: this.savingProductsTemplate.accountingMappings.interestPayableAccount.id
+          interestPayableAccountId:
+            this.savingProductsTemplate.accountingMappings.interestPayableAccount.id
         });
       }
 
       if (this.isDormancyTrackingActive.value) {
         this.savingProductAccountingForm.patchValue({
-          escheatLiabilityId: this.savingProductsTemplate.accountingMappings.escheatLiabilityAccount.id
+          escheatLiabilityId:
+            this.savingProductsTemplate.accountingMappings.escheatLiabilityAccount.id
         });
       }
       this.savingProductAccountingForm.setControl(
         'paymentChannelToFundSourceMappings',
         this.formBuilder.array(
-          (this.savingProductsTemplate.paymentChannelToFundSourceMappings || []).map((paymentFundSource: any) => ({
-            paymentTypeId: paymentFundSource.paymentType.id,
-            fundSourceAccountId: paymentFundSource.fundSourceAccount.id
-          }))
+          (this.savingProductsTemplate.paymentChannelToFundSourceMappings || []).map(
+            (paymentFundSource: any) => ({
+              paymentTypeId: paymentFundSource.paymentType.id,
+              fundSourceAccountId: paymentFundSource.fundSourceAccount.id
+            })
+          )
         )
       );
       this.savingProductAccountingForm.setControl(
@@ -191,10 +209,12 @@ export class SavingProductAccountingStepComponent implements OnInit {
       this.savingProductAccountingForm.setControl(
         'penaltyToIncomeAccountMappings',
         this.formBuilder.array(
-          (this.savingProductsTemplate.penaltyToIncomeAccountMappings || []).map((penaltyIncome: any) => ({
-            chargeId: penaltyIncome.charge.id,
-            incomeAccountId: penaltyIncome.incomeAccount.id
-          }))
+          (this.savingProductsTemplate.penaltyToIncomeAccountMappings || []).map(
+            (penaltyIncome: any) => ({
+              chargeId: penaltyIncome.charge.id,
+              incomeAccountId: penaltyIncome.incomeAccount.id
+            })
+          )
         )
       );
     }
@@ -207,126 +227,143 @@ export class SavingProductAccountingStepComponent implements OnInit {
   }
 
   setConditionalControls() {
-    this.savingProductAccountingForm.get('accountingRule').valueChanges.subscribe((accountingRule: any) => {
-      if (accountingRule === 2 || accountingRule === 3) {
-        this.savingProductAccountingForm.addControl(
-          'savingsReferenceAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.savingProductAccountingForm.addControl(
-          'overdraftPortfolioControlId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.savingProductAccountingForm.addControl(
-          'savingsControlAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.savingProductAccountingForm.addControl(
-          'transfersInSuspenseAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.savingProductAccountingForm.addControl(
-          'interestOnSavingsAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.savingProductAccountingForm.addControl(
-          'writeOffAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.savingProductAccountingForm.addControl(
-          'incomeFromFeeAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.savingProductAccountingForm.addControl(
-          'incomeFromPenaltyAccountId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.savingProductAccountingForm.addControl(
-          'incomeFromInterestId',
-          new UntypedFormControl('', Validators.required)
-        );
-        this.savingProductAccountingForm.addControl('advancedAccountingRules', new UntypedFormControl(false));
+    this.savingProductAccountingForm
+      .get('accountingRule')
+      .valueChanges.subscribe((accountingRule: any) => {
+        if (accountingRule === 2 || accountingRule === 3) {
+          this.savingProductAccountingForm.addControl(
+            'savingsReferenceAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
+            'overdraftPortfolioControlId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
+            'savingsControlAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
+            'transfersInSuspenseAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
+            'interestOnSavingsAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
+            'writeOffAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
+            'incomeFromFeeAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
+            'incomeFromPenaltyAccountId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
+            'incomeFromInterestId',
+            new UntypedFormControl('', Validators.required)
+          );
+          this.savingProductAccountingForm.addControl(
+            'advancedAccountingRules',
+            new UntypedFormControl(false)
+          );
 
-        if (accountingRule === 3) {
-          this.savingProductAccountingForm.addControl(
-            'feesReceivableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.savingProductAccountingForm.addControl(
-            'penaltiesReceivableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.savingProductAccountingForm.addControl(
-            'interestReceivableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-          this.savingProductAccountingForm.addControl(
-            'interestPayableAccountId',
-            new UntypedFormControl('', Validators.required)
-          );
-        }
-        if (accountingRule === 2) {
-          this.savingProductAccountingForm.removeControl('feesReceivableAccountId');
-          this.savingProductAccountingForm.removeControl('penaltiesReceivableAccountId');
-          this.savingProductAccountingForm.removeControl('interestPayableAccountId');
-        }
+          if (accountingRule === 3) {
+            this.savingProductAccountingForm.addControl(
+              'feesReceivableAccountId',
+              new UntypedFormControl('', Validators.required)
+            );
+            this.savingProductAccountingForm.addControl(
+              'penaltiesReceivableAccountId',
+              new UntypedFormControl('', Validators.required)
+            );
+            this.savingProductAccountingForm.addControl(
+              'interestReceivableAccountId',
+              new UntypedFormControl('', Validators.required)
+            );
+            this.savingProductAccountingForm.addControl(
+              'interestPayableAccountId',
+              new UntypedFormControl('', Validators.required)
+            );
+          }
+          if (accountingRule === 2) {
+            this.savingProductAccountingForm.removeControl('feesReceivableAccountId');
+            this.savingProductAccountingForm.removeControl('penaltiesReceivableAccountId');
+            this.savingProductAccountingForm.removeControl('interestPayableAccountId');
+          }
 
-        if (this.isDormancyTrackingActive.value) {
-          this.savingProductAccountingForm.addControl(
-            'escheatLiabilityId',
-            new UntypedFormControl('', Validators.required)
-          );
-        }
-
-        this.isDormancyTrackingActive.valueChanges.subscribe((isDormancyTrackingActive: boolean) => {
-          if (isDormancyTrackingActive) {
+          if (this.isDormancyTrackingActive.value) {
             this.savingProductAccountingForm.addControl(
               'escheatLiabilityId',
               new UntypedFormControl('', Validators.required)
             );
-          } else {
-            this.savingProductAccountingForm.removeControl('escheatLiabilityId');
           }
-        });
 
-        this.savingProductAccountingForm
-          .get('advancedAccountingRules')
-          .valueChanges.subscribe((advancedAccountingRules: boolean) => {
-            if (advancedAccountingRules) {
-              this.savingProductAccountingForm.addControl(
-                'paymentChannelToFundSourceMappings',
-                this.formBuilder.array([])
-              );
-              this.savingProductAccountingForm.addControl('feeToIncomeAccountMappings', this.formBuilder.array([]));
-              this.savingProductAccountingForm.addControl('penaltyToIncomeAccountMappings', this.formBuilder.array([]));
-            } else {
-              this.savingProductAccountingForm.removeControl('paymentChannelToFundSourceMappings');
-              this.savingProductAccountingForm.removeControl('feeToIncomeAccountMappings');
-              this.savingProductAccountingForm.removeControl('penaltyToIncomeAccountMappings');
+          this.isDormancyTrackingActive.valueChanges.subscribe(
+            (isDormancyTrackingActive: boolean) => {
+              if (isDormancyTrackingActive) {
+                this.savingProductAccountingForm.addControl(
+                  'escheatLiabilityId',
+                  new UntypedFormControl('', Validators.required)
+                );
+              } else {
+                this.savingProductAccountingForm.removeControl('escheatLiabilityId');
+              }
             }
-          });
-      } else {
-        this.savingProductAccountingForm.removeControl('savingsReferenceAccountId');
-        this.savingProductAccountingForm.removeControl('overdraftPortfolioControlId');
-        this.savingProductAccountingForm.removeControl('savingsControlAccountId');
-        this.savingProductAccountingForm.removeControl('transfersInSuspenseAccountId');
-        this.savingProductAccountingForm.removeControl('interestOnSavingsAccountId');
-        this.savingProductAccountingForm.removeControl('writeOffAccountId');
-        this.savingProductAccountingForm.removeControl('incomeFromFeeAccountId');
-        this.savingProductAccountingForm.removeControl('incomeFromPenaltyAccountId');
-        this.savingProductAccountingForm.removeControl('incomeFromInterestId');
-        this.savingProductAccountingForm.removeControl('advancedAccountingRules');
-        this.savingProductAccountingForm.removeControl('escheatLiabilityId');
-        this.savingProductAccountingForm.removeControl('feesReceivableAccountId');
-        this.savingProductAccountingForm.removeControl('penaltiesReceivableAccountId');
-        this.savingProductAccountingForm.removeControl('interestReceivableAccountId');
-        this.savingProductAccountingForm.removeControl('interestPayableAccountId');
-      }
-    });
+          );
+
+          this.savingProductAccountingForm
+            .get('advancedAccountingRules')
+            .valueChanges.subscribe((advancedAccountingRules: boolean) => {
+              if (advancedAccountingRules) {
+                this.savingProductAccountingForm.addControl(
+                  'paymentChannelToFundSourceMappings',
+                  this.formBuilder.array([])
+                );
+                this.savingProductAccountingForm.addControl(
+                  'feeToIncomeAccountMappings',
+                  this.formBuilder.array([])
+                );
+                this.savingProductAccountingForm.addControl(
+                  'penaltyToIncomeAccountMappings',
+                  this.formBuilder.array([])
+                );
+              } else {
+                this.savingProductAccountingForm.removeControl(
+                  'paymentChannelToFundSourceMappings'
+                );
+                this.savingProductAccountingForm.removeControl('feeToIncomeAccountMappings');
+                this.savingProductAccountingForm.removeControl('penaltyToIncomeAccountMappings');
+              }
+            });
+        } else {
+          this.savingProductAccountingForm.removeControl('savingsReferenceAccountId');
+          this.savingProductAccountingForm.removeControl('overdraftPortfolioControlId');
+          this.savingProductAccountingForm.removeControl('savingsControlAccountId');
+          this.savingProductAccountingForm.removeControl('transfersInSuspenseAccountId');
+          this.savingProductAccountingForm.removeControl('interestOnSavingsAccountId');
+          this.savingProductAccountingForm.removeControl('writeOffAccountId');
+          this.savingProductAccountingForm.removeControl('incomeFromFeeAccountId');
+          this.savingProductAccountingForm.removeControl('incomeFromPenaltyAccountId');
+          this.savingProductAccountingForm.removeControl('incomeFromInterestId');
+          this.savingProductAccountingForm.removeControl('advancedAccountingRules');
+          this.savingProductAccountingForm.removeControl('escheatLiabilityId');
+          this.savingProductAccountingForm.removeControl('feesReceivableAccountId');
+          this.savingProductAccountingForm.removeControl('penaltiesReceivableAccountId');
+          this.savingProductAccountingForm.removeControl('interestReceivableAccountId');
+          this.savingProductAccountingForm.removeControl('interestPayableAccountId');
+        }
+      });
   }
 
   get paymentChannelToFundSourceMappings(): UntypedFormArray {
-    return this.savingProductAccountingForm.get('paymentChannelToFundSourceMappings') as UntypedFormArray;
+    return this.savingProductAccountingForm.get(
+      'paymentChannelToFundSourceMappings'
+    ) as UntypedFormArray;
   }
 
   get feeToIncomeAccountMappings(): UntypedFormArray {
@@ -334,7 +371,9 @@ export class SavingProductAccountingStepComponent implements OnInit {
   }
 
   get penaltyToIncomeAccountMappings(): UntypedFormArray {
-    return this.savingProductAccountingForm.get('penaltyToIncomeAccountMappings') as UntypedFormArray;
+    return this.savingProductAccountingForm.get(
+      'penaltyToIncomeAccountMappings'
+    ) as UntypedFormArray;
   }
 
   setSavingProductAccountingFormDirty() {
@@ -359,7 +398,10 @@ export class SavingProductAccountingStepComponent implements OnInit {
   }
 
   edit(formType: string, formArray: UntypedFormArray, index: number) {
-    const data = { ...this.getData(formType, formArray.at(index).value), layout: { addButtonText: 'Edit' } };
+    const data = {
+      ...this.getData(formType, formArray.at(index).value),
+      layout: { addButtonText: 'Edit' }
+    };
     const dialogRef = this.dialog.open(FormDialogComponent, { data });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
@@ -385,17 +427,23 @@ export class SavingProductAccountingStepComponent implements OnInit {
     switch (formType) {
       case 'PaymentFundSource':
         return {
-          title: this.translateService.instant('labels.heading.Configure Fund Sources for Payment Channels'),
+          title: this.translateService.instant(
+            'labels.heading.Configure Fund Sources for Payment Channels'
+          ),
           formfields: this.getPaymentFundSourceFormfields(values)
         };
       case 'FeesIncome':
         return {
-          title: this.translateService.instant('labels.heading.Map Fees to Specific Income Accounts'),
+          title: this.translateService.instant(
+            'labels.heading.Map Fees to Specific Income Accounts'
+          ),
           formfields: this.getFeesIncomeFormfields(values)
         };
       case 'PenaltyIncome':
         return {
-          title: this.translateService.instant('labels.heading.Map Penalties to Specific Income Accounts'),
+          title: this.translateService.instant(
+            'labels.heading.Map Penalties to Specific Income Accounts'
+          ),
           formfields: this.getPenaltyIncomeFormfields(values)
         };
     }

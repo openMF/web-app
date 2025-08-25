@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -82,15 +87,20 @@ export class ApproveSavingsAccountComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevApprovedOnDate: Date = this.approveSavingsAccountForm.value.approvedOnDate;
     if (approveSavingsAccountFormData.approvedOnDate instanceof Date) {
-      approveSavingsAccountFormData.approvedOnDate = this.dateUtils.formatDate(prevApprovedOnDate, dateFormat);
+      approveSavingsAccountFormData.approvedOnDate = this.dateUtils.formatDate(
+        prevApprovedOnDate,
+        dateFormat
+      );
     }
     const data = {
       ...approveSavingsAccountFormData,
       dateFormat,
       locale
     };
-    this.savingsService.executeSavingsAccountCommand(this.accountId, 'approve', data).subscribe(() => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.savingsService
+      .executeSavingsAccountCommand(this.accountId, 'approve', data)
+      .subscribe(() => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

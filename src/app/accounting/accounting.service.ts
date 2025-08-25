@@ -65,7 +65,10 @@ export class AccountingService {
    * @returns {Observable<any>} GL Accounts.
    */
   getGlAccounts(): Observable<any> {
-    const httpParams = new HttpParams().set('manualEntriesAllowed', 'true').set('usage', '1').set('disabled', 'false');
+    const httpParams = new HttpParams()
+      .set('manualEntriesAllowed', 'true')
+      .set('usage', '1')
+      .set('disabled', 'false');
     return this.http.get(`/glaccounts`, { params: httpParams });
   }
 
@@ -74,7 +77,9 @@ export class AccountingService {
    * @returns {Observable<any>} Journal Entries.
    */
   getJournalEntry(transactionId: string): Observable<any> {
-    const httpParams = new HttpParams().set('transactionId', transactionId).set('transactionDetails', 'true');
+    const httpParams = new HttpParams()
+      .set('transactionId', transactionId)
+      .set('transactionDetails', 'true');
     return this.http.get(`/journalentries`, { params: httpParams });
   }
 
@@ -86,7 +91,13 @@ export class AccountingService {
    * @param {number} limit Number of entries within the page.
    * @returns {Observable<any>} Journal Entries.
    */
-  getJournalEntries(filterBy: any, orderBy: string, sortOrder: string, offset: number, limit: number): Observable<any> {
+  getJournalEntries(
+    filterBy: any,
+    orderBy: string,
+    sortOrder: string,
+    offset: number,
+    limit: number
+  ): Observable<any> {
     let httpParams = new HttpParams()
       .set('offset', offset.toString())
       .set('limit', limit.toString())
@@ -142,9 +153,14 @@ export class AccountingService {
    * @param {boolean} template True if template is required.
    * @returns {Observable<any>} Financial activity account.
    */
-  getFinancialActivityAccount(financialActivityAccountId: string, template: boolean = false): Observable<any> {
+  getFinancialActivityAccount(
+    financialActivityAccountId: string,
+    template: boolean = false
+  ): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
-    return this.http.get(`/financialactivityaccounts/${financialActivityAccountId}`, { params: httpParams });
+    return this.http.get(`/financialactivityaccounts/${financialActivityAccountId}`, {
+      params: httpParams
+    });
   }
 
   /**
@@ -152,8 +168,14 @@ export class AccountingService {
    * @param {any} financialActivityAccount Financial activity account to be updated.
    * @returns {Observable<any>}
    */
-  updateFinancialActivityAccount(financialActivityAccountId: string, financialActivityAccount: any): Observable<any> {
-    return this.http.put(`/financialactivityaccounts/${financialActivityAccountId}`, financialActivityAccount);
+  updateFinancialActivityAccount(
+    financialActivityAccountId: string,
+    financialActivityAccount: any
+  ): Observable<any> {
+    return this.http.put(
+      `/financialactivityaccounts/${financialActivityAccountId}`,
+      financialActivityAccount
+    );
   }
 
   /**
@@ -380,7 +402,11 @@ export class AccountingService {
    */
   createProvisioningJournalEntries(provisioningEntryId: string): Observable<any> {
     const httpParams = new HttpParams().set('command', 'createjournalentry');
-    return this.http.post(`/provisioningentries/${provisioningEntryId}`, {}, { params: httpParams });
+    return this.http.post(
+      `/provisioningentries/${provisioningEntryId}`,
+      {},
+      { params: httpParams }
+    );
   }
 
   /**
@@ -389,6 +415,10 @@ export class AccountingService {
    */
   recreateProvisioningEntries(provisioningEntryId: string): Observable<any> {
     const httpParams = new HttpParams().set('command', 'recreateprovisioningentry');
-    return this.http.post(`/provisioningentries/${provisioningEntryId}`, {}, { params: httpParams });
+    return this.http.post(
+      `/provisioningentries/${provisioningEntryId}`,
+      {},
+      { params: httpParams }
+    );
   }
 }

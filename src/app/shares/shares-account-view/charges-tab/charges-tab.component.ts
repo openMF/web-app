@@ -73,7 +73,9 @@ export class ChargesTabComponent implements OnInit {
   }
 
   ngOnInit() {
-    const activeCharges = this.chargesData ? this.chargesData.filter((charge) => charge.isActive) : [];
+    const activeCharges = this.chargesData
+      ? this.chargesData.filter((charge) => charge.isActive)
+      : [];
     this.dataSource = new MatTableDataSource(activeCharges);
   }
 }

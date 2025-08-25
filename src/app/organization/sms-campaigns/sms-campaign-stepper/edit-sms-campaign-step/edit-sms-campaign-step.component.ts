@@ -113,9 +113,11 @@ export class EditSmsCampaignStepComponent implements OnInit {
    * Gets Template parameters and disables the SMS form.
    */
   getParameters() {
-    this.reportService.getReportParams(this.smsCampaign.reportName).subscribe((response: ReportParameter[]) => {
-      this.paramData = response;
-    });
+    this.reportService
+      .getReportParams(this.smsCampaign.reportName)
+      .subscribe((response: ReportParameter[]) => {
+        this.paramData = response;
+      });
     this.smsCampaignDetailsForm.disable();
   }
 

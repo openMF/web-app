@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -132,7 +140,9 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
       if (data.loanDetailsData) {
         this.currencyCode = data.loanDetailsData.currency.code;
       }
-      this.loanDetailsDataRepaymentSchedule = data.loanDetailsData ? data.loanDetailsData.repaymentSchedule : [];
+      this.loanDetailsDataRepaymentSchedule = data.loanDetailsData
+        ? data.loanDetailsData.repaymentSchedule
+        : [];
     });
     this.businessDate = this.settingsService.businessDate;
   }
@@ -185,7 +195,10 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
   }
 
   exportToPDF() {
-    const businessDate = this.dateUtils.formatDate(this.settingsService.businessDate, Dates.DEFAULT_DATEFORMAT);
+    const businessDate = this.dateUtils.formatDate(
+      this.settingsService.businessDate,
+      Dates.DEFAULT_DATEFORMAT
+    );
     const fileName = `repaymentschedule-${businessDate}.pdf`;
 
     const options: jsPDFOptions = {

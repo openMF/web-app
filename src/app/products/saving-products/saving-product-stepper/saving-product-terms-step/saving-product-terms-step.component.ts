@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -32,17 +37,21 @@ export class SavingProductTermsStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.interestCompoundingPeriodTypeData = this.savingProductsTemplate.interestCompoundingPeriodTypeOptions;
-    this.interestPostingPeriodTypeData = this.savingProductsTemplate.interestPostingPeriodTypeOptions;
+    this.interestCompoundingPeriodTypeData =
+      this.savingProductsTemplate.interestCompoundingPeriodTypeOptions;
+    this.interestPostingPeriodTypeData =
+      this.savingProductsTemplate.interestPostingPeriodTypeOptions;
     this.interestCalculationTypeData = this.savingProductsTemplate.interestCalculationTypeOptions;
-    this.interestCalculationDaysInYearTypeData = this.savingProductsTemplate.interestCalculationDaysInYearTypeOptions;
+    this.interestCalculationDaysInYearTypeData =
+      this.savingProductsTemplate.interestCalculationDaysInYearTypeOptions;
 
     this.savingProductTermsForm.patchValue({
       nominalAnnualInterestRate: this.savingProductsTemplate.nominalAnnualInterestRate,
       interestCompoundingPeriodType: this.savingProductsTemplate.interestCompoundingPeriodType.id,
       interestPostingPeriodType: this.savingProductsTemplate.interestPostingPeriodType.id,
       interestCalculationType: this.savingProductsTemplate.interestCalculationType.id,
-      interestCalculationDaysInYearType: this.savingProductsTemplate.interestCalculationDaysInYearType.id
+      interestCalculationDaysInYearType:
+        this.savingProductsTemplate.interestCalculationDaysInYearType.id
     });
   }
 

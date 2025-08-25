@@ -1,5 +1,10 @@
 <div class="container m-b-20 layout-row align-end gap-20px">
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_HOOK'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['edit']"
+    *mifosxHasPermission="'UPDATE_HOOK'"
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
   </button>
@@ -23,10 +28,16 @@
         <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Status' | translate }}:</div>
 
         <div class="flex-50">
-          {{ hookData.isActive ? ('labels.inputs.Active' | translate) : ('labels.catalogs.Inactive' | translate) }}
+          {{
+            hookData.isActive
+              ? ('labels.inputs.Active' | translate)
+              : ('labels.catalogs.Inactive' | translate)
+          }}
         </div>
 
-        <div class="flex-50 mat-body-strong">{{ 'labels.inputs.Activation Date' | translate }}:</div>
+        <div class="flex-50 mat-body-strong">
+          {{ 'labels.inputs.Activation Date' | translate }}:
+        </div>
 
         <div class="flex-50">
           {{ hookData.createdAt | dateFormat }}

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -206,7 +211,11 @@ export class EditTaxGroupComponent implements OnInit {
     taxComponentDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
         const updatedTaxComponent = { ...taxComponent, ...response.data.value };
-        this.taxComponentsDataSource.splice(this.taxComponentsDataSource.indexOf(taxComponent), 1, updatedTaxComponent);
+        this.taxComponentsDataSource.splice(
+          this.taxComponentsDataSource.indexOf(taxComponent),
+          1,
+          updatedTaxComponent
+        );
         this.taxComponentsDataSource = this.taxComponentsDataSource.concat([]);
       }
     });
@@ -264,8 +273,10 @@ export class EditTaxGroupComponent implements OnInit {
       }
       delete taxComponent.isNew;
     }
-    this.productsService.updateTaxGroup(this.taxGroupData.id, taxGroup).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.productsService
+      .updateTaxGroup(this.taxGroupData.id, taxGroup)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

@@ -91,7 +91,8 @@ export class RecurringDepositsAccountInterestRateChartStepComponent implements O
 
   ngOnChanges() {
     if (this.recurringDepositsAccountProductTemplate) {
-      this.interestRateChartData = this.recurringDepositsAccountProductTemplate.accountChart.chartSlabs;
+      this.interestRateChartData =
+        this.recurringDepositsAccountProductTemplate.accountChart.chartSlabs;
     }
   }
 

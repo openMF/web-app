@@ -25,6 +25,8 @@ export class RecurringDepositsAccountAndTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const recurringDepositAccountId = route.paramMap.get('recurringDepositAccountId');
-    return this.recurringDepositsService.getRecurringDepositsAccountAndTemplate(recurringDepositAccountId);
+    return this.recurringDepositsService.getRecurringDepositsAccountAndTemplate(
+      recurringDepositAccountId
+    );
   }
 }

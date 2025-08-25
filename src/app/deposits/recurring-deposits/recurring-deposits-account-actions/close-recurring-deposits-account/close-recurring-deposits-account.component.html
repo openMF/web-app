@@ -26,8 +26,11 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Maturity Amount' | translate }}</mat-label>
             <input matInput required formControlName="maturityAmount" />
-            <mat-error *ngIf="closeRecurringDepositForm.controls.maturityAmount.hasError('required')">
-              {{ 'labels.inputs.Maturity Amount' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="closeRecurringDepositForm.controls.maturityAmount.hasError('required')"
+            >
+              {{ 'labels.inputs.Maturity Amount' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -42,7 +45,9 @@
                 {{ onAccountClosureOption.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.onAccountClosureId.hasError('required')">
+            <mat-error
+              *ngIf="closeRecurringDepositForm.controls.onAccountClosureId.hasError('required')"
+            >
               {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -55,8 +60,11 @@
                 {{ account.accountNo }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.toSavingsAccountId.hasError('required')">
-              {{ 'labels.inputs.Transfer to savings account' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="closeRecurringDepositForm.controls.toSavingsAccountId.hasError('required')"
+            >
+              {{ 'labels.inputs.Transfer to savings account' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -73,7 +81,9 @@
                 {{ paymentType.name }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="closeRecurringDepositForm.controls.paymentTypeId.hasError('required')">
+            <mat-error
+              *ngIf="closeRecurringDepositForm.controls.paymentTypeId.hasError('required')"
+            >
               {{ 'labels.inputs.Payment Type' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -120,7 +130,12 @@
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
-            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea
+              matInput
+              formControlName="note"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
           </mat-form-field>
         </div>
       </mat-card-content>

@@ -62,9 +62,11 @@ export class ViewAccountNumberPreferenceComponent {
     });
     deleteAccountNumberPreferenceDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteAccountNumberPreference(this.accountNumberPreferenceData.id).subscribe(() => {
-          this.router.navigate(['/system/account-number-preferences']);
-        });
+        this.systemService
+          .deleteAccountNumberPreference(this.accountNumberPreferenceData.id)
+          .subscribe(() => {
+            this.router.navigate(['/system/account-number-preferences']);
+          });
       }
     });
   }

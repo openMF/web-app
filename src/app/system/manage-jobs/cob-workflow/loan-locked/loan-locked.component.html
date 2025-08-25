@@ -2,11 +2,20 @@
   <div class="layout-row align-start-center">
     <div class="search-box flex-40">
       <mat-form-field class="flex-90">
-        <input matInput placeholder="Filter by loan Id or error" (keyup)="applyFilter($event.target.value)" />
+        <input
+          matInput
+          placeholder="Filter by loan Id or error"
+          (keyup)="applyFilter($event.target.value)"
+        />
       </mat-form-field>
     </div>
     <div class="flex-60" *ngIf="allowRunInlineJob">
-      <button mat-raised-button color="success" *mifosxHasPermission="'EXECUTE_INLINE_JOB'" (click)="runInlineCOB()">
+      <button
+        mat-raised-button
+        color="success"
+        *mifosxHasPermission="'EXECUTE_INLINE_JOB'"
+        (click)="runInlineCOB()"
+      >
         <fa-icon icon="play" class="m-r-10"></fa-icon>{{ 'Start inline COB' | translate }}
       </button>
     </div>
@@ -41,7 +50,9 @@
 
     <ng-container matColumnDef="lockPlacedOn">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Lock Placed On' | translate }}</th>
-      <td mat-cell *matCellDef="let loan" class="view-details">{{ loan.lockPlacedOn | datetimeFormat }}</td>
+      <td mat-cell *matCellDef="let loan" class="view-details">
+        {{ loan.lockPlacedOn | datetimeFormat }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="lockOwner">
@@ -78,7 +89,11 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="selection.toggle(row)"
+    ></tr>
   </table>
 
   <mat-paginator

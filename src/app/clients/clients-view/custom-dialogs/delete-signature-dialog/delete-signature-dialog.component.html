@@ -10,10 +10,20 @@
 
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-  <button mat-raised-button *ngIf="signatureId" color="warn" [mat-dialog-close]="{ delete: true, id: signatureId }">
+  <button
+    mat-raised-button
+    *ngIf="signatureId"
+    color="warn"
+    [mat-dialog-close]="{ delete: true, id: signatureId }"
+  >
     {{ 'labels.buttons.Confirm' | translate }}
   </button>
-  <button mat-raised-button *ngIf="!signatureId" color="primary" [mat-dialog-close]="{ upload: true }">
+  <button
+    mat-raised-button
+    *ngIf="!signatureId"
+    color="primary"
+    [mat-dialog-close]="{ upload: true }"
+  >
     {{ 'labels.buttons.Upload' | translate }}
   </button>
 </mat-dialog-actions>

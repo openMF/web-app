@@ -24,7 +24,9 @@
                 ></i>
                 <span class="m-r-5">{{ 'labels.inputs.Share Product' | translate }} :</span>
                 <span class="m-r-5"
-                  ><mifosx-long-text textValue="{{ sharesAccountData.productName }}"></mifosx-long-text
+                  ><mifosx-long-text
+                    textValue="{{ sharesAccountData.productName }}"
+                  ></mifosx-long-text
                 ></span>
                 <mifosx-account-number
                   accountNo="{{ sharesAccountData.accountNo }}"
@@ -33,10 +35,13 @@
               </h3>
               <span class="shares-overview">
                 <span class="m-r-10"
-                  >{{ 'labels.text.' + entityType | translate }} {{ 'labels.inputs.name' | translate }} :</span
+                  >{{ 'labels.text.' + entityType | translate }}
+                  {{ 'labels.inputs.name' | translate }} :</span
                 >{{ sharesAccountData.clientName || sharesAccountData.groupName }}
                 <span class="m-l-10" *ngIf="sharesAccountData.clientAccountNo">
-                  <mifosx-account-number accountNo="{{ sharesAccountData.clientAccountNo }}"></mifosx-account-number>
+                  <mifosx-account-number
+                    accountNo="{{ sharesAccountData.clientAccountNo }}"
+                  ></mifosx-account-number>
                 </span>
               </span>
               <div>
@@ -79,7 +84,11 @@
 
     <mat-menu #accountMenu="matMenu">
       <ng-container *ngFor="let item of buttonConfig.singleButtons">
-        <button mat-menu-item *mifosxHasPermission="item.taskPermissionName" (click)="doAction(item.name)">
+        <button
+          mat-menu-item
+          *mifosxHasPermission="item.taskPermissionName"
+          (click)="doAction(item.name)"
+        >
           <mat-icon matListIcon>
             <fa-icon icon="{{ item.icon }}" size="sm"></fa-icon>
           </mat-icon>
@@ -88,10 +97,16 @@
       </ng-container>
 
       <ng-container *ngIf="buttonConfig.options.length">
-        <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.menus.More' | translate }}</button>
+        <button mat-menu-item [matMenuTriggerFor]="More">
+          {{ 'labels.menus.More' | translate }}
+        </button>
         <mat-menu #More="matMenu">
           <span *ngFor="let option of buttonConfig.options">
-            <button mat-menu-item *mifosxHasPermission="option.taskPermissionName" (click)="doAction(option.name)">
+            <button
+              mat-menu-item
+              *mifosxHasPermission="option.taskPermissionName"
+              (click)="doAction(option.name)"
+            >
               {{ 'labels.menus.' + option.name | translate }}
             </button>
           </span>

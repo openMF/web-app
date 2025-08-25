@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -143,7 +150,10 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
         configuration.enabled = response.changes.enabled;
         if (configuration.name === SettingsService.businessDateConfigName) {
           const msg = configuration.enabled ? 'enabled' : 'disabled';
-          this.alertService.alert({ type: SettingsService.businessDateType + ' Set Config', message: msg });
+          this.alertService.alert({
+            type: SettingsService.businessDateType + ' Set Config',
+            message: msg
+          });
         }
       });
   }
@@ -176,7 +186,12 @@ export class GlobalConfigurationsTabComponent implements OnInit, AfterViewInit {
 
     if (this.configurationWizardService.showConfigurationsList === true) {
       setTimeout(() => {
-        this.showPopover(this.templateConfigurationsTable, this.configurationsTable.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateConfigurationsTable,
+          this.configurationsTable.nativeElement,
+          'top',
+          true
+        );
       });
     }
   }

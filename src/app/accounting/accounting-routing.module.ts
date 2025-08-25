@@ -159,7 +159,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditFinancialActivityMappingComponent,
-                  data: { title: 'Edit Financial Activity Mapping', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Financial Activity Mapping',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     financialActivityAccountAndTemplate: FinancialActivityMappingAndTemplateResolver
                   }
@@ -217,7 +221,11 @@ const routes: Routes = [
                     {
                       path: 'edit',
                       component: EditGlAccountComponent,
-                      data: { title: 'Edit GL Account', breadcrumb: 'Edit', routeResolveBreadcrumb: false }
+                      data: {
+                        title: 'Edit GL Account',
+                        breadcrumb: 'Edit',
+                        routeResolveBreadcrumb: false
+                      }
                     }
                   ]
                 }
@@ -260,7 +268,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditClosureComponent,
-                  data: { title: 'Edit Accounting Closure', breadcrumb: 'Edit', routeParamBreadcrumb: false }
+                  data: {
+                    title: 'Edit Accounting Closure',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  }
                 }
               ]
             }
@@ -303,7 +315,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditRuleComponent,
-                  data: { title: 'Edit Accounting Rules', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
+                  data: {
+                    title: 'Edit Accounting Rules',
+                    breadcrumb: 'Edit',
+                    routeResolveBreadcrumb: false
+                  },
                   resolve: {
                     accountingRulesTemplate: AccountingRulesTemplateResolver
                   }
@@ -315,7 +331,10 @@ const routes: Routes = [
         {
           path: 'periodic-accruals',
           component: PeriodicAccrualsComponent,
-          data: { title: 'Periodic Accrual Accounting', breadcrumb: 'Execute Periodic Accrual Accounting' }
+          data: {
+            title: 'Periodic Accrual Accounting',
+            breadcrumb: 'Execute Periodic Accrual Accounting'
+          }
         },
         {
           path: 'provisioning-entries',

@@ -16,7 +16,10 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
             <mat-select formControlName="frequencyType">
-              <mat-option *ngFor="let frequencyType of frequencyOptions" [value]="frequencyType.code">
+              <mat-option
+                *ngFor="let frequencyType of frequencyOptions"
+                [value]="frequencyType.code"
+              >
                 {{ frequencyType.value }}
               </mat-option>
             </mat-select>

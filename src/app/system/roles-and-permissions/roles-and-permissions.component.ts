@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -153,7 +160,12 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showRolesandPermissionPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonAddRole, this.buttonAddRole.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonAddRole,
+          this.buttonAddRole.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showRolesandPermissionList === true) {

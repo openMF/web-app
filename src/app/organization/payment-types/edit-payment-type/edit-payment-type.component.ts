@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -77,8 +82,10 @@ export class EditPaymentTypeComponent implements OnInit {
    */
   submit() {
     const paymentType = this.paymentTypeForm.value;
-    this.organizationService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe((response) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .updatePaymentType(this.paymentTypeData.id, paymentType)
+      .subscribe((response) => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

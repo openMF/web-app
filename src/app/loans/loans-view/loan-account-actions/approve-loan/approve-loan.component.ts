@@ -1,6 +1,12 @@
 /** Angular Imports. */
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -103,7 +109,10 @@ export class ApproveLoanComponent implements OnInit {
       approveLoanFormData.approvedOnDate = this.dateUtils.formatDate(approvedOnDate, dateFormat);
     }
     if (approveLoanFormData.expectedDisbursementDate instanceof Date) {
-      approveLoanFormData.expectedDisbursementDate = this.dateUtils.formatDate(expectedDisbursementDate, dateFormat);
+      approveLoanFormData.expectedDisbursementDate = this.dateUtils.formatDate(
+        expectedDisbursementDate,
+        dateFormat
+      );
     }
     const data = {
       ...approveLoanFormData,

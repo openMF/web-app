@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Services */
@@ -93,9 +98,11 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   buildDependencies() {
     const clientId = this.sharesAccountTemplate.clientId;
     this.sharesAccountDetailsForm.get('productId').valueChanges.subscribe((productId: string) => {
-      this.sharesService.getSharesAccountTemplate(clientId, productId).subscribe((response: any) => {
-        this.sharesAccountProductTemplate.emit(response);
-      });
+      this.sharesService
+        .getSharesAccountTemplate(clientId, productId)
+        .subscribe((response: any) => {
+          this.sharesAccountProductTemplate.emit(response);
+        });
     });
   }
 

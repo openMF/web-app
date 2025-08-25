@@ -10,8 +10,13 @@
                 {{ date | dateFormat }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="centerEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Existing Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="
+                centerEditMeetingScheduleForm.controls.presentMeetingDate.hasError('repeatsOnDay')
+              "
+            >
+              {{ 'labels.inputs.Existing Meeting Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -28,8 +33,11 @@
             />
             <mat-datepicker-toggle matSuffix [for]="newMeetingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #newMeetingDatePicker></mat-datepicker>
-            <mat-error *ngIf="centerEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')">
-              {{ 'labels.inputs.Revised Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="centerEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')"
+            >
+              {{ 'labels.inputs.Revised Meeting Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -40,7 +48,12 @@
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!centerEditMeetingScheduleForm.valid" (click)="submit()">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!centerEditMeetingScheduleForm.valid"
+          (click)="submit()"
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

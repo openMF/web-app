@@ -15,7 +15,9 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            <mat-error *ngIf="createDividendForm.controls.dividendPeriodStartDate.hasError('required')">
+            <mat-error
+              *ngIf="createDividendForm.controls.dividendPeriodStartDate.hasError('required')"
+            >
               {{ 'labels.inputs.Starting Date' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -33,7 +35,9 @@
             />
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
-            <mat-error *ngIf="createDividendForm.controls.dividendPeriodEndDate.hasError('required')">
+            <mat-error
+              *ngIf="createDividendForm.controls.dividendPeriodEndDate.hasError('required')"
+            >
               {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>

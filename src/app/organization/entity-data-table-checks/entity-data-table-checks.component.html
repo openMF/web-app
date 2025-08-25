@@ -21,27 +21,43 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="entity">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Entity' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Entity' | translate }}
+        </th>
         <td mat-cell *matCellDef="let entityDataTableCheck">{{ entityDataTableCheck.entity }}</td>
       </ng-container>
 
       <ng-container matColumnDef="productName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Product Name' | translate }}</th>
-        <td mat-cell *matCellDef="let entityDataTableCheck">{{ entityDataTableCheck.productName }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Product Name' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let entityDataTableCheck">
+          {{ entityDataTableCheck.productName }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="datatableName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Data Table' | translate }}</th>
-        <td mat-cell *matCellDef="let entityDataTableCheck">{{ entityDataTableCheck.datatableName }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Data Table' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let entityDataTableCheck">
+          {{ entityDataTableCheck.datatableName }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Status' | translate }}</th>
-        <td mat-cell *matCellDef="let entityDataTableCheck">{{ entityDataTableCheck.status.value }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.Status' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let entityDataTableCheck">
+          {{ entityDataTableCheck.status.value }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="systemDefined">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.System Defined' | translate }}</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'labels.inputs.System Defined' | translate }}
+        </th>
         <td mat-cell *matCellDef="let entityDataTableCheck">
           <div [className]="entityDataTableCheck.systemDefined === true ? 'true' : 'false'">
             <fa-icon

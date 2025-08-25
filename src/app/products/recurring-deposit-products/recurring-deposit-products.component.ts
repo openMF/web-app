@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -76,7 +83,8 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
   /* Reference of create recurring deposit product button */
   @ViewChild('buttonCreateRecurringProduct') buttonCreateRecurringProduct: ElementRef<any>;
   /* Template for popover on create recurring deposit product button */
-  @ViewChild('templateButtonCreateRecurringProduct') templateButtonCreateRecurringProduct: TemplateRef<any>;
+  @ViewChild('templateButtonCreateRecurringProduct')
+  templateButtonCreateRecurringProduct: TemplateRef<any>;
   /* Reference of recurring deposit products table */
   @ViewChild('recurringProductsTable') recurringProductsTable: ElementRef<any>;
   /* Template for popover on recurring deposit products table */
@@ -142,7 +150,12 @@ export class RecurringDepositProductsComponent implements OnInit, AfterViewInit 
 
     if (this.configurationWizardService.showRecurringDepositProductsList === true) {
       setTimeout(() => {
-        this.showPopover(this.templateRecurringProductsTable, this.recurringProductsTable.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateRecurringProductsTable,
+          this.recurringProductsTable.nativeElement,
+          'top',
+          true
+        );
       });
     }
   }

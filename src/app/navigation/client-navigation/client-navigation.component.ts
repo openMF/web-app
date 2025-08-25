@@ -44,7 +44,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class ClientNavigationComponent {
   @ViewChild(LoanAccountTableComponent) loanAccountTableComponent: LoanAccountTableComponent;
-  @ViewChild(SavingsAccountTableComponent) savingsAccountTableComponent: SavingsAccountTableComponent;
+  @ViewChild(SavingsAccountTableComponent)
+  savingsAccountTableComponent: SavingsAccountTableComponent;
   @ViewChild(ShareAccountTableComponent) shareAccountTableComponent: ShareAccountTableComponent;
   @ViewChild(MemberGroupsComponent) memberGroupsComponent: MemberGroupsComponent;
 

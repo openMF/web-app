@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, RouterLink } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,7 +27,13 @@ import { ConfigurationWizardService } from '../configuration-wizard/configuratio
 /** Custom Components */
 import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardImage } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardHeader,
+  MatCardTitle,
+  MatCardContent,
+  MatCardImage
+} from '@angular/material/card';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -58,7 +71,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   /* Reference of dashboard button */
   @ViewChild('buttonDashboard', { static: false }) buttonDashboard: ElementRef<any>;
   /* Template for popover on dashboard button */
-  @ViewChild('templateButtonDashboard', { static: false }) templateButtonDashboard: TemplateRef<any>;
+  @ViewChild('templateButtonDashboard', { static: false })
+  templateButtonDashboard: TemplateRef<any>;
   /* Reference of search activity */
   @ViewChild('searchActivity', { static: false }) searchActivity: ElementRef<any>;
   /* Template for popover on search activity */
@@ -101,7 +115,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   setFilteredActivities() {
     this.filteredActivities = this.searchText.valueChanges.pipe(
       map((activity: any) => (typeof activity === 'string' ? activity : activity.activity)),
-      map((activityName: string) => (activityName ? this.filterActivity(activityName) : this.allActivities))
+      map((activityName: string) =>
+        activityName ? this.filterActivity(activityName) : this.allActivities
+      )
     );
   }
 
@@ -112,7 +128,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   private filterActivity(activityName: string): any {
     const filterValue = activityName.toLowerCase();
-    return this.allActivities.filter((activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0);
+    return this.allActivities.filter(
+      (activity) => activity.activity.toLowerCase().indexOf(filterValue) === 0
+    );
   }
 
   /**
@@ -137,12 +155,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showHome === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonDashboard, this.buttonDashboard.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonDashboard,
+          this.buttonDashboard.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
     if (this.configurationWizardService.showHomeSearchActivity === true) {
       setTimeout(() => {
-        this.showPopover(this.templateSearchActivity, this.searchActivity.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateSearchActivity,
+          this.searchActivity.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
   }

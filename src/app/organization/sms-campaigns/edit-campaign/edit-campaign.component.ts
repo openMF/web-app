@@ -43,7 +43,8 @@ export class EditCampaignComponent {
   templateParameters: any;
 
   /** Campaign Message Step */
-  @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep: CampaignMessageStepComponent;
+  @ViewChild(CampaignMessageStepComponent, { static: true })
+  campaignMessageStep: CampaignMessageStepComponent;
 
   /**
    * Fetches campaign template from `resolve`
@@ -109,8 +110,10 @@ export class EditCampaignComponent {
         dateTimeFormat
       );
     }
-    this.organizationService.updateSmsCampaign(smsCampaign, this.smsCampaign.id).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .updateSmsCampaign(smsCampaign, this.smsCampaign.id)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

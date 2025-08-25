@@ -4,14 +4,24 @@
       <mat-card-content class="layout-column">
         <mat-form-field (click)="transferDatePicker.open()">
           <mat-label>{{ 'labels.inputs.Transfer Date' | translate }}</mat-label>
-          <input matInput [matDatepicker]="transferDatePicker" required formControlName="transferDate" />
+          <input
+            matInput
+            [matDatepicker]="transferDatePicker"
+            required
+            formControlName="transferDate"
+          />
           <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #transferDatePicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field class="flex-fill">
           <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
-          <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+          <textarea
+            matInput
+            formControlName="note"
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="2"
+          ></textarea>
         </mat-form-field>
       </mat-card-content>
 

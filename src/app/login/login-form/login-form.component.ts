@@ -7,7 +7,13 @@ import { finalize } from 'rxjs/operators';
 
 /** Custom Services */
 import { AuthenticationService } from '../../core/authentication/authentication.service';
-import { MatFormField, MatPrefix, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import {
+  MatFormField,
+  MatPrefix,
+  MatLabel,
+  MatError,
+  MatSuffix
+} from '@angular/material/form-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';

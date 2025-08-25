@@ -41,7 +41,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class CreateClientComponent {
   /** Client General Step */
-  @ViewChild(ClientGeneralStepComponent, { static: true }) clientGeneralStep: ClientGeneralStepComponent;
+  @ViewChild(ClientGeneralStepComponent, { static: true })
+  clientGeneralStep: ClientGeneralStepComponent;
   /** Client Family Members Step */
   @ViewChild('clientFamily') clientFamilyMembersStep: ClientFamilyMembersStepComponent;
   /** Client Address Step */
@@ -107,7 +108,11 @@ export class CreateClientComponent {
     if (this.clientTemplate.isAddressEnabled) {
       areValids = areValids && this.clientAddressStep.address.address.length > 0;
     }
-    if (this.clientTemplate.datatables && this.clientTemplate.datatables.length > 0 && this.clientDatatables) {
+    if (
+      this.clientTemplate.datatables &&
+      this.clientTemplate.datatables.length > 0 &&
+      this.clientDatatables
+    ) {
       this.clientDatatables.forEach((clientDatatable: ClientDatatableStepComponent) => {
         areValids = areValids && clientDatatable.datatableForm.valid;
       });

@@ -8,7 +8,10 @@
   </div>
 
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let member of clientFamilyMembers; index as i" class="family-member">
+    <mat-expansion-panel
+      *ngFor="let member of clientFamilyMembers; index as i"
+      class="family-member"
+    >
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ member.firstName }}
@@ -23,11 +26,23 @@
       <mat-divider></mat-divider>
 
       <div class="family-member-actions layout-row align-end">
-        <button mat-button color="primary" (click)="editFamilyMember(member, i)">
+        <button
+          mat-button
+          color="primary"
+          (click)="editFamilyMember(member, i)"
+          aria-label="Edit family member"
+        >
           <fa-icon icon="edit"></fa-icon>
+          <span class="sr-only">Edit</span>
         </button>
-        <button mat-button color="warn" (click)="deleteFamilyMember(member.firstName, i)">
+        <button
+          mat-button
+          color="warn"
+          (click)="deleteFamilyMember(member.firstName, i)"
+          aria-label="Delete family member"
+        >
           <fa-icon icon="trash"></fa-icon>
+          <span class="sr-only">Delete</span>
         </button>
       </div>
 
@@ -37,17 +52,28 @@
         {{ 'labels.inputs.Last Name' | translate }}: {{ member.lastName }}<br />
         {{ 'labels.inputs.Qualification' | translate }}: {{ member.qualification }}<br />
         {{ 'labels.inputs.Relationship' | translate }}:
-        {{ member.relationshipId | find: clientTemplate.familyMemberOptions.relationshipIdOptions : 'id' : 'name'
+        {{
+          member.relationshipId
+            | find: clientTemplate.familyMemberOptions.relationshipIdOptions : 'id' : 'name'
         }}<br />
         {{ 'labels.inputs.Age' | translate }}: {{ member.age }}<br />
-        {{ 'labels.inputs.Is Dependent' | translate }}: {{ member.isDependent ? 'Yes' : 'No' }}<br />
+        {{ 'labels.inputs.Is Dependent' | translate }}: {{ member.isDependent ? 'Yes' : 'No'
+        }}<br />
         {{ 'labels.inputs.Marital Status' | translate }}:
-        {{ member.maritalStatusId | find: clientTemplate.familyMemberOptions.maritalStatusIdOptions : 'id' : 'name'
+        {{
+          member.maritalStatusId
+            | find: clientTemplate.familyMemberOptions.maritalStatusIdOptions : 'id' : 'name'
         }}<br />
         {{ 'labels.inputs.Gender' | translate }}:
-        {{ member.genderId | find: clientTemplate.familyMemberOptions.genderIdOptions : 'id' : 'name' }}<br />
+        {{
+          member.genderId
+            | find: clientTemplate.familyMemberOptions.genderIdOptions : 'id' : 'name'
+        }}<br />
         {{ 'labels.inputs.Profession' | translate }}:
-        {{ member.professionId | find: clientTemplate.familyMemberOptions.professionIdOptions : 'id' : 'name' }}<br />
+        {{
+          member.professionId
+            | find: clientTemplate.familyMemberOptions.professionIdOptions : 'id' : 'name'
+        }}<br />
         {{ 'labels.inputs.Date Of Birth' | translate }}: {{ member.dateOfBirth | dateFormat }}<br />
       </p>
     </mat-expansion-panel>

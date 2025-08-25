@@ -122,7 +122,9 @@ export class LoanDisbursalComponent {
     const disburseLoanDialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
         heading: this.translateService.instant('labels.heading.Loan Disbursal'),
-        dialogContext: this.translateService.instant('labels.dialogContext.Are you sure you want to Disburse Loan')
+        dialogContext: this.translateService.instant(
+          'labels.dialogContext.Are you sure you want to Disburse Loan'
+        )
       }
     });
     disburseLoanDialogRef.afterClosed().subscribe((response: { confirm: any }) => {

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -76,7 +81,10 @@ export class CreateProvisioningEntryComponent implements OnInit {
     provisioningEntry.locale = this.settingsService.language.code;
     provisioningEntry.dateFormat = this.settingsService.dateFormat;
     if (provisioningEntry.date instanceof Date) {
-      provisioningEntry.date = this.dateUtils.formatDate(provisioningEntry.date, this.settingsService.dateFormat);
+      provisioningEntry.date = this.dateUtils.formatDate(
+        provisioningEntry.date,
+        this.settingsService.dateFormat
+      );
     }
     this.accountingService.createProvisioningEntry(provisioningEntry).subscribe((response: any) => {
       this.router.navigate(

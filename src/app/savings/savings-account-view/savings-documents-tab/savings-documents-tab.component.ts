@@ -79,6 +79,8 @@ export class SavingsDocumentsTabComponent {
   }
 
   deleteDocument(documentId: any) {
-    this.savingsService.deleteSavingsDocument(this.entityId, documentId).subscribe((res: any) => {});
+    this.savingsService
+      .deleteSavingsDocument(this.entityId, documentId)
+      .subscribe((res: any) => {});
   }
 }

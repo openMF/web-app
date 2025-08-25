@@ -41,7 +41,10 @@
               <mat-form-field>
                 <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
                 <mat-select formControlName="savingsId">
-                  <mat-option *ngFor="let accountOption of accountOptions" [value]="accountOption.id">
+                  <mat-option
+                    *ngFor="let accountOption of accountOptions"
+                    [value]="accountOption.id"
+                  >
                     {{ accountOption.productName }} - {{ accountOption.accountNo }}
                   </mat-option>
                 </mat-select>
@@ -69,7 +72,8 @@
               <input matInput required formControlName="firstname" />
               <mat-error *ngIf="newGuarantorForm.controls.firstname.hasError('required')">
                 {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
-                {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
+                {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
@@ -78,13 +82,20 @@
               <input matInput required formControlName="lastname" />
               <mat-error *ngIf="newGuarantorForm.controls.lastname.hasError('required')">
                 {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
-                {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
+                {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field (click)="dobDatePicker.open()">
               <mat-label>{{ 'labels.inputs.Date Of Birth' | translate }}</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dobDatePicker" formControlName="dob" />
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="dobDatePicker"
+                formControlName="dob"
+              />
               <mat-datepicker-toggle matSuffix [for]="dobDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #dobDatePicker></mat-datepicker>
             </mat-form-field>

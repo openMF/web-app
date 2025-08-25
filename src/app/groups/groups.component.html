@@ -9,18 +9,31 @@
       }}</mat-checkbox>
     </div>
     <div class="action-button gap-25px">
-      <button mat-raised-button color="primary" [routerLink]="['../', 'organization', 'bulk-import', 'Groups']">
-        <fa-icon icon="download" class="m-r-10"></fa-icon>{{ 'labels.buttons.Import Group' | translate }}
+      <button
+        mat-raised-button
+        color="primary"
+        [routerLink]="['../', 'organization', 'bulk-import', 'Groups']"
+      >
+        <fa-icon icon="download" class="m-r-10"></fa-icon
+        >{{ 'labels.buttons.Import Group' | translate }}
       </button>
-      <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_GROUP'">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Create Group' | translate }}
+      <button
+        mat-raised-button
+        color="primary"
+        [routerLink]="['create']"
+        *mifosxHasPermission="'CREATE_GROUP'"
+      >
+        <fa-icon icon="plus" class="m-r-10"></fa-icon
+        >{{ 'labels.buttons.Create Group' | translate }}
       </button>
     </div>
   </div>
 
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.name' | translate }}
+      </th>
       <td mat-cell *matCellDef="let group">{{ group.name }}</td>
     </ng-container>
 
@@ -44,7 +57,9 @@
     </ng-container>
 
     <ng-container matColumnDef="officeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Office Name' | translate }}</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'labels.inputs.Office Name' | translate }}
+      </th>
       <td mat-cell *matCellDef="let group">{{ group.officeName }}</td>
     </ng-container>
 

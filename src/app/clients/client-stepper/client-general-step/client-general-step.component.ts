@@ -154,7 +154,10 @@ export class ClientGeneralStepComponent implements OnInit {
             Validators.required,
             Validators.pattern('(^[A-z]).*')])
         );
-        this.createClientForm.addControl('middlename', new UntypedFormControl('', Validators.pattern('(^[A-z]).*')));
+        this.createClientForm.addControl(
+          'middlename',
+          new UntypedFormControl('', Validators.pattern('(^[A-z]).*'))
+        );
         this.createClientForm.addControl(
           'lastname',
           new UntypedFormControl('', [
@@ -189,14 +192,20 @@ export class ClientGeneralStepComponent implements OnInit {
     this.createClientForm.get('legalFormId').patchValue(1);
     this.createClientForm.get('active').valueChanges.subscribe((active: boolean) => {
       if (active) {
-        this.createClientForm.addControl('activationDate', new UntypedFormControl('', Validators.required));
+        this.createClientForm.addControl(
+          'activationDate',
+          new UntypedFormControl('', Validators.required)
+        );
       } else {
         this.createClientForm.removeControl('activationDate');
       }
     });
     this.createClientForm.get('addSavings').valueChanges.subscribe((active: boolean) => {
       if (active) {
-        this.createClientForm.addControl('savingsProductId', new UntypedFormControl('', Validators.required));
+        this.createClientForm.addControl(
+          'savingsProductId',
+          new UntypedFormControl('', Validators.required)
+        );
       } else {
         this.createClientForm.removeControl('savingsProductId');
       }
@@ -225,16 +234,28 @@ export class ClientGeneralStepComponent implements OnInit {
       }
     }
     if (generalDetails.submittedOnDate instanceof Date) {
-      generalDetails.submittedOnDate = this.dateUtils.formatDate(generalDetails.submittedOnDate, dateFormat);
+      generalDetails.submittedOnDate = this.dateUtils.formatDate(
+        generalDetails.submittedOnDate,
+        dateFormat
+      );
     }
     if (generalDetails.activationDate instanceof Date) {
-      generalDetails.activationDate = this.dateUtils.formatDate(generalDetails.activationDate, dateFormat);
+      generalDetails.activationDate = this.dateUtils.formatDate(
+        generalDetails.activationDate,
+        dateFormat
+      );
     }
     if (generalDetails.dateOfBirth instanceof Date) {
-      generalDetails.dateOfBirth = this.dateUtils.formatDate(generalDetails.dateOfBirth, dateFormat);
+      generalDetails.dateOfBirth = this.dateUtils.formatDate(
+        generalDetails.dateOfBirth,
+        dateFormat
+      );
     }
 
-    if (generalDetails.clientNonPersonDetails && generalDetails.clientNonPersonDetails.incorpValidityTillDate) {
+    if (
+      generalDetails.clientNonPersonDetails &&
+      generalDetails.clientNonPersonDetails.incorpValidityTillDate
+    ) {
       generalDetails.clientNonPersonDetails = {
         ...generalDetails.clientNonPersonDetails,
         incorpValidityTillDate: this.dateUtils.formatDate(generalDetails.dateOfBirth, dateFormat),

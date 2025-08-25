@@ -6,7 +6,8 @@
   <div class="flex-49 layout-column gap-4percent">
     <div
       *ngIf="
-        !savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval;
+        !savingsAccountData.status.rejected &&
+          !savingsAccountData.status.submittedAndPendingApproval;
         else alternateDetails
       "
     >
@@ -16,9 +17,13 @@
           <tr>
             <td>{{ 'labels.inputs.External Id' | translate }}</td>
             <td *ngIf="savingsAccountData.externalId">
-              <mifosx-external-identifier externalId="{{ savingsAccountData.externalId }}"></mifosx-external-identifier>
+              <mifosx-external-identifier
+                externalId="{{ savingsAccountData.externalId }}"
+              ></mifosx-external-identifier>
             </td>
-            <td *ngIf="!savingsAccountData.externalId">{{ 'labels.inputs.Not Provided' | translate }}</td>
+            <td *ngIf="!savingsAccountData.externalId">
+              {{ 'labels.inputs.Not Provided' | translate }}
+            </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Activated On' | translate }}</td>
@@ -32,7 +37,13 @@
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Field Officer' | translate }}</td>
-            <td>{{ savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned' }}</td>
+            <td>
+              {{
+                savingsAccountData.fieldOfficerName
+                  ? savingsAccountData.fieldOfficerName
+                  : 'Unassigned'
+              }}
+            </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Currency' | translate }}</td>
@@ -58,12 +69,21 @@
           <tbody>
             <tr>
               <td>{{ 'labels.inputs.Field Officer' | translate }}</td>
-              <td>{{ savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned' }}</td>
+              <td>
+                {{
+                  savingsAccountData.fieldOfficerName
+                    ? savingsAccountData.fieldOfficerName
+                    : 'Unassigned'
+                }}
+              </td>
             </tr>
             <tr>
               <td>{{ 'labels.inputs.Balance' | translate }}</td>
               <td class="r-amount">
-                {{ savingsAccountData.summary.accountBalance | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                {{
+                  savingsAccountData.summary.accountBalance
+                    | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                }}
               </td>
             </tr>
           </tbody>
@@ -71,20 +91,31 @@
       </div>
     </ng-template>
 
-    <div *ngIf="!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval">
+    <div
+      *ngIf="
+        !savingsAccountData.status.rejected &&
+        !savingsAccountData.status.submittedAndPendingApproval
+      "
+    >
       <h4 class="table-headers">{{ 'labels.heading.Performance History' | translate }}</h4>
       <table>
         <tbody>
           <tr *ngIf="savingsAccountData.summary.totalDeposits">
             <td>{{ 'labels.inputs.Total Deposits' | translate }}</td>
             <td class="r-amount">
-              {{ savingsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+              {{
+                savingsAccountData.summary.totalDeposits
+                  | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              }}
             </td>
           </tr>
           <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
             <td>{{ 'labels.inputs.Total Interest Earned' | translate }}</td>
             <td class="r-amount">
-              {{ savingsAccountData.summary.totalInterestEarned | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+              {{
+                savingsAccountData.summary.totalInterestEarned
+                  | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              }}
             </td>
           </tr>
         </tbody>
@@ -99,37 +130,55 @@
         <tr *ngIf="savingsAccountData.summary.totalWithdrawals">
           <td>{{ 'labels.inputs.Total Withdrawls' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.summary.totalWithdrawals | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.summary.totalWithdrawals
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalWithdrawalFees">
           <td>{{ 'labels.inputs.Withdrawals Fees' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.summary.totalWithdrawalFees | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.summary.totalWithdrawalFees
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalAnnualFees">
           <td>{{ 'labels.inputs.Annual Fees' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.summary.totalAnnualFees | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.summary.totalAnnualFees
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalInterestEarned >= 0">
           <td>{{ 'labels.inputs.Interest Earned' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.summary.totalInterestEarned | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.summary.totalInterestEarned
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalInterestPosted">
           <td>{{ 'labels.inputs.Interest Posted' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.summary.totalInterestPosted | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.summary.totalInterestPosted
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.interestNotPosted >= 0">
           <td>{{ 'labels.inputs.Interest Earned Not Posted' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.summary.interestNotPosted | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.summary.interestNotPosted
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.summary.totalOverdraftInterestDerived">
@@ -144,20 +193,29 @@
         <tr *ngIf="savingsAccountData.summary.interestNotPosted < 0">
           <td>{{ 'labels.inputs.Overdraft Interest Not Posted' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.summary.interestNotPosted | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.summary.interestNotPosted
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.nominalAnnualInterestRate">
           <td>{{ 'labels.inputs.Nominal Interest Rate' | translate }}</td>
-          <td class="r-amount">{{ savingsAccountData.nominalAnnualInterestRate | formatNumber }} %</td>
+          <td class="r-amount">
+            {{ savingsAccountData.nominalAnnualInterestRate | formatNumber }} %
+          </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Interest Compounding Period' | translate }}</td>
-          <td>{{ savingsAccountData.interestCompoundingPeriodType.value | translateKey: 'catalogs' }}</td>
+          <td>
+            {{ savingsAccountData.interestCompoundingPeriodType.value | translateKey: 'catalogs' }}
+          </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Interest Posting Period' | translate }}</td>
-          <td>{{ savingsAccountData.interestPostingPeriodType.value | translateKey: 'catalogs' }}</td>
+          <td>
+            {{ savingsAccountData.interestPostingPeriodType.value | translateKey: 'catalogs' }}
+          </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Interest Calculated Using' | translate }}</td>
@@ -165,12 +223,19 @@
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Days in Year' | translate }}</td>
-          <td>{{ savingsAccountData.interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}</td>
+          <td>
+            {{
+              savingsAccountData.interestCalculationDaysInYearType.value | translateKey: 'catalogs'
+            }}
+          </td>
         </tr>
         <tr *ngIf="savingsAccountData.withdrawalFee">
           <td>{{ 'labels.inputs.Withdrawal Fee' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.withdrawalFee.amount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.withdrawalFee.amount
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.lastActiveTransactionDate">
@@ -196,17 +261,25 @@
         <tr *ngIf="savingsAccountData.annualFee">
           <td>{{ 'labels.inputs.Annual Fee' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.annualFee.amount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.annualFee.amount
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.allowOverdraft">
           <td>{{ 'labels.inputs.Overdraft Limit' | translate }}</td>
           <td class="r-amount">
-            {{ savingsAccountData.overdraftLimit | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+            {{
+              savingsAccountData.overdraftLimit
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
+            }}
           </td>
         </tr>
         <tr *ngIf="savingsAccountData.allowOverdraft">
-          <td>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</td>
+          <td>
+            {{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}
+          </td>
           <td>
             {{
               savingsAccountData.minOverdraftForInterestCalculation
@@ -254,9 +327,13 @@
           <tr>
             <td>{{ 'labels.inputs.External Id' | translate }}</td>
             <td *ngIf="savingsAccountData.externalId">
-              <mifosx-external-identifier externalId="{{ savingsAccountData.externalId }}"></mifosx-external-identifier>
+              <mifosx-external-identifier
+                externalId="{{ savingsAccountData.externalId }}"
+              ></mifosx-external-identifier>
             </td>
-            <td *ngIf="!savingsAccountData.externalId">{{ 'labels.inputs.Not Provided' | translate }}</td>
+            <td *ngIf="!savingsAccountData.externalId">
+              {{ 'labels.inputs.Not Provided' | translate }}
+            </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Activated On' | translate }}</td>

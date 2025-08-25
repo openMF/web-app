@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -67,11 +72,12 @@ export class EditReportComponent implements OnInit {
   /** Report Parameters Data. */
   reportParametersData: any[] = [];
   /** Data passed to dialog. */
-  dataForDialog: { allowedParameters: any[]; parameterName: string; reportParameterName: string } = {
-    allowedParameters: undefined,
-    parameterName: undefined,
-    reportParameterName: undefined
-  };
+  dataForDialog: { allowedParameters: any[]; parameterName: string; reportParameterName: string } =
+    {
+      allowedParameters: undefined,
+      parameterName: undefined,
+      reportParameterName: undefined
+    };
   /** Report Form. */
   reportForm: UntypedFormGroup;
   /** Columns to be displayed in report parameters table. */
@@ -199,7 +205,9 @@ export class EditReportComponent implements OnInit {
             (allowedParameter: any) => allowedParameter.id === response.parameterName
           ).parameterName,
           parameterId: response.parameterName,
-          reportParameterName: response.reportParameterName ? response.reportParameterName : undefined
+          reportParameterName: response.reportParameterName
+            ? response.reportParameterName
+            : undefined
         });
         this.dataSource.connect().next(this.reportParametersData);
         this.isReportParametersChanged = true;

@@ -1,7 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 
 /** Custom Services */
 import { AccountTransfersService } from '../account-transfers.service';
@@ -64,7 +70,9 @@ export class EditStandingInstructionsComponent implements OnInit {
     this.route.data.subscribe((data: { standingInstructionsDataAndTemplate: any }) => {
       this.standingInstructionsData = data.standingInstructionsDataAndTemplate;
       this.standingInstructionsId = data.standingInstructionsDataAndTemplate.id;
-      if (this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id) {
+      if (
+        this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id
+      ) {
         this.allowclientedit = false;
       }
       this.setOptions();
@@ -96,8 +104,12 @@ export class EditStandingInstructionsComponent implements OnInit {
       toAccount: this.standingInstructionsData.toAccount.productName,
       instructionType: this.standingInstructionsData.instructionType.id,
       amount: this.standingInstructionsData.amount,
-      validFrom: this.standingInstructionsData.validFrom && new Date(this.standingInstructionsData.validFrom),
-      validTill: this.standingInstructionsData.validTill && new Date(this.standingInstructionsData.validTill),
+      validFrom:
+        this.standingInstructionsData.validFrom &&
+        new Date(this.standingInstructionsData.validFrom),
+      validTill:
+        this.standingInstructionsData.validTill &&
+        new Date(this.standingInstructionsData.validTill),
       recurrenceType: this.standingInstructionsData.recurrenceType.id,
       recurrenceInterval: this.standingInstructionsData.recurrenceInterval,
       recurrenceFrequency: this.standingInstructionsData.recurrenceFrequency.id,
@@ -179,8 +191,14 @@ export class EditStandingInstructionsComponent implements OnInit {
       ),
       recurrenceType: this.editStandingInstructionsForm.value.recurrenceType,
       status: this.editStandingInstructionsForm.value.status,
-      validFrom: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validFrom, dateFormat),
-      validTill: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validTill, dateFormat)
+      validFrom: this.dateUtils.formatDate(
+        this.editStandingInstructionsForm.value.validFrom,
+        dateFormat
+      ),
+      validTill: this.dateUtils.formatDate(
+        this.editStandingInstructionsForm.value.validTill,
+        dateFormat
+      )
     };
     this.accountTransfersService
       .updateStandingInstructionsData(this.standingInstructionsId, standingInstructionData)

@@ -1,6 +1,11 @@
 /** Angular Imports. */
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
@@ -87,18 +92,26 @@ export class CreateDividendComponent implements OnInit {
     const prevStartDate: Date = this.createDividendForm.value.dividendPeriodStartDate;
     const prevEndDate: Date = this.createDividendForm.value.dividendPeriodEndDate;
     if (createDividendFormData.dividendPeriodStartDate instanceof Date) {
-      createDividendFormData.dividendPeriodStartDate = this.dateUtils.formatDate(prevStartDate, dateFormat);
+      createDividendFormData.dividendPeriodStartDate = this.dateUtils.formatDate(
+        prevStartDate,
+        dateFormat
+      );
     }
     if (createDividendFormData.dividendPeriodEndDate instanceof Date) {
-      createDividendFormData.dividendPeriodEndDate = this.dateUtils.formatDate(prevEndDate, dateFormat);
+      createDividendFormData.dividendPeriodEndDate = this.dateUtils.formatDate(
+        prevEndDate,
+        dateFormat
+      );
     }
     const data = {
       ...createDividendFormData,
       dateFormat,
       locale
     };
-    this.productService.createDividend(this.shareProductData.id, data).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.productService
+      .createDividend(this.shareProductData.id, data)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

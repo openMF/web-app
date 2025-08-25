@@ -49,12 +49,18 @@ export class GlAccountTreeService {
 
     // Header nodes
     glAccountTree.push(new GLAccountNode('ACCOUNTS'));
-    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.ASSET')));
-    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.EQUITY')));
+    glAccountTree[0].children.push(
+      new GLAccountNode(this.translateService.instant('labels.inputs.accounting.ASSET'))
+    );
+    glAccountTree[0].children.push(
+      new GLAccountNode(this.translateService.instant('labels.inputs.accounting.EQUITY'))
+    );
     glAccountTree[0].children.push(
       new GLAccountNode(this.translateService.instant('labels.inputs.accounting.EXPENSE'))
     );
-    glAccountTree[0].children.push(new GLAccountNode(this.translateService.instant('labels.inputs.accounting.INCOME')));
+    glAccountTree[0].children.push(
+      new GLAccountNode(this.translateService.instant('labels.inputs.accounting.INCOME'))
+    );
     glAccountTree[0].children.push(
       new GLAccountNode(this.translateService.instant('labels.inputs.accounting.LIABILITY'))
     );

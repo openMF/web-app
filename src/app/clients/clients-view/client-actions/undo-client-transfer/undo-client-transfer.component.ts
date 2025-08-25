@@ -77,13 +77,18 @@ export class UndoClientTransferComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransferDate: Date = this.undoClientTransferForm.value.transferDate;
     if (undoClientTransferFormData.transferDate instanceof Date) {
-      undoClientTransferFormData.transferDate = this.dateUtils.formatDate(prevTransferDate, dateFormat);
+      undoClientTransferFormData.transferDate = this.dateUtils.formatDate(
+        prevTransferDate,
+        dateFormat
+      );
     }
     const data = {
       ...undoClientTransferFormData
     };
-    this.clientsService.executeClientCommand(this.clientId, 'withdrawTransfer', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.clientsService
+      .executeClientCommand(this.clientId, 'withdrawTransfer', data)
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -143,7 +150,9 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
     this.filteredOfficeData = this.officeName.valueChanges.pipe(
       startWith(''),
       map((office: any) => (typeof office === 'string' ? office : office.name)),
-      map((officeName: string) => (officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData))
+      map((officeName: string) =>
+        officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData
+      )
     );
   }
 
@@ -153,7 +162,9 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
    * @returns {any} Filtered offices.
    */
   private filterOfficeAutocompleteData(officeName: string): any {
-    return this.officeData.filter((office: any) => office.name.toLowerCase().includes(officeName.toLowerCase()));
+    return this.officeData.filter((office: any) =>
+      office.name.toLowerCase().includes(officeName.toLowerCase())
+    );
   }
 
   /**
@@ -178,7 +189,12 @@ export class ClosingEntriesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showClosingEntriesPage === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonCreateClosure, this.buttonCreateClosure.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonCreateClosure,
+          this.buttonCreateClosure.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
 

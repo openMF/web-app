@@ -239,7 +239,12 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   /** Refine Object
    * Removes the object param with null or '' values
    */
-  refineObject(dataObj: { [x: string]: any; transferAmount: any; transferDate: any; transferDescription: any }) {
+  refineObject(dataObj: {
+    [x: string]: any;
+    transferAmount: any;
+    transferDate: any;
+    transferDescription: any;
+  }) {
     delete dataObj.transferAmount;
     delete dataObj.transferDate;
     delete dataObj.transferDescription;
@@ -249,7 +254,11 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     const propNames = Object.getOwnPropertyNames(dataObj);
     for (let i = 0; i < propNames.length; i++) {
       const propName = propNames[i];
-      if (dataObj[propName] === null || dataObj[propName] === undefined || dataObj[propName] === '') {
+      if (
+        dataObj[propName] === null ||
+        dataObj[propName] === undefined ||
+        dataObj[propName] === ''
+      ) {
         delete dataObj[propName];
       }
     }
@@ -263,9 +272,11 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     if (!this.interbank) {
       this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: string) => {
         if (value.length >= 2) {
-          this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
-            this.clientsData = data.pageItems;
-          });
+          this.clientsService
+            .getFilteredClients('displayName', 'ASC', true, value)
+            .subscribe((data: any) => {
+              this.clientsData = data.pageItems;
+            });
           this.changeEvent();
         }
       });
@@ -294,7 +305,10 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     const locale = this.settingsService.language.code;
     const makeAccountTransferData = {
       ...this.makeAccountTransferForm.value,
-      transferDate: this.dateUtils.formatDate(this.makeAccountTransferForm.value.transferDate, dateFormat),
+      transferDate: this.dateUtils.formatDate(
+        this.makeAccountTransferForm.value.transferDate,
+        dateFormat
+      ),
       dateFormat,
       locale,
       toClientId: this.makeAccountTransferForm.controls.toClientId.value.id,

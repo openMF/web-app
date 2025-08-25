@@ -42,7 +42,10 @@ export class LanguageSelectorComponent {
    */
   setLanguage() {
     this.translateService.use(this.languageSelector.value);
-    this.settingsService.setLanguage({ name: '', code: this.languageSelector.value.substring(0, 2) });
+    this.settingsService.setLanguage({
+      name: '',
+      code: this.languageSelector.value.substring(0, 2)
+    });
   }
 
   /**

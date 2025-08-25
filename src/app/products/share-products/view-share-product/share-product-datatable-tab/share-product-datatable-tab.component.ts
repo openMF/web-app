@@ -22,7 +22,8 @@ export class ShareProductDatatableTabComponent {
 
     this.route.data.subscribe((data: { shareProductDatatable: any }) => {
       this.entityDatatable = data.shareProductDatatable;
-      this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+      this.multiRowDatatableFlag =
+        this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
 }

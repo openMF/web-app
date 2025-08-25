@@ -40,7 +40,9 @@ export class ClientDatatableStepComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.datatableInputs = this.datatableService.filterSystemColumns(this.datatableData.columnHeaderData);
+    this.datatableInputs = this.datatableService.filterSystemColumns(
+      this.datatableData.columnHeaderData
+    );
     const inputItems: any = {};
     this.datatableInputs.forEach((input: any) => {
       input.controlName = this.getInputName(input);
@@ -89,9 +91,14 @@ export class ClientDatatableStepComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const datatableDataValues = this.datatableForm.value;
 
-    const data = this.datatableService.buildPayload(this.datatableInputs, datatableDataValues, dateFormat, {
-      locale: this.settingsService.language.code
-    });
+    const data = this.datatableService.buildPayload(
+      this.datatableInputs,
+      datatableDataValues,
+      dateFormat,
+      {
+        locale: this.settingsService.language.code
+      }
+    );
 
     return {
       registeredTableName: this.datatableData.registeredTableName,

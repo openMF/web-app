@@ -1,9 +1,19 @@
 <div class="layout-row align-end gap-2px responsive-column container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CRITERIA'">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['edit']"
+    *mifosxHasPermission="'UPDATE_CRITERIA'"
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Edit' | translate }}
   </button>
-  <button mat-raised-button color="warn" (click)="deleteCriteria()" *mifosxHasPermission="'DELETE_CRITERIA'">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="deleteCriteria()"
+    *mifosxHasPermission="'DELETE_CRITERIA'"
+  >
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Delete' | translate }}
   </button>
@@ -41,16 +51,24 @@
 
           <ng-container matColumnDef="percentage">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Percentage' | translate }}</th>
-            <td mat-cell *matCellDef="let provisioningData">{{ provisioningData.provisioningPercentage }}</td>
+            <td mat-cell *matCellDef="let provisioningData">
+              {{ provisioningData.provisioningPercentage }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="liabilityAccount">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Liability Account' | translate }}</th>
-            <td mat-cell *matCellDef="let provisioningData">{{ provisioningData.liabilityName }}</td>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ 'labels.inputs.Liability Account' | translate }}
+            </th>
+            <td mat-cell *matCellDef="let provisioningData">
+              {{ provisioningData.liabilityName }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="expenseAccount">
-            <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Expense Account' | translate }}</th>
+            <th mat-header-cell *matHeaderCellDef>
+              {{ 'labels.inputs.Expense Account' | translate }}
+            </th>
             <td mat-cell *matCellDef="let provisioningData">{{ provisioningData.expenseName }}</td>
           </ng-container>
 

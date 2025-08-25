@@ -20,7 +20,9 @@
           <tr>
             <td>{{ 'labels.inputs.External Id' | translate }}</td>
             <td *ngIf="sharesAccountData.externalId">
-              <mifosx-external-identifier externalId="{{ sharesAccountData.externalId }}"></mifosx-external-identifier>
+              <mifosx-external-identifier
+                externalId="{{ sharesAccountData.externalId }}"
+              ></mifosx-external-identifier>
             </td>
             <td *ngIf="!sharesAccountData.externalId">
               {{ 'labels.inputs.Unassigned' | translate }}
@@ -50,11 +52,15 @@
         <tbody>
           <tr>
             <td>{{ 'labels.inputs.Pending for Approval Shares' | translate }}</td>
-            <td class="r-amount">{{ sharesAccountData.summary.totalPendingForApprovalShares | formatNumber }}</td>
+            <td class="r-amount">
+              {{ sharesAccountData.summary.totalPendingForApprovalShares | formatNumber }}
+            </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Approved Shares' | translate }}</td>
-            <td class="r-amount">{{ sharesAccountData.summary.totalApprovedShares | formatNumber }}</td>
+            <td class="r-amount">
+              {{ sharesAccountData.summary.totalApprovedShares | formatNumber }}
+            </td>
           </tr>
         </tbody>
       </table>

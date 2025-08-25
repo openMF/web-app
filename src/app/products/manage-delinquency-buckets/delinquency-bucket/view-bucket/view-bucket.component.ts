@@ -28,7 +28,8 @@ export class ViewBucketComponent {
     this.route.data.subscribe((data: { delinquencyBucket: any }) => {
       this.delinquencyBucketData = data.delinquencyBucket;
       this.delinquencyBucketData.ranges = this.delinquencyBucketData.ranges.sort(
-        (objA: { minimumAge: number }, objB: { minimumAge: number }) => objA.minimumAge - objB.minimumAge
+        (objA: { minimumAge: number }, objB: { minimumAge: number }) =>
+          objA.minimumAge - objB.minimumAge
       );
     });
   }
@@ -39,9 +40,11 @@ export class ViewBucketComponent {
     });
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.productsService.deleteDelinquencyBucket(this.delinquencyBucketData.id).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.productsService
+          .deleteDelinquencyBucket(this.delinquencyBucketData.id)
+          .subscribe(() => {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       }
     });
   }

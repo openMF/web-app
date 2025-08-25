@@ -68,18 +68,23 @@ export class AuthenticationService {
     this.rememberMe = false;
     this.storage = sessionStorage;
     const savedCredentials = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+      sessionStorage.getItem(this.credentialsStorageKey) ||
+        localStorage.getItem(this.credentialsStorageKey)
     );
     if (savedCredentials) {
       if (savedCredentials.rememberMe) {
         this.rememberMe = true;
         this.storage = localStorage;
       }
-      const twoFactorAccessToken = JSON.parse(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey));
+      const twoFactorAccessToken = JSON.parse(
+        this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey)
+      );
       if (environment.oauth.enabled) {
         this.refreshOAuthAccessToken();
       } else {
-        authenticationInterceptor.setAuthorizationToken(savedCredentials.base64EncodedAuthenticationKey);
+        authenticationInterceptor.setAuthorizationToken(
+          savedCredentials.base64EncodedAuthenticationKey
+        );
       }
       if (twoFactorAccessToken) {
         authenticationInterceptor.setTwoFactorAccessToken(twoFactorAccessToken.token);
@@ -116,7 +121,10 @@ export class AuthenticationService {
         );
     } else {
       return this.http
-        .post('/authentication', { username: loginContext.username, password: loginContext.password })
+        .post('/authentication', {
+          username: loginContext.username,
+          password: loginContext.password
+        })
         .pipe(
           map((credentials: Credentials) => {
             this.onLoginSuccess(credentials);
@@ -163,7 +171,9 @@ export class AuthenticationService {
     if (oAuthRefreshToken == null) {
       return;
     }
-    oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey)).refresh_token;
+    oAuthRefreshToken = JSON.parse(
+      this.storage.getItem(this.oAuthTokenDetailsStorageKey)
+    ).refresh_token;
     this.authenticationInterceptor.removeAuthorization();
     const credentials = JSON.parse(this.storage.getItem(this.credentialsStorageKey));
     let httpParams = new HttpParams();
@@ -201,7 +211,9 @@ export class AuthenticationService {
     if (environment.oauth.enabled) {
       this.authenticationInterceptor.setAuthorizationToken(credentials.accessToken);
     } else {
-      this.authenticationInterceptor.setAuthorizationToken(credentials.base64EncodedAuthenticationKey);
+      this.authenticationInterceptor.setAuthorizationToken(
+        credentials.base64EncodedAuthenticationKey
+      );
     }
     if (credentials.isTwoFactorAuthenticationRequired) {
       this.credentials = credentials;
@@ -231,7 +243,9 @@ export class AuthenticationService {
    * Logout ongoing Oauth2 session.
    */
   private logoutAuthSession() {
-    const oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey)).refresh_token;
+    const oAuthRefreshToken = JSON.parse(
+      this.storage.getItem(this.oAuthTokenDetailsStorageKey)
+    ).refresh_token;
     const credentials = JSON.parse(this.storage.getItem(this.credentialsStorageKey));
     this.authenticationInterceptor.removeAuthorizationTenant();
     let httpParams = new HttpParams();
@@ -251,7 +265,9 @@ export class AuthenticationService {
    * @returns {Observable<boolean>} True if the user was logged out successfully.
    */
   logout(): Observable<boolean> {
-    const twoFactorToken = JSON.parse(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey));
+    const twoFactorToken = JSON.parse(
+      this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey)
+    );
     if (twoFactorToken) {
       this.http.post('/twofactor/invalidate', { token: twoFactorToken.token }).subscribe();
       this.authenticationInterceptor.removeTwoFactorAuthorization();
@@ -272,7 +288,9 @@ export class AuthenticationService {
    * @returns {boolean} True if the two factor access token is valid or two factor authentication is not required.
    */
   twoFactorAccessTokenIsValid(): boolean {
-    const twoFactorAccessToken = JSON.parse(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey));
+    const twoFactorAccessToken = JSON.parse(
+      this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey)
+    );
     if (twoFactorAccessToken) {
       return new Date().getTime() < twoFactorAccessToken.validTo;
     }
@@ -286,7 +304,8 @@ export class AuthenticationService {
   isAuthenticated(): boolean {
     return !!(
       JSON.parse(
-        sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+        sessionStorage.getItem(this.credentialsStorageKey) ||
+          localStorage.getItem(this.credentialsStorageKey)
       ) && this.twoFactorAccessTokenIsValid()
     );
   }
@@ -399,7 +418,10 @@ export class AuthenticationService {
   resetPassword(passwordDetails: any) {
     return this.http.put(`/users/${this.credentials.userId}`, passwordDetails).pipe(
       map(() => {
-        this.alertService.alert({ type: 'Password Reset Success', message: `Your password was sucessfully reset!` });
+        this.alertService.alert({
+          type: 'Password Reset Success',
+          message: `Your password was sucessfully reset!`
+        });
         this.authenticationInterceptor.removeAuthorization();
         this.authenticationInterceptor.removeTwoFactorAuthorization();
         const loginContext: LoginContext = {

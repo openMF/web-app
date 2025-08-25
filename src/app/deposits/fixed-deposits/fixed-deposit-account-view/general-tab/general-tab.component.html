@@ -45,7 +45,11 @@
           <tr>
             <td>{{ 'labels.inputs.Maturity Date' | translate }}</td>
             <td>
-              {{ fixedDepositsAccountData.maturityDate ? (fixedDepositsAccountData.maturityDate | dateFormat) : 'N/A' }}
+              {{
+                fixedDepositsAccountData.maturityDate
+                  ? (fixedDepositsAccountData.maturityDate | dateFormat)
+                  : 'N/A'
+              }}
             </td>
           </tr>
           <tr>
@@ -62,7 +66,9 @@
           </tr>
           <tr *ngIf="fixedDepositsAccountData.onAccountClosure">
             <td>{{ 'labels.inputs.Maturity Instructions' | translate }}</td>
-            <td>{{ fixedDepositsAccountData.onAccountClosure.value | translateKey: 'catalogs' }}</td>
+            <td>
+              {{ fixedDepositsAccountData.onAccountClosure.value | translateKey: 'catalogs' }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -78,25 +84,46 @@
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Interest Compounding Period' | translate }}</td>
-            <td>{{ fixedDepositsAccountData.interestCompoundingPeriodType.value | translateKey: 'catalogs' }}</td>
+            <td>
+              {{
+                fixedDepositsAccountData.interestCompoundingPeriodType.value
+                  | translateKey: 'catalogs'
+              }}
+            </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Interest Posting Period' | translate }}</td>
-            <td>{{ fixedDepositsAccountData.interestPostingPeriodType.value | translateKey: 'catalogs' }}</td>
+            <td>
+              {{
+                fixedDepositsAccountData.interestPostingPeriodType.value | translateKey: 'catalogs'
+              }}
+            </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Interest Calculated Using' | translate }}</td>
-            <td>{{ fixedDepositsAccountData.interestCalculationType.value | translateKey: 'catalogs' }}</td>
+            <td>
+              {{
+                fixedDepositsAccountData.interestCalculationType.value | translateKey: 'catalogs'
+              }}
+            </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.No. of Days in Year' | translate }}</td>
-            <td>{{ fixedDepositsAccountData.interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}</td>
+            <td>
+              {{
+                fixedDepositsAccountData.interestCalculationDaysInYearType.value
+                  | translateKey: 'catalogs'
+              }}
+            </td>
           </tr>
           <tr *ngIf="fixedDepositsAccountData.preClosurePenalApplicable">
             <td>{{ 'labels.inputs.Pre-cloure Penal' | translate }}</td>
             <td>
               {{ fixedDepositsAccountData.preClosurePenalInterest }} % on
-              {{ fixedDepositsAccountData.preClosurePenalInterestOnType.value | translateKey: 'catalogs' }}
+              {{
+                fixedDepositsAccountData.preClosurePenalInterestOnType.value
+                  | translateKey: 'catalogs'
+              }}
             </td>
           </tr>
         </tbody>
@@ -107,7 +134,8 @@
   <div class="flex-49">
     <div
       *ngIf="
-        !fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval;
+        !fixedDepositsAccountData.status.rejected &&
+          !fixedDepositsAccountData.status.submittedAndPendingApproval;
         else otherDetails
       "
     >
@@ -117,26 +145,36 @@
           <tr>
             <td>{{ 'labels.inputs.Principal Amount' | translate }}</td>
             <td class="r-amount">
-              {{ fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+              {{
+                fixedDepositsAccountData.depositAmount
+                  | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              }}
             </td>
           </tr>
           <tr>
             <td>{{ 'labels.inputs.Maturity Amount' | translate }}</td>
             <td class="r-amount">
-              {{ fixedDepositsAccountData.maturityAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+              {{
+                fixedDepositsAccountData.maturityAmount
+                  | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              }}
             </td>
           </tr>
           <tr *ngIf="fixedDepositsAccountData.summary.totalDeposits">
             <td>{{ 'labels.inputs.Total Deposits' | translate }}</td>
             <td class="r-amount">
-              {{ fixedDepositsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+              {{
+                fixedDepositsAccountData.summary.totalDeposits
+                  | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              }}
             </td>
           </tr>
           <tr *ngIf="fixedDepositsAccountData.summary.totalWithdrawals">
             <td>{{ 'labels.inputs.Total Withdrawals' | translate }}</td>
             <td class="r-amount">
               {{
-                fixedDepositsAccountData.summary.totalWithdrawals | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                fixedDepositsAccountData.summary.totalWithdrawals
+                  | currency: currency.code : 'symbol-narrow' : '1.2-2'
               }}
             </td>
           </tr>
@@ -161,13 +199,19 @@
             <tr>
               <td>{{ 'labels.inputs.Principal Amount' | translate }}</td>
               <td class="r-amount">
-                {{ fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                {{
+                  fixedDepositsAccountData.depositAmount
+                    | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                }}
               </td>
             </tr>
             <tr>
               <td>{{ 'labels.inputs.Maturity Amount' | translate }}</td>
               <td class="r-amount">
-                {{ fixedDepositsAccountData.maturityAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                {{
+                  fixedDepositsAccountData.maturityAmount
+                    | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                }}
               </td>
             </tr>
           </tbody>

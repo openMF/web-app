@@ -165,7 +165,12 @@ export class GeneralTabComponent {
     private router: Router
   ) {
     this.route.data.subscribe(
-      (data: { clientAccountsData: any; clientChargesData: any; clientSummary: any; clientCollateralData: any }) => {
+      (data: {
+        clientAccountsData: any;
+        clientChargesData: any;
+        clientSummary: any;
+        clientCollateralData: any;
+      }) => {
         this.clientAccountData = data.clientAccountsData;
         this.savingAccounts = data.clientAccountsData.savingsAccounts;
         this.loanAccounts = data.clientAccountsData.loanAccounts;

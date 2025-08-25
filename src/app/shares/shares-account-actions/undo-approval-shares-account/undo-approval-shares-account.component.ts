@@ -41,8 +41,10 @@ export class UndoApprovalSharesAccountComponent {
    * if successful redirects to the share account.
    */
   submit() {
-    this.sharesService.executeSharesAccountCommand(this.accountId, 'undoapproval', {}).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.sharesService
+      .executeSharesAccountCommand(this.accountId, 'undoapproval', {})
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

@@ -1,6 +1,13 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationExtras,
+  Router,
+  RouterLinkActive,
+  RouterLink,
+  RouterOutlet
+} from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -18,7 +25,13 @@ import { DelinquencyPausePeriod } from '../models/loan-account.model';
 import { TranslateService } from '@ngx-translate/core';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { OptionData } from 'app/shared/models/option-data.model';
-import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardTitle, MatCardContent } from '@angular/material/card';
+import {
+  MatCard,
+  MatCardHeader,
+  MatCardTitleGroup,
+  MatCardTitle,
+  MatCardContent
+} from '@angular/material/card';
 import { SvgIconComponent } from '../../shared/svg-icon/svg-icon.component';
 import { MatTooltip } from '@angular/material/tooltip';
 import { NgClass, NgIf, NgFor, CurrencyPipe } from '@angular/common';
@@ -106,7 +119,8 @@ export class LoansViewComponent implements OnInit {
         this.loanDatatables = data.loanDatatables;
         this.loanDisplayArrearsDelinquency = data.loanArrearsDelinquencyConfig.value || 0;
         this.loanStatus = this.loanDetailsData.status;
-        this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
+        this.loanSubStatus =
+          this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
         this.currency = this.loanDetailsData.currency;
         loansService.saveLoanDisbursementDetailsData(this.loanDetailsData.disbursementDetails);
         if (this.loanStatus.active) {
@@ -137,7 +151,8 @@ export class LoansViewComponent implements OnInit {
     this.recalculateInterest = this.loanDetailsData.recalculateInterest || true;
     this.status = this.loanDetailsData.status.value;
     this.loanStatus = this.loanDetailsData.status;
-    this.loanSubStatus = this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
+    this.loanSubStatus =
+      this.loanDetailsData.subStatus === undefined ? null : this.loanDetailsData.subStatus;
     if (this.loanStatus.active && this.loanDetailsData.multiDisburseLoan) {
       if (this.loanDetailsData && this.loanDetailsData.transactions) {
         this.loanDetailsData.transactions.forEach((transaction: any) => {
@@ -363,12 +378,17 @@ export class LoansViewComponent implements OnInit {
 
   loanDelinquencyClassification(): void {
     this.loanDelinquencyClassificationStyle = '';
-    if (this.loanDetailsData.delinquent && this.loanDetailsData.delinquent.delinquencyPausePeriods) {
-      this.loanDetailsData.delinquent.delinquencyPausePeriods.some((period: DelinquencyPausePeriod) => {
-        if (period.active) {
-          this.loanDelinquencyClassificationStyle = 'fa fa-stop status-pending';
+    if (
+      this.loanDetailsData.delinquent &&
+      this.loanDetailsData.delinquent.delinquencyPausePeriods
+    ) {
+      this.loanDetailsData.delinquent.delinquencyPausePeriods.some(
+        (period: DelinquencyPausePeriod) => {
+          if (period.active) {
+            this.loanDelinquencyClassificationStyle = 'fa fa-stop status-pending';
+          }
         }
-      });
+      );
     }
   }
 
@@ -378,7 +398,9 @@ export class LoansViewComponent implements OnInit {
       data: {
         heading: this.translateService.instant('labels.heading.Undo Transaction'),
         dialogContext:
-          this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') +
+          this.translateService.instant(
+            'labels.dialogContext.Are you sure you want undo the transaction type'
+          ) +
           ' ' +
           this.translateService.instant('labels.menus.' + actionName)
       }
@@ -397,9 +419,11 @@ export class LoansViewComponent implements OnInit {
             undoCommand = 'undo-charge-off';
             break;
         }
-        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
-          this.reload();
-        });
+        this.loansService
+          .executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {})
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }

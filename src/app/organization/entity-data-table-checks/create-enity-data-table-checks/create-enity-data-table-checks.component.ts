@@ -96,21 +96,30 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
       switch (option) {
         case 'm_client': {
           this.entityType = 'm_client';
-          this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_client');
+          this.dataTableList = this.createEntityData.datatables.filter(
+            (data: any) => data.entity === 'm_client'
+          );
           this.statusList = this.createEntityData.statusClient;
           this.createEntityForm.removeControl('productId');
           break;
         }
         case 'm_loan': {
           this.entityType = 'm_loan';
-          this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_loan');
+          this.dataTableList = this.createEntityData.datatables.filter(
+            (data: any) => data.entity === 'm_loan'
+          );
           this.statusList = this.createEntityData.statusLoans;
-          this.createEntityForm.addControl('productId', new UntypedFormControl('', Validators.required));
+          this.createEntityForm.addControl(
+            'productId',
+            new UntypedFormControl('', Validators.required)
+          );
           break;
         }
         case 'm_group': {
           this.entityType = 'm_group';
-          this.dataTableList = this.createEntityData.datatables.filter((data: any) => data.entity === 'm_group');
+          this.dataTableList = this.createEntityData.datatables.filter(
+            (data: any) => data.entity === 'm_group'
+          );
           this.statusList = this.createEntityData.statusGroup;
           this.createEntityForm.removeControl('productId');
           break;
@@ -121,7 +130,10 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
             (data: any) => data.entity === 'm_savings_account'
           );
           this.statusList = this.createEntityData.statusSavings;
-          this.createEntityForm.addControl('productId', new UntypedFormControl('', Validators.required));
+          this.createEntityForm.addControl(
+            'productId',
+            new UntypedFormControl('', Validators.required)
+          );
           break;
         }
       }
@@ -132,8 +144,10 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
    * Submits Entity Datble Form.
    */
   submit() {
-    this.organizationService.createEntityDataTableChecks(this.createEntityForm.value).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizationService
+      .createEntityDataTableChecks(this.createEntityForm.value)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 }

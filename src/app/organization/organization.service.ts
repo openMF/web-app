@@ -392,9 +392,15 @@ export class OrganizationService {
    * @param {string} currencyCode Currency Code
    * @returns {Observable<any>}
    */
-  getCashierSummaryAndTransactions(tellerId: string, cashierId: string, currencyCode: string): Observable<any> {
+  getCashierSummaryAndTransactions(
+    tellerId: string,
+    cashierId: string,
+    currencyCode: string
+  ): Observable<any> {
     const httpParams = new HttpParams().set('currencyCode', currencyCode);
-    return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}/summaryandtransactions`, { params: httpParams });
+    return this.http.get(`/tellers/${tellerId}/cashiers/${cashierId}/summaryandtransactions`, {
+      params: httpParams
+    });
   }
 
   /**
@@ -433,7 +439,9 @@ export class OrganizationService {
    */
   settleCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
     const httpParams = new HttpParams().set('command', 'settle');
-    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/settle`, cashData, { params: httpParams });
+    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/settle`, cashData, {
+      params: httpParams
+    });
   }
 
   /**
@@ -444,7 +452,9 @@ export class OrganizationService {
    */
   allocateCash(tellerId: string, cashierId: string, cashData: any): Observable<any> {
     const httpParams = new HttpParams().set('command', 'allocate');
-    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/allocate`, cashData, { params: httpParams });
+    return this.http.post(`/tellers/${tellerId}/cashiers/${cashierId}/allocate`, cashData, {
+      params: httpParams
+    });
   }
 
   /** Get Cashier Template.
@@ -549,7 +559,9 @@ export class OrganizationService {
    * @returns {Observable<any>} Entity Data Table Checks data.
    */
   getEntityDataTableChecks(offset: number = 0, limit: number = -1): Observable<any> {
-    const httpParams = new HttpParams().set('offset', offset.toString()).set('limit', limit.toString());
+    const httpParams = new HttpParams()
+      .set('offset', offset.toString())
+      .set('limit', limit.toString());
     return this.http.get('/entityDatatableChecks', { params: httpParams });
   }
 
@@ -762,7 +774,12 @@ export class OrganizationService {
    * @param legalFormType Legal Form type fortemplate retrieval
    * @returns {Observable<any>} Import Template
    */
-  getImportTemplate(urlSuffix: string, officeId: any, staffId: any, legalFormType: string): Observable<any> {
+  getImportTemplate(
+    urlSuffix: string,
+    officeId: any,
+    staffId: any,
+    legalFormType: string
+  ): Observable<any> {
     let httpParams = new HttpParams()
       .set('tenantIdentifier', 'default')
       .set('locale', this.settingsService.language.code)
@@ -788,7 +805,9 @@ export class OrganizationService {
    * @returns {Observable<any>} Import Document
    */
   getImportDocument(id: any): Observable<any> {
-    const httpParams = new HttpParams().set('importDocumentId', id).set('tenantIdentifier', 'default');
+    const httpParams = new HttpParams()
+      .set('importDocumentId', id)
+      .set('tenantIdentifier', 'default');
     return this.http.get('/imports/downloadOutputTemplate', {
       params: httpParams,
       responseType: 'arraybuffer',

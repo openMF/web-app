@@ -40,7 +40,10 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Fund' | translate }}</mat-label>
-      <mat-select matTooltip="{{ 'tooltips.Loan products may be assigned' | translate }}" formControlName="fundId">
+      <mat-select
+        matTooltip="{{ 'tooltips.Loan products may be assigned' | translate }}"
+        formControlName="fundId"
+      >
         <mat-option *ngFor="let fund of fundData" [value]="fund.id">
           {{ fund.name }}
         </mat-option>
@@ -63,7 +66,9 @@
         [min]="minDate"
         [max]="maxDate"
         [matDatepicker]="startDatePicker"
-        matTooltip="{{ 'tooltips.loan product will be active and available to clients' | translate }}"
+        matTooltip="{{
+          'tooltips.loan product will be active and available to clients' | translate
+        }}"
         formControlName="startDate"
       />
       <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
@@ -77,7 +82,9 @@
         [min]="minDate"
         [max]="maxDate"
         [matDatepicker]="closeDatePicker"
-        matTooltip="{{ 'tooltips.loan product will become inactive and unavailable to clients' | translate }}"
+        matTooltip="{{
+          'tooltips.loan product will become inactive and unavailable to clients' | translate
+        }}"
         formControlName="closeDate"
       />
       <mat-datepicker-toggle matSuffix [for]="closeDatePicker"></mat-datepicker-toggle>

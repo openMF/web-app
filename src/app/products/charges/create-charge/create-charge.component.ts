@@ -81,7 +81,8 @@ export class CreateChargeComponent implements OnInit {
             data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions
           );
       } else {
-        this.incomeAndLiabilityAccountData = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions;
+        this.incomeAndLiabilityAccountData =
+          data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions;
       }
     });
   }
@@ -147,19 +148,23 @@ export class CreateChargeComponent implements OnInit {
     this.chargeForm.get('chargeAppliesTo').valueChanges.subscribe((chargeAppliesTo) => {
       switch (chargeAppliesTo) {
         case 1:
-          this.chargeCalculationTypeData = this.chargesTemplateData.loanChargeCalculationTypeOptions;
+          this.chargeCalculationTypeData =
+            this.chargesTemplateData.loanChargeCalculationTypeOptions;
           this.chargeTimeTypeData = this.chargesTemplateData.loanChargeTimeTypeOptions;
           break;
         case 2:
-          this.chargeCalculationTypeData = this.chargesTemplateData.savingsChargeCalculationTypeOptions;
+          this.chargeCalculationTypeData =
+            this.chargesTemplateData.savingsChargeCalculationTypeOptions;
           this.chargeTimeTypeData = this.chargesTemplateData.savingsChargeTimeTypeOptions;
           break;
         case 3:
-          this.chargeCalculationTypeData = this.chargesTemplateData.clientChargeCalculationTypeOptions;
+          this.chargeCalculationTypeData =
+            this.chargesTemplateData.clientChargeCalculationTypeOptions;
           this.chargeTimeTypeData = this.chargesTemplateData.clientChargeTimeTypeOptions;
           break;
         case 4:
-          this.chargeCalculationTypeData = this.chargesTemplateData.shareChargeCalculationTypeOptions;
+          this.chargeCalculationTypeData =
+            this.chargesTemplateData.shareChargeCalculationTypeOptions;
           this.chargeTimeTypeData = this.chargesTemplateData.shareChargeTimeTypeOptions;
           break;
       }
@@ -224,7 +229,10 @@ export class CreateChargeComponent implements OnInit {
       this.chargeForm.get('penalty').enable();
       switch (chargeAppliesTo) {
         case 1: // Loan
-          this.chargeForm.addControl('chargePaymentMode', new UntypedFormControl('', Validators.required));
+          this.chargeForm.addControl(
+            'chargePaymentMode',
+            new UntypedFormControl('', Validators.required)
+          );
           this.chargeForm.removeControl('incomeAccountId');
           break;
         case 2: // Savings
@@ -254,7 +262,10 @@ export class CreateChargeComponent implements OnInit {
       }
       switch (chargeTimeType) {
         case 6: // Annual Fee
-          this.chargeForm.addControl('feeOnMonthDay', new UntypedFormControl('', Validators.required));
+          this.chargeForm.addControl(
+            'feeOnMonthDay',
+            new UntypedFormControl('', Validators.required)
+          );
           break;
         case 7: // Monthly Fee
           this.chargeForm.addControl('feeOnMonthDay', new UntypedFormControl(''));
@@ -273,7 +284,10 @@ export class CreateChargeComponent implements OnInit {
           this.chargeForm.addControl('addFeeFrequency', new UntypedFormControl(false));
           this.chargeForm.get('addFeeFrequency').valueChanges.subscribe((addFeeFrequency) => {
             if (addFeeFrequency) {
-              this.chargeForm.addControl('feeFrequency', new UntypedFormControl('', Validators.required));
+              this.chargeForm.addControl(
+                'feeFrequency',
+                new UntypedFormControl('', Validators.required)
+              );
               this.chargeForm.addControl(
                 'feeInterval',
                 new UntypedFormControl('', [

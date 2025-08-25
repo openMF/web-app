@@ -22,7 +22,8 @@ export class FixedDepositDatatableTabComponent {
 
     this.route.data.subscribe((data: { fixedDepositDatatable: any }) => {
       this.entityDatatable = data.fixedDepositDatatable;
-      this.multiRowDatatableFlag = this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
+      this.multiRowDatatableFlag =
+        this.entityDatatable.columnHeaders[0].columnName === 'id' ? true : false;
     });
   }
 }

@@ -16,7 +16,8 @@
             <mat-datepicker-toggle matSuffix [for]="withdrawalDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawalDatePicker></mat-datepicker>
             <mat-error *ngIf="withdrawClientForm.controls.withdrawalDate.hasError('required')">
-              {{ 'labels.inputs.Withdrawal Date' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Withdrawal Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
@@ -29,7 +30,8 @@
               </mat-option>
             </mat-select>
             <mat-error *ngIf="withdrawClientForm.controls.withdrawalReasonId.hasError('required')">
-              {{ 'labels.inputs.Withdrawal Reason' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Withdrawal Reason' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>

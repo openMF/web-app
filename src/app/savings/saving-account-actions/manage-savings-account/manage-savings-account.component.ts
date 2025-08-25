@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { SavingsService } from 'app/savings/savings.service';
@@ -150,7 +155,10 @@ export class ManageSavingsAccountComponent implements OnInit {
       const dateFormat = this.settingsService.dateFormat;
       const prevTransactionDate: Date = this.manageSavingsAccountForm.value.transactionDate;
       if (manageSavingsAccountFormData.transactionDate instanceof Date) {
-        manageSavingsAccountFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+        manageSavingsAccountFormData.transactionDate = this.dateUtils.formatDate(
+          prevTransactionDate,
+          dateFormat
+        );
       }
       payload = {
         ...manageSavingsAccountFormData,

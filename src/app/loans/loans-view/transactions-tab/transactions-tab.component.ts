@@ -292,7 +292,10 @@ export class TransactionsTabComponent implements OnInit {
     if (transaction.transactionRelations && transaction.transactionRelations.length > 0) {
       return 'linked';
     }
-    if (this.isAccrual(transaction.type) || this.isCapitalizedIncomeAmortization(transaction.type)) {
+    if (
+      this.isAccrual(transaction.type) ||
+      this.isCapitalizedIncomeAmortization(transaction.type)
+    ) {
       return 'accrual';
     }
     if (this.isChargeOff(transaction.type)) {
@@ -336,7 +339,10 @@ export class TransactionsTabComponent implements OnInit {
       payload = {};
     } else {
       payload = {
-        transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+        transactionDate: this.dateUtils.formatDate(
+          operationDate && new Date(operationDate),
+          dateFormat
+        ),
         transactionAmount: 0,
         dateFormat,
         locale
@@ -347,7 +353,9 @@ export class TransactionsTabComponent implements OnInit {
       data: {
         heading: this.translateService.instant('labels.heading.Undo Transaction'),
         dialogContext:
-          this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') +
+          this.translateService.instant(
+            'labels.dialogContext.Are you sure you want undo the transaction type'
+          ) +
           `${transaction.type.value}` +
           this.translateService.instant('labels.dialogContext.with id') +
           `${transaction.id}`
@@ -375,7 +383,9 @@ export class TransactionsTabComponent implements OnInit {
       data: {
         heading: this.translateService.instant('labels.heading.Undo Transaction'),
         dialogContext:
-          this.translateService.instant('labels.dialogContext.Are you sure you want undo the transaction type') +
+          this.translateService.instant(
+            'labels.dialogContext.Are you sure you want undo the transaction type'
+          ) +
           ' ' +
           this.translateService.instant('labels.menus.' + actionName)
       }
@@ -383,9 +393,11 @@ export class TransactionsTabComponent implements OnInit {
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         const undoCommand = actionName === 'Re-Age' ? 'undoReAge' : 'undoReAmortize';
-        this.loansService.executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {}).subscribe(() => {
-          this.reload();
-        });
+        this.loansService
+          .executeLoansAccountTransactionsCommand(String(this.loanId), undoCommand, {})
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -399,7 +411,9 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   private isDownPayment(transactionType: LoanTransactionType): boolean {
-    return transactionType.downPayment || transactionType.code === 'loanTransactionType.downPayment';
+    return (
+      transactionType.downPayment || transactionType.code === 'loanTransactionType.downPayment'
+    );
   }
 
   private isReAge(transactionType: LoanTransactionType): boolean {
@@ -411,7 +425,10 @@ export class TransactionsTabComponent implements OnInit {
   }
 
   private isCapitalizedIncome(transactionType: LoanTransactionType): boolean {
-    return transactionType.capitalizedIncome || transactionType.code === 'loanTransactionType.capitalizedIncome';
+    return (
+      transactionType.capitalizedIncome ||
+      transactionType.code === 'loanTransactionType.capitalizedIncome'
+    );
   }
 
   private isCapitalizedIncomeAmortization(transactionType: LoanTransactionType): boolean {
@@ -495,7 +512,9 @@ export class TransactionsTabComponent implements OnInit {
         ];
         const data = {
           title: this.translateService.instant('labels.buttons.Create Interest Refund'),
-          layout: { addButtonText: this.translateService.instant('labels.buttons.Create Interest Refund') },
+          layout: {
+            addButtonText: this.translateService.instant('labels.buttons.Create Interest Refund')
+          },
           formfields: formfields
         };
         const dialogRef = this.dialog.open(FormDialogComponent, { data });
@@ -526,7 +545,9 @@ export class TransactionsTabComponent implements OnInit {
   private reload() {
     const clientId = this.route.parent.parent.snapshot.params['clientId'];
     const url: string = this.router.url;
-    this.router.navigateByUrl(`/clients`, { skipLocationChange: true }).then(() => this.router.navigate([url]));
+    this.router
+      .navigateByUrl(`/clients`, { skipLocationChange: true })
+      .then(() => this.router.navigate([url]));
   }
 
   displaySubMenu(transaction: LoanTransaction): boolean {
@@ -539,11 +560,18 @@ export class TransactionsTabComponent implements OnInit {
   capitalizedIncomeAdjustmentTransaction(transaction: LoanTransaction) {
     const accountId = `${this.loanId}`;
     this.loansService
-      .getLoanTransactionActionTemplate(accountId, 'capitalizedIncomeAdjustment', `${transaction.id}`)
+      .getLoanTransactionActionTemplate(
+        accountId,
+        'capitalizedIncomeAdjustment',
+        `${transaction.id}`
+      )
       .subscribe((response: any) => {
         const transactionDate = response.date || transaction.date;
         if (response.amount == 0) {
-          this.displayAlertMessage('Capitalized Income amount adjusted already adjusted', transaction.amount);
+          this.displayAlertMessage(
+            'Capitalized Income amount adjusted already adjusted',
+            transaction.amount
+          );
         } else {
           const transactionAmount = response.amount || transaction.amount;
           const formfields: FormfieldBase[] = [
@@ -585,7 +613,10 @@ export class TransactionsTabComponent implements OnInit {
               if (response.data.value.amount <= transactionAmount) {
                 const locale = this.settingsService.language.code;
                 const payload = {
-                  transactionDate: this.dateUtils.formatDate(response.data.value.transactionDate, dateFormat),
+                  transactionDate: this.dateUtils.formatDate(
+                    response.data.value.transactionDate,
+                    dateFormat
+                  ),
                   transactionAmount: response.data.value.amount,
                   locale,
                   dateFormat
@@ -661,18 +692,29 @@ export class TransactionsTabComponent implements OnInit {
               if (response.data.value.amount <= transactionAmount) {
                 const locale = this.settingsService.language.code;
                 const payload = {
-                  transactionDate: this.dateUtils.formatDate(response.data.value.transactionDate, dateFormat),
+                  transactionDate: this.dateUtils.formatDate(
+                    response.data.value.transactionDate,
+                    dateFormat
+                  ),
                   transactionAmount: response.data.value.amount,
                   locale,
                   dateFormat
                 };
                 this.loansService
-                  .executeLoansAccountTransactionsCommand(accountId, 'buyDownFeeAdjustment', payload, transaction.id)
+                  .executeLoansAccountTransactionsCommand(
+                    accountId,
+                    'buyDownFeeAdjustment',
+                    payload,
+                    transaction.id
+                  )
                   .subscribe(() => {
                     this.reload();
                   });
               } else {
-                this.displayAlertMessage('Buy Down Fee Adjustment amount must be lower or equal to', transactionAmount);
+                this.displayAlertMessage(
+                  'Buy Down Fee Adjustment amount must be lower or equal to',
+                  transactionAmount
+                );
               }
             }
           });

@@ -13,7 +13,11 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-48" (click)="submittedOnDatePicker.open()" *ngIf="savingsProductSelected">
+    <mat-form-field
+      class="flex-48"
+      (click)="submittedOnDatePicker.open()"
+      *ngIf="savingsProductSelected"
+    >
       <mat-label>{{ 'labels.inputs.Submitted On' | translate }}</mat-label>
       <input
         matInput

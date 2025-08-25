@@ -18,6 +18,8 @@ export class ExternalAssetOwnerJournalEntryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const transferId = route.paramMap.get('transferId') || route.parent.paramMap.get('transferId');
-    return this.externalAssetOwnerService.retrieveExternalAssetOwnerTransferJournalEntries(transferId);
+    return this.externalAssetOwnerService.retrieveExternalAssetOwnerTransferJournalEntries(
+      transferId
+    );
   }
 }

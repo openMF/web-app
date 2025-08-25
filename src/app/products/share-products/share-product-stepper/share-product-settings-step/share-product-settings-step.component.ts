@@ -1,5 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  FormControl,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
@@ -32,8 +38,10 @@ export class ShareProductSettingsStepComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.minimumActivePeriodFrequencyTypeData = this.shareProductsTemplate.minimumActivePeriodFrequencyTypeOptions;
-    this.lockinPeriodFrequencyTypeData = this.shareProductsTemplate.lockinPeriodFrequencyTypeOptions;
+    this.minimumActivePeriodFrequencyTypeData =
+      this.shareProductsTemplate.minimumActivePeriodFrequencyTypeOptions;
+    this.lockinPeriodFrequencyTypeData =
+      this.shareProductsTemplate.lockinPeriodFrequencyTypeOptions;
 
     this.shareProductSettingsForm.patchValue({
       minimumShares: this.shareProductsTemplate.minimumShares,
@@ -45,8 +53,10 @@ export class ShareProductSettingsStepComponent implements OnInit {
         this.shareProductsTemplate.minimumActivePeriodForDividendsTypeEnum.id,
       lockinPeriodFrequency: this.shareProductsTemplate.lockinPeriod,
       lockinPeriodFrequencyType:
-        this.shareProductsTemplate.lockPeriodTypeEnum && this.shareProductsTemplate.lockPeriodTypeEnum.id,
-      allowDividendCalculationForInactiveClients: this.shareProductsTemplate.allowDividendCalculationForInactiveClients
+        this.shareProductsTemplate.lockPeriodTypeEnum &&
+        this.shareProductsTemplate.lockPeriodTypeEnum.id,
+      allowDividendCalculationForInactiveClients:
+        this.shareProductsTemplate.allowDividendCalculationForInactiveClients
     });
   }
 

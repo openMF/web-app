@@ -128,7 +128,10 @@ const routes: Routes = [
             },
             {
               path: 'create',
-              data: { title: 'Create Provisioning Criteria', breadcrumb: 'Create Provisioning Criteria' },
+              data: {
+                title: 'Create Provisioning Criteria',
+                breadcrumb: 'Create Provisioning Criteria'
+              },
               component: CreateLoanProvisioningCriteriaComponent,
               resolve: {
                 loanProvisioningCriteriaTemplate: LoanProvisioningCriteriaTemplateResolver
@@ -148,7 +151,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditLoanProvisioningCriteriaComponent,
-                  data: { title: 'Edit Provisioning Criteria', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Provisioning Criteria',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     loanProvisioningCriteriaAndTemplate: LoanProvisioningCriteriaAndTemplateResolver
                   }
@@ -178,7 +185,11 @@ const routes: Routes = [
             },
             {
               path: ':officeId',
-              data: { title: 'View Office', breadcrumb: 'officeId', routeParamBreadcrumb: 'officeId' },
+              data: {
+                title: 'View Office',
+                breadcrumb: 'officeId',
+                routeParamBreadcrumb: 'officeId'
+              },
               component: ViewOfficeComponent,
               resolve: {
                 officeDatatables: OfficeDatatablesResolver
@@ -319,7 +330,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditCampaignComponent,
-                  data: { title: 'Edit SMS Campaign', breadcrumb: 'Edit', routeResolveBreadcrumb: false },
+                  data: {
+                    title: 'Edit SMS Campaign',
+                    breadcrumb: 'Edit',
+                    routeResolveBreadcrumb: false
+                  },
                   resolve: {
                     smsCampaignTemplate: SmsCampaignTemplateResolver
                   }
@@ -331,7 +346,10 @@ const routes: Routes = [
         {
           path: 'standing-instructions-history',
           component: StandingInstructionsHistoryComponent,
-          data: { title: 'Standing Instructions History', breadcrumb: 'Standing Instructions History' },
+          data: {
+            title: 'Standing Instructions History',
+            breadcrumb: 'Standing Instructions History'
+          },
           resolve: {
             standingInstructionsTemplate: StandingInstructionsTemplateResolver
           }
@@ -383,7 +401,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditAdhocQueryComponent,
-                  data: { title: 'Edit Adhoc Query', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Adhoc Query',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     adhocQueryAndTemplate: AdhocQueryAndTemplateResolver
                   }
@@ -457,7 +479,11 @@ const routes: Routes = [
                         {
                           path: '',
                           component: ViewCashierComponent,
-                          data: { title: 'View Cashier', breadcrumb: 'View Cashier', routeParamBreadcrumb: false },
+                          data: {
+                            title: 'View Cashier',
+                            breadcrumb: 'View Cashier',
+                            routeParamBreadcrumb: false
+                          },
                           resolve: {
                             cashier: CashierResolver
                           }
@@ -465,7 +491,11 @@ const routes: Routes = [
                         {
                           path: 'edit',
                           component: EditCashierComponent,
-                          data: { title: 'Edit Cashier', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                          data: {
+                            title: 'Edit Cashier',
+                            breadcrumb: 'Edit',
+                            routeParamBreadcrumb: false
+                          },
                           resolve: {
                             cashier: CashierResolver,
                             cashierTemplate: EditCashierResolver
@@ -486,7 +516,11 @@ const routes: Routes = [
                         {
                           path: 'settle',
                           component: SettleCashComponent,
-                          data: { title: 'Settle Cash', breadcrumb: 'Settle Cash', routeParamBreadcrumb: false },
+                          data: {
+                            title: 'Settle Cash',
+                            breadcrumb: 'Settle Cash',
+                            routeParamBreadcrumb: false
+                          },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
                           }
@@ -494,7 +528,11 @@ const routes: Routes = [
                         {
                           path: 'allocate',
                           component: AllocateCashComponent,
-                          data: { title: 'Allocate Cash', breadcrumb: 'Allocate Cash', routeParamBreadcrumb: false },
+                          data: {
+                            title: 'Allocate Cash',
+                            breadcrumb: 'Allocate Cash',
+                            routeParamBreadcrumb: false
+                          },
                           resolve: {
                             cashierTemplate: CashierTransactionTemplateResolver
                           }
@@ -530,7 +568,11 @@ const routes: Routes = [
                 {
                   path: 'edit',
                   component: EditPaymentTypeComponent,
-                  data: { title: 'Edit Payment Type', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+                  data: {
+                    title: 'Edit Payment Type',
+                    breadcrumb: 'Edit',
+                    routeParamBreadcrumb: false
+                  },
                   resolve: {
                     paymentType: PaymentTypesResolver
                   }

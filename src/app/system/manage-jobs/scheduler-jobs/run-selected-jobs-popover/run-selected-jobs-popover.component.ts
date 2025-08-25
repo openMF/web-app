@@ -1,5 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Inject, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogTitle,
@@ -56,7 +64,8 @@ export class RunSelectedJobsPopoverComponent implements OnInit {
   @Output() confirmedJobs = new EventEmitter<JobDataType[]>();
 
   /** Job table children */
-  @ViewChildren(RunSelectedJobsTableComponent) tableComponents: QueryList<RunSelectedJobsTableComponent>;
+  @ViewChildren(RunSelectedJobsTableComponent)
+  tableComponents: QueryList<RunSelectedJobsTableComponent>;
 
   /** Initialize Selected Jobs */
   selectedJobs: JobDataType[] = [];

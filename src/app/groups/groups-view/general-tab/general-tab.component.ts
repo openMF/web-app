@@ -129,7 +129,13 @@ export class GeneralTabComponent {
    */
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe(
-      (data: { groupAccountsData: any; groupClientMembers: any; groupSummary: any; glimData: any; gsimData: any }) => {
+      (data: {
+        groupAccountsData: any;
+        groupClientMembers: any;
+        groupSummary: any;
+        glimData: any;
+        gsimData: any;
+      }) => {
         this.glimAccounts = data.glimData;
         this.gsimAccounts = data.gsimData;
         this.groupAccountData = data.groupAccountsData;

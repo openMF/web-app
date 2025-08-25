@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -135,7 +142,12 @@ export class FixedDepositProductsComponent implements OnInit, AfterViewInit {
 
     if (this.configurationWizardService.showFixedDepositProductsList === true) {
       setTimeout(() => {
-        this.showPopover(this.templateFixedProductsTable, this.fixedProductsTable.nativeElement, 'top', true);
+        this.showPopover(
+          this.templateFixedProductsTable,
+          this.fixedProductsTable.nativeElement,
+          'top',
+          true
+        );
       });
     }
   }

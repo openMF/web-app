@@ -106,9 +106,12 @@ export class ViewGuarantorsComponent implements OnInit {
   }
 
   viewGuarantorDetails(guarantorData: any) {
-    const viewGuarantorDetailsDialogRef = this.dialog.open(LoansAccountViewGuarantorDetailsDialogComponent, {
-      data: { guarantorData: guarantorData }
-    });
+    const viewGuarantorDetailsDialogRef = this.dialog.open(
+      LoansAccountViewGuarantorDetailsDialogComponent,
+      {
+        data: { guarantorData: guarantorData }
+      }
+    );
     viewGuarantorDetailsDialogRef.afterClosed().subscribe(() => {});
   }
 

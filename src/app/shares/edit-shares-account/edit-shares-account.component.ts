@@ -46,7 +46,8 @@ export class EditSharesAccountComponent {
   @ViewChild(SharesAccountDetailsStepComponent, { static: true })
   sharesAccountDetailsStep: SharesAccountDetailsStepComponent;
   /** Shares Account Terms Step */
-  @ViewChild(SharesAccountTermsStepComponent, { static: true }) sharesAccountTermsStep: SharesAccountTermsStepComponent;
+  @ViewChild(SharesAccountTermsStepComponent, { static: true })
+  sharesAccountTermsStep: SharesAccountTermsStepComponent;
   /** Shares Account Charges Step */
   @ViewChild(SharesAccountChargesStepComponent, { static: true })
   sharesAccountChargesStep: SharesAccountChargesStepComponent;
@@ -127,7 +128,10 @@ export class EditSharesAccountComponent {
     const sharesAccount = {
       ...this.sharesAccount,
       clientId: this.sharesAccountAndTemplate.clientId,
-      charges: this.sharesAccount.charges.map((charge: any) => ({ chargeId: charge.id, amount: charge.amount })),
+      charges: this.sharesAccount.charges.map((charge: any) => ({
+        chargeId: charge.id,
+        amount: charge.amount
+      })),
       applicationDate: this.dateUtils.formatDate(this.sharesAccount.applicationDate, dateFormat),
       submittedDate: this.dateUtils.formatDate(this.sharesAccount.submittedDate, dateFormat),
       unitPrice: this.sharesAccountTermsForm.get('unitPrice').value,

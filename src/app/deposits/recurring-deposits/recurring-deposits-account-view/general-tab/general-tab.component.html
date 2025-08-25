@@ -2,7 +2,8 @@
   <div
     class="flex-49"
     *ngIf="
-      !recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval
+      !recurringDepositsAccountData.status.rejected &&
+      !recurringDepositsAccountData.status.submittedAndPendingApproval
     "
   >
     <h4 class="table-headers">{{ 'labels.inputs.Account Details' | translate }}</h4>
@@ -43,7 +44,8 @@
         </tr>
         <tr
           *ngIf="
-            recurringDepositsAccountData.timeline.closedOnDate || recurringDepositsAccountData.summary.totalWitddrawals
+            recurringDepositsAccountData.timeline.closedOnDate ||
+            recurringDepositsAccountData.summary.totalWitddrawals
           "
         >
           <td *ngIf="recurringDepositsAccountData.timeline.closedOnDate">
@@ -58,7 +60,9 @@
           <td>{{ 'labels.inputs.Deposit Frequency' | translate }}</td>
           <td>
             <span class="m-r-5">{{ recurringDepositsAccountData.recurringFrequency }}</span>
-            {{ recurringDepositsAccountData.recurringFrequencyType.value | translateKey: 'catalogs' }}
+            {{
+              recurringDepositsAccountData.recurringFrequencyType.value | translateKey: 'catalogs'
+            }}
           </td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.minBalanceForInterestCalculation">
@@ -80,7 +84,8 @@
   <div
     class="flex-49"
     *ngIf="
-      !recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval
+      !recurringDepositsAccountData.status.rejected &&
+      !recurringDepositsAccountData.status.submittedAndPendingApproval
     "
   >
     <h4 class="table-headers">{{ 'labels.heading.Performance History' | translate }}</h4>
@@ -90,7 +95,8 @@
           <td>{{ 'labels.inputs.Principal Amount' | translate }}</td>
           <td class="r-amount">
             <span>{{
-              recurringDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              recurringDepositsAccountData.depositAmount
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
             }}</span>
           </td>
         </tr>
@@ -98,7 +104,8 @@
           <td>{{ 'labels.inputs.Maturity Amount' | translate }}</td>
           <td class="r-amount">
             <span>{{
-              recurringDepositsAccountData.maturityAmount | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              recurringDepositsAccountData.maturityAmount
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
             }}</span>
           </td>
         </tr>
@@ -115,7 +122,8 @@
           <td>{{ 'labels.inputs.Deposits till Date' | translate }}</td>
           <td class="r-amount">
             <span *ngIf="recurringDepositsAccountData.summary.totalDeposits">{{
-              recurringDepositsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              recurringDepositsAccountData.summary.totalDeposits
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
             }}</span>
             <span *ngIf="!recurringDepositsAccountData.summary.totalDeposits">{{
               0 | currency: currency.code : 'symbol-narrow' : '1.2-2'
@@ -151,7 +159,8 @@
   <div
     class="flex-49"
     *ngIf="
-      recurringDepositsAccountData.status.rejected || recurringDepositsAccountData.status.submittedAndPendingApproval
+      recurringDepositsAccountData.status.rejected ||
+      recurringDepositsAccountData.status.submittedAndPendingApproval
     "
   >
     <table>
@@ -207,7 +216,8 @@
           <td>{{ 'labels.inputs.Total Deposits' | translate }}</td>
           <td class="r-amount">
             <span *ngIf="recurringDepositsAccountData.summary.totalDeposits">{{
-              recurringDepositsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              recurringDepositsAccountData.summary.totalDeposits
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
             }}</span>
             <span *ngIf="!recurringDepositsAccountData.summary.totalDeposits">{{
               0 | currency: currency.code : 'symbol-narrow' : '1.2-2'
@@ -218,7 +228,8 @@
           <td>{{ 'labels.inputs.Actual Available Balance' | translate }}</td>
           <td class="r-amount">
             {{
-              recurringDepositsAccountData.summary.accountBalance | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              recurringDepositsAccountData.summary.accountBalance
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
             }}
           </td>
         </tr>
@@ -253,7 +264,9 @@
         <tr *ngIf="recurringDepositsAccountData.minBalanceForInterestCalculation">
           <td>{{ 'labels.inputs.Balance Required for Interest Calculation' | translate }}</td>
           <td class="r-amount">
-            <span>{{ recurringDepositsAccountData.minBalanceForInterestCalculation | number }}</span>
+            <span>{{
+              recurringDepositsAccountData.minBalanceForInterestCalculation | number
+            }}</span>
           </td>
         </tr>
       </tbody>
@@ -263,7 +276,8 @@
   <div
     class="flex-49"
     *ngIf="
-      recurringDepositsAccountData.status.rejected || recurringDepositsAccountData.status.submittedAndPendingApproval
+      recurringDepositsAccountData.status.rejected ||
+      recurringDepositsAccountData.status.submittedAndPendingApproval
     "
   >
     <table>
@@ -272,7 +286,8 @@
           <td>{{ 'labels.inputs.Principal Amount' | translate }}</td>
           <td class="r-amount">
             <span *ngIf="recurringDepositsAccountData.depositAmount">{{
-              recurringDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              recurringDepositsAccountData.depositAmount
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
             }}</span>
             <span *ngIf="!recurringDepositsAccountData.depositAmount">{{
               0 | currency: currency.code : 'symbol-narrow' : '1.2-2'
@@ -282,14 +297,17 @@
         <tr>
           <td>{{ 'labels.inputs.Rate of Interest' | translate }}</td>
           <td class="r-amount">
-            <span>{{ recurringDepositsAccountData.nominalAnnualInterestRate | formatNumber }} %</span>
+            <span
+              >{{ recurringDepositsAccountData.nominalAnnualInterestRate | formatNumber }} %</span
+            >
           </td>
         </tr>
         <tr *ngIf="recurringDepositsAccountData.maturityDate">
           <td>{{ 'labels.inputs.Maturity Amount' | translate }}</td>
           <td class="r-amount">
             <span>{{
-              recurringDepositsAccountData.maturityAmount | currency: currency.code : 'symbol-narrow' : '1.2-2'
+              recurringDepositsAccountData.maturityAmount
+                | currency: currency.code : 'symbol-narrow' : '1.2-2'
             }}</span>
           </td>
         </tr>
@@ -340,7 +358,8 @@
   <div
     class="flex-49"
     *ngIf="
-      !recurringDepositsAccountData.status.rejected && !recurringDepositsAccountData.status.submittedAndPendingApproval
+      !recurringDepositsAccountData.status.rejected &&
+      !recurringDepositsAccountData.status.submittedAndPendingApproval
     "
   >
     <h4 class="table-headers">{{ 'labels.heading.Interest Details' | translate }}</h4>
@@ -348,33 +367,42 @@
       <tbody>
         <tr>
           <td>{{ 'labels.inputs.Interest Rate' | translate }}</td>
-          <td class="r-amount">{{ recurringDepositsAccountData.nominalAnnualInterestRate | formatNumber }} %</td>
+          <td class="r-amount">
+            {{ recurringDepositsAccountData.nominalAnnualInterestRate | formatNumber }} %
+          </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Interest Compounding Period' | translate }}</td>
           <td>
             <span>{{
-              recurringDepositsAccountData.interestCompoundingPeriodType.value | translateKey: 'catalogs'
+              recurringDepositsAccountData.interestCompoundingPeriodType.value
+                | translateKey: 'catalogs'
             }}</span>
           </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Interest Posting Period' | translate }}</td>
           <td>
-            <span>{{ recurringDepositsAccountData.interestPostingPeriodType.value | translateKey: 'catalogs' }}</span>
+            <span>{{
+              recurringDepositsAccountData.interestPostingPeriodType.value
+                | translateKey: 'catalogs'
+            }}</span>
           </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Interest calculated using' | translate }}</td>
           <td>
-            <span>{{ recurringDepositsAccountData.interestCalculationType.value | translateKey: 'catalogs' }}</span>
+            <span>{{
+              recurringDepositsAccountData.interestCalculationType.value | translateKey: 'catalogs'
+            }}</span>
           </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Days in Year' | translate }}</td>
           <td>
             <span>{{
-              recurringDepositsAccountData.interestCalculationDaysInYearType.value | translateKey: 'catalogs'
+              recurringDepositsAccountData.interestCalculationDaysInYearType.value
+                | translateKey: 'catalogs'
             }}</span>
           </td>
         </tr>
@@ -383,7 +411,10 @@
           <td>
             <span
               >{{ recurringDepositsAccountData.preClosurePenalInterest }} % on
-              {{ recurringDepositsAccountData.preClosurePenalInterestOnType.value | translateKey: 'catalogs' }}</span
+              {{
+                recurringDepositsAccountData.preClosurePenalInterestOnType.value
+                  | translateKey: 'catalogs'
+              }}</span
             >
           </td>
         </tr>
@@ -394,7 +425,8 @@
   <div
     class="flex-49"
     *ngIf="
-      recurringDepositsAccountData.status.rejected || recurringDepositsAccountData.status.submittedAndPendingApproval
+      recurringDepositsAccountData.status.rejected ||
+      recurringDepositsAccountData.status.submittedAndPendingApproval
     "
   >
     <table>
@@ -403,27 +435,34 @@
           <td>{{ 'labels.inputs.Interest Compounding Period' | translate }}</td>
           <td>
             <span>{{
-              recurringDepositsAccountData.interestCompoundingPeriodType.value | translateKey: 'catalogs'
+              recurringDepositsAccountData.interestCompoundingPeriodType.value
+                | translateKey: 'catalogs'
             }}</span>
           </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Interest Posting Period' | translate }}</td>
           <td>
-            <span>{{ recurringDepositsAccountData.interestPostingPeriodType.value | translateKey: 'catalogs' }}</span>
+            <span>{{
+              recurringDepositsAccountData.interestPostingPeriodType.value
+                | translateKey: 'catalogs'
+            }}</span>
           </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Interest calculated using' | translate }}</td>
           <td>
-            <span>{{ recurringDepositsAccountData.interestCalculationType.value | translateKey: 'catalogs' }}</span>
+            <span>{{
+              recurringDepositsAccountData.interestCalculationType.value | translateKey: 'catalogs'
+            }}</span>
           </td>
         </tr>
         <tr>
           <td>{{ 'labels.inputs.Days in Year' | translate }}</td>
           <td>
             <span>{{
-              recurringDepositsAccountData.interestCalculationDaysInYearType.value | translateKey: 'catalogs'
+              recurringDepositsAccountData.interestCalculationDaysInYearType.value
+                | translateKey: 'catalogs'
             }}</span>
           </td>
         </tr>
@@ -432,7 +471,10 @@
           <td>
             <span
               >{{ recurringDepositsAccountData.preClosurePenalInterest }} % on
-              {{ recurringDepositsAccountData.preClosurePenalInterestOnType.value | translateKey: 'catalogs' }}</span
+              {{
+                recurringDepositsAccountData.preClosurePenalInterestOnType.value
+                  | translateKey: 'catalogs'
+              }}</span
             >
           </td>
         </tr>

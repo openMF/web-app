@@ -95,20 +95,26 @@ export class EditAdhocQueryComponent implements OnInit {
    * Sets the conditional controls of the adhoc query form
    */
   setConditionalControls() {
-    this.editAdhocQueryForm.get('reportRunFrequency').valueChanges.subscribe((reportRunFrequencyId) => {
-      if (reportRunFrequencyId === 5) {
-        this.editAdhocQueryForm.addControl(
-          'reportRunEvery',
-          new UntypedFormControl('', [
-            Validators.required,
-            Validators.min(1)])
-        );
-        this.editAdhocQueryForm.get('reportRunEvery').patchValue(this.adhocQueryTemplateData.reportRunEvery);
-      } else {
-        this.editAdhocQueryForm.removeControl('reportRunEvery');
-      }
-    });
-    this.editAdhocQueryForm.get('reportRunFrequency').patchValue(this.adhocQueryTemplateData.reportRunFrequency);
+    this.editAdhocQueryForm
+      .get('reportRunFrequency')
+      .valueChanges.subscribe((reportRunFrequencyId) => {
+        if (reportRunFrequencyId === 5) {
+          this.editAdhocQueryForm.addControl(
+            'reportRunEvery',
+            new UntypedFormControl('', [
+              Validators.required,
+              Validators.min(1)])
+          );
+          this.editAdhocQueryForm
+            .get('reportRunEvery')
+            .patchValue(this.adhocQueryTemplateData.reportRunEvery);
+        } else {
+          this.editAdhocQueryForm.removeControl('reportRunEvery');
+        }
+      });
+    this.editAdhocQueryForm
+      .get('reportRunFrequency')
+      .patchValue(this.adhocQueryTemplateData.reportRunFrequency);
   }
 
   /**

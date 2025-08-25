@@ -104,7 +104,12 @@ export class ViewChargeComponent {
           locale
         };
         this.loansService
-          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'pay', dataObject, this.chargeData.id)
+          .executeLoansAccountChargesCommand(
+            this.chargeData.loanId,
+            'pay',
+            dataObject,
+            this.chargeData.id
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -128,7 +133,12 @@ export class ViewChargeComponent {
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
         this.loansService
-          .executeLoansAccountChargesCommand(this.chargeData.loanId, 'waive', {}, this.chargeData.id)
+          .executeLoansAccountChargesCommand(
+            this.chargeData.loanId,
+            'waive',
+            {},
+            this.chargeData.id
+          )
           .subscribe(() => {
             this.reload();
           });
@@ -194,9 +204,11 @@ export class ViewChargeComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.loansService.deleteLoansAccountCharge(this.loansAccountData.id, this.chargeData.id).subscribe(() => {
-          this.reload();
-        });
+        this.loansService
+          .deleteLoansAccountCharge(this.loansAccountData.id, this.chargeData.id)
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }

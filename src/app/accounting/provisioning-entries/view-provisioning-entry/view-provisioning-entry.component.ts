@@ -226,7 +226,9 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
     this.filteredOfficeData = this.officeName.valueChanges.pipe(
       startWith(''),
       map((office: any) => (typeof office === 'string' ? office : office.name)),
-      map((officeName: string) => (officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData))
+      map((officeName: string) =>
+        officeName ? this.filterOfficeAutocompleteData(officeName) : this.officeData
+      )
     );
   }
 
@@ -238,7 +240,9 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
       startWith(''),
       map((loanProduct: any) => (typeof loanProduct === 'string' ? loanProduct : loanProduct.name)),
       map((loanProductName: string) =>
-        loanProductName ? this.filterLoanProductAutocompleteData(loanProductName) : this.loanProductData
+        loanProductName
+          ? this.filterLoanProductAutocompleteData(loanProductName)
+          : this.loanProductData
       )
     );
   }
@@ -250,7 +254,9 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
     this.filteredProvisioningCategoryData = this.provisioningCategory.valueChanges.pipe(
       startWith(''),
       map((provisioningCategory: any) =>
-        typeof provisioningCategory === 'string' ? provisioningCategory : provisioningCategory.categoryName
+        typeof provisioningCategory === 'string'
+          ? provisioningCategory
+          : provisioningCategory.categoryName
       ),
       map((provisioningCategoryName: string) =>
         provisioningCategoryName
@@ -266,7 +272,9 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
    * @returns {any} Filtered offices.
    */
   private filterOfficeAutocompleteData(officeName: string): any {
-    return this.officeData.filter((office: any) => office.name.toLowerCase().includes(officeName.toLowerCase()));
+    return this.officeData.filter((office: any) =>
+      office.name.toLowerCase().includes(officeName.toLowerCase())
+    );
   }
 
   /**
@@ -287,7 +295,9 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
    */
   private filterProvisioningCategoryAutocompleteData(provisioningCategoryName: string): any {
     return this.provisioningCategoryData.filter((provisioningCategory: any) =>
-      provisioningCategory.categoryName.toLowerCase().includes(provisioningCategoryName.toLocaleLowerCase())
+      provisioningCategory.categoryName
+        .toLowerCase()
+        .includes(provisioningCategoryName.toLocaleLowerCase())
     );
   }
 
@@ -296,14 +306,16 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
    * and redirects to created entries.
    */
   createProvisioningJournalEntries() {
-    this.accountingService.createProvisioningJournalEntries(this.provisioningEntryId).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../../journal-entries/view',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.accountingService
+      .createProvisioningJournalEntries(this.provisioningEntryId)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../../journal-entries/view',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

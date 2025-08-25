@@ -78,21 +78,26 @@ export class ClientPayChargesComponent implements OnInit {
     const dateFormat = this.settingsService.dateFormat;
     const prevTransactionDate = this.transactionForm.value.transactionDate;
     if (transactionFormData.transactionDate instanceof Date) {
-      transactionFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
+      transactionFormData.transactionDate = this.dateUtils.formatDate(
+        prevTransactionDate,
+        dateFormat
+      );
     }
     const data = {
       ...transactionFormData,
       dateFormat,
       locale
     };
-    this.clientsService.payClientCharge(this.transactionData.clientId, this.transactionData.id, data).subscribe(() => {
-      this.router.navigate(
-        [
-          '../../..',
-          'general'
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.clientsService
+      .payClientCharge(this.transactionData.clientId, this.transactionData.id, data)
+      .subscribe(() => {
+        this.router.navigate(
+          [
+            '../../..',
+            'general'
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }

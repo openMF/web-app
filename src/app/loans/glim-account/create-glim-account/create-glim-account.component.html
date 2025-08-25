@@ -62,7 +62,9 @@
       </mifosx-loans-account-charges-step>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>{{ 'labels.heading.Active Client Members' | translate }}</ng-template>
+      <ng-template matStepLabel>{{
+        'labels.heading.Active Client Members' | translate
+      }}</ng-template>
 
       <mifosx-loans-active-client-members
         [activeClientMembers]="activeClientMembers"
@@ -87,7 +89,10 @@
     <mat-step *ngFor="let datatable of datatables">
       <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
 
-      <mifosx-loans-account-datatable-step [datatableData]="datatable" #dtloan></mifosx-loans-account-datatable-step>
+      <mifosx-loans-account-datatable-step
+        [datatableData]="datatable"
+        #dtloan
+      ></mifosx-loans-account-datatable-step>
     </mat-step>
 
     <mat-step state="preview" *ngIf="loansAccountFormValid" completed>

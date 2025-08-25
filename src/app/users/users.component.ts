@@ -1,5 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -142,7 +149,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.configurationWizardService.showUsers === true) {
       setTimeout(() => {
-        this.showPopover(this.templateButtonCreateUser, this.buttonCreateUser.nativeElement, 'bottom', true);
+        this.showPopover(
+          this.templateButtonCreateUser,
+          this.buttonCreateUser.nativeElement,
+          'bottom',
+          true
+        );
       });
     }
 

@@ -1,6 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -234,8 +239,12 @@ export class CreateHookComponent implements OnInit {
       events: this.eventsData,
       config: {
         'Payload URL': this.hookForm.get('payloadUrl').value,
-        'Content Type': this.hookForm.get('contentType').enabled ? this.hookForm.get('contentType').value : undefined,
-        'SMS Provider': this.hookForm.get('smsProvider').enabled ? this.hookForm.get('smsProvider').value : undefined,
+        'Content Type': this.hookForm.get('contentType').enabled
+          ? this.hookForm.get('contentType').value
+          : undefined,
+        'SMS Provider': this.hookForm.get('smsProvider').enabled
+          ? this.hookForm.get('smsProvider').value
+          : undefined,
         'SMS Provider Account Id': this.hookForm.get('smsProviderAccountId').enabled
           ? this.hookForm.get('smsProviderAccountId').value
           : undefined,

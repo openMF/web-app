@@ -51,7 +51,11 @@ const routes: Routes = [
               {
                 path: 'general',
                 component: GeneralTabComponent,
-                data: { title: 'Shares Account General', breadcrumb: 'General', routeParamBreadcrumb: false },
+                data: {
+                  title: 'Shares Account General',
+                  breadcrumb: 'General',
+                  routeParamBreadcrumb: false
+                },
                 resolve: {
                   sharesAccountData: SharesAccountViewResolver
                 }
@@ -59,17 +63,29 @@ const routes: Routes = [
               {
                 path: 'transactions',
                 component: TransactionsTabComponent,
-                data: { title: 'Shares Account Transactions', breadcrumb: 'Transactions', routeParamBreadcrumb: false }
+                data: {
+                  title: 'Shares Account Transactions',
+                  breadcrumb: 'Transactions',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'charges',
                 component: ChargesTabComponent,
-                data: { title: 'Shares Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false }
+                data: {
+                  title: 'Shares Account Charges',
+                  breadcrumb: 'Charges',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'dividends',
                 component: DividendsTabComponent,
-                data: { title: 'Shares Account Dividends', breadcrumb: 'Dividends', routeParamBreadcrumb: false }
+                data: {
+                  title: 'Shares Account Dividends',
+                  breadcrumb: 'Dividends',
+                  routeParamBreadcrumb: false
+                }
               }
             ]
           },
@@ -83,7 +99,11 @@ const routes: Routes = [
           },
           {
             path: 'actions/:name',
-            data: { title: 'Shares Account Actions', breadcrumb: 'Actions', routeParamBreadcrumb: 'name' },
+            data: {
+              title: 'Shares Account Actions',
+              breadcrumb: 'Actions',
+              routeParamBreadcrumb: 'name'
+            },
             component: SharesAccountActionsComponent,
             resolve: {
               shareAccountActionData: ShareAccountActionsResolver

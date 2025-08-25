@@ -30,11 +30,18 @@ import { GeneralTabComponent } from './recurring-deposits-account-view/general-t
 const routes: Routes = [
   {
     path: '',
-    data: { title: 'Recurring Deposits', breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
+    data: {
+      title: 'Recurring Deposits',
+      breadcrumb: 'Recurring Deposits',
+      routeParamBreadcrumb: false
+    },
     children: [
       {
         path: 'create-recurring-deposits-account',
-        data: { title: 'Create Recurring Deposits Account', breadcrumb: 'Create Recurring Deposits Account' },
+        data: {
+          title: 'Create Recurring Deposits Account',
+          breadcrumb: 'Create Recurring Deposits Account'
+        },
         component: CreateRecurringDepositsAccountComponent,
         resolve: {
           recurringDepositsAccountTemplate: RecurringDepositsAccountTemplateResolver
@@ -42,7 +49,10 @@ const routes: Routes = [
       },
       {
         path: ':recurringDepositAccountId',
-        data: { title: 'RecurringDeposit Account View', routeParamBreadcrumb: 'recurringDepositAccountId' },
+        data: {
+          title: 'RecurringDeposit Account View',
+          routeParamBreadcrumb: 'recurringDepositAccountId'
+        },
         children: [
           {
             path: '',
@@ -60,7 +70,11 @@ const routes: Routes = [
               {
                 path: 'general',
                 component: GeneralTabComponent,
-                data: { title: 'Recurring Deposit Account Details', breadcrumb: 'General', routeParamBreadcrumb: false }
+                data: {
+                  title: 'Recurring Deposit Account Details',
+                  breadcrumb: 'General',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'interest-rate-chart',
@@ -83,7 +97,11 @@ const routes: Routes = [
               {
                 path: 'charges',
                 component: ChargesTabComponent,
-                data: { title: 'Recurring Deposit Account Charges', breadcrumb: 'Charges', routeParamBreadcrumb: false }
+                data: {
+                  title: 'Recurring Deposit Account Charges',
+                  breadcrumb: 'Charges',
+                  routeParamBreadcrumb: false
+                }
               },
               {
                 path: 'standing-instructions-tab',
@@ -111,7 +129,11 @@ const routes: Routes = [
           },
           {
             path: 'edit-recurring-deposit-account',
-            data: { title: 'Edit Recurring Deposit Account', breadcrumb: 'Edit', routeParamBreadcrumb: false },
+            data: {
+              title: 'Edit Recurring Deposit Account',
+              breadcrumb: 'Edit',
+              routeParamBreadcrumb: false
+            },
             component: EditRecurringDepositAccountComponent,
             resolve: {
               recurringDepositsAccountAndTemplate: RecurringDepositsAccountAndTemplateResolver
@@ -138,14 +160,16 @@ const routes: Routes = [
                     path: '',
                     component: ViewTransactionComponent,
                     resolve: {
-                      recurringDepositsAccountTransaction: RecurringDepositsAccountTransactionResolver
+                      recurringDepositsAccountTransaction:
+                        RecurringDepositsAccountTransactionResolver
                     }
                   },
                   {
                     path: 'edit',
                     component: EditTransactionComponent,
                     resolve: {
-                      recurringDepositsAccountTransactionTemplate: RecurringDepositsAccountTransactionTemplateResolver
+                      recurringDepositsAccountTransactionTemplate:
+                        RecurringDepositsAccountTransactionTemplateResolver
                     }
                   }
                 ]
@@ -165,22 +189,33 @@ const routes: Routes = [
       {
         path: ':recurringDepositAccountId/transfer-funds',
         loadChildren: () =>
-          import('../../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
+          import('../../account-transfers/account-transfers.module').then(
+            (m) => m.AccountTransfersModule
+          )
       }
     ]
   },
   {
     path: '',
-    data: { title: 'All Recurring Deposits', breadcrumb: 'Recurring Deposits', routeParamBreadcrumb: false },
+    data: {
+      title: 'All Recurring Deposits',
+      breadcrumb: 'Recurring Deposits',
+      routeParamBreadcrumb: false
+    },
     children: [
       {
         path: ':recurringDepositAccountId',
-        data: { title: 'RecurringDeposit Account View', routeParamBreadcrumb: 'recurringDepositAccountId' },
+        data: {
+          title: 'RecurringDeposit Account View',
+          routeParamBreadcrumb: 'recurringDepositAccountId'
+        },
         children: [
           {
             path: 'standing-instructions',
             loadChildren: () =>
-              import('../../account-transfers/account-transfers.module').then((m) => m.AccountTransfersModule)
+              import('../../account-transfers/account-transfers.module').then(
+                (m) => m.AccountTransfersModule
+              )
           }
         ]
       }

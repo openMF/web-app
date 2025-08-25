@@ -10,7 +10,9 @@
 <table *ngIf="hasSomeValue()">
   <tbody>
     <tr>
-      <td class="mat-body-strong center" colspan="2">{{ 'labels.inputs.Payment Details' | translate }}</td>
+      <td class="mat-body-strong center" colspan="2">
+        {{ 'labels.inputs.Payment Details' | translate }}
+      </td>
     </tr>
     <tr *ngIf="isNotNullOrEmpty(paymentDetailData.accountNumber)">
       <td class="mat-body-strong">{{ 'labels.inputs.Account No' | translate }}</td>

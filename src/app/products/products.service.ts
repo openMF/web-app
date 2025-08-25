@@ -116,12 +116,16 @@ export class ProductsService {
       .set('limit', '10')
       .set('locale', this.settingsService.language.code)
       .set('offset', '0');
-    return this.http.get(`/shareproduct/${shareProductId}/dividend/${dividendId}`, { params: httpParams });
+    return this.http.get(`/shareproduct/${shareProductId}/dividend/${dividendId}`, {
+      params: httpParams
+    });
   }
 
   approveDividend(shareProductId: any, dividendId: any, data: any): Observable<any> {
     const httpParams = new HttpParams().set('command', 'approve');
-    return this.http.put(`/shareproduct/${shareProductId}/dividend/${dividendId}`, data, { params: httpParams });
+    return this.http.put(`/shareproduct/${shareProductId}/dividend/${dividendId}`, data, {
+      params: httpParams
+    });
   }
 
   /**
@@ -136,9 +140,14 @@ export class ProductsService {
    * @param {boolean} template Template
    * @return {Observable<any>} Recurring Deposit Product Details
    */
-  getRecurringDepositProduct(recurringDepositProductId: string, template: boolean = false): Observable<any> {
+  getRecurringDepositProduct(
+    recurringDepositProductId: string,
+    template: boolean = false
+  ): Observable<any> {
     const httpParams = new HttpParams().set('template', template.toString());
-    return this.http.get(`/recurringdepositproducts/${recurringDepositProductId}`, { params: httpParams });
+    return this.http.get(`/recurringdepositproducts/${recurringDepositProductId}`, {
+      params: httpParams
+    });
   }
 
   getRecurringDepositProductsTemplate(): Observable<any> {
@@ -489,11 +498,19 @@ export class ProductsService {
 
   getRecurringDepositProductAndTemplate(recurringDepositProductId: any) {
     const httpParams = new HttpParams().set('template', 'true');
-    return this.http.get(`/recurringdepositproducts/${recurringDepositProductId}`, { params: httpParams });
+    return this.http.get(`/recurringdepositproducts/${recurringDepositProductId}`, {
+      params: httpParams
+    });
   }
 
-  updateRecurringDepositProduct(recurringDepositProductId: any, recurringDepositProduct: any): Observable<any> {
-    return this.http.put(`/recurringdepositproducts/${recurringDepositProductId}`, recurringDepositProduct);
+  updateRecurringDepositProduct(
+    recurringDepositProductId: any,
+    recurringDepositProduct: any
+  ): Observable<any> {
+    return this.http.put(
+      `/recurringdepositproducts/${recurringDepositProductId}`,
+      recurringDepositProduct
+    );
   }
 
   /**
@@ -569,7 +586,9 @@ export class ProductsService {
    */
   addProductDatatableEntry(productId: string, datatableName: string, data: any) {
     const httpParams = new HttpParams().set('genericResultSet', 'true');
-    return this.http.post(`/datatables/${datatableName}/${productId}`, data, { params: httpParams });
+    return this.http.post(`/datatables/${datatableName}/${productId}`, data, {
+      params: httpParams
+    });
   }
 
   /**

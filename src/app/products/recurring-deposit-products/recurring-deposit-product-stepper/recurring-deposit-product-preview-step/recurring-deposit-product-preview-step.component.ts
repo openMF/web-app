@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { Accounting } from 'app/core/utils/accounting';
@@ -108,15 +116,19 @@ export class RecurringDepositProductPreviewStepComponent implements OnInit, OnCh
 
   setCurrentValues(): void {
     if (this.isCashOrAccrualAccounting()) {
-      this.accountingRule = this.accounting.getAccountingRuleFrom(this.recurringDepositProduct.accountingRule);
+      this.accountingRule = this.accounting.getAccountingRuleFrom(
+        this.recurringDepositProduct.accountingRule
+      );
 
-      const assetAccountData = this.recurringDepositProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
+      const assetAccountData =
+        this.recurringDepositProductsTemplate.accountingMappingOptions.assetAccountOptions || [];
       const incomeAccountData =
         this.recurringDepositProductsTemplate.accountingMappingOptions.incomeAccountOptions || [];
       const expenseAccountData =
         this.recurringDepositProductsTemplate.accountingMappingOptions.expenseAccountOptions || [];
       const liabilityAccountData =
-        this.recurringDepositProductsTemplate.accountingMappingOptions.liabilityAccountOptions || [];
+        this.recurringDepositProductsTemplate.accountingMappingOptions.liabilityAccountOptions ||
+        [];
 
       this.accountingMappings = {
         savingsReferenceAccount: this.accounting.glAccountLookUp(
@@ -167,7 +179,9 @@ export class RecurringDepositProductPreviewStepComponent implements OnInit, OnCh
   }
 
   isCashOrAccrualAccounting(): boolean {
-    return this.accounting.isCashOrAccrualAccountingRuleId(this.recurringDepositProduct.accountingRule);
+    return this.accounting.isCashOrAccrualAccountingRuleId(
+      this.recurringDepositProduct.accountingRule
+    );
   }
 
   isAccrualAccounting(): boolean {

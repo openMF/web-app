@@ -15,15 +15,25 @@
             />
             <mat-datepicker-toggle matSuffix [for]="withdrawnOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawnOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="withdrawRecurringDepositsAccountForm.controls.withdrawnOnDate.hasError('required')">
-              {{ 'labels.inputs.Withdrawn On Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <mat-error
+              *ngIf="
+                withdrawRecurringDepositsAccountForm.controls.withdrawnOnDate.hasError('required')
+              "
+            >
+              {{ 'labels.inputs.Withdrawn On Date' | translate }}
+              {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
-            <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+            <textarea
+              matInput
+              formControlName="note"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+            ></textarea>
           </mat-form-field>
         </div>
       </mat-card-content>
@@ -32,7 +42,11 @@
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
-        <button mat-raised-button color="primary" [disabled]="!withdrawRecurringDepositsAccountForm.valid">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!withdrawRecurringDepositsAccountForm.valid"
+        >
           {{ 'labels.buttons.Confirm' | translate }}
         </button>
       </mat-card-actions>

@@ -6,7 +6,10 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Collateral' | translate }}</mat-label>
             <mat-select required formControlName="collateralId">
-              <mat-option *ngFor="let clientCollateral of clientCollateralOptions" [value]="clientCollateral.id">
+              <mat-option
+                *ngFor="let clientCollateral of clientCollateralOptions"
+                [value]="clientCollateral.id"
+              >
                 {{ clientCollateral.name }}
               </mat-option>
             </mat-select>

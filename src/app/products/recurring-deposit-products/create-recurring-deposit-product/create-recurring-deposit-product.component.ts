@@ -97,7 +97,8 @@ export class CreateRecurringDepositProductComponent {
   }
 
   get recurringDepositProductInterestRateChartForm() {
-    return this.recurringDepositProductInterestRateChartStep.recurringDepositProductInterestRateChartForm;
+    return this.recurringDepositProductInterestRateChartStep
+      .recurringDepositProductInterestRateChartForm;
   }
 
   get recurringDepositProductAccountingForm() {
@@ -138,14 +139,16 @@ export class CreateRecurringDepositProductComponent {
       recurringDepositProduct.description = '';
     }
     delete recurringDepositProduct.advancedAccountingRules;
-    this.productsService.createRecurringDepositProduct(recurringDepositProduct).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.productsService
+      .createRecurringDepositProduct(recurringDepositProduct)
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 }
