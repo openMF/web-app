@@ -541,6 +541,18 @@
   .mdc-floating-label {
     font-size: 14px !important;
   }
+
+  .mdc-line-ripple::before {
+    border-bottom-color: white !important;
+  }
+
+  .mdc-line-ripple::after {
+    border-bottom-color: white !important;
+  }
+
+  .mat-mdc-form-field-bottom-line {
+    background-color: white !important;
+  }
 }
 
 @media (width <= 768px) {
