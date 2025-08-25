@@ -8,6 +8,7 @@ export interface DelinquencyRange {
 
 export interface DelinquentData {
   availableDisbursementAmount: number;
+  availableDisbursementAmountWithOverApplied: number;
   pastDueDays: number;
   nextPaymentDueDate: number[];
   delinquentDays: number;

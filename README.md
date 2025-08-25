@@ -14,7 +14,6 @@ Mifos X Web App is a modern single-page application (SPA) built on top of the Mi
 
 - [Live Demo](https://sandbox.mifos.community/#/login) (Updated nightly)
 - [GitHub Repository](https://github.com/openMF/web-app)
-- [TestRigor](https://app.testrigor.com/public/X3THbQd9nxLMxkdPu)
 - [Slack Channel](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
 - [Jira Board of Mifos](https://mifosforge.jira.com/jira/your-work)
 - [Jira Board of Mifos Web App Project](https://mifosforge.jira.com/jira/software/c/projects/WEB/boards/62)
@@ -32,8 +31,12 @@ Before installing the web app, you need to set up the Fineract backend server:
 
 1. **Choose ONE of these backend options:**
    - **Option A: Use existing remote server**
-     - Use the sandbox at `https://sandbox.mifos.community`
-     - Use the demo at `https://demo.mifos.community`
+     - Use the sandbox (MariaDB) at https://sandbox.mifos.community ** System is restored every 6 hours **
+     - Use the demo (MariaDB) at https://demo.mifos.community
+     - Use the demo (Keycloak) at https://oauth.mifos.community
+     - Use the demo (2FA) at https://2fa.mifos.community
+     - Use the demo (Oidc) at https://oidc.mifos.community
+     - Use the demo (Postgres) at https://elephant.mifos.community
      - Configure to your server by updating API URLs in environment files
 
    - **Option B: Install local Fineract server**

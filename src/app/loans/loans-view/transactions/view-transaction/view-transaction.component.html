@@ -82,6 +82,14 @@
           ></mifosx-external-identifier>
         </div>
 
+        <div class="flex-50 mat-body-strong" *ngIf="transactionData.classification">
+          {{ 'Classification' | translateKey: 'catalogs' }}
+        </div>
+
+        <div class="flex-50" *ngIf="transactionData.classification">
+          {{ transactionData.classification.name }}
+        </div>
+
         <mat-divider *ngIf="existTransactionRelations" [inset]="true"></mat-divider>
 
         <div class="mat-body-strong flex-100" *ngIf="existTransactionRelations">

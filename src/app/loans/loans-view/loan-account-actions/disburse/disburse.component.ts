@@ -17,7 +17,9 @@ import { Currency } from 'app/shared/models/general.model';
 import { InputAmountComponent } from '../../../../shared/input-amount/input-amount.component';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { MatIcon } from '@angular/material/icon';
 
 /**
  * Disburse Loan Option
@@ -30,7 +32,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     InputAmountComponent,
     MatSlideToggle,
-    CdkTextareaAutosize
+    CdkTextareaAutosize,
+    FormatNumberPipe,
+    MatIcon
   ]
 })
 export class DisburseComponent implements OnInit {
@@ -78,6 +82,19 @@ export class DisburseComponent implements OnInit {
     if (this.dataObject.currency) {
       this.currency = this.dataObject.currency;
     }
+
+    // Get delinquency data for available disbursement amount with over applied
+    this.loanService.retrieveLoan({ loanId: Number(this.loanId) }).subscribe((delinquencyData: any) => {
+      // Check if the field is at root level
+      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
+        this.dataObject.availableDisbursementAmountWithOverApplied =
+          delinquencyData.availableDisbursementAmountWithOverApplied;
+      }
+      // Also check if it's in delinquent object
+      if (delinquencyData.delinquent) {
+        this.dataObject.delinquent = delinquencyData.delinquent;
+      }
+    });
   }
 
   /**

@@ -278,5 +278,19 @@
         }}&nbsp;{{ 'labels.text.Days' | translate }}
       </span>
     </div>
+
+    <div
+      class="flex-fill layout-row"
+      *ngIf="
+        loanDetails &&
+        loanDetails.delinquent &&
+        loanDetails.delinquent.availableDisbursementAmountWithOverApplied !== undefined
+      "
+    >
+      <span class="flex-50">{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}</span>
+      <span class="flex-50">{{
+        loanDetails.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
+      }}</span>
+    </div>
   </div>
 </div>

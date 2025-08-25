@@ -84,7 +84,7 @@ export class CreateLoanProductComponent implements OnInit {
   advancedCreditAllocations: AdvancedPaymentAllocation[] = [];
 
   deferredIncomeRecognition: DeferredIncomeRecognition | null = null;
-  loanDeferredIncomeRecognitionForm: UntypedFormGroup;
+  loanIncomeCapitalizationForm: UntypedFormGroup | null = null;
 
   /**
    * @param {ActivatedRoute} route Activated Route.
@@ -197,8 +197,8 @@ export class CreateLoanProductComponent implements OnInit {
   }
 
   setViewChildForm(viewChildForm: UntypedFormGroup): void {
-    this.loanDeferredIncomeRecognitionForm = viewChildForm;
-    const formValues: any = this.loanDeferredIncomeRecognitionForm.getRawValue();
+    const formValues: any = viewChildForm.getRawValue();
+    this.loanIncomeCapitalizationForm = viewChildForm;
     const capitalizedIncome: CapitalizedIncome = formValues.enableIncomeCapitalization
       ? {
           enableIncomeCapitalization: true,
@@ -237,7 +237,7 @@ export class CreateLoanProductComponent implements OnInit {
         this.loanProductCurrencyForm.valid &&
         this.loanProductTermsForm.valid &&
         this.loanProductSettingsForm.valid &&
-        this.loanDeferredIncomeRecognitionForm.valid &&
+        this.loanIncomeCapitalizationForm.valid &&
         this.loanProductAccountingForm.valid
       );
     } else {

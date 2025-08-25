@@ -29,6 +29,12 @@
           >
           </mifosx-input-amount>
 
+          <!-- Display Available Disbursement Amount with Over Applied if available -->
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}</mat-label>
+            <input matInput [value]="dataObject.availableDisbursementAmountWithOverApplied | formatNumber" readonly />
+          </mat-form-field>
+
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput formControlName="externalId" />

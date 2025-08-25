@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { GuarantorsService } from '@fineract/client';
+import { GuarantorsService, LoansService } from '@fineract/client';
 
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -77,6 +77,7 @@ export class ViewGuarantorsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private guarantorsService: GuarantorsService,
+    private loansService: LoansService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -85,6 +86,19 @@ export class ViewGuarantorsComponent implements OnInit {
 
   ngOnInit() {
     this.guarantorDetails = this.dataObject.guarantors;
+
+    // Get delinquency data for available disbursement amount with over applied
+    this.loansService.retrieveLoan(this.loanId).subscribe((delinquencyData: any) => {
+      // Check if the field is at root level
+      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
+        this.dataObject.availableDisbursementAmountWithOverApplied =
+          delinquencyData.availableDisbursementAmountWithOverApplied;
+      }
+      // Also check if it's in delinquent object
+      if (delinquencyData.delinquent) {
+        this.dataObject.delinquent = delinquencyData.delinquent;
+      }
+    });
   }
 
   toggleGuarantorsDetailsOverview() {
