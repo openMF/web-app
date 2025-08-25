@@ -4,5 +4,7 @@
     "prettier-plugin-multiline-arrays"
   ],
   "singleQuote": true,
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "endOfLine": "lf",
+  "printWidth": 100
 }
