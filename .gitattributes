@@ -1,0 +1,33 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# JS, TS, and JSON files will always use LF
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+
+# HTML and CSS files will always use LF
+*.html text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+
+# Documentation
+*.md text eol=lf
+*.txt text eol=lf
+
+# Don't modify binary files
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.wav binary
+*.mp3 binary
+*.mp4 binary
+*.zip binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary

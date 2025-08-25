@@ -19,6 +19,8 @@
     "serve:dev": "npm run env -s && ng serve --source-map",
     "serve:sw": "npm run build -s && npx http-server ./dist -p 4200",
     "lint": "eslint . && stylelint \"src/**/*.scss\" && prettier . --check && htmlhint \"src\" --config .htmlhintrc",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "jest",
     "test:ci": "npm run env -s && npm run lint -s && ng test --code-coverage --watch=false",
     "test:watch": "ng test --watch",
