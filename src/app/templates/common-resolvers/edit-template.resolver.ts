@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TemplatesService } from '../templates.service';
+import { UserGeneratedDocumentsService } from '@fineract/client';
 
 /**
  * Edit Template data resolver.
@@ -14,9 +14,9 @@ import { TemplatesService } from '../templates.service';
 @Injectable()
 export class EditTemplateResolver {
   /**
-   * @param {TemplatesService} templatesService Templates service.
+   * @param {UserGeneratedDocumentsService} userGeneratedDocumentsService User Generated Documents service.
    */
-  constructor(private templatesService: TemplatesService) {}
+  constructor(private userGeneratedDocumentsService: UserGeneratedDocumentsService) {}
 
   /**
    * Returns the template data.
@@ -24,6 +24,8 @@ export class EditTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const templateId = route.paramMap.get('id');
-    return this.templatesService.getEditTemplateData(templateId);
+    return this.userGeneratedDocumentsService.getTemplateByTemplate({
+      templateId: Number(templateId)
+    });
   }
 }

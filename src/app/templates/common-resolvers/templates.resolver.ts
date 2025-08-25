@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TemplatesService } from '../templates.service';
+import { UserGeneratedDocumentsService } from '@fineract/client';
 
 /**
  * Templates data resolver.
@@ -13,15 +13,15 @@ import { TemplatesService } from '../templates.service';
 @Injectable()
 export class TemplatesResolver {
   /**
-   * @param {TemplatesService} templatesService Templates service.
+   * @param {UserGeneratedDocumentsService} userGeneratedDocumentsService User Generated Documents service.
    */
-  constructor(private templatesService: TemplatesService) {}
+  constructor(private userGeneratedDocumentsService: UserGeneratedDocumentsService) {}
 
   /**
    * Returns the templates data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.templatesService.getTemplates();
+    return this.userGeneratedDocumentsService.retrieveAll40();
   }
 }

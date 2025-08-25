@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { TemplatesService } from '../templates.service';
+import { UserGeneratedDocumentsService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -29,14 +29,14 @@ export class ViewTemplateComponent {
 
   /**
    * Retrieves the template data from `resolve`.
-   * @param {TemplateService} templateService Accounting Service.
+   * @param {UserGeneratedDocumentsService} userGeneratedDocumentsService User Generated Documents Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
     private route: ActivatedRoute,
-    private templatesService: TemplatesService,
+    private userGeneratedDocumentsService: UserGeneratedDocumentsService,
     private router: Router,
     private dialog: MatDialog
   ) {
@@ -54,7 +54,7 @@ export class ViewTemplateComponent {
     });
     deleteTemplateDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.templatesService.deleteTemplate(this.templateData.id).subscribe(() => {
+        this.userGeneratedDocumentsService.deleteTemplate({ templateId: this.templateData.id }).subscribe(() => {
           this.router.navigate(['/templates']);
         });
       }
