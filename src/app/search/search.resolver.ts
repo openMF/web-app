@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SearchService } from './search.service';
+import { SearchAPIService } from '@fineract/client';
 
 /**
  * Search Results data resolver.
@@ -14,9 +14,9 @@ import { SearchService } from './search.service';
 @Injectable()
 export class SearchResolver {
   /**
-   * @param {SearchService} searchService Notifications service.
+   * @param {SearchAPIService} searchAPIService Notifications service.
    */
-  constructor(private searchService: SearchService) {}
+  constructor(private searchAPIService: SearchAPIService) {}
 
   /**
    * Returns the Search Resultsdata.
@@ -26,6 +26,9 @@ export class SearchResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const query = route.queryParams['query'];
     const resource = route.queryParams['resource'];
-    return this.searchService.getSearchResults(query, resource);
+    return this.searchAPIService.searchData({
+      query,
+      resource
+    });
   }
 }
