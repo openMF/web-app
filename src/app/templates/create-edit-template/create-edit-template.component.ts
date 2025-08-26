@@ -16,7 +16,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } from '../template-parameter-labels';
 
 /** Custom Services */
-import { TemplatesService } from '../templates.service';
+import { UserGeneratedDocumentsService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {
@@ -73,13 +73,13 @@ export class CreateEditComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
-   * @param {TemplateService} templateService Templates Service
+   * @param {UserGeneratedDocumentsService} userGeneratedDocumentsService User Generated Documents Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private templateService: TemplatesService
+    private userGeneratedDocumentsService: UserGeneratedDocumentsService
   ) {
     this.route.data.subscribe((data: { templateData: any; mode: 'create' | 'edit' }) => {
       this.templateData = data.templateData;
@@ -244,19 +244,26 @@ export class CreateEditComponent implements OnInit {
       text: this.getEditorContent()
     };
     if (this.mode === 'create') {
-      this.templateService.createTemplate(template).subscribe((response: any) => {
-        this.router.navigate(
-          [
-            '../',
-            response.resourceId
-          ],
-          { relativeTo: this.route }
-        );
-      });
+      this.userGeneratedDocumentsService
+        .createTemplate({ postTemplatesRequest: template })
+        .subscribe((response: any) => {
+          this.router.navigate(
+            [
+              '../',
+              response.resourceId
+            ],
+            { relativeTo: this.route }
+          );
+        });
     } else {
-      this.templateService.updateTemplate(template, this.templateData.template.id).subscribe(() => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+      this.userGeneratedDocumentsService
+        .saveTemplate({
+          templateId: this.templateData.template.id,
+          putTemplatesTemplateIdRequest: template
+        })
+        .subscribe(() => {
+          this.router.navigate(['../'], { relativeTo: this.route });
+        });
     }
   }
 }
