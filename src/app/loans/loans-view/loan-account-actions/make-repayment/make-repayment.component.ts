@@ -104,7 +104,6 @@ export class MakeRepaymentComponent implements OnInit {
           Validators.min(0.001),
           Validators.max(this.dataObject.amount)])
       );
-      this.repaymentLoanForm.addControl('classificationId', new UntypedFormControl(''));
     } else {
       this.repaymentLoanForm.addControl(
         'transactionAmount',
@@ -112,6 +111,9 @@ export class MakeRepaymentComponent implements OnInit {
           Validators.required,
           Validators.min(0.001)])
       );
+    }
+    if (this.isCapitalizedIncome() || this.isBuyDownFee()) {
+      this.repaymentLoanForm.addControl('classificationId', new UntypedFormControl(''));
     }
   }
 

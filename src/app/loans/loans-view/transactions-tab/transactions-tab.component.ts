@@ -263,6 +263,7 @@ export class TransactionsTabComponent implements OnInit {
       29,
       30,
       31,
+      32,
       33,
       35,
       37,
