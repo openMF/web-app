@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { UsersService } from '../users.service';
+import { UsersService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -56,7 +56,7 @@ export class ViewUserComponent {
     });
     deleteUserDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.usersService.deleteUser(this.userData.id).subscribe(() => {
+        this.usersService.delete23(this.userData.id).subscribe(() => {
           this.router.navigate(['/appusers']);
         });
       }
@@ -76,7 +76,11 @@ export class ViewUserComponent {
         const repeatPassword = response.repeatPassword;
         const firstname = this.userData.firstname;
         const data = { password: password, repeatPassword: repeatPassword, firstname: firstname };
-        this.usersService.changePassword(this.userData.id, data).subscribe(() => {
+        const requestParams = {
+          userId: this.userData.id,
+          changePwdUsersUserIdRequest: data
+        };
+        this.usersService.changePassword(requestParams).subscribe(() => {
           this.router.navigate(['/appusers']);
         });
       }

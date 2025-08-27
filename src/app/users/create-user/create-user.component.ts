@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { UsersService } from '../users.service';
+import { UsersService, StaffService } from '@fineract/client';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 
 /** Custom Dialog Component */
@@ -52,7 +52,8 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the offices and roles data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {UsersService} UsersService Users Service.
+   * @param {UsersService} usersService Users Service.
+   * @param {StaffService} staffService Staff Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
@@ -61,6 +62,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private usersService: UsersService,
+    private staffService: StaffService,
     private route: ActivatedRoute,
     private router: Router,
     private popoverService: PopoverService,
@@ -134,7 +136,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   setStaffData() {
     this.userForm.get('officeId').valueChanges.subscribe((officeId: string) => {
       this.staffData = [];
-      this.usersService.getStaff(officeId).subscribe((staff: any) => {
+      this.staffService.retrieveAll16({ officeId: Number(officeId) }).subscribe((staff: any) => {
         this.staffData = staff;
       });
     });
@@ -175,7 +177,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
     if (this.userForm.value.staffId == null || this.userForm.value.staffId === '') {
       delete user.staffId;
     }
-    this.usersService.createUser(user).subscribe((response: any) => {
+    this.usersService.create15({ postUsersRequest: user }).subscribe((response: any) => {
       if (this.configurationWizardService.showUsersForm === true) {
         this.configurationWizardService.showUsersForm = false;
         this.openDialog();
