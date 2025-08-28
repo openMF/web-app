@@ -1,7 +1,8 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, switchMap } from 'rxjs';
+import { environment } from '../environments/environment';
 
 // loans.service.ts
 @Injectable({
@@ -119,5 +120,54 @@ export class RunReportsService {
   getCenterSummary(centerId: number): Observable<any> {
     const httpParams = new HttpParams().set('R_groupId', centerId.toString()).set('genericResultSet', false.toString());
     return this.http.get('/runreports/GroupSummaryCounts', { params: httpParams });
+  }
+}
+
+/**
+ * Account Transfers Service.
+ */
+@Injectable({
+  providedIn: 'root'
+})
+export class AccountTransfersService {
+  constructor(private http: HttpClient) {}
+
+  deleteStandingInstrucions(id: any) {
+    const httpParams = new HttpParams().set('command', 'delete');
+    return this.http.delete(`/standinginstructions/${id}`, { params: httpParams });
+  }
+
+  sendInterbankTransfer(body: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(
+      `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/executetransfer`,
+      body,
+      { headers }
+    );
+  }
+
+  getAccountByNumber(accountNumber: string, currency: string): Observable<any> {
+    const payload = {
+      partyId: accountNumber,
+      partyIdType: 'MSISDN',
+      currencyCode: currency
+    };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http
+      .post(
+        `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/participant`,
+        JSON.stringify(payload),
+        { headers }
+      )
+      .pipe(
+        switchMap((participant: any) => {
+          const body = JSON.stringify({ ...payload, ownerFspId: participant.fspId });
+          return this.http.post(
+            `${environment.vNextApiUrl}${environment.vNextApiVersion}${environment.vNextApiProvider}/partyinfo`,
+            body,
+            { headers }
+          );
+        })
+      );
   }
 }

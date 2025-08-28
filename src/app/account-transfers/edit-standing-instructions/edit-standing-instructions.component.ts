@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { StandingInstructionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -49,7 +49,7 @@ export class EditStandingInstructionsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Router} router Router
-   * @param {AccountTransfersService} accountTransfersService Account Transfers Service
+   * @param {StandingInstructionsService} standingInstructionsService Standing Instructions Service
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
@@ -57,7 +57,7 @@ export class EditStandingInstructionsComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountTransfersService: AccountTransfersService,
+    private standingInstructionsService: StandingInstructionsService,
     private settingsService: SettingsService,
     private dateUtils: Dates
   ) {
@@ -182,10 +182,12 @@ export class EditStandingInstructionsComponent implements OnInit {
       validFrom: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validFrom, dateFormat),
       validTill: this.dateUtils.formatDate(this.editStandingInstructionsForm.value.validTill, dateFormat)
     };
-    this.accountTransfersService
-      .updateStandingInstructionsData(this.standingInstructionsId, standingInstructionData)
-      .subscribe((response: any) => {
-        this.router.navigate(['../view'], { relativeTo: this.route });
-      });
+    const params = {
+      standingInstructionId: this.standingInstructionsId,
+      standingInstructionUpdatesRequest: standingInstructionData
+    };
+    this.standingInstructionsService.update9(params).subscribe((response: any) => {
+      this.router.navigate(['../view'], { relativeTo: this.route });
+    });
   }
 }

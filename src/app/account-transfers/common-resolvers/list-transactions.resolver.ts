@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { StandingInstructionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /**
@@ -15,11 +15,11 @@ import { SettingsService } from 'app/settings/settings.service';
 @Injectable()
 export class ListTransactionsResolver {
   /**
-   * @param {AccountTransfersService} accountTransfersService Account Transfers service.
+   * @param {StandingInstructionsService} standingInstructionsService Standing Instructions service.
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(
-    private accountTransfersService: AccountTransfersService,
+    private standingInstructionsService: StandingInstructionsService,
     private settingsService: SettingsService
   ) {}
 
@@ -32,6 +32,8 @@ export class ListTransactionsResolver {
     const id = route.parent.paramMap.get('standingInstructionsId');
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
-    return this.accountTransfersService.getStandingInstructionsTransactions(id, dateFormat, locale);
+    return this.standingInstructionsService.retrieveOne10({
+      standingInstructionId: Number(id)
+    });
   }
 }

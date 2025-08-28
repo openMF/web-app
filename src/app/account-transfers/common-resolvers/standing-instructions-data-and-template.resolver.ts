@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { StandingInstructionsService } from '@fineract/client';
 
 /**
  * View Standing Instructions resolver.
@@ -14,9 +14,9 @@ import { AccountTransfersService } from '../account-transfers.service';
 @Injectable()
 export class StandingInstructionsDataAndTemplateResolver {
   /**
-   * @param {accountTransfersService} AccountTransfersService Account Transfers service.
+   * @param {StandingInstructionsService} StandingInstructionsService Standing Instructions service.
    */
-  constructor(private accountTransfersService: AccountTransfersService) {}
+  constructor(private standingInstructionsService: StandingInstructionsService) {}
 
   /**
    * Returns the Standing Instructions Data.
@@ -25,6 +25,8 @@ export class StandingInstructionsDataAndTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const standingInstructionsId = route.parent.paramMap.get('standingInstructionsId');
-    return this.accountTransfersService.getStandingInstructionsDataAndTemplate(standingInstructionsId);
+    return this.standingInstructionsService.retrieveOne10({
+      standingInstructionId: Number(standingInstructionsId)
+    });
   }
 }

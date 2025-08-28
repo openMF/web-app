@@ -13,7 +13,8 @@ import {
 } from '@angular/forms';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { AccountTransfersService } from '@fineract/client';
+import { AccountTransfersService as CustomAccountTransfersService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { ClientService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
@@ -87,6 +88,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Router} router Router
    * @param {AccountTransfersService} accountTransfersService Account Transfers Service
+   * @param {CustomAccountTransfersService} customAccountTransfersService Custom Account Transfers Service
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    * @param {ClientsService} clientsService Clients Service
@@ -96,6 +98,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private accountTransfersService: AccountTransfersService,
+    private customAccountTransfersService: CustomAccountTransfersService,
     private dateUtils: Dates,
     private settingsService: SettingsService,
     private clientsService: ClientService
@@ -228,7 +231,11 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   changeEvent() {
     const formValue = this.refineObject(this.makeAccountTransferForm.value);
     this.accountTransfersService
-      .newAccountTranferResource(this.id, this.accountTypeId, formValue)
+      .template5({
+        fromAccountId: this.id,
+        fromAccountType: this.accountTypeId,
+        ...formValue
+      })
       .subscribe((response: any) => {
         this.accountTransferTemplateData = response;
         this.toClientTypeData = response.toClientOptions;
@@ -310,7 +317,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       fromClientId: this.accountTransferTemplateData.fromClient.id,
       fromOfficeId: this.accountTransferTemplateData.fromClient.officeId
     };
-    this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe(() => {
+    this.accountTransfersService.create4(makeAccountTransferData).subscribe(() => {
       this.isLoading = false;
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
@@ -343,7 +350,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       },
       note: this.makeAccountTransferForm.controls.transferDescription.value
     };
-    this.accountTransfersService.sendInterbankTransfer(JSON.stringify(payload)).subscribe(
+    this.customAccountTransfersService.sendInterbankTransfer(JSON.stringify(payload)).subscribe(
       (trnsfr) => {
         if (trnsfr.systemMessage) {
           this.isLoading = false;
@@ -358,7 +365,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
 
   searchAccountByNumber() {
     this.isLoading = true;
-    this.accountTransfersService
+    this.customAccountTransfersService
       .getAccountByNumber(this.phoneAccount, this.accountTransferTemplateData.currency.code)
       .subscribe(
         (acc) => {

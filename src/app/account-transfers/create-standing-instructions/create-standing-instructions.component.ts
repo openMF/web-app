@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { StandingInstructionsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -75,7 +75,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Router} router Router
-   * @param {AccountTransfersService} accountTransfersService Account Transfers Service
+   * @param {StandingInstructionsService} standingInstructionsService Standing Instructions Service
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
@@ -83,7 +83,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountTransfersService: AccountTransfersService,
+    private standingInstructionsService: StandingInstructionsService,
     private settingsService: SettingsService,
     private dateUtils: Dates
   ) {
@@ -256,8 +256,8 @@ export class CreateStandingInstructionsComponent implements OnInit {
   /** Executes on change of various select options */
   changeEvent() {
     const formValue = this.refineObject(this.createStandingInstructionsForm.value);
-    this.accountTransfersService
-      .getStandingInstructionsTemplate(this.clientId, this.officeId, this.accountTypeId, formValue)
+    this.standingInstructionsService
+      .template6(this.clientId, this.officeId, this.accountTypeId, formValue)
       .subscribe((response: any) => {
         this.standingIntructionsTemplate = response;
         this.setOptions();
@@ -300,7 +300,7 @@ export class CreateStandingInstructionsComponent implements OnInit {
     };
     delete standingInstructionData['destination'];
     delete standingInstructionData['applicant'];
-    this.accountTransfersService.createStandingInstructions(standingInstructionData).subscribe((response: any) => {
+    this.standingInstructionsService.create5(standingInstructionData).subscribe((response: any) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
