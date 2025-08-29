@@ -47,7 +47,6 @@ Also keep in mind this general rules:
 ## Best practices
 
 - Use object-oriented CSS (OOCSS):
-
   - Factorize common code in base class, and extend it, for example:
 
   ```scss
