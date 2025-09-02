@@ -36,7 +36,7 @@
   window['env']['sessionIdleTimeout'] = '0';
 
   // OAuth Server Enabled
-  window['env']['oauthServerEnabled'] = '';
+  window['env']['oauthServerEnabled'] = false;
 
   // OAuth Server URL
   window['env']['oauthServerUrl'] = '';
