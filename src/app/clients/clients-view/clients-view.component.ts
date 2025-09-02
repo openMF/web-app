@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +14,7 @@ import { UploadImageDialogComponent } from './custom-dialogs/upload-image-dialog
 import { CaptureImageDialogComponent } from './custom-dialogs/capture-image-dialog/capture-image-dialog.component';
 
 /** Custom Services */
-import { ClientsService } from '../clients.service';
+import { ClientService, DocumentsService, SelfClientService } from '@fineract/client';
 import {
   MatCard,
   MatCardHeader,
@@ -34,6 +34,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { MatTabNav, MatTabLink, MatTabNavPanel } from '@angular/material/tabs';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -69,37 +70,82 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe
   ]
 })
-export class ClientsViewComponent implements OnInit {
-  clientViewData: any;
+export class ClientsViewComponent {
+  clientViewData: any = {
+    status: { code: '', value: '' },
+    displayName: '',
+    id: null
+  };
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
+  isDataLoaded = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private clientsService: ClientsService,
+    private clientService: ClientService,
+    private documentsService: DocumentsService,
+    private selfClientService: SelfClientService,
     private _sanitizer: DomSanitizer,
     public dialog: MatDialog
   ) {
-    this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
-      this.clientViewData = data.clientViewData;
-      this.clientDatatables = data.clientDatatables;
-      this.clientTemplateData = data.clientTemplateData;
-    });
+    console.log('ClientsViewComponent constructor called');
+    try {
+      this.route.data.subscribe({
+        next: (data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
+          if (data && data.clientViewData && data.clientViewData.id) {
+            this.clientViewData = data.clientViewData;
+            this.clientDatatables = data.clientDatatables;
+            this.clientTemplateData = data.clientTemplateData;
+            this.isDataLoaded = true;
+            console.log('Client data loaded successfully with ID:', this.clientViewData.id);
+          } else {
+            console.warn('Invalid or missing client data in route resolver:', data);
+          }
+        },
+        error: (error: any) => {
+          console.error('Error in route data subscription:', error);
+          this.isDataLoaded = false;
+        }
+      });
+    } catch (error) {
+      console.error('Error in constructor:', error);
+    }
   }
 
-  ngOnInit() {
-    this.clientsService.getClientProfileImage(this.clientViewData.id).subscribe(
+  private loadClientImage() {
+    // Additional safety check before making the API call
+    if (
+      !this.clientViewData ||
+      !this.clientViewData.id ||
+      this.clientViewData.id === null ||
+      this.clientViewData.id === undefined ||
+      typeof this.clientViewData.id !== 'number' ||
+      this.clientViewData.id <= 0
+    ) {
+      console.warn('Cannot load client image: clientId is invalid or missing', this.clientViewData?.id);
+      return;
+    }
+
+    console.log('Loading client image for ID:', this.clientViewData.id);
+    this.selfClientService.retrieveImage1(this.clientViewData.id).subscribe(
       (base64Image: any) => {
         this.clientImage = this._sanitizer.bypassSecurityTrustResourceUrl(base64Image);
       },
-      (error: any) => {}
+      (error: any) => {
+        console.warn('Failed to load client image:', error);
+      }
     );
   }
 
   isActive(): boolean {
-    return this.clientViewData.status.value === 'Active';
+    return (
+      this.isDataLoaded &&
+      this.clientViewData &&
+      this.clientViewData.status &&
+      this.clientViewData.status.value === 'Active'
+    );
   }
 
   /**
@@ -107,6 +153,11 @@ export class ClientsViewComponent implements OnInit {
    * @param {string} name action name.
    */
   doAction(name: string) {
+    if (!this.isDataLoaded || !this.clientViewData || !this.clientViewData.id) {
+      console.warn('Cannot perform action: client data is not loaded');
+      return;
+    }
+
     switch (name) {
       case 'Assign Staff':
       case 'Close':
@@ -191,7 +242,7 @@ export class ClientsViewComponent implements OnInit {
     });
     deleteClientDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.clientsService.deleteClient(this.clientViewData.id).subscribe(() => {
+        this.clientService.delete8({ clientId: this.clientViewData.id }).subscribe(() => {
           this.router.navigate(['/clients'], { relativeTo: this.route });
         });
       }
@@ -205,8 +256,12 @@ export class ClientsViewComponent implements OnInit {
     const unAssignStaffDialogRef = this.dialog.open(UnassignStaffDialogComponent);
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.clientsService
-          .executeClientCommand(this.clientViewData.id, 'unassignStaff', { staffId: this.clientViewData.staffId })
+        this.clientService
+          .activate1({
+            clientId: this.clientViewData.id,
+            command: 'unassignStaff',
+            postClientsClientIdRequest: {}
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -218,21 +273,26 @@ export class ClientsViewComponent implements OnInit {
    * Shows client signature in a dialog
    */
   private viewSignature() {
-    this.clientsService.getClientDocuments(this.clientViewData.id).subscribe((documents: any) => {
-      const viewSignatureDialogRef = this.dialog.open(ViewSignatureDialogComponent, {
-        data: {
-          documents: documents,
-          id: this.clientViewData.id
-        }
+    this.documentsService
+      .retrieveAllDocuments({
+        entityType: 'clients',
+        entityId: Number(this.clientViewData.id)
+      })
+      .subscribe((documents: any) => {
+        const viewSignatureDialogRef = this.dialog.open(ViewSignatureDialogComponent, {
+          data: {
+            documents: documents,
+            id: this.clientViewData.id
+          }
+        });
+        viewSignatureDialogRef.afterClosed().subscribe((response: any) => {
+          if (response.upload) {
+            this.uploadSignature();
+          } else if (response.delete) {
+            this.deleteSignature();
+          }
+        });
       });
-      viewSignatureDialogRef.afterClosed().subscribe((response: any) => {
-        if (response.upload) {
-          this.uploadSignature();
-        } else if (response.delete) {
-          this.deleteSignature();
-        }
-      });
-    });
   }
 
   /**
@@ -242,9 +302,17 @@ export class ClientsViewComponent implements OnInit {
     const uploadSignatureDialogRef = this.dialog.open(UploadSignatureDialogComponent);
     uploadSignatureDialogRef.afterClosed().subscribe((signature: File) => {
       if (signature) {
-        this.clientsService.uploadClientSignatureImage(this.clientViewData.id, signature).subscribe(() => {
-          this.reload();
-        });
+        this.documentsService
+          .createDocument({
+            entityType: 'clients',
+            entityId: Number(this.clientViewData.id),
+            name: 'clientSignature',
+            description: 'Client signature',
+            uploadedInputStream: signature
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -253,32 +321,77 @@ export class ClientsViewComponent implements OnInit {
    * Deletes client signature
    */
   private deleteSignature() {
-    this.clientsService.getClientDocuments(this.clientViewData.id).subscribe((documents: any) => {
-      const deleteSignatureDialogRef = this.dialog.open(DeleteSignatureDialogComponent, {
-        data: documents
+    this.documentsService
+      .retrieveAllDocuments({
+        entityType: 'clients',
+        entityId: Number(this.clientViewData.id)
+      })
+      .subscribe((documents: any) => {
+        const deleteSignatureDialogRef = this.dialog.open(DeleteSignatureDialogComponent, {
+          data: documents
+        });
+        deleteSignatureDialogRef.afterClosed().subscribe((response: any) => {
+          if (response.delete) {
+            this.documentsService
+              .deleteDocument({
+                entityType: 'clients',
+                entityId: Number(this.clientViewData.id),
+                documentId: response.id
+              })
+              .subscribe(() => {
+                this.reload();
+              });
+          } else if (response.upload) {
+            this.uploadSignature();
+          }
+        });
       });
-      deleteSignatureDialogRef.afterClosed().subscribe((response: any) => {
-        if (response.delete) {
-          this.clientsService.deleteClientDocument(this.clientViewData.id, response.id).subscribe(() => {
-            this.reload();
-          });
-        } else if (response.upload) {
-          this.uploadSignature();
-        }
-      });
-    });
+  }
+
+  /**
+   * Convert a data URL string to a Blob
+   */
+  private dataURLToBlob(dataURL: string): Blob {
+    const arr = dataURL.split(',');
+    if (arr.length < 2) {
+      return new Blob([]);
+    }
+    const mimeArr = arr[0].match(/:(.*?);/);
+    if (!mimeArr || mimeArr.length < 2) {
+      return new Blob([]);
+    }
+    const mime = mimeArr[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
   }
 
   /**
    * Captures clients profile image.
    */
   private captureProfileImage() {
+    if (!this.clientViewData || !this.clientViewData.id) {
+      console.warn('Cannot capture profile image: client data is not available');
+      return;
+    }
+
     const captureImageDialogRef = this.dialog.open(CaptureImageDialogComponent);
     captureImageDialogRef.afterClosed().subscribe((imageURL: string) => {
       if (imageURL) {
-        this.clientsService.uploadCapturedClientProfileImage(this.clientViewData.id, imageURL).subscribe(() => {
-          this.reload();
-        });
+        const blob = this.dataURLToBlob(imageURL);
+        this.selfClientService
+          .addNewClientImage2({
+            clientId: this.clientViewData.id,
+            uploadedInputStream: blob,
+            contentLength: blob.size
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -287,12 +400,23 @@ export class ClientsViewComponent implements OnInit {
    * Uploads the clients image.
    */
   private uploadProfileImage() {
+    if (!this.clientViewData || !this.clientViewData.id) {
+      console.warn('Cannot upload profile image: client data is not available');
+      return;
+    }
+
     const uploadImageDialogRef = this.dialog.open(UploadImageDialogComponent);
     uploadImageDialogRef.afterClosed().subscribe((image: File) => {
       if (image) {
-        this.clientsService.uploadClientProfileImage(this.clientViewData.id, image).subscribe(() => {
-          this.reload();
-        });
+        this.selfClientService
+          .addNewClientImage2({
+            clientId: this.clientViewData.id,
+            uploadedInputStream: image,
+            contentLength: image.size
+          })
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }
@@ -301,12 +425,17 @@ export class ClientsViewComponent implements OnInit {
    * Deletes the client image.
    */
   private deleteProfileImage() {
+    if (!this.clientViewData || !this.clientViewData.id || !this.clientViewData.displayName) {
+      console.warn('Cannot delete profile image: client data is not available');
+      return;
+    }
+
     const deleteClientImageDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `the profile image of ${this.clientViewData.displayName}` }
     });
     deleteClientImageDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.clientsService.deleteClientProfileImage(this.clientViewData.id).subscribe(() => {
+        this.selfClientService.deleteClientImage1(this.clientViewData.id).subscribe(() => {
           this.reload();
         });
       }
