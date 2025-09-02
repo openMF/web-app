@@ -36,7 +36,7 @@
   window['env']['sessionIdleTimeout'] = '$MIFOS_SESSION_IDLE_TIMEOUT';
 
   // OAuth Server Enabled
-  window['env']['oauthServerEnabled'] = $MIFOS_OAUTH_SERVER_ENABLED;
+  window['env']['oauthServerEnabled'] = '$MIFOS_OAUTH_SERVER_ENABLED';
 
   // OAuth Server URL
   window['env']['oauthServerUrl'] = '$MIFOS_OAUTH_SERVER_URL';
@@ -56,7 +56,7 @@
   window['env']['interbankTransfers'] = '$VNEXT_INTERBANK_TRANSFERS';
 
   // OIDC Plugin Environment variables
-  window['env']['oidcServerEnabled'] = $FINERACT_PLUGIN_OIDC_ENABLED;
+  window['env']['oidcServerEnabled'] = '$FINERACT_PLUGIN_OIDC_ENABLED';
   window['env']['oidcBaseUrl'] = '$FINERACT_PLUGIN_OIDC_BASE_URL';
   window['env']['oidcClientId'] = '$FINERACT_PLUGIN_OIDC_CLIENT_ID';
   window['env']['oidcApiUrl'] = '$FINERACT_PLUGIN_OIDC_API_URL';
