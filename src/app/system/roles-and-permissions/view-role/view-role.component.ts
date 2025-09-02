@@ -18,6 +18,10 @@ import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Custom Service Zitadel */
+import { environment } from '../../../../environments/environment';
+import { AuthService } from 'app/zitadel/auth.service';
+
 /**
  * View Role and Permissions Component
  */
@@ -68,6 +72,7 @@ export class ViewRoleComponent implements OnInit {
   permissions: {
     permissions: { code: string; id: number }[];
   } = { permissions: [] };
+  /** Add role zitadel */
 
   /**
    * Retrieves the roledetails data from `resolve`.
@@ -84,7 +89,8 @@ export class ViewRoleComponent implements OnInit {
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private authService: AuthService
   ) {
     this.route.data.subscribe((data: { roledetails: any }) => {
       this.rolePermissionService = data.roledetails;
@@ -281,6 +287,9 @@ export class ViewRoleComponent implements OnInit {
     deleteRoleDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.systemService.deleteRole(this.roleId).subscribe(() => {
+          if (environment.OIDC.oidcServerEnabled) {
+            this.authService.deleteRole(this.roleId);
+          }
           this.router.navigate(['/system/roles-and-permissions']);
         });
       } else {
