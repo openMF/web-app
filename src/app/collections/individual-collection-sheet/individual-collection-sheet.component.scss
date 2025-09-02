@@ -1,5 +1,6 @@
 .container {
   max-width: 37em;
+  padding: 20px;
 
   .margin-v {
     margin: 1em 0;
@@ -11,6 +12,36 @@
 
   .margin-t {
     margin-top: 1em;
+  }
+
+  // Form field underlines for light mode
+  ::ng-deep .mat-form-field.mat-form-field .mat-form-field-underline {
+    background-color: rgb(0 0 0 / 42%);
+  }
+
+  ::ng-deep .mat-mdc-form-field.mat-mdc-form-field .mat-mdc-form-field-bottom-align::before {
+    border-bottom-color: rgb(0 0 0 / 42%);
+  }
+
+  ::ng-deep .mat-mdc-form-field.mat-mdc-form-field .mdc-line-ripple::before,
+  ::ng-deep .mat-mdc-form-field.mat-mdc-form-field .mdc-line-ripple::after {
+    border-bottom-color: rgb(0 0 0 / 42%);
+  }
+}
+
+// Dark theme form field underlines
+.dark-theme .container {
+  ::ng-deep .mat-form-field.mat-form-field .mat-form-field-underline {
+    background-color: rgb(255 255 255 / 70%);
+  }
+
+  ::ng-deep .mat-mdc-form-field.mat-mdc-form-field .mat-mdc-form-field-bottom-align::before {
+    border-bottom-color: rgb(255 255 255 / 70%);
+  }
+
+  ::ng-deep .mat-mdc-form-field.mat-mdc-form-field .mdc-line-ripple::before,
+  ::ng-deep .mat-mdc-form-field.mat-mdc-form-field .mdc-line-ripple::after {
+    border-bottom-color: rgb(255 255 255 / 70%);
   }
 }
 
