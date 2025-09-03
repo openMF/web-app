@@ -60,7 +60,7 @@ import { BusinessRuleParametersComponent } from './sms-campaigns/sms-campaign-st
 import { EditCampaignComponent } from './sms-campaigns/edit-campaign/edit-campaign.component';
 import { EditSmsCampaignStepComponent } from './sms-campaigns/sms-campaign-stepper/edit-sms-campaign-step/edit-sms-campaign-step.component';
 import { EditBusinessRuleParametersComponent } from './sms-campaigns/sms-campaign-stepper/edit-sms-campaign-step/edit-business-rule-parameters/edit-business-rule-parameters.component';
-import { CreateEnityDataTableChecksComponent } from './entity-data-table-checks/create-enity-data-table-checks/create-enity-data-table-checks.component';
+import { CreateEntityDataTableChecksComponent } from './entity-data-table-checks/create-entity-data-table-checks/create-entity-data-table-checks.component';
 import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
 import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/create-loan-provisioning-criteria/create-loan-provisioning-criteria.component';
 import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';
@@ -141,7 +141,7 @@ import { InvestorsComponent } from './investors/investors.component';
     EditCampaignComponent,
     EditSmsCampaignStepComponent,
     EditBusinessRuleParametersComponent,
-    CreateEnityDataTableChecksComponent,
+    CreateEntityDataTableChecksComponent,
     BulkLoanReassignmnetComponent,
     CreateLoanProvisioningCriteriaComponent,
     EditLoanProvisioningCriteriaComponent,
