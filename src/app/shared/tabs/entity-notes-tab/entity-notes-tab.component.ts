@@ -9,7 +9,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatList, MatListItem } from '@angular/material/list';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -21,8 +20,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize,
     FaIconComponent,
-    MatList,
-    MatListItem,
     DateFormatPipe
   ]
 })
