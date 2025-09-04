@@ -14,6 +14,15 @@
     margin-top: 1em;
   }
 
+  // Common margin utility classes
+  .m-b-20 {
+    margin-bottom: 20px;
+  }
+
+  .m-r-10 {
+    margin-right: 10px;
+  }
+
   // Form field underlines for light mode
   ::ng-deep .mat-form-field.mat-form-field .mat-form-field-underline {
     background-color: rgb(0 0 0 / 42%);
@@ -27,6 +36,71 @@
   ::ng-deep .mat-mdc-form-field.mat-mdc-form-field .mdc-line-ripple::after {
     border-bottom-color: rgb(0 0 0 / 42%);
   }
+}
+
+.showcollectionsheet {
+  .container {
+    max-width: 73rem;
+  }
+}
+
+// Card styling in collection sheet
+.showcollectionsheet .container mat-card {
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+}
+
+// Parameters button styling
+.showcollectionsheet .container .m-b-20 {
+  margin-bottom: 20px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.showcollectionsheet .container .m-b-20 button {
+  min-width: 120px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  transition: all 0.3s ease;
+}
+
+.showcollectionsheet .container .m-b-20 button:hover {
+  box-shadow: 0 4px 8px rgb(0 0 0 / 15%);
+  transform: translateY(-2px);
+}
+
+// Heading styling
+.showcollectionsheet .container h2.mat-h2 {
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: rgb(0 0 0 / 87%);
+  border-bottom: 1px solid rgb(0 0 0 / 12%);
+  padding-bottom: 10px;
+}
+
+// Table styling
+.showcollectionsheet .container table.mat-elevation-z1 {
+  width: 100%;
+  margin-bottom: 24px;
+  box-shadow: none;
+  border: 1px solid rgb(0 0 0 / 12%);
+}
+
+.showcollectionsheet .container table.mat-elevation-z1 th.mat-header-cell {
+  font-weight: 500;
+  color: rgb(0 0 0 / 87%);
+  background-color: rgb(0 0 0 / 4%);
+}
+
+.showcollectionsheet .container table.mat-elevation-z1 td.mat-cell,
+.showcollectionsheet .container table.mat-elevation-z1 th.mat-header-cell {
+  padding: 12px 16px;
+}
+
+.showcollectionsheet .container table.mat-elevation-z1 tr.mat-row:hover {
+  background-color: rgb(0 0 0 / 2%);
 }
 
 // Dark theme form field underlines
@@ -45,10 +119,34 @@
   }
 }
 
-.showcollectionsheet {
-  .container {
-    max-width: 73rem;
-  }
+// Dark theme card styling
+.dark-theme .showcollectionsheet .container mat-card {
+  background-color: #424242;
+}
+
+// Dark theme button styling
+.dark-theme .showcollectionsheet .container .m-b-20 button {
+  box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
+}
+
+// Dark theme heading styling
+.dark-theme .showcollectionsheet .container h2.mat-h2 {
+  color: rgb(255 255 255 / 87%);
+  border-bottom-color: rgb(255 255 255 / 12%);
+}
+
+// Dark theme table styling
+.dark-theme .showcollectionsheet .container table.mat-elevation-z1 {
+  border-color: rgb(255 255 255 / 12%);
+}
+
+.dark-theme .showcollectionsheet .container table.mat-elevation-z1 th.mat-header-cell {
+  color: rgb(255 255 255 / 87%);
+  background-color: rgb(255 255 255 / 10%);
+}
+
+.dark-theme .showcollectionsheet .container table.mat-elevation-z1 tr.mat-row:hover {
+  background-color: rgb(255 255 255 / 5%);
 }
 
 .alert {
@@ -60,13 +158,13 @@
   line-height: 1.43;
   border-radius: 4px;
   letter-spacing: normal;
+}
 
-  .message {
-    padding: 8px 0;
-  }
+.alert .message {
+  padding: 8px 0;
+}
 
-  .alert-check {
-    color: #f44336;
-    margin-right: 2px;
-  }
+.alert .alert-check {
+  color: #f44336;
+  margin-right: 2px;
 }
