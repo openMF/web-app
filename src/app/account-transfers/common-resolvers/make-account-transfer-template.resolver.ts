@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { AccountTransfersService } from '@fineract/client';
 
 /**
  * View Standing Instructions resolver.
@@ -16,12 +16,12 @@ export class MakeAccountTransferTemplateResolver {
   accountTypeId: string;
   id: any;
   /**
-   * @param {accountTransfersService} AccountTransfersService Account Transfers service.
+   * @param {AccountTransfersService} accountTransfersService Account Transfers service.
    */
   constructor(private accountTransfersService: AccountTransfersService) {}
 
   /**
-   * Returns the Standing Instructions Data.
+   * Returns the Account Transfer Template Data.
    * @param {ActivatedRouteSnapshot} route Route Snapshot
    * @returns {Observable<any>}
    */
@@ -43,6 +43,9 @@ export class MakeAccountTransferTemplateResolver {
       default:
         this.accountTypeId = '0';
     }
-    return this.accountTransfersService.newAccountTranferResource(this.id, this.accountTypeId);
+    return this.accountTransfersService.template5({
+      fromAccountId: this.id,
+      fromAccountType: Number(this.accountTypeId)
+    });
   }
 }

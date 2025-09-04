@@ -18,7 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { StandingInstructionsService } from '@fineract/client';
-import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+import { AccountTransfersService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
