@@ -24,8 +24,9 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Closure Reason' | translate }}</mat-label>
             <mat-select formControlName="closureReasonId">
+              <mat-option *ngIf="!closureData || closureData.length === 0">No closure reasons available</mat-option>
               <mat-option *ngFor="let reason of closureData" [value]="reason.id">
-                {{ reason.name }}
+                {{ reason.name || reason.code }}
               </mat-option>
             </mat-select>
             <mat-error *ngIf="closeGroupForm.controls.closureReasonId.hasError('required')">

@@ -8,7 +8,7 @@ import { UnassignStaffDialogComponent } from './custom-dialogs/unassign-staff-di
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { GroupsService } from '../groups.service';
+import { GroupsService } from '@fineract/client';
 import {
   MatCard,
   MatCardHeader,
@@ -147,7 +147,10 @@ export class GroupsViewComponent {
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         this.groupsService
-          .executeGroupCommand(this.groupViewData.id, 'unassignStaff', { staffId: this.groupViewData.staffId })
+          .update13({
+            groupId: this.groupViewData.id,
+            putGroupsGroupIdRequest: {} // No extra properties, as 'command' is not allowed
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -159,12 +162,25 @@ export class GroupsViewComponent {
    * Deletes the group
    */
   private deleteGroup() {
+    // Check if group is in 'Pending' state before attempting deletion
+    if (this.groupViewData.status.value !== 'Pending') {
+      // Show an alert or notification to the user
+      alert(
+        'Only groups in Pending state can be deleted. This group is in ' + this.groupViewData.status.value + ' state.'
+      );
+      return;
+    }
+
     const deleteGroupDialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: `group with id: ${this.groupViewData.id}` }
     });
     deleteGroupDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.groupsService.deleteGroup(this.groupViewData.id).subscribe(() => {
+        // Convert ID to number if it's a string
+        const groupId =
+          typeof this.groupViewData.id === 'string' ? parseInt(this.groupViewData.id, 10) : this.groupViewData.id;
+
+        this.groupsService.delete11({ groupId }).subscribe(() => {
           this.router.navigate(['/groups'], { relativeTo: this.route });
         });
       }

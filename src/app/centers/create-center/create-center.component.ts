@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService } from '@fineract/client';
 import { CentersService } from '../centers.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
@@ -120,7 +120,7 @@ export class CreateCenterComponent implements OnInit {
    */
   buildDependencies() {
     this.centerForm.get('officeId').valueChanges.subscribe((option: any) => {
-      this.groupService.getGroupsByOfficeId(option).subscribe((data: any) => {
+      this.groupService.retrieveAll24(option).subscribe((data: any) => {
         this.groupsData = data;
         if (!this.groupsData.length) {
           this.groupChoice.disable();

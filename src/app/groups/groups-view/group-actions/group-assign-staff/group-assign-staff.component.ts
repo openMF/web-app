@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -40,12 +40,30 @@ export class GroupAssignStaffComponent implements OnInit {
     private router: Router
   ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
+      console.log('Group action data:', data.groupActionData);
       this.groupData = data.groupActionData;
     });
   }
 
   ngOnInit() {
-    this.staffData = this.groupData.staffOptions;
+    console.log('Group data:', this.groupData);
+
+    // Make sure staffOptions exists before accessing it
+    if (this.groupData && this.groupData.staffOptions) {
+      this.staffData = this.groupData.staffOptions;
+      console.log('Staff options:', this.staffData);
+    } else {
+      console.error('No staff options found in group data');
+
+      // As a fallback, try to get staff options from the template property
+      if (this.groupData && this.groupData.template && this.groupData.template.staffOptions) {
+        this.staffData = this.groupData.template.staffOptions;
+        console.log('Staff options from template:', this.staffData);
+      } else {
+        this.staffData = [];
+      }
+    }
+
     this.createGroupAssignStaffForm();
   }
 
@@ -63,7 +81,11 @@ export class GroupAssignStaffComponent implements OnInit {
    */
   submit() {
     this.groupsService
-      .executeGroupCommand(this.groupData.id, 'assignStaff', this.groupAssignStaffForm.value)
+      .activateOrGenerateCollectionSheet({
+        groupId: this.groupData.id,
+        command: 'assignStaff',
+        ...this.groupAssignStaffForm.value
+      })
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });

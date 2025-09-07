@@ -6,10 +6,15 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Select Client Members for Transfer' | translate }}</mat-label>
             <mat-select required formControlName="clients" multiple>
-              <mat-option *ngFor="let member of clientMembers" [value]="{ id: member.id }">
-                {{ member.displayName }}
+              <mat-option *ngIf="!clientMembers || clientMembers.length === 0">No client members available</mat-option>
+              <mat-option *ngFor="let member of clientMembers" [value]="{ clientId: member.id }">
+                {{ member.displayName || member.name || member.clientName || 'Client ' + member.id }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="transferClientsForm.controls.clients.hasError('required')">
+              {{ 'labels.inputs.Select Client Members' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
 
           <mat-checkbox

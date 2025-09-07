@@ -123,7 +123,9 @@ export class StandingInstructionsTabComponent implements OnInit {
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {});
+        this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {
+          this.getStandingInstructions(); // Refresh the list after deletion
+        });
       }
     });
   }
