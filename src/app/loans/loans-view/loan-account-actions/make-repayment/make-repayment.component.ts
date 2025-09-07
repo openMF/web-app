@@ -115,6 +115,9 @@ export class MakeRepaymentComponent implements OnInit {
           Validators.min(0.001)])
       );
     }
+    if (this.isCapitalizedIncome() || this.isBuyDownFee()) {
+      this.repaymentLoanForm.addControl('classificationId', new UntypedFormControl(''));
+    }
   }
 
   setRepaymentLoanDetails() {

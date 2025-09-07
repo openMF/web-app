@@ -142,18 +142,18 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
           enableAccrualActivityPosting: this.loanProductsTemplate.enableAccrualActivityPosting
         });
         if (this.deferredIncomeRecognition) {
-          if (this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization) {
+          if (this.deferredIncomeRecognition.capitalizedIncome?.enableIncomeCapitalization) {
             this.loanProductAccountingForm.patchValue({
               deferredIncomeLiabilityAccountId: accountingMappings.deferredIncomeLiabilityAccount.id,
               incomeFromCapitalizationAccountId: accountingMappings.incomeFromCapitalizationAccount.id
             });
           }
-          if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {
+          if (this.deferredIncomeRecognition.buyDownFee?.enableBuyDownFee) {
             this.loanProductAccountingForm.patchValue({
               deferredIncomeLiabilityAccountId: accountingMappings.deferredIncomeLiabilityAccount.id,
               incomeFromBuyDownAccountId: accountingMappings.incomeFromBuyDownAccount.id
             });
-            if (this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee) {
+            if (this.deferredIncomeRecognition.buyDownFee?.merchantBuyDownFee) {
               this.loanProductAccountingForm.patchValue({
                 buyDownExpenseAccountId: accountingMappings.buyDownExpenseAccount?.id
               });
@@ -599,8 +599,8 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
     if (this.isAccountingAccrualBased) {
       if (this.deferredIncomeRecognition) {
         if (
-          this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization ||
-          this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee
+          this.deferredIncomeRecognition.capitalizedIncome?.enableIncomeCapitalization ||
+          this.deferredIncomeRecognition.buyDownFee?.enableBuyDownFee
         ) {
           this.loanProductAccountingForm.addControl(
             'deferredIncomeLiabilityAccountId',
@@ -609,7 +609,7 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
         } else {
           this.loanProductAccountingForm.removeControl('deferredIncomeLiabilityAccountId');
         }
-        if (this.deferredIncomeRecognition.capitalizedIncome.enableIncomeCapitalization) {
+        if (this.deferredIncomeRecognition.capitalizedIncome?.enableIncomeCapitalization) {
           this.loanProductAccountingForm.addControl(
             'incomeFromCapitalizationAccountId',
             new UntypedFormControl('', Validators.required)
@@ -617,8 +617,8 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
         } else {
           this.loanProductAccountingForm.removeControl('incomeFromCapitalizationAccountId');
         }
-        if (this.deferredIncomeRecognition.buyDownFee.enableBuyDownFee) {
-          if (this.deferredIncomeRecognition.buyDownFee.merchantBuyDownFee) {
+        if (this.deferredIncomeRecognition.buyDownFee?.enableBuyDownFee) {
+          if (this.deferredIncomeRecognition.buyDownFee?.merchantBuyDownFee) {
             this.loanProductAccountingForm.addControl(
               'buyDownExpenseAccountId',
               new UntypedFormControl('', Validators.required)

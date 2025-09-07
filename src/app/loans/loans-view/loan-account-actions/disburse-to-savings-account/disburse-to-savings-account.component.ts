@@ -1,12 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
@@ -25,8 +19,7 @@ import { MatIcon } from '@angular/material/icon';
     ...STANDALONE_SHARED_IMPORTS,
     InputAmountComponent,
     CdkTextareaAutosize,
-    FormatNumberPipe,
-    MatIcon
+    FormatNumberPipe
   ]
 })
 export class DisburseToSavingsAccountComponent implements OnInit {
