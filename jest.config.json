@@ -1,0 +1,14 @@
+{
+  "preset": "jest-preset-angular",
+  "setupFilesAfterEnv": ["<rootDir>/setup-jest.js"],
+  "testPathIgnorePatterns": [
+    "<rootDir>/node_modules/",
+    "<rootDir>/dist/"
+  ],
+  "transform": {
+    "^.+\\.(ts|js|html)$": "jest-preset-angular"
+  },
+  "moduleNameMapper": {
+    "app/standalone-shared.module": "<rootDir>/src/__mocks__/standalone-shared.module.ts"
+  }
+}

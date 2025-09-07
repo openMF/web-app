@@ -35,6 +35,16 @@ const config: Config = {
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'v8',
 
+  preset: 'jest-preset-angular',
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/dist/'
+  ],
+  transform: {
+    '^.+\\.(ts|js|html)$': 'jest-preset-angular'
+  },
+
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
   //   "json",
