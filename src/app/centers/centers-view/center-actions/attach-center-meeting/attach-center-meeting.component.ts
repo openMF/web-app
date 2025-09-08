@@ -174,7 +174,7 @@ export class AttachCenterMeetingComponent implements OnInit {
       locale
     };
     this.centersService.createCenterMeeting(this.centerId, data).subscribe((response: any) => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['../../general'], { relativeTo: this.route });
     });
   }
 }

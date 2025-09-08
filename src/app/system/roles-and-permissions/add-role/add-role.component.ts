@@ -7,6 +7,10 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { SystemService } from '../../system.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Custom Service Zitadel */
+import { environment } from '../../../../environments/environment';
+import { AuthService } from 'app/zitadel/auth.service';
+
 /**
  * Add Role Component.
  */
@@ -21,6 +25,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 export class AddRoleComponent implements OnInit {
   /** Role form. */
   roleForm: UntypedFormGroup;
+  /** Add role zitadel */
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -32,7 +37,8 @@ export class AddRoleComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private systemService: SystemService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   /**
@@ -64,6 +70,9 @@ export class AddRoleComponent implements OnInit {
    */
   submit() {
     this.systemService.createRole(this.roleForm.value).subscribe((response: any) => {
+      if (environment.OIDC.oidcServerEnabled) {
+        this.authService.createRole(response.resourceId, this.roleForm.value.name, this.roleForm.value.description);
+      }
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

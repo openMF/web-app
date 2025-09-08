@@ -1,12 +1,127 @@
+.container {
+  padding: 24px;
+  max-width: 100%;
+
+  .gap-2percent {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    margin-bottom: 24px;
+    align-items: stretch;
+
+    // Responsive behavior
+    @media (width <= 768px) {
+      flex-direction: column;
+    }
+
+    mat-card {
+      flex: 1;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+
+      h3 {
+        margin: 0 0 20px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      h4 {
+        font-weight: 400;
+        margin: 16px 0 12px;
+        color: #555;
+      }
+
+      mat-card-content {
+        padding: 0;
+        margin-bottom: 20px;
+        flex-grow: 1;
+
+        mat-form-field {
+          width: 100%;
+          margin-bottom: 16px;
+        }
+      }
+
+      .flex-13 {
+        margin-top: auto;
+        padding-top: 16px;
+
+        button {
+          padding: 12px 24px;
+          font-weight: 500;
+          width: 100%;
+        }
+      }
+
+      mifosx-file-upload {
+        margin: 16px 0;
+        flex-grow: 1;
+        padding-top: 20px !important;
+      }
+
+      mat-hint {
+        margin: 12px 0;
+        font-size: 12px;
+        color: #666;
+      }
+
+      .flex.cover {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  // Documents section styling
+  mat-card:last-child {
+    padding: 24px;
+    border-radius: 20px;
+    position: relative;
+
+    .documents {
+      margin: 16px 0 20px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .m-b-10 {
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      margin-bottom: 0;
+
+      button {
+        padding: 8px 16px;
+      }
+    }
+  }
+}
+
 .imports-table {
   overflow: auto;
+  margin-top: 16px;
+  border-radius: 8px;
+
+  table {
+    width: 100%;
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: 500;
+      padding: 16px 12px;
+    }
+
+    td {
+      padding: 16px 12px;
+    }
+
+    .select-row:hover {
+      background-color: rgb(0 0 0 / 4%);
+    }
+  }
 }
 
-.documents {
-  margin: 0;
-}
-
-h4 {
-  font-weight: 400;
-  margin: 1% 0;
+mat-paginator {
+  margin-top: 16px;
 }

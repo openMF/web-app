@@ -78,6 +78,7 @@
   color: white !important;
   /* stylelint-disable-next-line selector-max-universal */
   * {
+    background-color: transparent !important;
     color: white !important;
   }
 }
@@ -86,6 +87,8 @@
   color: white !important;
   /* stylelint-disable-next-line selector-max-universal */
   * {
+    background-color: transparent !important;
     color: white !important;
+    margin-bottom: 0;
   }
 }

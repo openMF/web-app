@@ -95,6 +95,18 @@
           <a matLine>{{ 'labels.menus.Checker Inbox and Tasks' | translate }}</a>
         </mat-list-item>
         <mat-list-item
+          [routerLink]="['/collections/collection-sheet']"
+          [matTooltipPosition]="tooltipPosition"
+          matTooltip="{{ 'tooltips.Collection Sheet' | translate }}"
+          routerLinkActive="active-menu"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <mat-icon matListIcon>
+            <i class="fa fa-tasks"></i>
+          </mat-icon>
+          <a matLine>{{ 'labels.menus.Collection Sheet' | translate }}</a>
+        </mat-list-item>
+        <mat-list-item
           [routerLink]="['/collections/individual-collection-sheet']"
           [matTooltipPosition]="tooltipPosition"
           matTooltip="{{ 'tooltips.Individual Collection Sheet' | translate }}"

@@ -1,13 +1,7 @@
 /** Angular Imports */
 import { Component, OnInit, Input } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  Validators,
-  UntypedFormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
 import { LoansService } from '@fineract/client';
@@ -33,8 +27,7 @@ import { MatIcon } from '@angular/material/icon';
     InputAmountComponent,
     MatSlideToggle,
     CdkTextareaAutosize,
-    FormatNumberPipe,
-    MatIcon
+    FormatNumberPipe
   ]
 })
 export class DisburseComponent implements OnInit {

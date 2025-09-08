@@ -18,6 +18,17 @@
     <!-- Load environment variables -->
   </head>
   <body class="h-full">
+    <script>
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+      const code = getQueryParam('code');
+      if (code) {
+        localStorage.setItem('auth_code', code);
+        window.location.href = '/#/callback';
+      }
+    </script>
     <script src="assets/env.js"></script>
     <!--[if lt IE 10]>
       <p>

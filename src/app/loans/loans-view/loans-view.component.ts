@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
@@ -18,10 +18,10 @@ import { DelinquencyPausePeriod } from '../models/loan-account.model';
 import { TranslateService } from '@ngx-translate/core';
 import { LoanTransaction } from 'app/products/loan-products/models/loan-account.model';
 import { OptionData } from 'app/shared/models/option-data.model';
-import { MatCard, MatCardHeader, MatCardTitleGroup, MatCardTitle, MatCardContent } from '@angular/material/card';
+import { MatCardHeader, MatCardTitleGroup, MatCardTitle } from '@angular/material/card';
 import { SvgIconComponent } from '../../shared/svg-icon/svg-icon.component';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgClass, NgIf, NgFor, CurrencyPipe } from '@angular/common';
+import { NgClass, CurrencyPipe } from '@angular/common';
 import { LongTextComponent } from '../../shared/long-text/long-text.component';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
 import { MatIconButton } from '@angular/material/button';
@@ -33,6 +33,7 @@ import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { LoanProducts } from 'app/products/loan-products/loan-products';
 
 @Component({
   selector: 'mifosx-loans-view',
@@ -294,6 +295,13 @@ export class LoansViewComponent implements OnInit {
           name: 'Disburse',
           icon: 'hand-holding-usd',
           taskPermissionName: 'DISBURSE_LOAN'
+        });
+      }
+      if (LoanProducts.isAdvancedPaymentAllocationStrategy(this.loanDetailsData.transactionProcessingStrategyCode)) {
+        this.buttonConfig.addButton({
+          name: 'Reschedule',
+          icon: 'calendar',
+          taskPermissionName: 'CREATE_RESCHEDULELOAN'
         });
       }
     }

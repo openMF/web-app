@@ -68,7 +68,7 @@
             <input matInput formControlName="externalId" />
           </mat-form-field>
 
-          <mat-form-field *ngIf="isCapitalizedIncome()">
+          <mat-form-field *ngIf="isCapitalizedIncome() || isBuyDownFee()">
             <mat-label>{{ 'labels.inputs.Classification' | translate }}</mat-label>
             <mat-select formControlName="classificationId">
               <mat-option *ngFor="let classificationOption of classificationOptions" [value]="classificationOption.id">

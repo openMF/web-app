@@ -24,7 +24,7 @@ export class CenterActionsResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const actionName = route.paramMap.get('name');
+    const actionName = route.paramMap.get('action');
     const centerId = route.paramMap.get('centerId') || route.parent.parent.paramMap.get('centerId');
     switch (actionName) {
       case 'Assign Staff':

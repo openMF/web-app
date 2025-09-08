@@ -1,0 +1,197 @@
+// Variables
+$bar: 150px;
+$foo: $bar * 8;
+$color: #e2e4ec;
+
+// Container styles
+.container {
+  padding: 24px;
+
+  // Support for existing layout classes
+  .layout-column,
+  .layout-gt-sm-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: nowrap;
+    gap: 20px;
+
+    &.align-gt-sm-start-center {
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+      min-width: 0;
+
+      &.m-r-30 {
+        margin-right: 30px;
+      }
+
+      // Handle multiple form fields in search box
+      mat-form-field {
+        min-width: 200px;
+        flex: 1;
+
+        &.search-box {
+          width: auto;
+        }
+
+        // Ensure form fields are inline
+        + mat-form-field {
+          margin-left: 15px;
+        }
+      }
+
+      mat-checkbox {
+        white-space: nowrap;
+        flex-shrink: 0;
+        margin-left: 15px;
+
+        &.m-r-10 {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .action-button {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      margin-left: auto;
+
+      &.gap-25px {
+        gap: 25px;
+      }
+
+      button {
+        white-space: nowrap;
+
+        fa-icon {
+          &.m-r-10,
+          &.m-r-20 {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  // Table styling
+  .bordered-table {
+    width: 100%;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 16px;
+
+    .select-row {
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f5f5f5;
+      }
+    }
+
+    th,
+    td {
+      padding: 12px 16px;
+    }
+
+    th {
+      background-color: #fafafa;
+      font-weight: 500;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tr {
+      border-bottom: 1px solid #f0f0f0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  // Paginator styling
+  mat-paginator {
+    border-top: 1px solid #e0e0e0;
+    background: white;
+    margin-top: 0;
+  }
+
+  // Progress bar
+  mat-progress-bar {
+    margin: 0;
+  }
+}
+
+// Responsive design
+@media (width <= 768px) {
+  .container {
+    padding: 16px;
+
+    .layout-column,
+    .layout-gt-sm-row {
+      flex-wrap: wrap;
+
+      .search-box {
+        width: 100%;
+        margin-right: 0 !important;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+
+        mat-form-field {
+          min-width: 150px;
+          margin-bottom: 10px;
+
+          + mat-form-field {
+            margin-left: 0;
+          }
+        }
+
+        mat-checkbox {
+          margin-left: 0;
+          margin-top: 10px;
+        }
+      }
+
+      .action-button {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+
+        &.gap-25px {
+          gap: 15px;
+        }
+      }
+    }
+  }
+}
+
+// Table styles
+table {
+  width: 100%;
+
+  tr.select-row:hover {
+    cursor: pointer;
+  }
+}
+
+// Utility classes
+.m-r-10 {
+  margin-right: 10px !important;
+}
+
+.m-r-20 {
+  margin-right: 20px !important;
+}
+
+.m-r-30 {
+  margin-right: 30px !important;
+}
