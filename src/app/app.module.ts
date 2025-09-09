@@ -41,8 +41,7 @@ import { ProfileModule } from './profile/profile.module';
 import { TasksModule } from './tasks/tasks.module';
 import { ConfigurationWizardModule } from './configuration-wizard/configuration-wizard.module';
 import { PortalModule } from '@angular/cdk/portal';
-import { ApiModule } from '@fineract/client';
-import { BASE_PATH } from '@fineract/client';
+import { ApiModule, Configuration, BASE_PATH } from '@fineract/client';
 import { SettingsService } from './settings/settings.service';
 
 /** Main Routing Module */
@@ -121,6 +120,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     CollectionsModule,
     TasksModule,
     ConfigurationWizardModule,
+    ApiModule.forRoot(
+      () =>
+        new Configuration({
+          basePath: '' // Empty so ApiPrefixInterceptor handles all URL construction
+        })
+    ),
     AppRoutingModule,
     NotFoundComponent,
     CallbackComponent
@@ -133,6 +138,10 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: !environment.OIDC.oidcServerEnabled ? TokenInterceptor : ZitadelTokenInterceptor,
       multi: true
+    },
+    {
+      provide: BASE_PATH,
+      useValue: '' // Empty so ApiPrefixInterceptor handles all URL construction
     }
   ]
 })
