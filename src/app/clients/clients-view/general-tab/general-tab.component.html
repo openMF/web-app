@@ -112,6 +112,10 @@
     <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Loan Accounts' | translate }}</h3>
+        <!-- No Loan Accounts Message -->
+        <div class="no-account-message" *ngIf="!loanAccounts?.length">
+          <h1>{{ 'labels.text.No loan accounts' | translate }}</h1>
+        </div>
       </div>
     </div>
     <div class="layout-column flex-50">
@@ -302,6 +306,13 @@
     <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Saving Accounts' | translate }}</h3>
+        <!-- No Saving Account message   -->
+        <div
+          class="no-account-message"
+          *ngIf="!(savingAccounts | accountsFilter: 'saving' : 'open' : 'isSavings')?.length"
+        >
+          <h1>{{ 'labels.text.No saving accounts' | translate }}</h1>
+        </div>
       </div>
     </div>
     <div class="layout-column flex-50">
@@ -439,11 +450,38 @@
     ></tr>
   </table>
 
+  <!-- loans accounts overview table
+  <div class="heading-content">
+    <div class="layout-column flex-50">
+      <div class="heading-name">
+        <h3>{{ 'labels.heading.Loan Accounts' | translate }}</h3>
+            No Loan Accounts Message
+        <div class="no-account-message" *ngIf="!loanAccounts?.length">
+          <h1>{{ 'labels.text.No loan accounts' | translate }}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="layout-column flex-50">
+      <div class="layout-row align-flex-end">
+        <button mat-raised-button class="f-right" color="primary" (click)="toggleLoanAccountsOverview()">
+          {{ viewAccountsLabel(showClosedLoanAccounts) | translate }}
+        </button>
+      </div>
+    </div>
+  </div> -->
+
   <!-- Fixed Deposit Table -->
   <div class="heading-content">
     <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Fixed Deposit Accounts' | translate }}</h3>
+        <!-- No Fixed Deposit accounts message -->
+        <div
+          class="no-account-message"
+          *ngIf="!(savingAccounts | accountsFilter: 'saving' : 'open' : 'isFixed')?.length"
+        >
+          <h1>{{ 'labels.text.No deposit accounts' | translate }}</h1>
+        </div>
       </div>
     </div>
     <div class="layout-column flex-50">
@@ -565,6 +603,13 @@
     <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.heading.Recurring Deposit Accounts' | translate }}</h3>
+        <!-- No Recurring Deposit Accounts message -->
+        <div
+          class="no-account-message"
+          *ngIf="!(savingAccounts | accountsFilter: 'saving' : 'open' : 'isRecurring')?.length"
+        >
+          <h1>{{ 'labels.text.No recurring accounts' | translate }}</h1>
+        </div>
       </div>
     </div>
     <div class="layout-column flex-50">
@@ -689,11 +734,35 @@
     ></tr>
   </table>
 
+  <!-- loans accounts overview table
+  <div class="heading-content">
+    <div class="layout-column flex-50">
+      <div class="heading-name">
+        <h3>{{ 'labels.heading.Loan Accounts' | translate }}</h3>
+            No Loan Accounts Message
+        <div class="no-account-message" *ngIf="!loanAccounts?.length">
+          <h1>{{ 'labels.text.No loan accounts' | translate }}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="layout-column flex-50">
+      <div class="layout-row align-flex-end">
+        <button mat-raised-button class="f-right" color="primary" (click)="toggleLoanAccountsOverview()">
+          {{ viewAccountsLabel(showClosedLoanAccounts) | translate }}
+        </button>
+      </div>
+    </div>
+  </div> -->
+
   <!-- Shares overview Table -->
   <div class="heading-content">
     <div class="layout-column flex-50">
       <div class="heading-name">
         <h3>{{ 'labels.inputs.Shares Accounts' | translate }}</h3>
+        <!-- No shares account message -->
+        <div class="no-account-message" *ngIf="!shareAccounts?.length">
+          <h1>{{ 'labels.text.No shares accounts' | translate }}</h1>
+        </div>
       </div>
     </div>
     <div class="layout-column flex-50">

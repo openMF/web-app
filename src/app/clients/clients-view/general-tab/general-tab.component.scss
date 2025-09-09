@@ -48,3 +48,8 @@
   align-items: center; /* Ensure buttons are vertically aligned */
   gap: 0.5rem; /* Add spacing between buttons if needed */
 }
+
+// New class for ‘no account available’ message.
+.no-account-message {
+  color: blue;
+}
