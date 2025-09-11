@@ -238,24 +238,8 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions
-        class="button-container"
-        style="
-          display: flex;
-          justify-content: center;
-          gap: 20px;
-          padding: 24px 0;
-          margin-top: 32px;
-          border-top: 1px solid rgba(0, 0, 0, 0.12);
-        "
-      >
-        <button
-          type="button"
-          mat-raised-button
-          [routerLink]="['../general']"
-          class="custom-button"
-          style="min-width: 100px; height: 36px; margin: 0 10px; padding: 0 20px; border-radius: 4px"
-        >
+      <mat-card-actions class="button-container">
+        <button type="button" mat-raised-button [routerLink]="['../general']" class="custom-button">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
         <button
@@ -265,7 +249,6 @@
           [disabled]="!editClientForm.valid"
           (click)="submit()"
           class="custom-button"
-          style="min-width: 100px; height: 36px; margin: 0 10px; padding: 0 20px; border-radius: 4px"
         >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
