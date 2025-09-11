@@ -1,3 +1,196 @@
 .margin-v {
   margin: 2em 0 0;
 }
+
+.flex-32 {
+  flex: 0 1 32%;
+  max-width: 32%;
+}
+
+.gap-2percent {
+  gap: 2%;
+}
+
+.align-center {
+  align-items: center;
+}
+
+// Enhanced layout styles
+.container {
+  margin: 24px auto;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.mat-card {
+  padding: 32px;
+  margin: 16px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+}
+
+.mat-card-content {
+  padding: 0 !important;
+}
+
+.flex-24 {
+  flex: 0 1 calc(25% - 15px);
+  max-width: calc(25% - 15px);
+  margin-right: 0;
+}
+
+.flex-48 {
+  flex: 0 1 calc(50% - 10px);
+  max-width: calc(50% - 10px);
+  margin-right: 0;
+}
+
+.responsive-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.responsive-row:last-child {
+  margin-bottom: 0;
+}
+
+.mat-form-field {
+  margin-bottom: 16px;
+}
+
+.mat-form-field:last-child {
+  margin-right: 0;
+}
+
+// Ensure all form fields in first row have consistent appearance
+.responsive-row .mat-form-field {
+  min-height: 56px; // Standard Material Design height
+}
+
+.responsive-row .mat-form-field .mat-form-field-wrapper {
+  padding-bottom: 1.3438em;
+}
+
+.section-divider {
+  margin: 32px 0 24px;
+  border-color: rgb(0 0 0 / 12%);
+}
+
+.mat-checkbox {
+  margin: 20px 0;
+}
+
+.mat-card-actions {
+  text-align: center !important;
+}
+
+.button-container {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 20px !important;
+  padding: 24px 0 !important;
+  margin-top: 32px !important;
+  border-top: 1px solid rgb(0 0 0 / 12%) !important;
+}
+
+.custom-button {
+  min-width: 100px !important;
+  height: 36px !important;
+  margin: 0 10px !important;
+  padding: 0 20px !important;
+  border-radius: 4px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.3px !important;
+  font-size: 13px !important;
+}
+
+::ng-deep .mat-card-actions {
+  padding: 32px 0 0 !important;
+  margin-top: 40px !important;
+  border-top: 1px solid rgb(0 0 0 / 12%) !important;
+  display: flex !important;
+  gap: 32px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+::ng-deep .mat-card-actions button {
+  margin: 0 !important;
+  margin-left: 16px !important;
+  margin-right: 16px !important;
+}
+
+::ng-deep .mat-raised-button {
+  min-width: 140px !important;
+  height: 48px !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  padding: 0 32px !important;
+  font-size: 14px !important;
+}
+
+@media (width <= 1024px) {
+  .flex-24 {
+    flex: 0 1 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+}
+
+@media (width <= 768px) {
+  .flex-32 {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+
+  .container {
+    margin: 16px;
+  }
+
+  .mat-card {
+    padding: 20px;
+  }
+
+  .responsive-row {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .responsive-row .mat-form-field,
+  .flex-24,
+  .flex-32,
+  .flex-48 {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-right: 0;
+  }
+
+  .mat-card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mat-raised-button {
+    margin-bottom: 8px;
+  }
+}
+
+@media (width <= 480px) {
+  .mat-card {
+    padding: 16px;
+    margin: 8px 0;
+  }
+
+  .responsive-row {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+}
