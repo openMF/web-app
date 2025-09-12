@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService, MeetingsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -97,7 +97,8 @@ export class GroupAttendanceComponent implements OnInit {
     private router: Router,
     private groupsService: GroupsService,
     public dialog: MatDialog,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private meetingService: MeetingsService
   ) {
     this.route.data.subscribe((data: { groupActionData: any }) => {
       this.groupData = data.groupActionData;
@@ -121,7 +122,7 @@ export class GroupAttendanceComponent implements OnInit {
    */
   getAttendanceOptions() {
     this.groupsService
-      .getMeetingsTemplate(this.groupData.id, this.groupData.collectionMeetingCalendar.id)
+      .retrieveOne15(this.groupData.id, this.groupData.collectionMeetingCalendar.id)
       .subscribe((response: any) => {
         this.attendanceTypeOptions = response.attendanceTypeOptions;
       });
@@ -172,10 +173,15 @@ export class GroupAttendanceComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService
-      .assignGroupAttendance(this.groupData.id, this.groupData.collectionMeetingCalendar.id, data)
-      .subscribe(() => {
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      });
+    const requestParams = {
+      groupId: this.groupData.id,
+      calendarId: this.groupData.collectionMeetingCalendar.id,
+      entityType: 'groups',
+      entityId: this.groupData.id,
+      ...data
+    };
+    this.meetingService.retrieveMeetings(requestParams).subscribe(() => {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    });
   }
 }

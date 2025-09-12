@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { GroupsService } from '../groups.service';
+import { GroupsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -26,7 +26,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS
   ]
 })
-export class EditGroupComponent implements OnInit {
+export class EditGroupComponent implements OnInit, AfterViewInit {
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -80,6 +80,15 @@ export class EditGroupComponent implements OnInit {
   }
 
   /**
+   * Build dependencies after view initialization to avoid ExpressionChangedAfterItHasBeenCheckedError
+   */
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.buildDependencies();
+    });
+  }
+
+  /**
    * Creates the edit group form.
    */
   createEditGroupForm() {
@@ -97,7 +106,7 @@ export class EditGroupComponent implements OnInit {
       staffId: [''],
       externalId: ['']
     });
-    this.buildDependencies();
+    // Remove buildDependencies from here to avoid change detection issues
   }
 
   /**
@@ -112,6 +121,14 @@ export class EditGroupComponent implements OnInit {
     } else {
       this.editGroupForm.removeControl('activationDate');
     }
+  }
+
+  /**
+   * Get the group ID from various possible sources
+   */
+  private getGroupId(): number | null {
+    const id = this.groupData?.id || this.route.snapshot.paramMap.get('groupId');
+    return id ? Number(id) : null;
   }
 
   /**
@@ -135,8 +152,13 @@ export class EditGroupComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupService.updateGroup(data, this.groupData.id).subscribe((response: any) => {
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    const groupId = this.getGroupId();
+    if (groupId) {
+      this.groupService.update13({ groupId: groupId, putGroupsGroupIdRequest: data }).subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
+    } else {
+      console.error('Group ID is not available');
+    }
   }
 }

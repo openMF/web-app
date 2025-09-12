@@ -5,7 +5,7 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 /** Custom Services */
-import { GroupsService } from './groups.service';
+import { GroupsService } from '@fineract/client';
 
 /**
  * Groups custom data source to implement server side filtering, pagination and sorting.
@@ -41,10 +41,22 @@ export class GroupsDataSource implements DataSource<any> {
     groupActive: boolean = true
   ) {
     this.groupsSubject.next([]);
-    this.groupsService.getGroups(filterBy, orderBy, sortOrder, pageIndex * limit, limit).subscribe((groups: any) => {
-      groups.pageItems = groupActive ? groups.pageItems.filter((group: any) => group.active) : groups.pageItems;
-      this.recordsSubject.next(groups.totalFilteredRecords);
-      this.groupsSubject.next(groups.pageItems);
+    const requestParams: any = {
+      ...filterBy,
+      orderBy: orderBy,
+      sortOrder: sortOrder,
+      offset: pageIndex * limit,
+      limit: limit
+    };
+    this.groupsService.retrieveAll24(requestParams).subscribe((groups: any) => {
+      if (groups.pageItems) {
+        groups.pageItems = groupActive ? groups.pageItems.filter((group: any) => group.active) : groups.pageItems;
+        this.recordsSubject.next(groups.totalFilteredRecords);
+        this.groupsSubject.next(groups.pageItems);
+      } else {
+        this.recordsSubject.next(0);
+        this.groupsSubject.next([]);
+      }
     });
   }
 

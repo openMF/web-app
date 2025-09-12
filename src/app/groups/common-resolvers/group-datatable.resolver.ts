@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { GroupsService } from '../groups.service';
+import { DataTablesService } from '@fineract/client';
 
 /**
  * Group Datatable data resolver.
@@ -14,9 +14,9 @@ import { GroupsService } from '../groups.service';
 @Injectable()
 export class GroupDatatableResolver {
   /**
-   * @param {GroupsService} GroupsService Groups service.
+   * @param {DataTablesService} DataTablesService Groups service.
    */
-  constructor(private groupsService: GroupsService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
    * Returns the Group's Datatable data.
@@ -25,6 +25,8 @@ export class GroupDatatableResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const groupId = route.parent.parent.paramMap.get('groupId');
     const datatableName = route.paramMap.get('datatableName');
-    return this.groupsService.getGroupDatatable(groupId, datatableName);
+    return this.dataTablesService.getDatatables({
+      apptable: 'm_group'
+    });
   }
 }

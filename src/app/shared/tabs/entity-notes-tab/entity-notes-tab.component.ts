@@ -1,9 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ClientService } from '@fineract/client';
-import { GroupsService } from 'app/groups/groups.service';
-import { LoansService } from '@fineract/client';
+import { LoansService, GroupsService, ClientService } from '@fineract/client';
 import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';

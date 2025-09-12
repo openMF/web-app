@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { GroupsService } from '../groups.service';
+import { GroupsService } from '@fineract/client';
 
 /**
  * Groups data and template resolver.
@@ -24,7 +24,7 @@ export class GroupDataAndTemplateResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const groupId = route.paramMap.get('groupId');
-    return this.groupsService.getGroupData(groupId, 'true');
+    const groupId = Number(route.paramMap.get('groupId'));
+    return this.groupsService.retrieveOne15({ groupId: groupId });
   }
 }

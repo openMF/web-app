@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { GroupsService } from '../groups.service';
+import { RunReportsService } from 'app/customApis.service';
 
 /**
  * Group Summary resolver.
@@ -14,9 +14,9 @@ import { GroupsService } from '../groups.service';
 @Injectable()
 export class GroupSummaryResolver {
   /**
-   * @param {GroupsService} GroupsService Groups service.
+   * @param {RunReportsService} runReportsService Groups service.
    */
-  constructor(private groupsService: GroupsService) {}
+  constructor(private runReportsService: RunReportsService) {}
 
   /**
    * Returns the Group Summary data.
@@ -25,6 +25,6 @@ export class GroupSummaryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const groupId = route.parent.paramMap.get('groupId');
-    return this.groupsService.getGroupSummary(groupId);
+    return this.runReportsService.getGroupSummary(groupId);
   }
 }

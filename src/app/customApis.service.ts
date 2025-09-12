@@ -121,6 +121,28 @@ export class RunReportsService {
     const httpParams = new HttpParams().set('R_groupId', centerId.toString()).set('genericResultSet', false.toString());
     return this.http.get('/runreports/GroupSummaryCounts', { params: httpParams });
   }
+
+  getGroupSummary(groupId: string): Observable<any> {
+    const httpParams = new HttpParams().set('R_groupId', groupId).set('genericResultSet', 'false');
+    return this.http.get(`/runreports/GroupSummaryCounts`, { params: httpParams });
+  }
+}
+@Injectable({
+  providedIn: 'root'
+})
+export class GroupsService {
+  constructor(private http: HttpClient) {}
+
+  /**
+   * @param {string} groupId Group Id
+   * @param {string} command Command
+   * @param {any} data Command payload
+   * @returns {Observable<any>}
+   */
+  executeGroupCommand(groupId: string, command: string, data: any): Observable<any> {
+    const httpParams = new HttpParams().set('command', command);
+    return this.http.post(`/groups/${groupId}`, data, { params: httpParams });
+  }
 }
 
 /**

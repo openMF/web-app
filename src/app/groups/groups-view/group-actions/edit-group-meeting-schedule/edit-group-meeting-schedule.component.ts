@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -106,7 +106,7 @@ export class EditGroupMeetingScheduleComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService.updateGroupMeeting(this.groupId, data, this.calendarId).subscribe((response: any) => {
+    this.groupsService.update13(this.groupId, data, this.calendarId).subscribe((response: any) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

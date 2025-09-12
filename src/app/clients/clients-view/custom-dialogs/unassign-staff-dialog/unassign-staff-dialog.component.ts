@@ -15,7 +15,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
  * Unassign staff dialog component.
  */
 @Component({
-  selector: 'mifosx-unassign-staff-dialog',
+  selector: 'mifosx-unassign-staff-dialog-client',
   templateUrl: './unassign-staff-dialog.component.html',
   styleUrls: ['./unassign-staff-dialog.component.scss'],
   imports: [

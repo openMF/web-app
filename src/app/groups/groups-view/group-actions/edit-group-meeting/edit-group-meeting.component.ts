@@ -11,7 +11,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatFormField, MatLabel, MatError, MatSuffix, MatHint } from '@angular/material/form-field';
@@ -187,7 +187,7 @@ export class EditGroupMeetingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService.updateGroupMeeting(this.groupId, data, this.calendarId).subscribe((response: any) => {
+    this.groupsService.update13(this.groupId, data, this.calendarId).subscribe((response: any) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

@@ -20,15 +20,17 @@
       </div>
       <div class="mat-row">
         <div class="mat-cell">{{ 'labels.inputs.name' | translate }}</div>
-        <div class="mat-cell">{{ clientChoice.value.displayName }}</div>
+        <div class="mat-cell">
+          {{ clientChoice.value?.displayName || '' }}
+        </div>
       </div>
       <div class="mat-row">
         <div class="mat-cell">{{ 'labels.inputs.Id' | translate }}</div>
-        <div class="mat-cell">{{ clientChoice.value.id }}</div>
+        <div class="mat-cell">{{ clientChoice.value?.id || '' }}</div>
       </div>
       <div class="mat-row">
         <div class="mat-cell">{{ 'labels.inputs.Office' | translate }}</div>
-        <div class="mat-cell">{{ clientChoice.value.officeName }}</div>
+        <div class="mat-cell">{{ clientChoice.value?.officeName || '' }}</div>
       </div>
     </div>
   </mat-card>
