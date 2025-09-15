@@ -17,6 +17,10 @@
 
   window['env']['preloadClients'] = '';
 
+  window['env']['allowServerSwitch'] = 'true';
+
+  window['env']['production'] = 'false';
+  
   // Char delimiter to Export CSV options: ',' ';' '|' ' '
   window['env']['defaultCharDelimiter'] = ',';
 
