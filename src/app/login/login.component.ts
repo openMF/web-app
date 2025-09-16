@@ -110,4 +110,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   displayTenantSelector(): boolean {
     return environment.displayTenantSelector === 'false' ? false : true;
   }
+
+  allowServerSwitch(): boolean {
+    return environment.allowServerSwitch === 'false' ? false : true;
+  }
 }

@@ -43,10 +43,7 @@
     <div class="layout-row-reverse">
       <mifosx-language-selector class="p-t-10 p-r-10 width-40"></mifosx-language-selector>
       <mifosx-theme-toggle class="p-t-10"></mifosx-theme-toggle>
-      <mifosx-server-selector
-        class="p-t-10"
-        *ngIf="!environment.production && environment.allowServerSwitch"
-      ></mifosx-server-selector>
+      <mifosx-server-selector class="p-t-10" *ngIf="allowServerSwitch()"></mifosx-server-selector>
     </div>
 
     <!-- Logo with Organization Name -->

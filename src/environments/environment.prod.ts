@@ -20,7 +20,7 @@ export const environment = {
     loadedEnv['fineractApiUrl'] ||
     (loadedEnv['fineractApiUrls']?.length > 0 ? loadedEnv['fineractApiUrls'].split(',')[0] : window.location.origin),
   oauthServerUrl: loadedEnv['oauthServerUrl'] || loadedEnv['fineractApiUrl'] + loadedEnv['apiProvider'],
-  allowServerSwitch: env.allow_switching_backend_instance,
+  allowServerSwitch: loadedEnv.allowServerSwitch || 'true',
   apiProvider: loadedEnv['apiProvider'] || '/fineract-provider/api',
   apiVersion: loadedEnv['apiVersion'] || '/v1',
   serverUrl: '',
