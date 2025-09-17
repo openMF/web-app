@@ -1,14 +1,33 @@
 .container {
   max-width: 37rem;
-  padding: 0.5rem;
+  padding: 1rem;
 
   mat-card {
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 1.5rem;
     box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+    border: 1px solid #ddd;
+    border-radius: 6px;
 
     .layout-row-wrap {
-      padding: 0.5rem 0;
+      display: grid;
+      grid-template-columns: 50% 50%;
+      gap: 1rem;
+
+      .info-box {
+        display: flex;
+        flex-direction: column;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: #fff;
+
+        .header {
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+          font-size: 1.1rem;
+        }
+      }
     }
   }
 
@@ -18,8 +37,9 @@
       word-wrap: break-word;
 
       &.header {
-        font-weight: 500;
+        font-weight: 600;
         margin-bottom: 0.5rem;
+        font-size: 1.1rem;
       }
     }
   }
@@ -27,20 +47,36 @@
   table {
     width: 100%;
     margin-top: 1rem;
+    border-collapse: collapse;
+
+    th {
+      font-weight: 600;
+      text-align: left;
+    }
+
+    td {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+    }
+
+    tr:hover {
+      background-color: #f9f9f9;
+    }
   }
+}
+
+.container table th,
+.container table td {
+  border-top: 1px solid rgb(0 0 0 / 12%);
+}
+
+th.mat-header-cell:not(:first-of-type),
+td.mat-cell:not(:first-of-type) {
+  border-left: 1px solid rgb(0 0 0 / 12%);
 }
 
 .mat-elevation-z1 {
   margin: 0.5rem 0;
   box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
-
-  th,
-  td {
-    border-top: 1px solid rgb(0 0 0 / 12%);
-  }
-
-  th.mat-header-cell:not(:first-of-type),
-  td.mat-cell:not(:first-of-type) {
-    border-left: 1px solid rgb(0 0 0 / 12%);
-  }
+  border-radius: 6px;
 }
