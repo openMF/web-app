@@ -15,6 +15,8 @@ import { MakeAccountTransfersComponent } from './make-account-transfers/make-acc
 import { ListStandingInstructionsComponent } from './list-standing-instructions/list-standing-instructions.component';
 import { ListTransactionsComponent } from './list-transactions/list-transactions.component';
 import { ViewAccountTransferComponent } from './view-account-transfer/view-account-transfer.component';
+import { MakeMultipleAccountTransfersComponent } from './make-multiple-account-transfers/make-multiple-account-transfers.component';
+import { AddClientTransferDialogComponent } from './make-multiple-account-transfers/add-client-transfer-dialog/add-client-transfer-dialog.component';
 /**
  * Account Transfers Module
  *
@@ -34,7 +36,9 @@ import { ViewAccountTransferComponent } from './view-account-transfer/view-accou
     MakeAccountTransfersComponent,
     ListStandingInstructionsComponent,
     ListTransactionsComponent,
-    ViewAccountTransferComponent
+    ViewAccountTransferComponent,
+    MakeMultipleAccountTransfersComponent,
+    AddClientTransferDialogComponent
   ],
   providers: []
 })

@@ -72,6 +72,10 @@ export class AccountTransfersService {
     return this.http.post(`/accounttransfers`, data);
   }
 
+  createMultiTransfer(data: any): Observable<any> {
+    return this.http.post(`https://cbs-server.afidingcapital.com/api/v1/services/fondsmouvement/multi-transfer/`, data);
+  }
+
   /**
    * @param clientId Client Id
    * @param clientName Client Name

@@ -10,6 +10,7 @@ import { MakeAccountTransfersComponent } from './make-account-transfers/make-acc
 import { ListStandingInstructionsComponent } from './list-standing-instructions/list-standing-instructions.component';
 import { ListTransactionsComponent } from './list-transactions/list-transactions.component';
 import { ViewAccountTransferComponent } from './view-account-transfer/view-account-transfer.component';
+import { MakeMultipleAccountTransfersComponent } from './make-multiple-account-transfers/make-multiple-account-transfers.component';
 
 /** Custom Resolvers */
 import { ViewStandingInstructionsResolver } from './common-resolvers/view-standing-instructions.resolver';
@@ -42,6 +43,14 @@ const routes: Routes = [
         component: MakeAccountTransfersComponent,
         resolve: {
           accountTransferTemplate: MakeAccountTransferTemplateResolver
+        }
+      },
+      {
+        path: 'make-multiple-account-transfer',
+        data: { title: 'Multiple Account Transfers', breadcrumb: 'Multiple Account Transfers', routeParamBreadcrumb: 'Multiple Account Transfers' },
+        component: MakeMultipleAccountTransfersComponent,
+        resolve: {
+          accountTransfersTemplateData: MakeAccountTransferTemplateResolver
         }
       },
       {

@@ -1,0 +1,342 @@
+<div class="container">
+  <mat-card>
+    <mat-card-content *ngIf="!showPreview">
+      <div fxLayout="row wrap" fxLayout.lt-md="column">
+        <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Transferring From Details' | translate }}</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">{{ 'labels.inputs.Applicant' | translate }}</span>
+          <span fxFlex="60%">{{ accountTransfersTemplateData.fromClient.displayName }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">{{ 'labels.inputs.Office' | translate }}</span>
+          <span fxFlex="60%">{{ accountTransfersTemplateData.fromOffice.name }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">{{ 'labels.inputs.From Account' | translate }}</span>
+          <span fxFlex="60%"
+            >{{ accountTransfersTemplateData.fromAccount.productName }}&nbsp;-&nbsp;#{{
+              accountTransfersTemplateData.fromAccount.accountNo
+            }}</span
+          >
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">{{ 'labels.inputs.From Account Type' | translate }}</span>
+          <span fxFlex="60%">{{ accountTransfersTemplateData.fromAccountType.value }}</span>
+        </div>
+
+        <div fxFlexFill>
+          <span fxFlex="40%">{{ 'labels.inputs.Currency' | translate }}</span>
+          <span fxFlex="60%">{{ accountTransfersTemplateData.currency.name }}</span>
+        </div>
+      </div>
+
+      <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Make Multiple Account Transfers' | translate }}</h3>
+
+      <mat-divider [inset]="true"></mat-divider>
+
+      <form [formGroup]="makeMultipleAccountTransfersForm">
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field fxFlex="48%" fxFlex.lt-md="100%" (click)="transferDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="transferDatePicker"
+              required
+              formControlName="transferDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transferDatePicker></mat-datepicker>
+            <mat-error *ngIf="makeMultipleAccountTransfersForm.controls.transferDate.hasError('required')">
+              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="48%" fxFlex.lt-md="100%">
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
+            <mat-select required formControlName="toOfficeId" (selectionChange)="changeEvent()">
+              <mat-option *ngFor="let toOfficeType of toOfficeTypeData" [value]="toOfficeType.id">
+                {{ toOfficeType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="makeMultipleAccountTransfersForm.controls.toOfficeId.hasError('required')">
+              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="2%" fxLayout.lt-md="column">
+          <mat-form-field fxFlex="100%">
+            <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+            <textarea
+              matInput
+              formControlName="transferDescription"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+              placeholder="Description générale pour tous les transferts"
+            ></textarea>
+            <mat-error *ngIf="makeMultipleAccountTransfersForm.controls.transferDescription.hasError('required')">
+              {{ 'labels.inputs.Transfer Description' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </form>
+
+      <!-- Section pour ajouter des clients -->
+      <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-3">
+        <h4 class="mat-h4">{{ 'labels.heading.Transfer Clients' | translate }}</h4>
+        <button mat-raised-button color="primary" (click)="addClientTransfer()" [disabled]="!makeMultipleAccountTransfersForm.valid">
+          <mat-icon>add</mat-icon>
+          {{ 'labels.menus.Add Client' | translate }}
+        </button>
+      </div>
+
+      <!-- Tableau des clients -->
+      <div *ngIf="transferClients.length > 0" class="mt-3">
+        <div class="table-container">
+          <table mat-table [dataSource]="transferClients" class="mat-elevation-z2">
+          <!-- Colonne Actions (Supprimer) -->
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef class="mat-column-delete"></th>
+            <td mat-cell *matCellDef="let client" class="mat-column-delete">
+              <button mat-icon-button color="warn" (click)="removeClientTransfer(client)" matTooltip="{{ 'labels.buttons.Delete' | translate }}">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Colonne Bureau -->
+          <ng-container matColumnDef="office">
+            <th mat-header-cell *matHeaderCellDef class="mat-column-office">{{ 'labels.inputs.Office' | translate }}</th>
+            <td mat-cell *matCellDef="let client" class="mat-column-office">{{ getOfficeName(client.toOfficeId) }}</td>
+          </ng-container>
+
+          <!-- Colonne Client -->
+          <ng-container matColumnDef="client">
+            <th mat-header-cell *matHeaderCellDef class="mat-column-client">{{ 'labels.inputs.Client' | translate }}</th>
+            <td mat-cell *matCellDef="let client" class="mat-column-client">{{ client.toClientName || client.toClientId }}</td>
+          </ng-container>
+
+          <!-- Colonne Type de compte -->
+          <ng-container matColumnDef="accountType">
+            <th mat-header-cell *matHeaderCellDef class="mat-column-accountType">{{ 'labels.inputs.Account Type' | translate }}</th>
+            <td mat-cell *matCellDef="let client" class="mat-column-accountType">{{ client.toAccountTypeName || client.toAccountType }}</td>
+          </ng-container>
+
+          <!-- Colonne Compte -->
+          <ng-container matColumnDef="account">
+            <th mat-header-cell *matHeaderCellDef class="mat-column-account">{{ 'labels.inputs.Account' | translate }}</th>
+            <td mat-cell *matCellDef="let client" class="mat-column-account">{{ client.toAccountName || client.toAccountId }}</td>
+          </ng-container>
+
+          <!-- Colonne Montant -->
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef class="mat-column-amount">{{ 'labels.inputs.Amount' | translate }}</th>
+            <td mat-cell *matCellDef="let client" class="mat-column-amount">{{ client.transferAmount | currency: accountTransfersTemplateData.currency.code : 'symbol-narrow' : '1.2-2' }}</td>
+          </ng-container>
+
+
+          <!-- Colonne Actions (Éditer) -->
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef class="mat-column-edit"></th>
+            <td mat-cell *matCellDef="let client" class="mat-column-edit">
+              <button mat-icon-button color="primary" (click)="editClientTransfer(client)" matTooltip="{{ 'labels.buttons.Edit' | translate }}">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['delete', 'office', 'client', 'accountType', 'account', 'amount', 'edit']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['delete', 'office', 'client', 'accountType', 'account', 'amount', 'edit'];"></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Message si aucun client -->
+      <div *ngIf="transferClients.length === 0" class="mt-3 text-center">
+        <p class="text-muted">{{ 'labels.text.No clients added yet' | translate }}</p>
+      </div>
+
+      <!-- Résumé des transferts -->
+      <div *ngIf="transferClients.length > 0" class="mt-3">
+        <mat-card class="summary-card">
+          <mat-card-content>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <div fxLayout="column">
+                <span class="summary-label">{{ 'labels.text.Total Clients' | translate }}</span>
+                <span class="summary-value">{{ transferClients.length }}</span>
+              </div>
+              <div fxLayout="column" fxLayoutAlign="end">
+                <span class="summary-label">{{ 'labels.text.Total Amount' | translate }}</span>
+                <span class="summary-value">{{ getTotalAmount() | currency: accountTransfersTemplateData.currency.code : 'symbol-narrow' : '1.2-2' }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+
+    <!-- Aperçu en lecture seule -->
+    <mat-card-content *ngIf="showPreview">
+      <div fxLayout="column" fxLayoutGap="2%">
+        <h3 class="mat-h3" fxFlexFill>{{ 'labels.heading.Transfer Preview' | translate }}</h3>
+        <mat-divider [inset]="true"></mat-divider>
+
+        <!-- Détails du transfert depuis -->
+        <div fxLayout="row wrap" fxLayout.lt-md="column">
+          <h4 class="mat-h4" fxFlexFill>{{ 'labels.heading.Transferring From Details' | translate }}</h4>
+          <mat-divider [inset]="true"></mat-divider>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">{{ 'labels.inputs.Applicant' | translate }}</span>
+            <span fxFlex="60%">{{ accountTransfersTemplateData.fromClient.displayName }}</span>
+          </div>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">{{ 'labels.inputs.Office' | translate }}</span>
+            <span fxFlex="60%">{{ accountTransfersTemplateData.fromOffice.name }}</span>
+          </div>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">{{ 'labels.inputs.From Account' | translate }}</span>
+            <span fxFlex="60%">{{ accountTransfersTemplateData.fromAccount.productName }}&nbsp;-&nbsp;#{{
+              accountTransfersTemplateData.fromAccount.accountNo
+            }}</span>
+          </div>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">{{ 'labels.inputs.From Account Type' | translate }}</span>
+            <span fxFlex="60%">{{ accountTransfersTemplateData.fromAccountType.value }}</span>
+          </div>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">{{ 'labels.inputs.Currency' | translate }}</span>
+            <span fxFlex="60%">{{ accountTransfersTemplateData.currency.name }}</span>
+          </div>
+        </div>
+
+        <!-- Détails du transfert vers -->
+        <div fxLayout="row wrap" fxLayout.lt-md="column">
+          <h4 class="mat-h4" fxFlexFill>{{ 'labels.heading.Transfer Details' | translate }}</h4>
+          <mat-divider [inset]="true"></mat-divider>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">{{ 'labels.inputs.Transaction Date' | translate }}</span>
+            <span fxFlex="60%">{{ makeMultipleAccountTransfersForm.value.transferDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">{{ 'labels.inputs.Office' | translate }}</span>
+            <span fxFlex="60%">{{ getOfficeName(makeMultipleAccountTransfersForm.value.toOfficeId) }}</span>
+          </div>
+
+          <div fxFlexFill>
+            <span fxFlex="40%">{{ 'labels.inputs.Description' | translate }}</span>
+            <span fxFlex="60%">{{ makeMultipleAccountTransfersForm.value.transferDescription }}</span>
+          </div>
+        </div>
+
+        <!-- Tableau des clients en lecture seule -->
+        <div fxLayout="row wrap" fxLayout.lt-md="column">
+          <h4 class="mat-h4" fxFlexFill>{{ 'labels.heading.Transfer Clients' | translate }}</h4>
+          <mat-divider [inset]="true"></mat-divider>
+
+          <div class="table-container">
+            <table mat-table [dataSource]="transferClients" class="mat-elevation-z2">
+              <!-- Colonne Bureau -->
+              <ng-container matColumnDef="office">
+                <th mat-header-cell *matHeaderCellDef class="mat-column-office">{{ 'labels.inputs.Office' | translate }}</th>
+                <td mat-cell *matCellDef="let client" class="mat-column-office">{{ getOfficeName(client.toOfficeId) }}</td>
+              </ng-container>
+
+              <!-- Colonne Client -->
+              <ng-container matColumnDef="client">
+                <th mat-header-cell *matHeaderCellDef class="mat-column-client">{{ 'labels.inputs.Client' | translate }}</th>
+                <td mat-cell *matCellDef="let client" class="mat-column-client">{{ client.toClientName || client.toClientId }}</td>
+              </ng-container>
+
+              <!-- Colonne Type de compte -->
+              <ng-container matColumnDef="accountType">
+                <th mat-header-cell *matHeaderCellDef class="mat-column-accountType">{{ 'labels.inputs.Account Type' | translate }}</th>
+                <td mat-cell *matCellDef="let client" class="mat-column-accountType">{{ client.toAccountTypeName || client.toAccountType }}</td>
+              </ng-container>
+
+              <!-- Colonne Compte -->
+              <ng-container matColumnDef="account">
+                <th mat-header-cell *matHeaderCellDef class="mat-column-account">{{ 'labels.inputs.Account' | translate }}</th>
+                <td mat-cell *matCellDef="let client" class="mat-column-account">{{ client.toAccountName || client.toAccountId }}</td>
+              </ng-container>
+
+              <!-- Colonne Montant -->
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef class="mat-column-amount">{{ 'labels.inputs.Amount' | translate }}</th>
+                <td mat-cell *matCellDef="let client" class="mat-column-amount">{{ client.transferAmount | currency: accountTransfersTemplateData.currency.code : 'symbol-narrow' : '1.2-2' }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['office', 'client', 'accountType', 'account', 'amount']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['office', 'client', 'accountType', 'account', 'amount'];"></tr>
+            </table>
+          </div>
+
+          <!-- Résumé des transferts -->
+          <div class="mt-3">
+            <mat-card class="summary-card">
+              <mat-card-content>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <div fxLayout="column">
+                    <span class="summary-label">{{ 'labels.text.Total Clients' | translate }}</span>
+                    <span class="summary-value">{{ transferClients.length }}</span>
+                  </div>
+                  <div fxLayout="column" fxLayoutAlign="end">
+                    <span class="summary-label">{{ 'labels.text.Total Amount' | translate }}</span>
+                    <span class="summary-value">{{ getTotalAmount() | currency: accountTransfersTemplateData.currency.code : 'symbol-narrow' : '1.2-2' }}</span>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="!showPreview">
+      <button type="button" mat-raised-button [routerLink]="['../..']">
+        {{ 'labels.buttons.Cancel' | translate }}
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!makeMultipleAccountTransfersForm.valid || transferClients.length === 0"
+        *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'"
+        (click)="submit()"
+      >
+        {{ 'labels.buttons.Submit' | translate }}
+      </button>
+    </mat-card-actions>
+
+    <!-- Actions pour l'aperçu -->
+    <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px" *ngIf="showPreview">
+      <button type="button" mat-raised-button (click)="cancelPreview()">
+        {{ 'labels.buttons.Cancel' | translate }}
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'"
+        (click)="confirmSubmit()"
+      >
+        {{ 'labels.buttons.Confirm' | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

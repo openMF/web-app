@@ -1,0 +1,206 @@
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+span {
+  margin: 0.5em 0;
+}
+
+.margin-t {
+  margin-top: 1em;
+}
+
+mat-divider {
+  margin: 0 0 0.5em;
+}
+
+.container {
+  max-width: 100%;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+table {
+  width: 100%;
+  min-width: 800px;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.mat-column-delete,
+.mat-column-edit {
+  width: 60px;
+  text-align: center;
+}
+
+.mat-column-amount {
+  text-align: right;
+  min-width: 120px;
+  width: 120px;
+  max-width: 120px;
+  padding-right: 16px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.mat-column-office {
+  min-width: 120px;
+}
+
+.mat-column-client {
+  min-width: 150px;
+}
+
+.mat-column-accountType {
+  min-width: 120px;
+}
+
+.mat-column-account {
+  min-width: 200px;
+}
+
+.mat-column-description {
+  min-width: 200px;
+  width: 200px;
+  max-width: 200px;
+  padding-left: 16px;
+  word-wrap: break-word;
+}
+
+// Améliorer l'affichage des cartes
+mat-card {
+  width: 100%;
+  max-width: none;
+}
+
+mat-card-content {
+  padding: 24px;
+}
+
+// Améliorer l'espacement
+.mt-3 {
+  margin-top: 1.5rem;
+}
+
+// Améliorer l'affichage des boutons
+button[mat-raised-button] {
+  margin: 4px;
+}
+
+// Conteneur de tableau avec défilement horizontal
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+// Styles pour les cellules du tableau
+.mat-mdc-table .mat-mdc-cell,
+.mat-mdc-table .mat-mdc-header-cell {
+  padding: 8px 16px;
+  border-right: 1px solid #e0e0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mat-mdc-table .mat-mdc-cell:last-child,
+.mat-mdc-table .mat-mdc-header-cell:last-child {
+  border-right: none;
+}
+
+// Styles spécifiques pour forcer la séparation des colonnes
+.mat-column-amount {
+  flex: 0 0 120px !important;
+  width: 120px !important;
+  max-width: 120px !important;
+  min-width: 120px !important;
+}
+
+.mat-column-description {
+  flex: 0 0 200px !important;
+  width: 200px !important;
+  max-width: 200px !important;
+  min-width: 200px !important;
+}
+
+// Styles pour les cellules spécifiques
+.mat-mdc-table .mat-column-amount {
+  text-align: right;
+  padding-right: 16px;
+  border-right: 2px solid #e0e0e0;
+}
+
+.mat-mdc-table .mat-column-description {
+  padding-left: 16px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+// Styles pour la carte de résumé
+.summary-card {
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+}
+
+// Styles pour l'aperçu
+.preview-section {
+  background-color: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.preview-readonly {
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 500;
+}
+
+.summary-label {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+}
+
+.summary-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1976d2;
+  margin-top: 4px;
+}
+
+// Améliorer l'affichage responsive
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  mat-card-content {
+    padding: 16px;
+  }
+
+  .table-container {
+    font-size: 14px;
+  }
+
+  .summary-value {
+    font-size: 16px;
+  }
+}

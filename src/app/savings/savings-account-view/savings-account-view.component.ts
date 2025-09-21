@@ -81,6 +81,10 @@ export class SavingsAccountViewComponent implements OnInit {
         name: 'Transfer Funds',
         taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
       });
+      this.buttonConfig.addOption({
+        name: 'Transfert multiples',
+        taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
+      });
     }
     if (!this.savingsAccountData.fieldOfficerId) {
       this.buttonConfig.addOption({
@@ -182,6 +186,13 @@ export class SavingsAccountViewComponent implements OnInit {
         this.router.navigate(['transfer-funds/make-account-transfer'], {
           relativeTo: this.route,
           queryParams: queryParams
+        });
+        break;
+      case 'Transfert multiples':
+        const multipleTransferQueryParams: any = { savingsId: this.savingsAccountData.id, accountType: 'fromsavings' };
+        this.router.navigate(['transfer-funds/make-multiple-account-transfer'], {
+          relativeTo: this.route,
+          queryParams: multipleTransferQueryParams
         });
         break;
       case 'Unblock Account':
