@@ -42,11 +42,25 @@ export interface PaymentChannelToFundSourceMapping {
 export interface ChargeOffReasonToExpenseAccountMapping {
   chargeOffReasonCodeValueId?: number;
   expenseAccountId?: number;
-  chargeOffReasonCodeValue?: ChargeOffReasonCodeValue;
+  chargeOffReasonCodeValue?: CodeValue;
   expenseAccount?: AccountingMapping;
 }
 
-export interface ChargeOffReasonCodeValue {
+export interface AccountMapping {
+  codeValueId?: number;
+  glAccountId?: number;
+  codeValue?: CodeValue;
+  glAccount?: AccountingMapping;
+}
+
+export interface ClassificationToIncomeAccountMapping {
+  classificationCodeValueId?: number;
+  incomeAccountId?: number;
+  classificationCodeValue?: CodeValue;
+  incomeAccount?: AccountingMapping;
+}
+
+export interface CodeValue {
   active: boolean;
   description: string;
   id: number;

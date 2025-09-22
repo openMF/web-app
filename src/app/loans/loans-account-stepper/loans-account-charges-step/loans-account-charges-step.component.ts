@@ -152,8 +152,9 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     if (this.loansAccountProductTemplate) {
       this.loanPurposeOptions = this.loansAccountProductTemplate.loanPurposeOptions;
       this.chargeData = this.loansAccountProductTemplate.chargeOptions;
-      // filter chargeData to have charges that have chargePaymentMode not 'Account Transfer' if loansSavingsAccountLinked is false
-      if (!this.loansSavingsAccountLinked) {
+      // filter chargeData to have charges that have chargePaymentMode not 'Account Transfer' if no savings account is linked
+      const hasLinkedGSIMAccount = this.loansAccountTemplate?.gsimData?.groupId != null;
+      if (!this.loansSavingsAccountLinked && !hasLinkedGSIMAccount) {
         this.chargeData = this.chargeData.filter(
           (charge: any) => charge.chargePaymentMode?.value != 'Account transfer'
         );

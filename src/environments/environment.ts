@@ -28,6 +28,8 @@ export const environment = {
   apiProvider: loadedEnv.apiProvider || '/fineract-provider/api',
   apiVersion: loadedEnv.apiVersion || '/v1',
   serverUrl: '',
+  /** Feature flag for Remember Me functionality */
+  enableRememberMe: false,
   oauth: {
     enabled: loadedEnv.oauthServerEnabled || false, // For connecting to Mifos X using OAuth2 Authentication change the value to true
     serverUrl: loadedEnv.oauthServerUrl || '',

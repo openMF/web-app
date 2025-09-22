@@ -94,7 +94,9 @@ export class AuthenticationService {
    */
   login(loginContext: LoginContext) {
     this.alertService.alert({ type: 'Authentication Start', message: 'Please wait...' });
-    this.rememberMe = loginContext.remember;
+    // Only allow Remember Me if enabled in config
+    const rememberAllowed = environment.enableRememberMe === true;
+    this.rememberMe = rememberAllowed ? loginContext.remember : false;
     this.storage = this.rememberMe ? localStorage : sessionStorage;
 
     if (environment.oauth.enabled) {
@@ -103,6 +105,7 @@ export class AuthenticationService {
       httpParams = httpParams.set('password', loginContext.password);
       httpParams = httpParams.set('client_id', `${environment.oauth.appId}`);
       httpParams = httpParams.set('grant_type', 'password');
+      httpParams = httpParams.set('remember_me', this.rememberMe ? 'true' : 'false');
       let headers = new HttpHeaders();
       headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
       return this.http.post(`${environment.oauth.serverUrl}/token`, httpParams.toString(), { headers: headers }).pipe(
@@ -113,7 +116,11 @@ export class AuthenticationService {
       );
     } else {
       return this.http
-        .post('/authentication', { username: loginContext.username, password: loginContext.password })
+        .post('/authentication', {
+          username: loginContext.username,
+          password: loginContext.password,
+          remember: this.rememberMe
+        })
         .pipe(
           map((credentials: Credentials) => {
             this.onLoginSuccess(credentials);
@@ -193,6 +200,9 @@ export class AuthenticationService {
    */
   private onLoginSuccess(credentials: Credentials) {
     this.userLoggedIn = true;
+    // Ensure the rememberMe value is preserved in credentials
+    credentials.rememberMe = this.rememberMe;
+
     if (environment.oauth.enabled) {
       this.authenticationInterceptor.setAuthorizationToken(credentials.accessToken);
     } else {
@@ -304,11 +314,17 @@ export class AuthenticationService {
   private setCredentials(credentials?: Credentials) {
     if (credentials) {
       credentials.rememberMe = this.rememberMe;
+      // Make sure we're using the correct storage based on rememberMe value
+      this.storage = credentials.rememberMe ? localStorage : sessionStorage;
       this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
     } else {
-      this.storage.removeItem(this.credentialsStorageKey);
-      this.storage.removeItem(this.oAuthTokenDetailsStorageKey);
-      this.storage.removeItem(this.twoFactorAuthenticationTokenStorageKey);
+      // Clear credentials from both storage types to ensure complete logout
+      localStorage.removeItem(this.credentialsStorageKey);
+      sessionStorage.removeItem(this.credentialsStorageKey);
+      localStorage.removeItem(this.oAuthTokenDetailsStorageKey);
+      sessionStorage.removeItem(this.oAuthTokenDetailsStorageKey);
+      localStorage.removeItem(this.twoFactorAuthenticationTokenStorageKey);
+      sessionStorage.removeItem(this.twoFactorAuthenticationTokenStorageKey);
     }
   }
 
