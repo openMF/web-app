@@ -722,7 +722,7 @@
     <span class="flex-60">{{ loanProduct.multiDisburseLoan | yesNo }}</span>
   </div>
 
-  <div class="flex-fill layout-row-wrap responsive-column" *ngIf="loanProduct.multiDisburseLoan">
+  <div class="flex-100 layout-row-wrap responsive-column" *ngIf="loanProduct.multiDisburseLoan">
     <span class="flex-40">{{ 'labels.inputs.Maximum Tranche count' | translate }}:</span>
     <span class="flex-60">{{ loanProduct.maxTrancheCount }}</span>
     <div class="flex-fill layout-row" *ngIf="loanProduct.outstandingLoanBalance">
@@ -737,7 +737,7 @@
 
   <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Event Settings' | translate }}</h3>
 
-  <div class="flex-fill">
+  <div class="flex-100">
     <span class="flex-40"
       >{{
         'labels.inputs.Use the Global Configurations values to the Repayment Event (notifications)' | translate
@@ -1245,6 +1245,72 @@
               <td mat-cell *matCellDef="let chargeOffReasonToExpenseAccountMapping">
                 ({{ chargeOffReasonToExpenseAccountMapping.expenseAccount.glCode }})
                 {{ chargeOffReasonToExpenseAccountMapping.expenseAccount.name }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="chargeOffReasonExpenseDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: chargeOffReasonExpenseDisplayedColumns"></tr>
+          </table>
+        </div>
+
+        <div
+          *ngIf="buydownFeeClassificationToIncomeAccountMappings?.length > 0"
+          class="flex-100 layout-row-wrap responsive-column"
+        >
+          <h4 class="mat-h4 flex-100">
+            {{ 'labels.heading.Buydown Fee classifications to Income accounts' | translate }}
+          </h4>
+
+          <table
+            class="mat-elevation-z1 flex-100"
+            mat-table
+            [dataSource]="buydownFeeClassificationToIncomeAccountMappings"
+          >
+            <ng-container matColumnDef="chargeOffReasonCodeValueId">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Classification' | translate }}</th>
+              <td mat-cell *matCellDef="let classificationToIncomeAccountMapping">
+                {{ classificationToIncomeAccountMapping.classificationCodeValue.name }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="expenseAccountId">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
+              <td mat-cell *matCellDef="let classificationToIncomeAccountMapping">
+                ({{ classificationToIncomeAccountMapping.incomeAccount.glCode }})
+                {{ classificationToIncomeAccountMapping.incomeAccount.name }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="chargeOffReasonExpenseDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: chargeOffReasonExpenseDisplayedColumns"></tr>
+          </table>
+        </div>
+
+        <div
+          *ngIf="capitalizedIncomeClassificationToIncomeAccountMappings?.length > 0"
+          class="flex-100 layout-row-wrap responsive-column"
+        >
+          <h4 class="mat-h4 flex-100">
+            {{ 'labels.heading.Capitalized Income classifications to Income accounts' | translate }}
+          </h4>
+
+          <table
+            class="mat-elevation-z1 flex-100"
+            mat-table
+            [dataSource]="capitalizedIncomeClassificationToIncomeAccountMappings"
+          >
+            <ng-container matColumnDef="chargeOffReasonCodeValueId">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Classification' | translate }}</th>
+              <td mat-cell *matCellDef="let capitalizedIncomeClassificationToIncomeAccountMapping">
+                {{ capitalizedIncomeClassificationToIncomeAccountMapping.classificationCodeValue.name }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="expenseAccountId">
+              <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
+              <td mat-cell *matCellDef="let capitalizedIncomeClassificationToIncomeAccountMapping">
+                ({{ capitalizedIncomeClassificationToIncomeAccountMapping.incomeAccount.glCode }})
+                {{ capitalizedIncomeClassificationToIncomeAccountMapping.incomeAccount.name }}
               </td>
             </ng-container>
 

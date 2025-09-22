@@ -514,6 +514,28 @@
           <tr mat-header-row *matHeaderRowDef="chargeOffReasonExpenseDisplayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: chargeOffReasonExpenseDisplayedColumns"></tr>
         </table>
+
+        <mifosx-advanced-accounting-mapping-rule
+          class="flex-100 m-t-10"
+          [textField]="'Classification'"
+          [formType]="'BuydownFeeClassificationToIncome'"
+          [formArray]="buydownfeeClassificationToIncomeAccountMappings"
+          [textHeading]="'Buydown Fee classifications to Income accounts'"
+          [incomeAccountData]="incomeAccountData"
+          [accountingMappingOptions]="buydownFeeClassificationOptions"
+          (formChangeEvent)="formChangeEvent($event)"
+        ></mifosx-advanced-accounting-mapping-rule>
+
+        <mifosx-advanced-accounting-mapping-rule
+          class="flex-100 m-t-10"
+          [textField]="'Classification'"
+          [formType]="'CapitalizedIncomeClassificationToIncome'"
+          [formArray]="capitalizedIncomeClassificationToIncomeAccountMappings"
+          [textHeading]="'Capitalized Income classifications to Income accounts'"
+          [incomeAccountData]="incomeAccountData"
+          [accountingMappingOptions]="capitalizedIncomeClassificationOptions"
+          (formChangeEvent)="formChangeEvent($event)"
+        ></mifosx-advanced-accounting-mapping-rule>
       </div>
     </div>
   </div>
