@@ -33,13 +33,18 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-checkbox *ngIf="enableRememberMe" formControlName="remember" class="m-t-10 flex-align-center">{{
+    <mat-checkbox formControlName="remember" class="m-t-5 flex-align-center remember-checkbox">{{
       'labels.inputs.Remember me' | translate
     }}</mat-checkbox>
 
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
-    <button mat-raised-button color="primary" class="login-button flex-align-center" [disabled]="!loginForm.valid">
+    <button
+      mat-raised-button
+      color="primary"
+      class="login-button-first flex-align-center"
+      [disabled]="!loginForm.valid"
+    >
       {{ 'labels.buttons.Login' | translate }}
       <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
     </button>
