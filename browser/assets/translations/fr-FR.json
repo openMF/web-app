@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Zéro intérêt après radiation",
       "Accelerate maturity to charge-off date": "Accélérer la maturité jusqu'à la date de radiation",
       "Full Leap Year": "Année bissextile complète",
-      "Feb 29 Period Only": "Période du 29 février seulement"
+      "Feb 29 Period Only": "Période du 29 février seulement",
+      "Waive Interest": "Renoncer aux intérêts",
+      "Equal Amortization of Outstanding amount": "Amortissement égal du montant restant dû"
     },
     "commons": {
       "50 characters long": "50 caractères",
@@ -1760,6 +1762,7 @@
       "Interest Earned Not Posted": "Intérêts gagnés non comptabilisés",
       "Interest Free Period": "Période sans intérêt",
       "Interest Grace Periods": "Délais de grâce des intérêts",
+      "Interest Handling": "Gestion des intérêts",
       "Interest Method": "Méthode d'intérêt",
       "Interest Outstanding": "Intérêts impayés",
       "Interest Payable": "Intérêts payables",

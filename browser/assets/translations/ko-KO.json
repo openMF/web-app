@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "대손충당 후 이자 없음",
       "Accelerate maturity to charge-off date": "만기일을 대금상환일로 앞당기세요",
       "Full Leap Year": "전체 윤년",
-      "Feb 29 Period Only": "2월 29일 기간만"
+      "Feb 29 Period Only": "2월 29일 기간만",
+      "Waive Interest": "이자 면제",
+      "Equal Amortization of Outstanding amount": "미지급 금액의 균등 상각"
     },
     "commons": {
       "50 characters long": "50자(영문 기준)",
@@ -1761,6 +1763,7 @@
       "Interest Earned Not Posted": "발생한 이자 미게시",
       "Interest Free Period": "무이자 기간",
       "Interest Grace Periods": "이자 유예 기간",
+      "Interest Handling": "이자 처리",
       "Interest Method": "이자방식",
       "Interest Outstanding": "미결제 이자",
       "Interest Payable": "관심있는 관심",

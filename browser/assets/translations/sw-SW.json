@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Riba sifuri baada ya kutozwa",
       "Accelerate maturity to charge-off date": "Kuharakisha ukomavu hadi tarehe ya kukomesha malipo",
       "Full Leap Year": "Mwaka Kamili wa Kurukaruka",
-      "Feb 29 Period Only": "Feb 29 Kipindi Pekee"
+      "Feb 29 Period Only": "Feb 29 Kipindi Pekee",
+      "Waive Interest": "Ondoa Maslahi",
+      "Equal Amortization of Outstanding amount": "Ulipaji Sawa wa Madeni ya Kiasi Kinachodaiwa"
     },
     "commons": {
       "50 characters long": "Urefu wa herufi 50",
@@ -1760,6 +1762,7 @@
       "Interest Earned Not Posted": "Riba Imepatikana Haijatumwa",
       "Interest Free Period": "Kipindi Bila Riba",
       "Interest Grace Periods": "Vipindi vya Neema vya Riba",
+      "Interest Handling": "Ushughulikiaji wa Maslahi",
       "Interest Method": "Mbinu ya Maslahi",
       "Interest Outstanding": "Maslahi Bora",
       "Interest Payable": "Riba inaelezewa",

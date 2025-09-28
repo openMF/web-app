@@ -756,7 +756,9 @@
       "Zero interest after charge-off": "Zero interest after charge-off",
       "Accelerate maturity to charge-off date": "Accelerate maturity to charge-off date",
       "Full Leap Year": "Full Leap Year",
-      "Feb 29 Period Only": "Feb 29 Period Only"
+      "Feb 29 Period Only": "Feb 29 Period Only",
+      "Waive Interest": "Waive Interest",
+      "Equal Amortization of Outstanding amount": "Equal Amortization of Outstanding amount"
     },
     "commons": {
       "50 characters long": "50 characters long",
@@ -1765,6 +1767,7 @@
       "Interest Earned Not Posted": "Interest Earned Not Posted",
       "Interest Free Period": "Interest Free Period",
       "Interest Grace Periods": "Interest Grace Periods",
+      "Interest Handling": "Interest Handling",
       "Interest Method": "Interest Method",
       "Interest Outstanding": "Interest Outstanding",
       "Interest Payable": "Interest Payable",

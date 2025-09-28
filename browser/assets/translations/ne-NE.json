@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "चार्ज अफ पछि शून्य ब्याज",
       "Accelerate maturity to charge-off date": "चार्ज अफ मितिमा परिपक्वतालाई गति दिनुहोस्",
       "Full Leap Year": "पूर्ण छलांग वर्ष",
-      "Feb 29 Period Only": "फेब्रुअरी 29 अवधि मात्र"
+      "Feb 29 Period Only": "फेब्रुअरी 29 अवधि मात्र",
+      "Waive Interest": "ब्याज माफ गर्नुहोस्",
+      "Equal Amortization of Outstanding amount": "बकाया रकमको समान परिशोधन"
     },
     "commons": {
       "50 characters long": "५० वर्ण लामो",
@@ -1760,6 +1762,7 @@
       "Interest Earned Not Posted": "कमाएको ब्याज पोस्ट गरिएको छैन",
       "Interest Free Period": "ब्याज मुक्त अवधि",
       "Interest Grace Periods": "ब्याज अनुग्रह अवधिहरू",
+      "Interest Handling": "ब्याज ह्यान्डलिङ",
       "Interest Method": "ब्याज विधि",
       "Interest Outstanding": "बकाया ब्याज",
       "Interest Payable": "ब्याज päyy",

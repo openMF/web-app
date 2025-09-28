@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Nulle procenti pēc atskaitīšanas",
       "Accelerate maturity to charge-off date": "Paātriniet dzēšanas termiņu līdz izņemšanas datumam",
       "Full Leap Year": "Pilns lēciens gads",
-      "Feb 29 Period Only": "Tikai 29. februāris"
+      "Feb 29 Period Only": "Tikai 29. februāris",
+      "Waive Interest": "Atteikties no procentiem",
+      "Equal Amortization of Outstanding amount": "Neizmaksātās summas vienāda amortizācija"
     },
     "commons": {
       "50 characters long": "50 rakstzīmes garš",
@@ -1760,6 +1762,7 @@
       "Interest Earned Not Posted": "Nopelnītie procenti nav publicēti",
       "Interest Free Period": "Periods bez procentiem",
       "Interest Grace Periods": "Procentu labvēlības periodi",
+      "Interest Handling": "Interešu apstrāde",
       "Interest Method": "Interešu metode",
       "Interest Outstanding": "Interese Izcila",
       "Interest Payable": "Procenti Päyable",

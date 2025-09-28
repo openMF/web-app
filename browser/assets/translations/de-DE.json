@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Null Zinsen nach Abschreibung",
       "Accelerate maturity to charge-off date": "Fälligkeit bis zum Abschreibungsdatum beschleunigen",
       "Full Leap Year": "Volles Schaltjahr",
-      "Feb 29 Period Only": "Nur für den Zeitraum vom 29. Februar"
+      "Feb 29 Period Only": "Nur für den Zeitraum vom 29. Februar",
+      "Waive Interest": "Zinsen erlassen",
+      "Equal Amortization of Outstanding amount": "Gleichmäßige Amortisierung des ausstehenden Betrags"
     },
     "commons": {
       "50 characters long": "50 Zeichen lang",
@@ -1760,6 +1762,7 @@
       "Interest Earned Not Posted": "Verdiente Zinsen wurden nicht gebucht",
       "Interest Free Period": "Zinsfreier Zeitraum",
       "Interest Grace Periods": "Zinsschonfristen",
+      "Interest Handling": "Zinsabwicklung",
       "Interest Method": "Zinsmethode",
       "Interest Outstanding": "Ausstehende Zinsen",
       "Interest Payable": "Interesse päylierbar",

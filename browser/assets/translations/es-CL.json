@@ -752,7 +752,9 @@
       "Zero interest after charge-off": "Cero intereses después de la cancelación",
       "Accelerate maturity to charge-off date": "Acelerar el vencimiento hasta la fecha de amortización",
       "Full Leap Year": "Año bisiesto completo",
-      "Feb 29 Period Only": "Solo periodo del 29 de febrero"
+      "Feb 29 Period Only": "Solo periodo del 29 de febrero",
+      "Waive Interest": "Renunciar a los intereses",
+      "Equal Amortization of Outstanding amount": "Amortización igual del importe pendiente"
     },
     "commons": {
       "50 characters long": "50 caracteres de largo",
@@ -1759,6 +1761,7 @@
       "Interest Earned Not Posted": "Intereses ganados no contabilizados",
       "Interest Free Period": "Periodo libre de intereses",
       "Interest Grace Periods": "Períodos de gracia de intereses",
+      "Interest Handling": "Manejo de intereses",
       "Interest Method": "Método de interés",
       "Interest Outstanding": "Interés pendiente",
       "Interest Payable": "Intereses a pagar",

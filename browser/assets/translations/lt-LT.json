@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Nulinės palūkanos po apmokestinimo",
       "Accelerate maturity to charge-off date": "Paspartinkite terminą iki nurašymo datos",
       "Full Leap Year": "Visi keliamieji metai",
-      "Feb 29 Period Only": "Tik vasario 29 d"
+      "Feb 29 Period Only": "Tik vasario 29 d",
+      "Waive Interest": "Atsisakyti palūkanų",
+      "Equal Amortization of Outstanding amount": "Lygi neapmokėtos sumos amortizacija"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -1760,6 +1762,7 @@
       "Interest Earned Not Posted": "Uždirbtos palūkanos nepaskelbtos",
       "Interest Free Period": "Laikotarpis be palūkanų",
       "Interest Grace Periods": "Palūkanų lengvatinis laikotarpis",
+      "Interest Handling": "Interesų valdymas",
       "Interest Method": "Palūkanų metodas",
       "Interest Outstanding": "Susidomėjimas išskirtinis",
       "Interest Payable": "Mokėtinos palūkanos",

@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Nulový úrok po nabití",
       "Accelerate maturity to charge-off date": "Urychlete splatnost do data odúčtování",
       "Full Leap Year": "Úplný přestupný rok",
-      "Feb 29 Period Only": "Pouze období 29. února"
+      "Feb 29 Period Only": "Pouze období 29. února",
+      "Waive Interest": "Vzdát se úroků",
+      "Equal Amortization of Outstanding amount": "Stejná amortizace dlužné částky"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
@@ -1760,6 +1762,7 @@
       "Interest Earned Not Posted": "Získaný úrok nebyl zveřejněn",
       "Interest Free Period": "Bezúročné období",
       "Interest Grace Periods": "Doby odkladu úroků",
+      "Interest Handling": "Zpracování úroků",
       "Interest Method": "Zájmová metoda",
       "Interest Outstanding": "Neuvěřitelný zájem",
       "Interest Payable": "Zájem päyable",
