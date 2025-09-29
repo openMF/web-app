@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { AlertService } from '../../app/core/alert/alert.service';
+import { TranslateService } from '@ngx-translate/core';
+
 /** Custom Services */
 import { AuthenticationService } from '../core/authentication/authentication.service';
 import { Credentials } from '../core/authentication/credentials.model';
@@ -18,12 +21,13 @@ export class AuthService {
   private frontUrl = environment.OIDC.oidcFrontUrl;
   private redirectUri = `${this.frontUrl}#/callback`;
   private refreshTimeoutId: any = null;
-
   constructor(
     private authenticationService: AuthenticationService,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService,
+    private translateService: TranslateService
   ) {}
 
   async login() {
@@ -169,7 +173,12 @@ export class AuthService {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Error retrieving user data from backend');
+          this.alertService.alert({
+            type: 'User Details',
+            message: this.translateService.instant('errors.Username or password incorrect.')
+          });
+          this.sesionEnd();
+          return false;
         }
         return res.json();
       })
@@ -180,7 +189,7 @@ export class AuthService {
         window.location.href = '/#/home';
       })
       .catch((error) => {
-        console.error('Error consuming backend:', error);
+        this.alertService.alert({ type: 'User Details', message: error });
       });
   }
 
@@ -377,5 +386,47 @@ export class AuthService {
     this.refreshTimeoutId = setTimeout(() => {
       this.refreshToken();
     }, refreshInMs);
+  }
+
+  async sesionEnd() {
+    const idToken = localStorage.getItem('id_token');
+    const postLogoutRedirectUri = this.frontUrl + '#/login';
+
+    if (this.refreshTimeoutId) {
+      clearTimeout(this.refreshTimeoutId);
+      this.refreshTimeoutId = null;
+    }
+
+    if (!idToken) {
+      window.location.href = postLogoutRedirectUri;
+      return;
+    }
+
+    const logoutUrl = `${this.baseUrl}oidc/v1/end_session?id_token_hint=${idToken}&post_logout_redirect_uri=${encodeURIComponent(postLogoutRedirectUri)}`;
+
+    try {
+      const response = await fetch(logoutUrl, {
+        method: 'GET',
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        console.error('Error en logout:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error de red en logout:', error);
+    } finally {
+      sessionStorage.removeItem('mifosXCredentials');
+      sessionStorage.removeItem('mifosXZitadelTokenDetails');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('expires_in');
+      localStorage.removeItem('id_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('refresh_expires_in');
+      localStorage.removeItem('token_start_time');
+      localStorage.removeItem('code_verifier');
+      localStorage.removeItem('mifosXZitadel');
+      localStorage.removeItem('auth_code');
+    }
   }
 }

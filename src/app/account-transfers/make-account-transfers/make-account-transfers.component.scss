@@ -1,26 +1,275 @@
-h2,
-h3,
-h4 {
-  margin: 0;
+.container {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+// Card styling
+.transfer-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+// Section styling
+.section-container {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgb(0 0 0 / 12%);
+
+  &.transfer-heading {
+    font-weight: 700;
+  }
+}
+
+// Source account info grid
+.info-grid {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 0.75rem;
+
+  @media (width >= 768px) {
+    grid-template-columns: repeat(2, 50%);
+  }
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: rgb(0 0 0 / 2%);
+  border-radius: 4px;
+
+  &:hover {
+    background-color: rgb(0 0 0 / 4%);
+  }
+}
+
+.info-label {
+  flex: 0 0 40%;
+  color: rgb(0 0 0 / 70%);
   font-weight: 500;
 }
 
-span {
-  margin: 0.5em 0;
+.info-value {
+  flex: 1;
+  color: rgb(0 0 0 / 87%);
 }
 
-.margin-t {
-  margin-top: 1em;
-}
-
+// Divider styling
 mat-divider {
-  margin: 0 0 0.5em;
+  margin: 1rem 0;
 }
 
-.container {
-  max-width: 37rem;
+// Interbank section
+.interbank-section {
+  margin-bottom: 1rem;
 }
 
+// Form styling
+.transfer-form {
+  margin-top: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 1rem;
+
+  @media (width >= 768px) {
+    grid-template-columns: repeat(2, 50%);
+  }
+}
+
+.form-field {
+  width: 100%;
+
+  &.description-field {
+    grid-column: 1 / -1;
+  }
+}
+
+// Button styling
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  margin-top: 1rem;
+
+  @media (width <= 576px) {
+    flex-direction: column;
+  }
+
+  button {
+    min-width: 120px;
+
+    @media (width <= 576px) {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .cancel-button {
+    background-color: #f5f5f5;
+    color: rgb(0 0 0 / 87%);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%);
+
+    &:hover {
+      background-color: #e0e0e0;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 18%);
+    }
+  }
+
+  .primary-button {
+    background-color: #f5f5f5;
+    color: rgb(0 0 0 / 87%);
+    font-weight: normal;
+    border: none;
+    box-shadow: none;
+
+    &:hover {
+      background-color: #e0e0e0;
+      box-shadow: 0 2px 5px rgb(0 0 0 / 18%);
+    }
+  }
+}
+
+// Loader styling
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  position: relative;
+}
+
+@keyframes rotate-triangle {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 34px solid rgb(0 0 0 / 5%);
+  animation: rotate-triangle 1.5s infinite linear;
+
+  &:hover {
+    border-bottom-color: rgb(0 0 0 / 8%);
+  }
+}
+
+// Dark theme
+// Lower specificity selectors first
+.dark-theme {
+  .info-label {
+    color: rgb(255 255 255 / 70%);
+  }
+
+  .info-value {
+    color: rgb(255 255 255 / 87%);
+  }
+
+  .section-title {
+    color: #fff;
+    border-bottom-color: rgb(255 255 255 / 12%);
+  }
+
+  .transfer-heading {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .action-buttons {
+    .cancel-button {
+      background-color: #424242;
+      color: rgb(255 255 255 / 87%);
+
+      &:hover {
+        background-color: #505050;
+      }
+    }
+
+    .primary-button {
+      background-color: #424242;
+      color: rgb(255 255 255 / 87%);
+      font-weight: normal;
+      border: none;
+      box-shadow: none;
+
+      &:hover {
+        background-color: #505050;
+      }
+    }
+  }
+}
+
+// Higher specificity selectors
+:host-context(.dark-theme) .transfer-heading {
+  color: #fff;
+  font-weight: 700;
+}
+
+:host-context(.dark-theme) .action-buttons .cancel-button {
+  background-color: #424242;
+  color: rgb(255 255 255 / 87%);
+}
+
+:host-context(.dark-theme) .action-buttons .primary-button {
+  background-color: #424242;
+  color: rgb(255 255 255 / 87%);
+  font-weight: normal;
+  border: none;
+  box-shadow: none;
+}
+
+// Medium specificity selectors
+body.dark-theme {
+  .container {
+    .section-title {
+      color: #fff;
+    }
+
+    .transfer-heading {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .action-buttons {
+      .cancel-button {
+        background-color: #424242;
+        color: rgb(255 255 255 / 87%);
+      }
+
+      .primary-button {
+        background-color: #424242;
+        color: rgb(255 255 255 / 87%);
+        font-weight: normal;
+        border: none;
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+// Form field errors
 ::ng-deep mat-form-field.error-warn.mat-form-field-invalid .mat-form-field-ripple {
   background-color: #000000de !important;
 }

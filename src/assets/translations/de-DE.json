@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Null Zinsen nach Abschreibung",
       "Accelerate maturity to charge-off date": "Fälligkeit bis zum Abschreibungsdatum beschleunigen",
       "Full Leap Year": "Volles Schaltjahr",
-      "Feb 29 Period Only": "Nur für den Zeitraum vom 29. Februar"
+      "Feb 29 Period Only": "Nur für den Zeitraum vom 29. Februar",
+      "Waive Interest": "Zinsen erlassen",
+      "Equal Amortization of Outstanding amount": "Gleichmäßige Amortisierung des ausstehenden Betrags"
     },
     "commons": {
       "50 characters long": "50 Zeichen lang",
@@ -840,6 +842,8 @@
       "Bulk Import": "Massenimport",
       "Bulk Loan Reassignment": "Neuzuweisung von Massenkrediten",
       "Business Rule Parameters": "Geschäftsregelparameter",
+      "Buydown Fee classifications to Income accounts": "Buydown-Gebührenklassifizierungen für Einkommenskonten",
+      "Capitalized Income classifications to Income accounts": "Klassifizierung kapitalisierter Einkünfte in Einkommenskonten",
       "COB Catch-Up is": "COB Catch-Up ist",
       "Calculate Interest": "Zinsen berechnen",
       "Campaign Message": "Kampagnenbotschaft",
@@ -1758,6 +1762,7 @@
       "Interest Earned Not Posted": "Verdiente Zinsen wurden nicht gebucht",
       "Interest Free Period": "Zinsfreier Zeitraum",
       "Interest Grace Periods": "Zinsschonfristen",
+      "Interest Handling": "Zinsabwicklung",
       "Interest Method": "Zinsmethode",
       "Interest Outstanding": "Ausstehende Zinsen",
       "Interest Payable": "Interesse päylierbar",
@@ -2139,6 +2144,7 @@
       "Reason": "Grund",
       "Reason for Charge-Off": "Grund für die Abbuchung",
       "Reason for Rescheduling": "Grund für die Umplanung",
+      "Reason for Write-Off": "Grund für die Abschreibung",
       "Recalculate Interest": "Zinsen neu berechnen",
       "Recalculate Interest based on new terms": "Zinsen basierend auf neuen Konditionen neu berechnen",
       "Receipt No": "Quittung Nr",

@@ -27,6 +27,15 @@
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Reason for Write-Off' | translate }}</mat-label>
+            <mat-select formControlName="writeoffReasonId">
+              <mat-option *ngFor="let writeOffReason of writeOffReasonOptions" [value]="writeOffReason.id">
+                {{ writeOffReason.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
             <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
             <textarea matInput formControlName="note" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
           </mat-form-field>

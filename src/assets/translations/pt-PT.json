@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Juros zero após baixa",
       "Accelerate maturity to charge-off date": "Acelerar o vencimento até à data de baixa",
       "Full Leap Year": "Ano bissexto completo",
-      "Feb 29 Period Only": "Somente período de 29 de fevereiro"
+      "Feb 29 Period Only": "Somente período de 29 de fevereiro",
+      "Waive Interest": "Renúncia de juros",
+      "Equal Amortization of Outstanding amount": "Amortização igual do valor em dívida"
     },
     "commons": {
       "50 characters long": "50 caracteres",
@@ -840,6 +842,8 @@
       "Bulk Import": "Importação em massa",
       "Bulk Loan Reassignment": "Reatribuição de empréstimo em massa",
       "Business Rule Parameters": "Parâmetros de regras de negócios",
+      "Buydown Fee classifications to Income accounts": "Classificações de taxas de recompra para contas de renda",
+      "Capitalized Income classifications to Income accounts": "Classificações de renda capitalizada para contas de renda",
       "COB Catch-Up is": "A recuperação do COB é",
       "Calculate Interest": "Calcular juros",
       "Campaign Message": "Mensagem da campanha",
@@ -1758,6 +1762,7 @@
       "Interest Earned Not Posted": "Juros ganhos não lançados",
       "Interest Free Period": "Período sem juros",
       "Interest Grace Periods": "Períodos de carência de juros",
+      "Interest Handling": "Tratamento de juros",
       "Interest Method": "Método de juros",
       "Interest Outstanding": "Juros pendentes",
       "Interest Payable": "Juros a pagar",
@@ -2139,6 +2144,7 @@
       "Reason": "Razão",
       "Reason for Charge-Off": "Motivo da cobrança",
       "Reason for Rescheduling": "Motivo do reagendamento",
+      "Reason for Write-Off": "Motivo da baixa",
       "Recalculate Interest": "Recalcular juros",
       "Recalculate Interest based on new terms": "Recalcular juros com base em novos termos",
       "Receipt No": "Número do recibo",

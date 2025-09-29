@@ -22,7 +22,7 @@ import { GeneralTabComponent } from './shares-account-view/general-tab/general-t
 const routes: Routes = [
   {
     path: '',
-    data: { title: 'Shares', breadcrumb: 'Shares', routeParamBreadcrumb: false },
+    data: { title: 'Shares', breadcrumb: 'Shares', routeParamBreadcrumb: false, addBreadcrumbLink: false },
     children: [
       {
         path: 'create',

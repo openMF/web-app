@@ -1,10 +1,103 @@
-.content {
-  div {
-    margin: 1rem 0;
-    word-wrap: break-word;
+.container {
+  max-width: 37rem;
+  margin: 0 auto;
+  padding: 1rem;
 
-    &.header {
-      font-weight: 500;
+  mat-card {
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 8px;
+    background-color: var(--card-background, #fff);
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  .layout-row-wrap {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    gap: 1rem;
+
+    .flex-50 {
+      padding: 0.5rem;
+
+      &.mat-body-strong {
+        color: var(--label-color, #555);
+        font-weight: 600;
+      }
+    }
+  }
+
+  .content {
+    div {
+      margin: 1rem 0;
+      word-wrap: break-word;
+
+      span {
+        display: block;
+        padding: 0.25rem 0;
+        color: var(--text-color, inherit);
+      }
+    }
+  }
+
+  .content-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .content-row {
+      display: flex;
+      flex-direction: row;
+      border-bottom: 1px solid var(--border-color-light, #eee);
+      padding-bottom: 0.5rem;
+
+      .label {
+        flex: 0 0 40%;
+        font-weight: 600;
+        color: var(--label-color, #555);
+        padding: 0.5rem 1rem 0.5rem 0;
+      }
+
+      .value {
+        flex: 0 0 60%;
+        padding: 0.5rem 0;
+        color: var(--text-color, inherit);
+
+        span {
+          display: block;
+          padding: 0.25rem 0;
+        }
+      }
+    }
+  }
+
+  .back-button-container {
+    margin-top: 2rem;
+  }
+
+  button {
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Dark mode styles
+:host-context(.dark-theme) {
+  --border-color: #444;
+  --border-color-light: #3a3a3a;
+  --card-background: #2d2d2d;
+  --label-color: #b8b8b8;
+  --text-color: #e0e0e0;
+
+  .container {
+    mat-card {
+      box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
     }
   }
 }

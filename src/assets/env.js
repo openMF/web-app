@@ -20,6 +20,9 @@
   // Char delimiter to Export CSV options: ',' ';' '|' ' '
   window['env']['defaultCharDelimiter'] = '';
 
+  // Display or not the Server Selector
+  window['env']['allowServerSwitch'] = '';
+  
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '';
 

@@ -3,12 +3,17 @@
   padding: 0;
 
   .header {
-    #office {
+    :where(#office) {
       margin-bottom: -1.2em;
+
+      // Make sure mat-label text is visible in light theme
+      :where(mat-label) {
+        color: rgb(0 0 0 / 87%); // Standard Material Design text color for light theme
+      }
     }
   }
 
-  #timescale {
+  :where(#timescale) {
     margin: 2% 50%;
     transform: translateX(-50%);
   }
@@ -17,5 +22,18 @@
     overflow-x: auto;
     max-width: 100%;
     min-height: 16.5rem;
+  }
+}
+
+// Dark theme specific styles
+:host-context(.dark-theme) {
+  .card {
+    .header {
+      :where(#office) {
+        :where(mat-label) {
+          color: white; // White text color for dark theme
+        }
+      }
+    }
   }
 }

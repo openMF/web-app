@@ -24,10 +24,12 @@ export const environment = {
   baseApiUrl:
     loadedEnv.fineractApiUrl ||
     (loadedEnv.fineractApiUrls?.length > 0 ? loadedEnv.fineractApiUrls.split(',')[0] : window.location.origin),
-  allowServerSwitch: env.allow_switching_backend_instance,
+  allowServerSwitch: loadedEnv.allowServerSwitch || 'true',
   apiProvider: loadedEnv.apiProvider || '/fineract-provider/api',
   apiVersion: loadedEnv.apiVersion || '/v1',
   serverUrl: '',
+  /** Feature flag for Remember Me functionality */
+  enableRememberMe: false,
   oauth: {
     enabled: loadedEnv.oauthServerEnabled || false, // For connecting to Mifos X using OAuth2 Authentication change the value to true
     serverUrl: loadedEnv.oauthServerUrl || '',

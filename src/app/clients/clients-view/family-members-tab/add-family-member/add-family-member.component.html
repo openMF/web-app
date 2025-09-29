@@ -3,7 +3,14 @@
     <div class="layout-row-wrap responsive-column align-start-center">
       <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
-        <input formControlName="firstName" required matInput />
+        <input
+          formControlName="firstName"
+          required
+          matInput
+          aria-label="First Name"
+          placeholder="First Name"
+          title="First Name"
+        />
         <mat-error *ngIf="addFamilyMemberForm.controls.firstName.hasError('required')">
           {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -12,12 +19,25 @@
 
       <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
-        <input formControlName="middleName" matInput />
+        <input
+          formControlName="middleName"
+          matInput
+          aria-label="Middle Name"
+          placeholder="Middle Name"
+          title="Middle Name"
+        />
       </mat-form-field>
 
       <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
-        <input formControlName="lastName" required matInput />
+        <input
+          formControlName="lastName"
+          required
+          matInput
+          aria-label="Last Name"
+          placeholder="Last Name"
+          title="Last Name"
+        />
         <mat-error *ngIf="addFamilyMemberForm.controls.lastName.hasError('required')">
           {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -26,16 +46,27 @@
 
       <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Qualification' | translate }}</mat-label>
-        <input formControlName="qualification" matInput />
+        <input
+          formControlName="qualification"
+          matInput
+          aria-label="Qualification"
+          placeholder="Qualification"
+          title="Qualification"
+        />
       </mat-form-field>
 
       <mat-form-field class="flex-50-minus-25px">
         <mat-label>{{ 'labels.inputs.Age' | translate }}</mat-label>
-        <input type="number" formControlName="age" required matInput [min]="minAge" />
-        <mat-error *ngIf="addFamilyMemberForm.controls.age.hasError('required')">
-          {{ 'labels.inputs.Age' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required and cannot be negative' | translate }}</strong>
-        </mat-error>
+        <input
+          type="number"
+          formControlName="age"
+          matInput
+          [min]="minAge"
+          disabled
+          aria-label="Age"
+          placeholder="Age"
+          title="Age"
+        />
       </mat-form-field>
 
       <mat-checkbox formControlName="isDependent" labelPosition="before" class="flex-50-minus-25px">
@@ -91,13 +122,17 @@
 
       <mat-form-field class="flex-fill" (click)="dueDatePicker.open()">
         <mat-label>{{ 'labels.inputs.Date Of Birth' | translate }}</mat-label>
-        <input formControlName="dateOfBirth" matInput [max]="maxDate" [matDatepicker]="dueDatePicker" required />
+        <input
+          formControlName="dateOfBirth"
+          matInput
+          [max]="maxDate"
+          [matDatepicker]="dueDatePicker"
+          placeholder="Optional"
+          aria-label="Date Of Birth"
+          title="Date Of Birth"
+        />
         <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #dueDatePicker></mat-datepicker>
-        <mat-error *ngIf="addFamilyMemberForm.controls.dateOfBirth.hasError('required')">
-          {{ 'labels.inputs.Date Of Birth' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
       </mat-form-field>
     </div>
 

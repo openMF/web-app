@@ -32,10 +32,19 @@
 }
 
 .heading-content {
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Align items vertically */
+  justify-content: space-between; /* Space out title and buttons */
   margin-bottom: 1%;
   margin-top: 1%;
 }
 
 .heading-name {
-  display: block;
+  margin: 0; /* Reset margin to avoid misalignment */
+}
+
+.layout-row.align-flex-end {
+  display: flex;
+  align-items: center; /* Ensure buttons are vertically aligned */
+  gap: 0.5rem; /* Add spacing between buttons if needed */
 }

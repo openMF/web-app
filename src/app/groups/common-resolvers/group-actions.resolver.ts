@@ -16,9 +16,7 @@ export class GroupActionsResolver {
   /**
    * @param {GroupsService} groupsService,
    */
-  constructor(
-    private groupsService: GroupsService,
-  ) {}
+  constructor(private groupsService: GroupsService) {}
 
   /**
    * Returns the group actions data.

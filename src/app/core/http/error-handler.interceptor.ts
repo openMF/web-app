@@ -12,6 +12,7 @@ import { environment } from '../../../environments/environment';
 /** Custom Services */
 import { Logger } from '../logger/logger.service';
 import { AlertService } from '../alert/alert.service';
+import { TranslateService } from '@ngx-translate/core'; // Added import for TranslateService
 
 /** Initialize Logger */
 const log = new Logger('ErrorHandlerInterceptor');
@@ -23,20 +24,24 @@ const log = new Logger('ErrorHandlerInterceptor');
 export class ErrorHandlerInterceptor implements HttpInterceptor {
   /**
    * @param {AlertService} alertService Alert Service.
+   * @param {TranslateService} translate Translation Service.
    */
-  constructor(private alertService: AlertService) {}
+  constructor(
+    private alertService: AlertService,
+    private translate: TranslateService // Added TranslateService
+  ) {}
 
   /**
    * Intercepts a Http request and adds a default error handler.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request).pipe(catchError((error) => this.handleError(error)));
+    return next.handle(request).pipe(catchError((error) => this.handleError(error, request)));
   }
 
   /**
    * Error handler.
    */
-  private handleError(response: HttpErrorResponse): Observable<HttpEvent<any>> {
+  private handleError(response: HttpErrorResponse, request: HttpRequest<any>): Observable<HttpEvent<any>> {
     const status = response.status;
     let errorMessage = response.error.developerMessage || response.message;
     if (response.error.errors) {
@@ -64,7 +69,17 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         message: errorMessage || 'You are not authorized for this request!'
       });
     } else if (status === 404) {
-      this.alertService.alert({ type: 'Resource does not exist', message: errorMessage || 'Resource does not exist!' });
+      // Check if this is an image request that should be silently handled (client profile image)
+      if (request.url.includes('/clients/') && request.url.includes('/images')) {
+        // Don't show alerts for missing client images
+        // This is an expected condition, not an error
+        return new Observable<HttpEvent<any>>();
+      } else {
+        this.alertService.alert({
+          type: this.translate.instant('error.resource.not.found'),
+          message: errorMessage || 'Resource does not exist!'
+        });
+      }
     } else if (status === 500) {
       this.alertService.alert({
         type: 'Internal Server Error',

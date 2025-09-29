@@ -32,11 +32,7 @@
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Age' | translate }}</mat-label>
-      <input type="number" formControlName="age" matInput [min]="0" />
-      <mat-error *ngIf="familyMemberForm.controls.age.hasError('required')">
-        {{ 'labels.inputs.Age' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required and cannot be negative' | translate }}</strong>
-      </mat-error>
+      <input type="number" formControlName="age" matInput [min]="0" disabled />
     </mat-form-field>
 
     <mat-checkbox formControlName="isDependent" labelPosition="before" class="flex-48"
@@ -89,19 +85,22 @@
 
     <mat-form-field class="flex-98" (click)="dueDatePicker.open()">
       <mat-label>{{ 'labels.inputs.Date Of Birth' | translate }}</mat-label>
-      <input formControlName="dateOfBirth" matInput [max]="maxDate" [matDatepicker]="dueDatePicker" required />
+      <input
+        formControlName="dateOfBirth"
+        matInput
+        [max]="maxDate"
+        [matDatepicker]="dueDatePicker"
+        placeholder="Optional"
+      />
       <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #dueDatePicker></mat-datepicker>
-      <mat-error *ngIf="familyMemberForm.controls.dateOfBirth.hasError('required')">
-        {{ 'labels.inputs.Date Of Birth' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
     </mat-form-field>
   </div>
 
   <mat-dialog-actions align="center">
-    <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+    <button type="button" mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
     <button
+      type="button"
       mat-raised-button
       color="primary"
       [disabled]="!familyMemberForm.valid"
