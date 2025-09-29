@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Zero interessi dopo la cancellazione",
       "Accelerate maturity to charge-off date": "Accelerare la scadenza alla data di cancellazione",
       "Full Leap Year": "Anno bisestile completo",
-      "Feb 29 Period Only": "Solo periodo del 29 febbraio"
+      "Feb 29 Period Only": "Solo periodo del 29 febbraio",
+      "Waive Interest": "Rinuncia agli interessi",
+      "Equal Amortization of Outstanding amount": "Ammortamento pari all'importo in sospeso"
     },
     "commons": {
       "50 characters long": "50 caratteri di lunghezza",
@@ -840,6 +842,8 @@
       "Bulk Import": "Importazione in blocco",
       "Bulk Loan Reassignment": "Riassegnazione del prestito in blocco",
       "Business Rule Parameters": "Parametri delle regole aziendali",
+      "Buydown Fee classifications to Income accounts": "Classificazioni delle commissioni di riacquisto nei conti di reddito",
+      "Capitalized Income classifications to Income accounts": "Classificazioni del reddito capitalizzato nei conti di reddito",
       "COB Catch-Up is": "Il recupero del COB lo è",
       "Calculate Interest": "Calcola gli interessi",
       "Campaign Message": "Messaggio della campagna",
@@ -1758,6 +1762,7 @@
       "Interest Earned Not Posted": "Interessi maturati non pubblicati",
       "Interest Free Period": "Periodo senza interessi",
       "Interest Grace Periods": "Periodi di grazia degli interessi",
+      "Interest Handling": "Gestione degli interessi",
       "Interest Method": "Metodo degli interessi",
       "Interest Outstanding": "Interessi in sospeso",
       "Interest Payable": "Interesse päyable",
@@ -2139,6 +2144,7 @@
       "Reason": "Motivo",
       "Reason for Charge-Off": "Motivo dell'addebito",
       "Reason for Rescheduling": "Motivo della riprogrammazione",
+      "Reason for Write-Off": "Motivo della cancellazione",
       "Recalculate Interest": "Ricalcolare gli interessi",
       "Recalculate Interest based on new terms": "Ricalcolare gli interessi in base ai nuovi termini",
       "Receipt No": "Numero di ricevuta",

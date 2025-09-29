@@ -31,7 +31,6 @@ import { environment } from '../../../environments/environment';
     MatPrefix,
     FaIconComponent,
     MatIconButton,
-    MatCheckbox,
     MatProgressBar,
     MatProgressSpinner
   ]
@@ -44,6 +43,8 @@ export class LoginFormComponent implements OnInit {
   /** True if loading. */
   loading = false;
   oidcServerEnabled = environment.OIDC.oidcServerEnabled;
+  /** Whether remember me functionality is enabled */
+  enableRememberMe = environment.enableRememberMe === true;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.

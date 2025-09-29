@@ -338,6 +338,14 @@ export class TransactionsTabComponent implements OnInit {
       command = 'undo-charge-off';
       operationDate = this.settingsService.businessDate;
       payload = {};
+    } else if (this.isWriteOff(transaction.type)) {
+      command = 'undowriteoff';
+      payload = {
+        transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
+        transactionAmount: 0,
+        dateFormat,
+        locale
+      };
     } else {
       payload = {
         transactionDate: this.dateUtils.formatDate(operationDate && new Date(operationDate), dateFormat),
@@ -360,7 +368,7 @@ export class TransactionsTabComponent implements OnInit {
     undoTransactionAccountDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
         let transactionId = transaction.id;
-        if (this.isChargeOff(transaction.type)) {
+        if (this.isChargeOff(transaction.type) || command === 'undowriteoff' || this.isWriteOff(transaction.type)) {
           transactionId = null;
         }
         this.loansService
@@ -410,6 +418,10 @@ export class TransactionsTabComponent implements OnInit {
 
   private isChargeOff(transactionType: LoanTransactionType): boolean {
     return transactionType.chargeoff || transactionType.code === 'loanTransactionType.chargeOff';
+  }
+
+  isWriteOff(transactionType: LoanTransactionType): boolean {
+    return transactionType.writeOff || transactionType.code === 'loanTransactionType.writeOff';
   }
 
   private isDownPayment(transactionType: LoanTransactionType): boolean {

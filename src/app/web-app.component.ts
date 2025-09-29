@@ -238,7 +238,7 @@ export class WebAppComponent implements OnInit {
         });
         this.dialog.open(SessionTimeoutDialogComponent);
         setTimeout(() => {
-          if (environment.OIDC.oidcServerEnabled) {
+          if (!environment.OIDC.oidcServerEnabled) {
             this.logout();
           } else {
             this.authService.logout();

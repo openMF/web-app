@@ -1,5 +1,6 @@
 /** Angular Imports */
 import { Component, OnInit } from '@angular/core';
+import { OrganizationService } from 'app/organization/organization.service';
 import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -39,10 +40,19 @@ export class CreateCollateralComponent implements OnInit {
     private productsService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private organizationService: OrganizationService
   ) {
     this.route.data.subscribe((data: { collateralTemplate: any }) => {
-      this.collateralTemplateData = data.collateralTemplate;
+      this.organizationService.getCurrencies().subscribe((orgCurrencies: any) => {
+        console.log('Organization currencies response:', orgCurrencies);
+        let orgCurrencyList = Array.isArray(orgCurrencies.selectedCurrencyOptions)
+          ? orgCurrencies.selectedCurrencyOptions
+          : [];
+        this.collateralTemplateData = data.collateralTemplate.filter((currency: any) =>
+          orgCurrencyList.some((orgCurrency: any) => orgCurrency.code === currency.code)
+        );
+      });
     });
   }
 

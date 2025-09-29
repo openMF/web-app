@@ -33,14 +33,19 @@
     </div>
   </mat-card>
 
-  <mat-card class="flex-40">
+  <mat-card class="flex-50">
     <h3 matSubheader>{{ 'labels.heading.Group Members' | translate }}</h3>
 
     <mat-nav-list *ngIf="groupMembers?.length">
-      <div mat-list-item *ngFor="let group of groupMembers; index as i">
+      <div mat-list-item class="member-item center-gap" *ngFor="let group of groupMembers; index as i">
         <span matLine class="p-t-10">{{ group.name }}</span>
-        <div class="flex-fill"></div>
-        <button mat-icon-button color="warn" (click)="removeGroup(i, group)">
+        <button
+          mat-icon-button
+          color="warn"
+          class="delete-btn"
+          aria-label="Remove group"
+          (click)="removeGroup(i, group)"
+        >
           <fa-icon icon="trash"></fa-icon>
         </button>
       </div>

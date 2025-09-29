@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
-import { DropdownOptions } from 'app/core/utils/dropdownOptions';
 import { LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { OptionData } from 'app/shared/models/option-data.model';
@@ -23,7 +22,9 @@ export class LoanReagingComponent implements OnInit {
   /** Repayment Loan Form */
   reagingLoanForm: UntypedFormGroup;
 
-  frequencyOptions: OptionData[] = [];
+  reAgeReasonOptions: any[] = [];
+  periodFrequencyOptions: OptionData[] = [];
+  reAgeInterestHandlingOptions: OptionData[] = [];
 
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
@@ -35,16 +36,19 @@ export class LoanReagingComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
-    private dropdownOptions: DropdownOptions,
     private loanService: LoansService,
     private dateUtils: Dates
   ) {
     this.loanId = this.route.snapshot.params['loanId'];
-    this.frequencyOptions = this.dropdownOptions.retrievePeriodFrequencyTypeOptions(false);
   }
 
   ngOnInit(): void {
     this.maxDate = this.settingsService.maxFutureDate;
+
+    this.reAgeReasonOptions = this.dataObject.reAgeReasonOptions;
+    this.reAgeInterestHandlingOptions = this.dataObject.reAgeInterestHandlingOptions;
+    this.periodFrequencyOptions = this.dataObject.periodFrequencyOptions;
+
     this.createReagingLoanForm();
   }
 
@@ -66,8 +70,13 @@ export class LoanReagingComponent implements OnInit {
         ,
         Validators.required
       ],
+      reAgeInterestHandling: [
+        this.reAgeInterestHandlingOptions[0],
+        Validators.required
+      ],
       note: '',
-      externalId: ''
+      externalId: '',
+      reasonCodeValueId: null
     });
   }
 

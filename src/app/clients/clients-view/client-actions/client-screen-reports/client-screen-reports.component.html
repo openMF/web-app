@@ -18,7 +18,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+      <mat-card-actions class="layout-row align-center gap-5px actions-spacing responsive-column">
         <button type="button" mat-raised-button [routerLink]="['../../']">
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
@@ -30,7 +30,7 @@
   </mat-card>
 </div>
 
-<div #output class="container">
+<div #output class="container m-t-20">
   <mat-card class="layout-column gap-3percent">
     <div class="layout-align-end">
       <button mat-stroked-button color="primary" [disabled]="!template" (click)="print()">

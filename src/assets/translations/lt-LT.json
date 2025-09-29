@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Nulinės palūkanos po apmokestinimo",
       "Accelerate maturity to charge-off date": "Paspartinkite terminą iki nurašymo datos",
       "Full Leap Year": "Visi keliamieji metai",
-      "Feb 29 Period Only": "Tik vasario 29 d"
+      "Feb 29 Period Only": "Tik vasario 29 d",
+      "Waive Interest": "Atsisakyti palūkanų",
+      "Equal Amortization of Outstanding amount": "Lygi neapmokėtos sumos amortizacija"
     },
     "commons": {
       "50 characters long": "50 simbolių ilgio",
@@ -840,6 +842,8 @@
       "Bulk Import": "Masinis importas",
       "Bulk Loan Reassignment": "Masinės paskolos perskirstymas",
       "Business Rule Parameters": "Verslo taisyklių parametrai",
+      "Buydown Fee classifications to Income accounts": "Išpirkimo mokesčių klasifikavimas į pajamų sąskaitas",
+      "Capitalized Income classifications to Income accounts": "Kapitalizuotų pajamų klasifikavimas į pajamų sąskaitas",
       "COB Catch-Up is": "COB Catch-Up yra",
       "Calculate Interest": "Apskaičiuokite palūkanas",
       "Campaign Message": "Kampanijos pranešimas",
@@ -1758,6 +1762,7 @@
       "Interest Earned Not Posted": "Uždirbtos palūkanos nepaskelbtos",
       "Interest Free Period": "Laikotarpis be palūkanų",
       "Interest Grace Periods": "Palūkanų lengvatinis laikotarpis",
+      "Interest Handling": "Interesų valdymas",
       "Interest Method": "Palūkanų metodas",
       "Interest Outstanding": "Susidomėjimas išskirtinis",
       "Interest Payable": "Mokėtinos palūkanos",
@@ -2139,6 +2144,7 @@
       "Reason": "Priežastis",
       "Reason for Charge-Off": "Apmokestinimo priežastis",
       "Reason for Rescheduling": "Perkėlimo priežastis",
+      "Reason for Write-Off": "Nurašymo priežastis",
       "Recalculate Interest": "Perskaičiuoti palūkanas",
       "Recalculate Interest based on new terms": "Perskaičiuokite palūkanas pagal naujas sąlygas",
       "Receipt No": "Kvitas Nr",

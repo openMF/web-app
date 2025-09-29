@@ -1,3 +1,227 @@
 .margin-v {
   margin: 2em 0 0;
 }
+
+.flex-32 {
+  flex: 0 1 32%;
+  max-width: 32%;
+}
+
+.gap-2percent {
+  gap: 2%;
+}
+
+.align-center {
+  align-items: center;
+}
+
+// Enhanced layout styles with Material compatibility
+.container {
+  margin: 24px auto;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+// More specific Material overrides
+:host ::ng-deep .mat-card {
+  padding: 32px;
+  margin: 16px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+}
+
+:host ::ng-deep .mat-card-content {
+  padding: 0;
+}
+
+// Flex utilities with better responsive support
+.flex-24 {
+  flex: 0 1 calc(25% - 15px);
+  max-width: calc(25% - 15px);
+  margin-right: 0;
+}
+
+.flex-48 {
+  flex: 0 1 calc(50% - 10px);
+  max-width: calc(50% - 10px);
+  margin-right: 0;
+}
+
+.responsive-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+  align-items: flex-start;
+}
+
+.responsive-row:last-child {
+  margin-bottom: 0;
+}
+
+// Enhanced Material form field styling
+:host ::ng-deep .mat-form-field {
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+:host ::ng-deep .mat-form-field:last-child {
+  margin-right: 0;
+}
+
+// Ensure consistent form field appearance
+:host ::ng-deep .responsive-row .mat-form-field {
+  min-height: 56px;
+}
+
+:host ::ng-deep .responsive-row .mat-form-field .mat-form-field-wrapper {
+  padding-bottom: 1.3438em;
+}
+
+// Error state styling and form field appearance consistency
+:host ::ng-deep .mat-form-field-appearance-outline {
+  .mat-form-field-outline {
+    color: rgb(0 0 0 / 12%);
+  }
+
+  .mat-form-field-outline-thick {
+    color: #3f51b5;
+  }
+}
+
+:host ::ng-deep .mat-form-field.mat-form-field-invalid {
+  .mat-form-field-outline-thick {
+    color: #f44336;
+    opacity: 1;
+  }
+}
+
+:host ::ng-deep .mat-error {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.section-divider {
+  margin: 32px 0 24px;
+  border-color: rgb(0 0 0 / 12%);
+}
+
+:host ::ng-deep .mat-checkbox {
+  margin: 20px 0;
+}
+
+// Enhanced button styling with better Material integration
+:host ::ng-deep mat-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px 0;
+  margin-top: 32px;
+  border-top: 1px solid rgb(0 0 0 / 12%);
+  width: 100%;
+}
+
+:host ::ng-deep mat-card-actions button {
+  min-width: 100px;
+  height: 36px;
+  padding: 0 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-size: 13px;
+  margin: 0;
+}
+
+// Enhanced responsive breakpoints
+@media (width <= 1024px) {
+  .flex-24 {
+    flex: 0 1 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+
+  .flex-48 {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+}
+
+@media (width <= 768px) {
+  .flex-32,
+  .flex-24,
+  .flex-48 {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+
+  .container {
+    margin: 16px;
+    padding: 0 16px;
+  }
+
+  :host ::ng-deep .mat-card {
+    padding: 20px;
+  }
+
+  .responsive-row {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .responsive-row .mat-form-field {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-right: 0;
+  }
+}
+
+@media (width <= 600px) {
+  :host ::ng-deep mat-card-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  :host ::ng-deep mat-card-actions button {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+@media (width <= 480px) {
+  :host ::ng-deep .mat-card {
+    padding: 16px;
+    margin: 8px 0;
+  }
+
+  .responsive-row {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .container {
+    padding: 0 12px;
+  }
+}
+
+// Fix for potential Material Design conflicts
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Ensure proper form styling
+:host ::ng-deep form {
+  width: 100%;
+}
+
+// DatePicker specific styling
+:host ::ng-deep .mat-datepicker-toggle {
+  color: rgb(0 0 0 / 54%);
+}
+
+// Select dropdown styling
+:host ::ng-deep .mat-select-panel {
+  max-height: 256px;
+}

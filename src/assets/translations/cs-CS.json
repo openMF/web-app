@@ -753,7 +753,9 @@
       "Zero interest after charge-off": "Nulový úrok po nabití",
       "Accelerate maturity to charge-off date": "Urychlete splatnost do data odúčtování",
       "Full Leap Year": "Úplný přestupný rok",
-      "Feb 29 Period Only": "Pouze období 29. února"
+      "Feb 29 Period Only": "Pouze období 29. února",
+      "Waive Interest": "Vzdát se úroků",
+      "Equal Amortization of Outstanding amount": "Stejná amortizace dlužné částky"
     },
     "commons": {
       "50 characters long": "50 znaků dlouhé",
@@ -839,6 +841,8 @@
       "Bulk Import": "Hromadný import",
       "Bulk Loan Reassignment": "Hromadné přeřazení půjčky",
       "Business Rule Parameters": "Parametry obchodních pravidel",
+      "Buydown Fee classifications to Income accounts": "Klasifikace poplatků za odkup na příjmové účty",
+      "Capitalized Income classifications to Income accounts": "Klasifikace kapitalizovaných výnosů do výnosových účtů",
       "COB Catch-Up is": "COB Catch-Up je",
       "Calculate Interest": "Vypočítejte úrok",
       "Campaign Message": "Zpráva kampaně",
@@ -1758,6 +1762,7 @@
       "Interest Earned Not Posted": "Získaný úrok nebyl zveřejněn",
       "Interest Free Period": "Bezúročné období",
       "Interest Grace Periods": "Doby odkladu úroků",
+      "Interest Handling": "Zpracování úroků",
       "Interest Method": "Zájmová metoda",
       "Interest Outstanding": "Neuvěřitelný zájem",
       "Interest Payable": "Zájem päyable",
@@ -2139,6 +2144,7 @@
       "Reason": "Důvod",
       "Reason for Charge-Off": "Důvod pro nabíjení",
       "Reason for Rescheduling": "Důvod přeplánování",
+      "Reason for Write-Off": "Důvod odepsání",
       "Recalculate Interest": "Přepočítat úrok",
       "Recalculate Interest based on new terms": "Přepočítat úrok na základě nových podmínek",
       "Receipt No": "Potvrzení č",

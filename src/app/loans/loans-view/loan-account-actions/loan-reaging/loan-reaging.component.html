@@ -16,8 +16,8 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
             <mat-select formControlName="frequencyType">
-              <mat-option *ngFor="let frequencyType of frequencyOptions" [value]="frequencyType.code">
-                {{ frequencyType.value }}
+              <mat-option *ngFor="let frequencyType of periodFrequencyOptions" [value]="frequencyType">
+                {{ frequencyType }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -41,13 +41,34 @@
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Interest Handling' | translate }}</mat-label>
+            <mat-select formControlName="reAgeInterestHandling">
+              <mat-option
+                *ngFor="let reAgeInterestHandlingOption of reAgeInterestHandlingOptions"
+                [value]="reAgeInterestHandlingOption.code"
+              >
+                {{ reAgeInterestHandlingOption.value | translateKey: 'catalogs' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
-            <input matInput formControlName="note" />
+            <mat-select formControlName="reasonCodeValueId">
+              <mat-option *ngFor="let reAgeReasonOption of reAgeReasonOptions" [value]="reAgeReasonOption.id">
+                {{ reAgeReasonOption.name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput formControlName="externalId" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+            <input matInput formControlName="note" />
           </mat-form-field>
         </div>
 

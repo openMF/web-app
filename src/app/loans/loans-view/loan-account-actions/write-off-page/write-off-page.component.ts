@@ -24,7 +24,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class WriteOffPageComponent implements OnInit {
   @Input() dataObject: any;
-
+  /** Loan Id */
+  loanId: string;
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -32,6 +33,7 @@ export class WriteOffPageComponent implements OnInit {
 
   /** Write Off form. */
   writeOffForm: UntypedFormGroup;
+  writeOffReasonOptions: any[] = [];
 
   /**
    * Get data from `Resolver`.
@@ -49,11 +51,14 @@ export class WriteOffPageComponent implements OnInit {
     private dateUtils: Dates,
     private router: Router,
     private settingsService: SettingsService
-  ) {}
+  ) {
+    this.loanId = this.route.snapshot.params['loanId'];
+  }
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.setWriteOffForm();
+    this.writeOffReasonOptions = this.dataObject.writeOffReasonOptions;
   }
 
   /**
@@ -66,6 +71,7 @@ export class WriteOffPageComponent implements OnInit {
         Validators.required
       ],
       amount: [{ value: this.dataObject.amount, disabled: true }],
+      writeoffReasonId: [''],
       note: ['']
     });
   }
@@ -81,16 +87,18 @@ export class WriteOffPageComponent implements OnInit {
     if (writeOffFormData.transactionDate instanceof Date) {
       writeOffFormData.transactionDate = this.dateUtils.formatDate(prevTransactionDate, dateFormat);
     }
+    if (writeOffFormData.writeoffReasonId === null || writeOffFormData.writeoffReasonId === '') {
+      delete writeOffFormData.writeoffReasonId;
+    }
     const data = {
       ...writeOffFormData,
       dateFormat,
       locale
     };
-    const loanId = this.route.snapshot.params['loanId'];
     delete data.amount;
     this.loanService
       .stateTransitions({
-        loanId: Number(loanId),
+        loanId: Number(this.loanId),
         postLoansLoanIdRequest: data,
         command: 'writeoff'
       })
