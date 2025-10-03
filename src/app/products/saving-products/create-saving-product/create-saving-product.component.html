@@ -74,10 +74,10 @@
         [accountingRuleData]="accountingRuleData"
         [isDormancyTrackingActive]="savingProductSettingsForm.get('isDormancyTrackingActive')"
         [savingProductFormValid]="savingProductFormValid"
+        [allowOverdraft]="savingProductSettingsForm.get('allowOverdraft')"
       >
       </mifosx-saving-product-accounting-step>
     </mat-step>
-
     <mat-step state="preview" *ngIf="savingProductFormValid" completed>
       <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
 

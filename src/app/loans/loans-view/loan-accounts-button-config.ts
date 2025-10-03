@@ -124,6 +124,11 @@ export class LoansAccountButtonConfiguration {
             name: 'Recovery Payment',
             icon: 'briefcase',
             taskPermissionName: 'RECOVERYPAYMENT_LOAN'
+          },
+          {
+            name: 'Undo Write-off',
+            icon: 'undo',
+            taskPermissionName: 'UNDOWRITEOFF_LOAN'
           }
         ];
         break;

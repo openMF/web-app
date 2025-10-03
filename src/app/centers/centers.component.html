@@ -1,13 +1,13 @@
 <mat-card class="container">
-  <div class="layout-row align-start-center">
-    <div class="search-box">
-      <mat-form-field>
+  <div class="layout-column layout-gt-sm-row align-gt-sm-start-center">
+    <div class="search-box m-r-30">
+      <mat-form-field class="search-box">
         <input matInput placeholder="Search by Name" [formControl]="name" />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="search-box">
         <input matInput placeholder="Search by ExternalID" [formControl]="externalId" />
       </mat-form-field>
-      <mat-checkbox #showClosedCenters labelPosition="after" (change)="changeShowClosedCenters()">
+      <mat-checkbox #showClosedCenters labelPosition="after" (change)="changeShowClosedCenters()" class="m-r-10">
         {{ 'labels.inputs.Show Closed Centers' | translate }}
       </mat-checkbox>
     </div>
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <table mat-table [dataSource]="dataSource" matSort>
+  <table mat-table [dataSource]="dataSource" matSort class="bordered-table">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
       <td mat-cell *matCellDef="let center">{{ center.name }}</td>

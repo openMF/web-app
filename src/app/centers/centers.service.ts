@@ -282,4 +282,16 @@ export class CentersService {
   executeEditCenter(centerId: string, data: any): Observable<any> {
     return this.http.put(`/groups/${centerId}`, data);
   }
+
+  getAllMeetingFallCenters(
+    officeId: number,
+    staffId: number,
+    meetingDate: string,
+    dateFormat: string,
+    locale: string
+  ): Observable<any> {
+    return this.http.get(
+      `/centers?dateFormat=${dateFormat}&locale=${locale}&meetingDate=${meetingDate}&officeId=${officeId}&staffId=${staffId}`
+    );
+  }
 }

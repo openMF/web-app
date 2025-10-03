@@ -23,10 +23,10 @@
         [routerLink]="['../', 'organization', 'bulk-import', 'Clients']"
         *mifosxHasPermission="'CREATE_CLIENT'"
       >
-        <fa-icon icon="download" class="m-r-10"></fa-icon>{{ 'labels.buttons.Import Client' | translate }}
+        <fa-icon icon="download" class="m-r-20"></fa-icon>{{ 'labels.buttons.Import Client' | translate }}
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CLIENT'">
-        <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Create Client' | translate }}
+        <fa-icon icon="plus" class="m-r-20"></fa-icon>{{ 'labels.buttons.Create Client' | translate }}
       </button>
     </div>
   </div>
@@ -35,7 +35,7 @@
     <div *ngIf="isLoading">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
-    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChanged($event)">
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChanged($event)" class="bordered-table">
       <!-- Name Column -->
       <ng-container matColumnDef="displayName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>

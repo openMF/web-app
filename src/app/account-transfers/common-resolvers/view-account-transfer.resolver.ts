@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { AccountTransfersService } from '@fineract/client';
 
 /**
  * View Account Transfer data resolver.
@@ -24,6 +24,6 @@ export class ViewAccountTransferResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const transferId = route.paramMap.get('transferid');
-    return this.accountTransfersService.getViewAccountTransferDetails(transferId);
+    return this.accountTransfersService.retrieveOne9({ transferId: Number(transferId) });
   }
 }

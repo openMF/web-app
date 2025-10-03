@@ -12,7 +12,7 @@ Mifos X Web App is a modern single-page application (SPA) built on top of the Mi
 
 ## Quick Links
 
-- [Live Demo](https://sandbox.mifos.community/#/login) (Updated nightly)
+- [Live Demo](https://sandbox.mifos.community/#/login) (Updated nightly ** System is restored every 6 hours **)
 - [GitHub Repository](https://github.com/openMF/web-app)
 - [Slack Channel](https://app.slack.com/client/T0F5GHE8Y/CJJGJLN10)
 - [Jira Board of Mifos](https://mifosforge.jira.com/jira/your-work)
@@ -185,10 +185,29 @@ Available languages:
 
 #### UI Display Settings
 
-| Variable                      | Description                           | Default Value |
-| ----------------------------- | ------------------------------------- | ------------- |
-| MIFOS_DISPLAY_TENANT_SELECTOR | Display tenant selector in Login view | true          |
-| MIFOS_DISPLAY_BACKEND_INFO    | Display backend info in footer        | true          |
+| Variable                           | Description                           | Default Value |
+| ---------------------------------- | ------------------------------------- | ------------- |
+| MIFOS_DISPLAY_TENANT_SELECTOR      | Display tenant selector in Login view | true          |
+| MIFOS_DISPLAY_BACKEND_INFO         | Display backend info in footer        | true          |
+| MIFOS_ALLOW_SERVER_SWITCH_SELECTOR | Display DNS server list               | true          |
+
+#### OAUTH Settings
+
+| Variable                   | Description                    | Default Value |
+| -------------------------- | ------------------------------ | ------------- |
+| MIFOS_OAUTH_SERVER_ENABLED | Enable the use of Oauth server | false         |
+| MIFOS_OAUTH_SERVER_URL     | Set the Oauth server URL       |               |
+| MIFOS_OAUTH_CLIENT_ID      | Set the Client Id              |               |
+
+#### OIDC Settings
+
+| Variable                          | Description                    | Default Value |
+| --------------------------------- | ------------------------------ | ------------- |
+| FINERACT_PLUGIN_OIDC_ENABLED      | Enable the use of Oidc server  | false         |
+| FINERACT_PLUGIN_OIDC_BASE_URL     | Set the Oidc server URL        |               |
+| FINERACT_PLUGIN_OIDC_CLIENT_ID    | Set the Client Id              |               |
+| FINERACT_PLUGIN_OIDC_API_URL      | Set the Client API URL         |               |
+| FINERACT_PLUGIN_OIDC_FRONTEND_URL | Set the Front End URL callback |               |
 
 For more detailed configuration options, refer to the `env.sample` file in the root directory of the project.
 

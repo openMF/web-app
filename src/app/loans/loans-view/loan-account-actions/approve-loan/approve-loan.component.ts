@@ -1,7 +1,7 @@
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
@@ -77,6 +77,19 @@ export class ApproveLoanComponent implements OnInit {
           expectedDisbursementDate: new Date(response.timeline.expectedDisbursementDate)
         });
       });
+
+    // Get delinquency data for available disbursement amount with over applied
+    this.loanService.retrieveLoan(this.loanId).subscribe((delinquencyData: any) => {
+      // Check if the field is at root level
+      if (delinquencyData.availableDisbursementAmountWithOverApplied !== undefined) {
+        this.loanData.availableDisbursementAmountWithOverApplied =
+          delinquencyData.availableDisbursementAmountWithOverApplied;
+      }
+      // Also check if it's in delinquent object
+      if (delinquencyData.delinquent) {
+        this.loanData.delinquent = delinquencyData.delinquent;
+      }
+    });
 
     // Get delinquency data for available disbursement amount with over applied
     this.loanService.retrieveLoan(this.loanId).subscribe((delinquencyData: any) => {

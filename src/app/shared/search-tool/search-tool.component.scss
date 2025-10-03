@@ -7,10 +7,12 @@
   }
 
   .resource {
-    max-width: 90px;
+    min-width: 100px;
+    max-width: 100px;
     width: 100%;
     font-size: 1rem;
     color: white;
+    padding-left: 5px;
   }
 }
 

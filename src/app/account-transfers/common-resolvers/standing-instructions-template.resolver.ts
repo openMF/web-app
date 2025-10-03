@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { StandingInstructionsService } from '@fineract/client';
 
 /**
  * View Standing Instructions resolver.
@@ -16,9 +16,9 @@ export class StandingInstructionsTemplateResolver {
   accountTypeId: string;
 
   /**
-   * @param {accountTransfersService} AccountTransfersService Account Transfers service.
+   * @param {StandingInstructionsService} StandingInstructionsService Standing Instructions service.
    */
-  constructor(private accountTransfersService: AccountTransfersService) {}
+  constructor(private standingInstructionsService: StandingInstructionsService) {}
 
   /**
    * Returns the Standing Instructions Data.
@@ -39,6 +39,10 @@ export class StandingInstructionsTemplateResolver {
       default:
         this.accountTypeId = '0';
     }
-    return this.accountTransfersService.getStandingInstructionsTemplate(clientId, officeId, this.accountTypeId);
+    return this.standingInstructionsService.template6({
+      toClientId: clientId ? Number(clientId) : undefined,
+      toOfficeId: officeId ? Number(officeId) : undefined,
+      toAccountType: this.accountTypeId ? Number(this.accountTypeId) : undefined
+    });
   }
 }

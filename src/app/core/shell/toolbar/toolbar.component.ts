@@ -41,6 +41,10 @@ import { NotificationsTrayComponent as NotificationsTrayComponent_1 } from '../.
 import { ThemeToggleComponent } from '../../../shared/theme-toggle/theme-toggle.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Environment Configuration and Zitadel*/
+import { environment } from '../../../../environments/environment';
+import { AuthService } from 'app/zitadel/auth.service';
+
 /**
  * Toolbar component.
  */
@@ -103,7 +107,8 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
     private popoverService: PopoverService,
     private configurationWizardService: ConfigurationWizardService,
     private dialog: MatDialog,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private authService: AuthService
   ) {}
 
   /**
@@ -140,10 +145,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    * Logs out the authenticated user and redirects to login page.
    */
   logout() {
-    this.authenticationService.logout().subscribe(() => {
-      this.notificationsTray.destroy();
-      this.router.navigate(['/login'], { replaceUrl: true });
-    });
+    if (!environment.OIDC.oidcServerEnabled) {
+      this.authenticationService.logout().subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+    } else {
+      this.authService.logout();
+    }
   }
 
   /**

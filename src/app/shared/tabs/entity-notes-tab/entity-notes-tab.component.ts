@@ -1,15 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ClientService } from '@fineract/client';
-import { GroupsService } from 'app/groups/groups.service';
-import { LoansService } from '@fineract/client';
+import { LoansService, GroupsService, ClientService } from '@fineract/client';
 import { SavingsService } from 'app/savings/savings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MatList, MatListItem } from '@angular/material/list';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -21,8 +18,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS,
     CdkTextareaAutosize,
     FaIconComponent,
-    MatList,
-    MatListItem,
     DateFormatPipe
   ]
 })

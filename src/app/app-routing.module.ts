@@ -4,11 +4,16 @@ import { Routes, RouterModule } from '@angular/router';
 
 // Not Found Component
 import { NotFoundComponent } from './not-found/not-found.component';
+import { CallbackComponent } from './zitadel/callback/callback.component';
 
 /**
  * Fallback to this route when no prior route is matched.
  */
 const routes: Routes = [
+  {
+    path: 'callback',
+    component: CallbackComponent
+  },
   {
     path: '**',
     component: NotFoundComponent

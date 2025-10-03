@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { GroupsService } from '../groups.service';
+import { GroupsService } from '@fineract/client';
 
 /**
  * GSIM Accounts data resolver.
@@ -24,7 +24,8 @@ export class GSIMAccountsResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const groupId = route.parent.paramMap.get('groupId');
-    return this.groupsService.getGSIMAccountsData(groupId);
+    const groupIdParam = route.parent.paramMap.get('groupId');
+    const groupId = groupIdParam ? Number(groupIdParam) : undefined;
+    return this.groupsService.retrieveGsimAccounts({ groupId: groupId as number });
   }
 }

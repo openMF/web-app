@@ -307,7 +307,9 @@
           {{ 'labels.inputs.Charges' | translate }}
         </a>
       </ng-container>
-      <ng-container *ngIf="loanDetailsData.status.active">
+      <ng-container
+        *ngIf="loanDetailsData.status.active || loanDetailsData.status.closed || loanDetailsData.status.overpaid"
+      >
         <a
           mat-tab-link
           [routerLink]="['./loan-reschedules']"

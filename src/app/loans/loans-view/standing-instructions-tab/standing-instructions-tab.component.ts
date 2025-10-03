@@ -18,7 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { StandingInstructionsService } from '@fineract/client';
-import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+import { AccountTransfersService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */
@@ -123,7 +123,9 @@ export class StandingInstructionsTabComponent implements OnInit {
     });
     deleteStandingInstructionDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {});
+        this.accountTransfersService.deleteStandingInstrucions(instructionId).subscribe(() => {
+          this.getStandingInstructions(); // Refresh the list after deletion
+        });
       }
     });
   }

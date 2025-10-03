@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -83,8 +83,14 @@ export class ActivateGroupComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.groupsService.executeGroupCommand(this.groupId, 'activate', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.groupsService
+      .activateOrGenerateCollectionSheet({
+        groupId: this.groupId,
+        command: 'activate',
+        ...data
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

@@ -18,7 +18,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { RecurringDepositsService } from 'app/deposits/recurring-deposits/recurring-deposits.service';
-import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+import { AccountTransfersService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */

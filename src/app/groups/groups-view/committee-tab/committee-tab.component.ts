@@ -19,7 +19,7 @@ import {
 import { UnassignRoleDialogComponent } from '../custom-dialogs/unassign-role-dialog/unassign-role-dialog.component';
 
 /** Custom Services */
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService } from '@fineract/client';
 import { MatTooltip } from '@angular/material/tooltip';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -94,7 +94,7 @@ export class CommitteeTabComponent {
         const clientIndex = this.groupRolesData.findIndex((client: any) => client.clientId === clientId);
         this.groupRolesData.splice(clientIndex, 1);
         this.rolesTableRef.renderRows();
-        this.groupsService.unAssignRoleCommand(this.groupViewData.id, roleId).subscribe(() => {});
+        this.groupsService.activateOrGenerateCollectionSheet(this.groupViewData.id, roleId).subscribe(() => {});
       }
     });
   }

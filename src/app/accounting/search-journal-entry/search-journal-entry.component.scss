@@ -1,7 +1,33 @@
 table {
   width: 100%;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 
   .select-row:hover {
     cursor: pointer;
   }
+}
+
+.filter-container {
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.table-container {
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }

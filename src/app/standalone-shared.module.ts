@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
 import { NgIf, NgFor } from '@angular/common';
 
 import { MatCard, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError, MatSuffix } from '@angular/material/form-field';
+import { MatFormField, MatLabel, MatError, MatSuffix, MatHint } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
@@ -33,6 +33,7 @@ export const STANDALONE_SHARED_IMPORTS = [
   MatLabel,
   MatError,
   MatSuffix,
+  MatHint,
   MatInput,
   MatSelect,
   MatOption,

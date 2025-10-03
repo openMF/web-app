@@ -1,0 +1,71 @@
+<mat-card class="container">
+  <form [formGroup]="collectionSheetForm" (ngSubmit)="previewCollectionSheet()">
+    <div class="layout-row-wrap gap-2percent responsive-column align-start-center">
+      <mat-form-field class="flex-98">
+        <mat-label>{{ 'labels.inputs.Branch Office' | translate }}</mat-label>
+        <mat-select formControlName="officeId" required>
+          <mat-option *ngFor="let office of officesData" [value]="office.id">
+            {{ office.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="collectionSheetForm.controls.officeId.hasError('required')">
+          {{ 'labels.inputs.Branch Office' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-98" (click)="meetingDatePicker.open()" *ngIf="officeId !== null">
+        <mat-label>{{ 'labels.inputs.Meeting Date' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="meetingDatePicker"
+          required
+          formControlName="meetingDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="meetingDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #meetingDatePicker></mat-datepicker>
+        <mat-error *ngIf="collectionSheetForm.controls.meetingDate.hasError('required')">
+          {{ 'labels.inputs.Meeting Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-98" *ngIf="officeId !== null">
+        <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
+        <mat-select formControlName="staffId">
+          <mat-option *ngFor="let loanOfficer of loanOfficerData" [value]="loanOfficer.id">
+            {{ loanOfficer.displayName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="flex-98" *ngIf="officeId !== null">
+        <mat-label>{{ 'labels.inputs.Group' | translate }}</mat-label>
+        <mat-select formControlName="groupId">
+          <mat-option *ngFor="let group of groupsData" [value]="group.id">
+            {{ group.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="flex-98" *ngIf="officeId !== null">
+        <mat-label>{{ 'labels.inputs.Center' | translate }}</mat-label>
+        <mat-select formControlName="centerId">
+          <mat-option *ngFor="let center of centersData" [value]="center.id">
+            {{ center.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+      <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
+      <button mat-raised-button color="primary" [disabled]="!collectionSheetForm.valid">
+        <fa-icon icon="download" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Productive Collection Sheet' | translate }}
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

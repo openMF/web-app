@@ -11,7 +11,7 @@ import { merge } from 'rxjs';
 import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 /** Custom Services */
-import { GroupsService } from './groups.service';
+import { GroupsService } from '@fineract/client';
 
 /** Custom Data Source */
 import { GroupsDataSource } from './groups.datasource';

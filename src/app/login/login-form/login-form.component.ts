@@ -15,6 +15,10 @@ import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+/** Custom Service Zitadel */
+import { AuthService } from '../../zitadel/auth.service';
+import { environment } from '../../../environments/environment';
+
 /**
  * Login form component.
  */
@@ -27,7 +31,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatPrefix,
     FaIconComponent,
     MatIconButton,
-    MatCheckbox,
     MatProgressBar,
     MatProgressSpinner
   ]
@@ -39,6 +42,9 @@ export class LoginFormComponent implements OnInit {
   passwordInputType: string = 'password';
   /** True if loading. */
   loading = false;
+  oidcServerEnabled = environment.OIDC.oidcServerEnabled;
+  /** Whether remember me functionality is enabled */
+  enableRememberMe = environment.enableRememberMe === true;
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
@@ -46,7 +52,8 @@ export class LoginFormComponent implements OnInit {
    */
   constructor(
     private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private authService: AuthService
   ) {}
 
   /**
@@ -76,6 +83,22 @@ export class LoginFormComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  /**
+   * Authenticates the user if the credentials are valid to Zitadel.
+   */
+
+  loginOIDC() {
+    this.authService.login();
+  }
+
+  getUsers() {
+    this.authService.getUsers();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   /**

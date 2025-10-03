@@ -702,6 +702,21 @@ export class OrganizationService {
     return this.http.put(`/funds/${fundId}`, fundData);
   }
 
+  getStaffs(officeId: any): Observable<any> {
+    const httpParams = new HttpParams().set('officeId', officeId).set('status', 'all');
+    return this.http.get(`/staff`, { params: httpParams });
+  }
+
+  getCenters(officeId: any): Observable<any> {
+    const httpParams = new HttpParams().set('officeId', officeId).set('status', 'all');
+    return this.http.get(`/centers`, { params: httpParams });
+  }
+
+  getGroups(officeId: any): Observable<any> {
+    const httpParams = new HttpParams().set('officeId', officeId).set('status', 'all');
+    return this.http.get(`/groups`, { params: httpParams });
+  }
+
   /*
    * @param {any} officeId ID of office to retrieve staff from.
    * @returns {Observable<any>} Staff data.

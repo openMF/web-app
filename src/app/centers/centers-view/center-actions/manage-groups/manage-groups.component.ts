@@ -8,7 +8,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 
 /** Custom Services */
 import { CentersService } from 'app/centers/centers.service';
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService } from '@fineract/client';
 import { MatDialog } from '@angular/material/dialog';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { MatIconButton } from '@angular/material/button';
@@ -68,7 +68,12 @@ export class ManageGroupsComponent implements AfterViewInit {
     this.groupChoice.valueChanges.subscribe((value: string) => {
       if (value.length >= 2) {
         this.groupsService
-          .getFilteredGroups('name', 'ASC', value, this.centerData.officeId, 'true')
+          .retrieveAll24({
+            orderBy: 'name',
+            sortOrder: 'ASC',
+            name: value,
+            officeId: this.centerData.officeId
+          })
           .subscribe((data: any) => {
             this.groupsData = data;
           });

@@ -6,7 +6,7 @@
     ><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon
   ></span>
   <span class="m-l-5" *ngIf="!completed" (click)="showValue()">{{ externalId | externalIdentifier }}</span>
-  <span class="m-l-5" *ngIf="completed" (click)="showValue()">{{ externalId }}</span>
+  <span *ngIf="completed" (click)="showValue()">{{ externalId }}</span>
   <span class="m-l-5" *ngIf="displayR && !completed && iconVisible && isLongValue()" (click)="showValue()"
     ><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon
   ></span>

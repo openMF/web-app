@@ -53,6 +53,7 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { dataTableEntity: any }) => {
       this.createEntityData = data.dataTableEntity;
+      // hardcoded, because data.dataTableEntity.entities might change anytime its order
       this.entityTypes = [
         { name: 'Client', value: this.createEntityData.entityTypes[0] },
         { name: 'Loan', value: this.createEntityData.entityTypes[1] },

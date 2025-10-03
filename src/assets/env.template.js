@@ -20,6 +20,9 @@
   // Char delimiter to Export CSV options: ',' ';' '|' ' '
   window['env']['defaultCharDelimiter'] = '$MIFOS_DEFAULT_CHAR_DELIMITER';
 
+  // Display or not the Server Selector
+  window['env']['allowServerSwitch'] = '$MIFOS_ALLOW_SERVER_SWITCH_SELECTOR';
+
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '$MIFOS_DISPLAY_BACKEND_INFO';
 
@@ -54,4 +57,11 @@
   window['env']['vNextApiProvider'] = '$VNEXT_API_PROVIDER';
   window['env']['vNextApiVersion'] = '$VNEXT_API_VERSION';
   window['env']['interbankTransfers'] = '$VNEXT_INTERBANK_TRANSFERS';
+
+  // OIDC Plugin Environment variables
+  window['env']['oidcServerEnabled'] = '$FINERACT_PLUGIN_OIDC_ENABLED';
+  window['env']['oidcBaseUrl'] = '$FINERACT_PLUGIN_OIDC_BASE_URL';
+  window['env']['oidcClientId'] = '$FINERACT_PLUGIN_OIDC_CLIENT_ID';
+  window['env']['oidcApiUrl'] = '$FINERACT_PLUGIN_OIDC_API_URL';
+  window['env']['oidcFrontUrl'] = '$FINERACT_PLUGIN_OIDC_FRONTEND_URL';
 })(this);

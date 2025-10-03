@@ -19,7 +19,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { AccountTransfersService } from '../account-transfers.service';
+import { StandingInstructionsService } from '@fineract/client';
+import { AccountTransfersService } from 'app/customApis.service';
 
 /** Dialog Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -101,12 +102,14 @@ export class ListStandingInstructionsComponent {
    * Retrieves Standing Instructions Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} route Mat Dialog
+   * @param {AccountTransfersService} accountTransfersService Accounts Transfer Service
    * @param {SettingsService} settingsService Settings Service
-   * @param {AccountTransfersService} accountTransfersService Account Transfers Service
+   * @param {StandingInstructionsService} standingInstructionsService Standing Instructions Service
    */
   constructor(
     private route: ActivatedRoute,
     private accountTransfersService: AccountTransfersService,
+    private standingInstructionsService: StandingInstructionsService,
     private settingsService: SettingsService,
     private dialog: MatDialog
   ) {
@@ -153,11 +156,11 @@ export class ListStandingInstructionsComponent {
       dateFormat,
       limit: 14,
       offset: 0,
-      fromAccountType: this.accountTypeId,
+      fromAccountType: Number(this.accountTypeId),
       fromAccountId: this.fromAccountId.value,
       fromTransferType: this.transferType.value
     };
-    this.accountTransfersService.getStandingInstructions(searchData).subscribe((response: any) => {
+    this.standingInstructionsService.retrieveAll19(searchData).subscribe((response: any) => {
       this.instructionsData = response.pageItems;
       this.dataSource.data = this.instructionsData;
       this.instructionTableRef.renderRows();

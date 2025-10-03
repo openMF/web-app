@@ -1,0 +1,125 @@
+<div class="container">
+  <mat-card>
+    <form *ngIf="editUserForm" [formGroup]="editUserForm" (ngSubmit)="submit()">
+      <mat-card-content>
+        <div class="layout-row-wrap gap-2px responsive-column">
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Username' | translate }}</mat-label>
+            <input matInput required formControlName="username" readonline />
+            <mat-error *ngIf="editUserForm.controls.username.hasError('required')">
+              {{ 'labels.inputs.Username' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Email' | translate }}</mat-label>
+            <input matInput required formControlName="email" />
+            <mat-error *ngIf="editUserForm.controls.email.hasError('email')">
+              {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.invalid' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="editUserForm.controls.email.hasError('required')">
+              {{ 'labels.inputs.Email' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+            <input matInput required formControlName="firstname" />
+            <mat-error *ngIf="editUserForm.controls.firstname.hasError('pattern')">
+              {{ 'labels.inputs.First Name' | translate }}
+              <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="editUserForm.controls.firstname.hasError('required')">
+              {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+            <input matInput required formControlName="lastname" />
+            <mat-error *ngIf="editUserForm.controls.lastname.hasError('pattern')">
+              {{ 'labels.inputs.Last Name' | translate }}
+              <strong>{{ 'labels.commons.cannot begin with a special character or number' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="editUserForm.controls.lastname.hasError('required')">
+              {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="flex-20">
+            <mat-label>{{ 'labels.inputs.Code' | translate }}</mat-label>
+            <mat-select formControlName="countryCode" required>
+              <mat-option *ngFor="let country of countryCodes" [value]="country.code">
+                {{ 'countries.' + country.key | translate }} ({{ country.code }})
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="flex-75">
+            <mat-label>{{ 'labels.inputs.Phone Number' | translate }}</mat-label>
+            <input matInput formControlName="phoneNumber" required maxlength="12" minlength="4" />
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
+            <mat-select formControlName="gender" required>
+              <mat-option value="GENDER_MALE">{{ 'labels.catalogs.male' | translate }}</mat-option>
+              <mat-option value="GENDER_FEMALE">{{ 'labels.catalogs.female' | translate }}</mat-option>
+              <mat-option value="GENDER_OTHER">{{ 'labels.catalogs.other' | translate }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Language' | translate }}</mat-label>
+            <mat-select formControlName="preferredLanguage" required>
+              <mat-option *ngFor="let lang of languageCodes" [value]="lang.code">
+                {{ 'languages.' + lang.key | translate }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
+            <mat-select required formControlName="officeId" (selectionChange)="officeChanged($event.value)">
+              <mat-option *ngFor="let office of officesData" [value]="office.id">
+                {{ office.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
+            <mat-select formControlName="staffId">
+              <mat-option *ngFor="let staff of staffData" [value]="staff.id">
+                {{ staff.displayName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="flex-48">
+            <mat-label>{{ 'labels.inputs.Roles' | translate }}</mat-label>
+            <mat-select formControlName="roles" multiple>
+              <mat-option *ngFor="let rol of rolesData" [value]="rol.id">
+                {{ rol.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+            <button type="button" mat-raised-button [routerLink]="['../']">
+              {{ 'labels.buttons.Cancel' | translate }}
+            </button>
+            <button mat-raised-button color="primary">
+              {{ 'labels.buttons.Submit' | translate }}
+            </button>
+          </mat-card-actions>
+        </div>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>

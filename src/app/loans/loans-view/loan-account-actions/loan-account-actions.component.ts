@@ -30,6 +30,7 @@ import { AssetTransferLoanComponent } from './asset-transfer-loan/asset-transfer
 import { LoanReagingComponent } from './loan-reaging/loan-reaging.component';
 import { LoanReamortizeComponent } from './loan-reamortize/loan-reamortize.component';
 import { AddInterestPauseComponent } from './add-interest-pause/add-interest-pause.component';
+import { UndoWriteOffComponent } from './undo-write-off/undo-write-off.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -69,7 +70,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     AssetTransferLoanComponent,
     LoanReagingComponent,
     LoanReamortizeComponent,
-    AddInterestPauseComponent
+    AddInterestPauseComponent,
+    UndoWriteOffComponent
   ]
 })
 export class LoanAccountActionsComponent {
@@ -116,6 +118,7 @@ export class LoanAccountActionsComponent {
     'Capitalized Income': boolean;
     'Contract Termination': boolean;
     'Buy Down Fee': boolean;
+    'Undo Write-off': boolean;
   } = {
     Close: false,
     'Undo Approval': false,
@@ -154,7 +157,8 @@ export class LoanAccountActionsComponent {
     'Add Interest Pause': false,
     'Capitalized Income': false,
     'Contract Termination': false,
-    'Buy Down Fee': false
+    'Buy Down Fee': false,
+    'Undo Write-off': false
   };
 
   actionButtonData: any;

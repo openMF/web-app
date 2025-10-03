@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { GroupsService } from '../../groups.service';
+import { GroupsService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -72,7 +72,11 @@ export class AddRoleComponent implements OnInit {
    */
   submit() {
     this.groupsService
-      .executeGroupCommand(this.groupAndTemplateData.id, 'assignRole', this.groupsAddRoleForm.value)
+      .activateOrGenerateCollectionSheet({
+        groupId: this.groupAndTemplateData.id,
+        command: 'assignRole',
+        ...this.groupsAddRoleForm.value
+      })
       .subscribe(() => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

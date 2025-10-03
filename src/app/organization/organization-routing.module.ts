@@ -52,7 +52,7 @@ import { ViewBulkImportComponent } from './bulk-import/view-bulk-import/view-bul
 import { ViewLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/view-loan-provisioning-criteria/view-loan-provisioning-criteria.component';
 import { CreateCampaignComponent } from './sms-campaigns/create-campaign/create-campaign.component';
 import { EditCampaignComponent } from './sms-campaigns/edit-campaign/edit-campaign.component';
-import { CreateEntityDataTableChecksComponent } from './entity-data-table-checks/create-enity-data-table-checks/create-enity-data-table-checks.component';
+import { CreateEntityDataTableChecksComponent } from './entity-data-table-checks/create-entity-data-table-checks/create-entity-data-table-checks.component';
 import { CreateLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/create-loan-provisioning-criteria/create-loan-provisioning-criteria.component';
 import { BulkLoanReassignmnetComponent } from './bulk-loan-reassignmnet/bulk-loan-reassignmnet.component';
 import { EditLoanProvisioningCriteriaComponent } from './loan-provisioning-criteria/edit-loan-provisioning-criteria/edit-loan-provisioning-criteria.component';

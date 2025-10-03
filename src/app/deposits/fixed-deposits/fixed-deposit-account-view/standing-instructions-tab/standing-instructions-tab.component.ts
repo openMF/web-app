@@ -18,7 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 
 /** Custom Services */
 import { FixedDepositsService } from 'app/deposits/fixed-deposits/fixed-deposits.service';
-import { AccountTransfersService } from 'app/account-transfers/account-transfers.service';
+import { AccountTransfersService } from 'app/customApis.service';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Dialog Components */

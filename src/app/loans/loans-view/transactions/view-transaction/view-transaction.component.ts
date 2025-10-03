@@ -202,6 +202,10 @@ export class ViewTransactionComponent implements OnInit {
     return true;
   }
 
+  isWriteOff(transactionType: LoanTransactionType): boolean {
+    return transactionType.writeOff || transactionType.code === 'loanTransactionType.writeOff';
+  }
+
   /**
    * Undo the loans transaction
    */

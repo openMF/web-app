@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { GroupsService } from 'app/groups/groups.service';
+import { GroupsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -89,10 +89,17 @@ export class CloseGroupComponent implements OnInit {
     const data = {
       ...closeGroupFormData,
       dateFormat,
-      locale
+      locale,
+      command: 'close'
     };
-    this.groupsService.executeGroupCommand(this.groupId, 'close', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.groupsService
+      .activateOrGenerateCollectionSheet({
+        groupId: this.groupId,
+        command: 'close',
+        ...data
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }
