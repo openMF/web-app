@@ -2,63 +2,62 @@
   <mat-card>
     <form #dataTableFormRef [formGroup]="dataTableForm" (ngSubmit)="submit()">
       <mat-card-content>
-        <div class="layout-row-wrap gap-2px responsive-column">
-          <mat-form-field class="flex-40">
-            <mat-label>{{ 'labels.inputs.Data Table Name' | translate }}</mat-label>
-            <input matInput required formControlName="datatableName" />
-            <mat-error *ngIf="dataTableForm.controls.datatableName.hasError('required')">
-              {{ 'labels.inputs.Data Table Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+        <mat-card class="first-box">
+          <div class="layout-row-wrap gap-2px responsive-column">
+            <mat-form-field class="flex-40">
+              <mat-label>{{ 'labels.inputs.Data Table Name' | translate }}</mat-label>
+              <input matInput required formControlName="datatableName" />
+              <mat-error *ngIf="dataTableForm.controls.datatableName.hasError('required')">
+                {{ 'labels.inputs.Data Table Name' | translate }}
+                {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            </mat-form-field>
 
-          <mat-form-field class="flex-fill flex-20">
-            <mat-label>{{ 'labels.inputs.Entity Type' | translate }}</mat-label>
-            <mat-select required formControlName="apptableName">
-              <mat-option *ngFor="let appTable of appTableData" [value]="appTable.value">
-                {{ appTable.displayValue | translateKey: 'inputs' }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="dataTableForm.controls.apptableName.hasError('required')">
-              {{ 'labels.inputs.Application Table Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+            <mat-form-field class="flex-fill flex-20">
+              <mat-label>{{ 'labels.inputs.Entity Type' | translate }}</mat-label>
+              <mat-select required formControlName="apptableName">
+                <mat-option *ngFor="let appTable of appTableData" [value]="appTable.value">
+                  {{ appTable.displayValue | translateKey: 'inputs' }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field class="flex-fill flex-20" *ngIf="showEntitySubType">
-            <mat-label>{{ 'labels.inputs.Entity SubType' | translate }}</mat-label>
-            <mat-select formControlName="entitySubType">
-              <mat-option *ngFor="let entitySubType of entitySubTypeData" [value]="entitySubType.value">
-                {{ entitySubType.displayValue | translateKey: 'inputs' }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+            <mat-form-field class="flex-fill flex-20" *ngIf="showEntitySubType">
+              <mat-label>{{ 'labels.inputs.Entity SubType' | translate }}</mat-label>
+              <mat-select formControlName="entitySubType">
+                <mat-option *ngFor="let entitySubType of entitySubTypeData" [value]="entitySubType.value">
+                  {{ entitySubType.displayValue | translateKey: 'inputs' }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field class="flex-fill flex-20" *ngIf="showSavingsSubType">
-            <mat-label>{{ 'labels.inputs.Savings SubType' | translate }}</mat-label>
-            <mat-select formControlName="entitySubType">
-              <mat-option *ngFor="let savingsSubType of savingsSubTypeData" [value]="savingsSubType.value">
-                {{ savingsSubType.displayValue | translateKey: 'inputs' }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+            <mat-form-field class="flex-fill flex-20" *ngIf="showSavingsSubType">
+              <mat-label>{{ 'labels.inputs.Savings SubType' | translate }}</mat-label>
+              <mat-select formControlName="entitySubType">
+                <mat-option *ngFor="let savingsSubType of savingsSubTypeData" [value]="savingsSubType.value">
+                  {{ savingsSubType.displayValue | translateKey: 'inputs' }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <div class="multi-row-wrapper flex-14">
-            <mat-checkbox labelPosition="before" formControlName="multiRow" class="multi-row">{{
-              'labels.inputs.Multi Row' | translate
-            }}</mat-checkbox>
+            <div class="multi-row-wrapper flex-14">
+              <mat-checkbox labelPosition="before" formControlName="multiRow" class="multi-row">
+                {{ 'labels.inputs.Multi Row' | translate }}
+              </mat-checkbox>
+            </div>
           </div>
-        </div>
-        <br />
 
-        <div class="layout-row-wrap gap-60percent layout-lt-md-column">
-          <p class="mat-title flex-20">{{ 'labels.inputs.Columns' | translate }}</p>
+          <br />
 
-          <button mat-raised-button class="flex-20" type="button" color="primary" (click)="addColumn()">
-            <fa-icon icon="plus" class="m-r-10"></fa-icon>
-            {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Columns' | translate }}
-          </button>
-        </div>
+          <div class="layout-row-wrap gap-60percent layout-lt-md-column">
+            <p class="mat-title flex-20">{{ 'labels.inputs.Columns' | translate }}</p>
+            <button mat-raised-button class="flex-20" type="button" color="primary" (click)="addColumn()">
+              <fa-icon icon="plus" class="m-r-10"></fa-icon>
+              {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Columns' | translate }}
+            </button>
+          </div>
+        </mat-card>
 
         <br />
 
@@ -134,7 +133,7 @@
                 size="lg"
                 class="not-column-mandatory"
                 matTooltip="{{ 'tooltips.No' | translate }}"
-                unique="right"
+                matTooltipPosition="right"
               ></fa-icon>
             </td>
           </ng-container>
@@ -175,6 +174,7 @@
             </td>
           </ng-container>
 
+          <!-- Rows -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
@@ -193,27 +193,3 @@
     </form>
   </mat-card>
 </div>
-
-<ng-template #templateDataTableFormRef let-popover="popover">
-  <h2>{{ 'labels.buttons.Create Datatable' | translate }}</h2>
-  <p class="mw400">
-    {{ 'labels.text.Filling Details' | translate }}
-    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/52592760/Manage+Data+Tables" target="_blank">{{
-      'labels.inputs.Manage Datatables' | translate
-    }}</a>
-  </p>
-  <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button mat-raised-button color="primary" (click)="popover.close()">
-      {{ 'labels.buttons.Create Datatable' | translate }}
-    </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
-</ng-template>
