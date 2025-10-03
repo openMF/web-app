@@ -22,7 +22,7 @@ import {
 import { FlatTreeControl } from '@angular/cdk/tree';
 
 /** Custom Services. */
-import { OrganizationService } from 'app/organization/organization.service';
+import { HolidaysService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { OfficeItemNode } from './office-item.class';
 import { OfficeItemFlatNode } from './office-flat-item.class';
@@ -98,14 +98,14 @@ export class CreateHolidayComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {HolidaysService} holidaysService Holidays Service.
    * @param {Router} router Router.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private dateUtils: Dates,
-    private organizationService: OrganizationService,
+    private holidaysService: HolidaysService,
     private settings: SettingsService,
     private router: Router,
     private _database: ChecklistDatabase,
@@ -347,7 +347,7 @@ export class CreateHolidayComponent implements OnInit {
       locale,
       offices
     };
-    this.organizationService.createHoliday(data).subscribe((response: any) => {
+    this.holidaysService.createNewHoliday(data).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { AdhocQueryApiService } from '@fineract/client';
 
 /**
  * Adhoc Query data resolver.
@@ -14,9 +14,9 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Injectable()
 export class AdhocQueryResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {AdhocQueryApiService} adhocQueryApiService Adhoc Query API service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private adhocQueryApiService: AdhocQueryApiService) {}
 
   /**
    * Returns the adhoc query data.
@@ -24,6 +24,8 @@ export class AdhocQueryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const adhocQueryId = route.paramMap.get('id');
-    return this.organizationService.getAdhocQuery(adhocQueryId);
+    return this.adhocQueryApiService.retrieveAdHocQuery({
+      adHocId: Number(adhocQueryId)
+    });
   }
 }

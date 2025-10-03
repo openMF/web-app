@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 
 /**
  * Tellers data resolver.
@@ -15,13 +15,13 @@ export class TellersResolver {
   /**
    * @param {OrganizationService} organizationService Organization service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private tellerCashManagementService: TellerCashManagementService) {}
 
   /**
    * Returns the Tellers data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getTellers();
+    return this.tellerCashManagementService.getTellerData();
   }
 }

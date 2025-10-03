@@ -11,7 +11,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
-import { OrganizationService } from 'app/organization/organization.service';
+import { HolidaysService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -45,14 +45,14 @@ export class EditHolidayComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
-   * @param {OrganizationService} organizatioService Organization Service.
+   * @param {HolidaysService} holidaysService Holidays Service.
    * @param {Router} router Router.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private dateUtils: Dates,
-    private organizatioService: OrganizationService,
+    private holidaysService: HolidaysService,
     private settingsService: SettingsService,
     private router: Router
   ) {
@@ -152,7 +152,7 @@ export class EditHolidayComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizatioService.updateHoliday(this.holidayData.id, data).subscribe((response) => {
+    this.holidaysService.update6(this.holidayData.id, data).subscribe((response) => {
       /** TODO Add Redirects to ViewMakerCheckerTask page. */
       this.router.navigate(['../'], { relativeTo: this.route });
     });

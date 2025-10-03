@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { AdhocQueryApiService } from '@fineract/client';
 
 /**
  * Adhoc Queries data resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../../organization.service';
 @Injectable()
 export class AdhocQueriesResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {AdhocQueryApiService} adhocQueryApiService Adhoc Query API service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private adhocQueryApiService: AdhocQueryApiService) {}
 
   /**
    * Returns the adhoc queries data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getAdhocQueries();
+    return this.adhocQueryApiService.retrieveAll2();
   }
 }

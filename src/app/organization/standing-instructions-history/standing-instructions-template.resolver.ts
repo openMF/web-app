@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { StandingInstructionsService } from '@fineract/client';
 
 /**
  * Standing Instructions Template resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class StandingInstructionsTemplateResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {StandingInstructionsService} standingInstructionsService Standing Instructions service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private standingInstructionsService: StandingInstructionsService) {}
 
   /**
    * Returns the Standing Instruction template.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getStandingInstructionTemplate();
+    return this.standingInstructionsService.template6();
   }
 }

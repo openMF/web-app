@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { PasswordPreferencesService } from '@fineract/client';
 import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -30,13 +30,13 @@ export class PasswordPreferencesComponent implements OnInit {
   /**
    * Retrieves the password preferences data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {PasswordPreferencesService} passwordPreferencesService Password Preferences Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private passwordPreferencesService: PasswordPreferencesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -79,7 +79,7 @@ export class PasswordPreferencesComponent implements OnInit {
    */
   submit() {
     const passwordPreferences = this.passwordPreferencesForm.value;
-    this.organizationService.updatePasswordPreferences(passwordPreferences).subscribe((response: any) => {
+    this.passwordPreferencesService.update25(passwordPreferences).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { HolidaysService } from '@fineract/client';
 
 /**
  * Holiday data template resolver.
@@ -14,15 +14,15 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Injectable()
 export class HolidayTemplateResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {HolidaysService} holidaysService Holidays service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private holidaysService: HolidaysService) {}
 
   /**
    * Returns the holiday data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getHolidayTemplate();
+    return this.holidaysService.retrieveRepaymentScheduleUpdationTyeOptions();
   }
 }

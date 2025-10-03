@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { OrganizationService } from '../organization.service';
+import { BulkLoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -52,14 +52,14 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * Get Office data from `resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {OrganizationService} organizationSevice Organization Service.
+   * @param {BulkLoansService} bulkLoansService Bulk Loans Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
-    private organizationSevice: OrganizationService,
+    private bulkLoansService: BulkLoansService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private router: Router
@@ -95,7 +95,8 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param officeId Office Id.
    */
   getOffice(officeId: string) {
-    this.organizationSevice.getOfficeTemplate(officeId).subscribe((response: any) => {
+    const params = { officeId: Number(officeId) };
+    this.bulkLoansService.loanReassignmentTemplate(params).subscribe((response: any) => {
       this.officeTemplate = response;
       this.fromLoanOfficers = this.officeTemplate.loanOfficerOptions;
       this.bulkLoanForm.addControl('fromLoanOfficerId', new UntypedFormControl('', Validators.required));
@@ -108,7 +109,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    */
   getFromOfficers(officerId: any) {
     this.toLoanOfficers = this.fromLoanOfficers.filter((officer: any) => officer.id !== officerId);
-    this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.id).subscribe((response: any) => {
+    this.bulkLoansService.loanReassignmentTemplate(officerId, this.officeTemplate.id).subscribe((response: any) => {
       this.officerTemplate = response;
     });
   }
@@ -145,7 +146,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
       locale
     };
     data.loans = this.loans;
-    this.organizationSevice.createLoanReassignment(data).subscribe((response: any) => {
+    this.bulkLoansService.loanReassignment(data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

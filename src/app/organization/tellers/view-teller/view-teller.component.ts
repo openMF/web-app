@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
@@ -33,13 +33,13 @@ export class ViewTellerComponent {
 
   /**
    * Retrieves the Teller data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management Service .
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
-    private organizationService: OrganizationService,
+    private tellerCashManagementService: TellerCashManagementService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog
@@ -58,7 +58,7 @@ export class ViewTellerComponent {
     });
     deleteTellerDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteTeller(this.tellerData.id).subscribe(() => {
+        this.tellerCashManagementService.deleteTeller(this.tellerData.id).subscribe(() => {
           this.router.navigate(['/organization/tellers']);
         });
       }

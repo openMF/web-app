@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { PaymentTypeService } from '@fineract/client';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -31,13 +31,13 @@ export class EditPaymentTypeComponent implements OnInit {
   /**
    * Retrieves the payment type data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {PaymentTypeService} paymentTypeService Payment Type Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private paymentTypeService: PaymentTypeService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -77,7 +77,7 @@ export class EditPaymentTypeComponent implements OnInit {
    */
   submit() {
     const paymentType = this.paymentTypeForm.value;
-    this.organizationService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe((response) => {
+    this.paymentTypeService.updatePaymentType(this.paymentTypeData.id, paymentType).subscribe((response) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }

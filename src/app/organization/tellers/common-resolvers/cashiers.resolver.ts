@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 
 /**
  * Cashiers data resolver.
@@ -14,16 +14,16 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Injectable()
 export class CashiersResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private tellerCashManagementService: TellerCashManagementService) {}
 
   /**
    * Returns the cashiers data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const tellerId = route.parent.paramMap.get('id');
-    return this.organizationService.getCashiers(tellerId);
+    const tellerId = Number(route.parent.paramMap.get('id'));
+    return this.tellerCashManagementService.getCashierData1({ tellerId });
   }
 }

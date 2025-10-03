@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { AdhocQueryApiService } from '@fineract/client';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -37,13 +37,13 @@ export class EditAdhocQueryComponent implements OnInit {
   /**
    * Retrieves the adhoc query template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {AdhocQueryApiService} adhocQueryApiService Adhoc Query API Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private adhocQueryApiService: AdhocQueryApiService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -116,8 +116,8 @@ export class EditAdhocQueryComponent implements OnInit {
    * if successful redirects to view adhoc query.
    */
   submit() {
-    this.organizationService
-      .updateAdhocQuery(this.adhocQueryTemplateData.id, this.editAdhocQueryForm.value)
+    this.adhocQueryApiService
+      .deleteAdHocQuery(this.adhocQueryTemplateData.id, this.editAdhocQueryForm.value)
       .subscribe(() => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

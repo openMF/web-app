@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { StaffService } from '@fineract/client';
 
 /**
  * Employees data resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class EmployeesResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {StaffService} staffService Staff service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private staffService: StaffService) {}
 
   /**
    * Returns the employees data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getEmployees();
+    return this.staffService.retrieveAll16();
   }
 }

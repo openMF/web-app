@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { SearchAPIService } from '@fineract/client';
 
 /**
  * Advance Search Template resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class AdvanceSearchTemplateResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {SearchAPIService} searchAPIService Search API service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private searchAPIService: SearchAPIService) {}
 
   /**
    * Returns the Advance Search template.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getAdvanceSearchTemplate();
+    return this.searchAPIService.retrieveAdHocSearchQueryTemplate();
   }
 }

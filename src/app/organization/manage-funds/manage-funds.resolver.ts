@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { FundsService } from '@fineract/client';
 
 /**
  * Manage Funds data resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class ManageFundsResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {FundsService} fundsService Funds service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private fundsService: FundsService) {}
 
   /**
    * Returns the manage funds data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getFunds();
+    return this.fundsService.retrieveFunds();
   }
 }

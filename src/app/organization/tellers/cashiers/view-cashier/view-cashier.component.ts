@@ -7,7 +7,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -33,13 +33,13 @@ export class ViewCashierComponent {
    * Get cashier data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router
-   * @param {OrganizationService} organizationService Organization Service
+   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management Service
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private organizationService: OrganizationService,
+    private tellerCashManagementService: TellerCashManagementService,
     public dialog: MatDialog
   ) {
     this.route.data.subscribe((data: { cashier: any }) => {
@@ -56,7 +56,7 @@ export class ViewCashierComponent {
     });
     deleteCashierDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteCashier(this.cashierData.tellerId, this.cashierData.id).subscribe(() => {
+        this.tellerCashManagementService.deleteCashier(this.cashierData.tellerId, this.cashierData.id).subscribe(() => {
           this.router.navigate(['../'], { relativeTo: this.route });
         });
       }

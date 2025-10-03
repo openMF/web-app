@@ -19,7 +19,11 @@ import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, ReactiveForms
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import {
+  StandingInstructionHistoryData,
+  StandingInstructionsHistoryService,
+  StandingInstructionsService
+} from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -88,7 +92,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
   /**
    * Retrieves the instructions template from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {StandingInstructionsHistoryService} standingInstructionsHistoryService Standing Instructions History Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -96,7 +100,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private standingHistoryService: StandingInstructionsHistoryService,
     private settingsService: SettingsService,
     private router: Router,
     private route: ActivatedRoute,
@@ -167,7 +171,7 @@ export class StandingInstructionsHistoryComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.getStandingInstructions(data).subscribe((response: any) => {
+    this.standingHistoryService.retrieveAll20(data).subscribe((response: any) => {
       this.setInstructions(response.pageItems);
     });
   }

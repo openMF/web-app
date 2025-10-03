@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { HolidaysService } from '@fineract/client';
 
 /**
  * Holiday data resolver.
@@ -14,9 +14,9 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Injectable()
 export class HolidayResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {HolidaysService} holidaysService Holidays service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private holidaysService: HolidaysService) {}
 
   /**
    * Returns the holiday data.
@@ -24,6 +24,6 @@ export class HolidayResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const holidayId = route.paramMap.get('id');
-    return this.organizationService.getHoliday(holidayId);
+    return this.holidaysService.retrieveAllHolidays({ officeId: holidayId ? Number(holidayId) : undefined });
   }
 }

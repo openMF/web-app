@@ -19,7 +19,6 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { MatIcon } from '@angular/material/icon';
 
 /**
  * Disburse Loan Option
@@ -33,8 +32,7 @@ import { MatIcon } from '@angular/material/icon';
     InputAmountComponent,
     MatSlideToggle,
     CdkTextareaAutosize,
-    FormatNumberPipe,
-    MatIcon
+    FormatNumberPipe
   ]
 })
 export class DisburseComponent implements OnInit {

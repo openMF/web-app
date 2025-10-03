@@ -10,21 +10,21 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { OrganizationService } from 'app/organization/organization.service';
+import { EntityDataTableService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
  * Create Entity Data Table Checks component.
  */
 @Component({
-  selector: 'mifosx-create-enity-data-table-checks',
-  templateUrl: './create-enity-data-table-checks.component.html',
-  styleUrls: ['./create-enity-data-table-checks.component.scss'],
+  selector: 'mifosx-create-entity-data-table-checks',
+  templateUrl: './create-entity-data-table-checks.component.html',
+  styleUrls: ['./create-entity-data-table-checks.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS
   ]
 })
-export class CreateEnityDataTableChecksComponent implements OnInit {
+export class CreateEntityDataTableChecksComponent implements OnInit {
   /** Create Entity Datatable Checks form. */
   createEntityForm: UntypedFormGroup;
   /** Entity Datatable Checks data. */
@@ -42,22 +42,22 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
    * Retrieves Entity Datatable Checks data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {EntityDataTableService} entityDataTableService Entity Data Table Service.
    * @param {Router} router Router.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
-    private organizationService: OrganizationService,
+    private entityDataTableService: EntityDataTableService,
     private router: Router
   ) {
     this.route.data.subscribe((data: { dataTableEntity: any }) => {
       this.createEntityData = data.dataTableEntity;
       this.entityTypes = [
-        { name: 'Client', value: this.createEntityData.entities[0] },
-        { name: 'Loan', value: this.createEntityData.entities[1] },
-        { name: 'Group', value: this.createEntityData.entities[2] },
-        { name: 'Savings Account', value: this.createEntityData.entities[3] }
+        { name: 'Client', value: this.createEntityData.entityTypes[0] },
+        { name: 'Loan', value: this.createEntityData.entityTypes[1] },
+        { name: 'Group', value: this.createEntityData.entityTypes[2] },
+        { name: 'Savings Account', value: this.createEntityData.entityTypes[3] }
       ];
     });
   }
@@ -132,7 +132,7 @@ export class CreateEnityDataTableChecksComponent implements OnInit {
    * Submits Entity Datble Form.
    */
   submit() {
-    this.organizationService.createEntityDataTableChecks(this.createEntityForm.value).subscribe((response: any) => {
+    this.entityDataTableService.createEntityDatatableCheck(this.createEntityForm.value).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

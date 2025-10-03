@@ -19,7 +19,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../../pipes/date-format.pipe';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
@@ -82,11 +82,11 @@ export class TransactionsComponent implements OnInit {
 
   /**
    * Retrieves the currencies data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management Service.
    * @param {ActivatedRoute} route Activated Route.
    */
   constructor(
-    private organizationService: OrganizationService,
+    private tellerCashManagementService: TellerCashManagementService,
     private route: ActivatedRoute
   ) {
     this.route.data.subscribe((data: { currencies: any }) => {
@@ -116,8 +116,8 @@ export class TransactionsComponent implements OnInit {
    */
   onChangeCurrency() {
     this.currencySelector.valueChanges.subscribe((currencyCode: any) => {
-      this.organizationService
-        .getCashierSummaryAndTransactions(this.tellerId, this.cashierId, currencyCode)
+      this.tellerCashManagementService
+        .getCashierData1(this.tellerId, this.cashierId, currencyCode)
         .subscribe((response: any) => {
           this.cashierData = response;
           this.setTransactions();

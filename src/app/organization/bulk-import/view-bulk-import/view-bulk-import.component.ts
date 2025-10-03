@@ -19,7 +19,8 @@ import {
 import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Imports */
-import { OrganizationService } from '../../organization.service';
+import { StaffService, BulkImportService } from '@fineract/client';
+import { OrganizationService } from 'app/customApis.service';
 import { BulkImports } from './bulk-imports';
 import { MatFormField, MatLabel, MatHint } from '@angular/material/form-field';
 import { MatButton, MatIconButton } from '@angular/material/button';
@@ -97,11 +98,15 @@ export class ViewBulkImportComponent implements OnInit {
    * fetches offices and imports data from resolve
    * @param {ActivatedRoute} route ActivatedRoute
    * @param {FormBuilder} formBuilder FormBuilder
+   * @param {StaffService} staffService StaffService
+   * @param {BulkImportService} bulkImportService BulkImportService
    * @param {OrganizationService} organizationService OrganizationService
    */
   constructor(
     private route: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
+    private staffService: StaffService,
+    private bulkImportService: BulkImportService,
     private organizationService: OrganizationService
   ) {
     this.bulkImport.name = this.route.snapshot.params['import-name'];
@@ -138,7 +143,7 @@ export class ViewBulkImportComponent implements OnInit {
   buildDependencies() {
     this.bulkImportForm.get('officeId').valueChanges.subscribe((value: any) => {
       if (this.bulkImport.formFields >= 2) {
-        this.organizationService.getStaff(value).subscribe((data: any) => {
+        this.staffService.retrieveAll16(value).subscribe((data: any) => {
           this.staffData = data;
         });
       }
@@ -203,16 +208,19 @@ export class ViewBulkImportComponent implements OnInit {
         legalFormType = 'CLIENTS_PERSON';
       }
     }
-    this.organizationService
-      .uploadImportDocument(this.template, this.bulkImport.urlSuffix, legalFormType)
-      .subscribe(() => {});
+    const requestParams: any = {
+      file: this.template,
+      entityType: this.bulkImport.urlSuffix,
+      legalFormType: legalFormType
+    };
+    this.staffService.postTemplate(requestParams).subscribe(() => {});
   }
 
   /**
    * Reloads imports data table.
    */
   refreshDocuments() {
-    this.organizationService.getImports(this.bulkImport.entityType).subscribe((data: any) => {
+    this.bulkImportService.retrieveImportDocuments(this.bulkImport.entityType).subscribe((data: any) => {
       this.dataSource = new MatTableDataSource(data);
       this.importsTableRef.renderRows();
     });
@@ -224,7 +232,7 @@ export class ViewBulkImportComponent implements OnInit {
    * @param {any} id ImportID
    */
   downloadDocument(name: string, id: any) {
-    this.organizationService.getImportDocument(id).subscribe((res: any) => {
+    this.bulkImportService.getOutputTemplate(id).subscribe((res: any) => {
       const contentType = res.headers.get('Content-Type');
       const blob = new Blob([res.body], { type: contentType });
       const fileOfBlob = new File([blob], name, { type: contentType });

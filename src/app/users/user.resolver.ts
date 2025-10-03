@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { UsersService } from './users.service';
+import { UsersService } from '@fineract/client';
 
 /**
  * User data resolver.
@@ -24,6 +24,6 @@ export class UserResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const userId = route.paramMap.get('id');
-    return this.usersService.getUser(userId);
+    return this.usersService.retrieveOne31({ userId: Number(userId) });
   }
 }

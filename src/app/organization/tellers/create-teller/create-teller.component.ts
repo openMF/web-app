@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -37,7 +37,7 @@ export class CreateTellerComponent implements OnInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -45,7 +45,7 @@ export class CreateTellerComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private tellerCashManagementService: TellerCashManagementService,
     private settingsService: SettingsService,
     private route: ActivatedRoute,
     private router: Router,
@@ -117,7 +117,7 @@ export class CreateTellerComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.createTeller(data).subscribe((response: any) => {
+    this.tellerCashManagementService.createTeller(data).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

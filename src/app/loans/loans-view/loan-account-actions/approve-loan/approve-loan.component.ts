@@ -12,7 +12,6 @@ import { InputAmountComponent } from '../../../../shared/input-amount/input-amou
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { FormatNumberPipe } from '../../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
-import { MatIcon } from '@angular/material/icon';
 
 /**
  * Approve Loan component.
@@ -25,8 +24,7 @@ import { MatIcon } from '@angular/material/icon';
     ...STANDALONE_SHARED_IMPORTS,
     InputAmountComponent,
     CdkTextareaAutosize,
-    FormatNumberPipe,
-    MatIcon
+    FormatNumberPipe
   ]
 })
 export class ApproveLoanComponent implements OnInit {

@@ -19,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { CurrencyService } from '@fineract/client';
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../../configuration-wizard/configuration-wizard.service';
 
@@ -79,13 +79,13 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
    * Retrieves the currency data from `resolve`.
    * @param {ActivatedRoute} route Activated Route
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {OrganizationService} organizationservice Organization Service
+   * @param {CurrencyService} currencyService Currency Service
    * @param {MatDialog} dialog Mat Dialog
    */
   constructor(
     private route: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
-    private organizationservice: OrganizationService,
+    private currencyService: CurrencyService,
     public dialog: MatDialog,
     private router: Router,
     private translateService: TranslateService,
@@ -154,14 +154,16 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
     const selectedCurrencyCodes: any[] = this.selectedCurrencies.map((currency) => currency.code);
     if (!selectedCurrencyCodes.includes(newCurrency.code)) {
       selectedCurrencyCodes.push(newCurrency.code);
-      this.organizationservice.updateCurrencies(selectedCurrencyCodes).subscribe((response: any) => {
-        this.selectedCurrencies.push(newCurrency);
-        this.formRef.resetForm();
-        if (this.configurationWizardService.showCurrencyForm === true) {
-          this.configurationWizardService.showCurrencyForm = false;
-          this.openDialog();
-        }
-      });
+      this.currencyService
+        .updateCurrencies({ currencyRequest: { currencies: selectedCurrencyCodes } })
+        .subscribe((response: any) => {
+          this.selectedCurrencies.push(newCurrency);
+          this.formRef.resetForm();
+          if (this.configurationWizardService.showCurrencyForm === true) {
+            this.configurationWizardService.showCurrencyForm = false;
+            this.openDialog();
+          }
+        });
     }
   }
 
@@ -178,10 +180,12 @@ export class ManageCurrenciesComponent implements OnInit, AfterViewInit, OnDestr
     });
     deleteCurrencyDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationservice.updateCurrencies(selectedCurrencyCodes).subscribe(() => {
-          this.selectedCurrencies.splice(index, 1);
-          this.formRef.resetForm();
-        });
+        this.currencyService
+          .updateCurrencies({ currencyRequest: { currencies: selectedCurrencyCodes } })
+          .subscribe(() => {
+            this.selectedCurrencies.splice(index, 1);
+            this.formRef.resetForm();
+          });
       }
     });
   }

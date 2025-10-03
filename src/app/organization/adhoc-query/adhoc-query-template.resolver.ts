@@ -5,23 +5,22 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
-
+import { AdhocQueryApiService } from '@fineract/client';
 /**
  * Adhoc Query template data resolver.
  */
 @Injectable()
 export class AdhocQueryTemplateResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {AdhocQueryApiService} adhocQueryApiService Adhoc Query API service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private adhocQueryApiService: AdhocQueryApiService) {}
 
   /**
    * Returns the adhoc query template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getAdhocQueryTemplate();
+    return this.adhocQueryApiService.template();
   }
 }

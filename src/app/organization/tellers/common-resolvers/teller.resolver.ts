@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 
 /**
  * Teller data resolver.
@@ -14,9 +14,9 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Injectable()
 export class TellerResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private tellerCashManagementService: TellerCashManagementService) {}
 
   /**
    * Returns the teller data.
@@ -24,6 +24,6 @@ export class TellerResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const tellerId = route.paramMap.get('id');
-    return this.organizationService.getTeller(tellerId);
+    return this.tellerCashManagementService.getTellerData({ officeId: Number(tellerId) });
   }
 }

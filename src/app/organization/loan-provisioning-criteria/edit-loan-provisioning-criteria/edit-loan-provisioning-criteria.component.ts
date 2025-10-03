@@ -26,7 +26,7 @@ import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { ProvisioningCriteriaService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -93,14 +93,14 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {ProvisioningCriteriaService} provisioningCriteriaService Provisioning Criteria Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private provisioningCriteriaService: ProvisioningCriteriaService,
     private router: Router,
     private settingsService: SettingsService,
     public dialog: MatDialog,
@@ -253,7 +253,7 @@ export class EditLoanProvisioningCriteriaComponent implements OnInit {
       definitions: this.definitions,
       locale
     };
-    this.organizationService
+    this.provisioningCriteriaService
       .updateProvisioningCriteria(this.loanProvisioningCriteriaAndTemplate.criteriaId, loanProvisioningCriteria)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });

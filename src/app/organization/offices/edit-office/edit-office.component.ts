@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { OfficesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -32,7 +32,7 @@ export class EditOfficeComponent implements OnInit {
 
   /**
    * Retrieves the charge data from `resolve`.
-   * @param {ProductsService} organizationService Organization Service.
+   * @param {OfficesService} officeService Office Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
@@ -41,7 +41,7 @@ export class EditOfficeComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils
    */
   constructor(
-    private organizationService: OrganizationService,
+    private officeService: OfficesService,
     private settingsService: SettingsService,
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
@@ -94,7 +94,7 @@ export class EditOfficeComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.updateOffice(this.officeData.id, data).subscribe((response: any) => {
+    this.officeService.updateOffice(this.officeData.id, data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

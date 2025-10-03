@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { PaymentTypeService } from '@fineract/client';
 
 /**
  * Payment Types data resolver.
@@ -14,9 +14,9 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class PaymentTypesResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {PaymentTypeService} paymentTypeService Payment Type service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private paymentTypeService: PaymentTypeService) {}
 
   /**
    * Returns the payment types data.
@@ -25,9 +25,9 @@ export class PaymentTypesResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const paymentTypeId = route.paramMap.get('id');
     if (paymentTypeId) {
-      return this.organizationService.getPaymentType(paymentTypeId);
+      return this.paymentTypeService.getAllPaymentTypes({ onlyWithCode: !!paymentTypeId });
     } else {
-      return this.organizationService.getPaymentTypes();
+      return this.paymentTypeService.getAllPaymentTypes();
     }
   }
 }
