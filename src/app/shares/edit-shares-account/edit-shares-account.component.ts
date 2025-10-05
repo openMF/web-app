@@ -8,7 +8,7 @@ import { SharesAccountTermsStepComponent } from '../shares-account-stepper/share
 import { SharesAccountChargesStepComponent } from '../shares-account-stepper/shares-account-charges-step/shares-account-charges-step.component';
 
 /** Custom Services */
-import { SharesService } from '../shares.service';
+import { ShareAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatStepper, MatStepperIcon, MatStep, MatStepLabel } from '@angular/material/stepper';
@@ -56,14 +56,14 @@ export class EditSharesAccountComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {SharesService} sharesService Shares Service
+   * @param {ShareAccountService} shareAccountService Shares Account Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private sharesService: SharesService,
+    private shareAccountService: ShareAccountService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { sharesAccountAndTemplate: any }) => {
@@ -134,8 +134,8 @@ export class EditSharesAccountComponent {
       dateFormat,
       locale
     };
-    this.sharesService
-      .updateSharesAccount(this.sharesAccountAndTemplate.id, sharesAccount)
+    this.shareAccountService
+      .updateAccount(this.sharesAccountAndTemplate.id, sharesAccount)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

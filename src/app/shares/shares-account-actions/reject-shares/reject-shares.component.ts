@@ -22,7 +22,7 @@ import { MatTable } from '@angular/material/table';
 import { RejectShareDialogComponent } from './reject-share-dialog/reject-share-dialog.component';
 
 /** Custom Serices */
-import { SharesService } from 'app/shares/shares.service';
+import { ShareAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -85,13 +85,13 @@ export class RejectSharesComponent implements OnInit {
   @ViewChild('sharesTable', { static: true }) sharesTableRef: MatTable<Element>;
 
   /**
-   * @param {SharesService} sharesService Shares Service
+   * @param {ShareAccountService } ShareAccountService Shares account service.
    * @param {ActivatedRoute} route Activated Route
    * @param {MatDialog} dialog Mat Dialog
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(
-    private sharesService: SharesService,
+    private shareAccountService: ShareAccountService,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private settingsService: SettingsService
@@ -134,11 +134,17 @@ export class RejectSharesComponent implements OnInit {
         const locale = this.settingsService.language.code;
         const dateFormat = this.settingsService.dateFormat;
         const data = {
-          requestedShares: [{ id }],
+          requestedShares: new Set([{ id }]),
           dateFormat,
           locale
         };
-        this.sharesService.executeSharesAccountCommand(this.accountId, 'rejectadditionalshares', data).subscribe(() => {
+        const params = {
+          type: 'shares',
+          accountId: this.accountId,
+          postAccountsTypeAccountIdRequest: data,
+          command: 'rejectadditionalshares'
+        };
+        this.shareAccountService.handleCommands2(params).subscribe(() => {
           const share = this.sharesData.find((element) => element.id === id);
           const index = this.sharesData.indexOf(share);
           this.sharesData.splice(index, 1);

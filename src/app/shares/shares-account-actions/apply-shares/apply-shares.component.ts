@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SharesService } from 'app/shares/shares.service';
+import { ShareAccountService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -35,7 +35,7 @@ export class ApplySharesComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {SharesService} sharesService Shares Service
+   * @param {ShareAccountService} shareAccountService Shares Account Service
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
@@ -43,7 +43,7 @@ export class ApplySharesComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private sharesService: SharesService,
+    private shareAccountService: ShareAccountService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
     private router: Router,
@@ -101,7 +101,13 @@ export class ApplySharesComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.sharesService.executeSharesAccountCommand(this.accountId, 'applyadditionalshares', data).subscribe(() => {
+    const params = {
+      type: 'shares',
+      accountId: this.accountId,
+      postAccountsTypeAccountIdRequest: data,
+      command: 'applyadditionalshares'
+    };
+    this.shareAccountService.handleCommands2(params).subscribe(() => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
