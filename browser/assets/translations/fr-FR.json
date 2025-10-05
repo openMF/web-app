@@ -3,6 +3,8 @@
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",
   "errors": {
+    "linkedSavingsAccountOwnership": "Le compte d'épargne lié n'appartient pas au client sélectionné.",
+    "clientNotInGSIM": "Le client avec l'ID {{id}} n'est pas membre du GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Montant du revenu capitalisé ajusté déjà ajusté",
     "Capitalized Income Adjustment amount must be lower or equal to": "Le montant de l'ajustement du revenu capitalisé doit être inférieur ou égal à",
     "Buy Down Fee amount already adjusted": "Montant de la commission de rachat déjà ajusté",

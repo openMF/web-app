@@ -3,6 +3,8 @@
   "Logged in as": "Imeingia kama",
   "Remember me": "Nikumbuke",
   "errors": {
+    "linkedSavingsAccountOwnership": "Akaunti ya akiba iliyounganishwa haimilikiwi na mteja aliyechaguliwa.",
+    "clientNotInGSIM": "Mteja mwenye kitambulisho {{id}} hayupo kwenye GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Kiasi cha Mapato ya Mtaji kilichorekebishwa tayari kimerekebishwa",
     "Capitalized Income Adjustment amount must be lower or equal to": "Kiasi cha Marekebisho ya Mapato ya Mtaji lazima kiwe chini au sawa na",
     "Buy Down Fee amount already adjusted": "Kiasi cha Ada ya Kununua Chini tayari kimerekebishwa",

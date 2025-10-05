@@ -3,6 +3,8 @@
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
   "errors": {
+    "linkedSavingsAccountOwnership": "Linked savings account does not belong to the selected client.",
+    "clientNotInGSIM": "Client with ID {{id}} is not present in GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Capitalized Income amount already adjusted",
     "Capitalized Income Adjustment amount must be lower or equal to": "Capitalized Income Adjustment amount must be lower or equal to",
     "Buy Down Fee amount already adjusted": "Buy Down Fee amount already adjusted",

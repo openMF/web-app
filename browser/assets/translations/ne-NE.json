@@ -3,6 +3,8 @@
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
   "errors": {
+    "linkedSavingsAccountOwnership": "लिंक गरिएको बचत खाता चयनित ग्राहकको होइन।",
+    "clientNotInGSIM": "आईडी {{id}} भएको ग्राहक GSIM मा उपस्थित छैन।",
     "Capitalized Income amount adjusted already adjusted": "क्यापिटलाइज्ड आय रकम पहिले नै समायोजन गरिएको छ",
     "Capitalized Income Adjustment amount must be lower or equal to": "पूंजीकृत आय समायोजन रकम कम वा बराबर हुनुपर्छ",
     "Buy Down Fee amount already adjusted": "बाइ डाउन शुल्क रकम पहिले नै समायोजन गरिएको छ।",

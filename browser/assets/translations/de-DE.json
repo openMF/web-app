@@ -3,6 +3,8 @@
   "Logged in as": "Angemeldet als",
   "Remember me": "Erinnere dich an mich",
   "errors": {
+    "linkedSavingsAccountOwnership": "Verknüpftes Sparkonto gehört nicht zum ausgewählten Kunden.",
+    "clientNotInGSIM": "Kunde mit der ID {{id}} ist nicht in GSIM vorhanden.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalisiertes Einkommen Betrag angepasst bereits angepasst",
     "Capitalized Income Adjustment amount must be lower or equal to": "Der Betrag der kapitalisierten Einkommensanpassung muss kleiner oder gleich sein",
     "Buy Down Fee amount already adjusted": "Kapitalisierte Erträge Betrag angepasst bereits angepasst",

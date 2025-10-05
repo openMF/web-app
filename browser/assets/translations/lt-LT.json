@@ -3,6 +3,8 @@
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
   "errors": {
+    "linkedSavingsAccountOwnership": "Susieta taupomoji sąskaita nepriklauso pasirinktam klientui.",
+    "clientNotInGSIM": "Klientas su ID {{id}} nėra GSIM sistemoje.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalizuotų pajamų suma pakoreguota jau pakoreguota",
     "Capitalized Income Adjustment amount must be lower or equal to": "Kapitalizuotų pajamų koregavimo suma turi būti mažesnė arba lygi",
     "Buy Down Fee amount already adjusted": "Jau pakoreguota išpirkimo mokesčio suma",

@@ -3,6 +3,8 @@
   "Logged in as": "Přihlášen jako",
   "Remember me": "Zapamatuj si mě",
   "errors": {
+    "linkedSavingsAccountOwnership": "Propojený spořicí účet nepatří vybranému klientovi.",
+    "clientNotInGSIM": "Klient s ID {{id}} není přítomen v GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Výše kapitalizovaného příjmu již upravená",
     "Capitalized Income Adjustment amount must be lower or equal to": "Částka úpravy kapitalizovaného příjmu musí být nižší nebo rovna",
     "Buy Down Fee amount already adjusted": "Výše poplatku za odkup již byla upravena",

@@ -3,6 +3,8 @@
   "Logged in as": "ielogojies Kā",
   "Remember me": "Atceries mani",
   "errors": {
+    "linkedSavingsAccountOwnership": "Saistītais krājkonts nepieder izvēlētajam klientam.",
+    "clientNotInGSIM": "Klients ar ID {{id}} nav GSIM sistēmā.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalizēto ienākumu summa jau koriģēta",
     "Capitalized Income Adjustment amount must be lower or equal to": "Kapitalizēto ienākumu korekcijas summai ir jābūt mazākai vai vienādai ar",
     "Buy Down Fee amount already adjusted": "Jau koriģētā atpirkšanas maksas summa",
