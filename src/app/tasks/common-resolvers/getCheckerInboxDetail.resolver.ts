@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TasksService } from '../tasks.service';
+import { AuditsService } from '@fineract/client';
 
 /**
  * Checker Inbox Detail resolver.
@@ -14,16 +14,16 @@ import { TasksService } from '../tasks.service';
 @Injectable()
 export class GetCheckerInboxDetailResolver {
   /**
-   * @param {TasksService} tasksService Tasks service.
+   * @param {AuditsService} auditsService Audits service.
    */
-  constructor(private tasksService: TasksService) {}
+  constructor(private auditsService: AuditsService) {}
 
   /**
    * Returns the detail data of the checker inbox.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const checkerId = route.paramMap.get('id');
-    return this.tasksService.getCheckerInboxDetail(checkerId);
+    const checkerId = Number(route.paramMap.get('id'));
+    return this.auditsService.retrieveAuditEntries({ resourceId: checkerId });
   }
 }

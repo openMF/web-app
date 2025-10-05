@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { TasksService } from '../tasks.service';
+import { MakerCheckerOr4EyeFunctionalityService } from '@fineract/client';
 
 /** Dialog Components */
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
@@ -41,14 +41,14 @@ export class ViewCheckerInboxComponent {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dialog} dialog MatDialog.
    * @param {router} router Router.
-   * @param {TasksService} tasksService Tasks Service.
+   * @param {MakerCheckerOr4EyeFunctionalityService} makerCheckerService Maker Checker service.
    */
   constructor(
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private router: Router,
     private translateService: TranslateService,
-    private tasksService: TasksService
+    private makerCheckerService: MakerCheckerOr4EyeFunctionalityService
   ) {
     this.route.data.subscribe((data: { checkerInboxDetail: any }) => {
       this.checkerInboxDetail = data.checkerInboxDetail;
@@ -69,9 +69,14 @@ export class ViewCheckerInboxComponent {
     });
     approveCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.tasksService.executeMakerCheckerAction(this.checkerInboxDetail.id, 'approve').subscribe((res: any) => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        });
+        this.makerCheckerService
+          .approveMakerCheckerEntry({
+            auditId: this.checkerInboxDetail.id,
+            command: 'approve'
+          })
+          .subscribe((res: any) => {
+            this.router.navigate(['../../'], { relativeTo: this.route });
+          });
       }
     });
   }
@@ -88,9 +93,14 @@ export class ViewCheckerInboxComponent {
     });
     rejectCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.tasksService.executeMakerCheckerAction(this.checkerInboxDetail.id, 'reject').subscribe((res: any) => {
-          this.router.navigate(['../../'], { relativeTo: this.route });
-        });
+        this.makerCheckerService
+          .approveMakerCheckerEntry({
+            auditId: this.checkerInboxDetail.id,
+            command: 'reject'
+          })
+          .subscribe((res: any) => {
+            this.router.navigate(['../../'], { relativeTo: this.route });
+          });
       }
     });
   }
@@ -107,7 +117,7 @@ export class ViewCheckerInboxComponent {
     });
     deleteCheckerDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.tasksService.deleteMakerChecker(this.checkerInboxDetail.id).subscribe((res: any) => {
+        this.makerCheckerService.deleteMakerCheckerEntry(this.checkerInboxDetail.id).subscribe((res: any) => {
           this.router.navigate(['../../'], { relativeTo: this.route });
         });
       }
