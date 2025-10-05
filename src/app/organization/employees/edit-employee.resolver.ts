@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { StaffService } from '@fineract/client';
 
 /**
  * Employees data resolver.
@@ -14,9 +14,9 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class EditEmployeeResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {StaffService} staffService Staff service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private staffService: StaffService) {}
 
   /**
    * Returns the employees data.
@@ -24,6 +24,6 @@ export class EditEmployeeResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const employeeId = route.paramMap.get('id');
-    return this.organizationService.getEmployee(employeeId);
+    return this.staffService.retrieveAll16({ officeId: employeeId ? Number(employeeId) : undefined });
   }
 }

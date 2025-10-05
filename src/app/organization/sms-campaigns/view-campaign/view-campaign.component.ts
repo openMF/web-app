@@ -26,7 +26,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { DefaultService, SMSService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -117,7 +117,8 @@ export class ViewCampaignComponent implements OnInit {
    * @param {MatDialog} dialog Mat Dialog
    * @param {FormBuilder} formBuilder Form Builder
    * @param {Dates} dateUtils Date Utils
-   * @param {OrganizationService} organizationService Organization Service
+   * @param {DefaultService} defaultService Default Service
+   * @param {SMSService} smsService SMS Service
    * @param {SettingsService} settingsService Setting Service
    */
   constructor(
@@ -126,7 +127,8 @@ export class ViewCampaignComponent implements OnInit {
     public dialog: MatDialog,
     private formBuilder: UntypedFormBuilder,
     private dateUtils: Dates,
-    private organizationService: OrganizationService,
+    private defaultService: DefaultService,
+    private smsService: SMSService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { smsCampaign: any }) => {
@@ -193,11 +195,14 @@ export class ViewCampaignComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.organizationService
-          .executeSmsCampaignCommand(this.smsCampaignData.id, dataObject, 'close')
-          .subscribe(() => {
-            this.reload();
-          });
+        const requestParams = {
+          campaignId: this.smsCampaignData.id,
+          command: 'close',
+          body: dataObject
+        };
+        this.defaultService.handleCommands(requestParams).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -231,11 +236,14 @@ export class ViewCampaignComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.organizationService
-          .executeSmsCampaignCommand(this.smsCampaignData.id, dataObject, 'activate')
-          .subscribe(() => {
-            this.reload();
-          });
+        const requestParams = {
+          campaignId: this.smsCampaignData.id,
+          command: 'activate',
+          body: dataObject
+        };
+        this.defaultService.handleCommands(requestParams).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -269,11 +277,14 @@ export class ViewCampaignComponent implements OnInit {
           dateFormat,
           locale
         };
-        this.organizationService
-          .executeSmsCampaignCommand(this.smsCampaignData.id, dataObject, 'reactivate')
-          .subscribe(() => {
-            this.reload();
-          });
+        const requestParams = {
+          campaignId: this.smsCampaignData.id,
+          command: 'reactivate',
+          body: dataObject
+        };
+        this.defaultService.handleCommands(requestParams).subscribe(() => {
+          this.reload();
+        });
       }
     });
   }
@@ -287,7 +298,11 @@ export class ViewCampaignComponent implements OnInit {
     });
     deleteSmsCampaignDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteSmsCampaign(this.smsCampaignData.id).subscribe(() => {
+        const requestParams = {
+          campaignId: this.smsCampaignData.id,
+          command: 'delete'
+        };
+        this.defaultService.handleCommands(requestParams).subscribe(() => {
           this.router.navigate(['../'], { relativeTo: this.route });
         });
       }
@@ -327,7 +342,7 @@ export class ViewCampaignComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.getMessagebyStatus(data).subscribe((response: any) => {
+    this.smsService.retrieveAllSmsByStatus(data).subscribe((response: any) => {
       this.dataSource.data = response.pageItems;
       this.messageTableRef.renderRows();
     });

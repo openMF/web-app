@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { WorkingDaysService } from '@fineract/client';
 
 /**
  * Working Days data resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class WorkingDaysResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {WorkingDaysService} workingDaysService Working days service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private workingDaysService: WorkingDaysService) {}
 
   /**
    * Returns the working days data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getWorkingDays();
+    return this.workingDaysService.retrieveAll17();
   }
 }

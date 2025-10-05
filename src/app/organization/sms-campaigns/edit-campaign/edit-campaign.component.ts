@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { DefaultService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Components */
@@ -50,14 +50,14 @@ export class EditCampaignComponent {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {OrganizationService} organizationService Organiztion Service
+   * @param {DefaultService} defaultService Default Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private organizationService: OrganizationService,
+    private defaultService: DefaultService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { smsCampaign: any; smsCampaignTemplate: any }) => {
@@ -109,7 +109,7 @@ export class EditCampaignComponent {
         dateTimeFormat
       );
     }
-    this.organizationService.updateSmsCampaign(smsCampaign, this.smsCampaign.id).subscribe((response: any) => {
+    this.defaultService.updateCampaign1(smsCampaign, this.smsCampaign.id).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

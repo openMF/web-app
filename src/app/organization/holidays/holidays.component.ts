@@ -22,7 +22,7 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { HolidaysService } from '@fineract/client';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -89,7 +89,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
 
   /**
    * Retrieves the offices data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {HolidaysService} holidaysService Holidays Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {Router} router Router.
@@ -97,7 +97,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
    * @param {PopoverService} popoverService PopoverService.
    */
   constructor(
-    private organizationService: OrganizationService,
+    private holidaysService: HolidaysService,
     private route: ActivatedRoute,
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
@@ -129,7 +129,7 @@ export class HolidaysComponent implements OnInit, AfterViewInit {
   onChangeOffice() {
     this.officeSelector.valueChanges.subscribe((officeId = this.officeSelector.value) => {
       this.holidaysData = [];
-      this.organizationService.getHolidays(officeId).subscribe((holidays: any) => {
+      this.holidaysService.retrieveAllHolidays(officeId).subscribe((holidays: any) => {
         this.holidaysData = holidays.filter((holiday: any) => holiday.status.value !== 'Deleted');
         this.setHolidays();
       });

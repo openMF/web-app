@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { ProvisioningCriteriaService } from '@fineract/client';
 
 /**
  * Provisioning criteria template resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../../organization.service';
 @Injectable()
 export class LoanProvisioningCriteriaTemplateResolver {
   /**
-   * @param {OrganizationService} organizationService Products service.
+   * @param {ProvisioningCriteriaService} provisioningCriteriaService Provisioning Criteria service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private provisioningCriteriaService: ProvisioningCriteriaService) {}
 
   /**
    * Returns the Pprovisioning criteria template
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getProvisioningCriteriaTemplate();
+    return this.provisioningCriteriaService.retrieveTemplate3();
   }
 }

@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { StaffService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatDialog } from '@angular/material/dialog';
@@ -46,7 +46,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {StaffService} staffService Staff Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -57,7 +57,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private staffService: StaffService,
     private settingsService: SettingsService,
     private route: ActivatedRoute,
     private router: Router,
@@ -126,7 +126,7 @@ export class CreateEmployeeComponent implements OnInit, AfterViewInit {
       dateFormat,
       locale
     };
-    this.organizationService.createEmployee(data).subscribe((response: any) => {
+    this.staffService.create3(data).subscribe((response: any) => {
       if (this.configurationWizardService.showEmployeeForm === true) {
         this.configurationWizardService.showEmployeeForm = false;
         this.openDialog();

@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services. */
-import { OrganizationService } from 'app/organization/organization.service';
+import { EntityDataTableService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -42,23 +42,23 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
    * Retrieves Entity Datatable Checks data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {EntityDataTableService} entityDataTableService Entity Data Table Service.
    * @param {Router} router Router.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
-    private organizationService: OrganizationService,
+    private entityDataTableService: EntityDataTableService,
     private router: Router
   ) {
     this.route.data.subscribe((data: { dataTableEntity: any }) => {
       this.createEntityData = data.dataTableEntity;
       // hardcoded, because data.dataTableEntity.entities might change anytime its order
       this.entityTypes = [
-        { name: 'Client', value: 'm_client' },
-        { name: 'Loan', value: 'm_loan' },
-        { name: 'Group', value: 'm_group' },
-        { name: 'Savings Account', value: 'm_savings_account' }
+        { name: 'Client', value: this.createEntityData.entityTypes[0] },
+        { name: 'Loan', value: this.createEntityData.entityTypes[1] },
+        { name: 'Group', value: this.createEntityData.entityTypes[2] },
+        { name: 'Savings Account', value: this.createEntityData.entityTypes[3] }
       ];
     });
   }
@@ -133,7 +133,7 @@ export class CreateEntityDataTableChecksComponent implements OnInit {
    * Submits Entity Datble Form.
    */
   submit() {
-    this.organizationService.createEntityDataTableChecks(this.createEntityForm.value).subscribe((response: any) => {
+    this.entityDataTableService.createEntityDatatableCheck(this.createEntityForm.value).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

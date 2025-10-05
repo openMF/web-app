@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { OfficesService } from '@fineract/client';
 
 /**
  * Office data resolver.
@@ -14,16 +14,16 @@ import { OrganizationService } from '../../organization.service';
 @Injectable()
 export class OfficeResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {OfficesService} officesService Offices service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private officesService: OfficesService) {}
 
   /**
    * Returns the office data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const officeId = route.parent.paramMap.get('officeId');
-    return this.organizationService.getOffice(officeId);
+    const officeId = Number(route.parent.paramMap.get('officeId'));
+    return this.officesService.retrieveOffice({ officeId });
   }
 }

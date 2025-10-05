@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { WorkingDaysService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
@@ -63,7 +63,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
    * Retrieves the working days data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {WorkingDaysService} workingDaysService Working Days Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog MatDialog.
@@ -73,7 +73,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
-    private organizationService: OrganizationService,
+    private workingDaysService: WorkingDaysService,
     private settingsService: SettingsService,
     private router: Router,
     private dialog: MatDialog,
@@ -144,7 +144,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
       }
     }
     workingDays.recurrence = recurrence;
-    this.organizationService.updateWorkingDays(workingDays).subscribe((response) => {
+    this.workingDaysService.update8(workingDays).subscribe((response) => {
       if (this.configurationWizardService.showDefineWorkingDays === true) {
         this.configurationWizardService.showDefineWorkingDays = false;
         this.openNextStepDialog();

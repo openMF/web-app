@@ -17,7 +17,7 @@ import {
 } from '@angular/material/table';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { ProvisioningCriteriaService } from '@fineract/client';
 
 /** Dialog Component */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -67,13 +67,13 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
 
   /**
    * Retrieves the Provisioning data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {ProvisioningCriteriaService} provisioningCriteriaService Provisioning Criteria Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
-    private organizationService: OrganizationService,
+    private provisioningCriteriaService: ProvisioningCriteriaService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog
@@ -108,7 +108,7 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
     });
     deleteCriteriaDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteProvisioningCriteria(this.provisioningData.criteriaId).subscribe(() => {
+        this.provisioningCriteriaService.deleteProvisioningCriteria(this.provisioningData.criteriaId).subscribe(() => {
           this.router.navigate(['/organization/provisioningcriteria']);
         });
       }

@@ -8,7 +8,7 @@ import { LoansService, LoanTransactionsService } from '@fineract/client';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
-import { OrganizationService } from 'app/organization/organization.service';
+import { PaymentTypeService } from '@fineract/client';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
@@ -116,7 +116,7 @@ export class ViewTransactionComponent implements OnInit {
     public dialog: MatDialog,
     private translateService: TranslateService,
     private settingsService: SettingsService,
-    private organizationService: OrganizationService,
+    private paymentTypeService: PaymentTypeService,
     private alertService: AlertService
   ) {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
@@ -159,8 +159,8 @@ export class ViewTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.allowChargeback) {
-      this.organizationService
-        .getPaymentTypesWithCode()
+      this.paymentTypeService
+        .getAllPaymentTypes()
         .toPromise()
         .then((data) => {
           this.paymentTypeOptions = data;

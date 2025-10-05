@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { ProvisioningCriteriaService } from '@fineract/client';
 
 /**
  * Provisioning criteria and template resolver.
@@ -14,9 +14,9 @@ import { OrganizationService } from '../../organization.service';
 @Injectable()
 export class LoanProvisioningCriteriaAndTemplateResolver {
   /**
-   * @param {OrganizationService} organizationService Products service.
+   * @param {ProvisioningCriteriaService} provisioningCriteriaService Provisioning Criteria service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private provisioningCriteriaService: ProvisioningCriteriaService) {}
 
   /**
    * Returns the Pprovisioning criteria and template data.
@@ -24,6 +24,6 @@ export class LoanProvisioningCriteriaAndTemplateResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const provisioningId = route.paramMap.get('id');
-    return this.organizationService.getProvisioningCriteria(provisioningId, true);
+    return this.provisioningCriteriaService.retrieveAllProvisioningCriterias();
   }
 }

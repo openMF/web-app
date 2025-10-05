@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { AdhocQueryApiService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -29,13 +29,13 @@ export class ViewAdhocQueryComponent {
 
   /**
    * Retrieves the adhoc query data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {AdhocQueryApiService} adhocQueryApiService Adhoc Query API Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
-    private organizationService: OrganizationService,
+    private adhocQueryApiService: AdhocQueryApiService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog
@@ -66,7 +66,7 @@ export class ViewAdhocQueryComponent {
     });
     deleteAdhocQueryDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteAdhocQuery(this.adhocQueryData.id).subscribe(() => {
+        this.adhocQueryApiService.retrieveAll2(this.adhocQueryData.id).subscribe(() => {
           this.router.navigate(['/organization/adhoc-query']);
         });
       }

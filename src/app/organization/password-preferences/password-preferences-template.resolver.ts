@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { PasswordPreferencesService } from '@fineract/client';
 
 /**
  * Password Preferences Template data resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class PasswordPreferencesTemplateResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {PasswordPreferencesService} passwordPreferencesService Password Preferences service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private passwordPreferencesService: PasswordPreferencesService) {}
 
   /**
    * Returns the password preferences template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getPasswordPreferencesTemplate();
+    return this.passwordPreferencesService.template21();
   }
 }

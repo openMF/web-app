@@ -25,7 +25,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { SearchAPIService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -89,14 +89,14 @@ export class FundMappingComponent implements OnInit {
   /**
    * Retrieves the advance search template from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {SearchAPIService} searchAPIService Search API Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private searchAPIService: SearchAPIService,
     private settingsService: SettingsService,
     private route: ActivatedRoute,
     private dateUtils: Dates
@@ -233,7 +233,7 @@ export class FundMappingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.retrieveAdvanceSearchResults(data).subscribe((response: any) => {
+    this.searchAPIService.advancedSearch(data).subscribe((response: any) => {
       this.setLoans(response);
     });
   }

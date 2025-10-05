@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -38,7 +38,7 @@ export class EditTellerComponent implements OnInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -46,7 +46,7 @@ export class EditTellerComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private tellerCashManagementService: TellerCashManagementService,
     private settingsService: SettingsService,
     private route: ActivatedRoute,
     private router: Router,
@@ -125,7 +125,7 @@ export class EditTellerComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.updateTeller(this.tellerData.id, data).subscribe((response: any) => {
+    this.tellerCashManagementService.updateTeller(this.tellerData.id, data).subscribe((response: any) => {
       this.router.navigate(
         [
           '../../',

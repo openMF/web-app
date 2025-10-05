@@ -7,8 +7,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { LoansService, LoanChargesService } from '@fineract/client';
-import { OrganizationService } from 'app/organization/organization.service';
+import { LoansService, LoanChargesService, PaymentTypeService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
@@ -49,6 +48,7 @@ export class AdjustLoanChargeComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
+   * @param {PaymentTypeService} paymentTypeService Payment Type Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -57,7 +57,7 @@ export class AdjustLoanChargeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private settingsService: SettingsService,
-    private organizationService: OrganizationService
+    private paymentTypeService: PaymentTypeService
   ) {
     this.loanId = this.route.snapshot.params['loanId'];
     this.chargeId = this.route.snapshot.params['id'];
@@ -93,7 +93,7 @@ export class AdjustLoanChargeComponent implements OnInit {
   }
 
   setRepaymentLoanDetails() {
-    this.organizationService.getPaymentTypes().subscribe((paymentTypes: any) => {
+    this.paymentTypeService.getAllPaymentTypes().subscribe((paymentTypes: any) => {
       this.paymentTypes = paymentTypes;
     });
   }

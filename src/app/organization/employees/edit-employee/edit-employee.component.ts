@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { StaffService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -37,7 +37,7 @@ export class EditEmployeeComponent implements OnInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {StaffService} staffService Staff Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -45,7 +45,7 @@ export class EditEmployeeComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private staffService: StaffService,
     private settingsService: SettingsService,
     private route: ActivatedRoute,
     private router: Router,
@@ -113,7 +113,7 @@ export class EditEmployeeComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.updateEmployee(this.employeeData.id, data).subscribe((response: any) => {
+    this.staffService.update7(this.employeeData.id, data).subscribe((response: any) => {
       this.router.navigate(
         [
           '../../',

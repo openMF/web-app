@@ -193,3 +193,41 @@ export class AccountTransfersService {
       );
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class OrganizationService {
+  constructor(
+    private http: HttpClient,
+    private settingsService: any
+  ) {}
+
+  /**
+   * @param urlSuffix of Bulk-Import
+   * @param officeId Office ID for template retrieval
+   * @param staffId Staff ID for template retrieval
+   * @param legalFormType Legal Form type fortemplate retrieval
+   * @returns {Observable<any>} Import Template
+   */
+  getImportTemplate(urlSuffix: string, officeId: any, staffId: any, legalFormType: string): Observable<any> {
+    let httpParams = new HttpParams()
+      .set('tenantIdentifier', 'default')
+      .set('locale', this.settingsService.language.code)
+      .set('dateFormat', this.settingsService.dateFormat);
+    if (officeId) {
+      httpParams = httpParams.set('officeId', officeId.toString());
+    }
+    if (staffId) {
+      httpParams = httpParams.set('staffId', staffId.toString());
+    }
+    if (legalFormType.length) {
+      httpParams = httpParams.set('legalFormType', legalFormType);
+    }
+    return this.http.get(`${urlSuffix}/downloadtemplate`, {
+      params: httpParams,
+      responseType: 'arraybuffer',
+      observe: 'response'
+    });
+  }
+}

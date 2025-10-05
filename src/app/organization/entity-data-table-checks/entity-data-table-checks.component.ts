@@ -19,7 +19,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { EntityDataTableService } from '@fineract/client';
 
 /** Custom Components */
 import { DeleteDialogComponent } from '../../shared/delete-dialog/delete-dialog.component';
@@ -94,12 +94,12 @@ export class EntityDataTableChecksComponent implements OnInit {
 
   /**
    * Retrieves the entity data table checks data from `resolve`.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {EntityDataTableService} entityDataTableService Entity Data Table Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
-    private organizationService: OrganizationService,
+    private entityDataTableService: EntityDataTableService,
     private route: ActivatedRoute,
     private dialog: MatDialog
   ) {
@@ -164,12 +164,14 @@ export class EntityDataTableChecksComponent implements OnInit {
     });
     deleteEntityDataTableCheckDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteEntityDataTableCheck(entityDataTableCheckId).subscribe(() => {
-          this.entityDataTableChecksData = this.entityDataTableChecksData.filter(
-            (entityDataTableChecks: any) => entityDataTableChecks.id !== entityDataTableCheckId
-          );
-          this.dataSource.data = this.entityDataTableChecksData;
-        });
+        this.entityDataTableService
+          .deleteDatatable1({ entityDatatableCheckId: Number(entityDataTableCheckId) })
+          .subscribe(() => {
+            this.entityDataTableChecksData = this.entityDataTableChecksData.filter(
+              (entityDataTableChecks: any) => entityDataTableChecks.id !== Number(entityDataTableCheckId)
+            );
+            this.dataSource.data = this.entityDataTableChecksData;
+          });
       }
     });
   }

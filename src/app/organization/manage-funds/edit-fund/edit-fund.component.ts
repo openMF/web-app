@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { OrganizationService } from 'app/organization/organization.service';
+import { FundsService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -26,7 +26,7 @@ export class EditFundComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
   constructor(
-    private organizationService: OrganizationService,
+    private fundsService: FundsService,
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private route: ActivatedRoute
@@ -55,7 +55,7 @@ export class EditFundComponent implements OnInit {
 
   submit() {
     const payload = this.fundForm.getRawValue();
-    this.organizationService.editFund(this.fundData.id.toString(), payload).subscribe((response: any) => {
+    this.fundsService.updateFund(this.fundData.id.toString(), payload).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

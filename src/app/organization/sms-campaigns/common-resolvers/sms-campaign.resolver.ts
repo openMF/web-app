@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from 'app/organization/organization.service';
+import { DefaultService } from '@fineract/client';
 
 /**
  * SMS Campaign data resolver.
@@ -14,9 +14,9 @@ import { OrganizationService } from 'app/organization/organization.service';
 @Injectable()
 export class SmsCampaignResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {DefaultService} defaultService Default service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private defaultService: DefaultService) {}
 
   /**
    * Returns the SMS Campaign data.
@@ -24,6 +24,7 @@ export class SmsCampaignResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const smsCampaignId = route.paramMap.get('id');
-    return this.organizationService.getSmsCampaign(smsCampaignId);
+    // Replace with the correct parameter(s) as per RetrieveAllEmails1RequestParams definition
+    return this.defaultService.retrieveAllEmails1({});
   }
 }

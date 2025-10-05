@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { BulkImportService } from '@fineract/client';
 
 /** Custom Imports */
 import { BulkImports } from './view-bulk-import/bulk-imports';
@@ -19,9 +19,9 @@ export class BulkImportResolver {
   bulkImportsArray = BulkImports;
 
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {BulkImportService} bulkImportService Bulk Import service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private bulkImportService: BulkImportService) {}
 
   /**
    * Gets bulk-import's entity name
@@ -37,7 +37,7 @@ export class BulkImportResolver {
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const entity = this.getEntityName(route.params['import-name']);
-    return this.organizationService.getImports(entity);
+    const entityType = this.getEntityName(route.params['import-name']);
+    return this.bulkImportService.retrieveImportDocuments({ entityType });
   }
 }

@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { OfficesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatDialog } from '@angular/material/dialog';
@@ -44,7 +44,7 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the offices data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {OfficesService} officeService Office Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
@@ -55,7 +55,7 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
+    private officeService: OfficesService,
     private settingsService: SettingsService,
     private router: Router,
     private route: ActivatedRoute,
@@ -112,7 +112,7 @@ export class CreateOfficeComponent implements OnInit, AfterViewInit {
       dateFormat,
       locale
     };
-    this.organizationService.createOffice(data).subscribe((response) => {
+    this.officeService.createOffice(data).subscribe((response) => {
       if (this.configurationWizardService.showOfficeForm === true) {
         this.configurationWizardService.showOfficeForm = false;
         this.openDialog();

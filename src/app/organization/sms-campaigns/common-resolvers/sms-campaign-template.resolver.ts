@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../../organization.service';
+import { DefaultService } from '@fineract/client';
 
 /**
  * SMS Campaign Template resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../../organization.service';
 @Injectable()
 export class SmsCampaignTemplateResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {DefaultService} defaultService Default service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private defaultService: DefaultService) {}
 
   /**
    * Returns the SMS Campaign Template.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getSmsCampaignTemplate();
+    return this.defaultService.template2();
   }
 }

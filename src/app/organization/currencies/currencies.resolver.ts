@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { CurrencyService } from '@fineract/client';
 
 /**
  * Currencies data resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class CurrenciesResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {CurrencyService} currencyService Currency service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private currencyService: CurrencyService) {}
 
   /**
    * Returns the currencies data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getCurrencies();
+    return this.currencyService.retrieveCurrencies();
   }
 }

@@ -12,7 +12,7 @@ import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-
 import { InputBase } from 'app/shared/form-dialog/formfield/model/input-base';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { FundsService } from '@fineract/client';
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
 
@@ -92,7 +92,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
    * Retrieves the manage funds data from `resolve`.
    * @param {ActivatedRoute} route Activated Route
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {OrganizationService} organizationservice Organization Service
+   * @param {FundsService} fundsService Funds Service
    * @param {MatDialog} dialog Mat Dialog
    * @param {Router} router Router.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
@@ -101,7 +101,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
-    private organizationservice: OrganizationService,
+    private fundsService: FundsService,
     public dialog: MatDialog,
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
@@ -143,7 +143,7 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
    */
   addFund() {
     const newFund = this.fundForm.value;
-    this.organizationservice.createFund(newFund).subscribe((response: any) => {
+    this.fundsService.createFund(newFund).subscribe((response: any) => {
       this.fundsData.push({
         id: response.resourceId,
         name: newFund.name
@@ -181,9 +181,14 @@ export class ManageFundsComponent implements OnInit, AfterViewInit {
     const editFundDialogRef = this.dialog.open(FormDialogComponent, { data });
     editFundDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        this.organizationservice.editFund(fundId, response.data.value).subscribe(() => {
-          this.fundsData[index].name = response.data.value.name;
-        });
+        this.fundsService
+          .updateFund({
+            fundId: Number(fundId),
+            fundRequest: response.data.value
+          })
+          .subscribe(() => {
+            this.fundsData[index].name = response.data.value.name;
+          });
       }
     });
   }

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
-import { OrganizationService } from 'app/organization/organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -35,7 +35,7 @@ export class AllocateCashComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {ActivatedRoute} route ActivateRoute.
    * @param {Dates} dateUtils Date Utils.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
@@ -43,7 +43,7 @@ export class AllocateCashComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private dateUtils: Dates,
-    private organizationService: OrganizationService,
+    private tellerCashManagementService: TellerCashManagementService,
     private settingsService: SettingsService,
     private router: Router
   ) {
@@ -109,8 +109,8 @@ export class AllocateCashComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService
-      .allocateCash(this.cashierData.tellerId, this.cashierData.cashierId, data)
+    this.tellerCashManagementService
+      .allocateCashToCashier(this.cashierData.tellerId, this.cashierData.cashierId, data)
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

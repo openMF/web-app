@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services. */
-import { OrganizationService } from 'app/organization/organization.service';
+import { HolidaysService } from '@fineract/client';
 
 /** Custom Components. */
 import { ConfirmationDialogComponent } from '../../../shared/confirmation-dialog/confirmation-dialog.component';
@@ -40,7 +40,7 @@ export class ViewHolidaysComponent {
     private router: Router,
     private dialog: MatDialog,
     private translateService: TranslateService,
-    private organizationService: OrganizationService
+    private holidaysService: HolidaysService
   ) {
     this.route.data.subscribe((data: { holidays: any }) => {
       this.holidayData = data.holidays;
@@ -56,7 +56,7 @@ export class ViewHolidaysComponent {
     });
     deleteHolidayDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteHoliday(this.holidayData.id).subscribe(() => {
+        this.holidaysService.delete6(this.holidayData.id).subscribe(() => {
           this.router.navigate(['../'], { relativeTo: this.route });
         });
       }
@@ -78,7 +78,7 @@ export class ViewHolidaysComponent {
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.organizationService.activateHoliday(this.holidayData.id).subscribe(() => {
+        this.holidaysService.handleCommands1(this.holidayData.id).subscribe(() => {
           this.router.navigate(['/organization/holidays']);
         });
       }

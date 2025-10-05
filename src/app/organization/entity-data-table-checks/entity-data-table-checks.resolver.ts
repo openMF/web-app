@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { OrganizationService } from '../organization.service';
+import { EntityDataTableService } from '@fineract/client';
 
 /**
  * Entity Data Table Checks data resolver.
@@ -13,15 +13,15 @@ import { OrganizationService } from '../organization.service';
 @Injectable()
 export class EntityDataTableChecksResolver {
   /**
-   * @param {OrganizationService} organizationService Organization service.
+   * @param {EntityDataTableService} entityDataTableService Entity Data Table service.
    */
-  constructor(private organizationService: OrganizationService) {}
+  constructor(private entityDataTableService: EntityDataTableService) {}
 
   /**
    * Returns the Entity Data Table Checks data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.organizationService.getEntityDataTableChecks();
+    return this.entityDataTableService.retrieveAll6();
   }
 }

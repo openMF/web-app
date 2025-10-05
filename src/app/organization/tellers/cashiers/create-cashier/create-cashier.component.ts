@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
-import { OrganizationService } from 'app/organization/organization.service';
+import { TellerCashManagementService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -38,7 +38,7 @@ export class CreateCashierComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router.
    * @param {Dates} dateUtils Date Utils.
-   * @param {OrganizationService} organizationService Organization Service.
+   * @param {TellerCashManagementService} tellerCashManagementService Teller Cash Management Service.
    * @param {SettingsService} settingsService Settings Service.
    */
   constructor(
@@ -46,7 +46,7 @@ export class CreateCashierComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private organizationService: OrganizationService,
+    private tellerCashManagementService: TellerCashManagementService,
     private settingsService: SettingsService
   ) {
     this.route.data.subscribe((data: { cashierTemplate: any }) => {
@@ -101,7 +101,7 @@ export class CreateCashierComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.organizationService.createCashier(this.cashierTemplate.tellerId, data).subscribe((response: any) => {
+    this.tellerCashManagementService.createCashier(this.cashierTemplate.tellerId, data).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
