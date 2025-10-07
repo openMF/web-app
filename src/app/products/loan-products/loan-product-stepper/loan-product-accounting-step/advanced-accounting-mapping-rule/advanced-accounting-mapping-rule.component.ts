@@ -133,6 +133,14 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     this.tableData = newData;
   }
 
+  updateTableData(updatedData: AccountingMappingDTO, index: number): void {
+    let newData = [
+      ...this.tableData.slice(0, index),
+      updatedData,
+      ...this.tableData.slice(index + 1)];
+    this.tableData = newData;
+  }
+
   delete(index: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       data: { deleteContext: this.translateService.instant('labels.text.this') }
@@ -140,6 +148,51 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     dialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
         this.tableData = this.tableData.filter((_, i) => i !== index);
+        this.sendParentData();
+      }
+    });
+  }
+
+  edit(record: AccountingMappingDTO, index: number) {
+    const data = { ...this.getData(this.formType, record), pristine: false, layout: { addButtonText: 'Edit' } };
+    const dialogRef = this.dialog.open(FormDialogComponent, { data });
+
+    dialogRef.afterClosed().subscribe((response: any) => {
+      if (response.data) {
+        let updateData: AccountingMappingDTO;
+        if ([
+            'ChargeOffReasonExpense',
+            'WriteOffReasonToExpense'
+          ].includes(this.formType)) {
+          updateData = {
+            value: this.getValueData(response.data.value.chargeOffReasonCodeValueId),
+            glAccount: this.getGlAccountData(response.data.value.expenseAccountId)
+          };
+        } else if ([
+            'BuydownFeeClassificationToIncome',
+            'CapitalizedIncomeClassificationToIncome'
+          ].includes(this.formType)) {
+          updateData = {
+            value: this.getValueData(response.data.value.valueId),
+            glAccount: this.getGlAccountData(response.data.value.glAccountId)
+          };
+        } else if (this.formType === 'PaymentFundSource') {
+          updateData = {
+            value: this.getValueData(response.data.paymentTypeId),
+            glAccount: this.getGlAccountData(response.data.fundSourceAccountId)
+          };
+        } else if (this.formType === 'FeesIncome') {
+          updateData = {
+            value: this.getValueData(response.data.chargeId),
+            glAccount: this.getGlAccountData(response.data.incomeAccountId)
+          };
+        } else if (this.formType === 'PenaltyIncome') {
+          updateData = {
+            value: this.getValueData(response.data.chargeId),
+            glAccount: this.getGlAccountData(response.data.incomeAccountId)
+          };
+        }
+        this.updateTableData(updateData, index);
         this.sendParentData();
       }
     });
@@ -267,7 +320,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       new SelectBase({
         controlName: 'chargeOffReasonCodeValueId',
         label: 'Charge-off reason',
-        value: values ? values.chargeOffReasonCodeValueId : reasonOptions[0].id,
+        value: values ? values.value.id : reasonOptions[0].id,
         options: { label: 'name', value: 'id', data: reasonOptions },
         required: true,
         order: 1
@@ -275,7 +328,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       new SelectBase({
         controlName: 'expenseAccountId',
         label: 'Expense Account',
-        value: values ? values.expenseAccountId : this.expenseAccountData[0].id,
+        value: values ? values.glAccount.id : this.expenseAccountData[0].id,
         options: { label: 'name', value: 'id', data: this.expenseAccountData },
         required: true,
         order: 2
@@ -293,7 +346,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       new SelectBase({
         controlName: 'valueId',
         label: 'Classification',
-        value: values ? values.chargeOffReasonCodeValueId : classificationOptions[0].id,
+        value: values ? values.value.id : classificationOptions[0].id,
         options: { label: 'name', value: 'id', data: classificationOptions },
         required: true,
         order: 1
@@ -301,7 +354,7 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       new SelectBase({
         controlName: 'glAccountId',
         label: 'Income Account',
-        value: values ? values.incomeAccountId : this.incomeAccountData[0].id,
+        value: values ? values.glAccount.id : this.incomeAccountData[0].id,
         options: { label: 'name', value: 'id', data: this.incomeAccountData },
         required: true,
         order: 2
@@ -325,9 +378,11 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
       this.liabilityAccountData
     ];
     for (const glAccountData of glAccountDatas) {
-      const glAccount = glAccountData.find((i: GLAccount) => i.id === valueId);
-      if (glAccount) {
-        return glAccount;
+      if (glAccountData) {
+        const glAccount = glAccountData.find((i: GLAccount) => i.id === valueId);
+        if (glAccount) {
+          return glAccount;
+        }
       }
     }
     return null;
