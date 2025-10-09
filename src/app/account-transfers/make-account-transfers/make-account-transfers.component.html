@@ -214,21 +214,5 @@
         [balance]="balance"
       ></mifosx-make-account-interbank-transfers>
     </mat-card-content>
-
-    <mat-card-actions *ngIf="!interbankTransferForm" class="action-buttons">
-      <button type="button" mat-raised-button [routerLink]="['../..']" class="cancel-button">
-        {{ 'labels.buttons.Cancel' | translate }}
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        [disabled]="!makeAccountTransferForm.valid"
-        *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'"
-        (click)="submit()"
-        class="primary-button"
-      >
-        {{ 'labels.buttons.Submit' | translate }}
-      </button>
-    </mat-card-actions>
   </mat-card>
 </div>
