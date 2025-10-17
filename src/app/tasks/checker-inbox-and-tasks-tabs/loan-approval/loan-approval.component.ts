@@ -22,7 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 /** Custom Services */
-import { TasksService } from '../../tasks.service';
+import { BatchAPIService, LoansService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
@@ -91,7 +91,8 @@ export class LoanApprovalComponent {
    * @param {Dates} dateUtils Date Utils.
    * @param {router} router Router.
    * @param {SettingsService} settingsService Settings Service.
-   * @param {TasksService} tasksService Tasks Service.
+   * @param {BatchAPIService} batchAPIService Batch API Service.
+   * @param {LoansService} loan Loan Service.
    */
   constructor(
     private route: ActivatedRoute,
@@ -100,7 +101,8 @@ export class LoanApprovalComponent {
     private router: Router,
     private translateService: TranslateService,
     private settingsService: SettingsService,
-    private tasksService: TasksService
+    private batchAPIService: BatchAPIService,
+    private loansService: LoansService
   ) {
     this.route.data.subscribe((data: { officesData: any; loansData: any }) => {
       this.offices = data.officesData;
@@ -200,7 +202,7 @@ export class LoanApprovalComponent {
       const batchData = { requestId: reqId++, relativeUrl: url, method: 'POST', body: bodyData };
       this.batchRequests.push(batchData);
     });
-    this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
+    this.batchAPIService.handleBatchRequests({ batchRequest: this.batchRequests }).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
         if ((responseEle.statusCode = '200')) {
           approvedAccounts++;
@@ -219,7 +221,7 @@ export class LoanApprovalComponent {
   }
 
   loanResource() {
-    this.tasksService.getAllLoansToBeApproved().subscribe((response: any) => {
+    this.loansService.retrieveAll27().subscribe((response: any) => {
       this.loans = response.pageItems;
       this.loans = this.loans.filter((account: any) => {
         return account.status.waitingForDisbursal === true;

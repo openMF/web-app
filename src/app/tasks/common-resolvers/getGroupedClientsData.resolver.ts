@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { TasksService } from '../tasks.service';
+import { ClientService } from '@fineract/client';
 
 /**
  * Grouped Client Data data resolver.
@@ -13,15 +13,15 @@ import { TasksService } from '../tasks.service';
 @Injectable()
 export class GetGroupedClientsData {
   /**
-   * @param {TasksService} tasksService Tasks service.
+   * @param {ClientService} clientService Client service.
    */
-  constructor(private tasksService: TasksService) {}
+  constructor(private clientService: ClientService) {}
 
   /**
    * Returns the grouped client data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.tasksService.getGroupedClientsData();
+    return this.clientService.retrieveAll21();
   }
 }
