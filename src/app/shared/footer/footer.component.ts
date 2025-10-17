@@ -11,7 +11,7 @@ import { VersionService } from 'app/system/version.service';
 /** Environment Configuration */
 import { environment } from '../../../environments/environment';
 import { Subscription } from 'rxjs';
-import { NgIf, NgClass, DatePipe } from '@angular/common';
+import { NgClass, DatePipe } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 

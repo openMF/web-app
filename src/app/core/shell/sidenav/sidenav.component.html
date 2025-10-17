@@ -3,7 +3,7 @@
     'sidebar-full': !sidenavCollapsed,
     'sidebar-compact': sidenavCollapsed
   }"
->
+  >
   <div class="navigation-panel layout-column">
     <!-- TODO: Allow customization by organization -->
     <div class="app-brand" [routerLink]="['/home']">
@@ -23,7 +23,7 @@
           mat-icon-button
           matTooltip="{{ 'tooltips.Settings' | translate }}"
           [routerLink]="['/settings']"
-        >
+          >
           <fa-icon icon="cog"></fa-icon>
         </button>
         <button class="xs-button" mat-icon-button matTooltip="{{ 'tooltips.Sign Out' | translate }}" (click)="logout()">
@@ -40,16 +40,18 @@
         </div>
       </div>
       <div class="icon-menu">
-        <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
-          <button
-            mat-raised-button
-            [matTooltipPosition]="tooltipPosition"
-            [matTooltip]="activity.toolTip"
-            [routerLink]="[activity.path]"
-          >
-            <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
-          </button>
-        </div>
+        @for (activity of mappedActivities; track activity) {
+          <div class="icon-menu-item">
+            <button
+              mat-raised-button
+              [matTooltipPosition]="tooltipPosition"
+              [matTooltip]="activity.toolTip"
+              [routerLink]="[activity.path]"
+              >
+              <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
+            </button>
+          </div>
+        }
       </div>
 
       <div class="nav-item-sep">
@@ -64,11 +66,11 @@
           matTooltip="{{ 'tooltips.Dashboard' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-        >
+          >
           <mat-icon matListIcon>
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #dashboard>{{ 'labels.menus.Dashboard' | translate }}</a>
+          <a class="menu-label" matLine #dashboard>{{ 'labels.menus.Dashboard' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/navigation']"
@@ -76,11 +78,11 @@
           matTooltip="{{ 'tooltips.Navigation' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-        >
+          >
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #navigation>{{ 'labels.menus.Navigation' | translate }}</a>
+          <a class="menu-label" matline #navigation>{{ 'labels.menus.Navigation' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/checker-inbox-and-tasks/checker-inbox']"
@@ -88,11 +90,11 @@
           matTooltip="{{ 'tooltips.Checker Inbox and Tasks' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-        >
+          >
           <mat-icon matListIcon>
             <i class="fa fa-check"></i>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Checker Inbox and Tasks' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Checker Inbox and Tasks' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/collections/collection-sheet']"
@@ -100,11 +102,11 @@
           matTooltip="{{ 'tooltips.Collection Sheet' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-        >
+          >
           <mat-icon matListIcon>
             <i class="fa fa-tasks"></i>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Collection Sheet' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Collection Sheet' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/collections/individual-collection-sheet']"
@@ -112,11 +114,11 @@
           matTooltip="{{ 'tooltips.Individual Collection Sheet' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-        >
+          >
           <mat-icon matListIcon>
             <i class="fa fa-tasks"></i>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Individual Collection Sheet' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Individual Collection Sheet' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/notifications']"
@@ -124,11 +126,11 @@
           matTooltip="{{ 'tooltips.Notifications' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-        >
+          >
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Notifications' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Notifications' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/accounting/journal-entries/frequent-postings']"
@@ -136,11 +138,11 @@
           matTooltip="{{ 'tooltips.Frequent Postings' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-        >
+          >
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #frequentPostings>{{ 'labels.menus.Frequent Postings' | translate }}</a>
+          <a class="menu-label" matline #frequentPostings>{{ 'labels.menus.Frequent Postings' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/accounting/journal-entries/create']"
@@ -148,11 +150,11 @@
           matTooltip="{{ 'tooltips.Create Journal Entry' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-        >
+          >
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #createJournalEntry>{{ 'labels.menus.Create Journal Entry' | translate }}</a>
+          <a class="menu-label" matline #createJournalEntry>{{ 'labels.menus.Create Journal Entry' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/accounting/chart-of-accounts']"
@@ -160,27 +162,27 @@
           matTooltip="{{ 'tooltips.Chart Of Accounts' | translate }}"
           routerLinkActive="active-menu"
           [routerLinkActiveOptions]="{ exact: false }"
-        >
+          >
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #chartOfAccounts>{{ 'labels.menus.Chart of Accounts' | translate }}</a>
+          <a class="menu-label" matline #chartOfAccounts>{{ 'labels.menus.Chart of Accounts' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           (click)="showKeyboardShortcuts()"
           [matTooltipPosition]="tooltipPosition"
           matTooltip="{{ 'tooltips.Keyboard Shortcuts' | translate }}"
-        >
+          >
           <mat-icon matListIcon>
             <fa-icon icon="keyboard" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Keyboard Shortcuts' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Keyboard Shortcuts' | translate }}</a>
         </mat-list-item>
         <mat-list-item [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Help' | translate }}">
           <mat-icon matListIcon (click)="help()">
             <fa-icon icon="question-circle" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Help' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Help' | translate }}</a>
         </mat-list-item>
       </mat-nav-list>
     </div>
@@ -201,7 +203,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateUserPanel, userPanel, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -218,14 +220,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateLogo, logo, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -242,14 +244,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateUserPanel, userPanel, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateDashboard, dashboard, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -266,14 +268,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateNavigation, navigation, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -290,14 +292,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateDashboard, dashboard, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFrequentPostings, frequentPostings, 'top', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -314,14 +316,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateNavigation, navigation, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateCreateJournalEntry, createJournalEntry, 'top', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -338,14 +340,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFrequentPostings, frequentPostings, 'top', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateChartOfAccounts, chartOfAccounts, 'top', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -362,7 +364,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateCreateJournalEntry, createJournalEntry, 'top', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

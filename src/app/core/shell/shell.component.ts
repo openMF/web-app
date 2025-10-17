@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 /** Custom Services */
 import { ProgressBarService } from '../progress-bar/progress-bar.service';
 import { MatSidenavContainer, MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
-import { NgClass, NgIf, AsyncPipe } from '@angular/common';
+import { NgClass, AsyncPipe } from '@angular/common';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';

@@ -1,9 +1,11 @@
-<div class="container m-b-20 layout-row layout-align-end gap-20px" *ngIf="!isdividendPosted">
-  <button mat-raised-button color="primary" *mifosxHasPermission="'POST_DIVIDENDS'" (click)="postDividends()">
-    <fa-icon icon="plus" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.buttons' | translate }}
-  </button>
-</div>
+@if (!isdividendPosted) {
+  <div class="container m-b-20 layout-row layout-align-end gap-20px">
+    <button mat-raised-button color="primary" *mifosxHasPermission="'POST_DIVIDENDS'" (click)="postDividends()">
+      <fa-icon icon="plus" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.buttons' | translate }}
+    </button>
+  </div>
+}
 
 <div class="container">
   <div class="layout-row">

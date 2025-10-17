@@ -20,7 +20,7 @@ import {
 /** Custom Services */
 import { environment } from '../../environments/environment';
 import { ClientsService } from './clients.service';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { AccountNumberComponent } from '../shared/account-number/account-number.component';

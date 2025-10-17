@@ -7,7 +7,7 @@
     class="flex-100"
     [repaymentScheduleDetails]="repaymentScheduleDetails"
     [currencyCode]="currencyCode"
-  >
+    >
   </mifosx-repayment-schedule-tab>
 </div>
 
@@ -20,7 +20,9 @@
     {{ 'labels.buttons.Next' | translate }}
     <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
   </button>
-  <button mat-raised-button *ngIf="loanId" [routerLink]="['../', 'general']">
-    {{ 'labels.buttons.Cancel' | translate }}
-  </button>
+  @if (loanId) {
+    <button mat-raised-button [routerLink]="['../', 'general']">
+      {{ 'labels.buttons.Cancel' | translate }}
+    </button>
+  }
 </div>

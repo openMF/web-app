@@ -7,7 +7,7 @@
         formControlName="name"
         matTooltip="{{ 'tooltips.Product name is a unique identifier' | translate }}"
         required
-      />
+        />
       <mat-error>
         {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -22,7 +22,7 @@
         maxlength="4"
         matTooltip="{{ 'tooltips.Short name is a unique identifier' | translate }}"
         required
-      />
+        />
       <mat-error>
         {{ 'labels.inputs.Short Name' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -35,15 +35,17 @@
         matInput
         formControlName="externalId"
         matTooltip="{{ 'tooltips.External Id is a unique identifier' | translate }}"
-      />
+        />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Fund' | translate }}</mat-label>
       <mat-select matTooltip="{{ 'tooltips.Loan products may be assigned' | translate }}" formControlName="fundId">
-        <mat-option *ngFor="let fund of fundData" [value]="fund.id">
-          {{ fund.name }}
-        </mat-option>
+        @for (fund of fundData; track fund) {
+          <mat-option [value]="fund.id">
+            {{ fund.name }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -52,7 +54,7 @@
       matTooltip="{{ 'tooltips.A borrower loan counter (cycle)' | translate }}"
       formControlName="includeInBorrowerCycle"
       class="flex-48"
-    >
+      >
       {{ 'labels.inputs.Include in Customer Loan Counter' | translate }}
     </mat-checkbox>
 
@@ -65,7 +67,7 @@
         [matDatepicker]="startDatePicker"
         matTooltip="{{ 'tooltips.loan product will be active and available to clients' | translate }}"
         formControlName="startDate"
-      />
+        />
       <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker></mat-datepicker>
     </mat-form-field>
@@ -79,7 +81,7 @@
         [matDatepicker]="closeDatePicker"
         matTooltip="{{ 'tooltips.loan product will become inactive and unavailable to clients' | translate }}"
         formControlName="closeDate"
-      />
+        />
       <mat-datepicker-toggle matSuffix [for]="closeDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #closeDatePicker></mat-datepicker>
     </mat-form-field>

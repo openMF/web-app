@@ -2,12 +2,13 @@
   <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
     <mat-select #charge>
-      <mat-option
-        *ngFor="let charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value"
-        [value]="charge"
-      >
-        {{ charge.name }}
-      </mat-option>
+      @for (charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value; track charge) {
+        <mat-option
+          [value]="charge"
+          >
+          {{ charge.name }}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
 
@@ -23,7 +24,7 @@
     mat-table
     [dataSource]="chargesDataSource"
     [hidden]="chargesDataSource.length === 0"
-  >
+    >
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
       <td mat-cell *matCellDef="let charge">

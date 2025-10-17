@@ -171,7 +171,7 @@ export class LoanAccountActionsComponent {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    const currentNavigation = this.router.getCurrentNavigation();
+    const currentNavigation = this.router.currentNavigation();
     // Safely access data with optional chaining
     this.navigationData = currentNavigation?.extras?.state?.data;
 

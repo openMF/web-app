@@ -4,8 +4,10 @@
   </span>
   <mat-label>{{ 'labels.inputs.Tenant' | translate }}</mat-label>
   <mat-select [formControl]="tenantSelector" (selectionChange)="setTenantIdentifier()" class="tenantselector">
-    <mat-option *ngFor="let tenant of tenants" [value]="tenant">
-      {{ tenant }}
-    </mat-option>
+    @for (tenant of tenants; track tenant) {
+      <mat-option [value]="tenant">
+        {{ tenant }}
+      </mat-option>
+    }
   </mat-select>
 </mat-form-field>

@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #loansAccountStepper
-  >
+    >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -33,7 +33,7 @@
         [loansAccountTemplate]="loansAccountTemplate"
         (loansAccountProductTemplate)="setTemplate($event)"
         #loansAccountDetailsForm
-      >
+        >
       </mifosx-loans-account-details-step>
     </mat-step>
 
@@ -47,7 +47,7 @@
         [collateralOptions]="collateralOptions"
         [loansAccountFormValid]="loansAccountFormValid"
         [loanPrincipal]="loanPrincipal"
-      >
+        >
       </mifosx-loans-account-terms-step>
     </mat-step>
 
@@ -60,39 +60,42 @@
         [loansAccountTemplate]="loansAccountTemplate"
         [loansAccountFormValid]="loansAccountFormValid"
         [loansSavingsAccountLinked]="loansSavingsAccountLinked"
-      >
+        >
       </mifosx-loans-account-charges-step>
     </mat-step>
 
-    <mat-step state="repayment" *ngIf="loansAccountFormValid" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.REPAYMENT SCHEDULE' | translate }}</ng-template>
+    @if (loansAccountFormValid) {
+      <mat-step state="repayment" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.REPAYMENT SCHEDULE' | translate }}</ng-template>
+        <mifosx-loans-account-schedule-step
+          #loanAccountSchedule
+          [loansAccountTemplate]="loansAccountTemplate"
+          [loansAccountProductTemplate]="loansAccountProductTemplate"
+          [loansAccount]="loansAccount"
+          [currencyCode]="currencyCode"
+          >
+        </mifosx-loans-account-schedule-step>
+      </mat-step>
+    }
 
-      <mifosx-loans-account-schedule-step
-        #loanAccountSchedule
-        [loansAccountTemplate]="loansAccountTemplate"
-        [loansAccountProductTemplate]="loansAccountProductTemplate"
-        [loansAccount]="loansAccount"
-        [currencyCode]="currencyCode"
-      >
-      </mifosx-loans-account-schedule-step>
-    </mat-step>
+    @for (datatable of datatables; track datatable) {
+      <mat-step>
+        <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
+        <mifosx-loans-account-datatable-step [datatableData]="datatable" #dtloan></mifosx-loans-account-datatable-step>
+      </mat-step>
+    }
 
-    <mat-step *ngFor="let datatable of datatables">
-      <ng-template matStepLabel>{{ datatable.registeredTableName }}</ng-template>
-
-      <mifosx-loans-account-datatable-step [datatableData]="datatable" #dtloan></mifosx-loans-account-datatable-step>
-    </mat-step>
-
-    <mat-step state="preview" *ngIf="loansAccountFormValid" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-loans-account-preview-step
-        [loansAccountTemplate]="loansAccountTemplate"
-        [loansAccountProductTemplate]="loansAccountProductTemplate"
-        [loansAccount]="loansAccount"
-        (submitEvent)="submit()"
-      >
-      </mifosx-loans-account-preview-step>
-    </mat-step>
+    @if (loansAccountFormValid) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-loans-account-preview-step
+          [loansAccountTemplate]="loansAccountTemplate"
+          [loansAccountProductTemplate]="loansAccountProductTemplate"
+          [loansAccount]="loansAccount"
+          (submitEvent)="submit()"
+          >
+        </mifosx-loans-account-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

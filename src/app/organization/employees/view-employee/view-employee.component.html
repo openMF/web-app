@@ -41,13 +41,17 @@
           {{ employeeData.isLoanOfficer === true | yesNo }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="employeeData.mobileNo">
-          {{ 'labels.inputs.Mobile Number for SMS' | translate }}
-        </div>
+        @if (employeeData.mobileNo) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Mobile Number for SMS' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="employeeData.mobileNo">
-          {{ employeeData.mobileNo }}
-        </div>
+        @if (employeeData.mobileNo) {
+          <div class="flex-50">
+            {{ employeeData.mobileNo }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Status' | translate }}

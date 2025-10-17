@@ -29,13 +29,17 @@
           {{ tellerData.officeName }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="tellerData.description">
-          {{ 'labels.inputs.Description' | translate }}
-        </div>
+        @if (tellerData.description) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Description' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="tellerData.description">
-          {{ tellerData.description }}
-        </div>
+        @if (tellerData.description) {
+          <div class="flex-50">
+            {{ tellerData.description }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Start Date' | translate }}
@@ -45,13 +49,17 @@
           {{ tellerData.startDate | dateFormat }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="tellerData.endDate">
-          {{ 'labels.inputs.End Date' | translate }}
-        </div>
+        @if (tellerData.endDate) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.End Date' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="tellerData.endDate">
-          {{ tellerData.endDate | dateFormat }}
-        </div>
+        @if (tellerData.endDate) {
+          <div class="flex-50">
+            {{ tellerData.endDate | dateFormat }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Status' | translate }}

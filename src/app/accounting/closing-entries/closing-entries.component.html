@@ -16,9 +16,11 @@
 
 <!-- Autocomplete data -->
 <mat-autocomplete autoActiveFirstOption #officeNameAutocomplete="matAutocomplete">
-  <mat-option *ngFor="let office of filteredOfficeData | async" [value]="office.name">
-    {{ office.name }}
-  </mat-option>
+  @for (office of filteredOfficeData | async; track office) {
+    <mat-option [value]="office.name">
+      {{ office.name }}
+    </mat-option>
+  }
 </mat-autocomplete>
 
 <div class="container">
@@ -71,7 +73,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -87,14 +89,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonCreateClosure, buttonCreateClosure, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateClosuresTable, closuresTable, 'top', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -115,7 +117,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

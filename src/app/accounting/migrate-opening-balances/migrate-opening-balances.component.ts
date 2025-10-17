@@ -19,7 +19,7 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 import { onlyOneOfTheFieldsIsRequiredValidator } from './only-one-of-the-fields-is-required.validator';
 import { Dates } from 'app/core/utils/dates';
 import { TranslateService } from '@ngx-translate/core';
-import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 import { GlAccountDisplayComponent } from '../../shared/accounting/gl-account-display/gl-account-display.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 

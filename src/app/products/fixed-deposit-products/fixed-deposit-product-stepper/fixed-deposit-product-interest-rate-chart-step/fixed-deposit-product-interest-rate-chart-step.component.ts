@@ -27,7 +27,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import {
@@ -70,8 +70,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    NgSwitch,
-    NgSwitchCase,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
@@ -79,7 +77,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     MatStepperNext,
     FindPipe
-  ]
+]
 })
 export class FixedDepositProductInterestRateChartStepComponent implements OnInit {
   @Input() fixedDepositProductsTemplate: any;

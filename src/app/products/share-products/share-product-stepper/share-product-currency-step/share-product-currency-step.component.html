@@ -6,10 +6,12 @@
         matTooltip="{{ 'tooltips.The currency to be used' | translate }}"
         formControlName="currencyCode"
         required
-      >
-        <mat-option *ngFor="let currency of currencyData" [value]="currency.code">
-          {{ currency.name }}
-        </mat-option>
+        >
+        @for (currency of currencyData; track currency) {
+          <mat-option [value]="currency.code">
+            {{ currency.name }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Currency' | translate }} {{ 'labels.commons.is' | translate }}
@@ -25,7 +27,7 @@
         matInput
         formControlName="digitsAfterDecimal"
         required
-      />
+        />
       <mat-error>
         {{ 'labels.inputs.Decimal Places' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,7 +42,7 @@
         matTooltip="{{ 'tooltips.Amount to be rounded off' | translate }}"
         formControlName="inMultiplesOf"
         required
-      />
+        />
       <mat-error>
         {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -8,7 +8,6 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { DatepickerBase } from 'app/shared/form-dialog/formfield/model/datepicker-base';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { AnyKindOfDictionary } from 'cypress/types/lodash';
 import {
   MatTable,
   MatColumnDef,
@@ -76,7 +75,7 @@ export class LoanTermVariationsTabComponent {
   invalidData: any[] = [];
 
   loanId: number;
-  clientId: AnyKindOfDictionary;
+  clientId: string;
 
   constructor(
     private route: ActivatedRoute,

@@ -32,7 +32,7 @@ import { CustomParametersPopoverComponent } from './custom-parameters-popover/cu
 import { SchedulerJob } from './models/scheduler-job.model';
 import { ErrorLogPopoverComponent } from './error-log-popover/error-log-popover.component';
 import { RunSelectedJobsPopoverComponent } from './run-selected-jobs-popover/run-selected-jobs-popover.component';
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';

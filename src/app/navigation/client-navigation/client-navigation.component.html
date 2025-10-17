@@ -29,45 +29,65 @@
   <mat-tab-group>
     <mat-tab label="Details">
       <div class="layout-row-wrap">
-        <div class="flex-50 mat-body-strong" *ngIf="clientData.firstName">
-          {{ 'labels.inputs.First Name' | translate }}
-        </div>
+        @if (clientData.firstName) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.First Name' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="clientData.firstName">
-          {{ clientData.firstName }}
-        </div>
+        @if (clientData.firstName) {
+          <div class="flex-50">
+            {{ clientData.firstName }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="clientData.middleName">
-          {{ 'labels.inputs.Middle Name' | translate }}
-        </div>
+        @if (clientData.middleName) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Middle Name' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="clientData.middleName">
-          {{ clientData.middleName }}
-        </div>
+        @if (clientData.middleName) {
+          <div class="flex-50">
+            {{ clientData.middleName }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="clientData.lastName">
-          {{ 'labels.inputs.Last Name' | translate }}
-        </div>
+        @if (clientData.lastName) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Last Name' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="clientData.lastName">
-          {{ clientData.lastName }}
-        </div>
+        @if (clientData.lastName) {
+          <div class="flex-50">
+            {{ clientData.lastName }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="clientData.dateOfBirth">
-          {{ 'labels.inputs.Date of Birth' | translate }}
-        </div>
+        @if (clientData.dateOfBirth) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Date of Birth' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="clientData.dateOfBirth">
-          {{ clientData.dateOfBirth | dateFormat }}
-        </div>
+        @if (clientData.dateOfBirth) {
+          <div class="flex-50">
+            {{ clientData.dateOfBirth | dateFormat }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="clientData.mobileNo">
-          {{ 'labels.inputs.Mobile Number' | translate }}
-        </div>
+        @if (clientData.mobileNo) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Mobile Number' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="clientData.mobileNo">
-          {{ clientData.mobileNo }}
-        </div>
+        @if (clientData.mobileNo) {
+          <div class="flex-50">
+            {{ clientData.mobileNo }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Activation Date' | translate }}
@@ -77,40 +97,56 @@
           {{ clientData.activationDate | dateFormat }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="clientData.officeName">
-          {{ 'labels.inputs.Associated Office' | translate }}
-        </div>
+        @if (clientData.officeName) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Associated Office' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="clientData.officeName">
-          {{ clientData.officeName }}
-        </div>
+        @if (clientData.officeName) {
+          <div class="flex-50">
+            {{ clientData.officeName }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="clientData.staffName">
-          {{ 'labels.inputs.Associated Staff' | translate }}
-        </div>
+        @if (clientData.staffName) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Associated Staff' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="clientData.staffName">
-          {{ clientData.staffName }}
-        </div>
+        @if (clientData.staffName) {
+          <div class="flex-50">
+            {{ clientData.staffName }}
+          </div>
+        }
       </div>
     </mat-tab>
 
-    <mat-tab label="Loan Accounts" *ngIf="clientAccountsData && clientAccountsData.loanAccounts">
-      <mifosx-loan-account-table [loanAccountData]="clientAccountsData.loanAccounts"></mifosx-loan-account-table>
-    </mat-tab>
+    @if (clientAccountsData && clientAccountsData.loanAccounts) {
+      <mat-tab label="Loan Accounts">
+        <mifosx-loan-account-table [loanAccountData]="clientAccountsData.loanAccounts"></mifosx-loan-account-table>
+      </mat-tab>
+    }
 
-    <mat-tab label="Savings Accounts" *ngIf="clientAccountsData && clientAccountsData.savingsAccounts">
-      <mifosx-savings-account-table
-        [savingsAccountData]="clientAccountsData.savingsAccounts"
-      ></mifosx-savings-account-table>
-    </mat-tab>
+    @if (clientAccountsData && clientAccountsData.savingsAccounts) {
+      <mat-tab label="Savings Accounts">
+        <mifosx-savings-account-table
+          [savingsAccountData]="clientAccountsData.savingsAccounts"
+        ></mifosx-savings-account-table>
+      </mat-tab>
+    }
 
-    <mat-tab label="Share Accounts" *ngIf="clientAccountsData && clientAccountsData.shareAccounts">
-      <mifosx-share-account-table [shareAccountData]="clientAccountsData.shareAccounts"></mifosx-share-account-table>
-    </mat-tab>
+    @if (clientAccountsData && clientAccountsData.shareAccounts) {
+      <mat-tab label="Share Accounts">
+        <mifosx-share-account-table [shareAccountData]="clientAccountsData.shareAccounts"></mifosx-share-account-table>
+      </mat-tab>
+    }
 
-    <mat-tab label="Group Members" *ngIf="clientData.groups && clientData.groups.length !== 0">
-      <mifosx-member-groups [memberGroupData]="clientData.groups"></mifosx-member-groups>
-    </mat-tab>
+    @if (clientData.groups && clientData.groups.length !== 0) {
+      <mat-tab label="Group Members">
+        <mifosx-member-groups [memberGroupData]="clientData.groups"></mifosx-member-groups>
+      </mat-tab>
+    }
   </mat-tab-group>
 </mat-card-content>

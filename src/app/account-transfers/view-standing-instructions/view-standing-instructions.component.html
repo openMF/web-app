@@ -8,7 +8,7 @@
     color="primary"
     [routerLink]="['../', 'list-account-transactions']"
     *mifosxHasPermission="'READ_ACCOUNTTRANSFER'"
-  >
+    >
     {{ 'labels.buttons.View Transactions History' | translate }}
   </button>
 </div>
@@ -51,78 +51,82 @@
           <span class="flex-60"
             >{{ standingInstructionsData.fromAccount.productName }} -
             {{ standingInstructionsData.fromAccount.accountNo }}</span
-          >
-        </div>
+            >
+          </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.Destination' | translate }}:</span>
-          <span class="flex-60">
-            <span *ngIf="allowclientedit"> {{ 'labels.inputs.Within Bank' | translate }} </span>
-            <span *ngIf="!allowclientedit"> {{ 'labels.inputs.Own Account' | translate }} </span>
-          </span>
-        </div>
+          <div class="flex-fill">
+            <span class="flex-40">{{ 'labels.inputs.Destination' | translate }}:</span>
+            <span class="flex-60">
+              @if (allowclientedit) {
+                <span> {{ 'labels.inputs.Within Bank' | translate }} </span>
+              }
+              @if (!allowclientedit) {
+                <span> {{ 'labels.inputs.Own Account' | translate }} </span>
+              }
+            </span>
+          </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.To Office' | translate }}:</span>
-          <span class="flex-60">{{ standingInstructionsData.toOffice.name }}</span>
-        </div>
+          <div class="flex-fill">
+            <span class="flex-40">{{ 'labels.inputs.To Office' | translate }}:</span>
+            <span class="flex-60">{{ standingInstructionsData.toOffice.name }}</span>
+          </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.Beneficiary' | translate }}:</span>
-          <span class="flex-60">{{ standingInstructionsData.toClient.displayName }}</span>
-        </div>
+          <div class="flex-fill">
+            <span class="flex-40">{{ 'labels.inputs.Beneficiary' | translate }}:</span>
+            <span class="flex-60">{{ standingInstructionsData.toClient.displayName }}</span>
+          </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.To Account Type' | translate }}:</span>
-          <span class="flex-60">{{ standingInstructionsData.toAccountType.value }}</span>
-        </div>
+          <div class="flex-fill">
+            <span class="flex-40">{{ 'labels.inputs.To Account Type' | translate }}:</span>
+            <span class="flex-60">{{ standingInstructionsData.toAccountType.value }}</span>
+          </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.To Account' | translate }}:</span>
-          <span class="flex-60"
-            >{{ standingInstructionsData.toAccount.productName }} -
-            {{ standingInstructionsData.toAccount.accountNo }}</span
-          >
-        </div>
+          <div class="flex-fill">
+            <span class="flex-40">{{ 'labels.inputs.To Account' | translate }}:</span>
+            <span class="flex-60"
+              >{{ standingInstructionsData.toAccount.productName }} -
+              {{ standingInstructionsData.toAccount.accountNo }}</span
+              >
+            </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.Standing Instruction Type' | translate }}:</span>
-          <span class="flex-60">{{ standingInstructionsData.instructionType.value }}</span>
-        </div>
+            <div class="flex-fill">
+              <span class="flex-40">{{ 'labels.inputs.Standing Instruction Type' | translate }}:</span>
+              <span class="flex-60">{{ standingInstructionsData.instructionType.value }}</span>
+            </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.Amount' | translate }}:</span>
-          <span class="flex-60">{{ standingInstructionsData.amount }}</span>
-        </div>
+            <div class="flex-fill">
+              <span class="flex-40">{{ 'labels.inputs.Amount' | translate }}:</span>
+              <span class="flex-60">{{ standingInstructionsData.amount }}</span>
+            </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.Validity' | translate }}:</span>
-          <span class="flex-60"
-            >{{ standingInstructionsData.validFrom | dateFormat }} -
-            {{ standingInstructionsData.validTill | dateFormat }}</span
-          >
-        </div>
+            <div class="flex-fill">
+              <span class="flex-40">{{ 'labels.inputs.Validity' | translate }}:</span>
+              <span class="flex-60"
+                >{{ standingInstructionsData.validFrom | dateFormat }} -
+                {{ standingInstructionsData.validTill | dateFormat }}</span
+                >
+              </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.Recurrence Type' | translate }}:</span>
-          <span class="flex-60">{{ standingInstructionsData.recurrenceType.value }}</span>
-        </div>
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Recurrence Type' | translate }}:</span>
+                <span class="flex-60">{{ standingInstructionsData.recurrenceType.value }}</span>
+              </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.Interval' | translate }}:</span>
-          <span class="flex-60">{{ standingInstructionsData.recurrenceInterval }}</span>
-        </div>
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Interval' | translate }}:</span>
+                <span class="flex-60">{{ standingInstructionsData.recurrenceInterval }}</span>
+              </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.Recurrence Frequency' | translate }}:</span>
-          <span class="flex-60">{{ standingInstructionsData.recurrenceFrequency.value }}</span>
-        </div>
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.Recurrence Frequency' | translate }}:</span>
+                <span class="flex-60">{{ standingInstructionsData.recurrenceFrequency.value }}</span>
+              </div>
 
-        <div class="flex-fill">
-          <span class="flex-40">{{ 'labels.inputs.On Month Day' | translate }}:</span>
-          <span class="flex-60">{{ standingInstructionsData.recurrenceOnMonthDay | dateFormat }}</span>
-        </div>
+              <div class="flex-fill">
+                <span class="flex-40">{{ 'labels.inputs.On Month Day' | translate }}:</span>
+                <span class="flex-60">{{ standingInstructionsData.recurrenceOnMonthDay | dateFormat }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
-    </mat-card-content>
-  </mat-card>
-</div>

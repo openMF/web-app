@@ -40,13 +40,17 @@
       {{ employeeData.isLoanOfficer | yesNo }}
     </div>
 
-    <div class="flex-50 mat-body-strong" *ngIf="employeeData.mobileNo">
-      {{ 'labels.inputs.Mobile Number' | translate }}
-    </div>
+    @if (employeeData.mobileNo) {
+      <div class="flex-50 mat-body-strong">
+        {{ 'labels.inputs.Mobile Number' | translate }}
+      </div>
+    }
 
-    <div class="flex-50" *ngIf="employeeData.mobileNo">
-      {{ employeeData.mobileNo }}
-    </div>
+    @if (employeeData.mobileNo) {
+      <div class="flex-50">
+        {{ employeeData.mobileNo }}
+      </div>
+    }
 
     <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Number of Centers' | translate }}

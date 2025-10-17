@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #shareProductStepper
-  >
+    >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -66,7 +66,7 @@
       <mifosx-share-product-charges-step
         [shareProductsTemplate]="shareProductsTemplate"
         [currencyCode]="shareProductCurrencyForm.get('currencyCode')"
-      >
+        >
       </mifosx-share-product-charges-step>
     </mat-step>
 
@@ -77,21 +77,22 @@
         [shareProductsTemplate]="shareProductsTemplate"
         [accountingRuleData]="accountingRuleData"
         [shareProductFormValid]="shareProductFormValid"
-      >
+        >
       </mifosx-share-product-accounting-step>
     </mat-step>
 
-    <mat-step state="preview" *ngIf="shareProductFormValid" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-share-product-preview-step
-        [shareProductsTemplate]="shareProductsTemplate"
-        [accountingRuleData]="accountingRuleData"
-        [shareProduct]="shareProduct"
-        [taskPermission]="'CREATE_SHAREPRODUCT'"
-        (submitEvent)="submit()"
-      >
-      </mifosx-share-product-preview-step>
-    </mat-step>
+    @if (shareProductFormValid) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-share-product-preview-step
+          [shareProductsTemplate]="shareProductsTemplate"
+          [accountingRuleData]="accountingRuleData"
+          [shareProduct]="shareProduct"
+          [taskPermission]="'CREATE_SHAREPRODUCT'"
+          (submitEvent)="submit()"
+          >
+        </mifosx-share-product-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

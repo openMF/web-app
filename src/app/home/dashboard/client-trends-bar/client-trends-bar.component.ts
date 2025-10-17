@@ -15,7 +15,7 @@ import { Dates } from 'app/core/utils/dates';
 import Chart from 'chart.js';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgFor, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
