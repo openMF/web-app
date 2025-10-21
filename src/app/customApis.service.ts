@@ -231,3 +231,20 @@ export class OrganizationService {
     });
   }
 }
+/**
+ * Savings Service
+ */
+@Injectable({
+  providedIn: 'root'
+})
+export class SavingsService {
+  constructor(private http: HttpClient) {}
+
+  /**
+   * @param {any} savingsAccount Savings Account
+   * @returns {Observable<any>}
+   */
+  createSavingsAccount(savingsAccount: any): Observable<any> {
+    return this.http.post('/savingsaccounts', savingsAccount);
+  }
+}

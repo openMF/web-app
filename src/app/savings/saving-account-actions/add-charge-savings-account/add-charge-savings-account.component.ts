@@ -10,7 +10,7 @@ import {
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SavingsService } from '../../savings.service';
+import { ChargesService, SavingsChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -46,7 +46,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    * @param {Dates} dateUtils Date Utils
-   * @param {SavingsService} savingsService Savings Service
+   * @param {ChargesService} chargesService Charges Service
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
@@ -54,8 +54,9 @@ export class AddChargeSavingsAccountComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private dateUtils: Dates,
-    private savingsService: SavingsService,
-    private settingsService: SettingsService
+    private chargesService: ChargesService,
+    private settingsService: SettingsService,
+    private savingsChargesService: SavingsChargesService
   ) {
     this.route.data.subscribe((data: { savingsAccountActionData: any }) => {
       this.savingsChargeOptions = data.savingsAccountActionData.chargeOptions;
@@ -74,7 +75,7 @@ export class AddChargeSavingsAccountComponent implements OnInit {
 
   buildDependencies() {
     this.savingsChargeForm.controls.chargeId.valueChanges.subscribe((chargeId) => {
-      this.savingsService.getChargeTemplate(chargeId).subscribe((data: any) => {
+      this.chargesService.deleteCharge(chargeId).subscribe((data: any) => {
         this.chargeDetails = data;
         const chargeTimeType = data.chargeTimeType.id;
         if (data.chargeTimeType.value === 'Withdrawal Fee' || data.chargeTimeType.value === 'Saving No Activity Fee') {
@@ -154,8 +155,13 @@ export class AddChargeSavingsAccountComponent implements OnInit {
         }
       }
     }
-    this.savingsService.createSavingsCharge(this.savingAccountId, 'charges', savingsCharge).subscribe(() => {
-      this.router.navigate(['../../transactions'], { relativeTo: this.route });
-    });
+    this.savingsChargesService
+      .addSavingsAccountCharge({
+        savingsAccountId: parseInt(this.savingAccountId, 10),
+        postSavingsAccountsSavingsAccountIdChargesRequest: savingsCharge
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../transactions'], { relativeTo: this.route });
+      });
   }
 }

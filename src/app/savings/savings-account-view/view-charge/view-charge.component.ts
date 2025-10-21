@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-import { SavingsService } from 'app/savings/savings.service';
+import { SavingsChargesService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -45,7 +45,7 @@ export class ViewChargeComponent {
 
   /**
    * Retrieves the Charge data from `resolve`.
-   * @param {SavingsService} savingsService Savings Service
+   * @param {SavingsChargesService} savingsChargesService Savings Charges Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
@@ -53,7 +53,7 @@ export class ViewChargeComponent {
    * @param {SettingsService} settingsService Setting service
    */
   constructor(
-    private savingsService: SavingsService,
+    private savingsChargesService: SavingsChargesService,
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
@@ -105,8 +105,13 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.savingsService
-          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'pay', dataObject, this.chargeData.id)
+        this.savingsChargesService
+          .payOrWaiveSavingsAccountCharge({
+            savingsAccountId: this.chargeData.accountId,
+            savingsAccountChargeId: this.chargeData.id,
+            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: dataObject,
+            command: 'pay'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -121,8 +126,13 @@ export class ViewChargeComponent {
     const waiveChargeDialogRef = this.dialog.open(WaiveChargeDialogComponent, { data: { id: this.chargeData.id } });
     waiveChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'waive', {}, this.chargeData.id)
+        this.savingsChargesService
+          .payOrWaiveSavingsAccountCharge({
+            savingsAccountId: this.chargeData.accountId,
+            savingsAccountChargeId: this.chargeData.id,
+            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: {},
+            command: 'waive'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -139,8 +149,13 @@ export class ViewChargeComponent {
     });
     inactivateChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.confirm) {
-        this.savingsService
-          .executeSavingsAccountChargesCommand(this.chargeData.accountId, 'inactivate', {}, this.chargeData.id)
+        this.savingsChargesService
+          .payOrWaiveSavingsAccountCharge({
+            savingsAccountId: this.chargeData.accountId,
+            savingsAccountChargeId: this.chargeData.id,
+            postSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest: {},
+            command: 'inactivate'
+          })
           .subscribe(() => {
             this.reload();
           });
@@ -177,8 +192,8 @@ export class ViewChargeComponent {
           dateFormat,
           locale
         };
-        this.savingsService
-          .editSavingsAccountCharge(this.chargeData.accountId, dataObject, this.chargeData.id)
+        this.savingsChargesService
+          .updateSavingsAccountCharge(this.chargeData.accountId, dataObject, this.chargeData.id)
           .subscribe(() => {
             this.reload();
           });
@@ -195,9 +210,11 @@ export class ViewChargeComponent {
     });
     deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.savingsService.deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id).subscribe(() => {
-          this.reload();
-        });
+        this.savingsChargesService
+          .deleteSavingsAccountCharge(this.chargeData.accountId, this.chargeData.id)
+          .subscribe(() => {
+            this.reload();
+          });
       }
     });
   }

@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SavingsService } from '../savings.service';
+import { SavingsAccountTransactionsService } from '@fineract/client';
 
 /**
  * Savings Account Transaction data resolver.
@@ -14,9 +14,9 @@ import { SavingsService } from '../savings.service';
 @Injectable()
 export class SavingsAccountTransactionResolver {
   /**
-   * @param {SavingsService} SavingsService Savings service.
+   * @param {SavingsAccountTransactionsService} SavingsAccountTransactionsService Savings Account Transactions Service.
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor(private savingsAccountTransactionsService: SavingsAccountTransactionsService) {}
 
   /**
    * Returns the Savings Account Transaction data.
@@ -26,6 +26,12 @@ export class SavingsAccountTransactionResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const savingAccountId = route.parent.paramMap.get('savingAccountId');
     const transactionId = route.parent.paramMap.get('id');
-    return this.savingsService.getSavingsAccountTransaction(savingAccountId, transactionId);
+    if (savingAccountId && transactionId) {
+      return this.savingsAccountTransactionsService.retrieveOne24({
+        savingsId: Number(savingAccountId),
+        transactionId: Number(transactionId)
+      });
+    }
+    throw new Error('Required parameters missing');
   }
 }
