@@ -32,7 +32,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { DatetimeFormatPipe } from '../../pipes/datetime-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -62,7 +62,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatRow,
     MatPaginator,
     AsyncPipe,
-    DateFormatPipe
+    DatetimeFormatPipe
   ]
 })
 export class AuditTrailsComponent implements OnInit, AfterViewInit {
@@ -153,8 +153,12 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   user = new UntypedFormControl('');
   /** From date form control. */
   fromDate = new UntypedFormControl();
+  /** From time form control. */
+  fromTime = new UntypedFormControl();
   /** Checked from date form control. */
   checkedFromDate = new UntypedFormControl();
+  /** Checked from time form control. */
+  checkedFromTime = new UntypedFormControl();
   /** Processing result form control. */
   processingResult = new UntypedFormControl();
   /** Action name form control. */
@@ -163,8 +167,12 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   resourceId = new UntypedFormControl('');
   /** To date form control. */
   toDate = new UntypedFormControl();
+  /** To time form control. */
+  toTime = new UntypedFormControl();
   /** Checked to date form control. */
   checkedToDate = new UntypedFormControl();
+  /** Checked to time form control. */
+  checkedToTime = new UntypedFormControl();
   /** Entity name form control. */
   entityName = new UntypedFormControl();
   /** Checker form control. */
@@ -230,7 +238,17 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'makerDateTimeFrom');
+          this.applyFilter(this.getDateTime(filterValue, this.fromTime.value), 'makerDateTimeFrom');
+        })
+      )
+      .subscribe();
+
+    this.fromTime.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((timeValue) => {
+          this.applyFilter(this.getDateTime(this.fromDate.value, timeValue), 'makerDateTimeFrom');
         })
       )
       .subscribe();
@@ -240,7 +258,17 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'makerDateTimeTo');
+          this.applyFilter(this.getDateTime(filterValue, this.toTime.value), 'makerDateTimeTo');
+        })
+      )
+      .subscribe();
+
+    this.toTime.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((timeValue) => {
+          this.applyFilter(this.getDateTime(this.toDate.value, timeValue), 'makerDateTimeTo');
         })
       )
       .subscribe();
@@ -250,7 +278,17 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'checkerDateTimeFrom');
+          this.applyFilter(this.getDateTime(filterValue, this.checkedFromTime.value), 'checkerDateTimeFrom');
+        })
+      )
+      .subscribe();
+
+    this.checkedFromTime.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((timeValue) => {
+          this.applyFilter(this.getDateTime(this.checkedFromDate.value, timeValue), 'checkerDateTimeFrom');
         })
       )
       .subscribe();
@@ -260,7 +298,17 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         tap((filterValue) => {
-          this.applyFilter(this.getDate(filterValue), 'checkerDateTimeTo');
+          this.applyFilter(this.getDateTime(filterValue, this.checkedToTime.value), 'checkerDateTimeTo');
+        })
+      )
+      .subscribe();
+
+    this.checkedToTime.valueChanges
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((timeValue) => {
+          this.applyFilter(this.getDateTime(this.checkedToDate.value, timeValue), 'checkerDateTimeTo');
         })
       )
       .subscribe();
@@ -502,8 +550,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
           let csv = response.pageItems.map((row: any) =>
             headerCode.map((fieldName) =>
               (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
-              JSON.stringify(row[fieldName], replacer) !== '""'
-                ? this.dateUtils.formatDate(JSON.stringify(row[fieldName], replacer), dateFormat)
+              row[fieldName] != null &&
+              row[fieldName] !== ''
+                ? JSON.stringify(this.dateUtils.formatDate(row[fieldName], 'YYYY-MM-DDTHH:mm:ssZ'))
                 : JSON.stringify(row[fieldName], replacer)
             )
           );
@@ -529,5 +578,22 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   private getDate(timestamp: any) {
     const dateFormat = this.settingsService.dateFormat;
     return this.dateUtils.formatDate(timestamp, dateFormat);
+  }
+  private getDateTime(date: Date, timeStr: string): string {
+    if (!date) {
+      return '';
+    }
+    const result = new Date(date);
+    if (timeStr) {
+      const [
+        hours,
+        minutes,
+        seconds
+      ] = timeStr.split(':').map(Number);
+      result.setHours(hours || 0);
+      result.setMinutes(minutes || 0);
+      result.setSeconds(seconds || 0);
+    }
+    return this.dateUtils.formatDate(result, 'YYYY-MM-DDTHH:mm:ssZ');
   }
 }
