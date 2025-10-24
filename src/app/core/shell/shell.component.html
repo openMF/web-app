@@ -11,7 +11,7 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
-  >
+    >
     <mifosx-sidenav [sidenavCollapsed]="sidenavCollapsed"></mifosx-sidenav>
   </mat-sidenav>
 
@@ -20,9 +20,11 @@
     <!-- Toolbar -->
     <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"></mifosx-toolbar>
     <!-- Progress Bar -->
-    <div *ngIf="progressBarMode !== 'none'">
-      <div class="loading"></div>
-    </div>
+    @if (progressBarMode !== 'none') {
+      <div>
+        <div class="loading"></div>
+      </div>
+    }
 
     <!-- Breadcrumb -->
     <mifosx-breadcrumb></mifosx-breadcrumb>

@@ -18,7 +18,7 @@ import {
   MatCardSubtitle,
   MatCardContent
 } from '@angular/material/card';
-import { NgClass, NgIf, NgFor, LowerCasePipe } from '@angular/common';
+import { NgClass, LowerCasePipe } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatIconButton } from '@angular/material/button';
 import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu';

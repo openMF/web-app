@@ -12,13 +12,15 @@
               [matDatepicker]="closedDatePicker"
               required
               formControlName="transactionDate"
-            />
+              />
             <mat-datepicker-toggle matSuffix [for]="closedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedDatePicker></mat-datepicker>
-            <mat-error *ngIf="closeLoanForm.controls.transactionDate.hasError('required')">
-              {{ 'labels.inputs.Closed Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (closeLoanForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Closed Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
@@ -36,7 +38,7 @@
             color="primary"
             [disabled]="!closeLoanForm.valid"
             *mifosxHasPermission="'CLOSE_LOAN'"
-          >
+            >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

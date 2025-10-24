@@ -33,7 +33,7 @@
           mat-raised-button
           color="primary"
           (click)="downloadDocument(document.id)"
-        >
+          >
           <fa-icon icon="cloud-download-alt"></fa-icon>
         </button>
         <button
@@ -41,7 +41,7 @@
           mat-raised-button
           color="warn"
           (click)="deleteDocument(document.id, document.name)"
-        >
+          >
           <fa-icon icon="times"></fa-icon>
         </button>
       </td>
@@ -51,9 +51,10 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
 
-  <mat-paginator
-    *ngIf="entityDocuments && entityDocuments.length > 10"
-    [pageSizeOptions]="[10, 25, 50]"
-    showFirstLastButtons
-  ></mat-paginator>
+  @if (entityDocuments && entityDocuments.length > 10) {
+    <mat-paginator
+      [pageSizeOptions]="[10, 25, 50]"
+      showFirstLastButtons
+    ></mat-paginator>
+  }
 </div>

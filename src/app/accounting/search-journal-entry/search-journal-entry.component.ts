@@ -17,7 +17,7 @@ import { JournalEntriesDataSource } from './journal-entry.datasource';
 import { Dates } from 'app/core/utils/dates';
 import { MatAutocompleteTrigger, MatOption, MatAutocomplete } from '@angular/material/autocomplete';
 import { GlAccountSelectorComponent } from '../../shared/accounting/gl-account-selector/gl-account-selector.component';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   MatTable,
   MatColumnDef,

@@ -14,7 +14,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { DecimalPipe, NgIf, NgFor } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 
 /** Custom Servies */
 import { ReportsService } from '../../reports.service';

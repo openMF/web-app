@@ -3,7 +3,7 @@ import { trigger, state, transition, animate, style } from '@angular/animations'
 import { Accounting } from 'app/core/utils/accounting';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { MatDivider } from '@angular/material/divider';
-import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+
 import {
   MatTable,
   MatColumnDef,
@@ -46,8 +46,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatCellDef,
     MatCell,
     FaIconComponent,
-    NgSwitch,
-    NgSwitchCase,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
@@ -58,7 +56,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe
-  ]
+]
 })
 export class FixedDepositProductPreviewStepComponent implements OnInit, OnChanges {
   @Input() fixedDepositProductsTemplate: any;

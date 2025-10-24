@@ -21,7 +21,7 @@
       color="primary"
       *mifosxHasPermission="'CREATE_OFFICE'"
       [routerLink]="['/organization', 'bulk-import', 'Offices']"
-    >
+      >
       <fa-icon icon="upload" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Import Offices' | translate }}
     </button>
@@ -117,55 +117,59 @@
       </mat-card>
     </div>
 
-    <div class="flex-48" *ngIf="office">
-      <mat-card>
-        <mat-card-content>
-          <div class="layout-row">
-            <mat-card-title>
-              {{ office.name }}
-            </mat-card-title>
-
-            <div class="flex align-end">
-              <button mat-icon-button (click)="closeOffice()">
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </div>
-          </div>
-
-          <mat-tab-group>
-            <mat-tab label="General">
-              <div class="layout-row-wrap">
-                <div class="flex-50 mat-body-strong" *ngIf="office.parentId">
-                  {{ 'Parent Office' | translate }}
-                </div>
-
-                <div class="flex-50" *ngIf="office.parentId">
-                  {{ office.parentName }}
-                </div>
-
-                <div class="flex-50 mat-body-strong">
-                  {{ ' Opened On' | translate }}
-                </div>
-
-                <div class="flex-50">
-                  {{ office.openingDate | date }}
-                </div>
-
-                <div class="flex-50 mat-body-strong" *ngIf="office.externalId">
-                  {{ 'External Id' | translate }}
-                </div>
-
-                <div class="flex-50" *ngIf="office.externalId">
-                  <mifosx-external-identifier externalId="{{ office.externalId }}"></mifosx-external-identifier>
-                </div>
+    @if (office) {
+      <div class="flex-48">
+        <mat-card>
+          <mat-card-content>
+            <div class="layout-row">
+              <mat-card-title>
+                {{ office.name }}
+              </mat-card-title>
+              <div class="flex align-end">
+                <button mat-icon-button (click)="closeOffice()">
+                  <fa-icon icon="times"></fa-icon>
+                </button>
               </div>
-            </mat-tab>
-
-            <mat-tab *ngFor="let dataTable of dataTablesData" label="{{ dataTable.registeredTableName }}"></mat-tab>
-          </mat-tab-group>
-        </mat-card-content>
-      </mat-card>
-    </div>
+            </div>
+            <mat-tab-group>
+              <mat-tab label="General">
+                <div class="layout-row-wrap">
+                  @if (office.parentId) {
+                    <div class="flex-50 mat-body-strong">
+                      {{ 'Parent Office' | translate }}
+                    </div>
+                  }
+                  @if (office.parentId) {
+                    <div class="flex-50">
+                      {{ office.parentName }}
+                    </div>
+                  }
+                  <div class="flex-50 mat-body-strong">
+                    {{ ' Opened On' | translate }}
+                  </div>
+                  <div class="flex-50">
+                    {{ office.openingDate | date }}
+                  </div>
+                  @if (office.externalId) {
+                    <div class="flex-50 mat-body-strong">
+                      {{ 'External Id' | translate }}
+                    </div>
+                  }
+                  @if (office.externalId) {
+                    <div class="flex-50">
+                      <mifosx-external-identifier externalId="{{ office.externalId }}"></mifosx-external-identifier>
+                    </div>
+                  }
+                </div>
+              </mat-tab>
+              @for (dataTable of dataTablesData; track dataTable) {
+                <mat-tab label="{{ dataTable.registeredTableName }}"></mat-tab>
+              }
+            </mat-tab-group>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    }
   </div>
 </div>
 
@@ -183,7 +187,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -200,14 +204,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonTreeView, buttonTreeView, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -224,14 +228,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -247,14 +251,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateTableOffices, tableOffices, 'top', true)"
-    >
+      >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -270,7 +274,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-    >
+      >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

@@ -29,7 +29,7 @@ import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document
 import { TranslateService } from '@ngx-translate/core';
 import { ClientsService } from '../../clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgStyle, NgFor } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**

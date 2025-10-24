@@ -23,39 +23,55 @@
 
         <div class="flex-50">{{ taxComponentData.percentage | formatNumber }} %</div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="taxComponentData.debitAccountType">
-          {{ 'labels.inputs.Debit Account Type' | translate }}
-        </div>
+        @if (taxComponentData.debitAccountType) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Debit Account Type' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="taxComponentData.debitAccountType">
-          {{ taxComponentData.debitAccountType.value }}
-        </div>
+        @if (taxComponentData.debitAccountType) {
+          <div class="flex-50">
+            {{ taxComponentData.debitAccountType.value }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="taxComponentData.debitAccount">
-          {{ 'labels.inputs.Debit Account' | translate }}
-        </div>
+        @if (taxComponentData.debitAccount) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Debit Account' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="taxComponentData.debitAccount">
-          ({{ 'labels.inputs.accounting.' + taxComponentData.debitAccount.glCode }})
-          {{ taxComponentData.debitAccount.name | translate }}
-        </div>
+        @if (taxComponentData.debitAccount) {
+          <div class="flex-50">
+            ({{ 'labels.inputs.accounting.' + taxComponentData.debitAccount.glCode }})
+            {{ taxComponentData.debitAccount.name | translate }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="taxComponentData.creditAccountType">
-          {{ 'labels.inputs.Credit Account Type' | translate }}
-        </div>
+        @if (taxComponentData.creditAccountType) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Credit Account Type' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="taxComponentData.creditAccountType">
-          {{ taxComponentData.creditAccountType.value | translateKey: 'catalogs' }}
-        </div>
+        @if (taxComponentData.creditAccountType) {
+          <div class="flex-50">
+            {{ taxComponentData.creditAccountType.value | translateKey: 'catalogs' }}
+          </div>
+        }
 
-        <div class="flex-50 mat-body-strong" *ngIf="taxComponentData.creditAccount">
-          {{ 'labels.inputs.Credit Account' | translate }}
-        </div>
+        @if (taxComponentData.creditAccount) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Credit Account' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="taxComponentData.creditAccount">
-          ({{ taxComponentData.creditAccount.glCode }})
-          {{ taxComponentData.creditAccount.name }}
-        </div>
+        @if (taxComponentData.creditAccount) {
+          <div class="flex-50">
+            ({{ taxComponentData.creditAccount.glCode }})
+            {{ taxComponentData.creditAccount.name }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Start Date' | translate }}

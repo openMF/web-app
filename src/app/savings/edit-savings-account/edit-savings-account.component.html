@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #savingProductStepper
-  >
+    >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -32,7 +32,7 @@
       <mifosx-savings-account-details-step
         [savingsAccountTemplate]="savingsAccountAndTemplate"
         (savingsAccountProductTemplate)="setTemplate($event)"
-      >
+        >
       </mifosx-savings-account-details-step>
     </mat-step>
 
@@ -52,21 +52,22 @@
         [savingsAccountProductTemplate]="savingsAccountProductTemplate"
         [savingsAccountTemplate]="savingsAccountAndTemplate"
         [currencyCode]="savingsAccountTermsForm.get('currencyCode')"
-      >
+        >
       </mifosx-savings-account-charges-step>
     </mat-step>
 
-    <mat-step *ngIf="savingsAccountFormValidAndNotPristine" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-savings-account-preview-step
-        [savingsAccountProductTemplate]="savingsAccountProductTemplate"
-        [savingsAccountTemplate]="savingsAccountAndTemplate"
-        [savingsAccountTermsForm]="savingsAccountTermsForm"
-        [savingsAccount]="savingsAccount"
-        (submitEvent)="submit()"
-      >
-      </mifosx-savings-account-preview-step>
-    </mat-step>
+    @if (savingsAccountFormValidAndNotPristine) {
+      <mat-step completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-savings-account-preview-step
+          [savingsAccountProductTemplate]="savingsAccountProductTemplate"
+          [savingsAccountTemplate]="savingsAccountAndTemplate"
+          [savingsAccountTermsForm]="savingsAccountTermsForm"
+          [savingsAccount]="savingsAccount"
+          (submitEvent)="submit()"
+          >
+        </mifosx-savings-account-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

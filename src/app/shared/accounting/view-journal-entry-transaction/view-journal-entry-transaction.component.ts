@@ -19,7 +19,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { Location, NgIf } from '@angular/common';
+import { Location } from '@angular/common';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';

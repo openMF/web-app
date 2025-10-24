@@ -6,40 +6,52 @@
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Select Grouping' | translate }}</mat-label>
         <mat-select required formControlName="grouping">
-          <mat-option *ngFor="let grouping of data.groupings" [value]="grouping.name">
-            {{ grouping.name | translateKey: 'catalogs' }}
-          </mat-option>
+          @for (grouping of data.groupings; track grouping) {
+            <mat-option [value]="grouping.name">
+              {{ grouping.name | translateKey: 'catalogs' }}
+            </mat-option>
+          }
         </mat-select>
-        <mat-error *ngIf="eventForm.controls.grouping.hasError('required')">
-          {{ 'labels.inputs.Grouping' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
+        @if (eventForm.controls.grouping.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Grouping' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Select Entity' | translate }}</mat-label>
         <mat-select required formControlName="entity">
-          <mat-option *ngFor="let entity of entityData" [value]="entity.name">
-            {{ entity.name }}
-          </mat-option>
+          @for (entity of entityData; track entity) {
+            <mat-option [value]="entity.name">
+              {{ entity.name }}
+            </mat-option>
+          }
         </mat-select>
-        <mat-error *ngIf="eventForm.controls.entity.hasError('required')">
-          {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
+        @if (eventForm.controls.entity.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Select Action' | translate }}</mat-label>
         <mat-select required formControlName="action">
-          <mat-option *ngFor="let action of actionData" [value]="action">
-            {{ action }}
-          </mat-option>
+          @for (action of actionData; track action) {
+            <mat-option [value]="action">
+              {{ action }}
+            </mat-option>
+          }
         </mat-select>
-        <mat-error *ngIf="eventForm.controls.action.hasError('required')">
-          {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
+        @if (eventForm.controls.action.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Action' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
       </mat-form-field>
     </div>
   </form>

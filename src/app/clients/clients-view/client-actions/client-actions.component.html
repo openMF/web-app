@@ -1,17 +1,51 @@
-<mifosx-client-assign-staff *ngIf="actions['Assign Staff']"></mifosx-client-assign-staff>
-<mifosx-close-client *ngIf="actions['Close']"></mifosx-close-client>
-<mifosx-view-survey *ngIf="actions['Survey']"></mifosx-view-survey>
-<mifosx-reject-client *ngIf="actions['Reject']"></mifosx-reject-client>
-<mifosx-activate-client *ngIf="actions['Activate']"></mifosx-activate-client>
-<mifosx-withdraw-client *ngIf="actions['Withdraw']"></mifosx-withdraw-client>
-<mifosx-update-client-savings-account *ngIf="actions['Update Default Savings']"></mifosx-update-client-savings-account>
-<mifosx-transfer-client *ngIf="actions['Transfer Client']"></mifosx-transfer-client>
-<mifosx-undo-client-transfer *ngIf="actions['Undo Transfer']"></mifosx-undo-client-transfer>
-<mifosx-reject-client-transfer *ngIf="actions['Reject Transfer']"></mifosx-reject-client-transfer>
-<mifosx-accept-client-transfer *ngIf="actions['Accept Transfer']"></mifosx-accept-client-transfer>
-<mifosx-reactivate-client *ngIf="actions['Reactivate']"></mifosx-reactivate-client>
-<mifosx-undo-client-rejection *ngIf="actions['Undo Rejection']"></mifosx-undo-client-rejection>
-<mifosx-add-client-charge *ngIf="actions['Add Charge']"></mifosx-add-client-charge>
-<mifosx-take-survey *ngIf="actions['Take Survey']"></mifosx-take-survey>
-<mifosx-client-screen-reports *ngIf="actions['Client Screen Reports']"></mifosx-client-screen-reports>
-<mifosx-add-client-collateral *ngIf="actions['Create Collateral']"></mifosx-add-client-collateral>
+@if (actions['Assign Staff']) {
+  <mifosx-client-assign-staff></mifosx-client-assign-staff>
+}
+@if (actions['Close']) {
+  <mifosx-close-client></mifosx-close-client>
+}
+@if (actions['Survey']) {
+  <mifosx-view-survey></mifosx-view-survey>
+}
+@if (actions['Reject']) {
+  <mifosx-reject-client></mifosx-reject-client>
+}
+@if (actions['Activate']) {
+  <mifosx-activate-client></mifosx-activate-client>
+}
+@if (actions['Withdraw']) {
+  <mifosx-withdraw-client></mifosx-withdraw-client>
+}
+@if (actions['Update Default Savings']) {
+  <mifosx-update-client-savings-account></mifosx-update-client-savings-account>
+}
+@if (actions['Transfer Client']) {
+  <mifosx-transfer-client></mifosx-transfer-client>
+}
+@if (actions['Undo Transfer']) {
+  <mifosx-undo-client-transfer></mifosx-undo-client-transfer>
+}
+@if (actions['Reject Transfer']) {
+  <mifosx-reject-client-transfer></mifosx-reject-client-transfer>
+}
+@if (actions['Accept Transfer']) {
+  <mifosx-accept-client-transfer></mifosx-accept-client-transfer>
+}
+@if (actions['Reactivate']) {
+  <mifosx-reactivate-client></mifosx-reactivate-client>
+}
+@if (actions['Undo Rejection']) {
+  <mifosx-undo-client-rejection></mifosx-undo-client-rejection>
+}
+@if (actions['Add Charge']) {
+  <mifosx-add-client-charge></mifosx-add-client-charge>
+}
+@if (actions['Take Survey']) {
+  <mifosx-take-survey></mifosx-take-survey>
+}
+@if (actions['Client Screen Reports']) {
+  <mifosx-client-screen-reports></mifosx-client-screen-reports>
+}
+@if (actions['Create Collateral']) {
+  <mifosx-add-client-collateral></mifosx-add-client-collateral>
+}

@@ -6,42 +6,56 @@
           <mat-form-field class="flex-40">
             <mat-label>{{ 'labels.inputs.Data Table Name' | translate }}</mat-label>
             <input matInput required formControlName="datatableName" />
-            <mat-error *ngIf="dataTableForm.controls.datatableName.hasError('required')">
-              {{ 'labels.inputs.Data Table Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (dataTableForm.controls.datatableName.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Data Table Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field class="flex-fill flex-20">
             <mat-label>{{ 'labels.inputs.Entity Type' | translate }}</mat-label>
             <mat-select required formControlName="apptableName">
-              <mat-option *ngFor="let appTable of appTableData" [value]="appTable.value">
-                {{ appTable.displayValue | translateKey: 'inputs' }}
-              </mat-option>
+              @for (appTable of appTableData; track appTable) {
+                <mat-option [value]="appTable.value">
+                  {{ appTable.displayValue | translateKey: 'inputs' }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="dataTableForm.controls.apptableName.hasError('required')">
-              {{ 'labels.inputs.Application Table Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (dataTableForm.controls.apptableName.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Application Table Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
-          <mat-form-field class="flex-fill flex-20" *ngIf="showEntitySubType">
-            <mat-label>{{ 'labels.inputs.Entity SubType' | translate }}</mat-label>
-            <mat-select formControlName="entitySubType">
-              <mat-option *ngFor="let entitySubType of entitySubTypeData" [value]="entitySubType.value">
-                {{ entitySubType.displayValue | translateKey: 'inputs' }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          @if (showEntitySubType) {
+            <mat-form-field class="flex-fill flex-20">
+              <mat-label>{{ 'labels.inputs.Entity SubType' | translate }}</mat-label>
+              <mat-select formControlName="entitySubType">
+                @for (entitySubType of entitySubTypeData; track entitySubType) {
+                  <mat-option [value]="entitySubType.value">
+                    {{ entitySubType.displayValue | translateKey: 'inputs' }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
 
-          <mat-form-field class="flex-fill flex-20" *ngIf="showSavingsSubType">
-            <mat-label>{{ 'labels.inputs.Savings SubType' | translate }}</mat-label>
-            <mat-select formControlName="entitySubType">
-              <mat-option *ngFor="let savingsSubType of savingsSubTypeData" [value]="savingsSubType.value">
-                {{ savingsSubType.displayValue | translateKey: 'inputs' }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          @if (showSavingsSubType) {
+            <mat-form-field class="flex-fill flex-20">
+              <mat-label>{{ 'labels.inputs.Savings SubType' | translate }}</mat-label>
+              <mat-select formControlName="entitySubType">
+                @for (savingsSubType of savingsSubTypeData; track savingsSubType) {
+                  <mat-option [value]="savingsSubType.value">
+                    {{ savingsSubType.displayValue | translateKey: 'inputs' }}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
 
           <div class="multi-row-wrapper flex-14">
             <mat-checkbox labelPosition="before" formControlName="multiRow" class="multi-row">{{
@@ -67,14 +81,15 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Name' | translate }}</th>
             <td mat-cell *matCellDef="let column">
               {{ column.columnName }}
-              <fa-icon
-                *ngIf="column.isColumnPrimaryKey"
-                icon="check-circle"
-                size="lg"
-                class="column-mandatory"
-                matTooltip="{{ 'tooltips.Primary Key' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
+              @if (column.isColumnPrimaryKey) {
+                <fa-icon
+                  icon="check-circle"
+                  size="lg"
+                  class="column-mandatory"
+                  matTooltip="{{ 'tooltips.Primary Key' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
             </td>
           </ng-container>
 
@@ -96,22 +111,24 @@
           <ng-container matColumnDef="mandatory">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.text.Mandatory' | translate }}</th>
             <td mat-cell *matCellDef="let column" class="left">
-              <fa-icon
-                *ngIf="!column.isColumnNullable"
-                icon="check-circle"
-                size="lg"
-                class="column-mandatory"
-                matTooltip="{{ 'tooltips.Yes' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
-              <fa-icon
-                *ngIf="column.isColumnNullable"
-                icon="times-circle"
-                size="lg"
-                class="not-column-mandatory"
-                matTooltip="{{ 'tooltips.No' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
+              @if (!column.isColumnNullable) {
+                <fa-icon
+                  icon="check-circle"
+                  size="lg"
+                  class="column-mandatory"
+                  matTooltip="{{ 'tooltips.Yes' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
+              @if (column.isColumnNullable) {
+                <fa-icon
+                  icon="times-circle"
+                  size="lg"
+                  class="not-column-mandatory"
+                  matTooltip="{{ 'tooltips.No' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
             </td>
           </ng-container>
 
@@ -120,22 +137,24 @@
               {{ 'labels.inputs.Unique' | translate }}
             </th>
             <td mat-cell *matCellDef="let column">
-              <fa-icon
-                *ngIf="column.isColumnUnique"
-                icon="check-circle"
-                size="lg"
-                class="column-mandatory"
-                matTooltip="{{ 'tooltips.Yes' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
-              <fa-icon
-                *ngIf="!column.isColumnUnique"
-                icon="times-circle"
-                size="lg"
-                class="not-column-mandatory"
-                matTooltip="{{ 'tooltips.No' | translate }}"
-                unique="right"
-              ></fa-icon>
+              @if (column.isColumnUnique) {
+                <fa-icon
+                  icon="check-circle"
+                  size="lg"
+                  class="column-mandatory"
+                  matTooltip="{{ 'tooltips.Yes' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
+              @if (!column.isColumnUnique) {
+                <fa-icon
+                  icon="times-circle"
+                  size="lg"
+                  class="not-column-mandatory"
+                  matTooltip="{{ 'tooltips.No' | translate }}"
+                  unique="right"
+                ></fa-icon>
+              }
             </td>
           </ng-container>
 
@@ -144,22 +163,24 @@
               {{ 'labels.inputs.Indexed' | translate }}
             </th>
             <td mat-cell *matCellDef="let column">
-              <fa-icon
-                *ngIf="column.isColumnIndexed"
-                icon="check-circle"
-                size="lg"
-                class="column-mandatory"
-                matTooltip="{{ 'tooltips.Yes' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
-              <fa-icon
-                *ngIf="!column.isColumnIndexed"
-                icon="times-circle"
-                size="lg"
-                class="not-column-mandatory"
-                matTooltip="{{ 'tooltips.No' | translate }}"
-                matTooltipPosition="right"
-              ></fa-icon>
+              @if (column.isColumnIndexed) {
+                <fa-icon
+                  icon="check-circle"
+                  size="lg"
+                  class="column-mandatory"
+                  matTooltip="{{ 'tooltips.Yes' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
+              @if (!column.isColumnIndexed) {
+                <fa-icon
+                  icon="times-circle"
+                  size="lg"
+                  class="not-column-mandatory"
+                  matTooltip="{{ 'tooltips.No' | translate }}"
+                  matTooltipPosition="right"
+                ></fa-icon>
+              }
             </td>
           </ng-container>
 
