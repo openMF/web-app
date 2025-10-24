@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, inject } from '@angular/core';
 
 /** Custom Services */
 import { ReportsService } from '../../reports.service';
@@ -28,6 +28,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChartComponent implements OnChanges {
+  private reportsService = inject(ReportsService);
+
   /** Run Report Data */
   @Input() dataObject: any;
 
@@ -38,10 +40,13 @@ export class ChartComponent implements OnChanges {
   /** Data object for witching charts in view. */
   inputData: ChartData;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {ReportsService} reportsService Reports Service
    */
-  constructor(private reportsService: ReportsService) {}
+  constructor() {}
 
   /**
    * Fetches run report data post changes in run report form.

@@ -1,52 +1,63 @@
 <div class="container mat-elevation-z8">
   <mat-card>
-    <mat-card-title *ngIf="transactionType.holdamount">{{ 'labels.heading.Hold Amount' | translate }}</mat-card-title>
-    <mat-card-title *ngIf="transactionType.blockaccount">{{
-      'labels.heading.Block Savings Account' | translate
-    }}</mat-card-title>
+    @if (transactionType.holdamount) {
+      <mat-card-title>{{ 'labels.heading.Hold Amount' | translate }}</mat-card-title>
+    }
+    @if (transactionType.blockaccount) {
+      <mat-card-title>{{ 'labels.heading.Block Savings Account' | translate }}</mat-card-title>
+    }
 
     <form [formGroup]="manageSavingsAccountForm" (ngSubmit)="submit()">
       <mat-card-content class="layout-row">
         <mat-form-field class="flex-100">
           <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
           <mat-select required formControlName="reasonForBlock">
-            <mat-option *ngFor="let codeValue of reasonOptions" [value]="codeValue.id">
-              {{ codeValue.name }}
-            </mat-option>
+            @for (codeValue of reasonOptions; track codeValue) {
+              <mat-option [value]="codeValue.id">
+                {{ codeValue.name }}
+              </mat-option>
+            }
           </mat-select>
-          <mat-error *ngIf="manageSavingsAccountForm.controls.reasonForBlock.hasError('required')">
-            {{ 'labels.inputs.Reason' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
+          @if (manageSavingsAccountForm.controls.reasonForBlock.hasError('required')) {
+            <mat-error>
+              {{ 'labels.inputs.Reason' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          }
         </mat-form-field>
 
-        <mat-form-field class="flex-100" (click)="transactionDatePicker.open()" *ngIf="transactionType.holdamount">
-          <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
-          <input
-            matInput
-            [min]="minDate"
-            [max]="maxDate"
-            [matDatepicker]="transactionDatePicker"
-            required
-            formControlName="transactionDate"
-          />
-          <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #transactionDatePicker></mat-datepicker>
-          <mat-error *ngIf="manageSavingsAccountForm.controls.transactionDate.hasError('required')">
-            {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
-        </mat-form-field>
+        @if (transactionType.holdamount) {
+          <mat-form-field class="flex-100" (click)="transactionDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="transactionDatePicker"
+              required
+              formControlName="transactionDate"
+            />
+            <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transactionDatePicker></mat-datepicker>
+            @if (manageSavingsAccountForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+          </mat-form-field>
+        }
 
-        <mifosx-input-amount
-          class="flex-100"
-          [currency]="currency"
-          [isRequired]="true"
-          *ngIf="transactionType.holdamount"
-          [inputFormControl]="manageSavingsAccountForm.controls.transactionAmount"
-          [inputLabel]="'Transaction Amount'"
-        >
-        </mifosx-input-amount>
+        @if (transactionType.holdamount) {
+          <mifosx-input-amount
+            class="flex-100"
+            [currency]="currency"
+            [isRequired]="true"
+            [inputFormControl]="manageSavingsAccountForm.controls.transactionAmount"
+            [inputLabel]="'Transaction Amount'"
+          >
+          </mifosx-input-amount>
+        }
       </mat-card-content>
 
       <mat-card-actions class="layout-row align-center gap-5px responsive-column">

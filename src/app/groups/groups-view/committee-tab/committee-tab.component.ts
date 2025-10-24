@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -46,6 +46,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CommitteeTabComponent {
+  private route = inject(ActivatedRoute);
+  private groupsService = inject(GroupsService);
+  dialog = inject(MatDialog);
+
   /** Group Status */
   groupStatus: any;
   /** Group Roles Data */
@@ -63,17 +67,16 @@ export class CommitteeTabComponent {
   /** Roles Table */
   @ViewChild('rolesTable') rolesTableRef: MatTable<Element>;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Fetches groups data from parent's `resolve`.
    * @param {ActivatedRoute} route Activated Route
    * @param {GroupsService} groupsService Groups Service
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(
-    private route: ActivatedRoute,
-    private groupsService: GroupsService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { groupViewData: any }) => {
       this.groupViewData = data.groupViewData;
       this.groupRolesData = this.groupViewData.groupRoles;

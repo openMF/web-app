@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { SearchService } from './search.service';
  */
 @Injectable()
 export class SearchResolver {
+  private searchService = inject(SearchService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {SearchService} searchService Notifications service.
    */
-  constructor(private searchService: SearchService) {}
+  constructor() {}
 
   /**
    * Returns the Search Resultsdata.

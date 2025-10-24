@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { GroupsService } from '../groups.service';
  */
 @Injectable()
 export class GSIMAccountsResolver {
+  private groupsService = inject(GroupsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {GroupsService} groupsService Groups service.
    */
-  constructor(private groupsService: GroupsService) {}
+  constructor() {}
 
   /**
    * Returns the Group's GSIM Acccounts data.

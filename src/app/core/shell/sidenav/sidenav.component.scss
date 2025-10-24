@@ -88,6 +88,10 @@
   }
 
   .app-sidenav {
+    .menu-label {
+      margin-left: 8px;
+    }
+
     .icon-menu {
       display: flex;
       flex-direction: column;

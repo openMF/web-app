@@ -6,9 +6,11 @@
     </mat-form-field>
 
     <mat-autocomplete autoActiveFirstOption #groupsAutocomplete="matAutocomplete" [displayWith]="displayGroup">
-      <mat-option *ngFor="let group of groupsData" [value]="group">
-        {{ group.name }}
-      </mat-option>
+      @for (group of groupsData; track group) {
+        <mat-option [value]="group">
+          {{ group.name }}
+        </mat-option>
+      }
     </mat-autocomplete>
 
     <div class="mat-table">
@@ -36,19 +38,23 @@
   <mat-card class="flex-50">
     <h3 matSubheader>{{ 'labels.heading.Group Members' | translate }}</h3>
 
-    <mat-nav-list *ngIf="groupMembers?.length">
-      <div mat-list-item class="member-item center-gap" *ngFor="let group of groupMembers; index as i">
-        <span matLine class="p-t-10">{{ group.name }}</span>
-        <button
-          mat-icon-button
-          color="warn"
-          class="delete-btn"
-          aria-label="Remove group"
-          (click)="removeGroup(i, group)"
-        >
-          <fa-icon icon="trash"></fa-icon>
-        </button>
-      </div>
-    </mat-nav-list>
+    @if (groupMembers?.length) {
+      <mat-nav-list>
+        @for (group of groupMembers; track group; let i = $index) {
+          <div mat-list-item class="member-item center-gap">
+            <span matLine class="p-t-10">{{ group.name }}</span>
+            <button
+              mat-icon-button
+              color="warn"
+              class="delete-btn"
+              aria-label="Remove group"
+              (click)="removeGroup(i, group)"
+            >
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </div>
+        }
+      </mat-nav-list>
+    }
   </mat-card>
 </div>

@@ -12,10 +12,12 @@
       />
       <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #transferDatePicker></mat-datepicker>
-      <mat-error *ngIf="makeAccountTransferForm.controls.transferDate.hasError('required')">
-        {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (makeAccountTransferForm.controls.transferDate.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-98">
@@ -41,23 +43,29 @@
     <mat-form-field class="flex-98 error-warn">
       <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
       <input #amntInput type="number" matInput required formControlName="transferAmount" />
-      <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
-        {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="makeAccountTransferForm.get('transferAmount')?.hasError('amountExceedsBalance')">
-        <fa-icon icon="exclamation-triangle" size="md"></fa-icon>
-        {{ 'errors.validation.msg.savingsproduct.insufficient.balance' | translate: { balance } }}
-      </mat-error>
+      @if (makeAccountTransferForm.controls.transferAmount.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+      @if (makeAccountTransferForm.get('transferAmount')?.hasError('amountExceedsBalance')) {
+        <mat-error>
+          <fa-icon icon="exclamation-triangle" size="md"></fa-icon>
+          {{ 'errors.validation.msg.savingsproduct.insufficient.balance' | translate: { balance } }}
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-98">
       <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
       <textarea matInput formControlName="transferDescription" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
-      <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')">
-        {{ 'labels.inputs.Transfer Description' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (makeAccountTransferForm.controls.transferDescription.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Transfer Description' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
   </div>
 </form>

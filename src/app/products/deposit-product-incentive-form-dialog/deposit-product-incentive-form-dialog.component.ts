@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -26,6 +26,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DepositProductIncentiveFormDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<DepositProductIncentiveFormDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private formBuilder = inject(UntypedFormBuilder);
+  private translateService = inject(TranslateService);
+
   layout: {
     addButtonText?: string;
   } = {
@@ -42,12 +47,12 @@ export class DepositProductIncentiveFormDialogComponent implements OnInit {
   attributeValueData: any;
   incentiveTypeData: any;
 
-  constructor(
-    public dialogRef: MatDialogRef<DepositProductIncentiveFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: UntypedFormBuilder,
-    private translateService: TranslateService
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
+    const data = this.data;
+
     this.createDepositProductIncentiveForm();
     this.setConditionalControls();
     this.layout = { ...this.layout, ...data.layout };

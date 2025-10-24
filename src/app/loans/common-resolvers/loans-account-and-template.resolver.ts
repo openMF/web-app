@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { LoansService } from '../loans.service';
  */
 @Injectable()
 export class LoansAccountAndTemplateResolver {
+  private loansService = inject(LoansService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {ProductsService} productsService Products service.
    */
-  constructor(private loansService: LoansService) {}
+  constructor() {}
 
   /**
    * Returns the loan account template data.

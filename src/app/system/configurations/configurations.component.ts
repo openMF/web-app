@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Alert } from 'app/core/alert/alert.model';
 import { AlertService } from 'app/core/alert/alert.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -22,15 +22,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ConfigurationsComponent implements OnInit {
+  private alertService = inject(AlertService);
+  private systemService = inject(SystemService);
+
   /** Subscription to alerts. */
   alert$: Subscription;
 
   isBusinessDateEnabled = false;
 
-  constructor(
-    private alertService: AlertService,
-    private systemService: SystemService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {

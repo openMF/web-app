@@ -22,10 +22,12 @@
         <div class="value">{{ accountingRule.officeName }}</div>
       </div>
 
-      <div class="content-row" *ngIf="accountingRule.description">
-        <div class="label">{{ 'labels.inputs.Description' | translate }}</div>
-        <div class="value">{{ accountingRule.description }}</div>
-      </div>
+      @if (accountingRule.description) {
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.Description' | translate }}</div>
+          <div class="value">{{ accountingRule.description }}</div>
+        </div>
+      }
 
       <div class="content-row">
         <div class="label">{{ 'labels.inputs.Multiple Debit Entries Allowed' | translate }}</div>
@@ -41,37 +43,49 @@
 
   <mat-card>
     <mat-card-content class="content-rows">
-      <div class="content-row" *ngIf="accountingRule.debitTags?.length">
-        <div class="label">{{ 'labels.inputs.Debit Tags' | translate }}</div>
-        <div class="value">
-          <span *ngFor="let debitTag of accountingRule.debitTags">{{ debitTag.tag.name }}</span>
+      @if (accountingRule.debitTags?.length) {
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.Debit Tags' | translate }}</div>
+          <div class="value">
+            @for (debitTag of accountingRule.debitTags; track debitTag) {
+              <span>{{ debitTag.tag.name }}</span>
+            }
+          </div>
         </div>
-      </div>
+      }
 
-      <div class="content-row" *ngIf="accountingRule.debitAccounts?.length">
-        <div class="label">{{ 'labels.inputs.Debit Account Name' | translate }}</div>
-        <div class="value">
-          <span *ngFor="let debitAccount of accountingRule.debitAccounts">{{
-            debitAccount.name + ' (' + debitAccount.glCode + ')'
-          }}</span>
+      @if (accountingRule.debitAccounts?.length) {
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.Debit Account Name' | translate }}</div>
+          <div class="value">
+            @for (debitAccount of accountingRule.debitAccounts; track debitAccount) {
+              <span>{{ debitAccount.name + ' (' + debitAccount.glCode + ')' }}</span>
+            }
+          </div>
         </div>
-      </div>
+      }
 
-      <div class="content-row" *ngIf="accountingRule.creditTags?.length">
-        <div class="label">{{ 'labels.inputs.Credit Tags' | translate }}</div>
-        <div class="value">
-          <span *ngFor="let creditTag of accountingRule.creditTags">{{ creditTag.tag.name }}</span>
+      @if (accountingRule.creditTags?.length) {
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.Credit Tags' | translate }}</div>
+          <div class="value">
+            @for (creditTag of accountingRule.creditTags; track creditTag) {
+              <span>{{ creditTag.tag.name }}</span>
+            }
+          </div>
         </div>
-      </div>
+      }
 
-      <div class="content-row" *ngIf="accountingRule.creditAccounts?.length">
-        <div class="label">{{ 'labels.inputs.Credit Account Name' | translate }}</div>
-        <div class="value">
-          <span *ngFor="let creditAccount of accountingRule.creditAccounts">{{
-            creditAccount.name + ' (' + creditAccount.glCode + ')'
-          }}</span>
+      @if (accountingRule.creditAccounts?.length) {
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.Credit Account Name' | translate }}</div>
+          <div class="value">
+            @for (creditAccount of accountingRule.creditAccounts; track creditAccount) {
+              <span>{{ creditAccount.name + ' (' + creditAccount.glCode + ')' }}</span>
+            }
+          </div>
         </div>
-      </div>
+      }
     </mat-card-content>
   </mat-card>
 </div>

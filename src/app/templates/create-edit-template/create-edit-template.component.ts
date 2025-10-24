@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -45,6 +45,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateEditComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private templateService = inject(TemplatesService);
+
   /** CKEditor5 */
   public Editor = ClassicEditor;
   /** CKEditor5 Template Reference */
@@ -68,6 +73,9 @@ export class CreateEditComponent implements OnInit {
   /** Repayment Parameter Labels */
   repaymentParameterLabels: string[] = repaymentParameterLabels;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -75,12 +83,7 @@ export class CreateEditComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {TemplateService} templateService Templates Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private templateService: TemplatesService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { templateData: any; mode: 'create' | 'edit' }) => {
       this.templateData = data.templateData;
       this.mode = data.mode;

@@ -20,9 +20,11 @@
     <!-- Toolbar -->
     <mifosx-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"></mifosx-toolbar>
     <!-- Progress Bar -->
-    <div *ngIf="progressBarMode !== 'none'">
-      <div class="loading"></div>
-    </div>
+    @if (progressBarMode !== 'none') {
+      <div>
+        <div class="loading"></div>
+      </div>
+    }
 
     <!-- Breadcrumb -->
     <mifosx-breadcrumb></mifosx-breadcrumb>

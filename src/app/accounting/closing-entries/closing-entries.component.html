@@ -16,9 +16,11 @@
 
 <!-- Autocomplete data -->
 <mat-autocomplete autoActiveFirstOption #officeNameAutocomplete="matAutocomplete">
-  <mat-option *ngFor="let office of filteredOfficeData | async" [value]="office.name">
-    {{ office.name }}
-  </mat-option>
+  @for (office of filteredOfficeData | async; track office) {
+    <mat-option [value]="office.name">
+      {{ office.name }}
+    </mat-option>
+  }
 </mat-autocomplete>
 
 <div class="container">

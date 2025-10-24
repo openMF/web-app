@@ -8,11 +8,13 @@
         </h2>
       </mat-card-title>
       <mat-card-subtitle>
-        <p *ngIf="officeData.externalId">
-          {{ 'labels.inputs.External Id' | translate }}:<mifosx-external-identifier
-            externalId="{{ officeData.externalId }}"
-          ></mifosx-external-identifier>
-        </p>
+        @if (officeData.externalId) {
+          <p>
+            {{ 'labels.inputs.External Id' | translate }}:<mifosx-external-identifier
+              externalId="{{ officeData.externalId }}"
+            ></mifosx-external-identifier>
+          </p>
+        }
       </mat-card-subtitle>
     </div>
   </mat-card-title-group>
@@ -28,13 +30,17 @@
       {{ officeData.openingDate | dateFormat }}
     </div>
 
-    <div class="flex-50 mat-body-strong" *ngIf="officeData.parentName">
-      {{ 'labels.inputs.Parent officeData' | translate }}
-    </div>
+    @if (officeData.parentName) {
+      <div class="flex-50 mat-body-strong">
+        {{ 'labels.inputs.Parent officeData' | translate }}
+      </div>
+    }
 
-    <div class="flex-50" *ngIf="officeData.parentName">
-      {{ officeData.parentName }}
-    </div>
+    @if (officeData.parentName) {
+      <div class="flex-50">
+        {{ officeData.parentName }}
+      </div>
+    }
 
     <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Number of Staff' | translate }}

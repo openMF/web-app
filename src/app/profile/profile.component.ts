@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   MatTableDataSource,
@@ -46,6 +46,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ProfileComponent implements OnInit {
+  private authenticationService = inject(AuthenticationService);
+  private settingsService = inject(SettingsService);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   /** Profile Data */
   profileData: any;
   /** Language, TODO: Update when df, locale settings are setup */
@@ -59,18 +64,18 @@ export class ProfileComponent implements OnInit {
     'description'
   ];
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {AuthenticationService} authenticationService Authentication Service
    * @param {UserService} userService Users Service
    * @param {Router} router Router
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(
-    private authenticationService: AuthenticationService,
-    private settingsService: SettingsService,
-    private router: Router,
-    public dialog: MatDialog
-  ) {
+  constructor() {
+    const authenticationService = this.authenticationService;
+
     this.profileData = authenticationService.getCredentials();
   }
 

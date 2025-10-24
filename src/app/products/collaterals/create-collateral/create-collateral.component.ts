@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { OrganizationService } from 'app/organization/organization.service';
 import { UntypedFormGroup, UntypedFormBuilder, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
@@ -22,10 +22,20 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateCollateralComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private organizationService = inject(OrganizationService);
+
   /** Collateral form */
   collateralForm: UntypedFormGroup;
   /** Charges Template data */
   collateralTemplateData: any;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
   /**
    * Retrieves the collateral template data
@@ -35,14 +45,7 @@ export class CreateCollateralComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService,
-    private organizationService: OrganizationService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { collateralTemplate: any }) => {
       this.organizationService.getCurrencies().subscribe((orgCurrencies: any) => {
         let orgCurrencyList = Array.isArray(orgCurrencies.selectedCurrencyOptions)

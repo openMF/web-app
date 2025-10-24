@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -23,6 +23,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class WriteOffPageComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private loanService = inject(LoansService);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+
   @Input() dataObject: any;
   /** Loan Id */
   loanId: string;
@@ -35,6 +42,9 @@ export class WriteOffPageComponent implements OnInit {
   writeOffForm: UntypedFormGroup;
   writeOffReasonOptions: any[] = [];
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Get data from `Resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -44,14 +54,7 @@ export class WriteOffPageComponent implements OnInit {
    * @param {Router} router Router.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private loanService: LoansService,
-    private dateUtils: Dates,
-    private router: Router,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

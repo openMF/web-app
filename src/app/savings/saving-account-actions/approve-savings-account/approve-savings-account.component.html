@@ -15,10 +15,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="approvedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #approvedOnDatePicker></mat-datepicker>
-            <mat-error *ngIf="approveSavingsAccountForm.controls.approvedOnDate.hasError('required')">
-              {{ 'labels.inputs.Approved On Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (approveSavingsAccountForm.controls.approvedOnDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Approved On Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>

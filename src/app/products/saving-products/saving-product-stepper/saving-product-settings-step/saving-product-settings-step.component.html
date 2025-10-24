@@ -24,12 +24,11 @@
 
     <mat-form-field class="flex-48">
       <mat-select formControlName="lockinPeriodFrequencyType">
-        <mat-option
-          *ngFor="let lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData"
-          [value]="lockinPeriodFrequencyType.id"
-        >
-          {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
+          <mat-option [value]="lockinPeriodFrequencyType.id">
+            {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -80,18 +79,22 @@
       {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}
     </mat-checkbox>
 
-    <mat-form-field class="flex-48" *ngIf="savingProductSettingsForm.value.withHoldTax">
-      <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
-      <mat-select formControlName="taxGroupId" required>
-        <mat-option *ngFor="let taxGroup of taxGroupData" [value]="taxGroup.id">
-          {{ taxGroup.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error>
-        {{ 'labels.inputs.Tax Group' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
+    @if (savingProductSettingsForm.value.withHoldTax) {
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Tax Group' | translate }}</mat-label>
+        <mat-select formControlName="taxGroupId" required>
+          @for (taxGroup of taxGroupData; track taxGroup) {
+            <mat-option [value]="taxGroup.id">
+              {{ taxGroup.name }}
+            </mat-option>
+          }
+        </mat-select>
+        <mat-error>
+          {{ 'labels.inputs.Tax Group' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      </mat-form-field>
+    }
 
     <mat-divider class="flex-98"></mat-divider>
 
@@ -106,40 +109,37 @@
       {{ 'labels.inputs.Is Overdraft Allowed' | translate }}
     </mat-checkbox>
 
-    <div
-      *ngIf="savingProductSettingsForm.value.allowOverdraft"
-      class="flex-fill layout-row-wrap gap-2percent responsive-column"
-    >
-      <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</mat-label>
-        <input
-          type="number"
-          matInput
-          matTooltip="{{ 'tooltips.Sets the overdraft required for interest calculation' | translate }}"
-          formControlName="minOverdraftForInterestCalculation"
-        />
-      </mat-form-field>
-
-      <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}</mat-label>
-        <input
-          type="number"
-          matInput
-          matTooltip="{{ 'tooltips.Default interest rate on overdraft' | translate }}"
-          formControlName="nominalAnnualInterestRateOverdraft"
-        />
-      </mat-form-field>
-
-      <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Maximum Overdraft Amount Limit' | translate }}</mat-label>
-        <input
-          type="number"
-          matInput
-          matTooltip="{{ 'tooltips.Sets the maximum allowed overdraft amount' | translate }}"
-          formControlName="overdraftLimit"
-        />
-      </mat-form-field>
-    </div>
+    @if (savingProductSettingsForm.value.allowOverdraft) {
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
+        <mat-form-field class="flex-31">
+          <mat-label>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</mat-label>
+          <input
+            type="number"
+            matInput
+            matTooltip="{{ 'tooltips.Sets the overdraft required for interest calculation' | translate }}"
+            formControlName="minOverdraftForInterestCalculation"
+          />
+        </mat-form-field>
+        <mat-form-field class="flex-31">
+          <mat-label>{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}</mat-label>
+          <input
+            type="number"
+            matInput
+            matTooltip="{{ 'tooltips.Default interest rate on overdraft' | translate }}"
+            formControlName="nominalAnnualInterestRateOverdraft"
+          />
+        </mat-form-field>
+        <mat-form-field class="flex-31">
+          <mat-label>{{ 'labels.inputs.Maximum Overdraft Amount Limit' | translate }}</mat-label>
+          <input
+            type="number"
+            matInput
+            matTooltip="{{ 'tooltips.Sets the maximum allowed overdraft amount' | translate }}"
+            formControlName="overdraftLimit"
+          />
+        </mat-form-field>
+      </div>
+    }
 
     <mat-divider class="flex-98"></mat-divider>
 
@@ -154,55 +154,53 @@
       {{ 'labels.inputs.Enable Dormancy Tracking' | translate }}
     </mat-checkbox>
 
-    <div
-      *ngIf="savingProductSettingsForm.value.isDormancyTrackingActive"
-      class="flex-fill layout-row-wrap gap-2percent responsive-column"
-    >
-      <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}</mat-label>
-        <input
-          type="number"
-          matInput
-          matTooltip="{{ 'tooltips.Inactive period to mark an account as Inactive' | translate }}"
-          formControlName="daysToInactive"
-          required
-        />
-        <mat-error>
-          {{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }}</mat-label>
-        <input
-          type="number"
-          matInput
-          matTooltip="{{ 'tooltips.Inactive period to mark an account as Dormant' | translate }}"
-          formControlName="daysToDormancy"
-          required
-        />
-        <mat-error>
-          {{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="flex-31">
-        <mat-label>{{ 'labels.inputs.Number of Days to Escheat' | translate }}</mat-label>
-        <input
-          type="number"
-          matInput
-          matTooltip="{{ 'tooltips.Inactive period to mark an account as Escheat' | translate }}"
-          formControlName="daysToEscheat"
-          required
-        />
-        <mat-error>
-          {{ 'labels.inputs.Number of Days to Escheat' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-      </mat-form-field>
-    </div>
+    @if (savingProductSettingsForm.value.isDormancyTrackingActive) {
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
+        <mat-form-field class="flex-31">
+          <mat-label>{{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}</mat-label>
+          <input
+            type="number"
+            matInput
+            matTooltip="{{ 'tooltips.Inactive period to mark an account as Inactive' | translate }}"
+            formControlName="daysToInactive"
+            required
+          />
+          <mat-error>
+            {{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}
+            {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-31">
+          <mat-label>{{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }}</mat-label>
+          <input
+            type="number"
+            matInput
+            matTooltip="{{ 'tooltips.Inactive period to mark an account as Dormant' | translate }}"
+            formControlName="daysToDormancy"
+            required
+          />
+          <mat-error>
+            {{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="flex-31">
+          <mat-label>{{ 'labels.inputs.Number of Days to Escheat' | translate }}</mat-label>
+          <input
+            type="number"
+            matInput
+            matTooltip="{{ 'tooltips.Inactive period to mark an account as Escheat' | translate }}"
+            formControlName="daysToEscheat"
+            required
+          />
+          <mat-error>
+            {{ 'labels.inputs.Number of Days to Escheat' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

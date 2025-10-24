@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -22,6 +22,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DisburseToSavingsAccountComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private loanService = inject(LoansService);
+  private settingsService = inject(SettingsService);
+
   @Input() dataObject: any;
 
   /** Minimum Date allowed. */
@@ -32,6 +39,9 @@ export class DisburseToSavingsAccountComponent implements OnInit {
   disbursementForm: UntypedFormGroup;
   currency: Currency;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Get data from `Resolver`.
    * @param {FormBuilder} formBuilder FormBuilder.
@@ -40,14 +50,7 @@ export class DisburseToSavingsAccountComponent implements OnInit {
    * @param {LoansService} loanService Loan Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private loanService: LoansService,
-    private settingsService: SettingsService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;

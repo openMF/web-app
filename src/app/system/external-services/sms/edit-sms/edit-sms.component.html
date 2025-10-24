@@ -6,37 +6,45 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Host Name' | translate }}</mat-label>
             <input matInput required formControlName="host_name" />
-            <mat-error *ngIf="smsConfigurationForm.controls.host_name.hasError('required')">
-              {{ 'labels.inputs.Host Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (smsConfigurationForm.controls.host_name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Host Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Port Number' | translate }}</mat-label>
             <input matInput required formControlName="port_number" />
-            <mat-error *ngIf="smsConfigurationForm.controls.port_number.hasError('required')">
-              {{ 'labels.inputs.Port Number' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (smsConfigurationForm.controls.port_number.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Port Number' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.End Point' | translate }}</mat-label>
             <input matInput required formControlName="end_point" />
-            <mat-error *ngIf="smsConfigurationForm.controls.end_point.hasError('required')">
-              {{ 'labels.inputs.End Point' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (smsConfigurationForm.controls.end_point.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.End Point' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Tenant App Key' | translate }}</mat-label>
             <input matInput required formControlName="tenant_app_key" />
-            <mat-error *ngIf="smsConfigurationForm.controls.tenant_app_key.hasError('required')">
-              {{ 'labels.inputs.Tenant App Key' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (smsConfigurationForm.controls.tenant_app_key.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Tenant App Key' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

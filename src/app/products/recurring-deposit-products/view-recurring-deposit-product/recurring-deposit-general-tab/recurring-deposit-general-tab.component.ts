@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
-import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+
 import {
   MatTable,
   MatColumnDef,
@@ -44,8 +44,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    NgSwitch,
-    NgSwitchCase,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
@@ -58,6 +56,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositGeneralTabComponent {
+  private route = inject(ActivatedRoute);
+
   recurringDepositProduct: any;
   recurringDepositProductTemplate: any;
 
@@ -92,7 +92,10 @@ export class RecurringDepositGeneralTabComponent {
     'incomeAccountId'
   ];
 
-  constructor(private route: ActivatedRoute) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.route.data.subscribe((data: { recurringDepositProduct: any; recurringDepositProductsTemplate: any }) => {
       this.recurringDepositProduct = data.recurringDepositProduct;
       this.recurringDepositProductTemplate = data.recurringDepositProductsTemplate;

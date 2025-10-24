@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -33,12 +33,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ConfigurationWizardComponent {
+  dialogRef = inject<MatDialogRef<ConfigurationWizardComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
   show: number;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
   /**
    * @param {MatDialogRef<ConfigurationWizardComponent>} dialogRef MatDialogRef<ConfigurationWizardComponent>.
    */
-  constructor(
-    public dialogRef: MatDialogRef<ConfigurationWizardComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  constructor() {}
 }

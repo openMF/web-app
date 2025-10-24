@@ -51,7 +51,8 @@ module.exports = [
           style: 'camelCase',
           type: 'attribute'
         }
-      ]
+      ],
+      '@angular-eslint/prefer-inject': 'off'
     }
   },
 

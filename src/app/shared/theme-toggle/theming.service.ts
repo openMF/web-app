@@ -1,19 +1,24 @@
-import { ApplicationRef, Injectable } from '@angular/core';
+import { ApplicationRef, Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThemingService {
+  private ref = inject(ApplicationRef);
+
   private darkModeOn = false;
 
   themes = [
     'dark-theme',
     'light-theme'
   ]; // <- list all themes in this array
-  theme = new BehaviorSubject('light-theme'); // <- initial theme
+  theme = new BehaviorSubject('light-theme');
 
-  constructor(private ref: ApplicationRef) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]); // <- initial theme
+
+  constructor() {
     // Initially check if dark mode is enabled on system
     this.darkModeOn = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 

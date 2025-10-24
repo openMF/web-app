@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import {
@@ -49,6 +49,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewLoanProvisioningCriteriaComponent implements OnInit {
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   /** Loan Provisioning data. */
   provisioningData: any;
   /** Loan Product String. */
@@ -65,6 +70,9 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
   /** Data source for loan provisioning criteria table. */
   dataSource: MatTableDataSource<any>;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the Provisioning data from `resolve`.
    * @param {OrganizationService} organizationService Organization Service.
@@ -72,12 +80,7 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private organizationService: OrganizationService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loanProvisioningCriteria: any }) => {
       this.provisioningData = data.loanProvisioningCriteria;
     });

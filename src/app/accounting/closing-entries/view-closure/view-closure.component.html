@@ -9,66 +9,55 @@
   </button>
 </div>
 
-<div class="container" *ngIf="glAccountClosure">
-  <mat-card>
-    <mat-card-content>
-      <div class="layout-row-wrap">
-        <div class="flex-50 header">
-          {{ 'labels.inputs.Office' | translate }}
+@if (glAccountClosure) {
+  <div class="container">
+    <mat-card>
+      <mat-card-content>
+        <div class="layout-row-wrap">
+          <div class="flex-50 header">
+            {{ 'labels.inputs.Office' | translate }}
+          </div>
+          <div class="flex-50">
+            {{ glAccountClosure.officeName }}
+          </div>
+          <div class="flex-50 header">
+            {{ 'labels.inputs.Closure Date' | translate }}
+          </div>
+          <div class="flex-50">
+            {{ glAccountClosure.closingDate }}
+          </div>
+          <div class="flex-50 header">
+            {{ 'labels.inputs.Closed By' | translate }}
+          </div>
+          <div class="flex-50">
+            {{ glAccountClosure.createdByUsername }}
+          </div>
+          <div class="flex-50 header">
+            {{ 'labels.inputs.Updated By' | translate }}
+          </div>
+          <div class="flex-50">
+            {{ glAccountClosure.lastUpdatedByUsername }}
+          </div>
+          <div class="flex-50 header">
+            {{ 'labels.inputs.Updated On' | translate }}
+          </div>
+          <div class="flex-50">
+            {{ glAccountClosure.lastUpdatedDate }}
+          </div>
+          <div class="flex-50 header">
+            {{ 'labels.inputs.Closure Creation Date' | translate }}
+          </div>
+          <div class="flex-50">
+            {{ glAccountClosure.createdDate }}
+          </div>
+          <div class="flex-50 header">
+            {{ 'labels.inputs.Comments' | translate }}
+          </div>
+          <div class="flex-50">
+            {{ glAccountClosure.comments }}
+          </div>
         </div>
-
-        <div class="flex-50">
-          {{ glAccountClosure.officeName }}
-        </div>
-
-        <div class="flex-50 header">
-          {{ 'labels.inputs.Closure Date' | translate }}
-        </div>
-
-        <div class="flex-50">
-          {{ glAccountClosure.closingDate }}
-        </div>
-
-        <div class="flex-50 header">
-          {{ 'labels.inputs.Closed By' | translate }}
-        </div>
-
-        <div class="flex-50">
-          {{ glAccountClosure.createdByUsername }}
-        </div>
-
-        <div class="flex-50 header">
-          {{ 'labels.inputs.Updated By' | translate }}
-        </div>
-
-        <div class="flex-50">
-          {{ glAccountClosure.lastUpdatedByUsername }}
-        </div>
-
-        <div class="flex-50 header">
-          {{ 'labels.inputs.Updated On' | translate }}
-        </div>
-
-        <div class="flex-50">
-          {{ glAccountClosure.lastUpdatedDate }}
-        </div>
-
-        <div class="flex-50 header">
-          {{ 'labels.inputs.Closure Creation Date' | translate }}
-        </div>
-
-        <div class="flex-50">
-          {{ glAccountClosure.createdDate }}
-        </div>
-
-        <div class="flex-50 header">
-          {{ 'labels.inputs.Comments' | translate }}
-        </div>
-
-        <div class="flex-50">
-          {{ glAccountClosure.comments }}
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+}

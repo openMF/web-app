@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { SavingsService } from 'app/savings/savings.service';
@@ -17,22 +17,25 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingsDocumentsTabComponent {
+  private route = inject(ActivatedRoute);
+  private savingsService = inject(SavingsService);
+  private settingsService = inject(SettingsService);
+  dialog = inject(MatDialog);
+
   /** Stores the resolved savings documents data */
   entityDocuments: any;
   /** Stores the saving Account Id */
   entityId: string;
   entityType = 'savings';
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the savings data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private savingsService: SavingsService,
-    private settingsService: SettingsService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { savingsDocuments: any }) => {
       this.setSavingsDocumentsData(data.savingsDocuments);
     });

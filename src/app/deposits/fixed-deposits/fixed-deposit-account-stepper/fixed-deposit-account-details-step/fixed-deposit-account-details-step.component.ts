@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -26,6 +26,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositAccountDetailsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private fixedDepositsService = inject(FixedDepositsService);
+  private settingsService = inject(SettingsService);
+
   /** Fixed Deposits Account Template */
   @Input() fixedDepositsAccountTemplate: any;
 
@@ -47,17 +51,16 @@ export class FixedDepositAccountDetailsStepComponent implements OnInit {
   /** Fixed Deposits Account Template with product data  */
   @Output() fixedDepositsAccountProductTemplate = new EventEmitter();
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Sets fixed deposits account details form.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private fixedDepositsService: FixedDepositsService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.createFixedDepositsAccountDetailsForm();
   }
 

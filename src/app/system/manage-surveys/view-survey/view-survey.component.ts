@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -8,7 +8,7 @@ import { SystemService } from 'app/system/system.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
-import { NgFor, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -28,6 +28,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewSurveyComponent {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
+
   /** Survey Data */
   surveyData: any;
 
@@ -37,6 +42,9 @@ export class ViewSurveyComponent {
     'value'
   ];
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the survey data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -44,12 +52,7 @@ export class ViewSurveyComponent {
    * @param {MatDialog} dialog Dialog Reference.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private systemService: SystemService,
-    private dialog: MatDialog,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { survey: any }) => {
       this.surveyData = data.survey;
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   MatTable,
@@ -35,6 +35,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanCollateralTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** Loan Collateral Details */
   loanCollaterals: any[] = [];
   /** Columns to be displayed in collateral table. */
@@ -47,11 +49,14 @@ export class LoanCollateralTabComponent implements OnInit {
 
   totalAmount: number;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the loans data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { loanCollaterals: any }) => {
       this.loanCollaterals = data.loanCollaterals;
     });

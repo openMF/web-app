@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 import { MatFormField, MatPrefix, MatLabel } from '@angular/material/form-field';
@@ -16,14 +16,19 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TenantSelectorComponent implements OnInit {
+  private settingsService = inject(SettingsService);
+
   /** Tenant selector form control. */
   tenantSelector = new UntypedFormControl();
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
   /**
    * Sets the Tenant Identifier of the application in the selector on initial setup.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(private settingsService: SettingsService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.tenantSelector.setValue(this.settingsService.tenantIdentifier);

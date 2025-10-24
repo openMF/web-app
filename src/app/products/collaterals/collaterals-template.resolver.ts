@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,15 @@ import { ProductsService } from '../products.service';
  */
 @Injectable()
 export class CollateralTemplateResolver {
+  private productsService = inject(ProductsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {ProductsService} productsService products Service
    */
-  constructor(private productsService: ProductsService) {}
+  constructor() {}
 
   /**
    * Returns the product Data.

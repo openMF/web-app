@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { TasksService } from '../tasks.service';
  */
 @Injectable()
 export class GetCheckerInboxDetailResolver {
+  private tasksService = inject(TasksService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {TasksService} tasksService Tasks service.
    */
-  constructor(private tasksService: TasksService) {}
+  constructor() {}
 
   /**
    * Returns the detail data of the checker inbox.

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
@@ -36,6 +36,10 @@ import { environment } from '../../../environments/environment';
   ]
 })
 export class LoginFormComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private authenticationService = inject(AuthenticationService);
+  private authService = inject(AuthService);
+
   /** Login form group. */
   loginForm: FormGroup;
   /** Password input field type. */
@@ -46,15 +50,14 @@ export class LoginFormComponent implements OnInit {
   /** Whether remember me functionality is enabled */
   enableRememberMe = environment.enableRememberMe === true;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(
-    private formBuilder: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private authService: AuthService
-  ) {}
+  constructor() {}
 
   /**
    * Creates login form.

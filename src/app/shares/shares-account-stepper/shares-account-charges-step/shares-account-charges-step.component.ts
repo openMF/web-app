@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormControl } from '@angular/forms';
 
@@ -56,6 +56,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Shares Account Product Template */
   @Input() sharesAccountProductTemplate: any;
   /** Shares Account Template */
@@ -80,13 +83,13 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
     'action'
   ];
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {MatDialog} dialog Mat Dialog
    */
-  constructor(
-    private dialog: MatDialog,
-    private translateService: TranslateService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     this.currencyCode.valueChanges.subscribe(() => {

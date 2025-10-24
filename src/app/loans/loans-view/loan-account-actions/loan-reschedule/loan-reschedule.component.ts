@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { LoansService } from 'app/loans/loans.service';
 import {
   UntypedFormBuilder,
@@ -25,6 +25,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanRescheduleComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private loanService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   @Input() dataObject: any;
   loanId: any;
   rescheduleLoanForm: UntypedFormGroup;
@@ -40,6 +47,9 @@ export class LoanRescheduleComponent implements OnInit {
   extendRepaymentPeriod = new UntypedFormControl(false);
   adjustinterestrates = new UntypedFormControl(false);
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {LoansService} systemService Loan Service.
@@ -47,14 +57,7 @@ export class LoanRescheduleComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private loanService: LoansService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

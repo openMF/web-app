@@ -15,23 +15,29 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
-            <mat-error *ngIf="chargeoffLoanForm.controls.transactionDate.hasError('required')">
-              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (chargeoffLoanForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reason for Charge-Off' | translate }}</mat-label>
             <mat-select formControlName="chargeOffReasonId">
-              <mat-option *ngFor="let chargeOffReason of chargeOffReasonOptions" [value]="chargeOffReason.id">
-                {{ chargeOffReason.name }}
-              </mat-option>
+              @for (chargeOffReason of chargeOffReasonOptions; track chargeOffReason) {
+                <mat-option [value]="chargeOffReason.id">
+                  {{ chargeOffReason.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="chargeoffLoanForm.controls.chargeOffReasonId.hasError('required')">
-              {{ 'labels.inputs.Reason for Charge-Off' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (chargeoffLoanForm.controls.chargeOffReasonId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Reason for Charge-Off' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>

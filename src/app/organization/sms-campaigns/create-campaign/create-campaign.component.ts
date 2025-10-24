@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -35,6 +35,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateCampaignComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private organizationService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+
   /** SMS Campaign Template */
   smsCampaignTemplate: any;
   /** Run report headers */
@@ -45,6 +51,9 @@ export class CreateCampaignComponent {
   /** Campaign Message Step */
   @ViewChild(CampaignMessageStepComponent, { static: true }) campaignMessageStep: CampaignMessageStepComponent;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Fetches campaign template from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -53,13 +62,7 @@ export class CreateCampaignComponent {
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private organizationService: OrganizationService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { smsCampaignTemplate: any }) => {
       this.smsCampaignTemplate = data.smsCampaignTemplate;
     });

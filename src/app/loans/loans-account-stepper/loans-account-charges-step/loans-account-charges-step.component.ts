@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 // import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -65,6 +65,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private route = inject(ActivatedRoute);
+  private settingsService = inject(SettingsService);
+
   // @Input loansAccountProductTemplate: LoansAccountProductTemplate
   @Input() loansAccountProductTemplate: any;
   // @Imput loansAccountTemplate: LoansAccountTemplate
@@ -122,18 +127,16 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   totalCollateralValue: any = 0;
   loanId: any = null;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Loans Account Charges Form Step
    * @param {dialog} MatDialog Mat Dialog
    * @param {Dates} dateUtils Date Utils
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private route: ActivatedRoute,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

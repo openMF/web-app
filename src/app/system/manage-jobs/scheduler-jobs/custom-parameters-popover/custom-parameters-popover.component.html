@@ -2,22 +2,26 @@
 
 <mat-dialog-content>
   <div class="jobs-container">
-    <div *ngFor="let job of selectedJobs">
-      <mifosx-custom-parameters-table
-        [displayName]="job.displayName"
-        [jobId]="job.jobId"
-        [jobParameters]="job.jobParameters"
-        (retrieveData)="runSelectedJobs($event)"
-      >
-      </mifosx-custom-parameters-table>
-    </div>
+    @for (job of selectedJobs; track job) {
+      <div>
+        <mifosx-custom-parameters-table
+          [displayName]="job.displayName"
+          [jobId]="job.jobId"
+          [jobParameters]="job.jobParameters"
+          (retrieveData)="runSelectedJobs($event)"
+        >
+        </mifosx-custom-parameters-table>
+      </div>
+    }
   </div>
 </mat-dialog-content>
 
 <mat-list>
-  <mat-list-item *ngFor="let message of messages" class="message" [ngClass]="{ green: message.status }">
-    {{ message.message }}
-  </mat-list-item>
+  @for (message of messages; track message) {
+    <mat-list-item class="message" [ngClass]="{ green: message.status }">
+      {{ message.message }}
+    </mat-list-item>
+  }
 </mat-list>
 
 <mat-dialog-actions>

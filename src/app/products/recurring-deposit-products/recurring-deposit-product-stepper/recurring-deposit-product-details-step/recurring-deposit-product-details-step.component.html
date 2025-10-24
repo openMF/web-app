@@ -8,10 +8,12 @@
         matTooltip="{{ 'tooltips.Product name is a unique identifier' | translate }}"
         required
       />
-      <mat-error *ngIf="recurringDepositProductDetailsForm.controls.name.hasError('required')">
-        {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (recurringDepositProductDetailsForm.controls.name.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -23,10 +25,12 @@
         matTooltip="{{ 'tooltips.Short name is a unique identifier' | translate }}"
         required
       />
-      <mat-error *ngIf="recurringDepositProductDetailsForm.controls.shortName.hasError('required')">
-        {{ 'labels.inputs.Short Name' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (recurringDepositProductDetailsForm.controls.shortName.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Short Name' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-98">
@@ -40,10 +44,12 @@
         cdkTextareaAutosize
         cdkAutosizeMinRows="2"
       ></textarea>
-      <mat-error *ngIf="recurringDepositProductDetailsForm.controls.description.hasError('required')">
-        {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (recurringDepositProductDetailsForm.controls.description.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
   </div>
 

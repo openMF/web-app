@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -15,14 +15,17 @@ import { SettingsService } from 'app/settings/settings.service';
   providedIn: 'root'
 })
 export class ProductsService {
+  private http = inject(HttpClient);
+  private settingsService = inject(SettingsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {HttpClient} http Http Client to send requests.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(
-    private http: HttpClient,
-    private settingsService: SettingsService
-  ) {}
+  constructor() {}
 
   /**
    * @returns {Observable<any>} Loan products data

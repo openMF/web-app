@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { SystemService } from 'app/system/system.service';
 import { Observable, of } from 'rxjs';
@@ -7,10 +7,15 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class ShareProductDatatableResolver {
+  private systemService = inject(SystemService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {SystemService} systemService Products service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor() {}
 
   /**
    * Returns the loan product data.

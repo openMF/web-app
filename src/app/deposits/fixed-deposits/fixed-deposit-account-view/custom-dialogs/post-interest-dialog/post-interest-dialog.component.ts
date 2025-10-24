@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogTitle,
@@ -27,8 +27,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class PostInterestDialogComponent {
+  dialogRef = inject<MatDialogRef<PostInterestDialogComponent>>(MatDialogRef);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<PostInterestDialogComponent>) {}
+  constructor() {}
 }

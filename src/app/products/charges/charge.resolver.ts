@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { ProductsService } from 'app/products/products.service';
  */
 @Injectable()
 export class ChargeResolver {
+  private productsService = inject(ProductsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {productsService} productsService Products service.
    */
-  constructor(private productsService: ProductsService) {}
+  constructor() {}
 
   /**
    * Returns the charge data.

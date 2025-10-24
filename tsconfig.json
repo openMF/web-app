@@ -3,8 +3,12 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@pipes/*": ["src/app/pipes/*"],
-      "app/*": ["src/app/*"]
+      "@pipes/*": [
+        "src/app/pipes/*"
+      ],
+      "app/*": [
+        "src/app/*"
+      ]
     },
     "importHelpers": true,
     "module": "es2022",
@@ -12,7 +16,7 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "noImplicitAny": true,

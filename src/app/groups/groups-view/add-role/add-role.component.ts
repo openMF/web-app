@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -19,6 +19,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddRoleComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private groupsService = inject(GroupsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Groups Add Role Form */
   groupsAddRoleForm: UntypedFormGroup;
   /** Client Member Data */
@@ -28,18 +33,16 @@ export class AddRoleComponent implements OnInit {
   /** Groups Account and Template Data */
   groupAndTemplateData: any;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {FormBuilder} formBuilder Form Builder
    * @param {GroupsService} groupsService Groups Service
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private groupsService: GroupsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { groupAndTemplateData: any }) => {
       this.groupAndTemplateData = data.groupAndTemplateData;
     });

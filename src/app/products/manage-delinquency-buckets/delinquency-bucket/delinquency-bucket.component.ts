@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -41,6 +41,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DelinquencyBucketComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   delinquencyBucketData: any;
   /** Columns to be displayed in delinquency bucket table. */
   displayedColumns: string[] = ['name'];
@@ -52,7 +54,10 @@ export class DelinquencyBucketComponent implements OnInit {
   /** Sorter for delinquency bucket table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private route: ActivatedRoute) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.route.data.subscribe((data: { delinquencyBuckets: any }) => {
       this.delinquencyBucketData = data.delinquencyBuckets;
     });

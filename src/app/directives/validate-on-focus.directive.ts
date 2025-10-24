@@ -1,12 +1,15 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({ selector: '[mifosxValidateOnFocus]' })
 export class ValidateOnFocusDirective {
-  constructor(
-    private control: NgControl,
-    private el: ElementRef
-  ) {}
+  private control = inject(NgControl);
+  private el = inject(ElementRef);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   @HostListener('focus')
   onFocus() {

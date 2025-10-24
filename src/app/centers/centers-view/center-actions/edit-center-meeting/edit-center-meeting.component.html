@@ -13,41 +13,55 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Repetition Frequency' | translate }}</mat-label>
             <mat-select formControlName="frequency">
-              <mat-option *ngFor="let option of frequencyOptions" [value]="option.id">
-                {{ option.value }}
-              </mat-option>
+              @for (option of frequencyOptions; track option) {
+                <mat-option [value]="option.id">
+                  {{ option.value }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="centerEditMeetingForm.controls.frequency.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Repetition Frequency' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (centerEditMeetingForm.controls.frequency.hasError('repeatsOnDay')) {
+              <mat-error>
+                {{ 'labels.inputs.Repetition Frequency' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Repetition Interval' | translate }}</mat-label>
             <mat-select formControlName="interval">
-              <mat-option *ngFor="let interval of repetitionIntervals" [value]="interval">
-                {{ interval }}
-              </mat-option>
+              @for (interval of repetitionIntervals; track interval) {
+                <mat-option [value]="interval">
+                  {{ interval }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="centerEditMeetingForm.controls.interval.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.Repetition Interval' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (centerEditMeetingForm.controls.interval.hasError('repeatsOnDay')) {
+              <mat-error>
+                {{ 'labels.inputs.Repetition Interval' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
-          <mat-form-field *ngIf="centerEditMeetingForm.contains('repeatsOnDay')">
-            <mat-label>{{ 'labels.inputs.Repeats on Day' | translate }}</mat-label>
-            <mat-select formControlName="repeatsOnDay" required>
-              <mat-option *ngFor="let day of repeatsOnDays" [value]="day.id">
-                {{ day.value }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="centerEditMeetingForm.controls.repeatsOnDay.hasError('repeatsOnDay')">
-              {{ 'labels.inputs.At least' | translate }} <strong>{{ 'labels.inputs.one' | translate }}</strong>
-              {{ 'labels.inputs.day must be selected' | translate }}
-            </mat-error>
-          </mat-form-field>
+          @if (centerEditMeetingForm.contains('repeatsOnDay')) {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Repeats on Day' | translate }}</mat-label>
+              <mat-select formControlName="repeatsOnDay" required>
+                @for (day of repeatsOnDays; track day) {
+                  <mat-option [value]="day.id">
+                    {{ day.value }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (centerEditMeetingForm.controls.repeatsOnDay.hasError('repeatsOnDay')) {
+                <mat-error>
+                  {{ 'labels.inputs.At least' | translate }} <strong>{{ 'labels.inputs.one' | translate }}</strong>
+                  {{ 'labels.inputs.day must be selected' | translate }}
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
           <mat-form-field class="m-b-5" (click)="startDatePicker.open()">
             <mat-label>{{ 'labels.inputs.Above Changes are Effective from' | translate }}</mat-label>
@@ -61,10 +75,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
-            <mat-error *ngIf="centerEditMeetingForm.controls.startDate.hasError('required')">
-              {{ 'labels.inputs.Changes Affection Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (centerEditMeetingForm.controls.startDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Changes Affection Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
             <mat-hint>
               {{ "labels.text.Repeats' and 'Repeats every" | translate }}
             </mat-hint>

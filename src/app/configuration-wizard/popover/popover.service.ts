@@ -7,7 +7,7 @@ import {
   ConnectionPositionPair
 } from '@angular/cdk/overlay';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
-import { Injectable, InjectionToken, Injector, TemplateRef, ElementRef } from '@angular/core';
+import { Injectable, InjectionToken, Injector, TemplateRef, ElementRef, inject } from '@angular/core';
 
 /* Custom Imports */
 import { PopoverConfig } from './popover-config';
@@ -35,14 +35,17 @@ const defaultConfig: PopoverConfig = {
   providedIn: 'root'
 })
 export class PopoverService {
+  private overlay = inject(Overlay);
+  private injector = inject(Injector);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {Injector} injector Injector.
    * @param {overlay} overlay Overlay.
    */
-  constructor(
-    private overlay: Overlay,
-    private injector: Injector
-  ) {}
+  constructor() {}
 
   /**
    * Opens the popover at target element

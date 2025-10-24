@@ -1,23 +1,22 @@
-<div class="container m-b-20 align-end gap-2percent" *ngIf="!transactionData.reversed">
-  <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
+@if (!transactionData.reversed) {
+  <div class="container m-b-20 align-end gap-2percent">
+    <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
+      @if (!(transactionData.transactionType.value === 'Transfer' || transactionData.reversed === 'true')) {
+        <button mat-raised-button color="primary" [routerLink]="'edit'">
+          <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
+        </button>
+      }
+    </span>
     <button
       mat-raised-button
-      color="primary"
-      *ngIf="!(transactionData.transactionType.value === 'Transfer' || transactionData.reversed === 'true')"
-      [routerLink]="'edit'"
+      color="warn"
+      *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
+      (click)="undoTransaction()"
     >
-      <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
+      <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
     </button>
-  </span>
-  <button
-    mat-raised-button
-    color="warn"
-    *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
-    (click)="undoTransaction()"
-  >
-    <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
-  </button>
-</div>
+  </div>
+}
 
 <div class="container">
   <mat-card>
@@ -65,19 +64,22 @@
           {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="transactionData.note">
-          {{ 'labels.inputs.Note' | translate }}
-        </div>
+        @if (transactionData.note) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Note' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="transactionData.note">
-          {{ transactionData.note }}
-        </div>
+        @if (transactionData.note) {
+          <div class="flex-50">
+            {{ transactionData.note }}
+          </div>
+        }
 
-        <mifosx-transaction-payment-detail
-          *ngIf="transactionData.paymentDetailData"
-          [paymentDetailData]="transactionData.paymentDetailData"
-        >
-        </mifosx-transaction-payment-detail>
+        @if (transactionData.paymentDetailData) {
+          <mifosx-transaction-payment-detail [paymentDetailData]="transactionData.paymentDetailData">
+          </mifosx-transaction-payment-detail>
+        }
       </div>
     </mat-card-content>
 

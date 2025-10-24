@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialogRef, MatDialogTitle, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { FileUploadComponent } from '../../../../shared/file-upload/file-upload.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -20,13 +20,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UploadImageDialogComponent {
+  dialogRef = inject<MatDialogRef<UploadImageDialogComponent>>(MatDialogRef);
+
   /** Client Image */
   image: File;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    */
-  constructor(public dialogRef: MatDialogRef<UploadImageDialogComponent>) {}
+  constructor() {}
 
   /**
    * Sets file form control value.

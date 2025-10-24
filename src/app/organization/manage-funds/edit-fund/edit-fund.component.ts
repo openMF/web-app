@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { OrganizationService } from 'app/organization/organization.service';
@@ -13,10 +13,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditFundComponent implements OnInit {
+  private organizationService = inject(OrganizationService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   /** Selected Data. */
   fundData: any;
   /** Charge form. */
   fundForm: UntypedFormGroup;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
   /**
    * Retrieves the charge data from `resolve`.
@@ -25,12 +33,7 @@ export class EditFundComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private organizationService: OrganizationService,
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { fundData: any }) => {
       this.fundData = data.fundData;
     });

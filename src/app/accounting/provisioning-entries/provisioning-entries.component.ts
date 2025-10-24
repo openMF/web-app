@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -50,6 +50,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ProvisioningEntriesComponent implements OnInit {
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Provisioning entry data. */
   provisioningEntryData: any;
   /** Columns to be displayed in provisioning entries table. */
@@ -69,17 +73,16 @@ export class ProvisioningEntriesComponent implements OnInit {
   /** Sorter for provisioning entries table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the provisioning entries data from `resolve`.
    * @param {AccountingService} accountingService Accounting Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private accountingService: AccountingService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { provisioningEntries: any }) => {
       this.provisioningEntryData = data.provisioningEntries.pageItems;
     });

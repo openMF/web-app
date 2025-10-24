@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   AbstractControl,
@@ -48,6 +48,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private accountTransfersService = inject(AccountTransfersService);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private clientsService = inject(ClientsService);
+
   /** Standing Instructions Data */
   accountTransferTemplateData: any;
   /** Minimum date allowed. */
@@ -81,6 +89,9 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   balance: number = 0;
   isLoading: boolean = false;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the standing instructions template from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -91,15 +102,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {ClientsService} clientsService Clients Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private accountTransfersService: AccountTransfersService,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private clientsService: ClientsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { accountTransferTemplate: any }) => {
       this.accountTransferTemplateData = data.accountTransferTemplate;
       this.setParams();
@@ -119,7 +122,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.accountTypeId = '2';
         this.id = this.route.snapshot.queryParams['savingsId'];
         this.interbank = this.route.snapshot.queryParams['interbank'] === 'true';
-        this.balance = this.router.getCurrentNavigation().extras.state.balance;
+        this.balance = this.router.currentNavigation().extras.state.balance;
         break;
       default:
         this.accountTypeId = '0';

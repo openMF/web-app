@@ -3,22 +3,28 @@
     <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
       <mat-select required formControlName="officeId">
-        <mat-option *ngFor="let office of officeOptions" [value]="office.id">
-          {{ office.name }}
-        </mat-option>
+        @for (office of officeOptions; track office) {
+          <mat-option [value]="office.id">
+            {{ office.name }}
+          </mat-option>
+        }
       </mat-select>
-      <mat-error *ngIf="createClientForm.controls.officeId.hasError('required')">
-        {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (createClientForm.controls.officeId.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-fill flex-23">
       <mat-label>{{ 'labels.inputs.Legal Form' | translate }}</mat-label>
       <mat-select required formControlName="legalFormId">
-        <mat-option *ngFor="let legalForm of legalFormOptions" [value]="legalForm.id">
-          {{ legalForm.value | translateKey: 'inputs' }}
-        </mat-option>
+        @for (legalForm of legalFormOptions; track legalForm) {
+          <mat-option [value]="legalForm.id">
+            {{ legalForm.value | translateKey: 'inputs' }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -27,64 +33,86 @@
       <input matInput formControlName="externalId" />
     </mat-form-field>
 
-    <mat-form-field *ngIf="createClientForm.contains('fullname')" class="flex-48">
-      <mat-label>
-        {{ 'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Name', 'Entity Name']) | translate }}
-      </mat-label>
-      <input matInput required formControlName="fullname" />
-      <mat-error *ngIf="createClientForm.controls.fullname.hasError('required')">
-        {{ 'labels.inputs.Client name' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-      <mat-error *ngIf="createClientForm.controls.fullname.hasError('pattern')">
-        {{ 'labels.inputs.Client name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
-        {{ 'labels.commons.begin with a special character or number' | translate }}
-      </mat-error>
-    </mat-form-field>
-
-    <div
-      class="name-fields-row"
-      *ngIf="
-        createClientForm.contains('firstname') ||
-        createClientForm.contains('middlename') ||
-        createClientForm.contains('lastname')
-      "
-    >
-      <mat-form-field *ngIf="createClientForm.contains('firstname')" class="name-field first-name">
-        <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
-        <input matInput required formControlName="firstname" />
-        <mat-error *ngIf="createClientForm.controls.firstname.hasError('required')">
-          {{ 'labels.inputs.Client first name' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-        <mat-error *ngIf="createClientForm.controls.firstname.hasError('pattern')">
-          {{ 'labels.inputs.Client first name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
-          {{ 'labels.commons.begin with a special character or number' | translate }}
-        </mat-error>
+    @if (createClientForm.contains('fullname')) {
+      <mat-form-field class="flex-48">
+        <mat-label>
+          {{ 'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Name', 'Entity Name']) | translate }}
+        </mat-label>
+        <input matInput required formControlName="fullname" />
+        @if (createClientForm.controls.fullname.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Client name' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
+        @if (createClientForm.controls.fullname.hasError('pattern')) {
+          <mat-error>
+            {{ 'labels.inputs.Client name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+            {{ 'labels.commons.begin with a special character or number' | translate }}
+          </mat-error>
+        }
       </mat-form-field>
+    }
 
-      <mat-form-field *ngIf="createClientForm.contains('middlename')" class="name-field middle-name">
-        <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
-        <input matInput formControlName="middlename" />
-        <mat-error *ngIf="createClientForm.controls.middlename.hasError('pattern')">
-          {{ 'labels.inputs.Client middle name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
-          {{ 'labels.commons.begin with a special character or number' | translate }}
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field *ngIf="createClientForm.contains('lastname')" class="name-field last-name">
-        <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
-        <input matInput required formControlName="lastname" />
-        <mat-error *ngIf="createClientForm.controls.lastname.hasError('required')">
-          {{ 'labels.inputs.Client last name' | translate }} {{ 'labels.commons.is' | translate }}
-          <strong>{{ 'labels.commons.required' | translate }}</strong>
-        </mat-error>
-        <mat-error *ngIf="createClientForm.controls.lastname.hasError('pattern')">
-          {{ 'labels.inputs.Client last name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
-          {{ 'labels.commons.begin with a special character or number' | translate }}
-        </mat-error>
-      </mat-form-field>
-    </div>
+    @if (
+      createClientForm.contains('firstname') ||
+      createClientForm.contains('middlename') ||
+      createClientForm.contains('lastname')
+    ) {
+      <div class="name-fields-row">
+        @if (createClientForm.contains('firstname')) {
+          <mat-form-field class="name-field first-name">
+            <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
+            <input matInput required formControlName="firstname" />
+            @if (createClientForm.controls.firstname.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Client first name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (createClientForm.controls.firstname.hasError('pattern')) {
+              <mat-error>
+                {{ 'labels.inputs.Client first name' | translate }}
+                <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.commons.begin with a special character or number' | translate }}
+              </mat-error>
+            }
+          </mat-form-field>
+        }
+        @if (createClientForm.contains('middlename')) {
+          <mat-form-field class="name-field middle-name">
+            <mat-label>{{ 'labels.inputs.Middle Name' | translate }}</mat-label>
+            <input matInput formControlName="middlename" />
+            @if (createClientForm.controls.middlename.hasError('pattern')) {
+              <mat-error>
+                {{ 'labels.inputs.Client middle name' | translate }}
+                <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.commons.begin with a special character or number' | translate }}
+              </mat-error>
+            }
+          </mat-form-field>
+        }
+        @if (createClientForm.contains('lastname')) {
+          <mat-form-field class="name-field last-name">
+            <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
+            <input matInput required formControlName="lastname" />
+            @if (createClientForm.controls.lastname.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Client last name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
+            @if (createClientForm.controls.lastname.hasError('pattern')) {
+              <mat-error>
+                {{ 'labels.inputs.Client last name' | translate }}
+                <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.commons.begin with a special character or number' | translate }}
+              </mat-error>
+            }
+          </mat-form-field>
+        }
+      </div>
+    }
 
     <mat-divider></mat-divider>
 
@@ -100,79 +128,80 @@
       <mat-datepicker #dateOfBirthDatePicker></mat-datepicker>
     </mat-form-field>
 
-    <div
-      class="flex-100 layout-row-wrap responsive-column gap-4percent"
-      formGroupName="clientNonPersonDetails"
-      *ngIf="createClientForm.get('clientNonPersonDetails')"
-    >
+    @if (createClientForm.get('clientNonPersonDetails')) {
+      <div class="flex-100 layout-row-wrap responsive-column gap-4percent" formGroupName="clientNonPersonDetails">
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
+          <mat-select formControlName="constitutionId" required>
+            @for (constitution of constitutionOptions; track constitution) {
+              <mat-option [value]="constitution.id">
+                {{ constitution.name }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Main Business Line' | translate }}</mat-label>
+          <mat-select formControlName="mainBusinessLineId">
+            @for (business of businessLineOptions; track business) {
+              <mat-option [value]="business.id">
+                {{ business.name }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="flex-48" (click)="incorpValidityTillDateDatePicker.open()">
+          <mat-label>{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</mat-label>
+          <input
+            matInput
+            [min]="minDate"
+            [max]="maxDate"
+            [matDatepicker]="incorpValidityTillDateDatePicker"
+            formControlName="incorpValidityTillDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Incorporation Number' | translate }}</mat-label>
+          <input matInput formControlName="incorpNumber" />
+        </mat-form-field>
+        <mat-form-field class="flex-98">
+          <mat-label>{{ 'labels.inputs.Remarks' | translate }}</mat-label>
+          <textarea matInput formControlName="remarks" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
+        </mat-form-field>
+      </div>
+    }
+
+    @if (createClientForm.value.legalFormId === 1) {
       <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
-        <mat-select formControlName="constitutionId" required>
-          <mat-option *ngFor="let constitution of constitutionOptions" [value]="constitution.id">
-            {{ constitution.name }}
-          </mat-option>
+        <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
+        <mat-select formControlName="genderId">
+          @for (gender of genderOptions; track gender) {
+            <mat-option [value]="gender.id">
+              {{ gender.name }}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
-
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Main Business Line' | translate }}</mat-label>
-        <mat-select formControlName="mainBusinessLineId">
-          <mat-option *ngFor="let business of businessLineOptions" [value]="business.id">
-            {{ business.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="flex-48" (click)="incorpValidityTillDateDatePicker.open()">
-        <mat-label>{{ 'labels.inputs.Incorporation Validity Till Date' | translate }}</mat-label>
-        <input
-          matInput
-          [min]="minDate"
-          [max]="maxDate"
-          [matDatepicker]="incorpValidityTillDateDatePicker"
-          formControlName="incorpValidityTillDate"
-        />
-        <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Incorporation Number' | translate }}</mat-label>
-        <input matInput formControlName="incorpNumber" />
-      </mat-form-field>
-
-      <mat-form-field class="flex-98">
-        <mat-label>{{ 'labels.inputs.Remarks' | translate }}</mat-label>
-        <textarea matInput formControlName="remarks" cdkTextareaAutosize cdkAutosizeMinRows="2"></textarea>
-      </mat-form-field>
-    </div>
-
-    <mat-form-field *ngIf="createClientForm.value.legalFormId === 1" class="flex-48">
-      <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
-      <mat-select formControlName="genderId">
-        <mat-option *ngFor="let gender of genderOptions" [value]="gender.id">
-          {{ gender.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    }
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Staff' | translate }}</mat-label>
       <mat-select formControlName="staffId">
-        <mat-option *ngFor="let staff of staffOptions" [value]="staff.id">
-          {{ staff.displayName }}
-        </mat-option>
+        @for (staff of staffOptions; track staff) {
+          <mat-option [value]="staff.id">
+            {{ staff.displayName }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
-    <mat-checkbox
-      *ngIf="createClientForm.value.legalFormId === 1"
-      class="flex-48 margin-v"
-      labelPosition="before"
-      formControlName="isStaff"
-    >
-      {{ 'labels.inputs.Is staff' | translate }}?
-    </mat-checkbox>
+    @if (createClientForm.value.legalFormId === 1) {
+      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="isStaff">
+        {{ 'labels.inputs.Is staff' | translate }}?
+      </mat-checkbox>
+    }
 
     <mat-divider class="flex-98"></mat-divider>
 
@@ -184,29 +213,32 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Email Address' | translate }}</mat-label>
       <input matInput formControlName="emailAddress" />
-      <mat-error *ngIf="createClientForm.controls.emailAddress.errors?.email">
-        {{ 'error.Email not valid' | translate }}
-      </mat-error>
+      @if (createClientForm.controls.emailAddress.errors?.email) {
+        <mat-error>
+          {{ 'error.Email not valid' | translate }}
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Client Type' | translate }}</mat-label>
       <mat-select formControlName="clientTypeId">
-        <mat-option *ngFor="let clientType of clientTypeOptions" [value]="clientType.id">
-          {{ clientType.name }}
-        </mat-option>
+        @for (clientType of clientTypeOptions; track clientType) {
+          <mat-option [value]="clientType.id">
+            {{ clientType.name }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Client Classification' | translate }}</mat-label>
       <mat-select formControlName="clientClassificationId">
-        <mat-option
-          *ngFor="let clientClassification of clientClassificationTypeOptions"
-          [value]="clientClassification.id"
-        >
-          {{ clientClassification.name }}
-        </mat-option>
+        @for (clientClassification of clientClassificationTypeOptions; track clientClassification) {
+          <mat-option [value]="clientClassification.id">
+            {{ clientClassification.name }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
@@ -230,44 +262,50 @@
       {{ 'labels.inputs.Active' | translate }}?
     </mat-checkbox>
 
-    <mat-form-field
-      *ngIf="createClientForm.contains('activationDate')"
-      class="flex-48"
-      (click)="activatedOnDatePicker.open()"
-    >
-      <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="createClientForm.value.submittedOnDate"
-        [max]="maxDate"
-        [matDatepicker]="activatedOnDatePicker"
-        required
-        formControlName="activationDate"
-      />
-      <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #activatedOnDatePicker></mat-datepicker>
-      <mat-error *ngIf="createClientForm.controls.activationDate.hasError('required')">
-        {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
+    @if (createClientForm.contains('activationDate')) {
+      <mat-form-field class="flex-48" (click)="activatedOnDatePicker.open()">
+        <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="createClientForm.value.submittedOnDate"
+          [max]="maxDate"
+          [matDatepicker]="activatedOnDatePicker"
+          required
+          formControlName="activationDate"
+        />
+        <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #activatedOnDatePicker></mat-datepicker>
+        @if (createClientForm.controls.activationDate.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Activation Date' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+    }
 
     <mat-checkbox labelPosition="before" formControlName="addSavings" class="margin-v flex-48">
       {{ 'labels.inputs.Open Savings Account' | translate }}?
     </mat-checkbox>
 
-    <mat-form-field *ngIf="createClientForm.contains('savingsProductId')" class="flex-48">
-      <mat-label>{{ 'labels.inputs.Savings Product' | translate }}</mat-label>
-      <mat-select required formControlName="savingsProductId">
-        <mat-option *ngFor="let product of savingProductOptions" [value]="product.id">
-          {{ product.name }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="createClientForm.controls.savingsProductId.hasError('required')">
-        {{ 'labels.inputs.Savings Product' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
+    @if (createClientForm.contains('savingsProductId')) {
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Savings Product' | translate }}</mat-label>
+        <mat-select required formControlName="savingsProductId">
+          @for (product of savingProductOptions; track product) {
+            <mat-option [value]="product.id">
+              {{ product.name }}
+            </mat-option>
+          }
+        </mat-select>
+        @if (createClientForm.controls.savingsProductId.hasError('required')) {
+          <mat-error>
+            {{ 'labels.inputs.Savings Product' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
+        }
+      </mat-form-field>
+    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

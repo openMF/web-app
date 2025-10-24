@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { SavingsService } from '../savings.service';
  */
 @Injectable()
 export class GSIMViewResolver {
+  private savingsService = inject(SavingsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {SavingsService} savingsService Savings service.
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor() {}
 
   /**
    * Returns the Savings Account data.

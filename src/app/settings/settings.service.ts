@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
 
@@ -13,6 +13,9 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class SettingsService {
+  private alertService = inject(AlertService);
+  private dateUtils = inject(Dates);
+
   public static businessDateFormat = 'yyyy-MM-dd';
   public static businessDateConfigName = 'enable-business-date';
   public static businessDateType = 'BUSINESS_DATE';
@@ -20,10 +23,10 @@ export class SettingsService {
   minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
 
-  constructor(
-    private alertService: AlertService,
-    private dateUtils: Dates
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   /**
    * Sets date format setting throughout the app.

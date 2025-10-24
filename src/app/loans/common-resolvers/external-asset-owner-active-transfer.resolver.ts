@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ExternalAssetOwnerService } from '../services/external-asset-owner.service';
@@ -7,10 +7,15 @@ import { ExternalAssetOwnerService } from '../services/external-asset-owner.serv
   providedIn: 'root'
 })
 export class ExternalAssetOwnerActiveTransferResolver {
+  private externalAssetOwnerService = inject(ExternalAssetOwnerService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {ExternalAssetOwnerService} externalAssetOwnerService External Asset Owner service.
    */
-  constructor(private externalAssetOwnerService: ExternalAssetOwnerService) {}
+  constructor() {}
 
   /**
    * Returns the Loans with Association data.

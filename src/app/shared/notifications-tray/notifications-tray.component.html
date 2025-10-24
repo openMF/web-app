@@ -13,29 +13,26 @@
 </button>
 
 <mat-menu class="mifosx-notifications-menu" #notificationsMenu="matMenu" [overlapTrigger]="false">
-  <div *ngIf="unreadNotifications.length === 0" class="layout-column align-center-center no-notifications">
-    <mat-icon class="no-notifications-icon">
-      <span class="material-icons">{{ 'labels.menus.Notifications' | translate }}</span>
-    </mat-icon>
-    <p>{{ 'labels.text.No notifications' | translate }}</p>
-  </div>
+  @if (unreadNotifications.length === 0) {
+    <div class="layout-column align-center-center no-notifications">
+      <mat-icon class="no-notifications-icon">
+        <span class="material-icons">{{ 'labels.menus.Notifications' | translate }}</span>
+      </mat-icon>
+      <p>{{ 'labels.text.No notifications' | translate }}</p>
+    </div>
+  }
 
-  <button
-    mat-menu-item
-    class="unread"
-    *ngFor="let notification of unreadNotifications"
-    [routerLink]="[routeMap[notification.objectType], notification.objectId]"
-  >
-    {{ notification.content }}*<br />
-    <span class="time">[{{ notification.createdAt }}]</span>
-  </button>
+  @for (notification of unreadNotifications; track notification) {
+    <button mat-menu-item class="unread" [routerLink]="[routeMap[notification.objectType], notification.objectId]">
+      {{ notification.content }}*<br />
+      <span class="time">[{{ notification.createdAt }}]</span>
+    </button>
+  }
 
-  <button
-    mat-menu-item
-    *ngFor="let notification of displayedReadNotifications"
-    [routerLink]="[routeMap[notification.objectType], notification.objectId]"
-  >
-    {{ notification.content }}<br />
-    <span class="time">[{{ notification.createdAt }}]</span>
-  </button>
+  @for (notification of displayedReadNotifications; track notification) {
+    <button mat-menu-item [routerLink]="[routeMap[notification.objectType], notification.objectId]">
+      {{ notification.content }}<br />
+      <span class="time">[{{ notification.createdAt }}]</span>
+    </button>
+  }
 </mat-menu>

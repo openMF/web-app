@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { SystemService } from 'app/system/system.service';
 import { environment } from '../../../../environments/environment';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -16,6 +16,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CobWorkflowComponent implements OnInit, OnDestroy {
+  private systemService = inject(SystemService);
+
   /** Wait time between API status calls 30 seg */
   waitTime = environment.waitTimeForCOBCatchUp || 30;
   /** Process running flag */
@@ -23,7 +25,10 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   /** Timer to refetch COB Catch-Up status every 5 seconds */
   timer: any;
 
-  constructor(private systemService: SystemService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.getCOBCatchUpStatus();

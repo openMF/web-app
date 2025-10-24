@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,15 @@ import { TasksService } from '../tasks.service';
  */
 @Injectable()
 export class GetLoansToBeDisbursed {
+  private tasksService = inject(TasksService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {TasksService} tasksService Tasks service.
    */
-  constructor(private tasksService: TasksService) {}
+  constructor() {}
 
   /**
    * Returns all the loans data.

@@ -10,7 +10,8 @@ import {
   ElementRef,
   TemplateRef,
   AfterContentChecked,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  inject
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -69,6 +70,15 @@ import { AuthService } from 'app/zitadel/auth.service';
   ]
 })
 export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChecked {
+  private breakpointObserver = inject(BreakpointObserver);
+  private router = inject(Router);
+  private authenticationService = inject(AuthenticationService);
+  private popoverService = inject(PopoverService);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private dialog = inject(MatDialog);
+  private changeDetector = inject(ChangeDetectorRef);
+  private authService = inject(AuthService);
+
   /* Reference of institution */
   @ViewChild('institution') institution: ElementRef<any>;
   /* Template for popover on institution */
@@ -92,6 +102,9 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
   /** Sidenav collapse event. */
   @Output() collapse = new EventEmitter<boolean>();
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {BreakpointObserver} breakpointObserver Breakpoint observer to detect screen size.
    * @param {Router} router Router for navigation.
@@ -100,16 +113,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, AfterContentChec
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    private popoverService: PopoverService,
-    private configurationWizardService: ConfigurationWizardService,
-    private dialog: MatDialog,
-    private changeDetector: ChangeDetectorRef,
-    private authService: AuthService
-  ) {}
+  constructor() {}
 
   /**
    * Subscribes to breakpoint for handset.

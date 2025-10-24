@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -29,6 +29,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class BulkLoanReassignmnetComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private organizationSevice = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+
   /** Bulk Loan form. */
   bulkLoanForm: UntypedFormGroup;
   /** Office data. */
@@ -48,6 +55,9 @@ export class BulkLoanReassignmnetComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Get Office data from `resolver`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -56,14 +66,7 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service.
    * @param {Router} router Router.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private organizationSevice: OrganizationService,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { offices: any }) => {
       this.offices = data.offices;
     });

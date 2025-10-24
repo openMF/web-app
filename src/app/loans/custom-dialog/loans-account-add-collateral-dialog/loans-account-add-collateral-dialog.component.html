@@ -4,9 +4,11 @@
   <mat-form-field>
     <mat-label>{{ 'labels.inputs.Collateral' | translate }}</mat-label>
     <mat-select formControlName="collateral" required>
-      <mat-option *ngFor="let collateralType of collateralTypeData" [value]="collateralType">
-        {{ collateralType.name }}
-      </mat-option>
+      @for (collateralType of collateralTypeData; track collateralType) {
+        <mat-option [value]="collateralType">
+          {{ collateralType.name }}
+        </mat-option>
+      }
     </mat-select>
     <mat-error>
       {{ 'labels.inputs.Collateral' | translate }} {{ 'labels.commons.is' | translate }}
@@ -17,13 +19,17 @@
   <mat-form-field>
     <mat-label>{{ 'labels.inputs.Quantity' | translate }}</mat-label>
     <input type="number" [max]="maxQuantity" [min]="0" matInput formControlName="quantity" required />
-    <mat-error *ngIf="addCollateralForm.controls.quantity.hasError('required')">
-      {{ 'labels.inputs.Quantity' | translate }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
-    <mat-error *ngIf="addCollateralForm.controls.quantity.hasError('max')">
-      {{ 'labels.inputs.Quantity can not be more than' | translate }} <strong>{{ maxQuantity }}</strong>
-    </mat-error>
+    @if (addCollateralForm.controls.quantity.hasError('required')) {
+      <mat-error>
+        {{ 'labels.inputs.Quantity' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    }
+    @if (addCollateralForm.controls.quantity.hasError('max')) {
+      <mat-error>
+        {{ 'labels.inputs.Quantity can not be more than' | translate }} <strong>{{ maxQuantity }}</strong>
+      </mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field>

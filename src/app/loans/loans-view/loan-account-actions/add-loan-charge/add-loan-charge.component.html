@@ -6,23 +6,29 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
             <mat-select required formControlName="chargeId">
-              <mat-option *ngFor="let loanCharge of loanChargeOptions" [value]="loanCharge.id">
-                {{ loanCharge.name + ' (' + loanCharge?.currency.name + ')' }}
-              </mat-option>
+              @for (loanCharge of loanChargeOptions; track loanCharge) {
+                <mat-option [value]="loanCharge.id">
+                  {{ loanCharge.name + ' (' + loanCharge?.currency.name + ')' }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="loanChargeForm.controls.chargeId.hasError('required')">
-              {{ 'labels.inputs.Charge' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (loanChargeForm.controls.chargeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Charge' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
             <input type="number" required matInput formControlName="amount" />
-            <mat-error *ngIf="loanChargeForm.controls.amount.hasError('required')">
-              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (loanChargeForm.controls.amount.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
@@ -35,23 +41,27 @@
             <input matInput formControlName="chargeTime" />
           </mat-form-field>
 
-          <mat-form-field *ngIf="loanChargeForm.controls['dueDate']" (click)="dueDatePicker.open()">
-            <mat-label>{{ 'labels.inputs.Due On' | translate }}</mat-label>
-            <input
-              matInput
-              [min]="minDate"
-              [max]="maxDate"
-              [matDatepicker]="dueDatePicker"
-              required
-              formControlName="dueDate"
-            />
-            <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #dueDatePicker></mat-datepicker>
-            <mat-error *ngIf="loanChargeForm.controls.dueDate.hasError('required')">
-              {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (loanChargeForm.controls['dueDate']) {
+            <mat-form-field (click)="dueDatePicker.open()">
+              <mat-label>{{ 'labels.inputs.Due On' | translate }}</mat-label>
+              <input
+                matInput
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="dueDatePicker"
+                required
+                formControlName="dueDate"
+              />
+              <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #dueDatePicker></mat-datepicker>
+              @if (loanChargeForm.controls.dueDate.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Due Date' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
         </div>
 
         <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">

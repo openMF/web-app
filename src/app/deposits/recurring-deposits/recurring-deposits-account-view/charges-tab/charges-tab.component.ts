@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -59,6 +59,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private savingsService = inject(SavingsService);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+
   /** Recurring Deposits Account Data */
   recurringDepositsAccountData: any;
   /** Charges Data */
@@ -85,19 +93,14 @@ export class ChargesTabComponent implements OnInit {
   /** Charges Table Reference */
   @ViewChild('chargesTable', { static: true }) chargesTableRef: MatTable<Element>;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves Recurring Deposits Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private savingsService: SavingsService,
-    private dateUtils: Dates,
-    private router: Router,
-    public dialog: MatDialog,
-    private translateService: TranslateService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.chargesData = this.recurringDepositsAccountData.charges;

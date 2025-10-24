@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterOutlet, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -43,19 +43,22 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FamilyMembersTabComponent {
+  private route = inject(ActivatedRoute);
+  private clientsService = inject(ClientsService);
+  dialog = inject(MatDialog);
+
   /** Client Family Members */
   clientFamilyMembers: any;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
   /**
    * @param {ActivatedRoute} route Activated Route
    * @param {ClientsService} clientsService Clients Service
    * @param {MatDialog }dialog Mat Dialog
    */
-  constructor(
-    private route: ActivatedRoute,
-    private clientsService: ClientsService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientFamilyMembers: any }) => {
       this.clientFamilyMembers = data.clientFamilyMembers;
     });

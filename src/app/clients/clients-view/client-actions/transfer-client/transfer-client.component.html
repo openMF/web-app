@@ -6,14 +6,18 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
             <mat-select required formControlName="destinationOfficeId">
-              <mat-option *ngFor="let office of officeData" [value]="office.id">
-                {{ office.name }}
-              </mat-option>
+              @for (office of officeData; track office) {
+                <mat-option [value]="office.id">
+                  {{ office.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="transferClientForm.controls.destinationOfficeId.hasError('required')">
-              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (transferClientForm.controls.destinationOfficeId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field (click)="transferDatePicker.open()">
@@ -28,10 +32,12 @@
             />
             <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transferDatePicker></mat-datepicker>
-            <mat-error *ngIf="transferClientForm.controls.transferDate.hasError('required')">
-              {{ 'labels.inputs.Transfer Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (transferClientForm.controls.transferDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Transfer Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>

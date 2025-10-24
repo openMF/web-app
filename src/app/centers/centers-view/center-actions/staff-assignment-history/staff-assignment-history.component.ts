@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -21,18 +21,21 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class StaffAssignmentHistoryComponent implements OnInit {
+  private sanitizer = inject(DomSanitizer);
+  private route = inject(ActivatedRoute);
+
   /** Staff Assignment History Data */
   staffAssignmentHistoryData: any;
   /** trusted resource url for pentaho output */
   pentahoUrl: any;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    */
-  constructor(
-    private sanitizer: DomSanitizer,
-    private route: ActivatedRoute
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { centersActionData: any }) => {
       this.staffAssignmentHistoryData = data.centersActionData;
     });

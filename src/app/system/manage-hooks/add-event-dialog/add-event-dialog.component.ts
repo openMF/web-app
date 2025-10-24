@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -29,6 +29,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddEventDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<AddEventDialogComponent>>(MatDialogRef);
+  formBuilder = inject(UntypedFormBuilder);
+  data = inject(MAT_DIALOG_DATA);
+
   /** Event Form. */
   eventForm: UntypedFormGroup;
   /** Entity Data. */
@@ -36,16 +40,15 @@ export class AddEventDialogComponent implements OnInit {
   /** Action Data. */
   actionData: Array<any> = new Array<any>();
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {any} data Provides grouping, entities and actions data to fill dropdowns.
    */
-  constructor(
-    public dialogRef: MatDialogRef<AddEventDialogComponent>,
-    public formBuilder: UntypedFormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  constructor() {}
 
   /**
    * Creates add event form.

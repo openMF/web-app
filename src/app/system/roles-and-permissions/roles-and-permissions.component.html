@@ -46,15 +46,11 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let role">
-          <button
-            *ngIf="role.name !== 'Super user'"
-            mat-icon-button
-            color="primary"
-            (click)="routeEdit($event)"
-            [routerLink]="[role.id, 'edit']"
-          >
-            <fa-icon icon="edit"> {{ 'labels.buttons.Edit' | translate }} </fa-icon>
-          </button>
+          @if (role.name !== 'Super user') {
+            <button mat-icon-button color="primary" (click)="routeEdit($event)" [routerLink]="[role.id, 'edit']">
+              <fa-icon icon="edit"> {{ 'labels.buttons.Edit' | translate }} </fa-icon>
+            </button>
+          }
         </td>
       </ng-container>
 

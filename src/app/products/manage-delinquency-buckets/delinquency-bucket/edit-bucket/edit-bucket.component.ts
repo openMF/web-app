@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -49,6 +49,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditBucketComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** Delinquency Bucket form. */
   bucketForm: UntypedFormGroup;
   /** Delinquency Bucket template data. */
@@ -73,14 +80,10 @@ export class EditBucketComponent implements OnInit {
     'actions'
   ];
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.route.data.subscribe((data: { delinquencyBucket: any; delinquencyRanges: any }) => {
       this.delinquencyRangesData = data.delinquencyRanges;
       this.rangesDataSource = [];

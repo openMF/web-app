@@ -1,5 +1,5 @@
 // ** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {
@@ -52,6 +52,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class InterestRateChartTabComponent {
+  private route = inject(ActivatedRoute);
+
   /** Fixed Deposits Account Status */
   status: any;
   /** Interest Rate Chart Data */
@@ -78,11 +80,14 @@ export class InterestRateChartTabComponent {
   /** Expand Chart Slab Index used in the view */
   expandChartSlabIndex: number;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves fixed deposits account data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.interestRateChartData = data.fixedDepositsAccountData.accountChart.chartSlabs;
     });

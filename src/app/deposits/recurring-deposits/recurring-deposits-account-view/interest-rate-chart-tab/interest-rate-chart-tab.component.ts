@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {
@@ -52,6 +52,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class InterestRateChartTabComponent {
+  private route = inject(ActivatedRoute);
+
   /** Interest Rate Chart Data */
   interestRateChartData: any = [];
   /** Columns to be displayed in interest rate chart table. */
@@ -76,11 +78,14 @@ export class InterestRateChartTabComponent {
   /** Expand Chart Slab Index used in the view */
   expandChartSlabIndex: number;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves recurring deposits account data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.parent.data.subscribe((data: { recurringDepositsAccountData: any }) => {
       this.interestRateChartData = data.recurringDepositsAccountData.accountChart.chartSlabs;
     });

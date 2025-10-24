@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,15 @@ import { SystemService } from '../system.service';
  */
 @Injectable()
 export class MakerCheckerTasksResolver {
+  private systemService = inject(SystemService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {SystemService} systemService System service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor() {}
 
   /**
    * Returns all the Configurable Maker Checker Tasks.

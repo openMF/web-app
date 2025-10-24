@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 /** rxjs Imports */
@@ -53,6 +53,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  private alertService = inject(AlertService);
+  private settingsService = inject(SettingsService);
+  private router = inject(Router);
+
   public environment = environment;
 
   /** True if password requires a reset. */
@@ -62,15 +66,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   /** Subscription to alerts. */
   alert$: Subscription;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {AlertService} alertService Alert Service.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private alertService: AlertService,
-    private settingsService: SettingsService,
-    private router: Router
-  ) {}
+  constructor() {}
 
   /**
    * Subscribes to alert event of alert service.

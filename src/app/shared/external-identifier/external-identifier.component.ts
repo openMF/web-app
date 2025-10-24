@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AlertService } from 'app/core/alert/alert.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -16,6 +16,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ExternalIdentifierComponent implements OnInit {
+  private clipboard = inject(Clipboard);
+  private alertService = inject(AlertService);
+
   @Input() externalId: string;
   @Input() completed = false;
   @Input() display = 'right';
@@ -25,10 +28,10 @@ export class ExternalIdentifierComponent implements OnInit {
   displayR = true;
   emptyValue = false;
 
-  constructor(
-    private clipboard: Clipboard,
-    private alertService: AlertService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.emptyValue = !this.externalId || this.externalId === '';

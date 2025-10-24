@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { SettingsService } from 'app/settings/settings.service';
  */
 @Injectable()
 export class ApiPrefixInterceptor implements HttpInterceptor {
+  private settingsService = inject(SettingsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(private settingsService: SettingsService) {}
+  constructor() {}
 
   /**
    * Intercepts a Http request and prefixes it with `serverUrl`.

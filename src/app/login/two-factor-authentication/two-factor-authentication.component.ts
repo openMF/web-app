@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** rxjs Imports */
@@ -33,6 +33,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TwoFactorAuthenticationComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private authenticationService = inject(AuthenticationService);
+
   /** Available delivery methods to receive OTP. */
   twoFactorAuthenticationDeliveryMethods: any;
   /** Delivery method selected to receive OTP. */
@@ -50,14 +53,14 @@ export class TwoFactorAuthenticationComponent implements OnInit {
   /** True if loading. */
   resendOTPLoading = false;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private authenticationService: AuthenticationService
-  ) {}
+  constructor() {}
 
   /**
    * Creates two factor authentication delivery method form.

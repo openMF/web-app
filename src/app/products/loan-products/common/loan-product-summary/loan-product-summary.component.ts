@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
 import { AccountingMappingDTO, DelinquencyBucket, LoanProduct } from '../../models/loan-product.model';
 import {
   AccountingMapping,
@@ -71,6 +71,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductSummaryComponent implements OnInit, OnChanges {
+  private accounting = inject(Accounting);
+
   @Input() action: string;
   @Input() loanProduct: LoanProduct;
   @Input() loanProductsTemplate: any | null;
@@ -119,7 +121,10 @@ export class LoanProductSummaryComponent implements OnInit, OnChanges {
   capitalizedIncomeClassificationToIncomeAccountMappings: ClassificationToIncomeAccountMapping[] = [];
   writeOffReasonsToExpenseMappings: ChargeOffReasonToExpenseAccountMapping[] = [];
 
-  constructor(private accounting: Accounting) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit() {
     this.accountingRuleData = this.accounting.getAccountingRulesForLoans();

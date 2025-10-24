@@ -7,27 +7,35 @@
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Delete' | translate }}
   </button>
-  <div
-    *ngIf="userData.isSelfServiceUser === 'USER_STATE_ACTIVE' || userData.isSelfServiceUser === 'USER_STATE_INACTIVE'"
-  >
-    <button mat-raised-button color="primary" (click)="changeUserPassword(userData.id)">
-      <fa-icon icon="cog" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Change Password' | translate }}
-    </button>
-  </div>
-  <div [ngSwitch]="userData.isSelfServiceUser">
-    <button *ngSwitchCase="'USER_STATE_ACTIVE'" mat-raised-button color="warn" (click)="desactiveUser(userData.id)">
-      <fa-icon icon="ban" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Disable' | translate }}
-    </button>
-    <button *ngSwitchCase="'USER_STATE_INACTIVE'" mat-raised-button color="primary" (click)="activeUser(userData.id)">
-      <fa-icon icon="check" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Reactivate' | translate }}
-    </button>
-    <button *ngSwitchDefault mat-raised-button color="primary" disabled>
-      <fa-icon icon="ban" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Validate' | translate }}
-    </button>
+  @if (userData.isSelfServiceUser === 'USER_STATE_ACTIVE' || userData.isSelfServiceUser === 'USER_STATE_INACTIVE') {
+    <div>
+      <button mat-raised-button color="primary" (click)="changeUserPassword(userData.id)">
+        <fa-icon icon="cog" class="m-r-10"></fa-icon>
+        {{ 'labels.buttons.Change Password' | translate }}
+      </button>
+    </div>
+  }
+  <div>
+    @switch (userData.isSelfServiceUser) {
+      @case ('USER_STATE_ACTIVE') {
+        <button mat-raised-button color="warn" (click)="desactiveUser(userData.id)">
+          <fa-icon icon="ban" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Disable' | translate }}
+        </button>
+      }
+      @case ('USER_STATE_INACTIVE') {
+        <button mat-raised-button color="primary" (click)="activeUser(userData.id)">
+          <fa-icon icon="check" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Reactivate' | translate }}
+        </button>
+      }
+      @default {
+        <button mat-raised-button color="primary" disabled>
+          <fa-icon icon="ban" class="m-r-10"></fa-icon>
+          {{ 'labels.buttons.Validate' | translate }}
+        </button>
+      }
+    }
   </div>
 </div>
 
@@ -59,13 +67,17 @@
           {{ userData.lastname }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="userData.email">
-          {{ 'labels.inputs.Email' | translate }}
-        </div>
+        @if (userData.email) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Email' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="userData.email">
-          {{ userData.email }}
-        </div>
+        @if (userData.email) {
+          <div class="flex-50">
+            {{ userData.email }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Office' | translate }}
@@ -80,9 +92,11 @@
         </div>
 
         <div class="flex-50">
-          <span *ngFor="let role of userData.selectedRoles">
-            {{ role.name }}
-          </span>
+          @for (role of userData.selectedRoles; track role) {
+            <span>
+              {{ role.name }}
+            </span>
+          }
         </div>
       </div>
 

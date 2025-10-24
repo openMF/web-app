@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -12,10 +12,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SharesService {
+  private http = inject(HttpClient);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {HttpClient} http Http Client
    */
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   /**
    * @param {string} accountId Shares Account Id of account to get data for.

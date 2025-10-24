@@ -37,14 +37,16 @@
     <ng-container matColumnDef="documents">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Identity Documents' | translate }}</th>
       <td mat-cell *matCellDef="let identity">
-        <div *ngFor="let document of identity.documents">
-          {{ document.name }}
-          <fa-icon
-            icon="cloud-download-alt"
-            (click)="download(document.parentEntityId, document.id)"
-            *mifosxHasPermission="'READ_DOCUMENT'"
-          ></fa-icon>
-        </div>
+        @for (document of identity.documents; track document) {
+          <div>
+            {{ document.name }}
+            <fa-icon
+              icon="cloud-download-alt"
+              (click)="download(document.parentEntityId, document.id)"
+              *mifosxHasPermission="'READ_DOCUMENT'"
+            ></fa-icon>
+          </div>
+        }
       </td>
     </ng-container>
 

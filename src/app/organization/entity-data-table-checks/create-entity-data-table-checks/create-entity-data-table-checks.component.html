@@ -6,70 +6,91 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
             <mat-select required formControlName="entity">
-              <mat-option *ngFor="let entity of entityTypes" [value]="entity.value">
-                {{ entity.name }}
-              </mat-option>
+              @for (entity of entityTypes; track entity) {
+                <mat-option [value]="entity.value">
+                  {{ entity.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="createEntityForm.controls.entity.hasError('required')">
-              {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (createEntityForm.controls.entity.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Entity' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
             <mat-select required formControlName="status">
-              <mat-option *ngFor="let status of statusList" [value]="status.code">
-                {{ status.name }}
-              </mat-option>
+              @for (status of statusList; track status) {
+                <mat-option [value]="status.code">
+                  {{ status.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="createEntityForm.controls.status.hasError('required')">
-              {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (createEntityForm.controls.status.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Status' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Data Table' | translate }}</mat-label>
             <mat-select required formControlName="datatableName">
-              <mat-option *ngFor="let dataTable of dataTableList" [value]="dataTable.dataTableName">
-                {{ dataTable.dataTableName }}
-              </mat-option>
+              @for (dataTable of dataTableList; track dataTable) {
+                <mat-option [value]="dataTable.dataTableName">
+                  {{ dataTable.dataTableName }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="createEntityForm.controls.datatableName.hasError('required')">
-              {{ 'labels.inputs.Data Table' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (createEntityForm.controls.datatableName.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Data Table' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
-          <mat-form-field *ngIf="entityType === 'm_loan'">
-            <mat-label>{{ 'labels.inputs.Products' | translate }}</mat-label>
-            <mat-select required formControlName="productId">
-              <mat-option *ngFor="let loanProducts of createEntityData.loanProductDatas" [value]="loanProducts.id">
-                {{ loanProducts.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="createEntityForm.controls.productId.hasError('required')">
-              {{ 'labels.inputs.Loan Product' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (entityType === 'm_loan') {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Products' | translate }}</mat-label>
+              <mat-select required formControlName="productId">
+                @for (loanProducts of createEntityData.loanProductDatas; track loanProducts) {
+                  <mat-option [value]="loanProducts.id">
+                    {{ loanProducts.name }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (createEntityForm.controls.productId.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Loan Product' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
 
-          <mat-form-field *ngIf="entityType === 'm_savings_account'">
-            <mat-label>{{ 'labels.inputs.Products' | translate }}</mat-label>
-            <mat-select required formControlName="productId">
-              <mat-option
-                *ngFor="let savingsProducts of createEntityData.savingsProductDatas"
-                [value]="savingsProducts.id"
-              >
-                {{ savingsProducts.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="createEntityForm.controls.productId.hasError('required')">
-              {{ 'labels.inputs.Loan Product' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
-          </mat-form-field>
+          @if (entityType === 'm_savings_account') {
+            <mat-form-field>
+              <mat-label>{{ 'labels.inputs.Products' | translate }}</mat-label>
+              <mat-select required formControlName="productId">
+                @for (savingsProducts of createEntityData.savingsProductDatas; track savingsProducts) {
+                  <mat-option [value]="savingsProducts.id">
+                    {{ savingsProducts.name }}
+                  </mat-option>
+                }
+              </mat-select>
+              @if (createEntityForm.controls.productId.hasError('required')) {
+                <mat-error>
+                  {{ 'labels.inputs.Loan Product' | translate }} {{ 'labels.commons.is' | translate }}
+                  <strong>{{ 'labels.commons.required' | translate }}</strong>
+                </mat-error>
+              }
+            </mat-form-field>
+          }
         </div>
       </mat-card-content>
 

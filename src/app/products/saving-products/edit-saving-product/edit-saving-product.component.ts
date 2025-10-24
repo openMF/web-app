@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -40,6 +40,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditSavingProductComponent {
+  private route = inject(ActivatedRoute);
+  private productsService = inject(ProductsService);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private accounting = inject(Accounting);
+
   @ViewChild(SavingProductDetailsStepComponent, { static: true })
   savingProductDetailsStep: SavingProductDetailsStepComponent;
   @ViewChild(SavingProductCurrencyStepComponent, { static: true })
@@ -55,6 +61,9 @@ export class EditSavingProductComponent {
   savingProductAndTemplate: any;
   accountingRuleData: string[] = [];
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {ActivatedRoute} route Activated Route.
    * @param {ProductsService} productsService Products Service.
@@ -62,13 +71,7 @@ export class EditSavingProductComponent {
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(
-    private route: ActivatedRoute,
-    private productsService: ProductsService,
-    private router: Router,
-    private settingsService: SettingsService,
-    private accounting: Accounting
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { savingProductAndTemplate: any }) => {
       this.savingProductAndTemplate = data.savingProductAndTemplate;
     });

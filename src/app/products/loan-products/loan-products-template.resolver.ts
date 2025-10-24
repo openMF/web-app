@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -9,7 +9,12 @@ import { ProductsService } from '../products.service';
 
 @Injectable()
 export class LoanProductsTemplateResolver {
-  constructor(private productsService: ProductsService) {}
+  private productsService = inject(ProductsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   /**
    * Returns the loan products template data.

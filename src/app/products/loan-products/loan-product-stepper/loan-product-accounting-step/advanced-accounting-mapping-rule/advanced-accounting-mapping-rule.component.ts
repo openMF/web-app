@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { UntypedFormArray } from '@angular/forms';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -45,6 +45,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrl: './advanced-accounting-mapping-rule.component.scss'
 })
 export class AdvancedAccountingMappingRuleComponent implements OnInit {
+  dialog = inject(MatDialog);
+  translateService = inject(TranslateService);
+
   @Input() formType: string;
   @Input() formArray: UntypedFormArray;
   @Input() textHeading: string;
@@ -73,10 +76,10 @@ export class AdvancedAccountingMappingRuleComponent implements OnInit {
     'actions'
   ];
 
-  constructor(
-    public dialog: MatDialog,
-    public translateService: TranslateService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.tableData = this.formArray?.value || [];

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Inject, Injectable, InjectionToken, Injector, Optional } from '@angular/core';
+import { Injectable, InjectionToken, Injector, inject } from '@angular/core';
 import { HttpClient, HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -70,12 +70,18 @@ export const HTTP_DYNAMIC_INTERCEPTORS = new InjectionToken<HttpInterceptor>('HT
  */
 @Injectable()
 export class HttpService extends HttpClient {
-  constructor(
-    private httpHandler: HttpHandler,
-    private injector: Injector,
-    @Optional() @Inject(HTTP_DYNAMIC_INTERCEPTORS) private interceptors: HttpInterceptor[] = []
-  ) {
+  private httpHandler: HttpHandler;
+  private injector = inject(Injector);
+  private interceptors: any = inject(HTTP_DYNAMIC_INTERCEPTORS, { optional: true }) ?? [];
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
+    const httpHandler = inject(HttpHandler);
+
     super(httpHandler);
+    this.httpHandler = httpHandler;
 
     if (!this.interceptors) {
       // Configure default interceptors that can be disabled here
@@ -103,7 +109,7 @@ export class HttpService extends HttpClient {
    */
   request(method?: any, url?: any, options?: any): any {
     const handler = this.interceptors.reduceRight(
-      (next, interceptor) => new HttpInterceptorHandler(next, interceptor),
+      (next: HttpHandler, interceptor: HttpInterceptor) => new HttpInterceptorHandler(next, interceptor),
       this.httpHandler
     );
     return new HttpClient(handler).request(method, url, options);
@@ -113,7 +119,7 @@ export class HttpService extends HttpClient {
     return new HttpService(
       this.httpHandler,
       this.injector,
-      this.interceptors.filter((i) => !(i instanceof interceptorType))
+      this.interceptors.filter((i: any) => !(i instanceof interceptorType))
     );
   }
 

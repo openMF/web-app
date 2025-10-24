@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /** Custom Services */
@@ -20,6 +20,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class PentahoComponent implements OnChanges {
+  private sanitizer = inject(DomSanitizer);
+  private reportsService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
+  private progressBarService = inject(ProgressBarService);
+
   /** Run Report Data */
   @Input() dataObject: any;
 
@@ -28,17 +33,15 @@ export class PentahoComponent implements OnChanges {
   /** trusted resource url for pentaho output */
   pentahoUrl: any;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {DomSanitizer} sanitizer DOM Sanitizer
    * @param {ReportsService} reportsService Reports Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private sanitizer: DomSanitizer,
-    private reportsService: ReportsService,
-    private settingsService: SettingsService,
-    private progressBarService: ProgressBarService
-  ) {}
+  constructor() {}
 
   /**
    * Fetches run report data post changes in run report form.

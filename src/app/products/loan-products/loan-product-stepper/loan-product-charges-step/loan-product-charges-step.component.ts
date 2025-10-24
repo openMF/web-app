@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -52,6 +52,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanProductChargesStepComponent implements OnInit {
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   @Input() loanProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
   @Input() multiDisburseLoan: UntypedFormControl;
@@ -70,10 +73,10 @@ export class LoanProductChargesStepComponent implements OnInit {
 
   pristine = true;
 
-  constructor(
-    public dialog: MatDialog,
-    private translateService: TranslateService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit() {
     this.chargeData = this.loanProductsTemplate.chargeOptions;

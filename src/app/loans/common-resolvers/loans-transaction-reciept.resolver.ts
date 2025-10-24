@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { ReportsService } from 'app/reports/reports.service';
  */
 @Injectable()
 export class LoansTransactionRecieptResolver {
+  private reportsService = inject(ReportsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {ReportsService} reportsService Reports service.
    */
-  constructor(private reportsService: ReportsService) {}
+  constructor() {}
 
   /**
    * Returns the Loans Transaction Reciept

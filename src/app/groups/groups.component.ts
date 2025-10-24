@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -62,6 +62,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GroupsComponent implements OnInit, AfterViewInit {
+  private groupsService = inject(GroupsService);
+
   @ViewChild('showClosedGroups', { static: true }) showClosedGroups: MatCheckbox;
 
   /** Name form control. */
@@ -89,10 +91,13 @@ export class GroupsComponent implements OnInit, AfterViewInit {
   /** Sorter for groups table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {GroupsService} groupsService Groups Service
    */
-  constructor(private groupsService: GroupsService) {}
+  constructor() {}
 
   ngOnInit() {
     this.getGroups();

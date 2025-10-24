@@ -1,5 +1,5 @@
 // Angular Imports
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 // rxjs Imports
@@ -10,11 +10,16 @@ import { SavingsService } from '../savings.service';
 
 @Injectable()
 export class TransactionDatatablesResolver {
+  private savingsService = inject(SavingsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    *
    * @param savingsService Savings Service
    */
-  constructor(private savingsService: SavingsService) {}
+  constructor() {}
   /**
    *
    * @param route

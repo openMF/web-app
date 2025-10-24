@@ -40,16 +40,18 @@
         </div>
       </div>
       <div class="icon-menu">
-        <div class="icon-menu-item" *ngFor="let activity of mappedActivities">
-          <button
-            mat-raised-button
-            [matTooltipPosition]="tooltipPosition"
-            [matTooltip]="activity.toolTip"
-            [routerLink]="[activity.path]"
-          >
-            <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
-          </button>
-        </div>
+        @for (activity of mappedActivities; track activity) {
+          <div class="icon-menu-item">
+            <button
+              mat-raised-button
+              [matTooltipPosition]="tooltipPosition"
+              [matTooltip]="activity.toolTip"
+              [routerLink]="[activity.path]"
+            >
+              <fa-icon [icon]="activity.icon" size="lg"></fa-icon>
+            </button>
+          </div>
+        }
       </div>
 
       <div class="nav-item-sep">
@@ -68,7 +70,7 @@
           <mat-icon matListIcon>
             <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #dashboard>{{ 'labels.menus.Dashboard' | translate }}</a>
+          <a class="menu-label" matLine #dashboard>{{ 'labels.menus.Dashboard' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/navigation']"
@@ -80,7 +82,7 @@
           <mat-icon matListIcon>
             <fa-icon icon="location-arrow" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #navigation>{{ 'labels.menus.Navigation' | translate }}</a>
+          <a class="menu-label" matline #navigation>{{ 'labels.menus.Navigation' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/checker-inbox-and-tasks/checker-inbox']"
@@ -92,7 +94,7 @@
           <mat-icon matListIcon>
             <i class="fa fa-check"></i>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Checker Inbox and Tasks' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Checker Inbox and Tasks' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/collections/collection-sheet']"
@@ -104,7 +106,7 @@
           <mat-icon matListIcon>
             <i class="fa fa-tasks"></i>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Collection Sheet' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Collection Sheet' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/collections/individual-collection-sheet']"
@@ -116,7 +118,7 @@
           <mat-icon matListIcon>
             <i class="fa fa-tasks"></i>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Individual Collection Sheet' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Individual Collection Sheet' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/notifications']"
@@ -128,7 +130,7 @@
           <mat-icon matListIcon>
             <fa-icon icon="bell" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Notifications' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Notifications' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/accounting/journal-entries/frequent-postings']"
@@ -140,7 +142,7 @@
           <mat-icon matListIcon>
             <fa-icon icon="sync" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #frequentPostings>{{ 'labels.menus.Frequent Postings' | translate }}</a>
+          <a class="menu-label" matline #frequentPostings>{{ 'labels.menus.Frequent Postings' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/accounting/journal-entries/create']"
@@ -152,7 +154,7 @@
           <mat-icon matListIcon>
             <fa-icon icon="plus" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #createJournalEntry>{{ 'labels.menus.Create Journal Entry' | translate }}</a>
+          <a class="menu-label" matline #createJournalEntry>{{ 'labels.menus.Create Journal Entry' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           [routerLink]="['/accounting/chart-of-accounts']"
@@ -164,7 +166,7 @@
           <mat-icon matListIcon>
             <fa-icon icon="sitemap" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine #chartOfAccounts>{{ 'labels.menus.Chart of Accounts' | translate }}</a>
+          <a class="menu-label" matline #chartOfAccounts>{{ 'labels.menus.Chart of Accounts' | translate }}</a>
         </mat-list-item>
         <mat-list-item
           (click)="showKeyboardShortcuts()"
@@ -174,13 +176,13 @@
           <mat-icon matListIcon>
             <fa-icon icon="keyboard" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Keyboard Shortcuts' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Keyboard Shortcuts' | translate }}</a>
         </mat-list-item>
         <mat-list-item [matTooltipPosition]="tooltipPosition" matTooltip="{{ 'tooltips.Help' | translate }}">
           <mat-icon matListIcon (click)="help()">
             <fa-icon icon="question-circle" size="sm"></fa-icon>
           </mat-icon>
-          <a matLine>{{ 'labels.menus.Help' | translate }}</a>
+          <a class="menu-label" matline>{{ 'labels.menus.Help' | translate }}</a>
         </mat-list-item>
       </mat-nav-list>
     </div>

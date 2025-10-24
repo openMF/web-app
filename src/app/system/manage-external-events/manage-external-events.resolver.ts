@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { SystemService } from '../system.service';
@@ -7,10 +7,15 @@ import { SystemService } from '../system.service';
   providedIn: 'root'
 })
 export class ManageExternalEventsResolver {
+  private systemService = inject(SystemService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {SystemService} systemService System service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor() {}
 
   /**
    * Returns the Configuration data.

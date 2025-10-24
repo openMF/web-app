@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MatDialogTitle,
@@ -24,11 +24,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class WarningDialogComponent {
+  dialogRef = inject<MatDialogRef<WarningDialogComponent>>(MatDialogRef);
+
   title: string;
   content: string;
   buttonText: string;
 
-  constructor(public dialogRef: MatDialogRef<WarningDialogComponent>) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.title = environment.warningDialog.title;
     this.content = environment.warningDialog.content;
     this.buttonText = environment.warningDialog.buttonText;

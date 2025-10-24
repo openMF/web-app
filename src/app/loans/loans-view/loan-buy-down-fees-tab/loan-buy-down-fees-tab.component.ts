@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatCell,
   MatCellDef,
@@ -39,6 +39,9 @@ import { DateFormatPipe } from '@pipes/date-format.pipe';
   ]
 })
 export class LoanBuyDownFeesTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private loansService = inject(LoansService);
+
   buyDownFeeData: BuyDownFeeAmortizationDetails[] = [];
   loanId: string;
   isLoading = true;
@@ -52,10 +55,10 @@ export class LoanBuyDownFeesTabComponent implements OnInit {
     'chargedOffAmount'
   ];
 
-  constructor(
-    private route: ActivatedRoute,
-    private loansService: LoansService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.getLoanId();

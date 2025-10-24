@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -46,6 +46,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ListTransactionsComponent {
+  private route = inject(ActivatedRoute);
+
   /** List Transactions Data */
   listTransactionData: any;
   /** Data source for instructions table. */
@@ -61,11 +63,14 @@ export class ListTransactionsComponent {
   /** Paginator for centers table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves Recurring Deposits Account Data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { listTransactionData: any }) => {
       this.listTransactionData = data.listTransactionData;
       this.dataSource = new MatTableDataSource(this.listTransactionData.transactions.pageItems);

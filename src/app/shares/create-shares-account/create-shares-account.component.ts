@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 /** Custom Components */
@@ -37,6 +37,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateSharesAccountComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private sharesService = inject(SharesService);
+  private settingsService = inject(SettingsService);
+
   /** Shares Account Template */
   sharesAccountTemplate: any;
   /** Shares Account Product Template */
@@ -51,6 +57,9 @@ export class CreateSharesAccountComponent {
   @ViewChild(SharesAccountChargesStepComponent, { static: true })
   sharesAccountChargesStep: SharesAccountChargesStepComponent;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Fetches shares account template from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -59,13 +68,7 @@ export class CreateSharesAccountComponent {
    * @param {SharesService} sharesService Shares Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private sharesService: SharesService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { sharesAccountTemplate: any }) => {
       this.sharesAccountTemplate = data.sharesAccountTemplate;
     });

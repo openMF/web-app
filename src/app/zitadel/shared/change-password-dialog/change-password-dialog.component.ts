@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions } from '@angular/material/dialog';
 import { UntypedFormBuilder, Validators, AbstractControl, ValidationErrors, FormGroup } from '@angular/forms';
 import { confirmPasswordValidator } from 'app/login/reset-password/confirm-password.validator';
@@ -23,16 +23,19 @@ import { TranslateService } from '@ngx-translate/core';
   ]
 })
 export class ChangePasswordDialogComponent implements OnInit {
+  dialogRef = inject<MatDialogRef<ChangePasswordDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+  private formBuilder = inject(UntypedFormBuilder);
+  private http = inject(HttpClient);
+  private translateService = inject(TranslateService);
+
   minPasswordLength: number = environment.minPasswordLength || 12;
   changePasswordForm: FormGroup;
 
-  constructor(
-    public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder: UntypedFormBuilder,
-    private http: HttpClient,
-    private translateService: TranslateService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   private api = environment.OIDC.oidcApiUrl;
 

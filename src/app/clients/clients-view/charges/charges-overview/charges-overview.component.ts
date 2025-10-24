@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import {
@@ -47,6 +47,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesOverviewComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  dialog = inject(MatDialog);
+
   /** Columns to be displayed in charge overview table. */
   displayedColumns: string[] = [
     'name',
@@ -64,15 +67,15 @@ export class ChargesOverviewComponent implements OnInit {
   /** Paginator for charge overview table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the charge overview data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private route: ActivatedRoute,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientChargesData: any }) => {
       this.chargeOverviewData = data.clientChargesData;
     });

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
@@ -18,16 +18,21 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewStandingInstructionsComponent {
+  private route = inject(ActivatedRoute);
+
   /** Standing Instructions Data */
   standingInstructionsData: any;
   /** Allow Client Edit */
   allowclientedit = false;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the standing instructions data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { standingInstructionsData: any }) => {
       this.standingInstructionsData = data.standingInstructionsData;
       if (this.standingInstructionsData.fromClient.id === this.standingInstructionsData.toClient.id) {

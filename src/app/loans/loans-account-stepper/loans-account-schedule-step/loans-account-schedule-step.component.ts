@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
 import { SettingsService } from 'app/settings/settings.service';
@@ -20,6 +20,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoansAccountScheduleStepComponent {
+  private loansService = inject(LoansService);
+  private settingsService = inject(SettingsService);
+  private route = inject(ActivatedRoute);
+
   /** Currency Code */
   @Input() currencyCode: string;
   /** Loans Account Template */
@@ -33,11 +37,10 @@ export class LoansAccountScheduleStepComponent {
 
   loanId: any = null;
 
-  constructor(
-    private loansService: LoansService,
-    private settingsService: SettingsService,
-    private route: ActivatedRoute
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

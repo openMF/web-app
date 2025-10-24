@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -28,12 +28,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DisableDialogComponent {
+  dialogRef = inject<MatDialogRef<DisableDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides a disableContext.
    */
-  constructor(
-    public dialogRef: MatDialogRef<DisableDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  constructor() {}
 }

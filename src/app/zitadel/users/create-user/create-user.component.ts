@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -38,6 +38,16 @@ import { ZITADEL_LANGUAGES } from 'app/zitadel/constants/languages';
   ]
 })
 export class CreateUserComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private usersService = inject(UsersServiceZitadel);
+  private usersService2 = inject(UsersService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private popoverService = inject(PopoverService);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private dialog = inject(MatDialog);
+  private passwordsUtility = inject(PasswordsUtility);
+
   /** User form. */
   userForm: UntypedFormGroup;
   /** Offices data. */
@@ -56,6 +66,9 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
   /* Template for popover on create user form */
   @ViewChild('templateUserFormRef') templateUserFormRef: TemplateRef<any>;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the offices and roles data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -65,17 +78,7 @@ export class CreateUserComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private usersService: UsersServiceZitadel,
-    private usersService2: UsersService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private popoverService: PopoverService,
-    private configurationWizardService: ConfigurationWizardService,
-    private dialog: MatDialog,
-    private passwordsUtility: PasswordsUtility
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { usersTemplate: any }) => {
       this.officesData = data.usersTemplate.allowedOffices;
       this.rolesData = data.usersTemplate.availableRoles;

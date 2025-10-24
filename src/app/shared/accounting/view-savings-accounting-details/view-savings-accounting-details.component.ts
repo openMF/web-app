@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Accounting } from 'app/core/utils/accounting';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { GlAccountDisplayComponent } from '../gl-account-display/gl-account-display.component';
@@ -14,10 +14,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewSavingsAccountingDetailsComponent {
+  private accounting = inject(Accounting);
+
   @Input() accountingRule: OptionData;
   @Input() accountingMappings: any[] = [];
 
-  constructor(private accounting: Accounting) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   isCashOrAccrualAccounting(): boolean {
     if (this.accountingRule) {

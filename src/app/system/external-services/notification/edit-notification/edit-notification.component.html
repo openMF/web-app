@@ -6,28 +6,34 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Server Key' | translate }}</mat-label>
             <input matInput required formControlName="server_key" />
-            <mat-error *ngIf="notificationConfigurationForm.controls.server_key.hasError('required')">
-              {{ 'labels.inputs.Server Key' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (notificationConfigurationForm.controls.server_key.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Server Key' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.GCM End Point' | translate }}</mat-label>
             <input matInput required formControlName="gcm_end_point" />
-            <mat-error *ngIf="notificationConfigurationForm.controls.gcm_end_point.hasError('required')">
-              {{ 'labels.inputs.GCM End Point' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (notificationConfigurationForm.controls.gcm_end_point.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.GCM End Point' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.FCM End Point' | translate }}</mat-label>
             <input matInput required formControlName="fcm_end_point" />
-            <mat-error *ngIf="notificationConfigurationForm.controls.fcm_end_point.hasError('required')">
-              {{ 'labels.inputs.FCM End Point' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (notificationConfigurationForm.controls.fcm_end_point.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.FCM End Point' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>

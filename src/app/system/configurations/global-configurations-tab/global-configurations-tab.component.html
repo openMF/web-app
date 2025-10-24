@@ -12,12 +12,13 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
         <td mat-cell *matCellDef="let configuration">
           <span class="m-r-10">{{ configuration.name }}</span>
-          <fa-icon
-            *ngIf="configuration.description"
-            icon="question-circle"
-            matTooltip="{{ configuration.description | translate }}"
-            matTooltipPosition="right"
-          ></fa-icon>
+          @if (configuration.description) {
+            <fa-icon
+              icon="question-circle"
+              matTooltip="{{ configuration.description | translate }}"
+              matTooltipPosition="right"
+            ></fa-icon>
+          }
         </td>
       </ng-container>
 
@@ -30,8 +31,12 @@
             (click)="toggleStatus(configuration)"
           >
             <div [className]="configuration.enabled ? 'enabled' : 'disabled'">
-              <span *ngIf="configuration.enabled">{{ 'labels.inputs.Enabled' | translate }}</span>
-              <span *ngIf="!configuration.enabled">{{ 'labels.inputs.Disabled' | translate }}</span>
+              @if (configuration.enabled) {
+                <span>{{ 'labels.inputs.Enabled' | translate }}</span>
+              }
+              @if (!configuration.enabled) {
+                <span>{{ 'labels.inputs.Disabled' | translate }}</span>
+              }
             </div>
           </mat-slide-toggle>
         </td>

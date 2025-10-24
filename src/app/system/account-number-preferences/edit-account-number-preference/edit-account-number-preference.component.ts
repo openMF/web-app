@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -19,6 +19,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditAccountNumberPreferenceComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+
   /** Account Number Preference Form */
   accountNumberPreferenceForm: UntypedFormGroup;
   /** Account Number Preference Data */
@@ -28,6 +33,9 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
   /** Prefix Type Data */
   prefixTypeData: any[];
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the account number preference and account number preferences template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -35,12 +43,7 @@ export class EditAccountNumberPreferenceComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { accountNumberPreference: any; accountNumberPreferencesTemplate: any }) => {
       this.accountNumberPreferenceData = data.accountNumberPreference;
       this.accountNumberPreferencesTemplateData = data.accountNumberPreferencesTemplate;

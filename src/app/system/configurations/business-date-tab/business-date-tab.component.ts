@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { Alert } from 'app/core/alert/alert.model';
@@ -29,6 +29,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class BusinessDateTabComponent implements OnInit {
+  private systemService = inject(SystemService);
+  private settingsService = inject(SettingsService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private dateUtils = inject(Dates);
+  private alertService = inject(AlertService);
+
   /** Subscription to alerts. */
   alert$: Subscription;
 
@@ -50,6 +56,9 @@ export class BusinessDateTabComponent implements OnInit {
   isBusinessDateEnabled = false;
   isEditInProgress = false;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the configurations data from `resolve`.
    * @param {SystemService} systemService System Service.
@@ -57,13 +66,7 @@ export class BusinessDateTabComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {Dates} dateUtils Date Utils.
    */
-  constructor(
-    private systemService: SystemService,
-    private settingsService: SettingsService,
-    private formBuilder: UntypedFormBuilder,
-    private dateUtils: Dates,
-    private alertService: AlertService
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {

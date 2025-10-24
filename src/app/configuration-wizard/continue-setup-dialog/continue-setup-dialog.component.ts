@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -28,16 +28,21 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ContinueSetupDialogComponent {
+  dialogRef = inject<MatDialogRef<ContinueSetupDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
   /* Current Step Name*/
   stepName: number;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
   /**
    * @param {MatDialogRef<ContinueSetupDialogComponent>} dialogRef MatDialogRef<ContinueSetupDialogComponent>.
    */
-  constructor(
-    public dialogRef: MatDialogRef<ContinueSetupDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.stepName = data.stepName;
   }
 }

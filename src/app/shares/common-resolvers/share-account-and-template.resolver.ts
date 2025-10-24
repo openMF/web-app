@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { SharesService } from '../shares.service';
  */
 @Injectable()
 export class SharesAccountAndTemplateResolver {
+  private sharesService = inject(SharesService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {SharesService} SharesService Shares service.
    */
-  constructor(private sharesService: SharesService) {}
+  constructor() {}
 
   /**
    * Returns the Shares Account data and template.

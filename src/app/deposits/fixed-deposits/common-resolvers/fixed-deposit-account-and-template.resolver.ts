@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { FixedDepositsService } from '../fixed-deposits.service';
  */
 @Injectable()
 export class FixedDepositsAccountAndTemplateResolver {
+  private fixedDepositsService = inject(FixedDepositsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits service.
    */
-  constructor(private fixedDepositsService: FixedDepositsService) {}
+  constructor() {}
 
   /**
    * Returns the Fixed Deposits Account Template.

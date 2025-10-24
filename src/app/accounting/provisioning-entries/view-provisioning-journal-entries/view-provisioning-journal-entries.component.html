@@ -51,26 +51,30 @@
       <ng-container matColumnDef="debit">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Debit' | translate }}</th>
         <td mat-cell *matCellDef="let provisioningJournalEntry">
-          <span *ngIf="provisioningJournalEntry.entryType.value === 'DEBIT'">
-            {{
-              (provisioningJournalEntry.currency.displaySymbol || provisioningJournalEntry.currency.code) +
-                ' ' +
-                provisioningJournalEntry.amount
-            }}
-          </span>
+          @if (provisioningJournalEntry.entryType.value === 'DEBIT') {
+            <span>
+              {{
+                (provisioningJournalEntry.currency.displaySymbol || provisioningJournalEntry.currency.code) +
+                  ' ' +
+                  provisioningJournalEntry.amount
+              }}
+            </span>
+          }
         </td>
       </ng-container>
 
       <ng-container matColumnDef="credit">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Credit' | translate }}</th>
         <td mat-cell *matCellDef="let provisioningJournalEntry">
-          <span *ngIf="provisioningJournalEntry.entryType.value === 'CREDIT'">
-            {{
-              (provisioningJournalEntry.currency.displaySymbol || provisioningJournalEntry.currency.code) +
-                ' ' +
-                provisioningJournalEntry.amount
-            }}
-          </span>
+          @if (provisioningJournalEntry.entryType.value === 'CREDIT') {
+            <span>
+              {{
+                (provisioningJournalEntry.currency.displaySymbol || provisioningJournalEntry.currency.code) +
+                  ' ' +
+                  provisioningJournalEntry.amount
+              }}
+            </span>
+          }
         </td>
       </ng-container>
 

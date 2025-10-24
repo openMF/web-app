@@ -3,42 +3,41 @@
     <div class="survey-select layout-row">
       <mat-label class="name-label">{{ 'labels.inputs.Survey Name' | translate }}</mat-label>
       <mat-select (selectionChange)="onSurveyChange($event)">
-        <mat-option *ngFor="let surveyData of allSurveyData" [value]="surveyData">
-          {{ surveyData.name }}
-        </mat-option>
+        @for (surveyData of allSurveyData; track surveyData) {
+          <mat-option [value]="surveyData">
+            {{ surveyData.name }}
+          </mat-option>
+        }
       </mat-select>
     </div>
 
     <hr />
 
     <div>
-      <ng-container *ngFor="let component of componentGroups">
-        <h2 *ngIf="component[0].componentKey">component[0].componentKey</h2>
-
+      @for (component of componentGroups; track component) {
+        @if (component[0].componentKey) {
+          <h2>component[0].componentKey</h2>
+        }
         <div class="layout-column display-questions">
-          <ng-container *ngFor="let question of component">
+          @for (question of component; track question) {
             <div class="layout-row question">
               <mat-label class="flex-40 question-text">{{ question.text }}</mat-label>
-
               <mat-radio-group class="flex-60 radio-group-spacing" [(ngModel)]="question.answer">
-                <mat-radio-button
-                  class="layout-column radio-button"
-                  *ngFor="let options of question.responseDatas"
-                  [value]="options"
-                >
-                  <span class="wrap-mat-radio-label">
-                    {{ options.text }}
-                  </span>
-                </mat-radio-button>
+                @for (options of question.responseDatas; track options) {
+                  <mat-radio-button class="layout-column radio-button" [value]="options">
+                    <span class="wrap-mat-radio-label">
+                      {{ options.text }}
+                    </span>
+                  </mat-radio-button>
+                }
               </mat-radio-group>
             </div>
-
-            <div *ngIf="question.answer">
-              {{ 'labels.text.Your answer is' | translate }}: {{ question.answer.text }}
-            </div>
-          </ng-container>
+            @if (question.answer) {
+              <div>{{ 'labels.text.Your answer is' | translate }}: {{ question.answer.text }}</div>
+            }
+          }
         </div>
-      </ng-container>
+      }
     </div>
 
     <button mat-raised-button class="button-cancel" color="danger" [routerLink]="['../../general']">

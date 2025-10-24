@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Components */
@@ -61,6 +61,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditLoanProductComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private productsService = inject(ProductsService);
+  private loanProducts = inject(LoanProducts);
+  private router = inject(Router);
+  private accounting = inject(Accounting);
+  private advancedPaymentStrategy = inject(AdvancedPaymentStrategy);
+
   @ViewChild(LoanProductDetailsStepComponent, { static: true }) loanProductDetailsStep: LoanProductDetailsStepComponent;
   @ViewChild(LoanProductCurrencyStepComponent, { static: true })
   loanProductCurrencyStep: LoanProductCurrencyStepComponent;
@@ -90,6 +97,9 @@ export class EditLoanProductComponent implements OnInit {
   deferredIncomeRecognition: DeferredIncomeRecognition | null = null;
   loanIncomeCapitalizationForm: UntypedFormGroup | null = null;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {ActivatedRoute} route Activated Route.
    * @param {ProductsService} productsService Product Service.
@@ -97,14 +107,9 @@ export class EditLoanProductComponent implements OnInit {
    * @param {Router} router Router for navigation.
    */
 
-  constructor(
-    private route: ActivatedRoute,
-    private productsService: ProductsService,
-    private loanProducts: LoanProducts,
-    private router: Router,
-    private accounting: Accounting,
-    private advancedPaymentStrategy: AdvancedPaymentStrategy
-  ) {
+  constructor() {
+    const loanProducts = this.loanProducts;
+
     this.route.data.subscribe((data: { loanProductAndTemplate: any; configurations: any }) => {
       this.loanProductAndTemplate = data.loanProductAndTemplate;
       const assetAccountData = this.loanProductAndTemplate.accountingMappingOptions.assetAccountOptions || [];

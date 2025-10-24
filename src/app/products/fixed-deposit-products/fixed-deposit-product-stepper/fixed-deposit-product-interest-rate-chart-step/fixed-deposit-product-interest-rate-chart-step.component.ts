@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   UntypedFormArray,
   UntypedFormBuilder,
@@ -27,7 +27,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgFor, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import {
@@ -70,8 +70,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderCell,
     MatCellDef,
     MatCell,
-    NgSwitch,
-    NgSwitchCase,
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
@@ -82,6 +80,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositProductInterestRateChartStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   @Input() fixedDepositProductsTemplate: any;
 
   fixedDepositProductInterestRateChartForm: UntypedFormGroup;
@@ -114,6 +118,9 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
   chartDetailData: any = [];
   chartsDetail: any[] = [];
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog reference.
@@ -121,13 +128,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createFixedDepositProductInterestRateChartForm();
   }
 

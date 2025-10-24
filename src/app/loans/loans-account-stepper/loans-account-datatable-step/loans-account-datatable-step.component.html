@@ -1,58 +1,49 @@
 <form [formGroup]="datatableForm">
   <div class="layout-row-wrap gap-2px responsive-column">
-    <div *ngFor="let datatableInput of datatableInputs" class="flex-48">
-      <mat-form-field class="flex-100" *ngIf="!isBoolean(datatableInput.columnDisplayType)">
-        <mat-label>{{ getInputName(datatableInput) }}</mat-label>
-
-        <mat-select
-          *ngIf="isDropdown(datatableInput.columnDisplayType)"
-          formControlName="{{ datatableInput.controlName }}"
-        >
-          <mat-option *ngFor="let code of datatableInput.columnValues" [value]="code.id">
-            {{ code.value }}
-          </mat-option>
-        </mat-select>
-
-        <input
-          matInput
-          type="number"
-          *ngIf="isNumeric(datatableInput.columnDisplayType)"
-          formControlName="{{ datatableInput.controlName }}"
-        />
-
-        <input
-          matInput
-          *ngIf="isString(datatableInput.columnDisplayType)"
-          formControlName="{{ datatableInput.controlName }}"
-        />
-
-        <textarea
-          matInput
-          *ngIf="isText(datatableInput.columnDisplayType)"
-          formControlName="{{ datatableInput.controlName }}"
-        ></textarea>
-
-        <span *ngIf="isDate(datatableInput.columnDisplayType)" (click)="datePicker.open()">
-          <input
-            matInput
-            [matDatepicker]="datePicker"
-            formControlName="{{ datatableInput.controlName }}"
-            class="date-picker"
-          />
-          <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-          <mat-datepicker #datePicker></mat-datepicker>
-        </span>
-      </mat-form-field>
-
-      <mat-checkbox
-        *ngIf="isBoolean(datatableInput.columnDisplayType)"
-        formControlName="{{ datatableInput.controlName }}"
-        labelPosition="before"
-        class="margin-v"
-      >
-        {{ getInputName(datatableInput) }}
-      </mat-checkbox>
-    </div>
+    @for (datatableInput of datatableInputs; track datatableInput) {
+      <div class="flex-48">
+        @if (!isBoolean(datatableInput.columnDisplayType)) {
+          <mat-form-field class="flex-100">
+            <mat-label>{{ getInputName(datatableInput) }}</mat-label>
+            @if (isDropdown(datatableInput.columnDisplayType)) {
+              <mat-select formControlName="{{ datatableInput.controlName }}">
+                @for (code of datatableInput.columnValues; track code) {
+                  <mat-option [value]="code.id">
+                    {{ code.value }}
+                  </mat-option>
+                }
+              </mat-select>
+            }
+            @if (isNumeric(datatableInput.columnDisplayType)) {
+              <input matInput type="number" formControlName="{{ datatableInput.controlName }}" />
+            }
+            @if (isString(datatableInput.columnDisplayType)) {
+              <input matInput formControlName="{{ datatableInput.controlName }}" />
+            }
+            @if (isText(datatableInput.columnDisplayType)) {
+              <textarea matInput formControlName="{{ datatableInput.controlName }}"></textarea>
+            }
+            @if (isDate(datatableInput.columnDisplayType)) {
+              <span (click)="datePicker.open()">
+                <input
+                  matInput
+                  [matDatepicker]="datePicker"
+                  formControlName="{{ datatableInput.controlName }}"
+                  class="date-picker"
+                />
+                <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker></mat-datepicker>
+              </span>
+            }
+          </mat-form-field>
+        }
+        @if (isBoolean(datatableInput.columnDisplayType)) {
+          <mat-checkbox formControlName="{{ datatableInput.controlName }}" labelPosition="before" class="margin-v">
+            {{ getInputName(datatableInput) }}
+          </mat-checkbox>
+        }
+      </div>
+    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

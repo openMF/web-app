@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -30,6 +30,9 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NextStepDialogComponent {
+  dialogRef = inject<MatDialogRef<NextStepDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
   /* Step Percentage */
   stepPercentage: number;
   /* Next Step Name */
@@ -37,13 +40,15 @@ export class NextStepDialogComponent {
   /* Previous Step Name*/
   previousStepName: string;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {MatDialogRef<NextStepDialogComponent>} dialogRef MatDialogRef<NextStepDialogComponent>.
    */
-  constructor(
-    public dialogRef: MatDialogRef<NextStepDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.stepPercentage = data.stepPercentage;
     this.nextStepName = data.nextStepName;
     this.previousStepName = data.previousStepName;

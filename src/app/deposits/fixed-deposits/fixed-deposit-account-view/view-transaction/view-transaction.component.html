@@ -1,14 +1,16 @@
 <div class="container m-b-20 align-end-center gap-2percent">
-  <span *ngIf="allowUndo()">
-    <button
-      mat-raised-button
-      color="warn"
-      *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
-      (click)="undoTransaction()"
-    >
-      <fa-icon icon="undo" class="m-r-10"></fa-icon>Undo
-    </button>
-  </span>
+  @if (allowUndo()) {
+    <span>
+      <button
+        mat-raised-button
+        color="warn"
+        *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
+        (click)="undoTransaction()"
+      >
+        <fa-icon icon="undo" class="m-r-10"></fa-icon>Undo
+      </button>
+    </span>
+  }
 </div>
 <div class="container">
   <mat-card>
@@ -56,19 +58,22 @@
           {{ transactionData.amount | currency: transactionData.currency.code : 'symbol-narrow' : '1.2-2' }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="transactionData.note">
-          {{ 'labels.inputs.Note' | translate }}
-        </div>
+        @if (transactionData.note) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Note' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="transactionData.note">
-          {{ transactionData.note }}
-        </div>
+        @if (transactionData.note) {
+          <div class="flex-50">
+            {{ transactionData.note }}
+          </div>
+        }
 
-        <mifosx-transaction-payment-detail
-          *ngIf="transactionData.paymentDetailData"
-          [paymentDetailData]="transactionData.paymentDetailData"
-        >
-        </mifosx-transaction-payment-detail>
+        @if (transactionData.paymentDetailData) {
+          <mifosx-transaction-payment-detail [paymentDetailData]="transactionData.paymentDetailData">
+          </mifosx-transaction-payment-detail>
+        }
       </div>
 
       <div class="layout-row layout-align-center gap-2percent column-on-mobile">

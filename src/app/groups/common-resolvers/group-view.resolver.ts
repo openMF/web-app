@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { GroupsService } from '../groups.service';
  */
 @Injectable()
 export class GroupViewResolver {
+  private groupsService = inject(GroupsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {GroupsService} GroupsService Groups service.
    */
-  constructor(private groupsService: GroupsService) {}
+  constructor() {}
 
   /**
    * Returns the Groups data.

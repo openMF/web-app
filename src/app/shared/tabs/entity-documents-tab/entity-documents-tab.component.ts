@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -47,6 +47,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EntityDocumentsTabComponent implements OnInit {
+  dialog = inject(MatDialog);
+  private savingsService = inject(SavingsService);
+  private loansService = inject(LoansService);
+  private clientsService = inject(ClientsService);
+
   @ViewChild('documentsTable', { static: true }) documentsTable: MatTable<Element>;
 
   @Input() entityId: string;
@@ -77,6 +82,9 @@ export class EntityDocumentsTabComponent implements OnInit {
   /** Sorter for codes table. */
   @ViewChild(MatSort) sort: MatSort;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    *
    * @param {MatDialog} dialog Dialog for Inputs.
@@ -84,12 +92,7 @@ export class EntityDocumentsTabComponent implements OnInit {
    * @param {LoansService} loansService Loan Account services.
    * @param {ClientsService} clientsService Client services.
    */
-  constructor(
-    public dialog: MatDialog,
-    private savingsService: SavingsService,
-    private loansService: LoansService,
-    private clientsService: ClientsService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.entityDocuments);

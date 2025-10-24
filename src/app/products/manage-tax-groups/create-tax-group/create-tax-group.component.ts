@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -67,6 +67,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateTaxGroupComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   /** Minimum start date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum start date allowed. */
@@ -87,6 +96,9 @@ export class CreateTaxGroupComponent implements OnInit {
     'actions'
   ];
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the tax Group template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -97,16 +109,7 @@ export class CreateTaxGroupComponent implements OnInit {
    * @param {MatDialog} dialog Dialog reference.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private dialog: MatDialog,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { taxGroupTemplate: any }) => {
       this.taxGroupTemplateData = data.taxGroupTemplate;
       this.taxComponentOptions = this.taxGroupTemplateData.taxComponents;

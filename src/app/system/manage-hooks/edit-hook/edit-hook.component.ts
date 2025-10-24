@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -67,6 +67,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditHookComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private router = inject(Router);
+  private formBuilder = inject(UntypedFormBuilder);
+  private dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+  private snackBar = inject(MatSnackBar);
+  private cdr = inject(ChangeDetectorRef);
+
   @NgModule({
     imports: [
       MatSnackBarModule
@@ -94,6 +103,9 @@ export class EditHookComponent implements OnInit {
   /** Sorter for events table. */
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the hooks template data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
@@ -103,16 +115,7 @@ export class EditHookComponent implements OnInit {
    * @param {MatDialog} dialog Dialog Reference.
    * @param {TranslateService} translateService Translate Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private systemService: SystemService,
-    private router: Router,
-    private formBuilder: UntypedFormBuilder,
-    private dialog: MatDialog,
-    private translateService: TranslateService,
-    private snackBar: MatSnackBar,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { hooksTemplate: any; hook: any }) => {
       this.hooksTemplateData = data.hooksTemplate;
       this.hookData = data.hook;

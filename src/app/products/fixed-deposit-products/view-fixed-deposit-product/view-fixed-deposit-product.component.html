@@ -10,7 +10,7 @@
       >
         {{ 'labels.heading.General' | translate }}
       </a>
-      <ng-container *ngFor="let fixedDepositDatatable of fixedDepositDatatables">
+      @for (fixedDepositDatatable of fixedDepositDatatables; track fixedDepositDatatable) {
         <a
           mat-tab-link
           [routerLink]="['./datatables', fixedDepositDatatable.registeredTableName]"
@@ -21,7 +21,7 @@
         >
           {{ fixedDepositDatatable.registeredTableName }}
         </a>
-      </ng-container>
+      }
     </nav>
 
     <mat-tab-nav-panel #tabPanel>

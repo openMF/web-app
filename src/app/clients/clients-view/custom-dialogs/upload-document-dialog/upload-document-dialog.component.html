@@ -6,16 +6,20 @@
     <mat-form-field class="flex-fill">
       <mat-label>{{ 'labels.inputs.File Name' | translate }}</mat-label>
       <input formControlName="fileName" required matInput />
-      <mat-error *ngIf="uploadDocumentForm.controls.fileName.hasError('required')">
-        {{ 'labels.inputs.File Name' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (uploadDocumentForm.controls.fileName.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.File Name' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
-    <mat-form-field class="flex-fill" *ngIf="!documentIdentifier">
-      <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-      <input formControlName="description" matInput />
-    </mat-form-field>
+    @if (!documentIdentifier) {
+      <mat-form-field class="flex-fill">
+        <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+        <input formControlName="description" matInput />
+      </mat-form-field>
+    }
 
     <mifosx-file-upload flex="60%" (change)="onFileSelect($event)"></mifosx-file-upload>
 

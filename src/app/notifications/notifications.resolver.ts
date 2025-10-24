@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,10 +12,15 @@ import { NotificationsService } from './notifications.service';
  */
 @Injectable()
 export class NotificationsResolver {
+  private notificationsService = inject(NotificationsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {NotificationsService} notificationsService Notifications service.
    */
-  constructor(private notificationsService: NotificationsService) {}
+  constructor() {}
 
   /**
    * Returns the Notifications data.

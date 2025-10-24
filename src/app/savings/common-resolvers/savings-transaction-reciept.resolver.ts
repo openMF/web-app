@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -14,14 +14,17 @@ import { SettingsService } from 'app/settings/settings.service';
  */
 @Injectable()
 export class SavingsTransactionRecieptResolver {
+  private reportsService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {ReportsService} reportsService Reports service.
    * @param {SettingsService} settingsService Settings Service.
    */
-  constructor(
-    private reportsService: ReportsService,
-    private settingsService: SettingsService
-  ) {}
+  constructor() {}
 
   /**
    * Returns the Savings Transaction Reciept

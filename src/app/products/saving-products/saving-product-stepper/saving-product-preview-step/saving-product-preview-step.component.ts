@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { Accounting } from 'app/core/utils/accounting';
 import { OptionData } from 'app/shared/models/option-data.model';
 import { MatDivider } from '@angular/material/divider';
@@ -48,6 +48,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingProductPreviewStepComponent implements OnInit, OnChanges {
+  private accounting = inject(Accounting);
+
   @Input() savingProductsTemplate: any;
   @Input() accountingRuleData: any;
   @Input() savingProduct: any;
@@ -72,7 +74,10 @@ export class SavingProductPreviewStepComponent implements OnInit, OnChanges {
   accountingMappings: any = {};
   accountingRule: OptionData;
 
-  constructor(private accounting: Accounting) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit() {
     this.setCurrentValues();

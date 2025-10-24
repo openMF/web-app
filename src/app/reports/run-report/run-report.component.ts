@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UntypedFormControl, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
@@ -42,6 +42,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RunReportComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private reportsService = inject(ReportsService);
+  private settingsService = inject(SettingsService);
+  private alertService = inject(AlertService);
+  private dateUtils = inject(Dates);
+
   /** Minimum date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum date allowed. */
@@ -80,6 +86,9 @@ export class RunReportComponent implements OnInit {
 
   isProcessing = false;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Fetches report specifications from route params and retrieves report parameters data from `resolve`.
    * @param {ActivatedRoute} route ActivatedRoute.
@@ -87,13 +96,7 @@ export class RunReportComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(
-    private route: ActivatedRoute,
-    private reportsService: ReportsService,
-    private settingsService: SettingsService,
-    private alertService: AlertService,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.report.name = this.route.snapshot.params['name'];
     this.route.queryParams.subscribe((queryParams: { type: any; id: any }) => {
       this.report.type = queryParams.type;

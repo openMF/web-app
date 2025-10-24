@@ -55,17 +55,18 @@
       </mifosx-savings-account-charges-step>
     </mat-step>
 
-    <mat-step *ngIf="savingsAccountFormValid" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-savings-account-preview-step
-        [savingsAccountProductTemplate]="savingsAccountProductTemplate"
-        [savingsAccountTemplate]="savingsAccountTemplate"
-        [savingsAccountTermsForm]="savingsAccountTermsForm"
-        [savingsAccount]="savingsAccount"
-        (submitEvent)="submit()"
-      >
-      </mifosx-savings-account-preview-step>
-    </mat-step>
+    @if (savingsAccountFormValid) {
+      <mat-step completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-savings-account-preview-step
+          [savingsAccountProductTemplate]="savingsAccountProductTemplate"
+          [savingsAccountTemplate]="savingsAccountTemplate"
+          [savingsAccountTermsForm]="savingsAccountTermsForm"
+          [savingsAccount]="savingsAccount"
+          (submitEvent)="submit()"
+        >
+        </mifosx-savings-account-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

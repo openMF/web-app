@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -13,14 +13,19 @@ import { RunJobWithParamPayloadType } from './manage-jobs/scheduler-jobs/custom-
   providedIn: 'root'
 })
 export class SystemService {
+  private http = inject(HttpClient);
+
   public static CONFIG_ASSET_EXTERNALIZATION = 'asset-externalization-of-non-active-loans';
 
   emptyPayload: any = {};
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {HttpClient} http Http Client to send requests.
    */
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   /**
    * @returns {Observable<any>} Data tables.

@@ -3,9 +3,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Product Name' | translate }}</mat-label>
       <mat-select formControlName="productId" required>
-        <mat-option *ngFor="let product of productData" [value]="product.id">
-          {{ product.name }}
-        </mat-option>
+        @for (product of productData; track product) {
+          <mat-option [value]="product.id">
+            {{ product.name }}
+          </mat-option>
+        }
       </mat-select>
       <mat-error>
         {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -13,37 +15,45 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="flex-48" (click)="submittedOnDatePicker.open()" *ngIf="savingsProductSelected">
-      <mat-label>{{ 'labels.inputs.Submitted On' | translate }}</mat-label>
-      <input
-        matInput
-        [min]="minDate"
-        [max]="maxDate"
-        [matDatepicker]="submittedOnDatePicker"
-        formControlName="submittedOnDate"
-        required
-      />
-      <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
-      <mat-datepicker #submittedOnDatePicker></mat-datepicker>
-      <mat-error>
-        {{ 'labels.inputs.Submitted On' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
-    </mat-form-field>
+    @if (savingsProductSelected) {
+      <mat-form-field class="flex-48" (click)="submittedOnDatePicker.open()">
+        <mat-label>{{ 'labels.inputs.Submitted On' | translate }}</mat-label>
+        <input
+          matInput
+          [min]="minDate"
+          [max]="maxDate"
+          [matDatepicker]="submittedOnDatePicker"
+          formControlName="submittedOnDate"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #submittedOnDatePicker></mat-datepicker>
+        <mat-error>
+          {{ 'labels.inputs.Submitted On' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      </mat-form-field>
+    }
 
-    <mat-form-field class="flex-48" *ngIf="savingsProductSelected">
-      <mat-label>{{ 'labels.inputs.Field Officer' | translate }}</mat-label>
-      <mat-select formControlName="fieldOfficerId">
-        <mat-option *ngFor="let officer of fieldOfficerData" [value]="officer.id">
-          {{ officer.displayName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    @if (savingsProductSelected) {
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.Field Officer' | translate }}</mat-label>
+        <mat-select formControlName="fieldOfficerId">
+          @for (officer of fieldOfficerData; track officer) {
+            <mat-option [value]="officer.id">
+              {{ officer.displayName }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
 
-    <mat-form-field class="flex-48" *ngIf="savingsProductSelected">
-      <mat-label>{{ 'labels.inputs.External ID' | translate }}</mat-label>
-      <input matInput formControlName="externalId" />
-    </mat-form-field>
+    @if (savingsProductSelected) {
+      <mat-form-field class="flex-48">
+        <mat-label>{{ 'labels.inputs.External ID' | translate }}</mat-label>
+        <input matInput formControlName="externalId" />
+      </mat-form-field>
+    }
   </div>
 
   <div class="layout-row align-center gap-2percent margin-t responsive-column">

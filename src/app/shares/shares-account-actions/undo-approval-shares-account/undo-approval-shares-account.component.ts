@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
@@ -20,19 +20,22 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class UndoApprovalSharesAccountComponent {
+  private sharesService = inject(SharesService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Shares Account Id */
   accountId: any;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
   /**
    * @param {SharesService} sharesService Shares Service
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
    */
-  constructor(
-    private sharesService: SharesService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.accountId = this.route.parent.snapshot.params['shareAccountId'];
   }
 

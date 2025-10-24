@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { CollateralsService } from '../collaterals.service';
  */
 @Injectable()
 export class ClientCollateralResolver {
+  private collateralsService = inject(CollateralsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {CollateralsService} collateralsService Collaterals service.
    */
-  constructor(private collateralsService: CollateralsService) {}
+  constructor() {}
 
   /**
    * Returns the Client Collateral data.

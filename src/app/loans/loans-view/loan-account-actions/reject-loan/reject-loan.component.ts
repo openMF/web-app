@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -23,6 +23,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RejectLoanComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private loanService = inject(LoansService);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   /** Loan Id. */
   loanId: any;
   /** Reject Loan form. */
@@ -32,6 +39,9 @@ export class RejectLoanComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieve data from `Resolver`.
    * @param formBuilder Form Builder.
@@ -39,14 +49,7 @@ export class RejectLoanComponent implements OnInit {
    * @param route Activated Route.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
-    private loanService: LoansService,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

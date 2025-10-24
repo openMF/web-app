@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SettingsService } from 'app/settings/settings.service';
 
@@ -24,6 +24,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SharesAccountDetailsStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private sharesService = inject(SharesService);
+  private settingsService = inject(SettingsService);
+
   /** Shares Account Template */
   @Input() sharesAccountTemplate: any;
 
@@ -39,17 +43,16 @@ export class SharesAccountDetailsStepComponent implements OnInit {
   /** Shares Account Template with product data  */
   @Output() sharesAccountProductTemplate = new EventEmitter();
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Sets share account details form.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {SharesService} sharesService Shares Service.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private sharesService: SharesService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.createSharesAccountDetailsForm();
   }
 

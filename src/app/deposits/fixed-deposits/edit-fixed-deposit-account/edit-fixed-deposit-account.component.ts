@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
@@ -42,6 +42,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditFixedDepositAccountComponent {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private fixedDepositsService = inject(FixedDepositsService);
+  private settingsService = inject(SettingsService);
+
   /** Fixed Deposits Account Details Step */
   @ViewChild(FixedDepositAccountDetailsStepComponent, { static: true })
   fixedDepositsAccountDetailsStep: FixedDepositAccountDetailsStepComponent;
@@ -62,6 +68,9 @@ export class EditFixedDepositAccountComponent {
 
   currency: Currency;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Fetches FD account template from `resolve`
    * @param {ActivatedRoute} route Activated Route
@@ -70,13 +79,7 @@ export class EditFixedDepositAccountComponent {
    * @param {FixedDepositsService} fixedDepositsService Fixed Deposits Service
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private fixedDepositsService: FixedDepositsService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { fixedDepositsAccountAndTemplate: any }) => {
       this.fixedDepositsAccountAndTemplate = data.fixedDepositsAccountAndTemplate;
     });

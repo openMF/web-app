@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 
 /** rxjs Imports */
@@ -15,9 +15,14 @@ import { environment } from '../../../environments/environment';
  */
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
+  private httpCacheService = inject(HttpCacheService);
+
   private forceUpdate = false;
 
-  constructor(private httpCacheService: HttpCacheService) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   /**
    * Configures interceptor options

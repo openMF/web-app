@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, inject } from '@angular/core';
 
 /** RxJS Imports */
 import { forkJoin } from 'rxjs';
@@ -36,6 +36,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class NotificationsTrayComponent implements OnInit, OnDestroy {
+  notificationsService = inject(NotificationsService);
+
   /** Wait time between API status calls 60 seg */
   waitTime = environment.waitTimeForNotifications || 60;
   /** Read Notifications */
@@ -64,10 +66,13 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
     loanProduct: '/products/loan-products/'
   };
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {NotificationsService} notificationsService Notifications Service
    */
-  constructor(public notificationsService: NotificationsService) {
+  constructor() {
     forkJoin([
       this.notificationsService.getNotifications(true, 9),
       this.notificationsService.getNotifications(false, 9)]).subscribe((response: any[]) => {

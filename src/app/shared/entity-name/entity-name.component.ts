@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -13,6 +13,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EntityNameComponent implements OnInit {
+  private clipboard = inject(Clipboard);
+
   @Input() entityName: string;
   @Input() display = 'right';
 
@@ -20,7 +22,10 @@ export class EntityNameComponent implements OnInit {
   displayL = false;
   displayR = true;
 
-  constructor(private clipboard: Clipboard) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.displayL = this.display === 'left';

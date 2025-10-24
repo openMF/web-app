@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   MatTable,
@@ -29,7 +29,7 @@ import { UploadDocumentDialogComponent } from '../custom-dialogs/upload-document
 import { TranslateService } from '@ngx-translate/core';
 import { ClientsService } from '../../clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgStyle, NgFor } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -56,6 +56,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class IdentitiesTabComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private clientService = inject(ClientsService);
+  private translateService = inject(TranslateService);
+
   /** Client Identities */
   clientIdentities: any;
   /** Client Identifier Template */
@@ -76,17 +81,15 @@ export class IdentitiesTabComponent {
   /** Identifiers Table */
   @ViewChild('identifiersTable', { static: true }) identifiersTable: MatTable<Element>;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {ActivatedRoute} route Activated Route
    * @param {MatDialog} dialog Mat Dialog
    * @param {ClientsService} clientService Clients Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private clientService: ClientsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
       this.clientIdentities = data.clientIdentities;

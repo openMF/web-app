@@ -5,10 +5,12 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
       <input formControlName="firstName" required matInput />
-      <mat-error *ngIf="familyMemberForm.controls.firstName.hasError('required')">
-        {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (familyMemberForm.controls.firstName.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -19,10 +21,12 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Last Name' | translate }}</mat-label>
       <input formControlName="lastName" required matInput />
-      <mat-error *ngIf="familyMemberForm.controls.lastName.hasError('required')">
-        {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (familyMemberForm.controls.lastName.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -42,44 +46,56 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Relationship' | translate }}</mat-label>
       <mat-select formControlName="relationshipId" required>
-        <mat-option *ngFor="let relation of data.options.relationshipIdOptions" [value]="relation.id">
-          {{ relation.name | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (relation of data.options.relationshipIdOptions; track relation) {
+          <mat-option [value]="relation.id">
+            {{ relation.name | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
-      <mat-error *ngIf="familyMemberForm.controls.relationshipId.hasError('required')">
-        {{ 'labels.inputs.Relationship' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (familyMemberForm.controls.relationshipId.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Relationship' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
       <mat-select formControlName="genderId" required>
-        <mat-option *ngFor="let gender of data.options.genderIdOptions" [value]="gender.id">
-          {{ gender.name | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (gender of data.options.genderIdOptions; track gender) {
+          <mat-option [value]="gender.id">
+            {{ gender.name | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
-      <mat-error *ngIf="familyMemberForm.controls.genderId.hasError('required')">
-        {{ 'labels.inputs.Gender' | translate }} {{ 'labels.commons.is' | translate }}
-        <strong>{{ 'labels.commons.required' | translate }}</strong>
-      </mat-error>
+      @if (familyMemberForm.controls.genderId.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Gender' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Profession' | translate }}</mat-label>
       <mat-select formControlName="professionId">
-        <mat-option *ngFor="let profession of data.options.professionIdOptions" [value]="profession.id">
-          {{ profession.name | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (profession of data.options.professionIdOptions; track profession) {
+          <mat-option [value]="profession.id">
+            {{ profession.name | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Marital Status' | translate }}</mat-label>
       <mat-select formControlName="maritalStatusId">
-        <mat-option *ngFor="let maritalStatus of data.options.maritalStatusIdOptions" [value]="maritalStatus.id">
-          {{ maritalStatus.name | translateKey: 'catalogs' }}
-        </mat-option>
+        @for (maritalStatus of data.options.maritalStatusIdOptions; track maritalStatus) {
+          <mat-option [value]="maritalStatus.id">
+            {{ maritalStatus.name | translateKey: 'catalogs' }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
 

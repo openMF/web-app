@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -65,6 +65,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
+  private route = inject(ActivatedRoute);
+  private settingsService = inject(SettingsService);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+
   /** Currency Code */
   @Input() currencyCode: string;
   /** Loan Repayment Schedule to be Edited */
@@ -118,16 +123,14 @@ export class RepaymentScheduleTabComponent implements OnInit, OnChanges {
 
   businessDate: Date = new Date();
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the loans with associations data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private settingsService: SettingsService,
-    private dateUtils: Dates,
-    private dialog: MatDialog
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       if (data.loanDetailsData) {
         this.currencyCode = data.loanDetailsData.currency.code;

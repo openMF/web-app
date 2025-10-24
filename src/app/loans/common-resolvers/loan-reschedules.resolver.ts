@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { LoansService } from '../loans.service';
@@ -7,10 +7,15 @@ import { LoansService } from '../loans.service';
   providedIn: 'root'
 })
 export class LoanReschedulesResolver {
+  private loansService = inject(LoansService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {LoansService} LoansService Loans service.
    */
-  constructor(private loansService: LoansService) {}
+  constructor() {}
 
   /**
    * Returns the Loans data.

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostListener, HostBinding, OnDestroy, inject } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -88,11 +88,29 @@ registerLocaleData(localeSW);
   standalone: false
 })
 export class WebAppComponent implements OnInit, OnDestroy {
-  buttonConfig: KeyboardShortcutsConfiguration;
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private titleService = inject(Title);
+  private translateService = inject(TranslateService);
+  private themeStorageService = inject(ThemeStorageService);
+  snackBar = inject(MatSnackBar);
+  private alertService = inject(AlertService);
+  private settingsService = inject(SettingsService);
+  private authenticationService = inject(AuthenticationService);
+  private themingService = inject(ThemingService);
+  private dateUtils = inject(Dates);
+  private idle = inject(IdleTimeoutService);
+  private dialog = inject(MatDialog);
+  private authService = inject(AuthService);
 
-  i18nService: I18nService;
+  buttonConfig: KeyboardShortcutsConfiguration = new KeyboardShortcutsConfiguration();
+
+  i18nService = inject(I18nService);
 
   private authSubscription: Subscription;
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
   /**
    * @param {Router} router Router for navigation.
@@ -108,22 +126,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
    * @param {IdleTimeoutService} idle Idle timeout service.
    * @param {MatDialog} dialog Dialog component.
    */
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private titleService: Title,
-    private translateService: TranslateService,
-    private themeStorageService: ThemeStorageService,
-    public snackBar: MatSnackBar,
-    private alertService: AlertService,
-    private settingsService: SettingsService,
-    private authenticationService: AuthenticationService,
-    private themingService: ThemingService,
-    private dateUtils: Dates,
-    private idle: IdleTimeoutService,
-    private dialog: MatDialog,
-    private authService: AuthService
-  ) {}
+  constructor() {}
 
   @HostBinding('class') public cssClass: string;
 
@@ -163,8 +166,6 @@ export class WebAppComponent implements OnInit, OnDestroy {
     } else {
       this.translateService.use(environment.defaultLanguage);
     }
-
-    this.i18nService = new I18nService(this.translateService);
 
     // Change page title on navigation or language change, based on route data
     const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
@@ -273,6 +274,12 @@ export class WebAppComponent implements OnInit, OnDestroy {
   // Monitor all keyboard events and excute keyboard shortcuts
   @HostListener('window:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
+    // Guard for safety
+    const cfg = this.buttonConfig;
+    if (!cfg || !cfg.buttonCombinations) {
+      return;
+    }
+
     const routeD = this.buttonConfig.buttonCombinations.find(
       (x) =>
         x.ctrlKey === event.ctrlKey && x.shiftKey === event.shiftKey && x.altKey === event.altKey && x.key === event.key

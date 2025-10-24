@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -16,6 +16,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanReagingComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private loanService = inject(LoansService);
+  private dateUtils = inject(Dates);
+
   @Input() dataObject: any;
   /** Loan Id */
   loanId: string;
@@ -31,14 +38,10 @@ export class LoanReagingComponent implements OnInit {
   /** Maximum Date allowed. */
   maxDate = new Date();
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private settingsService: SettingsService,
-    private loanService: LoansService,
-    private dateUtils: Dates
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.loanId = this.route.snapshot.params['loanId'];
   }
 

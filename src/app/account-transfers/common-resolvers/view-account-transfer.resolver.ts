@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { AccountTransfersService } from '../account-transfers.service';
  */
 @Injectable()
 export class ViewAccountTransferResolver {
+  private accountTransfersService = inject(AccountTransfersService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {AccountTransfersService} AccountTransfersService Savings service.
    */
-  constructor(private accountTransfersService: AccountTransfersService) {}
+  constructor() {}
 
   /**
    * Returns the View Account Transfer data.

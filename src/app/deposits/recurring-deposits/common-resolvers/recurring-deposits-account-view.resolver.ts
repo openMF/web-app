@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -13,10 +13,15 @@ import { RecurringDepositsService } from '../recurring-deposits.service';
  */
 @Injectable()
 export class RecurringDepositsAccountViewResolver {
+  private recurringDepositsService = inject(RecurringDepositsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * @param {RecurringDepositsService} RecurringDepositsService RecurringDeposits service.
    */
-  constructor(private recurringDepositsService: RecurringDepositsService) {}
+  constructor() {}
 
   /**
    * Returns the RecurringDeposits Account data.

@@ -1,41 +1,56 @@
-<div
-  *ngIf="savingsAccountData.status.value === 'Active' && chargeData.amountOutstanding !== 0"
-  class="layout-row align-end gap-2percent layout-xs-column container m-b-20"
->
-  <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
-    <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>
-    Pay
-  </button>
-  <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="waiveCharge()">
-    <fa-icon icon="flag" class="m-r-10"></fa-icon>
-    Waive
-  </button>
-  <span *ngIf="isRecurringCharge()">
+@if (savingsAccountData.status.value === 'Active' && chargeData.amountOutstanding !== 0) {
+  <div class="layout-row align-end gap-2percent layout-xs-column container m-b-20">
+    <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
+      <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>
+      Pay
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'"
+      (click)="waiveCharge()"
+    >
+      <fa-icon icon="flag" class="m-r-10"></fa-icon>
+      Waive
+    </button>
+    @if (isRecurringCharge()) {
+      <span>
+        <button
+          mat-raised-button
+          color="warn"
+          *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'"
+          (click)="inactivateCharge()"
+        >
+          <fa-icon icon="trash" class="m-r-10"></fa-icon>
+          Inactivate
+        </button>
+      </span>
+    }
+  </div>
+}
+
+@if (savingsAccountData.status.value === 'Submitted and pending approval') {
+  <div class="layout-row align-end gap-2percent layout-xs-column container m-b-20">
+    <button
+      mat-raised-button
+      color="primary"
+      *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'"
+      (click)="editCharge()"
+    >
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>
+      Edit
+    </button>
     <button
       mat-raised-button
       color="warn"
-      *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'"
-      (click)="inactivateCharge()"
+      *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'"
+      (click)="deleteCharge()"
     >
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
-      Inactivate
+      Delete
     </button>
-  </span>
-</div>
-
-<div
-  *ngIf="savingsAccountData.status.value === 'Submitted and pending approval'"
-  class="layout-row align-end gap-2percent layout-xs-column container m-b-20"
->
-  <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="editCharge()">
-    <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    Edit
-  </button>
-  <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'" (click)="deleteCharge()">
-    <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    Delete
-  </button>
-</div>
+  </div>
+}
 
 <div class="container">
   <mat-card>

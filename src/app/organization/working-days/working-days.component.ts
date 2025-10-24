@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -37,6 +37,15 @@ const recurrenceDefaultValue = 'FREQ=WEEKLY;INTERVAL=1;BYDAY=';
   ]
 })
 export class WorkingDaysComponent implements OnInit, AfterViewInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private organizationService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   /** Working days form. */
   workingDaysForm: UntypedFormGroup;
   /** Working days data. */
@@ -59,6 +68,9 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
   /* Template for popover on define working days form */
   @ViewChild('templateWorkingDaysFormRef') templateWorkingDaysFormRef: TemplateRef<any>;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retrieves the working days data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
@@ -70,16 +82,7 @@ export class WorkingDaysComponent implements OnInit, AfterViewInit {
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private organizationService: OrganizationService,
-    private settingsService: SettingsService,
-    private router: Router,
-    private dialog: MatDialog,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { workingDays: any }) => {
       this.workingDaysData = data.workingDays;
     });

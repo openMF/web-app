@@ -1,9 +1,14 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({ name: 'yesNo' })
 export class YesnoPipe implements PipeTransform {
-  constructor(private translateService: TranslateService) {}
+  private translateService = inject(TranslateService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   transform(value: boolean, ...args: unknown[]): string {
     if (value == null) {

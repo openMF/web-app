@@ -1,71 +1,84 @@
-<mat-expansion-panel *ngIf="paymentAllocation">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
+@if (paymentAllocation) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Transaction Type' | translate }}:</span>
+          <span class="flex-60">{{ transactionTypeValue(paymentAllocation.transactionType) }}</span>
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="flex-fill">
       <div class="flex-fill">
-        <span class="flex-40">{{ 'labels.inputs.Transaction Type' | translate }}:</span>
-        <span class="flex-60">{{ transactionTypeValue(paymentAllocation.transactionType) }}</span>
+        <span class="flex-40">{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}:</span>
+        <span class="flex-60">{{
+          futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) | translateKey: 'catalogs'
+        }}</span>
       </div>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-
-  <div class="flex-fill">
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}:</span>
-      <span class="flex-60">{{
-        futureInstallmentRuleValue(paymentAllocation.futureInstallmentAllocationRule) | translateKey: 'catalogs'
-      }}</span>
-    </div>
-
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Payment Allocation Order' | translate }}</span>
-      <span class="flex-60">
-        <table>
-          <thead>
-            <tr>
-              <th>{{ 'labels.inputs.Order' | translate }}</th>
-              <th>{{ 'labels.inputs.Payment Allocation Rule' | translate }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let paymentAllocation of paymentAllocation.paymentAllocationOrder; let idx = index">
-              <td>{{ idx + 1 }}</td>
-              <td>{{ allocationRuleValue(paymentAllocation.paymentAllocationRule) | translateKey: 'catalogs' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </span>
-    </div>
-  </div>
-</mat-expansion-panel>
-<mat-expansion-panel *ngIf="creditAllocation">
-  <mat-expansion-panel-header>
-    <mat-panel-title>
       <div class="flex-fill">
-        <span class="flex-40">{{ 'labels.inputs.Transaction Type' | translate }}:</span>
-        <span class="flex-60">{{ transactionTypeValue(creditAllocation.transactionType) }}</span>
+        <span class="flex-40">{{ 'labels.inputs.Payment Allocation Order' | translate }}</span>
+        <span class="flex-60">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'labels.inputs.Order' | translate }}</th>
+                <th>{{ 'labels.inputs.Payment Allocation Rule' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (
+                paymentAllocation of paymentAllocation.paymentAllocationOrder;
+                track paymentAllocation;
+                let idx = $index
+              ) {
+                <tr>
+                  <td>{{ idx + 1 }}</td>
+                  <td>{{ allocationRuleValue(paymentAllocation.paymentAllocationRule) | translateKey: 'catalogs' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </span>
       </div>
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-
-  <div class="flex-fill">
-    <div class="flex-fill">
-      <span class="flex-40">{{ 'labels.inputs.Credit Allocation Order' | translate }}</span>
-      <span class="flex-60">
-        <table>
-          <thead>
-            <tr>
-              <th>{{ 'labels.inputs.Order' | translate }}</th>
-              <th>{{ 'labels.inputs.Credit Allocation Rule' | translate }}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let creditAllocation of creditAllocation.creditAllocationOrder; let idx = index">
-              <td>{{ idx + 1 }}</td>
-              <td>{{ allocationRuleValue(creditAllocation.creditAllocationRule) | translateKey: 'catalogs' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </span>
     </div>
-  </div>
-</mat-expansion-panel>
+  </mat-expansion-panel>
+}
+@if (creditAllocation) {
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Transaction Type' | translate }}:</span>
+          <span class="flex-60">{{ transactionTypeValue(creditAllocation.transactionType) }}</span>
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="flex-fill">
+      <div class="flex-fill">
+        <span class="flex-40">{{ 'labels.inputs.Credit Allocation Order' | translate }}</span>
+        <span class="flex-60">
+          <table>
+            <thead>
+              <tr>
+                <th>{{ 'labels.inputs.Order' | translate }}</th>
+                <th>{{ 'labels.inputs.Credit Allocation Rule' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (
+                creditAllocation of creditAllocation.creditAllocationOrder;
+                track creditAllocation;
+                let idx = $index
+              ) {
+                <tr>
+                  <td>{{ idx + 1 }}</td>
+                  <td>{{ allocationRuleValue(creditAllocation.creditAllocationRule) | translateKey: 'catalogs' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </span>
+      </div>
+    </div>
+  </mat-expansion-panel>
+}

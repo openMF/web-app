@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
@@ -10,7 +10,12 @@ import { ProductsService } from '../products.service';
 
 @Injectable()
 export class ChargesTemplateAndResolver {
-  constructor(private productsService: ProductsService) {}
+  private productsService = inject(ProductsService);
+
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   /**
    * Returns the changes template and data.

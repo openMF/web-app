@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
@@ -20,6 +20,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class AddClientCollateralComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private productsService = inject(ProductsService);
+  private clientsService = inject(ClientsService);
+  private settingsService = inject(SettingsService);
+
   /** Client Collateral Form */
   clientCollateralForm: UntypedFormGroup;
   /** Client Collateral Options */
@@ -29,6 +36,9 @@ export class AddClientCollateralComponent implements OnInit {
   /** Collateral Details */
   collateralDetails: any;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
   /**
    * Retirives Collateral Form from `resolve`
    * @param {FormBuilder} formBuilder Form bUilder.
@@ -36,14 +46,7 @@ export class AddClientCollateralComponent implements OnInit {
    * @param {Router} router Router.
    * @param {ProductsService} productsService Products Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private productsService: ProductsService,
-    private clientsService: ClientsService,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientActionData: any }) => {
       this.clientCollateralOptions = data.clientActionData;
     });
