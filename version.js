@@ -1,6 +1,6 @@
 const { gitDescribeSync } = require('git-describe');
 const { resolve, relative } = require('path');
-const { writeFileSync } = require('node:fs');
+const { writeFileSync } = require('fs-extra');
 const moment = require('moment');
 
 const gitInfo = gitDescribeSync({
