@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #fixedDepositAccountStepper
-  >
+    >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -32,7 +32,7 @@
       <mifosx-fixed-deposit-account-details-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         (fixedDepositsAccountProductTemplate)="setTemplate($event)"
-      >
+        >
       </mifosx-fixed-deposit-account-details-step>
     </mat-step>
 
@@ -42,7 +42,7 @@
       <mifosx-fixed-deposit-account-terms-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-      >
+        >
       </mifosx-fixed-deposit-account-terms-step>
     </mat-step>
 
@@ -52,7 +52,7 @@
       <mifosx-fixed-deposit-account-settings-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-      >
+        >
       </mifosx-fixed-deposit-account-settings-step>
     </mat-step>
 
@@ -62,7 +62,7 @@
       <mifosx-fixed-deposit-account-interest-rate-chart-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-      >
+        >
       </mifosx-fixed-deposit-account-interest-rate-chart-step>
     </mat-step>
 
@@ -73,20 +73,21 @@
         [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
         [fixedDepositAccountFormValid]="fixedDepositAccountFormValidAndNotPristine"
-      >
+        >
       </mifosx-fixed-deposit-account-charges-step>
     </mat-step>
 
-    <mat-step state="preview" *ngIf="fixedDepositAccountFormValidAndNotPristine" completed>
-      <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
-
-      <mifosx-fixed-deposit-account-preview-step
-        [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
-        [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-        [fixedDepositAccountData]="fixedDepositAccount"
-        (submitEvent)="submit()"
-      >
-      </mifosx-fixed-deposit-account-preview-step>
-    </mat-step>
+    @if (fixedDepositAccountFormValidAndNotPristine) {
+      <mat-step state="preview" completed>
+        <ng-template matStepLabel>{{ 'labels.inputs.PREVIEW' | translate }}</ng-template>
+        <mifosx-fixed-deposit-account-preview-step
+          [fixedDepositsAccountTemplate]="fixedDepositsAccountAndTemplate"
+          [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
+          [fixedDepositAccountData]="fixedDepositAccount"
+          (submitEvent)="submit()"
+          >
+        </mifosx-fixed-deposit-account-preview-step>
+      </mat-step>
+    }
   </mat-stepper>
 </div>

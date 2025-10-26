@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ClientsService } from 'app/clients/clients.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCard, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import {
   MatTable,

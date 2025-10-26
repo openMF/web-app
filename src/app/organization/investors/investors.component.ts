@@ -12,7 +12,7 @@ import { ExternalAssetOwnerService } from 'app/loans/services/external-asset-own
 import { SettingsService } from 'app/settings/settings.service';
 import { CancelDialogComponent } from 'app/shared/cancel-dialog/cancel-dialog.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   MatAccordion,
   MatExpansionPanel,

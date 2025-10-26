@@ -15,9 +15,11 @@
           <div #content class="note-field" [class.show]="show" [class.note-text]="content.scrollHeight > 18">
             <span>{{ job.lastRunHistory.jobRunErrorLog }}</span>
           </div>
-          <button mat-flat-button *ngIf="content.scrollHeight > 18" class="show-button" (click)="show = !show">
-            {{ buttonLabel() }}
-          </button>
+          @if (content.scrollHeight > 18) {
+            <button mat-flat-button class="show-button" (click)="show = !show">
+              {{ buttonLabel() }}
+            </button>
+          }
         </td>
       </tr>
     </tbody>

@@ -27,7 +27,7 @@ import {
   MatCardContent
 } from '@angular/material/card';
 import { MatTooltip } from '@angular/material/tooltip';
-import { NgIf, NgClass, NgFor, CurrencyPipe } from '@angular/common';
+import { NgClass, CurrencyPipe } from '@angular/common';
 import { LongTextComponent } from '../../shared/long-text/long-text.component';
 import { AccountNumberComponent } from '../../shared/account-number/account-number.component';
 import { MatIconButton } from '@angular/material/button';

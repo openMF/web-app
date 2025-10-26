@@ -14,27 +14,33 @@
         <mat-form-field>
           <mat-label>{{ 'labels.inputs.Default Language' | translate }}</mat-label>
           <mat-select [formControl]="language" [compareWith]="compareOptions">
-            <mat-option *ngFor="let language of languages" [value]="language">
-              {{ language.name }}
-            </mat-option>
+            @for (language of languages; track language) {
+              <mat-option [value]="language">
+                {{ language.name }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>{{ 'labels.inputs.Default Date Format' | translate }}</mat-label>
           <mat-select [formControl]="dateFormat">
-            <mat-option *ngFor="let dateFormat of dateFormats" [value]="dateFormat">
-              {{ dateFormat }}
-            </mat-option>
+            @for (dateFormat of dateFormats; track dateFormat) {
+              <mat-option [value]="dateFormat">
+                {{ dateFormat }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>{{ 'labels.inputs.Decimals to Display' | translate }}</mat-label>
           <mat-select [formControl]="decimalsToDisplay">
-            <mat-option *ngFor="let decimalOpt of decimals" [value]="decimalOpt">
-              {{ decimalOpt }}
-            </mat-option>
+            @for (decimalOpt of decimals; track decimalOpt) {
+              <mat-option [value]="decimalOpt">
+                {{ decimalOpt }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
       </div>
@@ -76,9 +82,11 @@
         <mat-form-field>
           <mat-label>{{ 'labels.inputs.Default Font' | translate }}</mat-label>
           <mat-select>
-            <mat-option *ngFor="let font of fonts" [value]="font">
-              {{ font }}
-            </mat-option>
+            @for (font of fonts; track font) {
+              <mat-option [value]="font">
+                {{ font }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
       </div>

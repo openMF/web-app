@@ -15,7 +15,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatTooltip } from '@angular/material/tooltip';
 import { StatusLookupPipe } from '../../pipes/status-lookup.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';

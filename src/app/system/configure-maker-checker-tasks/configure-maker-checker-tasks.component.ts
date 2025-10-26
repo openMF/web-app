@@ -9,7 +9,7 @@ import { ConfigurationWizardService } from '../../configuration-wizard/configura
 import { SystemService } from '../system.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatList, MatListItem } from '@angular/material/list';
-import { NgFor, NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatDivider } from '@angular/material/divider';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';

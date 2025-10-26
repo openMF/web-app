@@ -16,7 +16,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { AccountNumberComponent } from '../../../shared/account-number/account-number.component';
 import { LongTextComponent } from '../../../shared/long-text/long-text.component';
 import { MatTooltip } from '@angular/material/tooltip';

@@ -1,32 +1,30 @@
-<div *ngIf="activeClientMembers">
-  <table class="flex-98" mat-table [dataSource]="dataSource">
-    <!-- Check Column -->
-
-    <ng-container matColumnDef="check">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="toggleSelects()" [(ngModel)]="selectAllItems"></mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <mat-checkbox (change)="toggleSelect()" [(ngModel)]="element.selected"></mat-checkbox>
-      </td>
-    </ng-container>
-
-    <!-- Position Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client ID' | translate }}</th>
-      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Name' | translate }}</th>
-      <td mat-cell *matCellDef="let element">{{ element.displayName }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumn"></tr>
-  </table>
-</div>
+@if (activeClientMembers) {
+  <div>
+    <table class="flex-98" mat-table [dataSource]="dataSource">
+      <!-- Check Column -->
+      <ng-container matColumnDef="check">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="toggleSelects()" [(ngModel)]="selectAllItems"></mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox (change)="toggleSelect()" [(ngModel)]="element.selected"></mat-checkbox>
+        </td>
+      </ng-container>
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client ID' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Client Name' | translate }}</th>
+        <td mat-cell *matCellDef="let element">{{ element.displayName }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumn"></tr>
+    </table>
+  </div>
+}
 
 <div class="layout-row responsive-column align-center gap-2px margin-t">
   <button mat-raised-button matStepperPrevious>

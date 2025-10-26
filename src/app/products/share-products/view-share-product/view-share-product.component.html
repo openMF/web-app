@@ -7,10 +7,10 @@
         routerLinkActive
         #general="routerLinkActive"
         [active]="general.isActive"
-      >
+        >
         {{ 'labels.inputs.General' | translate }}
       </a>
-      <ng-container *ngFor="let shareProductDatatable of shareProductDatatables">
+      @for (shareProductDatatable of shareProductDatatables; track shareProductDatatable) {
         <a
           mat-tab-link
           [routerLink]="['./datatables', shareProductDatatable.registeredTableName]"
@@ -18,10 +18,10 @@
           #datatable="routerLinkActive"
           [active]="datatable.isActive"
           *mifosxHasPermission="'READ_' + shareProductDatatable.registeredTableName"
-        >
+          >
           {{ shareProductDatatable.registeredTableName }}
         </a>
-      </ng-container>
+      }
     </nav>
 
     <mat-tab-nav-panel #tabPanel>

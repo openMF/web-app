@@ -10,13 +10,15 @@
       [matDatepicker]="validFromDatePicker"
       required
       formControlName="startDate"
-    />
+      />
     <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #validFromDatePicker></mat-datepicker>
-    <mat-error *ngIf="delinquencyActionForm.controls.startDate.hasError('required')">
-      {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
+    @if (delinquencyActionForm.controls.startDate.hasError('required')) {
+      <mat-error>
+        {{ 'labels.inputs.Start Date' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    }
   </mat-form-field>
 
   <mat-form-field class="flex-48" (click)="validTillDatePicker.open()">
@@ -28,13 +30,15 @@
       [matDatepicker]="validTillDatePicker"
       required
       formControlName="endDate"
-    />
+      />
     <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #validTillDatePicker></mat-datepicker>
-    <mat-error *ngIf="delinquencyActionForm.controls.endDate.hasError('required')">
-      {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
+    @if (delinquencyActionForm.controls.endDate.hasError('required')) {
+      <mat-error>
+        {{ 'labels.inputs.End Date' | translate }} {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    }
   </mat-form-field>
 </div>
 
@@ -45,7 +49,7 @@
     color="primary"
     [mat-dialog-close]="{ data: delinquencyActionForm }"
     [disabled]="!delinquencyActionForm.valid || delinquencyActionForm.pristine"
-  >
+    >
     {{ 'labels.buttons.Submit' | translate }}
   </button>
 </mat-dialog-actions>

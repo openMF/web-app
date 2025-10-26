@@ -6,10 +6,12 @@
           <mat-form-field class="flex-100">
             <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error *ngIf="bucketForm.controls.name.hasError('required')">
-              {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (bucketForm.controls.name.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <h3 class="mat-h3 flex-40">{{ 'labels.heading.Delinquency Ranges' | translate }}</h3>
@@ -56,7 +58,7 @@
                   (click)="deleteDelinquencyRange(rowIndex)"
                   matTooltip="{{ 'tooltips.Delete' | translate }}"
                   matTooltipPosition="left"
-                >
+                  >
                   <fa-icon icon="trash"></fa-icon>
                 </button>
               </td>
@@ -77,7 +79,7 @@
           color="primary"
           [disabled]="!dataWasChanged"
           *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'"
-        >
+          >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

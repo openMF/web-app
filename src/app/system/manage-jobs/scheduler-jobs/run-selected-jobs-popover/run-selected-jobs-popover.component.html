@@ -8,9 +8,11 @@
 </mat-dialog-content>
 
 <mat-list>
-  <mat-list-item *ngFor="let message of messages" class="message" ngClass]="{'green' : message.status}">
-    {{ message.message }}
-  </mat-list-item>
+  @for (message of messages; track message) {
+    <mat-list-item class="message" ngClass]="{'green' : message.status}">
+      {{ message.message }}
+    </mat-list-item>
+  }
 </mat-list>
 <mat-dialog-actions>
   <button mat-raised-button color="primary" (click)="runSelectedJobs()">

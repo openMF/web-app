@@ -12,13 +12,15 @@
               [matDatepicker]="transactionsDatePicker"
               required
               formControlName="transactionDate"
-            />
+              />
             <mat-datepicker-toggle matSuffix [for]="transactionsDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionsDatePicker></mat-datepicker>
-            <mat-error *ngIf="foreclosureForm.controls.transactionDate.hasError('required')">
-              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (foreclosureForm.controls.transactionDate.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
@@ -61,7 +63,7 @@
             color="primary"
             [disabled]="!foreclosureForm.valid"
             *mifosxHasPermission="'FORECLOSURE_LOAN'"
-          >
+            >
             {{ 'labels.buttons.Foreclosure' | translate }}
           </button>
         </mat-card-actions>

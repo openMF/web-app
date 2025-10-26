@@ -37,13 +37,17 @@
           {{ adhocQueryData.tableName }}
         </div>
 
-        <div class="flex-50 mat-body-strong" *ngIf="adhocQueryData.reportRunFrequency">
-          {{ 'labels.inputs.Report Run Frequency' | translate }}
-        </div>
+        @if (adhocQueryData.reportRunFrequency) {
+          <div class="flex-50 mat-body-strong">
+            {{ 'labels.inputs.Report Run Frequency' | translate }}
+          </div>
+        }
 
-        <div class="flex-50" *ngIf="adhocQueryData.reportRunFrequency">
-          {{ reportRunFrequency }}
-        </div>
+        @if (adhocQueryData.reportRunFrequency) {
+          <div class="flex-50">
+            {{ reportRunFrequency }}
+          </div>
+        }
 
         <div class="flex-50 mat-body-strong">
           {{ 'labels.inputs.Status' | translate }}

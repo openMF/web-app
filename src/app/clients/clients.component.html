@@ -7,21 +7,23 @@
           placeholder="Search by client name, external Id, mobile"
           class="search-box"
           (keydown.enter)="search($event.target.value)"
-        />
+          />
       </mat-form-field>
     </div>
-    <div class="filter-box" *ngIf="existsClientsToFilter">
-      <mat-checkbox #showClosedAccounts labelPosition="after" class="m-r-10"
-        >{{ 'labels.inputs.Show Closed Accounts' | translate }}
-      </mat-checkbox>
-    </div>
+    @if (existsClientsToFilter) {
+      <div class="filter-box">
+        <mat-checkbox #showClosedAccounts labelPosition="after" class="m-r-10"
+          >{{ 'labels.inputs.Show Closed Accounts' | translate }}
+        </mat-checkbox>
+      </div>
+    }
     <div class="action-button gap-25px">
       <button
         mat-raised-button
         color="primary"
         [routerLink]="['../', 'organization', 'bulk-import', 'Clients']"
         *mifosxHasPermission="'CREATE_CLIENT'"
-      >
+        >
         <fa-icon icon="download" class="m-r-20"></fa-icon>{{ 'labels.buttons.Import Client' | translate }}
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CLIENT'">
@@ -31,9 +33,11 @@
   </div>
 
   <div [hidden]="!existsClientsToFilter" class="client-list">
-    <div *ngIf="isLoading">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </div>
+    @if (isLoading) {
+      <div>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    }
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChanged($event)" class="bordered-table">
       <!-- Name Column -->
       <ng-container matColumnDef="displayName">

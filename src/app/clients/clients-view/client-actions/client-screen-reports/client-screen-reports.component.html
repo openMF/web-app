@@ -6,14 +6,18 @@
           <mat-form-field class="flex-fill">
             <mat-label>{{ 'labels.inputs.Client Screen Reports' | translate }}</mat-label>
             <mat-select formControlName="templateId">
-              <mat-option *ngFor="let template of templatesData" [value]="template.id">
-                {{ template.name }}
-              </mat-option>
+              @for (template of templatesData; track template) {
+                <mat-option [value]="template.id">
+                  {{ template.name }}
+                </mat-option>
+              }
             </mat-select>
-            <mat-error *ngIf="clientScreenReportForm.controls.templateId.hasError('required')">
-              {{ 'labels.inputs.Screen Report' | translate }} {{ 'labels.commons.is' | translate }}
-              <strong>{{ 'labels.commons.required' | translate }}</strong>
-            </mat-error>
+            @if (clientScreenReportForm.controls.templateId.hasError('required')) {
+              <mat-error>
+                {{ 'labels.inputs.Screen Report' | translate }} {{ 'labels.commons.is' | translate }}
+                <strong>{{ 'labels.commons.required' | translate }}</strong>
+              </mat-error>
+            }
           </mat-form-field>
         </div>
       </mat-card-content>
