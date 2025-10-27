@@ -2544,6 +2544,10 @@
       "User Manual": "User Manual",
       "Working with Code": "Working with Code"
     },
+    "states": {
+      "Authenticated": "Authenticated",
+      "Not Authenticated": "Not Authenticated"
+    },
     "menus": {
       "Accounting": "Accounting",
       "Account Overview": "Account Overview",

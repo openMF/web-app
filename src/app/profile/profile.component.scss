@@ -1,3 +1,14 @@
+.skeleton-wrapper {
+  display: block;
+  width: 100%;
+}
+
+/* Generic table styles should come before specific ones */
+table th,
+table td {
+  border-top: 1px solid var(--border-color, rgb(0 0 0 / 12%));
+}
+
 .container {
   max-width: 37rem;
   padding: 1rem;
@@ -76,11 +87,6 @@
   }
 }
 
-.container table th,
-.container table td {
-  border-top: 1px solid var(--border-color, rgb(0 0 0 / 12%));
-}
-
 th.mat-header-cell:not(:first-of-type),
 td.mat-cell:not(:first-of-type) {
   border-left: 1px solid var(--border-color, rgb(0 0 0 / 12%));
@@ -92,7 +98,6 @@ td.mat-cell:not(:first-of-type) {
   border-radius: 6px;
 }
 
-// Dark mode styles
 :host-context(.dark-theme) {
   --border-color: #444;
   --card-background: #2d2d2d;
@@ -107,10 +112,27 @@ td.mat-cell:not(:first-of-type) {
   .container {
     mat-card {
       box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
+      background-color: var(--card-background);
+      color: var(--text-color);
     }
 
     table {
       box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
+    }
+  }
+
+  .skeleton-wrapper {
+    background-color: transparent;
+  }
+
+  button {
+    &.mat-raised-button {
+      background-color: var(--primary-color, #1976d2);
+      color: #fff;
+
+      &:hover {
+        background-color: var(--primary-hover-color, #1565c0);
+      }
     }
   }
 }

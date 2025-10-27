@@ -22,6 +22,8 @@ import { ChangePasswordDialogComponent } from 'app/shared/change-password-dialog
 import { SettingsService } from 'app/settings/settings.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { TranslateService } from '@ngx-translate/core';
+import { SkeletonLoaderComponent } from 'app/shared/skeleton-loader';
 
 /**
  * Profile Component.
@@ -42,7 +44,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRowDef,
     MatHeaderRow,
     MatRowDef,
-    MatRow
+    MatRow,
+    SkeletonLoaderComponent
   ]
 })
 export class ProfileComponent implements OnInit {
@@ -59,23 +62,45 @@ export class ProfileComponent implements OnInit {
     'description'
   ];
 
+  /** Loading state for translations */
+  isLoadingTranslations = true;
+
   /**
    * @param {AuthenticationService} authenticationService Authentication Service
    * @param {UserService} userService Users Service
    * @param {Router} router Router
    * @param {MatDialog} dialog Mat Dialog
+   * @param {TranslateService} translateService Translate Service
    */
   constructor(
     private authenticationService: AuthenticationService,
     private settingsService: SettingsService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private translateService: TranslateService
   ) {
     this.profileData = authenticationService.getCredentials();
   }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource(this.profileData.roles);
+
+    // Show skeleton for at least 600ms and wait for translations
+    const startTime = Date.now();
+    const minDisplayTime = 600;
+
+    this.translateService.get('labels.inputs.Tenant Id').subscribe(() => {
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+
+      if (remainingTime > 0) {
+        setTimeout(() => {
+          this.isLoadingTranslations = false;
+        }, remainingTime);
+      } else {
+        this.isLoadingTranslations = false;
+      }
+    });
   }
 
   /**

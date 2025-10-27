@@ -1,0 +1,88 @@
+<!-- Profile Type Skeleton -->
+<div *ngIf="type === 'profile'" class="skeleton-loader-profile">
+  <!-- Buttons -->
+  <div class="skeleton-buttons" *ngIf="showButtons">
+    <div
+      class="skeleton-button"
+      *ngFor="let i of createArray(buttonCount); let idx = index; trackBy: trackByIndex"
+    ></div>
+  </div>
+
+  <!-- Info Boxes Card -->
+  <div class="skeleton-card">
+    <div class="layout-row-wrap">
+      <div class="skeleton-info-box" *ngFor="let i of createArray(6); let idx = index; trackBy: trackByIndex">
+        <div class="skeleton-header"></div>
+        <div class="skeleton-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="skeleton-card">
+    <div class="skeleton-table" [style.--columns]="tableColumns">
+      <div class="skeleton-table-header">
+        <div
+          class="skeleton-cell"
+          *ngFor="let i of createArray(tableColumns); let idx = index; trackBy: trackByIndex"
+        ></div>
+      </div>
+      <div class="skeleton-table-row" *ngFor="let i of createArray(tableRows); let idx = index; trackBy: trackByIndex">
+        <div
+          class="skeleton-cell"
+          *ngFor="let j of createArray(tableColumns); let idx2 = index; trackBy: trackByIndex"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table Type Skeleton -->
+<div *ngIf="type === 'table'" class="skeleton-loader-table">
+  <div class="skeleton-table" [style.--columns]="tableColumns">
+    <div class="skeleton-table-header">
+      <div
+        class="skeleton-cell"
+        *ngFor="let i of createArray(tableColumns); let idx = index; trackBy: trackByIndex"
+      ></div>
+    </div>
+    <div class="skeleton-table-row" *ngFor="let i of createArray(tableRows); let idx = index; trackBy: trackByIndex">
+      <div
+        class="skeleton-cell"
+        *ngFor="let j of createArray(tableColumns); let idx2 = index; trackBy: trackByIndex"
+      ></div>
+    </div>
+  </div>
+</div>
+
+<!-- Card Type Skeleton -->
+<div *ngIf="type === 'card'" class="skeleton-loader-card">
+  <div class="skeleton-card-item" *ngFor="let i of createArray(items); let idx = index; trackBy: trackByIndex">
+    <div class="skeleton-card-header">
+      <div class="skeleton-avatar"></div>
+      <div class="skeleton-card-title"></div>
+    </div>
+    <div class="skeleton-card-content">
+      <div class="skeleton-line skeleton-line-90"></div>
+      <div class="skeleton-line skeleton-line-70"></div>
+      <div class="skeleton-line skeleton-line-85"></div>
+    </div>
+    <div class="skeleton-card-footer"></div>
+  </div>
+</div>
+
+<!-- List Type Skeleton -->
+<div *ngIf="type === 'list'" class="skeleton-loader-list">
+  <div class="skeleton-list-item" *ngFor="let i of createArray(items); let idx = index; trackBy: trackByIndex">
+    <div class="skeleton-avatar"></div>
+    <div class="skeleton-list-content">
+      <div class="skeleton-line skeleton-line-60"></div>
+      <div class="skeleton-line skeleton-line-40"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Type Skeleton -->
+<div *ngIf="type === 'custom'" class="skeleton-loader-custom" [ngClass]="cssClass">
+  <ng-content></ng-content>
+</div>
