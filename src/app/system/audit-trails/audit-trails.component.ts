@@ -358,9 +358,11 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
 
     //this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(tap(() => this.loadAuditTrailsPage()))
-      .subscribe();
+    if (this.sort && this.paginator) {
+      merge(this.sort.sortChange, this.paginator.page)
+        .pipe(tap(() => this.loadAuditTrailsPage()))
+        .subscribe();
+    }
   }
 
   /**
@@ -381,7 +383,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * Loads a page of audit trails.
    */
   loadAuditTrailsPage() {
-    if (!this.sort.direction) {
+    if (this.sort && !this.sort.direction) {
       delete this.sort.active;
     }
     this.getAuditTrails();
@@ -393,7 +395,9 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
    * @param {string} property Property to filter data by.
    */
   applyFilter(filterValue: string, property: string) {
-    this.paginator.pageIndex = 0;
+    if (this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
     const findIndex = this.filterAuditTrailsBy.findIndex((filter) => filter.type === property);
     this.filterAuditTrailsBy[findIndex].value = filterValue;
     this.loadAuditTrailsPage();
@@ -544,7 +548,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       'clientName'
     ];
     this.systemService
-      .getAuditTrails(this.filterAuditTrailsBy, this.sort.active ? this.sort.active : '', this.sort.direction, 0, -1)
+      .getAuditTrails(this.filterAuditTrailsBy, this.sort?.active ?? '', this.sort?.direction ?? '', 0, -1)
       .subscribe((response: any) => {
         if (response !== undefined) {
           let csv = response.pageItems.map((row: any) =>
