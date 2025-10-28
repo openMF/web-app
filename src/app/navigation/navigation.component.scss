@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+.container {
+  width: 100%;
+}
+
+.layout-row-wrap.responsive-column {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.flex-48 {
+  flex: 1 1 48%;
+  min-width: 320px;
+}
+
+mat-card {
+  padding: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+mat-card-content {
+  display: grid;
+  grid-template-columns: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-label {
+  letter-spacing: 0.2px;
+}
+
+@media (768px <= width) {
+  mat-card-content {
+    grid-template-columns: 50% 50%;
+  }
+}
+
+@media (1200px <= width) {
+  .flex-48 {
+    flex-basis: 48%;
+  }
+
+  mat-card-content {
+    grid-template-columns: 50% 50%;
+    gap: 16px;
+  }
+}
