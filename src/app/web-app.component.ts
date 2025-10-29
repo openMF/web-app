@@ -148,7 +148,7 @@ export class WebAppComponent implements OnInit {
       this.cssClass = value;
     });
     this.themingService.setInitialDarkMode();
-    this.themingService.setDarkMode(this.settingsService.themeDarkEnabled === 'true');
+    this.themingService.setDarkMode(!!this.settingsService.themeDarkEnabled);
 
     // Setup logger
     if (environment.production) {
