@@ -1,12 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, HostListener, HostBinding } from '@angular/core';
+import { Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { merge } from 'rxjs';
+import { merge, Subscription } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
 /** Translation Imports */
@@ -87,12 +87,12 @@ registerLocaleData(localeSW);
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
 })
-export class WebAppComponent implements OnInit {
+export class WebAppComponent implements OnInit, OnDestroy {
   buttonConfig: KeyboardShortcutsConfiguration;
 
   i18nService: I18nService;
 
-  isLoggedIn = false;
+  private authSubscription: Subscription;
 
   /**
    * @param {Router} router Router for navigation.
@@ -231,6 +231,14 @@ export class WebAppComponent implements OnInit {
 
     // Subscribe to session timeout If IdleTimeout is higher than 0 (zero)
     if (environment.session.timeout.idleTimeout > 0) {
+      this.authSubscription = this.authenticationService.isAuthenticated$.subscribe((loggedIn) => {
+        if (loggedIn) {
+          this.idle.start();
+        } else {
+          this.idle.stop();
+        }
+      });
+
       this.idle.$onSessionTimeout.subscribe(() => {
         this.alertService.alert({
           type: 'Session timeout',
@@ -245,6 +253,12 @@ export class WebAppComponent implements OnInit {
           }
         }, 1000);
       });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
   }
 
