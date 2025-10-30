@@ -23,10 +23,7 @@
   @if (dataObject.data.length > 0) {
     <div class="m-t-10">
       @for (columnHeader of dataObject.columnHeaders; track columnHeader; let i = $index) {
-        <div
-          class="flex-fill"
-          [ngClass]="setAttributeClass(columnHeader.columnName)"
-          >
+        <div class="flex-fill" [ngClass]="setAttributeClass(columnHeader.columnName)">
           <div class="mat-body-strong left flex-40">
             {{ columnHeader.columnDisplayName }}
             {{ getInputName(columnHeader.columnName) }}
@@ -65,7 +62,7 @@
                   cdkAutosizeMinRows="1"
                   class="json-textarea"
                   [innerHTML]="dataObject.data[0].row[i].value | prettyPrint"
-                  >
+                >
                 </textarea>
               }
               @default {
@@ -78,7 +75,7 @@
                         (click)="openSite(dataObject.data[0].row[i])"
                         matTooltipPosition="right"
                         class="small-icon"
-                        >
+                      >
                         <fa-icon icon="eye" size="lg"></fa-icon>
                       </button>
                     </span>

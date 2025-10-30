@@ -8,7 +8,7 @@
         matTooltip="{{ 'tooltips.The default interest rate set' | translate }}"
         formControlName="nominalAnnualInterestRate"
         required
-        />
+      />
       <mat-error>
         {{ 'labels.inputs.Nominal Annual Interest' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -23,11 +23,9 @@
         formControlName="interestCompoundingPeriodType"
         matTooltip="{{ 'tooltips.The period at which interest rate' | translate }}"
         required
-        >
+      >
         @for (interestCompoundingPeriodType of interestCompoundingPeriodTypeData; track interestCompoundingPeriodType) {
-          <mat-option
-            [value]="interestCompoundingPeriodType.id"
-            >
+          <mat-option [value]="interestCompoundingPeriodType.id">
             {{ interestCompoundingPeriodType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -44,11 +42,9 @@
         formControlName="interestPostingPeriodType"
         matTooltip="{{ 'tooltips.Interest rate is posted or credited to a saving account' | translate }}"
         required
-        >
+      >
         @for (interestPostingPeriodType of interestPostingPeriodTypeData; track interestPostingPeriodType) {
-          <mat-option
-            [value]="interestPostingPeriodType.id"
-            >
+          <mat-option [value]="interestPostingPeriodType.id">
             {{ interestPostingPeriodType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -65,11 +61,9 @@
         formControlName="interestCalculationType"
         matTooltip="{{ 'tooltips.The method used to calculate interest' | translate }}"
         required
-        >
+      >
         @for (interestCalculationType of interestCalculationTypeData; track interestCalculationType) {
-          <mat-option
-            [value]="interestCalculationType.id"
-            >
+          <mat-option [value]="interestCalculationType.id">
             {{ interestCalculationType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -86,11 +80,12 @@
         formControlName="interestCalculationDaysInYearType"
         matTooltip="{{ 'tooltips.To calculate interest' | translate }}"
         required
-        >
-        @for (interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData; track interestCalculationDaysInYearType) {
-          <mat-option
-            [value]="interestCalculationDaysInYearType.id"
-            >
+      >
+        @for (
+          interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData;
+          track interestCalculationDaysInYearType
+        ) {
+          <mat-option [value]="interestCalculationDaysInYearType.id">
             {{ interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}
           </mat-option>
         }

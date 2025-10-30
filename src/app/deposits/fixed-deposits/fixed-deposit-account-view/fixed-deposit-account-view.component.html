@@ -8,7 +8,7 @@
             class="profile-image"
             matTooltip="{{ 'tooltips.Fixed Deposits Account' | translate }}"
             [src]="'assets/images/fd_account_placeholder.png'"
-            />
+          />
         </div>
       </div>
 
@@ -40,12 +40,9 @@
             </div>
 
             @if (
-              !fixedDepositsAccountData.status.rejected &&
-              !fixedDepositsAccountData.status.submittedAndPendingApproval
-              ) {
-              <div
-                class="flex-30"
-                >
+              !fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval
+            ) {
+              <div class="flex-30">
                 <h3 class="flex-100">{{ 'labels.heading.Account Overview' | translate }}</h3>
                 <table class="account-overview flex-100">
                   <tbody>
@@ -53,15 +50,17 @@
                       <td class="flex-70">{{ 'labels.inputs.Current Balance' | translate }}</td>
                       <td class="r-amount flex-30">
                         {{
-                        fixedDepositsAccountData.summary.accountBalance
-                        | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                          fixedDepositsAccountData.summary.accountBalance
+                            | currency: currency.code : 'symbol-narrow' : '1.2-2'
                         }}
                       </td>
                     </tr>
                     <tr>
                       <td class="flex-70">{{ 'labels.inputs.Deposit Amount' | translate }}</td>
                       <td class="r-amount flex-30">
-                        {{ fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                        {{
+                          fixedDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                        }}
                       </td>
                     </tr>
                   </tbody>
@@ -75,7 +74,7 @@
                 [matMenuTriggerFor]="accountMenu"
                 aria-label="Fixed Deposit account actions"
                 yPosition="below"
-                >
+              >
                 <mat-icon matListIcon class="actions-menu">
                   <fa-icon icon="bars" size="sm"></fa-icon>
                 </mat-icon>
@@ -114,7 +113,7 @@
         routerLinkActive
         #general="routerLinkActive"
         [active]="general.isActive"
-        >
+      >
         {{ 'labels.inputs.General' | translate }}
       </a>
       <a
@@ -123,7 +122,7 @@
         routerLinkActive
         #IRC="routerLinkActive"
         [active]="IRC.isActive"
-        >
+      >
         {{ 'labels.inputs.Interest Rate Chart' | translate }}
       </a>
       @if (showTransactions) {
@@ -134,7 +133,7 @@
             routerLinkActive
             #transactions="routerLinkActive"
             [active]="transactions.isActive"
-            >
+          >
             {{ 'labels.inputs.Transactions' | translate }}
           </a>
         </span>
@@ -145,7 +144,7 @@
         routerLinkActive
         #charges="routerLinkActive"
         [active]="charges.isActive"
-        >
+      >
         {{ 'labels.inputs.Charges' | translate }}
       </a>
       @if (fixedDepositsAccountData.clientId) {
@@ -155,7 +154,7 @@
           routerLinkActive
           #standingInstructions="routerLinkActive"
           [active]="standingInstructions.isActive"
-          >
+        >
           {{ 'labels.inputs.Standing Instructions' | translate }}
         </a>
       }
@@ -167,7 +166,7 @@
           routerLinkActive
           #datatable="routerLinkActive"
           [active]="datatable.isActive"
-          >
+        >
           {{ savingsDatatable.registeredTableName }}
         </a>
       }

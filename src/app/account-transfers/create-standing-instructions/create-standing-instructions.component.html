@@ -226,7 +226,7 @@
               [matDatepicker]="validFromDatePicker"
               required
               formControlName="validFrom"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validFromDatePicker></mat-datepicker>
             @if (createStandingInstructionsForm.controls.validFrom.hasError('required')) {
@@ -246,7 +246,7 @@
               [matDatepicker]="validTillDatePicker"
               required
               formControlName="validTill"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #validTillDatePicker></mat-datepicker>
             @if (createStandingInstructionsForm.controls.validTill.hasError('required')) {
@@ -289,9 +289,7 @@
             <mat-label>{{ 'labels.inputs.Recurrence Frequency' | translate }}</mat-label>
             <mat-select required formControlName="recurrenceFrequency">
               @for (recurrenceFrequencyType of recurrenceFrequencyTypeData; track recurrenceFrequencyType) {
-                <mat-option
-                  [value]="recurrenceFrequencyType.id"
-                  >
+                <mat-option [value]="recurrenceFrequencyType.id">
                   {{ recurrenceFrequencyType.value }}
                 </mat-option>
               }
@@ -313,7 +311,7 @@
               [max]="maxDate"
               [matDatepicker]="recurrenceOnMonthDayDatePicker"
               formControlName="recurrenceOnMonthDay"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="recurrenceOnMonthDayDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #recurrenceOnMonthDayDatePicker></mat-datepicker>
             @if (createStandingInstructionsForm.controls.recurrenceOnMonthDay.hasError('required')) {
@@ -336,7 +334,7 @@
           [disabled]="!createStandingInstructionsForm.valid"
           *mifosxHasPermission="'CREATE_STANDINGINSTRUCTION'"
           (click)="submit()"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

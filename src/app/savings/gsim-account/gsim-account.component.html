@@ -40,7 +40,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
-              >
+            >
               <i class="fa fa-arrow-up" matTooltip="{{ 'tooltips.Deposit' | translate }}"></i>
             </button>
           }
@@ -51,7 +51,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
-              >
+            >
               <i class="fa fa-arrow-down" matTooltip="{{ 'tooltips.Withdraw' | translate }}"></i>
             </button>
           }
@@ -62,7 +62,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../../../', 'savings-accounts', element.id, 'actions', 'Approve']"
-              >
+            >
               <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
             </button>
           }
@@ -73,7 +73,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../../../', 'savings-accounts', element.id, 'actions', 'Undo Approval']"
-              >
+            >
               <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approval' | translate }}"></i>
             </button>
           }
@@ -84,7 +84,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../../', element.id, 'actions', 'Activate']"
-              >
+            >
               <i class="fa fa-check-circle" matTooltip="{{ 'tooltips.Activate' | translate }}"></i>
             </button>
           }

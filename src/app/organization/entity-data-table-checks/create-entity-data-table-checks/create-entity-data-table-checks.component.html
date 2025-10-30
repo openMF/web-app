@@ -78,9 +78,7 @@
               <mat-label>{{ 'labels.inputs.Products' | translate }}</mat-label>
               <mat-select required formControlName="productId">
                 @for (savingsProducts of createEntityData.savingsProductDatas; track savingsProducts) {
-                  <mat-option
-                    [value]="savingsProducts.id"
-                    >
+                  <mat-option [value]="savingsProducts.id">
                     {{ savingsProducts.name }}
                   </mat-option>
                 }

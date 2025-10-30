@@ -7,7 +7,7 @@
         formControlName="name"
         matTooltip="{{ 'tooltips.Product name is a unique identifier' | translate }}"
         required
-        />
+      />
       @if (recurringDepositProductDetailsForm.controls.name.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Product Name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -24,7 +24,7 @@
         maxlength="4"
         matTooltip="{{ 'tooltips.Short name is a unique identifier' | translate }}"
         required
-        />
+      />
       @if (recurringDepositProductDetailsForm.controls.shortName.hasError('required')) {
         <mat-error>
           {{ 'labels.inputs.Short Name' | translate }} {{ 'labels.commons.is' | translate }}

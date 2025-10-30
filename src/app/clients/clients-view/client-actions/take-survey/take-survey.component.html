@@ -24,10 +24,7 @@
               <mat-label class="flex-40 question-text">{{ question.text }}</mat-label>
               <mat-radio-group class="flex-60 radio-group-spacing" [(ngModel)]="question.answer">
                 @for (options of question.responseDatas; track options) {
-                  <mat-radio-button
-                    class="layout-column radio-button"
-                    [value]="options"
-                    >
+                  <mat-radio-button class="layout-column radio-button" [value]="options">
                     <span class="wrap-mat-radio-label">
                       {{ options.text }}
                     </span>
@@ -36,9 +33,7 @@
               </mat-radio-group>
             </div>
             @if (question.answer) {
-              <div>
-                {{ 'labels.text.Your answer is' | translate }}: {{ question.answer.text }}
-              </div>
+              <div>{{ 'labels.text.Your answer is' | translate }}: {{ question.answer.text }}</div>
             }
           }
         </div>

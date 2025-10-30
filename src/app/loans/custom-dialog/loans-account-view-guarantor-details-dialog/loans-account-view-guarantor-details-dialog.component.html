@@ -34,20 +34,22 @@
           <span>
             {{ 'labels.inputs.Deleted' | translate }}
           </span>
-          }</span
-          >
-        </div>
-        @if (data.loanData?.delinquent?.availableDisbursementAmountWithOverApplied !== undefined) {
-          <div class="flex-fill">
-            <span class="flex-50">{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}:</span>
-            <span class="flex-50">{{
-              data.loanData.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
-            }}</span>
-          </div>
         }
-      </div>
+      </span>
     </div>
+    @if (data.loanData?.delinquent?.availableDisbursementAmountWithOverApplied !== undefined) {
+      <div class="flex-fill">
+        <span class="flex-50"
+          >{{ 'labels.inputs.Available Disbursement Amount (with Over Applied)' | translate }}:</span
+        >
+        <span class="flex-50">{{
+          data.loanData.delinquent.availableDisbursementAmountWithOverApplied | formatNumber
+        }}</span>
+      </div>
+    }
+  </div>
+</div>
 
-    <mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
-      <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-    </mat-dialog-actions>
+<mat-dialog-actions class="layout-row layout-xs-column layout-align-center gap-2percent">
+  <button mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+</mat-dialog-actions>

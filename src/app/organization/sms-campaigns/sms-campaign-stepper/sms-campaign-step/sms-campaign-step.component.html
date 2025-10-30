@@ -42,10 +42,7 @@
     </mat-checkbox>
 
     @if (smsCampaignDetailsForm.contains('recurrenceStartDate')) {
-      <mat-form-field
-        class="flex-48"
-        (click)="recurrenceStartDatePicker.open()"
-        >
+      <mat-form-field class="flex-48" (click)="recurrenceStartDatePicker.open()">
         <mat-label>{{ 'labels.inputs.Schedule Date' | translate }}</mat-label>
         <input
           matInput
@@ -54,7 +51,7 @@
           [matDatepicker]="recurrenceStartDatePicker"
           formControlName="recurrenceStartDate"
           required
-          />
+        />
         <mat-datepicker-toggle matSuffix [for]="recurrenceStartDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #recurrenceStartDatePicker></mat-datepicker>
         <mat-error>
@@ -133,9 +130,7 @@
   </div>
 
   @if (!smsCampaignDetailsForm.controls.runReportId.value) {
-    <div
-      class="layout-row layout-xs-column layout-align-center margin-t gap-2percent"
-      >
+    <div class="layout-row layout-xs-column layout-align-center margin-t gap-2percent">
       <button mat-raised-button matStepperPrevious disabled>
         <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
         {{ 'labels.buttons.Previous' | translate }}
@@ -148,10 +143,7 @@
   }
 
   @if (smsCampaignDetailsForm.controls.runReportId.value) {
-    <mifosx-business-rule-parameters
-      [paramData]="paramData"
-      (templateParameters)="passParameters($event)"
-      >
+    <mifosx-business-rule-parameters [paramData]="paramData" (templateParameters)="passParameters($event)">
     </mifosx-business-rule-parameters>
   }
 </form>

@@ -76,7 +76,7 @@
               [matDatepicker]="joiningDatePicker"
               required
               formControlName="joiningDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="joiningDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #joiningDatePicker></mat-datepicker>
             @if (editEmployeeForm.controls.joiningDate.hasError('required')) {
@@ -98,7 +98,7 @@
           color="primary"
           [disabled]="!editEmployeeForm.valid"
           *mifosxHasPermission="'UPDATE_STAFF'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

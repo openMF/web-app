@@ -3,86 +3,78 @@
     <h4 class="mat-h4 flex-98">
       {{ 'labels.inputs.Principal' | translate
       }}<i
-      class="m-l-10 fas fa-question"
-      matTooltip="{{ 'tooltips.Fields are used to define the minimum, default, and maximum principal' | translate }}"
-    ></i>
-  </h4>
+        class="m-l-10 fas fa-question"
+        matTooltip="{{ 'tooltips.Fields are used to define the minimum, default, and maximum principal' | translate }}"
+      ></i>
+    </h4>
 
-  <mat-form-field class="flex-31">
-    <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
-    <input type="number" matInput formControlName="minPrincipal" [min]="0" />
-    <mat-error>
-      {{ 'labels.commons.Minimum Value must be' | translate }}
-      <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="flex-31">
+      <mat-label>{{ 'labels.inputs.Minimum' | translate }}</mat-label>
+      <input type="number" matInput formControlName="minPrincipal" [min]="0" />
+      <mat-error>
+        {{ 'labels.commons.Minimum Value must be' | translate }}
+        <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="flex-31">
-    <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
-    <input type="number" matInput formControlName="principal" required />
-    <mat-error>
-      {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Principal' | translate }}
-      {{ 'labels.commons.is' | translate }}
-      <strong>{{ 'labels.commons.required' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="flex-31">
+      <mat-label>{{ 'labels.inputs.Default' | translate }}</mat-label>
+      <input type="number" matInput formControlName="principal" required />
+      <mat-error>
+        {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Principal' | translate }}
+        {{ 'labels.commons.is' | translate }}
+        <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="flex-31">
-    <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
-    <input type="number" matInput formControlName="maxPrincipal" [min]="0" />
-    <mat-error>
-      {{ 'labels.commons.Minimum Value must be' | translate }}
-      <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
-      {{ 'labels.commons.and must be greater than' | translate }}
-      <strong>{{ 'labels.commons.Minimum Principal' | translate }}</strong>
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="flex-31">
+      <mat-label>{{ 'labels.inputs.Maximum' | translate }}</mat-label>
+      <input type="number" matInput formControlName="maxPrincipal" [min]="0" />
+      <mat-error>
+        {{ 'labels.commons.Minimum Value must be' | translate }}
+        <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
+        {{ 'labels.commons.and must be greater than' | translate }}
+        <strong>{{ 'labels.commons.Minimum Principal' | translate }}</strong>
+      </mat-error>
+    </mat-form-field>
 
-  <mat-checkbox class="flex-60" labelPosition="before" formControlName="allowApprovedDisbursedAmountsOverApplied">
-    {{ 'labels.inputs.Allow approval / disbursal above loan applied amount' | translate }}
-  </mat-checkbox>
+    <mat-checkbox class="flex-60" labelPosition="before" formControlName="allowApprovedDisbursedAmountsOverApplied">
+      {{ 'labels.inputs.Allow approval / disbursal above loan applied amount' | translate }}
+    </mat-checkbox>
 
-  <div class="flex-98 layout-row-wrap responsive-column gap-2percent">
-    @if (loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied) {
-      <mat-form-field
-        class="flex-fill flex-32"
-        >
-        <mat-label>{{ 'labels.inputs.Over Amount Calculation Type' | translate }}</mat-label>
-        <mat-select formControlName="overAppliedCalculationType" required>
-          @for (overAppliedCalculationType of overAppliedCalculationTypeData; track overAppliedCalculationType) {
-            <mat-option
-              [value]="overAppliedCalculationType.id"
-              >
-              {{ overAppliedCalculationType.value | translateKey: 'catalogs' }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-    }
+    <div class="flex-98 layout-row-wrap responsive-column gap-2percent">
+      @if (loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied) {
+        <mat-form-field class="flex-fill flex-32">
+          <mat-label>{{ 'labels.inputs.Over Amount Calculation Type' | translate }}</mat-label>
+          <mat-select formControlName="overAppliedCalculationType" required>
+            @for (overAppliedCalculationType of overAppliedCalculationTypeData; track overAppliedCalculationType) {
+              <mat-option [value]="overAppliedCalculationType.id">
+                {{ overAppliedCalculationType.value | translateKey: 'catalogs' }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
 
-    @if (loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied) {
-      <mat-form-field
-        class="flex-fill flex-32"
-        >
-        <mat-label>{{ 'labels.inputs.Over Amount' | translate }}</mat-label>
-        <input type="number" matInput formControlName="overAppliedNumber" required />
-      </mat-form-field>
-    }
-  </div>
+      @if (loanProductTermsForm.value.allowApprovedDisbursedAmountsOverApplied) {
+        <mat-form-field class="flex-fill flex-32">
+          <mat-label>{{ 'labels.inputs.Over Amount' | translate }}</mat-label>
+          <input type="number" matInput formControlName="overAppliedNumber" required />
+        </mat-form-field>
+      }
+    </div>
 
-  <mat-form-field class="flex-31">
-    <mat-label
-      >{{ 'labels.inputs.Installment day calculation from' | translate }}
-      <i
-        class="fas fa-question"
-        matTooltip="{{ 'tooltips.Repayment schedule will start the installment' | translate }}"
+    <mat-form-field class="flex-31">
+      <mat-label
+        >{{ 'labels.inputs.Installment day calculation from' | translate }}
+        <i
+          class="fas fa-question"
+          matTooltip="{{ 'tooltips.Repayment schedule will start the installment' | translate }}"
         ></i
       ></mat-label>
       <mat-select formControlName="repaymentStartDateType" required>
         @for (repaymentStartDateType of repaymentStartDateTypeOptions; track repaymentStartDateType) {
-          <mat-option
-            [value]="repaymentStartDateType.id"
-            >
+          <mat-option [value]="repaymentStartDateType.id">
             {{ repaymentStartDateType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -138,36 +130,26 @@
     <h3 class="mat-h3 flex-23">{{ 'labels.inputs.Interest Rates' | translate }}</h3>
 
     @if (!loanProductTermsForm.value.isLinkedToFloatingInterestRates) {
-      <mat-checkbox
-        [formControl]="zeroInterest"
-        class="flex-23"
-        labelPosition="before"
-        >
+      <mat-checkbox [formControl]="zeroInterest" class="flex-23" labelPosition="before">
         {{ 'labels.inputs.Is Zero Interest Rate?' | translate }}
       </mat-checkbox>
     }
 
     @if (!isZeroInterest()) {
-      <mat-checkbox
-        class="flex-32"
-        labelPosition="before"
-        formControlName="isLinkedToFloatingInterestRates"
-        >
+      <mat-checkbox class="flex-32" labelPosition="before" formControlName="isLinkedToFloatingInterestRates">
         {{ 'labels.inputs.Is Linked to floating interest rates?' | translate }}
       </mat-checkbox>
     }
 
     @if (!loanProductTermsForm.value.isLinkedToFloatingInterestRates) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <h4 class="mat-h4 flex-98">
           {{ 'labels.inputs.Nominal interest rate' | translate }}
           <i
             class="fas fa-question"
-          matTooltip="{{
-            'tooltips.Define the minimum, default, maximum, and period for the nominal interest rate' | translate
-          }}"
+            matTooltip="{{
+              'tooltips.Define the minimum, default, maximum, and period for the nominal interest rate' | translate
+            }}"
           ></i>
         </h4>
         <mat-form-field class="flex-fill flex-23">
@@ -178,7 +160,7 @@
             formControlName="minInterestRatePerPeriod"
             [min]="0"
             [attr.disabled]="isZeroInterest()"
-            />
+          />
           <mat-error>
             {{ 'labels.commons.Minimum Value must be' | translate }}
             <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
@@ -192,7 +174,7 @@
             formControlName="interestRatePerPeriod"
             required
             [attr.disabled]="isZeroInterest()"
-            />
+          />
           <mat-error>
             {{ 'labels.catalogs.Default' | translate }} {{ 'labels.inputs.Nominal interest rate' | translate }}
             {{ 'labels.commons.is' | translate }}
@@ -207,7 +189,7 @@
             formControlName="maxInterestRatePerPeriod"
             [min]="0"
             [attr.disabled]="isZeroInterest()"
-            />
+          />
           <mat-error>
             {{ 'labels.commons.Maximum Value must be' | translate }}
             <strong>{{ 'labels.commons.greater equal to than 0' | translate }}</strong>
@@ -219,9 +201,7 @@
           <mat-label>{{ 'labels.inputs.Frequency' | translate }}</mat-label>
           <mat-select formControlName="interestRateFrequencyType" required [disabled]="isZeroInterest()">
             @for (interestRateFrequencyType of interestRateFrequencyTypeData; track interestRateFrequencyType) {
-              <mat-option
-                [value]="interestRateFrequencyType.id"
-                >
+              <mat-option [value]="interestRateFrequencyType.id">
                 {{ interestRateFrequencyType.value | translateKey: 'catalogs' }}
               </mat-option>
             }
@@ -235,16 +215,14 @@
     }
 
     @if (loanProductTermsForm.value.isLinkedToFloatingInterestRates && !isZeroInterest()) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column align-gt-sm-start-center"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column align-gt-sm-start-center">
         <h4 class="mat-h4 flex-98">
           {{ 'labels.inputs.Floating Interest Rate' | translate }}
           <i
             class="fas fa-question"
-          matTooltip="{{
-            'tooltips.Define the minimum, default, maximum, and period for the floating interest rate' | translate
-          }}"
+            matTooltip="{{
+              'tooltips.Define the minimum, default, maximum, and period for the floating interest rate' | translate
+            }}"
           ></i>
         </h4>
         <mat-form-field class="flex-31">
@@ -309,9 +287,7 @@
     </mat-checkbox>
 
     @if (loanProductTermsForm.value.useBorrowerCycle) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <h4 class="mat-h4 flex-73">{{ 'labels.inputs.Principal by loan cycle' | translate }}</h4>
         <div class="flex-23">
           <button
@@ -319,17 +295,13 @@
             mat-raised-button
             color="primary"
             (click)="addVariationsForBorrowerCycle('Principal', principalVariationsForBorrowerCycle)"
-            >
+          >
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add' | translate }}
           </button>
         </div>
         @if (principalVariationsForBorrowerCycle.value.length) {
-          <table
-            class="flex-98 mat-elevation-z1"
-            mat-table
-            [dataSource]="principalVariationsForBorrowerCycle.value"
-            >
+          <table class="flex-98 mat-elevation-z1" mat-table [dataSource]="principalVariationsForBorrowerCycle.value">
             <ng-container matColumnDef="valueConditionType">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Condition' | translate }}</th>
               <td mat-cell *matCellDef="let variation">
@@ -367,14 +339,14 @@
                   mat-icon-button
                   color="primary"
                   (click)="editVariationsForBorrowerCycle('Principal', principalVariationsForBorrowerCycle, i)"
-                  >
+                >
                   <fa-icon icon="edit"></fa-icon>
                 </button>
                 <button
                   mat-icon-button
                   color="warn"
                   (click)="deleteVariationsForBorrowerCycle(principalVariationsForBorrowerCycle, i)"
-                  >
+                >
                   <fa-icon icon="trash"></fa-icon>
                 </button>
               </td>
@@ -390,7 +362,7 @@
             mat-raised-button
             color="primary"
             (click)="addVariationsForBorrowerCycle('NumberOfRepayments', numberOfRepaymentVariationsForBorrowerCycle)"
-            >
+          >
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add' | translate }}
           </button>
@@ -400,7 +372,7 @@
             class="flex-98 mat-elevation-z1"
             mat-table
             [dataSource]="numberOfRepaymentVariationsForBorrowerCycle.value"
-            >
+          >
             <ng-container matColumnDef="valueConditionType">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Condition' | translate }}</th>
               <td mat-cell *matCellDef="let variation">
@@ -437,17 +409,17 @@
                 <button
                   mat-icon-button
                   color="primary"
-              (click)="
-                editVariationsForBorrowerCycle('NumberOfRepayments', numberOfRepaymentVariationsForBorrowerCycle, i)
-              "
-                  >
+                  (click)="
+                    editVariationsForBorrowerCycle('NumberOfRepayments', numberOfRepaymentVariationsForBorrowerCycle, i)
+                  "
+                >
                   <fa-icon icon="edit"></fa-icon>
                 </button>
                 <button
                   mat-icon-button
                   color="warn"
                   (click)="deleteVariationsForBorrowerCycle(numberOfRepaymentVariationsForBorrowerCycle, i)"
-                  >
+                >
                   <fa-icon icon="trash"></fa-icon>
                 </button>
               </td>
@@ -463,17 +435,13 @@
             mat-raised-button
             color="primary"
             (click)="addVariationsForBorrowerCycle('NominalInterestRate', interestRateVariationsForBorrowerCycle)"
-            >
+          >
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add' | translate }}
           </button>
         </div>
         @if (interestRateVariationsForBorrowerCycle.value.length) {
-          <table
-            class="flex-98 mat-elevation-z1"
-            mat-table
-            [dataSource]="interestRateVariationsForBorrowerCycle.value"
-            >
+          <table class="flex-98 mat-elevation-z1" mat-table [dataSource]="interestRateVariationsForBorrowerCycle.value">
             <ng-container matColumnDef="valueConditionType">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Condition' | translate }}</th>
               <td mat-cell *matCellDef="let variation">
@@ -510,15 +478,17 @@
                 <button
                   mat-icon-button
                   color="primary"
-                  (click)="editVariationsForBorrowerCycle('NominalInterestRate', interestRateVariationsForBorrowerCycle, i)"
-                  >
+                  (click)="
+                    editVariationsForBorrowerCycle('NominalInterestRate', interestRateVariationsForBorrowerCycle, i)
+                  "
+                >
                   <fa-icon icon="edit"></fa-icon>
                 </button>
                 <button
                   mat-icon-button
                   color="warn"
                   (click)="deleteVariationsForBorrowerCycle(interestRateVariationsForBorrowerCycle, i)"
-                  >
+                >
                   <fa-icon icon="trash"></fa-icon>
                 </button>
               </td>
@@ -554,9 +524,7 @@
       <mat-label>{{ 'labels.inputs.Frequency Type' | translate }}</mat-label>
       <mat-select formControlName="repaymentFrequencyType" required>
         @for (repaymentFrequencyType of repaymentFrequencyTypeData; track repaymentFrequencyType) {
-          <mat-option
-            [value]="repaymentFrequencyType.id"
-            >
+          <mat-option [value]="repaymentFrequencyType.id">
             {{ repaymentFrequencyType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -586,8 +554,8 @@
     @if (allowFixedLength()) {
       <span class="label-field flex-30">{{
         loanProductTermsForm.value.repaymentFrequencyType
-        | find: repaymentFrequencyTypeData : 'id' : 'value'
-        | translateKey: 'catalogs'
+          | find: repaymentFrequencyTypeData : 'id' : 'value'
+          | translateKey: 'catalogs'
       }}</span>
     }
 

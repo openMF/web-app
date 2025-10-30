@@ -6,7 +6,7 @@
         formControlName="currencyCode"
         matTooltip="{{ 'tooltips.The currency in which the deposit will be disbursed' | translate }}"
         required
-        >
+      >
         @for (currency of currencyData; track currency) {
           <mat-option [value]="currency.code">
             {{ currency.name }}
@@ -27,7 +27,7 @@
         formControlName="digitsAfterDecimal"
         matTooltip="{{ 'tooltips.Decimal places to be used to track and report' | translate }}"
         required
-        />
+      />
       <mat-error>
         {{ 'labels.inputs.Decimal Places' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -41,7 +41,7 @@
         matInput
         formControlName="inMultiplesOf"
         matTooltip="{{ 'tooltips.Enter multiples of currency value' | translate }}"
-        />
+      />
       <mat-error>
         {{ 'labels.inputs.Currency in multiples of' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>

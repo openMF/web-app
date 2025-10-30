@@ -72,7 +72,7 @@
               [matDatepicker]="startDatePicker"
               required
               formControlName="startDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             @if (groupEditMeetingForm.controls.startDate.hasError('required')) {
@@ -98,7 +98,7 @@
           [disabled]="!groupEditMeetingForm.valid"
           (click)="submit()"
           *mifosxHasPermission="'CREATE_MEETING'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

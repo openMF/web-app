@@ -4,9 +4,7 @@
       <mat-card-title>{{ 'labels.heading.Hold Amount' | translate }}</mat-card-title>
     }
     @if (transactionType.blockaccount) {
-      <mat-card-title>{{
-        'labels.heading.Block Savings Account' | translate
-      }}</mat-card-title>
+      <mat-card-title>{{ 'labels.heading.Block Savings Account' | translate }}</mat-card-title>
     }
 
     <form [formGroup]="manageSavingsAccountForm" (ngSubmit)="submit()">
@@ -38,7 +36,7 @@
               [matDatepicker]="transactionDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             @if (manageSavingsAccountForm.controls.transactionDate.hasError('required')) {
@@ -57,7 +55,7 @@
             [isRequired]="true"
             [inputFormControl]="manageSavingsAccountForm.controls.transactionAmount"
             [inputLabel]="'Transaction Amount'"
-            >
+          >
           </mifosx-input-amount>
         }
       </mat-card-content>

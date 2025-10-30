@@ -25,7 +25,7 @@
           [matDatepicker]="submittedOnDatePicker"
           formControlName="submittedOnDate"
           required
-          />
+        />
         <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #submittedOnDatePicker></mat-datepicker>
         <mat-error>
@@ -51,7 +51,11 @@
     @if (isProductSelected) {
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.External id' | translate }}</mat-label>
-        <input matInput formControlName="externalId" matTooltip="{{ 'tooltips.Provides an external id' | translate }}" />
+        <input
+          matInput
+          formControlName="externalId"
+          matTooltip="{{ 'tooltips.Provides an external id' | translate }}"
+        />
       </mat-form-field>
     }
   </div>
@@ -68,7 +72,7 @@
         !recurringDepositAccountDetailsForm.get('productId')?.value ||
         !recurringDepositAccountDetailsForm.get('submittedOnDate')?.value
       "
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
       <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
     </button>

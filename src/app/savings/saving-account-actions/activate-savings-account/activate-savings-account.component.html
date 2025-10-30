@@ -12,7 +12,7 @@
               [matDatepicker]="activatedOnDatePicker"
               required
               formControlName="activatedOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
             @if (activateSavingsAccountForm.controls.activatedOnDate.hasError('required')) {

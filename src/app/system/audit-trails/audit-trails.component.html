@@ -15,9 +15,7 @@
     <mat-label>{{ 'labels.inputs.Status' | translate }}</mat-label>
     <mat-select [formControl]="processingResult" (selectionChange)="applyFilter($event.value, 'processingResult')">
       @for (processingResult of auditTrailSearchTemplateData.processingResults; track processingResult) {
-        <mat-option
-          [value]="processingResult.id"
-          >
+        <mat-option [value]="processingResult.id">
           {{ processingResult.processingResult }}
         </mat-option>
       }
@@ -46,7 +44,7 @@
 
   <div class="flex-48 layout-row-wrap gap-8px">
     <mat-form-field class="flex-60" (click)="fromDatePicker.open()">
-    <mat-label>{{ 'labels.inputs.Maker From Date' | translate }}</mat-label>
+      <mat-label>{{ 'labels.inputs.Maker From Date' | translate }}</mat-label>
       <input
         matInput
         [min]="minDate"
@@ -55,9 +53,9 @@
         [formControl]="fromDate"
         placeholder="YYYY-MM-DD"
       />
-    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #fromDatePicker></mat-datepicker>
-  </mat-form-field>
+      <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #fromDatePicker></mat-datepicker>
+    </mat-form-field>
 
     <mat-form-field class="flex-38">
       <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
@@ -67,7 +65,7 @@
 
   <div class="flex-48 layout-row-wrap gap-8px">
     <mat-form-field class="flex-60" (click)="toDatePicker.open()">
-    <mat-label>{{ 'labels.inputs.Maker To Date' | translate }}</mat-label>
+      <mat-label>{{ 'labels.inputs.Maker To Date' | translate }}</mat-label>
       <input
         matInput
         [min]="minDate"
@@ -76,9 +74,9 @@
         [formControl]="toDate"
         placeholder="YYYY-MM-DD"
       />
-    <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #toDatePicker></mat-datepicker>
-  </mat-form-field>
+      <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #toDatePicker></mat-datepicker>
+    </mat-form-field>
 
     <mat-form-field class="flex-38">
       <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
@@ -88,18 +86,18 @@
 
   <div class="flex-48 layout-row-wrap gap-8px">
     <mat-form-field class="flex-60" (click)="checkedFromDatePicker.open()">
-    <mat-label>{{ 'labels.inputs.Checker From Date' | translate }}</mat-label>
-    <input
-      matInput
-      [min]="minDate"
-      [max]="maxDate"
-      [matDatepicker]="checkedFromDatePicker"
-      [formControl]="checkedFromDate"
+      <mat-label>{{ 'labels.inputs.Checker From Date' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="checkedFromDatePicker"
+        [formControl]="checkedFromDate"
         placeholder="YYYY-MM-DD"
       />
-    <mat-datepicker-toggle matSuffix [for]="checkedFromDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #checkedFromDatePicker></mat-datepicker>
-  </mat-form-field>
+      <mat-datepicker-toggle matSuffix [for]="checkedFromDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #checkedFromDatePicker></mat-datepicker>
+    </mat-form-field>
 
     <mat-form-field class="flex-38">
       <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
@@ -109,18 +107,18 @@
 
   <div class="flex-48 layout-row-wrap gap-8px">
     <mat-form-field class="flex-60" (click)="checkedToDatePicker.open()">
-    <mat-label>{{ 'labels.inputs.Checked To Date' | translate }}</mat-label>
-    <input
-      matInput
-      [min]="minDate"
-      [max]="maxDate"
-      [matDatepicker]="checkedToDatePicker"
-      [formControl]="checkedToDate"
+      <mat-label>{{ 'labels.inputs.Checked To Date' | translate }}</mat-label>
+      <input
+        matInput
+        [min]="minDate"
+        [max]="maxDate"
+        [matDatepicker]="checkedToDatePicker"
+        [formControl]="checkedToDate"
         placeholder="YYYY-MM-DD"
       />
-    <mat-datepicker-toggle matSuffix [for]="checkedToDatePicker"></mat-datepicker-toggle>
-    <mat-datepicker #checkedToDatePicker></mat-datepicker>
-  </mat-form-field>
+      <mat-datepicker-toggle matSuffix [for]="checkedToDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #checkedToDatePicker></mat-datepicker>
+    </mat-form-field>
 
     <mat-form-field class="flex-38">
       <mat-label>{{ 'labels.inputs.Time' | translate }}</mat-label>
@@ -200,7 +198,7 @@
       </ng-container>
       <ng-container matColumnDef="madeOnDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Made Date' | translate }}</th>
-      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.madeOnDate | datetimeFormat }}</td>
+        <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.madeOnDate | datetimeFormat }}</td>
       </ng-container>
       <ng-container matColumnDef="checker">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Checker' | translate }}</th>
@@ -208,7 +206,7 @@
       </ng-container>
       <ng-container matColumnDef="checkedOnDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Checked Date' | translate }}</th>
-      <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.checkedOnDate | datetimeFormat }}</td>
+        <td mat-cell *matCellDef="let auditTrail">{{ auditTrail.checkedOnDate | datetimeFormat }}</td>
       </ng-container>
       <ng-container matColumnDef="clientIp">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Client Ip' | translate }}</th>

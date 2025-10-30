@@ -20,7 +20,7 @@
             [glAccountList]="glAccountData"
             [required]="true"
             [inputLabel]="'Account'"
-            >
+          >
           </mifosx-gl-account-selector>
         </div>
       </mat-card-content>
@@ -34,7 +34,7 @@
           color="primary"
           [disabled]="financialActivityMappingForm.pristine"
           *mifosxHasPermission="'UPDATE_FINANCIALACTIVITYACCOUNT'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

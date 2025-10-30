@@ -12,7 +12,7 @@
               [matDatepicker]="startDatePicker"
               required
               formControlName="dividendPeriodStartDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             @if (createDividendForm.controls.dividendPeriodStartDate.hasError('required')) {
@@ -32,7 +32,7 @@
               [matDatepicker]="endDatePicker"
               required
               formControlName="dividendPeriodEndDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
             @if (createDividendForm.controls.dividendPeriodEndDate.hasError('required')) {

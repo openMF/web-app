@@ -15,7 +15,7 @@
       color="primary"
       [routerLink]="['gl-accounts/create']"
       *mifosxHasPermission="'CREATE_GLACCOUNT'"
-      >
+    >
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Add Account' | translate }}
     </button>
@@ -220,7 +220,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonAddAccount, buttonAddAccount, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -237,14 +237,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonTreeView, buttonTreeView, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -260,14 +260,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonAddAccount, buttonAddAccount, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateAccountsTable, accountsTable, 'top', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -285,7 +285,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

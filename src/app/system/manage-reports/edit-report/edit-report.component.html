@@ -35,9 +35,7 @@
             <mat-label>{{ 'labels.inputs.Report Sub Type' | translate }}</mat-label>
             <mat-select formControlName="reportSubType">
               @for (allowedReportSubType of reportData.allowedReportSubTypes; track allowedReportSubType) {
-                <mat-option
-                  [value]="allowedReportSubType"
-                  >
+                <mat-option [value]="allowedReportSubType">
                   {{ allowedReportSubType | translateKey: 'text' }}
                 </mat-option>
               }
@@ -90,13 +88,7 @@
           <p class="mat-title flex-20">{{ 'labels.inputs.Report Parameters' | translate }}</p>
 
           @if (!reportData.coreReport) {
-            <button
-              mat-raised-button
-              class="flex-20"
-              type="button"
-              color="primary"
-              (click)="addReportParameter()"
-              >
+            <button mat-raised-button class="flex-20" type="button" color="primary" (click)="addReportParameter()">
               <fa-icon icon="plus" class="m-r-10"></fa-icon>
               {{ 'labels.buttons.Add Report Parameter' | translate }}
             </button>
@@ -126,7 +118,7 @@
                   color="primary"
                   mat-icon-button
                   (click)="editReportParameter(reportParameter)"
-                  >
+                >
                   <fa-icon icon="edit" size="lg"></fa-icon>
                 </button>
               }
@@ -137,7 +129,7 @@
                   color="warn"
                   mat-icon-button
                   (click)="deleteReportParameter(reportParameter)"
-                  >
+                >
                   <fa-icon icon="trash" size="lg"></fa-icon>
                 </button>
               }
@@ -160,7 +152,7 @@
           color="primary"
           [disabled]="(!reportForm.valid || reportForm.pristine) && !isReportParametersChanged"
           *mifosxHasPermission="'UPDATE_REPORT'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

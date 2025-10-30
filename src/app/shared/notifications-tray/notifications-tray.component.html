@@ -8,7 +8,7 @@
   [matBadgeHidden]="!unreadNotifications.length"
   matBadgeColor="warn"
   matBadgeSize="medium"
-  >
+>
   <fa-icon icon="bell" size="lg"></fa-icon>
 </button>
 
@@ -23,21 +23,14 @@
   }
 
   @for (notification of unreadNotifications; track notification) {
-    <button
-      mat-menu-item
-      class="unread"
-      [routerLink]="[routeMap[notification.objectType], notification.objectId]"
-      >
+    <button mat-menu-item class="unread" [routerLink]="[routeMap[notification.objectType], notification.objectId]">
       {{ notification.content }}*<br />
       <span class="time">[{{ notification.createdAt }}]</span>
     </button>
   }
 
   @for (notification of displayedReadNotifications; track notification) {
-    <button
-      mat-menu-item
-      [routerLink]="[routeMap[notification.objectType], notification.objectId]"
-      >
+    <button mat-menu-item [routerLink]="[routeMap[notification.objectType], notification.objectId]">
       {{ notification.content }}<br />
       <span class="time">[{{ notification.createdAt }}]</span>
     </button>

@@ -7,7 +7,7 @@
         routerLinkActive
         #general="routerLinkActive"
         [active]="general.isActive"
-        >
+      >
         {{ 'labels.inputs.General' | translate }}
       </a>
       @for (shareProductDatatable of shareProductDatatables; track shareProductDatatable) {
@@ -18,7 +18,7 @@
           #datatable="routerLinkActive"
           [active]="datatable.isActive"
           *mifosxHasPermission="'READ_' + shareProductDatatable.registeredTableName"
-          >
+        >
           {{ shareProductDatatable.registeredTableName }}
         </a>
       }

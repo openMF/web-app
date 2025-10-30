@@ -23,83 +23,83 @@
           <span class="flex-60"
             >{{ viewAccountTransferData.currency.displaySymbol }}
             {{ viewAccountTransferData.transferAmount | formatNumber }} ({{
-            viewAccountTransferData.currency.code
+              viewAccountTransferData.currency.code
             }})</span
-            >
-          </div>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Transaction Date' | translate }}:</span>
-            <span class="flex-60">{{ viewAccountTransferData.transferDate | dateFormat }}</span>
-          </div>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Destination' | translate }}:</span>
-            <span class="flex-60">{{ viewAccountTransferData.transferDescription }}</span>
-          </div>
-
-          <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Transferred From' | translate }}</h3>
-
-          <mat-divider [inset]="true"></mat-divider>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Office' | translate }}:</span>
-            <span class="flex-60">{{ viewAccountTransferData.fromOffice.name }}</span>
-          </div>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Client' | translate }}:</span>
-            <span class="flex-60">{{ viewAccountTransferData.fromClient.displayName }}</span>
-          </div>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Account Type' | translate }}:</span>
-            <span class="flex-60">{{ viewAccountTransferData.fromAccountType.value }}</span>
-          </div>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Account No' | translate }}:</span>
-            <span class="flex-60">{{ viewAccountTransferData.fromAccount.accountNo }}</span>
-          </div>
-
-          <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Transferred To' | translate }}</h3>
-
-          <mat-divider [inset]="true"></mat-divider>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Office' | translate }}:</span>
-            <span class="flex-60">{{ viewAccountTransferData.toOffice.name }}</span>
-          </div>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Client' | translate }}:</span>
-            <span class="flex-60"
-              ><a [href]="transferToClient(viewAccountTransferData.toClient)">
-              {{ viewAccountTransferData.toClient.displayName }}</a
-              >
-            </span>
-          </div>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Account Type' | translate }}:</span>
-            <span class="flex-60">{{ viewAccountTransferData.toAccountType.value }}</span>
-          </div>
-
-          <div class="flex-fill">
-            <span class="flex-40">{{ 'labels.inputs.Account No' | translate }}:</span>
-            <span class="flex-60"
-              ><a [href]="transferToAccount(viewAccountTransferData.toClient, viewAccountTransferData.toAccount)">
-              {{ viewAccountTransferData.toAccount.accountNo }}</a
-              >
-            </span>
-          </div>
+          >
         </div>
-      </mat-card-content>
 
-      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-        <button type="button" color="primary" mat-raised-button (click)="goBack()">
-          {{ 'labels.buttons.Back' | translate }}
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Transaction Date' | translate }}:</span>
+          <span class="flex-60">{{ viewAccountTransferData.transferDate | dateFormat }}</span>
+        </div>
+
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Destination' | translate }}:</span>
+          <span class="flex-60">{{ viewAccountTransferData.transferDescription }}</span>
+        </div>
+
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Transferred From' | translate }}</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Office' | translate }}:</span>
+          <span class="flex-60">{{ viewAccountTransferData.fromOffice.name }}</span>
+        </div>
+
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Client' | translate }}:</span>
+          <span class="flex-60">{{ viewAccountTransferData.fromClient.displayName }}</span>
+        </div>
+
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Account Type' | translate }}:</span>
+          <span class="flex-60">{{ viewAccountTransferData.fromAccountType.value }}</span>
+        </div>
+
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Account No' | translate }}:</span>
+          <span class="flex-60">{{ viewAccountTransferData.fromAccount.accountNo }}</span>
+        </div>
+
+        <h3 class="mat-h3 flex-fill">{{ 'labels.heading.Transferred To' | translate }}</h3>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Office' | translate }}:</span>
+          <span class="flex-60">{{ viewAccountTransferData.toOffice.name }}</span>
+        </div>
+
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Client' | translate }}:</span>
+          <span class="flex-60"
+            ><a [href]="transferToClient(viewAccountTransferData.toClient)">
+              {{ viewAccountTransferData.toClient.displayName }}</a
+            >
+          </span>
+        </div>
+
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Account Type' | translate }}:</span>
+          <span class="flex-60">{{ viewAccountTransferData.toAccountType.value }}</span>
+        </div>
+
+        <div class="flex-fill">
+          <span class="flex-40">{{ 'labels.inputs.Account No' | translate }}:</span>
+          <span class="flex-60"
+            ><a [href]="transferToAccount(viewAccountTransferData.toClient, viewAccountTransferData.toAccount)">
+              {{ viewAccountTransferData.toAccount.accountNo }}</a
+            >
+          </span>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+      <button type="button" color="primary" mat-raised-button (click)="goBack()">
+        {{ 'labels.buttons.Back' | translate }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -12,7 +12,7 @@
               [matDatepicker]="writeOffDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="writeOffDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #writeOffDatePicker></mat-datepicker>
             @if (writeOffForm.controls.transactionDate.hasError('required')) {

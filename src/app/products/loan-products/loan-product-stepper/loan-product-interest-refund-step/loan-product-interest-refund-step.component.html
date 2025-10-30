@@ -8,11 +8,9 @@
         matTooltip="{{
           'tooltips.Refund transactions where interest refund will automatically be calculated' | translate
         }}"
-        >
+      >
         @for (supportedTransaction of supportedInterestRefundTypesOptions; track supportedTransaction) {
-          <mat-option
-            [value]="supportedTransaction.id"
-            >
+          <mat-option [value]="supportedTransaction.id">
             {{ supportedTransaction.value | translateKey: 'catalogs' }}
           </mat-option>
         }

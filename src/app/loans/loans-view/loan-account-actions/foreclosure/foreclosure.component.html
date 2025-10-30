@@ -12,7 +12,7 @@
               [matDatepicker]="transactionsDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="transactionsDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionsDatePicker></mat-datepicker>
             @if (foreclosureForm.controls.transactionDate.hasError('required')) {
@@ -63,7 +63,7 @@
             color="primary"
             [disabled]="!foreclosureForm.valid"
             *mifosxHasPermission="'FORECLOSURE_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Foreclosure' | translate }}
           </button>
         </mat-card-actions>

@@ -11,7 +11,7 @@
           color="primary"
           *mifosxHasPermission="'ASSIGNROLE_GROUP'"
           [routerLink]="['add-role']"
-          >
+        >
           <i class="fa fa-plus"></i>&nbsp; {{ 'labels.buttons.Add' | translate }}
         </button>
       </div>
@@ -44,7 +44,7 @@
                   color="warn"
                   *mifosxHasPermission="'UNASSIGNROLE_GROUP'"
                   (click)="unassignRole(element.clientId, element.id)"
-                  >
+                >
                   <i class="fa fa-ban" matTooltip="{{ 'tooltips.Unassign' | translate }}"></i>
                 </button>
               </span>

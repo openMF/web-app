@@ -1,14 +1,22 @@
 @if (loansAccountData.status.value === 'Active' && chargeData.amountOutstanding !== 0) {
-  <div
-    class="layout-row align-end gap-2percent layout-xs-column container m-b-20"
+  <div class="layout-row align-end gap-2percent layout-xs-column container m-b-20">
+    <button
+      mat-raised-button
+      color="primary"
+      *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'"
+      (click)="editCharge()"
     >
-    <button mat-raised-button color="primary" *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'" (click)="editCharge()">
       <fa-icon icon="flag" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Edit' | translate }}
     </button>
     @if (allowPayCharge) {
       <span>
-        <button mat-raised-button color="accent" *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'" (click)="payCharge()">
+        <button
+          mat-raised-button
+          color="accent"
+          *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'"
+          (click)="payCharge()"
+        >
           <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>
           {{ 'labels.buttons.Pay' | translate }}
         </button>
@@ -21,7 +29,7 @@
           color="primary"
           *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'"
           (click)="waiveCharge()"
-          >
+        >
           <fa-icon icon="flag" class="m-r-10"></fa-icon>
           {{ 'labels.buttons.Waive' | translate }}
         </button>
@@ -33,7 +41,7 @@
         color="accent"
         *mifosxHasPermission="'ADJUSTMENT_LOANCHARGE'"
         (click)="adjustmentCharge()"
-        >
+      >
         <fa-icon icon="pen" class="m-r-10"></fa-icon>
         {{ 'labels.buttons.Adjustment' | translate }}
       </button>
@@ -42,14 +50,22 @@
 }
 
 @if (loansAccountData.status.value === 'Submitted and pending approval') {
-  <div
-    class="layout-row align-end gap-2percent layout-xs-column container m-b-20"
+  <div class="layout-row align-end gap-2percent layout-xs-column container m-b-20">
+    <button
+      mat-raised-button
+      color="primary"
+      *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'"
+      (click)="editCharge()"
     >
-    <button mat-raised-button color="primary" *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'" (click)="editCharge()">
       <fa-icon icon="edit" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Edit' | translate }}
     </button>
-    <button mat-raised-button color="warn" *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'" (click)="deleteCharge()">
+    <button
+      mat-raised-button
+      color="warn"
+      *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'"
+      (click)="deleteCharge()"
+    >
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Delete' | translate }}
     </button>

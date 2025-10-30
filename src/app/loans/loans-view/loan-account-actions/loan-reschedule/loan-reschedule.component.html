@@ -11,7 +11,7 @@
               [matDatepicker]="rescheduleDatePicker"
               required
               formControlName="rescheduleFromDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="rescheduleDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rescheduleDatePicker></mat-datepicker>
             @if (rescheduleLoanForm.controls.rescheduleFromDate.hasError('required')) {
@@ -47,7 +47,7 @@
               [matDatepicker]="submittedDatePicker"
               required
               formControlName="submittedOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="submittedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedDatePicker></mat-datepicker>
             @if (rescheduleLoanForm.controls.submittedOnDate.hasError('required')) {
@@ -75,7 +75,7 @@
                 [min]="minDate"
                 [matDatepicker]="installmentrescheduledDatePicker"
                 formControlName="adjustedDueDate"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="installmentrescheduledDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #installmentrescheduledDatePicker></mat-datepicker>
             </mat-form-field>
@@ -127,7 +127,7 @@
             color="primary"
             [disabled]="!rescheduleLoanForm.valid"
             *mifosxHasPermission="'APPROVE_RESCHEDULELOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

@@ -7,7 +7,7 @@
     layout.columns > 1 ? 'flex flex-wrap gap-' + layout.gap + 'percent' : 'layout-column',
     'responsive-column'
   ]"
-  >
+>
   @for (formfield of formfields; track formfield) {
     <div [ngClass]="'flex-' + layout.flex + ' responsive-flex-full'">
       <mifosx-formfield [formfield]="formfield" [form]="form" class="flex-fill"></mifosx-formfield>
@@ -22,7 +22,7 @@
     color="primary"
     [mat-dialog-close]="{ data: form }"
     [disabled]="!form.valid || form.pristine"
-    >
+  >
     {{ 'labels.buttons.' + layout.addButtonText | translate }}
   </button>
 </mat-dialog-actions>

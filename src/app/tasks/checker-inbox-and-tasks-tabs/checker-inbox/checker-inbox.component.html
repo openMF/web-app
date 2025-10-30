@@ -7,7 +7,7 @@
             matInput
             placeholder="{{ 'labels.text.Search by user' | translate }}"
             (keyup)="applyFilter($event.target.value)"
-            />
+          />
         </mat-form-field>
       </div>
       <div class="flex-60 gap-8px">
@@ -32,7 +32,7 @@
             [max]="maxDate"
             [matDatepicker]="makerDateTimeFromPicker"
             formControlName="makerDateTimeFrom"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="makerDateTimeFromPicker"></mat-datepicker-toggle>
           <mat-datepicker #makerDateTimeFromPicker></mat-datepicker>
         </mat-form-field>
@@ -44,7 +44,7 @@
             [max]="maxDate"
             [matDatepicker]="makerDateTimetoPicker"
             formControlName="makerDateTimeto"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="makerDateTimetoPicker"></mat-datepicker-toggle>
           <mat-datepicker #makerDateTimetoPicker></mat-datepicker>
         </mat-form-field>
@@ -86,7 +86,7 @@
               [checked]="selection.hasValue() && isAllSelected()"
               [indeterminate]="selection.hasValue() && !isAllSelected()"
               [aria-label]="checkboxLabel()"
-              >
+            >
             </mat-checkbox>
           </th>
           <td mat-cell *matCellDef="let row">
@@ -95,7 +95,7 @@
               (change)="$event ? selection.toggle(row) : null"
               [checked]="selection.isSelected(row)"
               [aria-label]="checkboxLabel(row)"
-              >
+            >
             </mat-checkbox>
           </td>
         </ng-container>
@@ -124,7 +124,12 @@
           <td mat-cell *matCellDef="let makerChecker">{{ makerChecker.entityName }}</td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="[row.id, 'view']" class="select-row"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          [routerLink]="[row.id, 'view']"
+          class="select-row"
+        ></tr>
       </table>
     }
     @if (noSearchedData) {

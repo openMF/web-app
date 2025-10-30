@@ -7,7 +7,7 @@
         routerLinkActive
         #general="routerLinkActive"
         [active]="general.isActive"
-        >
+      >
         {{ 'labels.heading.General' | translate }}
       </a>
       @for (recurringDepositDatatable of recurringDepositDatatables; track recurringDepositDatatable) {
@@ -18,7 +18,7 @@
           #datatable="routerLinkActive"
           [active]="datatable.isActive"
           *mifosxHasPermission="'READ_' + recurringDepositDatatable.registeredTableName"
-          >
+        >
           {{ recurringDepositDatatable.registeredTableName }}
         </a>
       }

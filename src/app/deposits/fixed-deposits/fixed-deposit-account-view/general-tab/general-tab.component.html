@@ -26,9 +26,9 @@
             <td>{{ 'labels.inputs.Activated On' | translate }}</td>
             <td>
               {{
-              fixedDepositsAccountData.timeline.activatedOnDate
-              ? (fixedDepositsAccountData.timeline.activatedOnDate | dateFormat)
-              : ('labels.text.Not Activated' | translate)
+                fixedDepositsAccountData.timeline.activatedOnDate
+                  ? (fixedDepositsAccountData.timeline.activatedOnDate | dateFormat)
+                  : ('labels.text.Not Activated' | translate)
               }}
             </td>
           </tr>
@@ -42,9 +42,9 @@
             <td>{{ 'labels.inputs.Field Officer' | translate }}</td>
             <td>
               {{
-              fixedDepositsAccountData.fieldOfficerName
-              ? fixedDepositsAccountData.fieldOfficerName
-              : ('Unassigned' | translateKey: 'inputs')
+                fixedDepositsAccountData.fieldOfficerName
+                  ? fixedDepositsAccountData.fieldOfficerName
+                  : ('Unassigned' | translateKey: 'inputs')
               }}
             </td>
           </tr>
@@ -58,7 +58,7 @@
             <td>{{ 'labels.inputs.Deposit Period' | translate }}</td>
             <td>
               {{ fixedDepositsAccountData.depositPeriod }}&nbsp;{{
-              fixedDepositsAccountData.depositPeriodFrequency.value | translateKey: 'catalogs'
+                fixedDepositsAccountData.depositPeriodFrequency.value | translateKey: 'catalogs'
               }}
             </td>
           </tr>
@@ -117,10 +117,8 @@
   </div>
 
   <div class="flex-49">
-    @if (
-      !fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval) {
-      <div
-        >
+    @if (!fixedDepositsAccountData.status.rejected && !fixedDepositsAccountData.status.submittedAndPendingApproval) {
+      <div>
         <h4 class="table-headers">{{ 'labels.heading.Performance History' | translate }}</h4>
         <table>
           <tbody>
@@ -140,7 +138,9 @@
               <tr>
                 <td>{{ 'labels.inputs.Total Deposits' | translate }}</td>
                 <td class="r-amount">
-                  {{ fixedDepositsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                  {{
+                    fixedDepositsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
                 </td>
               </tr>
             }
@@ -149,7 +149,8 @@
                 <td>{{ 'labels.inputs.Total Withdrawals' | translate }}</td>
                 <td class="r-amount">
                   {{
-                  fixedDepositsAccountData.summary.totalWithdrawals | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                    fixedDepositsAccountData.summary.totalWithdrawals
+                      | currency: currency.code : 'symbol-narrow' : '1.2-2'
                   }}
                 </td>
               </tr>
@@ -159,8 +160,8 @@
                 <td>{{ 'labels.inputs.Total Interest Earned' | translate }}</td>
                 <td class="r-amount">
                   {{
-                  fixedDepositsAccountData.summary.totalInterestEarned
-                  | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                    fixedDepositsAccountData.summary.totalInterestEarned
+                      | currency: currency.code : 'symbol-narrow' : '1.2-2'
                   }}
                 </td>
               </tr>
@@ -189,6 +190,5 @@
         </table>
       </div>
     }
-
   </div>
 </div>

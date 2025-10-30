@@ -12,7 +12,7 @@
               [matDatepicker]="transactionDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             @if (chargeoffLoanForm.controls.transactionDate.hasError('required')) {
@@ -60,7 +60,7 @@
             color="primary"
             [disabled]="!chargeoffLoanForm.valid"
             *mifosxHasPermission="'CHARGEOFF_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

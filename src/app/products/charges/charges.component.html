@@ -17,7 +17,7 @@
       <mat-select
         placeholder="{{ 'labels.inputs.Filter' | translate }}"
         (selectionChange)="filterByAppliesTo($event.value)"
-        >
+      >
         @for (chargeAppliesTo of chargeAppliesToOptions; track chargeAppliesTo) {
           <mat-option [value]="chargeAppliesTo.id">
             {{ chargeAppliesTo.value | translateKey: 'catalogs' }}
@@ -120,7 +120,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -136,14 +136,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonCreateCharge, buttonCreateCharge, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateChargesTable, chargesTable, 'top', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -164,7 +164,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

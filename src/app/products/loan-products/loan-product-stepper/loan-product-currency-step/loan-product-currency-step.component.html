@@ -6,7 +6,7 @@
         formControlName="currencyCode"
         matTooltip="{{ 'tooltips.The currency in which the loan will be disbursed' | translate }}"
         required
-        >
+      >
         @for (currency of currencyData; track currency) {
           <mat-option [value]="currency.code">
             {{ currency.name }}
@@ -27,7 +27,7 @@
         matInput
         formControlName="digitsAfterDecimal"
         required
-        />
+      />
       <mat-error>
         {{ 'labels.inputs.Decimal Places' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -41,7 +41,7 @@
         matInput
         matTooltip="{{ 'tooltips.Enter multiples of currency value' | translate }}"
         formControlName="inMultiplesOf"
-        />
+      />
     </mat-form-field>
 
     <mat-form-field class="flex-48">

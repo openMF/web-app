@@ -20,9 +20,7 @@
             <mat-label>{{ 'labels.inputs.Payments due on non working days' | translate }}</mat-label>
             <mat-select formControlName="repaymentRescheduleType">
               @for (repaymentRescheduleType of repaymentRescheduleTypeData; track repaymentRescheduleType) {
-                <mat-option
-                  [value]="repaymentRescheduleType.id"
-                  >
+                <mat-option [value]="repaymentRescheduleType.id">
                   {{ repaymentRescheduleType.value }}
                 </mat-option>
               }
@@ -42,7 +40,7 @@
           color="primary"
           [disabled]="workingDaysForm.pristine"
           *mifosxHasPermission="'UPDATE_WORKINGDAYS'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

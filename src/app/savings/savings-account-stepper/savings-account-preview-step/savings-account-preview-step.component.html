@@ -78,8 +78,8 @@
     <span class="flex-40">{{ 'labels.inputs.Interest Compounding Period' | translate }}:</span>
     <span class="flex-60">{{
       getCatalogTranslation(
-      savingsAccount.interestCompoundingPeriodType
-      | find: savingsAccountProductTemplate.interestCompoundingPeriodTypeOptions : 'id' : 'value'
+        savingsAccount.interestCompoundingPeriodType
+          | find: savingsAccountProductTemplate.interestCompoundingPeriodTypeOptions : 'id' : 'value'
       )
     }}</span>
   </div>
@@ -88,8 +88,8 @@
     <span class="flex-40">{{ 'labels.inputs.Interest Posting Period' | translate }}:</span>
     <span class="flex-60">{{
       getCatalogTranslation(
-      savingsAccount.interestPostingPeriodType
-      | find: savingsAccountProductTemplate.interestPostingPeriodTypeOptions : 'id' : 'value'
+        savingsAccount.interestPostingPeriodType
+          | find: savingsAccountProductTemplate.interestPostingPeriodTypeOptions : 'id' : 'value'
       )
     }}</span>
   </div>
@@ -98,8 +98,8 @@
     <span class="flex-40">{{ 'labels.inputs.Interest Calculated using' | translate }}:</span>
     <span class="flex-60">{{
       getCatalogTranslation(
-      savingsAccount.interestCalculationType
-      | find: savingsAccountProductTemplate.interestCalculationTypeOptions : 'id' : 'value'
+        savingsAccount.interestCalculationType
+          | find: savingsAccountProductTemplate.interestCalculationTypeOptions : 'id' : 'value'
       )
     }}</span>
   </div>
@@ -108,8 +108,8 @@
     <span class="flex-40">{{ 'labels.inputs.Days in Year' | translate }}:</span>
     <span class="flex-60">{{
       getCatalogTranslation(
-      savingsAccount.interestCalculationDaysInYearType
-      | find: savingsAccountProductTemplate.interestCalculationDaysInYearTypeOptions : 'id' : 'value'
+        savingsAccount.interestCalculationDaysInYearType
+          | find: savingsAccountProductTemplate.interestCalculationDaysInYearTypeOptions : 'id' : 'value'
       )
     }}</span>
   </div>
@@ -131,10 +131,10 @@
       <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
       <span class="flex-60">{{
         getCatalogTranslation(
-        savingsAccount.lockinPeriodFrequency +
-        ' ' +
-        (savingsAccount.lockinPeriodFrequencyType
-        | find: savingsAccountProductTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value')
+          savingsAccount.lockinPeriodFrequency +
+            ' ' +
+            (savingsAccount.lockinPeriodFrequencyType
+              | find: savingsAccountProductTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value')
         )
       }}</span>
     </div>
@@ -147,7 +147,9 @@
 
   @if (savingsAccount.minOverdraftForInterestCalculation) {
     <div class="flex-fill layout-row">
-      <span class="flex-40">{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}:</span>
+      <span class="flex-40"
+        >{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}:</span
+      >
       <span class="flex-60">{{ savingsAccount.minOverdraftForInterestCalculation | formatNumber }}</span>
     </div>
   }
@@ -205,8 +207,7 @@
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
           <td mat-cell *matCellDef="let charge">
             @if (charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee') {
-              <span
-                >
+              <span>
                 {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
               </span>
             }
@@ -217,16 +218,13 @@
             }
             @if (
               !(
-              charge.chargeTimeType.value === 'Monthly Fee' ||
-              charge.chargeTimeType.value === 'Annual Fee' ||
-              charge.chargeTimeType.value === 'Specified due date' ||
-              charge.chargeTimeType.value === 'Weekly Fee'
+                charge.chargeTimeType.value === 'Monthly Fee' ||
+                charge.chargeTimeType.value === 'Annual Fee' ||
+                charge.chargeTimeType.value === 'Specified due date' ||
+                charge.chargeTimeType.value === 'Weekly Fee'
               )
-              ) {
-              <span
-                >
-                N/A
-              </span>
+            ) {
+              <span> N/A </span>
             }
           </td>
         </ng-container>

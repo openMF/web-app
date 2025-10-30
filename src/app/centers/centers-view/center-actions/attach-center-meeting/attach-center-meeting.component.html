@@ -12,7 +12,7 @@
               [matDatepicker]="startDatePicker"
               required
               formControlName="startDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             @if (centerMeetingForm.controls.startDate.hasError('required')) {

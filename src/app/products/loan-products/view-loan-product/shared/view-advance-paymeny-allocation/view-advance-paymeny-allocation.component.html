@@ -26,7 +26,11 @@
               </tr>
             </thead>
             <tbody>
-              @for (paymentAllocation of paymentAllocation.paymentAllocationOrder; track paymentAllocation; let idx = $index) {
+              @for (
+                paymentAllocation of paymentAllocation.paymentAllocationOrder;
+                track paymentAllocation;
+                let idx = $index
+              ) {
                 <tr>
                   <td>{{ idx + 1 }}</td>
                   <td>{{ allocationRuleValue(paymentAllocation.paymentAllocationRule) | translateKey: 'catalogs' }}</td>
@@ -61,7 +65,11 @@
               </tr>
             </thead>
             <tbody>
-              @for (creditAllocation of creditAllocation.creditAllocationOrder; track creditAllocation; let idx = $index) {
+              @for (
+                creditAllocation of creditAllocation.creditAllocationOrder;
+                track creditAllocation;
+                let idx = $index
+              ) {
                 <tr>
                   <td>{{ idx + 1 }}</td>
                   <td>{{ allocationRuleValue(creditAllocation.creditAllocationRule) | translateKey: 'catalogs' }}</td>

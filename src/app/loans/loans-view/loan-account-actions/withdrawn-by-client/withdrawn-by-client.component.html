@@ -12,7 +12,7 @@
               [matDatepicker]="withdrawnOnDatePicker"
               required
               formControlName="withdrawnOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="withdrawnOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawnOnDatePicker></mat-datepicker>
             @if (withdrawnByClientLoanForm.controls.withdrawnOnDate.hasError('required')) {
@@ -38,7 +38,7 @@
             color="primary"
             [disabled]="!withdrawnByClientLoanForm.valid"
             *mifosxHasPermission="'WITHDRAW_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

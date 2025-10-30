@@ -65,7 +65,7 @@
             [glAccountList]="parentData"
             [required]="false"
             [inputLabel]="'Parent'"
-            >
+          >
           </mifosx-gl-account-selector>
 
           <mat-form-field class="flex-28">
@@ -85,7 +85,7 @@
               required
               formControlName="manualEntriesAllowed"
               class="manual-entries-allowed"
-              >
+            >
               {{ 'labels.inputs.Manual Entries Allowed' | translate }}
             </mat-checkbox>
           </div>
@@ -104,9 +104,9 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="glAccountForm.pristine"
+          [disabled]="glAccountForm.invalid || glAccountForm.pristine"
           *mifosxHasPermission="'UPDATE_GLACCOUNT'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

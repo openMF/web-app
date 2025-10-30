@@ -44,7 +44,7 @@
                   mat-icon-button
                   color="primary"
                   (click)="editTaxGroup(taxComponent, taxComponentIndex)"
-                  >
+                >
                   <fa-icon icon="edit"></fa-icon>
                 </button>
                 <button
@@ -53,7 +53,7 @@
                   color="warn"
                   (click)="delete(taxComponentIndex)"
                   matTooltipPosition="left"
-                  >
+                >
                   <fa-icon icon="trash"></fa-icon>
                 </button>
               </td>
@@ -74,7 +74,7 @@
           color="primary"
           [disabled]="!taxGroupForm.valid"
           *mifosxHasPermission="'CREATE_TAXGROUP'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

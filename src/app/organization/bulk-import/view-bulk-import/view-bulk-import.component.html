@@ -57,7 +57,7 @@
           color="primary"
           (click)="downloadTemplate()"
           *mifosxHasPermission="bulkImport.permission"
-          >
+        >
           <i class="fa fa-download"></i>&nbsp;&nbsp;{{ 'labels.buttons.Download' | translate }}
         </button>
       </div>
@@ -73,9 +73,7 @@
       <mifosx-file-upload flex="75%" (change)="onFileSelect($event)" acceptFilter=".xls,.xlsx"></mifosx-file-upload>
 
       @if (bulkImport.name === 'Clients') {
-        <mat-hint>{{
-          'labels.text.Please retain the value Entity/Person in the filename.' | translate
-        }}</mat-hint>
+        <mat-hint>{{ 'labels.text.Please retain the value Entity/Person in the filename.' | translate }}</mat-hint>
       }
 
       <div class="flex-13">
@@ -147,7 +145,7 @@
               mat-icon-button
               (click)="downloadDocument(import.name, import.importId)"
               *mifosxHasPermission="'READ_DOCUMENT'"
-              >
+            >
               <fa-icon icon="cloud-download-alt"></fa-icon>
             </button>
           </td>

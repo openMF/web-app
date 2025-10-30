@@ -24,7 +24,7 @@
                 [matDatepicker]="fromDatePicker"
                 required
                 formControlName="fromDate"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #fromDatePicker></mat-datepicker>
               @if (holidayForm.controls.fromDate.hasError('required')) {
@@ -46,7 +46,7 @@
                 [matDatepicker]="toDatePicker"
                 required
                 formControlName="toDate"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #toDatePicker></mat-datepicker>
               @if (holidayForm.controls.toDate.hasError('required')) {
@@ -87,7 +87,7 @@
                 [matDatepicker]="repaymentDatePicker"
                 required
                 formControlName="repaymentsRescheduledTo"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="repaymentDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #repaymentDatePicker></mat-datepicker>
               @if (holidayForm.controls.repaymentsRescheduledTo.hasError('required')) {
@@ -115,7 +115,7 @@
           color="primary"
           [disabled]="!holidayForm.valid"
           *mifosxHasPermission="'UPDATE_HOLIDAY'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

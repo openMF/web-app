@@ -53,7 +53,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe
-]
+  ]
 })
 export class FixedDepositGeneralTabComponent {
   /** Fixed Deposit Product data. */

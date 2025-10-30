@@ -107,7 +107,13 @@
 
     @if (canBeSold()) {
       <div class="flex-10">
-        <button mat-raised-button class="f-right" color="primary" (click)="saleLoan()" *mifosxHasPermission="'SALE_LOAN'">
+        <button
+          mat-raised-button
+          class="f-right"
+          color="primary"
+          (click)="saleLoan()"
+          *mifosxHasPermission="'SALE_LOAN'"
+        >
           <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>{{ 'labels.buttons.Sell Loan' | translate }}
         </button>
       </div>
@@ -121,7 +127,7 @@
           color="warn"
           (click)="cancelSaleLoan()"
           *mifosxHasPermission="'SALE_LOAN'"
-          >
+        >
           <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Cancel Sell Loan' | translate }}
         </button>
       </div>
@@ -135,7 +141,7 @@
           color="primary"
           (click)="buyBackLoan()"
           *mifosxHasPermission="'SALE_LOAN'"
-          >
+        >
           <fa-icon icon="dollar-sign" class="m-r-10"></fa-icon>{{ 'labels.buttons.Buy Back Loan' | translate }}
         </button>
       </div>
@@ -191,7 +197,7 @@
               matTooltipPosition="left"
               (click)="routeJournalEntry($event)"
               [routerLink]="['/', 'journal-entry', 'view-transfer', item.transferId]"
-              >
+            >
               <i class="fa fa-arrow-circle-right"></i>
             </button>
           }

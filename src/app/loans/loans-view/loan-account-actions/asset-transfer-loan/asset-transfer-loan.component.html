@@ -12,7 +12,7 @@
               [matDatepicker]="settlementDatePicker"
               required
               formControlName="settlementDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="settlementDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #settlementDatePicker></mat-datepicker>
             @if (saleLoanForm.controls.settlementDate.hasError('required')) {

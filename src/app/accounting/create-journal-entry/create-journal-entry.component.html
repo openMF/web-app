@@ -45,10 +45,7 @@
           }
 
           @for (debit of debits.controls; track debit; let i = $index) {
-            <div
-              class="flex-fill layout-row-wrap responsive-column"
-              formArrayName="debits"
-              >
+            <div class="flex-fill layout-row-wrap responsive-column" formArrayName="debits">
               <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
                 <mifosx-gl-account-selector
                   class="flex-48"
@@ -56,7 +53,7 @@
                   [glAccountList]="glAccountData"
                   [required]="true"
                   [inputLabel]="'Affected GL Entry (Debit)'"
-                  >
+                >
                 </mifosx-gl-account-selector>
                 <mat-form-field class="flex-43">
                   <mat-label>{{ 'labels.inputs.Debit Amount' | translate }}</mat-label>
@@ -75,12 +72,7 @@
                     </button>
                   }
                   @if (i === 0) {
-                    <button
-                      type="button"
-                      mat-icon-button
-                      color="primary"
-                      (click)="addAffectedGLEntry(debits)"
-                      >
+                    <button type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(debits)">
                       <fa-icon icon="plus-circle" size="lg"></fa-icon>
                     </button>
                   }
@@ -90,10 +82,7 @@
           }
 
           @for (credit of credits.controls; track credit; let i = $index) {
-            <div
-              class="flex-fill layout-row-wrap responsive-column"
-              formArrayName="credits"
-              >
+            <div class="flex-fill layout-row-wrap responsive-column" formArrayName="credits">
               <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
                 <mifosx-gl-account-selector
                   class="flex-48"
@@ -101,7 +90,7 @@
                   [glAccountList]="glAccountData"
                   [required]="true"
                   [inputLabel]="'Affected GL Entry (Credit)'"
-                  >
+                >
                 </mifosx-gl-account-selector>
                 <mat-form-field class="flex-43">
                   <mat-label>{{ 'labels.inputs.Credit Amount' | translate }}</mat-label>
@@ -120,12 +109,7 @@
                     </button>
                   }
                   @if (i === 0) {
-                    <button
-                      type="button"
-                      mat-icon-button
-                      color="primary"
-                      (click)="addAffectedGLEntry(credits)"
-                      >
+                    <button type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(credits)">
                       <fa-icon icon="plus-circle" size="lg"></fa-icon>
                     </button>
                   }
@@ -148,7 +132,7 @@
               [matDatepicker]="transactionDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             @if (journalEntryForm.controls.transactionDate.hasError('required')) {
@@ -211,7 +195,7 @@
           color="primary"
           [disabled]="!journalEntryForm.valid"
           *mifosxHasPermission="'CREATE_JOURNALENTRY'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

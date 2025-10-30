@@ -7,9 +7,7 @@
             <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
             <mat-select required formControlName="accountType">
               @for (accountType of accountNumberPreferencesTemplateData.accountTypeOptions; track accountType) {
-                <mat-option
-                  [value]="accountType.id"
-                  >
+                <mat-option [value]="accountType.id">
                   {{ accountType.value | translateKey: 'catalogs' }}
                 </mat-option>
               }
@@ -44,7 +42,7 @@
           color="primary"
           [disabled]="!accountNumberPreferenceForm.valid"
           *mifosxHasPermission="'CREATE_ACCOUNTNUMBERFORMAT'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

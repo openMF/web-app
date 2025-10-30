@@ -51,7 +51,7 @@
               [matDatepicker]="startDatePicker"
               required
               formControlName="startDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             @if (tellerForm.controls.startDate.hasError('required')) {
@@ -70,7 +70,7 @@
               [max]="maxDate"
               [matDatepicker]="endDatePicker"
               formControlName="endDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
           </mat-form-field>

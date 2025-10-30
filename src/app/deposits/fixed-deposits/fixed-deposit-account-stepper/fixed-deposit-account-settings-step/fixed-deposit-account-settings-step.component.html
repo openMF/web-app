@@ -11,9 +11,7 @@
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
-          <mat-option
-            [value]="lockinPeriodFrequencyType.id"
-            >
+          <mat-option [value]="lockinPeriodFrequencyType.id">
             {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -95,9 +93,7 @@
         <mat-label>{{ 'labels.inputs.Linked Savings Account' | translate }}</mat-label>
         <mat-select formControlName="linkAccountId" required>
           @for (account of savingsAccountsData; track account) {
-            <mat-option [value]="account.id">
-              ({{ account.accountNo }}) {{ account.savingsProductName }}
-            </mat-option>
+            <mat-option [value]="account.id"> ({{ account.accountNo }}) {{ account.savingsProductName }} </mat-option>
           }
         </mat-select>
         <mat-error>
@@ -125,9 +121,7 @@
         <mat-label>{{ 'labels.inputs.Transfer to savings account' | translate }}</mat-label>
         <mat-select formControlName="transferToSavingsId" required>
           @for (account of savingsAccountsData; track account) {
-            <mat-option [value]="account.id">
-              ({{ account.accountNo }}) {{ account.savingsProductName }}
-            </mat-option>
+            <mat-option [value]="account.id"> ({{ account.accountNo }}) {{ account.savingsProductName }} </mat-option>
           }
         </mat-select>
         <mat-error>
@@ -154,9 +148,7 @@
       <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
       <mat-select formControlName="preClosurePenalInterestOnTypeId">
         @for (preClosurePenalInterestOnType of preClosurePenalInterestOnTypeData; track preClosurePenalInterestOnType) {
-          <mat-option
-            [value]="preClosurePenalInterestOnType.id"
-            >
+          <mat-option [value]="preClosurePenalInterestOnType.id">
             {{ preClosurePenalInterestOnType.value | translateKey: 'catalogs' }}
           </mat-option>
         }

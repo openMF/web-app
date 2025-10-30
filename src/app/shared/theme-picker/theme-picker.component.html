@@ -9,11 +9,7 @@
         <div mat-menu-item (click)="installTheme(theme)">
           <div class="mifosx-theme-picker-swatch">
             @if (currentTheme.href === theme.href) {
-              <fa-icon
-                class="mifosx-theme-chosen-icon"
-                icon="check-circle"
-                size="lg"
-              ></fa-icon>
+              <fa-icon class="mifosx-theme-chosen-icon" icon="check-circle" size="lg"></fa-icon>
             }
             <div class="mifosx-theme-picker-primary" [style.background]="theme.primary"></div>
             <div class="mifosx-theme-picker-accent" [style.background]="theme.accent"></div>

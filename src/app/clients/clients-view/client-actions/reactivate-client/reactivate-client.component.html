@@ -11,7 +11,7 @@
             [matDatepicker]="reactivationDatePicker"
             required
             formControlName="reactivationDate"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="reactivationDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #reactivationDatePicker></mat-datepicker>
           @if (reactivateClientForm.controls.reactivationDate.hasError('required')) {

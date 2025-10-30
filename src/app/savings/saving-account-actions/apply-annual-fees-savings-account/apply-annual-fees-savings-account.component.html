@@ -12,7 +12,7 @@
               [matDatepicker]="dueDatePicker"
               required
               formControlName="dueDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
             @if (applyAnnualFeesForm.controls.dueDate.hasError('required')) {

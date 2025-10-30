@@ -12,7 +12,7 @@
         matInput
         (blur)="displayHint = false"
         (focus)="displayHint = true"
-        />
+      />
     </div>
     @if (inputFormControl.hasError('required')) {
       <mat-error>
@@ -40,7 +40,7 @@
       matInput
       (blur)="displayHint = false"
       (focus)="displayHint = true"
-      />
+    />
     @if (displayHint) {
       <mat-hint class="right-hint">{{
         inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'

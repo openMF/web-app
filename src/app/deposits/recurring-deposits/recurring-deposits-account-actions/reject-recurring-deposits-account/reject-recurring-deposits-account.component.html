@@ -12,7 +12,7 @@
               [matDatepicker]="rejectedOnDatePicker"
               required
               formControlName="rejectedOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="rejectedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rejectedOnDatePicker></mat-datepicker>
             @if (rejectRecurringDepositsAccountForm.controls.rejectedOnDate.hasError('required')) {

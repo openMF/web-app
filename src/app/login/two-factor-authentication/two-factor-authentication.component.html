@@ -14,15 +14,16 @@
     class="layout-column two-factor-auth-form"
     [formGroup]="twoFactorAuthenticationDeliveryMethodForm"
     (ngSubmit)="requestOTP()"
-    >
+  >
     <mat-radio-group
       class="layout-column align-center radio-group-spacing"
       formControlName="twoFactorAuthenticationDeliveryMethod"
-      >
-      @for (twoFactorAuthenticationDeliveryMethod of twoFactorAuthenticationDeliveryMethods; track twoFactorAuthenticationDeliveryMethod) {
-        <mat-radio-button
-          [value]="twoFactorAuthenticationDeliveryMethod"
-          >
+    >
+      @for (
+        twoFactorAuthenticationDeliveryMethod of twoFactorAuthenticationDeliveryMethods;
+        track twoFactorAuthenticationDeliveryMethod
+      ) {
+        <mat-radio-button [value]="twoFactorAuthenticationDeliveryMethod">
           {{ 'labels.inputs.Send' | translate }} {{ twoFactorAuthenticationDeliveryMethod.name }}
           {{ 'labels.inputs.to' | translate }} {{ twoFactorAuthenticationDeliveryMethod.target }}
         </mat-radio-button>
@@ -33,7 +34,7 @@
       color="primary"
       class="flex-fill align-center"
       [disabled]="!twoFactorAuthenticationDeliveryMethodForm.valid"
-      >
+    >
       {{ 'labels.buttons.Request OTP' | translate }}
       @if (loading) {
         <mat-spinner [diameter]="20"></mat-spinner>
@@ -48,11 +49,7 @@
 }
 
 @if (otpRequested) {
-  <form
-    class="layout-column two-factor-auth-form"
-    [formGroup]="twoFactorAuthenticationForm"
-    (ngSubmit)="validateOTP()"
-    >
+  <form class="layout-column two-factor-auth-form" [formGroup]="twoFactorAuthenticationForm" (ngSubmit)="validateOTP()">
     <mat-form-field class="two-factor-auth-input flex-fill align-center">
       <span matPrefix>
         <fa-icon icon="user-shield" class="m-r-10"></fa-icon>
@@ -79,7 +76,7 @@
       color="primary"
       class="two-factor-auth-button align-center"
       [disabled]="!twoFactorAuthenticationForm.valid"
-      >
+    >
       {{ 'labels.buttons.Validate OTP' | translate }}
       @if (loading) {
         <mat-spinner [diameter]="20"></mat-spinner>
@@ -91,7 +88,7 @@
       class="two-factor-auth-button align-center"
       (click)="resendOTP()"
       [disabled]="loading || resendOTPLoading"
-      >
+    >
       {{ 'labels.buttons.Resend OTP' | translate }}
       @if (resendOTPLoading) {
         <mat-spinner [diameter]="20"></mat-spinner>

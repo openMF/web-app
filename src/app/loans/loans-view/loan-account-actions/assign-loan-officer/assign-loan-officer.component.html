@@ -29,7 +29,7 @@
               [matDatepicker]="assignOnDatePicker"
               required
               formControlName="assignmentDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="assignOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignOnDatePicker></mat-datepicker>
             @if (assignOfficerForm.controls.assignmentDate.hasError('required')) {
@@ -50,7 +50,7 @@
             color="primary"
             [disabled]="!assignOfficerForm.valid"
             *mifosxHasPermission="'BULKREASSIGN_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

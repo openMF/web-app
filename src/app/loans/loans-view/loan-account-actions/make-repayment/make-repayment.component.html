@@ -12,7 +12,7 @@
               [matDatepicker]="transactionDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             @if (repaymentLoanForm.controls.transactionDate.hasError('required')) {
@@ -57,7 +57,7 @@
             [isRequired]="true"
             [inputFormControl]="repaymentLoanForm.controls.transactionAmount"
             [inputLabel]="'Transaction Amount'"
-            >
+          >
           </mifosx-input-amount>
 
           <mat-form-field>
@@ -143,7 +143,7 @@
             color="primary"
             [disabled]="!repaymentLoanForm.valid"
             *mifosxHasPermission="'REPAYMENT_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

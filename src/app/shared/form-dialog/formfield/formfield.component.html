@@ -9,7 +9,7 @@
             matInput
             [formControlName]="formfield.controlName"
             [required]="formfield.required"
-            />
+          />
         }
         @if (form.controls[formfield.controlName].hasError('max')) {
           <mat-error>
@@ -22,10 +22,7 @@
           </mat-error>
         }
         @if (formfield.controlType === 'select') {
-          <mat-select
-            [formControlName]="formfield.controlName"
-            [required]="formfield.required"
-            >
+          <mat-select [formControlName]="formfield.controlName" [required]="formfield.required">
             @for (option of formfield.options.data; track option) {
               <mat-option [value]="option[formfield.options.value]">
                 {{ option[formfield.options.label] }}
@@ -53,7 +50,7 @@
         [max]="formfield.maxDate"
         [formControlName]="formfield.controlName"
         [required]="formfield.required"
-        />
+      />
       <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
       <mat-datepicker #datePicker></mat-datepicker>
       @if (form.controls[formfield.controlName].hasError('required')) {
@@ -75,7 +72,7 @@
         [max]="formfield.maxDate"
         [formControlName]="formfield.controlName"
         [required]="formfield.required"
-        />
+      />
       @if (form.controls[formfield.controlName].hasError('required')) {
         <mat-error>
           {{ formfield.label }} {{ 'labels.commons.is' | translate }}
@@ -91,7 +88,7 @@
       [checked]="formfield.value"
       [formControlName]="formfield.controlName"
       [required]="formfield.required"
-      >
+    >
       {{ formfield.label }}
     </mat-checkbox>
   }

@@ -62,7 +62,7 @@
                 [matDatepicker]="activationDatePicker"
                 required
                 formControlName="activationDate"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #activationDatePicker></mat-datepicker>
               @if (centerForm.controls.activationDate.hasError('required')) {
@@ -88,7 +88,7 @@
               [matDatepicker]="submittedOnDatePicker"
               required
               formControlName="submittedOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
             @if (centerForm.controls.submittedOnDate.hasError('required')) {
@@ -161,7 +161,7 @@
           [disabled]="!centerForm.valid"
           (click)="submit()"
           *mifosxHasPermission="'CREATE_CENTER'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

@@ -6,7 +6,7 @@
         color="warn"
         *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
         (click)="undoTransaction()"
-        >
+      >
         <fa-icon icon="undo" class="m-r-10"></fa-icon>Undo
       </button>
     </span>
@@ -71,9 +71,7 @@
         }
 
         @if (transactionData.paymentDetailData) {
-          <mifosx-transaction-payment-detail
-            [paymentDetailData]="transactionData.paymentDetailData"
-            >
+          <mifosx-transaction-payment-detail [paymentDetailData]="transactionData.paymentDetailData">
           </mifosx-transaction-payment-detail>
         }
       </div>

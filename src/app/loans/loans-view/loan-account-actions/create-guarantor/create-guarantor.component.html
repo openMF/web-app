@@ -23,7 +23,7 @@
               #clientsAutocomplete="matAutocomplete"
               [displayWith]="displayClient"
               (optionSelected)="clientSelected($event.option.value)"
-              >
+            >
               @for (client of clientsData; track client) {
                 <mat-option [value]="client">
                   {{ client.displayName }}
@@ -131,7 +131,7 @@
             color="primary"
             [disabled]="!newGuarantorForm.valid"
             *mifosxHasPermission="'CREATE_GUARANTOR'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

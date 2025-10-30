@@ -14,11 +14,7 @@
   </div>
 
   @if (marketPricePeriods.value.length) {
-    <table
-      class="flex-98 mat-elevation-z1"
-      mat-table
-      [dataSource]="marketPricePeriods.value"
-      >
+    <table class="flex-98 mat-elevation-z1" mat-table [dataSource]="marketPricePeriods.value">
       <ng-container matColumnDef="fromDate">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.From Date' | translate }}</th>
         <td mat-cell *matCellDef="let marketPricePeriod">

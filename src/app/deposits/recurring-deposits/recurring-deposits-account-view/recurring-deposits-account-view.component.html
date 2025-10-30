@@ -8,7 +8,7 @@
             class="profile-image"
             matTooltip="{{ 'tooltips.Recurring Deposits Account' | translate }}"
             [src]="'assets/images/recurring-deposits_account_placeholder.png'"
-            />
+          />
         </div>
       </div>
 
@@ -42,10 +42,8 @@
             @if (
               !recurringDepositsAccountData.status.rejected &&
               !recurringDepositsAccountData.status.submittedAndPendingApproval
-              ) {
-              <div
-                class="flex-30"
-                >
+            ) {
+              <div class="flex-30">
                 <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
                 <table class="account-overview">
                   <tbody>
@@ -53,8 +51,8 @@
                       <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
                       <td class="r-amount">
                         {{
-                        recurringDepositsAccountData.summary.accountBalance
-                        | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                          recurringDepositsAccountData.summary.accountBalance
+                            | currency: currency.code : 'symbol-narrow' : '1.2-2'
                         }}
                       </td>
                     </tr>
@@ -62,7 +60,8 @@
                       <td>{{ 'labels.inputs.Deposit Amount' | translate }}</td>
                       <td class="r-amount">
                         {{
-                        recurringDepositsAccountData.depositAmount | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                          recurringDepositsAccountData.depositAmount
+                            | currency: currency.code : 'symbol-narrow' : '1.2-2'
                         }}
                       </td>
                     </tr>
@@ -81,7 +80,7 @@
                 [matMenuTriggerFor]="accountMenu"
                 aria-label="Loan account actions"
                 yPosition="below"
-                >
+              >
                 <mat-icon matListIcon class="actions-menu">
                   <fa-icon icon="bars" size="sm"></fa-icon>
                 </mat-icon>
@@ -122,7 +121,7 @@
         routerLinkActive
         #general="routerLinkActive"
         [active]="general.isActive"
-        >
+      >
         {{ 'labels.inputs.General' | translate }}
       </a>
       <a
@@ -131,7 +130,7 @@
         routerLinkActive
         #IRC="routerLinkActive"
         [active]="IRC.isActive"
-        >
+      >
         {{ 'labels.inputs.Interest Rate Chart' | translate }}
       </a>
       @if (showTransactions) {
@@ -141,7 +140,7 @@
           routerLinkActive
           #transactions="routerLinkActive"
           [active]="transactions.isActive"
-          >
+        >
           {{ 'labels.inputs.Transactions' | translate }}
         </a>
       }
@@ -151,7 +150,7 @@
         routerLinkActive
         #charges="routerLinkActive"
         [active]="charges.isActive"
-        >
+      >
         {{ 'labels.inputs.Charges' | translate }}
       </a>
       @if (recurringDepositsAccountData.clientId) {
@@ -161,7 +160,7 @@
           routerLinkActive
           #standingInstructions="routerLinkActive"
           [active]="standingInstructions.isActive"
-          >
+        >
           {{ 'labels.inputs.Standing Instructions' | translate }}
         </a>
       }
@@ -173,7 +172,7 @@
           routerLinkActive
           #datatable="routerLinkActive"
           [active]="datatable.isActive"
-          >
+        >
           {{ savingsDatatable.registeredTableName }}
         </a>
       }

@@ -17,7 +17,7 @@
               [matDatepicker]="startDatePicker"
               required
               formControlName="startDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             @if (interestPauseLoanForm.controls.startDate.hasError('required')) {
@@ -36,7 +36,7 @@
               [matDatepicker]="endDatePicker"
               required
               formControlName="endDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker></mat-datepicker>
             @if (interestPauseLoanForm.controls.endDate.hasError('required')) {
@@ -56,7 +56,7 @@
             color="primary"
             [disabled]="!interestPauseLoanForm.valid"
             *mifosxHasPermission="'DISBURSE_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

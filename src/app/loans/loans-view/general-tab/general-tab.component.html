@@ -44,7 +44,9 @@
           </td>
         </ng-container>
         <ng-container matColumnDef="Adjustments">
-          <th mat-header-cell class="r-amount" *matHeaderCellDef>{{ 'labels.inputs.Credit Adjustments' | translate }}</th>
+          <th mat-header-cell class="r-amount" *matHeaderCellDef>
+            {{ 'labels.inputs.Credit Adjustments' | translate }}
+          </th>
           <td mat-cell class="r-amount amount-plus" *matCellDef="let ele">
             {{ ele.adjustment | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
           </td>
@@ -239,7 +241,9 @@
           @if (showDisbursedAmountBasedOnStatus()) {
             <div class="flex-contents">
               <span class="flex-50">{{ 'labels.inputs.Disburse Amount' | translate }}:</span>
-              <span class="flex-50">{{ loanDetails.principal | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</span>
+              <span class="flex-50">{{
+                loanDetails.principal | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+              }}</span>
             </div>
           }
           @if (loanDetails.balloonRepaymentAmount > 0) {

@@ -36,187 +36,191 @@
                 @if (centerViewData.externalId) {
                   <span>
                     {{ 'labels.inputs.External Id' | translate }}:
-                    <mifosx-external-identifier externalId="{{ centerViewData.externalId }}"></mifosx-external-identifier
-                      ><br />
-                    </span>
-                  }
-                  @if (centerViewData.staffName) {
-                    <span>
-                      {{ 'labels.inputs.Staff' | translate }}: {{ centerViewData.staffName }} <br />
-                    </span>
-                  }
-                  {{ 'labels.inputs.Activation Date' | translate }} :
-                  {{ centerViewData.activationDate ? (centerViewData.activationDate | dateFormat) : 'Not Activated'
-                  }}<br />
-                </p>
-              </div>
-              <div class="center-meeting flex-45 align-start-start">
-                @if (centerViewData.collectionMeetingCalendar) {
-                  <div>
-                    <p>
-                      {{ 'labels.inputs.Next Meeting on' | translate }}:
-                      {{ centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | dateFormat }}
-                      @if (editMeeting) {
-                        <span>
-                          <i class="fa fa-edit" (click)="doAction('Edit Meeting')" *mifosxHasPermission="'UPDATE_MEETING'"></i
-                            ><br />
-                          </span>
-                        }
-                        {{ 'labels.inputs.Meeting Frequency' | translate }}:
-                        {{ centerViewData.collectionMeetingCalendar?.frequency.value | lowercase }}
-                      </p>
-                    </div>
-                  } @else {
-                    <div>
-                      <p>
-                        {{ 'labels.inputs.Next Meeting on' | translate }}: {{ 'labels.text.Unassigned' | translate }}
-                        <i class="fa fa-calendar"></i><br />
-                        {{ 'labels.inputs.Meeting Frequency' | translate }}: {{ 'labels.text.N/A' | translate }}
-                      </p>
-                    </div>
-                  }
-                </div>
-              </div>
-            </mat-card-subtitle>
-          </div>
-
-          <mat-menu #centerMenu="matMenu">
-            @if (!(centerViewData.status.value === 'Active')) {
-              <span>
-                <button mat-menu-item *mifosxHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')">
-                  <mat-icon matListIcon>
-                    <fa-icon icon="checkSign" size="sm"></fa-icon>
-                  </mat-icon>
-                  <span>{{ 'labels.buttons.Activate' | translate }}</span>
-                </button>
-              </span>
-            }
-            <button mat-menu-item *mifosxHasPermission="'UPDATE_CENTER'" (click)="doAction('Edit')">
-              <mat-icon matListIcon>
-                <fa-icon icon="edit" size="sm"></fa-icon>
-              </mat-icon>
-              <span>{{ 'labels.buttons.Edit' | translate }}</span>
-            </button>
-            <button [disabled]="true" mat-menu-item *mifosxHasPermission="'CREATE_GROUP'">
-              <mat-icon matListIcon>
-                <fa-icon icon="add" size="sm"></fa-icon>
-              </mat-icon>
-              <span>{{ 'labels.buttons.Add Group' | translate }}</span>
-            </button>
-            <button mat-menu-item *mifosxHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')">
-              <mat-icon matListIcon>
-                <fa-icon icon="edit" size="sm"></fa-icon>
-              </mat-icon>
-              <span>{{ 'labels.buttons.Manage Groups' | translate }}</span>
-            </button>
-            @if (centerViewData.active) {
-              <span>
-                <button
-                  [disabled]="true"
-                  mat-menu-item
-                  *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
-                  [routerLink]="['savings-accounts', 'create']"
-                  >
-                  <mat-icon matListIcon>
-                    <fa-icon icon="file" size="sm"></fa-icon>
-                  </mat-icon>
-                  <span>{{ 'labels.buttons.Centers Saving Application' | translate }}</span>
-                </button>
-              </span>
-            }
-            <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>
-            <mat-menu #More="matMenu">
+                    <mifosx-external-identifier
+                      externalId="{{ centerViewData.externalId }}"
+                    ></mifosx-external-identifier
+                    ><br />
+                  </span>
+                }
+                @if (centerViewData.staffName) {
+                  <span> {{ 'labels.inputs.Staff' | translate }}: {{ centerViewData.staffName }} <br /> </span>
+                }
+                {{ 'labels.inputs.Activation Date' | translate }} :
+                {{ centerViewData.activationDate ? (centerViewData.activationDate | dateFormat) : 'Not Activated'
+                }}<br />
+              </p>
+            </div>
+            <div class="center-meeting flex-45 align-start-start">
               @if (centerViewData.collectionMeetingCalendar) {
-                <span>
-                  <button
-                    mat-menu-item
-                    *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'"
-                    (click)="doAction('Attendance')"
-                    >
-                    {{ 'labels.buttons.Attendance' | translate }}
-                  </button>
-                </span>
+                <div>
+                  <p>
+                    {{ 'labels.inputs.Next Meeting on' | translate }}:
+                    {{ centerViewData.collectionMeetingCalendar?.nextTenRecurringDates[0] | dateFormat }}
+                    @if (editMeeting) {
+                      <span>
+                        <i
+                          class="fa fa-edit"
+                          (click)="doAction('Edit Meeting')"
+                          *mifosxHasPermission="'UPDATE_MEETING'"
+                        ></i
+                        ><br />
+                      </span>
+                    }
+                    {{ 'labels.inputs.Meeting Frequency' | translate }}:
+                    {{ centerViewData.collectionMeetingCalendar?.frequency.value | lowercase }}
+                  </p>
+                </div>
+              } @else {
+                <div>
+                  <p>
+                    {{ 'labels.inputs.Next Meeting on' | translate }}: {{ 'labels.text.Unassigned' | translate }}
+                    <i class="fa fa-calendar"></i><br />
+                    {{ 'labels.inputs.Meeting Frequency' | translate }}: {{ 'labels.text.N/A' | translate }}
+                  </p>
+                </div>
               }
-              @if (!centerViewData.staffId) {
-                <span>
-                  <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">
-                    {{ 'labels.buttons.Assign Staff' | translate }}
-                  </button>
-                </span>
-              }
-              @if (centerViewData.staffId) {
-                <span>
-                  <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">
-                    {{ 'labels.buttons.Unassign Staff' | translate }}
-                  </button>
-                </span>
-              }
-              @if (centerViewData.status.value === 'Active') {
-                <span>
-                  <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')">
-                    {{ 'labels.buttons.Delete' | translate }}
-                  </button>
-                </span>
-              }
-              <button mat-menu-item *mifosxHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')">
-                {{ 'labels.buttons.Close' | translate }}
-              </button>
-              @if (centerViewData.status.value === 'Active' && !centerViewData.collectionMeetingCalendar) {
-                <span>
-                  <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">
-                    {{ 'labels.buttons.Attach Meeting' | translate }}
-                  </button>
-                </span>
-              }
+            </div>
+          </div>
+        </mat-card-subtitle>
+      </div>
+
+      <mat-menu #centerMenu="matMenu">
+        @if (!(centerViewData.status.value === 'Active')) {
+          <span>
+            <button mat-menu-item *mifosxHasPermission="'ACTIVATE_CENTER'" (click)="doAction('Activate')">
+              <mat-icon matListIcon>
+                <fa-icon icon="checkSign" size="sm"></fa-icon>
+              </mat-icon>
+              <span>{{ 'labels.buttons.Activate' | translate }}</span>
+            </button>
+          </span>
+        }
+        <button mat-menu-item *mifosxHasPermission="'UPDATE_CENTER'" (click)="doAction('Edit')">
+          <mat-icon matListIcon>
+            <fa-icon icon="edit" size="sm"></fa-icon>
+          </mat-icon>
+          <span>{{ 'labels.buttons.Edit' | translate }}</span>
+        </button>
+        <button [disabled]="true" mat-menu-item *mifosxHasPermission="'CREATE_GROUP'">
+          <mat-icon matListIcon>
+            <fa-icon icon="add" size="sm"></fa-icon>
+          </mat-icon>
+          <span>{{ 'labels.buttons.Add Group' | translate }}</span>
+        </button>
+        <button mat-menu-item *mifosxHasPermission="'ASSOCIATEGROUPS_CENTER'" (click)="doAction('Manage Groups')">
+          <mat-icon matListIcon>
+            <fa-icon icon="edit" size="sm"></fa-icon>
+          </mat-icon>
+          <span>{{ 'labels.buttons.Manage Groups' | translate }}</span>
+        </button>
+        @if (centerViewData.active) {
+          <span>
+            <button
+              [disabled]="true"
+              mat-menu-item
+              *mifosxHasPermission="'CREATE_SAVINGSACCOUNT'"
+              [routerLink]="['savings-accounts', 'create']"
+            >
+              <mat-icon matListIcon>
+                <fa-icon icon="file" size="sm"></fa-icon>
+              </mat-icon>
+              <span>{{ 'labels.buttons.Centers Saving Application' | translate }}</span>
+            </button>
+          </span>
+        }
+        <button mat-menu-item [matMenuTriggerFor]="More">{{ 'labels.buttons.More' | translate }}</button>
+        <mat-menu #More="matMenu">
+          @if (centerViewData.collectionMeetingCalendar) {
+            <span>
               <button
                 mat-menu-item
-                *mifosxHasPermission="'READ_Staff Assignment History'"
-                (click)="doAction('Staff Assignment History')"
-                >
-                {{ 'labels.buttons.Staff Assignment History' | translate }}
+                *mifosxHasPermission="'SAVEORUPDATEATTENDANCE_MEETING'"
+                (click)="doAction('Attendance')"
+              >
+                {{ 'labels.buttons.Attendance' | translate }}
               </button>
-            </mat-menu>
-          </mat-menu>
-        </mat-card-title-group>
-      </mat-card-header>
-      <mat-card-content>
-        <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
-          <a
-            mat-tab-link
-            [routerLink]="['./general']"
-            routerLinkActive
-            #general="routerLinkActive"
-            [active]="general.isActive"
-            >
-            {{ 'labels.inputs.General' | translate }}
-          </a>
-          <a
-            mat-tab-link
-            *mifosxHasPermission="'READ_GROUPNOTE'"
-            [routerLink]="['./notes']"
-            routerLinkActive
-            #notes="routerLinkActive"
-            [active]="notes.isActive"
-            >
-            {{ 'labels.inputs.Notes' | translate }}
-          </a>
-          @for (centerDatatable of centerDatatables; track centerDatatable) {
-            <span>
-              <a
-                mat-tab-link
-                *mifosxHasPermission="'READ_' + centerDatatable.registeredTableName"
-                [routerLink]="['./datatables', centerDatatable.registeredTableName]"
-                routerLinkActive
-                #datatable="routerLinkActive"
-                [active]="datatable.isActive"
-                >
-                {{ centerDatatable.registeredTableName }}
-              </a>
             </span>
           }
-        </nav>
-        <mat-tab-nav-panel #tabPanel>
-          <router-outlet></router-outlet>
-        </mat-tab-nav-panel>
-      </mat-card-content>
-    </mat-card>
+          @if (!centerViewData.staffId) {
+            <span>
+              <button mat-menu-item *mifosxHasPermission="'ASSIGNSTAFF_GROUP'" (click)="doAction('Assign Staff')">
+                {{ 'labels.buttons.Assign Staff' | translate }}
+              </button>
+            </span>
+          }
+          @if (centerViewData.staffId) {
+            <span>
+              <button mat-menu-item *mifosxHasPermission="'UNASSIGNSTAFF_GROUP'" (click)="doAction('Unassign Staff')">
+                {{ 'labels.buttons.Unassign Staff' | translate }}
+              </button>
+            </span>
+          }
+          @if (centerViewData.status.value === 'Active') {
+            <span>
+              <button mat-menu-item *mifosxHasPermission="'DELETE_CENTER'" (click)="doAction('Delete')">
+                {{ 'labels.buttons.Delete' | translate }}
+              </button>
+            </span>
+          }
+          <button mat-menu-item *mifosxHasPermission="'CLOSE_CENTER'" (click)="doAction('Close')">
+            {{ 'labels.buttons.Close' | translate }}
+          </button>
+          @if (centerViewData.status.value === 'Active' && !centerViewData.collectionMeetingCalendar) {
+            <span>
+              <button mat-menu-item *mifosxHasPermission="'CREATE_MEETING'" (click)="doAction('Attach Meeting')">
+                {{ 'labels.buttons.Attach Meeting' | translate }}
+              </button>
+            </span>
+          }
+          <button
+            mat-menu-item
+            *mifosxHasPermission="'READ_Staff Assignment History'"
+            (click)="doAction('Staff Assignment History')"
+          >
+            {{ 'labels.buttons.Staff Assignment History' | translate }}
+          </button>
+        </mat-menu>
+      </mat-menu>
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-content>
+    <nav mat-tab-nav-bar class="navigation-tabs" [tabPanel]="tabPanel">
+      <a
+        mat-tab-link
+        [routerLink]="['./general']"
+        routerLinkActive
+        #general="routerLinkActive"
+        [active]="general.isActive"
+      >
+        {{ 'labels.inputs.General' | translate }}
+      </a>
+      <a
+        mat-tab-link
+        *mifosxHasPermission="'READ_GROUPNOTE'"
+        [routerLink]="['./notes']"
+        routerLinkActive
+        #notes="routerLinkActive"
+        [active]="notes.isActive"
+      >
+        {{ 'labels.inputs.Notes' | translate }}
+      </a>
+      @for (centerDatatable of centerDatatables; track centerDatatable) {
+        <span>
+          <a
+            mat-tab-link
+            *mifosxHasPermission="'READ_' + centerDatatable.registeredTableName"
+            [routerLink]="['./datatables', centerDatatable.registeredTableName]"
+            routerLinkActive
+            #datatable="routerLinkActive"
+            [active]="datatable.isActive"
+          >
+            {{ centerDatatable.registeredTableName }}
+          </a>
+        </span>
+      }
+    </nav>
+    <mat-tab-nav-panel #tabPanel>
+      <router-outlet></router-outlet>
+    </mat-tab-nav-panel>
+  </mat-card-content>
+</mat-card>

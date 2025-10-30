@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #fixedDepositAccountStepper
-    >
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -32,7 +32,7 @@
       <mifosx-fixed-deposit-account-details-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
         (fixedDepositsAccountProductTemplate)="setTemplate($event)"
-        >
+      >
       </mifosx-fixed-deposit-account-details-step>
     </mat-step>
 
@@ -42,7 +42,7 @@
       <mifosx-fixed-deposit-account-terms-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-        >
+      >
       </mifosx-fixed-deposit-account-terms-step>
     </mat-step>
 
@@ -52,7 +52,7 @@
       <mifosx-fixed-deposit-account-settings-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-        >
+      >
       </mifosx-fixed-deposit-account-settings-step>
     </mat-step>
 
@@ -62,7 +62,7 @@
       <mifosx-fixed-deposit-account-interest-rate-chart-step
         [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
-        >
+      >
       </mifosx-fixed-deposit-account-interest-rate-chart-step>
     </mat-step>
 
@@ -73,7 +73,7 @@
         [fixedDepositsAccountTemplate]="fixedDepositsAccountTemplate"
         [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
         [fixedDepositAccountFormValid]="fixedDepositAccountFormValid"
-        >
+      >
       </mifosx-fixed-deposit-account-charges-step>
     </mat-step>
 
@@ -85,7 +85,7 @@
           [fixedDepositsAccountProductTemplate]="fixedDepositsAccountProductTemplate"
           [fixedDepositAccountData]="fixedDepositAccount"
           (submitEvent)="submit()"
-          >
+        >
         </mifosx-fixed-deposit-account-preview-step>
       </mat-step>
     }

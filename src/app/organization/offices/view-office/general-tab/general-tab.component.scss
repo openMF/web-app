@@ -1,6 +1,8 @@
 .tab-container {
-  padding: 1%;
-  margin: 1%;
+  padding: 0.5rem;
+  margin: 1% auto;
+  max-width: 600px;
+  width: 90%;
 
   .delete-button {
     margin-left: 1%;
@@ -13,4 +15,90 @@
 
 .table-data {
   margin-top: 3px;
+}
+
+.compact-button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.compact-details {
+  font-size: 0.9rem;
+
+  .left,
+  .right {
+    padding: 0.25rem 0;
+  }
+
+  .mat-body-strong {
+    font-size: 0.9rem;
+  }
+}
+
+.bottom-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1rem 0;
+}
+
+.edit-button {
+  min-width: 120px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 3px 5px rgb(0 0 0 / 20%);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgb(0 0 0 / 30%);
+    transform: translateY(-2px);
+  }
+}
+
+.layout-row-wrap {
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+.section-divider {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid rgb(0 0 0 / 10%);
+  margin: 8px 0;
+}
+
+.compact-view {
+  padding: 0.3rem;
+  margin: 0 auto;
+  max-width: 450px;
+  width: 90%;
+}
+
+.condensed {
+  .flex-45,
+  .flex-50 {
+    padding: 0.2rem 0;
+    font-size: 0.85rem;
+  }
+
+  .section-divider {
+    margin: 4px 0;
+  }
+}
+
+.small-buttons {
+  margin-top: 1rem;
+
+  .edit-button {
+    min-width: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+.tab-container.compact-view {
+  max-width: 450px;
+  width: 90%;
 }

@@ -12,7 +12,7 @@
               [matDatepicker]="datePicker"
               required
               formControlName="date"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
             <mat-datepicker #datePicker></mat-datepicker>
             @if (provisioningEntryForm.controls.date.hasError('required')) {
@@ -40,7 +40,7 @@
           color="primary"
           [disabled]="!provisioningEntryForm.valid"
           *mifosxHasPermission="'CREATE_PROVISIONING_ENTRIES'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

@@ -57,7 +57,7 @@
               [matDatepicker]="submittedOnDatePicker"
               required
               formControlName="submittedOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
             @if (groupForm.controls.submittedOnDate.hasError('required')) {
@@ -82,7 +82,7 @@
                 [matDatepicker]="activationDatePicker"
                 required
                 formControlName="activationDate"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="activationDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #activationDatePicker></mat-datepicker>
               @if (groupForm.controls.activationDate.hasError('required')) {

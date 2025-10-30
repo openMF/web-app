@@ -12,7 +12,7 @@
               [matDatepicker]="closedOnDatePicker"
               required
               formControlName="closedOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
             @if (prematureCloseAccountForm.controls.closedOnDate.hasError('required')) {

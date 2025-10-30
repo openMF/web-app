@@ -33,7 +33,7 @@
               [matDatepicker]="startDatePicker"
               required
               formControlName="startDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             @if (reagingLoanForm.controls.startDate.hasError('required')) {
@@ -48,9 +48,7 @@
             <mat-label>{{ 'labels.inputs.Interest Handling' | translate }}</mat-label>
             <mat-select formControlName="reAgeInterestHandling">
               @for (reAgeInterestHandlingOption of reAgeInterestHandlingOptions; track reAgeInterestHandlingOption) {
-                <mat-option
-                  [value]="reAgeInterestHandlingOption.id"
-                  >
+                <mat-option [value]="reAgeInterestHandlingOption.id">
                   {{ reAgeInterestHandlingOption.value | translateKey: 'catalogs' }}
                 </mat-option>
               }
@@ -88,7 +86,7 @@
             color="primary"
             [disabled]="!reagingLoanForm.valid"
             *mifosxHasPermission="'REAGING_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

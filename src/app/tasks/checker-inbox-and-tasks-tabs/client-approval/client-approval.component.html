@@ -7,7 +7,7 @@
             matInput
             placeholder="{{ 'labels.text.Filter by name' | translate }}"
             (keyup)="applyFilter($event.target.value)"
-            />
+          />
         </mat-form-field>
       </div>
       <div class="flex-60">
@@ -27,7 +27,7 @@
                 [checked]="selection.hasValue() && isAllSelected(client.value)"
                 [indeterminate]="selection.hasValue() && !isAllSelected(client.value)"
                 [aria-label]="checkboxLabel(client.value)"
-                >
+              >
               </mat-checkbox>
             </th>
             <td mat-cell *matCellDef="let row">
@@ -36,7 +36,7 @@
                 (change)="$event ? selection.toggle(row) : null"
                 [checked]="selection.isSelected(row)"
                 [aria-label]="checkboxLabel(row)"
-                >
+              >
               </mat-checkbox>
             </td>
           </ng-container>

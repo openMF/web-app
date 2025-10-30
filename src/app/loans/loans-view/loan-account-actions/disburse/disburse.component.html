@@ -12,7 +12,7 @@
               [matDatepicker]="actualDisbursementDatePicker"
               required
               formControlName="actualDisbursementDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="actualDisbursementDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #actualDisbursementDatePicker></mat-datepicker>
             @if (disbursementLoanForm.controls.actualDisbursementDate.hasError('required')) {
@@ -28,7 +28,7 @@
             [isRequired]="true"
             [inputFormControl]="disbursementLoanForm.controls.transactionAmount"
             [inputLabel]="'Transaction Amount'"
-            >
+          >
           </mifosx-input-amount>
 
           <!-- Display Available Disbursement Amount with Over Applied if available -->
@@ -101,7 +101,7 @@
             color="primary"
             [disabled]="!disbursementLoanForm.valid"
             *mifosxHasPermission="'DISBURSE_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

@@ -85,11 +85,7 @@
                   <div matLine>
                     {{ 'labels.heading.Manage Roles and Permissions' | translate }}
                     @if (arrowBooleans[2]) {
-                      <p
-                        matLine
-                        [routerLink]="['roles-and-permissions']"
-                        class="menu-explanation"
-                        >
+                      <p matLine [routerLink]="['roles-and-permissions']" class="menu-explanation">
                         {{ 'labels.text.Define or modify roles and associated permissions' | translate }}
                       </p>
                     }
@@ -194,11 +190,7 @@
                 <div matLine>
                   {{ 'labels.heading.Entity to Entity Mapping' | translate }}
                   @if (arrowBooleans[5]) {
-                    <p
-                      matLine
-                      [routerLink]="['entity-to-entity-mapping']"
-                      class="menu-explanation"
-                      >
+                    <p matLine [routerLink]="['entity-to-entity-mapping']" class="menu-explanation">
                       {{ 'labels.text.Define or modify entity to entity mappings' | translate }}
                     </p>
                   }
@@ -442,11 +434,7 @@
                 <div matLine>
                   {{ 'labels.heading.Account Number Preferences' | translate }}
                   @if (arrowBooleans[12]) {
-                    <p
-                      matLine
-                      [routerLink]="['account-number-preferences']"
-                      class="menu-explanation"
-                      >
+                    <p matLine [routerLink]="['account-number-preferences']" class="menu-explanation">
                       {{ 'labels.text.Preferences for generating account numbers for client' | translate }}
                     </p>
                   }

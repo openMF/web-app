@@ -1,0 +1,62 @@
+.container {
+  padding: 0.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.layout-row {
+  display: flex;
+  flex-direction: row;
+}
+
+mat-card {
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%) !important;
+  border-radius: 8px;
+
+  .layout-row {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.mat-elevation-z1 {
+  padding: 1rem;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+
+  th {
+    font-weight: 600;
+  }
+}
+
+.m-t-20 {
+  margin-top: 2rem;
+}
+
+.layout-align-center {
+  align-items: center;
+  justify-content: center;
+}
+
+@media (width <= 768px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  mat-card {
+    padding: 1rem;
+  }
+
+  .layout-row {
+    flex-direction: column;
+  }
+
+  .gap-20px {
+    flex-direction: column;
+    width: 100%;
+  }
+}

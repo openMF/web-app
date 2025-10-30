@@ -65,7 +65,7 @@
             [glAccountList]="parentData"
             [required]="false"
             [inputLabel]="'Parent'"
-            >
+          >
           </mifosx-gl-account-selector>
 
           <mat-form-field class="flex-28">
@@ -101,7 +101,7 @@
           color="primary"
           [disabled]="!glAccountForm.valid"
           *mifosxHasPermission="'CREATE_GLACCOUNT'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>
@@ -117,20 +117,20 @@
       href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141745/Chart+of+Accounts+-+General+Ledger+Setup"
       target="_blank"
       >{{ 'labels.inputs.Chart of Accounts' | translate }}</a
-      >
-    </p>
-    <div class="layout-row align-end gap-2px responsive-column">
-      <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-        {{ 'labels.buttons.Close' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close()">
-        {{ 'labels.buttons.Create GL Account' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
-        {{ 'labels.buttons.Back' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
-        {{ 'labels.buttons.Next' | translate }}
-      </button>
-    </div>
-  </ng-template>
+    >
+  </p>
+  <div class="layout-row align-end gap-2px responsive-column">
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close()">
+      {{ 'labels.buttons.Create GL Account' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
+  </div>
+</ng-template>

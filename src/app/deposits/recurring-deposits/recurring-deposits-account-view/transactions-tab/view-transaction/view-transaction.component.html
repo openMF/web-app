@@ -2,11 +2,7 @@
   <div class="container m-b-20 align-end gap-2percent">
     <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
       @if (!(transactionData.transactionType.value === 'Transfer' || transactionData.reversed === 'true')) {
-        <button
-          mat-raised-button
-          color="primary"
-          [routerLink]="'edit'"
-          >
+        <button mat-raised-button color="primary" [routerLink]="'edit'">
           <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
         </button>
       }
@@ -16,7 +12,7 @@
       color="warn"
       *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
       (click)="undoTransaction()"
-      >
+    >
       <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
     </button>
   </div>
@@ -81,9 +77,7 @@
         }
 
         @if (transactionData.paymentDetailData) {
-          <mifosx-transaction-payment-detail
-            [paymentDetailData]="transactionData.paymentDetailData"
-            >
+          <mifosx-transaction-payment-detail [paymentDetailData]="transactionData.paymentDetailData">
           </mifosx-transaction-payment-detail>
         }
       </div>

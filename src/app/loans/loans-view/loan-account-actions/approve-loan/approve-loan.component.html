@@ -11,7 +11,7 @@
               [matDatepicker]="approvedDatePicker"
               required
               formControlName="approvedOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="approvedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #approvedDatePicker></mat-datepicker>
             @if (approveLoanForm.controls.approvedOnDate.hasError('required')) {
@@ -29,7 +29,7 @@
               [min]="minDate"
               [matDatepicker]="disbursementDatePicker"
               formControlName="expectedDisbursementDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="disbursementDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #disbursementDatePicker></mat-datepicker>
           </mat-form-field>
@@ -39,7 +39,7 @@
             [isRequired]="true"
             [inputFormControl]="approveLoanForm.controls.approvedLoanAmount"
             [inputLabel]="'Approved Amount'"
-            >
+          >
           </mifosx-input-amount>
 
           <!-- Display Available Disbursement Amount with Over Applied if available -->
@@ -74,7 +74,7 @@
             color="primary"
             [disabled]="!approveLoanForm.valid"
             *mifosxHasPermission="'APPROVE_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

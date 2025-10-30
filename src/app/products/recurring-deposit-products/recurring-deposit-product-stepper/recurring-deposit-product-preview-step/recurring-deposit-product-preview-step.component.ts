@@ -56,7 +56,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DateFormatPipe,
     FormatNumberPipe,
     YesnoPipe
-]
+  ]
 })
 export class RecurringDepositProductPreviewStepComponent implements OnInit, OnChanges {
   @Input() recurringDepositProductsTemplate: any;

@@ -21,7 +21,7 @@
             [matDatepicker]="transactionDatePicker"
             required
             formControlName="transactionDate"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDatePicker></mat-datepicker>
           @if (transactionForm.controls.transactionDate.hasError('required')) {

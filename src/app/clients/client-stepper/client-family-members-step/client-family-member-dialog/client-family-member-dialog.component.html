@@ -41,88 +41,88 @@
 
     <mat-checkbox formControlName="isDependent" labelPosition="before" class="flex-48"
       >{{ 'labels.inputs.Is Dependent' | translate }}?</mat-checkbox
-      >
+    >
 
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Relationship' | translate }}</mat-label>
-        <mat-select formControlName="relationshipId" required>
-          @for (relation of data.options.relationshipIdOptions; track relation) {
-            <mat-option [value]="relation.id">
-              {{ relation.name | translateKey: 'catalogs' }}
-            </mat-option>
-          }
-        </mat-select>
-        @if (familyMemberForm.controls.relationshipId.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Relationship' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Relationship' | translate }}</mat-label>
+      <mat-select formControlName="relationshipId" required>
+        @for (relation of data.options.relationshipIdOptions; track relation) {
+          <mat-option [value]="relation.id">
+            {{ relation.name | translateKey: 'catalogs' }}
+          </mat-option>
         }
-      </mat-form-field>
+      </mat-select>
+      @if (familyMemberForm.controls.relationshipId.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Relationship' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+    </mat-form-field>
 
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
-        <mat-select formControlName="genderId" required>
-          @for (gender of data.options.genderIdOptions; track gender) {
-            <mat-option [value]="gender.id">
-              {{ gender.name | translateKey: 'catalogs' }}
-            </mat-option>
-          }
-        </mat-select>
-        @if (familyMemberForm.controls.genderId.hasError('required')) {
-          <mat-error>
-            {{ 'labels.inputs.Gender' | translate }} {{ 'labels.commons.is' | translate }}
-            <strong>{{ 'labels.commons.required' | translate }}</strong>
-          </mat-error>
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Gender' | translate }}</mat-label>
+      <mat-select formControlName="genderId" required>
+        @for (gender of data.options.genderIdOptions; track gender) {
+          <mat-option [value]="gender.id">
+            {{ gender.name | translateKey: 'catalogs' }}
+          </mat-option>
         }
-      </mat-form-field>
+      </mat-select>
+      @if (familyMemberForm.controls.genderId.hasError('required')) {
+        <mat-error>
+          {{ 'labels.inputs.Gender' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
+      }
+    </mat-form-field>
 
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Profession' | translate }}</mat-label>
-        <mat-select formControlName="professionId">
-          @for (profession of data.options.professionIdOptions; track profession) {
-            <mat-option [value]="profession.id">
-              {{ profession.name | translateKey: 'catalogs' }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Profession' | translate }}</mat-label>
+      <mat-select formControlName="professionId">
+        @for (profession of data.options.professionIdOptions; track profession) {
+          <mat-option [value]="profession.id">
+            {{ profession.name | translateKey: 'catalogs' }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Marital Status' | translate }}</mat-label>
-        <mat-select formControlName="maritalStatusId">
-          @for (maritalStatus of data.options.maritalStatusIdOptions; track maritalStatus) {
-            <mat-option [value]="maritalStatus.id">
-              {{ maritalStatus.name | translateKey: 'catalogs' }}
-            </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
+    <mat-form-field class="flex-48">
+      <mat-label>{{ 'labels.inputs.Marital Status' | translate }}</mat-label>
+      <mat-select formControlName="maritalStatusId">
+        @for (maritalStatus of data.options.maritalStatusIdOptions; track maritalStatus) {
+          <mat-option [value]="maritalStatus.id">
+            {{ maritalStatus.name | translateKey: 'catalogs' }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
 
-      <mat-form-field class="flex-98" (click)="dueDatePicker.open()">
-        <mat-label>{{ 'labels.inputs.Date Of Birth' | translate }}</mat-label>
-        <input
-          formControlName="dateOfBirth"
-          matInput
-          [max]="maxDate"
-          [matDatepicker]="dueDatePicker"
-          placeholder="Optional"
-          />
-        <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
-        <mat-datepicker #dueDatePicker></mat-datepicker>
-      </mat-form-field>
-    </div>
+    <mat-form-field class="flex-98" (click)="dueDatePicker.open()">
+      <mat-label>{{ 'labels.inputs.Date Of Birth' | translate }}</mat-label>
+      <input
+        formControlName="dateOfBirth"
+        matInput
+        [max]="maxDate"
+        [matDatepicker]="dueDatePicker"
+        placeholder="Optional"
+      />
+      <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #dueDatePicker></mat-datepicker>
+    </mat-form-field>
+  </div>
 
-    <mat-dialog-actions align="center">
-      <button type="button" mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
-      <button
-        type="button"
-        mat-raised-button
-        color="primary"
-        [disabled]="!familyMemberForm.valid"
-        [mat-dialog-close]="{ member: familyMember }"
-        >
-        {{ 'labels.buttons.Confirm' | translate }}
-      </button>
-    </mat-dialog-actions>
-  </form>
+  <mat-dialog-actions align="center">
+    <button type="button" mat-raised-button mat-dialog-close>{{ 'labels.buttons.Cancel' | translate }}</button>
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      [disabled]="!familyMemberForm.valid"
+      [mat-dialog-close]="{ member: familyMember }"
+    >
+      {{ 'labels.buttons.Confirm' | translate }}
+    </button>
+  </mat-dialog-actions>
+</form>

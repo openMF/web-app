@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #loanProductStepper
-    >
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -49,7 +49,7 @@
         [loanProductsTemplate]="loanProductsTemplate"
         [isLinkedToFloatingInterestRates]="loanProductTermsForm.get('isLinkedToFloatingInterestRates')"
         (advancePaymentStrategy)="advancePaymentStrategy($event)"
-        >
+      >
       </mifosx-loan-product-settings-step>
     </mat-step>
 
@@ -59,7 +59,7 @@
         <mifosx-loan-product-interest-refund-step
           [loanProductsTemplate]="loanProductsTemplate"
           (supportedInterestRefundTypes)="setSupportedInterestRefundTypes($event)"
-          >
+        >
         </mifosx-loan-product-interest-refund-step>
         <mifosx-stepper-buttons></mifosx-stepper-buttons>
       </mat-step>
@@ -77,7 +77,7 @@
           [creditAllocationOrderDefault]="loanProductsTemplate.creditAllocationAllocationTypes"
           (setPaymentAllocation)="setPaymentAllocation($event)"
           (setCreditAllocation)="setCreditAllocation($event)"
-          >
+        >
         </mifosx-loan-product-payment-strategy-step>
         <mifosx-stepper-buttons></mifosx-stepper-buttons>
       </mat-step>
@@ -96,7 +96,7 @@
         [loanProductsTemplate]="loanProductsTemplate"
         [currencyCode]="loanProductCurrencyForm.get('currencyCode')"
         [multiDisburseLoan]="loanProductSettingsForm.get('multiDisburseLoan')"
-        >
+      >
       </mifosx-loan-product-charges-step>
     </mat-step>
 
@@ -112,7 +112,7 @@
           [buyDownFeeStrategyOptions]="loanProductsTemplate.buyDownFeeStrategyOptions"
           [buyDownFeeIncomeTypeOptions]="loanProductsTemplate.buyDownFeeIncomeTypeOptions"
           (setViewChildForm)="setViewChildForm($event)"
-          >
+        >
         </mifosx-loan-product-capitalized-income-step>
         <mifosx-stepper-buttons></mifosx-stepper-buttons>
       </mat-step>
@@ -126,7 +126,7 @@
         [accountingRuleData]="accountingRuleData"
         [loanProductFormValid]="loanProductFormValid"
         [deferredIncomeRecognition]="deferredIncomeRecognition"
-        >
+      >
       </mifosx-loan-product-accounting-step>
     </mat-step>
 
@@ -138,7 +138,7 @@
           [accountingRuleData]="accountingRuleData"
           [loanProduct]="loanProduct"
           (submitEvent)="submit()"
-          >
+        >
         </mifosx-loan-product-preview-step>
       </mat-step>
     }

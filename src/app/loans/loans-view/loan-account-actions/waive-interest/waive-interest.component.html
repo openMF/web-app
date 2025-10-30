@@ -12,7 +12,7 @@
               [matDatepicker]="interestDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="interestDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #interestDatePicker></mat-datepicker>
             @if (loanInterestForm.controls.transactionDate.hasError('required')) {
@@ -28,7 +28,7 @@
             [isRequired]="true"
             [inputFormControl]="loanInterestForm.controls.transactionAmount"
             [inputLabel]="'Transaction Amount'"
-            >
+          >
           </mifosx-input-amount>
 
           <mat-form-field>
@@ -46,7 +46,7 @@
             color="primary"
             [disabled]="!loanInterestForm.valid"
             *mifosxHasPermission="'WAIVEINTERESTPORTION_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

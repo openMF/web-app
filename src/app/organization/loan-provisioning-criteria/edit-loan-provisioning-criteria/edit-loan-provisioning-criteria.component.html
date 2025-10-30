@@ -30,9 +30,7 @@
 
     <div class="mat-elevation-z1">
       @if (!provisioningCriteriaFormValid) {
-        <mat-hint>{{
-          'labels.text.Provisioning criteria definitions' | translate
-        }}</mat-hint>
+        <mat-hint>{{ 'labels.text.Provisioning criteria definitions' | translate }}</mat-hint>
       }
 
       <table mat-table class="m-t-10" [dataSource]="definitions">
@@ -60,8 +58,8 @@
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Liability Account' | translate }}</th>
           <td mat-cell *matCellDef="let definition">
             {{
-            (definition.liabilityAccount | find: loanProvisioningCriteriaAndTemplate.glAccounts : 'id' : 'name') ||
-            '-'
+              (definition.liabilityAccount | find: loanProvisioningCriteriaAndTemplate.glAccounts : 'id' : 'name') ||
+                '-'
             }}
           </td>
         </ng-container>
@@ -70,7 +68,7 @@
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Expense Account' | translate }}</th>
           <td mat-cell *matCellDef="let definition">
             {{
-            (definition.expenseAccount | find: loanProvisioningCriteriaAndTemplate.glAccounts : 'id' : 'name') || '-'
+              (definition.expenseAccount | find: loanProvisioningCriteriaAndTemplate.glAccounts : 'id' : 'name') || '-'
             }}
           </td>
         </ng-container>
@@ -98,7 +96,7 @@
         [disabled]="!provisioningCriteriaFormValid"
         (click)="submit()"
         *mifosxHasPermission="'UPDATE_CRITERIA'"
-        >
+      >
         {{ 'labels.buttons.Submit' | translate }}
       </button>
     </div>

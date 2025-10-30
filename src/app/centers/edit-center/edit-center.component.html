@@ -47,7 +47,7 @@
                   [matDatepicker]="activatedOnDatePicker"
                   required
                   formControlName="activationDate"
-                  />
+                />
                 <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #activatedOnDatePicker></mat-datepicker>
                 @if (editCenterForm.controls.activationDate.hasError('required')) {

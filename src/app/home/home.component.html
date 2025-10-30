@@ -44,7 +44,7 @@
         mat-raised-button
         color="primary"
         (click)="popover.close(); showPopover(prev.template, prev.target, 'bottom', true)"
-        >
+      >
         {{ 'labels.buttons.Back' | translate }}
       </button>
     }
@@ -53,7 +53,7 @@
         mat-raised-button
         color="primary"
         (click)="popover.close(); showPopover(next.template, next.target, 'bottom', true)"
-        >
+      >
         {{ 'labels.buttons.Next' | translate }}
       </button>
     }
@@ -74,7 +74,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateSearchActivity, searchActivity, 'top', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -91,7 +91,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonDashboard, buttonDashboard, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

@@ -1,24 +1,19 @@
 <div class="container transaction-buttons m-b-20 align-end-center gap-2percent" align="end">
   @if (
     !(
-    transactionData.interestedPostedAsOn === false &&
-    (transactionData.transactionType.id === 17 || transactionData.transactionType.id === 3)
+      transactionData.interestedPostedAsOn === false &&
+      (transactionData.transactionType.id === 17 || transactionData.transactionType.id === 3)
     )
-    ) {
-    <span
-      >
+  ) {
+    <span>
       <span *mifosxHasPermission="'ADJUSTTRANSACTION_SAVINGSACCOUNT'">
         @if (
           transactionData.transactionType.value === 'Transfer' ||
           transactionData.reversed === 'true' ||
           transactionData.transactionType.id === 3 ||
           transactionData.transactionType.id === 17
-          ) {
-          <button
-            mat-raised-button
-            color="primary"
-            [routerLink]="'edit'"
-            >
+        ) {
+          <button mat-raised-button color="primary" [routerLink]="'edit'">
             <fa-icon icon="edit" class="m-r-10"></fa-icon>{{ 'labels.buttons.Edit' | translate }}
           </button>
         }
@@ -32,7 +27,7 @@
         color="primary"
         *mifosxHasPermission="'RELEASEAMOUNT_SAVINGSACCOUNT'"
         (click)="releaseAmount()"
-        >
+      >
         <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{ 'labels.buttons.Release Amount' | translate }}
       </button>
     </span>
@@ -44,7 +39,7 @@
         color="warn"
         *mifosxHasPermission="'UNDOTRANSACTION_SAVINGSACCOUNT'"
         (click)="undoTransaction()"
-        >
+      >
         <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Undo' | translate }}
       </button>
     </span>
@@ -110,9 +105,7 @@
         }
 
         @if (transactionData.paymentDetailData) {
-          <mifosx-transaction-payment-detail
-            [paymentDetailData]="transactionData.paymentDetailData"
-            >
+          <mifosx-transaction-payment-detail [paymentDetailData]="transactionData.paymentDetailData">
           </mifosx-transaction-payment-detail>
         }
       </div>

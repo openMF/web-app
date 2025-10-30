@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoansService } from 'app/loans/loans.service';
+import { CodeValue } from 'app/shared/models/general.model';
+import { OptionData } from 'app/shared/models/option-data.model';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 @Component({
@@ -18,6 +20,8 @@ export class LoanReamortizeComponent implements OnInit {
   loanId: string;
   /** ReAmortize Loan Form */
   reamortizeLoanForm: UntypedFormGroup;
+  reAmortizationReasonOptions: CodeValue[] = [];
+  reAmortizationInterestHandlingOptions: OptionData[] = [];
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -29,11 +33,18 @@ export class LoanReamortizeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.reAmortizationReasonOptions = this.dataObject?.reAmortizationReasonOptions || [];
+    this.reAmortizationInterestHandlingOptions = this.dataObject?.reAmortizationInterestHandlingOptions || [];
+
     this.createReAmortizeLoanForm();
   }
 
   createReAmortizeLoanForm() {
     this.reamortizeLoanForm = this.formBuilder.group({
+      reAmortizationInterestHandling: [
+        this.reAmortizationInterestHandlingOptions[0] || null
+      ],
+      reasonCodeValueId: null,
       note: '',
       externalId: ''
     });
@@ -44,5 +55,13 @@ export class LoanReamortizeComponent implements OnInit {
     this.loanService.submitLoanActionButton(this.loanId, data, 'reAmortize').subscribe((response: any) => {
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
     });
+  }
+
+  trackByInterestHandlingOption(index: number, option: OptionData): string | number {
+    return option.id ?? index;
+  }
+
+  trackByReasonOption(index: number, option: CodeValue): string | number {
+    return option.id ?? index;
   }
 }

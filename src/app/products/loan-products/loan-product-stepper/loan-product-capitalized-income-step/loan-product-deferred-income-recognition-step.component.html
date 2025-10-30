@@ -8,10 +8,11 @@
       <mat-form-field class="flex-48">
         <mat-label>{{ 'labels.inputs.Income capitalization calculation type' | translate }}</mat-label>
         <mat-select formControlName="capitalizedIncomeCalculationType" required>
-          @for (capitalizedIncomeCalculationType of capitalizedIncomeCalculationTypeOptions; track capitalizedIncomeCalculationType) {
-            <mat-option
-              [value]="capitalizedIncomeCalculationType.id"
-              >
+          @for (
+            capitalizedIncomeCalculationType of capitalizedIncomeCalculationTypeOptions;
+            track capitalizedIncomeCalculationType
+          ) {
+            <mat-option [value]="capitalizedIncomeCalculationType.id">
               {{ capitalizedIncomeCalculationType.value | translateKey: 'catalogs' }}
             </mat-option>
           }
@@ -23,9 +24,7 @@
         <mat-label>{{ 'labels.inputs.Income capitalization strategy' | translate }}</mat-label>
         <mat-select formControlName="capitalizedIncomeStrategy" required>
           @for (capitalizedIncomeStrategy of capitalizedIncomeStrategyOptions; track capitalizedIncomeStrategy) {
-            <mat-option
-              [value]="capitalizedIncomeStrategy.id"
-              >
+            <mat-option [value]="capitalizedIncomeStrategy.id">
               {{ capitalizedIncomeStrategy.value | translateKey: 'catalogs' }}
             </mat-option>
           }
@@ -37,9 +36,7 @@
         <mat-label>{{ 'labels.inputs.Income type' | translate }}</mat-label>
         <mat-select formControlName="capitalizedIncomeType" required>
           @for (capitalizedIncomeType of capitalizedIncomeTypeOptions; track capitalizedIncomeType) {
-            <mat-option
-              [value]="capitalizedIncomeType.id"
-              >
+            <mat-option [value]="capitalizedIncomeType.id">
               {{ capitalizedIncomeType.value | translateKey: 'catalogs' }}
             </mat-option>
           }
@@ -57,9 +54,7 @@
         <mat-label>{{ 'labels.inputs.Buy down fee calculation type' | translate }}</mat-label>
         <mat-select formControlName="buyDownFeeCalculationType" required>
           @for (buyDownFeeCalculationType of buyDownFeeCalculationTypeOptions; track buyDownFeeCalculationType) {
-            <mat-option
-              [value]="buyDownFeeCalculationType.id"
-              >
+            <mat-option [value]="buyDownFeeCalculationType.id">
               {{ buyDownFeeCalculationType.value | translateKey: 'catalogs' }}
             </mat-option>
           }

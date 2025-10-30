@@ -67,11 +67,11 @@
     <span class="flex-40">{{ 'labels.inputs.Shares per Client' | translate }}:</span>
     <span class="flex-60">{{
       shareProduct.nominalShares +
-      ' (Min: ' +
-      (shareProduct.minimumShares ? shareProduct.minimumShares : shareProduct.nominalShares) +
-      ', Max: ' +
-      (shareProduct.maximumShares ? shareProduct.maximumShares : shareProduct.nominalShares) +
-      ')'
+        ' (Min: ' +
+        (shareProduct.minimumShares ? shareProduct.minimumShares : shareProduct.nominalShares) +
+        ', Max: ' +
+        (shareProduct.maximumShares ? shareProduct.maximumShares : shareProduct.nominalShares) +
+        ')'
     }}</span>
   </div>
 
@@ -80,9 +80,9 @@
       <span class="flex-40">{{ 'labels.inputs.Minimum Active Period' | translate }}:</span>
       <span class="flex-60">{{
         shareProduct.minimumActivePeriodForDividends +
-        ' ' +
-        (shareProduct.minimumactiveperiodFrequencyType
-        | find: shareProductsTemplate.minimumActivePeriodFrequencyTypeOptions : 'id' : 'value')
+          ' ' +
+          (shareProduct.minimumactiveperiodFrequencyType
+            | find: shareProductsTemplate.minimumActivePeriodFrequencyTypeOptions : 'id' : 'value')
       }}</span>
     </div>
   }
@@ -92,9 +92,9 @@
       <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
       <span class="flex-60">{{
         shareProduct.lockinPeriodFrequency +
-        ' ' +
-        (shareProduct.lockinPeriodFrequencyType
-        | find: shareProductsTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value')
+          ' ' +
+          (shareProduct.lockinPeriodFrequencyType
+            | find: shareProductsTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value')
       }}</span>
     </div>
   }
@@ -177,7 +177,7 @@
         <span class="flex-40">{{ 'labels.inputs.Share reference' | translate }}:</span>
         <span class="flex-60">{{
           shareProduct.shareReferenceId
-          | find: shareProductsTemplate.accountingMappingOptions.assetAccountOptions : 'id' : 'name'
+            | find: shareProductsTemplate.accountingMappingOptions.assetAccountOptions : 'id' : 'name'
         }}</span>
       </div>
       <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Liabilities' | translate }}</h4>
@@ -185,7 +185,7 @@
         <span class="flex-40">{{ 'labels.inputs.Share suspense control' | translate }}:</span>
         <span class="flex-60">{{
           shareProduct.shareSuspenseId
-          | find: shareProductsTemplate.accountingMappingOptions.liabilityAccountOptions : 'id' : 'name'
+            | find: shareProductsTemplate.accountingMappingOptions.liabilityAccountOptions : 'id' : 'name'
         }}</span>
       </div>
       <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Share Equity' | translate }}</h4>
@@ -193,7 +193,7 @@
         <span class="flex-40">{{ 'labels.inputs.Equity' | translate }}:</span>
         <span class="flex-60">{{
           shareProduct.shareEquityId
-          | find: shareProductsTemplate.accountingMappingOptions.equityAccountOptions : 'id' : 'name'
+            | find: shareProductsTemplate.accountingMappingOptions.equityAccountOptions : 'id' : 'name'
         }}</span>
       </div>
       <h4 class="mat-h4 flex-fill">{{ 'labels.heading.Income' | translate }}</h4>
@@ -201,7 +201,7 @@
         <span class="flex-40">{{ 'labels.inputs.Income from fees' | translate }}:</span>
         <span class="flex-60">{{
           shareProduct.incomeFromFeeAccountId
-          | find: shareProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
+            | find: shareProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
         }}</span>
       </div>
     </div>

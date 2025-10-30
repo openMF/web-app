@@ -55,7 +55,7 @@
                 matTooltip="{{ 'tooltips.Edit Standing Instruction' | translate }}"
                 *mifosxHasPermission="'UPDATE_STANDINGINSTRUCTION'"
                 [routerLink]="['../', 'standing-instructions', instruction.id, 'edit']"
-                >
+              >
                 <i class="fa fa-edit"></i>
               </button>
             </span>
@@ -69,7 +69,7 @@
                 matTooltip="{{ 'tooltips.Delete Standing Instruction' | translate }}"
                 *mifosxHasPermission="'DELETE_STANDINGINSTRUCTION'"
                 (click)="deleteStandingInstruction(instruction.id)"
-                >
+              >
                 <i class="fa fa-times"></i>
               </button>
             </span>
@@ -81,7 +81,7 @@
             matTooltip="{{ 'tooltips.View Standing Instruction' | translate }}"
             *mifosxHasPermission="'READ_STANDINGINSTRUCTION'"
             [routerLink]="['../', 'standing-instructions', instruction.id, 'view']"
-            >
+          >
             <i class="fa fa-eye"></i>
           </button>
         </td>

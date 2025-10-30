@@ -17,9 +17,7 @@
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
-          <mat-option
-            [value]="lockinPeriodFrequencyType.id"
-            >
+          <mat-option [value]="lockinPeriodFrequencyType.id">
             {{ lockinPeriodFrequencyType.value }}
           </mat-option>
         }
@@ -123,9 +121,7 @@
       <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
       <mat-select formControlName="preClosurePenalInterestOnTypeId">
         @for (preClosurePenalInterestOnType of preClosurePenalInterestOnTypeData; track preClosurePenalInterestOnType) {
-          <mat-option
-            [value]="preClosurePenalInterestOnType.id"
-            >
+          <mat-option [value]="preClosurePenalInterestOnType.id">
             {{ preClosurePenalInterestOnType.value }}
           </mat-option>
         }
@@ -139,7 +135,7 @@
       labelPosition="before"
       formControlName="withHoldTax"
       matTooltip="{{ 'tooltips.An boolean flag to attach' | translate }}"
-      >
+    >
       {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}
     </mat-checkbox>
 

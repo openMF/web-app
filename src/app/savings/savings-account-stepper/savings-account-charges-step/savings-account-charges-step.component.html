@@ -3,9 +3,7 @@
     <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
     <mat-select #charge>
       @for (charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value; track charge) {
-        <mat-option
-          [value]="charge"
-          >
+        <mat-option [value]="charge">
           {{ charge.name }}
         </mat-option>
       }
@@ -20,11 +18,7 @@
   </div>
 
   @if (chargesDataSource.length > 0) {
-    <table
-      class="flex-98 mat-elevation-z1"
-      mat-table
-      [dataSource]="chargesDataSource"
-      >
+    <table class="flex-98 mat-elevation-z1" mat-table [dataSource]="chargesDataSource">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
@@ -56,8 +50,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           @if (charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee') {
-            <span
-              >
+            <span>
               {{ (charge.dueDate | dateFormat) || 'Unassigned' }}
             </span>
           }
@@ -68,28 +61,21 @@
           }
           @if (
             !(
-            charge.chargeTimeType.value === 'Monthly Fee' ||
-            charge.chargeTimeType.value === 'Annual Fee' ||
-            charge.chargeTimeType.value === 'Specified due date' ||
-            charge.chargeTimeType.value === 'Weekly Fee'
+              charge.chargeTimeType.value === 'Monthly Fee' ||
+              charge.chargeTimeType.value === 'Annual Fee' ||
+              charge.chargeTimeType.value === 'Specified due date' ||
+              charge.chargeTimeType.value === 'Weekly Fee'
             )
-            ) {
-            <span
-              >
-              N/A
-            </span>
+          ) {
+            <span> N/A </span>
           }
           @if (
             charge.chargeTimeType.value === 'Weekly Fee' ||
             charge.chargeTimeType.value === 'Monthly Fee' ||
             charge.chargeTimeType.value === 'Annual Fee' ||
             charge.chargeTimeType.value === 'Specified due date'
-            ) {
-            <button
-              mat-icon-button
-              color="primary"
-              (click)="editChargeDate(charge)"
-              >
+          ) {
+            <button mat-icon-button color="primary" (click)="editChargeDate(charge)">
               <fa-icon icon="pen"></fa-icon>
             </button>
           }
@@ -105,11 +91,7 @@
             <span>{{ 'labels.inputs.Not Provided' | translate }}</span>
           }
           @if (charge.chargeTimeType.value === 'Weekly Fee' || charge.chargeTimeType.value === 'Monthly Fee') {
-            <button
-              mat-icon-button
-              color="primary"
-              (click)="editChargeFeeInterval(charge)"
-              >
+            <button mat-icon-button color="primary" (click)="editChargeFeeInterval(charge)">
               <fa-icon icon="pen"></fa-icon>
             </button>
           }
