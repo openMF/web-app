@@ -19,18 +19,14 @@
       </mat-error>
     </mat-form-field>
     @if (currency) {
-      <span class="flex-48">{{
-        calculateCurrenValue() | currency: currency.code : 'symbol-narrow' : '1.2-2'
-      }}</span>
+      <span class="flex-48">{{ calculateCurrenValue() | currency: currency.code : 'symbol-narrow' : '1.2-2' }}</span>
     }
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Default Savings Account' | translate }}</mat-label>
       <mat-select formControlName="savingsAccountId" required>
         @for (account of savingsAccountsData; track account) {
-          <mat-option [value]="account.id">
-            {{ account.accountNo }} - {{ account.savingsProductName }}
-          </mat-option>
+          <mat-option [value]="account.id"> {{ account.accountNo }} - {{ account.savingsProductName }} </mat-option>
         }
       </mat-select>
       <mat-error>
@@ -48,7 +44,7 @@
         [matDatepicker]="applicationDatePicker"
         formControlName="applicationDate"
         required
-        />
+      />
       <mat-datepicker-toggle matSuffix [for]="applicationDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #applicationDatePicker></mat-datepicker>
       <mat-error>
@@ -71,10 +67,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="minimumActivePeriodFrequencyType">
-        @for (minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData; track minimumActivePeriodFrequencyType) {
-          <mat-option
-            [value]="minimumActivePeriodFrequencyType.id"
-            >
+        @for (
+          minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData;
+          track minimumActivePeriodFrequencyType
+        ) {
+          <mat-option [value]="minimumActivePeriodFrequencyType.id">
             {{ minimumActivePeriodFrequencyType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -92,9 +89,7 @@
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
-          <mat-option
-            [value]="lockinPeriodFrequencyType.id"
-            >
+          <mat-option [value]="lockinPeriodFrequencyType.id">
             {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
           </mat-option>
         }

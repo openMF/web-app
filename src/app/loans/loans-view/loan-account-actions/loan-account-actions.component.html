@@ -5,17 +5,13 @@
   <mifosx-undo-approval></mifosx-undo-approval>
 }
 @if (actions['Assign Loan Officer']) {
-  <mifosx-assign-loan-officer
-    [dataObject]="actionButtonData"
-  ></mifosx-assign-loan-officer>
+  <mifosx-assign-loan-officer [dataObject]="actionButtonData"></mifosx-assign-loan-officer>
 }
 @if (actions['Foreclosure']) {
   <mifosx-foreclosure [dataObject]="actionButtonData"></mifosx-foreclosure>
 }
 @if (actions['Prepay Loan'] || actions['Contract Termination']) {
-  <mifosx-prepay-loan
-    [dataObject]="actionButtonData"
-  ></mifosx-prepay-loan>
+  <mifosx-prepay-loan [dataObject]="actionButtonData"></mifosx-prepay-loan>
 }
 @if (actions['Make Repayment']) {
   <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
@@ -30,22 +26,16 @@
   <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
 }
 @if (actions['Interest Payment Waiver']) {
-  <mifosx-make-repayment
-    [dataObject]="actionButtonData"
-  ></mifosx-make-repayment>
+  <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
 }
 @if (actions['Payout Refund']) {
   <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
 }
 @if (actions['Merchant Issued Refund']) {
-  <mifosx-make-repayment
-    [dataObject]="actionButtonData"
-  ></mifosx-make-repayment>
+  <mifosx-make-repayment [dataObject]="actionButtonData"></mifosx-make-repayment>
 }
 @if (actions['Credit Balance Refund']) {
-  <mifosx-loan-credit-balance-refund
-    [dataObject]="actionButtonData"
-  ></mifosx-loan-credit-balance-refund>
+  <mifosx-loan-credit-balance-refund [dataObject]="actionButtonData"></mifosx-loan-credit-balance-refund>
 }
 @if (actions['Waive Interest']) {
   <mifosx-waive-interest [dataObject]="actionButtonData"></mifosx-waive-interest>
@@ -54,17 +44,13 @@
   <mifosx-write-off-page [dataObject]="actionButtonData"></mifosx-write-off-page>
 }
 @if (actions['Close (as Rescheduled)']) {
-  <mifosx-close-as-rescheduled
-    [dataObject]="actionButtonData"
-  ></mifosx-close-as-rescheduled>
+  <mifosx-close-as-rescheduled [dataObject]="actionButtonData"></mifosx-close-as-rescheduled>
 }
 @if (actions['Reschedule']) {
   <mifosx-loan-reschedule [dataObject]="actionButtonData"></mifosx-loan-reschedule>
 }
 @if (actions['Recovery Payment']) {
-  <mifosx-recovery-repayment
-    [dataObject]="actionButtonData"
-  ></mifosx-recovery-repayment>
+  <mifosx-recovery-repayment [dataObject]="actionButtonData"></mifosx-recovery-repayment>
 }
 @if (actions['View Guarantors']) {
   <mifosx-view-guarantors [dataObject]="actionButtonData"></mifosx-view-guarantors>
@@ -73,9 +59,7 @@
   <mifosx-create-guarantor [dataObject]="actionButtonData"></mifosx-create-guarantor>
 }
 @if (actions['Disburse to Savings']) {
-  <mifosx-disburse-to-savings-account
-    [dataObject]="actionButtonData"
-  ></mifosx-disburse-to-savings-account>
+  <mifosx-disburse-to-savings-account [dataObject]="actionButtonData"></mifosx-disburse-to-savings-account>
 }
 @if (actions['Reject']) {
   <mifosx-reject-loan></mifosx-reject-loan>
@@ -90,14 +74,10 @@
   <mifosx-add-collateral [dataObject]="actionButtonData"></mifosx-add-collateral>
 }
 @if (actions['Undo Disbursal'] || actions['Undo Last Disbursal']) {
-  <mifosx-undo-disbursal
-    [actionName]="actionName"
-  ></mifosx-undo-disbursal>
+  <mifosx-undo-disbursal [actionName]="actionName"></mifosx-undo-disbursal>
 }
 @if (actions['Loan Screen Reports']) {
-  <mifosx-loan-screen-reports
-    [dataObject]="actionButtonData"
-  ></mifosx-loan-screen-reports>
+  <mifosx-loan-screen-reports [dataObject]="actionButtonData"></mifosx-loan-screen-reports>
 }
 @if (actions['Approve']) {
   <mifosx-approve-loan></mifosx-approve-loan>
@@ -121,9 +101,7 @@
   <mifosx-loan-reamortize [dataObject]="actionButtonData"></mifosx-loan-reamortize>
 }
 @if (actions['Add Interest Pause']) {
-  <mifosx-add-interest-pause
-    [dataObject]="navigationData"
-  ></mifosx-add-interest-pause>
+  <mifosx-add-interest-pause [dataObject]="navigationData"></mifosx-add-interest-pause>
 }
 @if (actions['Undo Write-off']) {
   <mifosx-undo-write-off [dataObject]="actionButtonData"></mifosx-undo-write-off>

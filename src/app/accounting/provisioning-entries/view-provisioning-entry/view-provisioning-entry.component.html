@@ -7,7 +7,7 @@
         (click)="createProvisioningJournalEntries()"
         [disabled]="provisioningEntry.journalEntry"
         *mifosxHasPermission="'CREATE_JOURNAL_ENTRY'"
-        >
+      >
         <fa-icon icon="plus" class="m-r-10"></fa-icon>
         {{ 'labels.buttons.Create Journal Entries' | translate }}
       </button>
@@ -76,9 +76,7 @@
 
 <mat-autocomplete autoActiveFirstOption #provisioningCategoryAutocomplete="matAutocomplete">
   @for (provisioningCategory of filteredProvisioningCategoryData | async; track provisioningCategory) {
-    <mat-option
-      [value]="provisioningCategory.categoryName"
-      >
+    <mat-option [value]="provisioningCategory.categoryName">
       {{ provisioningCategory.categoryName }}
     </mat-option>
   }

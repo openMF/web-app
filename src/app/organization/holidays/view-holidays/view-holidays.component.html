@@ -50,17 +50,13 @@
         </div>
 
         @if (holidayData.repaymentsRescheduledTo !== undefined && holidayData.repaymentsRescheduledTo !== null) {
-          <div
-            class="flex-50"
-            >
+          <div class="flex-50">
             {{ holidayData.repaymentsRescheduledTo | dateFormat }}
           </div>
         }
 
         @if (holidayData.repaymentsRescheduledTo === undefined || holidayData.repaymentsRescheduledTo === null) {
-          <div
-            class="flex-50"
-            >
+          <div class="flex-50">
             {{ 'labels.inputs.Next Repayment Date' | translate }}
           </div>
         }

@@ -7,7 +7,7 @@
         routerLinkActive
         #general="routerLinkActive"
         [active]="general.isActive"
-        >
+      >
         {{ 'labels.heading.General' | translate }}
       </a>
       @for (loanProductDatatable of loanProductDatatables; track loanProductDatatable) {
@@ -18,7 +18,7 @@
           #datatable="routerLinkActive"
           [active]="datatable.isActive"
           *mifosxHasPermission="'READ_' + loanProductDatatable.registeredTableName"
-          >
+        >
           {{ loanProductDatatable.registeredTableName }}
         </a>
       }

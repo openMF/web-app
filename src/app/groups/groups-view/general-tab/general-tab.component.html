@@ -23,7 +23,11 @@
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
           <td mat-cell *matCellDef="let element">
-            <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup" [matTooltip]="element.status.value"></i>
+            <i
+              class="fa fa-stop"
+              [ngClass]="element.status.code | statusLookup"
+              [matTooltip]="element.status.value"
+            ></i>
             {{ element.displayName }}
           </td>
         </ng-container>
@@ -74,11 +78,7 @@
       </div>
       <!-- Open Loan Accounts Table -->
       @if (!showClosedLoanAccounts) {
-        <table
-          mat-table
-          [dataSource]="loanAccounts | accountsFilter: 'loan'"
-          class="mat-elevation-z1 m-b-30"
-          >
+        <table mat-table [dataSource]="loanAccounts | accountsFilter: 'loan'" class="mat-elevation-z1 m-b-30">
           <ng-container matColumnDef="Account No">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}.</th>
             <td mat-cell *matCellDef="let element">
@@ -125,29 +125,17 @@
                 </button>
               }
               @if (element.status.pendingApproval) {
-                <button
-                  class="account-action-button"
-                  mat-raised-button
-                  color="primary"
-                  >
+                <button class="account-action-button" mat-raised-button color="primary">
                   <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
                 </button>
               }
               @if (!element.status.pendingApproval && !element.status.active && !element.status.overpaid) {
-                <button
-                  class="account-action-button"
-                  mat-raised-button
-                  color="primary"
-                  >
+                <button class="account-action-button" mat-raised-button color="primary">
                   <i class="fa fa-flag" matTooltip="{{ 'tooltips.Disburse' | translate }}"></i>
                 </button>
               }
               @if (!element.status.pendingApproval && !element.status.active && element.status.overpaid) {
-                <button
-                  class="account-action-button"
-                  mat-raised-button
-                  color="primary"
-                  >
+                <button class="account-action-button" mat-raised-button color="primary">
                   <i class="fa fa-exchange" matTooltip="{{ 'tooltips.Transfer Funds' | translate }}"></i>
                 </button>
               }
@@ -167,7 +155,7 @@
           mat-table
           [dataSource]="loanAccounts | accountsFilter: 'loan' : 'closed'"
           class="mat-elevation-z1 m-b-30"
-          >
+        >
           <ng-container matColumnDef="Account No">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}.</th>
             <td mat-cell *matCellDef="let element">
@@ -310,12 +298,7 @@
         </div>
         <div class="action-button m-b-10">
           @if ((savingAccounts | accountsFilter: 'saving' : 'closed').length) {
-            <button
-              mat-raised-button
-              class="f-right"
-              color="primary"
-              (click)="toggleSavingAccountsOverview()"
-              >
+            <button mat-raised-button class="f-right" color="primary" (click)="toggleSavingAccountsOverview()">
               {{ showClosedSavingAccounts ? 'View Active Accounts' : 'View Closed Accounts' }}
             </button>
           }
@@ -323,15 +306,15 @@
       </div>
       <!-- Open Savings Accounts Table -->
       @if (!showClosedSavingAccounts) {
-        <table
-          mat-table
-          [dataSource]="savingAccounts | accountsFilter: 'saving'"
-          class="mat-elevation-z1 m-b-30"
-          >
+        <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving'" class="mat-elevation-z1 m-b-30">
           <ng-container matColumnDef="Account No">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}.</th>
             <td mat-cell *matCellDef="let element">
-              <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup" [matTooltip]="element.status.value"></i>
+              <i
+                class="fa fa-stop"
+                [ngClass]="element.status.code | statusLookup"
+                [matTooltip]="element.status.value"
+              ></i>
               {{ element.accountNo }}
             </td>
           </ng-container>
@@ -357,7 +340,7 @@
                   color="primary"
                   (click)="routeEdit($event)"
                   [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
-                  >
+                >
                   <i class="fa fa-arrow-up" matTooltip="{{ 'tooltips.Deposit' | translate }}"></i>
                 </button>
               }
@@ -368,7 +351,7 @@
                   color="primary"
                   (click)="routeEdit($event)"
                   [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
-                  >
+                >
                   <i class="fa fa-arrow-down" matTooltip="{{ 'tooltips.Withdraw' | translate }}"></i>
                 </button>
               }
@@ -379,7 +362,7 @@
                   color="primary"
                   (click)="routeEdit($event)"
                   [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Approve']"
-                  >
+                >
                   <i class="fa fa-check" matTooltip="{{ 'tooltips.Approve' | translate }}"></i>
                 </button>
               }
@@ -390,7 +373,7 @@
                   color="primary"
                   (click)="routeEdit($event)"
                   [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Undo Approval']"
-                  >
+                >
                   <i class="fa fa-undo" matTooltip="{{ 'tooltips.Undo Approval' | translate }}"></i>
                 </button>
               }
@@ -401,7 +384,7 @@
                   color="primary"
                   (click)="routeEdit($event)"
                   [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Activate']"
-                  >
+                >
                   <i class="fa fa-check-circle" matTooltip="{{ 'tooltips.Activate' | translate }}"></i>
                 </button>
               }
@@ -421,11 +404,15 @@
           mat-table
           [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed'"
           class="mat-elevation-z1 m-b-30"
-          >
+        >
           <ng-container matColumnDef="Account No">
             <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}.</th>
             <td mat-cell *matCellDef="let element">
-              <i class="fa fa-stop" [ngClass]="element.status.code | statusLookup" [matTooltip]="element.status.value"></i>
+              <i
+                class="fa fa-stop"
+                [ngClass]="element.status.code | statusLookup"
+                [matTooltip]="element.status.value"
+              ></i>
               {{ element.accountNo }}
             </td>
           </ng-container>

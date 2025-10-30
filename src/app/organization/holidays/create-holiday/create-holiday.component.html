@@ -23,7 +23,7 @@
               [matDatepicker]="fromDatePicker"
               required
               formControlName="fromDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatePicker></mat-datepicker>
             @if (holidayForm.controls.fromDate.hasError('required')) {
@@ -43,7 +43,7 @@
               [matDatepicker]="toDatePicker"
               required
               formControlName="toDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatePicker></mat-datepicker>
             @if (holidayForm.controls.toDate.hasError('required')) {
@@ -81,7 +81,7 @@
                 [matDatepicker]="repaymentDatePicker"
                 required
                 formControlName="repaymentsRescheduledTo"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="repaymentDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #repaymentDatePicker></mat-datepicker>
               @if (holidayForm.controls.repaymentsRescheduledTo.hasError('required')) {
@@ -108,36 +108,36 @@
                 [checked]="checklistSelection.isSelected(node)"
                 (change)="officeLeafItemSelectionToggle(node)"
                 >{{ officesDict[node.item].name }}</mat-checkbox
-                >
-              </mat-tree-node>
+              >
+            </mat-tree-node>
 
-              <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-                <button type="button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
-                  <mat-icon class="mat-icon-rtl-mirror">
-                    {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
-                  </mat-icon>
-                </button>
-                <mat-checkbox [checked]="descendantsAllSelected(node)" (change)="officeItemSelectionToggle(node)">{{
-                  officesDict[node.item].name
-                }}</mat-checkbox>
-              </mat-tree-node>
-            </mat-tree>
-          </div>
-        </mat-card-content>
+            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+              <button type="button" mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+                </mat-icon>
+              </button>
+              <mat-checkbox [checked]="descendantsAllSelected(node)" (change)="officeItemSelectionToggle(node)">{{
+                officesDict[node.item].name
+              }}</mat-checkbox>
+            </mat-tree-node>
+          </mat-tree>
+        </div>
+      </mat-card-content>
 
-        <mat-card-actions class="layout-row align-center gap-5px responsive-column">
-          <button type="button" mat-raised-button [routerLink]="['../']">
-            {{ 'labels.buttons.Cancel' | translate }}
-          </button>
-          <button
-            mat-raised-button
-            color="primary"
-            [disabled]="!holidayForm.valid"
-            *mifosxHasPermission="'CREATE_HOLIDAY'"
-            >
-            {{ 'labels.buttons.Submit' | translate }}
-          </button>
-        </mat-card-actions>
-      </form>
-    </mat-card>
-  </div>
+      <mat-card-actions class="layout-row align-center gap-5px responsive-column">
+        <button type="button" mat-raised-button [routerLink]="['../']">
+          {{ 'labels.buttons.Cancel' | translate }}
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!holidayForm.valid"
+          *mifosxHasPermission="'CREATE_HOLIDAY'"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

@@ -7,7 +7,7 @@
           placeholder="Search by client name, external Id, mobile"
           class="search-box"
           (keydown.enter)="search($event.target.value)"
-          />
+        />
       </mat-form-field>
     </div>
     @if (existsClientsToFilter) {
@@ -23,7 +23,7 @@
         color="primary"
         [routerLink]="['../', 'organization', 'bulk-import', 'Clients']"
         *mifosxHasPermission="'CREATE_CLIENT'"
-        >
+      >
         <fa-icon icon="download" class="m-r-20"></fa-icon>{{ 'labels.buttons.Import Client' | translate }}
       </button>
       <button mat-raised-button color="primary" [routerLink]="['create']" *mifosxHasPermission="'CREATE_CLIENT'">

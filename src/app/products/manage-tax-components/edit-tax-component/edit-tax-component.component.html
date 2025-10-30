@@ -48,7 +48,7 @@
               [matDatepicker]="startDatePicker"
               required
               formControlName="startDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             @if (taxComponentForm.controls.startDate.hasError('required')) {
@@ -70,7 +70,7 @@
           color="primary"
           [disabled]="!taxComponentForm.valid"
           *mifosxHasPermission="'UPDATE_TAXCOMPONENT'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

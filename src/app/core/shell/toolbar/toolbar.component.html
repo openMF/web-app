@@ -5,7 +5,7 @@
       (click)="toggleSidenav()"
       matTooltip="{{ 'tooltips.Toggle Hide/Open' | translate }}"
       tabindex="0"
-      >
+    >
       <fa-icon icon="bars" size="lg"></fa-icon>
     </button>
   }
@@ -17,7 +17,7 @@
       matTooltip="{{ 'tooltips.Toggle Collapse' | translate }}"
       class="hide-lt-md"
       tabindex="0"
-      >
+    >
       @if (!sidenavCollapsed) {
         <fa-icon icon="chevron-left"></fa-icon>
       }
@@ -34,7 +34,7 @@
       [matMenuTriggerFor]="institutionMenu"
       #institutionMenuTrigger="matMenuTrigger"
       tabindex="0"
-      >
+    >
       <fa-icon class="mr-05" icon="university" size="lg"></fa-icon>
       {{ 'labels.menus.Institution' | translate }}
     </a>
@@ -235,7 +235,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateConfigWizard, configWizard)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -255,7 +255,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateGlobalSearch, globalSearch)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -272,14 +272,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateConfigWizard, configWizard)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -296,14 +296,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateGlobalSearch, globalSearch)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateNotifications, notifications)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -320,7 +320,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateLanguageSelector, languageSelector)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateThemePicker, themeToggle)">
@@ -340,7 +340,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateNotifications, notifications)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); showPopover(templateAppMenu, appMenu)">

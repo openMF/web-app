@@ -26,9 +26,8 @@
             @if (
               taxComponentForm.controls.percentage.hasError('pattern') ||
               taxComponentForm.controls.percentage.hasError('max')
-              ) {
-              <mat-error
-                >
+            ) {
+              <mat-error>
                 {{ 'labels.inputs.Percentage' | translate }} <strong>{{ 'labels.commons.should' | translate }}</strong>
                 {{ 'labels.commons.be larger than 0 and at most 100' | translate }}
               </mat-error>
@@ -52,7 +51,7 @@
               [glAccountList]="debitAccountData"
               [required]="false"
               [inputLabel]="'Debit Account'"
-              >
+            >
             </mifosx-gl-account-selector>
           }
 
@@ -73,7 +72,7 @@
               [glAccountList]="creditAccountData"
               [required]="false"
               [inputLabel]="'Credit Account'"
-              >
+            >
             </mifosx-gl-account-selector>
           }
 
@@ -86,7 +85,7 @@
               [matDatepicker]="startDatePicker"
               required
               formControlName="startDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker></mat-datepicker>
             @if (taxComponentForm.controls.startDate.hasError('required')) {
@@ -108,7 +107,7 @@
           color="primary"
           [disabled]="!taxComponentForm.valid"
           *mifosxHasPermission="'CREATE_TAXCOMPONENT'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

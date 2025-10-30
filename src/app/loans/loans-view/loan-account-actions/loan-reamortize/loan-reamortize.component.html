@@ -4,8 +4,33 @@
       <mat-card-content>
         <div class="layout-column">
           <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Interest Handling' | translate }}</mat-label>
+            <mat-select formControlName="reAmortizationInterestHandling">
+              @for (
+                reAmortizationInterestHandlingOption of reAmortizationInterestHandlingOptions;
+                track trackByInterestHandlingOption($index, reAmortizationInterestHandlingOption)
+              ) {
+                <mat-option [value]="reAmortizationInterestHandlingOption.id">
+                  {{ reAmortizationInterestHandlingOption.value | translateKey: 'catalogs' }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="layout-column">
+          <mat-form-field>
             <mat-label>{{ 'labels.inputs.Reason' | translate }}</mat-label>
-            <input matInput formControlName="note" />
+            <mat-select formControlName="reasonCodeValueId">
+              @for (
+                reAmortizationReasonOption of reAmortizationReasonOptions;
+                track trackByReasonOption($index, reAmortizationReasonOption)
+              ) {
+                <mat-option [value]="reAmortizationReasonOption.id">
+                  {{ reAmortizationReasonOption.name }}
+                </mat-option>
+              }
+            </mat-select>
           </mat-form-field>
         </div>
 
@@ -13,6 +38,13 @@
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.External Id' | translate }}</mat-label>
             <input matInput formControlName="externalId" />
+          </mat-form-field>
+        </div>
+
+        <div class="layout-column">
+          <mat-form-field>
+            <mat-label>{{ 'labels.inputs.Note' | translate }}</mat-label>
+            <input matInput formControlName="note" />
           </mat-form-field>
         </div>
 

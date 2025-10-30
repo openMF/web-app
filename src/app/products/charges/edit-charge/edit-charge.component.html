@@ -7,9 +7,7 @@
             <mat-label>{{ 'labels.inputs.Charge Applies To' | translate }}</mat-label>
             <mat-select required formControlName="chargeAppliesTo">
               @for (chargeAppliesTo of chargeData.chargeAppliesToOptions; track chargeAppliesTo) {
-                <mat-option
-                  [value]="chargeAppliesTo.id"
-                  >
+                <mat-option [value]="chargeAppliesTo.id">
                   {{ chargeAppliesTo.value | translateKey: 'catalogs' }}
                 </mat-option>
               }
@@ -85,9 +83,7 @@
               <mat-label>{{ 'labels.inputs.Charge Payment By' | translate }}</mat-label>
               <mat-select required formControlName="chargePaymentMode">
                 @for (chargePaymentMode of chargeData.chargePaymetModeOptions; track chargePaymentMode) {
-                  <mat-option
-                    [value]="chargePaymentMode.id"
-                    >
+                  <mat-option [value]="chargePaymentMode.id">
                     {{ chargePaymentMode.value | translateKey: 'catalogs' }}
                   </mat-option>
                 }
@@ -119,26 +115,24 @@
           -->
           @if (
             (chargeForm.controls.chargeAppliesTo.value === 1 &&
-            (chargeForm.controls.chargeCalculationType.value === 2 ||
-            chargeForm.controls.chargeCalculationType.value === 3 ||
-            chargeForm.controls.chargeCalculationType.value === 4 ||
-            chargeForm.controls.chargeCalculationType.value === 5)) ||
+              (chargeForm.controls.chargeCalculationType.value === 2 ||
+                chargeForm.controls.chargeCalculationType.value === 3 ||
+                chargeForm.controls.chargeCalculationType.value === 4 ||
+                chargeForm.controls.chargeCalculationType.value === 5)) ||
             (chargeForm.controls.chargeAppliesTo.value === 2 &&
-            (chargeForm.controls.chargeTimeType.value === 16 || chargeForm.controls.chargeTimeType.value === 5) &&
-            chargeForm.controls.chargeCalculationType.value === 2) ||
+              (chargeForm.controls.chargeTimeType.value === 16 || chargeForm.controls.chargeTimeType.value === 5) &&
+              chargeForm.controls.chargeCalculationType.value === 2) ||
             (chargeForm.controls.chargeAppliesTo.value === 4 &&
-            (chargeForm.controls.chargeTimeType.value === 14 || chargeForm.controls.chargeTimeType.value === 15) &&
-            chargeForm.controls.chargeCalculationType.value === 2)
-            ) {
-            <mat-form-field
-              class="flex-48"
-              >
+              (chargeForm.controls.chargeTimeType.value === 14 || chargeForm.controls.chargeTimeType.value === 15) &&
+              chargeForm.controls.chargeCalculationType.value === 2)
+          ) {
+            <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Minimum Charge Cap' | translate }}</mat-label>
               <input matInput autofocus formControlName="minCap" mifosxValidateOnFocus />
               @if (chargeForm.controls.minCap.hasError('maxValue')) {
                 <mat-error>
                   {{ 'errors.validation.msg.loanproduct.minimumGap.not.greater.than.specified.number' | translate }} ({{
-                  chargeForm.controls.maxCap.value
+                    chargeForm.controls.maxCap.value
                   }})
                 </mat-error>
               }
@@ -146,26 +140,24 @@
           }
           @if (
             (chargeForm.controls.chargeAppliesTo.value === 1 &&
-            (chargeForm.controls.chargeCalculationType.value === 2 ||
-            chargeForm.controls.chargeCalculationType.value === 3 ||
-            chargeForm.controls.chargeCalculationType.value === 4 ||
-            chargeForm.controls.chargeCalculationType.value === 5)) ||
+              (chargeForm.controls.chargeCalculationType.value === 2 ||
+                chargeForm.controls.chargeCalculationType.value === 3 ||
+                chargeForm.controls.chargeCalculationType.value === 4 ||
+                chargeForm.controls.chargeCalculationType.value === 5)) ||
             (chargeForm.controls.chargeAppliesTo.value === 2 &&
-            (chargeForm.controls.chargeTimeType.value === 16 || chargeForm.controls.chargeTimeType.value === 5) &&
-            chargeForm.controls.chargeCalculationType.value === 2) ||
+              (chargeForm.controls.chargeTimeType.value === 16 || chargeForm.controls.chargeTimeType.value === 5) &&
+              chargeForm.controls.chargeCalculationType.value === 2) ||
             (chargeForm.controls.chargeAppliesTo.value === 4 &&
-            (chargeForm.controls.chargeTimeType.value === 14 || chargeForm.controls.chargeTimeType.value === 15) &&
-            chargeForm.controls.chargeCalculationType.value === 2)
-            ) {
-            <mat-form-field
-              class="flex-48"
-              >
+              (chargeForm.controls.chargeTimeType.value === 14 || chargeForm.controls.chargeTimeType.value === 15) &&
+              chargeForm.controls.chargeCalculationType.value === 2)
+          ) {
+            <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Maximum Charge Cap' | translate }}</mat-label>
               <input matInput autofocus formControlName="maxCap" mifosxValidateOnFocus />
               @if (chargeForm.controls.maxCap.hasError('minValue')) {
                 <mat-error>
                   {{ 'errors.validation.msg.loanproduct.maximumGap.not.greater.than.specified.number' | translate }} ({{
-                  chargeForm.controls.minCap.value
+                    chargeForm.controls.minCap.value
                   }})
                 </mat-error>
               }
@@ -179,7 +171,7 @@
               [glAccountList]="chargeData.incomeOrLiabilityAccountOptions.incomeAccountOptions"
               [required]="true"
               [inputLabel]="'Income from Charge'"
-              >
+            >
             </mifosx-gl-account-selector>
           }
 
@@ -212,7 +204,7 @@
                 labelPosition="before"
                 [checked]="addFeeFrequency && showFeeOptions"
                 (change)="getFeeFrequency($event.checked)"
-                >
+              >
                 {{ 'labels.inputs.Add Fee Frequency' | translate }}
               </mat-checkbox>
             </div>

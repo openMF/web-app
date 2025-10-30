@@ -42,7 +42,7 @@
               [matDatepicker]="openingDatePicker"
               required
               formControlName="openingDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="openingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #openingDatePicker></mat-datepicker>
             @if (officeForm.controls.openingDate.hasError('required')) {

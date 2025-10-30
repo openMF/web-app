@@ -5,7 +5,7 @@
       color="primary"
       (click)="editTask(); backupCheckValues()"
       *mifosxHasPermission="'UPDATE_PERMISSION'"
-      >
+    >
       <fa-icon icon="edit" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Edit' | translate }}
     </button>
@@ -22,7 +22,7 @@
               <mat-list-item
                 [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
                 (click)="showPermissions(grouping)"
-                >
+              >
                 <span class="grouping-name">
                   {{ formatName(grouping) }}
                 </span>
@@ -79,7 +79,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateMcTable, mcTable, 'top', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -92,21 +92,21 @@
       href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895359/Configure+Maker-Checker+Tasks"
       target="_blank"
       >{{ 'labels.inputs.Configure Maker-Checker Tasks' | translate }}</a
-      >
-    </h4>
-    <div class="layout-row align-end gap-2px responsive-column">
-      <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-        {{ 'labels.buttons.Close' | translate }}
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="popover.close(); showPopover(templateButtonEdit, buttonEdit, 'bottom', true)"
-        >
-        {{ 'labels.buttons.Back' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
-        {{ 'labels.buttons.Next' | translate }}
-      </button>
-    </div>
-  </ng-template>
+    >
+  </h4>
+  <div class="layout-row align-end gap-2px responsive-column">
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateButtonEdit, buttonEdit, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
+  </div>
+</ng-template>

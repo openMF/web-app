@@ -29,7 +29,7 @@
               [matDatepicker]="closingDatePicker"
               required
               formControlName="closingDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="closingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closingDatePicker></mat-datepicker>
             @if (accountingClosureForm.controls.closingDate.hasError('required')) {
@@ -56,7 +56,7 @@
           color="primary"
           [disabled]="!accountingClosureForm.valid"
           *mifosxHasPermission="'CREATE_GLCLOSURE'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

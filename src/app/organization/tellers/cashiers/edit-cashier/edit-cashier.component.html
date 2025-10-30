@@ -53,7 +53,7 @@
               [matDatepicker]="fromDatePicker"
               required
               formControlName="startDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #fromDatePicker></mat-datepicker>
             @if (editCashierForm.controls.startDate.hasError('required')) {
@@ -73,7 +73,7 @@
               [matDatepicker]="toDatePicker"
               required
               formControlName="endDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #toDatePicker></mat-datepicker>
             @if (editCashierForm.controls.endDate.hasError('required')) {
@@ -101,7 +101,7 @@
           color="primary"
           [disabled]="!editCashierForm.valid"
           *mifosxHasPermission="'UPDATECASHIERALLOCATION_TELLER'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

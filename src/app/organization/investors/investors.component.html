@@ -14,7 +14,7 @@
           [max]="maxDate"
           [matDatepicker]="effectiveFromDatePicker"
           [formControl]="effectiveFromDate"
-          />
+        />
         <mat-datepicker-toggle matSuffix [for]="effectiveFromDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #effectiveFromDatePicker></mat-datepicker>
       </mat-form-field>
@@ -27,7 +27,7 @@
           [max]="maxDate"
           [matDatepicker]="effectiveToDatePicker"
           [formControl]="effectiveToDate"
-          />
+        />
         <mat-datepicker-toggle matSuffix [for]="effectiveToDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #effectiveToDatePicker></mat-datepicker>
       </mat-form-field>
@@ -40,7 +40,7 @@
           [max]="maxDate"
           [matDatepicker]="settlementFromDatePicker"
           [formControl]="settlementFromDate"
-          />
+        />
         <mat-datepicker-toggle matSuffix [for]="settlementFromDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #settlementFromDatePicker></mat-datepicker>
       </mat-form-field>
@@ -53,7 +53,7 @@
           [max]="maxDate"
           [matDatepicker]="settlementToDatePicker"
           [formControl]="settlementToDate"
-          />
+        />
         <mat-datepicker-toggle matSuffix [for]="settlementToDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #settlementToDatePicker></mat-datepicker>
       </mat-form-field>
@@ -87,7 +87,9 @@
                       </td>
                       <td class="field-name">{{ 'labels.inputs.Owner External Id' | translate }}</td>
                       <td>
-                        <mifosx-external-identifier externalId="{{ record.owner.externalId }}"></mifosx-external-identifier>
+                        <mifosx-external-identifier
+                          externalId="{{ record.owner.externalId }}"
+                        ></mifosx-external-identifier>
                       </td>
                       <td class="field-name">{{ 'labels.inputs.Transfer External Id' | translate }}</td>
                       <td>
@@ -206,7 +208,7 @@
                     color="warn"
                     (click)="cancelPendingSale(record)"
                     matTooltip="{{ 'labels.text.Cancel Pending Sale' | translate }}"
-                    >
+                  >
                     <fa-icon icon="trash"></fa-icon>
                   </button>
                 </div>

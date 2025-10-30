@@ -24,7 +24,7 @@
                 mat-icon-button
                 (mousedown)="passwordInputType = 'text'"
                 (mouseup)="passwordInputType = 'password'"
-                >
+              >
                 @if (passwordInputType === 'password') {
                   <fa-icon icon="eye"></fa-icon>
                 }
@@ -99,7 +99,7 @@
           mat-raised-button
           color="primary"
           [disabled]="!emailConfigurationForm.valid || emailConfigurationForm.pristine"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

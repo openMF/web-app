@@ -50,7 +50,7 @@
                   mat-icon-button
                   color="primary"
                   (click)="editTaxGroup(taxComponent, taxComponentIndex)"
-                  >
+                >
                   <fa-icon icon="edit"></fa-icon>
                 </button>
                 @if (taxComponent.isNew) {
@@ -61,7 +61,7 @@
                     (click)="delete(taxComponentIndex)"
                     matTooltip="{{ 'tooltips.Delete Interest Rate Chart' | translate }}"
                     matTooltipPosition="left"
-                    >
+                  >
                     <fa-icon icon="trash"></fa-icon>
                   </button>
                 }
@@ -83,7 +83,7 @@
           color="primary"
           [disabled]="!taxGroupForm.valid"
           *mifosxHasPermission="'UPDATE_TAXGROUP'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

@@ -76,7 +76,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatStepperPrevious,
     MatStepperNext,
     FindPipe
-]
+  ]
 })
 export class RecurringDepositProductInterestRateChartStepComponent implements OnInit {
   @Input() recurringDepositProductsTemplate: any;

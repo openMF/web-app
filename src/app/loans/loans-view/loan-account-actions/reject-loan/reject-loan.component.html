@@ -12,7 +12,7 @@
               [matDatepicker]="rejectedDatePicker"
               required
               formControlName="rejectedOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="rejectedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rejectedDatePicker></mat-datepicker>
             @if (rejectLoanForm.controls.rejectedOnDate.hasError('required')) {
@@ -38,7 +38,7 @@
             color="primary"
             [disabled]="!rejectLoanForm.valid"
             *mifosxHasPermission="'REJECT_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

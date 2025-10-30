@@ -32,7 +32,7 @@
               [matDatepicker]="cashDatePicker"
               required
               formControlName="txnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="cashDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #cashDatePicker></mat-datepicker>
             @if (allocateCashForm.controls.txnDate.hasError('required')) {
@@ -93,7 +93,7 @@
           color="primary"
           [disabled]="!allocateCashForm.valid"
           *mifosxHasPermission="'ALLOCATECASHIER_TELLER'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

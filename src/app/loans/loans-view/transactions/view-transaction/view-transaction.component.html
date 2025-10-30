@@ -139,9 +139,7 @@
         }
 
         @if (transactionData.paymentDetailData) {
-          <mifosx-transaction-payment-detail
-            [paymentDetailData]="transactionData.paymentDetailData"
-            >
+          <mifosx-transaction-payment-detail [paymentDetailData]="transactionData.paymentDetailData">
           </mifosx-transaction-payment-detail>
         }
       </div>

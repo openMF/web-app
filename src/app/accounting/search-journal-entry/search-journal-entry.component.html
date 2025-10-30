@@ -10,7 +10,7 @@
     [glAccountList]="glAccountData"
     [required]="true"
     [inputLabel]="'GL Account Name or Code'"
-    >
+  >
   </mifosx-gl-account-selector>
 
   <mat-form-field class="flex-31">
@@ -32,7 +32,7 @@
       [max]="maxDate"
       [matDatepicker]="transactionDateFromPicker"
       [formControl]="transactionDateFrom"
-      />
+    />
     <mat-datepicker-toggle matSuffix [for]="transactionDateFromPicker"></mat-datepicker-toggle>
     <mat-datepicker #transactionDateFromPicker></mat-datepicker>
   </mat-form-field>
@@ -45,7 +45,7 @@
       [max]="maxDate"
       [matDatepicker]="transactionDateToPicker"
       [formControl]="transactionDateTo"
-      />
+    />
     <mat-datepicker-toggle matSuffix [for]="transactionDateToPicker"></mat-datepicker-toggle>
     <mat-datepicker #transactionDateToPicker></mat-datepicker>
   </mat-form-field>
@@ -62,7 +62,7 @@
       [max]="submittedOnDateTo.value"
       [matDatepicker]="submittedOnDateFromPicker"
       [formControl]="submittedOnDateFrom"
-      />
+    />
     <mat-datepicker-toggle matSuffix [for]="submittedOnDateFromPicker"></mat-datepicker-toggle>
     <mat-datepicker #submittedOnDateFromPicker></mat-datepicker>
   </mat-form-field>
@@ -74,7 +74,7 @@
       [min]="submittedOnDateFrom.value"
       [matDatepicker]="submittedOnDateToPicker"
       [formControl]="submittedOnDateTo"
-      />
+    />
     <mat-datepicker-toggle matSuffix [for]="submittedOnDateToPicker"></mat-datepicker-toggle>
     <mat-datepicker #submittedOnDateToPicker></mat-datepicker>
   </mat-form-field>

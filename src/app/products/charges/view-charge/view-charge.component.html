@@ -116,9 +116,7 @@
         }
 
         @if (chargeData.chargeTimeType.id === 9 && chargeData.feeFrequency && chargeData.feeFrequency) {
-          <div
-            class="flex-50"
-            >
+          <div class="flex-50">
             {{ chargeData.feeFrequency.value | translateKey: 'catalogs' }}
           </div>
         }
@@ -141,7 +139,7 @@
             [accountTitle]="'Income From Charges'"
             [glAccount]="chargeData.incomeOrLiabilityAccount"
             [withTitle]="'50%'"
-            >
+          >
           </mifosx-gl-account-display>
         }
 

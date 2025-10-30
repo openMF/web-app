@@ -36,7 +36,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     DatetimeFormatPipe,
     FormatNumberPipe,
     PrettyPrintPipe
-]
+  ]
 })
 export class DatatableSingleRowComponent implements OnInit {
   @Input() dataObject: any;

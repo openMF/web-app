@@ -89,11 +89,7 @@
                   {{ 'labels.buttons.Submit' | translate }}
                 </button>
                 @if (hasClickedFilters) {
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    (click)="showAddScreen(selectedMappingType)"
-                    >
+                  <button mat-raised-button color="primary" (click)="showAddScreen(selectedMappingType)">
                     {{ 'labels.buttons.Add' | translate }}
                   </button>
                 }
@@ -132,7 +128,7 @@
                     matTooltipPosition="above"
                     *mifosxHasPermission="'UPDATE_ENTITYMAPPING'"
                     (click)="showEditScreen(listdata.mapId, selectedMappingType)"
-                    >
+                  >
                     <fa-icon icon="edit" size="lg"></fa-icon>
                   </button>
                 </td>
@@ -148,7 +144,7 @@
                     matTooltipPosition="above"
                     *mifosxHasPermission="'DELETE_ENTITYMAPPING'"
                     (click)="delete(listdata.mapId)"
-                    >
+                  >
                     <fa-icon icon="trash" size="lg"></fa-icon>
                   </button>
                 </td>

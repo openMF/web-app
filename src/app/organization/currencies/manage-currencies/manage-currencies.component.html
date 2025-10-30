@@ -6,7 +6,7 @@
         [formGroup]="currencyForm"
         class="layout-row align-start-baseline gap-20px flex-48"
         (ngSubmit)="addCurrency()"
-        >
+      >
         <mat-form-field class="flex-fill flex-90-minus-20px">
           <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
           <mat-select required formControlName="currency">
@@ -18,9 +18,7 @@
               ></ngx-mat-select-search>
             </mat-option>
             @for (currency of currencyData | async; track currency) {
-              <mat-option [value]="currency">
-                ({{ currency.code }}) {{ currency.name }}
-              </mat-option>
+              <mat-option [value]="currency"> ({{ currency.code }}) {{ currency.name }} </mat-option>
             }
           </mat-select>
           @if (currencyForm.controls.currency.hasError('required')) {
@@ -37,7 +35,7 @@
           color="primary"
           [disabled]="!currencyForm.valid"
           *mifosxHasPermission="'UPDATE_CURRENCY'"
-          >
+        >
           <fa-icon icon="plus"></fa-icon>
         </button>
       </form>
@@ -53,40 +51,40 @@
                 color="warn"
                 (click)="deleteCurrency(currency.code, i)"
                 *mifosxHasPermission="'UPDATE_CURRENCY'"
-                >
+              >
                 <fa-icon icon="trash"></fa-icon>
               </button>
             </div>
             <span class="label m-l-10 p-t-5"
               ><b>{{ currency.name }}</b></span
-              >
-            </div>
-          </mat-grid-tile>
-        }
-      </mat-grid-list>
-    </mat-card>
-  </div>
+            >
+          </div>
+        </mat-grid-tile>
+      }
+    </mat-grid-list>
+  </mat-card>
+</div>
 
-  <ng-template #templateCurrencyFormRef let-popover="popover">
-    <h4>{{ 'labels.heading.Add Currency Form' | translate }}</h4>
-    <p class="mw400">
-      {{ 'labels.text.Used to add currency' | translate }}:
-      <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">{{
-        'labels.inputs.Currency Configuration' | translate
-      }}</a>
-    </p>
-    <div class="layout-row align-end gap-2px responsive-column">
-      <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-        {{ 'labels.buttons.Close' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close()">
-        {{ 'labels.buttons.Add Currency' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
-        {{ 'labels.buttons.Back' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
-        {{ 'labels.buttons.Next' | translate }}
-      </button>
-    </div>
-  </ng-template>
+<ng-template #templateCurrencyFormRef let-popover="popover">
+  <h4>{{ 'labels.heading.Add Currency Form' | translate }}</h4>
+  <p class="mw400">
+    {{ 'labels.text.Used to add currency' | translate }}:
+    <a href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67141734/Currency+Configuration" target="_blank">{{
+      'labels.inputs.Currency Configuration' | translate
+    }}</a>
+  </p>
+  <div class="layout-row align-end gap-2px responsive-column">
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close()">
+      {{ 'labels.buttons.Add Currency' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
+  </div>
+</ng-template>

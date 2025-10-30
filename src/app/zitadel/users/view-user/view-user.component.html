@@ -8,8 +8,7 @@
     {{ 'labels.buttons.Delete' | translate }}
   </button>
   @if (userData.isSelfServiceUser === 'USER_STATE_ACTIVE' || userData.isSelfServiceUser === 'USER_STATE_INACTIVE') {
-    <div
-      >
+    <div>
       <button mat-raised-button color="primary" (click)="changeUserPassword(userData.id)">
         <fa-icon icon="cog" class="m-r-10"></fa-icon>
         {{ 'labels.buttons.Change Password' | translate }}

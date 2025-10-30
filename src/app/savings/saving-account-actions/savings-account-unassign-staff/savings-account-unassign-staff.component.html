@@ -11,7 +11,7 @@
             [matDatepicker]="unassignedDatePicker"
             required
             formControlName="unassignedDate"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="unassignedDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #unassignedDatePicker></mat-datepicker>
           @if (savingsUnassignStaffForm.controls.unassignedDate.hasError('required')) {

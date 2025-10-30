@@ -27,7 +27,7 @@
               <div class="info-label">{{ 'labels.inputs.From Account' | translate }}</div>
               <div class="info-value">
                 {{ accountTransferTemplateData.fromAccount.productName }}&nbsp;-&nbsp;#{{
-                accountTransferTemplateData.fromAccount.accountNo
+                  accountTransferTemplateData.fromAccount.accountNo
                 }}
               </div>
             </div>
@@ -58,7 +58,7 @@
                   required
                   placeholder="Enter phone number"
                   title="Phone number"
-                  />
+                />
                 <mat-hint align="end">{{ phoneAccount.length || 0 }}/10</mat-hint>
               </mat-form-field>
             </div>
@@ -75,7 +75,7 @@
                   *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'"
                   id="search-button"
                   class="primary-button"
-                  >
+                >
                   {{ 'labels.buttons.Search' | translate }}
                 </button>
               </mat-card-actions>
@@ -101,7 +101,7 @@
                   formControlName="transferDate"
                   placeholder="Select date"
                   title="Transaction Date"
-                  />
+                />
                 <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
                 <mat-datepicker #transferDatePicker></mat-datepicker>
                 @if (makeAccountTransferForm.controls.transferDate.hasError('required')) {
@@ -135,7 +135,7 @@
                   [matAutocomplete]="clientsAutocomplete"
                   placeholder="Select or type client name"
                   title="Client name"
-                  />
+                />
                 @if (makeAccountTransferForm.controls.toClientId.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Client' | translate }} {{ 'labels.commons.is' | translate }}
@@ -143,11 +143,13 @@
                   </mat-error>
                 }
               </mat-form-field>
-              <mat-autocomplete autoActiveFirstOption #clientsAutocomplete="matAutocomplete" [displayWith]="displayClient">
+              <mat-autocomplete
+                autoActiveFirstOption
+                #clientsAutocomplete="matAutocomplete"
+                [displayWith]="displayClient"
+              >
                 @for (client of clientsData; track client) {
-                  <mat-option [value]="client">
-                    {{ client.id }} - {{ client.displayName }}
-                  </mat-option>
+                  <mat-option [value]="client"> {{ client.id }} - {{ client.displayName }} </mat-option>
                 }
               </mat-autocomplete>
               <mat-form-field class="form-field">
@@ -191,7 +193,7 @@
                   formControlName="transferAmount"
                   placeholder="Enter amount"
                   title="Transfer amount"
-                  />
+                />
                 @if (makeAccountTransferForm.controls.transferAmount.hasError('required')) {
                   <mat-error>
                     {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}

@@ -8,12 +8,7 @@
 
   <div class="layout-row-wrap layout-xs-column layout-align-center">
     @for (label of parameterLabels; track label) {
-      <button
-        mat-stroked-button
-        color="primary"
-        class="parameter"
-        (click)="addText(label)"
-        >
+      <button mat-stroked-button color="primary" class="parameter" (click)="addText(label)">
         {{ label }}
       </button>
     }

@@ -4,9 +4,7 @@
       <mat-label>{{ 'labels.inputs.Interest Compounding Period' | translate }}</mat-label>
       <mat-select formControlName="interestCompoundingPeriodType" required>
         @for (interestCompoundingPeriodType of interestCompoundingPeriodTypeData; track interestCompoundingPeriodType) {
-          <mat-option
-            [value]="interestCompoundingPeriodType.id"
-            >
+          <mat-option [value]="interestCompoundingPeriodType.id">
             {{ interestCompoundingPeriodType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -21,9 +19,7 @@
       <mat-label>{{ 'labels.inputs.Interest Posting Period' | translate }}</mat-label>
       <mat-select formControlName="interestPostingPeriodType" required>
         @for (interestPostingPeriodType of interestPostingPeriodTypeData; track interestPostingPeriodType) {
-          <mat-option
-            [value]="interestPostingPeriodType.id"
-            >
+          <mat-option [value]="interestPostingPeriodType.id">
             {{ interestPostingPeriodType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -38,9 +34,7 @@
       <mat-label>{{ 'labels.inputs.Interest Calculated using' | translate }}</mat-label>
       <mat-select formControlName="interestCalculationType" required>
         @for (interestCalculationType of interestCalculationTypeData; track interestCalculationType) {
-          <mat-option
-            [value]="interestCalculationType.id"
-            >
+          <mat-option [value]="interestCalculationType.id">
             {{ interestCalculationType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -54,10 +48,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Days in Year' | translate }}</mat-label>
       <mat-select formControlName="interestCalculationDaysInYearType" required>
-        @for (interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData; track interestCalculationDaysInYearType) {
-          <mat-option
-            [value]="interestCalculationDaysInYearType.id"
-            >
+        @for (
+          interestCalculationDaysInYearType of interestCalculationDaysInYearTypeData;
+          track interestCalculationDaysInYearType
+        ) {
+          <mat-option [value]="interestCalculationDaysInYearType.id">
             {{ interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}
           </mat-option>
         }

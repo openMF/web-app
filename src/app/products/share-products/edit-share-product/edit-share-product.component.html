@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #shareProductStepper
-    >
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -72,7 +72,7 @@
       <mifosx-share-product-charges-step
         [shareProductsTemplate]="shareProductAndTemplate"
         [currencyCode]="shareProductCurrencyForm.get('currencyCode')"
-        >
+      >
       </mifosx-share-product-charges-step>
     </mat-step>
 
@@ -83,7 +83,7 @@
         [shareProductsTemplate]="shareProductAndTemplate"
         [accountingRuleData]="accountingRuleData"
         [shareProductFormValid]="shareProductFormValidAndNotPristine"
-        >
+      >
       </mifosx-share-product-accounting-step>
     </mat-step>
 
@@ -96,7 +96,7 @@
           [shareProduct]="shareProduct"
           [taskPermission]="'UPDATE_SHAREPRODUCT'"
           (submitEvent)="submit()"
-          >
+        >
         </mifosx-share-product-preview-step>
       </mat-step>
     }

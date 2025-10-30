@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #fixedDepositProductStepper
-    >
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -70,7 +70,7 @@
       <mifosx-fixed-deposit-product-charges-step
         [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
         [currencyCode]="fixedDepositProductCurrencyForm.get('currencyCode')"
-        >
+      >
       </mifosx-fixed-deposit-product-charges-step>
     </mat-step>
 
@@ -81,7 +81,7 @@
         [fixedDepositProductsTemplate]="fixedDepositProductsTemplate"
         [accountingRuleData]="accountingRuleData"
         [fixedDepositProductFormValid]="fixedDepositProductFormValid"
-        >
+      >
       </mifosx-fixed-deposit-product-accounting-step>
     </mat-step>
 
@@ -94,7 +94,7 @@
           [accountingRuleData]="accountingRuleData"
           [fixedDepositProduct]="fixedDepositProduct"
           (submitEvent)="submit()"
-          >
+        >
         </mifosx-fixed-deposit-product-preview-step>
       </mat-step>
     }

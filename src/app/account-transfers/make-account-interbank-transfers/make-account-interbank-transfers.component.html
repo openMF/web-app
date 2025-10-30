@@ -9,7 +9,7 @@
         [matDatepicker]="transferDatePicker"
         required
         formControlName="transferDate"
-        />
+      />
       <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #transferDatePicker></mat-datepicker>
       @if (makeAccountTransferForm.controls.transferDate.hasError('required')) {

@@ -6,7 +6,7 @@
         formControlName="amortizationType"
         matTooltip="{{ 'tooltips.The Amortization value' | translate }}"
         required
-        >
+      >
         @for (amortizationType of amortizationTypeData; track amortizationType) {
           <mat-option [value]="amortizationType.id">
             {{ 'labels.inputs.products.loan.amortizationType.' + amortizationType.value | translate }}
@@ -25,7 +25,7 @@
         formControlName="interestType"
         matTooltip="{{ 'tooltips.The Interest method value' | translate }}"
         required
-        >
+      >
         @for (interestType of interestTypeData; track interestType) {
           <mat-option [value]="interestType.id">
             {{ interestType.value | translateKey: 'catalogs' }}
@@ -44,11 +44,9 @@
         formControlName="interestCalculationPeriodType"
         matTooltip="{{ 'tooltips.Daily - Will Calculate the interest' | translate }}"
         required
-        >
+      >
         @for (interestCalculationPeriodType of interestCalculationPeriodTypeData; track interestCalculationPeriodType) {
-          <mat-option
-            [value]="interestCalculationPeriodType.id"
-            >
+          <mat-option [value]="interestCalculationPeriodType.id">
             {{ interestCalculationPeriodType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -69,7 +67,7 @@
         labelPosition="before"
         matTooltip="{{ 'tooltips.To be used with SAME AS REPAYMENT PERIOD' | translate }}"
         formControlName="allowPartialPeriodInterestCalculation"
-        >
+      >
         {{ 'labels.inputs.Calculate interest for exact days in partial period' | translate }}
       </mat-checkbox>
     }
@@ -96,11 +94,9 @@
         matTooltip="{{ 'tooltips.The repayment strategy' | translate }}"
         required
         [disabled]="advancedTransactionProcessingStrategyDisabled"
-        >
+      >
         @for (transactionProcessingStrategy of transactionProcessingStrategyData; track transactionProcessingStrategy) {
-          <mat-option
-            [value]="transactionProcessingStrategy.code"
-            >
+          <mat-option [value]="transactionProcessingStrategy.code">
             {{ transactionProcessingStrategy.name | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -116,9 +112,7 @@
         <mat-label>{{ 'labels.inputs.Loan Schedule Processing Type' | translate }}</mat-label>
         <mat-select formControlName="loanScheduleProcessingType" required>
           @for (loanScheduleProcessingType of loanScheduleProcessingTypeData; track loanScheduleProcessingType) {
-            <mat-option
-              [value]="loanScheduleProcessingType.code"
-              >
+            <mat-option [value]="loanScheduleProcessingType.code">
               {{ loanScheduleProcessingType.value | translateKey: 'catalogs' }}
             </mat-option>
           }
@@ -133,14 +127,12 @@
       formControlName="multiDisburseLoan"
       matTooltip="{{ 'tooltips.Leave this checkbox unchecked' | translate }}"
       class="margin-b flex-73"
-      >
+    >
       {{ 'labels.inputs.Enable Multiple Disbursals' | translate }}
     </mat-checkbox>
 
     @if (loanProductSettingsForm.value.multiDisburseLoan) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Maximum Tranche count' | translate }}</mat-label>
           <input
@@ -149,7 +141,7 @@
             matTooltip="{{ 'tooltips.Maximum number of disbursements' | translate }}"
             formControlName="maxTrancheCount"
             required
-            />
+          />
           @if (loanProductSettingsForm.controls.maxTrancheCount.hasError('required')) {
             <mat-error>
               {{ 'labels.inputs.Maximum Tranche count' | translate }} {{ 'labels.commons.is' | translate }}
@@ -164,7 +156,7 @@
             matInput
             matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate }}"
             formControlName="outstandingLoanBalance"
-            />
+          />
         </mat-form-field>
         <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="disallowExpectedDisbursements">
           {{ 'labels.inputs.Disallow Expected Disbursements' | translate }}
@@ -179,14 +171,12 @@
       formControlName="enableDownPayment"
       matTooltip="{{ 'tooltips.Leave this checkbox unchecked' | translate }}"
       class="margin-b flex-73"
-      >
+    >
       {{ 'labels.inputs.Enable Down Payment' | translate }}
     </mat-checkbox>
 
     @if (loanProductSettingsForm.value.enableDownPayment) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }} (%)</mat-label>
           <input
@@ -197,10 +187,9 @@
             required
             [min]="0"
             [max]="100"
-            />
+          />
           @if (loanProductSettingsForm.controls.disbursedAmountPercentageForDownPayment.hasError('required')) {
-            <mat-error
-              >
+            <mat-error>
               {{ 'labels.inputs.Disbursed Amount Percentage Down Payment' | translate }}
               {{ 'labels.commons.is' | translate }} <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -218,7 +207,7 @@
           labelPosition="before"
           formControlName="enableAutoRepaymentForDownPayment"
           matTooltip="{{ 'tooltips.Enable or disable the auto repayment of down-payment.' | translate }}"
-          >
+        >
           {{ 'labels.inputs.Enable Auto Repayment for Down Payment' | translate }}
         </mat-checkbox>
       </div>
@@ -273,23 +262,14 @@
         }
       </mat-select>
       @if (loanProductSettingsForm.controls.delinquencyBucketId) {
-        <button
-          matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          (click)="clearProperty($event, 'delinquencyBucketId')"
-          >
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="clearProperty($event, 'delinquencyBucketId')">
           <fa-icon icon="close" size="md"></fa-icon>
         </button>
       }
     </mat-form-field>
 
     @if (loanProductSettingsForm.value.delinquencyBucketId) {
-      <mat-checkbox
-        class="flex-48 margin-v"
-        labelPosition="before"
-        formControlName="enableInstallmentLevelDelinquency"
-        >
+      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="enableInstallmentLevelDelinquency">
         {{ 'labels.inputs.Enable installment level Delinquency' | translate }}
       </mat-checkbox>
     }
@@ -303,7 +283,7 @@
         matInput
         matTooltip="{{ 'tooltips.If the Interest Free Period' | translate }}"
         formControlName="graceOnInterestCharged"
-        />
+      />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -313,7 +293,7 @@
         matInput
         matTooltip="{{ 'tooltips.With Arrears tolerance' | translate }}"
         formControlName="inArrearsTolerance"
-        />
+      />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -322,7 +302,7 @@
         matTooltip="{{ 'tooltips.To calculate interest' | translate }}"
         formControlName="daysInYearType"
         required
-        >
+      >
         @for (daysInYearType of daysInYearTypeData; track daysInYearType) {
           <mat-option [value]="daysInYearType.id">
             {{ daysInYearType.value | translateKey: 'catalogs' }}
@@ -341,11 +321,9 @@
         <mat-select
           matTooltip="{{ 'tooltips.To calculate interest' | translate }}"
           formControlName="daysInYearCustomStrategy"
-          >
+        >
           @for (daysInYearCustomStrategy of daysInYearCustomStrategyOptions; track daysInYearCustomStrategy) {
-            <mat-option
-              [value]="daysInYearCustomStrategy.id"
-              >
+            <mat-option [value]="daysInYearCustomStrategy.id">
               {{ daysInYearCustomStrategy.value | translateKey: 'catalogs' }}
             </mat-option>
           }
@@ -359,7 +337,7 @@
         matTooltip="{{ 'tooltips.Number of days in month' | translate }}."
         formControlName="daysInMonthType"
         required
-        >
+      >
         @for (daysInMonthType of daysInMonthTypeData; track daysInMonthType) {
           <mat-option [value]="daysInMonthType.id">
             {{ daysInMonthType.value | translateKey: 'catalogs' }}
@@ -391,8 +369,8 @@
 
     <h4 class="flex-48">
       {{
-      'labels.inputs.Maximum number of days a loan may be overdue before becoming a NPA (non performing asset)'
-      | translate
+        'labels.inputs.Maximum number of days a loan may be overdue before becoming a NPA (non performing asset)'
+          | translate
       }}
       <i
         class="fas fa-question"
@@ -409,7 +387,7 @@
       class="flex-48 margin-v"
       labelPosition="before"
       formControlName="accountMovesOutOfNPAOnlyOnArrearsCompletion"
-      >
+    >
       {{ 'labels.inputs.Account moves out of NPA only after all arrears have been cleared' | translate }}
     </mat-checkbox>
 
@@ -423,14 +401,12 @@
       labelPosition="before"
       matTooltip="{{ 'tooltips.Fields are used to define the minimum, maximum gap' | translate }}"
       formControlName="allowVariableInstallments"
-      >
+    >
       {{ 'labels.inputs.Are Variable Installments allowed?' | translate }}
     </mat-checkbox>
 
     @if (loanProductSettingsForm.value.allowVariableInstallments) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <h4 class="mat-h4 flex-98">{{ 'labels.inputs.Variable Installments' | translate }}</h4>
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Minimum gap between Installments' | translate }}</mat-label>
@@ -456,7 +432,7 @@
       labelPosition="before"
       matTooltip="{{ 'tooltips.Loan Product can be used to apply for Topup Loans' | translate }}"
       formControlName="canUseForTopup"
-      >
+    >
       {{ 'labels.inputs.Allowed to be used for providing Topup Loans' | translate }}
     </mat-checkbox>
 
@@ -469,22 +445,22 @@
     </mat-checkbox>
 
     @if (loanProductSettingsForm.value.isInterestRecalculationEnabled) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Pre-closure interest calculation rule' | translate }}</mat-label>
           <mat-select formControlName="preClosureInterestCalculationStrategy" required>
-            @for (preClosureInterestCalculationStrategy of preClosureInterestCalculationStrategyData; track preClosureInterestCalculationStrategy) {
-              <mat-option
-                [value]="preClosureInterestCalculationStrategy.id"
-                >
+            @for (
+              preClosureInterestCalculationStrategy of preClosureInterestCalculationStrategyData;
+              track preClosureInterestCalculationStrategy
+            ) {
+              <mat-option [value]="preClosureInterestCalculationStrategy.id">
                 {{ preClosureInterestCalculationStrategy.value | translateKey: 'catalogs' }}
               </mat-option>
             }
           </mat-select>
           <mat-error>
-            {{ 'labels.inputs.Pre-closure interest calculation rule' | translate }} {{ 'labels.commons.is' | translate }}
+            {{ 'labels.inputs.Pre-closure interest calculation rule' | translate }}
+            {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
@@ -492,9 +468,7 @@
           <mat-label>{{ 'labels.inputs.Advance payments adjustment type' | translate }}</mat-label>
           <mat-select formControlName="rescheduleStrategyMethod" required [disabled]="rescheduleStrategyTypeDisabled">
             @for (rescheduleStrategyType of rescheduleStrategyTypeData; track rescheduleStrategyType) {
-              <mat-option
-                [value]="rescheduleStrategyType.id"
-                >
+              <mat-option [value]="rescheduleStrategyType.id">
                 {{ rescheduleStrategyType.value | translateKey: 'catalogs' }}
               </mat-option>
             }
@@ -507,16 +481,18 @@
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Interest recalculation compounding on' | translate }}</mat-label>
           <mat-select formControlName="interestRecalculationCompoundingMethod" required>
-            @for (interestRecalculationCompoundingType of interestRecalculationCompoundingTypeData; track interestRecalculationCompoundingType) {
-              <mat-option
-                [value]="interestRecalculationCompoundingType.id"
-                >
+            @for (
+              interestRecalculationCompoundingType of interestRecalculationCompoundingTypeData;
+              track interestRecalculationCompoundingType
+            ) {
+              <mat-option [value]="interestRecalculationCompoundingType.id">
                 {{ interestRecalculationCompoundingType.value | translateKey: 'catalogs' }}
               </mat-option>
             }
           </mat-select>
           <mat-error>
-            {{ 'labels.inputs.Interest recalculation compounding on' | translate }} {{ 'labels.commons.is' | translate }}
+            {{ 'labels.inputs.Interest recalculation compounding on' | translate }}
+            {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
@@ -525,14 +501,13 @@
           @if (
             loanProductSettingsForm.value.interestRecalculationCompoundingMethod !== 0 &&
             loanProductSettingsForm.value.recalculationCompoundingFrequencyType !== 1
-            ) {
-            <mat-form-field
-              class="flex-48"
-              >
+          ) {
+            <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Frequency Interval for compounding' | translate }}</mat-label>
               <input type="number" matInput formControlName="recalculationCompoundingFrequencyInterval" required />
               <mat-error>
-                {{ 'labels.inputs.Frequency Interval for compounding' | translate }} {{ 'labels.commons.is' | translate }}
+                {{ 'labels.inputs.Frequency Interval for compounding' | translate }}
+                {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
               </mat-error>
             </mat-form-field>
@@ -549,31 +524,29 @@
           }
         </div>
         @if (loanProductSettingsForm.value.interestRecalculationCompoundingMethod !== 0) {
-          <div
-            class="flex-fill layout-row-wrap gap-2percent responsive-column"
-            >
+          <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
             <mat-form-field class="flex-31">
               <mat-label>{{ 'labels.inputs.Frequency for compounding' | translate }}</mat-label>
               <mat-select formControlName="recalculationCompoundingFrequencyType" required>
-                @for (interestRecalculationFrequencyType of interestRecalculationFrequencyTypeData; track interestRecalculationFrequencyType) {
-                  <mat-option
-                    [value]="interestRecalculationFrequencyType.id"
-                    >
+                @for (
+                  interestRecalculationFrequencyType of interestRecalculationFrequencyTypeData;
+                  track interestRecalculationFrequencyType
+                ) {
+                  <mat-option [value]="interestRecalculationFrequencyType.id">
                     {{ interestRecalculationFrequencyType.value }}
                   </mat-option>
                 }
               </mat-select>
             </mat-form-field>
             @if (loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 4) {
-              <div
-                class="flex-31 layout-row layout-lt-md-column"
-                >
+              <div class="flex-31 layout-row layout-lt-md-column">
                 <mat-form-field class="flex-fill">
                   <mat-select formControlName="recalculationCompoundingFrequencyNthDayType">
-                    @for (interestRecalculationNthDayType of interestRecalculationNthDayTypeData; track interestRecalculationNthDayType) {
-                      <mat-option
-                        [value]="interestRecalculationNthDayType.id"
-                        >
+                    @for (
+                      interestRecalculationNthDayType of interestRecalculationNthDayTypeData;
+                      track interestRecalculationNthDayType
+                    ) {
+                      <mat-option [value]="interestRecalculationNthDayType.id">
                         {{ interestRecalculationNthDayType.value | translateKey: 'catalogs' }}
                       </mat-option>
                     }
@@ -583,18 +556,17 @@
             }
             @if (
               (loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 4 &&
-              loanProductSettingsForm.value.recalculationCompoundingFrequencyNthDayType !== -2) ||
+                loanProductSettingsForm.value.recalculationCompoundingFrequencyNthDayType !== -2) ||
               loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 3
-              ) {
-              <div
-                class="flex-31 layout-row layout-lt-md-column"
-                >
+            ) {
+              <div class="flex-31 layout-row layout-lt-md-column">
                 <mat-form-field class="flex-fill">
                   <mat-select formControlName="recalculationCompoundingFrequencyDayOfWeekType">
-                    @for (interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData; track interestRecalculationDayOfWeekType) {
-                      <mat-option
-                        [value]="interestRecalculationDayOfWeekType.id"
-                        >
+                    @for (
+                      interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData;
+                      track interestRecalculationDayOfWeekType
+                    ) {
+                      <mat-option [value]="interestRecalculationDayOfWeekType.id">
                         {{ interestRecalculationDayOfWeekType.value | translateKey: 'catalogs' }}
                       </mat-option>
                     }
@@ -605,16 +577,15 @@
             @if (
               loanProductSettingsForm.value.recalculationCompoundingFrequencyType === 4 &&
               loanProductSettingsForm.value.recalculationCompoundingFrequencyNthDayType === -2
-              ) {
-              <div
-                class="flex-31 layout-row layout-lt-md-column"
-                >
+            ) {
+              <div class="flex-31 layout-row layout-lt-md-column">
                 <mat-form-field class="flex-fill">
                   <mat-select formControlName="recalculationCompoundingFrequencyOnDayType">
-                    @for (interestRecalculationOnDayType of interestRecalculationOnDayTypeData; track interestRecalculationOnDayType) {
-                      <mat-option
-                        [value]="interestRecalculationOnDayType"
-                        >
+                    @for (
+                      interestRecalculationOnDayType of interestRecalculationOnDayTypeData;
+                      track interestRecalculationOnDayType
+                    ) {
+                      <mat-option [value]="interestRecalculationOnDayType">
                         {{ interestRecalculationOnDayType }}
                       </mat-option>
                     }
@@ -627,10 +598,11 @@
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Frequency for recalculate Outstanding Principal' | translate }}</mat-label>
           <mat-select formControlName="recalculationRestFrequencyType" required>
-            @for (interestRecalculationFrequencyType of interestRecalculationFrequencyTypeData; track interestRecalculationFrequencyType) {
-              <mat-option
-                [value]="interestRecalculationFrequencyType.id"
-                >
+            @for (
+              interestRecalculationFrequencyType of interestRecalculationFrequencyTypeData;
+              track interestRecalculationFrequencyType
+            ) {
+              <mat-option [value]="interestRecalculationFrequencyType.id">
                 {{ interestRecalculationFrequencyType.value | translateKey: 'catalogs' }}
               </mat-option>
             }
@@ -641,15 +613,14 @@
           </mat-error>
         </mat-form-field>
         @if (loanProductSettingsForm.value.recalculationRestFrequencyType === 4) {
-          <div
-            class="flex-31 layout-row layout-lt-md-column"
-            >
+          <div class="flex-31 layout-row layout-lt-md-column">
             <mat-form-field class="flex-fill">
               <mat-select formControlName="recalculationRestFrequencyNthDayType">
-                @for (interestRecalculationNthDayType of interestRecalculationNthDayTypeData; track interestRecalculationNthDayType) {
-                  <mat-option
-                    [value]="interestRecalculationNthDayType.id"
-                    >
+                @for (
+                  interestRecalculationNthDayType of interestRecalculationNthDayTypeData;
+                  track interestRecalculationNthDayType
+                ) {
+                  <mat-option [value]="interestRecalculationNthDayType.id">
                     {{ interestRecalculationNthDayType.value | translateKey: 'catalogs' }}
                   </mat-option>
                 }
@@ -659,18 +630,17 @@
         }
         @if (
           (loanProductSettingsForm.value.recalculationRestFrequencyType === 4 &&
-          loanProductSettingsForm.value.recalculationRestFrequencyNthDayType !== -2) ||
+            loanProductSettingsForm.value.recalculationRestFrequencyNthDayType !== -2) ||
           loanProductSettingsForm.value.recalculationRestFrequencyType === 3
-          ) {
-          <div
-            class="flex-31 layout-row layout-lt-md-column"
-            >
+        ) {
+          <div class="flex-31 layout-row layout-lt-md-column">
             <mat-form-field class="flex-fill">
               <mat-select formControlName="recalculationRestFrequencyDayOfWeekType">
-                @for (interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData; track interestRecalculationDayOfWeekType) {
-                  <mat-option
-                    [value]="interestRecalculationDayOfWeekType.id"
-                    >
+                @for (
+                  interestRecalculationDayOfWeekType of interestRecalculationDayOfWeekTypeData;
+                  track interestRecalculationDayOfWeekType
+                ) {
+                  <mat-option [value]="interestRecalculationDayOfWeekType.id">
                     {{ interestRecalculationDayOfWeekType.value | translateKey: 'catalogs' }}
                   </mat-option>
                 }
@@ -681,16 +651,15 @@
         @if (
           loanProductSettingsForm.value.recalculationRestFrequencyType === 4 &&
           loanProductSettingsForm.value.recalculationRestFrequencyNthDayType === -2
-          ) {
-          <div
-            class="flex-31 layout-row layout-lt-md-column"
-            >
+        ) {
+          <div class="flex-31 layout-row layout-lt-md-column">
             <mat-form-field class="flex-fill">
               <mat-select formControlName="recalculationRestFrequencyOnDayType">
-                @for (interestRecalculationOnDayType of interestRecalculationOnDayTypeData; track interestRecalculationOnDayType) {
-                  <mat-option
-                    [value]="interestRecalculationOnDayType"
-                    >
+                @for (
+                  interestRecalculationOnDayType of interestRecalculationOnDayTypeData;
+                  track interestRecalculationOnDayType
+                ) {
+                  <mat-option [value]="interestRecalculationOnDayType">
                     {{ interestRecalculationOnDayType }}
                   </mat-option>
                 }
@@ -698,7 +667,11 @@
             </mat-form-field>
           </div>
         }
-        <mat-checkbox class="flex-98 margin-v" labelPosition="before" formControlName="isArrearsBasedOnOriginalSchedule">
+        <mat-checkbox
+          class="flex-98 margin-v"
+          labelPosition="before"
+          formControlName="isArrearsBasedOnOriginalSchedule"
+        >
           {{ 'labels.inputs.Is Arrears recognization based on original schedule' | translate }}?
         </mat-checkbox>
         @if (loanProductSettingsForm.value.loanScheduleType === 'PROGRESSIVE') {
@@ -706,7 +679,7 @@
             class="flex-98 margin-v"
             labelPosition="before"
             formControlName="disallowInterestCalculationOnPastDue"
-            >
+          >
             {{ 'labels.inputs.Do not calculate interest on past due principal balances' | translate }}
           </mat-checkbox>
         }
@@ -722,9 +695,7 @@
     </mat-checkbox>
 
     @if (loanProductSettingsForm.value.holdGuaranteeFunds) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Mandatory Guarantee(%)' | translate }}</mat-label>
           <input type="number" matInput formControlName="mandatoryGuarantee" required />
@@ -749,98 +720,97 @@
     <h3 class="mat-h3 flex-23">
       {{ 'labels.heading.Event Settings' | translate
       }}<i
-      class="fas fa-question"
-      matTooltip="{{ 'tooltips.Setting for event notifications to be sent' | translate }}"
-    ></i>
-  </h3>
+        class="fas fa-question"
+        matTooltip="{{ 'tooltips.Setting for event notifications to be sent' | translate }}"
+      ></i>
+    </h3>
 
-  <mat-checkbox
-    class="flex-48 margin-b"
-    labelPosition="before"
-    formControlName="useDueForRepaymentsConfigurations"
-    matTooltip="{{ 'tooltips.Use or not the Global Configurations' | translate }}"
+    <mat-checkbox
+      class="flex-48 margin-b"
+      labelPosition="before"
+      formControlName="useDueForRepaymentsConfigurations"
+      matTooltip="{{ 'tooltips.Use or not the Global Configurations' | translate }}"
     >
-    {{ 'labels.inputs.Use the Global Configurations values to the Repayment Event (notifications)' | translate }}
-  </mat-checkbox>
+      {{ 'labels.inputs.Use the Global Configurations values to the Repayment Event (notifications)' | translate }}
+    </mat-checkbox>
 
-  @if (!loanProductSettingsForm.value.useDueForRepaymentsConfigurations) {
-    <div
-      class="flex-fill layout-row-wrap gap-2percent responsive-column"
-      >
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.Due days for repayment event' | translate }}</mat-label>
-        <input
-          type="number"
-          matInput
-          matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate }}"
-          formControlName="dueDaysForRepaymentEvent"
+    @if (!loanProductSettingsForm.value.useDueForRepaymentsConfigurations) {
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.Due days for repayment event' | translate }}</mat-label>
+          <input
+            type="number"
+            matInput
+            matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate }}"
+            formControlName="dueDaysForRepaymentEvent"
           />
-      </mat-form-field>
-      <mat-form-field class="flex-48">
-        <mat-label>{{ 'labels.inputs.OverDue days for repayment event' | translate }}</mat-label>
-        <input
-          type="number"
-          matInput
-          matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate }}"
-          formControlName="overDueDaysForRepaymentEvent"
+        </mat-form-field>
+        <mat-form-field class="flex-48">
+          <mat-label>{{ 'labels.inputs.OverDue days for repayment event' | translate }}</mat-label>
+          <input
+            type="number"
+            matInput
+            matTooltip="{{ 'tooltips.Maximum outstanding loan account balance' | translate }}"
+            formControlName="overDueDaysForRepaymentEvent"
           />
-      </mat-form-field>
-    </div>
-  }
+        </mat-form-field>
+      </div>
+    }
 
-  <mat-divider class="flex-98"></mat-divider>
+    <mat-divider class="flex-98"></mat-divider>
 
-  <h3 class="mat-h3 flex-43">{{ 'labels.inputs.Configurable Terms and Settings' | translate }}</h3>
+    <h3 class="mat-h3 flex-43">{{ 'labels.inputs.Configurable Terms and Settings' | translate }}</h3>
 
-  <mat-checkbox labelPosition="before" formControlName="allowAttributeConfiguration" class="margin-b flex-53">
-    {{ 'labels.inputs.Allow overriding select terms and settings in loan accounts' | translate }}
-  </mat-checkbox>
+    <mat-checkbox labelPosition="before" formControlName="allowAttributeConfiguration" class="margin-b flex-53">
+      {{ 'labels.inputs.Allow overriding select terms and settings in loan accounts' | translate }}
+    </mat-checkbox>
 
-  @if (loanProductSettingsForm.value.allowAttributeConfiguration) {
-    <div
-      formGroupName="allowAttributeOverrides"
-      class="flex-fill layout-row-wrap gap-2percent responsive-column"
-      >
-      <mat-checkbox labelPosition="before" formControlName="amortizationType" class="margin-v flex-48">
-        {{ 'labels.inputs.Amortization' | translate }}
-      </mat-checkbox>
-      <mat-checkbox labelPosition="before" formControlName="interestType" class="margin-v flex-48">
-        {{ 'labels.inputs.Interest method' | translate }}
-      </mat-checkbox>
-      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="transactionProcessingStrategyCode">
-        {{ 'labels.inputs.Repayment strategy' | translate }}
-      </mat-checkbox>
-      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="interestCalculationPeriodType">
-        {{ 'labels.inputs.Interest calculation period' | translate }}
-      </mat-checkbox>
-      <mat-checkbox labelPosition="before" formControlName="inArrearsTolerance" class="margin-v flex-48">
-        {{ 'labels.inputs.Arrears tolerance' | translate }}
-      </mat-checkbox>
-      <mat-checkbox labelPosition="before" formControlName="repaymentEvery" class="margin-v flex-48">
-        {{ 'labels.inputs.Repaid every' | translate }}
-      </mat-checkbox>
-      <mat-checkbox
-        class="flex-48 margin-v"
-        labelPosition="before"
-        formControlName="graceOnPrincipalAndInterestPayment"
+    @if (loanProductSettingsForm.value.allowAttributeConfiguration) {
+      <div formGroupName="allowAttributeOverrides" class="flex-fill layout-row-wrap gap-2percent responsive-column">
+        <mat-checkbox labelPosition="before" formControlName="amortizationType" class="margin-v flex-48">
+          {{ 'labels.inputs.Amortization' | translate }}
+        </mat-checkbox>
+        <mat-checkbox labelPosition="before" formControlName="interestType" class="margin-v flex-48">
+          {{ 'labels.inputs.Interest method' | translate }}
+        </mat-checkbox>
+        <mat-checkbox
+          class="flex-48 margin-v"
+          labelPosition="before"
+          formControlName="transactionProcessingStrategyCode"
         >
-        {{ 'labels.inputs.Moratorium' | translate }}
-      </mat-checkbox>
-      <mat-checkbox labelPosition="before" formControlName="graceOnArrearsAgeing" class="margin-v flex-48">
-        {{ 'labels.inputs.Number of days a loan may be overdue before moving into arrears' | translate }}
-      </mat-checkbox>
-    </div>
-  }
-</div>
+          {{ 'labels.inputs.Repayment strategy' | translate }}
+        </mat-checkbox>
+        <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="interestCalculationPeriodType">
+          {{ 'labels.inputs.Interest calculation period' | translate }}
+        </mat-checkbox>
+        <mat-checkbox labelPosition="before" formControlName="inArrearsTolerance" class="margin-v flex-48">
+          {{ 'labels.inputs.Arrears tolerance' | translate }}
+        </mat-checkbox>
+        <mat-checkbox labelPosition="before" formControlName="repaymentEvery" class="margin-v flex-48">
+          {{ 'labels.inputs.Repaid every' | translate }}
+        </mat-checkbox>
+        <mat-checkbox
+          class="flex-48 margin-v"
+          labelPosition="before"
+          formControlName="graceOnPrincipalAndInterestPayment"
+        >
+          {{ 'labels.inputs.Moratorium' | translate }}
+        </mat-checkbox>
+        <mat-checkbox labelPosition="before" formControlName="graceOnArrearsAgeing" class="margin-v flex-48">
+          {{ 'labels.inputs.Number of days a loan may be overdue before moving into arrears' | translate }}
+        </mat-checkbox>
+      </div>
+    }
+  </div>
 
-<div class="layout-row align-center gap-2percent margin-t responsive-column">
-  <button mat-raised-button matStepperPrevious>
-    <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.Previous' | translate }}
-  </button>
-  <button mat-raised-button matStepperNext>
-    {{ 'labels.buttons.Next' | translate }}
-    <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
-  </button>
-</div>
+  <div class="layout-row align-center gap-2percent margin-t responsive-column">
+    <button mat-raised-button matStepperPrevious>
+      <fa-icon icon="arrow-left" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Previous' | translate }}
+    </button>
+    <button mat-raised-button matStepperNext>
+      {{ 'labels.buttons.Next' | translate }}
+      <fa-icon icon="arrow-right" class="m-l-10"></fa-icon>
+    </button>
+  </div>
 </form>

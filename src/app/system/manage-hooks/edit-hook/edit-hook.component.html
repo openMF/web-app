@@ -86,9 +86,7 @@
         </div>
 
         @if (hookForm.controls.name.value === 'SMS Bridge') {
-          <div
-            class="layout-row-wrap responsive-column gap-4percent"
-            >
+          <div class="layout-row-wrap responsive-column gap-4percent">
             <mat-form-field class="flex-30">
               <mat-label>{{ 'labels.inputs.SMS Provider' | translate }}</mat-label>
               <input matInput required formControlName="smsProvider" />
@@ -179,7 +177,7 @@
           color="primary"
           [disabled]="(!hookForm.valid || hookForm.pristine) && !eventsDataChanged"
           *mifosxHasPermission="'UPDATE_HOOK'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

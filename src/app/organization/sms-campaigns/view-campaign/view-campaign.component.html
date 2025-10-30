@@ -15,7 +15,7 @@
           color="accent"
           *mifosxHasPermission="'ACTIVATE_SMSCAMPAIGN'"
           (click)="activateCampaign()"
-          >
+        >
           <fa-icon icon="lock-open" class="m-r-10"></fa-icon>{{ 'labels.buttons.Activate' | translate }}
         </button>
       </span>
@@ -30,14 +30,13 @@
     }
 
     @if (smsCampaignData.campaignStatus.value !== 'Pending' && smsCampaignData.campaignStatus.value !== 'active') {
-      <span
-        >
+      <span>
         <button
           mat-raised-button
           color="accent"
           *mifosxHasPermission="'REACTIVATE_SMSCAMPAIGN'"
           (click)="reactivateCampaign()"
-          >
+        >
           <fa-icon icon="undo" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reactivate' | translate }}
         </button>
       </span>
@@ -106,7 +105,7 @@
                       [max]="maxDate"
                       [matDatepicker]="fromDatePicker"
                       formControlName="fromDate"
-                      />
+                    />
                     <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #fromDatePicker></mat-datepicker>
                   </mat-form-field>
@@ -118,7 +117,7 @@
                       [max]="maxDate"
                       [matDatepicker]="toDatePicker"
                       formControlName="toDate"
-                      />
+                    />
                     <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
                     <mat-datepicker #toDatePicker></mat-datepicker>
                   </mat-form-field>

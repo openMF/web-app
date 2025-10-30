@@ -3,12 +3,10 @@
     <mat-label>{{ 'labels.inputs.Charge' | translate }}</mat-label>
     <mat-select #charge>
       @for (
-        charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value : multiDisburseLoan.value
-        ; track
-        charge) {
-        <mat-option
-          [value]="charge"
-          >
+        charge of chargeData | chargesFilter: chargesDataSource : currencyCode.value : multiDisburseLoan.value;
+        track charge
+      ) {
+        <mat-option [value]="charge">
           {{ charge.name }}
         </mat-option>
       }
@@ -28,7 +26,7 @@
     [dataSource]="chargesDataSource | chargesPenaltyFilter: false"
     #chargesTable
     [hidden]="chargesTable.dataSource.length === 0"
-    >
+  >
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
@@ -79,10 +77,11 @@
   <mat-form-field class="flex-48">
     <mat-label>{{ 'labels.inputs.Overdue Charge' | translate }}</mat-label>
     <mat-select #overdueCharge>
-      @for (overdueCharge of overdueChargeData | chargesFilter: chargesDataSource : currencyCode.value; track overdueCharge) {
-        <mat-option
-          [value]="overdueCharge"
-          >
+      @for (
+        overdueCharge of overdueChargeData | chargesFilter: chargesDataSource : currencyCode.value;
+        track overdueCharge
+      ) {
+        <mat-option [value]="overdueCharge">
           {{ overdueCharge.name }}
         </mat-option>
       }
@@ -96,7 +95,7 @@
       color="primary"
       (click)="addCharge(overdueCharge)"
       [disabled]="!overdueCharge.value"
-      >
+    >
       <fa-icon icon="plus" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Add' | translate }}
     </button>
@@ -108,7 +107,7 @@
     [dataSource]="chargesDataSource | chargesPenaltyFilter: true"
     #overdueChargesTable
     [hidden]="overdueChargesTable.dataSource.length === 0"
-    >
+  >
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Name' | translate }}</th>
       <td mat-cell *matCellDef="let overdueCharge">

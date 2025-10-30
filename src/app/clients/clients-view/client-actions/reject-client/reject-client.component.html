@@ -12,7 +12,7 @@
               [matDatepicker]="rejectionDatePicker"
               required
               formControlName="rejectionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="rejectionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #rejectionDatePicker></mat-datepicker>
             @if (rejectClientForm.controls.rejectionDate.hasError('required')) {

@@ -23,7 +23,7 @@
               [matDatepicker]="dueDatePicker"
               formControlName="transactionDate"
               required
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #dueDatePicker></mat-datepicker>
             @if (savingAccountTransactionForm.controls.transactionDate.hasError('required')) {
@@ -39,7 +39,7 @@
             [isRequired]="true"
             [inputFormControl]="savingAccountTransactionForm.controls.transactionAmount"
             [inputLabel]="'Transaction Amount'"
-            >
+          >
           </mifosx-input-amount>
 
           <mat-form-field>

@@ -36,9 +36,7 @@
                 <mat-label>{{ 'labels.inputs.Charge Calculation' | translate }}</mat-label>
                 <mat-select formControlName="chargeCalculationType">
                   @for (chargeCalculation of chargeDetails.chargeCalculationTypeOptions; track chargeCalculation) {
-                    <mat-option
-                      [value]="chargeCalculation.id"
-                      >
+                    <mat-option [value]="chargeCalculation.id">
                       {{ chargeCalculation.value }}
                     </mat-option>
                   }
@@ -64,7 +62,7 @@
                     [matDatepicker]="dueDatePicker"
                     required
                     formControlName="dueDate"
-                    />
+                  />
                   <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
                   <mat-datepicker #dueDatePicker></mat-datepicker>
                   @if (savingsChargeForm.controls.dueDate.hasError('required')) {
@@ -85,7 +83,7 @@
                     [matDatepicker]="feeOnMonthDayPicker"
                     required
                     formControlName="feeOnMonthDay"
-                    />
+                  />
                   <mat-datepicker-toggle matSuffix [for]="feeOnMonthDayPicker"></mat-datepicker-toggle>
                   <mat-datepicker #feeOnMonthDayPicker></mat-datepicker>
                   @if (savingsChargeForm.controls.feeOnMonthDay.hasError('required')) {

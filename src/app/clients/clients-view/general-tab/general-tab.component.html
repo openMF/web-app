@@ -38,7 +38,7 @@
           color="primary"
           [routerLink]="['../', 'charges', 'overview']"
           *mifosxHasPermission="'READ_CLIENTCHARGE'"
-          >
+        >
           {{ 'labels.buttons.Charges Overview' | translate }}
         </button>
       </div>
@@ -88,7 +88,7 @@
           (click)="routeEdit($event)"
           [routerLink]="['../', 'charges', element.id, 'pay']"
           *mifosxHasPermission="'PAY_CLIENTCHARGE'"
-          >
+        >
           <i class="fa fa-dollar"></i>
         </button>
         <button
@@ -97,7 +97,7 @@
           color="primary"
           (click)="routeEdit($event); waiveCharge(element.id, element.clientId)"
           *mifosxHasPermission="'WAIVE_CLIENTCHARGE'"
-          >
+        >
           <i class="fa fa-flag"></i>
         </button>
       </td>
@@ -176,7 +176,7 @@
               matTooltipPosition="above"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'loans-accounts', element.id, 'actions', 'Make Repayment']"
-              >
+            >
               <i class="fa fa-dollar"></i>
             </button>
           }
@@ -191,7 +191,7 @@
                 *mifosxHasPermission="'APPROVE_LOAN'"
                 (click)="routeEdit($event)"
                 [routerLink]="['../', 'loans-accounts', element.id, 'actions', 'Approve']"
-                >
+              >
                 <i class="fa fa-check"></i>
               </button>
             </span>
@@ -207,7 +207,7 @@
                 *mifosxHasPermission="'DISBURSE_LOAN'"
                 (click)="routeEdit($event)"
                 [routerLink]="['../', 'loans-accounts', element.id, 'actions', 'Disburse']"
-                >
+              >
                 <i class="fa fa-flag"></i>
               </button>
             </span>
@@ -222,7 +222,7 @@
                 matTooltipPosition="above"
                 *mifosxHasPermission="'DISBURSE_LOAN'"
                 (click)="routeEdit($event); routeTransferFund(element.id)"
-                >
+              >
                 <i class="fa fa-exchange"></i>
               </button>
             </span>
@@ -312,10 +312,7 @@
   </div>
 
   @if (!showClosedSavingAccounts) {
-    <table
-      mat-table
-      [dataSource]="savingAccounts | accountsFilter: 'saving' : 'open' : 'isSavings'"
-      >
+    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'open' : 'isSavings'">
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
         <td mat-cell *matCellDef="let element">
@@ -347,7 +344,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Deposit']"
-              >
+            >
               <i class="fa fa-arrow-up"></i>
             </button>
           }
@@ -358,7 +355,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Withdrawal']"
-              >
+            >
               <i class="fa fa-arrow-down"></i>
             </button>
           }
@@ -369,7 +366,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Approve']"
-              >
+            >
               <i class="fa fa-check"></i>
             </button>
           }
@@ -379,7 +376,7 @@
               mat-raised-button
               color="primary"
               [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Undo Approval']"
-              >
+            >
               <i class="fa fa-undo"></i>
             </button>
           }
@@ -389,7 +386,7 @@
               mat-raised-button
               color="primary"
               [routerLink]="['../', 'savings-accounts', element.id, 'actions', 'Activate']"
-              >
+            >
               <i class="fa fa-check-circle"></i>
             </button>
           }
@@ -406,10 +403,7 @@
 
   <!-- Closed Saving Accounts -->
   @if (showClosedSavingAccounts) {
-    <table
-      mat-table
-      [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed' : 'isSavings'"
-      >
+    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed' : 'isSavings'">
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
         <td mat-cell *matCellDef="let element">
@@ -453,10 +447,7 @@
   </div>
 
   @if (!showClosedFixedAccounts) {
-    <table
-      mat-table
-      [dataSource]="savingAccounts | accountsFilter: 'saving' : 'open' : 'isFixed'"
-      >
+    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'open' : 'isFixed'">
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
         <td mat-cell *matCellDef="let element">
@@ -486,7 +477,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'fixed-deposits-accounts', element.id, 'actions', 'Approve']"
-              >
+            >
               <i class="fa fa-check"></i>
             </button>
           }
@@ -496,7 +487,7 @@
               mat-raised-button
               color="primary"
               [routerLink]="['../', 'fixed-deposits-accounts', element.id, 'actions', 'Undo Approval']"
-              >
+            >
               <i class="fa fa-undo"></i>
             </button>
           }
@@ -506,7 +497,7 @@
               mat-raised-button
               color="primary"
               [routerLink]="['../', 'fixed-deposits-accounts', element.id, 'actions', 'Activate']"
-              >
+            >
               <i class="fa fa-check-circle"></i>
             </button>
           }
@@ -524,10 +515,7 @@
   <!-- Closed Fixed Deposit Accounts -->
 
   @if (showClosedFixedAccounts) {
-    <table
-      mat-table
-      [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed' : 'isFixed'"
-      >
+    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed' : 'isFixed'">
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
         <td mat-cell *matCellDef="let element">
@@ -571,10 +559,7 @@
   </div>
 
   @if (!showClosedRecurringAccounts) {
-    <table
-      mat-table
-      [dataSource]="savingAccounts | accountsFilter: 'saving' : 'open' : 'isRecurring'"
-      >
+    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'open' : 'isRecurring'">
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
         <td mat-cell *matCellDef="let element">
@@ -606,7 +591,7 @@
               *mifosxHasPermission="'APPROVE_SAVINGSACCOUNT'"
               [routerLink]="['../', 'recurring-deposits-accounts', element.id, 'actions', 'Approve']"
               color="primary"
-              >
+            >
               <i class="fa fa-check"></i>
             </button>
           }
@@ -618,7 +603,7 @@
               (click)="routeEdit($event)"
               *mifosxHasPermission="'APPROVALUNDO_SAVINGSACCOUNT'"
               [routerLink]="['../', 'recurring-deposits-accounts', element.id, 'actions', 'Undo Approval']"
-              >
+            >
               <i class="fa fa-undo"></i>
             </button>
             <button
@@ -628,7 +613,7 @@
               (click)="routeEdit($event)"
               *mifosxHasPermission="'ACTIVATE_SAVINGSACCOUNT'"
               [routerLink]="['../', 'recurring-deposits-accounts', element.id, 'actions', 'Activate']"
-              >
+            >
               <i class="fa fa-check-circle"></i>
             </button>
           }
@@ -646,10 +631,7 @@
 
   <!-- Closed Recurring Deposit Accounts -->
   @if (showClosedRecurringAccounts) {
-    <table
-      mat-table
-      [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed' : 'isRecurring'"
-      >
+    <table mat-table [dataSource]="savingAccounts | accountsFilter: 'saving' : 'closed' : 'isRecurring'">
       <ng-container matColumnDef="Account No">
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Account No' | translate }}</th>
         <td mat-cell *matCellDef="let element">
@@ -726,7 +708,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'shares-accounts', element.id, 'actions', 'Approve']"
-              >
+            >
               <i class="fa fa-check"></i>
             </button>
           }
@@ -737,7 +719,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'shares-accounts', element.id, 'actions', 'Undo Approval']"
-              >
+            >
               <i class="fa fa-undo"></i>
             </button>
           }
@@ -748,7 +730,7 @@
               color="primary"
               (click)="routeEdit($event)"
               [routerLink]="['../', 'shares-accounts', element.id, 'actions', 'Activate']"
-              >
+            >
               <i class="fa fa-check-circle"></i>
             </button>
           }

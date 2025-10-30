@@ -6,7 +6,7 @@
       [formGroup]="noteForm"
       class="layout-row align-start-baseline gap-20px"
       (ngSubmit)="submit()"
-      >
+    >
       <mat-form-field class="flex-90-minus-20px">
         <textarea
           formControlName="note"
@@ -20,7 +20,7 @@
         color="primary"
         [disabled]="!noteForm.valid"
         *mifosxHasPermission="'CREATE_GROUPNOTE'"
-        >
+      >
         <fa-icon icon="plus" class="m-r-10"></fa-icon> {{ 'labels.buttons.Add' | translate }}
       </button>
     </form>
@@ -32,18 +32,18 @@
         <h3 matLine>{{ centerNote.note }}</h3>
         <p matLine>
           <span>{{ 'labels.inputs.Created By' | translate }}: {{ centerNote.createdByUsername }}</span
-            ><br />
-            <span>{{ 'labels.inputs.Date' | translate }}: {{ centerNote.createdOn | dateFormat }}</span>
-          </p>
-          <div class="layout-row align-start">
-            <button mat-button color="primary" (click)="editNote(centerNote.id, centerNote.note, i)">
-              <fa-icon icon="edit"></fa-icon>
-            </button>
-            <button mat-button color="warn" (click)="deleteNote(centerNote.id, i)">
-              <fa-icon icon="trash"></fa-icon>
-            </button>
-          </div>
-        </mat-list-item>
-      }
-    </mat-list>
-  </div>
+          ><br />
+          <span>{{ 'labels.inputs.Date' | translate }}: {{ centerNote.createdOn | dateFormat }}</span>
+        </p>
+        <div class="layout-row align-start">
+          <button mat-button color="primary" (click)="editNote(centerNote.id, centerNote.note, i)">
+            <fa-icon icon="edit"></fa-icon>
+          </button>
+          <button mat-button color="warn" (click)="deleteNote(centerNote.id, i)">
+            <fa-icon icon="trash"></fa-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    }
+  </mat-list>
+</div>

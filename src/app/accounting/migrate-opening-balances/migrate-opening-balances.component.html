@@ -37,7 +37,7 @@
               [accountTitle]="'Opening Balances Contra Account'"
               [glAccount]="openingBalancesData.contraAccount"
               [withTitle]="'50%'"
-              >
+            >
             </mifosx-gl-account-display>
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Currency' | translate }}</mat-label>
@@ -64,7 +64,7 @@
                 [matDatepicker]="openingBalancesDatePicker"
                 required
                 formControlName="transactionDate"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="openingBalancesDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #openingBalancesDatePicker></mat-datepicker>
               @if (openingBalancesForm.controls.transactionDate.hasError('required')) {
@@ -95,17 +95,14 @@
               </div>
             </div>
             @for (credit of glAccountEntries.controls; track credit; let i = $index) {
-              <div
-                class="flex-fill layout-row-wrap responsive-column content"
-                formArrayName="glAccountEntries"
-                >
+              <div class="flex-fill layout-row-wrap responsive-column content" formArrayName="glAccountEntries">
                 <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
                   <div class="flex-8">
                     {{
-                    openingBalancesData.glAccounts[i].glAccountType.value !==
-                    openingBalancesData.glAccounts[i - 1]?.glAccountType.value
-                    ? glAccountTypeLabel(openingBalancesData.glAccounts[i].glAccountType.value)
-                    : ''
+                      openingBalancesData.glAccounts[i].glAccountType.value !==
+                      openingBalancesData.glAccounts[i - 1]?.glAccountType.value
+                        ? glAccountTypeLabel(openingBalancesData.glAccounts[i].glAccountType.value)
+                        : ''
                     }}
                   </div>
                   <div class="flex-13">
@@ -143,7 +140,7 @@
             color="primary"
             [disabled]="!openingBalancesForm.valid"
             *mifosxHasPermission="'DEFINEOPENINGBALANCE_JOURNALENTRY'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>
@@ -160,17 +157,17 @@
       href="https://mifosforge.jira.com/wiki/spaces/docs/pages/90243328/Migrate+opening+balances+Office-wise"
       target="_blank"
       >{{ 'labels.inputs.Migrate opening balances (Office-wise)' | translate }}</a
-      >
-    </p>
-    <div class="layout-row align-end gap-2px responsive-column">
-      <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-        {{ 'labels.buttons.Close' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close(); popover.close(); previousStep()">
-        {{ 'labels.buttons.Back' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close(); popover.close(); nextStep()">
-        {{ 'labels.buttons.Next' | translate }}
-      </button>
-    </div>
-  </ng-template>
+    >
+  </p>
+  <div class="layout-row align-end gap-2px responsive-column">
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); popover.close(); previousStep()">
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
+  </div>
+</ng-template>

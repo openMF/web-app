@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #loansAccountStepper
-    >
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -32,7 +32,7 @@
       <mifosx-loans-account-details-step
         [loansAccountTemplate]="loansAccountAndTemplate"
         (loansAccountProductTemplate)="setTemplate($event)"
-        >
+      >
       </mifosx-loans-account-details-step>
     </mat-step>
 
@@ -43,7 +43,7 @@
         [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountAndTemplate"
         [collateralOptions]="collateralOptions"
-        >
+      >
       </mifosx-loans-account-terms-step>
     </mat-step>
 
@@ -54,7 +54,7 @@
         [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccountTemplate]="loansAccountAndTemplate"
         [loansAccountFormValid]="loansAccountFormValidAndNotPristine"
-        >
+      >
       </mifosx-loans-account-charges-step>
     </mat-step>
 
@@ -66,7 +66,7 @@
         [loansAccountProductTemplate]="loansAccountProductTemplate"
         [loansAccount]="loansAccount"
         [currencyCode]="currencyCode"
-        >
+      >
       </mifosx-loans-account-schedule-step>
     </mat-step>
 
@@ -78,7 +78,7 @@
           [loansAccountProductTemplate]="loansAccountProductTemplate"
           [loansAccount]="loansAccount"
           (submitEvent)="submit()"
-          >
+        >
         </mifosx-loans-account-preview-step>
       </mat-step>
     }

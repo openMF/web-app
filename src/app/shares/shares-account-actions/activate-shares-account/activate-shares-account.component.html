@@ -11,7 +11,7 @@
             [matDatepicker]="activatedDatePicker"
             required
             formControlName="activatedDate"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="activatedDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #activatedDatePicker></mat-datepicker>
           @if (activateSharesAccountForm.controls.activatedDate.hasError('required')) {

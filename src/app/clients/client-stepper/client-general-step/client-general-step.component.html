@@ -58,10 +58,8 @@
       createClientForm.contains('firstname') ||
       createClientForm.contains('middlename') ||
       createClientForm.contains('lastname')
-      ) {
-      <div
-        class="name-fields-row"
-        >
+    ) {
+      <div class="name-fields-row">
         @if (createClientForm.contains('firstname')) {
           <mat-form-field class="name-field first-name">
             <mat-label>{{ 'labels.inputs.First Name' | translate }}</mat-label>
@@ -74,7 +72,8 @@
             }
             @if (createClientForm.controls.firstname.hasError('pattern')) {
               <mat-error>
-                {{ 'labels.inputs.Client first name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.inputs.Client first name' | translate }}
+                <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.commons.begin with a special character or number' | translate }}
               </mat-error>
             }
@@ -86,7 +85,8 @@
             <input matInput formControlName="middlename" />
             @if (createClientForm.controls.middlename.hasError('pattern')) {
               <mat-error>
-                {{ 'labels.inputs.Client middle name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.inputs.Client middle name' | translate }}
+                <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.commons.begin with a special character or number' | translate }}
               </mat-error>
             }
@@ -104,7 +104,8 @@
             }
             @if (createClientForm.controls.lastname.hasError('pattern')) {
               <mat-error>
-                {{ 'labels.inputs.Client last name' | translate }} <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
+                {{ 'labels.inputs.Client last name' | translate }}
+                <strong>{{ 'labels.inputs.cannot' | translate }}</strong>
                 {{ 'labels.commons.begin with a special character or number' | translate }}
               </mat-error>
             }
@@ -118,8 +119,8 @@
     <mat-form-field class="flex-48" (click)="dateOfBirthDatePicker.open()">
       <mat-label>
         {{
-        'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Date of Birth', 'Incorporation Date'])
-        | translate
+          'labels.inputs.' + getDateLabel(createClientForm.value.legalFormId, ['Date of Birth', 'Incorporation Date'])
+            | translate
         }}
       </mat-label>
       <input matInput [max]="maxDate" [matDatepicker]="dateOfBirthDatePicker" formControlName="dateOfBirth" />
@@ -128,10 +129,7 @@
     </mat-form-field>
 
     @if (createClientForm.get('clientNonPersonDetails')) {
-      <div
-        class="flex-100 layout-row-wrap responsive-column gap-4percent"
-        formGroupName="clientNonPersonDetails"
-        >
+      <div class="flex-100 layout-row-wrap responsive-column gap-4percent" formGroupName="clientNonPersonDetails">
         <mat-form-field class="flex-48">
           <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
           <mat-select formControlName="constitutionId" required>
@@ -160,7 +158,7 @@
             [max]="maxDate"
             [matDatepicker]="incorpValidityTillDateDatePicker"
             formControlName="incorpValidityTillDate"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
         </mat-form-field>
@@ -200,11 +198,7 @@
     </mat-form-field>
 
     @if (createClientForm.value.legalFormId === 1) {
-      <mat-checkbox
-        class="flex-48 margin-v"
-        labelPosition="before"
-        formControlName="isStaff"
-        >
+      <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="isStaff">
         {{ 'labels.inputs.Is staff' | translate }}?
       </mat-checkbox>
     }
@@ -241,9 +235,7 @@
       <mat-label>{{ 'labels.inputs.Client Classification' | translate }}</mat-label>
       <mat-select formControlName="clientClassificationId">
         @for (clientClassification of clientClassificationTypeOptions; track clientClassification) {
-          <mat-option
-            [value]="clientClassification.id"
-            >
+          <mat-option [value]="clientClassification.id">
             {{ clientClassification.name }}
           </mat-option>
         }
@@ -259,7 +251,7 @@
         [matDatepicker]="submittedOnDatePicker"
         formControlName="submittedOnDate"
         required
-        />
+      />
       <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #submittedOnDatePicker></mat-datepicker>
     </mat-form-field>
@@ -271,10 +263,7 @@
     </mat-checkbox>
 
     @if (createClientForm.contains('activationDate')) {
-      <mat-form-field
-        class="flex-48"
-        (click)="activatedOnDatePicker.open()"
-        >
+      <mat-form-field class="flex-48" (click)="activatedOnDatePicker.open()">
         <mat-label>{{ 'labels.inputs.Activation Date' | translate }}</mat-label>
         <input
           matInput
@@ -283,7 +272,7 @@
           [matDatepicker]="activatedOnDatePicker"
           required
           formControlName="activationDate"
-          />
+        />
         <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #activatedOnDatePicker></mat-datepicker>
         @if (createClientForm.controls.activationDate.hasError('required')) {

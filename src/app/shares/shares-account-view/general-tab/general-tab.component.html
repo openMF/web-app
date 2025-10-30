@@ -25,7 +25,9 @@
             <td>{{ 'labels.inputs.External Id' | translate }}</td>
             @if (sharesAccountData.externalId) {
               <td>
-                <mifosx-external-identifier externalId="{{ sharesAccountData.externalId }}"></mifosx-external-identifier>
+                <mifosx-external-identifier
+                  externalId="{{ sharesAccountData.externalId }}"
+                ></mifosx-external-identifier>
               </td>
             }
             @if (!sharesAccountData.externalId) {

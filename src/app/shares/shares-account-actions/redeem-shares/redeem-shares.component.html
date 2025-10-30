@@ -12,7 +12,7 @@
               [matDatepicker]="requestedDatePicker"
               required
               formControlName="requestedDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="requestedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #requestedDatePicker></mat-datepicker>
             @if (redeemSharesForm.controls.requestedDate.hasError('required')) {

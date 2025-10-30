@@ -7,7 +7,7 @@
         matInput
         matTooltip="{{ 'tooltips.Sets the minimum deposit amount' | translate }}"
         formControlName="minRequiredOpeningBalance"
-        />
+      />
     </mat-form-field>
 
     <span class="flex-48 hide-lt-md"></span>
@@ -19,15 +19,13 @@
         matInput
         matTooltip="{{ 'tooltips.Used to indicate the length of time' | translate }}"
         formControlName="lockinPeriodFrequency"
-        />
+      />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-select formControlName="lockinPeriodFrequencyType">
         @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
-          <mat-option
-            [value]="lockinPeriodFrequencyType.id"
-            >
+          <mat-option [value]="lockinPeriodFrequencyType.id">
             {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -39,7 +37,7 @@
       labelPosition="before"
       matTooltip="{{ 'tooltips.Indicates whether the withdrawal fee' | translate }}"
       formControlName="withdrawalFeeForTransfers"
-      >
+    >
       {{ 'labels.inputs.Apply Withdrawal Fee for Transfers' | translate }}
     </mat-checkbox>
 
@@ -50,7 +48,7 @@
         matInput
         matTooltip="{{ 'tooltips.Sets the balance required for interest calculation' | translate }}"
         formControlName="minBalanceForInterestCalculation"
-        />
+      />
     </mat-form-field>
 
     <mat-checkbox
@@ -58,7 +56,7 @@
       labelPosition="before"
       matTooltip="{{ 'tooltips.Indicates whether to enforce a minimum balance' | translate }}"
       formControlName="enforceMinRequiredBalance"
-      >
+    >
       {{ 'labels.inputs.Enforce Minimum Balance' | translate }}
     </mat-checkbox>
 
@@ -69,7 +67,7 @@
         matInput
         matTooltip="{{ 'tooltips.Sets the minimum balance allowed for a saving account' | translate }}"
         formControlName="minRequiredBalance"
-        />
+      />
     </mat-form-field>
 
     <mat-checkbox
@@ -77,7 +75,7 @@
       labelPosition="before"
       matTooltip="{{ 'tooltips.An boolean flag to attach' | translate }}"
       formControlName="withHoldTax"
-      >
+    >
       {{ 'labels.inputs.Is Withhold Tax Applicable' | translate }}
     </mat-checkbox>
 
@@ -107,14 +105,12 @@
       labelPosition="before"
       matTooltip="{{ 'tooltips.Indicates whether saving accounts based on this saving product' | translate }}"
       formControlName="allowOverdraft"
-      >
+    >
       {{ 'labels.inputs.Is Overdraft Allowed' | translate }}
     </mat-checkbox>
 
     @if (savingProductSettingsForm.value.allowOverdraft) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</mat-label>
           <input
@@ -122,7 +118,7 @@
             matInput
             matTooltip="{{ 'tooltips.Sets the overdraft required for interest calculation' | translate }}"
             formControlName="minOverdraftForInterestCalculation"
-            />
+          />
         </mat-form-field>
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Nominal Annual Interest for Overdraft' | translate }}</mat-label>
@@ -131,7 +127,7 @@
             matInput
             matTooltip="{{ 'tooltips.Default interest rate on overdraft' | translate }}"
             formControlName="nominalAnnualInterestRateOverdraft"
-            />
+          />
         </mat-form-field>
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Maximum Overdraft Amount Limit' | translate }}</mat-label>
@@ -140,7 +136,7 @@
             matInput
             matTooltip="{{ 'tooltips.Sets the maximum allowed overdraft amount' | translate }}"
             formControlName="overdraftLimit"
-            />
+          />
         </mat-form-field>
       </div>
     }
@@ -154,14 +150,12 @@
       labelPosition="before"
       matTooltip="{{ 'tooltips.Enables definition and tracking inactive Savings Accounts' | translate }}"
       formControlName="isDormancyTrackingActive"
-      >
+    >
       {{ 'labels.inputs.Enable Dormancy Tracking' | translate }}
     </mat-checkbox>
 
     @if (savingProductSettingsForm.value.isDormancyTrackingActive) {
-      <div
-        class="flex-fill layout-row-wrap gap-2percent responsive-column"
-        >
+      <div class="flex-fill layout-row-wrap gap-2percent responsive-column">
         <mat-form-field class="flex-31">
           <mat-label>{{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}</mat-label>
           <input
@@ -170,9 +164,10 @@
             matTooltip="{{ 'tooltips.Inactive period to mark an account as Inactive' | translate }}"
             formControlName="daysToInactive"
             required
-            />
+          />
           <mat-error>
-            {{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }} {{ 'labels.commons.is' | translate }}
+            {{ 'labels.inputs.Number of Days to Inactive sub-status' | translate }}
+            {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
           </mat-error>
         </mat-form-field>
@@ -184,7 +179,7 @@
             matTooltip="{{ 'tooltips.Inactive period to mark an account as Dormant' | translate }}"
             formControlName="daysToDormancy"
             required
-            />
+          />
           <mat-error>
             {{ 'labels.inputs.Number of Days to Dormant sub-status' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -198,7 +193,7 @@
             matTooltip="{{ 'tooltips.Inactive period to mark an account as Escheat' | translate }}"
             formControlName="daysToEscheat"
             required
-            />
+          />
           <mat-error>
             {{ 'labels.inputs.Number of Days to Escheat' | translate }} {{ 'labels.commons.is' | translate }}
             <strong>{{ 'labels.commons.required' | translate }}</strong>

@@ -57,10 +57,7 @@
           <span class="flex-48 hide-lt-md"></span>
 
           @for (debit of debits.controls; track debit; let i = $index) {
-            <div
-              class="flex-fill layout-row-wrap responsive-column"
-              formArrayName="debits"
-              >
+            <div class="flex-fill layout-row-wrap responsive-column" formArrayName="debits">
               <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Affected GL Entry (Debit)' | translate }}</mat-label>
@@ -95,12 +92,7 @@
                     </button>
                   }
                   @if (i === 0 && allowMultipleDebitEntries) {
-                    <button
-                      type="button"
-                      mat-icon-button
-                      color="primary"
-                      (click)="addAffectedGLEntry(debits)"
-                      >
+                    <button type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(debits)">
                       <fa-icon icon="plus-circle" size="lg"></fa-icon>
                     </button>
                   }
@@ -110,18 +102,13 @@
           }
 
           @for (credit of credits.controls; track credit; let i = $index) {
-            <div
-              class="flex-fill layout-row-wrap responsive-column"
-              formArrayName="credits"
-              >
+            <div class="flex-fill layout-row-wrap responsive-column" formArrayName="credits">
               <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
                 <mat-form-field class="flex-48">
                   <mat-label>{{ 'labels.inputs.Affected GL Entry (Credit)' | translate }}</mat-label>
                   <mat-select required formControlName="glAccountId">
                     @for (affectedGLEntryCredit of creditAccountData; track affectedGLEntryCredit) {
-                      <mat-option
-                        [value]="affectedGLEntryCredit.id"
-                        >
+                      <mat-option [value]="affectedGLEntryCredit.id">
                         {{ affectedGLEntryCredit.name }}
                       </mat-option>
                     }
@@ -150,12 +137,7 @@
                     </button>
                   }
                   @if (i === 0 && allowMultipleCreditEntries) {
-                    <button
-                      type="button"
-                      mat-icon-button
-                      color="primary"
-                      (click)="addAffectedGLEntry(credits)"
-                      >
+                    <button type="button" mat-icon-button color="primary" (click)="addAffectedGLEntry(credits)">
                       <fa-icon icon="plus-circle" size="lg"></fa-icon>
                     </button>
                   }
@@ -178,7 +160,7 @@
               [matDatepicker]="transactionDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             @if (frequentPostingsForm.controls.transactionDate.hasError('required')) {
@@ -241,7 +223,7 @@
           color="primary"
           [disabled]="!frequentPostingsForm.valid"
           *mifosxHasPermission="'CREATE_JOURNALENTRY'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

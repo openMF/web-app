@@ -8,7 +8,7 @@
             class="profile-image"
             matTooltip="{{ 'tooltips.Savings Account' | translate }}"
             [src]="'assets/images/savings_account_placeholder.png'"
-            />
+          />
         </div>
       </div>
 
@@ -51,9 +51,7 @@
           </div>
 
           @if (!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval) {
-            <div
-              class="flex-30"
-              >
+            <div class="flex-30">
               <h3>{{ 'labels.heading.Account Overview' | translate }}</h3>
               <table class="account-overview">
                 <tbody>
@@ -61,7 +59,7 @@
                     <td>{{ 'labels.inputs.Current Balance' | translate }}</td>
                     <td class="r-amount">
                       {{
-                      savingsAccountData.summary.accountBalance | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                        savingsAccountData.summary.accountBalance | currency: currency.code : 'symbol-narrow' : '1.2-2'
                       }}
                     </td>
                   </tr>
@@ -69,7 +67,8 @@
                     <td>{{ 'labels.inputs.Available Balance' | translate }}</td>
                     <td class="r-amount">
                       {{
-                      savingsAccountData.summary.availableBalance | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                        savingsAccountData.summary.availableBalance
+                          | currency: currency.code : 'symbol-narrow' : '1.2-2'
                       }}
                     </td>
                   </tr>
@@ -84,7 +83,7 @@
               [matMenuTriggerFor]="accountMenu"
               aria-label="Loan account actions"
               yPosition="below"
-              >
+            >
               <mat-icon matListIcon class="actions-menu">
                 <fa-icon icon="bars" size="sm"></fa-icon>
               </mat-icon>
@@ -128,7 +127,7 @@
           routerLinkActive
           #general="routerLinkActive"
           [active]="general.isActive"
-          >
+        >
           {{ 'labels.inputs.General' | translate }}
         </a>
         <a
@@ -137,7 +136,7 @@
           routerLinkActive
           #transactions="routerLinkActive"
           [active]="transactions.isActive"
-          >
+        >
           {{ 'labels.inputs.Transactions' | translate }}
         </a>
         <a
@@ -146,7 +145,7 @@
           routerLinkActive
           #charges="routerLinkActive"
           [active]="charges.isActive"
-          >
+        >
           {{ 'labels.inputs.Charges' | translate }}
         </a>
         <a
@@ -155,7 +154,7 @@
           routerLinkActive
           #savingsDocuments="routerLinkActive"
           [active]="savingsDocuments.isActive"
-          >
+        >
           {{ 'labels.inputs.Documents' | translate }}
         </a>
         <a
@@ -165,7 +164,7 @@
           routerLinkActive
           #notes="routerLinkActive"
           [active]="notes.isActive"
-          >
+        >
           {{ 'labels.inputs.Notes' | translate }}
         </a>
         <ng-container *mifosxHasPermission="'READ_SAVINGSACCOUNTCHARGE'">
@@ -176,7 +175,7 @@
               routerLinkActive
               #standingInstructions="routerLinkActive"
               [active]="standingInstructions.isActive"
-              >
+            >
               {{ 'labels.inputs.Standing Instructions' | translate }}
             </a>
           }
@@ -189,7 +188,7 @@
             routerLinkActive
             #datatable="routerLinkActive"
             [active]="datatable.isActive"
-            >
+          >
             {{ savingsDatatable.registeredTableName }}
           </a>
         }

@@ -4,7 +4,7 @@
     color="primary"
     [routerLink]="['create']"
     *mifosxHasPermission="'CREATE_ENTITY_DATATABLE_CHECK'"
-    >
+  >
     <fa-icon icon="plus" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Create' | translate }}
   </button>
@@ -72,7 +72,7 @@
             (click)="deleteEntityDataTableCheck(entityDataTableCheck.id)"
             color="warn"
             *mifosxHasPermission="'DELETE_ENTITY_DATATABLE_CHECK'"
-            >
+          >
             <fa-icon icon="trash" class="m-r-10"></fa-icon>{{ 'labels.buttons.Delete' | translate }}
           </button>
         </td>

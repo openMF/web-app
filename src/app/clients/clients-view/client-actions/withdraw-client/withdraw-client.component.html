@@ -12,7 +12,7 @@
               [matDatepicker]="withdrawalDatePicker"
               required
               formControlName="withdrawalDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="withdrawalDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #withdrawalDatePicker></mat-datepicker>
             @if (withdrawClientForm.controls.withdrawalDate.hasError('required')) {

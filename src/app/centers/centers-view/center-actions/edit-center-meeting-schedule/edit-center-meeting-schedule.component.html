@@ -29,7 +29,7 @@
               [matDatepicker]="newMeetingDatePicker"
               required
               formControlName="newMeetingDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="newMeetingDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #newMeetingDatePicker></mat-datepicker>
             @if (centerEditMeetingScheduleForm.controls.newMeetingDate.hasError('required')) {

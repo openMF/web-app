@@ -20,7 +20,7 @@
         cdkDropList
         [cdkDropListData]="paymentAllocationsData"
         (cdkDropListDropped)="dropTable($event, false)"
-        >
+      >
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let paymentAllocation">
@@ -50,7 +50,7 @@
         cdkDropList
         [cdkDropListData]="creditAllocationsData"
         (cdkDropListDropped)="dropTable($event, true)"
-        >
+      >
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let creditAllocation">
@@ -72,15 +72,14 @@
   }
 
   @if (advancedPaymentAllocation && advancedPaymentAllocation.futureInstallmentAllocationRules) {
-    <mat-form-field
-      class="m-t-20 flex-33"
-      >
+    <mat-form-field class="m-t-20 flex-33">
       <mat-label>{{ 'labels.inputs.Future Installment Allocation Rule' | translate }}</mat-label>
       <mat-select [formControl]="futureInstallmentAllocationRule">
-        @for (futureInstallmentAllocationRule of advancedPaymentAllocation.futureInstallmentAllocationRules; track futureInstallmentAllocationRule) {
-          <mat-option
-            [value]="futureInstallmentAllocationRule.code"
-            >
+        @for (
+          futureInstallmentAllocationRule of advancedPaymentAllocation.futureInstallmentAllocationRules;
+          track futureInstallmentAllocationRule
+        ) {
+          <mat-option [value]="futureInstallmentAllocationRule.code">
             {{ futureInstallmentAllocationRule.value | translateKey: 'catalogs' }}
           </mat-option>
         }

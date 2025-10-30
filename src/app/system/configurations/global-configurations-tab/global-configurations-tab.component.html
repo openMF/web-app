@@ -29,7 +29,7 @@
             [(ngModel)]="configuration.enabled"
             name="{{ configuration.name }}"
             (click)="toggleStatus(configuration)"
-            >
+          >
             <div [className]="configuration.enabled ? 'enabled' : 'disabled'">
               @if (configuration.enabled) {
                 <span>{{ 'labels.inputs.Enabled' | translate }}</span>
@@ -87,7 +87,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateConfigurationsTable, configurationsTable, 'top', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -108,7 +108,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

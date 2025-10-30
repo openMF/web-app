@@ -44,12 +44,7 @@
         </mat-select>
       }
       @if (depositProductIncentiveForm.value.attributeName === 3) {
-        <input
-          type="number"
-          matInput
-          formControlName="attributeValue"
-          required
-          />
+        <input type="number" matInput formControlName="attributeValue" required />
       }
       <mat-error>
         {{ 'labels.inputs.Value' | translate }} {{ 'labels.commons.is' | translate }}
@@ -90,7 +85,7 @@
     color="primary"
     [mat-dialog-close]="{ data: depositProductIncentiveForm }"
     [disabled]="!depositProductIncentiveForm.valid || depositProductIncentiveForm.pristine"
-    >
+  >
     {{ 'labels.buttons.' + layout.addButtonText | translate }}
   </button>
 </mat-dialog-actions>

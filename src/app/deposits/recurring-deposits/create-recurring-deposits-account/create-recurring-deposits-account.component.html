@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #recurringDepositAccountStepper
-    >
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -32,7 +32,7 @@
       <mifosx-recurring-deposits-account-details-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
         (recurringDepositsAccountProductTemplate)="setTemplate($event)"
-        >
+      >
       </mifosx-recurring-deposits-account-details-step>
     </mat-step>
 
@@ -42,7 +42,7 @@
       <mifosx-recurring-deposits-account-terms-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
         [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
-        >
+      >
       </mifosx-recurring-deposits-account-terms-step>
     </mat-step>
 
@@ -52,7 +52,7 @@
       <mifosx-recurring-deposits-account-settings-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
         [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
-        >
+      >
       </mifosx-recurring-deposits-account-settings-step>
     </mat-step>
 
@@ -62,7 +62,7 @@
       <mifosx-recurring-deposits-account-interest-rate-chart-step
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
         [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
-        >
+      >
       </mifosx-recurring-deposits-account-interest-rate-chart-step>
     </mat-step>
 
@@ -73,7 +73,7 @@
         [recurringDepositsAccountTemplate]="recurringDepositsAccountTemplate"
         [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
         [recurringDepositAccountFormValid]="recurringDepositAccountFormValid"
-        >
+      >
       </mifosx-recurring-deposits-account-charges-step>
     </mat-step>
 
@@ -85,7 +85,7 @@
           [recurringDepositsAccountProductTemplate]="recurringDepositsAccountProductTemplate"
           [recurringDepositAccountData]="recurringDepositAccountData"
           (submitEvent)="submit()"
-          >
+        >
         </mifosx-recurring-deposits-account-preview-step>
       </mat-step>
     }

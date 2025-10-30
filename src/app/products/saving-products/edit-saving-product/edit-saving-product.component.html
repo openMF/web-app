@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #savingProductStepper
-    >
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -64,7 +64,7 @@
       <mifosx-saving-product-charges-step
         [savingProductsTemplate]="savingProductAndTemplate"
         [currencyCode]="savingProductCurrencyForm.get('currencyCode')"
-        >
+      >
       </mifosx-saving-product-charges-step>
     </mat-step>
 
@@ -77,7 +77,7 @@
         [isDormancyTrackingActive]="savingProductSettingsForm.get('isDormancyTrackingActive')"
         [savingProductFormValid]="savingProductFormValidAndNotPristine"
         [allowOverdraft]="savingProductSettingsForm.get('allowOverdraft')"
-        >
+      >
       </mifosx-saving-product-accounting-step>
     </mat-step>
 
@@ -90,7 +90,7 @@
           [savingProduct]="savingProduct"
           [taskPermission]="'UPDATE_SAVINGSPRODUCT'"
           (submitEvent)="submit()"
-          >
+        >
         </mifosx-saving-product-preview-step>
       </mat-step>
     }

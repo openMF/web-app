@@ -11,7 +11,7 @@
             [matDatepicker]="transactionDatePicker"
             required
             formControlName="transactionDate"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #transactionDatePicker></mat-datepicker>
           @if (postInterestSavingsAccountForm.controls.transactionDate.hasError('required')) {

@@ -58,33 +58,25 @@
         }
 
         @if (groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]) {
-          <div
-            class="mat-body-strong flex-50"
-            >
+          <div class="mat-body-strong flex-50">
             {{ 'labels.inputs.Next Meeting Date' | translate }}
           </div>
         }
 
         @if (groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.nextTenRecurringDates[0]) {
-          <div
-            class="flex-50"
-            >
+          <div class="flex-50">
             {{ groupData.collectionMeetingCalendar.nextTenRecurringDates[0] | dateFormat }}
           </div>
         }
 
         @if (groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable) {
-          <div
-            class="mat-body-strong flex-50"
-            >
+          <div class="mat-body-strong flex-50">
             {{ 'labels.inputs.Meeting Frequency' | translate }}
           </div>
         }
 
         @if (groupData.collectionMeetingCalendar && groupData.collectionMeetingCalendar.humanReadable) {
-          <div
-            class="flex-50"
-            >
+          <div class="flex-50">
             {{ groupData.collectionMeetingCalendar.humanReadable }}
           </div>
         }

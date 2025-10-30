@@ -21,16 +21,14 @@
         matInput
         formControlName="lockinPeriodFrequency"
         matTooltip="{{ 'tooltips.The number at which lock in period occurs' | translate }}"
-        />
+      />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
-          <mat-option
-            [value]="lockinPeriodFrequencyType.id"
-            >
+          <mat-option [value]="lockinPeriodFrequencyType.id">
             {{ lockinPeriodFrequencyType.value }}
           </mat-option>
         }
@@ -47,7 +45,7 @@
         formControlName="minDepositTerm"
         matTooltip="{{ 'tooltips.The number at which minimum deposit occurs' | translate }}"
         required
-        />
+      />
       <mat-error>
         {{ 'labels.inputs.Minimum Deposit Term Frequency' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -78,7 +76,7 @@
         matInput
         formControlName="inMultiplesOfDepositTerm"
         matTooltip="{{ 'tooltips.The number at which multiple deposits occurs' | translate }}"
-        />
+      />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -101,7 +99,7 @@
         matInput
         formControlName="maxDepositTerm"
         matTooltip="{{ 'tooltips.The number at which minimum deposit occurs' | translate }}"
-        />
+      />
     </mat-form-field>
 
     <mat-form-field class="flex-48">
@@ -132,9 +130,7 @@
       <mat-label>{{ 'labels.inputs.Period' | translate }}</mat-label>
       <mat-select formControlName="preClosurePenalInterestOnTypeId">
         @for (preClosurePenalInterestOnType of preClosurePenalInterestOnTypeData; track preClosurePenalInterestOnType) {
-          <mat-option
-            [value]="preClosurePenalInterestOnType.id"
-            >
+          <mat-option [value]="preClosurePenalInterestOnType.id">
             {{ preClosurePenalInterestOnType.value }}
           </mat-option>
         }

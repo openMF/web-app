@@ -18,7 +18,7 @@
               [matDatepicker]="transactionDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #transactionDatePicker></mat-datepicker>
             @if (depositRecurringDepositForm.controls.transactionDate.hasError('required')) {
@@ -34,7 +34,7 @@
             [isRequired]="true"
             [inputFormControl]="depositRecurringDepositForm.controls.transactionAmount"
             [inputLabel]="'Transaction Amount'"
-            >
+          >
           </mifosx-input-amount>
 
           <mat-form-field>

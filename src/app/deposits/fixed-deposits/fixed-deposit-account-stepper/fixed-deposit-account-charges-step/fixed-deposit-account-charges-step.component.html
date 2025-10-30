@@ -22,7 +22,7 @@
     mat-table
     [dataSource]="chargesDataSource"
     [hidden]="chargesDataSource.length === 0"
-    >
+  >
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
@@ -58,8 +58,7 @@
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Date' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
         @if (charge.chargeTimeType.value === 'Specified due date' || charge.chargeTimeType.value === 'Weekly Fee') {
-          <span
-            >
+          <span>
             {{ (charge.dueDate | dateFormat) || 'Unassigned*' }}
           </span>
         }
@@ -70,14 +69,13 @@
         }
         @if (
           !(
-          charge.chargeTimeType.value === 'Monthly Fee' ||
-          charge.chargeTimeType.value === 'Annual Fee' ||
-          charge.chargeTimeType.value === 'Specified due date' ||
-          charge.chargeTimeType.value === 'Weekly Fee'
+            charge.chargeTimeType.value === 'Monthly Fee' ||
+            charge.chargeTimeType.value === 'Annual Fee' ||
+            charge.chargeTimeType.value === 'Specified due date' ||
+            charge.chargeTimeType.value === 'Weekly Fee'
           )
-          ) {
-          <span
-            >
+        ) {
+          <span>
             {{ 'labels.inputs.N/A' | translate }}
           </span>
         }
@@ -85,12 +83,8 @@
           charge.chargeTimeType.value === 'Weekly Fee' ||
           charge.chargeTimeType.value === 'Annual Fee' ||
           charge.chargeTimeType.value === 'Specified due date'
-          ) {
-          <button
-            mat-icon-button
-            color="primary"
-            (click)="editChargeDate(charge)"
-            >
+        ) {
+          <button mat-icon-button color="primary" (click)="editChargeDate(charge)">
             <fa-icon icon="pen"></fa-icon>
           </button>
         }
@@ -102,11 +96,7 @@
       <td mat-cell *matCellDef="let charge">
         {{ charge.feeInterval || 'Not Provided' }}
         @if (charge.chargeTimeType.value === 'Weekly Fee' || charge.chargeTimeType.value === 'Monthly Fee') {
-          <button
-            mat-icon-button
-            color="primary"
-            (click)="editChargeFeeInterval(charge)"
-            >
+          <button mat-icon-button color="primary" (click)="editChargeFeeInterval(charge)">
             <fa-icon icon="pen"></fa-icon>
           </button>
         }

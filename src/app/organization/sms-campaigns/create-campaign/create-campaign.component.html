@@ -5,7 +5,7 @@
     class="mat-elevation-z8"
     labelPosition="bottom"
     #smsCampaignStepper
-    >
+  >
     <ng-template matStepperIcon="number">
       <fa-icon icon="pencil-alt" size="sm"></fa-icon>
     </ng-template>
@@ -32,7 +32,7 @@
       <mifosx-sms-campaign-step
         [smsCampaignTemplate]="smsCampaignTemplate"
         (templateParameters)="setParameters($event)"
-        >
+      >
       </mifosx-sms-campaign-step>
     </mat-step>
 
@@ -42,7 +42,7 @@
       <mifosx-campaign-message-step
         [templateParameters]="templateParameters"
         [smsCampaignFormValid]="smsCampaignForm.valid"
-        >
+      >
       </mifosx-campaign-message-step>
     </mat-step>
 
@@ -53,7 +53,7 @@
           [smsCampaignTemplate]="smsCampaignTemplate"
           [campaign]="smsCampaign"
           (submitEvent)="submit()"
-          >
+        >
         </mifosx-campaign-preview-step>
       </mat-step>
     }

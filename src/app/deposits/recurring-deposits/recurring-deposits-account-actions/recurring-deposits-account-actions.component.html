@@ -2,8 +2,7 @@
   <mifosx-activate-recurring-deposits-account></mifosx-activate-recurring-deposits-account>
 }
 @if (actions['Undo Approval'] || actions['Undo Activation']) {
-  <mifosx-undo-approval-recurring-deposits-account
-  ></mifosx-undo-approval-recurring-deposits-account>
+  <mifosx-undo-approval-recurring-deposits-account></mifosx-undo-approval-recurring-deposits-account>
 }
 @if (actions['Approve']) {
   <mifosx-approve-recurring-deposits-account></mifosx-approve-recurring-deposits-account>
@@ -12,22 +11,17 @@
   <mifosx-reject-recurring-deposits-account></mifosx-reject-recurring-deposits-account>
 }
 @if (actions['Withdrawn by Client']) {
-  <mifosx-withdraw-by-client-recurring-deposits-account
-  ></mifosx-withdraw-by-client-recurring-deposits-account>
+  <mifosx-withdraw-by-client-recurring-deposits-account></mifosx-withdraw-by-client-recurring-deposits-account>
 }
 @if (actions['Add Charge']) {
-  <mifosx-add-charge-recurring-deposits-account
-  ></mifosx-add-charge-recurring-deposits-account>
+  <mifosx-add-charge-recurring-deposits-account></mifosx-add-charge-recurring-deposits-account>
 }
 @if (actions['Premature Close']) {
-  <mifosx-premature-close-recurring-deposit-account
-  ></mifosx-premature-close-recurring-deposit-account>
+  <mifosx-premature-close-recurring-deposit-account></mifosx-premature-close-recurring-deposit-account>
 }
 @if (actions['Close']) {
   <mifosx-close-recurring-deposits-account></mifosx-close-recurring-deposits-account>
 }
 @if (actions['Deposit'] || actions['Withdrawal']) {
-  <mifosx-deposit-recurring-deposits-account
-    [currency]="currency"
-  ></mifosx-deposit-recurring-deposits-account>
+  <mifosx-deposit-recurring-deposits-account [currency]="currency"></mifosx-deposit-recurring-deposits-account>
 }

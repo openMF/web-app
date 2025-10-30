@@ -7,7 +7,7 @@
             matInput
             placeholder="{{ 'labels.text.Filter by name' | translate }}"
             (keyup)="applyFilter($event.target.value)"
-            />
+          />
         </mat-form-field>
       </div>
       <div class="flex-60">
@@ -16,7 +16,7 @@
           color="success"
           *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
           (click)="bulkLoanReschedule('Approve')"
-          >
+        >
           <fa-icon icon="check" class="m-r-10"></fa-icon>{{ 'labels.buttons.Approve' | translate }}
         </button>
         <button
@@ -24,7 +24,7 @@
           color="reject"
           *mifosxHasPermission="'APPROVE_LOANRESCHEDULE'"
           (click)="bulkLoanReschedule('Reject')"
-          >
+        >
           <fa-icon icon="times" class="m-r-10"></fa-icon>{{ 'labels.buttons.Reject' | translate }}
         </button>
       </div>
@@ -37,7 +37,7 @@
             [checked]="selection.hasValue() && isAllSelected()"
             [indeterminate]="selection.hasValue() && !isAllSelected()"
             [aria-label]="checkboxLabel()"
-            >
+          >
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
@@ -46,7 +46,7 @@
             (change)="$event ? selection.toggle(row) : null"
             [checked]="selection.isSelected(row)"
             [aria-label]="checkboxLabel(row)"
-            >
+          >
           </mat-checkbox>
         </td>
       </ng-container>
@@ -57,7 +57,7 @@
           *matCellDef="let loan"
           class="view-details"
           [routerLink]="['../../clients', loan.clientId, 'general']"
-          >
+        >
           {{ loan.clientName }}
         </td>
       </ng-container>
@@ -72,7 +72,7 @@
           *matCellDef="let loan"
           class="view-details"
           [routerLink]="['../../clients', loan.clientId, 'loans', loan.loanId, 'general']"
-          >
+        >
           {{ loan.loanAccountNumber }}
         </td>
       </ng-container>

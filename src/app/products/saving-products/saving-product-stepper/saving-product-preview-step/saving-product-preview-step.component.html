@@ -49,8 +49,8 @@
     <span class="flex-40">{{ 'labels.inputs.Interest Compounding Period' | translate }}:</span>
     <span class="flex-60">{{
       savingProduct.interestCompoundingPeriodType
-      | find: savingProductsTemplate.interestCompoundingPeriodTypeOptions : 'id' : 'value'
-      | translateKey: 'catalogs'
+        | find: savingProductsTemplate.interestCompoundingPeriodTypeOptions : 'id' : 'value'
+        | translateKey: 'catalogs'
     }}</span>
   </div>
 
@@ -58,8 +58,8 @@
     <span class="flex-40">{{ 'labels.inputs.Interest Posting Period' | translate }}:</span>
     <span class="flex-60">{{
       savingProduct.interestPostingPeriodType
-      | find: savingProductsTemplate.interestPostingPeriodTypeOptions : 'id' : 'value'
-      | translateKey: 'catalogs'
+        | find: savingProductsTemplate.interestPostingPeriodTypeOptions : 'id' : 'value'
+        | translateKey: 'catalogs'
     }}</span>
   </div>
 
@@ -67,8 +67,8 @@
     <span class="flex-40">{{ 'labels.inputs.Interest Calculated using' | translate }}:</span>
     <span class="flex-60">{{
       savingProduct.interestCalculationType
-      | find: savingProductsTemplate.interestCalculationTypeOptions : 'id' : 'value'
-      | translateKey: 'catalogs'
+        | find: savingProductsTemplate.interestCalculationTypeOptions : 'id' : 'value'
+        | translateKey: 'catalogs'
     }}</span>
   </div>
 
@@ -76,8 +76,8 @@
     <span class="flex-40">{{ 'labels.inputs.Days in Year' | translate }}:</span>
     <span class="flex-60">{{
       savingProduct.interestCalculationDaysInYearType
-      | find: savingProductsTemplate.interestCalculationDaysInYearTypeOptions : 'id' : 'value'
-      | translateKey: 'catalogs'
+        | find: savingProductsTemplate.interestCalculationDaysInYearTypeOptions : 'id' : 'value'
+        | translateKey: 'catalogs'
     }}</span>
   </div>
 
@@ -96,9 +96,9 @@
       <span class="flex-40">{{ 'labels.inputs.Lock-in Period' | translate }}:</span>
       <span class="flex-60">{{
         savingProduct.lockinPeriodFrequency +
-        ' ' +
-        (savingProduct.lockinPeriodFrequencyType
-        | find: savingProductsTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value') | translateKey: 'catalogs'
+          ' ' +
+          (savingProduct.lockinPeriodFrequencyType
+            | find: savingProductsTemplate.lockinPeriodFrequencyTypeOptions : 'id' : 'value') | translateKey: 'catalogs'
       }}</span>
     </div>
   }
@@ -148,7 +148,9 @@
 
   @if (savingProduct.minOverdraftForInterestCalculation) {
     <div class="flex-100 layout-row">
-      <span class="flex-40">{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}:</span>
+      <span class="flex-40"
+        >{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}:</span
+      >
       <span class="flex-60">{{ savingProduct.minOverdraftForInterestCalculation | formatNumber }}</span>
     </div>
   }
@@ -228,24 +230,20 @@
   @if (
     savingProduct.advancedAccountingRules &&
     (savingProduct.paymentChannelToFundSourceMappings?.length ||
-    savingProduct.feeToIncomeAccountMappings?.length ||
-    savingProduct.penaltyToIncomeAccountMappings?.length)
-    ) {
-    <div
-      class="layout-row-wrap responsive-column flex-100"
-      >
+      savingProduct.feeToIncomeAccountMappings?.length ||
+      savingProduct.penaltyToIncomeAccountMappings?.length)
+  ) {
+    <div class="layout-row-wrap responsive-column flex-100">
       <h3 class="mat-h3 flex-100">{{ 'labels.heading.Advanced Accounting Rules' | translate }}</h3>
       <mat-divider class="flex-100"></mat-divider>
       @if (savingProduct.paymentChannelToFundSourceMappings?.length) {
-        <div
-          class="flex-100 layout-row-wrap responsive-column"
-          >
+        <div class="flex-100 layout-row-wrap responsive-column">
           <h4 class="mat-h4 flex-100">{{ 'labels.heading.Fund Sources for Payment Channels' | translate }}</h4>
           <table
             class="mat-elevation-z1 flex-100"
             mat-table
             [dataSource]="savingProduct.paymentChannelToFundSourceMappings"
-            >
+          >
             <ng-container matColumnDef="paymentTypeId">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Payment Type' | translate }}</th>
               <td mat-cell *matCellDef="let paymentFundSource">
@@ -256,8 +254,8 @@
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Fund Source' | translate }}</th>
               <td mat-cell *matCellDef="let paymentFundSource">
                 {{
-                paymentFundSource.fundSourceAccountId
-                | find: savingProductsTemplate.accountingMappingOptions.assetAccountOptions : 'id' : 'name'
+                  paymentFundSource.fundSourceAccountId
+                    | find: savingProductsTemplate.accountingMappingOptions.assetAccountOptions : 'id' : 'name'
                 }}
               </td>
             </ng-container>
@@ -280,8 +278,8 @@
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
               <td mat-cell *matCellDef="let feesIncome">
                 {{
-                feesIncome.incomeAccountId
-                | find: savingProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
+                  feesIncome.incomeAccountId
+                    | find: savingProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
                 }}
               </td>
             </ng-container>
@@ -291,11 +289,13 @@
         </div>
       }
       @if (savingProduct.penaltyToIncomeAccountMappings?.length) {
-        <div
-          class="flex-100 layout-row-wrap responsive-column"
-          >
+        <div class="flex-100 layout-row-wrap responsive-column">
           <h4 class="mat-h4 flex-100">{{ 'labels.heading.Penalties to Specific Income Accounts' | translate }}</h4>
-          <table class="flex-100 mat-elevation-z1" mat-table [dataSource]="savingProduct.penaltyToIncomeAccountMappings">
+          <table
+            class="flex-100 mat-elevation-z1"
+            mat-table
+            [dataSource]="savingProduct.penaltyToIncomeAccountMappings"
+          >
             <ng-container matColumnDef="chargeId">
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Penalty' | translate }}</th>
               <td mat-cell *matCellDef="let penaltyIncome">
@@ -306,8 +306,8 @@
               <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Income Account' | translate }}</th>
               <td mat-cell *matCellDef="let penaltyIncome">
                 {{
-                penaltyIncome.incomeAccountId
-                | find: savingProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
+                  penaltyIncome.incomeAccountId
+                    | find: savingProductsTemplate.accountingMappingOptions.incomeAccountOptions : 'id' : 'name'
                 }}
               </td>
             </ng-container>

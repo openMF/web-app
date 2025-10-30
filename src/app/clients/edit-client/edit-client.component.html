@@ -135,21 +135,14 @@
           </mat-form-field>
 
           @if (legalFormId === 1) {
-            <mat-checkbox
-              class="flex-48 margin-v"
-              labelPosition="before"
-              formControlName="isStaff"
-              >
+            <mat-checkbox class="flex-48 margin-v" labelPosition="before" formControlName="isStaff">
               {{ 'labels.inputs.Is staff' | translate }}?
             </mat-checkbox>
           }
         </div>
 
         @if (editClientForm.contains('clientNonPersonDetails')) {
-          <div
-            class="flex-100 layout-row-wrap gap-2percent column-on-small"
-            formGroupName="clientNonPersonDetails"
-            >
+          <div class="flex-100 layout-row-wrap gap-2percent column-on-small" formGroupName="clientNonPersonDetails">
             <mat-form-field class="flex-48">
               <mat-label>{{ 'labels.inputs.Constitution' | translate }}</mat-label>
               <mat-select formControlName="constitutionId" required>
@@ -178,7 +171,7 @@
                 [max]="maxDate"
                 [matDatepicker]="incorpValidityTillDateDatePicker"
                 formControlName="incorpValidityTillDate"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="incorpValidityTillDateDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #incorpValidityTillDateDatePicker></mat-datepicker>
             </mat-form-field>
@@ -226,9 +219,7 @@
             <mat-label>{{ 'labels.inputs.Client Classification' | translate }}</mat-label>
             <mat-select formControlName="clientClassificationId">
               @for (clientClassification of clientClassificationTypeOptions; track clientClassification) {
-                <mat-option
-                  [value]="clientClassification.id"
-                  >
+                <mat-option [value]="clientClassification.id">
                   {{ clientClassification.name }}
                 </mat-option>
               }
@@ -247,7 +238,7 @@
               [matDatepicker]="submittedOnDatePicker"
               formControlName="submittedOnDate"
               required
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="submittedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #submittedOnDatePicker></mat-datepicker>
             @if (editClientForm.controls.submittedOnDate.hasError('required')) {
@@ -266,7 +257,7 @@
               [max]="maxDate"
               [matDatepicker]="activatedOnDatePicker"
               formControlName="activationDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="activatedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #activatedOnDatePicker></mat-datepicker>
           </mat-form-field>
@@ -284,7 +275,7 @@
           [disabled]="!editClientForm.valid"
           (click)="submit()"
           class="custom-button"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

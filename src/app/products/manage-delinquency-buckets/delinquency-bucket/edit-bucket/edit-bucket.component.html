@@ -58,7 +58,7 @@
                   (click)="deleteDelinquencyRange(rowIndex)"
                   matTooltip="{{ 'tooltips.Delete' | translate }}"
                   matTooltipPosition="left"
-                  >
+                >
                   <fa-icon icon="trash"></fa-icon>
                 </button>
               </td>
@@ -79,7 +79,7 @@
           color="primary"
           [disabled]="!dataWasChanged"
           *mifosxHasPermission="'UPDATE_DELINQUENCY_BUCKET'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

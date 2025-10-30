@@ -28,7 +28,7 @@
             [matDatepicker]="meetingDatePicker"
             required
             formControlName="meetingDate"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="meetingDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #meetingDatePicker></mat-datepicker>
           @if (collectionSheetForm.controls.meetingDate.hasError('required')) {

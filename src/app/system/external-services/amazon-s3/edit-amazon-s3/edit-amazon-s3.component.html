@@ -24,7 +24,7 @@
                 mat-icon-button
                 (mousedown)="accessKeyInputType = 'text'"
                 (mouseup)="accessKeyInputType = 'password'"
-                >
+              >
                 @if (accessKeyInputType === 'password') {
                   <fa-icon icon="eye"></fa-icon>
                 }
@@ -51,7 +51,7 @@
                 mat-icon-button
                 (mousedown)="secretKeyInputType = 'text'"
                 (mouseup)="secretKeyInputType = 'password'"
-                >
+              >
                 @if (secretKeyInputType === 'password') {
                   <fa-icon icon="eye"></fa-icon>
                 }
@@ -78,7 +78,7 @@
           mat-raised-button
           color="primary"
           [disabled]="!amazonS3ConfigurationForm.valid || amazonS3ConfigurationForm.pristine"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

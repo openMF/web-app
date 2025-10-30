@@ -10,7 +10,7 @@
       [matDatepicker]="validFromDatePicker"
       required
       formControlName="startDate"
-      />
+    />
     <mat-datepicker-toggle matSuffix [for]="validFromDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #validFromDatePicker></mat-datepicker>
     @if (delinquencyActionForm.controls.startDate.hasError('required')) {
@@ -30,7 +30,7 @@
       [matDatepicker]="validTillDatePicker"
       required
       formControlName="endDate"
-      />
+    />
     <mat-datepicker-toggle matSuffix [for]="validTillDatePicker"></mat-datepicker-toggle>
     <mat-datepicker #validTillDatePicker></mat-datepicker>
     @if (delinquencyActionForm.controls.endDate.hasError('required')) {
@@ -49,7 +49,7 @@
     color="primary"
     [mat-dialog-close]="{ data: delinquencyActionForm }"
     [disabled]="!delinquencyActionForm.valid || delinquencyActionForm.pristine"
-    >
+  >
     {{ 'labels.buttons.Submit' | translate }}
   </button>
 </mat-dialog-actions>

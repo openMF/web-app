@@ -7,10 +7,8 @@
 @if (!isLoading) {
   <div class="savings-account-tables layout-row gap-2percent">
     <div class="flex-49 layout-column gap-4percent">
-      @if (
-        !savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval) {
-        <div
-          >
+      @if (!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval) {
+        <div>
           <h4 class="table-headers">{{ 'labels.heading.Savings Details' | translate }}</h4>
           <table>
             <tbody>
@@ -18,7 +16,9 @@
                 <td>{{ 'labels.inputs.External Id' | translate }}</td>
                 @if (savingsAccountData.externalId) {
                   <td>
-                    <mifosx-external-identifier externalId="{{ savingsAccountData.externalId }}"></mifosx-external-identifier>
+                    <mifosx-external-identifier
+                      externalId="{{ savingsAccountData.externalId }}"
+                    ></mifosx-external-identifier>
                   </td>
                 }
                 @if (!savingsAccountData.externalId) {
@@ -29,9 +29,9 @@
                 <td>{{ 'labels.inputs.Activated On' | translate }}</td>
                 <td>
                   {{
-                  savingsAccountData.timeline.activatedOnDate
-                  ? (savingsAccountData.timeline.activatedOnDate | dateFormat)
-                  : 'Not Activated'
+                    savingsAccountData.timeline.activatedOnDate
+                      ? (savingsAccountData.timeline.activatedOnDate | dateFormat)
+                      : 'Not Activated'
                   }}
                 </td>
               </tr>
@@ -47,298 +47,313 @@
                 <td>{{ 'labels.inputs.Nominal Interest Rate' | translate }}</td>
                 <td class="r-amount">
                   @if (savingsAccountData.nominalAnnualInterestRate) {
-                    <span
-                      >{{ savingsAccountData.nominalAnnualInterestRate | formatNumber }} %</span
-                      >
-                    }
-                    @if (!savingsAccountData.nominalAnnualInterestRate) {
-                      <span>0 %</span>
-                    }
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        } @else {
-          <div>
-            <h4 class="table-headers">{{ 'labels.heading.Savings Details' | translate }}</h4>
-            <table>
-              <tbody>
-                <tr>
-                  <td>{{ 'labels.inputs.Field Officer' | translate }}</td>
-                  <td>{{ savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned' }}</td>
-                </tr>
-                <tr>
-                  <td>{{ 'labels.inputs.Balance' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.summary.accountBalance | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        }
-        @if (!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval) {
-          <div>
-            <h4 class="table-headers">{{ 'labels.heading.Performance History' | translate }}</h4>
-            <table>
-              <tbody>
-                @if (savingsAccountData.summary.totalDeposits) {
-                  <tr>
-                    <td>{{ 'labels.inputs.Total Deposits' | translate }}</td>
-                    <td class="r-amount">
-                      {{ savingsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                    </td>
-                  </tr>
-                }
-                @if (savingsAccountData.summary.totalInterestEarned >= 0) {
-                  <tr>
-                    <td>{{ 'labels.inputs.Total Interest Earned' | translate }}</td>
-                    <td class="r-amount">
-                      {{ savingsAccountData.summary.totalInterestEarned | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                    </td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
-        }
-      </div>
-      @if (isActive) {
-        <div class="flex-49">
-          <h4 class="table-headers">{{ 'labels.heading.Account Summary' | translate }}</h4>
-          <table>
-            <tbody>
-              @if (savingsAccountData.summary.totalWithdrawals) {
-                <tr>
-                  <td>{{ 'labels.inputs.Total Withdrawls' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.summary.totalWithdrawals | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.summary.totalWithdrawalFees) {
-                <tr>
-                  <td>{{ 'labels.inputs.Withdrawals Fees' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.summary.totalWithdrawalFees | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.summary.totalAnnualFees) {
-                <tr>
-                  <td>{{ 'labels.inputs.Annual Fees' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.summary.totalAnnualFees | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.summary.totalInterestEarned >= 0) {
-                <tr>
-                  <td>{{ 'labels.inputs.Interest Earned' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.summary.totalInterestEarned | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.summary.totalInterestPosted) {
-                <tr>
-                  <td>{{ 'labels.inputs.Interest Posted' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.summary.totalInterestPosted | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.summary.interestNotPosted >= 0) {
-                <tr>
-                  <td>{{ 'labels.inputs.Interest Earned Not Posted' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.summary.interestNotPosted | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.summary.totalOverdraftInterestDerived) {
-                <tr>
-                  <td>{{ 'labels.inputs.Interest On Overdraft' | translate }}</td>
-                  <td class="r-amount">
-                    {{
-                    savingsAccountData.summary.totalOverdraftInterestDerived
-                    | currency: currency.code : 'symbol-narrow' : '1.2-2'
-                    }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.summary.interestNotPosted < 0) {
-                <tr>
-                  <td>{{ 'labels.inputs.Overdraft Interest Not Posted' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.summary.interestNotPosted | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.nominalAnnualInterestRate) {
-                <tr>
-                  <td>{{ 'labels.inputs.Nominal Interest Rate' | translate }}</td>
-                  <td class="r-amount">{{ savingsAccountData.nominalAnnualInterestRate | formatNumber }} %</td>
-                </tr>
-              }
-              <tr>
-                <td>{{ 'labels.inputs.Interest Compounding Period' | translate }}</td>
-                <td>{{ savingsAccountData.interestCompoundingPeriodType.value | translateKey: 'catalogs' }}</td>
+                    <span>{{ savingsAccountData.nominalAnnualInterestRate | formatNumber }} %</span>
+                  }
+                  @if (!savingsAccountData.nominalAnnualInterestRate) {
+                    <span>0 %</span>
+                  }
+                </td>
               </tr>
-              <tr>
-                <td>{{ 'labels.inputs.Interest Posting Period' | translate }}</td>
-                <td>{{ savingsAccountData.interestPostingPeriodType.value | translateKey: 'catalogs' }}</td>
-              </tr>
-              <tr>
-                <td>{{ 'labels.inputs.Interest Calculated Using' | translate }}</td>
-                <td>{{ savingsAccountData.interestCalculationType.value | translateKey: 'catalogs' }}</td>
-              </tr>
-              <tr>
-                <td>{{ 'labels.inputs.Days in Year' | translate }}</td>
-                <td>{{ savingsAccountData.interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}</td>
-              </tr>
-              @if (savingsAccountData.withdrawalFee) {
-                <tr>
-                  <td>{{ 'labels.inputs.Withdrawal Fee' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.withdrawalFee.amount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.lastActiveTransactionDate) {
-                <tr>
-                  <td>{{ 'labels.inputs.Last Active Transaction Date' | translate }}</td>
-                  <td>{{ savingsAccountData.lastActiveTransactionDate | dateFormat }}</td>
-                </tr>
-              }
-              @if (!(savingsAccountData.subStatus.id === 0)) {
-                <tr>
-                  <td>{{ 'labels.inputs.Substatus' | translate }}</td>
-                  <td>{{ savingsAccountData.subStatus.value }}</td>
-                </tr>
-              }
-              @if (savingsAccountData.daysToInactive) {
-                <tr>
-                  <td>{{ 'labels.inputs.Days to Inactive' | translate }}</td>
-                  <td>{{ savingsAccountData.daysToInactive }}</td>
-                </tr>
-              }
-              @if (savingsAccountData.daysToDormancy) {
-                <tr>
-                  <td>{{ 'labels.inputs.Days to Dormancy' | translate }}</td>
-                  <td>{{ savingsAccountData.daysToDormancy }}</td>
-                </tr>
-              }
-              @if (savingsAccountData.daysToEscheat) {
-                <tr>
-                  <td>{{ 'labels.inputs.Days to Escheat' | translate }}</td>
-                  <td>{{ savingsAccountData.daysToEscheat }}</td>
-                </tr>
-              }
-              @if (savingsAccountData.annualFee) {
-                <tr>
-                  <td>{{ 'labels.inputs.Annual Fee' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.annualFee.amount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.allowOverdraft) {
-                <tr>
-                  <td>{{ 'labels.inputs.Overdraft Limit' | translate }}</td>
-                  <td class="r-amount">
-                    {{ savingsAccountData.overdraftLimit | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.allowOverdraft) {
-                <tr>
-                  <td>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</td>
-                  <td>
-                    {{
-                    savingsAccountData.minOverdraftForInterestCalculation
-                    | currency: currency.code : 'symbol-narrow' : '1.2-2'
-                    }}
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.minBalanceForInterestCalculation) {
-                <tr>
-                  <td>{{ 'labels.inputs.Min Balance Required for Interest Calculation' | translate }}</td>
-                  <td>{{ savingsAccountData.minBalanceForInterestCalculation | formatNumber }}</td>
-                </tr>
-              }
-              @if (savingsAccountData.minRequiredBalance) {
-                <tr>
-                  <td>{{ 'labels.inputs.Minimum Required Balance' | translate }}</td>
-                  <td>{{ savingsAccountData.minRequiredBalance | formatNumber }}</td>
-                </tr>
-              }
-              @if (savingsAccountData.enforceMinRequiredBalance) {
-                <tr>
-                  <td>{{ 'labels.inputs.Enforce Minimum Required Balance' | translate }}</td>
-                  <td>{{ savingsAccountData.enforceMinRequiredBalance | yesNo }}</td>
-                </tr>
-              }
-              @if (savingsAccountData.summary.lastInterestCalculationDate) {
-                <tr>
-                  <td>{{ 'labels.inputs.Interest Recalculation Date' | translate }}</td>
-                  <td>{{ savingsAccountData.summary.lastInterestCalculationDate | dateFormat }}</td>
-                </tr>
-              }
-              @if (savingsAccountData.onHoldFunds) {
-                <tr>
-                  <td>{{ 'labels.inputs.On Hold Funds' | translate }}</td>
-                  <td>
-                    <a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{
-                      savingsAccountData.onHoldFunds | currency: currency.code : 'symbol-narrow' : '1.2-2'
-                    }}</a>
-                  </td>
-                </tr>
-              }
-              @if (savingsAccountData.withHoldTax) {
-                <tr>
-                  <td>{{ 'labels.inputs.Withhold Tax Group' | translate }}</td>
-                  <td>{{ savingsAccountData.taxGroup.name }}</td>
-                </tr>
-              }
             </tbody>
           </table>
         </div>
       } @else {
-        <div class="flex-49">
-          <h4 class="table-headers">{{ 'labels.heading.Account Summary' | translate }}</h4>
+        <div>
+          <h4 class="table-headers">{{ 'labels.heading.Savings Details' | translate }}</h4>
           <table>
             <tbody>
               <tr>
-                <td>{{ 'labels.inputs.External Id' | translate }}</td>
-                @if (savingsAccountData.externalId) {
-                  <td>
-                    <mifosx-external-identifier externalId="{{ savingsAccountData.externalId }}"></mifosx-external-identifier>
-                  </td>
-                }
-                @if (!savingsAccountData.externalId) {
-                  <td>{{ 'labels.inputs.Not Provided' | translate }}</td>
-                }
+                <td>{{ 'labels.inputs.Field Officer' | translate }}</td>
+                <td>{{ savingsAccountData.fieldOfficerName ? savingsAccountData.fieldOfficerName : 'Unassigned' }}</td>
               </tr>
               <tr>
-                <td>{{ 'labels.inputs.Activated On' | translate }}</td>
-                <td>
-                  {{
-                  savingsAccountData.timeline.activatedOnDate
-                  ? (savingsAccountData.timeline.activatedOnDate | dateFormat)
-                  : 'Not Activated'
-                  }}
+                <td>{{ 'labels.inputs.Balance' | translate }}</td>
+                <td class="r-amount">
+                  {{ savingsAccountData.summary.accountBalance | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
                 </td>
-              </tr>
-              <tr>
-                <td>{{ 'labels.inputs.Currency' | translate }}</td>
-                <td>{{ savingsAccountData.currency.name }} [{{ savingsAccountData.currency.code }}]</td>
               </tr>
             </tbody>
           </table>
         </div>
       }
+      @if (!savingsAccountData.status.rejected && !savingsAccountData.status.submittedAndPendingApproval) {
+        <div>
+          <h4 class="table-headers">{{ 'labels.heading.Performance History' | translate }}</h4>
+          <table>
+            <tbody>
+              @if (savingsAccountData.summary.totalDeposits) {
+                <tr>
+                  <td>{{ 'labels.inputs.Total Deposits' | translate }}</td>
+                  <td class="r-amount">
+                    {{ savingsAccountData.summary.totalDeposits | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                  </td>
+                </tr>
+              }
+              @if (savingsAccountData.summary.totalInterestEarned >= 0) {
+                <tr>
+                  <td>{{ 'labels.inputs.Total Interest Earned' | translate }}</td>
+                  <td class="r-amount">
+                    {{
+                      savingsAccountData.summary.totalInterestEarned
+                        | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                    }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
     </div>
-  }
+    @if (isActive) {
+      <div class="flex-49">
+        <h4 class="table-headers">{{ 'labels.heading.Account Summary' | translate }}</h4>
+        <table>
+          <tbody>
+            @if (savingsAccountData.summary.totalWithdrawals) {
+              <tr>
+                <td>{{ 'labels.inputs.Total Withdrawls' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    savingsAccountData.summary.totalWithdrawals | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.summary.totalWithdrawalFees) {
+              <tr>
+                <td>{{ 'labels.inputs.Withdrawals Fees' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    savingsAccountData.summary.totalWithdrawalFees | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.summary.totalAnnualFees) {
+              <tr>
+                <td>{{ 'labels.inputs.Annual Fees' | translate }}</td>
+                <td class="r-amount">
+                  {{ savingsAccountData.summary.totalAnnualFees | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.summary.totalInterestEarned >= 0) {
+              <tr>
+                <td>{{ 'labels.inputs.Interest Earned' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    savingsAccountData.summary.totalInterestEarned | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.summary.totalInterestPosted) {
+              <tr>
+                <td>{{ 'labels.inputs.Interest Posted' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    savingsAccountData.summary.totalInterestPosted | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.summary.interestNotPosted >= 0) {
+              <tr>
+                <td>{{ 'labels.inputs.Interest Earned Not Posted' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    savingsAccountData.summary.interestNotPosted | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.summary.totalOverdraftInterestDerived) {
+              <tr>
+                <td>{{ 'labels.inputs.Interest On Overdraft' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    savingsAccountData.summary.totalOverdraftInterestDerived
+                      | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.summary.interestNotPosted < 0) {
+              <tr>
+                <td>{{ 'labels.inputs.Overdraft Interest Not Posted' | translate }}</td>
+                <td class="r-amount">
+                  {{
+                    savingsAccountData.summary.interestNotPosted | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.nominalAnnualInterestRate) {
+              <tr>
+                <td>{{ 'labels.inputs.Nominal Interest Rate' | translate }}</td>
+                <td class="r-amount">{{ savingsAccountData.nominalAnnualInterestRate | formatNumber }} %</td>
+              </tr>
+            }
+            <tr>
+              <td>{{ 'labels.inputs.Interest Compounding Period' | translate }}</td>
+              <td>{{ savingsAccountData.interestCompoundingPeriodType.value | translateKey: 'catalogs' }}</td>
+            </tr>
+            <tr>
+              <td>{{ 'labels.inputs.Interest Posting Period' | translate }}</td>
+              <td>{{ savingsAccountData.interestPostingPeriodType.value | translateKey: 'catalogs' }}</td>
+            </tr>
+            <tr>
+              <td>{{ 'labels.inputs.Interest Calculated Using' | translate }}</td>
+              <td>{{ savingsAccountData.interestCalculationType.value | translateKey: 'catalogs' }}</td>
+            </tr>
+            <tr>
+              <td>{{ 'labels.inputs.Days in Year' | translate }}</td>
+              <td>{{ savingsAccountData.interestCalculationDaysInYearType.value | translateKey: 'catalogs' }}</td>
+            </tr>
+            @if (savingsAccountData.withdrawalFee) {
+              <tr>
+                <td>{{ 'labels.inputs.Withdrawal Fee' | translate }}</td>
+                <td class="r-amount">
+                  {{ savingsAccountData.withdrawalFee.amount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.lastActiveTransactionDate) {
+              <tr>
+                <td>{{ 'labels.inputs.Last Active Transaction Date' | translate }}</td>
+                <td>{{ savingsAccountData.lastActiveTransactionDate | dateFormat }}</td>
+              </tr>
+            }
+            @if (!(savingsAccountData.subStatus.id === 0)) {
+              <tr>
+                <td>{{ 'labels.inputs.Substatus' | translate }}</td>
+                <td>{{ savingsAccountData.subStatus.value }}</td>
+              </tr>
+            }
+            @if (savingsAccountData.daysToInactive) {
+              <tr>
+                <td>{{ 'labels.inputs.Days to Inactive' | translate }}</td>
+                <td>{{ savingsAccountData.daysToInactive }}</td>
+              </tr>
+            }
+            @if (savingsAccountData.daysToDormancy) {
+              <tr>
+                <td>{{ 'labels.inputs.Days to Dormancy' | translate }}</td>
+                <td>{{ savingsAccountData.daysToDormancy }}</td>
+              </tr>
+            }
+            @if (savingsAccountData.daysToEscheat) {
+              <tr>
+                <td>{{ 'labels.inputs.Days to Escheat' | translate }}</td>
+                <td>{{ savingsAccountData.daysToEscheat }}</td>
+              </tr>
+            }
+            @if (savingsAccountData.annualFee) {
+              <tr>
+                <td>{{ 'labels.inputs.Annual Fee' | translate }}</td>
+                <td class="r-amount">
+                  {{ savingsAccountData.annualFee.amount | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.allowOverdraft) {
+              <tr>
+                <td>{{ 'labels.inputs.Overdraft Limit' | translate }}</td>
+                <td class="r-amount">
+                  {{ savingsAccountData.overdraftLimit | currency: currency.code : 'symbol-narrow' : '1.2-2' }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.allowOverdraft) {
+              <tr>
+                <td>{{ 'labels.inputs.Minimum Overdraft Required for Interest Calculation' | translate }}</td>
+                <td>
+                  {{
+                    savingsAccountData.minOverdraftForInterestCalculation
+                      | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.minBalanceForInterestCalculation) {
+              <tr>
+                <td>{{ 'labels.inputs.Min Balance Required for Interest Calculation' | translate }}</td>
+                <td>{{ savingsAccountData.minBalanceForInterestCalculation | formatNumber }}</td>
+              </tr>
+            }
+            @if (savingsAccountData.minRequiredBalance) {
+              <tr>
+                <td>{{ 'labels.inputs.Minimum Required Balance' | translate }}</td>
+                <td>{{ savingsAccountData.minRequiredBalance | formatNumber }}</td>
+              </tr>
+            }
+            @if (savingsAccountData.enforceMinRequiredBalance) {
+              <tr>
+                <td>{{ 'labels.inputs.Enforce Minimum Required Balance' | translate }}</td>
+                <td>{{ savingsAccountData.enforceMinRequiredBalance | yesNo }}</td>
+              </tr>
+            }
+            @if (savingsAccountData.summary.lastInterestCalculationDate) {
+              <tr>
+                <td>{{ 'labels.inputs.Interest Recalculation Date' | translate }}</td>
+                <td>{{ savingsAccountData.summary.lastInterestCalculationDate | dateFormat }}</td>
+              </tr>
+            }
+            @if (savingsAccountData.onHoldFunds) {
+              <tr>
+                <td>{{ 'labels.inputs.On Hold Funds' | translate }}</td>
+                <td>
+                  <a *mifosxHasPermission="'READ_SAVINGSACCOUNT'">{{
+                    savingsAccountData.onHoldFunds | currency: currency.code : 'symbol-narrow' : '1.2-2'
+                  }}</a>
+                </td>
+              </tr>
+            }
+            @if (savingsAccountData.withHoldTax) {
+              <tr>
+                <td>{{ 'labels.inputs.Withhold Tax Group' | translate }}</td>
+                <td>{{ savingsAccountData.taxGroup.name }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="flex-49">
+        <h4 class="table-headers">{{ 'labels.heading.Account Summary' | translate }}</h4>
+        <table>
+          <tbody>
+            <tr>
+              <td>{{ 'labels.inputs.External Id' | translate }}</td>
+              @if (savingsAccountData.externalId) {
+                <td>
+                  <mifosx-external-identifier
+                    externalId="{{ savingsAccountData.externalId }}"
+                  ></mifosx-external-identifier>
+                </td>
+              }
+              @if (!savingsAccountData.externalId) {
+                <td>{{ 'labels.inputs.Not Provided' | translate }}</td>
+              }
+            </tr>
+            <tr>
+              <td>{{ 'labels.inputs.Activated On' | translate }}</td>
+              <td>
+                {{
+                  savingsAccountData.timeline.activatedOnDate
+                    ? (savingsAccountData.timeline.activatedOnDate | dateFormat)
+                    : 'Not Activated'
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td>{{ 'labels.inputs.Currency' | translate }}</td>
+              <td>{{ savingsAccountData.currency.name }} [{{ savingsAccountData.currency.code }}]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+}

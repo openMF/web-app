@@ -47,12 +47,7 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
         <td mat-cell *matCellDef="let role">
           @if (role.name !== 'Super user') {
-            <button
-              mat-icon-button
-              color="primary"
-              (click)="routeEdit($event)"
-              [routerLink]="[role.id, 'edit']"
-              >
+            <button mat-icon-button color="primary" (click)="routeEdit($event)" [routerLink]="[role.id, 'edit']">
               <fa-icon icon="edit"> {{ 'labels.buttons.Edit' | translate }} </fa-icon>
             </button>
           }
@@ -81,7 +76,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -97,14 +92,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonAddRole, buttonAddRole, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateTableRolesandPermissions, tableRolesandPermissions, 'top', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -117,21 +112,21 @@
       href="https://mifosforge.jira.com/wiki/spaces/docs/pages/67895364/Manage+Roles+and+Permissions"
       target="_blank"
       >{{ 'labels.inputs.Manage Roles and Permission' | translate }}</a
-      >
-    </h4>
-    <div class="layout-row align-end gap-2px responsive-column">
-      <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-        {{ 'labels.buttons.Close' | translate }}
-      </button>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-        >
-        {{ 'labels.buttons.Back' | translate }}
-      </button>
-      <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
-        {{ 'labels.buttons.Next' | translate }}
-      </button>
-    </div>
-  </ng-template>
+    >
+  </h4>
+  <div class="layout-row align-end gap-2px responsive-column">
+    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
+      {{ 'labels.buttons.Close' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
+    >
+      {{ 'labels.buttons.Back' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
+      {{ 'labels.buttons.Next' | translate }}
+    </button>
+  </div>
+</ng-template>

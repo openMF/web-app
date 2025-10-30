@@ -12,7 +12,7 @@
               [matDatepicker]="closureDatePicker"
               required
               formControlName="closureDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="closureDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closureDatePicker></mat-datepicker>
             @if (closeGroupForm.controls.closureDate.hasError('required')) {

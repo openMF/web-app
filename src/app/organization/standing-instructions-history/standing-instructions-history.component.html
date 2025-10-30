@@ -16,9 +16,7 @@
               <mat-label>{{ 'labels.inputs.Transfer Type' | translate }}</mat-label>
               <mat-select formControlName="transferType">
                 @for (transferType of standingInstructionsTemplate.transferTypeOptions; track transferType) {
-                  <mat-option
-                    [value]="transferType.id"
-                    >
+                  <mat-option [value]="transferType.id">
                     {{ transferType.value }}
                   </mat-option>
                 }
@@ -28,9 +26,7 @@
               <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
               <mat-select formControlName="fromAccountType">
                 @for (accountType of standingInstructionsTemplate.fromAccountTypeOptions; track accountType) {
-                  <mat-option
-                    [value]="accountType.id"
-                    >
+                  <mat-option [value]="accountType.id">
                     {{ accountType.value }}
                   </mat-option>
                 }
@@ -50,7 +46,7 @@
                 [max]="maxDate"
                 formControlName="fromDate"
                 [matDatepicker]="fromDatePicker"
-                />
+              />
               <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
               <mat-datepicker #fromDatePicker></mat-datepicker>
             </mat-form-field>
@@ -125,12 +121,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Error Log' | translate }}</th>
           <td mat-cell *matCellDef="let instruction">
             @if (instruction.status === 'failed') {
-              <button
-                class="error-log"
-                mat-raised-button
-                color="warn"
-                [matTooltip]="instruction.errorLog"
-                >
+              <button class="error-log" mat-raised-button color="warn" [matTooltip]="instruction.errorLog">
                 <i class="fa fa-exclamation"></i>
               </button>
             }

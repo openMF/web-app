@@ -14,7 +14,7 @@
               [matDatepicker]="closedOnDatePicker"
               required
               formControlName="closedOnDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="closedOnDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedOnDatePicker></mat-datepicker>
             @if (closeRecurringDepositForm.controls.closedOnDate.hasError('required')) {
@@ -40,9 +40,7 @@
             <mat-label>{{ 'labels.inputs.Action' | translate }}</mat-label>
             <mat-select formControlName="onAccountClosureId" required>
               @for (onAccountClosureOption of onAccountClosureOptions; track onAccountClosureOption) {
-                <mat-option
-                  [value]="onAccountClosureOption.id"
-                  >
+                <mat-option [value]="onAccountClosureOption.id">
                   {{ onAccountClosureOption.value }}
                 </mat-option>
               }

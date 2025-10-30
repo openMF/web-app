@@ -45,10 +45,11 @@
     <mat-form-field class="flex-48">
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="minimumactiveperiodFrequencyType">
-        @for (minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData; track minimumActivePeriodFrequencyType) {
-          <mat-option
-            [value]="minimumActivePeriodFrequencyType.id"
-            >
+        @for (
+          minimumActivePeriodFrequencyType of minimumActivePeriodFrequencyTypeData;
+          track minimumActivePeriodFrequencyType
+        ) {
+          <mat-option [value]="minimumActivePeriodFrequencyType.id">
             {{ minimumActivePeriodFrequencyType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -69,9 +70,7 @@
       <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
       <mat-select formControlName="lockinPeriodFrequencyType">
         @for (lockinPeriodFrequencyType of lockinPeriodFrequencyTypeData; track lockinPeriodFrequencyType) {
-          <mat-option
-            [value]="lockinPeriodFrequencyType.id"
-            >
+          <mat-option [value]="lockinPeriodFrequencyType.id">
             {{ lockinPeriodFrequencyType.value | translateKey: 'catalogs' }}
           </mat-option>
         }
@@ -86,7 +85,7 @@
           | translate
       }}"
       formControlName="allowDividendCalculationForInactiveClients"
-      >
+    >
       {{ 'labels.inputs.Allow dividends for inactive clients' | translate }}
     </mat-checkbox>
   </div>

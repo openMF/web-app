@@ -9,7 +9,7 @@
       color="warn"
       (click)="deleteAccountingRule()"
       *mifosxHasPermission="'DELETE_ACCOUNTINGRULE'"
-      >
+    >
       <fa-icon icon="trash" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Delete' | translate }}
     </button>
@@ -59,9 +59,7 @@
           <div class="label">{{ 'labels.inputs.Debit Account Name' | translate }}</div>
           <div class="value">
             @for (debitAccount of accountingRule.debitAccounts; track debitAccount) {
-              <span>{{
-                debitAccount.name + ' (' + debitAccount.glCode + ')'
-              }}</span>
+              <span>{{ debitAccount.name + ' (' + debitAccount.glCode + ')' }}</span>
             }
           </div>
         </div>
@@ -83,9 +81,7 @@
           <div class="label">{{ 'labels.inputs.Credit Account Name' | translate }}</div>
           <div class="value">
             @for (creditAccount of accountingRule.creditAccounts; track creditAccount) {
-              <span>{{
-                creditAccount.name + ' (' + creditAccount.glCode + ')'
-              }}</span>
+              <span>{{ creditAccount.name + ' (' + creditAccount.glCode + ')' }}</span>
             }
           </div>
         </div>

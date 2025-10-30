@@ -21,7 +21,7 @@
       color="primary"
       *mifosxHasPermission="'CREATE_OFFICE'"
       [routerLink]="['/organization', 'bulk-import', 'Offices']"
-      >
+    >
       <fa-icon icon="upload" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Import Offices' | translate }}
     </button>
@@ -187,7 +187,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -204,14 +204,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonTreeView, buttonTreeView, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -228,14 +228,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonCreateOffice, buttonCreateOffice, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -251,14 +251,14 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateButtonImportOffices, buttonImportOffices, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateTableOffices, tableOffices, 'top', true)"
-      >
+    >
       {{ 'labels.buttons.Next' | translate }}
     </button>
   </div>
@@ -274,7 +274,7 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFilter, filter, 'bottom', true)"
-      >
+    >
       {{ 'labels.buttons.Back' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">

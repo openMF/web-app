@@ -40,9 +40,9 @@
         <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Repeats On' | translate }}</th>
         <td mat-cell *matCellDef="let charge">
           {{
-          charge.feeOnMonthDay
-          ? ([2000].concat(charge.feeOnMonthDay) | dateFormat: 'dd MMMM')
-          : ('Unassigned' | translateKey: 'inputs')
+            charge.feeOnMonthDay
+              ? ([2000].concat(charge.feeOnMonthDay) | dateFormat: 'dd MMMM')
+              : ('Unassigned' | translateKey: 'inputs')
           }}
         </td>
       </ng-container>
@@ -92,7 +92,7 @@
                 matTooltip="{{ 'tooltips.Edit Charge' | translate }}"
                 *mifosxHasPermission="'UPDATE_SAVINGSACCOUNTCHARGE'"
                 (click)="routeEdit($event); editCharge(charge)"
-                >
+              >
                 <i class="fa fa-pencil"></i>
               </button>
               <button
@@ -102,7 +102,7 @@
                 matTooltip="{{ 'tooltips.Delete Charge' | translate }}"
                 *mifosxHasPermission="'DELETE_SAVINGSACCOUNTCHARGE'"
                 (click)="routeEdit($event); deleteCharge(charge.id)"
-                >
+              >
                 <i class="fa fa-trash"></i>
               </button>
             </span>
@@ -116,7 +116,7 @@
                 matTooltip="{{ 'tooltips.Pay Charge' | translate }}"
                 *mifosxHasPermission="'PAY_SAVINGSACCOUNTCHARGE'"
                 (click)="routeEdit($event); payCharge(charge.id)"
-                >
+              >
                 <i class="fa fa-dollar"></i>
               </button>
               <button
@@ -126,7 +126,7 @@
                 matTooltip="{{ 'tooltips.Waive Charge' | translate }}"
                 *mifosxHasPermission="'WAIVE_SAVINGSACCOUNTCHARGE'"
                 (click)="routeEdit($event); waiveCharge(charge.id)"
-                >
+              >
                 <i class="fa fa-flag"></i>
               </button>
               @if (isRecurringCharge(charge)) {
@@ -137,7 +137,7 @@
                   matTooltip="{{ 'tooltips.Inactivate Charge' | translate }}"
                   *mifosxHasPermission="'INACTIVATE_SAVINGSACCOUNTCHARGE'"
                   (click)="routeEdit($event); inactivateCharge(charge.id)"
-                  >
+                >
                   <i class="fa fa-ban"></i>
                 </button>
               }

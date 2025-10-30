@@ -27,101 +27,116 @@
   <mat-card>
     <mat-card-title class="m-t-20 m-l-20"
       ><h4>{{ codeData.name }}</h4></mat-card-title
-      >
+    >
 
-      <form [formGroup]="codeValuesForm">
-        <mat-card-content>
-          @for (codeValue of codeValues.controls; track codeValue; let i = $index) {
-            <div formArrayName="codeValues">
-              <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
-                <mat-form-field class="flex-fill flex-20">
-                  <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
-                  <input required matInput formControlName="name" />
-                  @if (codeValues.at(i).controls.name.hasError('required')) {
-                    <mat-error>
-                      {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
-                      <strong>{{ 'labels.commons.required' | translate }}</strong>
-                    </mat-error>
-                  }
-                </mat-form-field>
-                <mat-form-field class="flex-fill flex-22">
-                  <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-                  <input matInput formControlName="description" />
-                </mat-form-field>
-                <mat-form-field class="flex-fill flex-18">
-                  <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
-                  <input required matInput formControlName="position" type="number" />
-                  @if (codeValues.at(i).controls.position.hasError('required')) {
-                    <mat-error>
-                      {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
-                      <strong>{{ 'labels.commons.required' | translate }}</strong>
-                    </mat-error>
-                  }
-                </mat-form-field>
-                <div class="active-wrapper flex-8">
-                  <mat-checkbox formControlName="isActive" class="active">{{
-                    'labels.inputs.Active' | translate
-                  }}</mat-checkbox>
-                </div>
-                <div class="options-wrapper gap-2percent flex-22">
-                  @if (codeValueRowStatus[i] === 'edit') {
-                    <span>
-                      <button
-                        mat-stroked-button
-                        color="primary"
-                        [disabled]="codeValues.at(i).pristine"
-                        (click)="updateCodeValue(i)"
-                        *mifosxHasPermission="'UPDATE_CODEVALUE'"
-                        >
-                        {{ 'labels.buttons.Submit' | translate }}
-                      </button>
-                    </span>
-                  }
-                  @if (codeValueRowStatus[i] === 'edit') {
-                    <button mat-button (click)="disableRow(i)">
-                      {{ 'labels.buttons.Cancel' | translate }}
-                    </button>
-                  }
-                  @if (codeValueRowStatus[i] === 'new') {
+    <form [formGroup]="codeValuesForm">
+      <mat-card-content>
+        @for (codeValue of codeValues.controls; track codeValue; let i = $index) {
+          <div formArrayName="codeValues">
+            <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
+              <mat-form-field class="flex-fill flex-20">
+                <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
+                <input required matInput formControlName="name" placeholder="{{ 'labels.inputs.name' | translate }}" />
+                @if (codeValues.at(i).controls.name.hasError('required')) {
+                  <mat-error>
+                    {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field class="flex-fill flex-22">
+                <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="description"
+                  placeholder="{{ 'labels.inputs.Description' | translate }}"
+                />
+              </mat-form-field>
+              <mat-form-field class="flex-fill flex-18">
+                <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
+                <input
+                  required
+                  matInput
+                  formControlName="position"
+                  type="number"
+                  placeholder="{{ 'labels.inputs.Position' | translate }}"
+                />
+                @if (codeValues.at(i).controls.position.hasError('required')) {
+                  <mat-error>
+                    {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
+                    <strong>{{ 'labels.commons.required' | translate }}</strong>
+                  </mat-error>
+                }
+              </mat-form-field>
+              <div class="active-wrapper flex-8">
+                <mat-checkbox formControlName="isActive" class="active">{{
+                  'labels.inputs.Active' | translate
+                }}</mat-checkbox>
+              </div>
+              <div class="options-wrapper gap-2percent flex-22">
+                @if (codeValueRowStatus[i] === 'edit') {
+                  <span>
                     <button
-                      mat-icon-button
+                      mat-stroked-button
                       color="primary"
-                      [disabled]="!codeValuesForm.get('codeValues').at(i).valid"
-                      matTooltip="{{ 'tooltips.Add' | translate }}"
-                      matTooltipPosition="above"
-                      (click)="addCodeValue(i)"
-                      >
-                      <fa-icon icon="plus" size="lg"></fa-icon>
-                    </button>
-                  }
-                  @if (codeValueRowStatus[i] === 'disabled') {
-                    <button
                       type="button"
-                      color="primary"
-                      mat-icon-button
-                      matTooltip="{{ 'tooltips.Edit' | translate }}"
-                      matTooltipPosition="above"
-                      (click)="enableRow(i)"
-                      >
-                      <fa-icon icon="edit" size="lg"></fa-icon>
+                      [disabled]="!codeValues.at(i).valid || codeValues.at(i).pristine"
+                      (click)="updateCodeValue(i)"
+                      *mifosxHasPermission="'UPDATE_CODEVALUE'"
+                    >
+                      {{ 'labels.buttons.Submit' | translate }}
                     </button>
-                  }
+                  </span>
+                }
+                @if (codeValueRowStatus[i] === 'edit') {
+                  <button mat-button type="button" (click)="disableRow(i)">
+                    {{ 'labels.buttons.Cancel' | translate }}
+                  </button>
+                }
+                @if (codeValueRowStatus[i] === 'new') {
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    type="button"
+                    title="{{ 'tooltips.Add' | translate }}"
+                    [disabled]="!codeValuesForm.get('codeValues').at(i).valid"
+                    matTooltip="{{ 'tooltips.Add' | translate }}"
+                    matTooltipPosition="above"
+                    (click)="addCodeValue(i)"
+                  >
+                    <fa-icon icon="plus" size="lg"></fa-icon>
+                  </button>
+                }
+                @if (codeValueRowStatus[i] === 'disabled') {
                   <button
                     type="button"
-                    color="warn"
+                    color="primary"
+                    title="{{ 'tooltips.Edit' | translate }}"
                     mat-icon-button
-                    matTooltip="{{ 'tooltips.Delete' | translate }}"
-                    *mifosxHasPermission="'DELETE_CODEVALUE'"
+                    matTooltip="{{ 'tooltips.Edit' | translate }}"
                     matTooltipPosition="above"
-                    (click)="codeValueRowStatus[i] === 'new' ? removeNewCodeValue(i) : deleteCodeValue(i)"
-                    >
-                    <fa-icon icon="trash" size="lg"></fa-icon>
+                    (click)="enableRow(i)"
+                  >
+                    <fa-icon icon="edit" size="lg"></fa-icon>
                   </button>
-                </div>
+                }
+                <button
+                  type="button"
+                  color="warn"
+                  title="{{ 'tooltips.Delete' | translate }}"
+                  mat-icon-button
+                  matTooltip="{{ 'tooltips.Delete' | translate }}"
+                  *mifosxHasPermission="'DELETE_CODEVALUE'"
+                  matTooltipPosition="above"
+                  (click)="codeValueRowStatus[i] === 'new' ? removeNewCodeValue(i) : deleteCodeValue(i)"
+                >
+                  <fa-icon icon="trash" size="lg"></fa-icon>
+                </button>
               </div>
             </div>
-          }
-        </mat-card-content>
-      </form>
-    </mat-card>
-  </div>
+          </div>
+        }
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>

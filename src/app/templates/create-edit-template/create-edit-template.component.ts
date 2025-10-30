@@ -259,4 +259,43 @@ export class CreateEditComponent implements OnInit {
       });
     }
   }
+
+  /**
+   * TrackBy function for mappers array to improve ngFor performance.
+   * @param {number} index Index of the item
+   * @returns {number} Index as unique identifier
+   */
+  trackByMapperIndex(index: number): number {
+    return index;
+  }
+
+  /**
+   * TrackBy function for parameter labels to improve ngFor performance.
+   * @param {number} index Index of the item
+   * @param {string} label Label string
+   * @returns {string} Label as unique identifier
+   */
+  trackByLabel(index: number, label: string): string {
+    return label;
+  }
+
+  /**
+   * TrackBy function for entities dropdown to improve ngFor performance.
+   * @param {number} index Index of the item
+   * @param {any} entity Entity object
+   * @returns {number} Entity ID as unique identifier
+   */
+  trackByEntityId(index: number, entity: any): number {
+    return entity.id;
+  }
+
+  /**
+   * TrackBy function for types dropdown to improve ngFor performance.
+   * @param {number} index Index of the item
+   * @param {any} type Type object
+   * @returns {number} Type ID as unique identifier
+   */
+  trackByTypeId(index: number, type: any): number {
+    return type.id;
+  }
 }

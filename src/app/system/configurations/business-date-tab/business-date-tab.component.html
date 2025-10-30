@@ -3,7 +3,8 @@
     @if (!isBusinessDateEnabled) {
       <div>
         <p>
-          {{ 'labels.text.Business Date functionality is not enabled' | translate }}: <code>{{ configurationName }}</code>
+          {{ 'labels.text.Business Date functionality is not enabled' | translate }}:
+          <code>{{ configurationName }}</code>
         </p>
       </div>
     }
@@ -36,7 +37,7 @@
                       [max]="maxDate"
                       [matDatepicker]="businessDatePicker"
                       formControlName="businessDate"
-                      />
+                    />
                     <mat-datepicker-toggle matSuffix [for]="businessDatePicker"> </mat-datepicker-toggle>
                     <mat-datepicker #businessDatePicker></mat-datepicker>
                     @if (businessDateForm.controls.businessDate.hasError('required')) {
@@ -56,7 +57,7 @@
                         [disabled]="businessDateForm.pristine"
                         (click)="submit()"
                         *mifosxHasPermission="'UPDATE_BUSINESSDATE'"
-                        >
+                      >
                         {{ 'labels.buttons.Submit' | translate }}
                       </button>
                       <button mat-raised-button (click)="editInProgressToggle(0)">
@@ -72,7 +73,7 @@
                       matTooltip="{{ 'tooltips.Edit the Business Date' | translate }}"
                       matTooltipPosition="above"
                       (click)="editInProgressToggle(0)"
-                      >
+                    >
                       <fa-icon icon="edit" size="lg"></fa-icon>
                     </button>
                   }
@@ -95,7 +96,7 @@
                       [max]="maxDate"
                       [matDatepicker]="cobDatePicker"
                       formControlName="businessDate"
-                      />
+                    />
                     <mat-datepicker-toggle matSuffix [for]="cobDatePicker"> </mat-datepicker-toggle>
                     <mat-datepicker #cobDatePicker></mat-datepicker>
                     @if (businessDateForm.controls.cobDate.hasError('required')) {
@@ -115,7 +116,7 @@
                         [disabled]="businessDateForm.pristine"
                         (click)="submit()"
                         *mifosxHasPermission="'UPDATE_BUSINESSDATE'"
-                        >
+                      >
                         {{ 'labels.buttons.Submit' | translate }}
                       </button>
                     </span>
@@ -133,7 +134,7 @@
                       matTooltip="{{ 'tooltips.Edit the COB Date' | translate }}"
                       matTooltipPosition="above"
                       (click)="editInProgressToggle(1)"
-                      >
+                    >
                       <fa-icon icon="edit" size="lg"></fa-icon>
                     </button>
                   }

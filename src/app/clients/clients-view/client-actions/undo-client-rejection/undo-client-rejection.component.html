@@ -11,7 +11,7 @@
             [matDatepicker]="reopenedDatePicker"
             required
             formControlName="reopenedDate"
-            />
+          />
           <mat-datepicker-toggle matSuffix [for]="reopenedDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #reopenedDatePicker></mat-datepicker>
           @if (undoClientRejectionForm.controls.reopenedDate.hasError('required')) {

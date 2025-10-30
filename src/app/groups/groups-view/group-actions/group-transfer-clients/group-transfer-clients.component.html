@@ -18,7 +18,7 @@
             class="m-t-10 m-b-10"
             labelPosition="before"
             formControlName="inheritDestinationGroupLoanOfficer"
-            >
+          >
             {{ 'labels.inputs.Inherit Group Loan Officer' | translate }}?
           </mat-checkbox>
 
@@ -58,7 +58,9 @@
             <div class="mat-row">
               <div class="mat-cell">{{ 'labels.inputs.Activation Date' | translate }}</div>
               <div class="mat-cell">
-                {{ (transferClientsForm.get('destinationGroupId').value.activationDate | dateFormat) || 'Not Activated' }}
+                {{
+                  (transferClientsForm.get('destinationGroupId').value.activationDate | dateFormat) || 'Not Activated'
+                }}
               </div>
             </div>
             <div class="mat-row">
@@ -87,7 +89,7 @@
           [disabled]="!transferClientsForm.valid"
           (click)="submit()"
           *mifosxHasPermission="'TRANSFERCLIENTS_GROUP'"
-          >
+        >
           {{ 'labels.buttons.Submit' | translate }}
         </button>
       </mat-card-actions>

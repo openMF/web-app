@@ -6,7 +6,7 @@
       routerLinkActive
       #general="routerLinkActive"
       [active]="general.isActive"
-      >
+    >
       {{ 'labels.heading.General' | translate }}
     </a>
     @for (entityDatatable of entityDatatables; track entityDatatable) {
@@ -17,7 +17,7 @@
         #datatable="routerLinkActive"
         [active]="datatable.isActive"
         *mifosxHasPermission="'READ_' + entityDatatable.registeredTableName"
-        >
+      >
         {{ entityDatatable.registeredTableName }}
       </a>
     }

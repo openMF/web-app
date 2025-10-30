@@ -65,7 +65,7 @@
                 matTooltip="{{ 'tooltips.Edit Charge' | translate }}"
                 *mifosxHasPermission="'UPDATE_SHARESACCOUNTCHARGE'"
                 (click)="routeEdit($event); editCharge(charge)"
-                >
+              >
                 <i class="fa fa-pencil"></i>
               </button>
               <button
@@ -75,7 +75,7 @@
                 matTooltip="{{ 'tooltips.Delete Charge' | translate }}"
                 *mifosxHasPermission="'DELETE_SHARESACCOUNTCHARGE'"
                 (click)="routeEdit($event); deleteCharge(charge.id)"
-                >
+              >
                 <i class="fa fa-trash"></i>
               </button>
             </span>
@@ -89,7 +89,7 @@
                 matTooltip="{{ 'tooltips.Pay Charge' | translate }}"
                 *mifosxHasPermission="'PAY_SHARESACCOUNTCHARGE'"
                 (click)="routeEdit($event); payCharge(charge.id)"
-                >
+              >
                 <i class="fa fa-dollar"></i>
               </button>
               <button
@@ -99,7 +99,7 @@
                 matTooltip="{{ 'tooltips.Waive Charge' | translate }}"
                 *mifosxHasPermission="'WAIVE_SHARESACCOUNTCHARGE'"
                 (click)="routeEdit($event); waiveCharge(charge.id)"
-                >
+              >
                 <i class="fa fa-flag"></i>
               </button>
             </span>

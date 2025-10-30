@@ -123,8 +123,8 @@
                     @if (arrowBooleans[3]) {
                       <p matLine [routerLink]="['charges']" class="menu-explanation">
                         {{
-                        'labels.text.Define charges/penalties for loan products, savings and deposit products'
-                        | translate
+                          'labels.text.Define charges/penalties for loan products, savings and deposit products'
+                            | translate
                         }}
                       </p>
                     }
@@ -187,7 +187,7 @@
           <mat-list-item
             [routerLink]="['delinquency-bucket-configurations']"
             *mifosxHasPermission="'READ_DELINQUENCY_BUCKET'"
-            >
+          >
             <div class="menu-list-item-content">
               <div class="menu-left-section" [routerLink]="['delinquency-bucket-configurations']">
                 <mat-icon matListIcon>
@@ -196,11 +196,7 @@
                 <div matLine>
                   {{ 'labels.heading.Delinquency Buckets' | translate }}
                   @if (arrowBooleans[5]) {
-                    <p
-                      matLine
-                      [routerLink]="['delinquency-bucket-configurations']"
-                      class="menu-explanation"
-                      >
+                    <p matLine [routerLink]="['delinquency-bucket-configurations']" class="menu-explanation">
                       {{ 'labels.text.Define delinquency day ranges and bucket set for loan products' | translate }}
                     </p>
                   }
@@ -273,11 +269,7 @@
                   <div matLine>
                     {{ 'labels.heading.Fixed Deposit Products' | translate }}
                     @if (arrowBooleans[7]) {
-                      <p
-                        matLine
-                        [routerLink]="['fixed-deposit-products']"
-                        class="menu-explanation"
-                        >
+                      <p matLine [routerLink]="['fixed-deposit-products']" class="menu-explanation">
                         {{ 'labels.text.Add, modify or inactivate a Fixed deposit product' | translate }}
                       </p>
                     }
@@ -307,7 +299,7 @@
             <mat-list-item
               [routerLink]="['recurring-deposit-products']"
               *mifosxHasPermission="'READ_RECURRINGDEPOSITPRODUCT'"
-              >
+            >
               <div class="menu-list-item-content">
                 <div class="menu-left-section" [routerLink]="['recurring-deposit-products']">
                   <mat-icon matListIcon>
@@ -316,11 +308,7 @@
                   <div matLine>
                     {{ 'labels.heading.Recurring Deposit Products' | translate }}
                     @if (arrowBooleans[8]) {
-                      <p
-                        matLine
-                        [routerLink]="['recurring-deposit-products']"
-                        class="menu-explanation"
-                        >
+                      <p matLine [routerLink]="['recurring-deposit-products']" class="menu-explanation">
                         {{ 'labels.text.Add, modify or inactivate a Recurring Deposit product' | translate }}
                       </p>
                     }

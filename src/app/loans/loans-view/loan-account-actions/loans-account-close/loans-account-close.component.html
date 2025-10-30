@@ -12,7 +12,7 @@
               [matDatepicker]="closedDatePicker"
               required
               formControlName="transactionDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="closedDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #closedDatePicker></mat-datepicker>
             @if (closeLoanForm.controls.transactionDate.hasError('required')) {
@@ -38,7 +38,7 @@
             color="primary"
             [disabled]="!closeLoanForm.valid"
             *mifosxHasPermission="'CLOSE_LOAN'"
-            >
+          >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
         </mat-card-actions>

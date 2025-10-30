@@ -4,7 +4,7 @@
     color="primary"
     (click)="editRoles(); backupCheckValues()"
     [disabled]="rolePermissionService.name === 'Super user'"
-    >
+  >
     <fa-icon icon="edit" class="m-r-10"></fa-icon>
     {{ 'labels.text.Edit Role' | translate }}
   </button>
@@ -15,7 +15,7 @@
       color="danger"
       (click)="disableRolesConfirmation()"
       [disabled]="rolePermissionService.name === 'Super user'"
-      >
+    >
       <fa-icon icon="lock" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Disable' | translate }} {{ 'labels.inputs.Role' | translate }}
     </button>
@@ -27,7 +27,7 @@
       color="primary"
       (click)="enableRolesConfirmation()"
       [disabled]="rolePermissionService.name === 'Super user'"
-      >
+    >
       <fa-icon icon="lock-open" class="m-r-10"></fa-icon>
       {{ 'labels.buttons.Enable' | translate }} {{ 'labels.inputs.Role' | translate }}
     </button>
@@ -38,7 +38,7 @@
     color="warn"
     (click)="deleteRole()"
     [disabled]="rolePermissionService.name === 'Super user'"
-    >
+  >
     <fa-icon icon="trash" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Delete' | translate }} {{ 'labels.inputs.Role' | translate }}
   </button>
@@ -97,7 +97,7 @@
               <mat-list-item
                 [ngClass]="selectedItem === grouping ? 'active' : 'inactive'"
                 (click)="showPermissions(grouping)"
-                >
+              >
                 <span class="grouping-name">
                   {{ formatName(grouping) }}
                 </span>
@@ -132,7 +132,9 @@
           <button type="button" mat-raised-button (click)="cancel(); restoreCheckboxes()">
             {{ 'labels.buttons.Cancel' | translate }}
           </button>
-          <button mat-raised-button color="primary" (click)="submit()">{{ 'labels.buttons.Submit' | translate }}</button>
+          <button mat-raised-button color="primary" (click)="submit()">
+            {{ 'labels.buttons.Submit' | translate }}
+          </button>
         </mat-card-actions>
       </div>
     }

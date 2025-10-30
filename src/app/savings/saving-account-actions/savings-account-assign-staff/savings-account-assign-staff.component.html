@@ -23,7 +23,7 @@
               [matDatepicker]="assignmentDatePicker"
               required
               formControlName="assignmentDate"
-              />
+            />
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignmentDatePicker></mat-datepicker>
             @if (savingsAssignStaffForm.controls.assignmentDate.hasError('required')) {

@@ -96,7 +96,7 @@
               color="primary"
               matTooltip="{{ 'tooltips.Edit Charge' | translate }}"
               (click)="routeEdit($event); editCharge(charge)"
-              >
+            >
               <i class="fa fa-pencil"></i>
             </button>
             <button
@@ -105,7 +105,7 @@
               color="warn"
               matTooltip="{{ 'tooltips.Delete Charge' | translate }}"
               (click)="routeEdit($event); deleteCharge(charge.id)"
-              >
+            >
               <i class="fa fa-trash"></i>
             </button>
           </span>
@@ -117,7 +117,7 @@
             color="accent"
             matTooltip="{{ 'tooltips.Adjust Charge' | translate }}"
             (click)="routeEdit($event); adjustCharge(charge.id)"
-            >
+          >
             <i class="fa fa-pencil"></i>
           </button>
         }
@@ -128,7 +128,7 @@
             color="primary"
             matTooltip="{{ 'tooltips.Pay Charge' | translate }}"
             (click)="routeEdit($event); payCharge(charge.id)"
-            >
+          >
             <i class="fa fa-dollar"></i>
           </button>
         }
@@ -139,7 +139,7 @@
             color="primary"
             matTooltip="{{ 'tooltips.Waive Charge' | translate }}"
             (click)="routeEdit($event); waiveCharge(charge.id)"
-            >
+          >
             <i class="fa fa-flag"></i>
           </button>
         }

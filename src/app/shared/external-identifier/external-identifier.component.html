@@ -1,14 +1,10 @@
 @if (!emptyValue) {
   <span (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
     @if (displayL && iconVisible) {
-      <span (click)="copyValue()"
-        ><fa-icon icon="copy" size="sm" title="Copy External Id"></fa-icon
-      ></span>
+      <span (click)="copyValue()"><fa-icon icon="copy" size="sm" title="Copy External Id"></fa-icon></span>
     }
     @if (displayL && !completed && iconVisible && isLongValue()) {
-      <span class="m-l-3" (click)="showValue()"
-        ><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon
-      ></span>
+      <span class="m-l-3" (click)="showValue()"><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon></span>
     }
     @if (!completed) {
       <span class="m-l-5" (click)="showValue()">{{ externalId | externalIdentifier }}</span>
@@ -17,9 +13,7 @@
       <span (click)="showValue()">{{ externalId }}</span>
     }
     @if (displayR && !completed && iconVisible && isLongValue()) {
-      <span class="m-l-5" (click)="showValue()"
-        ><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon
-      ></span>
+      <span class="m-l-5" (click)="showValue()"><fa-icon icon="eye" size="sm" [title]="externalId"></fa-icon></span>
     }
     @if (displayR && iconVisible) {
       <span class="m-l-3" (click)="copyValue()"

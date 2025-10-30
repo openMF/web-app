@@ -10,7 +10,7 @@
           aria-label="First Name"
           placeholder="First Name"
           title="First Name"
-          />
+        />
         @if (addFamilyMemberForm.controls.firstName.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.First Name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -27,7 +27,7 @@
           aria-label="Middle Name"
           placeholder="Middle Name"
           title="Middle Name"
-          />
+        />
       </mat-form-field>
 
       <mat-form-field class="flex-50-minus-25px">
@@ -39,7 +39,7 @@
           aria-label="Last Name"
           placeholder="Last Name"
           title="Last Name"
-          />
+        />
         @if (addFamilyMemberForm.controls.lastName.hasError('required')) {
           <mat-error>
             {{ 'labels.inputs.Last Name' | translate }} {{ 'labels.commons.is' | translate }}
@@ -56,7 +56,7 @@
           aria-label="Qualification"
           placeholder="Qualification"
           title="Qualification"
-          />
+        />
       </mat-form-field>
 
       <mat-form-field class="flex-50-minus-25px">
@@ -70,7 +70,7 @@
           aria-label="Age"
           placeholder="Age"
           title="Age"
-          />
+        />
       </mat-form-field>
 
       <mat-checkbox formControlName="isDependent" labelPosition="before" class="flex-50-minus-25px">
@@ -126,9 +126,7 @@
         <mat-label>{{ 'labels.inputs.Marital Status' | translate }}</mat-label>
         <mat-select formControlName="maritalStatusId">
           @for (maritalStatus of addFamilyMemberTemplate.maritalStatusIdOptions; track maritalStatus) {
-            <mat-option
-              [value]="maritalStatus.id"
-              >
+            <mat-option [value]="maritalStatus.id">
               {{ maritalStatus.name | translateKey: 'catalogs' }}
             </mat-option>
           }
@@ -145,7 +143,7 @@
           placeholder="Optional"
           aria-label="Date Of Birth"
           title="Date Of Birth"
-          />
+        />
         <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #dueDatePicker></mat-datepicker>
       </mat-form-field>

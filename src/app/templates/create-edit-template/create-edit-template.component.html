@@ -6,7 +6,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Entity' | translate }}</mat-label>
             <mat-select required formControlName="entity">
-              @for (entity of templateData.entities; track entity) {
+              @for (entity of templateData.entities; track trackByEntityId($index, entity)) {
                 <mat-option [value]="entity.id">
                   {{ entity.name }}
                 </mat-option>
@@ -23,7 +23,7 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Type' | translate }}</mat-label>
             <mat-select required formControlName="type">
-              @for (type of templateData.types; track type) {
+              @for (type of templateData.types; track trackByTypeId($index, type)) {
                 <mat-option [value]="type.id">
                   {{ type.name }}
                 </mat-option>
@@ -51,125 +51,111 @@
       </mat-card-content>
     </form>
 
-    <div role="toggle" class="flex-33">
-      <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">
-        {{ 'labels.buttons.Advanced Options' | translate }}
-      </button>
-    </div>
+    <mat-card-content>
+      <div role="toggle" class="advanced-options-wrapper">
+        <button mat-raised-button color="primary" (click)="showAdvanceOptions = !showAdvanceOptions">
+          {{ 'labels.buttons.Advanced Options' | translate }}
+        </button>
+      </div>
 
-    @if (showAdvanceOptions) {
-      <ng-container role="mappers">
-        @for (mapper of mappers; track mapper; let i = $index) {
-          <div class="layout-row gap-2percent">
-            <mat-form-field class="flex-48">
-              <mat-label>{{ 'labels.inputs.Mapper Key' | translate }}</mat-label>
-              <input matInput [formControl]="mapper.mapperskey" />
-            </mat-form-field>
-            <mat-form-field class="flex-fill flex-38">
-              <mat-label>{{ 'labels.inputs.Mapper Value' | translate }}</mat-label>
-              <input matInput [formControl]="mapper.mappersvalue" />
-            </mat-form-field>
-            @if (i === 0) {
-              <button class="mapper-button flex-8" mat-raised-button color="primary" (click)="addMapper()">
-                <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
-              </button>
-            }
-            @if (!(i === 0)) {
-              <button
-                class="mapper-button flex-9"
-                mat-raised-button
-                color="primary"
-                (click)="removeMapper(i)"
-                >
-                <fa-icon icon="minus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Remove' | translate }}
-              </button>
-            }
-          </div>
-        }
-      </ng-container>
-    }
-
-    <div role="editor">
-      <label for="ckeditor" class="required-label required-label-ckeditor">
-        {{ 'labels.inputs.Text' | translate }} <span class="required-asterisk">*</span>
-      </label>
-      <ckeditor
-        #ckEditor
-        [editor]="Editor"
-        (change)="onEditorChange($event)"
-        [data]="templateData.template?.text"
-      ></ckeditor>
-    </div>
-
-    <div role="template-parameters">
-      <mat-accordion>
-        @if (templateForm.controls.entity.value === 0) {
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{ 'labels.inputs.Client Parameters' | translate }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="layout-row-wrap layout-xs-column layout-align-center">
-              @for (label of clientParameterLabels; track label) {
-                <button
-                  mat-stroked-button
-                  color="primary"
-                  class="parameter"
-                  (click)="addText(label)"
-                  >
-                  {{ label }}
+      @if (showAdvanceOptions) {
+        <ng-container role="mappers">
+          @for (mapper of mappers; track trackByMapperIndex(i, mapper); let i = $index) {
+            <div class="mapper-row layout-row gap-2percent">
+              <mat-form-field class="flex-48">
+                <mat-label>{{ 'labels.inputs.Mapper Key' | translate }}</mat-label>
+                <input matInput [formControl]="mapper.mapperskey" />
+              </mat-form-field>
+              <mat-form-field class="flex-fill flex-38">
+                <mat-label>{{ 'labels.inputs.Mapper Value' | translate }}</mat-label>
+                <input matInput [formControl]="mapper.mappersvalue" />
+              </mat-form-field>
+              @if (i === 0) {
+                <button class="mapper-button flex-8" mat-raised-button color="primary" (click)="addMapper()">
+                  <fa-icon icon="plus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Add' | translate }}
+                </button>
+              }
+              @if (!(i === 0)) {
+                <button class="mapper-button flex-9" mat-raised-button color="primary" (click)="removeMapper(i)">
+                  <fa-icon icon="minus" class="m-r-10"></fa-icon>{{ 'labels.buttons.Remove' | translate }}
                 </button>
               }
             </div>
-          </mat-expansion-panel>
-        }
+          }
+        </ng-container>
+      }
+    </mat-card-content>
 
-        @if (templateForm.controls.entity.value === 1) {
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{ 'labels.inputs.Loan Parameters' | translate }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="layout-row-wrap layout-xs-column layout-align-center">
-              @for (label of loanParameterLabels; track label) {
-                <button
-                  mat-stroked-button
-                  color="primary"
-                  class="parameter"
-                  (click)="addText(label)"
-                  >
-                  {{ label }}
-                </button>
-              }
-            </div>
-          </mat-expansion-panel>
-        }
+    <mat-card-content>
+      <div role="editor" class="editor-wrapper">
+        <label for="ckeditor" class="required-label required-label-ckeditor">
+          {{ 'labels.inputs.Text' | translate }} <span class="required-asterisk">*</span>
+        </label>
+        <ckeditor
+          #ckEditor
+          [editor]="Editor"
+          (change)="onEditorChange($event)"
+          [data]="templateData.template?.text"
+        ></ckeditor>
+      </div>
+    </mat-card-content>
 
-        @if (templateForm.controls.entity.value === 1) {
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                {{ 'labels.inputs.Repayment Schedule Parameters' | translate }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="layout-row-wrap layout-xs-column layout-align-center">
-              @for (label of repaymentParameterLabels; track label) {
-                <button
-                  mat-stroked-button
-                  color="primary"
-                  class="parameter"
-                  (click)="addText(label)"
-                  >
-                  {{ label }}
-                </button>
-              }
-            </div>
-          </mat-expansion-panel>
-        }
-      </mat-accordion>
-    </div>
+    <mat-card-content>
+      <div role="template-parameters">
+        <mat-accordion>
+          @if (templateForm.controls.entity.value === 0) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ 'labels.inputs.Client Parameters' | translate }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="layout-row-wrap layout-xs-column layout-align-center">
+                @for (label of clientParameterLabels; track trackByLabel($index, label)) {
+                  <button mat-stroked-button color="primary" class="parameter" (click)="addText(label)">
+                    {{ label }}
+                  </button>
+                }
+              </div>
+            </mat-expansion-panel>
+          }
+
+          @if (templateForm.controls.entity.value === 1) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ 'labels.inputs.Loan Parameters' | translate }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="layout-row-wrap layout-xs-column layout-align-center">
+                @for (label of loanParameterLabels; track trackByLabel($index, label)) {
+                  <button mat-stroked-button color="primary" class="parameter" (click)="addText(label)">
+                    {{ label }}
+                  </button>
+                }
+              </div>
+            </mat-expansion-panel>
+          }
+
+          @if (templateForm.controls.entity.value === 1) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ 'labels.inputs.Repayment Schedule Parameters' | translate }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="layout-row-wrap layout-xs-column layout-align-center">
+                @for (label of repaymentParameterLabels; track trackByLabel($index, label)) {
+                  <button mat-stroked-button color="primary" class="parameter" (click)="addText(label)">
+                    {{ label }}
+                  </button>
+                }
+              </div>
+            </mat-expansion-panel>
+          }
+        </mat-accordion>
+      </div>
+    </mat-card-content>
 
     <mat-card-actions class="m-b-20 layout-row layout-xs-column layout-align-center gap-5px">
       <button type="button" mat-raised-button [routerLink]="['../']">{{ 'labels.buttons.Cancel' | translate }}</button>
