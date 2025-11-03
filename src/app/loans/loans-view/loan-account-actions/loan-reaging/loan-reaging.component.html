@@ -45,7 +45,7 @@
             <mat-select formControlName="reAgeInterestHandling">
               <mat-option
                 *ngFor="let reAgeInterestHandlingOption of reAgeInterestHandlingOptions"
-                [value]="reAgeInterestHandlingOption.code"
+                [value]="reAgeInterestHandlingOption.id"
               >
                 {{ reAgeInterestHandlingOption.value | translateKey: 'catalogs' }}
               </mat-option>

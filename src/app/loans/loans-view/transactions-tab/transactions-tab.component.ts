@@ -192,10 +192,7 @@ export class TransactionsTabComponent implements OnInit {
 
     if (hideAccrual || hideReversed) {
       transactions = this.transactionsData.filter((t: LoanTransaction) => {
-        return (
-          !(hideReversed && t.manuallyReversed) &&
-          !(hideAccrual && (t.type.accrual || t.type.capitalizedIncomeAmortization))
-        );
+        return !(hideReversed && t.manuallyReversed) && !(hideAccrual && this.isAccrualKindOf(t.type));
       });
     }
     this.dataSource = new MatTableDataSource(transactions);
@@ -246,10 +243,12 @@ export class TransactionsTabComponent implements OnInit {
    * REAMORTIZE:30
    * INTEREST REFUND:33
    * CAPITALIZED INCOME:35
+   * CAPITALIZED_INCOME_AMORTIZATION:36
    * CAPITALIZED INCOME ADJUSTMENT:37
    * CONTRACT_TERMINATION:38
    * BUY_DOWN_FEE:40
    * BUY_DOWN_FEE_ADJUSTMENT:41
+   * BUY_DOWN_FEE_AMORTIZATION:42
    */
   showTransaction(transactionsData: LoanTransaction): boolean {
     return [
@@ -269,10 +268,12 @@ export class TransactionsTabComponent implements OnInit {
       32,
       33,
       35,
+      36,
       37,
       38,
       40,
-      41
+      41,
+      42
     ].includes(transactionsData.type.id);
   }
 
@@ -296,7 +297,7 @@ export class TransactionsTabComponent implements OnInit {
     if (transaction.transactionRelations && transaction.transactionRelations.length > 0) {
       return 'linked';
     }
-    if (this.isAccrual(transaction.type) || this.isCapitalizedIncomeAmortization(transaction.type)) {
+    if (this.isAccrualKindOf(transaction.type)) {
       return 'accrual';
     }
     if (this.isChargeOff(transaction.type)) {
@@ -438,6 +439,21 @@ export class TransactionsTabComponent implements OnInit {
 
   private isCapitalizedIncome(transactionType: LoanTransactionType): boolean {
     return transactionType.capitalizedIncome || transactionType.code === 'loanTransactionType.capitalizedIncome';
+  }
+
+  private isBuyDownFeeAmortization(transactionType: LoanTransactionType): boolean {
+    return (
+      transactionType.buyDownFeeAmortizationAdjustment ||
+      transactionType.code === 'loanTransactionType.buyDownFeeAmortizationAdjustment'
+    );
+  }
+
+  private isAccrualKindOf(transactionType: LoanTransactionType): boolean {
+    return (
+      this.isAccrual(transactionType) ||
+      this.isCapitalizedIncomeAmortization(transactionType) ||
+      this.isBuyDownFeeAmortization(transactionType)
+    );
   }
 
   private isCapitalizedIncomeAmortization(transactionType: LoanTransactionType): boolean {

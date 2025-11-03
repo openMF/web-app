@@ -86,6 +86,7 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
   chargeOffReasonOptions: any;
   capitalizedIncomeClassificationOptions: any[] = [];
   buydownFeeClassificationOptions: any[] = [];
+  writeOffReasonOptions: any[] = [];
 
   currentFormValues: any[] = [];
   allowAddChargeOffReasonExpense = true;
@@ -134,6 +135,7 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
     this.capitalizedIncomeClassificationOptions =
       this.loanProductsTemplate.capitalizedIncomeClassificationOptions || [];
     this.buydownFeeClassificationOptions = this.loanProductsTemplate.buydownFeeClassificationOptions || [];
+    this.writeOffReasonOptions = this.loanProductsTemplate.writeOffReasonOptions || [];
 
     this.loanProductAccountingForm.patchValue({
       accountingRule: this.loanProductsTemplate.accountingRule.id
@@ -214,7 +216,8 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
             this.loanProductsTemplate.penaltyToIncomeAccountMappings ||
             this.loanProductsTemplate.chargeOffReasonToExpenseAccountMappings ||
             this.loanProductsTemplate.buydownFeeClassificationToIncomeAccountMappings ||
-            this.loanProductsTemplate.capitalizedIncomeClassificationToIncomeAccountMappings
+            this.loanProductsTemplate.capitalizedIncomeClassificationToIncomeAccountMappings ||
+            this.loanProductsTemplate.writeOffReasonsToExpenseMappings
               ? true
               : false
         });
@@ -251,7 +254,7 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
           this.formBuilder.array(
             (this.loanProductsTemplate.chargeOffReasonToExpenseAccountMappings || []).map(
               (m: ChargeOffReasonToExpenseAccountMapping) => ({
-                chargeOffReasonCodeValueId: m.chargeOffReasonCodeValue.id,
+                chargeOffReasonCodeValueId: m.reasonCodeValue.id,
                 expenseAccountId: m.expenseAccount.id
               })
             )
@@ -275,6 +278,17 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
               (m: ClassificationToIncomeAccountMapping) => ({
                 value: m.classificationCodeValue,
                 glAccount: m.incomeAccount
+              })
+            )
+          )
+        );
+        this.loanProductAccountingForm.setControl(
+          'writeOffReasonsToExpenseMappings',
+          this.formBuilder.array(
+            (this.loanProductsTemplate.writeOffReasonsToExpenseMappings || []).map(
+              (m: ChargeOffReasonToExpenseAccountMapping) => ({
+                value: m.reasonCodeValue,
+                glAccount: m.expenseAccount
               })
             )
           )
@@ -384,6 +398,7 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
                 'capitalizedIncomeClassificationToIncomeAccountMappings',
                 this.formBuilder.array([])
               );
+              this.loanProductAccountingForm.addControl('writeOffReasonsToExpenseMappings', this.formBuilder.array([]));
             } else {
               this.loanProductAccountingForm.setControl(
                 'paymentChannelToFundSourceMappings',
@@ -403,6 +418,7 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
                 'capitalizedIncomeClassificationToIncomeAccountMappings',
                 this.formBuilder.array([])
               );
+              this.loanProductAccountingForm.setControl('writeOffReasonsToExpenseMappings', this.formBuilder.array([]));
             }
           });
       } else {
@@ -474,6 +490,10 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
     return this.loanProductAccountingForm.get(
       'capitalizedIncomeClassificationToIncomeAccountMappings'
     ) as UntypedFormArray;
+  }
+
+  get writeOffReasonsToExpenseMappings(): UntypedFormArray {
+    return this.loanProductAccountingForm.get('writeOffReasonsToExpenseMappings') as UntypedFormArray;
   }
 
   setLoanProductAccountingFormDirty() {
@@ -708,7 +728,6 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
           }))
         )
       );
-      console.log(this.loanProductAccountingForm.value.buydownfeeClassificationToIncomeAccountMappings);
     } else if (accountingData.formType === 'CapitalizedIncomeClassificationToIncome') {
       this.loanProductAccountingForm.setControl(
         'capitalizedIncomeClassificationToIncomeAccountMappings',
@@ -719,7 +738,16 @@ export class LoanProductAccountingStepComponent implements OnInit, OnChanges {
           }))
         )
       );
-      console.log(this.loanProductAccountingForm.value.capitalizedIncomeClassificationToIncomeAccountMappings);
+    } else if (accountingData.formType === 'WriteOffReasonToExpense') {
+      this.loanProductAccountingForm.setControl(
+        'writeOffReasonsToExpenseMappings',
+        this.formBuilder.array(
+          (accountingData.values || []).map((m: AccountingMappingDTO) => ({
+            writeOffReasonCodeValueId: m.value.id,
+            expenseAccountId: m.glAccount.id
+          }))
+        )
+      );
     }
     this.setLoanProductAccountingFormDirty();
   }

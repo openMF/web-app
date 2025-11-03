@@ -24,8 +24,8 @@
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
-      <td mat-cell *matCellDef="let chargeOffReasonExpense; let i = index">
-        <button mat-icon-button color="primary" (click)="edit(i)">
+      <td mat-cell *matCellDef="let item; let i = index">
+        <button mat-icon-button color="primary" (click)="edit(item, i)">
           <fa-icon icon="edit"></fa-icon>
         </button>
         <button mat-icon-button color="warn" (click)="delete(i)">
