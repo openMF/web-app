@@ -31,6 +31,7 @@ import { Dates } from './core/utils/dates';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from './core/i18n/i18n.service';
 import { ThemingService } from './shared/theme-toggle/theming.service';
+import { safeParseArray } from 'app/core/utils/json';
 
 import { AuthService } from './zitadel/auth.service';
 
@@ -195,7 +196,7 @@ export class WebAppComponent implements OnInit, OnDestroy {
     // Stores top 100 user activites as local storage object.
     let activities: string[] = [];
     if (localStorage.getItem('mifosXLocation')) {
-      const activitiesArray: string[] = JSON.parse(localStorage.getItem('mifosXLocation'));
+      const activitiesArray = safeParseArray<string>(localStorage.getItem('mifosXLocation'), []);
       const length = activitiesArray.length;
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }

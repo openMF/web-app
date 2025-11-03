@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
+import { safeParse, safeParseArray, safeParseObject } from 'app/core/utils/json';
 
 /** Environment Imports */
 import { environment } from '../../environments/environment';
@@ -108,8 +109,9 @@ export class SettingsService {
   /**
    * Returns date format setting.
    */
-  get dateFormat() {
-    return JSON.parse(localStorage.getItem('mifosXDateFormat'));
+  get dateFormat(): string {
+    const parsed = safeParse<string | null>(localStorage.getItem('mifosXDateFormat'), null);
+    return typeof parsed === 'string' && parsed.length > 0 ? parsed : 'dd MMMM yyyy';
   }
 
   /**
@@ -119,7 +121,10 @@ export class SettingsService {
     if (!localStorage.getItem('mifosXLanguage')) {
       this.setDefaultLanguage();
     }
-    return JSON.parse(localStorage.getItem('mifosXLanguage'));
+    return safeParseObject<{ name: string; code: string } | undefined>(
+      localStorage.getItem('mifosXLanguage'),
+      undefined
+    );
   }
 
   get languageCode() {
@@ -147,7 +152,7 @@ export class SettingsService {
    * Returns list of default server
    */
   get servers() {
-    return JSON.parse(localStorage.getItem('mifosXServers'));
+    return safeParseArray<string>(localStorage.getItem('mifosXServers'), []);
   }
 
   /**
@@ -160,7 +165,7 @@ export class SettingsService {
     if (environment.baseApiUrl && environment.baseApiUrl !== '') {
       return environment.baseApiUrl;
     } else {
-      return this.servers()[0];
+      return this.servers[0];
     }
   }
 
@@ -217,7 +222,7 @@ export class SettingsService {
    * Returns list of Tenant Identifiers
    */
   get tenantIdentifiers(): any {
-    return JSON.parse(localStorage.getItem('mifosXTenantIdentifiers'));
+    return safeParseArray<string>(localStorage.getItem('mifosXTenantIdentifiers'), []);
   }
 
   /**
@@ -260,6 +265,6 @@ export class SettingsService {
   }
 
   get themeDarkEnabled(): boolean {
-    return JSON.parse(localStorage.getItem('mifosXThemeDarkEnabled'));
+    return safeParse<boolean>(localStorage.getItem('mifosXThemeDarkEnabled'), false);
   }
 }

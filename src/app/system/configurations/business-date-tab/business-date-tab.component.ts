@@ -46,7 +46,7 @@ export class BusinessDateTabComponent implements OnInit {
   businessDateData: any;
 
   dateIndex = 0;
-  userDateFormat: '';
+  userDateFormat: string = '';
   isBusinessDateEnabled = false;
   isEditInProgress = false;
 
