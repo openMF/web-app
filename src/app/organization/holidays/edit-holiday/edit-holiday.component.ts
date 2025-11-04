@@ -134,17 +134,17 @@ export class EditHolidayComponent implements OnInit {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     if (!this.isActiveHoliday) {
-      if (this.reSchedulingType === 2) {
-        const repaymentScheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
-        holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(repaymentScheduledTo, dateFormat);
+      if (holidayFormData.fromDate instanceof Date) {
+        holidayFormData.fromDate = this.dateUtils.formatDate(holidayFormData.fromDate, dateFormat);
       }
-      const prevFromDate: Date = this.holidayForm.value.fromDate;
-      const prevToDate: Date = this.holidayForm.value.toDate;
-      if (holidayFormData.closureDate instanceof Date) {
-        holidayFormData.fromDate = this.dateUtils.formatDate(prevFromDate, dateFormat);
+      if (holidayFormData.toDate instanceof Date) {
+        holidayFormData.toDate = this.dateUtils.formatDate(holidayFormData.toDate, dateFormat);
       }
-      if (holidayFormData.closureDate instanceof Date) {
-        holidayFormData.toDate = this.dateUtils.formatDate(prevToDate, dateFormat);
+      if (this.reSchedulingType === 2 && holidayFormData.repaymentsRescheduledTo instanceof Date) {
+        holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(
+          holidayFormData.repaymentsRescheduledTo,
+          dateFormat
+        );
       }
     }
     const data = {
