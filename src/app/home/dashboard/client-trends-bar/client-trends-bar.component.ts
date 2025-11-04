@@ -12,7 +12,7 @@ import { HomeService } from '../../home.service';
 
 /** Charting Imports */
 import { Dates } from 'app/core/utils/dates';
-import Chart from 'chart.js';
+import { Chart } from 'app/core/chart.config';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgFor, NgStyle } from '@angular/common';
@@ -266,11 +266,11 @@ export class ClientTrendsBarComponent implements OnInit {
           responsive: true,
           scales: {
             y: {
-              beginAtZero: true,
-              scaleLabel: {
+              min: 0,
+              title: {
                 display: true,
-                labelString: 'Values',
-                fontColor: '#1074B9'
+                text: 'Values',
+                color: '#1074B9'
               }
             }
           }

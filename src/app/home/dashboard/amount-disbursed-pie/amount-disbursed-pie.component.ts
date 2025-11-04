@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HomeService } from '../../home.service';
 
 /** Charting Imports */
-import Chart from 'chart.js';
+import { Chart } from 'app/core/chart.config';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgFor, NgStyle, NgIf } from '@angular/common';

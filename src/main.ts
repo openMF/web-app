@@ -7,6 +7,10 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+// Initialize Chart.js 4.x before Angular bootstraps
+// This ensures all chart types are registered before any components use them
+import './app/core/chart.config';
+
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 

@@ -8,7 +8,7 @@ import { ReportsService } from '../../reports.service';
 import { ChartData } from '../../common-models/chart-data.model';
 
 /** Charting Imports */
-import Chart from 'chart.js';
+import { Chart } from 'app/core/chart.config';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { NgStyle } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -81,9 +81,11 @@ export class ChartComponent implements OnChanges {
         ]
       },
       options: {
-        title: {
-          display: true,
-          text: inputData.keysLabel
+        plugins: {
+          title: {
+            display: true,
+            text: inputData.keysLabel
+          }
         }
       }
     });
@@ -110,19 +112,19 @@ export class ChartComponent implements OnChanges {
         ]
       },
       options: {
-        legend: { display: false },
+        plugins: {
+          legend: { display: false }
+        },
         scales: {
-          xAxes: [
-            {
-              scaleLabel: {
-                display: true,
-                labelString: inputData.keysLabel
-              },
-              ticks: {
-                beginAtZero: true
-              }
+          x: {
+            title: {
+              display: true,
+              text: inputData.keysLabel
             }
-          ]
+          },
+          y: {
+            min: 0
+          }
         }
       }
     });
