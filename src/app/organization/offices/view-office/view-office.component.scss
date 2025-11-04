@@ -1,13 +1,74 @@
 .action-button {
-  width: 95%;
+  width: 85%;
+  margin: 0.2rem auto;
+  padding: 0.3rem;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+  }
 }
 
 .office-card {
-  margin: 0 auto;
-  width: 90%;
-  padding: 0;
+  width: 100%;
+  margin: 0.75rem auto;
+  padding: 0.5rem;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%) !important;
 
   .navigation-tabs {
     overflow: auto;
+    padding: 0.2rem 0;
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgb(0 0 0 / 20%);
+      border-radius: 4px;
+    }
+
+    .mat-tab-label {
+      min-width: 80px;
+      padding: 0 0.5rem;
+      height: 36px;
+      font-size: 0.85rem;
+    }
   }
+
+  @media (width <= 768px) {
+    width: 85%;
+    padding: 0.4rem;
+  }
+}
+
+.container {
+  padding: 0.5rem;
+}
+
+.narrow-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0.75rem;
+}
+
+.extra-small {
+  max-width: 500px;
+}
+
+.compact-tab {
+  min-width: auto;
+  padding: 0 12px;
+}
+
+.card-content {
+  padding: 0.5rem;
+}
+
+.tab-panel {
+  padding: 0.5rem 0;
 }

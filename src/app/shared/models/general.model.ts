@@ -41,8 +41,10 @@ export interface PaymentChannelToFundSourceMapping {
 
 export interface ChargeOffReasonToExpenseAccountMapping {
   chargeOffReasonCodeValueId?: number;
+  writeOffReasonCodeValueId?: number;
   expenseAccountId?: number;
-  chargeOffReasonCodeValue?: CodeValue;
+  reasonCodeValue?: CodeValue;
+  writeOffReasonCodeValue?: CodeValue;
   expenseAccount?: AccountingMapping;
 }
 

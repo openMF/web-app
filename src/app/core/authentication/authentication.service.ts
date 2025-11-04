@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 /** Custom Services */
@@ -30,6 +30,8 @@ export class AuthenticationService {
   }
   // User logged in boolean
   private userLoggedIn: boolean;
+  private userLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public readonly isAuthenticated$ = this.userLoggedIn$.asObservable();
 
   /** Denotes whether the user credentials should persist through sessions. */
   private rememberMe: boolean;
@@ -84,6 +86,9 @@ export class AuthenticationService {
       if (twoFactorAccessToken) {
         authenticationInterceptor.setTwoFactorAccessToken(twoFactorAccessToken.token);
       }
+      // Emit the correct initial state
+      this.userLoggedIn = true;
+      this.userLoggedIn$.next(true);
     }
   }
 
@@ -200,6 +205,7 @@ export class AuthenticationService {
    */
   private onLoginSuccess(credentials: Credentials) {
     this.userLoggedIn = true;
+    this.userLoggedIn$.next(true); // ✅ notify observers
     // Ensure the rememberMe value is preserved in credentials
     credentials.rememberMe = this.rememberMe;
 
@@ -268,6 +274,7 @@ export class AuthenticationService {
     this.setCredentials();
     this.resetDialog();
     this.userLoggedIn = false;
+    this.userLoggedIn$.next(false); // ✅ notify observers
     return of(true);
   }
 

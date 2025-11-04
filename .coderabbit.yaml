@@ -1,0 +1,60 @@
+# .coderabbit.yaml
+language: 'en-US'
+early_access: false
+
+chat:
+  auto_reply: true
+
+reviews:
+  poem: false
+  profile: 'chill' # not too strict
+  high_level_summary: true
+  review_status: true
+  commit_status: true
+  collapse_walkthrough: false
+
+  # Scope: review code, skip docs/config/assets
+  path_filters:
+    - '**/*'
+    - '!.github/**'
+    - '!**/*.svg'
+
+  # Repo-specific guidance
+  instructions: |
+    Focus on correctness, readability, and maintainability over cosmetic nitpicks.
+    - Avoid reviewing README, config, or asset files.
+    - Prioritize identifying bugs, performance issues, and architectural concerns.
+    - For Angular, check for OnPush strategy, unsubscribe patterns, proper RxJS usage,
+      and template accessibility (labels, roles, tab order).
+    - For TypeScript, enforce strong typing and minimal use of `any`.
+    - Point out missing tests only when changes are medium/high risk.
+
+  # Use path + instructions
+  path_instructions:
+    - path: 'src/app/**'
+      instructions: |
+        For Angular code: verify component separation, trackBy on *ngFor,
+        strict type safety, and clean observable patterns.
+    - path: '**/*.spec.ts'
+      instructions: |
+        For tests: encourage clear Arrange-Act-Assert structure,
+        stable selectors, and minimal brittle timing dependencies.
+
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    drafts: false
+    base_branches: ['dev']
+    ignore_title_keywords: ['WIP', 'Draft']
+    labels: ['!skip-ai-review']
+    ignore_usernames: ['dependabot', 'renovate[bot]']
+
+  finishing_touches:
+    docstrings:
+      enabled: true
+    unit_tests:
+      enabled: true
+
+# Valid schema: turn off gates entirely
+pre_merge_checks:
+  mode: 'off'

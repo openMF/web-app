@@ -39,4 +39,5 @@ export interface LoanTransactionType {
   contractTermination: boolean;
   buyDownFee: boolean;
   buyDownFeeAdjustment: boolean;
+  buyDownFeeAmortizationAdjustment: boolean;
 }

@@ -3,7 +3,6 @@ $bar: 150px;
 $foo: $bar * 8;
 $color: #e2e4ec;
 
-// Container styles
 .container {
   padding: 24px;
 
@@ -84,7 +83,6 @@ $color: #e2e4ec;
   // Table styling
   .bordered-table {
     width: 100%;
-    background: white;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
     overflow: hidden;
@@ -104,7 +102,6 @@ $color: #e2e4ec;
     }
 
     th {
-      background-color: #fafafa;
       font-weight: 500;
       border-bottom: 1px solid #e0e0e0;
     }
@@ -121,7 +118,6 @@ $color: #e2e4ec;
   // Paginator styling
   mat-paginator {
     border-top: 1px solid #e0e0e0;
-    background: white;
     margin-top: 0;
   }
 

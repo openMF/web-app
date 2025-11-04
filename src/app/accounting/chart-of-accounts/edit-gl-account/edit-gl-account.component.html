@@ -90,7 +90,7 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="glAccountForm.pristine"
+          [disabled]="glAccountForm.invalid || glAccountForm.pristine"
           *mifosxHasPermission="'UPDATE_GLACCOUNT'"
         >
           {{ 'labels.buttons.Submit' | translate }}

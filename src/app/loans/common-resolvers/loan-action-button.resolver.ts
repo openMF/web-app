@@ -214,6 +214,16 @@ export class LoanActionButtonResolver {
         loanId: parseInt(loanId, 10),
         command: 'buyDownFee'
       });
+    } else if (loanActionButton === 'Re-Age') {
+      return this.loanTransactionsService.retrieveTransactionTemplate({
+        loanId: parseInt(loanId, 10),
+        command: 'reAge'
+      });
+    } else if (loanActionButton === 'Re-Amortize') {
+      return this.loanTransactionsService.retrieveTransactionTemplate({
+        loanId: parseInt(loanId, 10),
+        command: 'reAmortization'
+      });
     } else {
       return undefined;
     }
