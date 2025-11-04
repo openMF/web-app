@@ -11,6 +11,18 @@ import { Credentials } from '../core/authentication/credentials.model';
 import { OAuth2Token } from '../core/authentication/o-auth2-token.model';
 import { environment } from '../../environments/environment';
 
+/**
+ * Interface for Zitadel User data
+ * Represents the transformed user object used throughout the application
+ */
+export interface ZitadelUser {
+  id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  officeName: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private baseUrl = environment.OIDC.oidcBaseUrl;
@@ -249,28 +261,41 @@ export class AuthService {
       });
   }
 
-  public getUsers() {
-    let getUsers: any[] = [];
-    fetch(`${this.api}authentication/user`, {
+  public getUsers(): Promise<ZitadelUser[]> {
+    return fetch(`${this.api}authentication/user`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.getAccessToken()}`
       }
     })
-      .then((res) => res.json())
-      .then((response) => {
-        const users = response.data?.result;
-        if (Array.isArray(users)) {
-          users.forEach((element: { human: any }) => {
-            const human = element.human;
-            if (human) {
-              getUsers.push(human);
-            }
-          });
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
         }
+        return res.json();
       })
-      .catch((error) => console.error(`Error retrieving users: ${error}`));
+      .then((response): ZitadelUser[] => {
+        const users = response.data?.result || [];
+        if (Array.isArray(users)) {
+          return users
+            .filter((element: any) => element.human)
+            .map(
+              (element: any): ZitadelUser => ({
+                id: element.id || '',
+                firstname: element.human?.profile?.firstName || '',
+                lastname: element.human?.profile?.lastName || '',
+                email: element.human?.email?.email || '',
+                officeName: 'Head Office'
+              })
+            );
+        }
+        return [];
+      })
+      .catch((error) => {
+        console.error(`Error retrieving users: ${error}`);
+        throw error; // Let caller handle it
+      });
   }
 
   public createRole(roleKey: string, displayName: string, group: string) {

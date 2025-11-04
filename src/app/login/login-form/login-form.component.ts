@@ -93,10 +93,6 @@ export class LoginFormComponent implements OnInit {
     this.authService.login();
   }
 
-  getUsers() {
-    this.authService.getUsers();
-  }
-
   logout() {
     this.authService.logout();
   }
