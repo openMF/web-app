@@ -29,6 +29,16 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
+ * Role interface representing a role in the system.
+ */
+export interface Role {
+  id: number | string;
+  name: string;
+  description: string;
+  disabled: boolean;
+}
+
+/**
  * Roles and Permissions component.
  */
 @Component({
@@ -57,7 +67,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 })
 export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
   /** Role data. */
-  roleData: any;
+  roleData: Role[];
   /** Columns to be displayed in roles and permissions table. */
   displayedColumns: string[] = [
     'name',
@@ -66,7 +76,7 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
     'actions'
   ];
   /** Data source for roles and permissions table. */
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<Role>;
 
   /** Paginator for roles and permissions table. */
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -94,7 +104,7 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
     private configurationWizardService: ConfigurationWizardService,
     private popoverService: PopoverService
   ) {
-    this.route.data.subscribe((data: { roles: any }) => {
+    this.route.data.subscribe((data: { roles: Role[] }) => {
       this.roleData = data.roles;
     });
   }
@@ -129,6 +139,16 @@ export class RolesAndPermissionsComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource(this.roleData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  /**
+   * TrackBy function for Material table rows to optimize change detection.
+   * @param index Index of the item.
+   * @param role Role data object.
+   * @returns Unique identifier for the role.
+   */
+  trackByRoleId(index: number, role: Role): number | string {
+    return role?.id ?? index;
   }
 
   /**

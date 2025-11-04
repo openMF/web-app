@@ -330,4 +330,24 @@ export class ViewRoleComponent implements OnInit {
       }
     });
   }
+
+  /**
+   * TrackBy function for grouping list to optimize change detection.
+   * @param index Index of the item.
+   * @param grouping Grouping string.
+   * @returns The grouping string as unique identifier.
+   */
+  trackByGrouping(index: number, grouping: string): string {
+    return grouping;
+  }
+
+  /**
+   * TrackBy function for permission list to optimize change detection.
+   * @param index Index of the item.
+   * @param permission Permission object.
+   * @returns Unique identifier for the permission.
+   */
+  trackByPermission(index: number, permission: any): number {
+    return permission.id;
+  }
 }
