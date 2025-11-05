@@ -113,9 +113,9 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
       const filters = JSON.parse(filtersJson);
       filters.forEach((filter: any) => {
         const val = data[filter.id] === null ? '' : data[filter.id];
-        if (filter.value !== '') {
-          matchFilter.push(val === parseInt(filter.value, 10));
-        } else if (filter.value === '') {
+        if (filter.value !== '' && val !== '') {
+          matchFilter.push(parseInt(val.toString(), 10) === parseInt(filter.value, 10));
+        } else if (filter.value === '' || val === '') {
           matchFilter.push(val.toString().toLowerCase().includes(filter.value.toLowerCase()));
         }
       });
