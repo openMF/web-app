@@ -14,6 +14,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { EditSmsCampaignStepComponent } from '../sms-campaign-stepper/edit-sms-campaign-step/edit-sms-campaign-step.component';
 import { CampaignPreviewStepComponent } from '../sms-campaign-stepper/campaign-preview-step/campaign-preview-step.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseObject } from 'app/core/utils/json';
 
 /**
  * Edit Campaign Component
@@ -98,7 +99,7 @@ export class EditCampaignComponent {
       providerId: this.smsCampaign.providerId === 0 ? null : this.smsCampaign.providerId,
       runReportId: this.smsCampaign.runReportId,
       message: this.campaignMessage,
-      paramValue: JSON.parse(this.smsCampaign.paramValue),
+      paramValue: safeParseObject<any>(this.smsCampaign.paramValue, {}),
       dateTimeFormat,
       dateFormat,
       locale

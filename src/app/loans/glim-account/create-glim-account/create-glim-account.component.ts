@@ -8,6 +8,7 @@ import { LoansService } from '../../loans.service';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { ClientsService } from 'app/clients/clients.service';
+import { safeParseObject } from 'app/core/utils/json';
 
 /** Step Components */
 import { LoansAccountDetailsStepComponent } from '../../loans-account-stepper/loans-account-details-step/loans-account-details-step.component';
@@ -266,7 +267,7 @@ export class CreateGlimAccountComponent {
     // Use date format from settingsService for interestChargedFromDate
     const data = this.buildRequestData();
     this.loansService.createGlimAccount(data).subscribe((response: any) => {
-      const body = JSON.parse(response[0].body);
+      const body = safeParseObject<any>(response[0]?.body, {});
       if (body.glimId) {
         this.router.navigate(
           [

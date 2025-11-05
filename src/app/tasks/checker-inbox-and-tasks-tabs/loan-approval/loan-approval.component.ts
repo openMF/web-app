@@ -30,6 +30,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseObject } from 'app/core/utils/json';
 
 interface OfficeNode {
   id: number;
@@ -204,7 +205,7 @@ export class LoanApprovalComponent {
       response.forEach((responseEle: any) => {
         if ((responseEle.statusCode = '200')) {
           approvedAccounts++;
-          responseEle.body = JSON.parse(responseEle.body);
+          responseEle.body = safeParseObject<any>(responseEle.body, {});
           if (selectedAccounts === approvedAccounts) {
             this.loanResource();
           }

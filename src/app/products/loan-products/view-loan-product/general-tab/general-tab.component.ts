@@ -11,6 +11,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoanProductSummaryComponent } from '../../common/loan-product-summary/loan-product-summary.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParse } from 'app/core/utils/json';
 
 @Component({
   selector: 'mifosx-general-tab',
@@ -61,7 +62,7 @@ export class GeneralTabComponent implements OnInit {
 
   copyProduct(): void {
     const productNameTmp = `${this.loanProduct.name.replace(' ', '_')}_${this.translateService.instant('labels.text.Copy')}`;
-    const productCopy = JSON.parse(JSON.stringify(this.loanProduct));
+    const productCopy: any = safeParse<any>(JSON.stringify(this.loanProduct), {});
 
     const formfields: FormfieldBase[] = [
       new InputBase({

@@ -5,6 +5,7 @@ import { confirmPasswordValidator } from 'app/login/reset-password/confirm-passw
 import { HttpClient } from '@angular/common/http';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { environment } from '../../../../environments/environment';
+import { safeParseObject } from 'app/core/utils/json';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -104,18 +105,16 @@ export class ChangePasswordDialogComponent implements OnInit {
         this.dialogRef.close(true);
       },
       error: (err) => {
-        try {
-          const backendError = JSON.parse(err.error.message);
-          if (backendError.code === 3) {
-            alert(this.translateService.instant('labels.inputs.The current password is not correct'));
-          } else if (backendError.code === 9) {
-            alert(
-              this.translateService.instant('labels.inputs.New password cannot be the same as your current password')
-            );
-          } else {
-            alert('Error: ' + backendError.message);
-          }
-        } catch (e) {
+        const backendError = safeParseObject<{ code?: number; message?: string }>(err?.error?.message, {});
+        if (backendError.code === 3) {
+          alert(this.translateService.instant('labels.inputs.The current password is not correct'));
+        } else if (backendError.code === 9) {
+          alert(
+            this.translateService.instant('labels.inputs.New password cannot be the same as your current password')
+          );
+        } else if (backendError.message) {
+          alert('Error: ' + backendError.message);
+        } else {
           alert(this.translateService.instant('labels.inputs.Unable to update password'));
         }
       }

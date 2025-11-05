@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { safeParse, safeParseObject } from 'app/core/utils/json';
 
 import { AlertService } from '../../app/core/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -79,8 +80,8 @@ export class AuthService {
     const rawToken = sessionStorage.getItem('mifosXZitadelTokenDetails');
 
     if (rawToken) {
-      const parsedToken: OAuth2Token = JSON.parse(rawToken);
-      return parsedToken.access_token;
+      const parsedToken = safeParseObject<{ access_token?: string }>(rawToken, {} as any);
+      return parsedToken.access_token || null;
     }
 
     return null;
