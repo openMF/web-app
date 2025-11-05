@@ -165,7 +165,15 @@ export class RescheduleLoanComponent {
       this.batchRequests.push(batchData);
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
-      this.reload();
+      let successCount = 0;
+      response.forEach((responseEle: any) => {
+        if (responseEle.statusCode === '200') {
+          successCount++;
+        }
+      });
+      if (successCount > 0) {
+        this.reload();
+      }
     });
   }
 
