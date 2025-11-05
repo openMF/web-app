@@ -1,12 +1,22 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Pipe({ name: 'find' })
 export class FindPipe implements PipeTransform {
-  transform(value: any, options: any, key: string, property: string): any {
+  constructor(private sanitizer: DomSanitizer) {}
+
+  transform(value: any, options: any, key: string, property: string): SafeHtml | string {
     let optionFound;
-    if (options) {
-      optionFound = options.find((option: any) => option[key] === value);
+    if (options && Array.isArray(options)) {
+      optionFound = options.find((option: any) => option && option[key] === value);
     }
-    return optionFound ? optionFound[property] : '';
+
+    const result = optionFound ? optionFound[property] : '';
+
+    if (typeof result === 'string') {
+      return this.sanitizer.sanitize(SecurityContext.HTML, result) || '';
+    }
+
+    return String(result || '');
   }
 }
