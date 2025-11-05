@@ -20,6 +20,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoansAccountScheduleStepComponent } from '../../loans-account-stepper/loans-account-schedule-step/loans-account-schedule-step.component';
 import { LoansAccountPreviewStepComponent } from '../../loans-account-stepper/loans-account-preview-step/loans-account-preview-step.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseObject } from 'app/core/utils/json';
 
 @Component({
   selector: 'mifosx-create-glim-account',
@@ -266,8 +267,8 @@ export class CreateGlimAccountComponent {
     // Use date format from settingsService for interestChargedFromDate
     const data = this.buildRequestData();
     this.loansService.createGlimAccount(data).subscribe((response: any) => {
-      const body = JSON.parse(response[0].body);
-      if (body.glimId) {
+      const body = safeParseObject<any>(response[0].body, null);
+      if (body?.glimId) {
         this.router.navigate(
           [
             '../',

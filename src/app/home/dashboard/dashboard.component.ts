@@ -11,6 +11,7 @@ import { ClientTrendsBarComponent } from './client-trends-bar/client-trends-bar.
 import { AmountDisbursedPieComponent } from './amount-disbursed-pie/amount-disbursed-pie.component';
 import { AmountCollectedPieComponent } from './amount-collected-pie/amount-collected-pie.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseArray } from 'app/core/utils/json';
 /**
  * Dashboard component.
  */
@@ -46,7 +47,7 @@ export class DashboardComponent implements OnInit {
    * Gets user activities from local storage.
    */
   constructor(private router: Router) {
-    this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
+    this.userActivity = safeParseArray<string>(localStorage.getItem('mifosXLocation'), []);
   }
 
   ngOnInit() {

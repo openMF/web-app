@@ -10,6 +10,7 @@ import { AuthenticationService } from '../core/authentication/authentication.ser
 import { Credentials } from '../core/authentication/credentials.model';
 import { OAuth2Token } from '../core/authentication/o-auth2-token.model';
 import { environment } from '../../environments/environment';
+import { safeParseObject } from '../core/utils/json';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -79,8 +80,8 @@ export class AuthService {
     const rawToken = sessionStorage.getItem('mifosXZitadelTokenDetails');
 
     if (rawToken) {
-      const parsedToken: OAuth2Token = JSON.parse(rawToken);
-      return parsedToken.access_token;
+      const parsedToken = safeParseObject<OAuth2Token>(rawToken, {} as OAuth2Token);
+      return parsedToken.access_token || null;
     }
 
     return null;

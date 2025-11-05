@@ -18,6 +18,7 @@ import { NgFor, NgSwitch, NgIf, NgSwitchCase } from '@angular/common';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseObject } from 'app/core/utils/json';
 
 /**
  * Edit Business Rule Parameters.
@@ -72,7 +73,7 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.paramData) {
       this.ReportForm = new UntypedFormGroup({});
-      this.paramValue = JSON.parse(this.smsCampaign.paramValue);
+      this.paramValue = safeParseObject<any>(this.smsCampaign.paramValue, {});
       this.createRunReportForm();
       this.disableFormWhenValid();
       this.getResponseHeaders();
@@ -88,19 +89,21 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
       if (!param.parentParameterName) {
         // Non Child Parameter
         this.ReportForm.addControl(param.name, new UntypedFormControl('', Validators.required));
-        const controlValue = this.paramValue[param.variable].toString();
-        switch (param.displayType) {
-          case 'text':
-            this.ReportForm.get(param.name).patchValue(controlValue);
-            break;
-          case 'select':
-            this.fetchSelectOptions(param, param.name);
-            break;
-          case 'date':
-            const dateFormat = this.settingsService.dateFormat;
-            const newControlValue = this.dateUtils.formatDate(controlValue, dateFormat);
-            this.ReportForm.get(param.name).patchValue(newControlValue);
-            break;
+        const controlValue = this.paramValue[param.variable]?.toString();
+        if (controlValue) {
+          switch (param.displayType) {
+            case 'text':
+              this.ReportForm.get(param.name).patchValue(controlValue);
+              break;
+            case 'select':
+              this.fetchSelectOptions(param, param.name);
+              break;
+            case 'date':
+              const dateFormat = this.settingsService.dateFormat;
+              const newControlValue = this.dateUtils.formatDate(controlValue, dateFormat);
+              this.ReportForm.get(param.name).patchValue(newControlValue);
+              break;
+          }
         }
       } else {
         // Child Parameter
@@ -160,9 +163,13 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
       if (param.selectAll === 'Y') {
         param.selectOptions.push({ id: '-1', name: 'All' });
       }
-      const optionId = this.paramValue[param.variable].toString();
-      const option = options.find((entry) => entry.id === optionId);
-      this.ReportForm.controls[param.name].patchValue({ id: optionId, name: option.name });
+      const optionId = this.paramValue[param.variable]?.toString();
+      if (optionId) {
+        const option = options.find((entry) => entry.id === optionId);
+        if (option) {
+          this.ReportForm.controls[param.name].patchValue({ id: optionId, name: option.name });
+        }
+      }
     });
   }
 
@@ -211,17 +218,19 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
    * TODO: Replace report object with report name once reports service is refactored.
    */
   getResponseHeaders() {
-    const reportName = this.paramValue.reportName;
-    delete this.paramValue.reportName;
-    const formattedResponse = this.formatUserResponse(this.paramValue, true);
-    this.reportsService.getRunReportData(reportName, formattedResponse).subscribe(
-      (response: any) => {
-        this.templateParameters.emit(response.columnHeaders);
-      },
-      (error: any) => {
-        this.templateParameters.emit(null);
-        this.ReportForm.disable();
-      }
-    );
+    const reportName = this.paramValue?.reportName;
+    if (reportName) {
+      delete this.paramValue.reportName;
+      const formattedResponse = this.formatUserResponse(this.paramValue, true);
+      this.reportsService.getRunReportData(reportName, formattedResponse).subscribe(
+        (response: any) => {
+          this.templateParameters.emit(response.columnHeaders);
+        },
+        (error: any) => {
+          this.templateParameters.emit(null);
+          this.ReportForm.disable();
+        }
+      );
+    }
   }
 }

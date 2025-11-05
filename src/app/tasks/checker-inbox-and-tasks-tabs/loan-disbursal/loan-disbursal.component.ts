@@ -29,6 +29,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { FormatNumberPipe } from '../../../pipes/format-number.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseObject } from 'app/core/utils/json';
 
 @Component({
   selector: 'mifosx-loan-disbursal',
@@ -156,7 +157,7 @@ export class LoanDisbursalComponent {
       response.forEach((responseEle: any) => {
         if (responseEle.statusCode === '200') {
           approvedAccounts++;
-          responseEle.body = JSON.parse(responseEle.body);
+          responseEle.body = safeParseObject<any>(responseEle.body, null);
           if (selectedAccounts === approvedAccounts) {
             this.loanResource();
           }
