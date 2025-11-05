@@ -1,1 +1,21 @@
 @use '../shared/styles/list-layout' as *;
+
+.layout-column.layout-gt-sm-row.align-gt-sm-start-center {
+  align-items: center;
+
+  .search-box {
+    align-items: center;
+
+    mat-checkbox {
+      transform: translateY(-14px);
+    }
+  }
+
+  .action-button {
+    align-items: center;
+
+    button {
+      transform: translateY(-14px);
+    }
+  }
+}

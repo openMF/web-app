@@ -1,6 +1,6 @@
 <mat-card class="container">
   <div class="layout-column layout-gt-sm-row align-gt-sm-start-center">
-    <div class="search-box m-r-30">
+    <div class="search-box">
       <mat-form-field class="search-box">
         <input
           matInput
@@ -9,9 +9,7 @@
           (keydown.enter)="search($event.target.value)"
         />
       </mat-form-field>
-    </div>
-    <div class="filter-box" *ngIf="existsClientsToFilter">
-      <mat-checkbox #showClosedAccounts labelPosition="after" class="m-r-10"
+      <mat-checkbox #showClosedAccounts labelPosition="after" class="m-r-10" *ngIf="existsClientsToFilter"
         >{{ 'labels.inputs.Show Closed Accounts' | translate }}
       </mat-checkbox>
     </div>
