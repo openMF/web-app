@@ -160,7 +160,7 @@ export class ClientsService {
    */
   payClientCharge(clientId: string, chargeId: string, payment: any) {
     const httpParams = new HttpParams().set('command', 'paycharge');
-    return this.http.post(`/clients/${clientId}/charges/${chargeId}?command=paycharge`, payment, {
+    return this.http.post(`/clients/${clientId}/charges/${chargeId}`, payment, {
       params: httpParams
     });
   }
