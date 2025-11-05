@@ -60,8 +60,12 @@ export class GeneralTabComponent implements OnInit {
   }
 
   copyProduct(): void {
+    if (!this.loanProduct) {
+      console.error('Cannot copy product: loanProduct is not available');
+      return;
+    }
     const productNameTmp = `${this.loanProduct.name.replace(' ', '_')}_${this.translateService.instant('labels.text.Copy')}`;
-    const productCopy = JSON.parse(JSON.stringify(this.loanProduct));
+    const productCopy: any = JSON.parse(JSON.stringify(this.loanProduct));
 
     const formfields: FormfieldBase[] = [
       new InputBase({

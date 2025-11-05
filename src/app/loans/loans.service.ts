@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { DisbursementData } from './models/loan-account.model';
+import { safeParseArray } from 'app/core/utils/json';
 
 /**
  * Loans service.
@@ -698,6 +699,6 @@ export class LoansService {
   }
 
   getLoanDisbursementDetailsData(): DisbursementData[] {
-    return JSON.parse(localStorage.getItem('disbursementData'));
+    return safeParseArray<DisbursementData>(localStorage.getItem('disbursementData'), []);
   }
 }

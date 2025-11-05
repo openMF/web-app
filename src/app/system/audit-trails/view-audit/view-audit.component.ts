@@ -18,6 +18,7 @@ import {
 } from '@angular/material/table';
 import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseObject } from 'app/core/utils/json';
 
 /**
  * View Audit Component.
@@ -83,22 +84,13 @@ export class ViewAuditComponent implements OnInit {
     if (!this.auditTrailData || !this.auditTrailData.commandAsJson) {
       return [];
     }
-
-    try {
-      const parsed = JSON.parse(this.auditTrailData.commandAsJson);
-      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
-        return Object.entries(parsed).map(
-          ([
-            key,
-            value
-          ]) => ({ command: key, commandValue: value })
-        );
-      }
-      return [];
-    } catch (err) {
-      console.error('Invalid commandAsJson in audit trail:', err);
-      return [];
-    }
+    const parsed = safeParseObject<Record<string, unknown>>(this.auditTrailData.commandAsJson, {});
+    return Object.entries(parsed).map(
+      ([
+        key,
+        value
+      ]) => ({ command: key, commandValue: value })
+    );
   }
 
   /**

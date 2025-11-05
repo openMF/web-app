@@ -23,6 +23,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { MatIconButton, MatButton } from '@angular/material/button';
 import { DatetimeFormatPipe } from '../../../../pipes/datetime-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseArray } from 'app/core/utils/json';
 
 @Component({
   selector: 'mifosx-view-history-scheduler-job',
@@ -110,7 +111,7 @@ export class ViewHistorySchedulerJobComponent implements OnInit {
     /** Search By Version */
     this.dataSource.filterPredicate = (data: any, filtersJson: string) => {
       const matchFilter: any[] = [];
-      const filters = JSON.parse(filtersJson);
+      const filters = safeParseArray<{ id: string; value: string | number }>(filtersJson, []);
       filters.forEach((filter: any) => {
         const val = data[filter.id] === null ? '' : data[filter.id];
         if (filter.value !== '') {

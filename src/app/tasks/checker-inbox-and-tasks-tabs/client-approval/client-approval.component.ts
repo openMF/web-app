@@ -32,6 +32,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseObject } from 'app/core/utils/json';
 
 @Component({
   selector: 'mifosx-client-approval',
@@ -172,9 +173,10 @@ export class ClientApprovalComponent {
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
-        if ((responseEle.statusCode = '200')) {
+        if (responseEle.statusCode === '200' || responseEle.statusCode === 200) {
           activatedAccounts++;
-          responseEle.body = JSON.parse(responseEle.body);
+          // If needed later, parse safely:
+          // const parsedBody = safeParseObject<any>(responseEle.body, {});
           if (selectedAccounts === activatedAccounts) {
             this.reload();
           }

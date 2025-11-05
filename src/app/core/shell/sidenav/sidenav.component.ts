@@ -27,6 +27,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 /** Environment Configuration and Zitadel*/
 import { environment } from '../../../../environments/environment';
 import { AuthService } from 'app/zitadel/auth.service';
+import { safeParseArray } from 'app/core/utils/json';
 
 /**
  * Sidenav component.
@@ -89,7 +90,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     private popoverService: PopoverService,
     private authService: AuthService
   ) {
-    this.userActivity = JSON.parse(localStorage.getItem('mifosXLocation'));
+    this.userActivity = safeParseArray<string>(localStorage.getItem('mifosXLocation'), []);
   }
 
   /**

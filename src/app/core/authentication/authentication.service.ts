@@ -19,6 +19,7 @@ import { environment } from '../../../environments/environment';
 import { LoginContext } from './login-context.model';
 import { Credentials } from './credentials.model';
 import { OAuth2Token } from './o-auth2-token.model';
+import { safeParse, safeParseObject } from 'app/core/utils/json';
 
 /**
  * Authentication workflow.
@@ -69,15 +70,19 @@ export class AuthenticationService {
     this.userLoggedIn = false;
     this.rememberMe = false;
     this.storage = sessionStorage;
-    const savedCredentials = JSON.parse(
-      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+    const savedCredentials = safeParse<Credentials | null>(
+      sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey),
+      null
     );
     if (savedCredentials) {
       if (savedCredentials.rememberMe) {
         this.rememberMe = true;
         this.storage = localStorage;
       }
-      const twoFactorAccessToken = JSON.parse(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey));
+      const twoFactorAccessToken = safeParse<any>(
+        this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey),
+        null
+      );
       if (environment.oauth.enabled) {
         this.refreshOAuthAccessToken();
       } else {
@@ -167,13 +172,20 @@ export class AuthenticationService {
    * Refreshes the oauth2 authorization token.
    */
   private refreshOAuthAccessToken() {
-    var oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey));
-    if (oAuthRefreshToken == null) {
+    const tokenDetails = safeParse<{ refresh_token?: string } | null>(
+      this.storage.getItem(this.oAuthTokenDetailsStorageKey),
+      null
+    );
+    if (!tokenDetails?.refresh_token) {
       return;
     }
-    oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey)).refresh_token;
+    const oAuthRefreshToken = tokenDetails.refresh_token;
     this.authenticationInterceptor.removeAuthorization();
-    const credentials = JSON.parse(this.storage.getItem(this.credentialsStorageKey));
+    const credentials = safeParse<Credentials>(this.storage.getItem(this.credentialsStorageKey), {} as any);
+    if (!credentials.username) {
+      console.error('Missing credentials during token refresh');
+      return;
+    }
     let httpParams = new HttpParams();
     httpParams = httpParams.set('username', credentials.username);
     httpParams = httpParams.set('client_id', `${environment.oauth.appId}`);
@@ -187,7 +199,11 @@ export class AuthenticationService {
         this.storage.setItem(this.oAuthTokenDetailsStorageKey, JSON.stringify(tokenResponse));
         this.authenticationInterceptor.setAuthorizationToken(tokenResponse.access_token);
         this.refreshTokenOnExpiry(tokenResponse.expires_in);
-        const credentials = JSON.parse(this.storage.getItem(this.credentialsStorageKey));
+        const credentials = safeParse<Credentials>(this.storage.getItem(this.credentialsStorageKey), {} as any);
+        if (!credentials.username) {
+          console.error('Missing credentials after token refresh');
+          return;
+        }
         credentials.accessToken = tokenResponse.access_token;
         this.storage.setItem(this.credentialsStorageKey, JSON.stringify(credentials));
       });
@@ -242,8 +258,11 @@ export class AuthenticationService {
    * Logout ongoing Oauth2 session.
    */
   private logoutAuthSession() {
-    const oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey)).refresh_token;
-    const credentials = JSON.parse(this.storage.getItem(this.credentialsStorageKey));
+    const oAuthRefreshToken = safeParse<{ refresh_token?: string }>(
+      this.storage.getItem(this.oAuthTokenDetailsStorageKey),
+      {}
+    ).refresh_token;
+    const credentials = safeParse<Credentials>(this.storage.getItem(this.credentialsStorageKey), {} as any);
     this.authenticationInterceptor.removeAuthorizationTenant();
     let httpParams = new HttpParams();
     httpParams = httpParams.set('username', credentials.username);
@@ -261,12 +280,12 @@ export class AuthenticationService {
    * @returns {Observable<boolean>} True if the user was logged out successfully.
    */
   logout(): Observable<boolean> {
-    const twoFactorToken = JSON.parse(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey));
+    const twoFactorToken = safeParse<any>(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey), null);
     if (twoFactorToken) {
       this.http.post('/twofactor/invalidate', { token: twoFactorToken.token }).subscribe();
       this.authenticationInterceptor.removeTwoFactorAuthorization();
     }
-    const oAuthRefreshToken = JSON.parse(this.storage.getItem(this.oAuthTokenDetailsStorageKey));
+    const oAuthRefreshToken = safeParse<any>(this.storage.getItem(this.oAuthTokenDetailsStorageKey), null);
     if (oAuthRefreshToken) {
       this.logoutAuthSession();
     }
@@ -283,7 +302,10 @@ export class AuthenticationService {
    * @returns {boolean} True if the two factor access token is valid or two factor authentication is not required.
    */
   twoFactorAccessTokenIsValid(): boolean {
-    const twoFactorAccessToken = JSON.parse(this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey));
+    const twoFactorAccessToken = safeParse<any>(
+      this.storage.getItem(this.twoFactorAuthenticationTokenStorageKey),
+      null
+    );
     if (twoFactorAccessToken) {
       return new Date().getTime() < twoFactorAccessToken.validTo;
     }
@@ -296,8 +318,9 @@ export class AuthenticationService {
    */
   isAuthenticated(): boolean {
     return !!(
-      JSON.parse(
-        sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey)
+      safeParse<any>(
+        sessionStorage.getItem(this.credentialsStorageKey) || localStorage.getItem(this.credentialsStorageKey),
+        null
       ) && this.twoFactorAccessTokenIsValid()
     );
   }
@@ -307,7 +330,7 @@ export class AuthenticationService {
    * @returns {Credentials} The user credentials if the user is authenticated otherwise null.
    */
   getCredentials(): Credentials | null {
-    return JSON.parse(this.storage.getItem(this.credentialsStorageKey));
+    return safeParse<Credentials | null>(this.storage.getItem(this.credentialsStorageKey), null);
   }
 
   /**

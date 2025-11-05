@@ -202,9 +202,10 @@ export class LoanApprovalComponent {
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
-        if ((responseEle.statusCode = '200')) {
+        if (responseEle.statusCode === '200' || responseEle.statusCode === 200) {
           approvedAccounts++;
-          responseEle.body = JSON.parse(responseEle.body);
+          // If needed later, parse safely:
+          // const parsedBody = safeParseObject<any>(responseEle.body, {});
           if (selectedAccounts === approvedAccounts) {
             this.loanResource();
           }

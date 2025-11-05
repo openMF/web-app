@@ -18,6 +18,7 @@ import { NgFor, NgSwitch, NgIf, NgSwitchCase } from '@angular/common';
 import { MatStepperPrevious, MatStepperNext } from '@angular/material/stepper';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { safeParseObject } from 'app/core/utils/json';
 
 /**
  * Edit Business Rule Parameters.
@@ -72,7 +73,7 @@ export class EditBusinessRuleParametersComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.paramData) {
       this.ReportForm = new UntypedFormGroup({});
-      this.paramValue = JSON.parse(this.smsCampaign.paramValue);
+      this.paramValue = safeParseObject<any>(this.smsCampaign.paramValue, {});
       this.createRunReportForm();
       this.disableFormWhenValid();
       this.getResponseHeaders();
