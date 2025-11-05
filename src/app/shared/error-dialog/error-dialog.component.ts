@@ -28,12 +28,25 @@ export class ErrorDialogComponent {
   showAsCode = false;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
-   * @param {any} data Provides any data.
+   * @param {unknown} data Provides any data.
    */
   constructor(
     public dialogRef: MatDialogRef<ErrorDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string
+    @Inject(MAT_DIALOG_DATA) public data: unknown
   ) {
-    this.showAsCode = data.startsWith('<pre><code>');
+    // Guard for non-string data to avoid runtime error
+    this.showAsCode = typeof data === 'string' && data.startsWith('<pre><code>');
+  }
+
+  /**
+   * Get display data with proper type safety for template usage.
+   * @returns {string} Safe string representation of the data.
+   */
+  get displayData(): string {
+    if (typeof this.data === 'string') {
+      return this.data;
+    }
+    // Convert non-string data to string representation for display
+    return this.data != null ? JSON.stringify(this.data) : '';
   }
 }
