@@ -1,0 +1,218 @@
+// Container styling
+.container {
+  margin: 16px auto;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+
+  @media (width <= 768px) {
+    margin: 12px auto;
+    padding: 0 12px;
+  }
+
+  @media (width <= 480px) {
+    margin: 8px auto;
+    padding: 0 8px;
+  }
+}
+
+// Step content wrapper improvements
+mat-step .mat-step-content {
+  animation: fade-in 0.3s ease-in;
+}
+
+// Stepper styling improvements
+:host ::ng-deep {
+  .mat-stepper-vertical {
+    background: transparent;
+    padding: 0;
+  }
+
+  .mat-stepper-vertical-line::before {
+    border-left-width: 2px;
+    border-left-style: solid;
+    opacity: 0.3;
+  }
+
+  .mat-step-header {
+    padding: 10px 16px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    min-height: 48px;
+    border: 1px solid rgb(0 0 0 / 8%);
+  }
+
+  .mat-step-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mat-step-label {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+  }
+
+  .mat-step-content {
+    padding: 12px 16px 12px 56px;
+    margin-left: 12px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+
+    @media (width <= 768px) {
+      padding: 10px 12px;
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+  }
+
+  .mat-step-text-label {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  // Enhanced elevation for the stepper
+  .mat-elevation-z8 {
+    box-shadow:
+      0 8px 10px -5px rgb(0 0 0 / 8%),
+      0 16px 24px 2px rgb(0 0 0 / 6%),
+      0 6px 30px 5px rgb(0 0 0 / 4%);
+    border-radius: 8px;
+    padding: 12px;
+
+    @media (width <= 768px) {
+      padding: 10px;
+      border-radius: 6px;
+    }
+  }
+
+  // Form field spacing improvements
+  .mat-form-field {
+    margin-bottom: 16px;
+    font-size: 13px;
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0.5em;
+    }
+
+    .mat-form-field-infix {
+      padding: 0.25em 0;
+      border-top: 0.35em solid transparent;
+      font-size: 13px;
+    }
+
+    .mat-input-element {
+      font-size: 13px;
+      line-height: 1.3;
+      padding: 4px 8px;
+    }
+
+    .mat-form-field-label {
+      font-size: 10px;
+    }
+
+    .mat-select-value {
+      font-size: 13px;
+      padding: 4px 8px;
+    }
+
+    .mat-form-field-subscript-wrapper {
+      font-size: 11px;
+      margin-top: 0.25em;
+    }
+
+    .mat-form-field-outline {
+      padding: 0;
+    }
+
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-gap,
+    .mat-form-field-outline-end {
+      min-height: 36px;
+    }
+  }
+
+  // Button spacing
+  [mat-raised-button] {
+    margin: 4px 2px;
+    padding: 6px 16px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    min-height: 36px;
+    font-size: 13px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@media (width <= 768px) {
+  :host ::ng-deep {
+    .mat-stepper-vertical {
+      .mat-step-header {
+        padding: 8px 12px;
+        min-height: 44px;
+        margin-bottom: 3px;
+      }
+
+      .mat-step-icon {
+        width: 28px;
+        height: 28px;
+        margin-right: 10px;
+      }
+
+      .mat-step-label {
+        font-size: 13px;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+@media (width <= 480px) {
+  :host ::ng-deep {
+    .mat-stepper-vertical {
+      .mat-step-header {
+        padding: 6px 10px;
+        min-height: 40px;
+        margin-bottom: 2px;
+      }
+
+      .mat-step-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
+      }
+
+      .mat-step-label {
+        font-size: 12px;
+        font-weight: 600;
+      }
+    }
+  }
+}
