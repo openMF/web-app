@@ -5,6 +5,7 @@
 }
 
 // Card styling
+// Card styling
 .transfer-card {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
@@ -22,6 +23,8 @@
   font-weight: 600;
   color: #333;
   margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgb(0 0 0 / 12%);
   padding-bottom: 0.5rem;
   border-bottom: 1px solid rgb(0 0 0 / 12%);
 
@@ -46,6 +49,7 @@
   align-items: center;
   padding: 0.5rem;
   background-color: rgb(0 0 0 / 2%);
+  border-radius: 4px;
   border-radius: 4px;
 
   &:hover {
@@ -75,6 +79,7 @@ mat-divider {
 }
 
 // Form styling - SOLO MEJORAS DE ESTRUCTURA
+// Form styling - SOLO MEJORAS DE ESTRUCTURA
 .transfer-form {
   margin-top: 1rem;
 }
@@ -95,8 +100,27 @@ mat-divider {
   display: contents; /* Permite que los campos se organicen en grid */
 }
 
+// MEJORAS PARA ORGANIZAR MEJOR LOS CAMPOS
+.form-row {
+  display: contents; /* Permite que los campos se organicen en grid */
+}
+
 .form-field {
   width: 100%;
+  margin-bottom: 0.5rem;
+
+  // Campos en la misma fila se alinean mejor
+  &:nth-child(odd) {
+    @media (width >= 768px) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &:nth-child(even) {
+    @media (width >= 768px) {
+      margin-left: 0.5rem;
+    }
+  }
   margin-bottom: 0.5rem;
 
   // Campos en la misma fila se alinean mejor
@@ -126,14 +150,28 @@ mat-divider {
 // Mejor alineación de campos en el formulario
 ::ng-deep .mat-form-field {
   width: 100%;
+    
+    // Mejorar el textarea de descripción
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+  }
+}
+
+// Mejor alineación de campos en el formulario
+::ng-deep .mat-form-field {
+  width: 100%;
 }
 
 // Button styling
 .action-buttons {
   display: flex;
   justify-content: flex-end;
+  justify-content: flex-end;
   gap: 1rem;
   padding: 1rem 1.5rem;
+  margin-top: 1rem;
   margin-top: 1rem;
 
   @media (width <= 576px) {
@@ -212,9 +250,11 @@ mat-divider {
 .dark-theme {
   .info-label {
     color: rgb(255 255 255 / 70%);
+    color: rgb(255 255 255 / 70%);
   }
 
   .info-value {
+    color: rgb(255 255 255 / 87%);
     color: rgb(255 255 255 / 87%);
   }
 
