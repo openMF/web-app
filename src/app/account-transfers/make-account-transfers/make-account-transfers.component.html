@@ -5,6 +5,7 @@
     <div class="left triangle"></div>
     <div class="right triangle"></div>
   </div>
+
   <mat-card *ngIf="!isLoading" class="transfer-card">
     <mat-card-content>
       <!-- Source Account Details Section -->
@@ -53,7 +54,7 @@
             <mat-label>{{ 'labels.inputs.Phone Number' | translate }}</mat-label>
             <input
               matInput
-              [disabled]="interbankTransferForm"
+              [readonly]="interbankTransferForm"
               type="tel"
               #input
               [(ngModel)]="phoneAccount"
@@ -66,28 +67,27 @@
           </mat-form-field>
         </div>
 
+        <!--interbank -->
         <mat-card-actions *ngIf="!interbankTransferForm" class="action-buttons">
-          <button type="button" mat-raised-button [routerLink]="['../..']" class="cancel-button">
-            {{ 'labels.buttons.Cancel' | translate }}
-          </button>
-          <button
-            mat-raised-button
-            color="primary"
-            [disabled]="phoneAccount.length !== 10"
-            (click)="searchAccountByNumber()"
-            *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'"
-            id="search-button"
-            class="primary-button"
-          >
-            {{ 'labels.buttons.Search' | translate }}
-          </button>
+          <ng-container *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'">
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="phoneAccount.length !== 10"
+              (click)="searchAccountByNumber()"
+              id="search-button"
+              class="primary-button"
+            >
+              {{ 'labels.buttons.Search' | translate }}
+            </button>
+          </ng-container>
         </mat-card-actions>
       </div>
 
       <mat-divider *ngIf="!interbank"></mat-divider>
 
-      <!-- Transfer Form Section -->
-      <form *ngIf="!interbank" [formGroup]="makeAccountTransferForm" class="transfer-form" (ngSubmit)="submit()">
+      <!-- Transfer Form Section (Normal) -->
+      <form *ngIf="!interbank && makeAccountTransferForm" [formGroup]="makeAccountTransferForm" class="transfer-form">
         <h3 class="section-title transfer-heading">{{ 'labels.heading.Transfer Details' | translate }}</h3>
 
         <div class="form-grid">
@@ -180,6 +180,8 @@
               formControlName="transferAmount"
               placeholder="Enter amount"
               title="Transfer amount"
+              min="0.01"
+              step="0.01"
             />
             <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
               {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
@@ -207,20 +209,135 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <mat-card-actions class="layout-row layout-xs-column layout-align-center gap-5px">
-          <button type="button" mat-raised-button [routerLink]="['../../transactions']">
-            {{ 'labels.buttons.Cancel' | translate }}
-          </button>
-          <button mat-raised-button color="primary" [disabled]="!makeAccountTransferForm.valid">
-            {{ 'labels.buttons.Submit' | translate }}
-          </button>
-        </mat-card-actions>
       </form>
-      <mifosx-make-account-interbank-transfers
-        *ngIf="interbank && interbankTransferForm"
-        [makeAccountTransferForm]="makeAccountTransferForm"
-        [balance]="balance"
-      ></mifosx-make-account-interbank-transfers>
+
+      <!-- Interbank Transfer Form Section -->
+      <form
+        *ngIf="interbank && interbankTransferForm && makeAccountTransferForm"
+        [formGroup]="makeAccountTransferForm"
+        class="transfer-form"
+      >
+        <h3 class="section-title transfer-heading">{{ 'labels.heading.Transfer Details' | translate }}</h3>
+
+        <div class="form-grid">
+          <mat-form-field class="form-field" (click)="transferDatePicker.open()">
+            <mat-label>{{ 'labels.inputs.Transaction Date' | translate }}</mat-label>
+            <input
+              matInput
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="transferDatePicker"
+              required
+              formControlName="transferDate"
+              placeholder="Select date"
+              title="Transaction Date"
+            />
+            <mat-datepicker-toggle matSuffix [for]="transferDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #transferDatePicker></mat-datepicker>
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferDate.hasError('required')">
+              {{ 'labels.inputs.Transaction Date' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+            <mat-label>{{ 'labels.inputs.Bank' | translate }}</mat-label>
+            <input matInput formControlName="toBank" [readonly]="true" placeholder="Bank" title="Bank" />
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+            <mat-label>{{ 'labels.inputs.Client' | translate }}</mat-label>
+            <input matInput formControlName="toClientId" [readonly]="true" placeholder="Client" title="Client" />
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+            <mat-label>{{ 'labels.inputs.Account Type' | translate }}</mat-label>
+            <input
+              matInput
+              formControlName="toAccountType"
+              [readonly]="true"
+              placeholder="Account Type"
+              title="Account Type"
+            />
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+            <mat-label>{{ 'labels.inputs.Account' | translate }}</mat-label>
+            <input matInput formControlName="toAccountId" [readonly]="true" placeholder="Account" title="Account" />
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+            <mat-label>{{ 'labels.inputs.Amount' | translate }}</mat-label>
+            <input
+              type="number"
+              matInput
+              required
+              formControlName="transferAmount"
+              placeholder="Enter amount"
+              title="Transfer amount"
+              min="0.01"
+              step="0.01"
+            />
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('required')">
+              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferAmount.hasError('min')">
+              {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.mustBeAtLeast' | translate }} 0.01
+            </mat-error>
+            <mat-error *ngIf="makeAccountTransferForm.get('transferAmount')?.hasError('amountExceedsBalance')">
+              <fa-icon icon="exclamation-triangle" size="md"></fa-icon>
+              {{ 'errors.validation.msg.savingsproduct.insufficient.balance' | translate: { balance } }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field description-field">
+            <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
+            <textarea
+              matInput
+              formControlName="transferDescription"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2"
+              placeholder="Enter transfer description"
+              title="Transfer description"
+            ></textarea>
+            <mat-error *ngIf="makeAccountTransferForm.controls.transferDescription.hasError('required')">
+              {{ 'labels.inputs.Transfer Description' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </form>
     </mat-card-content>
+
+    <mat-card-actions *ngIf="!isLoading && makeAccountTransferForm" class="action-buttons">
+      <button type="button" mat-raised-button [routerLink]="['../..']" class="cancel-button">
+        {{ 'labels.buttons.Cancel' | translate }}
+      </button>
+
+      <ng-container *mifosxHasPermission="'CREATE_ACCOUNTTRANSFER'">
+        <button
+          *ngIf="interbank && interbankTransferForm"
+          mat-raised-button
+          color="primary"
+          [disabled]="!makeAccountTransferForm.valid"
+          (click)="submit()"
+          class="primary-button"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
+
+        <button
+          *ngIf="!interbank"
+          mat-raised-button
+          color="primary"
+          [disabled]="!makeAccountTransferForm.valid"
+          (click)="submit()"
+          class="primary-button"
+        >
+          {{ 'labels.buttons.Submit' | translate }}
+        </button>
+      </ng-container>
+    </mat-card-actions>
   </mat-card>
 </div>
