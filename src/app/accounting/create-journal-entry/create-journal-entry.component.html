@@ -49,7 +49,7 @@
               >
               </mifosx-gl-account-selector>
 
-              <mat-form-field class="flex-43">
+              <mat-form-field class="flex-24">
                 <mat-label>{{ 'labels.inputs.Debit Amount' | translate }}</mat-label>
                 <input type="number" matInput required formControlName="amount" />
                 <mat-error *ngIf="debits.at(i).controls.amount.hasError('required')">
@@ -58,7 +58,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <span class="flex-fill">
+              <span class="flex-24">
                 <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(debits, i)">
                   <fa-icon icon="minus-circle" size="lg"></fa-icon>
                 </button>
@@ -90,7 +90,7 @@
               >
               </mifosx-gl-account-selector>
 
-              <mat-form-field class="flex-43">
+              <mat-form-field class="flex-24">
                 <mat-label>{{ 'labels.inputs.Credit Amount' | translate }}</mat-label>
                 <input type="number" matInput required formControlName="amount" />
                 <mat-error *ngIf="credits.at(i).controls.amount.hasError('required')">
@@ -99,7 +99,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <span class="flex-fill">
+              <span class="flex-24">
                 <button *ngIf="i !== 0" type="button" mat-icon-button (click)="removeAffectedGLEntry(credits, i)">
                   <fa-icon icon="minus-circle" size="lg"></fa-icon>
                 </button>
