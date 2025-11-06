@@ -4,11 +4,7 @@
   padding: 1rem;
 }
 
-#search-button {
-  background-color: #1074b9;
-  color: white;
-}
-
+// Card styling
 .transfer-card {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgb(0 0 0 / 8%);
@@ -26,7 +22,8 @@
   font-weight: 600;
   color: #333;
   margin: 0 0 1rem;
-  padding-bottom: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgb(0 0 0 / 12%);
 
   &.transfer-heading {
     font-weight: 700;
@@ -49,9 +46,7 @@
   align-items: center;
   padding: 0.5rem;
   background-color: rgb(0 0 0 / 2%);
-  box-shadow: 0 0.5px 1px rgb(0 0 0 / 10%);
-  border: 1px solid var(--border-color, #ddd);
-  border-radius: 8px;
+  border-radius: 4px;
 
   &:hover {
     background-color: rgb(0 0 0 / 4%);
@@ -79,7 +74,7 @@ mat-divider {
   margin-bottom: 1rem;
 }
 
-// Form styling
+// Form styling - SOLO MEJORAS DE ESTRUCTURA
 .transfer-form {
   margin-top: 1rem;
 }
@@ -90,29 +85,59 @@ mat-divider {
   gap: 1rem;
 
   @media (width >= 768px) {
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: repeat(2, 1fr); /* stylelint-disable-line unit-allowed-list */
+    gap: 1.5rem;
   }
+}
+
+// MEJORAS PARA ORGANIZAR MEJOR LOS CAMPOS
+.form-row {
+  display: contents; /* Permite que los campos se organicen en grid */
 }
 
 .form-field {
   width: 100%;
+  margin-bottom: 0.5rem;
+
+  // Campos en la misma fila se alinean mejor
+  &:nth-child(odd) {
+    @media (width >= 768px) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &:nth-child(even) {
+    @media (width >= 768px) {
+      margin-left: 0.5rem;
+    }
+  }
 
   &.description-field {
     grid-column: 1 / -1;
+    
+    // Mejorar el textarea de descripción
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
   }
+}
+
+// Mejor alineación de campos en el formulario
+::ng-deep .mat-form-field {
+  width: 100%;
 }
 
 // Button styling
 .action-buttons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 1rem;
   padding: 1rem 1.5rem;
-  margin-top: 0;
+  margin-top: 1rem;
 
   @media (width <= 576px) {
     flex-direction: column;
-    align-items: center;
   }
 
   button {
@@ -120,7 +145,6 @@ mat-divider {
 
     @media (width <= 576px) {
       width: 100%;
-      max-width: 300px;
       margin-bottom: 0.5rem;
     }
   }
@@ -186,16 +210,12 @@ mat-divider {
 // Dark theme
 // Lower specificity selectors first
 .dark-theme {
-  .info-row {
-    color: #fff !important;
-  }
-
   .info-label {
-    color: rgb(255 255 255 / 70%) !important;
+    color: rgb(255 255 255 / 70%);
   }
 
   .info-value {
-    color: rgb(255 255 255 / 87%) !important;
+    color: rgb(255 255 255 / 87%);
   }
 
   .section-title {
@@ -233,18 +253,6 @@ mat-divider {
 }
 
 // Higher specificity selectors
-:host-context(.dark-theme) .info-row {
-  color: #fff !important;
-}
-
-:host-context(.dark-theme) .info-label {
-  color: rgb(255 255 255 / 70%) !important;
-}
-
-:host-context(.dark-theme) .info-value {
-  color: rgb(255 255 255 / 87%) !important;
-}
-
 :host-context(.dark-theme) .transfer-heading {
   color: #fff;
   font-weight: 700;
@@ -266,18 +274,6 @@ mat-divider {
 // Medium specificity selectors
 body.dark-theme {
   .container {
-    .info-row {
-      color: #fff !important;
-    }
-
-    .info-label {
-      color: rgb(255 255 255 / 70%) !important;
-    }
-
-    .info-value {
-      color: rgb(255 255 255 / 87%) !important;
-    }
-
     .section-title {
       color: #fff;
     }
@@ -319,4 +315,26 @@ body.dark-theme {
 
 ::ng-deep mat-form-field.error-warn.mat-form-field-invalid .mat-error {
   color: #0009 !important;
+}
+
+// MEJORAS ADICIONALES PARA MEJOR ORGANIZACIÓN
+// Asegurar que los campos tengan el mismo tamaño
+::ng-deep .mat-form-field-flex {
+  align-items: center;
+}
+
+// Mejor espaciado entre campos
+.transfer-form .form-field {
+  margin-bottom: 1rem;
+}
+
+// Campos readonly con estilo consistente - CORREGIDO
+.readonly-field {
+  background-color: rgb(0 0 0 / 2%);
+  cursor: not-allowed;
+}
+
+// Mejorar la legibilidad de los campos
+::ng-deep .mat-input-element {
+  font-size: 14px;
 }
