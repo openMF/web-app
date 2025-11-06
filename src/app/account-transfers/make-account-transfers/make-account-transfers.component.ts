@@ -1,14 +1,12 @@
 /** Angular Imports */
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   AbstractControl,
-  FormGroup,
   UntypedFormBuilder,
   UntypedFormGroup,
   ValidationErrors,
   Validators,
-  ReactiveFormsModule,
   FormsModule
 } from '@angular/forms';
 
@@ -21,11 +19,10 @@ import { Dates } from 'app/core/utils/dates';
 /** Environment Configuration */
 import { environment } from '../../../environments/environment';
 import { MatDivider } from '@angular/material/divider';
-import { MatFormField, MatLabel, MatHint, MatSuffix, MatError } from '@angular/material/form-field';
-import { MatOption, MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { MatFormField, MatLabel, MatHint, MatError } from '@angular/material/form-field';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { MakeAccountInterbankTransfersComponent } from '../make-account-interbank-transfers/make-account-interbank-transfers.component';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -43,8 +40,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatAutocompleteTrigger,
     MatAutocomplete,
     FaIconComponent,
-    CdkTextareaAutosize,
-    MakeAccountInterbankTransfersComponent
+    CdkTextareaAutosize
   ]
 })
 export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
@@ -56,7 +52,6 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   maxDate = new Date(2100, 0, 1);
   /** Edit Standing Instructions form. */
   makeAccountTransferForm: UntypedFormGroup;
-  //makeAccountInterbankTransferForm: FormGroup;
   /** To Office Type Data */
   toOfficeTypeData: any;
   /** To Client Type Data */
@@ -77,6 +72,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
   interbank: boolean = false;
   /** Reference of phoneAccount search */
   phoneAccount = '';
+  /** Interbank transfer form flag */
   interbankTransferForm: boolean = false;
   balance: number = 0;
   isLoading: boolean = false;
@@ -106,6 +102,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       this.setOptions();
     });
   }
+
   /** Sets the value from the URL */
   setParams() {
     this.accountType = this.route.snapshot.queryParams['accountType'];
@@ -119,7 +116,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         this.accountTypeId = '2';
         this.id = this.route.snapshot.queryParams['savingsId'];
         this.interbank = this.route.snapshot.queryParams['interbank'] === 'true';
-        this.balance = this.router.getCurrentNavigation().extras.state.balance;
+        this.balance = this.router.getCurrentNavigation()?.extras?.state?.balance || 0;
         break;
       default:
         this.accountTypeId = '0';
@@ -133,7 +130,31 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     this.maxDate = this.settingsService.businessDate;
     if (!this.interbank) {
       this.createMakeAccountTransferForm();
+    } else {
+      this.createEmptyInterbankForm();
     }
+  }
+
+  /**
+   * Crea un formulario vacío para interbank mientras se carga
+   */
+  createEmptyInterbankForm() {
+    this.makeAccountTransferForm = this.formBuilder.group({
+      toBank: ['', Validators.required],
+      toClientId: ['', Validators.required],
+      toAccountType: ['', Validators.required],
+      toAccountId: ['', Validators.required],
+      transferAmount: [
+        0,
+        [
+          Validators.required,
+          Validators.min(0.01),
+          this.amountExceedsBalanceValidator.bind(this)
+        ]
+      ],
+      transferDate: [this.settingsService.businessDate, Validators.required],
+      transferDescription: ['', Validators.required]
+    });
   }
 
   /**
@@ -141,74 +162,56 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    */
   createMakeAccountTransferForm() {
     this.makeAccountTransferForm = this.formBuilder.group({
-      toOfficeId: [
-        '',
-        Validators.required
-      ],
-      toClientId: [
-        '',
-        Validators.required
-      ],
-      toAccountType: [
-        '',
-        Validators.required
-      ],
-      toAccountId: [
-        '',
-        Validators.required
-      ],
+      toOfficeId: ['', Validators.required],
+      toClientId: ['', Validators.required],
+      toAccountType: ['', Validators.required],
+      toAccountId: ['', Validators.required],
       transferAmount: [
         this.accountTransferTemplateData.transferAmount,
         [
           Validators.required,
           Validators.min(0.01),
-          this.amountExceedsBalanceValidator.bind(this)]
+          this.amountExceedsBalanceValidator.bind(this)
+        ]
       ],
-      transferDate: [
-        this.settingsService.businessDate,
-        Validators.required
-      ],
-      transferDescription: [
-        '',
-        Validators.required
-      ]
+      transferDate: [this.settingsService.businessDate, Validators.required],
+      transferDescription: ['', Validators.required]
     });
   }
 
   createMakeAccountInterbankTransferForm(account: any) {
-    /* --> */ this.makeAccountTransferForm = this.formBuilder.group({
-      toBank: [
-        { value: account.sourceFspId, disabled: true },
-        Validators.required
-      ],
-      toClientId: [
-        { value: account.firsName + ' ' + account.lastName, disabled: true },
-        Validators.required
-      ],
-      toAccountType: [
-        { value: 'Saving Account', disabled: true },
-        Validators.required
-      ],
-      toAccountId: [
-        { value: account.partyId, disabled: true },
-        Validators.required
-      ],
+    if (!account) {
+      console.error('Account data is undefined');
+      this.isLoading = false;
+      return;
+    }
+
+    console.log('Creating interbank form with account:', account);
+
+    const defaultAmount = this.accountTransferTemplateData?.transferAmount > 0 
+      ? this.accountTransferTemplateData.transferAmount 
+      : 1;
+
+    this.makeAccountTransferForm = this.formBuilder.group({
+      toBank: [account.destinationFspId || '', Validators.required],
+      toClientId: [(account.firstName || account.firsName || '') + ' ' + (account.lastName || ''), Validators.required],
+      toAccountType: ['Saving Account', Validators.required],
+      toAccountId: [account.partyId || '', Validators.required],
       transferAmount: [
-        this.accountTransferTemplateData.transferAmount,
+        defaultAmount,
         [
           Validators.required,
           Validators.min(0.01),
-          this.amountExceedsBalanceValidator.bind(this)]
+          this.amountExceedsBalanceValidator.bind(this)
+        ]
       ],
-      transferDate: [
-        this.settingsService.businessDate,
-        Validators.required
-      ],
-      transferDescription: [
-        '',
-        Validators.required
-      ]
+      transferDate: [this.settingsService.businessDate, Validators.required],
+      transferDescription: ['Transferencia interbancaria', Validators.required] // Valor por defecto
     });
+
+    console.log('Form created with values:', this.makeAccountTransferForm.value);
+    console.log('Form valid:', this.makeAccountTransferForm.valid);
+    
     this.isLoading = false;
   }
 
@@ -243,7 +246,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     delete dataObj.transferAmount;
     delete dataObj.transferDate;
     delete dataObj.transferDescription;
-    if (dataObj.toClientId) {
+    if (dataObj.toClientId && typeof dataObj.toClientId === 'object') {
       dataObj.toClientId = dataObj.toClientId.id;
     }
     const propNames = Object.getOwnPropertyNames(dataObj);
@@ -260,9 +263,9 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
    * Subscribes to Clients search filter:
    */
   ngAfterViewInit() {
-    if (!this.interbank) {
-      this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: string) => {
-        if (value.length >= 2) {
+    if (!this.interbank && this.makeAccountTransferForm) {
+      this.makeAccountTransferForm.controls.toClientId.valueChanges.subscribe((value: any) => {
+        if (typeof value === 'string' && value.length >= 2) {
           this.clientsService.getFilteredClients('displayName', 'ASC', true, value).subscribe((data: any) => {
             this.clientsData = data.pageItems;
           });
@@ -292,17 +295,26 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     const dateFormat = this.settingsService.dateFormat;
     const locale = this.settingsService.language.code;
+    
+    let toClientIdValue: any;
+    if (typeof this.makeAccountTransferForm.controls.toClientId.value === 'object') {
+      toClientIdValue = this.makeAccountTransferForm.controls.toClientId.value.id;
+    } else {
+      toClientIdValue = this.makeAccountTransferForm.controls.toClientId.value;
+    }
+
     const makeAccountTransferData = {
       ...this.makeAccountTransferForm.value,
       transferDate: this.dateUtils.formatDate(this.makeAccountTransferForm.value.transferDate, dateFormat),
       dateFormat,
       locale,
-      toClientId: this.makeAccountTransferForm.controls.toClientId.value.id,
+      toClientId: toClientIdValue,
       fromAccountId: this.id,
       fromAccountType: this.accountTypeId,
       fromClientId: this.accountTransferTemplateData.fromClient.id,
       fromOfficeId: this.accountTransferTemplateData.fromClient.officeId
     };
+    
     this.accountTransfersService.createAccountTransfer(makeAccountTransferData).subscribe(() => {
       this.isLoading = false;
       this.router.navigate(['../../transactions'], { relativeTo: this.route });
@@ -311,12 +323,19 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
 
   makeInterbankTransfer() {
     this.isLoading = true;
+    
+    if (!this.makeAccountTransferForm.valid) {
+      console.error('Formulario interbancario no es válido');
+      this.isLoading = false;
+      return;
+    }
+
     const payload = {
       homeTransactionId: crypto.randomUUID(),
       from: {
         fspId: environment.fineractPlatformTenantId,
         idType: 'MSISDN',
-        idValue: this.accountTransferTemplateData.fromAccount.externalId.trim()
+        idValue: this.accountTransferTemplateData.fromAccount.externalId?.trim() || ''
       },
       to: {
         fspId: this.makeAccountTransferForm.controls.toBank.value,
@@ -336,6 +355,7 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
       },
       note: this.makeAccountTransferForm.controls.transferDescription.value
     };
+    
     this.accountTransfersService.sendInterbankTransfer(JSON.stringify(payload)).subscribe(
       (trnsfr) => {
         if (trnsfr.systemMessage) {
@@ -344,21 +364,28 @@ export class MakeAccountTransfersComponent implements OnInit, AfterViewInit {
         }
       },
       (error) => {
+        console.error('Error en transferencia interbancaria:', error);
         this.isLoading = false;
       }
     );
   }
 
   searchAccountByNumber() {
+    if (!this.phoneAccount || this.phoneAccount.length !== 10) {
+      return;
+    }
+
     this.isLoading = true;
     this.accountTransfersService
       .getAccountByNumber(this.phoneAccount, this.accountTransferTemplateData.currency.code)
       .subscribe(
         (acc) => {
+          console.log('Account data received:', acc);
           this.interbankTransferForm = true;
           this.createMakeAccountInterbankTransferForm(acc);
         },
         (error) => {
+          console.error('Error searching account:', error);
           this.isLoading = false;
         }
       );
