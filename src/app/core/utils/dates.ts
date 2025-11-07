@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
+import { safeParse } from 'app/core/utils/json';
 
 @Injectable({
   providedIn: 'root'
@@ -41,10 +42,10 @@ export class Dates {
   }
 
   get language() {
-    if (!localStorage.getItem('mifosXLanguage')) {
-      return 'en';
-    }
-    return JSON.parse(localStorage.getItem('mifosXLanguage'));
+    return safeParse<{ name: string; code: string }>(localStorage.getItem('mifosXLanguage'), {
+      name: 'English',
+      code: 'en'
+    });
   }
 
   calculateDiff(date1: Date, date2: Date) {

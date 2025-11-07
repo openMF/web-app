@@ -7,6 +7,7 @@ import { each } from 'lodash';
 
 /** Custom Services */
 import { Logger } from '../logger/logger.service';
+import { safeParseObject } from 'app/core/utils/json';
 
 /** Initialize Logger */
 const log = new Logger('HttpCacheService');
@@ -120,6 +121,6 @@ export class HttpCacheService {
 
   private loadCacheData() {
     const data = this.storage ? this.storage[this.cachePersistenceStorageKey] : null;
-    this.cachedData = data ? JSON.parse(data) : {};
+    this.cachedData = safeParseObject<{ [key: string]: HttpCacheEntry }>(data, {});
   }
 }

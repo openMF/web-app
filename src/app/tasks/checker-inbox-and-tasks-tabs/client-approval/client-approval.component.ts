@@ -174,7 +174,6 @@ export class ClientApprovalComponent {
       response.forEach((responseEle: any) => {
         if (responseEle.statusCode === '200') {
           activatedAccounts++;
-          responseEle.body = JSON.parse(responseEle.body);
           if (selectedAccounts === activatedAccounts) {
             this.reload();
           }

@@ -156,7 +156,6 @@ export class LoanDisbursalComponent {
       response.forEach((responseEle: any) => {
         if (responseEle.statusCode === '200') {
           approvedAccounts++;
-          responseEle.body = JSON.parse(responseEle.body);
           if (selectedAccounts === approvedAccounts) {
             this.loanResource();
           }
