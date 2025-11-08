@@ -33,7 +33,7 @@ export class AuthService {
   async login() {
     const codeVerifier = this.generateRandomString();
     const codeChallenge = await this.generateCodeChallenge(codeVerifier);
-    localStorage.setItem('code_verifier', codeVerifier);
+    sessionStorage.setItem('code_verifier', codeVerifier);
     const url =
       `${this.authUrl}` +
       `?client_id=${encodeURIComponent(this.clientId)}` +
@@ -105,56 +105,51 @@ export class AuthService {
     return base64;
   }
 
-  exchangeCodeForTokens(code: string, codeVerifier: string | null) {
+  async exchangeCodeForTokens(code: string, codeVerifier: string | null): Promise<void> {
     const payload = {
       code: code,
       code_verifier: codeVerifier || ''
     };
 
-    fetch(this.api + 'authentication/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Error exchanging code: ${res.status} ${res.statusText}`);
-        }
-        return res.json();
-      })
-      .then(
-        (tokens: {
-          access_token: string;
-          id_token: string;
-          refresh_token: string;
-          expires_in: number;
-          token_type: string;
-        }) => {
-          const token: OAuth2Token = {
-            access_token: tokens.access_token,
-            token_type: tokens.token_type,
-            refresh_token: tokens.refresh_token,
-            expires_in: tokens.expires_in,
-            scope: 'Bearer'
-          };
-
-          localStorage.setItem('id_token', tokens.id_token);
-          localStorage.setItem('mifosXZitadel', 'true');
-          sessionStorage.setItem('mifosXZitadelTokenDetails', JSON.stringify(token));
-          localStorage.setItem('refresh_token', tokens.refresh_token);
-          this.scheduleRefresh(tokens.expires_in);
-          localStorage.removeItem('auth_code');
-          localStorage.removeItem('code_verifier');
-          this.userdetails();
-        }
-      )
-      .catch((error) => {
-        localStorage.removeItem('auth_code');
-        localStorage.removeItem('code_verifier');
-        window.location.href = '/#/login';
+    try {
+      const response = await fetch(this.api + 'authentication/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
       });
+
+      if (!response.ok) {
+        throw new Error(`Error exchanging code: ${response.status} ${response.statusText}`);
+      }
+
+      const tokens: {
+        access_token: string;
+        id_token: string;
+        refresh_token: string;
+        expires_in: number;
+        token_type: string;
+      } = await response.json();
+
+      const token: OAuth2Token = {
+        access_token: tokens.access_token,
+        token_type: tokens.token_type,
+        refresh_token: tokens.refresh_token,
+        expires_in: tokens.expires_in,
+        scope: 'Bearer'
+      };
+
+      sessionStorage.setItem('mifosXZitadelTokenDetails', JSON.stringify(token));
+      localStorage.setItem('id_token', tokens.id_token);
+      localStorage.setItem('refresh_token', tokens.refresh_token);
+      localStorage.setItem('mifosXZitadel', 'true');
+      this.scheduleRefresh(tokens.expires_in);
+      await this.userdetails();
+    } catch (error) {
+      window.location.href = '/#/login';
+      throw error;
+    }
   }
 
   userdetails() {
