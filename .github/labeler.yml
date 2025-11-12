@@ -1,0 +1,235 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements. See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership. The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License. You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+
+# Angular Components & Templates
+component:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/**/*.component.ts'
+          - 'src/app/**/*.component.html'
+          - 'src/app/**/*.component.scss'
+
+# Services
+service:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/**/*.service.ts'
+
+# Modules & Routing
+module:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/**/*.module.ts'
+          - 'src/app/**/*-routing.module.ts'
+
+# Core & Shared
+core:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/core/**/*'
+
+shared:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/shared/**/*'
+
+# Feature Modules
+accounting:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/accounting/**/*'
+
+clients:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/clients/**/*'
+
+loans:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/loans/**/*'
+
+savings:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/savings/**/*'
+
+products:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/products/**/*'
+
+organization:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/organization/**/*'
+
+system:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/system/**/*'
+
+users:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/users/**/*'
+
+reports:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/app/reports/**/*'
+
+# Styles & Assets
+styles:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/**/*.scss'
+          - 'src/**/*.css'
+          - 'src/styles/**/*'
+          - 'tailwind.config.js'
+
+assets:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/assets/**/*'
+
+# Testing
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.spec.ts'
+          - 'src/**/*.spec.ts'
+          - 'jest.config.ts'
+
+e2e:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'e2e/**/*'
+          - 'cypress/**/*'
+          - 'cypress.config.ts'
+
+# Configuration
+config:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'angular.json'
+          - 'tsconfig*.json'
+          - '*.config.js'
+          - '*.config.ts'
+          - 'proxy.conf.js'
+          - 'ngsw-config.json'
+
+# Build & Dependencies
+build:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'package-lock.json'
+
+# Docker
+docker:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'Dockerfile'
+          - 'docker-compose.yml'
+          - '.dockerignore'
+
+# Linting & Formatting
+linting:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'eslint.config.js'
+          - '.eslintrc*'
+          - '.prettierrc'
+          - '.prettierignore'
+          - '.stylelintrc'
+          - '.htmlhintrc'
+          - '.editorconfig'
+
+# CI/CD
+ci-cd:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**/*'
+          - '.github/**/*'
+
+# Documentation
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - 'docs/**/*'
+          - 'CONTRIBUTING.md'
+
+# Environment
+environment:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'env.sample'
+          - '**/environment*.ts'
+
+# Guards & Interceptors
+guards:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.guard.ts'
+
+interceptors:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.interceptor.ts'
+
+# Pipes & Directives
+pipes:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.pipe.ts'
+
+directives:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.directive.ts'
+
+# Models & Interfaces
+models:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.model.ts'
+          - '**/*.interface.ts'
+
+# Translations
+i18n:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/i18n/**/*'
+          - '**/translations/**/*'
+          - '**/locale/**/*'
+
+# PWA
+pwa:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'ngsw-config.json'
+          - '**/manifest.json'
+          - '**/service-worker*'
+
+# Husky & Git Hooks
+git-hooks:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.husky/**/*'
