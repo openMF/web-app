@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { RolesService } from '@fineract/client';
 
 /**
  * Roles and Permission data resolver.
@@ -14,9 +14,9 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class ViewRoleResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {RolesService} rolesService Roles service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private rolesService: RolesService) {}
 
   /**
    * Returns the roles and permissions data.
@@ -24,6 +24,6 @@ export class ViewRoleResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const id = route.paramMap.get('id');
-    return this.systemService.getRole(id);
+    return this.rolesService.retrieveRole({ roleId: Number(id) });
   }
 }

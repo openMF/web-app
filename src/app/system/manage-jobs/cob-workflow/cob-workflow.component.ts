@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { SystemService } from 'app/system/system.service';
+import { LoanCOBCatchUpService } from '@fineract/client';
 import { environment } from '../../../../environments/environment';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LoanLockedComponent } from './loan-locked/loan-locked.component';
@@ -23,7 +23,7 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   /** Timer to refetch COB Catch-Up status every 5 seconds */
   timer: any;
 
-  constructor(private systemService: SystemService) {}
+  constructor(private loanCOBCatchUpService: LoanCOBCatchUpService) {}
 
   ngOnInit(): void {
     this.getCOBCatchUpStatus();
@@ -34,7 +34,7 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   }
 
   getCOBCatchUpStatus(): void {
-    this.systemService.getCOBCatchUpStatus().subscribe((response: any) => {
+    this.loanCOBCatchUpService.isCatchUpRunning().subscribe((response: any) => {
       this.isCatchUpRunning = response.isCatchUpRunning;
     });
     this.timer = setTimeout(() => {
@@ -43,7 +43,7 @@ export class CobWorkflowComponent implements OnInit, OnDestroy {
   }
 
   runCatchUp(): void {
-    this.systemService.runCOBCatchUp().subscribe((response: any) => {
+    this.loanCOBCatchUpService.executeLoanCOBCatchUp().subscribe((response: any) => {
       this.isCatchUpRunning = true;
       this.waitTime = 5000;
     });

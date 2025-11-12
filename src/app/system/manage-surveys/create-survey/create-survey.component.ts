@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { SpmSurveysService } from '@fineract/client';
 
 /** Custom Components */
 import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dialog.component';
@@ -47,14 +47,14 @@ export class CreateSurveyComponent implements OnInit {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {SpmSurveysService} spmSurveysService Spm Surveys Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private spmSurveysService: SpmSurveysService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog
@@ -242,7 +242,7 @@ export class CreateSurveyComponent implements OnInit {
     this.surveyForm.patchValue({
       countryCode: this.surveyForm.value.countryCode.toUpperCase()
     });
-    this.systemService.createSurvey(this.surveyForm.value).subscribe((response: any) => {
+    this.spmSurveysService.createSurvey(this.surveyForm.value).subscribe((response: any) => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

@@ -18,7 +18,7 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { SPMAPILookUpTableService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -72,10 +72,11 @@ export class ManageSurveysComponent implements OnInit {
   /**
    * Retrieves the surveys data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
+   * @param {SPMAPILookUpTableService} sPMAPILookUpTableService SPM API Look Up Table Service.
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService
+    private sPMAPILookUpTableService: SPMAPILookUpTableService
   ) {
     this.route.data.subscribe((data: { surveys: any }) => {
       this.surveysData = data.surveys;
@@ -131,7 +132,7 @@ export class ManageSurveysComponent implements OnInit {
    * @param {any} survey Survey to activate.
    */
   activate(survey: any) {
-    this.systemService.activateSurvey(survey.id).subscribe(() => {
+    this.sPMAPILookUpTableService.createLookupTable(survey.id).subscribe(() => {
       const today = new Date().toISOString().split('T')[0];
       // This mimics the server-side logic
       survey.validFrom = today;
@@ -144,7 +145,7 @@ export class ManageSurveysComponent implements OnInit {
    * @param {any} survey Survey to deactivate.
    */
   deactivate(survey: any) {
-    this.systemService.deactivateSurvey(survey.id).subscribe(() => {
+    this.sPMAPILookUpTableService.createLookupTable(survey.id).subscribe(() => {
       const date = new Date();
       date.setDate(date.getDate() - 1); // Set to yesterday
       const yesterday = date.toISOString().split('T')[0];

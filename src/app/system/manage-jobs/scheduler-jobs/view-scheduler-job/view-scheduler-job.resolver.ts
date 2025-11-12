@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../../system.service';
+import { SCHEDULERJOBService } from '@fineract/client';
 
 /**
  * Selected Scheduler Jobs data resolver.
@@ -14,9 +14,9 @@ import { SystemService } from '../../../system.service';
 @Injectable()
 export class ViewSchedulerJobResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {SCHEDULERJOBService} schedulerJobService Scheduler Job Service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private schedulerJobService: SCHEDULERJOBService) {}
 
   /**
    * Returns the selected scheduler job data.
@@ -24,6 +24,6 @@ export class ViewSchedulerJobResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const jobId = route.paramMap.get('id');
-    return this.systemService.getSelectedJob(jobId);
+    return this.schedulerJobService.retrieveHistory({ jobId: Number(jobId) });
   }
 }

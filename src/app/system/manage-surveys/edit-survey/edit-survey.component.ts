@@ -13,13 +13,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { SpmSurveysService } from '@fineract/client';
 
 /** Custom Components */
 import { CancelDialogComponent } from '../../../shared/cancel-dialog/cancel-dialog.component';
 
 /** Survey Models */
 import { Survey, QuestionData, ResponseData } from './../survey.model';
+import { EditSurveyRequestParams } from '@fineract/client'; // Add this import if available from the service
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -51,14 +52,14 @@ export class EditSurveyComponent {
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {SpmSurveysService} spmSurveysService Spm Surveys Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private spmSurveysService: SpmSurveysService,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog
@@ -286,10 +287,13 @@ export class EditSurveyComponent {
     this.surveyForm.patchValue({
       countryCode: this.surveyForm.value.countryCode.toUpperCase()
     });
-    this.systemService
-      .editSurvey(this.route.snapshot.paramMap.get('id'), this.surveyForm.value)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const requestParams: EditSurveyRequestParams = {
+      id,
+      surveyData: this.surveyForm.value
+    };
+    this.spmSurveysService.editSurvey(requestParams).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

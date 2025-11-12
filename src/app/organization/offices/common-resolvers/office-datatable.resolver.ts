@@ -1,7 +1,7 @@
 /** Angular Imports */
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { SystemService } from 'app/system/system.service';
+import { DataTablesService } from '@fineract/client';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -12,9 +12,9 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class OfficeDatatableResolver {
   /**
-   * @param {SystemService} systemService Products service.
+   * @param {DataTablesService} dataTablesService Data Tables service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private dataTablesService: DataTablesService) {}
 
   /**
    * Returns the Office's Datatable data.
@@ -23,6 +23,12 @@ export class OfficeDatatableResolver {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const officeId = route.parent.parent.paramMap.get('officeId');
     const datatableName = route.paramMap.get('datatableName');
-    return this.systemService.getEntityDatatable(officeId, datatableName);
+    const requestParams = {
+      datatableName: datatableName,
+      entityId: officeId
+    };
+    return this.dataTablesService.getDatatables({
+      apptable: datatableName
+    });
   }
 }

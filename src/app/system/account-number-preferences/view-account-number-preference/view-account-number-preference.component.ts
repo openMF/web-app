@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { AccountNumberFormatService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -30,7 +30,7 @@ export class ViewAccountNumberPreferenceComponent {
 
   /**
    * Retrieves the account number preference data from `resolve`.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {AccountNumberFormatService} accountNumberFormatService Account Number Format Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
@@ -38,7 +38,7 @@ export class ViewAccountNumberPreferenceComponent {
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private accountNumberFormatService: AccountNumberFormatService,
     private router: Router,
     private dialog: MatDialog,
     private translateService: TranslateService
@@ -62,7 +62,7 @@ export class ViewAccountNumberPreferenceComponent {
     });
     deleteAccountNumberPreferenceDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteAccountNumberPreference(this.accountNumberPreferenceData.id).subscribe(() => {
+        this.accountNumberFormatService._delete(this.accountNumberPreferenceData.id).subscribe(() => {
           this.router.navigate(['/system/account-number-preferences']);
         });
       }

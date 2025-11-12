@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { ReportsService } from '@fineract/client';
 
 /**
  * Report data resolver.
@@ -14,16 +14,16 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class ReportResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {ReportsService} reportsService Reports service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private reportsService: ReportsService) {}
 
   /**
    * Returns the Report data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const reportId = route.paramMap.get('id');
-    return this.systemService.getReport(reportId);
+    const reportId = Number(route.paramMap.get('id'));
+    return this.reportsService.retrieveReport({ id: reportId });
   }
 }

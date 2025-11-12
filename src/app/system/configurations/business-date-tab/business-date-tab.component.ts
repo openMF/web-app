@@ -9,7 +9,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { Subscription } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { GlobalConfigurationService, BusinessDateManagementService } from '@fineract/client';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -52,13 +52,15 @@ export class BusinessDateTabComponent implements OnInit {
 
   /**
    * Retrieves the configurations data from `resolve`.
-   * @param {SystemService} systemService System Service.
+   * @param {GlobalConfigurationService} globalConfigurationService Global Configuration Service.
+   * @param {BusinessDateManagementService} BusinessDateManagementService Buisness Date Management Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {Dates} dateUtils Date Utils.
    */
   constructor(
-    private systemService: SystemService,
+    private globalConfigurationService: GlobalConfigurationService,
+    private businessDateManagementService: BusinessDateManagementService,
     private settingsService: SettingsService,
     private formBuilder: UntypedFormBuilder,
     private dateUtils: Dates,
@@ -85,8 +87,8 @@ export class BusinessDateTabComponent implements OnInit {
    * Get the Configuration and the Business Date data
    */
   getConfigurations(): void {
-    this.systemService
-      .getConfigurationByName(SettingsService.businessDateConfigName)
+    this.globalConfigurationService
+      .retrieveOneByName({ name: SettingsService.businessDateConfigName })
       .subscribe((configurationData: any) => {
         this.isBusinessDateEnabled = configurationData.enabled;
         if (this.isBusinessDateEnabled) {
@@ -96,7 +98,7 @@ export class BusinessDateTabComponent implements OnInit {
   }
 
   setBusinessDates(): void {
-    this.systemService.getBusinessDates().subscribe((businessDateData: any) => {
+    this.businessDateManagementService.getBusinessDates().subscribe((businessDateData: any) => {
       businessDateData.forEach((data: any) => {
         if (data.type === SettingsService.businessDateType) {
           this.businessDate = new Date(data.date);
@@ -145,13 +147,13 @@ export class BusinessDateTabComponent implements OnInit {
     if (this.dateIndex === 1) {
       dateType = SettingsService.cobDateType;
     }
-    const data = {
+    const businessDateRequest = {
       date: this.dateUtils.formatDate(prevBusinessDate, dateFormat),
       type: dateType,
       dateFormat,
       locale
     };
-    this.systemService.updateBusinessDate(data).subscribe((response: any) => {
+    this.businessDateManagementService.updateBusinessDate({ businessDateRequest }).subscribe((response: any) => {
       this.getConfigurations();
       this.editInProgressToggle(this.dateIndex);
     });

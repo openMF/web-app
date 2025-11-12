@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { CodesService } from '@fineract/client';
 
 /**
  * Codes data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class CodesResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {CodesService} codesService Codes service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private codesService: CodesService) {}
 
   /**
    * Returns the Codes data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getCodes();
+    return this.codesService.retrieveCodes();
   }
 }

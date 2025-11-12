@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../../system.service';
+import { SCHEDULERJOBService } from '@fineract/client';
 
 /**
  * View History Scheduler Jobs data resolver.
@@ -14,9 +14,9 @@ import { SystemService } from '../../../system.service';
 @Injectable()
 export class ViewHistorySchedulerJobsResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {SCHEDULERJOBService} schedulerJobService Scheduler Job Service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private schedulerJobService: SCHEDULERJOBService) {}
 
   /**
    * Returns the Scheduler Jobs History data.
@@ -24,6 +24,6 @@ export class ViewHistorySchedulerJobsResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const jobId = route.paramMap.get('id');
-    return this.systemService.getHistoryScheduler(jobId);
+    return this.schedulerJobService.retrieveHistory({ jobId: Number(jobId) });
   }
 }

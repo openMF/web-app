@@ -19,7 +19,7 @@ import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.co
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
 import { SelectBase } from 'app/shared/form-dialog/formfield/model/select-base';
-import { SystemService } from 'app/system/system.service';
+import { BusinessStepConfigurationService } from '@fineract/client';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatTooltip } from '@angular/material/tooltip';
@@ -77,14 +77,14 @@ export class WorkflowJobsComponent implements OnInit {
   ];
 
   constructor(
-    private systemService: SystemService,
+    private buisnessStepConfigService: BusinessStepConfigurationService,
     public dialog: MatDialog,
     private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
-    this.systemService
-      .getWorkflowJobNames()
+    this.buisnessStepConfigService
+      .retrieveAllConfiguredBusinessJobs()
       .toPromise()
       .then((jobNames) => {
         this.jobNameOptions = jobNames.businessJobs.sort(function (a: any, b: any) {
@@ -98,7 +98,7 @@ export class WorkflowJobsComponent implements OnInit {
    * @param {string} jobName Value to Workflow Job name.
    */
   getWorkflowJobSteps(jobName: string) {
-    this.systemService.getWorkflowJobSteps(jobName).subscribe((data: any) => {
+    this.buisnessStepConfigService.retrieveAllConfiguredBusinessStep({ jobName }).subscribe((data: any) => {
       this.jobStepName = jobName;
       this.jobStepsData = data.businessSteps.sort(function (a: JobStep, b: JobStep) {
         return a.order - b.order;
@@ -139,13 +139,19 @@ export class WorkflowJobsComponent implements OnInit {
     if (this.jobStepName != null) {
       const jobDatas = this.jobStepName.split('_');
       this.jobAvailableStepsData = [];
-      this.systemService
-        .getAvailablesJobSteps(jobDatas[0])
+      this.buisnessStepConfigService
+        .retrieveAllAvailableBusinessStep({ jobName: jobDatas[0] })
         .toPromise()
         .then((jobData) => {
-          this.jobAvailableStepsData = jobData.availableBusinessSteps.sort(function (a: any, b: any) {
-            return a.stepName - b.stepName;
-          });
+          this.jobAvailableStepsData = jobData.availableBusinessSteps
+            .map((step: any, idx: number) => ({
+              stepName: step.stepName,
+              stepDescription: step.stepDescription,
+              order: idx + 1 // or assign a default value if needed
+            }))
+            .sort(function (a: JobStep, b: JobStep) {
+              return a.stepName.localeCompare(b.stepName);
+            });
 
           const tmpStepsNames: any = [];
           this.jobStepsData.forEach((step: any) => {
@@ -201,8 +207,11 @@ export class WorkflowJobsComponent implements OnInit {
       businessSteps: this.jobStepsData
     };
 
-    this.systemService
-      .putWorkflowJobSteps(this.jobStepName, payload)
+    this.buisnessStepConfigService
+      .updateJobBusinessStepConfig({
+        jobName: this.jobStepName as string,
+        businessStepRequest: payload
+      })
       .toPromise()
       .then((data) => {
         this.stepOrderHasChanged = false;

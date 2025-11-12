@@ -15,7 +15,7 @@ import {
   MatRow
 } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { SystemService } from '../system.service';
+import { ExternalEventConfigurationService } from '@fineract/client';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -65,7 +65,7 @@ export class ManageExternalEventsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService
+    private externalEventConfigurationService: ExternalEventConfigurationService
   ) {
     this.route.data.subscribe((data: { events: any }) => {
       this.eventsData = data.events.externalEventConfiguration;
@@ -105,10 +105,12 @@ export class ManageExternalEventsComponent implements OnInit {
    */
   applyChanges() {
     const payload = {
-      externalEventConfigurations: this.externalEventConfigurations
+      externalEventConfigurationCommand: {
+        externalEventConfigurations: this.externalEventConfigurations
+      }
     };
 
-    this.systemService.putExternalEventConfiguration(payload).subscribe(() => {
+    this.externalEventConfigurationService.updateExternalEventConfigurationsDetails(payload).subscribe(() => {
       this.existAnyUpdate = false;
     });
   }

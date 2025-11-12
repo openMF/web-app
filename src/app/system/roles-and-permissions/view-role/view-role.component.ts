@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, ReactiveFo
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
-import { SystemService } from '../../system.service';
+import { RolesService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -77,7 +77,7 @@ export class ViewRoleComponent implements OnInit {
   /**
    * Retrieves the roledetails data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
+   * @param {RolesService} rolesService Roles Service.
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Shared Dialog Boxes.
@@ -85,7 +85,7 @@ export class ViewRoleComponent implements OnInit {
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private rolesService: RolesService,
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private translateService: TranslateService,
@@ -94,6 +94,11 @@ export class ViewRoleComponent implements OnInit {
   ) {
     this.route.data.subscribe((data: { roledetails: any }) => {
       this.rolePermissionService = data.roledetails;
+      // Only create form and group rules after data is available
+      this.createForm();
+      this.groupRules();
+      this.selectedItem = 'special';
+      this.showPermissions('special');
     });
   }
 
@@ -104,23 +109,22 @@ export class ViewRoleComponent implements OnInit {
     this.permissions = {
       permissions: []
     };
-    this.createForm();
-    this.groupRules();
-    this.selectedItem = 'special';
-    this.showPermissions('special');
     this.route.params.subscribe((routeParams: any) => {
       this.roleId = routeParams.id;
     });
+    // Form creation moved to constructor after data is loaded
   }
 
   /**
    * creates the form to display and edit permissions
    */
   createForm() {
+    const permissionData =
+      this.rolePermissionService && Array.isArray(this.rolePermissionService.permissionUsageData)
+        ? this.rolePermissionService.permissionUsageData
+        : [];
     this.formGroup = this.formBuilder.group({
-      roster: this.formBuilder.array(
-        this.rolePermissionService.permissionUsageData.map((elem: any) => this.createMemberGroup(elem))
-      )
+      roster: this.formBuilder.array(permissionData.map((elem: any) => this.createMemberGroup(elem)))
     });
   }
 
@@ -214,7 +218,9 @@ export class ViewRoleComponent implements OnInit {
    * Restores the checkboxes to previous data on clicking cancel
    */
   restoreCheckboxes() {
-    this.formGroup = _.cloneDeep(this.backupform) as UntypedFormGroup;
+    if (this.backupform) {
+      this.formGroup = _.cloneDeep(this.backupform) as UntypedFormGroup;
+    }
   }
 
   isRoleEnable(value: any) {
@@ -223,7 +229,17 @@ export class ViewRoleComponent implements OnInit {
 
   editRoles() {
     this.isDisabled = false;
-    this.formGroup.controls.roster.enable();
+    if (this.formGroup && this.formGroup.controls && this.formGroup.controls.roster) {
+      this.formGroup.controls.roster.enable();
+      const rosterArray = this.formGroup.get('roster') as FormArray;
+      if (rosterArray && Array.isArray(rosterArray.controls)) {
+        rosterArray.controls.forEach((group: UntypedFormGroup) => {
+          if (group && group.controls && group.controls.selected) {
+            group.controls.selected.enable();
+          }
+        });
+      }
+    }
   }
 
   /**
@@ -231,7 +247,9 @@ export class ViewRoleComponent implements OnInit {
    */
   cancel() {
     this.isDisabled = true;
-    this.formGroup.controls.roster.disable();
+    if (this.formGroup && this.formGroup.controls && this.formGroup.controls.roster) {
+      this.formGroup.controls.roster.disable();
+    }
   }
 
   /**
@@ -250,7 +268,12 @@ export class ViewRoleComponent implements OnInit {
     this.formGroup.controls.roster.disable();
     this.checkboxesChanged = false;
     this.isDisabled = true;
-    this.systemService.updateRolePermission(this.roleId, permissionData).subscribe((response: any) => {});
+    this.rolesService
+      .updateRolePermissions({
+        roleId: this.roleId,
+        putRolesRoleIdPermissionsRequest: permissionData
+      })
+      .subscribe((response: any) => {});
   }
 
   /**
@@ -281,18 +304,30 @@ export class ViewRoleComponent implements OnInit {
    * Deletes the Role and redirects to Roles and Permissions.
    */
   deleteRole() {
+    this.roleId = this.route.snapshot.paramMap.get('id') || this.route.snapshot.params['id'] || this.roleId;
+    if (this.roleId === null || this.roleId === undefined || this.roleId === '') {
+      console.error('Delete Role Error: roleId is null or undefined');
+      alert('Cannot delete role: roleId is missing.');
+      return;
+    }
+    const roleIdNum = Number(this.roleId);
+    if (isNaN(roleIdNum)) {
+      console.error('Delete Role Error: roleId is not a valid number');
+      alert('Cannot delete role: roleId is not a valid number.');
+      return;
+    }
+    console.log('Delete Role: roleId =', roleIdNum);
     const deleteRoleDialogRef = this.dialog.open(DeleteDialogComponent, {
-      data: { deleteContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId }
+      data: { deleteContext: this.translateService.instant('labels.inputs.Role') + ' ' + roleIdNum }
     });
     deleteRoleDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.delete) {
-        this.systemService.deleteRole(this.roleId).subscribe(() => {
+      if (response && response.delete) {
+        this.rolesService.deleteRole({ roleId: roleIdNum }).subscribe(() => {
           if (environment.OIDC.oidcServerEnabled) {
-            this.authService.deleteRole(this.roleId);
+            this.authService.deleteRole(String(roleIdNum));
           }
           this.router.navigate(['/system/roles-and-permissions']);
         });
-      } else {
       }
     });
   }
@@ -301,15 +336,26 @@ export class ViewRoleComponent implements OnInit {
    * Enables the Role and redirects to Roles and Permissions.
    */
   enableRolesConfirmation() {
+    this.roleId = this.route.snapshot.paramMap.get('id') || this.route.snapshot.params['id'] || this.roleId;
+    if (this.roleId === null || this.roleId === undefined || this.roleId === '') {
+      console.error('Enable Role Error: roleId is null or undefined');
+      alert('Cannot enable role: roleId is missing.');
+      return;
+    }
+    const roleIdNum = Number(this.roleId);
+    if (isNaN(roleIdNum)) {
+      console.error('Enable Role Error: roleId is not a valid number');
+      alert('Cannot enable role: roleId is not a valid number.');
+      return;
+    }
     const enableRoleDialogRef = this.dialog.open(EnableDialogComponent, {
-      data: { enableContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId }
+      data: { enableContext: this.translateService.instant('labels.inputs.Role') + ' ' + roleIdNum }
     });
     enableRoleDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.enable) {
-        this.systemService.enableRole(this.roleId).subscribe(() => {
+      if (response && response.enable) {
+        this.rolesService.actionsOnRoles({ roleId: roleIdNum }).subscribe(() => {
           this.router.navigate(['/system/roles-and-permissions']);
         });
-      } else {
       }
     });
   }
@@ -318,15 +364,27 @@ export class ViewRoleComponent implements OnInit {
    * Disables the Role and redirects to Roles and Permissions.
    */
   disableRolesConfirmation() {
+    this.roleId = this.route.snapshot.paramMap.get('id') || this.route.snapshot.params['id'] || this.roleId;
+    if (this.roleId === null || this.roleId === undefined || this.roleId === '') {
+      console.error('Disable Role Error: roleId is null or undefined');
+      alert('Cannot disable role: roleId is missing.');
+      return;
+    }
+    const roleIdNum = Number(this.roleId);
+    if (isNaN(roleIdNum)) {
+      console.error('Disable Role Error: roleId is not a valid number');
+      alert('Cannot disable role: roleId is not a valid number.');
+      return;
+    }
+    console.log('Disable Role: roleId =', roleIdNum);
     const deleteRoleDialogRef = this.dialog.open(DisableDialogComponent, {
-      data: { disableContext: this.translateService.instant('labels.inputs.Role') + ' ' + this.roleId }
+      data: { disableContext: this.translateService.instant('labels.inputs.Role') + ' ' + roleIdNum }
     });
     deleteRoleDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.disable) {
-        this.systemService.disableRole(this.roleId).subscribe(() => {
+      if (response && response.disable) {
+        this.rolesService.actionsOnRoles({ roleId: roleIdNum }).subscribe(() => {
           this.router.navigate(['/system/roles-and-permissions']);
         });
-      } else {
       }
     });
   }

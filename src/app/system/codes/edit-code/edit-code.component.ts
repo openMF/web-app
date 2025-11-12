@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { CodesService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -27,13 +27,13 @@ export class EditCodeComponent implements OnInit {
   /**
    * Retrieves the code data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {CodesService} codesService Codes Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private codesService: CodesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -66,7 +66,17 @@ export class EditCodeComponent implements OnInit {
    * if successful redirects to view updated code.
    */
   submit() {
-    this.systemService.updateCode(this.codeForm.value, this.codeData.id).subscribe((response: any) => {
+    let codeId = this.codeData?.id;
+    if (!codeId) {
+      codeId = Number(this.route.snapshot.params['id']);
+    }
+    const payload = {
+      codeId,
+      putCodesRequest: {
+        name: this.codeForm.value.name
+      }
+    };
+    this.codesService.updateCode(payload).subscribe((response: any) => {
       this.router.navigate(
         [
           '../../',

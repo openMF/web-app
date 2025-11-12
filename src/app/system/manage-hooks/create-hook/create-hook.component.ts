@@ -19,7 +19,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { HooksService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -79,7 +79,7 @@ export class CreateHookComponent implements OnInit {
   /**
    * Retrieves the hooks template data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
+   * @param {HooksService} hooksService Hooks Service.
    * @param {Router} router Router for navigation.
    * @param {FormBuilder} formBuilder Form Builder.
    * @param {MatDialog} dialog Dialog Reference.
@@ -87,7 +87,7 @@ export class CreateHookComponent implements OnInit {
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private hooksService: HooksService,
     private router: Router,
     private formBuilder: UntypedFormBuilder,
     private dialog: MatDialog,
@@ -244,7 +244,32 @@ export class CreateHookComponent implements OnInit {
           : undefined
       }
     };
-    this.systemService.createHook(hook).subscribe((response: any) => {
+    const configFields = Object.entries(hook.config)
+      .filter(
+        ([
+          _,
+          value
+        ]) => value !== undefined
+      )
+      .map(
+        ([
+          fieldName,
+          value
+        ]) => ({
+          fieldName,
+          value
+        })
+      );
+
+    const postHookRequest = {
+      name: hook.name,
+      isActive: hook.isActive,
+      displayName: hook.displayName,
+      events: hook.events,
+      config: configFields
+    };
+
+    this.hooksService.createHook({ postHookRequest }).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

@@ -5,7 +5,7 @@ import { AlertService } from 'app/core/alert/alert.service';
 import { AuthenticationService } from 'app/core/authentication/authentication.service';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
-import { SystemService } from 'app/system/system.service';
+import { GlobalConfigurationService, BusinessDateManagementService } from '@fineract/client';
 import { VersionService } from 'app/system/version.service';
 
 /** Environment Configuration */
@@ -55,12 +55,13 @@ export class FooterComponent implements OnInit, OnDestroy {
   displayBackEndInfo = true;
 
   constructor(
-    private systemService: SystemService,
+    private globalConfigurationService: GlobalConfigurationService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private alertService: AlertService,
     private dateUtils: Dates,
-    private versionService: VersionService
+    private versionService: VersionService,
+    private businessDateManagementService: BusinessDateManagementService
   ) {
     this.displayBackEndInfo = environment.displayBackEndInfo === 'true';
   }
@@ -108,8 +109,8 @@ export class FooterComponent implements OnInit, OnDestroy {
    */
   getConfigurations(): void {
     if (this.authenticationService.isAuthenticated()) {
-      this.systemService
-        .getConfigurationByName(SettingsService.businessDateConfigName)
+      this.globalConfigurationService
+        .retrieveOneByName({ name: SettingsService.businessDateConfigName })
         .subscribe((configurationData: any) => {
           this.isBusinessDateEnabled = configurationData.enabled;
           this.settingsService.setBusinessDateConfig(configurationData.enabled);
@@ -129,7 +130,7 @@ export class FooterComponent implements OnInit, OnDestroy {
    * Get the Business Date data
    */
   setBusinessDate(): void {
-    this.systemService.getBusinessDate(SettingsService.businessDateType).subscribe((data: any) => {
+    this.businessDateManagementService.getBusinessDates().subscribe((data: any) => {
       this.businessDate = new Date(data.date);
       this.settingsService.setBusinessDate(
         this.dateUtils.formatDate(this.businessDate, SettingsService.businessDateFormat)

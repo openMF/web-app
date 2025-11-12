@@ -24,7 +24,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
 import { FormfieldBase } from 'app/shared/form-dialog/formfield/model/formfield-base';
-import { SystemService } from 'app/system/system.service';
+import { DataTablesService } from '@fineract/client';
 import * as _ from 'lodash';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -78,7 +78,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
    * Fetches center Id from parent route params.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Dates} dateUtils Date Utils.
-   * @param {SystemService} systemService system Service.
+   * @param {DataTablesService} dataTablesService Data Tables Service.
    * @param {SettingsService} settingsService Settings Service.
    * @param {MatDialog} dialog Mat Dialog.
    * @param {Datatables} datatables Datatable utils
@@ -86,7 +86,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
   constructor(
     private route: ActivatedRoute,
     private dateUtils: Dates,
-    private systemService: SystemService,
+    private dataTablesService: DataTablesService,
     private settingsService: SettingsService,
     private dialog: MatDialog,
     private datatables: Datatables,
@@ -139,7 +139,7 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
 
   getData() {
     this.isLoading = true;
-    this.systemService.getEntityDatatable(this.entityId, this.datatableName).subscribe((dataObject: any) => {
+    this.dataTablesService.getDatatables({ apptable: this.datatableName }).subscribe((dataObject: any) => {
       this.dataObject.data = dataObject.data;
       this.showDeleteBotton = false;
       if (this.dataTableRef) {
@@ -176,8 +176,11 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
           );
         });
         dataTableEntryObject = { ...response.data.value, ...dataTableEntryObject };
-        this.systemService
-          .addEntityDatatableEntry(this.entityId, this.datatableName, dataTableEntryObject)
+        this.dataTablesService
+          .deleteDatatableEntries({
+            apptableId: Number(this.entityId),
+            datatable: this.datatableName
+          })
           .subscribe((result: any) => {
             this.getData();
           });
@@ -194,9 +197,14 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
     });
     deleteDataTableDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.systemService.deleteDatatableContent(this.entityId, this.datatableName).subscribe(() => {
-          this.getData();
-        });
+        this.dataTablesService
+          .deleteDatatableEntries({
+            apptableId: Number(this.entityId),
+            datatable: this.datatableName
+          })
+          .subscribe(() => {
+            this.getData();
+          });
       }
     });
   }
@@ -212,16 +220,21 @@ export class DatatableMultiRowComponent implements OnInit, OnDestroy, OnChanges 
       if (response.delete) {
         this.isSelected = false;
         this.selection.selected.forEach((data) => {
-          this.systemService.deleteDatatableEntry(this.entityId, data.row[0], this.datatableName).subscribe(() => {
-            this.datatableData.forEach((item: any, index: any) => {
-              if (item.row[0] === data.row[0]) {
-                this.datatableData.splice(index, 1);
-                this.dataTableRef.renderRows();
-                this.selection = new SelectionModel(true, []);
-                this.isSelected = this.selection.selected.length > 0;
-              }
+          this.dataTablesService
+            .deleteDatatableEntries({
+              datatable: this.datatableName,
+              apptableId: data.row[0]
+            })
+            .subscribe(() => {
+              this.datatableData.forEach((item: any, index: any) => {
+                if (item.row[0] === data.row[0]) {
+                  this.datatableData.splice(index, 1);
+                  this.dataTableRef.renderRows();
+                  this.selection = new SelectionModel(true, []);
+                  this.isSelected = this.selection.selected.length > 0;
+                }
+              });
             });
-          });
         });
       } else {
         this.selection = new SelectionModel(true, []);

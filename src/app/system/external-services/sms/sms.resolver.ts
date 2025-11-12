@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { ExternalServicesService } from '@fineract/client';
 
 /**
  * SMS Configuration data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class SMSConfigurationResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {ExternalServicesService} externalServicesService External services service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private externalServicesService: ExternalServicesService) {}
 
   /**
    * Returns the SMS Configuration data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getExternalConfiguration('SMS');
+    return this.externalServicesService.retrieveOne2({ servicename: 'SMS' });
   }
 }

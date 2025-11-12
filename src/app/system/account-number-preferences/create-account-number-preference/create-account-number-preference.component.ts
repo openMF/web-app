@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators, ReactiveFormsModule }
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { AccountNumberFormatService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -29,13 +29,13 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
   /**
    * Retrieves the account number preferences template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {AccountNumberFormatService} accountNumberFormatService Account Number Format Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private accountNumberFormatService: AccountNumberFormatService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -87,7 +87,7 @@ export class CreateAccountNumberPreferenceComponent implements OnInit {
     if (accountNumberPreference.prefixType === '') {
       accountNumberPreference.prefixType = undefined;
     }
-    this.systemService.createAccountNumberPreference(accountNumberPreference).subscribe((response: any) => {
+    this.accountNumberFormatService.create(accountNumberPreference).subscribe((response: any) => {
       this.router.navigate(
         [
           '../',

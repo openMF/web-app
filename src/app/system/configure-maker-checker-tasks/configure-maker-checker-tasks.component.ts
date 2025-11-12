@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 /** Custom Services */
 import { PopoverService } from '../../configuration-wizard/popover/popover.service';
 import { ConfigurationWizardService } from '../../configuration-wizard/configuration-wizard.service';
-import { SystemService } from '../system.service';
+import { PermissionsService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatList, MatListItem } from '@angular/material/list';
 import { NgFor, NgClass, NgIf } from '@angular/common';
@@ -76,7 +76,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
 
   /**
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {PermissionsService} permissionsService Permissions Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
@@ -84,7 +84,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private permissionsService: PermissionsService,
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private configurationWizardService: ConfigurationWizardService,
@@ -227,7 +227,9 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
     this.formGroup.get('roster')?.disable();
     this.checkboxesChanged = false;
     this.isDisabled = true;
-    this.systemService.updateMakerCheckerPermission(permissionData).subscribe((response: any) => {});
+    this.permissionsService
+      .updatePermissionsDetails({ putPermissionsRequest: permissionData })
+      .subscribe((response: any) => {});
   }
 
   /**

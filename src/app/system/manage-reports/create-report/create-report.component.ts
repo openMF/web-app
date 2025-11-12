@@ -20,7 +20,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { ReportsService } from '@fineract/client';
 
 /** Custom Components */
 import { TranslateService } from '@ngx-translate/core';
@@ -97,7 +97,7 @@ export class CreateReportComponent implements OnInit {
   /**
    * Retrieves the report template data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {ReportsService} reportsService Reports Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog Reference.
@@ -105,7 +105,7 @@ export class CreateReportComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private reportsService: ReportsService,
     private route: ActivatedRoute,
     private router: Router,
     private dialog: MatDialog,
@@ -258,7 +258,7 @@ export class CreateReportComponent implements OnInit {
       reportParameter.parameterName = undefined;
       return reportParameter;
     });
-    this.systemService.createReport(this.reportForm.value).subscribe((response: any) => {
+    this.reportsService.createReport(this.reportForm.value).subscribe((response: any) => {
       // TODO: Implement Maker Checker Component.
       this.router.navigate(
         [

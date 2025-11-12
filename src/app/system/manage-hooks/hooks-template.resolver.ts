@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { HooksService } from '@fineract/client';
 
 /**
  * Hooks template data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class HooksTemplateResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {HooksService} hooksService Hooks service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private hooksService: HooksService) {}
 
   /**
    * Returns the hooks template data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getHooksTemplate();
+    return this.hooksService.template3();
   }
 }

@@ -9,7 +9,7 @@ import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { AuditTrailsDataSource } from './audit-trail.datasource';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { AuditsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** rxjs Imports */
@@ -188,13 +188,13 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the audit trail search template data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
-   * @param {SystemService} systemService System Service.
+   * @param {AuditsService} auditsService Audits Service.
    * @param {Dates} dateUtils Dates utils
    * @param {SettingsService} settingsService Settings Service
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
+    private auditsService: AuditsService,
     private dateUtils: Dates,
     private settingsService: SettingsService
   ) {
@@ -212,7 +212,7 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
     this.setFilteredActions();
     this.setFilteredEntities();
     this.setFilteredCheckers();
-    this.dataSource = new AuditTrailsDataSource(this.systemService);
+    this.dataSource = new AuditTrailsDataSource(this.auditsService);
     this.getAuditTrails();
   }
 
@@ -547,23 +547,48 @@ export class AuditTrailsComponent implements OnInit, AfterViewInit {
       'actionName',
       'clientName'
     ];
-    this.systemService
-      .getAuditTrails(this.filterAuditTrailsBy, this.sort?.active ?? '', this.sort?.direction ?? '', 0, -1)
+    this.auditsService
+      .retrieveAuditEntries({
+        ...Object.fromEntries(
+          this.filterAuditTrailsBy.map((f) => [
+            f.type,
+            f.value
+          ])
+        ),
+        orderBy: this.sort?.active ?? '',
+        sortOrder: this.sort?.direction ?? '',
+        offset: 0,
+        limit: -1
+      })
       .subscribe((response: any) => {
-        if (response !== undefined) {
-          let csv = response.pageItems.map((row: any) =>
-            headerCode.map((fieldName) =>
-              (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
-              row[fieldName] != null &&
-              row[fieldName] !== ''
-                ? JSON.stringify(this.dateUtils.formatDate(row[fieldName], 'YYYY-MM-DDTHH:mm:ssZ'))
-                : JSON.stringify(row[fieldName], replacer)
-            )
+        if (response && Array.isArray(response.pageItems) && response.pageItems.length > 0) {
+          let csvRows = response.pageItems.map((row: any) =>
+            headerCode
+              .map((fieldName) =>
+                (fieldName === 'madeOnDate' || fieldName === 'checkedOnDate') &&
+                row[fieldName] != null &&
+                row[fieldName] !== ''
+                  ? JSON.stringify(this.dateUtils.formatDate(row[fieldName], 'YYYY-MM-DDTHH:mm:ssZ'))
+                  : JSON.stringify(row[fieldName], replacer)
+              )
+              .join(',')
           );
-          csv.unshift(`data:text/csv;charset=utf-8,${header.join()}`);
-          csv = csv.join('\r\n');
+          const csvContent = [
+            header.join(','),
+            ...csvRows
+          ].join('\r\n');
+          const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
           const link = document.createElement('a');
-          link.setAttribute('href', encodeURI(csv));
+          link.setAttribute('href', dataUri);
+          link.setAttribute('download', 'Audit Trails.csv');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        } else {
+          const csvContent = header.join(',');
+          const dataUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
+          const link = document.createElement('a');
+          link.setAttribute('href', dataUri);
           link.setAttribute('download', 'Audit Trails.csv');
           document.body.appendChild(link);
           link.click();

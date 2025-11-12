@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { ExternalServicesService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -27,13 +27,13 @@ export class EditNotificationComponent implements OnInit {
   /**
    * Retrieves the Notification configuration data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {ExternalServicesService} externalServicesService External Services Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private externalServicesService: ExternalServicesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -74,8 +74,11 @@ export class EditNotificationComponent implements OnInit {
    * if successful redirects to view Notification configuration.
    */
   submit() {
-    this.systemService
-      .updateExternalConfiguration('NOTIFICATION', this.notificationConfigurationForm.value)
+    this.externalServicesService
+      .updateExternalServiceProperties({
+        servicename: 'NOTIFICATION',
+        putExternalServiceRequest: this.notificationConfigurationForm.value
+      })
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { ExternalServicesService } from '@fineract/client';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -35,13 +35,13 @@ export class EditAmazonS3Component implements OnInit {
   /**
    * Retrieves the Amazon S3 configuration data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {ExternalServicesService} externalServicesService External Services Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private externalServicesService: ExternalServicesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -84,10 +84,16 @@ export class EditAmazonS3Component implements OnInit {
    * if successful redirects to view Amazon S3 configuration.
    */
   submit() {
-    this.systemService
-      .updateExternalConfiguration('S3', this.amazonS3ConfigurationForm.value)
-      .subscribe((response: any) => {
-        this.router.navigate(['../'], { relativeTo: this.route });
-      });
+    const requestParams = {
+      name: 'S3',
+      body: this.amazonS3ConfigurationForm.value
+    };
+    const updateParams = {
+      servicename: 'S3',
+      putExternalServiceRequest: this.amazonS3ConfigurationForm.value
+    };
+    this.externalServicesService.updateExternalServiceProperties(updateParams).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 }

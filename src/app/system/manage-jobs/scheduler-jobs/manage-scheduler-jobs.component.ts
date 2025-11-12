@@ -20,7 +20,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { SystemService } from '../../system.service';
+import { SCHEDULERJOBService, SchedulerService } from '@fineract/client';
 
 /** Custom Services */
 import { PopoverService } from '../../../configuration-wizard/popover/popover.service';
@@ -117,14 +117,17 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * @param {Router} router Router for navigation.
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
+   * @param {SchedulerJobService} schedulerJobService SchedulerJob Service.
+   * @param {SchedulerService} schedulerService SchedulerService.
    */
   constructor(
     private route: ActivatedRoute,
-    private systemService: SystemService,
     private router: Router,
     private dialog: MatDialog,
     private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
+    private popoverService: PopoverService,
+    private schedulerJobService: SCHEDULERJOBService,
+    private schedulerService: SchedulerService
   ) {
     this.route.data.subscribe((data: { jobsScheduler: any }) => {
       if (data.jobsScheduler) {
@@ -169,7 +172,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
    * Initializes the data source, paginator and sorter for manage scheduler jobs table.
    */
   setJobs() {
-    this.systemService.getJobs().subscribe((jobData: any[]) => {
+    this.schedulerJobService.retrieveAll8().subscribe((jobData: any[]) => {
       const sortedData = jobData.sort((a, b) => b.active - a.active || this.sortByName(a, b));
       this.dataSource = new MatTableDataSource(sortedData);
       this.dataSource.paginator = this.paginator;
@@ -206,20 +209,20 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
   }
 
   getScheduler() {
-    this.systemService.getScheduler().subscribe((schedulerData: any) => {
+    this.schedulerService.retrieveStatus().subscribe((schedulerData: any) => {
       this.schedulerData = schedulerData;
       this.schedulerActive = this.schedulerData.active;
     });
   }
 
   suspendScheduler(): void {
-    this.systemService.runCommandOnScheduler('stop').subscribe(() => {
+    this.schedulerService.changeSchedulerStatus({ command: 'stop' }).subscribe(() => {
       this.getScheduler();
     });
   }
 
   activateScheduler(): void {
-    this.systemService.runCommandOnScheduler('start').subscribe(() => {
+    this.schedulerService.changeSchedulerStatus({ command: 'start' }).subscribe(() => {
       this.getScheduler();
     });
   }
@@ -230,7 +233,7 @@ export class ManageSchedulerJobsComponent implements OnInit, AfterViewInit {
 
   runSelectedJobs(): void {
     this.selection.selected.forEach((job) => {
-      this.systemService.runSelectedJob(job.jobId);
+      this.schedulerJobService.executeJob(job.jobId);
     });
   }
 

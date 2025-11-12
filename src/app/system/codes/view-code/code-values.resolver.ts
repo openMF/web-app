@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { CodeValuesService } from '@fineract/client';
 
 /**
  * Code Values data resolver.
@@ -14,9 +14,9 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class CodeValuesResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {CodeValuesService} codeValuesService Code Values service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private codeValuesService: CodeValuesService) {}
 
   /**
    * Returns the Code Values data.
@@ -24,6 +24,6 @@ export class CodeValuesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const codeId = route.paramMap.get('id');
-    return this.systemService.getCodeValues(codeId);
+    return this.codeValuesService.retrieveAllCodeValues({ codeId: Number(codeId) });
   }
 }

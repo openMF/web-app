@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 /** Custom Services */
-import { SystemService } from 'app/system/system.service';
+import { ExternalServicesService } from '@fineract/client';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -35,13 +35,13 @@ export class EditEmailComponent implements OnInit {
   /**
    * Retrieves the Email configuration data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService Accounting Service.
+   * @param {ExternalServicesService} externalServicesService External Services Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private externalServicesService: ExternalServicesService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -99,8 +99,11 @@ export class EditEmailComponent implements OnInit {
    * if successful redirects to view Email configuration.
    */
   submit() {
-    this.systemService
-      .updateExternalConfiguration('SMTP', this.emailConfigurationForm.value)
+    this.externalServicesService
+      .updateExternalServiceProperties({
+        servicename: 'SMTP',
+        putExternalServiceRequest: this.emailConfigurationForm.value
+      })
       .subscribe((response: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       });

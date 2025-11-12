@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { RolesService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /** Custom Service Zitadel */
@@ -31,13 +31,13 @@ export class EditRoleComponent implements OnInit {
   /**
    * Retrieves the code data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {SystemService} systemService System Service.
+   * @param {RolesService} rolesService Roles Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
+    private rolesService: RolesService,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
@@ -52,6 +52,16 @@ export class EditRoleComponent implements OnInit {
    */
   ngOnInit() {
     this.createRoleForm();
+    // Patch form with latest roleData if available
+    if (this.roleData) {
+      this.roleForm.patchValue({
+        name: this.roleData.name,
+        description: this.roleData.description
+      });
+      console.log('ngOnInit roleData:', this.roleData);
+    } else {
+      console.warn('ngOnInit: roleData is missing');
+    }
   }
 
   /**
@@ -60,7 +70,7 @@ export class EditRoleComponent implements OnInit {
   createRoleForm() {
     this.roleForm = this.formBuilder.group({
       name: [
-        { value: this.roleData.name, disabled: true },
+        this.roleData.name,
         Validators.required
       ],
       description: [
@@ -75,15 +85,36 @@ export class EditRoleComponent implements OnInit {
    * if successful redirects to view updated roles and permissions.
    */
   submit() {
-    this.systemService.updateRole(this.roleForm.value, this.roleData.id).subscribe(() => {
-      if (environment.OIDC.oidcServerEnabled) {
-        this.authService.updateRole(
-          this.roleData.id,
-          this.roleForm.get('name')?.value,
-          this.roleForm.value.description
-        );
+    // Debug log for troubleshooting
+    console.log('submit roleData:', this.roleData);
+    console.log('submit paramMap:', this.route.snapshot.paramMap);
+    let roleId = this.roleData?.id;
+    if (!roleId) {
+      const paramId = this.route.snapshot.paramMap.get('id') || this.route.snapshot.paramMap.get('roleId');
+      roleId = paramId ? Number(paramId) : undefined;
+    }
+    console.log('submit resolved roleId:', roleId);
+    if (!roleId || isNaN(roleId)) {
+      alert('Role ID is missing or invalid. Cannot update role.');
+      console.error('Role ID is missing or invalid. Cannot update role.');
+      return;
+    }
+    const updatePayload = {
+      ...this.roleForm.value,
+      id: roleId
+    };
+    console.log('submit updatePayload:', updatePayload);
+    this.rolesService.updateRole({ roleId, putRolesRoleIdRequest: updatePayload }).subscribe({
+      next: () => {
+        if (environment.OIDC.oidcServerEnabled) {
+          this.authService.updateRole(roleId, this.roleForm.get('name')?.value, this.roleForm.value.description);
+        }
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      },
+      error: (err) => {
+        alert('Failed to update role. Please try again.');
+        console.error('Update role error:', err);
       }
-      this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
 }

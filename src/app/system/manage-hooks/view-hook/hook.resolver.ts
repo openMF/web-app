@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../../system.service';
+import { HooksService } from '@fineract/client';
 
 /**
  * Hook data resolver.
@@ -14,16 +14,16 @@ import { SystemService } from '../../system.service';
 @Injectable()
 export class HookResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {HooksService} hooksService Hooks service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private hooksService: HooksService) {}
 
   /**
    * Returns the manage hooks data.
    * @returns {Observable<any>}
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const hookId = route.paramMap.get('id');
-    return this.systemService.getHook(hookId);
+    const hookId = Number(route.paramMap.get('id'));
+    return this.hooksService.retrieveHook({ hookId: hookId });
   }
 }

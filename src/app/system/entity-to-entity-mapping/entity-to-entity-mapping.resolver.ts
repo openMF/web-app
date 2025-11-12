@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { SystemService } from '../system.service';
+import { FineractEntityService } from '@fineract/client';
 
 /**
  * Entity to entity mapping data resolver.
@@ -13,15 +13,15 @@ import { SystemService } from '../system.service';
 @Injectable()
 export class EntityToEntityMappingResolver {
   /**
-   * @param {SystemService} systemService System service.
+   * @param {FineractEntityService} fineractEntityService Fineract Entity Service.
    */
-  constructor(private systemService: SystemService) {}
+  constructor(private fineractEntityService: FineractEntityService) {}
 
   /**
    * Returns the Mapping data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    return this.systemService.getEntityMappings();
+    return this.fineractEntityService.retrieveAll7();
   }
 }
