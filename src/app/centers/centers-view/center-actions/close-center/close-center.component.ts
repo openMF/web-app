@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule }
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CentersService } from 'app/centers/centers.service';
+import { CentersService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
@@ -91,8 +91,14 @@ export class CloseCenterComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.executeCenterActionCommand(this.centerId, 'close', data).subscribe(() => {
-      this.router.navigate(['../../'], { relativeTo: this.route });
-    });
+    this.centersService
+      .activate2({
+        centerId: Number(this.centerId),
+        postCentersCenterIdRequest: data,
+        command: 'close'
+      })
+      .subscribe(() => {
+        this.router.navigate(['../../'], { relativeTo: this.route });
+      });
   }
 }

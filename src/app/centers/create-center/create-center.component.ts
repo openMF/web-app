@@ -11,7 +11,7 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 
 /** Custom Services */
 import { GroupsService } from '@fineract/client';
-import { CentersService } from '../centers.service';
+import { CentersService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 import { Dates } from 'app/core/utils/dates';
 import { MatCheckbox } from '@angular/material/checkbox';
@@ -128,7 +128,7 @@ export class CreateCenterComponent implements OnInit {
           this.groupChoice.enable();
         }
       });
-      this.centerService.getStaff(option).subscribe((data: any) => {
+      this.centerService.retrieveTemplate6(option).subscribe((data: any) => {
         this.staffData = data['staffOptions'];
         if (this.staffData === undefined) {
           this.centerForm.controls['staffId'].disable();
@@ -167,26 +167,73 @@ export class CreateCenterComponent implements OnInit {
    * if successful redirects to centers.
    */
   submit() {
-    const centerFormData = this.centerForm.value;
-    const prevSubmittedOnDate: Date = this.centerForm.value.submittedOnDate;
-    const prevActivationDate: Date = this.centerForm.value.activationDate;
+    const centerFormData = this.centerForm.value || {};
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    if (centerFormData.submittedOnDate instanceof Date) {
-      centerFormData.submittedOnDate = this.dateUtils.formatDate(prevSubmittedOnDate, dateFormat);
+
+    // Format submittedOnDate as string
+    let submittedOnDate = centerFormData.submittedOnDate;
+    if (submittedOnDate instanceof Date) {
+      submittedOnDate = this.dateUtils.formatDate(submittedOnDate, dateFormat);
     }
-    if (centerFormData.activationDate instanceof Date) {
-      centerFormData.activationDate = this.dateUtils.formatDate(prevActivationDate, dateFormat);
+    if (!submittedOnDate) {
+      submittedOnDate = '';
     }
-    const data = {
-      ...centerFormData,
+
+    // Format activationDate as string if present
+    let activationDate = centerFormData.activationDate;
+    if (activationDate instanceof Date) {
+      activationDate = this.dateUtils.formatDate(activationDate, dateFormat);
+    }
+
+    // Ensure groupMembers is an array of IDs
+    const groupMembers = Array.isArray(this.groupMembers)
+      ? this.groupMembers.map((group: any) => (group && group.id ? group.id : group))
+      : [];
+
+    // Build payload matching PostCentersRequest
+    const payload: any = {
+      name: centerFormData.name || '',
+      officeId: centerFormData.officeId ? Number(centerFormData.officeId) : undefined,
+      submittedOnDate: submittedOnDate || '',
       dateFormat,
-      locale
+      locale,
+      active: !!centerFormData.active
     };
-    data.groupMembers = [];
-    this.groupMembers.forEach((group: any) => data.groupMembers.push(group.id));
-    this.centerService.createCenter(data).subscribe((response: any) => {
-      this.router.navigate(['../centers']);
+    // Mandatory: activationDate if active is true
+    if (payload.active) {
+      payload.activationDate = activationDate || '';
+    }
+    // Optional fields
+    if (centerFormData.externalId) {
+      payload.externalId = centerFormData.externalId;
+    }
+    if (centerFormData.staffId) {
+      payload.staffId = Number(centerFormData.staffId);
+    }
+    if (groupMembers.length > 0) {
+      payload.groupMembers = groupMembers.map((id: any) => Number(id));
+    }
+
+    // Remove undefined fields
+    Object.keys(payload).forEach((key) => {
+      if (payload[key] === undefined || payload[key] === '') {
+        delete payload[key];
+      }
     });
+
+    // Only submit if required fields are present
+    if (payload.name && payload.officeId && payload.submittedOnDate) {
+      this.centerService.create7({ postCentersRequest: payload }).subscribe({
+        next: (response: any) => {
+          this.router.navigate(['../centers']);
+        },
+        error: (err: any) => {
+          alert('Error creating center: ' + (err?.message || 'Unknown error'));
+        }
+      });
+    } else {
+      alert('Please fill all required fields.');
+    }
   }
 }

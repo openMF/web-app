@@ -4,7 +4,7 @@ import { UntypedFormGroup, UntypedFormBuilder, ReactiveFormsModule } from '@angu
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CentersService } from 'app/centers/centers.service';
+import { GroupsService } from '@fineract/client';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -32,10 +32,11 @@ export class CenterAssignStaffComponent implements OnInit {
    * @param {SavingsService} savingsService Savings Service
    * @param {ActivatedRoute} route Activated Route
    * @param {Router} router Router
+   * @param {GroupsService} groupsService Groups Service
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private centersService: CentersService,
+    private groupsService: GroupsService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -65,8 +66,12 @@ export class CenterAssignStaffComponent implements OnInit {
    * Submits the form and assigns staff for the center.
    */
   submit() {
-    this.centersService
-      .executeGroupActionCommand(this.centerData.id, 'assignStaff', this.centerAssignStaffForm.value)
+    this.groupsService
+      .activateOrGenerateCollectionSheet({
+        groupId: this.centerData.id,
+        postGroupsGroupIdRequest: this.centerAssignStaffForm.value,
+        command: 'assignStaff'
+      })
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });

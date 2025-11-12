@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { GroupsService, NotesService } from '@fineract/client';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -79,7 +79,8 @@ export class CentersViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
-    public centersService: CentersService,
+    public groupsService: GroupsService,
+    public notesService: NotesService,
     private translateService: TranslateService
   ) {
     this.route.data.subscribe((data: { centerViewData: any; centerDatatables: any }) => {
@@ -151,8 +152,12 @@ export class CentersViewComponent implements OnInit {
     });
     unAssignStaffDialogRef.afterClosed().subscribe((response: { confirm: any }) => {
       if (response.confirm) {
-        this.centersService
-          .executeGroupActionCommand(this.centerViewData.id, 'unassignStaff', { staffId: this.centerViewData.staffId })
+        this.groupsService
+          .activateOrGenerateCollectionSheet({
+            groupId: this.centerViewData.id,
+            command: 'unassignStaff',
+            requestBody: { staffId: this.centerViewData.staffId }
+          } as any)
           .subscribe(() => {
             this.reload();
           });
@@ -169,7 +174,7 @@ export class CentersViewComponent implements OnInit {
     });
     deleteGroupDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.centersService.deleteCenter(this.centerViewData.id).subscribe(() => {
+        this.notesService.deleteNote(this.centerViewData.id).subscribe(() => {
           this.router.navigate(['/centers'], { relativeTo: this.route });
         });
       }

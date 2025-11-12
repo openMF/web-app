@@ -10,7 +10,7 @@ import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dial
 /** Custom Services */
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '../../../core/authentication/authentication.service';
-import { CentersService } from '../../centers.service';
+import { NotesService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatList, MatListItem } from '@angular/material/list';
 import { MatLine } from '@angular/material/grid-list';
@@ -40,7 +40,7 @@ export class NotesTabComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private formBuilder: UntypedFormBuilder,
-    private centersService: CentersService,
+    private notesService: NotesService,
     private authenticationService: AuthenticationService,
     private dialog: MatDialog,
     private translateService: TranslateService
@@ -67,15 +67,21 @@ export class NotesTabComponent implements OnInit {
   }
 
   submit() {
-    this.centersService.createCenterNote(this.centerId, this.noteForm.value).subscribe((response: any) => {
-      this.centerNotes.push({
-        id: response.resourceId,
-        createdByUsername: this.username,
-        createdOn: new Date(),
-        note: this.noteForm.value.note
+    this.notesService
+      .addNewNote({
+        resourceType: 'centers',
+        resourceId: Number(this.centerId),
+        noteRequest: this.noteForm.value
+      })
+      .subscribe((response: any) => {
+        this.centerNotes.push({
+          id: response.resourceId,
+          createdByUsername: this.username,
+          createdOn: new Date(),
+          note: this.noteForm.value.note
+        });
+        this.formRef.resetForm();
       });
-      this.formRef.resetForm();
-    });
   }
 
   editNote(noteId: string, noteContent: string, index: number) {
@@ -99,9 +105,16 @@ export class NotesTabComponent implements OnInit {
     });
     editNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.data) {
-        this.centersService.editCenterNote(this.centerId, noteId, response.data.value).subscribe(() => {
-          this.centerNotes[index].note = response.data.value.note;
-        });
+        this.notesService
+          .updateNote({
+            resourceType: 'centers',
+            resourceId: Number(this.centerId),
+            noteId: Number(noteId),
+            noteRequest: response.data.value
+          })
+          .subscribe(() => {
+            this.centerNotes[index].note = response.data.value.note;
+          });
       }
     });
   }
@@ -114,9 +127,15 @@ export class NotesTabComponent implements OnInit {
     });
     deleteNoteDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.centersService.deleteCenterNote(this.centerId, noteId).subscribe(() => {
-          this.centerNotes.splice(index, 1);
-        });
+        this.notesService
+          .deleteNote({
+            resourceType: 'centers',
+            resourceId: Number(this.centerId),
+            noteId: Number(noteId)
+          })
+          .subscribe(() => {
+            this.centerNotes.splice(index, 1);
+          });
       }
     });
   }

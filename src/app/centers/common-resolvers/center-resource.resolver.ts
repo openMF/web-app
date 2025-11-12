@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { CentersService } from '@fineract/client';
 
 /**
  * Centers data resolver.
@@ -24,6 +24,6 @@ export class CenterResourceResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const centerId = route.parent.paramMap.get('centerId');
-    return this.centersService.getCenterData(centerId);
+    return this.centersService.retrieveOne14({ centerId: Number(centerId) });
   }
 }

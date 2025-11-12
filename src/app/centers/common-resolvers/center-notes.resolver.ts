@@ -6,17 +6,16 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
-
+import { NotesService } from '@fineract/client';
 /**
  * Centers notes data resolver.
  */
 @Injectable()
 export class CenterNotesResolver {
   /**
-   * @param {CentersService} CentersService Centers service.
+   * @param {NotesService} notesService Notes Service.
    */
-  constructor(private centersService: CentersService) {}
+  constructor(private notesService: NotesService) {}
 
   /**
    * Returns the Centers Notes Data.
@@ -24,6 +23,9 @@ export class CenterNotesResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const centerId = route.parent.paramMap.get('centerId');
-    return this.centersService.getCenterNotes(centerId);
+    return this.notesService.retrieveNotesByResource({
+      resourceType: 'centers',
+      resourceId: Number(centerId)
+    });
   }
 }

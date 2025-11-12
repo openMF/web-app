@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { RunReportsService } from '@fineract/client';
 
 /**
  * Centers data resolver.
@@ -14,9 +14,9 @@ import { CentersService } from '../centers.service';
 @Injectable()
 export class CenterSummaryResolver {
   /**
-   * @param {CentersService} CentersService Centers service.
+   * @param {RunReportsService} runReportsService Run Reports Service.
    */
-  constructor(private centersService: CentersService) {}
+  constructor(private runReportsService: RunReportsService) {}
 
   /**
    * Returns the Centers Summary Data.
@@ -24,6 +24,6 @@ export class CenterSummaryResolver {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const centerId = route.parent.paramMap.get('centerId');
-    return this.centersService.getCenterSummary(centerId);
+    return this.runReportsService.runReport({ reportName: centerId });
   }
 }

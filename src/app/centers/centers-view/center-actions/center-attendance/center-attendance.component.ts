@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CentersService } from 'app/centers/centers.service';
+import { MeetingsService } from '@fineract/client';
 import { SettingsService } from 'app/settings/settings.service';
 
 /** Custom Dialogs */
@@ -92,7 +92,7 @@ export class CenterAttendanceComponent implements OnInit {
    * @param {ActivatedRoute} route Route
    * @param {Dates} dateUtils Date Utils
    * @param {Router} router Router
-   * @param {CentersService} centersService Centers Service
+   * @param {MeetingsService} meetingsService Meetings Service
    * @param {SettingsService} settingsService Settings Service.
    * @param {MatDialog} dialog Mat Dialog
    */
@@ -100,7 +100,7 @@ export class CenterAttendanceComponent implements OnInit {
     private route: ActivatedRoute,
     private dateUtils: Dates,
     private router: Router,
-    private centersService: CentersService,
+    private meetingsService: MeetingsService,
     private settingsService: SettingsService,
     public dialog: MatDialog,
     private translateService: TranslateService
@@ -129,8 +129,8 @@ export class CenterAttendanceComponent implements OnInit {
    * Gets attendance type options based on calendar id.
    */
   getAttendanceOptions() {
-    this.centersService
-      .getMeetingsTemplate(this.centerData.id, this.centerData.collectionMeetingCalendar.id)
+    this.meetingsService
+      .template11(this.centerData.id, this.centerData.collectionMeetingCalendar.id)
       .subscribe((response: any) => {
         this.attendanceTypeOptions = response.attendanceTypeOptions;
       });
@@ -184,8 +184,12 @@ export class CenterAttendanceComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService
-      .assignCenterAttendance(this.centerData.id, this.centerData.collectionMeetingCalendar.id, data)
+    this.meetingsService
+      .createMeeting({
+        entityType: 'centers',
+        entityId: this.centerData.id,
+        body: JSON.stringify(data)
+      })
       .subscribe(() => {
         this.router.navigate(['../../'], { relativeTo: this.route });
       });

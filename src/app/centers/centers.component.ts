@@ -11,11 +11,9 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { merge } from 'rxjs';
 import { tap, startWith, map, distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
-/** Custom Services */
-import { CentersService } from './centers.service';
-
 /** Custom Data Source */
 import { CentersDataSource } from './centers.datasource';
+import { CentersService } from '@fineract/client';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import {
   MatTable,
@@ -99,6 +97,7 @@ export class CentersComponent implements OnInit, AfterViewInit {
   constructor(private centersService: CentersService) {}
 
   ngOnInit() {
+    this.dataSource = new CentersDataSource(this.centersService);
     this.getCenters();
   }
 
@@ -175,7 +174,6 @@ export class CentersComponent implements OnInit, AfterViewInit {
    * Initializes the data source for centers table and loads the first page.
    */
   getCenters() {
-    this.dataSource = new CentersDataSource(this.centersService);
     this.dataSource.getCenters(
       this.filterCentersBy,
       this.sort.active,

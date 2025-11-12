@@ -6,7 +6,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-import { CentersService } from '../centers.service';
+import { GroupsService, CentersService, CalendarService, RunReportsService } from '@fineract/client';
 
 /**
  * Group Actions data resolver.
@@ -14,9 +14,17 @@ import { CentersService } from '../centers.service';
 @Injectable()
 export class CenterActionsResolver {
   /**
-   * @param {CentersService} centersService Savings service.
+   * @param {GroupsService} groupsService Groups Service
+   * @param {CentersService} centersService Centers Service
+   * @param {CalendarService} calendarService Calendar Service
+   * @param {RunReportsService} runReportsService Run Reports Service
    */
-  constructor(private centersService: CentersService) {}
+  constructor(
+    private groupsService: GroupsService,
+    private centersService: CentersService,
+    private calendarService: CalendarService,
+    private runReportsService: RunReportsService
+  ) {}
 
   /**
    * Returns the Centers account actions data.
@@ -28,19 +36,30 @@ export class CenterActionsResolver {
     const centerId = route.paramMap.get('centerId') || route.parent.parent.paramMap.get('centerId');
     switch (actionName) {
       case 'Assign Staff':
-        return this.centersService.getGroupStaffData(centerId);
+        return this.groupsService.delete11({ groupId: Number(centerId) });
       case 'Attendance':
-        return this.centersService.getCentersData(centerId, 'groupMembers,collectionMeetingCalendar');
+        return this.centersService.retrieveOne14({
+          centerId: Number(centerId)
+        });
       case 'Manage Groups':
-        return this.centersService.getCentersData(centerId, 'groupMembers', 'true');
+        return this.centersService.retrieveOne14({
+          centerId: Number(centerId),
+          staffInSelectedOfficeOnly: true
+        });
       case 'Attach Meeting':
-        return this.centersService.getCalendarTemplate(centerId);
+        return this.calendarService.retrieveNewCalendarDetails({ entityType: 'centers', entityId: Number(centerId) });
       case 'Edit Meeting':
       case 'Edit Meeting Schedule':
         const calendarId = route.queryParamMap.get('calendarId');
-        return this.centersService.getCalendarAndTemplate(centerId, calendarId);
+        return this.calendarService.retrieveCalendar({
+          calendarId: Number(calendarId),
+          entityType: 'center',
+          entityId: Number(centerId)
+        });
       case 'Staff Assignment History':
-        return this.centersService.getStaffAssignmentHistoryData('Staff Assignment History', centerId, 'default', 'en');
+        return this.runReportsService.runReport({
+          reportName: 'Staff Assignment History'
+        });
       default:
         return undefined;
     }

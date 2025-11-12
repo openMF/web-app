@@ -6,7 +6,7 @@ import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { OrganizationService } from 'app/organization/organization.service';
-import { CentersService } from 'app/centers/centers.service';
+import { CentersService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { CollectionSheetData, JLGGroupData, MeetingFallCenter } from '../models/collection-sheet-data.model';
 
@@ -46,11 +46,12 @@ export class CollectionSheetComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {Dialog} dialog Dialog component.
    * @param {Router} router Router for navigation.
-   * @param {SettingsService} settingsService Settings Service
+   * @param {SettingsService} settingsService Settings Service.
+   * @param {CentersService} centerService Centers Service.
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private centerService: CentersService,
+    private centersService: CentersService,
     private collectionsService: CollectionsService,
     private organizationService: OrganizationService,
     private router: Router,
@@ -116,11 +117,13 @@ export class CollectionSheetComponent implements OnInit {
     const staffId = this.collectionSheetForm.value.staffId;
     const meetingDate = this.dateUtils.formatDate(this.collectionSheetForm.value.meetingDate, dateFormat);
 
-    this.centerService
-      .getAllMeetingFallCenters(this.officeId, staffId, meetingDate, dateFormat, locale)
-      .subscribe((response: CollectionSheetData[]) => {
-        if (response.length > 0) {
-          this.meetingFallCenters = response[0].meetingFallCenters;
+    this.centersService
+      .retrieveOne14({
+        centerId: this.officeId as number
+      })
+      .subscribe((response: any) => {
+        if (response.meetingFallCenters && response.meetingFallCenters.length > 0) {
+          this.meetingFallCenters = response.meetingFallCenters;
           const payload = {
             calendarId: this.meetingFallCenters[0].collectionMeetingCalendar.calendarInstanceId,
             transactionDate: meetingDate,
@@ -133,8 +136,8 @@ export class CollectionSheetComponent implements OnInit {
               postCentersCenterIdRequest: payload,
               command: 'activate'
             })
-            .subscribe((response: PostCentersCenterIdResponse) => {
-              console.log(response);
+            .subscribe((activateResponse: PostCentersCenterIdResponse) => {
+              console.log(activateResponse);
             });
         }
       });

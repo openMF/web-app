@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 /** Custom Services */
-import { CentersService } from 'app/centers/centers.service';
+import { CalendarService } from '@fineract/client';
 import { Dates } from 'app/core/utils/dates';
 import { SettingsService } from 'app/settings/settings.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -53,7 +53,7 @@ export class EditCenterMeetingComponent implements OnInit {
   /**
    * Fetches Calendar Template from `resolve`
    * @param {FormBuilder} formBuilder Form Builder
-   * @param {CentersService} centersService Shares Service
+   * @param {CalendarService} calendarService Calendar Service
    * @param {SettingsService} settingsService Settings Service.
    * @param {Dates} dateUtils Date Utils
    * @param {ActivatedRoute} route Activated Route
@@ -61,7 +61,7 @@ export class EditCenterMeetingComponent implements OnInit {
    */
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private centersService: CentersService,
+    private calendarService: CalendarService,
     private settingsService: SettingsService,
     private dateUtils: Dates,
     private route: ActivatedRoute,
@@ -187,7 +187,7 @@ export class EditCenterMeetingComponent implements OnInit {
       dateFormat,
       locale
     };
-    this.centersService.updateCenterMeeting(this.centerId, data, this.calendarId).subscribe((response: any) => {
+    this.calendarService.updateCalendar(this.centerId, data, this.calendarId).subscribe((response: any) => {
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
   }
