@@ -1,4 +1,3 @@
-/** Angular Imports */
 import { Injectable } from '@angular/core';
 import { AlertService } from 'app/core/alert/alert.service';
 import { Dates } from 'app/core/utils/dates';
@@ -21,17 +20,39 @@ export class SettingsService {
   minAllowedDate = new Date(1950, 0, 1);
   maxAllowedDate = new Date(2100, 0, 1);
 
+  // Fallback in-memory storage for incognito mode
+  private memoryStorage: { [key: string]: string } = {};
+
   constructor(
     private alertService: AlertService,
     private dateUtils: Dates
   ) {}
+
+  // Helper to safely set item
+  private setStorageItem(key: string, value: string): void {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      // Fallback to memory in incognito/private mode
+      this.memoryStorage[key] = value;
+    }
+  }
+
+  // Helper to safely get item
+  private getStorageItem(key: string): string | null {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      return this.memoryStorage[key] || null;
+    }
+  }
 
   /**
    * Sets date format setting throughout the app.
    * @param {string} dateFormat Date Format
    */
   setDateFormat(dateFormat: string) {
-    localStorage.setItem('mifosXDateFormat', JSON.stringify(dateFormat));
+    this.setStorageItem('mifosXDateFormat', JSON.stringify(dateFormat));
   }
 
   /**
@@ -39,7 +60,7 @@ export class SettingsService {
    * @param {any} language Language.
    */
   setLanguage(language: { name: string; code: string }) {
-    localStorage.setItem('mifosXLanguage', JSON.stringify(language));
+    this.setStorageItem('mifosXLanguage', JSON.stringify(language));
   }
 
   /**
@@ -47,7 +68,7 @@ export class SettingsService {
    * @param {string} decimals.
    */
   setDecimalToDisplay(decimals: string) {
-    localStorage.setItem('mifosXDecimalsToDisplay', decimals);
+    this.setStorageItem('mifosXDecimalsToDisplay', decimals);
   }
 
   setDefaultLanguage() {
@@ -63,7 +84,7 @@ export class SettingsService {
    * @param {string} url URL
    */
   setServer(url: string) {
-    localStorage.setItem('mifosXServerURL', url);
+    this.setStorageItem('mifosXServerURL', url);
   }
 
   /**
@@ -71,7 +92,7 @@ export class SettingsService {
    * @param {string[]} list List of default servers
    */
   setServers(list: string[]) {
-    localStorage.setItem('mifosXServers', JSON.stringify(list));
+    this.setStorageItem('mifosXServers', JSON.stringify(list));
   }
 
   /**
@@ -79,7 +100,7 @@ export class SettingsService {
    * @param {string[]} list List of default tenants
    */
   setTenantIdentifiers(list: string[]) {
-    localStorage.setItem('mifosXTenantIdentifiers', JSON.stringify(list));
+    this.setStorageItem('mifosXTenantIdentifiers', JSON.stringify(list));
   }
 
   /**
@@ -87,7 +108,7 @@ export class SettingsService {
    * @param {string} Tenant Identifier
    */
   setTenantIdentifier(tenantIdentifier: string) {
-    localStorage.setItem('mifosXTenantIdentifier', tenantIdentifier);
+    this.setStorageItem('mifosXTenantIdentifier', tenantIdentifier);
   }
 
   /**
@@ -95,7 +116,7 @@ export class SettingsService {
    * @param {string} date
    */
   setBusinessDate(date: string) {
-    localStorage.setItem('mifosXServerDate', date);
+    this.setStorageItem('mifosXServerDate', date);
   }
 
   /**
@@ -103,143 +124,113 @@ export class SettingsService {
    * @param {string} enabled
    */
   setBusinessDateConfig(enabled: string) {
-    localStorage.setItem('mifosXServerBusinessDateEnabled', enabled);
+    this.setStorageItem('mifosXServerBusinessDateEnabled', enabled);
   }
 
-  /**
-   * Returns date format setting.
-   */
+  setThemeDarkEnabled(enabled: boolean) {
+    this.setStorageItem('mifosXThemeDarkEnabled', JSON.stringify(enabled));
+  }
+
+  // --- GETTERS ---
+
   get dateFormat(): string {
-    const parsed = safeParse<string | null>(localStorage.getItem('mifosXDateFormat'), null);
+    const item = this.getStorageItem('mifosXDateFormat');
+    const parsed = safeParse<string | null>(item, null);
     return typeof parsed === 'string' && parsed.length > 0 ? parsed : 'dd MMMM yyyy';
   }
 
-  /**
-   * Returns language setting
-   */
-  get language() {
-    if (!localStorage.getItem('mifosXLanguage')) {
-      this.setDefaultLanguage();
+  get language(): { name: string; code: string } | undefined {
+    const item = this.getStorageItem('mifosXLanguage');
+    if (!item) {
+      const defaultLanguage = environment.defaultLanguage || 'en-US';
+      const lang = {
+        name: defaultLanguage,
+        code: defaultLanguage.substring(0, 2)
+      };
+      this.setLanguage(lang); // persist if possible
+      return lang;
     }
-    return safeParseObject<{ name: string; code: string } | undefined>(
-      localStorage.getItem('mifosXLanguage'),
-      undefined
-    );
+    return safeParseObject<{ name: string; code: string } | undefined>(item, undefined);
   }
 
   get languageCode() {
-    const currentLanguage = this.language.code;
-    if (currentLanguage === 'es') {
-      return 'es-MX';
-    }
-    if (currentLanguage === 'en') {
-      return 'en-US';
-    }
-    return currentLanguage + '-' + currentLanguage.toUpperCase();
+    const lang = this.language;
+    if (!lang || !lang.code) return 'en-US';
+    const code = lang.code;
+    if (code === 'es') return 'es-MX';
+    if (code === 'en') return 'en-US';
+    return code + '-' + code.toUpperCase();
   }
 
-  /**
-   * Returns Decimals to Display setting
-   */
   get decimals() {
-    if (!localStorage.getItem('mifosXDecimalsToDisplay')) {
-      return '2';
-    }
-    return localStorage.getItem('mifosXDecimalsToDisplay');
+    return this.getStorageItem('mifosXDecimalsToDisplay') || '2';
   }
 
-  /**
-   * Returns list of default server
-   */
   get servers() {
-    return safeParseArray<string>(localStorage.getItem('mifosXServers'), []);
+    return safeParseArray<string>(this.getStorageItem('mifosXServers'), []);
   }
 
-  /**
-   * Returns server setting
-   */
   get server() {
-    if (localStorage.getItem('mifosXServerURL')) {
-      return localStorage.getItem('mifosXServerURL');
-    }
+    const stored = this.getStorageItem('mifosXServerURL');
+    if (stored) return stored;
     if (environment.baseApiUrl && environment.baseApiUrl !== '') {
       return environment.baseApiUrl;
-    } else {
-      return this.servers[0];
     }
+    const servers = this.servers;
+    return servers.length > 0 ? servers[0] : '';
   }
 
-  /**
-   * Returns server url with api path without version
-   */
   get baseServerUrl() {
     return this.server + environment.apiProvider;
   }
 
-  /**
-   * Returns server url with api path and version
-   */
   get serverUrl() {
     return this.server + environment.apiProvider + environment.apiVersion;
   }
 
-  /**
-   * Returns server url with api path and version
-   */
   get serverHost() {
     return this.server;
   }
 
-  /**
-   * Returns current Business date server
-   */
   get businessDate(): Date {
-    return this.dateUtils.convertToDate(localStorage.getItem('mifosXServerDate'), SettingsService.businessDateFormat);
+    const dateStr = this.getStorageItem('mifosXServerDate');
+    return this.dateUtils.convertToDate(dateStr, SettingsService.businessDateFormat);
   }
 
-  /**
-   * Returns current Business date Config if it's enabled
-   */
-  get businessDateConfig(): any {
-    return localStorage.getItem('mifosXServerBusinessDateEnabled');
+  get businessDateConfig(): string | null {
+    return this.getStorageItem('mifosXServerBusinessDateEnabled');
   }
 
-  /**
-   * Returns min Past date
-   */
   get minPastDate(): Date {
     return this.minAllowedDate;
   }
 
-  /**
-   * Returns max Future date
-   */
   get maxFutureDate(): Date {
     return this.maxAllowedDate;
   }
 
-  /**
-   * Returns list of Tenant Identifiers
-   */
-  get tenantIdentifiers(): any {
-    return safeParseArray<string>(localStorage.getItem('mifosXTenantIdentifiers'), []);
+  get tenantIdentifiers() {
+    return safeParseArray<string>(this.getStorageItem('mifosXTenantIdentifiers'), []);
   }
 
-  /**
-   * Returns Tenant Identifier
-   */
-  get tenantIdentifier(): string {
-    return localStorage.getItem('mifosXTenantIdentifier');
+  get tenantIdentifier(): string | null {
+    return this.getStorageItem('mifosXTenantIdentifier');
+  }
+
+  get themeDarkEnabled(): boolean {
+    const item = this.getStorageItem('mifosXThemeDarkEnabled');
+    return safeParse<boolean>(item, false);
   }
 
   /**
    * Validate If the enable_business_date configuration is enabled or disabled.
    */
   validateBusinessDateStatus(configurations: any) {
-    configurations.some((config: any) => {
+    return configurations.some((config: any) => {
       if (config.name === SettingsService.businessDateConfigName) {
         return config.enabled;
       }
+      return false;
     });
   }
 
@@ -255,16 +246,9 @@ export class SettingsService {
           type: dateType + ' Set',
           message: this.dateUtils.formatDate(dateVal, this.dateFormat)
         });
-        return;
+        return true;
       }
+      return false;
     });
-  }
-
-  setThemeDarkEnabled(enabled: boolean) {
-    localStorage.setItem('mifosXThemeDarkEnabled', JSON.stringify(enabled));
-  }
-
-  get themeDarkEnabled(): boolean {
-    return safeParse<boolean>(localStorage.getItem('mifosXThemeDarkEnabled'), false);
   }
 }
