@@ -1,16 +1,11 @@
 /** Angular Imports */
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  UntypedFormGroup,
-  UntypedFormBuilder,
-  UntypedFormControl,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
-/** CKEditor5 Imports */
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+/** TinyMCE Imports */
+import { EditorComponent, EditorModule } from '@tinymce/tinymce-angular';
+import type { EditorOptions } from 'tinymce';
 
 /** Custom Imports */
 import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } from '../template-parameter-labels';
@@ -18,7 +13,6 @@ import { clientParameterLabels, loanParameterLabels, repaymentParameterLabels } 
 /** Custom Services */
 import { TemplatesService } from '../templates.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -26,6 +20,7 @@ import {
   MatExpansionPanelTitle
 } from '@angular/material/expansion';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import '../tinymce-loader';
 
 /**
  * Create Template Component.
@@ -37,7 +32,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
     FaIconComponent,
-    CKEditorModule,
+    EditorModule,
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelHeader,
@@ -45,10 +40,41 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateEditComponent implements OnInit {
-  /** CKEditor5 */
-  public Editor = ClassicEditor;
-  /** CKEditor5 Template Reference */
-  @ViewChild('ckEditor', { static: true }) ckEditor: any;
+  /** TinyMCE Template Reference */
+  @ViewChild('tinyEditor') tinyEditor?: EditorComponent;
+  /** Default TinyMCE editor options (using bundled version via tinymce-loader.ts). */
+  readonly tinyMceInit: Partial<EditorOptions> = {
+    skin: false,
+    content_css: [],
+    menubar: false,
+    statusbar: false,
+    height: 340,
+    min_height: 260,
+    // Prevent external resource loading
+    base_url: '',
+    suffix: '',
+    plugins: [
+      'advlist',
+      'autolink',
+      'lists',
+      'link',
+      'charmap',
+      'preview',
+      'searchreplace',
+      'visualblocks',
+      'code',
+      'fullscreen',
+      'table',
+      'wordcount',
+      'image',
+      'media'
+    ],
+    toolbar:
+      'undo redo | blocks | bold italic | link image table blockquote media | ' +
+      'bullist numlist | outdent indent | alignleft aligncenter alignright alignjustify | removeformat code fullscreen preview',
+    toolbar_mode: 'wrap',
+    content_style: 'body { font-family: var(--mat-body-large-font-family, Inter, Arial, sans-serif); font-size: 14px; }'
+  };
 
   /** Template form. */
   templateForm: UntypedFormGroup;
@@ -67,6 +93,14 @@ export class CreateEditComponent implements OnInit {
   loanParameterLabels: string[] = loanParameterLabels;
   /** Repayment Parameter Labels */
   repaymentParameterLabels: string[] = repaymentParameterLabels;
+  /** Convenience getter for editor form control. */
+  private get textControl(): UntypedFormControl {
+    return this.templateForm.get('text') as UntypedFormControl;
+  }
+  /** Exposes the editor control to the template. */
+  get textFormControl(): UntypedFormControl {
+    return this.textControl;
+  }
 
   /**
    * Retrieves the template data from `resolve`.
@@ -166,6 +200,8 @@ export class CreateEditComponent implements OnInit {
         });
       }
       this.setEditorContent('');
+      this.textControl.markAsPristine();
+      this.textControl.markAsUntouched();
     });
     if (this.mode === 'create') {
       this.templateForm.get('entity').patchValue(0);
@@ -192,42 +228,49 @@ export class CreateEditComponent implements OnInit {
   }
 
   /**
-   * Adds text to CKEditor at cursor position.
+   * Adds text to the TinyMCE editor at cursor position.
    * @param {string} label Template parameter label.
    */
   addText(label: string) {
-    if (this.ckEditor && this.ckEditor.editorInstance) {
-      this.ckEditor.editorInstance.model.change((writer: any) => {
-        const insertPosition = this.ckEditor.editorInstance.model.document.selection.getFirstPosition();
-        writer.insertText(label, insertPosition);
-      });
+    const editorInstance = this.tinyEditor?.editor;
+    if (editorInstance) {
+      editorInstance.focus();
+      editorInstance.insertContent(label);
+      const updatedContent = editorInstance.getContent() || '';
+      this.textControl.setValue(updatedContent);
+      this.textControl.markAsDirty();
+      this.textControl.markAsTouched();
+      return;
     }
+    const fallbackValue = this.textControl.value || '';
+    this.textControl.setValue(`${fallbackValue}${label}`);
+    this.textControl.markAsDirty();
+    this.textControl.markAsTouched();
   }
 
   /**
-   * Gets the contents of CKEditor.
+   * Gets the contents of the editor.
    */
   getEditorContent() {
-    if (this.ckEditor && this.ckEditor.editorInstance) {
-      return this.ckEditor.editorInstance.getData();
+    if (this.tinyEditor?.editor) {
+      return this.tinyEditor.editor.getContent() || '';
     }
-    return '';
+    return this.textControl?.value || '';
   }
 
   /**
-   * Sets the contents of CKEditor.
+   * Sets the contents of the editor.
    * @param {string} content Editor Content
    */
   setEditorContent(content: string) {
-    if (this.ckEditor && this.ckEditor.editorInstance) {
-      return this.ckEditor.editorInstance.setData(content);
-    }
-    return '';
+    this.textControl.setValue(content || '');
   }
 
-  onEditorChange(event: any) {
-    const editorContent = event.editor.getData();
-    this.templateForm.get('text').setValue(editorContent);
+  /**
+   * Marks the editor control as touched when focus leaves TinyMCE.
+   */
+  onEditorBlur() {
+    this.textControl.markAsTouched();
   }
 
   /**
