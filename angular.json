@@ -49,7 +49,6 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "lodash",
-              "@ckeditor/ckeditor5-build-classic",
               "moment"
             ],
             "browser": "src/main.ts",

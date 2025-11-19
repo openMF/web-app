@@ -14,7 +14,7 @@
   }
 }
 
-// Editor wrapper - prevents CKEditor from touching borders on left and right
+// Editor wrapper - prevents TinyMCE from touching borders on left and right
 .editor-wrapper {
   margin-top: 16px;
 
@@ -29,15 +29,19 @@
     color: #f44336;
   }
 
-  // CKEditor container spacing
+  .editor-error {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  // TinyMCE container spacing
   ::ng-deep {
-    .ck-editor {
+    .tox-tinymce {
       margin: 0;
 
-      .ck-editor__main {
-        .ck-content {
-          min-height: 200px;
-        }
+      .tox-edit-area__iframe {
+        min-height: 260px;
       }
     }
   }
