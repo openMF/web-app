@@ -1,7 +1,11 @@
 /** Angular Imports */
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UntypedFormControl } from '@angular/forms';
+
+/** RxJS Imports */
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /** Custom Dialogs */
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -55,7 +59,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ChargesFilterPipe
   ]
 })
-export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
+export class SharesAccountChargesStepComponent implements OnInit, OnChanges, OnDestroy {
   /** Shares Account Product Template */
   @Input() sharesAccountProductTemplate: any;
   /** Shares Account Template */
@@ -79,6 +83,8 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
     'chargeTimeType',
     'action'
   ];
+  /** Subject to handle subscription cleanup */
+  private destroy$ = new Subject<void>();
 
   /**
    * @param {MatDialog} dialog Mat Dialog
@@ -89,7 +95,7 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    this.currencyCode.valueChanges.subscribe(() => {
+    this.currencyCode.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       if (!this.isChargesPatched && this.sharesAccountTemplate.charges) {
         this.chargesDataSource = this.sharesAccountTemplate.charges;
         this.isChargesPatched = true;
@@ -104,6 +110,11 @@ export class SharesAccountChargesStepComponent implements OnInit, OnChanges {
       this.chargeData = this.sharesAccountTemplate.chargeOptions;
       this.chargesDataSource = this.sharesAccountProductTemplate.charges;
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   /**

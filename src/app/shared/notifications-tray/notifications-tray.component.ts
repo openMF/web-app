@@ -2,7 +2,8 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 
 /** RxJS Imports */
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /** Custom Services */
 import { NotificationsService } from 'app/notifications/notifications.service';
@@ -46,6 +47,8 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
   unreadNotifications: any[] = [];
   /** Timer to refetch notifications every 60 seconds */
   timer: any;
+  /** Subject to handle subscription cleanup */
+  private destroy$ = new Subject<void>();
 
   /**
    * Gets router link prefix from notification's objectType attribute
@@ -70,11 +73,13 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
   constructor(public notificationsService: NotificationsService) {
     forkJoin([
       this.notificationsService.getNotifications(true, 9),
-      this.notificationsService.getNotifications(false, 9)]).subscribe((response: any[]) => {
-      this.readNotifications = response[0].pageItems;
-      this.unreadNotifications = response[1].pageItems;
-      this.setNotifications();
-    });
+      this.notificationsService.getNotifications(false, 9)])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any[]) => {
+        this.readNotifications = response[0].pageItems;
+        this.unreadNotifications = response[1].pageItems;
+        this.setNotifications();
+      });
   }
 
   ngOnInit() {
@@ -83,6 +88,8 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.destroy();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   public destroy() {
@@ -101,10 +108,13 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * Recursively fetch unread notifications.
    */
   fetchUnreadNotifications() {
-    this.notificationsService.getNotifications(false, 9).subscribe((response: any) => {
-      this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
-      this.setNotifications();
-    });
+    this.notificationsService
+      .getNotifications(false, 9)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
+        this.setNotifications();
+      });
     // this.mockNotifications(); // Uncomment for Testing.
     this.timer = setTimeout(() => {
       this.fetchUnreadNotifications();
@@ -116,7 +126,10 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    */
   menuClosed() {
     // Update the server for read notifications.
-    this.notificationsService.updateNotifications().subscribe(() => {});
+    this.notificationsService
+      .updateNotifications()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {});
     // Update locally for read notifications.
     this.readNotifications = this.unreadNotifications.concat(this.readNotifications);
     this.unreadNotifications = [];
@@ -127,9 +140,12 @@ export class NotificationsTrayComponent implements OnInit, OnDestroy {
    * Function to test notifications in case of faulty backend.
    */
   mockNotifications() {
-    this.notificationsService.getMockUnreadNotification().subscribe((response: any) => {
-      this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
-      this.setNotifications();
-    });
+    this.notificationsService
+      .getMockUnreadNotification()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        this.unreadNotifications = this.unreadNotifications.concat(response.pageItems);
+        this.setNotifications();
+      });
   }
 }

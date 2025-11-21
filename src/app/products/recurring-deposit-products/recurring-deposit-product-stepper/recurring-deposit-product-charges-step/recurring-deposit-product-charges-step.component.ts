@@ -1,6 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+
+/** RxJS Imports */
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -45,7 +49,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ChargesFilterPipe
   ]
 })
-export class RecurringDepositProductChargesStepComponent implements OnInit {
+export class RecurringDepositProductChargesStepComponent implements OnInit, OnDestroy {
   @Input() recurringDepositProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
 
@@ -59,6 +63,8 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
     'chargeTimeType',
     'action'
   ];
+  /** Subject to handle subscription cleanup */
+  private destroy$ = new Subject<void>();
 
   constructor(
     public dialog: MatDialog,
@@ -72,7 +78,12 @@ export class RecurringDepositProductChargesStepComponent implements OnInit {
     } else {
       this.chargesDataSource = [];
     }
-    this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
+    this.currencyCode.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => (this.chargesDataSource = []));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   addCharge(charge: any) {

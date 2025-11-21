@@ -1,6 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+
+/** RxJS Imports */
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
 import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
@@ -51,7 +55,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FormatNumberPipe
   ]
 })
-export class LoanProductChargesStepComponent implements OnInit {
+export class LoanProductChargesStepComponent implements OnInit, OnDestroy {
   @Input() loanProductsTemplate: any;
   @Input() currencyCode: UntypedFormControl;
   @Input() multiDisburseLoan: UntypedFormControl;
@@ -69,6 +73,8 @@ export class LoanProductChargesStepComponent implements OnInit {
   ];
 
   pristine = true;
+  /** Subject to handle subscription cleanup */
+  private destroy$ = new Subject<void>();
 
   constructor(
     public dialog: MatDialog,
@@ -86,8 +92,13 @@ export class LoanProductChargesStepComponent implements OnInit {
     this.chargesDataSource = this.loanProductsTemplate.charges || [];
     this.pristine = true;
 
-    this.currencyCode.valueChanges.subscribe(() => (this.chargesDataSource = []));
-    this.multiDisburseLoan.valueChanges.subscribe(() => (this.chargesDataSource = []));
+    this.currencyCode.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => (this.chargesDataSource = []));
+    this.multiDisburseLoan.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => (this.chargesDataSource = []));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   addCharge(charge: any) {

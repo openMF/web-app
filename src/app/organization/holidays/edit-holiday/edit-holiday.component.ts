@@ -60,7 +60,7 @@ export class EditHolidayComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private router: Router
   ) {
-    this.route.data.subscribe((data: { holiday: any; holidayTemplate: any }) => {
+    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { holiday: any; holidayTemplate: any }) => {
       this.holidayData = data.holiday;
       this.holidayData.repaymentSchedulingTypes = data.holidayTemplate;
       this.reSchedulingType = this.holidayData.reschedulingType;
@@ -165,10 +165,13 @@ export class EditHolidayComponent implements OnInit, OnDestroy {
       dateFormat,
       locale
     };
-    this.organizatioService.updateHoliday(this.holidayData.id, data).subscribe((response) => {
-      /** TODO Add Redirects to ViewMakerCheckerTask page. */
-      this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    this.organizatioService
+      .updateHoliday(this.holidayData.id, data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response) => {
+        /** TODO Add Redirects to ViewMakerCheckerTask page. */
+        this.router.navigate(['../'], { relativeTo: this.route });
+      });
   }
 
   /**

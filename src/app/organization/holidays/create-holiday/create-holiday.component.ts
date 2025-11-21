@@ -115,7 +115,7 @@ export class CreateHolidayComponent implements OnInit, OnDestroy {
     private _database: ChecklistDatabase,
     private createHoliday: CreateHoliday
   ) {
-    this.route.data.subscribe((data: { offices: any; holidayTemplate: any }) => {
+    this.route.data.pipe(takeUntil(this.destroy$)).subscribe((data: { offices: any; holidayTemplate: any }) => {
       this.officesData = data.offices;
       this.repaymentSchedulingTypes = data.holidayTemplate;
       // Constructs trie everytime data changes
@@ -128,7 +128,7 @@ export class CreateHolidayComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     // Listens for changes in CheckListDatabase
-    this._database.dataChange.subscribe((data) => {
+    this._database.dataChange.pipe(takeUntil(this.destroy$)).subscribe((data) => {
       this.dataSource.data = data;
     });
   }
@@ -357,15 +357,18 @@ export class CreateHolidayComponent implements OnInit, OnDestroy {
       locale,
       offices
     };
-    this.organizationService.createHoliday(data).subscribe((response: any) => {
-      this.router.navigate(
-        [
-          '../',
-          response.resourceId
-        ],
-        { relativeTo: this.route }
-      );
-    });
+    this.organizationService
+      .createHoliday(data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        this.router.navigate(
+          [
+            '../',
+            response.resourceId
+          ],
+          { relativeTo: this.route }
+        );
+      });
   }
 
   /**
