@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -8,6 +8,8 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Dates } from 'app/core/utils/dates';
 
 /** Custom Services. */
@@ -26,7 +28,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     ...STANDALONE_SHARED_IMPORTS
   ]
 })
-export class EditHolidayComponent implements OnInit {
+export class EditHolidayComponent implements OnInit, OnDestroy {
   /** Edit Holiday form. */
   holidayForm: UntypedFormGroup;
   /** Holiday data. */
@@ -39,6 +41,8 @@ export class EditHolidayComponent implements OnInit {
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
   maxDate = new Date();
+  /** Subject for managing subscriptions. */
+  private destroy$ = new Subject<void>();
 
   /**
    * Get holiday and holiday template from `Resolver`.
@@ -116,14 +120,20 @@ export class EditHolidayComponent implements OnInit {
    * Get Rescheduling Type.
    */
   getReschedulingType() {
-    this.holidayForm.get('reschedulingType').valueChanges.subscribe((option: any) => {
-      this.reSchedulingType = option;
-      if (option === 2) {
-        this.holidayForm.addControl('repaymentsRescheduledTo', new UntypedFormControl(new Date(), Validators.required));
-      } else {
-        this.holidayForm.removeControl('repaymentsRescheduledTo');
-      }
-    });
+    this.holidayForm
+      .get('reschedulingType')
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((option: any) => {
+        this.reSchedulingType = option;
+        if (option === 2) {
+          this.holidayForm.addControl(
+            'repaymentsRescheduledTo',
+            new UntypedFormControl(new Date(), Validators.required)
+          );
+        } else {
+          this.holidayForm.removeControl('repaymentsRescheduledTo');
+        }
+      });
   }
 
   /**
@@ -159,5 +169,13 @@ export class EditHolidayComponent implements OnInit {
       /** TODO Add Redirects to ViewMakerCheckerTask page. */
       this.router.navigate(['../'], { relativeTo: this.route });
     });
+  }
+
+  /**
+   * Component lifecycle hook to clean up subscriptions.
+   */
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
