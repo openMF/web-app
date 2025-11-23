@@ -106,22 +106,13 @@ export class LoginFormComponent implements OnInit {
    *
    * Changes the input type between 'password' and 'text'.
    */
-
   togglePasswordVisibility() {
     this.passwordInputType = this.passwordInputType === 'password' ? 'text' : 'password';
   }
 
   /**
-   * TODO: Decision to be taken on providing this feature.
-   */
-  forgotPassword() {
-    console.log('Forgot Password feature currently unavailable.');
-  }
-
-  /**
    * Creates login form with validation rules.
    */
-
   private createLoginForm() {
     this.loginForm = this.formBuilder.group({
       username: [

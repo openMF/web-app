@@ -44,16 +44,6 @@
       {{ 'labels.buttons.Login' | translate }}
       <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
     </button>
-
-    <button
-      type="button"
-      mat-button
-      class="login-button flex-align-center"
-      (click)="forgotPassword()"
-      [disabled]="loading"
-    >
-      {{ 'labels.links.Forgot Password?' | translate }}
-    </button>
   </form>
 </div>
 
