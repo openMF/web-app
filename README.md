@@ -60,7 +60,7 @@ Choose ONE of the following methods to install the web app:
 1. Install Node.js: [Download here](https://nodejs.org/en/download/)
 2. Install Angular CLI:
    ```
-   npm install -g @angular/cli@16.0.2
+   npm install -g @angular/cli@20.3.14
    ```
 3. Clone the repository:
    ```
