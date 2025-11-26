@@ -34,7 +34,12 @@
               "src/favicon.ico",
               "src/robots.txt",
               "src/manifest.json",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce",
+                "output": "assets/tinymce"
+              }
             ],
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
@@ -49,7 +54,7 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "lodash",
-              "@ckeditor/ckeditor5-build-classic",
+              "tinymce",
               "moment"
             ],
             "browser": "src/main.ts",

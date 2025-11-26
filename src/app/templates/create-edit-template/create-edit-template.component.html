@@ -81,15 +81,17 @@
 
     <mat-card-content>
       <div role="editor" class="editor-wrapper">
-        <label for="ckeditor" class="required-label required-label-ckeditor">
+        <label for="template-text-editor" class="required-label required-label-ckeditor">
           {{ 'labels.inputs.Text' | translate }} <span class="required-asterisk">*</span>
         </label>
-        <ckeditor
-          #ckEditor
-          [editor]="Editor"
-          (change)="onEditorChange($event)"
-          [data]="templateData.template?.text"
-        ></ckeditor>
+        <editor
+          id="template-text-editor"
+          #tinymceEditor
+          [init]="tinymceConfig"
+          [initialValue]="templateData.template?.text || ''"
+          apiKey=""
+          [formControl]="templateForm.controls.text"
+        ></editor>
       </div>
     </mat-card-content>
 
