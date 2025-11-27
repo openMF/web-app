@@ -30,7 +30,7 @@ Reviewed implementation decisions, change sets, and architectural impact.
 
 </details>
 24 November
-<details open> <summary><strong>Show Merged PRs Reviewed</strong></summary>
+<details> <summary><strong>Show Merged PRs Reviewed</strong></summary>
 
 Focused on merged pull requests relevant to the project.
 
@@ -44,6 +44,22 @@ https://github.com/openMF/web-app/pull/2798
 
 #2757 — WEB-399-fix(webappcomponent): Add RxJS cleanup & unsubscribe handlers to prevent memory leaks
 https://github.com/openMF/web-app/pull/2757
+
+</details>
+25 November
+<details> <summary><strong>Show Details</strong></summary>
+
+Fixed all the issues with launching through client side AGAIN.
+
+Reviewed implementation decisions, change sets, and architectural impact again.
+
+</details>
+26 November
+<details open> <summary><strong>Show Details</strong></summary>
+
+Created test changes and pushed data to our Repo.
+
+Planned further changes and started working on them locally.
 
 </details>
 
