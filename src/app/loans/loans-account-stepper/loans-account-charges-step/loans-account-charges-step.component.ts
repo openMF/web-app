@@ -338,32 +338,21 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   get loansAccountCharges() {
     const uniqueCharges = this.getUniqueCharges(this.chargesDataSource);
     return {
-      charges: uniqueCharges.map((charge: any) => {
-        const result: any = {};
-        result.chargeId = charge.chargeId;
-
-        if (charge.id && charge.id !== charge.chargeId) {
-          result.id = charge.id;
-        }
-
-        if (charge.amount !== undefined) result.amount = charge.amount;
-        if (charge.dueDate !== undefined) result.dueDate = charge.dueDate;
-        if (charge.feeInterval !== undefined) result.feeInterval = charge.feeInterval;
-        if (charge.feeOnMonthDay !== undefined) result.feeOnMonthDay = charge.feeOnMonthDay;
-
-        return result;
-      })
+      charges: uniqueCharges.map((charge: any) => ({
+        ...charge,
+        chargeId: charge.chargeId ?? charge.id
+      }))
     };
   }
   private getUniqueCharges<T extends { id?: number | string; chargeId?: number | string }>(charges: T[]): T[] {
     const uniqueChargesMap = new Map<number | string, T>();
 
     for (const charge of charges ?? []) {
-      const chargeId = charge.chargeId;
+      const chargeId = charge.chargeId ?? charge.id;
       if (chargeId == null) {
         continue;
       }
-      uniqueChargesMap.set(chargeId, charge);
+      uniqueChargesMap.set(chargeId, { ...charge, chargeId });
     }
 
     return Array.from(uniqueChargesMap.values());
