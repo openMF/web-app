@@ -193,32 +193,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --------------------------------------------------------------------------------
-Package: @ckeditor/ckeditor5-build-classic
-License: "GPL-2.0-or-later"
-
-Software License Agreement
-==========================
-
-**CKEditor&nbsp;5 classic editor build** – https://github.com/ckeditor/ckeditor5-build-classic <br>
-Copyright (c) 2003–2023, [CKSource Holding sp. z o.o.](https://cksource.com) All rights reserved.
-
-Licensed under the terms of [GNU General Public License Version 2 or later](http://www.gnu.org/licenses/gpl.html).
-
-Sources of Intellectual Property Included in CKEditor
------------------------------------------------------
-
-Where not otherwise indicated, all CKEditor content is authored by CKSource engineers and consists of CKSource-owned intellectual property. In some specific instances, CKEditor will incorporate work done by developers outside of CKSource with their express permission.
-
-The following libraries are included in CKEditor under the [MIT license](https://opensource.org/licenses/MIT):
-
-* Lodash - Copyright (c) JS Foundation and other contributors https://js.foundation/. Based on Underscore.js, copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors http://underscorejs.org/.
-
-Trademarks
-----------
-
-**CKEditor** is a trademark of [CKSource Holding sp. z o.o.](https://cksource.com) All other brand and product names are trademarks, registered trademarks, or service marks of their respective holders.
-
---------------------------------------------------------------------------------
 Package: exceljs
 License: "MIT"
 
@@ -653,104 +627,9 @@ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package: @ckeditor/ckeditor5-watchdog
-License: "GPL-2.0-or-later"
-
-Software License Agreement
-==========================
-
-**CKEditor 5 watchdog feature** – https://github.com/ckeditor/ckeditor5-watchdog <br>
-Copyright (c) 2003-2023, [CKSource Holding sp. z o.o.](https://cksource.com) All rights reserved.
-
-Licensed under the terms of [GNU General Public License Version 2 or later](http://www.gnu.org/licenses/gpl.html).
-
-Sources of Intellectual Property Included in CKEditor
------------------------------------------------------
-
-Where not otherwise indicated, all CKEditor content is authored by CKSource engineers and consists of CKSource-owned intellectual property. In some specific instances, CKEditor will incorporate work done by developers outside of CKSource with their express permission.
-
-The following libraries are included in CKEditor under the [MIT license](https://opensource.org/licenses/MIT):
-
-* lodash - Copyright (c) JS Foundation and other contributors https://js.foundation/. Based on Underscore.js, copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors http://underscorejs.org/.
-
-Trademarks
-----------
-
-**CKEditor** is a trademark of [CKSource Holding sp. z o.o.](https://cksource.com) All other brand and product names are trademarks, registered trademarks or service marks of their respective holders.
-
---------------------------------------------------------------------------------
-Package: lodash-es
+Package: @tinymce/tinymce-angular
 License: "MIT"
 
-Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
-
-Based on Underscore.js, copyright Jeremy Ashkenas,
-DocumentCloud and Investigative Reporters & Editors <http://underscorejs.org/>
-
-This software consists of voluntary contributions made by many
-individuals. For exact contribution history, see the revision history
-available at https://github.com/lodash/lodash
-
-The following license applies to all parts of this software except as
-documented below:
-
-====
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-====
-
-Copyright and related rights for sample code are waived via CC0. Sample
-code is defined as all source code displayed within the prose of the
-documentation.
-
-CC0: http://creativecommons.org/publicdomain/zero/1.0/
-
-====
-
-Files located in the node_modules and vendor directories are externally
-maintained libraries used by this software which have their own
-licenses; we recommend you read them, as their terms may differ from the
-terms above.
-
---------------------------------------------------------------------------------
-Package: @ckeditor/ckeditor5-angular
-License: "GPL-2.0-or-later"
-
-Software License Agreement
-==========================
-
-**CKEditor 5 component for Angular** – https://github.com/ckeditor/ckeditor5-angular <br>
-Copyright (c) 2003-2023, [CKSource](http://cksource.com) Holding sp. z o.o. All rights reserved.
-
-Licensed under the terms of [GNU General Public License Version 2 or later](http://www.gnu.org/licenses/gpl.html).
-
-Sources of Intellectual Property Included in CKEditor
------------------------------------------------------
-
-Where not otherwise indicated, all CKEditor content is authored by CKSource engineers and consists of CKSource-owned intellectual property. In some specific instances, CKEditor will incorporate work done by developers outside of CKSource with their express permission.
-
-Trademarks
-----------
-
-**CKEditor** is a trademark of [CKSource](http://cksource.com) Holding sp. z o.o. All other brand and product names are trademarks, registered trademarks or service marks of their respective holders.
 
 --------------------------------------------------------------------------------
 Package: @ngx-translate/http-loader
