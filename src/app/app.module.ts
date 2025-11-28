@@ -9,6 +9,7 @@
 /** Angular Imports */
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { I18nService } from './core/i18n/i18n.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   HttpBackend,
@@ -139,7 +140,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: !environment.OIDC.oidcServerEnabled ? TokenInterceptor : ZitadelTokenInterceptor,
       multi: true
-    }
+    },
+    I18nService
   ]
 })
 export class AppModule {}

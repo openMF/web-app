@@ -185,58 +185,42 @@ export class CreateGlimAccountComponent {
     };
   }
 
-  setData(client: any, totalLoan: number): any {
+  setData(applicationId: number, client: any, totalLoan: number, isFirst: boolean, isLast: boolean): any {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     // const monthDayFormat = 'dd MMMM';
-    const data = {
+    const data: any = {
       ...this.loansAccount,
-      charges: (this.loansAccount.charges ?? [])
-        .map((charge: any) => {
-          const chargeId = charge.chargeId ?? charge.id;
-          if (chargeId == null) {
-            return null;
-          }
-          const mappedCharge: any = {
-            chargeId,
-            amount: charge.amount
-          };
-          if (charge.id && charge.id !== chargeId) {
-            mappedCharge.id = charge.id;
-          }
-          if (charge.dueDate) {
-            mappedCharge.dueDate = this.dateUtils.formatDate(charge.dueDate, dateFormat);
-          }
-          if (charge.feeInterval !== undefined) {
-            mappedCharge.feeInterval = charge.feeInterval;
-          }
-          if (charge.feeOnMonthDay !== undefined) {
-            mappedCharge.feeOnMonthDay = charge.feeOnMonthDay;
-          }
-          return mappedCharge;
-        })
-        .filter(Boolean),
+      charges: this.loansAccount.charges.map((charge: any) => ({
+        chargeId: charge.id,
+        amount: charge.amount,
+        currency: charge.currency
+      })),
       clientId: client.id,
       totalLoan: totalLoan,
       loanType: 'glim',
+      applicationId: applicationId,
       amortizationType: 1,
-      isParentAccount: true,
       principal: client.principal,
       syncDisbursementWithMeeting: false,
       expectedDisbursementDate: this.dateUtils.formatDate(this.loansAccount.expectedDisbursementDate, dateFormat),
       submittedOnDate: this.dateUtils.formatDate(this.loansAccount.submittedOnDate, dateFormat),
-      dateFormat,
-      // monthDayFormat,
-      locale
+      dateFormat: dateFormat,
+      locale: locale,
+      groupId: this.loansAccountTemplate.group.id
     };
-    data.groupId = this.loansAccountTemplate.group.id;
-
+    if (isFirst) {
+      data.isParentAccount = true;
+    }
+    if (isLast) {
+      data.lastApplication = true;
+    }
     delete data.principalAmount;
-    // TODO: 2025-03-17: Apparently (?!) unsupported for GLIM
     delete data.allowPartialPeriodInterestCalculation;
     delete data.multiDisburseLoan;
     delete data.isFloatingInterestRate;
-
+    delete data.moratoriumPrincipal;
+    delete data.moratoriumInterest;
     return JSON.stringify(data);
   }
 
@@ -245,12 +229,17 @@ export class CreateGlimAccountComponent {
     const requestData = [];
     const memberSelected = this.selectedMembers?.selectedMembers ?? [];
     const totalLoan = this.totalLoanAmount();
+    const applicationId = Math.floor(1000000000 + Math.random() * 9000000000);
+
     for (let index = 0; index < memberSelected.length; index++) {
+      const isFirst = index === 0;
+      const isLast = index === memberSelected.length - 1;
       requestData.push({
         requestId: index.toString(),
+        reference: index === 0 ? null : (index - 1).toString(),
         method: 'POST',
         relativeUrl: 'loans',
-        body: this.setData(memberSelected[index], totalLoan)
+        body: this.setData(applicationId, memberSelected[index], totalLoan, isFirst, isLast)
       });
     }
     return requestData;
@@ -265,57 +254,10 @@ export class CreateGlimAccountComponent {
     return total;
   }
 
-  /**
-   * Creates a new GLIM account.
-   */
-  submit() {
-    this.selectedMembers = this.loansActiveClientMembers?.selectedClientMembers;
-    const memberSelected = this.loansActiveClientMembers?.selectedClientMembers?.selectedMembers ?? [];
-    if (!memberSelected.length) return;
-    const gsimMemberIds = new Set(this.dataSource.map((m: any) => Number(m.id)));
-    for (const member of memberSelected) {
-      const memberId = Number(member.id);
-      // Validate savings account ownership
-      const ownerId = Number(member.linkAccountOwnerId);
-      if (member.linkAccountId && member.linkAccountOwnerId && ownerId !== memberId) {
-        this.i18nService.translate('errors.linkedSavingsAccountOwnership').subscribe((msg: string) => {
-          this.notify({ defaultUserMessage: msg, errors: [] }, { memberId });
-        });
-        return;
-      }
-      // Validate GSIM membership
-      if (!gsimMemberIds.has(memberId)) {
-        this.i18nService.translate('errors.clientNotInGSIM', { id: memberId }).subscribe((msg: string) => {
-          this.notify({ defaultUserMessage: msg, errors: [] }, { memberId });
-        });
-        return;
-      }
-    }
-
-    // Use date format from settingsService for interestChargedFromDate
-    const data = this.buildRequestData();
-    this.loansService.createGlimAccount(data).subscribe((response: any) => {
-      const body = JSON.parse(response[0].body);
-      if (body.glimId) {
-        this.router.navigate(
-          [
-            '../',
-            body.glimId
-          ],
-          { relativeTo: this.route }
-        );
-      } else {
-        this.notify(body, { batchSize: data.length });
-      }
-    });
-  }
-
-  notify(body: any, context?: { [k: string]: unknown }) {
-    const parts: string[] = [String(body?.defaultUserMessage ?? '')];
-    if (Array.isArray(body?.errors)) {
-      for (const e of body.errors) parts.push(String(e?.developerMessage ?? ''));
-    }
-    if (context) parts.push(`Context: ${JSON.stringify(context)}`);
-    console.error(parts.join(' ').trim());
+  notify(body: any, data: any) {
+    let message = body.defaultUserMessage + ' ';
+    body.errors?.forEach((error: any) => (message += error.developerMessage + ' '));
+    message += 'Data: ' + JSON.stringify(data);
+    console.error(message);
   }
 }

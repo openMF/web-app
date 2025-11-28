@@ -344,6 +344,32 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     });
   }
 
+  editOverdueChargeAmount(charge: { amount: number; [key: string]: any }) {
+    const formfields: FormfieldBase[] = [
+      new InputBase({
+        controlName: 'amount',
+        label: 'Amount',
+        value: charge.amount,
+        type: 'number',
+        required: false
+      })
+    ];
+    const data = {
+      title: 'Edit Overdue Charge Amount',
+      layout: { addButtonText: 'Confirm' },
+      formfields: formfields
+    };
+    const editNoteDialogRef = this.dialog.open(FormDialogComponent, { data });
+    editNoteDialogRef.afterClosed().subscribe((response?: { data?: { value: { amount: number } } }) => {
+      if (response?.data) {
+        const newCharge = { ...charge, amount: response.data.value.amount };
+        this.overDueChargesDataSource.splice(this.overDueChargesDataSource.indexOf(charge), 1, newCharge);
+        this.overDueChargesDataSource = this.overDueChargesDataSource.concat([]);
+        this.pristine = false;
+      }
+    });
+  }
+
   get isValid() {
     return true;
     // !this.activeClientMembers ||

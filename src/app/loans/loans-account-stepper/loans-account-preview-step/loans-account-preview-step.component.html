@@ -344,10 +344,10 @@
             }
             @if (
               !(
-                charge.chargeTimeType.value === 'Monthly Fee' ||
-                charge.chargeTimeType.value === 'Annual Fee' ||
-                charge.chargeTimeType.value === 'Specified due date' ||
-                charge.chargeTimeType.value === 'Weekly Fee'
+                charge.chargeTimeType?.value === 'Monthly Fee' ||
+                charge.chargeTimeType?.value === 'Annual Fee' ||
+                charge.chargeTimeType?.value === 'Specified due date' ||
+                charge.chargeTimeType?.value === 'Weekly Fee'
               )
             ) {
               <span>
