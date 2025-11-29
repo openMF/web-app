@@ -803,7 +803,9 @@
       "required and cannot be negative": "obligāti un nevar būt negatīvs",
       "should": "vajadzētu",
       "on": "ieslēgts",
-      "Password validation": "Parolē jābūt vismaz {{minchar}} rakstzīmēm, tai jābūt 1 lielajam, mazajam un speciālajām rakstzīmēm, un tā nedrīkst sastāvēt no atkārtotām rakstzīmēm vai atstarpēm."
+      "Password validation": "Parolē jābūt vismaz {{minchar}} rakstzīmēm, tai jābūt 1 lielajam, mazajam un speciālajām rakstzīmēm, un tā nedrīkst sastāvēt no atkārtotām rakstzīmēm vai atstarpēm.",
+      "Must be at least": "Jābūt vismaz",
+      "Must be less or equal to": "Jābūt mazākam vai vienādam ar"
     },
     "heading": {
       "Account Linked Financial": "Ar dažādām finanšu darbībām saistīto kontu saraksts. Lai uzzinātu vairāk, noklikšķiniet:",

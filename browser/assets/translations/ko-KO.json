@@ -803,7 +803,9 @@
       "required and cannot be negative": "필수이며 음수일 수 없습니다.",
       "should": "~해야 한다",
       "on": "~에",
-      "Password validation": "비밀번호는 최소 자여야 하며 대문자, 소문자 및 특수 문자 1개가 포함되어야 하며 반복되는 문자나 공백으로 구성되어서는 안 됩니다."
+      "Password validation": "비밀번호는 최소 자여야 하며 대문자, 소문자 및 특수 문자 1개가 포함되어야 하며 반복되는 문자나 공백으로 구성되어서는 안 됩니다.",
+      "Must be at least": "최소한이어야 합니다",
+      "Must be less or equal to": "이보다 작거나 같아야 합니다."
     },
     "heading": {
       "Account Linked Financial": "다양한 금융 활동과 연결된 계정 목록입니다. 자세한 내용을 보려면 다음을 클릭하세요.",

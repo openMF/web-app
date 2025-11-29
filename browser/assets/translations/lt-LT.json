@@ -803,7 +803,9 @@
       "required and cannot be negative": "privaloma ir negali būti neigiama",
       "should": "turėtų",
       "on": "įjungta",
-      "Password validation": "Slaptažodį turi sudaryti ne mažiau kaip {{minchar}} simbolių, iš kurių turi būti 1 didžioji, mažoji raidė ir specialus simbolis, o jį neturėtų sudaryti pasikartojantys simboliai ar tarpai"
+      "Password validation": "Slaptažodį turi sudaryti ne mažiau kaip {{minchar}} simbolių, iš kurių turi būti 1 didžioji, mažoji raidė ir specialus simbolis, o jį neturėtų sudaryti pasikartojantys simboliai ar tarpai",
+      "Must be at least": "Turi būti bent jau",
+      "Must be less or equal to": "Turi būti mažesnis arba lygus"
     },
     "heading": {
       "Account Linked Financial": "Sąskaitų, susietų su įvairia finansine veikla, sąrašas. Norėdami sužinoti daugiau, spustelėkite:",

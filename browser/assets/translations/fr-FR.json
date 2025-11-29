@@ -803,7 +803,9 @@
       "required and cannot be negative": "obligatoire et ne peut pas être négatif",
       "should": "devrait",
       "on": "sur",
-      "Password validation": "Le mot de passe doit contenir au minimum {{minchar}} caractères, dont 1 majuscule, 1 minuscule et un caractère spécial et ne doit pas être composé de caractères répétés ou d'espaces blancs."
+      "Password validation": "Le mot de passe doit contenir au minimum {{minchar}} caractères, dont 1 majuscule, 1 minuscule et un caractère spécial et ne doit pas être composé de caractères répétés ou d'espaces blancs.",
+      "Must be at least": "Doit être au moins",
+      "Must be less or equal to": "Doit être inférieur ou égal à"
     },
     "heading": {
       "Account Linked Financial": "Liste des comptes liés aux différentes activités financières. Pour en savoir plus cliquez :",

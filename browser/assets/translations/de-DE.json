@@ -803,7 +803,9 @@
       "required and cannot be negative": "erforderlich und darf nicht negativ sein",
       "should": "sollen",
       "on": "An",
-      "Password validation": "Das Passwort sollte mindestens {{michar}} Zeichen enthalten, aus 1 Großbuchstaben, Kleinbuchstaben und Sonderzeichen bestehen und darf nicht aus wiederholten Zeichen oder Leerzeichen bestehen"
+      "Password validation": "Das Passwort sollte mindestens {{michar}} Zeichen enthalten, aus 1 Großbuchstaben, Kleinbuchstaben und Sonderzeichen bestehen und darf nicht aus wiederholten Zeichen oder Leerzeichen bestehen",
+      "Must be at least": "Muss mindestens",
+      "Must be less or equal to": "Muss kleiner oder gleich sein"
     },
     "heading": {
       "Account Linked Financial": "Liste der Konten, die mit verschiedenen Finanzaktivitäten verknüpft sind. Um mehr zu erfahren, klicken Sie:",
