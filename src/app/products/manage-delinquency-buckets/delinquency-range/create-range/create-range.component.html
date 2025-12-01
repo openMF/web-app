@@ -14,10 +14,13 @@
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Days From' | translate }}</mat-label>
-            <input matInput type="number" required formControlName="minimumAgeDays" />
+            <input matInput type="number" required formControlName="minimumAgeDays" min="1" />
             <mat-error *ngIf="delinquencyRangeForm.controls.minimumAgeDays.hasError('required')">
               {{ 'labels.inputs.Days From' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="delinquencyRangeForm.controls.minimumAgeDays.hasError('pattern')">
+              {{ 'labels.inputs.Days From' | translate }} must be a positive number.
             </mat-error>
           </mat-form-field>
 
