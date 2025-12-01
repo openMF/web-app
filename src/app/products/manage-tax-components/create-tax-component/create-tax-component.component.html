@@ -16,7 +16,7 @@
             <mat-label>{{ 'labels.inputs.Percentage' | translate }}</mat-label>
             <input type="number" matInput required formControlName="percentage" />
             <mat-error *ngIf="taxComponentForm.controls.percentage.hasError('required')">
-              {{ 'labels.inputs.Percentage ' | translate }} {{ 'labels.commons.is' | translate }}
+              {{ 'labels.inputs.Percentage' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
             <mat-error

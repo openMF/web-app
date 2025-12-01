@@ -1196,6 +1196,7 @@
         "INCOME": "RENDA",
         "EXPENSE": "DESPESA"
       },
+      "Percentage is required": "Percentual é obrigatório",
       "ACCOUNTING": "CONTABILIDADE",
       "ADDRESS": "ENDEREÇO",
       "Above Changes are Effective from": "As alterações acima entram em vigor a partir de",
