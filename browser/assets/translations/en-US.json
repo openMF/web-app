@@ -1202,6 +1202,7 @@
         "INCOME": "INCOME",
         "EXPENSE": "EXPENSE"
       },
+      "Percentage is required": "Percentage is required",
       "ACCOUNTING": "ACCOUNTING",
       "ADDRESS": "ADDRESS",
       "Above Changes are Effective from": "Above Changes are Effective from",

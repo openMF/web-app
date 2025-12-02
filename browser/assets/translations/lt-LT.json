@@ -1198,6 +1198,7 @@
         "INCOME": "PAJAMOS",
         "EXPENSE": "IŠLAIDOS"
       },
+      "Percentage is required": "Reikalingas procentas",
       "ACCOUNTING": "APSKAITA",
       "ADDRESS": "ADRESAS",
       "Above Changes are Effective from": "Aukščiau pateikti pakeitimai galioja nuo",

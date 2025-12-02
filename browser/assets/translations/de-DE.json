@@ -1198,6 +1198,7 @@
         "INCOME": "EINKOMMEN",
         "EXPENSE": "KOSTEN"
       },
+      "Percentage is required": "Prozentsatz ist erforderlich",
       "ACCOUNTING": "BUCHHALTUNG",
       "ADDRESS": "ADRESSE",
       "Above Changes are Effective from": "Die oben genannten Änderungen gelten ab",

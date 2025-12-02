@@ -1198,6 +1198,7 @@
         "INCOME": "IENĀKUMI",
         "EXPENSE": "IZDEVUMI"
       },
+      "Percentage is required": "Nepieciešams procents",
       "ACCOUNTING": "GRĀMATVEDĪBA",
       "ADDRESS": "ADRESE",
       "Above Changes are Effective from": "Iepriekš minētās izmaiņas ir spēkā no",

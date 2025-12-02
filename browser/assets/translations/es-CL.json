@@ -1198,6 +1198,7 @@
         "EXPENSE": "EGRESO"
       },
       "ACCOUNTING": "CONTABILIDAD",
+      "Percentage is required": "Se requiere porcentaje",
       "ADDRESS": "DOMICILIO",
       "Above Changes are Effective from": "Los cambios anteriores son efectivos desde",
       "Absent": "Ausente",

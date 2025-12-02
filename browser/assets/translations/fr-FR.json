@@ -1198,6 +1198,7 @@
         "INCOME": "REVENU",
         "EXPENSE": "FRAIS"
       },
+      "Percentage is required": "Le pourcentage est requis",
       "ACCOUNTING": "COMPTABILITÉ",
       "ADDRESS": "ADRESSE",
       "Above Changes are Effective from": "Les modifications ci-dessus entrent en vigueur à partir de",

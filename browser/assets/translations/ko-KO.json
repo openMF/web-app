@@ -1199,6 +1199,7 @@
         "INCOME": "소득",
         "EXPENSE": "비용"
       },
+      "Percentage is required": "백분율이 필요합니다",
       "ACCOUNTING": "회계",
       "ADDRESS": "주소",
       "Above Changes are Effective from": "위 변경사항은 다음부터 적용됩니다.",
