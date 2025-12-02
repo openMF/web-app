@@ -3,6 +3,8 @@
   "Logged in as": "को रूपमा लग इन गरियो",
   "Remember me": "मलाई सम्झनुहोस्",
   "errors": {
+    "error.resource.notImplemented.type": "लागू नभएको त्रुटि",
+    "error.resource.notImplemented.message": "कार्यक्षमता लागू गरिएको छैन!",
     "linkedSavingsAccountOwnership": "लिंक गरिएको बचत खाता चयनित ग्राहकको होइन।",
     "clientNotInGSIM": "आईडी {{id}} भएको ग्राहक GSIM मा उपस्थित छैन।",
     "Capitalized Income amount adjusted already adjusted": "क्यापिटलाइज्ड आय रकम पहिले नै समायोजन गरिएको छ",

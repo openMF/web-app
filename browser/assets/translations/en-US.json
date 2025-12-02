@@ -2,6 +2,8 @@
   "APP_NAME": "Mifos X",
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
+  "error.resource.notImplemented.type": "Not Implemented Error",
+  "error.resource.notImplemented.message": "Not implemented functionality!",
   "errors": {
     "linkedSavingsAccountOwnership": "Linked savings account does not belong to the selected client.",
     "clientNotInGSIM": "Client with ID {{id}} is not present in GSIM.",

@@ -3,6 +3,8 @@
   "Logged in as": "prisijungęs kaip",
   "Remember me": "Prisimink mane",
   "errors": {
+    "error.resource.notImplemented.type": "Neįdiegta klaida",
+    "error.resource.notImplemented.message": "Funkcionalumas neįdiegtas!",
     "linkedSavingsAccountOwnership": "Susieta taupomoji sąskaita nepriklauso pasirinktam klientui.",
     "clientNotInGSIM": "Klientas su ID {{id}} nėra GSIM sistemoje.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalizuotų pajamų suma pakoreguota jau pakoreguota",

@@ -3,6 +3,8 @@
   "Logged in as": "Přihlášen jako",
   "Remember me": "Zapamatuj si mě",
   "errors": {
+    "error.resource.notImplemented.type": "Nenaimplementovaná chyba",
+    "error.resource.notImplemented.message": "Funkce není implementována!",
     "linkedSavingsAccountOwnership": "Propojený spořicí účet nepatří vybranému klientovi.",
     "clientNotInGSIM": "Klient s ID {{id}} není přítomen v GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Výše kapitalizovaného příjmu již upravená",

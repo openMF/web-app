@@ -3,6 +3,8 @@
   "Logged in as": "Conectado como",
   "Remember me": "Recordar me",
   "errors": {
+    "error.resource.notImplemented.type": "Error no implementado",
+    "error.resource.notImplemented.message": "¡Funcionalidad no implementada!",
     "linkedSavingsAccountOwnership": "La cuenta de ahorro vinculada no pertenece al cliente seleccionado.",
     "clientNotInGSIM": "El cliente con ID {{id}} no está presente en GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Monto de Ingreso Capitalizado ajustado ya ajustado",

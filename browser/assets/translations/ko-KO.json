@@ -3,6 +3,8 @@
   "Logged in as": "다음 계정으로 로그인됨",
   "Remember me": "날 기억해",
   "errors": {
+    "error.resource.notImplemented.type": "구현되지 않은 오류",
+    "error.resource.notImplemented.message": "구현되지 않은 기능입니다!",
     "linkedSavingsAccountOwnership": "연결된 저축 계좌가 선택한 클라이언트에 속하지 않습니다.",
     "clientNotInGSIM": "ID가 {{id}}인 클라이언트가 GSIM에 없습니다.",
     "Capitalized Income amount adjusted already adjusted": "자본화된 소득 금액은 이미 조정되었습니다.",

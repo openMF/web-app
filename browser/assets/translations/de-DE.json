@@ -3,6 +3,8 @@
   "Logged in as": "Angemeldet als",
   "Remember me": "Erinnere dich an mich",
   "errors": {
+    "error.resource.notImplemented.type": "Nicht implementierter Fehler",
+    "error.resource.notImplemented.message": "Nicht implementierte Funktion!",
     "linkedSavingsAccountOwnership": "Verknüpftes Sparkonto gehört nicht zum ausgewählten Kunden.",
     "clientNotInGSIM": "Kunde mit der ID {{id}} ist nicht in GSIM vorhanden.",
     "Capitalized Income amount adjusted already adjusted": "Kapitalisiertes Einkommen Betrag angepasst bereits angepasst",

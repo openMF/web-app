@@ -3,6 +3,8 @@
   "Logged in as": "connecté en tant que",
   "Remember me": "Souviens-toi de moi",
   "errors": {
+    "error.resource.notImplemented.type": "Erreur non implémentée",
+    "error.resource.notImplemented.message": "Fonctionnalité non implémentée !",
     "linkedSavingsAccountOwnership": "Le compte d'épargne lié n'appartient pas au client sélectionné.",
     "clientNotInGSIM": "Le client avec l'ID {{id}} n'est pas membre du GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Montant du revenu capitalisé ajusté déjà ajusté",

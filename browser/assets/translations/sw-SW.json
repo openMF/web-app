@@ -3,6 +3,8 @@
   "Logged in as": "Imeingia kama",
   "Remember me": "Nikumbuke",
   "errors": {
+    "error.resource.notImplemented.type": "Hitilafu ya Kukamilika Haijatimizwa",
+    "error.resource.notImplemented.message": "Utendakazi haujatekelezwa!",
     "linkedSavingsAccountOwnership": "Akaunti ya akiba iliyounganishwa haimilikiwi na mteja aliyechaguliwa.",
     "clientNotInGSIM": "Mteja mwenye kitambulisho {{id}} hayupo kwenye GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Kiasi cha Mapato ya Mtaji kilichorekebishwa tayari kimerekebishwa",
