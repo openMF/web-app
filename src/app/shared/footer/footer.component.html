@@ -3,6 +3,12 @@
   <div class="layout-column m-b-20 content-wrapper footer-center">
     <table class="versions">
       <tr>
+        <td class="footer-content">Tenant</td>
+        <td class="right footer-content">
+          {{ tenant | titlecase }}
+        </td>
+      </tr>
+      <tr>
         <td class="footer-content">Mifos</td>
         <td class="right footer-content">
           {{ versions.mifos }} - <b>{{ hash }}</b>
