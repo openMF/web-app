@@ -237,7 +237,10 @@ export class ClientGeneralStepComponent implements OnInit {
     if (generalDetails.clientNonPersonDetails && generalDetails.clientNonPersonDetails.incorpValidityTillDate) {
       generalDetails.clientNonPersonDetails = {
         ...generalDetails.clientNonPersonDetails,
-        incorpValidityTillDate: this.dateUtils.formatDate(generalDetails.dateOfBirth, dateFormat),
+        incorpValidityTillDate: this.dateUtils.formatDate(
+          generalDetails.clientNonPersonDetails.incorpValidityTillDate,
+          dateFormat
+        ),
         dateFormat,
         locale
       };

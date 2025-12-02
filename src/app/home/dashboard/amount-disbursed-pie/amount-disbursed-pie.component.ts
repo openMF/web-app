@@ -7,11 +7,14 @@ import { ActivatedRoute } from '@angular/router';
 import { HomeService } from '../../home.service';
 
 /** Charting Imports */
-import Chart from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgFor, NgStyle, NgIf } from '@angular/common';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+// Register Chart.js components
+Chart.register(...registerables);
 
 /**
  * Amount Disbursed Pie Chart Component

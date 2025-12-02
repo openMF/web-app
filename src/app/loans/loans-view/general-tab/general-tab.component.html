@@ -131,6 +131,11 @@
             <span *ngIf="!loanDetails.externalId"> {{ 'labels.inputs.Not Available' | translate }} </span>
           </ng-container>
 
+          <ng-container *ngIf="ele.key === 'Write-off Reason'">
+            <span *ngIf="ele.value">{{ ele.value }}</span>
+            <span *ngIf="!ele.value">{{ 'labels.inputs.Not Available' | translate }}</span>
+          </ng-container>
+
           <ng-container
             *ngIf="ele.key === 'Proposed Amount' || ele.key === 'Approved Amount' || ele.key === 'Disburse Amount'"
           >

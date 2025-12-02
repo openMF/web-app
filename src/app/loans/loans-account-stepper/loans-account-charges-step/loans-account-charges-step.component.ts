@@ -140,7 +140,13 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.loansAccountTemplate && this.loansAccountTemplate.charges) {
       this.chargesDataSource =
-        this.loansAccountTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+        this.loansAccountTemplate.charges.map((charge: any) => {
+          return {
+            ...charge,
+            id: charge.id,
+            chargeId: charge.chargeId
+          };
+        }) || [];
     }
     this.dataSource = new MatTableDataSource<any>(this.activeClientMembers);
   }
@@ -152,8 +158,9 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
     if (this.loansAccountProductTemplate) {
       this.loanPurposeOptions = this.loansAccountProductTemplate.loanPurposeOptions;
       this.chargeData = this.loansAccountProductTemplate.chargeOptions;
-      // filter chargeData to have charges that have chargePaymentMode not 'Account Transfer' if loansSavingsAccountLinked is false
-      if (!this.loansSavingsAccountLinked) {
+      // filter chargeData to have charges that have chargePaymentMode not 'Account Transfer' if no savings account is linked
+      const hasLinkedGSIMAccount = this.loansAccountTemplate?.gsimData?.groupId != null;
+      if (!this.loansSavingsAccountLinked && !hasLinkedGSIMAccount) {
         this.chargeData = this.chargeData.filter(
           (charge: any) => charge.chargePaymentMode?.value != 'Account transfer'
         );
@@ -161,13 +168,26 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
       if (this.loansAccountProductTemplate.overdueCharges) {
         this.overDueChargesDataSource = this.loansAccountProductTemplate.overdueCharges;
       }
+      const isModification = this.loanId != null;
       if (
         this.loansAccountProductTemplate.charges &&
         this.loansAccountProductTemplate.charges.length > 0 &&
         this.chargesDataSource.length === 0
       ) {
         this.chargesDataSource =
-          this.loansAccountProductTemplate.charges.map((charge: any) => ({ ...charge, id: charge.chargeId })) || [];
+          this.loansAccountProductTemplate.charges.map((charge: any) => ({
+            ...charge,
+            chargeId: charge.chargeId || charge.id
+          })) || [];
+      } else if (isModification && this.loansAccountTemplate && this.loansAccountTemplate.charges) {
+        this.chargesDataSource =
+          this.loansAccountTemplate.charges.map((charge: any) => {
+            return {
+              ...charge,
+              id: charge.id,
+              chargeId: charge.chargeId
+            };
+          }) || [];
       }
     }
   }
@@ -176,7 +196,11 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    * Add a charge
    */
   addCharge(charge: any) {
-    this.chargesDataSource = this.chargesDataSource.concat([charge.value]);
+    const newCharge = {
+      ...charge.value,
+      chargeId: charge.value.id || charge.value.chargeId
+    };
+    this.chargesDataSource = this.chargesDataSource.concat([newCharge]);
     charge.value = '';
     this.pristine = false;
   }
@@ -312,9 +336,26 @@ export class LoansAccountChargesStepComponent implements OnInit, OnChanges {
    * Returns Loans Account Charges and Collateral Form
    */
   get loansAccountCharges() {
+    const uniqueCharges = this.getUniqueCharges(this.chargesDataSource);
     return {
-      charges: this.chargesDataSource
+      charges: uniqueCharges.map((charge: any) => ({
+        ...charge,
+        chargeId: charge.chargeId ?? charge.id
+      }))
     };
+  }
+  private getUniqueCharges<T extends { id?: number | string; chargeId?: number | string }>(charges: T[]): T[] {
+    const uniqueChargesMap = new Map<number | string, T>();
+
+    for (const charge of charges ?? []) {
+      const chargeId = charge.chargeId ?? charge.id;
+      if (chargeId == null) {
+        continue;
+      }
+      uniqueChargesMap.set(chargeId, { ...charge, chargeId });
+    }
+
+    return Array.from(uniqueChargesMap.values());
   }
 
   get selectedClientMembers() {

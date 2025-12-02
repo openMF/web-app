@@ -3,6 +3,8 @@
   "Logged in as": "Logged in as",
   "Remember me": "Remember me",
   "errors": {
+    "linkedSavingsAccountOwnership": "Linked savings account does not belong to the selected client.",
+    "clientNotInGSIM": "Client with ID {{id}} is not present in GSIM.",
     "Capitalized Income amount adjusted already adjusted": "Capitalized Income amount already adjusted",
     "Capitalized Income Adjustment amount must be lower or equal to": "Capitalized Income Adjustment amount must be lower or equal to",
     "Buy Down Fee amount already adjusted": "Buy Down Fee amount already adjusted",
@@ -424,6 +426,7 @@
       "GSIM Application": "GSIM Application",
       "Generate Report": "Generate Report",
       "Get Parameters": "Get Parameters",
+      "Go back": "Go back",
       "Go to next step": "Go to next step",
       "Group Loan Application": "Group Loan Application",
       "Group Saving Application": "Group Saving Application",
@@ -458,6 +461,7 @@
       "Pie Chart": "Pie Chart",
       "Post Dividend": "Post Dividend",
       "Previous": "Previous",
+      "Preview": "Preview",
       "Print": "Print",
       "Proceed": "Proceed",
       "Productive Collection Sheet": "Productive Collection Sheet",
@@ -756,7 +760,9 @@
       "Zero interest after charge-off": "Zero interest after charge-off",
       "Accelerate maturity to charge-off date": "Accelerate maturity to charge-off date",
       "Full Leap Year": "Full Leap Year",
-      "Feb 29 Period Only": "Feb 29 Period Only"
+      "Feb 29 Period Only": "Feb 29 Period Only",
+      "Waive Interest": "Waive Interest",
+      "Equal Amortization of Outstanding amount": "Equal Amortization of Outstanding amount"
     },
     "commons": {
       "50 characters long": "50 characters long",
@@ -801,7 +807,9 @@
       "required and cannot be negative": "required and cannot be negative",
       "should": "should",
       "on": "on",
-      "Password validation": "The password should contain a minimum of {{minchar}} characters, including 1 uppercase, 1 lowercase and a special character and should not include repeated characters or spaces."
+      "Password validation": "The password should contain a minimum of {{minchar}} characters, including 1 uppercase, 1 lowercase and a special character and should not include repeated characters or spaces.",
+      "Must be at least": "Must be at least",
+      "Must be less or equal to": "Must be less or equal to"
     },
     "heading": {
       "Account Linked Financial": "List of accounts linked to different financial activities. To know more click:",
@@ -845,6 +853,8 @@
       "Bulk Import": "Bulk Import",
       "Bulk Loan Reassignment": "Bulk Loan Reassignment",
       "Business Rule Parameters": "Business Rule Parameters",
+      "Buydown Fee classifications to Income accounts": "Buydown Fee classifications to Income accounts",
+      "Capitalized Income classifications to Income accounts": "Capitalized Income classifications to Income accounts",
       "COB Catch-Up is": "COB Catch-Up is",
       "Calculate Interest": "Calculate Interest",
       "Campaign Message": "Campaign Message",
@@ -1069,6 +1079,7 @@
       "Reject Checker": "Reject Checker",
       "Release Amount": "Release Amount",
       "Repaid Every": "Repaid Every",
+      "Repayment Schedule Preview": "Repayment Schedule Preview",
       "Report Parameter": "Report Parameter",
       "Reschedule Loan": "Reschedule Loan",
       "Revert Transaction": "Revert Transaction",
@@ -1135,6 +1146,7 @@
       "Transaction Details": "Transaction Details",
       "Transaction Reverted": "Transaction Reverted",
       "Transactions": "Transactions",
+      "Transfer Details": "Transfer Details",
       "Transferred From": "Transferred From",
       "Transferred To": "Transferred To",
       "Transferring From Details": "Transferring From Details",
@@ -1154,6 +1166,7 @@
       "View Journal Entry": "View Journal Entry",
       "Waive Charge": "Waive Charge",
       "Welcome to Mifos": "Welcome to Mifos",
+      "WriteOff reasons to Expense accounts": "WriteOff reasons to Expense accounts",
       "Withdraw Money From Saving Account": "Withdraw Money From Saving Account",
       "Withhold Tax": "Withhold Tax",
       "Working Days": "Working Days",
@@ -1763,6 +1776,7 @@
       "Interest Earned Not Posted": "Interest Earned Not Posted",
       "Interest Free Period": "Interest Free Period",
       "Interest Grace Periods": "Interest Grace Periods",
+      "Interest Handling": "Interest Handling",
       "Interest Method": "Interest Method",
       "Interest Outstanding": "Interest Outstanding",
       "Interest Payable": "Interest Payable",
@@ -2456,6 +2470,7 @@
       "Within Bank": "Within Bank",
       "Working Days": "Working Days",
       "Workflow Jobs": "Workflow Jobs",
+      "WriteOff Reason": "WriteOff Reason",
       "Write Off Date": "Write Off Date",
       "Write off on": "Write off on",
       "Write-off": "Write-off",
@@ -2616,6 +2631,7 @@
       "Recover From Guarantor": "Recover From Guarantor",
       "Recovery Payment": "Recovery Payment",
       "Reject": "Reject",
+      "Undo Write-off": "Undo Write-off",
       "Reports": "Reports",
       "Reschedule": "Reschedule",
       "Savings": "Savings",
@@ -3125,6 +3141,7 @@
       "Loan Products": "Loan Products",
       "Loan Provisioning Criteria Organization": "Define Loan Provisioning Criteria for Organization",
       "Loan Tranche Details": "Loan Tranche Details",
+      "Loan Term Variations": "Loan Term Variations",
       "Loan View": "Loan View",
       "Loan products define the rules, default settings": "Loan products define the rules, default settings, and constraints for a financial institution's lending offerings. A loan product provides a template for multiple loan accounts for the financial institution's clients.",
       "Loan": "Loan",
@@ -3428,7 +3445,8 @@
       "Voluntary": "Voluntary",
       "Write a note": "Write a note",
       "“Maker-Checker” principle requires every tasks": "The “Maker-Checker” principle requires every tasks to be completed by two people to reduce the chance of errors and misuse. One person initiates the process and the second completes it.",
-      "Buy Down Fees": "Buy Down Fees"
+      "Buy Down Fees": "Buy Down Fees",
+      "Undo Write-off Description": "This action will reverse the write-off transaction and restore the loan to its previous active status. Please provide a note explaining the reason for this action."
     },
     "titles": {
       "Dashboard": "Dashboard",

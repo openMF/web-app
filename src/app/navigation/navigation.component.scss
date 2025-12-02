@@ -1,0 +1,53 @@
+// Component-specific styles - minimal overrides
+// Leverages global layout classes from main.scss
+
+:host {
+  display: block;
+}
+
+.container {
+  width: 100%;
+}
+
+// Using existing .layout-row-wrap.responsive-column from global styles
+// Only adding specific alignment needed for this component
+.layout-row-wrap.responsive-column {
+  align-items: flex-start;
+}
+
+// Extending global .flex-48 with min-width constraint for this component
+.flex-48 {
+  min-width: 20rem;
+
+  @media (width >= 1200px) {
+    flex-basis: 48%;
+  }
+}
+
+mat-card {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+mat-card-content {
+  display: grid;
+  grid-template-columns: 100%;
+
+  @media (width >= 768px) {
+    grid-template-columns: 50% 50%;
+  }
+
+  @media (width >= 1200px) {
+    grid-template-columns: 50% 50%;
+    gap: 1rem;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-label {
+  letter-spacing: 0.0125rem;
+}

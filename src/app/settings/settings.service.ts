@@ -248,18 +248,18 @@ export class SettingsService {
         this.setBusinessDate(this.dateUtils.formatDate(dateVal, SettingsService.businessDateFormat));
         this.alertService.alert({
           type: dateType + ' Set',
-          message: this.dateUtils.formatDate(dateVal, this.dateFormat())
+          message: this.dateUtils.formatDate(dateVal, this.dateFormat)
         });
         return;
       }
     });
   }
 
-  setThemeDarkEnabled(enabled: string) {
-    localStorage.setItem('mifosXThemeDarkEnabled', enabled);
+  setThemeDarkEnabled(enabled: boolean) {
+    localStorage.setItem('mifosXThemeDarkEnabled', JSON.stringify(enabled));
   }
 
-  get themeDarkEnabled() {
+  get themeDarkEnabled(): boolean {
     return JSON.parse(localStorage.getItem('mifosXThemeDarkEnabled'));
   }
 }

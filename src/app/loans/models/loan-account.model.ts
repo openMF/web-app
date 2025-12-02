@@ -146,3 +146,21 @@ export interface BuyDownFeeAmortizationDetails {
   adjustedAmount: number;
   chargedOffAmount: number;
 }
+
+export interface EditablePeriod extends RepaymentSchedulePeriod {
+  changed?: boolean;
+}
+
+export interface EditableRepaymentSchedule extends RepaymentSchedule {
+  periods: EditablePeriod[];
+}
+
+export interface RepaymentScheduleEditCache {
+  edit: boolean;
+  data: RepaymentSchedulePeriod;
+}
+
+export interface ScheduleChangeRecord {
+  dueDate: string;
+  installmentAmount: number;
+}

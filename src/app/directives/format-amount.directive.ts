@@ -42,6 +42,9 @@ export class FormatAmountDirective implements OnInit {
   ) {}
 
   parse(value: any) {
+    if (value == '') {
+      return '' + this.sufix;
+    }
     return formatCurrency(value, this.locale, this.displaySymbol, this.currencyCode, this.digitsInfo) + this.sufix;
   }
 }

@@ -5,11 +5,15 @@
         <div class="layout-row-wrap gap-2px responsive-column">
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Office' | translate }}</mat-label>
-            <mat-select required (selectionChange)="getOffice($event.value)">
+            <mat-select required formControlName="officeId" (selectionChange)="getOffice($event.value)">
               <mat-option *ngFor="let office of offices" [value]="office.id">
                 {{ office.name }}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="bulkLoanForm.controls.officeId.hasError('required')">
+              {{ 'labels.inputs.Office' | translate }} {{ 'labels.commons.is' | translate }}
+              <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
           </mat-form-field>
         </div>
 
@@ -23,6 +27,7 @@
               [matDatepicker]="assignmentDatePicker"
               required
               formControlName="assignmentDate"
+              placeholder="{{ 'labels.inputs.Assignment Date' | translate }}"
             />
             <mat-datepicker-toggle matSuffix [for]="assignmentDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #assignmentDatePicker></mat-datepicker>
@@ -106,7 +111,9 @@
 
                   <tr *ngFor="let loans of groups.loans">
                     <td>
-                      <mat-checkbox>{{ loans.productName }}({{ loans.accountNo }})</mat-checkbox>
+                      <mat-checkbox (change)="getLoans($event, loans.id)"
+                        >{{ loans.productName }}({{ loans.accountNo }})</mat-checkbox
+                      >
                     </td>
                   </tr>
                 </table>
@@ -121,6 +128,7 @@
           {{ 'labels.buttons.Cancel' | translate }}
         </button>
         <button
+          type="submit"
           mat-raised-button
           color="primary"
           [disabled]="!bulkLoanForm.valid"

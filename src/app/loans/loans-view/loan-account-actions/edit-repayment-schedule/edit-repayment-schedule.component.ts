@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Dates } from 'app/core/utils/dates';
 import { LoansService } from 'app/loans/loans.service';
+import { EditableRepaymentSchedule, EditablePeriod, ScheduleChangeRecord } from 'app/loans/models/loan-account.model';
 import { SettingsService } from 'app/settings/settings.service';
 import { ConfirmationDialogComponent } from 'app/shared/confirmation-dialog/confirmation-dialog.component';
 import { FormDialogComponent } from 'app/shared/form-dialog/form-dialog.component';
@@ -30,11 +31,9 @@ export class EditRepaymentScheduleComponent implements OnInit {
   /** Indicates If the Schedule has been validated */
   wasValidated = false;
   /** Stores the Repayment Schedule data */
-  repaymentScheduleDetails: {
-    periods: { period?: number; dueDate: string; totalDueForPeriod?: number; changed?: boolean }[];
-  } | null = null;
+  repaymentScheduleDetails: EditableRepaymentSchedule | null = null;
   /** Stores the Installments changed */
-  repaymentScheduleChanges: any = {};
+  repaymentScheduleChanges: Record<string, ScheduleChangeRecord> = {};
 
   /**
    * @param {LoansService} systemService Loan Service.
@@ -62,14 +61,23 @@ export class EditRepaymentScheduleComponent implements OnInit {
   }
 
   getRepaymentSchedule(): void {
-    this.loansService.getLoanAccountResource(this.loanId, 'repaymentSchedule').subscribe((response: any) => {
-      this.repaymentScheduleDetails = response.repaymentSchedule;
+    this.loansService.getLoanAccountResource(this.loanId, 'repaymentSchedule').subscribe({
+      next: (response: { repaymentSchedule: EditableRepaymentSchedule }) => {
+        this.repaymentScheduleDetails = response.repaymentSchedule;
+      },
+      error: (err) => {
+        console.error('Failed to load repayment schedule:', err);
+      }
     });
   }
 
   applyPattern(): void {
-    const periods: any = [];
-    this.repaymentScheduleDetails['periods'].forEach((period: any) => {
+    if (!this.repaymentScheduleDetails) {
+      return;
+    }
+
+    const periods: Array<{ idx: number; dueDate: string }> = [];
+    this.repaymentScheduleDetails.periods.forEach((period: EditablePeriod) => {
       if (period.period) {
         periods.push({
           idx: period.period,
@@ -106,27 +114,29 @@ export class EditRepaymentScheduleComponent implements OnInit {
       formfields: formfields
     };
     const addDialogRef = this.dialog.open(FormDialogComponent, { data });
-    addDialogRef.afterClosed().subscribe((response: any) => {
-      if (response.data) {
-        const fromPeriod = response.data.value.fromPeriod;
-        const toPeriod = response.data.value.toPeriod;
-        const amount = response.data.value.amount;
-        const periodsVariation: any = [];
-        this.repaymentScheduleDetails['periods'].forEach((period: any) => {
-          const dueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
-          if (period.period && fromPeriod <= period.period && toPeriod >= period.period) {
-            if (period.totalDueForPeriod !== amount) {
-              period.totalDueForPeriod = amount;
-              this.repaymentScheduleChanges[dueDate] = { dueDate: dueDate, installmentAmount: amount };
-              this.wasChanged = true;
-              period['changed'] = true;
+    addDialogRef
+      .afterClosed()
+      .subscribe((response: { data?: { value?: { fromPeriod: number; toPeriod: number; amount: number } } }) => {
+        if (response.data?.value && this.repaymentScheduleDetails) {
+          const fromPeriod = response.data.value.fromPeriod;
+          const toPeriod = response.data.value.toPeriod;
+          const amount = response.data.value.amount;
+          const periodsVariation: EditablePeriod[] = [];
+          this.repaymentScheduleDetails.periods.forEach((period: EditablePeriod) => {
+            const dueDate = this.dateUtils.formatDate(period.dueDate, this.settingsService.dateFormat);
+            if (period.period && fromPeriod <= period.period && toPeriod >= period.period) {
+              if (period.totalDueForPeriod !== amount) {
+                period.totalDueForPeriod = amount;
+                this.repaymentScheduleChanges[dueDate] = { dueDate: dueDate, installmentAmount: amount };
+                this.wasChanged = true;
+                period.changed = true;
+              }
             }
-          }
-          periodsVariation.push(period);
-        });
-        this.repaymentScheduleDetails['periods'] = periodsVariation;
-      }
-    });
+            periodsVariation.push(period);
+          });
+          this.repaymentScheduleDetails.periods = periodsVariation;
+        }
+      });
   }
 
   reset(): void {
@@ -138,42 +148,63 @@ export class EditRepaymentScheduleComponent implements OnInit {
         )
       }
     });
-    recoverScheduleDialogRef.afterClosed().subscribe((responseConfirmation: any) => {
+    recoverScheduleDialogRef.afterClosed().subscribe((responseConfirmation: { confirm?: boolean }) => {
       if (responseConfirmation.confirm) {
-        this.loansService
-          .applyCommandLoanScheduleVariations(this.loanId, 'deleteVariations', {})
-          .subscribe((response: any) => {
+        this.loansService.applyCommandLoanScheduleVariations(this.loanId, 'deleteVariations', {}).subscribe({
+          next: () => {
             this.getRepaymentSchedule();
             this.wasChanged = false;
             this.wasValidated = false;
-          });
+          },
+          error: (err) => {
+            console.error('Failed to delete schedule variations:', err);
+          }
+        });
       }
     });
   }
 
   validate(): void {
+    if (!this.repaymentScheduleDetails) {
+      return;
+    }
+
     this.loansService
       .applyCommandLoanScheduleVariations(this.loanId, 'calculateLoanSchedule', this.getPayload())
-      .subscribe((response: any) => {
-        this.repaymentScheduleDetails['periods'] = [];
-        response['periods'].forEach((period: any) => {
-          period['changed'] = true;
-          this.repaymentScheduleDetails['periods'].push(period);
-          this.wasValidated = true;
-        });
+      .subscribe({
+        next: (response: EditableRepaymentSchedule) => {
+          if (this.repaymentScheduleDetails) {
+            this.repaymentScheduleDetails.periods = [];
+            response.periods.forEach((period: EditablePeriod) => {
+              period.changed = true;
+              this.repaymentScheduleDetails!.periods.push(period);
+              this.wasValidated = true;
+            });
+          }
+        },
+        error: (err) => {
+          console.error('Failed to calculate loan schedule:', err);
+        }
       });
   }
 
   submit(): void {
-    this.loansService
-      .applyCommandLoanScheduleVariations(this.loanId, 'addVariations', this.getPayload())
-      .subscribe((response: any) => {
+    this.loansService.applyCommandLoanScheduleVariations(this.loanId, 'addVariations', this.getPayload()).subscribe({
+      next: () => {
         this.router.navigate(['../../repayment-schedule'], { relativeTo: this.route });
-      });
+      },
+      error: (err) => {
+        console.error('Failed to add schedule variations:', err);
+      }
+    });
   }
 
-  private getPayload(): any {
-    const modifiedinstallments: any = [];
+  private getPayload(): {
+    exceptions: { modifiedinstallments: ScheduleChangeRecord[] };
+    dateFormat: string;
+    locale: string;
+  } {
+    const modifiedinstallments: ScheduleChangeRecord[] = [];
     Object.keys(this.repaymentScheduleChanges).forEach((key: string) => {
       modifiedinstallments.push(this.repaymentScheduleChanges[key]);
     });

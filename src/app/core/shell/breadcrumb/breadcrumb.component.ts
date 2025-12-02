@@ -141,11 +141,9 @@ export class BreadcrumbComponent implements AfterViewInit {
                   routeData.loanDetailsData.accountNo +
                   ')';
               } else if (routeData.breadcrumb === 'Savings') {
-                breadcrumbLabel =
-                  this.printableValue(routeData.savingsAccountData.savingsProductName) +
-                  ' (' +
-                  routeData.savingsAccountData.accountNo +
-                  ')';
+                const savingsProductName = routeData.savingsAccountData?.savingsProductName ?? '';
+                const accountNo = routeData.savingsAccountData?.accountNo ?? '';
+                breadcrumbLabel = this.printableValue(savingsProductName) + (accountNo ? ' (' + accountNo + ')' : '');
               } else if (routeData.breadcrumb === 'Fixed Deposits') {
                 breadcrumbLabel =
                   this.printableValue(routeData.fixedDepositsAccountData.depositProductName) +

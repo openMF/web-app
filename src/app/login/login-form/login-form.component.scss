@@ -1,12 +1,24 @@
 #login-form {
   .login-input {
     width: 14rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.1rem;
   }
 
-  .login-button {
+  [matPrefix] fa-icon {
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 190px;
+    transform: translateY(-50%);
+  }
+
+  .login-button-first {
     width: 14rem;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
+    background-color: #1976d2;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
   }
 
   mat-spinner {
@@ -22,4 +34,6 @@
 .container-margin {
   margin-top: 8rem;
   margin-bottom: 8rem;
+  border-radius: 50px;
+  border: solid 1px black;
 }

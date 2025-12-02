@@ -71,7 +71,7 @@ const routes: Routes = [
           component: RescheduleLoanComponent,
           data: { title: 'Reschedule Loan' },
           resolve: {
-            recheduleLoansData: GetRescheduleLoans
+            rescheduleLoansData: GetRescheduleLoans
           }
         }
       ]

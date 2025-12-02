@@ -1,12 +1,6 @@
 /** Angular Imports */
 import { Component, Input } from '@angular/core';
-import {
-  MatCardHeader,
-  MatCardTitleGroup,
-  MatCardTitle,
-  MatCardSubtitle,
-  MatCardContent
-} from '@angular/material/card';
+import { MatCardHeader, MatCardTitleGroup, MatCardTitle, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { ExternalIdentifierComponent } from '../../shared/external-identifier/external-identifier.component';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
@@ -22,7 +16,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     FaIconComponent,
     MatCardTitleGroup,
     MatCardTitle,
-    MatCardSubtitle,
+    MatCardContent,
     ExternalIdentifierComponent,
     DateFormatPipe
   ]

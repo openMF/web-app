@@ -96,8 +96,8 @@ export class RescheduleLoanComponent {
     private translateService: TranslateService,
     private tasksService: TasksService
   ) {
-    this.route.data.subscribe((data: { recheduleLoansData: any }) => {
-      this.loans = data.recheduleLoansData;
+    this.route.data.subscribe((data: { rescheduleLoansData: any }) => {
+      this.loans = data.rescheduleLoansData;
       this.dataSource = new MatTableDataSource(this.loans);
       this.selection = new SelectionModel(true, []);
     });

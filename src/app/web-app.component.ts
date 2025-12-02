@@ -1,13 +1,13 @@
 /** Angular Imports */
-import { Component, OnInit, HostListener, HostBinding } from '@angular/core';
+import { Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
 /** rxjs Imports */
-import { merge } from 'rxjs';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { merge, Subscription, Subject } from 'rxjs';
+import { filter, map, mergeMap, takeUntil, take } from 'rxjs/operators';
 
 /** Translation Imports */
 import { TranslateService } from '@ngx-translate/core';
@@ -87,12 +87,13 @@ registerLocaleData(localeSW);
   // eslint-disable-next-line @angular-eslint/prefer-standalone
   standalone: false
 })
-export class WebAppComponent implements OnInit {
+export class WebAppComponent implements OnInit, OnDestroy {
   buttonConfig: KeyboardShortcutsConfiguration;
 
   i18nService: I18nService;
 
-  isLoggedIn = false;
+  private authSubscription: Subscription;
+  private destroy$ = new Subject<void>();
 
   /**
    * @param {Router} router Router for navigation.
@@ -148,7 +149,7 @@ export class WebAppComponent implements OnInit {
       this.cssClass = value;
     });
     this.themingService.setInitialDarkMode();
-    this.themingService.setDarkMode(this.settingsService.themeDarkEnabled === 'true');
+    this.themingService.setDarkMode(!!this.settingsService.themeDarkEnabled);
 
     // Setup logger
     if (environment.production) {
@@ -178,13 +179,17 @@ export class WebAppComponent implements OnInit {
           return route;
         }),
         filter((route) => route.outlet === 'primary'),
-        mergeMap((route) => route.data)
+        mergeMap((route) => route.data),
+        takeUntil(this.destroy$)
       )
       .subscribe((event) => {
         const title = event['title'] ? `labels.text.${event['title']}` : 'APP_NAME';
-        this.i18nService.translate(title).subscribe((titleTranslated: any) => {
-          this.titleService.setTitle(titleTranslated);
-        });
+        this.i18nService
+          .translate(title)
+          .pipe(take(1))
+          .subscribe((titleTranslated: any) => {
+            this.titleService.setTitle(titleTranslated);
+          });
       });
 
     // Stores top 100 user activites as local storage object.
@@ -195,7 +200,7 @@ export class WebAppComponent implements OnInit {
       activities = length > 100 ? activitiesArray.slice(length - 100) : activitiesArray;
     }
     // Store route URLs array in local storage on navigation end.
-    onNavigationEnd.subscribe(() => {
+    onNavigationEnd.pipe(takeUntil(this.destroy$)).subscribe(() => {
       activities.push(this.router.url);
       localStorage.setItem('mifosXLocation', JSON.stringify(activities));
     });
@@ -231,6 +236,14 @@ export class WebAppComponent implements OnInit {
 
     // Subscribe to session timeout If IdleTimeout is higher than 0 (zero)
     if (environment.session.timeout.idleTimeout > 0) {
+      this.authSubscription = this.authenticationService.isAuthenticated$.subscribe((loggedIn) => {
+        if (loggedIn) {
+          this.idle.start();
+        } else {
+          this.idle.stop();
+        }
+      });
+
       this.idle.$onSessionTimeout.subscribe(() => {
         this.alertService.alert({
           type: 'Session timeout',
@@ -245,6 +258,14 @@ export class WebAppComponent implements OnInit {
           }
         }, 1000);
       });
+    }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
     }
   }
 

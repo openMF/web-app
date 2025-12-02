@@ -20,6 +20,12 @@
   <mat-hint class="right-hint" *ngIf="displayHint">{{
     inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
   }}</mat-hint>
+  <mat-error *ngIf="minVal && inputFormControl.hasError('min')">
+    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be at least' | translate }} {{ minVal }}
+  </mat-error>
+  <mat-error *ngIf="maxVal && inputFormControl.hasError('max')">
+    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be less or equal to' | translate }} {{ maxVal }}
+  </mat-error>
 </mat-form-field>
 <mat-form-field appearance="fill" class="flex-100" *ngIf="!isRequired">
   <mat-label>{{ 'labels.inputs.' + inputLabel | translate }}</mat-label>
@@ -37,4 +43,10 @@
   <mat-hint class="right-hint" *ngIf="displayHint">{{
     inputFormControl.value | currency: currency.code : currency.displaySymbol : '1.2-2'
   }}</mat-hint>
+  <mat-error *ngIf="minVal && inputFormControl.hasError('min')">
+    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be at least' | translate }} {{ minVal }}
+  </mat-error>
+  <mat-error *ngIf="maxVal && inputFormControl.hasError('max')">
+    {{ 'labels.inputs.Amount' | translate }} {{ 'labels.commons.Must be less or equal to' | translate }} {{ maxVal }}
+  </mat-error>
 </mat-form-field>

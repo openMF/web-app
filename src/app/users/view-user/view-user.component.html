@@ -16,59 +16,43 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <div class="layout-row-wrap">
-        <div class="flex-50 mat-body-strong">
-          {{ 'labels.inputs.Login Name' | translate }}
+      <div class="content-rows">
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.Login Name' | translate }}</div>
+          <div class="value">{{ userData.username }}</div>
         </div>
 
-        <div class="flex-50">
-          {{ userData.username }}
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.First Name' | translate }}</div>
+          <div class="value">{{ userData.firstname }}</div>
         </div>
 
-        <div class="flex-50 mat-body-strong">
-          {{ 'labels.inputs.First Name' | translate }}
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.Last Name' | translate }}</div>
+          <div class="value">{{ userData.lastname }}</div>
         </div>
 
-        <div class="flex-50">
-          {{ userData.firstname }}
+        <div class="content-row" *ngIf="userData.email">
+          <div class="label">{{ 'labels.inputs.Email' | translate }}</div>
+          <div class="value">{{ userData.email }}</div>
         </div>
 
-        <div class="flex-50 mat-body-strong">
-          {{ 'labels.inputs.Last Name' | translate }}
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.Office' | translate }}</div>
+          <div class="value">{{ userData.officeName }}</div>
         </div>
 
-        <div class="flex-50">
-          {{ userData.lastname }}
-        </div>
-
-        <div class="flex-50 mat-body-strong" *ngIf="userData.email">
-          {{ 'labels.inputs.Email' | translate }}
-        </div>
-
-        <div class="flex-50" *ngIf="userData.email">
-          {{ userData.email }}
-        </div>
-
-        <div class="flex-50 mat-body-strong">
-          {{ 'labels.inputs.Office' | translate }}
-        </div>
-
-        <div class="flex-50">
-          {{ userData.officeName }}
-        </div>
-
-        <div class="flex-50 mat-body-strong">
-          {{ 'labels.inputs.Roles' | translate }}
-        </div>
-
-        <div class="flex-50">
-          <span *ngFor="let role of userData.selectedRoles">
-            {{ role.name }}
-          </span>
+        <div class="content-row">
+          <div class="label">{{ 'labels.inputs.Roles' | translate }}</div>
+          <div class="value">
+            <span *ngFor="let role of userData.selectedRoles">
+              {{ role.name }}
+            </span>
+          </div>
         </div>
       </div>
 
-      <div class="layout-row layout-align-center gap-2percent column-on-mobile">
+      <div class="layout-row layout-align-center gap-2percent column-on-mobile back-button-container">
         <button type="button" mat-raised-button color="primary" [routerLink]="['../']">
           {{ 'labels.buttons.Back' | translate }}
         </button>

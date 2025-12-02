@@ -172,7 +172,7 @@ export class ClientApprovalComponent {
     });
     this.tasksService.submitBatchData(this.batchRequests).subscribe((response: any) => {
       response.forEach((responseEle: any) => {
-        if ((responseEle.statusCode = '200')) {
+        if (responseEle.statusCode === '200') {
           activatedAccounts++;
           responseEle.body = JSON.parse(responseEle.body);
           if (selectedAccounts === activatedAccounts) {

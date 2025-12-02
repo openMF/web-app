@@ -29,6 +29,8 @@ export const environment = {
     serverUrl: loadedEnv['oauthServerUrl'] || '',
     appId: loadedEnv['oauthAppId'] || ''
   },
+  /** Feature flag for Remember Me functionality */
+  enableRememberMe: false,
   warningDialog: {
     title: 'Warning',
     content:

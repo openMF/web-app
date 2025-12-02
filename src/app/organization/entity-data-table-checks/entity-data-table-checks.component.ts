@@ -124,17 +124,18 @@ export class EntityDataTableChecksComponent implements OnInit {
     this.setEntity();
   }
 
-  /**
-   * Sets Entity to its corresponding values
-   */
   setEntity() {
-    for (let i = 0; i < this.dataSource.data.length; i++) {
-      for (let j = 0; j < this.entityValues.length; j++) {
-        if (this.entityValues[j].code === this.dataSource.data[i].entity) {
-          this.dataSource.data[i].entity = this.entityValues[j].value;
-        }
+    const entityMap = new Map<string, string>();
+    this.entityValues.forEach((entity: any) => {
+      entityMap.set(entity.code, entity.value);
+    });
+
+    this.dataSource.data.forEach((item: any) => {
+      const entityValue = entityMap.get(item.entity);
+      if (entityValue) {
+        item.entity = entityValue;
       }
-    }
+    });
   }
 
   /**

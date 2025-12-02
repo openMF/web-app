@@ -131,7 +131,10 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
         '',
         Validators.required
       ],
-      loanProducts: ['']
+      loanProducts: [
+        [],
+        Validators.required
+      ]
     });
   }
 
@@ -234,9 +237,10 @@ export class CreateLoanProvisioningCriteriaComponent implements OnInit {
    */
   submit() {
     const locale = this.settingsService.language.code;
+    const products = this.provisioningCriteriaForm.get('loanProducts').value;
     const loanProvisioningCriteria = {
       ...this.provisioningCriteriaForm.value,
-      loanProducts: this.provisioningCriteriaForm.get('loanProducts').value.map((product: any) => ({
+      loanProducts: products.map((product: any) => ({
         id: product.id,
         name: product.name,
         includeInBorrowerCycle: product.includeInBorrowerCycle

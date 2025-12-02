@@ -1,3 +1,8 @@
+.table-container {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 table {
   width: 100%;
 }
@@ -8,14 +13,4 @@ table {
 
 .false {
   color: #f44366;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.nowrap {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
 }

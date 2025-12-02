@@ -25,6 +25,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatDivider } from '@angular/material/divider';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
+import { LoanProduct } from 'app/products/loan-products/models/loan-product.model';
+
 /**
  * View Loan Provisioning
  */
@@ -93,9 +95,14 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
   setLoanProvisioningSelectedCriteria() {
     this.dataSource = new MatTableDataSource(this.provisioningData.definitions);
 
-    /** Get load products as a string. */
-    for (let _id = 0; _id < this.provisioningData.loanProducts.length; _id++) {
-      this.loanProducts += this.provisioningData.loanProducts[_id].name + ',';
+    // Get loan products as a comma-separated string, no trailing comma, with type safety
+    if (this.provisioningData.loanProducts && this.provisioningData.loanProducts.length > 0) {
+      this.loanProducts = (this.provisioningData.loanProducts as LoanProduct[])
+        .filter((p) => p && p.name)
+        .map((p) => p.name)
+        .join(', ');
+    } else {
+      this.loanProducts = '';
     }
   }
 
@@ -108,9 +115,14 @@ export class ViewLoanProvisioningCriteriaComponent implements OnInit {
     });
     deleteCriteriaDialogRef.afterClosed().subscribe((response: any) => {
       if (response.delete) {
-        this.organizationService.deleteProvisioningCriteria(this.provisioningData.criteriaId).subscribe(() => {
-          this.router.navigate(['/organization/provisioningcriteria']);
-        });
+        this.organizationService.deleteProvisioningCriteria(this.provisioningData.criteriaId).subscribe(
+          () => {
+            this.router.navigate(['/organization/provisioning-criteria']);
+          },
+          (error) => {
+            console.error('Failed to delete provisioning criteria:', error);
+          }
+        );
       }
     });
   }

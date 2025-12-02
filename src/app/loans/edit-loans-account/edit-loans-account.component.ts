@@ -129,14 +129,29 @@ export class EditLoansAccountComponent {
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
     const loanType = 'individual';
+    const uniqueCharges = new Map<number | string, any>();
+    (this.loansAccount.charges ?? []).forEach((charge: any) => {
+      const chargeId = charge.chargeId;
+      if (chargeId == null) {
+        return;
+      } // Skip malformed entries
+      uniqueCharges.set(chargeId, charge);
+    });
+
     const loansAccountData = {
       ...this.loansAccount,
       clientId: this.loansAccountAndTemplate.clientId,
-      charges: this.loansAccount.charges.map((charge: any) => ({
-        chargeId: charge.id,
-        amount: charge.amount,
-        dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat)
-      })),
+      charges: Array.from(uniqueCharges.values()).map((charge: any) => {
+        const result: any = {
+          chargeId: charge.chargeId,
+          amount: charge.amount,
+          dueDate: charge.dueDate && this.dateUtils.formatDate(charge.dueDate, dateFormat)
+        };
+        if (charge.id && charge.id !== charge.chargeId) {
+          result.id = charge.id;
+        }
+        return result;
+      }),
       collateral: this.loansAccount.collateral.map((collateralEle: any) => ({
         type: collateralEle.type,
         value: collateralEle.value,

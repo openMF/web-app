@@ -25,8 +25,6 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatDialogTitle,
     CdkScrollable,
     MatDialogContent,
-    MatGridList,
-    MatGridTile,
     MatDialogClose,
     MatProgressBar,
     MatDialogActions

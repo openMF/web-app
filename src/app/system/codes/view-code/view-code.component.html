@@ -31,7 +31,7 @@
           <div class="flex-fill layout-row-wrap gap-2percent responsive-column" [formGroupName]="i">
             <mat-form-field class="flex-fill flex-20">
               <mat-label>{{ 'labels.inputs.name' | translate }}</mat-label>
-              <input required matInput formControlName="name" />
+              <input required matInput formControlName="name" placeholder="{{ 'labels.inputs.name' | translate }}" />
               <mat-error *ngIf="codeValues.at(i).controls.name.hasError('required')">
                 {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -40,12 +40,22 @@
 
             <mat-form-field class="flex-fill flex-22">
               <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
-              <input matInput formControlName="description" />
+              <input
+                matInput
+                formControlName="description"
+                placeholder="{{ 'labels.inputs.Description' | translate }}"
+              />
             </mat-form-field>
 
             <mat-form-field class="flex-fill flex-18">
               <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
-              <input required matInput formControlName="position" type="number" />
+              <input
+                required
+                matInput
+                formControlName="position"
+                type="number"
+                placeholder="{{ 'labels.inputs.Position' | translate }}"
+              />
               <mat-error *ngIf="codeValues.at(i).controls.position.hasError('required')">
                 {{ 'labels.inputs.name' | translate }} {{ 'labels.commons.is' | translate }}
                 <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -63,19 +73,22 @@
                 <button
                   mat-stroked-button
                   color="primary"
-                  [disabled]="codeValues.at(i).pristine"
+                  type="button"
+                  [disabled]="!codeValues.at(i).valid || codeValues.at(i).pristine"
                   (click)="updateCodeValue(i)"
                   *mifosxHasPermission="'UPDATE_CODEVALUE'"
                 >
                   {{ 'labels.buttons.Submit' | translate }}
                 </button>
               </span>
-              <button mat-button *ngIf="codeValueRowStatus[i] === 'edit'" (click)="disableRow(i)">
+              <button mat-button type="button" *ngIf="codeValueRowStatus[i] === 'edit'" (click)="disableRow(i)">
                 {{ 'labels.buttons.Cancel' | translate }}
               </button>
               <button
                 mat-icon-button
                 color="primary"
+                type="button"
+                title="{{ 'tooltips.Add' | translate }}"
                 [disabled]="!codeValuesForm.get('codeValues').at(i).valid"
                 *ngIf="codeValueRowStatus[i] === 'new'"
                 matTooltip="{{ 'tooltips.Add' | translate }}"
@@ -87,6 +100,7 @@
               <button
                 type="button"
                 color="primary"
+                title="{{ 'tooltips.Edit' | translate }}"
                 *ngIf="codeValueRowStatus[i] === 'disabled'"
                 mat-icon-button
                 matTooltip="{{ 'tooltips.Edit' | translate }}"
@@ -98,6 +112,7 @@
               <button
                 type="button"
                 color="warn"
+                title="{{ 'tooltips.Delete' | translate }}"
                 mat-icon-button
                 matTooltip="{{ 'tooltips.Delete' | translate }}"
                 *mifosxHasPermission="'DELETE_CODEVALUE'"

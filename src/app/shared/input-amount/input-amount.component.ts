@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Currency } from '../models/general.model';
-import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
-import { NgIf, CurrencyPipe } from '@angular/common';
-import { MatFormField, MatLabel, MatError, MatHint, MatSuffix } from '@angular/material/form-field';
+import { UntypedFormControl } from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
+import { MatHint } from '@angular/material/form-field';
 import { FormatAmountDirective } from '../../directives/format-amount.directive';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
@@ -22,6 +22,8 @@ export class InputAmountComponent {
   @Input() currency: Currency;
   @Input() inputLabel: string;
   @Input() inputFormControl: UntypedFormControl;
+  @Input() minVal: number;
+  @Input() maxVal: number;
 
   displayHint = false;
 
@@ -38,13 +40,5 @@ export class InputAmountComponent {
       return false;
     }
     return true;
-  }
-
-  inputBlur(): void {
-    this.displayHint = false;
-  }
-
-  inputFocus(): void {
-    this.displayHint = true;
   }
 }

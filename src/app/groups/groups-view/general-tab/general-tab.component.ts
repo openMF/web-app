@@ -19,6 +19,7 @@ import { StatusLookupPipe } from '../../../pipes/status-lookup.pipe';
 import { AccountsFilterPipe } from '../../../pipes/accounts-filter.pipe';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+import { GroupsService } from '../../groups.service';
 
 /**
  * Groups View General Tab Component.
@@ -123,11 +124,10 @@ export class GeneralTabComponent {
   /** Boolean for toggling savings accounts table */
   showClosedSavingAccounts = false;
 
-  /**
-   * Fetches group's related data from `resolve`
-   * @param {ActivatedRoute} route Activated Route.
-   */
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute,
+    private groupsService: GroupsService
+  ) {
     this.route.data.subscribe(
       (data: { groupAccountsData: any; groupClientMembers: any; groupSummary: any; glimData: any; gsimData: any }) => {
         this.glimAccounts = data.glimData;
@@ -140,6 +140,18 @@ export class GeneralTabComponent {
     );
     this.route.parent.data.subscribe((data: { groupViewData: any }) => {
       this.groupClientMembers = data.groupViewData.clientMembers;
+    });
+  }
+
+  /**
+   * Refreshes group account data from backend (for GSIM/GLIM status/balance update)
+   */
+  refreshAccounts(groupId: string) {
+    this.groupsService.getGroupAccountsData(groupId).subscribe((data: any) => {
+      this.groupAccountData = data;
+      this.savingAccounts = data.savingsAccounts;
+      this.loanAccounts = data.loanAccounts;
+      // If GSIM/GLIM data is separate, fetch and update here as well
     });
   }
 
