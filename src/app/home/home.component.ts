@@ -3,6 +3,9 @@ import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } 
 import { ActivatedRoute, Router, NavigationEnd, RouterLink } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ClientTrendsBarComponent } from './client-trends-bar/client-trends-bar.component';
+import { AmountDisbursedPieComponent } from './amount-disbursed-pie/amount-disbursed-pie.component';
+import { AmountCollectedPieComponent } from './amount-collected-pie/amount-collected-pie.component';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
@@ -19,7 +22,6 @@ import { ConfigurationWizardService } from '../configuration-wizard/configuratio
 
 /** Custom Components */
 import { NextStepDialogComponent } from '../configuration-wizard/next-step-dialog/next-step-dialog.component';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardImage } from '@angular/material/card';
 import { MatAutocompleteTrigger, MatAutocomplete, MatOption } from '@angular/material/autocomplete';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
@@ -34,11 +36,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   styleUrls: ['./home.component.scss'],
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    FaIconComponent,
     MatCardHeader,
     MatCardTitle,
     MatAutocompleteTrigger,
+    ClientTrendsBarComponent,
+    AmountDisbursedPieComponent,
+    AmountCollectedPieComponent,
     MatAutocomplete,
+    MatOption,
     MatCardImage,
     AsyncPipe
   ]
@@ -56,9 +61,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   allActivities: any[] = activities;
 
   /* Reference of dashboard button */
-  @ViewChild('buttonDashboard', { static: false }) buttonDashboard: ElementRef<any>;
-  /* Template for popover on dashboard button */
-  @ViewChild('templateButtonDashboard', { static: false }) templateButtonDashboard: TemplateRef<any>;
+  // @ViewChild('buttonDashboard', { static: false }) buttonDashboard: ElementRef<any>;
+  // /* Template for popover on dashboard button */
+  // @ViewChild('templateButtonDashboard', { static: false }) templateButtonDashboard: TemplateRef<any>;
   /* Reference of search activity */
   @ViewChild('searchActivity', { static: false }) searchActivity: ElementRef<any>;
   /* Template for popover on search activity */
@@ -135,11 +140,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
    * To show popover.
    */
   ngAfterViewInit() {
-    if (this.configurationWizardService.showHome === true) {
-      setTimeout(() => {
-        this.showPopover(this.templateButtonDashboard, this.buttonDashboard.nativeElement, 'bottom', true);
-      });
-    }
+    // if (this.configurationWizardService.showHome === true) {
+    //   setTimeout(() => {
+    //     this.showPopover(this.templateButtonDashboard, this.buttonDashboard.nativeElement, 'bottom', true);
+    //   });
+    // }
     if (this.configurationWizardService.showHomeSearchActivity === true) {
       setTimeout(() => {
         this.showPopover(this.templateSearchActivity, this.searchActivity.nativeElement, 'bottom', true);
