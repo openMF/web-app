@@ -144,6 +144,7 @@ All these environment variables can be set when using Docker or Docker Compose:
 | ------------------------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | FINERACT_API_URLS                    | Fineract server list                                                 | https://sandbox.mifos.community,https://demo.mifos.community,https://localhost:8443 |
 | FINERACT_API_URL                     | Default Fineract server                                              | https://localhost:8443                                                              |
+| FINERACT_API_ACTUATOR                | Default Fineract Actuator endpoint                                   | /fineract-provider                                                                  |
 | FINERACT_PLATFORM_TENANT_IDENTIFIER  | Default tenant identifier (must align with Fineract `tenants` table) | default                                                                             |
 | FINERACT_PLATFORM_TENANTS_IDENTIFIER | Tenant identifier list (must align with Fineract `tenants` table)    | -                                                                                   |
 
