@@ -7,12 +7,12 @@ import { Route } from '../core/route/route.service';
 
 /** Custom Components */
 import { HomeComponent } from './home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 
 /** Custom Resolvers */
 import { OfficesResolver } from '../accounting/common-resolvers/offices.resolver';
 
-/** Home and Dashboard Routes */
+/** Home Routes */
+// Dashboard Routes commented out
 const routes: Routes = [
   Route.withShell([
     {
@@ -23,12 +23,7 @@ const routes: Routes = [
     {
       path: 'home',
       component: HomeComponent,
-      data: { title: 'Home' }
-    },
-    {
-      path: 'dashboard',
-      component: DashboardComponent,
-      data: { title: 'Dashboard', breadcrumb: 'Dashboard' },
+      data: { title: 'Home' },
       resolve: {
         offices: OfficesResolver
       }
@@ -40,7 +35,7 @@ const routes: Routes = [
 /**
  * Home Routing Module
  *
- * Configures the home and dashboard routes.
+ * Configures the home routes.
  */
 @NgModule({
   imports: [RouterModule.forChild(routes)],

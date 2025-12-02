@@ -9,10 +9,9 @@ import { PipesModule } from '../pipes/pipes.module';
 
 /** Custom Components */
 import { HomeComponent } from './home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { AmountCollectedPieComponent } from './dashboard/amount-collected-pie/amount-collected-pie.component';
-import { AmountDisbursedPieComponent } from './dashboard/amount-disbursed-pie/amount-disbursed-pie.component';
-import { ClientTrendsBarComponent } from './dashboard/client-trends-bar/client-trends-bar.component';
+import { AmountCollectedPieComponent } from './amount-collected-pie/amount-collected-pie.component';
+import { AmountDisbursedPieComponent } from './amount-disbursed-pie/amount-disbursed-pie.component';
+import { ClientTrendsBarComponent } from './client-trends-bar/client-trends-bar.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { WarningDialogComponent } from './warning-dialog/warning-dialog.component';
 import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-dialog.component';
@@ -20,7 +19,7 @@ import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-
 /**
  * Home Component
  *
- * Home and dashboard components should be declared here.
+ * Home components should be declared here.
  */
 @NgModule({
   imports: [
@@ -30,7 +29,6 @@ import { SessionTimeoutDialogComponent } from './timeout-dialog/session-timeout-
     HomeRoutingModule,
     TranslateModule,
     HomeComponent,
-    DashboardComponent,
     AmountCollectedPieComponent,
     AmountDisbursedPieComponent,
     ClientTrendsBarComponent,
