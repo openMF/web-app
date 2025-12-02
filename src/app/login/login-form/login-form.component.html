@@ -12,7 +12,7 @@
     </mat-form-field>
 
     <mat-form-field class="login-input flex-align-center">
-      <span matPrefix class="m-r-10">
+      <span matPrefix class="m-r-10" *ngIf="!loginForm.controls.password.value">
         <fa-icon icon="lock" size="lg"></fa-icon>
       </span>
       <mat-label>{{ 'labels.inputs.Password' | translate }}</mat-label>
@@ -33,25 +33,16 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-checkbox formControlName="remember" class="m-t-10 flex-align-center">{{
-      'labels.inputs.Remember me' | translate
-    }}</mat-checkbox>
-
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
-    <button mat-raised-button color="primary" class="login-button flex-align-center" [disabled]="!loginForm.valid">
+    <button
+      mat-raised-button
+      color="primary"
+      class="login-button-first flex-align-center"
+      [disabled]="!loginForm.valid"
+    >
       {{ 'labels.buttons.Login' | translate }}
       <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
-    </button>
-
-    <button
-      type="button"
-      mat-button
-      class="login-button flex-align-center"
-      (click)="forgotPassword()"
-      [disabled]="loading"
-    >
-      {{ 'labels.links.Forgot Password?' | translate }}
     </button>
   </form>
 </div>

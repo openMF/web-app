@@ -25,7 +25,7 @@
       }
       const code = getQueryParam('code');
       if (code) {
-        localStorage.setItem('auth_code', code);
+        sessionStorage.setItem('auth_code', code);
         window.location.href = '/#/callback';
       }
     </script>

@@ -267,4 +267,11 @@ body.dark-theme {
       content: url('../assets/images/white-mifos.png');
     }
   }
+
+  // Table row hover effect for dark mode
+  .mat-mdc-row:hover,
+  tr.select-row:hover,
+  .select-row:hover {
+    background-color: rgb(255 255 255 / 8%) !important;
+  }
 }

@@ -1,101 +1,77 @@
-<div class="layout-row align-end gap-2px responsive-column container m-b-20">
-  <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ACCOUNTINGRULE'">
-    <fa-icon icon="edit" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.Edit' | translate }}
-  </button>
-  <button
-    mat-raised-button
-    color="warn"
-    (click)="deleteAccountingRule()"
-    *mifosxHasPermission="'DELETE_ACCOUNTINGRULE'"
-  >
-    <fa-icon icon="trash" class="m-r-10"></fa-icon>
-    {{ 'labels.buttons.Delete' | translate }}
-  </button>
-</div>
-
-<div class="container layout-row gap-2-percent responsive-column">
-  <div class="flex-48">
-    <mat-card>
-      <mat-card-content>
-        <div class="layout-row-wrap">
-          <div class="flex-50 header">
-            {{ 'labels.inputs.Office' | translate }}
-          </div>
-
-          <div class="flex-50">
-            {{ accountingRule.officeName }}
-          </div>
-
-          <div class="flex-50 header" *ngIf="accountingRule.description">
-            {{ 'labels.inputs.Description' | translate }}
-          </div>
-
-          <div class="flex-50" *ngIf="accountingRule.description">
-            {{ accountingRule.description }}
-          </div>
-
-          <div class="flex-50 header">
-            {{ 'labels.inputs.Multiple Debit Entries Allowed' | translate }}
-          </div>
-
-          <div class="flex-50">
-            {{ accountingRule.allowMultipleDebitEntries }}
-          </div>
-
-          <div class="flex-50 header">
-            {{ 'labels.inputs.Multiple Credit Entries Allowed' | translate }}
-          </div>
-
-          <div class="flex-50">
-            {{ accountingRule.allowMultipleCreditEntries }}
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+<div class="container">
+  <div class="layout-row align-end gap-2px responsive-column m-b-20">
+    <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_ACCOUNTINGRULE'">
+      <fa-icon icon="edit" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Edit' | translate }}
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="deleteAccountingRule()"
+      *mifosxHasPermission="'DELETE_ACCOUNTINGRULE'"
+    >
+      <fa-icon icon="trash" class="m-r-10"></fa-icon>
+      {{ 'labels.buttons.Delete' | translate }}
+    </button>
   </div>
 
-  <div class="flex-fill">
-    <mat-card>
-      <mat-card-content>
-        <div class="layout-row content">
-          <div class="flex-50 layout-column" *ngIf="accountingRule.debitTags">
-            <div class="header">
-              {{ 'labels.inputs.Debit Tags' | translate }}
-            </div>
-            <div *ngFor="let debitTag of accountingRule.debitTags">
-              {{ debitTag.tag.name }}
-            </div>
-          </div>
+  <mat-card>
+    <mat-card-content class="content-rows">
+      <div class="content-row">
+        <div class="label">{{ 'labels.inputs.Office' | translate }}</div>
+        <div class="value">{{ accountingRule.officeName }}</div>
+      </div>
 
-          <div class="flex-50 layout-column" *ngIf="accountingRule.debitAccounts">
-            <div class="header">
-              {{ 'labels.inputs.Debit Account Name' | translate }}
-            </div>
-            <div *ngFor="let debitAccount of accountingRule.debitAccounts">
-              {{ debitAccount.name + ' (' + debitAccount.glCode + ')' }}
-            </div>
-          </div>
+      <div class="content-row" *ngIf="accountingRule.description">
+        <div class="label">{{ 'labels.inputs.Description' | translate }}</div>
+        <div class="value">{{ accountingRule.description }}</div>
+      </div>
 
-          <div class="flex-50 layout-column" *ngIf="accountingRule.creditTags">
-            <div class="header">
-              {{ 'labels.inputs.Credit Tags' | translate }}
-            </div>
-            <div *ngFor="let creditTag of accountingRule.creditTags">
-              {{ creditTag.tag.name }}
-            </div>
-          </div>
+      <div class="content-row">
+        <div class="label">{{ 'labels.inputs.Multiple Debit Entries Allowed' | translate }}</div>
+        <div class="value">{{ accountingRule.allowMultipleDebitEntries }}</div>
+      </div>
 
-          <div class="flex-50 layout-column" *ngIf="accountingRule.creditAccounts">
-            <div class="header">
-              {{ 'labels.inputs.Credit Account Name' | translate }}
-            </div>
-            <div *ngFor="let creditAccount of accountingRule.creditAccounts">
-              {{ creditAccount.name + ' (' + creditAccount.glCode + ')' }}
-            </div>
-          </div>
+      <div class="content-row">
+        <div class="label">{{ 'labels.inputs.Multiple Credit Entries Allowed' | translate }}</div>
+        <div class="value">{{ accountingRule.allowMultipleCreditEntries }}</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-content class="content-rows">
+      <div class="content-row" *ngIf="accountingRule.debitTags?.length">
+        <div class="label">{{ 'labels.inputs.Debit Tags' | translate }}</div>
+        <div class="value">
+          <span *ngFor="let debitTag of accountingRule.debitTags">{{ debitTag.tag.name }}</span>
         </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+      </div>
+
+      <div class="content-row" *ngIf="accountingRule.debitAccounts?.length">
+        <div class="label">{{ 'labels.inputs.Debit Account Name' | translate }}</div>
+        <div class="value">
+          <span *ngFor="let debitAccount of accountingRule.debitAccounts">{{
+            debitAccount.name + ' (' + debitAccount.glCode + ')'
+          }}</span>
+        </div>
+      </div>
+
+      <div class="content-row" *ngIf="accountingRule.creditTags?.length">
+        <div class="label">{{ 'labels.inputs.Credit Tags' | translate }}</div>
+        <div class="value">
+          <span *ngFor="let creditTag of accountingRule.creditTags">{{ creditTag.tag.name }}</span>
+        </div>
+      </div>
+
+      <div class="content-row" *ngIf="accountingRule.creditAccounts?.length">
+        <div class="label">{{ 'labels.inputs.Credit Account Name' | translate }}</div>
+        <div class="value">
+          <span *ngFor="let creditAccount of accountingRule.creditAccounts">{{
+            creditAccount.name + ' (' + creditAccount.glCode + ')'
+          }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -12,12 +12,15 @@ import { HomeService } from '../../home.service';
 
 /** Charting Imports */
 import { Dates } from 'app/core/utils/dates';
-import Chart from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import { MatCard, MatCardHeader, MatCardContent } from '@angular/material/card';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgFor, NgStyle } from '@angular/common';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
+
+// Register Chart.js components
+Chart.register(...registerables);
 
 /**
  * Client Trends Bar Chart Component.
@@ -266,11 +269,11 @@ export class ClientTrendsBarComponent implements OnInit {
           responsive: true,
           scales: {
             y: {
-              beginAtZero: true,
-              scaleLabel: {
+              min: 0,
+              title: {
                 display: true,
-                labelString: 'Values',
-                fontColor: '#1074B9'
+                text: 'Values',
+                color: '#1074B9'
               }
             }
           }

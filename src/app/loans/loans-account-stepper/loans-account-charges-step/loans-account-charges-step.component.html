@@ -24,7 +24,7 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
       <td mat-cell *matCellDef="let charge">
-        {{ charge.name + ', ' + charge.currency.displaySymbol }}
+        {{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}
       </td>
     </ng-container>
 
@@ -110,7 +110,7 @@
   <table mat-table class="mat-elevation-z1" [dataSource]="overDueChargesDataSource">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.name' | translate }}</th>
-      <td mat-cell *matCellDef="let charge">{{ charge.name }},{{ charge.currency.displaySymbol }}</td>
+      <td mat-cell *matCellDef="let charge">{{ charge.name + ', ' + (charge.currency?.displaySymbol || '') }}</td>
     </ng-container>
 
     <ng-container matColumnDef="type">

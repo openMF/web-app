@@ -154,8 +154,6 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
           break;
       }
     });
-
-    this.glAccountForm.get('type').setValue(this.accountTypeId);
   }
 
   /**
@@ -163,6 +161,9 @@ export class CreateGlAccountComponent implements OnInit, AfterViewInit {
    * if successful redirects to view created account.
    */
   submit() {
+    if (this.glAccountForm.invalid) {
+      return;
+    }
     this.accountingService.createGlAccount(this.glAccountForm.value).subscribe((response: any) => {
       if (this.configurationWizardService.showChartofAccounts === true) {
         this.configurationWizardService.showChartofAccounts = false;

@@ -31,12 +31,11 @@
         </div>
 
         <mat-divider [vertical]="true"></mat-divider>
-
         <div class="list-permission layout-column flex-70">
           <form [formGroup]="formGroup" (submit)="submit()">
-            <div *ngFor="let permission of permissions.permissions" class="display-permissions">
-              <div formArrayName="roster">
-                <div [formGroupName]="permission.id">
+            <div formArrayName="roster">
+              <div *ngFor="let permission of permissions.permissions; let i = index" class="display-permissions">
+                <div [formGroupName]="i">
                   <mat-checkbox name="cp" id="{{ permission.code }}" formControlName="selected">
                     {{ permissionName(permission.code) }}
                   </mat-checkbox>

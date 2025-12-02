@@ -332,11 +332,14 @@ export class CreateHolidayComponent implements OnInit {
     const locale = this.settings.language.code;
     const prevFromDate: Date = this.holidayForm.value.fromDate;
     const prevToDate: Date = this.holidayForm.value.toDate;
-    holidayFormData.fromDate = this.dateUtils.formatDate(prevFromDate, dateFormat);
-    holidayFormData.toDate = this.dateUtils.formatDate(prevToDate, dateFormat);
+    holidayFormData.fromDate = this.dateUtils.formatDateAsString(prevFromDate, dateFormat);
+    holidayFormData.toDate = this.dateUtils.formatDateAsString(prevToDate, dateFormat);
     if (this.holidayForm.contains('repaymentsRescheduledTo')) {
       const prevRepaymentsRescheduledTo: Date = this.holidayForm.value.repaymentsRescheduledTo;
-      holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDate(prevRepaymentsRescheduledTo, dateFormat);
+      holidayFormData.repaymentsRescheduledTo = this.dateUtils.formatDateAsString(
+        prevRepaymentsRescheduledTo,
+        dateFormat
+      );
     }
     const offices = this.holidayForm.value.offices.map((office: string) => {
       return { officeId: Number.parseInt(office, 10) };

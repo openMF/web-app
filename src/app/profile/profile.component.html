@@ -1,9 +1,9 @@
 <div class="container m-b-10 layout-row layout-lt-md-column align-end gap-1percent">
-  <button mat-raised-button color="primary" [routerLink]="['/system', 'roles-and-permissions']">
+  <button mat-raised-button color="primary" class="m-r-10" [routerLink]="['/system', 'roles-and-permissions']">
     <fa-icon icon="check" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Permissions' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="changeUserPassword()">
+  <button mat-raised-button color="primary" class="m-r-10" (click)="changeUserPassword()">
     <fa-icon icon="cog" class="m-r-10"></fa-icon>
     {{ 'labels.buttons.Change Password' | translate }}
   </button>
@@ -11,41 +11,53 @@
 <div class="container layout-column gap-1percent">
   <mat-card>
     <div class="layout-row-wrap">
-      <div class="flex-50 header">
-        {{ 'labels.inputs.Tenant Id' | translate }}
+      <div class="info-box">
+        <div class="header">
+          {{ 'labels.inputs.Tenant Id' | translate }}
+        </div>
+        <div>
+          {{ tenantIdentifier }}
+        </div>
       </div>
-      <div class="flex-50">
-        {{ tenantIdentifier }}
+      <div class="info-box">
+        <div class="header">
+          {{ 'labels.inputs.User Id' | translate }}
+        </div>
+        <div>
+          {{ profileData.userId }}
+        </div>
       </div>
-      <div class="flex-50 header">
-        {{ 'labels.inputs.User Id' | translate }}
+      <div class="info-box">
+        <div class="header">
+          {{ 'labels.inputs.User Name' | translate }}
+        </div>
+        <div>
+          {{ profileData.username }}
+        </div>
       </div>
-      <div class="flex-50">
-        {{ profileData.userId }}
+      <div class="info-box">
+        <div class="header">
+          {{ 'labels.inputs.Office' | translate }}
+        </div>
+        <div>
+          {{ profileData.officeName }}
+        </div>
       </div>
-      <div class="flex-50 header">
-        {{ 'labels.inputs.User Name' | translate }}
+      <div class="info-box">
+        <div class="header">
+          {{ 'labels.inputs.Status' | translate }}
+        </div>
+        <div>
+          {{ profileData.authenticated ? 'Authenticated' : 'Not Authenticated' }}
+        </div>
       </div>
-      <div class="flex-50">
-        {{ profileData.username }}
-      </div>
-      <div class="flex-50 header">
-        {{ 'labels.inputs.Office' | translate }}
-      </div>
-      <div class="flex-50">
-        {{ profileData.officeName }}
-      </div>
-      <div class="flex-50 header">
-        {{ 'labels.inputs.Status' | translate }}
-      </div>
-      <div class="flex-50">
-        {{ profileData.authenticated ? 'Authenticated' : 'Not Authenticated' }}
-      </div>
-      <div class="flex-50 header">
-        {{ 'labels.inputs.Language' | translate }}
-      </div>
-      <div class="flex-50">
-        {{ language }}
+      <div class="info-box">
+        <div class="header">
+          {{ 'labels.inputs.Language' | translate }}
+        </div>
+        <div>
+          {{ language }}
+        </div>
       </div>
     </div>
   </mat-card>

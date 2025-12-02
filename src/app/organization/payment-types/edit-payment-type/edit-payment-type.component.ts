@@ -66,7 +66,9 @@ export class EditPaymentTypeComponent implements OnInit {
       isCashPayment: [this.paymentTypeData.isCashPayment],
       position: [
         this.paymentTypeData.position,
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(1)]
       ]
     });
   }

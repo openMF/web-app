@@ -20,7 +20,9 @@ import {
   UntypedFormBuilder,
   UntypedFormControl,
   Validators,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  AbstractControl,
+  ValidationErrors
 } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -113,13 +115,35 @@ export class FundMappingComponent implements OnInit {
   }
 
   /**
+   * Custom validator to ensure array fields are not empty.
+   * @param {AbstractControl} control - the form control to validate.
+   * @returns {ValidationErrors | null} - validation errors or null if valid.
+   */
+  private nonEmptyArrayValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value || !Array.isArray(value) || value.length === 0) {
+      return { required: true };
+    }
+    if (value.every((item: any) => item === '' || item === null || item === undefined)) {
+      return { required: true };
+    }
+    return null;
+  }
+
+  /**
    * Creates the Fund Mapping Form
    */
   createFundMappingForm() {
     this.fundMappingForm = this.formBuilder.group({
-      loanStatus: [''],
-      loanProducts: [''],
-      offices: [''],
+      loanStatus: [
+        [],
+        this.nonEmptyArrayValidator.bind(this)],
+      loanProducts: [
+        [],
+        this.nonEmptyArrayValidator.bind(this)],
+      offices: [
+        [],
+        this.nonEmptyArrayValidator.bind(this)],
       loanDateOption: [
         '',
         Validators.required
@@ -223,6 +247,10 @@ export class FundMappingComponent implements OnInit {
     const prevLoanToDate: Date = this.fundMappingForm.value.loanToDate;
     if (fundMappingFormData.loanFromDate instanceof Date) {
       fundMappingFormData.loanFromDate = this.dateUtils.formatDate(prevLoanFromDate, dateFormat);
+    }
+    if (this.fundMappingForm.invalid) {
+      this.fundMappingForm.markAllAsTouched();
+      return;
     }
     if (fundMappingFormData.loanToDate instanceof Date) {
       fundMappingFormData.loanToDate = this.dateUtils.formatDate(prevLoanToDate, dateFormat);

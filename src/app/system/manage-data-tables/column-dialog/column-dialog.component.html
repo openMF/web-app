@@ -8,7 +8,7 @@
     <div class="layout-column">
       <mat-form-field>
         <mat-label>{{ 'labels.inputs.Column Name' | translate }}</mat-label>
-        <input matInput required formControlName="name" />
+        <input matInput required formControlName="name" placeholder="{{ 'labels.inputs.Column Name' | translate }}" />
         <mat-error *ngIf="columnForm.controls.name.hasError('required')">
           {{ 'labels.inputs.Column Name' | translate }} {{ 'labels.commons.is' | translate }}
           <strong>{{ 'labels.commons.required' | translate }}</strong>
@@ -22,11 +22,21 @@
             {{ columnType.displayValue | translateKey: 'inputs' }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="columnForm.controls.type.hasError('required')">
+          {{ 'labels.inputs.Column Type' | translate }} {{ 'labels.commons.is' | translate }}
+          <strong>{{ 'labels.commons.required' | translate }}</strong>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field *ngIf="columnForm.value.type === 'String'">
         <mat-label> {{ 'labels.inputs.Column Length' | translate }}</mat-label>
-        <input matInput required type="number" formControlName="length" />
+        <input
+          matInput
+          required
+          type="number"
+          formControlName="length"
+          placeholder="{{ 'labels.inputs.Column Length' | translate }}"
+        />
       </mat-form-field>
 
       <mat-form-field *ngIf="columnForm.value.type === 'Dropdown'">

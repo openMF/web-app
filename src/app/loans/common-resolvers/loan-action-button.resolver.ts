@@ -79,6 +79,10 @@ export class LoanActionButtonResolver {
       return this.loansService.getLoanActionTemplate(loanId, 'contractTermination');
     } else if (loanActionButton === 'Buy Down Fee') {
       return this.loansService.getLoanActionTemplate(loanId, 'buyDownFee');
+    } else if (loanActionButton === 'Re-Age') {
+      return this.loansService.getLoanActionTemplate(loanId, 'reAge');
+    } else if (loanActionButton === 'Re-Amortize') {
+      return this.loansService.getLoanActionTemplate(loanId, 'reAmortization');
     } else {
       return undefined;
     }

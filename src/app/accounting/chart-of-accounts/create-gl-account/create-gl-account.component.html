@@ -10,7 +10,12 @@
                 {{ 'labels.inputs.accounting.' + accountType.value | translate }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="glAccountForm.controls.type.hasError('required')">
+            <mat-error
+              *ngIf="
+                glAccountForm.controls.type.hasError('required') &&
+                (glAccountForm.controls.type.touched || glAccountForm.controls.type.dirty)
+              "
+            >
               {{ 'labels.inputs.Account Type' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -19,7 +24,12 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.Account Name' | translate }}</mat-label>
             <input matInput required formControlName="name" />
-            <mat-error *ngIf="glAccountForm.controls.name.hasError('required')">
+            <mat-error
+              *ngIf="
+                glAccountForm.controls.name.hasError('required') &&
+                (glAccountForm.controls.name.touched || glAccountForm.controls.name.dirty)
+              "
+            >
               {{ 'labels.inputs.Account Name' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -32,7 +42,12 @@
                 {{ accountUsage.value }}
               </mat-option>
             </mat-select>
-            <mat-error *ngIf="glAccountForm.controls.usage.hasError('required')">
+            <mat-error
+              *ngIf="
+                glAccountForm.controls.usage.hasError('required') &&
+                (glAccountForm.controls.usage.touched || glAccountForm.controls.usage.dirty)
+              "
+            >
               {{ 'labels.inputs.Account Usage' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
@@ -41,7 +56,12 @@
           <mat-form-field class="flex-48">
             <mat-label>{{ 'labels.inputs.GL Code' | translate }}</mat-label>
             <input matInput required formControlName="glCode" />
-            <mat-error *ngIf="glAccountForm.controls.glCode.hasError('required')">
+            <mat-error
+              *ngIf="
+                glAccountForm.controls.glCode.hasError('required') &&
+                (glAccountForm.controls.glCode.touched || glAccountForm.controls.glCode.dirty)
+              "
+            >
               {{ 'labels.inputs.GL Code' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>

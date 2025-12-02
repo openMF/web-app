@@ -79,8 +79,12 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    */
   setBulkLoanForm() {
     this.bulkLoanForm = this.formBuilder.group({
+      officeId: [
+        '',
+        Validators.required
+      ],
       assignmentDate: [
-        new Date(),
+        this.settingsService.businessDate,
         Validators.required
       ],
       toLoanOfficerId: [
@@ -107,10 +111,14 @@ export class BulkLoanReassignmnetComponent implements OnInit {
    * @param officerId Office Id.
    */
   getFromOfficers(officerId: any) {
-    this.toLoanOfficers = this.fromLoanOfficers.filter((officer: any) => officer.id !== officerId);
-    this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.id).subscribe((response: any) => {
-      this.officerTemplate = response;
-    });
+    this.toLoanOfficers = this.fromLoanOfficers?.filter((officer: any) => officer.id !== officerId) || [];
+    if (officerId && this.officeTemplate && this.officeTemplate.id) {
+      this.organizationSevice.getOfficerTemplate(officerId, this.officeTemplate.id).subscribe((response: any) => {
+        this.officerTemplate = response;
+      });
+    } else {
+      this.officerTemplate = undefined;
+    }
   }
 
   /**

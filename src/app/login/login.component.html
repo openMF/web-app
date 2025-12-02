@@ -43,10 +43,7 @@
     <div class="layout-row-reverse">
       <mifosx-language-selector class="p-t-10 p-r-10 width-40"></mifosx-language-selector>
       <mifosx-theme-toggle class="p-t-10"></mifosx-theme-toggle>
-      <mifosx-server-selector
-        class="p-t-10"
-        *ngIf="!environment.production && environment.allowServerSwitch"
-      ></mifosx-server-selector>
+      <mifosx-server-selector class="p-t-10" *ngIf="allowServerSwitch()"></mifosx-server-selector>
     </div>
 
     <!-- Logo with Organization Name -->
@@ -54,22 +51,25 @@
       <img src="assets/images/mifos_lg-logo.png" alt="{{ 'APP_NAME' | translate }} Logo" class="img-container" />
     </div>
 
-    <!-- Tenant Identifier Name -->
-    <mifosx-tenant-selector *ngIf="displayTenantSelector()"></mifosx-tenant-selector>
+    <!-- Form Section -->
+    <div class="layout-column align-center-center">
+      <!-- Tenant Identifier Name -->
+      <mifosx-tenant-selector *ngIf="displayTenantSelector()"></mifosx-tenant-selector>
 
-    <!--
-      Type of Form:
-        Login
-        Reset Password
-        Two Factor Authentication
-        Forgot Password (TODO: Decision to be taken on providing this feature.)
-    -->
-    <mifosx-login-form *ngIf="!resetPassword && !twoFactorAuthenticationRequired"></mifosx-login-form>
+      <!--
+        Type of Form:
+          Login
+          Reset Password
+          Two Factor Authentication
+      -->
+      <mifosx-login-form *ngIf="!resetPassword && !twoFactorAuthenticationRequired"></mifosx-login-form>
 
-    <div class="layout-row">
-      <mifosx-reset-password *ngIf="resetPassword"></mifosx-reset-password>
-      <mifosx-two-factor-authentication *ngIf="twoFactorAuthenticationRequired"></mifosx-two-factor-authentication>
+      <div class="layout-row">
+        <mifosx-reset-password *ngIf="resetPassword"></mifosx-reset-password>
+        <mifosx-two-factor-authentication *ngIf="twoFactorAuthenticationRequired"></mifosx-two-factor-authentication>
+      </div>
     </div>
+
     <div class="layout-row">
       <!-- Contact Information/Resources (hidden on smaller screens) -->
       <mat-list class="information-list align-items-center custom-horizontal-list hide-lt-lg">

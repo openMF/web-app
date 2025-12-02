@@ -1,0 +1,32 @@
+.container {
+  max-width: 37rem;
+}
+
+.mat-card {
+  padding: 20px;
+}
+
+.layout-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mat-card-actions {
+  padding-top: 20px;
+}
+
+.gap-5px {
+  gap: 5px;
+}
+
+.responsive-column {
+  @media (width <= 768px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.m-b-20 {
+  margin-bottom: 20px;
+}

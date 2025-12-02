@@ -33,11 +33,19 @@
         <mat-form-field class="flex-28 m-r-5">
           <mat-label>{{ 'labels.inputs.Name' | translate }}</mat-label>
           <input matInput formControlName="name" required />
+          <mat-error *ngIf="chart.get('name')?.touched && chart.get('name')?.hasError('required')">
+            {{ 'labels.inputs.Name' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="flex-70">
           <mat-label>{{ 'labels.inputs.Description' | translate }}</mat-label>
           <textarea matInput formControlName="description" required></textarea>
+          <mat-error *ngIf="chart.get('description')?.touched && chart.get('description')?.hasError('required')">
+            {{ 'labels.inputs.Description' | translate }} {{ 'labels.commons.is' | translate }}
+            <strong>{{ 'labels.commons.required' | translate }}</strong>
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="flex-48 m-r-5" (click)="validFromDatePicker.open()">

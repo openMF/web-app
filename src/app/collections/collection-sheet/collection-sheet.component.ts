@@ -5,20 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SettingsService } from 'app/settings/settings.service';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
-  MatTable
-} from '@angular/material/table';
-import { MatSort, MatSortHeader } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
+
 import { OrganizationService } from 'app/organization/organization.service';
 import { CentersService } from 'app/centers/centers.service';
 import { GroupsService } from 'app/groups/groups.service';
@@ -31,20 +18,7 @@ import { CollectionSheetData, JLGGroupData, MeetingFallCenter } from '../models/
   styleUrl: './collection-sheet.component.scss',
   imports: [
     ...STANDALONE_SHARED_IMPORTS,
-    FaIconComponent,
-    MatTable,
-    MatSort,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatSortHeader,
-    MatCellDef,
-    MatCell,
-    MatHeaderRowDef,
-    MatHeaderRow,
-    MatRowDef,
-    MatRow,
-    MatPaginator
+    FaIconComponent
   ]
 })
 export class CollectionSheetComponent implements OnInit {

@@ -16,7 +16,7 @@ import {
   MatRowDef,
   MatRow
 } from '@angular/material/table';
-import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { DatetimeFormatPipe } from '../../../pipes/datetime-format.pipe';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /**
@@ -40,7 +40,7 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
     MatHeaderRow,
     MatRowDef,
     MatRow,
-    DateFormatPipe
+    DatetimeFormatPipe
   ]
 })
 export class ViewAuditComponent implements OnInit {
@@ -80,12 +80,25 @@ export class ViewAuditComponent implements OnInit {
    * Initalizes Audit Trail Commands Data.
    */
   get auditTrailCommandsData() {
-    return Object.entries(JSON.parse(this.auditTrailData.commandAsJson)).map(
-      ([
-        key,
-        value
-      ]) => ({ command: key, commandValue: value })
-    );
+    if (!this.auditTrailData || !this.auditTrailData.commandAsJson) {
+      return [];
+    }
+
+    try {
+      const parsed = JSON.parse(this.auditTrailData.commandAsJson);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        return Object.entries(parsed).map(
+          ([
+            key,
+            value
+          ]) => ({ command: key, commandValue: value })
+        );
+      }
+      return [];
+    } catch (err) {
+      console.error('Invalid commandAsJson in audit trail:', err);
+      return [];
+    }
   }
 
   /**

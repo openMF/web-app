@@ -57,6 +57,32 @@ export class EditFamilyMemberComponent implements OnInit {
   ngOnInit() {
     this.maxDate = this.settingsService.businessDate;
     this.createEditFamilyMemberForm(this.familyMemberDetails);
+    this.editFamilyMemberForm.get('dateOfBirth').valueChanges.subscribe((dateOfBirth: any) => {
+      if (dateOfBirth) {
+        const age = this.calculateAge(dateOfBirth);
+        this.editFamilyMemberForm.get('age').setValue(age);
+      } else {
+        this.editFamilyMemberForm.get('age').setValue('');
+      }
+    });
+  }
+
+  /**
+   * Calculates age from date of birth
+   * @param {Date} dateOfBirth Date of Birth
+   * @returns {number} Age
+   */
+  calculateAge(dateOfBirth: Date): number {
+    const today = new Date(this.settingsService.businessDate);
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
   }
 
   /**
@@ -76,9 +102,7 @@ export class EditFamilyMemberComponent implements OnInit {
       ],
       qualification: [familyMember.qualification],
       age: [
-        familyMember.age,
-        Validators.required
-      ],
+        { value: familyMember.age, disabled: true }],
       isDependent: [familyMember.isDependent],
       relationshipId: [
         familyMember.relationshipId,
@@ -91,8 +115,7 @@ export class EditFamilyMemberComponent implements OnInit {
       professionId: [familyMember.professionId],
       maritalStatusId: [familyMember.maritalStatusId],
       dateOfBirth: [
-        this.dateUtils.formatDate(familyMember.dateOfBirth, 'yyyy-MM-dd'),
-        Validators.required
+        familyMember.dateOfBirth ? this.dateUtils.formatDate(familyMember.dateOfBirth, 'yyyy-MM-dd') : null
       ]
     });
   }
@@ -101,18 +124,36 @@ export class EditFamilyMemberComponent implements OnInit {
    * Submits the form and updates the client family member.
    */
   submit() {
-    const editFamilyMemberFormData = this.editFamilyMemberForm.value;
+    // Get form values including disabled controls like age
+    const formValue = {
+      ...this.editFamilyMemberForm.getRawValue()
+    };
+
     const locale = this.settingsService.language.code;
     const dateFormat = this.settingsService.dateFormat;
-    const prevDateOfBirth: Date = this.editFamilyMemberForm.value.dateOfBirth;
-    if (editFamilyMemberFormData.dateOfBirth instanceof Date) {
-      editFamilyMemberFormData.dateOfBirth = this.dateUtils.formatDate(prevDateOfBirth, dateFormat);
+    const prevDateOfBirth: Date = formValue.dateOfBirth;
+
+    // Calculate age from dateOfBirth if present
+    if (prevDateOfBirth) {
+      if (formValue.dateOfBirth instanceof Date) {
+        formValue.dateOfBirth = this.dateUtils.formatDate(prevDateOfBirth, dateFormat);
+      }
+      // Ensure age is calculated even if it wasn't already
+      if (!formValue.age && prevDateOfBirth) {
+        formValue.age = this.calculateAge(prevDateOfBirth);
+      }
+    } else {
+      // If no date of birth, remove age and dateOfBirth from submission
+      delete formValue.age;
+      delete formValue.dateOfBirth;
     }
+
     const data = {
-      ...editFamilyMemberFormData,
+      ...formValue,
       dateFormat,
       locale
     };
+
     this.clientsService
       .editFamilyMember(this.familyMemberDetails.clientId, this.familyMemberDetails.id, data)
       .subscribe((res) => {

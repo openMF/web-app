@@ -24,12 +24,6 @@
               <strong>{{ 'labels.commons.required' | translate }}</strong>
             </mat-error>
           </mat-form-field>
-
-          <div class="is-active-wrapper">
-            <mat-checkbox class="is-active flex-10" labelPosition="before" formControlName="isActive">
-              {{ 'labels.inputs.Is Active' | translate }}?
-            </mat-checkbox>
-          </div>
         </div>
 
         <div class="layout-row-wrap responsive-column gap-4percent">
@@ -107,13 +101,15 @@
 
         <br />
 
-        <div class="layout-row-wrap responsive-column">
+        <div class="layout-row-wrap responsive-column align-center">
           <p class="mat-title flex-20">{{ 'labels.inputs.Events' | translate }}<span class="red">*</span></p>
-
           <button mat-raised-button class="AddEventButton flex-20" type="button" color="primary" (click)="addEvent()">
             <fa-icon icon="plus" class="m-r-10"></fa-icon>
             {{ 'labels.buttons.Add' | translate }} {{ 'labels.inputs.Events' | translate }}
           </button>
+          <mat-checkbox class="is-active flex-10 m-l-20" labelPosition="before" formControlName="isActive">
+            {{ 'labels.inputs.Is Active' | translate }}?
+          </mat-checkbox>
         </div>
 
         <table mat-table [dataSource]="dataSource" matSort>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 
 /** rxjs Imports */
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 /** Environment Configuration */
@@ -50,7 +50,9 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       }
     }
 
-    if (!environment.production) {
+    const isClientImage404 = status === 404 && request.url.includes('/clients/') && request.url.includes('/images');
+
+    if (!environment.production && !isClientImage404) {
       log.error(`Request Error: ${errorMessage}`);
     }
 
@@ -70,10 +72,10 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       });
     } else if (status === 404) {
       // Check if this is an image request that should be silently handled (client profile image)
-      if (request.url.includes('/clients/') && request.url.includes('/images')) {
+      if (isClientImage404) {
         // Don't show alerts for missing client images
         // This is an expected condition, not an error
-        return new Observable<HttpEvent<any>>();
+        return EMPTY;
       } else {
         this.alertService.alert({
           type: this.translate.instant('error.resource.not.found'),

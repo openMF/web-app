@@ -198,6 +198,12 @@ export class GeneralTabComponent implements OnInit {
         value: this.loanDetails.principal
       }
     ];
+    if (this.loanDetails.writeOffReason) {
+      this.loanDetailsTableData.push({
+        key: 'Write-off Reason',
+        value: this.loanDetails.writeOffReason
+      });
+    }
     this.detailsDataSource = new MatTableDataSource(this.loanDetailsTableData);
   }
 

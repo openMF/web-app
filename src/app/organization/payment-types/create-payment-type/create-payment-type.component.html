@@ -23,10 +23,13 @@
 
           <mat-form-field>
             <mat-label>{{ 'labels.inputs.Position' | translate }}</mat-label>
-            <input required matInput formControlName="position" />
+            <input required matInput type="number" min="1" formControlName="position" />
             <mat-error *ngIf="paymentTypeForm.controls.position.hasError('required')">
               {{ 'labels.inputs.Position' | translate }} {{ 'labels.commons.is' | translate }}
               <strong>{{ 'labels.commons.required' | translate }}</strong>
+            </mat-error>
+            <mat-error *ngIf="paymentTypeForm.controls.position.hasError('min')">
+              {{ 'labels.inputs.Position' | translate }} must be a positive number.
             </mat-error>
           </mat-form-field>
         </div>

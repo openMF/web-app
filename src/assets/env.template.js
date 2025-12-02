@@ -7,6 +7,7 @@
 
   window['env']['apiProvider'] = '$FINERACT_API_PROVIDER';
   window['env']['apiVersion'] = '$FINERACT_API_VERSION';
+  window['env']['apiActuator'] = '$FINERACT_API_ACTUATOR';
 
   window['env']['fineractPlatformTenantId'] = '$FINERACT_PLATFORM_TENANT_IDENTIFIER';
   window['env']['fineractPlatformTenantIds'] = '$FINERACT_PLATFORM_TENANTS_IDENTIFIER';
@@ -19,6 +20,9 @@
 
   // Char delimiter to Export CSV options: ',' ';' '|' ' '
   window['env']['defaultCharDelimiter'] = '$MIFOS_DEFAULT_CHAR_DELIMITER';
+
+  // Display or not the Server Selector
+  window['env']['allowServerSwitch'] = '$MIFOS_ALLOW_SERVER_SWITCH_SELECTOR';
 
   // Display or not the BackEnd Info
   window['env']['displayBackEndInfo'] = '$MIFOS_DISPLAY_BACKEND_INFO';

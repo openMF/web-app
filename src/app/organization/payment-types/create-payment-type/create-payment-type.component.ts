@@ -59,7 +59,9 @@ export class CreatePaymentTypeComponent implements OnInit {
       isCashPayment: [false],
       position: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(1)]
       ]
     });
   }

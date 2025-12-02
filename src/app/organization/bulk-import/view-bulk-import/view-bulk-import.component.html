@@ -66,13 +66,13 @@
         'labels.text.Please retain the value Entity/Person in the filename.' | translate
       }}</mat-hint>
 
+      <div class="flex-spacer"></div>
+
       <div class="flex-13">
         <button mat-raised-button color="primary" [disabled]="!template" (click)="uploadTemplate()">
           <i class="fa fa-upload"></i>&nbsp;&nbsp;{{ 'labels.buttons.Upload' | translate }}
         </button>
       </div>
-
-      <div *ngIf="bulkImport.formFields >= 2" class="flex cover"></div>
     </mat-card>
   </div>
 

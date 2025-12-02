@@ -5,7 +5,7 @@
     </button>
   </div>
 
-  <table mat-table [dataSource]="repaymentScheduleDetails.periods" *ngIf="!forEditing" id="repaymentSchedule">
+  <table mat-table [dataSource]="repaymentScheduleDetails?.periods" *ngIf="!forEditing" id="repaymentSchedule">
     <ng-container matColumnDef="number">
       <th mat-header-cell class="center mat-header-cell" *matHeaderCellDef>#</th>
       <td mat-cell class="right" *matCellDef="let item">{{ item.period }}</td>
@@ -63,7 +63,7 @@
       </td>
       <td mat-footer-cell class="check r-amount" *matFooterCellDef>
         <b>
-          {{ repaymentScheduleDetails.totalPrincipalExpected | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</b
+          {{ repaymentScheduleDetails?.totalPrincipalExpected | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}</b
         >
       </td>
     </ng-container>
@@ -77,7 +77,7 @@
       </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
         <b>
-          {{ repaymentScheduleDetails.totalInterestCharged | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          {{ repaymentScheduleDetails?.totalInterestCharged | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
         </b>
       </td>
     </ng-container>
@@ -89,7 +89,7 @@
       </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
         <b>
-          {{ repaymentScheduleDetails.totalFeeChargesCharged | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          {{ repaymentScheduleDetails?.totalFeeChargesCharged | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
         </b>
       </td>
     </ng-container>
@@ -103,7 +103,9 @@
       </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
         <b>
-          {{ repaymentScheduleDetails.totalPenaltyChargesCharged | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          {{
+            repaymentScheduleDetails?.totalPenaltyChargesCharged | currency: currencyCode : 'symbol-narrow' : '1.2-2'
+          }}
         </b>
       </td>
     </ng-container>
@@ -115,7 +117,7 @@
       </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
         <b>
-          {{ repaymentScheduleDetails.totalRepaymentExpected | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
+          {{ repaymentScheduleDetails?.totalRepaymentExpected | currency: currencyCode : 'symbol-narrow' : '1.2-2' }}
         </b>
       </td>
     </ng-container>
@@ -126,7 +128,7 @@
         {{ item.totalPaidForPeriod | formatNumber }}
       </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
-        <b> {{ repaymentScheduleDetails.totalRepayment | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
+        <b> {{ repaymentScheduleDetails?.totalRepayment | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
       </td>
     </ng-container>
 
@@ -138,7 +140,7 @@
         {{ item.totalPaidInAdvanceForPeriod | formatNumber }}
       </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
-        <b> {{ repaymentScheduleDetails.totalPaidInAdvance | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
+        <b> {{ repaymentScheduleDetails?.totalPaidInAdvance | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
       </td>
     </ng-container>
 
@@ -148,7 +150,7 @@
         {{ item.totalPaidLateForPeriod | formatNumber }}
       </td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
-        <b> {{ repaymentScheduleDetails.totalPaidLate | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
+        <b> {{ repaymentScheduleDetails?.totalPaidLate | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
       </td>
     </ng-container>
 
@@ -161,7 +163,7 @@
           {{ item.totalWaivedForPeriod | formatNumber }}
         </td>
         <td mat-footer-cell class="r-amount" *matFooterCellDef>
-          <b> {{ repaymentScheduleDetails.totalWaived | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
+          <b> {{ repaymentScheduleDetails?.totalWaived | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
         </td>
       </ng-container>
     </ng-container>
@@ -180,7 +182,7 @@
       </th>
       <td mat-cell class="r-amount" *matCellDef="let item">{{ item.totalOutstandingForPeriod | formatNumber }}</td>
       <td mat-footer-cell class="r-amount" *matFooterCellDef>
-        <b> {{ repaymentScheduleDetails.totalOutstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
+        <b> {{ repaymentScheduleDetails?.totalOutstanding | currency: currencyCode : 'symbol-narrow' : '1.2-2' }} </b>
       </td>
     </ng-container>
 
@@ -218,8 +220,8 @@
   <!-- Repayment Schedule to be Edited -->
   <table
     mat-table
-    [dataSource]="repaymentScheduleDetails.periods"
-    *ngIf="forEditing && repaymentScheduleDetails.periods.length > 0"
+    [dataSource]="repaymentScheduleDetails?.periods"
+    *ngIf="forEditing && repaymentScheduleDetails?.periods?.length > 0"
     id="repaymentScheduleEdit"
   >
     <ng-container matColumnDef="number">
@@ -285,7 +287,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Actions' | translate }}</th>
       <td mat-cell class="center" *matCellDef="let item">
-        <span *ngIf="item.period && item.period + 1 < repaymentScheduleDetails.periods.length">
+        <span *ngIf="item.period && item.period + 1 < repaymentScheduleDetails?.periods?.length">
           <ng-container>
             <button
               type="button"

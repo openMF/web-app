@@ -3,6 +3,34 @@ mifosx-server-selector {
   width: 40%;
 }
 
+.mat-mdc-form-field-infix {
+  width: 144px !important;
+}
+
+mifosx-tenant-selector {
+  border-radius: 8px;
+  width: 14rem;
+  margin-bottom: 0.1rem;
+
+  ::ng-deep .mat-mdc-form-field {
+    width: 14rem;
+  }
+
+  ::ng-deep .mat-mdc-form-field-infix {
+    width: 144px !important;
+    border-radius: 8px;
+  }
+
+  ::ng-deep [matPrefix] fa-icon {
+    font-size: 16px;
+    position: absolute;
+    left: 190px;
+    border-radius: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
 .cover {
   background: url('../../assets/images/cover_image_resized.webp') no-repeat center center;
   background-size: cover;
@@ -60,9 +88,12 @@ mifosx-server-selector {
   height: 100vh;
   width: 100%;
   min-width: 21.5rem;
+  padding: 0.5rem 1rem;
 
   .img-container {
     max-width: 18rem;
+    margin-bottom: 2rem;
+    gap: 20px;
   }
 }
 
@@ -77,7 +108,7 @@ mifosx-server-selector {
   flex-direction: row !important;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem; // space between items
+  gap: 1.5rem;
 
   mat-list-item {
     width: auto !important;
@@ -88,10 +119,6 @@ mifosx-server-selector {
       white-space: nowrap;
     }
   }
-}
-
-.mat-mdc-form-field-infix {
-  width: 144px !important;
 }
 
 .p-t-10 {

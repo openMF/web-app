@@ -1,45 +1,31 @@
-<mat-card-header class="layout-row gap-5percent header">
-  <fa-icon class="main-icon" icon="building" size="3x"></fa-icon>
-  <mat-card-title-group>
-    <div class="mat-typography">
-      <mat-card-title>
-        <h2>
-          {{ officeData.name }}
-        </h2>
-      </mat-card-title>
-      <mat-card-subtitle>
-        <p *ngIf="officeData.externalId">
-          {{ 'labels.inputs.External Id' | translate }}:<mifosx-external-identifier
-            externalId="{{ officeData.externalId }}"
-          ></mifosx-external-identifier>
-        </p>
-      </mat-card-subtitle>
-    </div>
+<mat-card-header class="layout-row align-items-center gap-10px">
+  <fa-icon icon="building" size="3x"></fa-icon>
+  <mat-card-title-group class="flex-fill">
+    <mat-card-title>
+      <h2>{{ officeData.name }}</h2>
+    </mat-card-title>
   </mat-card-title-group>
 </mat-card-header>
 
 <mat-card-content>
   <div class="layout-row-wrap">
+    <div class="flex-50 mat-body-strong" *ngIf="officeData.externalId">
+      {{ 'labels.inputs.External Id' | translate }}
+    </div>
+    <div class="flex-50" *ngIf="officeData.externalId">
+      <mifosx-external-identifier externalId="{{ officeData.externalId }}"></mifosx-external-identifier>
+    </div>
+
     <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Opened On' | translate }}
     </div>
-
     <div class="flex-50">
       {{ officeData.openingDate | dateFormat }}
-    </div>
-
-    <div class="flex-50 mat-body-strong" *ngIf="officeData.parentName">
-      {{ 'labels.inputs.Parent officeData' | translate }}
-    </div>
-
-    <div class="flex-50" *ngIf="officeData.parentName">
-      {{ officeData.parentName }}
     </div>
 
     <div class="flex-50 mat-body-strong">
       {{ 'labels.inputs.Number of Staff' | translate }}
     </div>
-
     <div class="flex-50">
       {{ employeeData ? employeeData.length : '' }}
     </div>

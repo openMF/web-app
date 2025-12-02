@@ -5,3 +5,34 @@
     align-self: flex-end;
   }
 }
+
+::ng-deep mat-card {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  background-color: var(--card-background, #fff);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+  height: 10rem;
+}
+
+.m-t-20 button {
+  background-color: #1976d2;
+  color: white;
+}
+
+::ng-deep .container.m-t-20 mat-card p {
+  display: block;
+  margin-top: -1.9rem;
+}
+
+.m-b-20 form {
+  margin-top: -1.5rem;
+}
+
+.actions-spacing {
+  margin-top: 24px;
+}

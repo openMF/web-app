@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 
 /** Custom Modules */
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { EditorModule } from '@tinymce/tinymce-angular';
 import { SharedModule } from '../shared/shared.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { TemplatesRoutingModule } from './templates-routing.module';
@@ -19,7 +19,7 @@ import { CreateEditComponent } from './create-edit-template/create-edit-template
  */
 @NgModule({
   imports: [
-    CKEditorModule,
+    EditorModule,
     SharedModule,
     DirectivesModule,
     TemplatesRoutingModule,

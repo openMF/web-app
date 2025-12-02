@@ -134,7 +134,8 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     const frequencyCounts: any = {};
     let index = this.userActivity?.length;
     while (index) {
-      frequencyCounts[this.userActivity[--index]] = (frequencyCounts[this.userActivity[index]] || 0) + 1;
+      const activity = this.userActivity[--index];
+      frequencyCounts[activity] = (frequencyCounts[activity] || 0) + 1;
     }
     const frequencyCountsArray = Object.entries(frequencyCounts);
     const topThreeFrequentActivities = frequencyCountsArray

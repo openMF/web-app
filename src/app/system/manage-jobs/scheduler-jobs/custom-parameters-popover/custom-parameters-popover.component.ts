@@ -10,7 +10,7 @@ import {
 import { CustomParametersTableComponent } from './custom-parameters-table/custom-parameters-table.component';
 import { SystemService } from 'app/system/system.service';
 import { CdkScrollable } from '@angular/cdk/scrolling';
-import { NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatList, MatListItem } from '@angular/material/list';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';

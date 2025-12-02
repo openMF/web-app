@@ -48,7 +48,7 @@ import { GeneralTabComponent } from './savings-account-view/general-tab/general-
 const routes: Routes = [
   {
     path: '',
-    data: { title: 'All Savings', breadcrumb: 'Savings', routeParamBreadcrumb: false },
+    data: { title: 'All Savings', breadcrumb: 'Savings', routeParamBreadcrumb: false, addBreadcrumbLink: false },
     children: [
       {
         path: 'create',

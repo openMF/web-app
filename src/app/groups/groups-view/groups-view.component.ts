@@ -100,6 +100,12 @@ export class GroupsViewComponent {
       case 'Manage Members':
       case 'Transfer Clients':
         this.router.navigate([`actions/${name}`], { relativeTo: this.route });
+        if (name === 'Activate') {
+          const generalTab = this.getGeneralTabComponent();
+          if (generalTab) {
+            generalTab.refreshAccounts(this.groupViewData.id);
+          }
+        }
         break;
       case 'Edit Meeting':
         const queryParams: any = { calendarId: this.groupViewData.collectionMeetingCalendar.id };
@@ -116,7 +122,9 @@ export class GroupsViewComponent {
         break;
     }
   }
-
+  getGeneralTabComponent(): any {
+    return null;
+  }
   /**
    * Checks if meeting is editable.
    */
@@ -129,7 +137,6 @@ export class GroupsViewComponent {
     }
     return false;
   }
-
   /**
    * Refetches data for the component
    * TODO: Replace by a custom reload component instead of hard-coded back-routing.

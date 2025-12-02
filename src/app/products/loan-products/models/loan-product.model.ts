@@ -2,7 +2,10 @@ import {
   AccountingMapping,
   ChargeOffReasonToExpenseAccountMapping,
   ChargeToIncomeAccountMapping,
+  ClassificationToIncomeAccountMapping,
+  CodeValue,
   Currency,
+  GLAccount,
   PaymentChannelToFundSourceMapping
 } from 'app/shared/models/general.model';
 import { OptionData, StringEnumOptionData } from 'app/shared/models/option-data.model';
@@ -152,6 +155,10 @@ export interface LoanProduct {
   enableAccrualActivityPosting?: boolean;
   supportedInterestRefundTypes?: StringEnumOptionData[];
   chargeOffBehaviour?: StringEnumOptionData;
+  buydownfeeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
+  buydownFeeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
+  capitalizedIncomeClassificationToIncomeAccountMappings?: ClassificationToIncomeAccountMapping[];
+  writeOffReasonsToExpenseMappings?: ChargeOffReasonToExpenseAccountMapping[];
 }
 
 export interface AllowAttributeOverrides {
@@ -192,4 +199,14 @@ export interface InterestRecalculationData {
   preClosureInterestCalculationStrategy: OptionData;
   allowCompoundingOnEod: boolean;
   disallowInterestCalculationOnPastDue: boolean;
+}
+
+export interface AdvancedMappingDTO {
+  formType: string;
+  values: AccountingMappingDTO[];
+}
+
+export interface AccountingMappingDTO {
+  value: CodeValue;
+  glAccount: GLAccount;
 }

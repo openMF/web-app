@@ -85,16 +85,43 @@ mat-divider {
   gap: 1rem;
 
   @media (width >= 768px) {
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: repeat(2, 1fr); /* stylelint-disable-line unit-allowed-list */
+    gap: 1.5rem;
   }
+}
+
+.form-row {
+  display: contents;
 }
 
 .form-field {
   width: 100%;
+  margin-bottom: 0.5rem;
+
+  &:nth-child(odd) {
+    @media (width >= 768px) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &:nth-child(even) {
+    @media (width >= 768px) {
+      margin-left: 0.5rem;
+    }
+  }
 
   &.description-field {
     grid-column: 1 / -1;
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
   }
+}
+
+::ng-deep .mat-form-field {
+  width: 100%;
 }
 
 // Button styling
@@ -284,4 +311,21 @@ body.dark-theme {
 
 ::ng-deep mat-form-field.error-warn.mat-form-field-invalid .mat-error {
   color: #0009 !important;
+}
+
+::ng-deep .mat-form-field-flex {
+  align-items: center;
+}
+
+.transfer-form .form-field {
+  margin-bottom: 1rem;
+}
+
+.readonly-field {
+  background-color: rgb(0 0 0 / 2%);
+  cursor: not-allowed;
+}
+
+::ng-deep .mat-input-element {
+  font-size: 14px;
 }
