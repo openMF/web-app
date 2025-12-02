@@ -145,8 +145,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
         (activity: string) => ![
             '/',
             '/login',
-            '/home',
-            '/dashboard'
+            '/home'
           ].includes(activity)
       )
       .slice(0, 3);

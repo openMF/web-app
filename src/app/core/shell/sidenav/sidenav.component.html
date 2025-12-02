@@ -59,18 +59,6 @@
 
       <mat-nav-list>
         <mat-list-item
-          [routerLink]="['/dashboard']"
-          [matTooltipPosition]="tooltipPosition"
-          matTooltip="{{ 'tooltips.Dashboard' | translate }}"
-          routerLinkActive="active-menu"
-          [routerLinkActiveOptions]="{ exact: false }"
-        >
-          <mat-icon matListIcon>
-            <fa-icon icon="tachometer-alt" size="sm"></fa-icon>
-          </mat-icon>
-          <a matLine #dashboard>{{ 'labels.menus.Dashboard' | translate }}</a>
-        </mat-list-item>
-        <mat-list-item
           [routerLink]="['/navigation']"
           [matTooltipPosition]="tooltipPosition"
           matTooltip="{{ 'tooltips.Navigation' | translate }}"
@@ -225,78 +213,6 @@
       mat-raised-button
       color="primary"
       (click)="popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #templateFrequentlyAccessed let-popover="popover">
-  <h2>{{ 'labels.menus.Frequently Accessed' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.Shortcut to the frequently accessed components' | translate }}</p>
-  <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateUserPanel, userPanel, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateDashboard, dashboard, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #templateDashboard let-popover="popover">
-  <h2>{{ 'labels.menus.Dashboard' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.User Dashboard Component' | translate }}</p>
-  <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateFrequentlyAccessed, frequentlyAccessed, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateNavigation, navigation, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #templateNavigation let-popover="popover">
-  <h2>{{ 'labels.menus.Navigation' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.User Entity navigation screen' | translate }}</p>
-  <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateDashboard, dashboard, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateFrequentPostings, frequentPostings, 'top', true)"
     >
       {{ 'labels.buttons.Next' | translate }}
     </button>

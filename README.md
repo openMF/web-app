@@ -4,6 +4,7 @@ Ongoing documentation of daily progress, research, and implementation efforts.
 
 📅 Timeline
 16–21 November
+
 <details> <summary><strong>Show Details</strong></summary>
 
 Reviewed all relevant documentation and requirements.
@@ -62,4 +63,3 @@ Created test changes and pushed data to our Repo.
 Planned further changes and started working on them locally.
 
 </details>
-

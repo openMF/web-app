@@ -17,6 +17,54 @@ a {
   color: black;
 }
 
+.search-overlay {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  z-index: 5;
+  padding: 10px;
+}
+
+#home-buttons {
+  position: absolute;
+  top: 9.5rem;
+  left: 55%;
+  transform: translateX(-50%);
+  width: 250px;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  scale: 1.2;
+}
+
+#home-buttons button {
+  width: 60px;
+  height: 40px;
+  border-radius: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #1074b9;
+  box-shadow: 0 0.5px 1.5px black;
+  color: white;
+  transition: 0.2s;
+}
+
+#home-buttons button:hover {
+  background-color: #2182c2;
+  cursor: pointer;
+  box-shadow: 0 1px 2px black;
+}
+
+#home-search-bar {
+  box-shadow: 0 0 2px black;
+}
+
 .card {
   box-sizing: border-box;
   padding: 2%;
