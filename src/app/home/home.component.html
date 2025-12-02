@@ -1,19 +1,11 @@
-<div class="layout-row align-end gap-2px responsive-column container m-b-20">
-  <!-- <div #buttonDashboard class="in-block">
-    <button mat-raised-button color="primary" [routerLink]="['/dashboard']">
-      <fa-icon icon="tachometer-alt" class="m-r-10"></fa-icon>
-      {{ 'labels.buttons.Dashboard' | translate }}
-    </button>
-  </div> -->
-</div>
+<div class="layout-row align-end gap-2px responsive-column container m-b-20"></div>
 
 <div class="container">
   <mat-card>
     <mat-card-header>
       <mat-card-title class="title"> {{ 'labels.text.Welcome' | translate }}, {{ username }}! </mat-card-title>
     </mat-card-header>
-
-    <mat-card-content #searchActivity>
+    <mat-card-content #searchActivity class="search-overlay">
       <div class="layout-column">
         <mat-form-field>
           <mat-label>{{ 'labels.placeholders.Search Activity' | translate }}</mat-label>
@@ -28,7 +20,19 @@
       </mat-autocomplete>
     </mat-card-content>
 
-    <img mat-card-image src="assets/images/mifos_lg-logo.png" alt="Mifos X" />
+    <div id="home-buttons">
+      <button mat-raised-button color="primary" [routerLink]="['/clients']">
+        {{ 'Clients' | translate }}
+      </button>
+      <button mat-raised-button color="primary" [routerLink]="['/groups']">
+        {{ 'Groups' | translate }}
+      </button>
+      <button mat-raised-button color="primary" [routerLink]="['/centers']">
+        {{ 'Centers' | translate }}
+      </button>
+    </div>
+
+    <img mat-card-image src="assets/images/mifos_lg-logo.png" alt="Mifos X" id="mifos_lg-logo" />
   </mat-card>
 </div>
 
@@ -76,26 +80,6 @@
   </div>
 </ng-template>
 
-<!-- <ng-template #templateButtonDashboard let-popover="popover">
-  <h2>{{ 'labels.heading.Dashboard' | translate }}</h2>
-  <p class="mw300">{{ 'labels.text.This will navigate the user to the dashboard component.' | translate }}</p>
-  <div class="layout-row align-end gap-2px responsive-column">
-    <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
-      {{ 'labels.buttons.Close' | translate }}
-    </button>
-    <button mat-raised-button color="primary" (click)="popover.close(); previousStep()">
-      {{ 'labels.buttons.Back' | translate }}
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateSearchActivity, searchActivity, 'top', true)"
-    >
-      {{ 'labels.buttons.Next' | translate }}
-    </button>
-  </div>
-</ng-template> -->
-
 <ng-template #templateSearchActivity let-popover="popover">
   <h2>{{ 'labels.heading.Search Activity' | translate }}</h2>
   <p class="mw300">{{ 'labels.text.This will navigate the user to the searched activity.' | translate }}</p>
@@ -103,13 +87,6 @@
     <button mat-raised-button color="warn" (click)="popover.close(); configurationWizardService.closeConfigWizard()">
       {{ 'labels.buttons.Close' | translate }}
     </button>
-    <!-- <button
-      mat-raised-button
-      color="primary"
-      (click)="popover.close(); showPopover(templateButtonDashboard, buttonDashboard, 'bottom', true)"
-    >
-      {{ 'labels.buttons.Back' | translate }}
-    </button> -->
     <button mat-raised-button color="primary" (click)="popover.close(); nextStep()">
       {{ 'labels.buttons.Next' | translate }}
     </button>
