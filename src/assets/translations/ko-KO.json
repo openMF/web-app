@@ -3100,6 +3100,7 @@
       "No checker inbox data available for this search": "이 검색에 사용할 수 있는 검사기 받은 편지함 데이터가 없습니다.",
       "No client was found": "클라이언트를 찾을 수 없습니다.",
       "No data found": "데이터가 없습니다",
+      "NoDocuments": "사용 가능한 문서가 없습니다.",
       "No loan locked available": "잠긴 대출이 없습니다.",
       "No notifications": "알림 없음",
       "No pending loan available for disbursal": "지급 가능한 보류 중인 대출이 없습니다.",
@@ -3342,7 +3343,8 @@
       "Voluntary": "자발적인",
       "Write a note": "메모 쓰기",
       "“Maker-Checker” principle requires every tasks": "\"Maker-Checker\" 원칙은 오류와 오용 가능성을 줄이기 위해 모든 작업을 두 사람이 완료하도록 요구합니다. 한 사람이 프로세스를 시작하고 두 번째 사람이 프로세스를 완료합니다.",
-      "Buy Down Fees": "매입 수수료"
+      "Buy Down Fees": "매입 수수료",
+      "UploadDocumentHint": "미리보기를 생성하려면 PDF 또는 이미지를 업로드하세요."
     },
     "titles": {
       "Dashboard": "계기반",

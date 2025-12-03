@@ -78,13 +78,6 @@ export class LoanDocumentsTabComponent implements OnInit {
     this.entityDocuments = data;
   }
 
-  downloadDocument(documentId: string) {
-    this.loansService.downloadLoanDocument(this.entityId, documentId).subscribe((res) => {
-      const url = window.URL.createObjectURL(res);
-      window.open(url);
-    });
-  }
-
   uploadDocument(formData: FormData): any {
     return this.loansService.loadLoanDocument(this.entityId, formData);
   }

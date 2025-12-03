@@ -12,11 +12,15 @@
 @use 'theme/pink-bluegrey' as *;
 @use 'theme/deeppurple-amber' as *;
 @use 'theme/purple-green.scss' as *;
+@use 'assets/styles/helper';
+@use 'lightgallery/scss/lightgallery' as *;
+@use 'lightgallery/scss/lg-thumbnail' as *;
+@use 'lightgallery/scss/lg-zoom' as *;
+@use 'lightgallery/scss/lg-fullscreen' as *;
 
 // Global Imports
 
 /* You can add global styles to this file, and also import other style files */
-@use 'assets/styles/helper';
 
 .scrollbar-styling {
   scrollbar-width: thin;

@@ -1,5 +1,5 @@
 <div class="tab-container mat-typography">
-  <div class="layout-row align-start-center">
+  <div class="layout-row align-start-center header-row">
     <h3 class="flex-90">{{ 'labels.heading.Documents' | translate }}</h3>
 
     <div class="flex-10" *mifosxHasPermission="'CREATE_DOCUMENT'">
@@ -9,51 +9,62 @@
     </div>
   </div>
 
-  <table mat-table #documentsTable [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.name' | translate }}</th>
-      <td mat-cell *matCellDef="let document">{{ document.name }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Description' | translate }}</th>
-      <td mat-cell *matCellDef="let document">{{ document.description }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="filename">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.File Name' | translate }}</th>
-      <td mat-cell *matCellDef="let document">{{ document.fileName }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ 'labels.inputs.Actions' | translate }}</th>
-      <td mat-cell *matCellDef="let document; let index">
-        <button
-          class="document-action-button"
-          mat-raised-button
-          color="primary"
-          (click)="downloadDocument(document.id)"
+  <div *ngIf="entityDocuments?.length; else empty">
+    <div class="document-grid">
+      <div class="document-card" *ngFor="let document of entityDocuments; trackBy: trackByDocumentId">
+        <div
+          class="thumb"
+          [class.clickable]="isPreviewable(document)"
+          [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
+          (click)="isPreviewable(document) && openPreview(document)"
         >
-          <fa-icon icon="cloud-download-alt"></fa-icon>
-        </button>
-        <button
-          class="document-action-button"
-          mat-raised-button
-          color="warn"
-          (click)="deleteDocument(document.id, document.name)"
-        >
-          <fa-icon icon="times"></fa-icon>
-        </button>
-      </td>
-    </ng-container>
+          <ng-container *ngIf="previewThumbnails[document.id]; else placeholder">
+            <img [src]="previewThumbnails[document.id]" [alt]="document.name" [title]="document.name" loading="lazy" />
+          </ng-container>
+          <ng-template #placeholder>
+            <div class="placeholder">
+              <fa-icon icon="file"></fa-icon>
+              <span>{{ document.fileName || document.name }}</span>
+            </div>
+          </ng-template>
+        </div>
+        <div class="card-body">
+          <div class="title">{{ document.name }}</div>
+          <div class="meta" *ngIf="document.fileName">{{ document.fileName }}</div>
+          <div class="description" *ngIf="document.description">{{ document.description }}</div>
+          <div class="actions">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="openPreview(document)"
+              [disabled]="!isPreviewable(document)"
+              title="Preview"
+              [attr.aria-label]="'labels.buttons.Preview' | translate"
+            >
+              <fa-icon icon="eye"></fa-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteDocument(document.id, document.name)"
+              title="Delete"
+              [attr.aria-label]="'labels.buttons.Delete' | translate"
+              *mifosxHasPermission="'DELETE_DOCUMENT'"
+            >
+              <fa-icon icon="times"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-
-  <mat-paginator
-    *ngIf="entityDocuments && entityDocuments.length > 10"
-    [pageSizeOptions]="[10, 25, 50]"
-    showFirstLastButtons
-  ></mat-paginator>
+  <ng-template #empty>
+    <div class="empty-state">
+      <p>{{ 'labels.text.NoDocuments' | translate }}</p>
+      <p class="muted">{{ 'labels.text.UploadDocumentHint' | translate }}</p>
+    </div>
+  </ng-template>
 </div>
+
+<div #lightboxRoot class="document-lightbox-host"></div>

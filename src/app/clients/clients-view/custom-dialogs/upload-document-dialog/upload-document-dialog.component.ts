@@ -27,10 +27,14 @@ export class UploadDocumentDialogComponent implements OnInit {
   uploadDocumentForm: UntypedFormGroup;
   /** Upload Document Data */
   uploadDocumentData: any = [];
-  /** Triggers description field */
+  /** Triggers identity fields (documentType, status, documentKey) */
   documentIdentifier = false;
   /** Entity Type */
   entityType: string;
+  /** Allowed Document Types for identifiers */
+  allowedDocumentTypes: any[] = [];
+  /** Status options for identifiers */
+  statusOptions: any[] = [];
 
   /**
    * @param {MatDialogRef} dialogRef Dialog reference element
@@ -44,6 +48,8 @@ export class UploadDocumentDialogComponent implements OnInit {
   ) {
     this.documentIdentifier = data.documentIdentifier;
     this.entityType = data.entityType;
+    this.allowedDocumentTypes = data.allowedDocumentTypes || [];
+    this.statusOptions = data.statusOptions || [];
   }
 
   ngOnInit() {
@@ -54,14 +60,39 @@ export class UploadDocumentDialogComponent implements OnInit {
    * Creates the upload Document form.
    */
   createUploadDocumentForm() {
-    this.uploadDocumentForm = this.formBuilder.group({
-      fileName: [
-        '',
-        Validators.required
-      ],
-      description: [''],
-      file: ['']
-    });
+    if (this.documentIdentifier) {
+      // Unified form for identity: identifier fields + document upload
+      this.uploadDocumentForm = this.formBuilder.group({
+        documentTypeId: [
+          '',
+          Validators.required
+        ],
+        status: [
+          'Active',
+          Validators.required
+        ],
+        documentKey: [
+          '',
+          Validators.required
+        ],
+        description: [''],
+        fileName: [
+          '',
+          Validators.required
+        ],
+        file: ['']
+      });
+    } else {
+      // Standard document upload form
+      this.uploadDocumentForm = this.formBuilder.group({
+        fileName: [
+          '',
+          Validators.required
+        ],
+        description: [''],
+        file: ['']
+      });
+    }
   }
 
   /**

@@ -3099,6 +3099,7 @@
       "No checker inbox data available for this search": "Aucune donnée de boîte de réception du vérificateur disponible pour cette recherche.",
       "No client was found": "Aucun client n'a été trouvé",
       "No data found": "Aucune donnée disponible",
+      "NoDocuments": "Aucun document disponible.",
       "No loan locked available": "Aucun prêt bloqué disponible.",
       "No notifications": "Pas de notifications",
       "No pending loan available for disbursal": "Aucun prêt en attente disponible pour décaissement.",
@@ -3341,7 +3342,8 @@
       "Voluntary": "Volontaire",
       "Write a note": "Écrire une note",
       "“Maker-Checker” principle requires every tasks": "Le principe « Maker-Checker » exige que chaque tâche soit effectuée par deux personnes afin de réduire les risques d'erreurs et de mauvaise utilisation. Une personne lance le processus et la seconde le termine.",
-      "Buy Down Fees": "Frais de rachat"
+      "Buy Down Fees": "Frais de rachat",
+      "UploadDocumentHint": "Téléchargez un PDF ou une image pour générer un aperçu."
     },
     "titles": {
       "Dashboard": "Tableau de bord",

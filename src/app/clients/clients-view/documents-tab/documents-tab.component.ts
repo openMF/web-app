@@ -32,13 +32,6 @@ export class DocumentsTabComponent {
     this.entityId = this.route.parent.snapshot.paramMap.get('clientId');
   }
 
-  downloadDocument(documentId: string) {
-    this.clientsService.downloadClientDocument(this.entityId, documentId).subscribe((res) => {
-      const url = window.URL.createObjectURL(res);
-      window.open(url);
-    });
-  }
-
   deleteDocument(documentId: string) {
     this.clientsService.deleteClientDocument(this.entityId, documentId).subscribe((res) => {});
   }

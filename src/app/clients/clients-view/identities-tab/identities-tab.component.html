@@ -37,14 +37,49 @@
     <ng-container matColumnDef="documents">
       <th mat-header-cell *matHeaderCellDef>{{ 'labels.inputs.Identity Documents' | translate }}</th>
       <td mat-cell *matCellDef="let identity">
-        <div *ngFor="let document of identity.documents">
-          {{ document.name }}
-          <fa-icon
-            icon="cloud-download-alt"
-            (click)="download(document.parentEntityId, document.id)"
-            *mifosxHasPermission="'READ_DOCUMENT'"
-          ></fa-icon>
+        <div class="document-grid" *ngIf="identity.documents?.length; else noDocs">
+          <div class="document-card" *ngFor="let document of identity.documents; trackBy: trackByDocumentId">
+            <div
+              class="thumb"
+              [class.clickable]="isPreviewable(document)"
+              [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
+              (click)="isPreviewable(document) && openDocumentPreview(identity, document)"
+            >
+              <ng-container *ngIf="previewThumbnails[document.id]; else placeholder">
+                <img
+                  [src]="previewThumbnails[document.id]"
+                  [alt]="document.name"
+                  [title]="document.name"
+                  loading="lazy"
+                />
+              </ng-container>
+              <ng-template #placeholder>
+                <div class="placeholder">
+                  <fa-icon icon="file"></fa-icon>
+                  <span>{{ document.fileName || document.name }}</span>
+                </div>
+              </ng-template>
+              <button
+                mat-icon-button
+                color="primary"
+                class="preview-btn"
+                *ngIf="isPreviewable(document)"
+                title="Preview"
+                [attr.aria-label]="'labels.buttons.Preview' | translate"
+                (click)="$event.stopPropagation(); openDocumentPreview(identity, document)"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="title">{{ document.name }}</div>
+              <div class="meta" *ngIf="document.fileName">{{ document.fileName }}</div>
+            </div>
+          </div>
         </div>
+        <ng-template #noDocs>
+          <span class="muted">{{ 'labels.text.NoDocuments' | translate }}</span>
+        </ng-template>
       </td>
     </ng-container>
 
@@ -61,16 +96,8 @@
         <button
           class="identity-action-button"
           mat-raised-button
-          color="primary"
-          (click)="uploadDocument(i, identity.id)"
-          *mifosxHasPermission="'CREATE_DOCUMENT'"
-        >
-          <fa-icon icon="eye"></fa-icon>
-        </button>
-        <button
-          class="identity-action-button"
-          mat-raised-button
           color="warn"
+          title="Delete"
           (click)="deleteIdentifier(identity.clientId, identity.id, i)"
           *mifosxHasPermission="'DELETE_CLIENTIDENTIFIER'"
         >
@@ -83,3 +110,5 @@
     <tr mat-row *matRowDef="let row; columns: identitiesColumns"></tr>
   </table>
 </div>
+
+<div #identityLightbox class="document-lightbox-host"></div>

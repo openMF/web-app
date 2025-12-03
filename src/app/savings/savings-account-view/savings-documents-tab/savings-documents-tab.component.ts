@@ -67,13 +67,6 @@ export class SavingsDocumentsTabComponent {
     this.entityDocuments = data;
   }
 
-  downloadDocument(documentId: string) {
-    this.savingsService.downloadSavingsDocument(this.entityId, documentId).subscribe((res) => {
-      const url = window.URL.createObjectURL(res);
-      window.open(url);
-    });
-  }
-
   uploadDocument(formData: FormData): any {
     return this.savingsService.loadSavingsDocument(this.entityId, formData);
   }

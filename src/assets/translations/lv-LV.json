@@ -3100,6 +3100,7 @@
       "No checker inbox data available for this search": "Šai meklēšanai nav pieejami pārbaudītāja iesūtnes dati.",
       "No client was found": "Klients netika atrasts",
       "No data found": "Dati nav atrasti",
+      "NoDocuments": "Nav pieejamu dokumentu.",
       "No loan locked available": "Nav pieejams bloķēts aizdevums.",
       "No notifications": "Nav paziņojumu",
       "No pending loan available for disbursal": "Nav pieejams neizmaksāts aizdevums.",
@@ -3342,7 +3343,8 @@
       "Voluntary": "Brīvprātīgi",
       "Write a note": "Uzrakstiet piezīmi",
       "“Maker-Checker” principle requires every tasks": "“Maker-Checker” princips paredz, ka katrs uzdevums ir jāveic diviem cilvēkiem, lai samazinātu kļūdu un nepareizas lietošanas iespējamību. Viens cilvēks uzsāk procesu, bet otrs to pabeidz.",
-      "Buy Down Fees": "Izpirkšanas maksas"
+      "Buy Down Fees": "Izpirkšanas maksas",
+      "UploadDocumentHint": "Augšupielādējiet PDF vai attēlu, lai izveidotu priekšskatījumu."
     },
     "titles": {
       "Dashboard": "Mērinstrumentu panelis",
