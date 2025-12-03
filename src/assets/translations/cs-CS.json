@@ -807,7 +807,8 @@
       "on": "na",
       "Password validation": "Heslo by mělo obsahovat minimálně {{minchar}} znaků, které by měly obsahovat 1 velké písmeno, malé písmeno a speciální znak a nemělo by se skládat z opakujících se znaků nebo mezer.",
       "Must be at least": "Musí být alespoň",
-      "Must be less or equal to": "Musí být menší nebo rovno"
+      "Must be less or equal to": "Musí být menší nebo rovno",
+      "must be after or equal to start date": "musí být po nebo rovno datu zahájení"
     },
     "heading": {
       "Account Linked Financial": "Seznam účtů spojených s různými finančními aktivitami. Chcete-li vědět více, klikněte:",
