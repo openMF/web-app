@@ -61,11 +61,11 @@ When using the development server with basic authentication:
 
 **Important:** Do not alter these credentials.
 
-📘 Update Log
+## Update Log
 
 Ongoing documentation of daily progress, research, and implementation efforts.
 
-📅 Timeline
+**Timeline**
 16–21 November
 
 <details> <summary><strong>Show Details</strong></summary>
