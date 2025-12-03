@@ -3100,6 +3100,7 @@
       "No checker inbox data available for this search": "Pro toto vyhledávání nejsou k dispozici žádná data doručené pošty Checker.",
       "No client was found": "Nebyl nalezen žádný klient",
       "No data found": "Nenalezena žádná data",
+      "NoDocuments": "Žádné dokumenty k dispozici.",
       "No loan locked available": "Žádná půjčka není k dispozici.",
       "No notifications": "Žádné oznámení",
       "No pending loan available for disbursal": "Není k dispozici žádná nevyřízená půjčka k vyplacení.",
@@ -3342,7 +3343,8 @@
       "Voluntary": "Dobrovolný",
       "Write a note": "Napište poznámku",
       "“Maker-Checker” principle requires every tasks": "Princip „Maker-Checker“ vyžaduje, aby každý úkol prováděli dva lidé, aby se snížila pravděpodobnost chyb a zneužití. Jedna osoba proces iniciuje a druhá jej dokončí.",
-      "Buy Down Fees": "Poplatky za odkup"
+      "Buy Down Fees": "Poplatky za odkup",
+      "UploadDocumentHint": "Nahrajte PDF nebo obrázek pro vygenerování náhledu."
     },
     "titles": {
       "Dashboard": "Přístrojová deska",

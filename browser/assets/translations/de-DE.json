@@ -3099,6 +3099,7 @@
       "No checker inbox data available for this search": "Für diese Suche sind keine Checker-Posteingangsdaten verfügbar.",
       "No client was found": "Es wurde kein Kunde gefunden",
       "No data found": "Keine Daten gefunden",
+      "NoDocuments": "Keine Dokumente verfügbar.",
       "No loan locked available": "Kein gesperrter Kredit verfügbar.",
       "No notifications": "Keine benachrichtigungen",
       "No pending loan available for disbursal": "Kein ausstehendes Darlehen zur Auszahlung verfügbar.",
@@ -3341,7 +3342,8 @@
       "Voluntary": "Freiwillig",
       "Write a note": "Schreib eine Notitz",
       "“Maker-Checker” principle requires every tasks": "Das „Maker-Checker“-Prinzip erfordert, dass jede Aufgabe von zwei Personen erledigt wird, um das Risiko von Fehlern und Missbrauch zu verringern. Eine Person leitet den Prozess ein und die zweite Person schließt ihn ab.",
-      "Buy Down Fees": "Kaufgebühren"
+      "Buy Down Fees": "Kaufgebühren",
+      "UploadDocumentHint": "Laden Sie ein PDF oder Bild hoch, um eine Vorschau zu erstellen."
     },
     "titles": {
       "Dashboard": "Armaturenbrett",

@@ -3099,6 +3099,7 @@
       "No checker inbox data available for this search": "Hakuna data ya kikasha kikagua inayopatikana kwa utafutaji huu.",
       "No client was found": "Hakuna mteja aliyepatikana",
       "No data found": "Hakuna data iliyopatikana",
+      "NoDocuments": "Hakuna hati zinazopatikana.",
       "No loan locked available": "Hakuna mkopo uliofungwa unaopatikana.",
       "No notifications": "Hakuna arifa",
       "No pending loan available for disbursal": "Hakuna mkopo unaosubiri kulipwa.",
@@ -3341,7 +3342,8 @@
       "Voluntary": "Kwa hiari",
       "Write a note": "Andika dokezo",
       "“Maker-Checker” principle requires every tasks": "Kanuni ya \"Mtengenezaji-Kikagua\" inahitaji kila kazi kukamilishwa na watu wawili ili kupunguza uwezekano wa makosa na matumizi mabaya. Mtu mmoja anaanzisha mchakato na wa pili anakamilisha.",
-      "Buy Down Fees": "Ada za Ununuzi"
+      "Buy Down Fees": "Ada za Ununuzi",
+      "UploadDocumentHint": "Pakia PDF au picha ili kutoa hakikisho."
     },
     "titles": {
       "Dashboard": "Dashibodi",

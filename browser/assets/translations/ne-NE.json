@@ -3100,6 +3100,7 @@
       "No checker inbox data available for this search": "यस खोजको लागि कुनै परीक्षक इनबक्स डाटा उपलब्ध छैन।",
       "No client was found": "कुनै ग्राहक भेटिएन",
       "No data found": "कुनै डाटा फेला परेन",
+      "NoDocuments": "कुनै कागजात उपलब्ध छैन।",
       "No loan locked available": "कुनै ऋण उपलब्ध छैन।",
       "No notifications": "कुनै सूचना छैन",
       "No pending loan available for disbursal": "वितरणको लागि कुनै पेन्डिङ ऋण उपलब्ध छैन।",
@@ -3342,7 +3343,8 @@
       "Voluntary": "स्वैच्छिक",
       "Write a note": "नोट लेख्नुहोस्",
       "“Maker-Checker” principle requires every tasks": "\"मेकर-चेकर\" सिद्धान्तले त्रुटि र दुरुपयोगको सम्भावना कम गर्न प्रत्येक कार्यहरू दुई व्यक्तिद्वारा पूरा गर्न आवश्यक छ। एक व्यक्तिले प्रक्रिया सुरु गर्छ र दोस्रोले यसलाई पूरा गर्दछ।",
-      "Buy Down Fees": "खरीद शुल्क"
+      "Buy Down Fees": "खरीद शुल्क",
+      "UploadDocumentHint": "पूर्वावलोकन उत्पन्न गर्न PDF वा छवि अपलोड गर्नुहोस्।"
     },
     "titles": {
       "Dashboard": "ड्यासबोर्ड",
