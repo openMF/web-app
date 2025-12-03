@@ -42,7 +42,11 @@
             <div
               class="thumb"
               [class.clickable]="isPreviewable(document)"
+              role="button"
+              tabindex="0"
               [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
+              (keydown.enter)="isPreviewable(document) && openDocumentPreview(identity, document)"
+              (keydown.space)="isPreviewable(document) && openDocumentPreview(identity, document)"
               (click)="isPreviewable(document) && openDocumentPreview(identity, document)"
             >
               <ng-container *ngIf="previewThumbnails[document.id]; else placeholder">
@@ -59,17 +63,9 @@
                   <span>{{ document.fileName || document.name }}</span>
                 </div>
               </ng-template>
-              <button
-                mat-icon-button
-                color="primary"
-                class="preview-btn"
-                *ngIf="isPreviewable(document)"
-                title="Preview"
-                [attr.aria-label]="'labels.buttons.Preview' | translate"
-                (click)="$event.stopPropagation(); openDocumentPreview(identity, document)"
-              >
+              <div class="preview-overlay" *ngIf="isPreviewable(document)">
                 <fa-icon icon="eye"></fa-icon>
-              </button>
+              </div>
             </div>
             <div class="card-body">
               <div class="title">{{ document.name }}</div>
@@ -97,7 +93,8 @@
           class="identity-action-button"
           mat-raised-button
           color="warn"
-          title="Delete"
+          [title]="'labels.buttons.Delete' | translate"
+          [attr.aria-label]="'labels.buttons.Delete' | translate"
           (click)="deleteIdentifier(identity.clientId, identity.id, i)"
           *mifosxHasPermission="'DELETE_CLIENTIDENTIFIER'"
         >

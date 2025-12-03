@@ -15,7 +15,11 @@
         <div
           class="thumb"
           [class.clickable]="isPreviewable(document)"
+          role="button"
+          tabindex="0"
           [attr.aria-label]="('labels.buttons.Preview' | translate) + ': ' + document.name"
+          (keydown.enter)="isPreviewable(document) && openPreview(document)"
+          (keydown.space)="isPreviewable(document) && openPreview(document)"
           (click)="isPreviewable(document) && openPreview(document)"
         >
           <ng-container *ngIf="previewThumbnails[document.id]; else placeholder">
@@ -27,22 +31,15 @@
               <span>{{ document.fileName || document.name }}</span>
             </div>
           </ng-template>
+          <div class="preview-overlay" *ngIf="isPreviewable(document)">
+            <fa-icon icon="eye"></fa-icon>
+          </div>
         </div>
         <div class="card-body">
           <div class="title">{{ document.name }}</div>
           <div class="meta" *ngIf="document.fileName">{{ document.fileName }}</div>
           <div class="description" *ngIf="document.description">{{ document.description }}</div>
           <div class="actions">
-            <button
-              mat-icon-button
-              color="primary"
-              (click)="openPreview(document)"
-              [disabled]="!isPreviewable(document)"
-              title="Preview"
-              [attr.aria-label]="'labels.buttons.Preview' | translate"
-            >
-              <fa-icon icon="eye"></fa-icon>
-            </button>
             <button
               mat-icon-button
               color="warn"

@@ -61,6 +61,26 @@
   }
 }
 
+.preview-overlay {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background: rgba($white, 0.9);
+  border-radius: 50%;
+  padding: 0.4rem;
+  color: $peter-river;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  .thumb:hover &,
+  .thumb:focus & {
+    opacity: 1;
+  }
+}
+
 .placeholder {
   color: $light-grey;
   text-align: center;
