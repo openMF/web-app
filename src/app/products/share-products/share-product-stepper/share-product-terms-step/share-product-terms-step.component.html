@@ -38,10 +38,14 @@
         matTooltip="{{ 'tooltips.Unit/Nominal Price of each share' | translate }}"
         formControlName="unitPrice"
         required
+        min="1"
       />
-      <mat-error>
+      <mat-error *ngIf="shareProductTermsForm.get('unitPrice').hasError('required')">
         {{ 'labels.inputs.Nominal Price' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+      <mat-error *ngIf="shareProductTermsForm.get('unitPrice').hasError('min')">
+        {{ 'labels.inputs.Nominal Price' | translate }} must be at least <strong>1</strong>
       </mat-error>
     </mat-form-field>
 
