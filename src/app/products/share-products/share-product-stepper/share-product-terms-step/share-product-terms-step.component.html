@@ -23,10 +23,14 @@
         matTooltip="{{ 'tooltips.Total number of shares that an orgranization' | translate }}"
         formControlName="sharesIssued"
         required
+        min="1"
       />
-      <mat-error>
+      <mat-error *ngIf="shareProductTermsForm.get('sharesIssued').hasError('required')">
         {{ 'labels.inputs.Shares to be Issued' | translate }} {{ 'labels.commons.is' | translate }}
         <strong>{{ 'labels.commons.required' | translate }}</strong>
+      </mat-error>
+      <mat-error *ngIf="shareProductTermsForm.get('sharesIssued').hasError('min')">
+        {{ 'labels.inputs.Shares to be Issued' | translate }} must be at least <strong>1</strong>
       </mat-error>
     </mat-form-field>
 

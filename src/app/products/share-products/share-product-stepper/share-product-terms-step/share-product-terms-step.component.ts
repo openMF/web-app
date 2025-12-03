@@ -60,7 +60,9 @@ export class ShareProductTermsStepComponent implements OnInit {
       ],
       sharesIssued: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(1)]
       ],
       unitPrice: [
         '',
