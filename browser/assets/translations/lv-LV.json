@@ -807,7 +807,8 @@
       "on": "ieslēgts",
       "Password validation": "Parolē jābūt vismaz {{minchar}} rakstzīmēm, tai jābūt 1 lielajam, mazajam un speciālajām rakstzīmēm, un tā nedrīkst sastāvēt no atkārtotām rakstzīmēm vai atstarpēm.",
       "Must be at least": "Jābūt vismaz",
-      "Must be less or equal to": "Jābūt mazākam vai vienādam ar"
+      "Must be less or equal to": "Jābūt mazākam vai vienādam ar",
+      "must be after or equal to start date": "jābūt pēc sākuma datuma vai vienādam ar to"
     },
     "heading": {
       "Account Linked Financial": "Ar dažādām finanšu darbībām saistīto kontu saraksts. Lai uzzinātu vairāk, noklikšķiniet:",

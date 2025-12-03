@@ -807,7 +807,8 @@
       "on": "SU",
       "Password validation": "La password deve contenere almeno {{minchar}} caratteri, di cui 1 carattere maiuscolo, minuscolo e speciale e non deve essere composta da caratteri ripetuti o spazi bianchi",
       "Must be at least": "Deve essere almeno",
-      "Must be less or equal to": "Deve essere minore o uguale a"
+      "Must be less or equal to": "Deve essere minore o uguale a",
+      "must be after or equal to start date": "deve essere successiva o uguale alla data di inizio"
     },
     "heading": {
       "Account Linked Financial": "Elenco dei conti collegati a diverse attività finanziarie. Per saperne di più clicca:",

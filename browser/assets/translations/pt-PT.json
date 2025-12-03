@@ -807,7 +807,8 @@
       "on": "sobre",
       "Password validation": "A senha deve conter no mínimo {{minchar}} caracteres, que deve conter 1 letra maiúscula, minúscula e caractere especial e não deve consistir em caracteres repetidos ou espaços em branco",
       "Must be at least": "Deve ser pelo menos",
-      "Must be less or equal to": "Deve ser menor ou igual a"
+      "Must be less or equal to": "Deve ser menor ou igual a",
+      "must be after or equal to start date": "deve ser posterior ou igual à data de início"
     },
     "heading": {
       "Account Linked Financial": "Lista de contas vinculadas a diferentes atividades financeiras. Para saber mais clique:",

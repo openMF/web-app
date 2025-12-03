@@ -807,7 +807,8 @@
       "on": "juu",
       "Password validation": "Nenosiri lazima liwe na herufi {{minchar}}, ambazo zinafaa kuingiza herufi 1 kubwa, ndogo na maalum na haipaswi kuwa na herufi zinazorudiwa au nafasi nyeupe.",
       "Must be at least": "Lazima iwe angalau",
-      "Must be less or equal to": "Lazima iwe chini au sawa na"
+      "Must be less or equal to": "Lazima iwe chini au sawa na",
+      "must be after or equal to start date": "lazima iwe baada ya au sawa na tarehe ya kuanza"
     },
     "heading": {
       "Account Linked Financial": "Orodha ya akaunti zilizounganishwa na shughuli tofauti za kifedha. Kujua zaidi bofya:",
