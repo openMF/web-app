@@ -66,7 +66,7 @@ When using the development server with basic authentication:
 Ongoing documentation of daily progress, research, and implementation efforts.
 
 **Timeline**
-16–21 November
+16 November - 2 December
 
 <details> <summary><strong>Show Details</strong></summary>
 
