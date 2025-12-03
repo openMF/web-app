@@ -56,7 +56,9 @@ export class ShareProductTermsStepComponent implements OnInit {
     this.shareProductTermsForm = this.formBuilder.group({
       totalShares: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.min(1)]
       ],
       sharesIssued: [
         '',
