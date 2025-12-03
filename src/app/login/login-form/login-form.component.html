@@ -48,8 +48,8 @@
 </div>
 
 <div *ngIf="oidcServerEnabled" class="container container-margin">
-  <div *ngIf="!isLoggedIn">
-    <button mat-raised-button color="primary" class="login-button-z" (click)="loginOIDC()">
+  <div *ngIf="!isLoggedIn" class="layout-column align-center-center">
+    <button mat-raised-button color="primary" class="login-button-first flex-align-center" (click)="loginOIDC()">
       {{ 'labels.buttons.Login' | translate }}
       <mat-spinner [diameter]="20" *ngIf="loading"></mat-spinner>
     </button>
