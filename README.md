@@ -23,9 +23,7 @@ Mifos X Web App is a modern single-page application (SPA) built on top of the Mi
 
 ### Frontend Setup (Web App)
 
-Choose ONE of the following methods to install the web app:
-
-#### Method 1: Manual Installation
+#### Preferred Method: Manual Installation
 
 1. Install Node.js: [Download here](https://nodejs.org/en/download/)
 2. Install Angular CLI:
