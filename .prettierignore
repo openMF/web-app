@@ -3,3 +3,4 @@
 **/.git
 src/environments/.env.ts
 src/environments/environment.ts
+angular.json
