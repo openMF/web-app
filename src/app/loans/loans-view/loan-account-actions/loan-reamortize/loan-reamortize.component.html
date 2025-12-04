@@ -59,6 +59,16 @@
           >
             {{ 'labels.buttons.Submit' | translate }}
           </button>
+          <button
+            type="button"
+            mat-raised-button
+            color="accent"
+            [disabled]="!reamortizeLoanForm.valid"
+            *mifosxHasPermission="'REAMORTIZE_LOAN'"
+            (click)="preview()"
+          >
+            {{ 'labels.buttons.Preview' | translate }}
+          </button>
         </mat-card-actions>
       </mat-card-content>
     </form>

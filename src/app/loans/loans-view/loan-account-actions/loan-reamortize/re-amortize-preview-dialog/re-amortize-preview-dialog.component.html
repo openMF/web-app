@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{ 'labels.heading.Repayment Schedule Preview' | translate }}</h1>
+
+<mat-dialog-content class="mat-typography">
+  <mifosx-repayment-schedule-tab
+    [repaymentScheduleDetails]="repaymentSchedule"
+    [currencyCode]="currencyCode"
+    [forEditing]="false"
+  >
+  </mifosx-repayment-schedule-tab>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button type="button" (click)="close()">
+    {{ 'labels.buttons.Go back' | translate }}
+  </button>
+</mat-dialog-actions>
