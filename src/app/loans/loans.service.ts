@@ -259,6 +259,24 @@ export class LoansService {
     return this.http.get(`/loans/${loanId}/transactions/reage-preview`, { params: httpParams });
   }
 
+  /**
+   * Get Re-Amortize preview with repayment schedule
+   * @param loanId Loan Id
+   * @param data Re-Amortize data
+   * @returns Observable with repayment schedule preview
+   */
+  getReAmortizePreview(loanId: string, data: any): Observable<any> {
+    let httpParams = new HttpParams();
+
+    Object.keys(data).forEach((key) => {
+      if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
+        httpParams = httpParams.set(key, data[key].toString());
+      }
+    });
+
+    return this.http.get(`/loans/${loanId}/transactions/reamortized-preview`, { params: httpParams });
+  }
+
   getLoanScreenReportsData(): Observable<any> {
     const httpParams = new HttpParams().set('entityId', '1').set('typeId', '0');
     return this.http.get(`/templates`, { params: httpParams });
