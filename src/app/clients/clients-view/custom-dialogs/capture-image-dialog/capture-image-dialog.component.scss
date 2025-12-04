@@ -4,8 +4,7 @@
   width: 100%;
   max-width: 640px;
   height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 4px;
   background-color: colors.$black;
 }
