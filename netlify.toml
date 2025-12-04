@@ -1,6 +1,6 @@
 [build]
-  publish = "dist/web-app"
-  command = "npm install && npm run build"
+  publish = "dist/web-app/browser"
+  command = "npm ci && npm run build"
 
 [[redirects]]
   from = "/*"
@@ -9,3 +9,5 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  CI = "true"
+  HUSKY = "0"
