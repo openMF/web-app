@@ -2,56 +2,45 @@
   window["env"] = window["env"] || {};
 
   // BackEnd Environment variables
-  window["env"]["fineractApiUrls"] = '';
-  window["env"]["fineractApiUrl"]  = '';
+  window["env"]["fineractApiUrls"] = "https://demo.mifos.community";
+  window["env"]["fineractApiUrl"]  = "https://demo.mifos.community";
 
-  window["env"]["apiProvider"] = '';
-  window["env"]["apiVersion"]  = '';
+  window["env"]["apiProvider"] = "/fineract-provider/api";
+  window["env"]["apiVersion"]  = "/v1";
 
-  window["env"]["fineractPlatformTenantId"]  = '';
-  window["env"]["fineractPlatformTenantIds"]  = '';
+  window["env"]["fineractPlatformTenantId"]  = "default";
+  window["env"]["fineractPlatformTenantIds"] = "default";
 
   // Language Environment variables
-  window["env"]["defaultLanguage"] = '';
-  window["env"]["supportedLanguages"] = '';
+  window["env"]["defaultLanguage"] = "en-US";
+  window["env"]["supportedLanguages"] = "en-US";
 
-  window['env']['preloadClients'] = '';
+  // Faster client load
+  window['env']['preloadClients'] = true;
 
-  // Char delimiter to Export CSV options: ',' ';' '|' ' '
-  window['env']['defaultCharDelimiter'] = '';
+  // CSV delimiter
+  window['env']['defaultCharDelimiter'] = ",";
 
-  // Display or not the Server Selector
-  window['env']['allowServerSwitch'] = '';
-  
-  // Display or not the BackEnd Info
-  window['env']['displayBackEndInfo'] = '';
+  // Toggles
+  window['env']['allowServerSwitch'] = "true";
+  window['env']['displayBackEndInfo'] = "true";
+  window['env']['displayTenantSelector'] = "true";
 
-  // Display or not the Tenant Selector
-  window['env']['displayTenantSelector'] = '';
+  // Timing
+  window['env']['waitTimeForNotifications'] = "60";
+  window['env']['waitTimeForCOBCatchUp'] = "30";
+  window['env']['sessionIdleTimeout'] = "300000"; // 5 minutes
 
-  // Time in seconds for Notifications, default 60 seconds
-  window['env']['waitTimeForNotifications'] = '';
-
-  // Time in seconds for COB Catch-Up, default 30 seconds
-  window['env']['waitTimeForCOBCatchUp'] = '';
-
-  // Time in milliseconds for Session idle timeout, default 300000 seconds
-  window['env']['sessionIdleTimeout'] = '0';
-
-  // OAuth Server Enabled
+  // OAuth (Disabled for demo)
   window['env']['oauthServerEnabled'] = false;
+  window['env']['oauthServerUrl'] = "";
+  window['env']['oauthAppId'] = "";
 
-  // OAuth Server URL
-  window['env']['oauthServerUrl'] = '';
-
-  // OAuth Client Id
-  window['env']['oauthAppId'] = '';
-
-  // OIDC Plugin Environment variables
+  // OIDC Plugin (Disabled)
   window['env']['oidcServerEnabled'] = false;
-  window['env']['oidcBaseUrl']       = '';
-  window['env']['oidcClientId']      = '';
-  window['env']['oidcApiUrl']        = '';
-  window['env']['oidcFrontUrl']      = '';
+  window['env']['oidcBaseUrl']  = "";
+  window['env']['oidcClientId'] = "";
+  window['env']['oidcApiUrl']   = "";
+  window['env']['oidcFrontUrl'] = "";
 
 })(this);
