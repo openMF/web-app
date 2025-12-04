@@ -2,3 +2,4 @@
 /node_modules
 **/.git
 src/environments/.env.ts
+src/environments/environment.ts
